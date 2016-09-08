@@ -1,0 +1,694 @@
+[ {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/1",
+    "@type" : [ "http://xmlns.com/foaf/0.1/Agent" ],
+    "http://purl.org/dc/terms/type" : [ {
+      "@id" : "http://purl.org/adms/publishertype/NationalAuthority"
+    } ],
+    "http://xmlns.com/foaf/0.1/homepage" : [ {
+      "@value" : "http://difi.no"
+    } ],
+    "http://xmlns.com/foaf/0.1/mbox" : [ {
+      "@id" : "mailto:opnedata@difi.no"
+    } ],
+    "http://xmlns.com/foaf/0.1/name" : [ {
+      "@value" : "Difi"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/1"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a8t5ibvdx1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/endDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-03-02"
+    } ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-12-01"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/11",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/ANNUAL"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Dette er tallene bak figurene i Revidert nasjonalbudsjett 2015.\n\nDet første arket i hver arbeidsbok gir en oversikt over figurene i det respektive kapittelet i Revidert nasjonalbudsjett.\n\nDet har vært hensiktsmessig å trekke ut tallene i tabellene som er i budsjettdokumentene på en mer lettvint måte enn å lete seg gjennom alle dokumentene. Siden det er en omfattende jobb å lage slikt uttrekk manuelt, har vi i stedet valgt å bruke litt tid på å lage en tabellgenerator - som automatisk skal trekke ut tabellene i budsjettdokumentene og presentere disse i et regnark o.l.\n\nDette er ett av flere datasett tilknyttet revidert statsbudsjett 2015."
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1a8t5ibvdx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Revidert statsbudsjett 2015 - Kapittel 3 - Den økonomiske politikken"
+    } ],
+    "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+      "@value" : "1"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "offentlig forvaltning"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "http://www.statsbudsjettet.no/upload/Revidert_2015/dokumenter/tallene/kap3.xlsx"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/11"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a929inhmx1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/endDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-12-30"
+    } ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-12-28"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/12",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/DAILY"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Datasettene gir oversikt over utvalgte data om vannverk som er registrert hos Mattilsynet. Informasjonen er meldt inn av vannverkene gjennom søknadsbehandlinger eller ved annen innrapportering til Mattilsynet. Drikkevannsforskriften krever bl.a. årlig innrapportering. Mattilsynet har laget en egen skjematjeneste for slik innrapportering."
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-06"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-13"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1a929inhmx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Vannverk -  Historisk oversikt over innrapportert informasjon om ledningsnettet"
+    } ],
+    "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+      "@value" : "1"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/15"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/17"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/19"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "forbruker"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "https://data.mattilsynet.no/vannverk/vanntransportsystem_innrapportering.csv"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ENVI"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/12"
+}, {
+  "@graph" : [ {
+    "@id" : "http://sws.geonames.org/3144096/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Norway"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/13",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Innbyggerundersøkelsen 2015 ble gjennomført høsten 2014 og våren 2015 av Epinion på oppdrag fra Difi. 30 000 tilfeldig utvalgte innbyggere fikk tilsendt spørreskjema og 41 prosent av disse svarte. Undersøkelsen er gjennomført for tredje gang, og den er Norges mest omfattende undersøkelse om innbyggernes inntrykk av og erfaringer med offentlige tjenester og om det å bo i Norge. "
+    } ],
+    "http://purl.org/dc/terms/identifier" : [ {
+      "@value" : "difi.no/datataset/#1"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-10-06"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/relation" : [ {
+      "@id" : "http://data.norge.no/data/direktoratet-forvaltning-og-ikt/innbyggerunders%C3%B8kelsen-2013"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3144096/"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Innbyggerundersøkelsen 2015"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/14"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "innbygger"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "https://www.difi.no/rapporter-og-undersokelser/statistikk-og-undersokelser/innbyggerundersokelsen-2015/"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/SOCI"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/13"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a8tmobq9x1",
+    "@type" : [ "http://schema.theodi.org/odrs#RightsStatement" ],
+    "http://schema.theodi.org/odrs#attributionText" : [ {
+      "@value" : "Data fra Difi brukt under CC BY 4.0"
+    } ],
+    "http://schema.theodi.org/odrs#attributionURL" : [ {
+      "@id" : "http://difi.no"
+    } ],
+    "http://schema.theodi.org/odrs#copyrightNotice" : [ {
+      "@value" : "Til fri bruk til alle formål"
+    } ],
+    "http://schema.theodi.org/odrs#copyrightStatement" : [ {
+      "@id" : "http://data.norge.no/nlod"
+    } ],
+    "http://schema.theodi.org/odrs#copyrightYear" : [ {
+      "@value" : "2015"
+    } ],
+    "http://schema.theodi.org/odrs#reuserGuidelines" : [ {
+      "@id" : "http://data.norge.no/"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/14",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "da",
+      "@value" : "ZIP-fil som inneholder datasettet som csv og sav, samt kodeverk i xls-format"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/zip"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-10-06"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://creativecommons.org/licenses/by/4.0/"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-12-06"
+    } ],
+    "http://purl.org/dc/terms/rights" : [ {
+      "@id" : "_:node1a8tmobq9x1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "da",
+      "@value" : "Innbyggerdelen"
+    } ],
+    "http://www.w3.org/ns/adms#status" : [ {
+      "@id" : "http://purl.org/adms/status/Completed"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://www.difi.no/rapporter-og-undersokelser/statistikk-og-undersokelser/innbyggerundersokelsen-2015/data"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "https://www.difi.no/sites/difino/files/innbyggerdel.zip"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/14"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/15",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Historisk oversikt over innrapportert informasjon om ledningsnettet"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "text/csv"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://data.mattilsynet.no/vannverk/vanntransportsystem_innrapportering.csv"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "https://data.mattilsynet.no/vannverk/vanntransportsystem_innrapportering.csv"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/15"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/17",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/vnd.ms-excel"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/16"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/16"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/17"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/19",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/json"
+    } ],
+    "http://purl.org/dc/terms/source" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/16"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/16"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/16"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/19"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/2",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Testbeskrivelse"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Test"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/2"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a9i84tp4x1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2014"
+    } ]
+  }, {
+    "@id" : "http://sws.geonames.org/3144096/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Norway"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/20",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/OTHER"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Resultater fra kvalitetsvurderingen av 52 offentlige digitale tjenester 2014. Inneholder vurderingsrapport for hver tjeneste som er vurdert. Vurderingen er utført av Direktoratet for forvaltning og IKT. Resultatliste finnes i eget datasett. Se http://kvalitet.difi.no for mer informasjon om vurderingsarbeidet."
+    } ],
+    "http://purl.org/dc/terms/identifier" : [ {
+      "@value" : "http://data.norge.no/data/direktoratet-forvaltning-og-ikt/kvalitet-p%C3%A5-digitale-tjenester-detaljresultat-2014"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3144096/"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1a9i84tp4x1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Kvalitet på digitale tjenester - detaljresultat 2014"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/21"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/22"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "brukskvalitet, universell utforming, "
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "http://kvalitet.difi.no"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/20"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a9i8gfsgx1",
+    "@type" : [ "http://schema.theodi.org/odrs#RightsStatement" ],
+    "http://schema.theodi.org/odrs#attributionText" : [ {
+      "@value" : "Datasettet er gjort tilgjengelig av Difi under Norsk lisens for offentlige data"
+    } ],
+    "http://schema.theodi.org/odrs#attributionURL" : [ {
+      "@id" : "http://difi.no"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/21",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Rest-API som leverer data i en rekke formater, samt nedlasting i CSV"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/json"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://data.norge.no/nlod/no"
+    } ],
+    "http://purl.org/dc/terms/rights" : [ {
+      "@id" : "_:node1a9i8gfsgx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Detaljresultater 2014 CSV REST API"
+    } ],
+    "http://www.w3.org/ns/adms#status" : [ {
+      "@id" : "http://purl.org/adms/status/Completed"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "http://hotell.difi.no/api/json/difi/kvalitet/resultat2014?"
+    } ],
+    "http://www.w3.org/ns/dcat#byteSize" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#decimal",
+      "@value" : "100"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/21"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a9i84tllx1",
+    "@type" : [ "http://schema.theodi.org/odrs#RightsStatement" ],
+    "http://schema.theodi.org/odrs#attributionText" : [ {
+      "@value" : "Data er gjort tilgjengelig av Difi under Norsk lisens for offentlige data"
+    } ],
+    "http://schema.theodi.org/odrs#attributionURL" : [ {
+      "@id" : "http://difi.no"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/22",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Rest-API som leverer data i en rekke formater, samt nedlasting i CSV"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "text/csv"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://data.norge.no/nlod/no"
+    } ],
+    "http://purl.org/dc/terms/rights" : [ {
+      "@id" : "_:node1a9i84tllx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Detaljresultater 2014 JSON REST API"
+    } ],
+    "http://www.w3.org/ns/adms#status" : [ {
+      "@id" : "http://purl.org/adms/status/Completed"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "http://hotell.difi.no/api/csv/difi/kvalitet/resultat2014?"
+    } ],
+    "http://www.w3.org/ns/dcat#byteSize" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#decimal",
+      "@value" : "660"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "http://hotell.difi.no/download/difi/kvalitet/resultat2014?download"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/22"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/23",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Enhetsregisteret har som hovedoppgave å samordne opplysninger om næringslivet og offentlige etater som finnes i ulike offentlige registre. Enhetsregisteret inneholder grunndata om enheter som har registreringsplikt i NAV Aa-registeret, Merverdiavgiftsregisteret, Foretaksregisteret, Statistisk sentralbyrås bedriftsregister, Skattedirektoratets register over upersonlige skatteytere eller Stiftelsesregisteret. Alle registrerte enheter identifiseres med en entydig identifikator, et ni-sifret organisasjonsnummer.\n\nFra data.brreg.no og hotell.difi.no kan du benytte API for både søk i og nedlasting av komplett datasett. Ved direkteoppslag får du tilgang til informasjon fra data.brreg.no i sanntid. Fra hotell.difi.no er det i hovedsak en forsinkelse i oppdateringshyppighet på ca 8-24 t. Komplett datasett for begge tjenenstene er basert forhåndsprodusert uttrekk hver natt (med unntak av natt til lørdag og mandag, hvor det ikke produseres filbasert datauttrekk).\n\nDatasettet omfatter utvalgte informasjonselementer for samtlige registrerte enheter i Enhetsregisteret, med unntak av organisasjonsformene TVAM (tvangsregistrert for mva), BEDR (underenheter/avdeling), AAFY (underenhet til ikke-næringsdrivende enhet) og UTLA (utenlandsk enhet). Enheter som er slettet i Enhetsregisteret er utelatt i datafilen. I overkant av 1 000 000 enheter inngår i datasettet, hvorav enkeltpersonforetak og aksjeselskap utgjør ca 80 % av bestanden (tall per 01.11.15). BEDR og AAFY finner du i datasettet \"Underenheter\"\n\nInformasjon om næringskoder er basert på Norsk standard for næringsgruppering (SN2007).\n\nEnheter som for eksempel er under konkursbehandling, tvangsoppløsning eller tvangsavvikling inngår i datasettet. Det er først ved sletting av enheter at disse utelates.\n\nViktig statusinformasjon kan sjekkes ved søk i Brønnøysundregistrenes elektroniske kunngjøringstjeneste. Dersom det er behov for ytterligere data, som ikke er tilgjengelig via datahotellet, finnes følgende alternativ:\n\nNøkkelopplysninger fra Enhetsregisteret\n\nProdukter og tjenester i Altinn\n\nBrønnøysundregistrenes nettbaserte bestillingsløsning\n\nBestillinger av «skreddersydd» foretaksinformasjon/statistikker"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Enhetsregisteret"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/23"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/4",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/ANNUAL"
+    }, {
+      "@id" : "http://purl.org/cld/freq/daily"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Marcus er Spesialsamlingene til Universitetsbiblioteket i Bergen sin portal til digitaliserte manuskript, fotografi, diplomer og mye mer. Nettstedet er oppkalt etter Marcus Selmer, Bergens første fotograf.\n\nMarcus-datasettet innholder ca. 2,7 millioner tripler om dokument i Universitetsbiblioteket i Bergens samlinger og personene knyttet til disse. Datasettet innholder i dag hovedsakelig fotografier, men mange tekstlige kilder vil bil tilgjengelige i løpet av 2016.\n\nDatasattet bruker blant annet foaf, dct, skos, bibo og et eget skjema (ubbont: <http://data.ub.uib.no/ontology/>). Mer dokumentasjon kommer"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-13"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-05"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/source" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/2"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Marcus"
+    } ],
+    "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+      "@value" : "1"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "kultur"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "http://sparql.ub.uib.no/"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/EDUC"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/4"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/5",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/ANNUAL"
+    }, {
+      "@id" : "http://purl.org/cld/freq/biennial"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Stavanger kommune rådmannens budsjettforslag 2016\n"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-12-29"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-19"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Stavanger kommune rådmannens budsjettforslag 2016"
+    } ],
+    "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+      "@value" : "1"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "kommuner"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "http://hotell.difi.no/?dataset=stavanger/budsjettforslag2016"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/REGI"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/5"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1a8t5age0x1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/endDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-27"
+    } ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-12-29"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/6/resource/6",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/ANNUAL"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Standarden er basert på den internasjonale standarden for yrkesklassifisering, International Standard Classification of Occupations 2008 - ISCO-08. Strukturen er hierarkisk og er delt inn med fire sifre: 1. siffer = yrkesfelt, 2. siffer = yrkesområde, 3. siffer = yrkesgruppe, 4. siffer = yrke. Et yrke er karakterisert ved ensartethet i arbeidsoppgaver, kompetansenivå og spesialisering.\n\nStandard for yrkesklassifisering er beregnet for bruk i offisiell norsk statistikk og vil også være et viktig verktøy innen arbeidsformidling og yrkesrettledning. Men for innrapportering av yrker til A-ordningen skal en bruke Yrkeskatalogen (7 siffer)."
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-06"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-13"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1a8t5age0x1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Standard for yrkesklassifisering (STYRK08)"
+    } ],
+    "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+      "@value" : "1"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/3"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@value" : "arbeid"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "http://hotell.difi.no/?dataset=ssb/styrk-08"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    } ],
+    "http://xmlns.com/foaf/0.1/page" : [ {
+      "@id" : "http://stabas.ssb.no/"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/6"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/6/resource/dcat",
+    "@type" : [ "http://www.w3.org/ns/dcat#Catalog" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Difi tester beskrivelser av datasett og datakataloger i Entryscape"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@value" : "2015-12-09"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://creativecommons.org/licenses/by/4.0/"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Difi - testkatalog"
+    } ],
+    "http://www.w3.org/ns/dcat#dataset" : [ {
+      "@id" : "https://difi.entryscape.net/store/6/resource/2"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/4"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/5"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/6"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/11"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/12"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/13"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/20"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/6/resource/23"
+    } ],
+    "http://www.w3.org/ns/dcat#themeTaxonomy" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme"
+    } ],
+    "http://xmlns.com/foaf/0.1/homepage" : [ {
+      "@value" : "http://difi.no/"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/6/metadata/dcat"
+} ]

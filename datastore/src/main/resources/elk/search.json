@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "crawler_operations",
+    "_type": "search",
+    "_source": {
+      "title": "crawler_operations",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "severity",
+        "event",
+        "cause"
+      ],
+      "sort": [
+        "timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"difi-*\",\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647},\"query\":{\"query_string\":{\"query\":\"logger:crawler_operations\",\"analyze_wildcard\":true}}}"
+      }
+    }
+  }
+]

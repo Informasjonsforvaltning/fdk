@@ -1,0 +1,6 @@
+construct {
+	?s ?p ?o
+} where {
+	?s ?p ?o .
+	FILTER(!STRSTARTS(STR(?p), "http://data.brreg.no/meta/")) .
+}

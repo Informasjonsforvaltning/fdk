@@ -1,0 +1,9 @@
+2016-08-25 13:25:12 INFO  no.difi.dcat.harvester.Application - Starting Application on PC-NODAVSKO-OSL with PID 932 (C:\Users\nodavsko\git\dcat-harvester\dcat-harvester-app\target\classes started by nodavsko in C:\Users\nodavsko\git\dcat-harvester\dcat-harvester-app)
+2016-08-25 13:25:12 INFO  no.difi.dcat.harvester.Application - The following profiles are active: development
+2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-08-25 13:25:14 INFO  no.difi.dcat.harvester.Application - Started Application in 2.414 seconds (JVM running for 16.105)
