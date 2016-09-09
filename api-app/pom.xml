@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <artifactId>parent</artifactId>
+        <groupId>no.dcat</groupId>
+        <version>0.1.0</version>
+    </parent>
+    
+    <artifactId>api-app</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+
+     	<dependency>
+			<groupId>no.dcat</groupId>
+			<artifactId>datastore</artifactId>
+			<version>0.1.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.rometools</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>4.3.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.castor</groupId>
+			<artifactId>castor-xml</artifactId>
+			<version>1.4.0</version>
+		</dependency>	
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.4.0.RELEASE</version>
+            </plugin>
+           	<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
+	            <configuration>
+	                <outputDirectory></outputDirectory>
+	            </configuration>
+	        </plugin>
+        </plugins>
+    </build>
+
+</project>
+

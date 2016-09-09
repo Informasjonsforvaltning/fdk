@@ -4,7 +4,7 @@
 	
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dcat.no</groupId>
+    <groupId>no.dcat</groupId>
     <artifactId>parent</artifactId>
     <version>0.1.0</version>
 	<packaging>pom</packaging>
@@ -20,6 +20,7 @@
 		<module>admin-webapp</module>
 		<module>datastore</module>
 		<module>harvester-app</module>
+		<module>api-app</module>
 	</modules>
 
     <properties>
@@ -29,18 +30,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<repositories>
-		<repository>
-			<id>spring-releases</id>
-			<url>https://repo.spring.io/libs-release</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-releases</id>
-			<url>https://repo.spring.io/libs-release</url>
-		</pluginRepository>
-	</pluginRepositories>
+
 
 	<dependencies>
 		<dependency>
@@ -92,8 +82,7 @@
         </resources>
 		
 	<pluginManagement>
-	    
-	
+
         <plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -158,8 +147,6 @@
                 </configuration>
 
             </plugin>
-		
-
    
 		 <plugin>
             <groupId>com.spotify</groupId>

@@ -1,0 +1,22 @@
+spring:
+  mvc.view.prefix: /WEB-INF/jsp/
+  mvc.view.suffix: .jsp
+fuseki:
+  dcatServiceUri: http://localhost:8080/fuseki/dcat
+  adminServiceUri: http://localhost:8080/fuseki/admin
+application:
+  harvesterUrl: http://localhost:8080/dcat-harvester-app
+---
+spring:
+    profiles: docker
+fuseki:
+  dcatServiceUri: http://fuseki:8080/fuseki/dcat
+  adminServiceUri: http://fuseki:8080/fuseki/admin
+---
+spring:
+    profiles: development
+fuseki:
+  dcatServiceUri: http://localhost:3030/fuseki/dcat
+  adminServiceUri: http://localhost:3030/fuseki/admin
+application:
+  harvesterUrl: http://localhost:8090
