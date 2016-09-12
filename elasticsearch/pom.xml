@@ -8,7 +8,7 @@
     <version>0.1.0</version>
 	
     <parent>
-        <groupId>dcat.no</groupId>
+        <groupId>no.dcat</groupId>
         <artifactId>parent</artifactId>
         <version>0.1.0</version>
     </parent>

@@ -29,8 +29,6 @@
 		<docker.registry></docker.registry>		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
-
 
 	<dependencies>
 		<dependency>
@@ -49,6 +47,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>1.4.0.RELEASE</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<version>1.4.0.RELEASE</version>
 		</dependency>
 		<dependency>
             <groupId>org.hibernate</groupId>
@@ -125,25 +128,6 @@
                    
                     <abbrevLength>7</abbrevLength>
 
-                    <validationProperties>
-                        <validationProperty>
-                            <!--
-                                 A descriptive name that will be used to be able to identify the validation that does not match up (will be displayed in the error message).
-                            -->
-                            <name>validating project version</name>
-                            <!-- 
-                                 the value that needs the validation
-                                 *Note* : In order to be able to validate the generated git-properties inside the pom itself you may need to set the configutation `<injectAllReactorProjects>true</injectAllReactorProjects>`. 
-                            -->
-                            <value>${project.version}</value>
-                            <!--
-                                the expected value
-                            -->
-                            <shouldMatchTo><![CDATA[^.*(?<!-SNAPSHOT)$]]></shouldMatchTo>
-                        </validationProperty>
-                        <!-- the next validationProperty you would like to validate -->
-                    </validationProperties>                 
-                    <validationShouldFailIfNoMatch>true</validationShouldFailIfNoMatch>
                 </configuration>
 
             </plugin>
