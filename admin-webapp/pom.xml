@@ -18,6 +18,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>1.4.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<version>1.4.0.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
 			<version>1.4.0.RELEASE</version>
@@ -39,9 +50,9 @@
 			<version>5.2.1.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>no.difi</groupId>
-			<artifactId>dcat-datastore</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>no.dcat</groupId>
+			<artifactId>datastore</artifactId>
+			<version>0.1.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>log4j</artifactId>
@@ -60,17 +71,27 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				
+				<version>1.4.0.RELEASE</version>
 				<configuration>
 					<mainClass>no.difi.dcat.admin.Application</mainClass>
 				</configuration>
 			</plugin>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-war-plugin</artifactId>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
-	            
-	        </plugin>
+			</plugin>
+			<!--plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+			</plugin-->
+
 		</plugins>
 	</build>
 

@@ -130,7 +130,7 @@ public class Fuseki {
 	}
 
 	public static void main(String[] args) {
-		String serviceURI = "http://localhost:8080/fuseki/dcat";
+		String serviceURI = "http://localhost:3030/fuseki/dcat";
 		Fuseki fusekiController = new Fuseki(serviceURI);
 
 		Model model = FileManager.get().loadModel("data.jsonld");
