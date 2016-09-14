@@ -61,7 +61,7 @@
 	
 
     <build>
-	<resources>
+		<resources>
             <resource>
                 <directory>${project.basedir}</directory>
                 <filtering>true</filtering>
@@ -74,7 +74,6 @@
         </resources>
 		
 	<pluginManagement>
-
         <plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -85,7 +84,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!--plugin>
+			<plugin>
 				<groupId>org.commonjava.maven.plugins</groupId>
 				<artifactId>directory-maven-plugin</artifactId>
 				<version>0.1</version>
@@ -101,7 +100,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin-->
+			</plugin>
 
 		<plugin>
                 <groupId>pl.project13.maven</groupId>
@@ -121,7 +120,7 @@
                     <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
                     <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
                     <!-- false is default here, it prints some more information during the build -->
-                    <verbose>true</verbose>                
+                    <verbose>false</verbose>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>                   
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
                     <format>properties</format>

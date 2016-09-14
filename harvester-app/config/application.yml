@@ -20,4 +20,4 @@ fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin
 application:
-  elasticSearchHost: localhost
+  elasticSearchHost: http://localhost:9300
