@@ -4,12 +4,31 @@ Compile:
 mvn clean install -DskipTests
 
 #Docker:
-Start
+##Start
 cd docker
 docker-compose up -d
 
-Stop
+##Stop
 docker-compose down
+
+
+###DCAT API
+http://localhost:8080/api-app/
+
+###DCAT Harvester Admin
+http://localhost:8080/admin-webapp/admin
+
+test_user password
+test_admin password
+
+###Elasticsearch
+http://localhost:9200
+
+###Kibana
+http://localhost:5601/
+
+###FUSEKI
+http://localhost:3030/fuseki/
 
 
 #Common Problems
