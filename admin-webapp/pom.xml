@@ -82,7 +82,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 			</plugin>
-			<!--plugin>
+			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
 			</plugin>
@@ -90,7 +90,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-			</plugin-->
+			</plugin>
 
 		</plugins>
 	</build>

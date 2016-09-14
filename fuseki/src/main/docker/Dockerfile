@@ -9,6 +9,7 @@ RUN mkdir /etc/fuseki/databases/admin/
 ADD apache-jena-fuseki-2.3.1.zip /usr/local/tomcat/fusekiDownloadTemp
 
 ADD tomcat-users.xml /usr/local/tomcat/conf/
+ADD server.xml /usr/local/tomcat/conf/
 
 WORKDIR /usr/local/tomcat/fusekiDownloadTemp/
 

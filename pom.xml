@@ -17,6 +17,9 @@
 	<modules>
 		<module>portal</module>
 		<module>elasticsearch</module>
+		<module>fuseki</module>
+		<module>kibana</module>
+		<module>logstash</module>
 		<module>admin-webapp</module>
 		<module>datastore</module>
 		<module>harvester-app</module>
