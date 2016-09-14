@@ -3,6 +3,9 @@
 Compile:
 mvn clean install -DskipTests
 
+admin-webapp and harvester-app
+mvn package spring-boot:repackage -DskipTests
+
 #Docker:
 ##Start
 cd docker
