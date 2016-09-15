@@ -16,12 +16,10 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
 		</dependency>
 		<dependency>
 			<groupId>no.dcat</groupId>
@@ -41,7 +39,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -67,6 +65,11 @@
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -86,7 +89,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring.boot.version}</version>
 				<configuration>
 					<mainClass>no.difi.dcat.harvester.Application</mainClass>
 				</configuration>

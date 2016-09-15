@@ -29,7 +29,7 @@ services:
      - fuseki
      - elasticsearch
 
-  admin-webapp:
+  admin:
     image: "fdk/admin-webapp:${TAG}"
     ports:
      - "8082:8080"
