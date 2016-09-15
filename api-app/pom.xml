@@ -15,7 +15,6 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.1</version>
 		</dependency>
 
      	<dependency>
@@ -38,28 +37,40 @@
 			<artifactId>rome</artifactId>
 			<version>1.5.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.castor</groupId>
 			<artifactId>castor-xml</artifactId>
 			<version>1.4.0</version>
-		</dependency>	
-    </dependencies>
+		</dependency>
+
+	</dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring.boot.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
             </plugin>
            	<plugin>
 	            <groupId>org.apache.maven.plugins</groupId>
 	            <artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
-	            <configuration>
-	                <outputDirectory></outputDirectory>
-	            </configuration>
 	        </plugin>
         </plugins>
     </build>
