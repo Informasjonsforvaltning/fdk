@@ -1,9 +1,47 @@
-2016-08-25 13:25:12 INFO  no.difi.dcat.harvester.Application - Starting Application on PC-NODAVSKO-OSL with PID 932 (C:\Users\nodavsko\git\dcat-harvester\dcat-harvester-app\target\classes started by nodavsko in C:\Users\nodavsko\git\dcat-harvester\dcat-harvester-app)
-2016-08-25 13:25:12 INFO  no.difi.dcat.harvester.Application - The following profiles are active: development
-2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
-2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
-2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
-2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
-2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
-2016-08-25 13:25:13 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
-2016-08-25 13:25:14 INFO  no.difi.dcat.harvester.Application - Started Application in 2.414 seconds (JVM running for 16.105)
+2016-09-16 08:50:35 INFO  n.d.d.harvester.crawler.CrawlerJob - [crawler_operations] [success] Started crawler job: crawler_id=http://dcat.difi.no/dcatSource_1b5fbe00-9e2d-4d66-b8e4-057c22c90ba4, crawler_name=BRREG, crawler_url=https://difi.entryscape.net/store/37/metadata/dcat?recursive=dcat&format=application/ld+json, crawler_user=test_admin
+2016-09-16 08:50:35 ERROR n.d.d.harvester.crawler.CrawlerJob - [crawler_operations] [fail] Error running crawler job: crawler_id=http://dcat.difi.no/dcatSource_1b5fbe00-9e2d-4d66-b8e4-057c22c90ba4, crawler_name=BRREG, crawler_url=https://difi.entryscape.net/store/37/metadata/dcat?recursive=dcat&format=application/ld+json, crawler_user=test_admin, error=org.apache.jena.atlas.web.HttpException: java.net.UnknownHostException: difi.entryscape.net
+2016-09-16 09:05:39 INFO  no.difi.dcat.harvester.Application - Starting Application on PC-NODAVSKO-OSL with PID 3752 (C:\Users\nodavsko\git\fdk\harvester-app\target\classes started by nodavsko in C:\Users\nodavsko\git\fdk\harvester-app)
+2016-09-16 09:05:39 INFO  no.difi.dcat.harvester.Application - The following profiles are active: development
+2016-09-16 09:05:42 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:05:42 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 09:05:42 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:05:42 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:05:42 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 09:05:42 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:05:43 INFO  no.difi.dcat.harvester.Application - Started Application in 4.602 seconds (JVM running for 23.373)
+2016-09-16 09:07:40 INFO  n.d.d.harvester.crawler.CrawlerJob - [crawler_operations] [success] Started crawler job: crawler_id=http://dcat.difi.no/dcatSource_1b5fbe00-9e2d-4d66-b8e4-057c22c90ba4, crawler_name=BRREG, crawler_url=https://difi.entryscape.net/store/37/metadata/dcat?recursive=dcat&format=application/ld+json, crawler_user=test_admin
+2016-09-16 09:07:41 ERROR n.d.d.harvester.crawler.CrawlerJob - [crawler_operations] [fail] Error running crawler job: crawler_id=http://dcat.difi.no/dcatSource_1b5fbe00-9e2d-4d66-b8e4-057c22c90ba4, crawler_name=BRREG, crawler_url=https://difi.entryscape.net/store/37/metadata/dcat?recursive=dcat&format=application/ld+json, crawler_user=test_admin, error=org.apache.jena.atlas.web.HttpException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+2016-09-16 09:35:03 INFO  no.difi.dcat.harvester.Application - Starting Application on PC-NODAVSKO-OSL with PID 14308 (started by nodavsko in C:\Users\nodavsko\git\fdk\harvester-app)
+2016-09-16 09:35:03 INFO  no.difi.dcat.harvester.Application - No profiles are active
+2016-09-16 09:35:09 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:35:09 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 09:35:09 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:35:09 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:35:09 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 09:35:09 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 09:35:11 INFO  no.difi.dcat.harvester.Application - Started Application in 8.711 seconds (JVM running for 10.236)
+2016-09-16 18:29:05 INFO  no.difi.dcat.harvester.Application - Starting Application on PC-NODAVSKO-OSL with PID 5968 (started by nodavsko in C:\Users\nodavsko\git\fdk\harvester-app)
+2016-09-16 18:29:05 DEBUG no.difi.dcat.harvester.Application - Running with Spring Boot v1.3.0.RELEASE, Spring v4.2.3.RELEASE
+2016-09-16 18:29:05 INFO  no.difi.dcat.harvester.Application - No profiles are active
+2016-09-16 18:29:11 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 18:29:11 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 18:29:11 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 18:29:11 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 18:29:11 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 18:29:11 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 18:29:14 INFO  no.difi.dcat.harvester.Application - Started Application in 9.515 seconds (JVM running for 11.127)
+2016-09-16 19:15:36 INFO  no.difi.dcat.harvester.Application - Starting Application on PC-NODAVSKO-OSL with PID 4964 (C:\Users\nodavsko\git\fdk\harvester-app\target\classes started by nodavsko in C:\Users\nodavsko\git\fdk\harvester-app)
+2016-09-16 19:15:36 DEBUG no.difi.dcat.harvester.Application - Running with Spring Boot v1.3.0.RELEASE, Spring v4.2.3.RELEASE
+2016-09-16 19:15:36 INFO  no.difi.dcat.harvester.Application - The following profiles are active: development
+2016-09-16 19:15:39 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 19:15:39 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 19:15:39 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 19:15:39 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 19:15:39 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/dcat
+2016-09-16 19:15:39 INFO  no.difi.dcat.datastore.Fuseki - Connecting to Fuseki at http://localhost:3030/fuseki/admin
+2016-09-16 19:15:41 INFO  no.difi.dcat.harvester.Application - Started Application in 5.95 seconds (JVM running for 20.184)
+2016-09-16 19:20:07 DEBUG n.d.d.h.c.web.CrawlerRestController - Received request to harvest http://dcat.difi.no/dcatSource_065f6d8e-24a8-4146-8182-c45babc48b78
+2016-09-16 19:20:07 TRACE n.d.dcat.datastore.AdminDataStore - Getting dcat source by id http://dcat.difi.no/dcatSource_065f6d8e-24a8-4146-8182-c45babc48b78
+2016-09-16 19:20:07 INFO  n.d.d.harvester.crawler.CrawlerJob - [crawler_operations] [success] Started crawler job: crawler_id=http://dcat.difi.no/dcatSource_065f6d8e-24a8-4146-8182-c45babc48b78, crawler_name=b, crawler_url=https://difi.entryscape.net/store/37/metadata/dcat?recursive=dcat&format=application/ld+json, crawler_user=test_admin
+2016-09-16 19:20:08 TRACE n.d.dcat.datastore.AdminDataStore - Adding crawl result to dcat source http://dcat.difi.no/dcatSource_065f6d8e-24a8-4146-8182-c45babc48b78
+2016-09-16 19:20:08 ERROR n.d.d.harvester.crawler.CrawlerJob - [crawler_operations] [fail] Error running crawler job: crawler_id=http://dcat.difi.no/dcatSource_065f6d8e-24a8-4146-8182-c45babc48b78, crawler_name=b, crawler_url=https://difi.entryscape.net/store/37/metadata/dcat?recursive=dcat&format=application/ld+json, crawler_user=test_admin, error=org.apache.jena.atlas.web.HttpException: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target

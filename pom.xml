@@ -30,6 +30,7 @@
 		<module>harvester-app</module>
 		<module>admin-webapp</module>
 		<module>api-app</module>
+		<module>docker</module>
 	</modules>
 
     <properties>
@@ -63,17 +64,6 @@
 	</dependencies>
 
     <build>
-		<!--resources>
-            <resource>
-                <directory>${project.basedir}</directory>
-                <filtering>true</filtering>
-                <includes>
-					<include>**/Dockerfile</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources-->
 		
 	<pluginManagement>
         <plugins>
@@ -116,7 +106,6 @@
                         </goals>
                     </execution>                    
                 </executions>
-
                 <configuration>
                     <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
                     <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
@@ -132,7 +121,6 @@
                     <skip>false</skip>
                     <abbrevLength>7</abbrevLength>
                 </configuration>
-
             </plugin>
    
 		 <plugin>

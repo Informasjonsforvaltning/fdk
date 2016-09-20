@@ -2,18 +2,21 @@ package no.difi.dcat.datastore;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.cluster.health.ClusterHealthStatus;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.node.NodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Elasticsearch implements AutoCloseable {
 
@@ -23,7 +26,9 @@ public class Elasticsearch implements AutoCloseable {
 	private Client client;
 
 	public Elasticsearch(String host, int port) {
+		logger.debug("Attempt to connect to Elasticsearch client: "+host + ":" + port);
 		this.client = returnElasticsearchTransportClient(host, port);
+		logger.debug("transportclient success ...? "+ this.client);
 	}
 
 	public Elasticsearch(Client client) {
@@ -47,12 +52,31 @@ public class Elasticsearch implements AutoCloseable {
 	public Client returnElasticsearchTransportClient(String host, int port) {
 		Client client = null;
 		try {
-			client = TransportClient.builder().build()
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), port));
+			logger.debug("attemting to connect to elasticsearch 2: " + host + " : "+ port);
+			//client = TransportClient.builder().build()
+			//		.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), port));
+			//Settings settings = Settings.settingsBuilder().put("cluster.name",
+			//		"mysearchcluster").put("client.transport.sniff", false).build();
+			InetAddress inetadress = InetAddress.getByName(host);
+			logger.debug("inetadress: "+ inetadress.getHostAddress() + " " + inetadress.getHostName());
+			InetSocketTransportAddress address = new InetSocketTransportAddress(inetadress, port);
+			logger.debug("intetScoketTransportAdress: "+ address.toString() + " " + address.getHost() + " "+address.getPort());
+
+			Settings settings = Settings.settingsBuilder()
+					.put("client.transport.sniff", false)
+				.put("client.transport.ping_timeout", 5, TimeUnit.SECONDS).build();
+
+			logger.debug("Settings: " + settings.toString());
+
+			client = TransportClient.builder().settings(settings).build()
+					.addTransportAddress(address);
+
+			logger.debug("Client returns!");
 		} catch (UnknownHostException e) {
 			logger.error(e.toString());
 		}
 
+		logger.debug("transportclient: " + client);
 		return client;
 
 	}

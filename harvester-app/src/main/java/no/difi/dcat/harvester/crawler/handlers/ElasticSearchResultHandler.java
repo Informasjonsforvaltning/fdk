@@ -36,13 +36,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     @Override
     public void process(DcatSource dcatSource, Model model) {
-        logger.trace("Processing results");
+        logger.trace("Processing results Elasticsearch");
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port)) {
+            logger.trace("Start indexing");
             indexWithElasticsearch(dcatSource, model, elasticsearch);
         } catch (Exception e) {
+            logger.error("Exception: " + e.getMessage(), e);
             throw e;
         }
+        logger.trace("finished");
 
 
     }
@@ -50,10 +53,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     protected void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
+        logger.debug("Creating index: " + DCAT_INDEX);
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
             elasticsearch.createIndex(DCAT_INDEX);
         }
-
+        logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         List<Distribution> distributions = new DistributionBuilder(model).build();

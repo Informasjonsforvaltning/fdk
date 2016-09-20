@@ -47,7 +47,7 @@ public class CrawlerJobFactory {
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
 		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort());
-		return new CrawlerJob(dcatSource, adminDataStore, brregCache,fusekiResultHandler, elasticSearchResultHandler);
+		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler);
 	}
 
 

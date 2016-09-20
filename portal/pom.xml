@@ -19,6 +19,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
 			<version>1.4.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>2.3.5</version>
+        </dependency>
+
     </dependencies>
 
 	<build>
