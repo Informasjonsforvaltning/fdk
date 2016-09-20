@@ -1,5 +1,8 @@
 FROM tomcat:8-jre8
 
+ENV TZ=Europe/Oslo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN mkdir /usr/local/tomcat/fusekiDownloadTemp
 RUN mkdir /etc/fuseki/
 RUN mkdir /etc/fuseki/databases/

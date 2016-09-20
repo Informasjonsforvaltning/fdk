@@ -4,6 +4,7 @@
     <logger name="org.springframework.web" level="DEBUG"/>
     <logger name="org.apache.http.wire" level="WARN"/>
     <logger name="org.apache.jena" level="ERROR"/>
+	<logger name="org.elasticsearch" level ="DEBUG"/>
     
     <timestamp key="datetime" datePattern="yyyy-MM-dd HH:mm:ss"/>
 
