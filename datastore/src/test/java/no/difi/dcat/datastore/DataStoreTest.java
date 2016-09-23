@@ -22,10 +22,10 @@ import org.apache.jena.fuseki.server.FusekiServer;
 import org.apache.jena.fuseki.server.FusekiServerListener;
 import org.apache.jena.fuseki.server.ServerInitialConfig;
 import org.apache.jena.fuseki.server.SystemState;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.tdb.StoreConnection;
 import org.apache.jena.tdb.base.file.Location;
 import org.apache.jena.vocabulary.RDFS;
@@ -82,6 +82,7 @@ public class DataStoreTest {
 		for (String k : keys) {
 			DataAccessPointRegistry.get().remove(k);
 		}
+		//TODO: Filene ser ikke ut til å slettes
 		// Clear configuration directory.
 		System.out.println(FusekiServer.dirConfiguration.toFile());
 		FileOps.clearAll(FusekiServer.dirConfiguration.toFile());
@@ -102,8 +103,13 @@ public class DataStoreTest {
 		fuseki.update("http://example.com/a", defaultModel);
 		System.out.println(ResultSetFormatter.asText(fuseki.select("select * where {?a ?b ?c}")));
 
+		//BG: Hva gjør denne?
 		Fuseki fuseki2 = new Fuseki("http://localhost:3131/admin/");
-		fuseki2.select("select * where {?a ?b ?c}");
+
+		ResultSet rs = fuseki.select("select * where {?a ?b ?c}");
+		QuerySolution qs = rs.next();
+		RDFNode node = qs.get("c");
+		assertEquals("Resultatsett har innhold", "yay", node.toString());
 
 	}
 
@@ -120,7 +126,19 @@ public class DataStoreTest {
 		System.out.println(ResultSetFormatter.asText(fuseki.select("select * where {?a ?b ?c}")));
 
 		Fuseki fuseki2 = new Fuseki("http://localhost:3131/admin/");
-		fuseki2.select("select * where {?a ?b ?c}");
+		ResultSet rs = fuseki2.select("select * where {?a ?b ?c}");
+
+		//BG: Legger til assertion som sjekker at selecten fra fuseki2 er tom.
+		//vet ikke om dette var intensjonen med testen
+
+		int numrows = 0;
+		while (rs.hasNext()) {
+			numrows++;
+			rs.next();
+		}
+		assertEquals("fuseki2 resultatsett skal være tomt", 0, numrows);
+
+
 
 	}
 
@@ -128,6 +146,12 @@ public class DataStoreTest {
 	public void testFusekiEndpointSlash() {
 		Fuseki fuseki = new Fuseki("http://localhost:3131/admin/");
 		Fuseki fuseki2 = new Fuseki("http://localhost:3131/admin");
+
+		//BG: Regner med at intensjonen er å sjekke at det er lov til å opprette
+		//fuseki endpoint som ender både med og uten slash
+		//Gjør ikke noe annet enn å sjekke at objektene eksisterer...
+		assertNotNull(fuseki);
+		assertNotNull(fuseki2);
 
 		fuseki.drop("");
 		fuseki2.drop("");
