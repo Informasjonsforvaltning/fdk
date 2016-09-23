@@ -46,7 +46,9 @@ public class DataStoreTest {
 
 	private final Logger logger = LoggerFactory.getLogger(DataStoreTest.class);
 
-	JettyFuseki server;
+	private JettyFuseki server;
+	private String dcatDBdir = "src/test/resources/fuseki-home/db/dcat";
+	private String adminDBdir = "src/test/resources/fuseki-home/db/admin";
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,8 +56,8 @@ public class DataStoreTest {
 		SystemState.location = Location.mem();
 		SystemState.init$();
 
-		File dcatDB = new File("src/test/resources/fuseki-home/db/dcat");
-		File adminDB = new File("src/test/resources/fuseki-home/db/admin");
+		File dcatDB = new File(dcatDBdir);
+		File adminDB = new File(adminDBdir);
 
 		dcatDB.mkdirs();
 		adminDB.mkdirs();
@@ -82,10 +84,17 @@ public class DataStoreTest {
 		for (String k : keys) {
 			DataAccessPointRegistry.get().remove(k);
 		}
-		//TODO: Filene ser ikke ut til å slettes
+
 		// Clear configuration directory.
-		System.out.println(FusekiServer.dirConfiguration.toFile());
+		logger.info("DB Katalog: " + FusekiServer.dirFileArea.toFile().toString());
 		FileOps.clearAll(FusekiServer.dirConfiguration.toFile());
+
+		// Clear database directories
+		File dcatDB = new File(dcatDBdir);
+		File adminDB = new File(adminDBdir);
+
+		FileUtils.cleanDirectory(dcatDB);
+		FileUtils.cleanDirectory(adminDB);
 
 		Thread.sleep(1000);
 	}
