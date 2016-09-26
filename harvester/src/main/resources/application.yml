@@ -14,8 +14,6 @@ fuseki:
 application:
   elasticSearchHost: es
   elasticSearchPort: 9300
-logging:
-  file: harvester.log
 ---
 spring:
     profiles: development

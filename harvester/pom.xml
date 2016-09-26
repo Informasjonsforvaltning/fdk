@@ -2,41 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>parent</artifactId>
         <groupId>no.dcat</groupId>
         <version>0.1.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>harvester</artifactId>
+    <version>0.1.0</version>
     <packaging>war</packaging>
 
-    <properties>
-        <springb.version>1.4.0.RELEASE</springb.version>
-    </properties>
-
-
     <dependencies>
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${springb.version}</version>
-        </dependency>
-        <dependency>
+        </dependency-->
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <version>${springb.version}</version>
+        </dependency-->
+        <!-- fra harvester-app -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>2.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.acando</groupId>
-            <artifactId>xmltordf</artifactId>
-            <version>1.6.0</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -53,6 +50,37 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.acando</groupId>
+            <artifactId>xmltordf</artifactId>
+            <version>1.6.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -60,7 +88,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${springb.version}</version>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <mainClass>no.dcat.harvester.Application</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
