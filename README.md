@@ -1,40 +1,57 @@
-#Felles datakatalog
+# Felles datakatalog
 
-Compile:
+Dette er den første felleskomponenten som utvikles i regi av Skate (https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate). Felles datakatalog skal tilby en oversikt over hvilke datasett som offentlige virksomheter har. Det skal tilbys en søkeløsning (portal) som gjør det mulig å søke og finne relevante datasettbeskrivelser. Prosjektet går over 2 år med oppstart høsten 2016. Det er basert på en norsk profil DCAT-AP-NO 1.1 av en Europeisk og W3C standard for utveksling av datasettbeskrivelser. Det er basert på kode som ble utviklet i DIFIs pilotprosjekt: Nasjonal infrastruktur for felles datakatalog (våren 2016). 
+
+## Struktur
+
+Applikasjoner
+
+* portal
+* admin
+* harvester
+* datastore
+* api
+
+Komponenter
+
+* elasticsearch, kibana og logstash
+* fuseki
+
+## Kompilere og installere
+### Compile:
 mvn clean install -DskipTests
 
-admin-webapp and harvester-app
-mvn package spring-boot:repackage -DskipTests
+admin-webapp and harvester
+mvn package -DskipTests
 
-#Docker:
-##Start
+### Docker:
+#### Start
 cd docker
 docker-compose up -d
 
-##Stop
+#### Stop
 docker-compose down
 
 
-###DCAT API
-http://localhost:8080/api-app/
+## Kjøre applikasjonene 
 
-###DCAT Harvester Admin
+Admin:
 http://localhost:8080/admin-webapp/admin
 
 test_user password
 test_admin password
 
-###Elasticsearch
+Elasticsearch
 http://localhost:9200
 
-###Kibana
+Kibana
 http://localhost:5601/
 
-###FUSEKI
+FUSEKI
 http://localhost:3030/fuseki/
 
 
-#Common Problems
+## Common Problems
 
 ERROR: for elasticsearch  No such image: sha256:09e6a3991c52f2fd3466fdc1bc34eb7a5e0929ed3367cf964c4f7e58a1fc5231
 Solution: remove old containers
