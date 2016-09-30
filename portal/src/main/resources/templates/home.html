@@ -45,7 +45,7 @@
                    value="" placeholder="Søk etter innhold"/>
 
             <div class="input-group-btn">
-                <button class="btn btn-secondary" type="button">
+                <button id="dosearch" class="btn btn-secondary" type="button">
                     <i class="material-icons a-input-icon"><span class="sr-only">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
                 </button>
             </div>
@@ -53,8 +53,8 @@
     </div>
 
     <!-- Resultatfelt -->
-    <section id="results">
-        Søkeresultat 2000
+    <section id="resultPanel">
+        <p id="summary">Søkeresultat</p>
         <div class="container-fluid">
             <div class="row">
 
@@ -76,36 +76,37 @@
                     </div>
                 </div>
 
-                <div class="col-xs-8 col-xm-8 col-md-8 col-lg-8 list-group">
-                    <!-- søkeresultat -->
-                    <a class="row list-group-item datasett" href="#"><strong>Enhetsregisteret</strong></a>
-                    <a class="row list-group-item datasett" href="#"><strong>Oppgaveregisteret</strong></a>
-                    <a class="row list-group-item datasett" href="#"><strong>Spesialregisteret</strong></a>
-                    <a class="row list-group-item datasett" href="#"><strong>Hemmeligregisteret</strong></a>
+                <!-- søkeresultat -->
+                <div id="datasets" class="col-xs-8 col-xm-8 col-md-8 col-lg-8 list-group">
 
-                     <center>
-                        <nav aria-label="Sidenavigering">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Forrige">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Neste">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </center>
+                    <a class="row list-group-item dataset" href="#"><strong>Enhetsregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong>Oppgaveregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong>Spesialregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong>Hemmeligregisteret</strong></a>
+
+
                 </div>
-
+                <center>
+                    <nav aria-label="Sidenavigering">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Forrige">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Neste">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </center>
             </div>
             </div>
 
@@ -123,6 +124,23 @@ var searchUrl = "http://localhost:8090/search"
 
 httpGetAsync(searchUrl, showResults);
 
+var search = document.getElementById("search");
+var dosearch = document.getElementById("dosearch");
+dosearch.onclick = function (event) {
+    console.log("q: " + search.value);
+    doSearch();
+};
+
+search.onkeypress = function (event) {
+    if (event.keyCode == 13) {
+        doSearch();
+    }
+};
+
+function doSearch() {
+    httpGetAsync(searchUrl + "?q=" + search.value, showResults);
+}
+
 function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
@@ -137,17 +155,53 @@ function showResults(search_result) {
 
     var res = JSON.parse(search_result);
 
-    var results = document.getElementById("results");
-
+    var results = document.getElementById("datasets");
+    // fjerner forrige resultat
+    while (results.firstChild) {
+        results.removeChild(results.firstChild);
+    }
+    // Oppdaterer søkeinformasjon
     var total = res.hits.total;
-    console.log(total);
-    var hits  = res.hits.hits;
+    var summary = document.getElementById("summary");
+    summary.innerHTML = "Resultat: " + total + " treff";
 
+    // behandler hits siden
+    var hits  = res.hits.hits;
     hits.forEach(function(dataset) {
-        var title = dataset._source.title[""];
+        var source = dataset._source;
+        var title = source.title[""];
         if (title == undefined)
-            title = dataset._source.title["no"];
-        console.log(title);
+            title = source.title["no"];
+
+        var description = source.description[""];
+        if (description == undefined)
+           description = source.description["no"];
+        var landingPage = source.landingPage;
+        if (landingPage != undefined) {
+            var lpElement = document.createElement("a");
+            lpElement.href = landingPage;
+            lpElement.target = "_blank";
+            lpElement.innerHTML = "<span class=\"glyphicon glyphicon-home\"></span>";
+        }
+
+        var keywords = source.keywords[""];
+        if (keywords == undefined)
+            keywords = source.keywords["no"];
+        if (keywords != undefined) {
+            var kwElement = document.createElement("span");
+            kwElement.innerHTML = " [" + keywords.join(", ") + "] ";
+        }
+
+        var row = document.createElement("a");
+        row.className = "row list-group-item dataset";
+        row.href = "#";
+        row.innerHTML = "<strong>" + title + "</strong></br>" + description ;
+        if (keywords != undefined)
+            row.appendChild(kwElement);
+        if (landingPage != undefined)
+            row.appendChild(lpElement);
+
+        results.appendChild(row);
     });
 }
   //]]>

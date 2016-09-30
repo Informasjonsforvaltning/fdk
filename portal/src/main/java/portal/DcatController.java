@@ -1,6 +1,13 @@
 package portal;
 
 
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +18,9 @@ import java.io.BufferedReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -20,11 +30,61 @@ import java.io.IOException;
 public class DcatController {
     Logger logger = LoggerFactory.getLogger(DcatController.class);
 
+    Client client = null;
+
     @RequestMapping("/search")
     public String search(@RequestParam(value="q", defaultValue="") String query) {
         logger.debug("query: "+ query);
+        if ("".equals(query)) query = "*";
 
-        /* Laster en json fil */
+        String json = "{}";
+
+        if (client == null) client = returnElasticsearchTransportClient("localhost",9300);
+
+        QueryBuilder search = QueryBuilders.queryStringQuery(query);
+
+        /*
+        {
+            "query": {
+                "query_string": {
+                  "query": {query string}
+            }
+        }
+        }*/
+        logger.debug(search.toString());
+
+        SearchResponse response = client.prepareSearch("dcat")
+                .setTypes("dataset")
+                .setQuery(search)
+                .execute().actionGet();
+
+        //logger.debug(response.toString());
+        // Build query
+
+        return response.toString();
+
+    }
+
+    public Client returnElasticsearchTransportClient(String host, int port) {
+        client = null;
+        try {
+            InetAddress inetadress = InetAddress.getByName(host);
+             InetSocketTransportAddress address = new InetSocketTransportAddress(inetadress, port);
+
+            client = TransportClient.builder().build()
+                    .addTransportAddress(address);
+            logger.debug("Client returns!");
+        } catch (UnknownHostException e) {
+            logger.error(e.toString());
+        }
+
+        logger.debug("transportclient created: " + client);
+        return client;
+
+    }
+
+    /* Laster en json fil */
+    private String loadFromFile(String filename) {
 
         ClassLoader classLoader = getClass().getClassLoader();
         String json = "{}";
@@ -36,7 +96,7 @@ public class DcatController {
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
 
-                while ( line != null) {
+                while (line != null) {
                     sb.append(line);
                     sb.append(System.lineSeparator());
                     line = br.readLine();
@@ -44,18 +104,15 @@ public class DcatController {
                 json = sb.toString();
 
             } catch (IOException io) {
-                logger.error("IO: "+io);
-            }
-            catch (Exception e) {
-                logger.error("E: "+e);
+                logger.error("IO: " + io);
+            } catch (Exception e) {
+                logger.error("E: " + e);
             }
 
         } catch (NullPointerException npe) {
             logger.error("NP: ", npe);
         }
-
         return json;
-
     }
 
 }
