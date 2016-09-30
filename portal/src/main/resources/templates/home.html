@@ -31,42 +31,43 @@
     </header>
 
     <!-- Søkefelt -->
-        <div class="form-group a-form-group">
-            <div class="input-group input-group-large">
+    <div class="form-group a-form-group">
+        <div class="input-group input-group-large">
 
-                <!-- Label -->
-                <label for="search" id="searchLarge">
-                    <span class="sr-only"> Søk etter datasett </span>
-                </label>
+            <!-- Label -->
+            <label for="search" id="searchLarge">
+                <span class="sr-only"> Søk etter datasett </span>
+            </label>
 
-                <!-- Input  -->
-                <input id="search" aria-labelledby="searchLarge" type="search" class="form-control form-control-noleft form-control-withBtn" value="" placeholder="Søk etter innhold"/>
+            <!-- Input  -->
+            <input id="search" aria-labelledby="searchLarge" type="search"
+                   class="form-control form-control-noleft form-control-withBtn"
+                   value="" placeholder="Søk etter innhold"/>
 
-                <div class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">
-                        <i class="material-icons a-input-icon"><span class="sr-only">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
-                    </button>
-                </div>
+            <div class="input-group-btn">
+                <button class="btn btn-secondary" type="button">
+                    <i class="material-icons a-input-icon"><span class="sr-only">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
+                </button>
             </div>
-
+        </div>
     </div>
 
     <!-- Resultatfelt -->
     <section id="results">
         Søkeresultat 2000
         <div class="container-fluid">
-            <!--div class="row panel panel-default" -->
+            <div class="row">
 
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
                     <!-- fasettering -->
                     <div class="list-group">
-                        <a class="list-group-item" href="#">Virksomheter<span class="badge red">2</span>
+                        <div class="list-group-item" href="#">Virksomhet<span class="badge red">2</span>
                             <ul>
-                                <li >Brønnøysundregistrene [14]</li>
-                                <li >NAV [2]</li>
+                                <li><a href="#">Brønnøysundregistrene [14]</a></li>
+                                <li ><a href="#">NAV [2]</a></li>
                             </ul>
-                        </a>
-                        <a class="list-group-item disabled" href="#">Tema <span class="badge">3</span></a>
+                        </div>
+                        <a class="list-group-item disabled" href="#">Tema<span class="badge">3</span></a>
                         <a class="list-group-item disabled" href="#">Begrep<span class="badge">5</span></a>
                         <a class="list-group-item disabled" href="#">Hjemmel<span class="badge">1</span></a>
                         <a class="list-group-item disabled" href="#">Geografi</a>
@@ -106,6 +107,7 @@
                 </div>
 
             </div>
+            </div>
 
 
 
@@ -114,6 +116,42 @@
     </div>
     <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+
+var searchUrl = "http://localhost:8090/search"
+
+httpGetAsync(searchUrl, showResults);
+
+function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+
+function showResults(search_result) {
+
+    var res = JSON.parse(search_result);
+
+    var results = document.getElementById("results");
+
+    var total = res.hits.total;
+    console.log(total);
+    var hits  = res.hits.hits;
+
+    hits.forEach(function(dataset) {
+        var title = dataset._source.title[""];
+        if (title == undefined)
+            title = dataset._source.title["no"];
+        console.log(title);
+    });
+}
+  //]]>
+    </script>
 </body>
 </html>
 
