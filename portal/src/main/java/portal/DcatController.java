@@ -33,8 +33,14 @@ public class DcatController {
     Client client = null;
 
     @RequestMapping("/search")
-    public String search(@RequestParam(value="q", defaultValue="") String query) {
-        logger.debug("query: "+ query);
+    public String search(@RequestParam(value="q", defaultValue="") String query,
+                         @RequestParam(value="from", defaultValue="0") int from,
+                         @RequestParam(value="size", defaultValue="10") int size) {
+        logger.debug("query: \""+ query + "\" from:" + from + " size:" + size );
+
+        if (size > 50) size = 50;
+        if (size < 5) size = 5;
+
         if ("".equals(query)) query = "*";
 
         String json = "{}";
@@ -55,10 +61,14 @@ public class DcatController {
 
         SearchResponse response = client.prepareSearch("dcat")
                 .setTypes("dataset")
+                //.addHighlightedField("description.no")
                 .setQuery(search)
+                .setFrom(from)
+                .setSize(size)
+
                 .execute().actionGet();
 
-        //logger.debug(response.toString());
+        logger.debug(response.toString());
         // Build query
 
         return response.toString();
