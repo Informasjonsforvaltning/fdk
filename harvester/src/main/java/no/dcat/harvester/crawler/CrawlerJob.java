@@ -24,6 +24,7 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
+import org.openrdf.model.vocabulary.DCTERMS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +84,9 @@ public class CrawlerJob implements Runnable {
            if (isVegvesenet(union)) {
                 enrichForVegvesenet(union);
             }
+
+            enrichLanguage(union);
+
             BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
             brregAgentConverter.collectFromModel(union);
 
@@ -309,6 +313,37 @@ public class CrawlerJob implements Runnable {
         }
 
 
+    }
+
+
+    /**
+     * Add language tag to dataset title, description and keyword if this is missing
+     * Value will be set to "no-nb"
+     * See Jira https://jira.brreg.no/browse/FDK-82
+     *
+     * @param union Graph containing the rdf model
+     */
+    private void enrichLanguage(Model union) {
+        //TODO: Må vi sjekke for tomme tager i tillegg til manglende tager?
+
+        // Handle missing language tag for dataset title
+        NodeIterator datasetTitles = union.listObjectsOfProperty(DCTerms.title);
+
+        //while (datasetTitles.hasNext()) {
+            Resource resource = datasetTitles.next().asResource();
+
+            //..men denne finnes ikke...
+           // Statement lang = resource.getProperty(DCTerms.language);
+
+            //logger.info("langStmt: " + lang.toString());
+
+       //}
+        ResIterator catalogPublisher = union.listSubjectsWithProperty(RDF.type, DCAT.Catalog);
+        while (catalogPublisher.hasNext()) {
+            Resource resource = catalogPublisher.next().asResource();
+            ResIterator resIterator = union.listSubjectsWithProperty(FOAF.name, "Brønnøysundregistrene");
+            logger.
+        }
     }
 
     private boolean isValid(Model model) {
