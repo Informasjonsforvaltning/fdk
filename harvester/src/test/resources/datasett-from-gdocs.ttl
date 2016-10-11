@@ -53,24 +53,25 @@
         dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/> .
 
 <http://data.brreg.no/datakatalog/dataset/24>
-        a               dcat:Dataset ;
-        dct:identifier  "24" ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
-        dct:title       "Kodeverksregisteret" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        foaf:page       <https://register-web.test.nhn.no/> .
+        a                dcat:Dataset ;
+        dct:description  "Barnehagefakta.no kan du finne barnehager og se informasjon om dem." ;
+        dct:identifier   "24" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/> ;
+        dct:title        "Barnehagefakta" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/> .
 
 <http://data.brreg.no/enhetsregisteret/provinence/bruker>
         a                    dct:ProvenanceStatement ;
         prov:wasGeneratedBy  "brukerinnsamling" .
 
 <http://data.brreg.no/datakatalog/dataset/37>
-        a               dcat:Dataset ;
-        dct:identifier  "37" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/NAV> ;
-        dct:title       "Aa-registeret" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "MVA registeret" ;
+        dct:identifier   "37" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Skattetaten> ;
+        dct:title        "MVA registeret" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/1>
         a                        dcat:Dataset ;
@@ -95,12 +96,13 @@ dct:source  a   owl:ObjectProperty .
         foaf:name       "SSB" .
 
 <http://data.brreg.no/datakatalog/dataset/31>
-        a               dcat:Dataset ;
-        dct:identifier  "31" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Skateetaten> ;
-        dct:title       "Forhåndsregistrering mva" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Levere A-melding" ;
+        dct:identifier   "31" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Skateetaten> ;
+        dct:title        "Levere A-melding" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/enhetsregisteret/enhet/Norid>
         a               foaf:Agent ;
@@ -122,12 +124,13 @@ dct:source  a   owl:ObjectProperty .
         dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/29>
-        a               dcat:Dataset ;
-        dct:identifier  "29" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
-        dct:title       "Registrere virksomhet" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Registrering i virksomhets- og foretaksregisteret" ;
+        dct:identifier   "29" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/SSB> ;
+        dct:title        "Registrering i virksomhets- og foretaksregisteret" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/avdeling/4>
         a                        vcard:Organization ;
@@ -174,17 +177,18 @@ dct:hasVersion  a  owl:ObjectProperty .
         a               dcat:Dataset ;
         dct:identifier  "23" ;
         dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
-        dct:title       "Fastlegeregisteret" ;
+        dct:title       "Kodeverksregisteret" ;
         dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         foaf:page       <https://register-web.test.nhn.no/> .
 
 <http://data.brreg.no/datakatalog/dataset/36>
-        a               dcat:Dataset ;
-        dct:identifier  "36" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Mattilsynet> ;
-        dct:title       "Registrere ny næringsmiddelvirksomhet" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Aa-registeret" ;
+        dct:identifier   "36" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/NAV> ;
+        dct:title        "Aa-registeret" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 dct:accessRights  a  owl:ObjectProperty .
 
@@ -198,20 +202,13 @@ dct:title  a    owl:DatatypeProperty .
 dct:relation  a  owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/30>
-        a               dcat:Dataset ;
-        dct:identifier  "30" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/SSB> ;
-        dct:title       "Registrering i virksomhets- og foretaksregisteret" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
-
-<http://data.brreg.no/datakatalog/dataset/43>
-        a               dcat:Dataset ;
-        dct:identifier  "43" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Mattilsynet> ;
-        dct:title       "MATS" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Forhåndsregistrering mva" ;
+        dct:identifier   "30" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Skateetaten> ;
+        dct:title        "Forhåndsregistrering mva" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/15>
         a                  dcat:Dataset ;
@@ -228,12 +225,13 @@ dcatno:accessRightsComment
         a       owl:DatatypeProperty .
 
 <http://data.brreg.no/datakatalog/dataset/28>
-        a               dcat:Dataset ;
-        dct:identifier  "28" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Patentstyret> ;
-        dct:title       "Registrere varemerke" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Registrere virksomhet" ;
+        dct:identifier   "28" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title        "Registrere virksomhet" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 dct:publisher  a  owl:ObjectProperty .
 
@@ -259,17 +257,18 @@ dcat:distriution  a  owl:ObjectProperty .
         a               dcat:Dataset ;
         dct:identifier  "22" ;
         dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
-        dct:title       "Legestillingsregisteret" ;
+        dct:title       "Fastlegeregisteret" ;
         dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         foaf:page       <https://register-web.test.nhn.no/> .
 
 <http://data.brreg.no/datakatalog/dataset/35>
-        a               dcat:Dataset ;
-        dct:identifier  "35" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Kommune> ;
-        dct:title       "Søke serveringsbevilgning" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Registrere ny næringsmiddelvirksomhet" ;
+        dct:identifier   "35" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Mattilsynet> ;
+        dct:title        "Registrere ny næringsmiddelvirksomhet" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 adms:identifier  a  owl:ObjectProperty .
 
@@ -283,12 +282,13 @@ vcard:telefon  a  owl:ObjectProperty .
         foaf:name       "Politiet" .
 
 <http://data.brreg.no/datakatalog/dataset/42>
-        a               dcat:Dataset ;
-        dct:identifier  "42" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Patentstyret> ;
-        dct:title       "Varemerkeregisteret" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "MATS" ;
+        dct:identifier   "42" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Mattilsynet> ;
+        dct:title        "MATS" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/14>
         a                  dcat:Dataset ;
@@ -304,12 +304,11 @@ vcard:telefon  a  owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/27>
         a                dcat:Dataset ;
-        dct:description  "Selskapet blir stifta ved at stiftarane opprettar eit stiftingsdokument som blant anna inneheld aksjeteikning, vedtekter, styresamansetjing og val av revisor eller fullmakt til å velje bort revisjon" ;
+        dct:description  "Registrere varemerke" ;
         dct:identifier   "27" ;
         dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
-        dct:title        "Stifting av aksjeselskap" ;
-        dcat:keyword     "Revisjon" , "Styre" , "Aksjeklasser" , "Formål" , "Styreleder" , "Kommune" , "E-postadresse" , "Vedtektsbestemmelser" , "Mobilnummer" , "Aksjekapital" , "Navn" , "Stifter" , "Aksjetegning" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Patentstyret> ;
+        dct:title        "Registrere varemerke" ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/4>
@@ -332,7 +331,7 @@ vcard:telefon  a  owl:ObjectProperty .
         dct:description  "Katalog over datasett som inngår i brukerreise ny bedift" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
         dct:title        "Brukerreise ny bedrift" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/40> , <http://data.brreg.no/datakatalog/dataset/34> , <http://data.brreg.no/datakatalog/dataset/30> , <http://data.brreg.no/datakatalog/dataset/37> , <http://data.brreg.no/datakatalog/dataset/42> , <http://data.brreg.no/datakatalog/dataset/29> , <http://data.brreg.no/datakatalog/dataset/32> , <http://data.brreg.no/datakatalog/dataset/36> , <http://data.brreg.no/datakatalog/dataset/41> , <http://data.brreg.no/datakatalog/dataset/28> , <http://data.brreg.no/datakatalog/dataset/31> , <http://data.brreg.no/datakatalog/dataset/27> , <http://data.brreg.no/datakatalog/dataset/33> , <http://data.brreg.no/datakatalog/dataset/43> , <http://data.brreg.no/datakatalog/dataset/39> , <http://data.brreg.no/datakatalog/dataset/38> .
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/40> , <http://data.brreg.no/datakatalog/dataset/34> , <http://data.brreg.no/datakatalog/dataset/30> , <http://data.brreg.no/datakatalog/dataset/37> , <http://data.brreg.no/datakatalog/dataset/42> , <http://data.brreg.no/datakatalog/dataset/29> , <http://data.brreg.no/datakatalog/dataset/32> , <http://data.brreg.no/datakatalog/dataset/36> , <http://data.brreg.no/datakatalog/dataset/41> , <http://data.brreg.no/datakatalog/dataset/28> , <http://data.brreg.no/datakatalog/dataset/31> , <http://data.brreg.no/datakatalog/dataset/27> , <http://data.brreg.no/datakatalog/dataset/26> , <http://data.brreg.no/datakatalog/dataset/33> , <http://data.brreg.no/datakatalog/dataset/39> , <http://data.brreg.no/datakatalog/dataset/38> .
 
 <http://data.brreg.no/enhetsregisteret/enhet/Kommune>
         a               foaf:Agent ;
@@ -343,7 +342,7 @@ vcard:telefon  a  owl:ObjectProperty .
         a               dcat:Dataset ;
         dct:identifier  "21" ;
         dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
-        dct:title       "RESH" ;
+        dct:title       "Legestillingsregisteret" ;
         dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         foaf:page       <https://register-web.test.nhn.no/> .
 
@@ -353,26 +352,25 @@ vcard:organization-unit
 vcard:Organization  a  owl:Class .
 
 <http://data.brreg.no/datakatalog/dataset/34>
-        a               dcat:Dataset ;
-        dct:identifier  "34" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Kommune> ;
-        dct:title       "Søke sjenkebevilgning" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Søke serveringsbevilgning" ;
+        dct:identifier   "34" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Kommune> ;
+        dct:title        "Søke serveringsbevilgning" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 dcat:Catalog  a  owl:Class .
 
 foaf:name  a    owl:DatatypeProperty .
 
 <http://data.brreg.no/datakatalog/dataset/19>
-        a                dcat:Dataset ;
-        dct:description  "Helsepersonellregisteret (HPR) er helsemyndighetens register over alt helsepersonell med autorisasjon eller lisens etter helsepersonelloven, og veterinærer med autorisasjon eller lisens etter dyrehelsepersonelloven. Ved søk gis opplysning om gjeldende autorisasjon, lisens og forskrivningsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere." ;
-        dct:identifier   "19" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
-        dct:title        "Helsepersonellregisteret" ;
-        dcat:keyword     "Fødselsdato" , "SSB-koden" , "Helsepersonellkategori" , "Utløpsdato" , "Vilkår" , "Opplysninger om godkjenning" , "annen identifikasjon" , "Statsborgerskap" , "Navn" , "Opplysninger om utdanning" , "Helsepersonell" , "Personopplysninger" , "Privatadresse" , "Kjønn" , "HPR-nummer" , "Godkjenningsdato" , "Opplysninger om ansettelse/ansvar" ;
-        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        foaf:page        <https://register-web.test.nhn.no/> .
+        a               dcat:Dataset ;
+        dct:identifier  "19" ;
+        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title       "Helsetjenestekatalogen" ;
+        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        foaf:page       <https://register-web.test.nhn.no/> .
 
 <http://data.brreg.no/enhetsregisteret/enhet/915933149>
         a               foaf:Agent ;
@@ -397,12 +395,13 @@ dcat:theme  a   owl:ObjectProperty .
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/41>
-        a               dcat:Dataset ;
-        dct:identifier  "41" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Norid> ;
-        dct:title       "Domeneregisteret" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Varemerkeregisteret" ;
+        dct:identifier   "41" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Patentstyret> ;
+        dct:title        "Varemerkeregisteret" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/13>
         a                  dcat:Dataset ;
@@ -418,25 +417,23 @@ dcat:theme  a   owl:ObjectProperty .
 foaf:Agent  a   owl:Class .
 
 <http://data.brreg.no/datakatalog/dataset/26>
-        a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
-        dct:description          "Registeret inneheld oversikt over godkjende aktørar i lotterimarknaden og gjeldande løyve for lotteri og bingo." ;
-        dct:identifier           "26" ;
-        dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
-        dct:spatial              <http://sws.geonames.org/3144096/> ;
-        dct:title                "Lotteriregisteret" ;
-        dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
-        dcat:keyword             "Lotteri" , "Adresse" , "Organisasjonsnummer" , "Bingo" , "Lokale" , "Formål" ;
-        dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Selskapet blir stifta ved at stiftarane opprettar eit stiftingsdokument som blant anna inneheld aksjeteikning, vedtekter, styresamansetjing og val av revisor eller fullmakt til å velje bort revisjon" ;
+        dct:identifier   "26" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title        "Stifting av aksjeselskap" ;
+        dcat:keyword     "Stifter" , "Aksjetegning" , "Vedtektsbestemmelser" , "Aksjekapital" , "Navn" , "Kommune" , "Revisjon" , "E-postadresse" , "Styre" , "Mobilnummer" , "Aksjeklasser" , "Formål" , "Styreleder" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/39>
-        a               dcat:Dataset ;
-        dct:identifier  "39" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/SSB> ;
-        dct:title       "Virksomhets- og foretaksregister" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Register over upersonlige skatteytere" ;
+        dct:identifier   "39" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Skateetaten> ;
+        dct:title        "Register over upersonlige skatteytere" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/3>
         a                           dcat:Dataset ;
@@ -474,19 +471,30 @@ vcard:email  a  owl:ObjectProperty .
         a               dcat:Dataset ;
         dct:identifier  "20" ;
         dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
-        dct:title       "Helsetjenestekatalogen" ;
+        dct:title       "RESH" ;
         dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         foaf:page       <https://register-web.test.nhn.no/> .
 
 dct:issued  a   owl:DatatypeProperty .
 
 <http://data.brreg.no/datakatalog/dataset/33>
-        a               dcat:Dataset ;
-        dct:identifier  "33" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Politiet> ;
-        dct:title       "Politiattest" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Søke sjenkebevilgning" ;
+        dct:identifier   "33" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Kommune> ;
+        dct:title        "Søke sjenkebevilgning" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/18>
+        a                dcat:Dataset ;
+        dct:description  "Helsepersonellregisteret (HPR) er helsemyndighetens register over alt helsepersonell med autorisasjon eller lisens etter helsepersonelloven, og veterinærer med autorisasjon eller lisens etter dyrehelsepersonelloven. Ved søk gis opplysning om gjeldende autorisasjon, lisens og forskrivningsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere." ;
+        dct:identifier   "18" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Helsepersonellregisteret" ;
+        dcat:keyword     "SSB-koden" , "Personopplysninger" , "Privatadresse" , "Helsepersonellkategori" , "Kjønn" , "Opplysninger om godkjenning" , "Opplysninger om utdanning" , "annen identifikasjon" , "Statsborgerskap" , "Vilkår" , "HPR-nummer" , "Navn" , "Utløpsdato" , "Helsepersonell" , "Godkjenningsdato" , "Opplysninger om ansettelse/ansvar" , "Fødselsdato" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        foaf:page        <https://register-web.test.nhn.no/> .
 
 prov:wasGeneratedBy  a  owl:DatatypeProperty .
 
@@ -517,12 +525,13 @@ dct:accruralPeriodicity
         a       owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/40>
-        a               dcat:Dataset ;
-        dct:identifier  "40" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Skateetaten> ;
-        dct:title       "Register over upersonlige skatteytere" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Domeneregisteret" ;
+        dct:identifier   "40" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Norid> ;
+        dct:title        "Domeneregisteret" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/12>
         a                  dcat:Dataset ;
@@ -538,20 +547,26 @@ dct:accruralPeriodicity
         dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/25>
-        a                dcat:Dataset ;
-        dct:description  "Barnehagefakta.no kan du finne barnehager og se informasjon om dem." ;
-        dct:identifier   "25" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/> ;
-        dct:title        "Barnehagefakta" ;
-        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/> .
+        a                        dcat:Dataset ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description          "Registeret inneheld oversikt over godkjende aktørar i lotterimarknaden og gjeldande løyve for lotteri og bingo." ;
+        dct:identifier           "25" ;
+        dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial              <http://sws.geonames.org/3144096/> ;
+        dct:title                "Lotteriregisteret" ;
+        dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        dcat:keyword             "Bingo" , "Formål" , "Lokale" , "Lotteri" , "Adresse" , "Organisasjonsnummer" ;
+        dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/38>
-        a               dcat:Dataset ;
-        dct:identifier  "38" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Skattetaten> ;
-        dct:title       "MVA registeret" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Virksomhets- og foretaksregister" ;
+        dct:identifier   "38" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/SSB> ;
+        dct:title        "Virksomhets- og foretaksregister" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/2>
         a                        dcat:Dataset ;
@@ -600,12 +615,13 @@ dcat:Dataset  a  owl:Class .
         foaf:name       "Skatteetaten" .
 
 <http://data.brreg.no/datakatalog/dataset/32>
-        a               dcat:Dataset ;
-        dct:identifier  "32" ;
-        dct:provenance  <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/Skateetaten> ;
-        dct:title       "Levere A-melding" ;
-        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        a                dcat:Dataset ;
+        dct:description  "Politiattest" ;
+        dct:identifier   "32" ;
+        dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Politiet> ;
+        dct:title        "Politiattest" ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/enhetsregisteret/provinence/vedtak>
         a                    dct:ProvenanceStatement ;

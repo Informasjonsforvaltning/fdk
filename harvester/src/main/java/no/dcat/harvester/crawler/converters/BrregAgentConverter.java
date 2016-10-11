@@ -95,16 +95,22 @@ public class BrregAgentConverter {
 			
 		try {
 			URL url = new URL(uri);
-			String content = brregCache.get(url);
-			logger.debug(content);
-			InputStream inputStream = new ByteArrayInputStream(content.getBytes());
-			Model incomingModel = convert(inputStream);
+			if (brregCache != null) {
 
-			logger.debug(incomingModel.toString());
-			removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
-			
-			model.add(incomingModel);
-			
+				String content = brregCache.get(url);
+				logger.debug(content);
+				InputStream inputStream = new ByteArrayInputStream(content.getBytes());
+				Model incomingModel = convert(inputStream);
+
+				logger.debug(incomingModel.toString());
+				removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
+
+				model.add(incomingModel);
+			} else {
+				logger.warn("Unable to look up publisher {} - cache is not initiatilized.",uri);
+			}
+
+
 		} catch (Exception e) {
 			logger.warn("Failed to look up publisher: {}", uri, e);
 		}	
