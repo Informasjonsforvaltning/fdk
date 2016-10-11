@@ -1,0 +1,571 @@
+[ {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/33/resource/1",
+    "@type" : [ "http://xmlns.com/foaf/0.1/Agent" ],
+    "http://xmlns.com/foaf/0.1/name" : [ {
+      "@value" : "Statens pensjonskasse"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/1"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/33/resource/16",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/IRREG"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Datasettet inneholder kodeverket for pensjonsarter som SPK benytter (eller har benyttet) i Pensjonsvedtak. \n\nPensjonsarten er et 3-sifret nummer.\nFor hver pensjonsart angir datasettet blant annet:\n- Pensjonsprodukt (Uførepensjon, AFP, Alderspensjon, Særalderspensjon, Spesiell førtidspensjon, Etterlattepensjon, Barnepensjon)\n- Om pensjonen er straksløpende (dvs at medlemmet går rett fra stilling til pensjon) eller oppsatt (dvs at medlemmet slutter i statlig stilling før start av pensjon)\n- Om pensjonen skal utbetales til medlemmet eller til en annen offentlig tjenestepensjonsordning\n- Tekstlig beskrivelse av pensjonsarten\n\nPensjonsarten (sammen med Pensjonsordnign) bestemmer hvilke regler som skal benyttes for beregning og behandling av en pensjon.\n\nDatasettet oppdateres når det oppstår behov for nye pensjonsarter (sist i forbindelse med uførereformen per 01.01.2015)."
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-02-25"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-02-25"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Pensjonsarter i Statens pensjonskasse"
+    } ],
+    "http://purl.org/dc/terms/type" : [ {
+      "@value" : "code list"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Pensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Tjenestepensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "AFP"
+    }, {
+      "@language" : "no",
+      "@value" : "Alderspensjon"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/16"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1acrbs8ocx1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "1986-01-09"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/33/resource/17",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/NON-PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/MONTHLY"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Datasettet inneholder alle pensjonsutbetalinger fra Statens pensjonskasse siden september 1986.\n\nHver rad inneholder følgende felter:\n- Fødselsdato og personnummer\n- Ordningsnummer\n- Pensjonsart\n- Beløp\n- Beløpstype (månedlig utbetaling, refusjonskrav, etterbetaling, trekk)\n- Utbetalingsmåned\n- Mottaker (medlem eller annen ordning)"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-03-02"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-03-02"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1acrbs8ocx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Pensjonsutbetalinger"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Pensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Utbetaling"
+    }, {
+      "@language" : "no",
+      "@value" : "Refusjonskrav"
+    }, {
+      "@language" : "no",
+      "@value" : "Etterbetaling"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/17"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1abl16ocfx1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "1948-01-01"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/33/resource/2",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/NON-PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/CONT"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Datasettet inneholder alle data - knyttet til arbeidsforhold - som har betydning for beregning av tjenestepensjon for alle medlemmer av Statens pensjonskasse, pensjonsordningen for apoteketaten og pensjonsordningen for Operaen.\n\nDatasettet består av en rad per hendelse i arbeidsforholdet. En hendelse oppstår hver gang et medlem begynner eller slutter i stilling, går inn i eller ut av permisjon, eller endrer lønn, stillingsprosent, stillingskode/-betegnelse eller aldersgrense.\n\nHver rad har felter for:\n- Virkningsdato \n- Pensjonsgivende inntekt (fordelt på hovedlønn, faste tillegg, variable tillegg og funksjonstillegg)\n- Stillingsprosent\n- Referanse til paragraf i permisjonsavtalen (når hendelsen gjelder permisjon)\n- Referanse til medlem (fødselsnummer) og arbeidsgiver (organisasjonsnummer)\n\nOppdateres månedlig eller oftere ut fra rapportering fra arbeidsgiverne.\n\nI tillegg inneholder datasettet informasjon om\n- Perioder med statsarbeidertid\n- Perioder med ventelønn og vartpenger\n- Perioder med bistilling\n- Perioder med medlemskap i andre offentlige tjenestepensjonsordninger som er med i overføringsavtalen\nHver periode har informasjon om start- og sluttdato, tjenestetid i perioden (tjenestetiden kan være kortere enn perioden fra start- til sluttdato), stillingsprosent og lønn, samt referanse til medlem og eventuelt arbeidsgiver.\n\n"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1abl16ocfx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Opptjeningsdata for pensjon"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#hasVersion" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/5"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Pensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Inntekt"
+    }, {
+      "@language" : "no",
+      "@value" : "Permisjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Stillingshistorikk"
+    }, {
+      "@language" : "no",
+      "@value" : "Arbeidsforhold"
+    }, {
+      "@language" : "no",
+      "@value" : "SPK"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/2"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/33/resource/5",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/DAILY"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Historisk oversikt over pensjonsgivende lønn, stillingsprosent med mere i arbeidsforhold som gir medlemskap i en av tjenestepensjonsordningene som SPK administrerer.\n\nDatasettet består av en rad per hendelse i arbeidsforholdet. En hendelse oppstår hver gang et medlem begynner eller slutter i stilling, går inn i eller ut av permisjon, eller endrer lønn, stillingsprosent, stillingskode/-betegnelse eller aldersgrense.\n\nHver rad har felter for:\n- Virkningsdato \n- Pensjonsgivende inntekt (fordelt på hovedlønn, faste tillegg, variable tillegg og funksjonstillegg)\n- Stillingsprosent\n- Referanse til paragraf i permisjonsavtalen (når hendelsen gjelder permisjon)\n- Referanse til medlem (fødselsnummer) og arbeidsgiver (organisasjonsnummer)\n\nOppdateres månedlig eller oftere ut fra rapportering fra arbeidsgiverne."
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Stillingshistorikk"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/7"
+    } ],
+    "http://www.w3.org/ns/dcat#isVersionOf" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/2"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Pensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Inntekt"
+    }, {
+      "@language" : "no",
+      "@value" : "Permisjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Stillingsprosent"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/5"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1abilqm7rx1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "1948-01-01"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/33/resource/6",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/CONT"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Datasettet inneholder informasjon om virksomheter som er kunde av Statens pensjonskasse - det vil si har en (eller flere) av pensjonsordningene som SPK administrerer som tjenestepensjonsordning for alle eller noen av sine ansatte.\n\nHver kunde kan ha en eller flere avtaler med SPK. Avtalen angir hvilken pensjonsordning kunden er tilknyttet, samt parametere som har betydning for beregning av pensjon og premie for de ansatte knyttet til avtalen.\n\nDatasettet omfatter blant annet følgende informasjonselementer om virksomhetene:\n- Navn, adresse og organisasjonsnummer\n- Kontaktpersoner\n- Tariffområde, avlønningsform og lignende\n- Innmeldingsdato (i SPK) og eventuelt utmeldingsdato\n- Hvilke ansattgrupper som er medlem av SPK\n\nDatasettet inneholder historikk for de fleste informasjonselementene. En rad i datasettet vil dermed inneholde informasjonen som gjelder for en arbeidsgiver i angitt periode.\n\nDatasettet oppdateres i hovedsak manuelt ut fra ulike kilder (Enhetsregistereret, Arbeids- og sosialdepartementet, kunden selv)."
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1abilqm7rx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Kunder av Statens pensjonskasse"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Tjenestepensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Organisasjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Virksomhet"
+    }, {
+      "@language" : "no",
+      "@value" : "Tariffavtale"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/6"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/33/resource/7",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Oversikt over en arbeidsgivers ansatte (de som er medlem i SPK) med sist innrapportert lønn, stillingsprosent og andre data som har betydning for pensjonen"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/vnd.ms-excel"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Ansattliste for en arbeidsgiver"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://www.spk.no/arbeidsgiver/"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/7"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1abl10ed1x1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "1985-05-01"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/33/resource/8",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/NON-PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/DAILY"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Datasettet inneholder alle pensjonsvedtak for pensjonsordningene som SPK administrerer med historikk tilbake til 1985.\n\nHvert pensjonsvedtak inneholder informasjon om pensjonsprodukt (alder, uføre, AFP, etterlatt), rettighetsdata (pensjonsgrunnlag og tjenestetid) og månedlig bruttopensjon, samordningsfradrag og nettopensjon.(etter samordning).\n\nRettigheten (pensjonsgrunnlag og tjenestetid) er beregnet ut fra Opptjeningsdata for pensjon.\n\nBruttopensjonen beregnes ut fra rettigheten.\n\nSamordningsfradrag er beregnet ut fra Samordningsdata for pensjon.\n\nPensjonsvedtakene oppdateres løpende når det skjer endringer i opptjeningsdata eller samordningsdata, i tillegg til den årlige reguleringen av pensjon i takt med folketrygdens grunnbeløp (G)."
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-29"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-29"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1abl10ed1x1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Pensjonsvedtak"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Pensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Tjenestepensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Samordning"
+    }, {
+      "@language" : "no",
+      "@value" : "Tjenestetid"
+    }, {
+      "@language" : "no",
+      "@value" : "Pensjonsgrunnlag"
+    }, {
+      "@language" : "no",
+      "@value" : "Barnepensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Etterlattepensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Uførepensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "Avtalefestet førtidspensjon"
+    }, {
+      "@language" : "no",
+      "@value" : "AFP"
+    }, {
+      "@language" : "no",
+      "@value" : "Alderspensjon"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ECON"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/8"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1abilpub5x1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "1948-01-01"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/33/resource/9",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/WEEKLY"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Datasettet inneholder en rad per person som er eller har vært medlem av SPK, eller som mottar eller har mottatt pensjon fra SPK.\n\nDatasettet inneholder blant annet fødselsnummer, navn, adresse, sivilstatus og dødsdato.\n\nInformasjonen oppdateres maskinelt ukentlig basert på data fra Det sentrale folkeregisteret. "
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-02-01"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-02-01"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1abilpub5x1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Medlemmer av Statens pensjonskasse"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "no",
+      "@value" : "Adresse"
+    }, {
+      "@language" : "no",
+      "@value" : "Navn"
+    }, {
+      "@language" : "no",
+      "@value" : "Person"
+    }, {
+      "@language" : "no",
+      "@value" : "Dødsdato"
+    }, {
+      "@language" : "no",
+      "@value" : "Sivilstatus"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/GOVE"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/9"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/33/resource/dcat",
+    "@type" : [ "http://www.w3.org/ns/dcat#Catalog" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Statens pensjonskasse administrerer tjenestepensjon for statlige ansatte, lærere, frivillige organisasjoner, apoteketaten, operaen og politikerordningen med flere"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://creativecommons.org/licenses/by-nc/4.0/"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Statens pensjonskasse"
+    } ],
+    "http://www.w3.org/ns/dcat#dataset" : [ {
+      "@id" : "https://difi.entryscape.net/store/33/resource/2"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/5"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/6"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/8"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/9"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/16"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/33/resource/17"
+    } ],
+    "http://www.w3.org/ns/dcat#themeTaxonomy" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme"
+    } ],
+    "http://xmlns.com/foaf/0.1/homepage" : [ {
+      "@value" : "http://spk.no"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/33/metadata/dcat"
+} ]

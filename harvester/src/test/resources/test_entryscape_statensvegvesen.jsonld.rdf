@@ -1,0 +1,315 @@
+[ {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/1",
+    "@type" : [ "http://xmlns.com/foaf/0.1/Agent" ],
+    "http://xmlns.com/foaf/0.1/name" : [ {
+      "@value" : "Statens vegvesen"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/1"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/13",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Her kan jeg ikke lenke til ftp!"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/xml"
+    }, {
+      "@value" : "SOSI"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Dette er en distrivbusjpn (test)"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://kartkatalog.geonorge.no/metadata/statens-vegvesen/trafikkulykker/2c47f033-b877-4885-a0ea-50333afd8fab"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/13"
+}, {
+  "@graph" : [ {
+    "@id" : "http://sws.geonames.org/3144096/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Norway"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/41/resource/2",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Inneholder det meste av støff langs vegen (bomstasjoner, skilt, utstyr), inkl. vegnettet, og en del hendelser som ulykker og gjennomsnittlig trafikkbelastning (årsdøgntrafikk)."
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/1"
+    } ],
+    "http://purl.org/dc/terms/source" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/7"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3144096/"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Norsk vegdatabank (NVDB)"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/4"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/5"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/8"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ENVI"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/HEAL"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/TRAN"
+    } ],
+    "http://xmlns.com/foaf/0.1/page" : [ {
+      "@id" : "http://www.vegdata.no/"
+    }, {
+      "@id" : "http://tfprod1.sintef.no/datakatalog/"
+    }, {
+      "@id" : "https://www.vegvesen.no/vegkart/vegkart/"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/2"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/3",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Liste over alle bomstasjoner, med lokasjon og, priser."
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/1"
+    } ],
+    "http://purl.org/dc/terms/source" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/2"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Bomstasjoner"
+    } ],
+    "http://www.w3.org/ns/dcat#isVersionOf" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/2"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/TRAN"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/3"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/4",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "REST-API i XML og JSON"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/json"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://data.norge.no/nlod/no"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://www.vegvesen.no/nvdb/api/dokumentasjon/sok"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/4"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/5",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "REST-API i XML og JSON"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/xml"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://data.norge.no/nlod/no"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "https://www.vegvesen.no/nvdb/api/dokumentasjon/sok"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/5"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1aaokmtbpx1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/endDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2014"
+    } ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2010"
+    } ]
+  }, {
+    "@id" : "http://sws.geonames.org/3144096/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Norway"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/41/resource/6",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/ANNUAL"
+    } ],
+    "http://purl.org/dc/terms/conformsTo" : [ {
+      "@id" : "http://kartverket.no/geodataarbeid/Standarder/SOSI/"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "en",
+      "@value" : "Traffic accidents (complete version, including sensitive information about indivuals, such as suspicions of crimes or suicide)"
+    }, {
+      "@language" : "no",
+      "@value" : "Trafikkulykker (komplett versjon, inkl. sensitive personopplysninger som mistanke om lovbrudd eller selvdrap)"
+    } ],
+    "http://purl.org/dc/terms/identifier" : [ {
+      "@value" : "http://vegvesen.no/dette-er-en-test/unik-id/ulykkesregisteret-komplett-versjon"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2014-01-01"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/1"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3144096/"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1aaokmtbpx1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "en",
+      "@value" : "Traffic accidents (complete version)"
+    }, {
+      "@language" : "no",
+      "@value" : "Ulykkesregisteret (komplett versjon)"
+    } ],
+    "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+      "@value" : "jihlugfyttdfyjfd"
+    } ],
+    "http://www.w3.org/ns/adms#versionNotes" : [ {
+      "@value" : "Dette er en versjon med SKriveLiesf"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/9"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/12"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/13"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "en",
+      "@value" : "accident"
+    }, {
+      "@language" : "no",
+      "@value" : "ulykke"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "https://kartkatalog.geonorge.no/metadata/statens-vegvesen/trafikkulykker/2c47f033-b877-4885-a0ea-50333afd8fab"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/HEAL"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/TRAN"
+    } ],
+    "http://xmlns.com/foaf/0.1/page" : [ {
+      "@id" : "https://register.geonorge.no/register/produktark/statens-vegvesen/trafikkulykke"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/6"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/7",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Trafikkulykker, sensitiv informasjon er fjernet (som informasjon om lovbrudd og mistanke om selvdrap)"
+    } ],
+    "http://purl.org/dc/terms/source" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/6"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Ulykkesregisteret (offentlig versjon)"
+    } ],
+    "http://www.w3.org/ns/dcat#isVersionOf" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/2"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/6"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/HEAL"
+    }, {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/TRAN"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/7"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/8",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "VisVeg mer komplisert REST-API"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/xml"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://data.norge.no/nlod/no"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "http://visveginfo-static.opentns.org/help.htm"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/8"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/41/resource/dcat",
+    "@type" : [ "http://www.w3.org/ns/dcat#Catalog" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Data fra Statens vegvesen"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "Statens vegvesen"
+    } ],
+    "http://www.w3.org/ns/dcat#dataset" : [ {
+      "@id" : "https://difi.entryscape.net/store/41/resource/2"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/3"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/6"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/41/resource/7"
+    } ],
+    "http://xmlns.com/foaf/0.1/homepage" : [ {
+      "@value" : "http://vegvesen.no"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/41/metadata/dcat"
+} ]

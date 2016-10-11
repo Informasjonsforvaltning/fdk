@@ -1,0 +1,311 @@
+[ {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/38/resource/1",
+    "@type" : [ "http://xmlns.com/foaf/0.1/Agent" ],
+    "http://xmlns.com/foaf/0.1/homepage" : [ {
+      "@value" : "http://www.kartverket.no"
+    } ],
+    "http://xmlns.com/foaf/0.1/name" : [ {
+      "@value" : "Kartverket"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/1"
+}, {
+  "@graph" : [ {
+    "@id" : "_:node1af0pava6x1",
+    "@type" : [ "http://purl.org/dc/terms/PeriodOfTime" ],
+    "http://schema.org/endDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-03-01"
+    } ],
+    "http://schema.org/startDate" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2015-03-01"
+    } ]
+  }, {
+    "@id" : "http://sws.geonames.org/3163480/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Akershus"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/38/resource/2",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/WEEKLY"
+    } ],
+    "http://purl.org/dc/terms/conformsTo" : [ {
+      "@id" : "https://kartkatalog.geonorge.no/produktspesifikasjoner/turogfriluftsliv"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "Landsdekkende datasett over tur- og friluftsruter i Norge. Datasettet inneholder fotruter, skiløyper, sykkelruter, andre ruter og tilretteleggingstiltak i friluftslivsområder. Dataene kan brukes i prosesser etter plan- og bygningsloven (kommuneplanlegging og saksbehandlingsom for eksempel byggesak) i kommunene, til analyser, rapportering, oppslag og visualisering av ruter til turplanlegging."
+    }, {
+      "@language" : "en",
+      "@value" : "Nationwide dataset of tour and leisure routes in Norway. The dataset contains fotruter, ski trails, bicycle routes, other routes and facilitation measures in outdoor areas. The data can be used in processes under the Planning and Building Act (municipal planning and saksbehandlingsom eg building application) in municipalities, for analysis, reporting, search and visualization of routes with trip planning.\n"
+    } ],
+    "http://purl.org/dc/terms/identifier" : [ {
+      "@value" : "https://kartkatalog.geonorge.no/metadata/uuid/d1422d17-6d95-4ef1-96ab-8af31744dd63"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-03-28"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-03-29"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/1"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3163480/"
+    } ],
+    "http://purl.org/dc/terms/subject" : [ {
+      "@value" : "Friluftsliv"
+    } ],
+    "http://purl.org/dc/terms/temporal" : [ {
+      "@id" : "_:node1af0pava6x1"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "en",
+      "@value" : "National trails and hiking routes"
+    }, {
+      "@language" : "no",
+      "@value" : "Nasjonal database for tur- og friluftsruter"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/4"
+    } ],
+    "http://www.w3.org/ns/dcat#distribution" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/6"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/38/resource/7"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "en",
+      "@value" : "Hiking routes"
+    }, {
+      "@language" : "en",
+      "@value" : "Trails"
+    }, {
+      "@language" : "no",
+      "@value" : "Friluftsruter"
+    }, {
+      "@language" : "no",
+      "@value" : "Turløyper"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "https://kartkatalog.geonorge.no/Metadata/nasjonal-database-for-tur-og-friluftsruter/d1422d17-6d95-4ef1-96ab-8af31744dd63"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/TRAN"
+    } ],
+    "http://xmlns.com/foaf/0.1/page" : [ {
+      "@id" : "http://www.kartverket.no/geodataarbeid/temadata/nasjonal-database-for-tur--og-friluftsruter/"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/2"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/38/resource/6",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/conformsTo" : [ {
+      "@id" : "http://skjema.geonorge.no/SOSITEST/produktspesifikasjon/TurOgFriluftsruter/2.5.1/TurOgFriluftsruter.xsd"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "no",
+      "@value" : "WFS for tur- og friluftsruter"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/gml+xml"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://creativecommons.org/licenses/by/4.0/"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-27"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@value" : "WFS"
+    } ],
+    "http://www.w3.org/ns/adms#status" : [ {
+      "@id" : "http://purl.org/adms/status/Completed"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "http://wfs.geonorge.no/skwms1/wfs.turogfriluftsruter?service=WFS&request=GetCapabilities"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "http://wfs.geonorge.no/skwms1/wfs.turogfriluftsruter?"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/6"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/38/resource/7",
+    "@type" : [ "http://www.w3.org/ns/dcat#Distribution" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Nedlastning av Tur- og friluftsruter som Atom feed"
+    } ],
+    "http://purl.org/dc/terms/format" : [ {
+      "@value" : "application/gml+xml"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://creativecommons.org/licenses/by/4.0/"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Atom Feed GML"
+    } ],
+    "http://www.w3.org/ns/adms#status" : [ {
+      "@id" : "http://purl.org/adms/status/Completed"
+    } ],
+    "http://www.w3.org/ns/dcat#accessURL" : [ {
+      "@id" : "http://nedlasting.geonorge.no/fmedatastreaming/ATOM-feeds/Barnehager_AtomFeedGML.fmw"
+    } ],
+    "http://www.w3.org/ns/dcat#downloadURL" : [ {
+      "@id" : "https://nedlasting.geonorge.no/geonorge/Offentligetjenester/Barnehager/GML/Offentligetjenester_0000_Norge_25833_Barnehager_GML.zip"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/7"
+}, {
+  "@graph" : [ {
+    "@id" : "http://sws.geonames.org/3144096/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Norway"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/38/resource/8",
+    "@type" : [ "http://www.w3.org/ns/dcat#Dataset" ],
+    "http://purl.org/dc/terms/accessRights" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"
+    } ],
+    "http://purl.org/dc/terms/accrualPeriodicity" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/frequency/ANNUAL"
+    } ],
+    "http://purl.org/dc/terms/conformsTo" : [ {
+      "@id" : "https://register.test.geonorge.no/register/versjoner/produktspesifikasjoner/miljodirektoratet/naturvernomrader"
+    } ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@language" : "en",
+      "@value" : "Datasettet inneholder verneområder og vernede enkeltobjekt i Norge, herunder Svalbard og Jan Mayen. Datasettet gir en oversikt over hvilke områder som er vernet etter følgende lover: naturmangfoldloven av 2009, biotopvern etter viltloven av 1981, naturvernloven av 1970, lov om naturvern av 1954, lov om Jan Mayen av 1930 og lov om naturfredning av 1910. I tillegg inneholder det områder vernet etter følgende lovverk på Svalbard: Svalbardloven av 1925 og Svalbardmiljøloven av 2002. Datasettet gir også tilgang til lovforskriften som gjelder for hvert enkelt vernevedtak."
+    } ],
+    "http://purl.org/dc/terms/identifier" : [ {
+      "@value" : "https://www.geonorge.no/geonetworkbeta/srv/nor/xml_iso19139?uuid=5857ec0a-8d2c-4cd8-baa2-0dc54ae213b4"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/9"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3144096/"
+    } ],
+    "http://purl.org/dc/terms/subject" : [ {
+      "@value" : "NT Natur"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "en",
+      "@value" : "Naturvernområder"
+    } ],
+    "http://purl.org/dc/terms/type" : [ {
+      "@value" : "Vektorkart"
+    } ],
+    "http://www.w3.org/ns/dcat#contactPoint" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/5"
+    } ],
+    "http://www.w3.org/ns/dcat#keyword" : [ {
+      "@language" : "en",
+      "@value" : "Naturvernområder"
+    }, {
+      "@language" : "en",
+      "@value" : "Natur"
+    } ],
+    "http://www.w3.org/ns/dcat#landingPage" : [ {
+      "@id" : "http://kartkatalogen.test.geonorge.no/Metadata/naturvernomrader/5857ec0a-8d2c-4cd8-baa2-0dc54ae213b4"
+    } ],
+    "http://www.w3.org/ns/dcat#theme" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme/ENVI"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/8"
+}, {
+  "@graph" : [ {
+    "@id" : "https://difi.entryscape.net/store/38/resource/9",
+    "@type" : [ "http://xmlns.com/foaf/0.1/Agent" ],
+    "http://purl.org/dc/terms/type" : [ {
+      "@id" : "http://purl.org/adms/publishertype/NationalAuthority"
+    } ],
+    "http://xmlns.com/foaf/0.1/mbox" : [ {
+      "@id" : "mailto:postmottak@miljodir.no"
+    } ],
+    "http://xmlns.com/foaf/0.1/name" : [ {
+      "@language" : "en",
+      "@value" : "Miljødirektoratet"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/9"
+}, {
+  "@graph" : [ {
+    "@id" : "http://sws.geonames.org/3144096/",
+    "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+      "@language" : "en",
+      "@value" : "Norway"
+    } ]
+  }, {
+    "@id" : "https://difi.entryscape.net/store/38/resource/dcat",
+    "@type" : [ "http://www.w3.org/ns/dcat#Catalog" ],
+    "http://purl.org/dc/terms/description" : [ {
+      "@value" : "Nasjonal katalog for geografisk informasjon"
+    } ],
+    "http://purl.org/dc/terms/issued" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/language" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/language/NOR"
+    } ],
+    "http://purl.org/dc/terms/license" : [ {
+      "@id" : "http://creativecommons.org/licenses/by/4.0/"
+    } ],
+    "http://purl.org/dc/terms/modified" : [ {
+      "@type" : "http://www.w3.org/2001/XMLSchema#date",
+      "@value" : "2016-01-26"
+    } ],
+    "http://purl.org/dc/terms/publisher" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/1"
+    } ],
+    "http://purl.org/dc/terms/spatial" : [ {
+      "@id" : "http://sws.geonames.org/3144096/"
+    } ],
+    "http://purl.org/dc/terms/title" : [ {
+      "@language" : "no",
+      "@value" : "Geonorge"
+    } ],
+    "http://www.w3.org/ns/dcat#dataset" : [ {
+      "@id" : "https://difi.entryscape.net/store/38/resource/2"
+    }, {
+      "@id" : "https://difi.entryscape.net/store/38/resource/8"
+    } ],
+    "http://www.w3.org/ns/dcat#themeTaxonomy" : [ {
+      "@id" : "http://publications.europa.eu/resource/authority/data-theme"
+    } ],
+    "http://xmlns.com/foaf/0.1/homepage" : [ {
+      "@value" : "https://www.geonorge.no"
+    } ]
+  } ],
+  "@id" : "https://difi.entryscape.net/store/38/metadata/dcat"
+} ]

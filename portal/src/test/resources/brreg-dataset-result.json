@@ -1,0 +1,216 @@
+{
+   "took": 30,
+   "timed_out": false,
+   "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+   },
+   "hits": {
+      "total": 4,
+      "max_score": 1,
+      "hits": [
+         {
+            "_index": "dcat",
+            "_type": "dataset",
+            "_id": "https://difi.entryscape.net/store/37/resource/3",
+            "_score": 1,
+            "_source": {
+               "id": "https://difi.entryscape.net/store/37/resource/3",
+               "title": {
+                  "no": "Nøkkelopplysninger fra Enhetsregisteret"
+               },
+               "description": {
+                  "no": "Ved hjelp av denne tjenesten kan du finne en del nøkkelopplysninger – blant annet organisasjonsnummer, fullt navn, adresse og bransje – bare du kjenner navnet på en enhet.\n\nHvis du skal registrere et nytt foretak, er det en fordel å undersøke om du har valgt et navn som ikke er i bruk av andre. Det gjør du enkelt med denne tjenesten."
+               },
+               "keywords": {
+                  "no": [
+                     "Organisasjonsnummer",
+                     "Bransje",
+                     "Enhetsnavn"
+                  ]
+               },
+               "landingPage": "https://w2.brreg.no/enhet/sok/",
+               "catalog": {
+                  "id": "https://difi.entryscape.net/store/37/resource/dcat",
+                  "title": {
+                     "": "Brønnøysundregistrene"
+                  },
+                  "description": {
+                     "": "Katalog over datasett i Brønnøysundregistrene"
+                  },
+                  "publisher": {
+                     "id": "https://difi.entryscape.net/store/37/resource/1",
+                     "name": "Brønnøysundregistrene"
+                  }
+               },
+               "distributions": [
+                  {
+                     "id": "https://difi.entryscape.net/store/37/resource/12",
+                     "title": {},
+                     "description": {
+                        "": "Søk etter registrerte enheter i Enhetsregisteret"
+                     },
+                     "accessURL": "https://w2.brreg.no/enhet/sok/",
+                     "format": "text/html"
+                  }
+               ]
+            }
+         },
+         {
+            "_index": "dcat",
+            "_type": "dataset",
+            "_id": "https://difi.entryscape.net/store/37/resource/10",
+            "_score": 1,
+            "_source": {
+               "id": "https://difi.entryscape.net/store/37/resource/10",
+               "title": {
+                  "": "Nøkkelopplysninger fra Frivillighetsregisteret"
+               },
+               "description": {
+                  "": "Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret"
+               },
+               "keywords": {
+                  "": [
+                     "Lag",
+                     "Organisasjonsnummer",
+                     "Forening",
+                     "Grasrotandel",
+                     "Kontonummer"
+                  ]
+               },
+               "issued": "2009-01-01T00:00:00+01",
+               "language": "http://publications.europa.eu/resource/authority/language/NOR",
+               "landingPage": "https://w2.brreg.no/frivillighetsregisteret/",
+               "catalog": {
+                  "id": "https://difi.entryscape.net/store/37/resource/dcat",
+                  "title": {
+                     "": "Brønnøysundregistrene"
+                  },
+                  "description": {
+                     "": "Katalog over datasett i Brønnøysundregistrene"
+                  },
+                  "publisher": {
+                     "id": "https://difi.entryscape.net/store/37/resource/1",
+                     "name": "Brønnøysundregistrene"
+                  }
+               },
+               "distributions": [
+                  {
+                     "id": "https://difi.entryscape.net/store/37/resource/11",
+                     "title": {},
+                     "description": {
+                        "": "Søk etter registrert frivillig organisasjon"
+                     },
+                     "accessURL": "https://w2.brreg.no/frivillighetsregisteret/",
+                     "format": "text/html"
+                  }
+               ]
+            }
+         },
+         {
+            "_index": "dcat",
+            "_type": "dataset",
+            "_id": "https://difi.entryscape.net/store/37/resource/8",
+            "_score": 1,
+            "_source": {
+               "id": "https://difi.entryscape.net/store/37/resource/8",
+               "title": {
+                  "": "Åpne data - Enhetsregisteret"
+               },
+               "description": {
+                  "": "Denne tjenesten fra Brønnøysundregistrene tilbyr et utvalg av opplysninger om alle enheter registrert i Enhetsregisteret. Vi gjør oppmerksom på at tjenesten er en pilot og er derfor ikke en ferdig løsning. I denne tjenesten kan du\n•gjøre søk og oppslag mot Enhetsregisteret\n•laste ned komplette datasett med utvalgt informasjon om alle enheter i Enhetsregisteret (CSV-format)\n"
+               },
+               "keywords": {
+                  "": [
+                     "Organisasjonsnummer",
+                     "Åpne data",
+                     "Foretaksnavn",
+                     "Grunndata"
+                  ]
+               },
+               "issued": "2014-10-01T00:00:00+02",
+               "modified": "2016-02-03T00:00:00+01",
+               "language": "http://publications.europa.eu/resource/authority/language/NOR",
+               "landingPage": "http://data.brreg.no/oppslag/enhetsregisteret/enheter.xhtml",
+               "catalog": {
+                  "id": "https://difi.entryscape.net/store/37/resource/dcat",
+                  "title": {
+                     "": "Brønnøysundregistrene"
+                  },
+                  "description": {
+                     "": "Katalog over datasett i Brønnøysundregistrene"
+                  },
+                  "publisher": {
+                     "id": "https://difi.entryscape.net/store/37/resource/1",
+                     "name": "Brønnøysundregistrene"
+                  }
+               },
+               "distributions": [
+                  {
+                     "id": "https://difi.entryscape.net/store/37/resource/9",
+                     "title": {},
+                     "description": {
+                        "": "Oppslag via data.brreg.no eller API"
+                     },
+                     "accessURL": "http://data.brreg.no/oppslag/enhetsregisteret/enheter.xhtml",
+                     "license": "http://data.norge.no/nlod/no/1.0",
+                     "format": "text/csv"
+                  }
+               ]
+            }
+         },
+         {
+            "_index": "dcat",
+            "_type": "dataset",
+            "_id": "https://difi.entryscape.net/store/37/resource/2",
+            "_score": 1,
+            "_source": {
+               "id": "https://difi.entryscape.net/store/37/resource/2",
+               "title": {
+                  "no": "Enhetsregisteret"
+               },
+               "description": {
+                  "no": "Einingsregisteret samordnar opplysningar om næringslivet og offentlege etatar som finst i ulike offentlege register.I Enhetsregisteret finner du alle som er registrert for momspliktig virksomhet, har registrerte ansatte eller er med i Foretaksregisteret. Dessuten finner du mange næringsdrivende enkeltpersonforetak, foreninger og andre økonomiske enheter uten registreringsplikt, som har valgt å bli med i Enhetsregisteret på frivillig grunnlag. Registeret inneholder også alle enheter som er registrert i fylkesmennenes stiftelsesregistre og skattemanntallet for etterskuddspliktige."
+               },
+               "keywords": {
+                  "no": [
+                     "Organisasjonsnummer",
+                     "Roller",
+                     "Enhet",
+                     "Grunndata"
+                  ]
+               },
+               "issued": "1995-03-01T00:00:00+01",
+               "modified": "2015-01-01T00:00:00+01",
+               "language": "http://publications.europa.eu/resource/authority/language/NOR",
+               "landingPage": "https://www.brreg.no/",
+               "catalog": {
+                  "id": "https://difi.entryscape.net/store/37/resource/dcat",
+                  "title": {
+                     "": "Brønnøysundregistrene"
+                  },
+                  "description": {
+                     "": "Katalog over datasett i Brønnøysundregistrene"
+                  },
+                  "publisher": {
+                     "id": "https://difi.entryscape.net/store/37/resource/1",
+                     "name": "Brønnøysundregistrene"
+                  }
+               },
+               "distributions": [
+                  {
+                     "id": "https://difi.entryscape.net/store/37/resource/7",
+                     "title": {},
+                     "description": {
+                        "": "Tilgang til komplett kopi av Enhetsregisteret er bare tilgjengelig for noen utvalgte offentlige virksomheter."
+                     },
+                     "accessURL": "https://www.brreg.no/",
+                     "format": "Batch"
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
