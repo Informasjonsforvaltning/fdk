@@ -6,7 +6,9 @@
     <groupId>no.dcat</groupId>
     <artifactId>portal</artifactId>
     <version>0.1.0</version>
-	
+    <name>Søkeportal for felles datakatalog</name>
+    <description>En søkeportal for å søke etter datasettbeskrivelser og vise resultater</description>
+
     <parent>
         <groupId>no.dcat</groupId>
         <artifactId>parent</artifactId>
@@ -17,12 +19,37 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-			<version>1.4.0.RELEASE</version>
+			<version>${spring.boot.version}</version>
+        </dependency>
+        <!-- må være med for å kjøre i intellij -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <!--<scope>provided</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>2.3.5</version>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.1.1</version>
         </dependency>
 
     </dependencies>
@@ -31,9 +58,8 @@
 	<plugins>
 		
 		<plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.4.0.RELEASE</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
             <executions>
                 <execution>
                     <goals>
@@ -44,8 +70,8 @@
         </plugin>
    
 		<plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>                
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
 		</plugin>
 		
 		<plugin>

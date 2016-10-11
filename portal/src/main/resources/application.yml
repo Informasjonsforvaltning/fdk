@@ -1,0 +1,11 @@
+spring:
+    profiles: docker
+application:
+  elasticSearchHost: es
+  elasticSearchPort: 9300
+---
+spring:
+    profiles: development
+application:
+  elasticSearchHost: localhost
+  elasticSearchPort: 9300

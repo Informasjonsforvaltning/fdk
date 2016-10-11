@@ -69,33 +69,27 @@ public class CrawlerJob implements Runnable {
         try {
             logger.debug("loadDataset: "+ dcatSource.getUrl());
             Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
-            logger.debug("dataset " + dataset.toString());
             Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
             Iterator<String> stringIterator = dataset.listNames();
 
-            logger.debug("union");
-            while (stringIterator.hasNext()) {
+             while (stringIterator.hasNext()) {
                 union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
             }
-            logger.debug("verify");
             verifyModelByParsing(union);
 
-            logger.debug("isEtnryscape");
             if (isEntryscape(union)) {
                 enrichForEntryscape(union);
             }
-            logger.debug("isVegvesen");
-            if (isVegvesenet(union)) {
+           if (isVegvesenet(union)) {
                 enrichForVegvesenet(union);
             }
-            logger.debug("brregagentconverter2");
             BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-            logger.debug("collect from model");
             brregAgentConverter.collectFromModel(union);
 
-            logger.debug("isValid");
+
 
             if (isValid(union)) {
+                logger.debug("Dataset is valid!");
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
                 }
@@ -119,13 +113,13 @@ public class CrawlerJob implements Runnable {
                 }
             }catch (Exception e2){}
             adminDataStore.addCrawlResults(dcatSource, DifiMeta.syntaxError, message);
-            logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()));
+            logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
 
         } catch (HttpException e) {
             adminDataStore.addCrawlResults(dcatSource, DifiMeta.networkError, e.getMessage());
-            logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()));
+            logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
         } catch (Exception e) {
-            logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()));
+            logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
             adminDataStore.addCrawlResults(dcatSource, DifiMeta.error, e.getMessage());
         }
 
