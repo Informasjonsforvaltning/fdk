@@ -8,6 +8,7 @@ services:
     environment:
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
+     - application.simpleQueryServiceURL=http://portal:8080/search
     links:
       - elasticsearch
     networks:

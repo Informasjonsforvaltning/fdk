@@ -21,27 +21,16 @@ public class Application {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-   /*     System.out.println("Let's inspect the beans provided by Spring Boot:");
+        /*
+        System.out.println("Let's inspect the beans provided by Spring Boot:");
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
         for (String beanName : beanNames) {
             System.out.println(beanName);
-        }*/
-/*
-        // connect to ES
-        Client client = null;
-        logger.info("Starting Portal Application");
-        try {
-            client = TransportClient.builder().build()
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("es"),9300));
-        } catch (UnknownHostException e) {
-            // TODO Auto-generated catch block
-            logger.error("ERROR: "+ e.getMessage());
         }
+        */
 
-        logger.info("Client is connected " + client.toString());
-*/
     }
 
 }
