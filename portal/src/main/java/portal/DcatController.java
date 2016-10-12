@@ -10,6 +10,11 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +35,13 @@ import java.util.concurrent.TimeUnit;
 public class DcatController {
     Logger logger = LoggerFactory.getLogger(DcatController.class);
 
+
+    @Value("${application.elasticsearchHost}")
+    private String elasticsearchHost ;
+
+    @Value("${application.elasticsearchPort}")
+    private int elasticsearchPort;
+
     Client client = null;
 
     @RequestMapping("/search")
@@ -45,7 +57,15 @@ public class DcatController {
 
         String json = "{}";
 
-        if (client == null) client = returnElasticsearchTransportClient("localhost",9300);
+        logger.debug("elasticsearch: "+ elasticsearchHost +":"+ elasticsearchPort);
+        if (client == null) {
+            if (elasticsearchHost == null) {
+                logger.error("Unable to connect to elasticsearchHost:" + elasticsearchHost + ":" + elasticsearchPort );
+                return json;
+            }
+
+            client = returnElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
+        }
 
         QueryBuilder search = QueryBuilders.queryStringQuery(query);
 
@@ -79,11 +99,11 @@ public class DcatController {
         client = null;
         try {
             InetAddress inetadress = InetAddress.getByName(host);
-             InetSocketTransportAddress address = new InetSocketTransportAddress(inetadress, port);
+            InetSocketTransportAddress address = new InetSocketTransportAddress(inetadress, port);
 
             client = TransportClient.builder().build()
                     .addTransportAddress(address);
-            logger.debug("Client returns!");
+            logger.debug("Client returns! " + address.toString() );
         } catch (UnknownHostException e) {
             logger.error(e.toString());
         }
