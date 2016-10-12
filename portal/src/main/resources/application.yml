@@ -3,9 +3,11 @@ spring:
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
+  simpleQueryServiceURL: http://portal:8080/search
 ---
 spring:
     profiles: development
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
+  simpleQueryServiceURL: http://localhost:8090/search

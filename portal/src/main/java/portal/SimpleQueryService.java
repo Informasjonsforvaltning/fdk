@@ -4,17 +4,14 @@ package portal;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,59 +22,63 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.concurrent.TimeUnit;
 
 
 /**
+ * A simple search service.
+ *
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class DcatController {
-    Logger logger = LoggerFactory.getLogger(DcatController.class);
-
+public class SimpleQueryService {
+    static private Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
+    static private Client client = null;
 
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost ;
 
     @Value("${application.elasticsearchPort}")
-    private int elasticsearchPort;
+    private int elasticsearchPort = 9300;
 
-    Client client = null;
 
-    @RequestMapping("/search")
-    public String search(@RequestParam(value="q", defaultValue="") String query,
+    @RequestMapping(value = "/search", produces = "application/json")
+    public ResponseEntity<String> search(@RequestParam(value="q", defaultValue="") String query,
                          @RequestParam(value="from", defaultValue="0") int from,
                          @RequestParam(value="size", defaultValue="10") int size) {
+
         logger.debug("query: \""+ query + "\" from:" + from + " size:" + size );
 
         if (size > 50) size = 50;
         if (size < 5) size = 5;
 
-        if ("".equals(query)) query = "*";
-
         String json = "{}";
 
+        // TODO - check if client is available
         logger.debug("elasticsearch: "+ elasticsearchHost +":"+ elasticsearchPort);
         if (client == null) {
             if (elasticsearchHost == null) {
-                logger.error("Unable to connect to elasticsearchHost:" + elasticsearchHost + ":" + elasticsearchPort );
-                return json;
+                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
+                return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             client = returnElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
         }
 
-        QueryBuilder search = QueryBuilders.queryStringQuery(query);
+        QueryBuilder search;
 
-        /*
-        {
-            "query": {
-                "query_string": {
-                  "query": {query string}
-            }
+        if ("".equals(query)) {
+            search = QueryBuilders.matchAllQuery();
+        } else {
+            search = QueryBuilders.queryStringQuery(query);
+            /*JSON: {
+                "query": {
+                   "query_string": {
+                   "query": {query string}
+                }
+            }*/
         }
-        }*/
-        logger.debug(search.toString());
+
+        logger.trace(search.toString());
 
         SearchResponse response = client.prepareSearch("dcat")
                 .setTypes("dataset")
@@ -88,11 +89,10 @@ public class DcatController {
 
                 .execute().actionGet();
 
-        logger.debug(response.toString());
+        logger.trace("Search responce: " + response.toString());
         // Build query
 
-        return response.toString();
-
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
     public Client returnElasticsearchTransportClient(String host, int port) {

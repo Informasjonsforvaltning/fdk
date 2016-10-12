@@ -10,6 +10,8 @@
     </style>
 </head>
 <body>
+    <div id="dcatQueryService" th:text="${session.dcatQueryService}" style="display:none"></div>
+
     <div class="container-fluid">
 
     <header class="a-header" role="banner">
@@ -184,10 +186,10 @@ $(document).ready(function () {
 	});
 });
 
-//var murl = "${application.dcatServerURL}";
-//console.log(murl);
+var sElement = document.getElementById("dcatQueryService");
+var searchUrl = sElement.innerHTML;
+console.log("service: " + searchUrl);
 
-var searchUrl = "http://localhost:8080/search"
 var from = 0;
 var size = 10;
 var total = 0;
