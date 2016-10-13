@@ -5,7 +5,9 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>portal</artifactId>
-    <version>0.1.0</version>
+    <packaging>pom</packaging>
+    <version>0.2.0</version>
+
     <name>Søkeportal for felles datakatalog</name>
     <description>En søkeportal for å søke etter datasettbeskrivelser og vise resultater</description>
 
@@ -15,70 +17,10 @@
         <version>0.1.0</version>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-			<version>${spring.boot.version}</version>
-        </dependency>
-        <!-- må være med for å kjøre i intellij -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>${elasticsearch.version}</version>
-        </dependency>
+    <modules>
+        <module>query</module>
+        <module>webapp</module>
+    </modules>
 
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.1.1</version>
-        </dependency>
 
-    </dependencies>
-
-	<build>
-	<plugins>
-		
-		<plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>repackage</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-   
-		<plugin>
-            <groupId>pl.project13.maven</groupId>
-            <artifactId>git-commit-id-plugin</artifactId>
-		</plugin>
-		
-		<plugin>
-            <groupId>com.spotify</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-		</plugin>
-    </plugins>
-    </build>
-	
 </project>

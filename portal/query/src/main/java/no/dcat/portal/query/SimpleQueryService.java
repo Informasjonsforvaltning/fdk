@@ -1,4 +1,4 @@
-package portal;
+package no.dcat.portal.query;
 
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ import java.net.UnknownHostException;
 
 
 /**
- * A simple search service.
+ * A simple search service. Receives a query and forwards the query to Elasticsearch, reports back results.
  *
  * Created by nodavsko on 29.09.2016.
  */
@@ -40,7 +41,7 @@ public class SimpleQueryService {
     @Value("${application.elasticsearchPort}")
     private int elasticsearchPort = 9300;
 
-
+    @CrossOrigin
     @RequestMapping(value = "/search", produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value="q", defaultValue="") String query,
                          @RequestParam(value="from", defaultValue="0") int from,
@@ -68,6 +69,9 @@ public class SimpleQueryService {
 
         if ("".equals(query)) {
             search = QueryBuilders.matchAllQuery();
+            /*JSON: {
+                "match_all" : { }
+             }*/
         } else {
             search = QueryBuilders.queryStringQuery(query);
             /*JSON: {
@@ -89,7 +93,7 @@ public class SimpleQueryService {
 
                 .execute().actionGet();
 
-        logger.trace("Search responce: " + response.toString());
+        logger.trace("Search response: " + response.toString());
         // Build query
 
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
@@ -98,8 +102,8 @@ public class SimpleQueryService {
     public Client returnElasticsearchTransportClient(String host, int port) {
         client = null;
         try {
-            InetAddress inetadress = InetAddress.getByName(host);
-            InetSocketTransportAddress address = new InetSocketTransportAddress(inetadress, port);
+            InetAddress inetaddress = InetAddress.getByName(host);
+            InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
 
             client = TransportClient.builder().build()
                     .addTransportAddress(address);
@@ -108,12 +112,12 @@ public class SimpleQueryService {
             logger.error(e.toString());
         }
 
-        logger.debug("transportclient created: " + client);
+        logger.debug("Transport client to elasticsearch created: " + client);
         return client;
 
     }
 
-    /* Laster en json fil */
+    /* Laster en json fil. Prototyping */
     private String loadFromFile(String filename) {
 
         ClassLoader classLoader = getClass().getClassLoader();
