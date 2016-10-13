@@ -34,6 +34,7 @@
         dct:spatial              <http://sws.geonames.org/3144096/> ;
         dct:subject              <file:///usr/local/src/data/dcat/mapper/0> ;
         dct:title                "Partiregisteret" ;
+        dct:title                "Registry of political parties"@en ;
         dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
         dcat:distriution         <http://data.brreg.no/datakatalog/distibusjon/3> ;
         dcat:keyword             "Partinavn" , "Utøvende organ" , "Parti" , "Organisasjonsnummer" , "Kontaktperson" ;

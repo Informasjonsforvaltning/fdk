@@ -40,6 +40,9 @@ import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
 
+    //Default language added to titles, descriptions and keywords with no language
+    private static final String DEFAULT_LANGUAGE = "no-nb";
+
     private List<CrawlerResultHandler> handlers;
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;
@@ -321,29 +324,98 @@ public class CrawlerJob implements Runnable {
      * Value will be set to "no-nb"
      * See Jira https://jira.brreg.no/browse/FDK-82
      *
-     * @param union Graph containing the rdf model
+     * @param union Graph containing rdf model
      */
     private void enrichLanguage(Model union) {
-        //TODO: Må vi sjekke for tomme tager i tillegg til manglende tager?
 
-        // Handle missing language tag for dataset title
-        NodeIterator datasetTitles = union.listObjectsOfProperty(DCTerms.title);
-
-        //while (datasetTitles.hasNext()) {
-            Resource resource = datasetTitles.next().asResource();
-
-            //..men denne finnes ikke...
-           // Statement lang = resource.getProperty(DCTerms.language);
-
-            //logger.info("langStmt: " + lang.toString());
-
-       //}
-        ResIterator catalogPublisher = union.listSubjectsWithProperty(RDF.type, DCAT.Catalog);
-        while (catalogPublisher.hasNext()) {
-            Resource resource = catalogPublisher.next().asResource();
-            ResIterator resIterator = union.listSubjectsWithProperty(FOAF.name, "Brønnøysundregistrene");
-            logger.
+        //Debug: Skricv ut alle statements før endring
+        logger.info("Alle ressurser");
+        logger.info("==============================");
+        StmtIterator stmtIt = union.listStatements(new SimpleSelector(null, null, (RDFNode) null));
+        while(stmtIt.hasNext()) {
+            Statement stmt = stmtIt.next();
+            logger.info("stmt : " + stmt.toString());
         }
+
+
+        //Store statements that need to be deleted
+        List<Statement> statementToBeDeleted = new ArrayList<>();
+
+        //Find all resources that has a title property
+        StmtIterator titles = union.listStatements(new SimpleSelector(null, DCTerms.title, (RDFNode) null));
+        while(titles.hasNext()) {
+            Statement titleStmt = titles.nextStatement();
+            Literal title = titleStmt.getObject().asLiteral();
+
+            //if language is blank, default language should be added
+            if(title.getLanguage().equals("")) {
+                //create new resource with language added
+                Literal titleWithLang = ResourceFactory.createLangLiteral(title.getString(), DEFAULT_LANGUAGE);
+                titleStmt.getSubject().addLiteral(DCTerms.title, titleWithLang);
+
+                //mark resource without language for deletion
+                statementToBeDeleted.add(titleStmt);
+            }
+        }
+
+        //Find all resources that has a description property
+        StmtIterator descriptions = union.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
+        while(descriptions.hasNext()) {
+            Statement descStmt = descriptions.nextStatement();
+            Literal description = descStmt.getObject().asLiteral();
+
+            //if language is blank, default language should be added
+            if(description.getLanguage().equals("")) {
+                //create new resource with language added
+                Literal descWithLang = ResourceFactory.createLangLiteral(description.getString(), DEFAULT_LANGUAGE);
+                descStmt.getSubject().addLiteral(DCTerms.description, descWithLang);
+
+                //mark resource without language for deletion
+                statementToBeDeleted.add(descStmt);
+            }
+        }
+
+        //Find all resources that has a keyword property
+        StmtIterator keywords = union.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
+        while(keywords.hasNext()) {
+            Statement keywordStmt = keywords.nextStatement();
+            Literal keyword = keywordStmt.getObject().asLiteral();
+
+            //if language is blank, default language should be added
+            if(keyword.getLanguage().equals("")) {
+                //create new resource with language added
+                Literal keywordWithLang = ResourceFactory.createLangLiteral(keyword.getString(), DEFAULT_LANGUAGE);
+                keywordStmt.getSubject().addLiteral(DCAT.keyword, keywordWithLang);
+
+                //mark resource without language for deletion
+                statementToBeDeleted.add(keywordStmt);
+            }
+        }
+
+        //Delete resources without language
+        statementToBeDeleted.forEach(union::remove);
+
+
+
+
+        //Debug: Loop gjennom for å se at alle descriptions har språk
+        logger.info("Description-ressurser skal ha språk");
+        logger.info("====================================");
+        StmtIterator dctDesc = union.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
+        while(dctDesc.hasNext()) {
+            Statement testDescRes = dctDesc.next();
+            logger.info("Testres med beskrivelse: " + testDescRes.toString());
+        }
+
+        //Debug: Loop gjennom for å se at alle descriptions har språk
+        logger.info("Keyword-ressurser skal ha språk");
+        logger.info("====================================");
+        StmtIterator keyStmti = union.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
+        while(keyStmti.hasNext()) {
+            Statement keyStmt = keyStmti.next();
+            logger.info("Testres med keyword: " + keyStmt.toString());
+        }
+
     }
 
     private boolean isValid(Model model) {
