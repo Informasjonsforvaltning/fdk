@@ -13,10 +13,6 @@
     <description>Portal webapplication</description>
     <version>0.2.0</version>
 
-    <properties>
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-    </properties>
 
 
     <dependencies>
@@ -54,6 +50,8 @@
     </dependencies>
 
     <build>
+
+
         <!-- enable filtering to generate project.properties with information from build process -->
         <resources>
             <resource>
@@ -66,6 +64,30 @@
         </resources>
 
         <plugins>
+
+            <!-- hack to get the build time out of maven. Default is GMT and we need local time -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.12</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>build.time</name>
+                            <pattern>yyyy-MM-dd HH:mm</pattern>
+                            <locale>no_NO</locale>
+                            <unit>hour</unit>
+                            <offset>2</offset>
+                            <timeZone>+02:00</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
