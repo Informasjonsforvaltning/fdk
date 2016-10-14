@@ -1,42 +1,15 @@
 package no.dcat.harvester;
 
-import com.google.common.cache.LoadingCache;
-import no.dcat.harvester.crawler.converters.BrregAgentConverter;
-import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
-import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
-import no.dcat.harvester.validation.DcatValidation;
-import no.dcat.harvester.validation.ValidationError;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.DifiMeta;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.graph.Triple;
-import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFLanguages;
-import org.apache.jena.riot.system.StreamRDF;
-import org.apache.jena.shared.JenaException;
-import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
-import org.openrdf.model.vocabulary.DCTERMS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by bjg on 14.10.2016.
