@@ -5,7 +5,7 @@ import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RiotException;
 import org.apache.jena.shared.BadURIException;
 import org.apache.jena.util.FileManager;
@@ -37,6 +37,8 @@ public class CrawlerJobTest {
 
 
         job.run();
+
+
     }
 
     @Test
@@ -57,7 +59,38 @@ public class CrawlerJobTest {
 
 
         job.run();
+
     }
+
+
+    @Test
+    public void testLanguageDefault() throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+
+
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("datasett-mini.ttl").getFile(), "tester", "123456789");
+
+        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
+        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+
+        FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
+
+        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+
+
+        job.run();
+
+        //Get processed model in order to check language properties
+        Model model = job.getMod();
+
+        //Debug: Skricv ut alle statements før endring
+        //StmtIterator stmtIt = model.listStatements(new SimpleSelector(null, null, (RDFNode) null));
+        //System.out.println("Modell har innhold: " + stmtIt.hasNext());
+
+    }
+
 
     @Test
     public void testCrawlerResultHandlerWithNoException() {

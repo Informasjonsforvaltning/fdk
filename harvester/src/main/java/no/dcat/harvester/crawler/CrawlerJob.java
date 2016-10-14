@@ -50,6 +50,17 @@ public class CrawlerJob implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
+    //for tests
+    private Model mod;
+
+    public Model getMod() {
+        return mod;
+    }
+
+    public void setMod(Model mod) {
+        this.mod = mod;
+    }
+
     protected CrawlerJob(DcatSource dcatSource,
                          AdminDataStore adminDataStore,
                          LoadingCache<URL, String> brregCaache,
@@ -101,6 +112,9 @@ public class CrawlerJob implements Runnable {
                     handler.process(dcatSource, union);
                 }
             }
+
+            //make finished model available externally for tests
+            mod = union;
 
             LocalDateTime stop = LocalDateTime.now();
             logger.info("[crawler_operations] [success] Finished crawler job: {}", dcatSource.toString() + ", Duration=" + returnCrawlDuration(start, stop));
@@ -327,16 +341,6 @@ public class CrawlerJob implements Runnable {
      * @param union Graph containing rdf model
      */
     private void enrichLanguage(Model union) {
-
-        //Debug: Skricv ut alle statements før endring
-        logger.info("Alle ressurser");
-        logger.info("==============================");
-        StmtIterator stmtIt = union.listStatements(new SimpleSelector(null, null, (RDFNode) null));
-        while(stmtIt.hasNext()) {
-            Statement stmt = stmtIt.next();
-            logger.info("stmt : " + stmt.toString());
-        }
-
 
         //Store statements that need to be deleted
         List<Statement> statementToBeDeleted = new ArrayList<>();
