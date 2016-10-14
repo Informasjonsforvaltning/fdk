@@ -185,58 +185,40 @@ public class DataEnricher {
      * See Jira https://jira.brreg.no/browse/FDK-82
      */
     private void enrichLanguage() {
+        //Enrich title properties
+        enrichLanguageForProperty(DCTerms.title, DEFAULT_LANGUAGE);
 
-        //Find all resources that has a title property
-        StmtIterator titles = model.listStatements(new SimpleSelector(null, DCTerms.title, (RDFNode) null));
-        while(titles.hasNext()) {
-            Statement titleStmt = titles.nextStatement();
-            Literal title = titleStmt.getObject().asLiteral();
+        //Enrich description properties
+        enrichLanguageForProperty(DCTerms.description, DEFAULT_LANGUAGE);
 
-            //if language is blank, default language should be added
-            if(title.getLanguage().equals("")) {
+        //Enrich keyword properties
+        enrichLanguageForProperty(DCAT.keyword, DEFAULT_LANGUAGE);
+    }
+
+
+    /**
+     * Search for statement with specified property, and add language
+     * to object literal if language is missing
+     * @param predicate predicate to search for
+     * @param language language code that will be added to literal
+     */
+    private void enrichLanguageForProperty(Property predicate, String language) {
+        //Find all statements with specified property
+        StmtIterator statementIterator = model.listStatements(new SimpleSelector(null, predicate, (RDFNode) null));
+        while(statementIterator.hasNext()) {
+            Statement statement = statementIterator.nextStatement();
+            Literal literal = statement.getObject().asLiteral();
+
+            //if language is blank, specified language should be added
+            if(literal.getLanguage().equals("")) {
                 //create new resource with language added
-                Literal titleWithLang = ResourceFactory.createLangLiteral(title.getString(), DEFAULT_LANGUAGE);
-                titleStmt.getSubject().addLiteral(DCTerms.title, titleWithLang);
+                Literal literalWithLang = ResourceFactory.createLangLiteral(literal.getString(), language);
+                statement.getSubject().addLiteral(predicate, literalWithLang);
 
                 //mark resource without language for deletion
-                statementsToDelete.add(titleStmt);
+                statementsToDelete.add(statement);
             }
         }
-
-        //Find all resources that has a description property
-        StmtIterator descriptions = model.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
-        while(descriptions.hasNext()) {
-            Statement descStmt = descriptions.nextStatement();
-            Literal description = descStmt.getObject().asLiteral();
-
-            //if language is blank, default language should be added
-            if(description.getLanguage().equals("")) {
-                //create new resource with language added
-                Literal descWithLang = ResourceFactory.createLangLiteral(description.getString(), DEFAULT_LANGUAGE);
-                descStmt.getSubject().addLiteral(DCTerms.description, descWithLang);
-
-                //mark resource without language for deletion
-                statementsToDelete.add(descStmt);
-            }
-        }
-
-        //Find all resources that has a keyword property
-        StmtIterator keywords = model.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
-        while(keywords.hasNext()) {
-            Statement keywordStmt = keywords.nextStatement();
-            Literal keyword = keywordStmt.getObject().asLiteral();
-
-            //if language is blank, default language should be added
-            if(keyword.getLanguage().equals("")) {
-                //create new resource with language added
-                Literal keywordWithLang = ResourceFactory.createLangLiteral(keyword.getString(), DEFAULT_LANGUAGE);
-                keywordStmt.getSubject().addLiteral(DCAT.keyword, keywordWithLang);
-
-                //mark resource without language for deletion
-                statementsToDelete.add(keywordStmt);
-            }
-        }
-
-    } //end method enrichLanguage
+    }
 
 }
