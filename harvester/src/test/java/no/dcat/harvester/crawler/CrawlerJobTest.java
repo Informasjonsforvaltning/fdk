@@ -64,35 +64,6 @@ public class CrawlerJobTest {
 
 
     @Test
-    public void testLanguageDefault() throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-
-
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("datasett-mini.ttl").getFile(), "tester", "123456789");
-
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
-
-        FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
-
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
-
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
-
-
-        job.run();
-
-        //Get processed model in order to check language properties
-        Model model = job.getMod();
-
-        //Debug: Skricv ut alle statements før endring
-        //StmtIterator stmtIt = model.listStatements(new SimpleSelector(null, null, (RDFNode) null));
-        //System.out.println("Modell har innhold: " + stmtIt.hasNext());
-
-    }
-
-
-    @Test
     public void testCrawlerResultHandlerWithNoException() {
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "src/test/resources/npolar.jsonld", "tester", null);
 
