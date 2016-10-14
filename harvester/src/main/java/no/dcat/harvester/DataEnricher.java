@@ -25,72 +25,77 @@ public class DataEnricher {
     //Default language added to titles, descriptions and keywords with no language
     private static final String DEFAULT_LANGUAGE = "no-nb";
 
+    //Hold the model to be enriched
+    private Model model;
+
+    //Hold statements to be deleted at end
+    private List<Statement> statementsToDelete = new ArrayList<>();
+
     /**
      * This method enriches an input RDF DCAT model with extra data
      *
      * @param inputModel DCAT RDF model to be enriched
      * @return Enriched DCAT RDF model
      */
-    public Model enrichData(Model model) {
-        if (isEntryscape(model)) {
-            enrichForEntryscape(model);
+    public Model enrichData(Model inputModel) {
+
+        model = inputModel;
+
+        if (isEntryscape()) {
+            enrichForEntryscape();
         }
-        if (isVegvesenet(model)) {
-            enrichForVegvesenet(model);
+        if (isVegvesenet()) {
+            enrichForVegvesenet();
         }
-        enrichLanguage(model);
+        enrichLanguage();
+
+        //Remove statements marked for deletion
+        statementsToDelete.forEach(model::remove);
 
         return model;
+
     } //end method enrichData
 
 
     /**
      * Check to see if a model have been created with EntryScape
-     *
-     * @param union RDF DCAT model to be checked
-     * @return True if model is made by Entryscape
      */
-    private boolean isEntryscape(Model union) {
+    private boolean isEntryscape() {
         //detect entryscape data by doing a string match against the uri of a catalog
-        ResIterator resIterator = union.listResourcesWithProperty(RDF.type, union.createResource("http://www.w3.org/ns/dcat#Catalog"));
+        ResIterator resIterator = model.listResourcesWithProperty(RDF.type, model.createResource("http://www.w3.org/ns/dcat#Catalog"));
         return resIterator.hasNext() && resIterator.nextResource().getURI().contains("://difi.entryscape.net/");
     }
 
 
     /**
      * Check if model is from Vegvesenet (Norwegian state roads authority)
-     *
-     * @param union RDF DCAT model to be checked
-     * @return True if model is from Vegvesenet
      */
-    private boolean isVegvesenet(Model union) {
+    private boolean isVegvesenet() {
         //detect entryscape data by doing a string match against the uri of a catalog
-        ResIterator resIterator = union.listResourcesWithProperty(RDF.type, union.createResource("http://www.w3.org/ns/dcat#Catalog"));
+        ResIterator resIterator = model.listResourcesWithProperty(RDF.type, model.createResource("http://www.w3.org/ns/dcat#Catalog"));
         return resIterator.hasNext() && resIterator.nextResource().getURI().contains("utv.vegvesen.no");
     }
 
 
     /**
      * Add required DCAT-AP-NO data elements to models created with Entryscape
-     * @param union Model to enrich
      */
-    private void enrichForEntryscape(Model union) {
+    private void enrichForEntryscape() {
 
         // Add type DCTerms.RightsStatement to alle DCTerms.rights
-        NodeIterator dctRights = union.listObjectsOfProperty(DCTerms.rights);
+        NodeIterator dctRights = model.listObjectsOfProperty(DCTerms.rights);
         while (dctRights.hasNext()) {
             dctRights.next().asResource().addProperty(RDF.type, DCTerms.RightsStatement);
         }
 
         // Add type  DCTerms.Location to all DCTerms.spatial
-        NodeIterator dctSpatial = union.listObjectsOfProperty(DCTerms.spatial);
+        NodeIterator dctSpatial = model.listObjectsOfProperty(DCTerms.spatial);
         while (dctSpatial.hasNext()) {
             dctSpatial.next().asResource().addProperty(RDF.type, DCTerms.Location);
         }
 
         // Replace all DCTerms.issued where the literal is not a date or datetime
-        List<Statement> dctIssuedToDelete = new ArrayList<>();
-        StmtIterator dctIssued = union.listStatements(new SimpleSelector(null, DCTerms.issued, (RDFNode) null));
+        StmtIterator dctIssued = model.listStatements(new SimpleSelector(null, DCTerms.issued, (RDFNode) null));
         while (dctIssued.hasNext()) {
             Statement statement = dctIssued.next();
             Literal literal = statement.getObject().asLiteral();
@@ -98,7 +103,7 @@ public class DataEnricher {
 
 
                 String string = literal.getString();
-                dctIssuedToDelete.add(statement);
+                statementsToDelete.add(statement);
 
                 if (string.contains(":")) {
                     //datetime
@@ -116,62 +121,55 @@ public class DataEnricher {
             }
         }
 
-        dctIssuedToDelete.forEach(union::remove);
-
-
         // Remove DCTerms.accrualPeriodicity that are not according to DCAT AP 1.1
-        List<Statement> accrualPeriodicityToDelete = new ArrayList<>();
-        StmtIterator accrualPeriodicity = union.listStatements(new SimpleSelector(null, DCTerms.accrualPeriodicity, (RDFNode) null));
+        StmtIterator accrualPeriodicity = model.listStatements(new SimpleSelector(null, DCTerms.accrualPeriodicity, (RDFNode) null));
         while (accrualPeriodicity.hasNext()) {
             Statement statement = accrualPeriodicity.next();
             String uri = statement.getObject().asResource().getURI();
             if (!uri.startsWith("http://publications.europa.eu/resource/authority/frequency/")) {
-                accrualPeriodicityToDelete.add(statement);
+                statementsToDelete.add(statement);
             }
         }
-
-        accrualPeriodicityToDelete.forEach(union::remove);
-
     } //end method enrichForEntryscape
 
 
     /**
      * Add required DCAT-AP-NO data elements to models created by Vegvesenet
-     * @param union Model to be enriched
      */
-    private void enrichForVegvesenet(Model union) {
+    private void enrichForVegvesenet() {
 
         // Make all use of dcat:contactPoint point to resources of type vcard:Kind
-        NodeIterator contactPoint = union.listObjectsOfProperty(DCAT.contactPoint);
+        NodeIterator contactPoint = model.listObjectsOfProperty(DCAT.contactPoint);
         while (contactPoint.hasNext()) {
             Resource resource = contactPoint.next().asResource();
-            resource.addProperty(RDF.type, union.createResource("http://www.w3.org/2006/vcard/ns#Kind"));
+            resource.addProperty(RDF.type, model.createResource("http://www.w3.org/2006/vcard/ns#Kind"));
         }
 
         // Find a resource with foaf:name "Statens vegvesen" and use it as the dct:publisher for all dcat:Catalog(s)
-        ResIterator catalogPublisher = union.listSubjectsWithProperty(RDF.type, DCAT.Catalog);
+        ResIterator catalogPublisher = model.listSubjectsWithProperty(RDF.type, DCAT.Catalog);
         while (catalogPublisher.hasNext()) {
             Resource resource = catalogPublisher.next().asResource();
-            ResIterator resIterator = union.listSubjectsWithProperty(FOAF.name, "Statens vegvesen");
+            ResIterator resIterator = model.listSubjectsWithProperty(FOAF.name, "Statens vegvesen");
             resource.addProperty(DCTerms.publisher, resIterator.nextResource());
         }
 
         // Change dcat:accessUrl from string literal to uri resource
         List<Statement> toDelete = new ArrayList<>();
-        StmtIterator accessURL = union.listStatements(null, DCAT.accessUrl, (String) null);
+        StmtIterator accessURL = model.listStatements(null, DCAT.accessUrl, (String) null);
         while (accessURL.hasNext()) {
             toDelete.add(accessURL.nextStatement());
         }
 
+        //TODO: kan sikkert gjøres på en lurerer måte
         for (Statement statement : toDelete) {
             Resource subject = statement.getSubject();
-            subject.addProperty(DCAT.accessUrl, union.createResource(statement.getObject().toString()));
-            union.remove(statement);
+            subject.addProperty(DCAT.accessUrl, model.createResource(statement.getObject().toString()));
+            statementsToDelete.add(statement);
         }
 
 
         // Make all uses of dct:publisher point to resources of type foaf:Agent
-        NodeIterator dctPublisher = union.listObjectsOfProperty(DCTerms.publisher);
+        NodeIterator dctPublisher = model.listObjectsOfProperty(DCTerms.publisher);
         while (dctPublisher.hasNext()) {
             Resource resource = dctPublisher.next().asResource();
             resource.addProperty(RDF.type, FOAF.Agent);
@@ -185,26 +183,11 @@ public class DataEnricher {
      * Add language tag to dataset title, description and keyword if this is missing
      * Value will be set to "no-nb"
      * See Jira https://jira.brreg.no/browse/FDK-82
-     *
-     * @param union Model to be enriched
      */
-    private void enrichLanguage(Model union) {
-
-        //Debug: Skricv ut alle statements før endring
-        logger.info("Alle ressurser");
-        logger.info("==============================");
-        StmtIterator stmtIt = union.listStatements(new SimpleSelector(null, null, (RDFNode) null));
-        while(stmtIt.hasNext()) {
-            Statement stmt = stmtIt.next();
-            logger.info("stmt : " + stmt.toString());
-        }
-
-
-        //Store statements that need to be deleted
-        List<Statement> statementToBeDeleted = new ArrayList<>();
+    private void enrichLanguage() {
 
         //Find all resources that has a title property
-        StmtIterator titles = union.listStatements(new SimpleSelector(null, DCTerms.title, (RDFNode) null));
+        StmtIterator titles = model.listStatements(new SimpleSelector(null, DCTerms.title, (RDFNode) null));
         while(titles.hasNext()) {
             Statement titleStmt = titles.nextStatement();
             Literal title = titleStmt.getObject().asLiteral();
@@ -216,12 +199,12 @@ public class DataEnricher {
                 titleStmt.getSubject().addLiteral(DCTerms.title, titleWithLang);
 
                 //mark resource without language for deletion
-                statementToBeDeleted.add(titleStmt);
+                statementsToDelete.add(titleStmt);
             }
         }
 
         //Find all resources that has a description property
-        StmtIterator descriptions = union.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
+        StmtIterator descriptions = model.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
         while(descriptions.hasNext()) {
             Statement descStmt = descriptions.nextStatement();
             Literal description = descStmt.getObject().asLiteral();
@@ -233,12 +216,12 @@ public class DataEnricher {
                 descStmt.getSubject().addLiteral(DCTerms.description, descWithLang);
 
                 //mark resource without language for deletion
-                statementToBeDeleted.add(descStmt);
+                statementsToDelete.add(descStmt);
             }
         }
 
         //Find all resources that has a keyword property
-        StmtIterator keywords = union.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
+        StmtIterator keywords = model.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
         while(keywords.hasNext()) {
             Statement keywordStmt = keywords.nextStatement();
             Literal keyword = keywordStmt.getObject().asLiteral();
@@ -250,32 +233,8 @@ public class DataEnricher {
                 keywordStmt.getSubject().addLiteral(DCAT.keyword, keywordWithLang);
 
                 //mark resource without language for deletion
-                statementToBeDeleted.add(keywordStmt);
+                statementsToDelete.add(keywordStmt);
             }
-        }
-
-        //Delete resources without language
-        statementToBeDeleted.forEach(union::remove);
-
-
-
-
-        //Debug: Loop gjennom for å se at alle descriptions har språk
-        logger.info("Description-ressurser skal ha språk");
-        logger.info("====================================");
-        StmtIterator dctDesc = union.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
-        while(dctDesc.hasNext()) {
-            Statement testDescRes = dctDesc.next();
-            logger.info("Testres med beskrivelse: " + testDescRes.toString());
-        }
-
-        //Debug: Loop gjennom for å se at alle descriptions har språk
-        logger.info("Keyword-ressurser skal ha språk");
-        logger.info("====================================");
-        StmtIterator keyStmti = union.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
-        while(keyStmti.hasNext()) {
-            Statement keyStmt = keyStmti.next();
-            logger.info("Testres med keyword: " + keyStmt.toString());
         }
 
     } //end method enrichLanguage

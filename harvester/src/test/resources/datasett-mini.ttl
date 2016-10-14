@@ -23,6 +23,15 @@
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         foaf:page        <https://register-web.test.nhn.no/> .
 
+<http://data.brreg.no/datakatalog/dataset/27>
+        a                dcat:Dataset ;
+        dct:description  "Dataset with english description."@en ;
+        dct:identifier   "17" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Brreg> ;
+        dct:title        "EnglishData"@en ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        foaf:page        <https://register-web.test.nhn.no/> .
+
 <http://data.brreg.no/datakatalog/dataset/7>
         a                        dcat:Dataset ;
         dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
@@ -34,7 +43,6 @@
         dct:spatial              <http://sws.geonames.org/3144096/> ;
         dct:subject              <file:///usr/local/src/data/dcat/mapper/0> ;
         dct:title                "Partiregisteret" ;
-        dct:title                "Registry of political parties"@en ;
         dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
         dcat:distriution         <http://data.brreg.no/datakatalog/distibusjon/3> ;
         dcat:keyword             "Partinavn" , "Utøvende organ" , "Parti" , "Organisasjonsnummer" , "Kontaktperson" ;
@@ -69,7 +77,7 @@ vcard:telefon  a  owl:ObjectProperty .
         dct:description  "Minikatalog for testformål" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Brreg> ;
         dct:title        "Minikatalog" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/17> , <http://data.brreg.no/datakatalog/dataset/7> .
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/17> , <http://data.brreg.no/datakatalog/dataset/7>, <http://data.brreg.no/datakatalog/dataset/27> .
 
 
 vcard:organization-unit

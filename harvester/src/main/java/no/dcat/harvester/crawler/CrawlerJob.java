@@ -189,20 +189,6 @@ public class CrawlerJob implements Runnable {
 
     }
 
-
-
-    //DEL isEntryscape
-
-    //DEL isVegvesenet
-
-
-    //DEL enrichForEntryscape
-
-    //DEL enrichForVegvesenet
-
-
-    //DEL enrichLanguage
-
     private boolean isValid(Model model) {
 
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
