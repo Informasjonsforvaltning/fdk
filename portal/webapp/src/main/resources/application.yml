@@ -1,9 +1,9 @@
 spring:
     profiles: docker
 application:
-  simpleQueryServiceURL: http://query:8080/search
+  queryServiceURL: http://localhost:8081/search
 ---
 spring:
     profiles: development
 application:
-  simpleQueryServiceURL: http://localhost:8091/search
+  queryServiceURL: http://localhost:8091/search
