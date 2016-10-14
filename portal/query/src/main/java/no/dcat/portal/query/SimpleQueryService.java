@@ -49,17 +49,24 @@ public class SimpleQueryService {
 
         logger.debug("query: \""+ query + "\" from:" + from + " size:" + size );
 
-        if (size > 50) size = 50;
+        if (from < 0) {
+            return new ResponseEntity<String>("{\"error\": \"parameter error: from is less than zero\"}",HttpStatus.BAD_REQUEST);
+        }
+
+        if (size > 100) {
+            return new ResponseEntity<String>("{\"error\": \"parameter error: size is larger than 100\"}",HttpStatus.BAD_REQUEST);
+        }
+
         if (size < 5) size = 5;
 
-        String json = "{}";
+        String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
 
         // TODO - check if client is available
         logger.debug("elasticsearch: "+ elasticsearchHost +":"+ elasticsearchPort);
         if (client == null) {
             if (elasticsearchHost == null) {
                 logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
-                return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             client = returnElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
