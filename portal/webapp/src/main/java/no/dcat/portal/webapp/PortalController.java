@@ -3,52 +3,27 @@ package no.dcat.portal.webapp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Delivers html pages to support the DCAT Portal application
  *
  * Created by nodavsko on 12.10.2016.
  */
+
 @Controller
-@EnableAutoConfiguration
-@PropertySource("project.properties") // for maven build properties
-@PropertySource("git.properties") // for git properties
-@ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalController {
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
+    private final PortalConfiguration buildMetadata;
 
-    @Value("${spring.profiles.active}")
-    private String profile = "utvikling";
-
-    /* application.queryServiceURL */
-    private String queryServiceURL;
-    public void setQueryServiceURL (String serviceURL) {
-        this.queryServiceURL = serviceURL;
+    @Autowired
+    public PortalController(PortalConfiguration metadata) {
+        this.buildMetadata = metadata;
     }
-
-    @Value("${git.commit.id.abbrev}")
-    private String commitAbbrev;
-
-    @Value("${version}")
-    private String version;
-
-    @Value("${artifactId}")
-    private String artifactId;
-
-    @Value("${build.date}")
-    private String buildDate;
-
 
 
     /**
@@ -58,13 +33,12 @@ public class PortalController {
     @RequestMapping({"/"})
     String index (HttpSession session) {
 
-        session.setAttribute("dcatQueryService", queryServiceURL);
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
 
-        logger.debug(queryServiceURL);
-        String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
-        logger.debug(versionInfo);
+        logger.debug(buildMetadata.getQueryServiceURL());
+        logger.debug(buildMetadata.getVersionInformation());
 
-        session.setAttribute("versionInformation",versionInfo);
+        session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
 
         return "home"; // templates/home.html
     }
