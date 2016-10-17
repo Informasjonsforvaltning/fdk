@@ -1,14 +1,17 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
-import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.atlas.web.HttpException;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.*;
@@ -18,6 +21,9 @@ import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.sparql.vocabulary.FOAF;
+import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +46,7 @@ public class CrawlerJob implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
-     protected CrawlerJob(DcatSource dcatSource,
+    protected CrawlerJob(DcatSource dcatSource,
                          AdminDataStore adminDataStore,
                          LoadingCache<URL, String> brregCaache,
                          CrawlerResultHandler... handlers) {
@@ -70,12 +77,12 @@ public class CrawlerJob implements Runnable {
             }
             verifyModelByParsing(union);
 
-            //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
-            DataEnricher enricher = new DataEnricher();
-            Model enrichedUnion = enricher.enrichData(union);
-            union = enrichedUnion;
-
-
+            if (isEntryscape(union)) {
+                enrichForEntryscape(union);
+            }
+           if (isVegvesenet(union)) {
+                enrichForVegvesenet(union);
+            }
             BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
             brregAgentConverter.collectFromModel(union);
 
@@ -186,6 +193,121 @@ public class CrawlerJob implements Runnable {
 
             }
         }, new ByteArrayInputStream(str.toString().getBytes()), Lang.RDFXML);
+
+    }
+
+
+    private boolean isEntryscape(Model union) {
+        //detect entryscape data by doing a string match against the uri of a catalog
+        ResIterator resIterator = union.listResourcesWithProperty(RDF.type, union.createResource("http://www.w3.org/ns/dcat#Catalog"));
+        return resIterator.hasNext() && resIterator.nextResource().getURI().contains("://difi.entryscape.net/");
+    }
+
+    private boolean isVegvesenet(Model union) {
+        //detect entryscape data by doing a string match against the uri of a catalog
+        ResIterator resIterator = union.listResourcesWithProperty(RDF.type, union.createResource("http://www.w3.org/ns/dcat#Catalog"));
+        return resIterator.hasNext() && resIterator.nextResource().getURI().contains("utv.vegvesen.no");
+    }
+
+
+    private void enrichForEntryscape(Model union) {
+
+        // Add type DCTerms.RightsStatement to alle DCTerms.rights
+        NodeIterator dctRights = union.listObjectsOfProperty(DCTerms.rights);
+        while (dctRights.hasNext()) {
+            dctRights.next().asResource().addProperty(RDF.type, DCTerms.RightsStatement);
+        }
+
+        // Add type  DCTerms.Location to all DCTerms.spatial
+        NodeIterator dctSpatial = union.listObjectsOfProperty(DCTerms.spatial);
+        while (dctSpatial.hasNext()) {
+            dctSpatial.next().asResource().addProperty(RDF.type, DCTerms.Location);
+        }
+
+        // Replace all DCTerms.issued where the literal is not a date or datetime
+        List<Statement> dctIssuedToDelete = new ArrayList<>();
+        StmtIterator dctIssued = union.listStatements(new SimpleSelector(null, DCTerms.issued, (RDFNode) null));
+        while (dctIssued.hasNext()) {
+            Statement statement = dctIssued.next();
+            Literal literal = statement.getObject().asLiteral();
+            if (literal.getDatatype().equals(XSDDatatype.XSDstring)) {
+
+
+                String string = literal.getString();
+                dctIssuedToDelete.add(statement);
+
+                if (string.contains(":")) {
+                    //datetime
+                    Literal typedLiteral = ResourceFactory.createTypedLiteral(string, XSDDatatype.XSDdateTime);
+                    statement.getSubject().addLiteral(DCTerms.issued, typedLiteral);
+                } else {
+                    //date
+
+                    Literal typedLiteral = ResourceFactory.createTypedLiteral(string, XSDDatatype.XSDdate);
+                    statement.getSubject().addLiteral(DCTerms.issued, typedLiteral);
+
+                }
+
+
+            }
+        }
+
+        dctIssuedToDelete.forEach(union::remove);
+
+
+        // Remove DCTerms.accrualPeriodicity that are not according to DCAT AP 1.1
+        List<Statement> accrualPeriodicityToDelete = new ArrayList<>();
+        StmtIterator accrualPeriodicity = union.listStatements(new SimpleSelector(null, DCTerms.accrualPeriodicity, (RDFNode) null));
+        while (accrualPeriodicity.hasNext()) {
+            Statement statement = accrualPeriodicity.next();
+            String uri = statement.getObject().asResource().getURI();
+            if (!uri.startsWith("http://publications.europa.eu/resource/authority/frequency/")) {
+                accrualPeriodicityToDelete.add(statement);
+            }
+        }
+
+        accrualPeriodicityToDelete.forEach(union::remove);
+
+    }
+
+    private void enrichForVegvesenet(Model union) {
+
+        // Make all use of dcat:contactPoint point to resources of type vcard:Kind
+        NodeIterator contactPoint = union.listObjectsOfProperty(DCAT.contactPoint);
+        while (contactPoint.hasNext()) {
+            Resource resource = contactPoint.next().asResource();
+            resource.addProperty(RDF.type, union.createResource("http://www.w3.org/2006/vcard/ns#Kind"));
+        }
+
+        // Find a resource with foaf:name "Statens vegvesen" and use it as the dct:publisher for all dcat:Catalog(s)
+        ResIterator catalogPublisher = union.listSubjectsWithProperty(RDF.type, DCAT.Catalog);
+        while (catalogPublisher.hasNext()) {
+            Resource resource = catalogPublisher.next().asResource();
+            ResIterator resIterator = union.listSubjectsWithProperty(FOAF.name, "Statens vegvesen");
+            resource.addProperty(DCTerms.publisher, resIterator.nextResource());
+        }
+
+        // Change dcat:accessUrl from string literal to uri resource
+        List<Statement> toDelete = new ArrayList<>();
+        StmtIterator accessURL = union.listStatements(null, DCAT.accessUrl, (String) null);
+        while (accessURL.hasNext()) {
+            toDelete.add(accessURL.nextStatement());
+        }
+
+        for (Statement statement : toDelete) {
+            Resource subject = statement.getSubject();
+            subject.addProperty(DCAT.accessUrl, union.createResource(statement.getObject().toString()));
+            union.remove(statement);
+        }
+
+
+        // Make all uses of dct:publisher point to resources of type foaf:Agent
+        NodeIterator dctPublisher = union.listObjectsOfProperty(DCTerms.publisher);
+        while (dctPublisher.hasNext()) {
+            Resource resource = dctPublisher.next().asResource();
+            resource.addProperty(RDF.type, FOAF.Agent);
+        }
+
 
     }
 

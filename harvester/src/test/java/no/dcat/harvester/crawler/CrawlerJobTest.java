@@ -5,7 +5,7 @@ import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RiotException;
 import org.apache.jena.shared.BadURIException;
 import org.apache.jena.util.FileManager;
@@ -37,8 +37,6 @@ public class CrawlerJobTest {
 
 
         job.run();
-
-
     }
 
     @Test
@@ -59,9 +57,7 @@ public class CrawlerJobTest {
 
 
         job.run();
-
     }
-
 
     @Test
     public void testCrawlerResultHandlerWithNoException() {

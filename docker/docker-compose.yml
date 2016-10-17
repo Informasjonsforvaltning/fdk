@@ -2,20 +2,9 @@ version: "2"
 
 services:
   portal:
-    image: "fdk/webapp:${TAG}"
+    image: "fdk/portal:${TAG}"
     ports:
       - "8080:8080"
-    environment:
-     - application.simpleQueryServiceURL=http://localhost:8083/search
-    links:
-      - query
-    networks:
-      platform:
-
-  query:
-    image: "fdk/query:${TAG}"
-    ports:
-      - "8083:8080"
     environment:
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
@@ -27,7 +16,7 @@ services:
   catalog:
     image: "fdk/catalog:${TAG}"
     ports:
-      - "8084:8080"
+      - "8083:8080"
     networks:
       platform:
       logging:

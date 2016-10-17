@@ -1,6 +1,4 @@
 target/
-docker/.env
-docker/git.properties
 **/*.iml
 .idea/
 logs/
