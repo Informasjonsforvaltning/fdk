@@ -19,7 +19,7 @@
         dct:description  "Adresseregisteret (AR) er et felles nasjonalt register for presis adressering ved utveksling av helseopplysninger som sendes elektronisk eller per post innen helse- og omsorgssektoren."@no-nb ;
         dct:identifier   "17" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Ehelse> ;
-        dct:title        "Adresseregisteret"@no-nb ;
+        dct:title        "Adresseregisteret"@no ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         foaf:page        <https://register-web.test.nhn.no/> .
 

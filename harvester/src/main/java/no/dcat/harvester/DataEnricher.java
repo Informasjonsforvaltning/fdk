@@ -210,7 +210,8 @@ public class DataEnricher {
             Literal literal = statement.getObject().asLiteral();
 
             //if language is blank, specified language should be added
-            if(literal.getLanguage().equals("")) {
+            //if language code is "no", change to specified language, in order to keep language coding consistent
+            if(literal.getLanguage().equals("") || literal.getLanguage().equals("no")) {
                 //create new resource with language added
                 Literal literalWithLang = ResourceFactory.createLangLiteral(literal.getString(), language);
                 statement.getSubject().addLiteral(predicate, literalWithLang);
