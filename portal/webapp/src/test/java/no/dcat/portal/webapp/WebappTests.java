@@ -59,8 +59,8 @@ public class WebappTests {
     public void testExample() throws Exception {
        //PortalController c = new PortalController(pbm);
 
-        DefaultCredentialsProvider cp = (DefaultCredentialsProvider) webClient.getCredentialsProvider();
-        cp.addNTLMCredentials("user", "password", proxyHost, proxyPort, null, domain);
+      //  DefaultCredentialsProvider cp = (DefaultCredentialsProvider) webClient.getCredentialsProvider();
+       // cp.addNTLMCredentials("user", "password", proxyHost, proxyPort, null, domain);
 
         HtmlPage page = this.webClient.getPage("/");
 
