@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Felles datakatalog</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.min.css" media="all"/>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="dcatQueryService" th:text="${session.dcatQueryService}" style="display:none"></div>
+    <div id="versionInformation" class="text-muted small text-right" th:text="${session.versionInformation}"></div>
+
+    <div class="container-fluid">
+
+    <header class="a-header" role="banner">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Felles datakatalog</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" title="Tilbakemelding"><span class="glyphicon glyphicon-envelope"></span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" title="Velg språk" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Norsk<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Norsk</a></li>
+                        <li><a href="#">Engelsk</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="Logg inn"><span class="glyphicon glyphicon-user"></span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" title="Om applikasjonen" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Om <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="coverage.html" target = "_blank">Status implementasjon</a></li>
+                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank">DCAT-AP-NO 1.1</a></li>
+                        <li><a href="#">Veileder</a></li>
+                        <li><a href="#">For dataeiere</a></li>
+                        <li><a href="#">For databrukere</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Teknisk</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Søkefelt -->
+    <div class="form-group a-form-group">
+        <div class="input-group input-group-large">
+
+            <!-- Label -->
+            <label for="search" id="searchLarge">
+                <span class="sr-only"> Søk etter datasett </span>
+            </label>
+
+            <!-- Input  -->
+            <input id="search" aria-labelledby="searchLarge" type="search"
+                      class="form-control form-control-noleft form-control-withBtn"
+                   value="" placeholder="Søk etter innhold"/>
+
+            <!-- Search buttton -->
+            <div class="input-group-btn">
+                <button id="dosearch" class="btn btn-primary" type="button">
+                    <i class="material-icons a-input-icon"><span class="sr-only">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resultatfelt -->
+    <section id="resultPanel">
+
+        <div class="row">
+            <!--div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
+
+            </div>
+            <div id="pagenav" class="col-xs-8 col-xm-8 col-md-8 col-lg-8"-->
+                <center>
+                    <nav aria-label="Sidenavigering">
+                        <span id="summary">Søkeresultat</span>
+                        <ul class="pagination">
+                            <li>
+                                <a id="prev" href="#" aria-label="Forrige">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <!--li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li-->
+                            <li>
+                                <a id="next" href="#" aria-label="Neste">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </center>
+            <!--/div-->
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
+                    <!-- fasettering -->
+                    <div class="list-group">
+                        <div class="tree list-group-item">
+                            <ul class="nav nav-list">
+                                <li><label class="tree-toggler nav-header">Virksomhet <span class="badge">2</span></label>
+                                    <ul class="nav nav-list tree">
+                                        <li><label class="tree-toggler nav-header">Nærings- og fiskeridepartementet</label>
+                                            <ul class="nav nav-list tree">
+                                                <li><a href="#">Innovasjon Norge [0]</a></li>
+                                                <li><a href="#">Brønnøysundregistrene [14]</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><label class="tree-toggler nav-header">Arbeids- og sosialdepartementet</label>
+                                            <ul class="nav nav-list tree">
+                                                <li><a href="#">NAV [2]</a></li>
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <a class="list-group-item disabled" href="#">Tema<span class="badge">3</span></a>
+                        <a class="list-group-item disabled" href="#">Begrep<span class="badge">5</span></a>
+                        <a class="list-group-item disabled" href="#">Hjemmel<span class="badge">1</span></a>
+                        <a class="list-group-item disabled" href="#">Geografi</a>
+                        <a class="list-group-item disabled" href="#">Tid</a>
+                        <a class="list-group-item disabled" href="#">Standard<span class="badge">2</span></a>
+                    </div>
+                </div>
+
+                <!-- søkeresultat -->
+                <div id="datasets" class="col-xs-8 col-xm-8 col-md-8 col-lg-8 list-group">
+
+                    <a class="row list-group-item dataset" href="#"><strong>Enhetsregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong>Oppgaveregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong>Spesialregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong>Hemmeligregisteret</strong></a>
+
+                </div>
+                </div>
+
+        </div>
+
+    </section>
+
+        <footer class="sitefooter hidden-print">
+
+            <div id="some-share-section" class="container center-block">
+            </div>
+            <div class="black-container center-block" lang="nb">
+                <div class="container">
+                    <div class="row" id="footer-row">
+                        <div class="col-xs-12 col-md-4" id="logo-footer">
+
+                            <div class="footer-content">
+                                <a href="//www.brreg.no">
+                                    <img src="brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
+                                </a>
+
+                                <p>Organisasjonsnummer: <span class="nowrap">974 760 673</span></p>
+                                <a href="//www.brreg.no/personvern/personvernerklaering/">Informasjonskapsler - personvern</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+
+// tree toggler -> http://cssdeck.com
+$(document).ready(function () {
+	$('label.tree-toggler').click(function () {
+		$(this).parent().children('ul.tree').toggle(300);
+	});
+});
+
+var sElement = document.getElementById("dcatQueryService");
+var searchUrl = sElement.innerHTML;
+console.log("service: " + searchUrl);
+
+var from = 0;
+var size = 10;
+var total = 0;
+
+httpGetAsync(searchUrl, showResults);
+
+var prev = document.getElementById("prev");
+prev.onclick = function (e) {
+    e.preventDefault();
+    from -= size;
+    if (from < 0) from = 0;
+    console.log(from + " " + size);
+
+    doSearch();
+};
+var next = document.getElementById("next");
+next.onclick = function(e) {
+    e.preventDefault();
+    var oldFrom = from;
+    from += size;
+    if (from > total) from = odlFrom;
+
+    console.log(from + " " + size);
+
+    doSearch();
+};
+
+var search = document.getElementById("search");
+var dosearch = document.getElementById("dosearch");
+dosearch.onclick = function (event) {
+    console.log("q: " + search.value);
+    from = 0;
+    doSearch();
+};
+
+search.onkeypress = function (event) {
+    if (event.keyCode == 13) {
+        from = 0;
+        doSearch();
+    }
+};
+
+function doSearch() {
+    var urlstring = searchUrl + "?q=" + search.value +"&from="+from +"&size="+size ;
+    console.log(urlstring);
+    httpGetAsync(urlstring, showResults);
+
+}
+
+function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+
+function showResults(search_result) {
+
+    var res = JSON.parse(search_result);
+
+    var results = document.getElementById("datasets");
+    // fjerner forrige resultat
+    while (results.firstChild) {
+        results.removeChild(results.firstChild);
+    }
+    // Oppdaterer søkeinformasjon
+    total = res.hits.total;
+    var summary = document.getElementById("summary");
+    if (total == 0 )
+        summary.innerHTML = "Ingen treff";
+    else {
+        var til = from + size ;
+        var fra = from + 1;
+        if (fra > total) fra = total;
+        if (til > total ) til = total;
+        //if (from == 0) summary.innerHTML = "Viser de " + fra +  " første datasettene av totalt " + total + " treff";
+        summary.innerHTML = "Viser datasett " + fra  + " til " + til + " av " + total + " treff";
+    }
+
+    // behandler hits siden
+    var hits  = res.hits.hits;
+    hits.forEach(function(dataset) {
+        var source = dataset._source;
+
+        var title = source.title[""];
+        if (title == undefined)
+            title = source.title["no"];
+
+        var description = source.description[""];
+        if (description == undefined)
+           description = source.description["no"];
+        var landingPage = source.landingPage;
+        if (landingPage != undefined) {
+            var lpElement = document.createElement("a");
+            lpElement.href = landingPage;
+            lpElement.target = "_blank";
+            lpElement.innerHTML = "<span class=\"glyphicon glyphicon-home\"></span>";
+        }
+
+        var keywords = source.keywords[""];
+        if (keywords == undefined)
+            keywords = source.keywords["no"];
+        if (keywords != undefined) {
+            var kwElement = document.createElement("span");
+            kwElement.innerHTML = " [" + keywords.join(", ") + "] ";
+        }
+
+        var row = document.createElement("a");
+        row.className = "row list-group-item dataset";
+        row.href = "#";
+        row.innerHTML = "<strong>" + title + "</strong></br>" + description ;
+        if (keywords != undefined)
+            row.appendChild(kwElement);
+        if (landingPage != undefined)
+            row.appendChild(lpElement);
+
+        results.appendChild(row);
+    });
+}
+
+
+
+  //]]>
+    </script>
+</body>
+</html>
+

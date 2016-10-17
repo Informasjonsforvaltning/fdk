@@ -9,6 +9,7 @@
     <version>0.1.0</version>
 	<packaging>pom</packaging>
 
+	<!-- This parent changes default parameter substitution from ${param} to @param@ in resource filtering -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -32,7 +33,7 @@
 		<module>admin-webapp</module>
 		<module>api-app</module>
 		<module>docker</module>
-	</modules>
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>	
@@ -69,6 +70,7 @@
 		
 	<pluginManagement>
         <plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
