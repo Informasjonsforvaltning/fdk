@@ -10,7 +10,6 @@
 		<artifactId>parent</artifactId>
 		<groupId>no.dcat</groupId>
 		<version>0.1.0</version>
-		<relativePath/>
 	</parent>
 
     <dependencies>

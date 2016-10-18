@@ -8,12 +8,29 @@
         <artifactId>parent</artifactId>
         <groupId>no.dcat</groupId>
         <version>0.1.0</version>
-        <relativePath/>
     </parent>
 
     <artifactId>harvester</artifactId>
     <version>0.1.0</version>
     <packaging>war</packaging>
+
+    <repositories>
+        <repository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+        </repository>
+        <snapshotRepository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <!--dependency>
