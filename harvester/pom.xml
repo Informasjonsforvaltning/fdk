@@ -17,6 +17,7 @@
     <repositories>
         <repository>
             <id>Felles datakatalog</id>
+            <name>Felles datakatalog</name>
             <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
         </repository>
     </repositories>
