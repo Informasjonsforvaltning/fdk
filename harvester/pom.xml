@@ -14,6 +14,17 @@
     <version>0.1.0</version>
     <packaging>war</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
+        </repository>
+        <snapshotRepository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <!--dependency>
             <groupId>org.springframework.boot</groupId>
