@@ -16,7 +16,7 @@
 
     <repositories>
         <repository>
-            <id>Felles datakatalog</id>
+            <id>Felles_datakatalog</id>
             <name>Felles datakatalog</name>
             <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
         </repository>
@@ -24,11 +24,11 @@
 
     <distributionManagement>
         <repository>
-            <id>Felles datakatalog</id>
+            <id>Felles_datakatalog</id>
             <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
         </repository>
         <snapshotRepository>
-            <id>Felles datakatalog</id>
+            <id>Felles_datakatalog</id>
             <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
         </snapshotRepository>
     </distributionManagement>
