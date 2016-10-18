@@ -9,6 +9,13 @@
     <version>0.1.0</version>
 	<packaging>pom</packaging>
 
+	<repositories>
+		<repository>
+			<id>Felles datakatalog</id>
+			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
+		</repository>
+	</repositories>
+
 	<distributionManagement>
 		<repository>
 			<id>Felles datakatalog</id>
