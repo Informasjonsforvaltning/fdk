@@ -5,7 +5,7 @@ var sElement = document.getElementById("dcatQueryService");
 var searchUrl = sElement.innerHTML;
 console.log("service: " + searchUrl);
 
-var languages = [ "nb", "nn", "en", ""];
+var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = "nb";
 
 // find the chosen language from the page
@@ -18,6 +18,8 @@ var langName = chosenLanguage.textContent;
 if (langName == "English") pageLanguage="en";
 if (langName == "Norsk (bokmål)") pageLanguage="nb";
 if (langName == "Norsk (nynorsk)") pageLanguage = "nn"
+
+console.log(pageLanguage);
 
 
 var from = 0;
@@ -106,22 +108,38 @@ function showResults(search_result) {
 
 
 
-    // Returns the string from the language tagged literal
+    // Returns the string from the language tagged literal,
+    // literal - object with language keys { "nb": "Norsk", "en": "English", ...
     function getLanguageString(literal) {
         var result = { "value": undefined, "language": "?"};
 
+        // get string from pageLanguage
         var string = literal[pageLanguage];
+
+        // literal does not contain the default pageLanguage key
         if (string == undefined) {
             let l = 0;
+            // Check expected language keys
             while (l < languages.length && string == undefined) {
                 string = literal[ languages[l] ];
                 if (string != undefined) {
                     result.value = string;
                     result.language = languages[l];
+
+                    return result;
                 }
                 l++;
             }
-        } else {
+            // Handle unexpected language keys (select first in list)
+            if (result.value == undefined) {
+                for (var k in literal) {
+                    result.value = literal[k];
+                    result.language = k;
+
+                    return result;
+                }
+            }
+        } else { // default language values found
             result.value = string;
             result.language = pageLanguage;
         }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Felles datakatalog</title>
+    <title th:text="#{app.title}">Felles datakatalog</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.min.css" media="all"/>
@@ -18,35 +18,35 @@
     <header class="a-header" role="banner">
         <nav class="navbar navbar-default">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Felles datakatalog</a>
+                <a class="navbar-brand" href="#" th:text="#{app.title}">Felles datakatalog</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" title="Tilbakemelding"><span class="glyphicon glyphicon-envelope"></span></a></li>
+                <li><a href="#" th:attr="title=#{feedback.title}"><span class="glyphicon glyphicon-envelope"></span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" title="Velg språk" data-toggle="dropdown"
+                    <a href="#" class="dropdown-toggle" th:attr="title=#{lang.choose}" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
-                        <span id="chosenLanguage" th:text="#{chosenLanguage}">Norsk (bokmål)</span>
+                        <span id="chosenLanguage" th:text="#{lang.chosenLanguage}">Norsk (bokmål)</span>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" id="language-list">
-                        <li><a href="?lang=nb" lang="nb" th:text="#{norwegian-nb}">Norsk (bokmål)</a></li>
-                        <li><a href="?lang=nn" lang="nn" th:text="#{norwegian-nn}">Norsk (nynorsk)</a></li>
-                        <li><a href="?lang=en" lang="en" th:text="#{english-en}">Engelsk</a></li>
+                        <li><a href="?lang=nb" lang="nb" th:text="#{lang.norwegian-nb}">Norsk (bokmål)</a></li>
+                        <li><a href="?lang=nn" lang="nn" th:text="#{lang.norwegian-nn}">Norsk (nynorsk)</a></li>
+                        <li><a href="?lang=en" lang="en" th:text="#{lang.english-en}">Engelsk</a></li>
                     </ul>
                 </li>
-                <li><a href="#" title="Logg inn"><span class="glyphicon glyphicon-user"></span></a></li>
+                <li><a href="#" th:attr="title=#{login.title}"><span class="glyphicon glyphicon-user"></span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" title="Om applikasjonen" data-toggle="dropdown"
+                    <a href="#" class="dropdown-toggle" th:attr="title=#{about.title}" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
-                        <span th:text="#{om}">Om</span> <span class="caret"></span></a>
+                        <span th:text="#{about}">Om</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" target="_blank" th:text="#{om.help}">Hjelp</a></li>
-                        <li><a href="coverage.html" target="_blank" th:text="#{om.status}">Status implementasjon</a></li>
-                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{om.standard}">DCAT-AP-NO 1.1</a></li>
-                        <li><a href="#" th:text="#{om.guide}">Veileder</a></li>
-                        <li><a href="#" th:text="#{om.fordataowners}">For dataeiere</a></li>
-                        <li><a href="#" th:text="#{om.fordatausers}">For databrukere</a></li>
+                        <li><a href="#" target="_blank" th:text="#{about.help}">Hjelp</a></li>
+                        <li><a href="coverage.html" target="_blank" th:text="#{about.status}">Status implementasjon</a></li>
+                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{about.standard}">DCAT-AP-NO 1.1</a></li>
+                        <li><a href="#" th:text="#{about.guide}">Veileder</a></li>
+                        <li><a href="#" th:text="#{about.fordataowners}">For dataeiere</a></li>
+                        <li><a href="#" th:text="#{about.fordatausers}">For databrukere</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#" th:text="#{om.technical}">Teknisk</a></li>
+                        <li><a href="#" th:text="#{about.technical}">Teknisk</a></li>
                     </ul>
                 </li>
             </ul>
@@ -59,18 +59,18 @@
 
             <!-- Label -->
             <label for="search" id="searchLarge">
-                <span class="sr-only"> Søk etter datasett </span>
+                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
             </label>
 
             <!-- Input  -->
             <input id="search" aria-labelledby="searchLarge" type="search"
                       class="form-control form-control-noleft form-control-withBtn"
-                   value="" placeholder="Søk etter innhold"/>
+                   value="" th:attr="placeholder=#{query.intro}"/>
 
             <!-- Search buttton -->
             <div class="input-group-btn">
                 <button id="dosearch" class="btn btn-primary" type="button">
-                    <i class="material-icons a-input-icon"><span class="sr-only">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
+                    <i class="material-icons a-input-icon"><span class="sr-only" th:text="#{query.do}">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
                 </button>
             </div>
         </div>
@@ -85,11 +85,11 @@
             </div>
             <div id="pagenav" class="col-xs-8 col-xm-8 col-md-8 col-lg-8"-->
                 <center>
-                    <nav aria-label="Sidenavigering">
-                        <span id="summary">Søkeresultat</span>
+                    <nav th:attr="aria-label=#{page.navigation}">
+                        <span id="summary" th:text="#{page.result.summary}">Søkeresultat</span>
                         <ul class="pagination">
                             <li>
-                                <a id="prev" href="#" aria-label="Forrige">
+                                <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
@@ -98,7 +98,7 @@
                             <li><a href="#">3</a></li>
                             <li><a href="#">4</a></li-->
                             <li>
-                                <a id="next" href="#" aria-label="Neste">
+                                <a id="next" href="#" th:attr="aria-label=#{page.next}">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
