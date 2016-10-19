@@ -23,23 +23,30 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" title="Tilbakemelding"><span class="glyphicon glyphicon-envelope"></span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" title="Velg språk" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Norsk<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Norsk</a></li>
-                        <li><a href="#">Engelsk</a></li>
+                    <a href="#" class="dropdown-toggle" title="Velg språk" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="false">
+                        <span id="chosenLanguage" th:text="#{chosenLanguage}">Norsk (bokmål)</span>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" id="language-list">
+                        <li><a href="?lang=nb" lang="nb" th:text="#{norwegian-nb}">Norsk (bokmål)</a></li>
+                        <li><a href="?lang=nn" lang="nn" th:text="#{norwegian-nn}">Norsk (nynorsk)</a></li>
+                        <li><a href="?lang=en" lang="en" th:text="#{english-en}">Engelsk</a></li>
                     </ul>
                 </li>
                 <li><a href="#" title="Logg inn"><span class="glyphicon glyphicon-user"></span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" title="Om applikasjonen" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Om <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" title="Om applikasjonen" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="#{om}">Om</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="coverage.html" target = "_blank">Status implementasjon</a></li>
-                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank">DCAT-AP-NO 1.1</a></li>
-                        <li><a href="#">Veileder</a></li>
-                        <li><a href="#">For dataeiere</a></li>
-                        <li><a href="#">For databrukere</a></li>
+                        <li><a href="#" target="_blank" th:text="#{om.help}">Hjelp</a></li>
+                        <li><a href="coverage.html" target="_blank" th:text="#{om.status}">Status implementasjon</a></li>
+                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{om.standard}">DCAT-AP-NO 1.1</a></li>
+                        <li><a href="#" th:text="#{om.guide}">Veileder</a></li>
+                        <li><a href="#" th:text="#{om.fordataowners}">For dataeiere</a></li>
+                        <li><a href="#" th:text="#{om.fordatausers}">For databrukere</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Teknisk</a></li>
+                        <li><a href="#" th:text="#{om.technical}">Teknisk</a></li>
                     </ul>
                 </li>
             </ul>
@@ -106,26 +113,7 @@
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
                     <!-- fasettering -->
                     <div class="list-group">
-                        <div class="tree list-group-item">
-                            <ul class="nav nav-list">
-                                <li><label class="tree-toggler nav-header">Virksomhet <span class="badge">2</span></label>
-                                    <ul class="nav nav-list tree">
-                                        <li><label class="tree-toggler nav-header">Nærings- og fiskeridepartementet</label>
-                                            <ul class="nav nav-list tree">
-                                                <li><a href="#">Innovasjon Norge [0]</a></li>
-                                                <li><a href="#">Brønnøysundregistrene [14]</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><label class="tree-toggler nav-header">Arbeids- og sosialdepartementet</label>
-                                            <ul class="nav nav-list tree">
-                                                <li><a href="#">NAV [2]</a></li>
-
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                        <a class="list-group-item disabled" href="#">Virksomhet<span class="badge">2</span></a>
                         <a class="list-group-item disabled" href="#">Tema<span class="badge">3</span></a>
                         <a class="list-group-item disabled" href="#">Begrep<span class="badge">5</span></a>
                         <a class="list-group-item disabled" href="#">Hjemmel<span class="badge">1</span></a>
@@ -177,147 +165,7 @@
     </div>
     <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-    //<![CDATA[
-
-// tree toggler -> http://cssdeck.com
-$(document).ready(function () {
-	$('label.tree-toggler').click(function () {
-		$(this).parent().children('ul.tree').toggle(300);
-	});
-});
-
-var sElement = document.getElementById("dcatQueryService");
-var searchUrl = sElement.innerHTML;
-console.log("service: " + searchUrl);
-
-var from = 0;
-var size = 10;
-var total = 0;
-
-httpGetAsync(searchUrl, showResults);
-
-var prev = document.getElementById("prev");
-prev.onclick = function (e) {
-    e.preventDefault();
-    from -= size;
-    if (from < 0) from = 0;
-    console.log(from + " " + size);
-
-    doSearch();
-};
-var next = document.getElementById("next");
-next.onclick = function(e) {
-    e.preventDefault();
-    var oldFrom = from;
-    from += size;
-    if (from > total) from = odlFrom;
-
-    console.log(from + " " + size);
-
-    doSearch();
-};
-
-var search = document.getElementById("search");
-var dosearch = document.getElementById("dosearch");
-dosearch.onclick = function (event) {
-    console.log("q: " + search.value);
-    from = 0;
-    doSearch();
-};
-
-search.onkeypress = function (event) {
-    if (event.keyCode == 13) {
-        from = 0;
-        doSearch();
-    }
-};
-
-function doSearch() {
-    var urlstring = searchUrl + "?q=" + search.value +"&from="+from +"&size="+size ;
-    console.log(urlstring);
-    httpGetAsync(urlstring, showResults);
-
-}
-
-function httpGetAsync(theUrl, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
-}
-
-function showResults(search_result) {
-
-    var res = JSON.parse(search_result);
-
-    var results = document.getElementById("datasets");
-    // fjerner forrige resultat
-    while (results.firstChild) {
-        results.removeChild(results.firstChild);
-    }
-    // Oppdaterer søkeinformasjon
-    total = res.hits.total;
-    var summary = document.getElementById("summary");
-    if (total == 0 )
-        summary.innerHTML = "Ingen treff";
-    else {
-        var til = from + size ;
-        var fra = from + 1;
-        if (fra > total) fra = total;
-        if (til > total ) til = total;
-        //if (from == 0) summary.innerHTML = "Viser de " + fra +  " første datasettene av totalt " + total + " treff";
-        summary.innerHTML = "Viser datasett " + fra  + " til " + til + " av " + total + " treff";
-    }
-
-    // behandler hits siden
-    var hits  = res.hits.hits;
-    hits.forEach(function(dataset) {
-        var source = dataset._source;
-
-        var title = source.title[""];
-        if (title == undefined)
-            title = source.title["no"];
-
-        var description = source.description[""];
-        if (description == undefined)
-           description = source.description["no"];
-        var landingPage = source.landingPage;
-        if (landingPage != undefined) {
-            var lpElement = document.createElement("a");
-            lpElement.href = landingPage;
-            lpElement.target = "_blank";
-            lpElement.innerHTML = "<span class=\"glyphicon glyphicon-home\"></span>";
-        }
-
-        var keywords = source.keywords[""];
-        if (keywords == undefined)
-            keywords = source.keywords["no"];
-        if (keywords != undefined) {
-            var kwElement = document.createElement("span");
-            kwElement.innerHTML = " [" + keywords.join(", ") + "] ";
-        }
-
-        var row = document.createElement("a");
-        row.className = "row list-group-item dataset";
-        row.href = "#";
-        row.innerHTML = "<strong>" + title + "</strong></br>" + description ;
-        if (keywords != undefined)
-            row.appendChild(kwElement);
-        if (landingPage != undefined)
-            row.appendChild(lpElement);
-
-        results.appendChild(row);
-    });
-}
-
-
-
-  //]]>
-    </script>
+    <script type="text/javascript" src="js/result.js"></script>
 </body>
 </html>
 

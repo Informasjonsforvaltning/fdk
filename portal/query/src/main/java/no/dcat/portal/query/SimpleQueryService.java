@@ -37,6 +37,9 @@ public class SimpleQueryService {
 
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost ;
+    public void setElasticsearchHost(String host) {
+        elasticsearchHost = host;
+    }
 
     @Value("${application.elasticsearchPort}")
     private int elasticsearchPort = 9300;
@@ -93,8 +96,10 @@ public class SimpleQueryService {
 
         SearchResponse response = client.prepareSearch("dcat")
                 .setTypes("dataset")
+
                 //.addHighlightedField("description.no")
                 .setQuery(search)
+
                 .setFrom(from)
                 .setSize(size)
 

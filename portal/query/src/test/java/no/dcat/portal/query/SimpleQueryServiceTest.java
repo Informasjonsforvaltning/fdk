@@ -34,6 +34,7 @@ public class SimpleQueryServiceTest {
     @Test
     public void apiFailsWithoutConfiguredDatabase () {
         SimpleQueryService sqs = new SimpleQueryService();
+        sqs.setElasticsearchHost("");
 
         ResponseEntity<String> actual =  sqs.search("", 0, 10);
 

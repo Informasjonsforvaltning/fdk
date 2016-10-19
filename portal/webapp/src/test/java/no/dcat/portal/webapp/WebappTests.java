@@ -21,8 +21,6 @@ public class WebappTests {
     @MockBean
     PortalConfiguration config;
 
-
-
     @Test
     public void testVersionInformation () throws Exception {
 
