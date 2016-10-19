@@ -12,19 +12,7 @@
 		<version>0.1.0</version>
 	</parent>
 
-
-	<distributionManagement>
-		<repository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
-		</repository>
-		<snapshotRepository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<dependencies>
+    <dependencies>
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-fuseki-core</artifactId>
