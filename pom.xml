@@ -11,6 +11,10 @@
 
 	<repositories>
 		<repository>
+			<id>brJEE-release</id>
+			<url>https://nexus.brreg.no/content/repositories/brJEE-release/</url>
+		</repository>
+		<repository>
 			<id>Felles datakatalog</id>
 			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
 		</repository>
@@ -27,12 +31,19 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<!-- This parent changes default parameter substitution from ${param} to @param@ in resource filtering -->
+	<!-- BR parent pom for Spring Boot 1.4.0. Tar med Sonar-konfig -->
 	<parent>
+		<groupId>no.brreg.felles</groupId>
+		<artifactId>br-maven-main-msn</artifactId>
+		<version>1.1.0</version>
+	</parent>
+
+	<!-- This parent changes default parameter substitution from ${param} to @param@ in resource filtering -->
+	<!--<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.0.RELEASE</version>
-	</parent>
+	</parent> -->
 	
 	<organization>
 		<name>Brønnøysundregistrene</name>
