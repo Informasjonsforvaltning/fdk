@@ -125,7 +125,7 @@ public class DataEnricherTest {
     }
 
     /**
-     * Check that default language assigned to title property is "no-nb"
+     * Check that default language assigned to title property is "nb"
      * @throws IOException
      */
     @Test
@@ -143,12 +143,12 @@ public class DataEnricherTest {
         Literal title = dcatRes.getProperty(DCTerms.title).getLiteral();
         String foundLanguage = title.getLanguage();
 
-        assertEquals("Title: Default language should be no-nb", "no-nb", foundLanguage);
+        assertEquals("Title: Default language should be nb", "nb", foundLanguage);
     }
 
 
     /**
-     * Check that default language assigned to description property is "no-nb"
+     * Check that default language assigned to description property is "nb"
      * @throws IOException
      */
     @Test
@@ -166,12 +166,12 @@ public class DataEnricherTest {
         Literal desc = dcatRes.getProperty(DCTerms.description).getLiteral();
         String foundLanguage = desc.getLanguage();
 
-        assertEquals("Description: Default language should be no-nb", "no-nb", foundLanguage);
+        assertEquals("Description: Default language should be nb", "nb", foundLanguage);
     }
 
 
     /**
-     * Check that default language assigned to keyword property is "no-nb"
+     * Check that default language assigned to keyword property is "nb"
      * @throws IOException
      */
     @Test
@@ -189,7 +189,7 @@ public class DataEnricherTest {
         Literal kw = dcatRes.getProperty(DCAT.keyword).getLiteral();
         String foundLanguage = kw.getLanguage();
 
-        assertEquals("Keyword: Default language should be no-nb", "no-nb", foundLanguage);
+        assertEquals("Keyword: Default language should be nb", "nb", foundLanguage);
     }
 
 

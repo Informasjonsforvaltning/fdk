@@ -23,7 +23,7 @@ public class DataEnricher {
     private final Logger logger = LoggerFactory.getLogger(DataEnricher.class);
 
     //Default language added to titles, descriptions and keywords with no language
-    private static final String DEFAULT_LANGUAGE = "no-nb";
+    private static final String DEFAULT_LANGUAGE = "nb";
 
     //Hold the model to be enriched
     private Model model;
