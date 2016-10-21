@@ -12,7 +12,6 @@
 		<version>0.1.0</version>
 	</parent>
 
-	
 	<distributionManagement>
 		<repository>
 			<id>Felles datakatalog</id>
