@@ -1,5 +1,6 @@
 package no.dcat.harvester.crawler;
 
+import no.dcat.harvester.Application;
 import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.difi.dcat.datastore.AdminDataStore;
@@ -22,6 +23,7 @@ public class Loader {
 
         String file = args[0];
 
+
         Loader loader = new Loader();
 
         //URL url = loader.getClass().getClassLoader().getResource(file);
@@ -41,7 +43,7 @@ public class Loader {
             ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300);
 
 
-            CrawlerJob job = new CrawlerJob(dcatSource, null, null, esHandler);
+            CrawlerJob job = new CrawlerJob(dcatSource, null, Application.getBrregCache(), esHandler);
 
 
             job.run();
