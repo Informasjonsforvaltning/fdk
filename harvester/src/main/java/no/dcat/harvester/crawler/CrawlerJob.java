@@ -105,15 +105,15 @@ public class CrawlerJob implements Runnable {
                     message = message.substring(1, message.length()).trim();
                 }
             }catch (Exception e2){}
-            adminDataStore.addCrawlResults(dcatSource, DifiMeta.syntaxError, message);
+            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, DifiMeta.syntaxError, message);
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
 
         } catch (HttpException e) {
-            adminDataStore.addCrawlResults(dcatSource, DifiMeta.networkError, e.getMessage());
+            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, DifiMeta.networkError, e.getMessage());
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
         } catch (Exception e) {
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
-            adminDataStore.addCrawlResults(dcatSource, DifiMeta.error, e.getMessage());
+            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, DifiMeta.error, e.getMessage());
         }
 
     }
@@ -223,7 +223,7 @@ public class CrawlerJob implements Runnable {
                 break;
         }
 
-        adminDataStore.addCrawlResults(dcatSource, rdfStatus, message[0]);
+        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, message[0]);
 
         return validated;
     }
