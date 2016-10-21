@@ -163,6 +163,16 @@ function showResults(search_result) {
             lpElement.innerHTML = "<span class=\"glyphicon glyphicon-home\"></span>";
         }
 
+        var publisher = source.publisher;
+        if (publisher == undefined ) {
+            publisher = source.catalog.publisher.name;
+        } else {
+            publisher = publisher.name;
+        }
+        if (publisher != undefined) {
+            var pbElement = document.createElement("kbd");
+            pbElement.innerHTML =  publisher;
+        }
 
         var keywords = getLanguageString(source.keywords);
         if (keywords.value != undefined) {
@@ -175,10 +185,13 @@ function showResults(search_result) {
         row.className = "row list-group-item dataset";
         row.href = "#";
         row.innerHTML = "<strong>" + title.value + " [" + title.language + "]</strong></br>" + description.value ;
+
         if (keywords.value != undefined)
             row.appendChild(kwElement);
         if (landingPage != undefined)
             row.appendChild(lpElement);
+        if (publisher != undefined)
+            row.appendChild(pbElement);
 
         results.appendChild(row);
     });
