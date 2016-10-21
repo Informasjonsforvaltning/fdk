@@ -7,3 +7,8 @@ spring:
     profiles: development
 application:
   queryServiceURL: http://localhost:8091/search
+
+  spring:
+      profiles: test
+  application:
+    queryServiceURL: http://localhost:8071/search
