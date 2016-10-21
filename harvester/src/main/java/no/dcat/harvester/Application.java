@@ -3,6 +3,10 @@ package no.dcat.harvester;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import no.dcat.harvester.crawler.CrawlerJob;
+import no.dcat.harvester.crawler.Loader;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.difi.dcat.datastore.domain.DcatSource;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 @SpringBootApplication
@@ -45,31 +50,22 @@ public class Application {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
+        if (args.length == 1 ) {
+            logger.debug("open file: "+ args[0]);
+            loadDatasetFromFile(args[0]);
+        }
+
         logger.debug("HARVESTER APPLICATION STARTED");
 
 
-   /*     System.out.println("Let's inspect the beans provided by Spring Boot:");
 
-        String[] beanNames = ctx.getBeanDefinitionNames();
-        Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }*/
+    }
 
-   /*
-        // connect to ES
-        Client client = null;
-        logger.info("Starting HARVESTER Application");
-        try {
-            client = TransportClient.builder().build()
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("es"),9300));
-        } catch (UnknownHostException e) {
-            // TODO Auto-generated catch block
-            logger.error("ERROR: "+ e.getMessage());
-        }
 
-        logger.info("Client is connected " + client.toString());
-*/
+    public static void loadDatasetFromFile(String filename) {
+        Loader loader = new Loader();
+
+        loader.loadDatasetFromFile(filename);
 
     }
 

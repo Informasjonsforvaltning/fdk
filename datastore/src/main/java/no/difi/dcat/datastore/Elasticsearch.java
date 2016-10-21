@@ -55,26 +55,16 @@ public class Elasticsearch implements AutoCloseable {
 	public Client returnElasticsearchTransportClient(String host, int port) {
 		Client client = null;
 		try {
-			logger.debug("attemting to connect to elasticsearch 2: " + host + " : "+ port);
-			//client = TransportClient.builder().build()
-			//		.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), port));
-			//Settings settings = Settings.settingsBuilder().put("cluster.name",
-			//		"mysearchcluster").put("client.transport.sniff", false).build();
-			InetAddress inetadress = InetAddress.getByName(host);
-			logger.debug("inetadress: "+ inetadress.getHostAddress() + " " + inetadress.getHostName());
-			InetSocketTransportAddress address = new InetSocketTransportAddress(inetadress, port);
-			logger.debug("intetScoketTransportAdress: "+ address.toString() + " " + address.getHost() + " "+address.getPort());
+			logger.debug("Connect to elasticsearch: " + host + " : "+ port);
 
-			Settings settings = Settings.settingsBuilder()
-					.put("client.transport.sniff", false)
-				.put("client.transport.ping_timeout", 5, TimeUnit.SECONDS).build();
+			InetAddress inetaddress = InetAddress.getByName(host);
+			InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
 
-			logger.debug("Settings: " + settings.toString());
-
-			client = TransportClient.builder().settings(settings).build()
+			client = TransportClient.builder().build()
 					.addTransportAddress(address);
 
-			logger.debug("Client returns!");
+			logger.debug("Client returns! " + address.toString() );
+
 		} catch (UnknownHostException e) {
 			logger.error(e.toString());
 		}
