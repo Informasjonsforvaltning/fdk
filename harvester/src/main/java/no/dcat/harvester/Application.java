@@ -50,22 +50,7 @@ public class Application {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-        if (args.length == 1 ) {
-            logger.debug("open file: "+ args[0]);
-            loadDatasetFromFile(args[0]);
-        }
-
         logger.debug("HARVESTER APPLICATION STARTED");
-
-
-
-    }
-
-
-    public static void loadDatasetFromFile(String filename) {
-        Loader loader = new Loader();
-
-        loader.loadDatasetFromFile(filename);
 
     }
 

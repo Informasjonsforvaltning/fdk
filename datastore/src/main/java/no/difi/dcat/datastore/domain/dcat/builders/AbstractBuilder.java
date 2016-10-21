@@ -95,7 +95,7 @@ public abstract class AbstractBuilder {
 			
 			return contact;
 		} catch (Exception e) {
-			logger.warn("Error when extracting property {} from resource {}", DCTerms.publisher, resource.getURI(), e);
+			logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
 		}
 		
 		return null;
