@@ -9,17 +9,20 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.node.NodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Elasticsearch implements AutoCloseable {
 
+	private static final String DCAT_INDEX_SETUP_FILENAME = "index_setup.json";
 	private static final String CLUSTER_NAME = "cluster.name";
 	private final Logger logger = LoggerFactory.getLogger(Elasticsearch.class);
 
@@ -98,8 +101,34 @@ public class Elasticsearch implements AutoCloseable {
 	}
 
 	public void createIndex(String index) {
-		client.admin().indices().prepareCreate(index).execute().actionGet();
+		//Set mapping for correct language stemming and indexing
+		ClassLoader classLoader = getClass().getClassLoader();
+		File mappingJsonFile = new File(classLoader.getResource(DCAT_INDEX_SETUP_FILENAME).getFile());
+
+        StringBuilder mappingStr = new StringBuilder("");
+        try (Scanner scanner = new Scanner(mappingJsonFile)) {
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                mappingStr.append(line).append("\n");
+            }
+
+            scanner.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String mappingJson = mappingStr.toString();
+
+        logger.debug("[createIndex] mappingJson prepared: " + mappingJson);
+
+        client.admin().indices().prepareCreate(index).execute().actionGet();
+        logger.debug("[createIndex] before preparePutMapping");
+		client.admin().indices().preparePutMapping(index).setType("dataset").setSource(mappingJson).execute().actionGet();
+        logger.debug("[createIndex] after preparePutMapping");
 		client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        logger.debug("[createIndex] after prepareHealth");
 	}
 
 	public boolean indexDocument(String index, String type, String id, JsonObject jsonObject) {

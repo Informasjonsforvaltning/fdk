@@ -1,0 +1,50 @@
+{
+	"dataset": {
+		"properties": {
+			"catalog": {
+				"properties": {
+					"description": {
+						"properties": {
+							"nb": {
+								"type": "string",
+								"analyzer": "norwegian"
+							}
+						}
+					},
+					"title": {
+						"properties": {
+							"nb": {
+								"type": "string",
+								"analyzer": "norwegian"
+							}
+						}
+					}
+				}
+			},
+			"description": {
+				"properties": {
+					"nb": {
+						"type": "string",
+						"analyzer": "norwegian"
+					}
+				}
+			},
+			"keywords": {
+				"properties": {
+					"nb": {
+						"type": "string",
+						"analyzer": "norwegian"
+					}
+				}
+			},
+			"title": {
+				"properties": {
+					"nb": {
+						"type": "string",
+						"analyzer": "norwegian"
+					}
+				}
+			}
+		}
+	}
+}
