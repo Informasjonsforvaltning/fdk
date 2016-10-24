@@ -113,6 +113,24 @@
             </plugin>
 
             <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- keep the configuration out of the execution so that the bdd goal has access to it -->
+                <configuration>
+                    <jsSrcDir>${project.basedir}${file.separator}src${file.separator}main/resources${file.separator}static${file.separator}js</jsSrcDir>
+                    <!-- configuration properties will go here -->
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>

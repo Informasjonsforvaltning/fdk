@@ -17,8 +17,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
 
-
-    @Value("${spring.profiles.active:utvikling}")
+    @Value("${spring.profiles.active:development}")
     private String profile;
 
     /* application.queryServiceURL */
@@ -26,16 +25,18 @@ public class PortalConfiguration {
     public void setQueryServiceURL (String serviceURL) {
         this.queryServiceURL = serviceURL;
     }
-    public String getQueryServiceURL() { return this.queryServiceURL; }
 
+    public String getQueryServiceURL() {
+        return this.queryServiceURL;
+    }
 
     public String getVersionInformation() {
         String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
         return versionInfo;
     }
 
-    @Value("${git.commit.id.abbrev:}")
-    private String commitAbbrev = "comAbbrev";
+    @Value("${git.commit.id.abbrev:gitcid}")
+    private String commitAbbrev;
 
     @Value("${version:ver}")
     private String version;
