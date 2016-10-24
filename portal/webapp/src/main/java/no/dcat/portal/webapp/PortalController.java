@@ -25,10 +25,8 @@ public class PortalController {
         this.buildMetadata = metadata;
     }
 
-
     /**
-     * The resultSet page. Sets callback service and version identification and returns home.html page.
-     *
+     * The resultSet page. Sets callback service and version identification and returns home.html page
      */
     @RequestMapping({"/"})
     String index (HttpSession session) {

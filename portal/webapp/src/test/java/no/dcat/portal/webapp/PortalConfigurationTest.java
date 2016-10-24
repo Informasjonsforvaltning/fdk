@@ -24,30 +24,12 @@ import static org.assertj.core.api.Assertions.*;
  * Created by nodavsko on 17.10.2016.
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest( controllers = Application.class,  secure = false )
-@ContextConfiguration(classes = {PortalConfiguration.class, PortalSecurityConfig.class, MvcConfig.class})
+//@WebMvcTest( controllers = Application.class,  secure = false )
+//@ContextConfiguration(classes = {PortalConfiguration.class, PortalSecurityConfig.class, MvcConfig.class})
 //@AutoConfigureMockMvc (secure = false)
 //@SpringBootTest(classes = { Application.class, PortalController.class, PortalConfiguration.class, PortalSecurityConfig.class, MvcConfig.class } , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class WebappIntegrationTests {
-    private static Logger logger = LoggerFactory.getLogger(WebappIntegrationTests.class);
-
-
-    @Autowired
-    private WebClient webClient;
-
-
-    @Autowired
-    private WebApplicationContext wac;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    /*
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        this.webClient = webAppContextSetup()
-    }*/
+public class PortalConfigurationTest {
+    private static Logger logger = LoggerFactory.getLogger(PortalConfigurationTest.class);
 
     /**
      * Denne skulle kjøre opp portalcontrolleren. TODO Fix
@@ -55,21 +37,28 @@ public class WebappIntegrationTests {
      * @throws Exception
      */
     @Test
-    public void testExample() throws Exception {
+    public void versionStringIsNotNull() throws Exception {
 
-    //PortalController c = new PortalController(pbm);
-        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
-        TextPage page = webClient.getPage("/");
+        PortalConfiguration pc = new PortalConfiguration();
 
-        logger.info(page.getContent());
+        String actual = pc.getVersionInformation();
+        logger.info(actual);
+        Assert.assertNotEquals("Version information is not null", null, actual);
+    }
 
-        assertThat(page.getContent()).isEmpty();
+    @Test
+    public void queryCallbackIsNotNull() {
 
+        PortalConfiguration pc = new PortalConfiguration();
+        String actual = pc.getQueryServiceURL();
+        logger.info(actual);
+        Assert.assertNotEquals("Query Service URL is not null", null, actual);
     }
 
     /**
      * Her må portalen være opp å kjøre !
      */
+    /*
     @Test
     public void versionNumberExist() {
         WebDriver driver = new HtmlUnitDriver();
@@ -82,5 +71,5 @@ public class WebappIntegrationTests {
         Assert.assertTrue(element.getText().startsWith("webapp-"));
 
         driver.quit();
-    }
+    }*/
 }
