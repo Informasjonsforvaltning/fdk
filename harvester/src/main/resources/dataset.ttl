@@ -122,9 +122,9 @@ dct:source  a   owl:ObjectProperty .
         a                dcat:Dataset ;
         dct:description  "City cycles"@nb ;
         dct:identifier   "44" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Oslo+Kommune> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
         dct:title        "City cycles"@nb , "City cycles"@en ;
-        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/> .
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/16>
         a                  dcat:Dataset ;
@@ -150,9 +150,9 @@ dct:source  a   owl:ObjectProperty .
         dcat:keyword     "Juridisk enhet" , "Virksomhetsenheten" ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
-<http://data.brreg.no/datakatalog/avdeling/4>
+<http://data.brreg.no/datakatalog/kontaktpunkt/4>
         a                        vcard:Organization ;
-        vcard:email              <mbox:0> ;
+        vcard:hasEmail           <mbox:0> ;
         vcard:organization-unit  "AAS" ;
         vcard:telefon            <tel:4775007500> .
 
@@ -239,6 +239,11 @@ dct:title  a    owl:DatatypeProperty .
         dct:identifier  "971526920" ;
         foaf:name       "SSB" .
 
+<http://data.brreg.no/enhetsregisteret/enhet/991609407>
+        a               foaf:Agent ;
+        dct:identifier  "991609407" ;
+        foaf:name       "Ruter" .
+
 <http://data.brreg.no/datakatalog/dataset/30>
         a                dcat:Dataset ;
         dct:description  "Forhåndsregistrering mva med samordnet registermelding"@nb ;
@@ -253,9 +258,9 @@ dct:title  a    owl:DatatypeProperty .
         a                dcat:Dataset ;
         dct:description  "Ruter routes"@nb ;
         dct:identifier   "43" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/RUTER> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/991609407> ;
         dct:title        "Ruter routes"@nb , "Ruter routes"@en ;
-        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/> .
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/15>
         a                  dcat:Dataset ;
@@ -282,6 +287,8 @@ dcatno:accessRightsComment
         dct:title        "Registrere virksomhet"@nb ;
         dcat:keyword     "Postadresse" , "Organisasjonsform" , "Formål" , "Aktivitet" , "Revisor" , "MVA-registrering" , "Aksjeinnskudd" , "Kontaktopplysninger" , "Kontaktperson" , "Ansatte" , "Daglig Leder" , "Styre" , "Forretningsadresse" , "Enhetens navn" , "Aksjekapital" , "Konsern" , "Regskapsfører" , "Signaturrett" , "Målform" , "Forretningsfører" , "MVA-plikt" , "Dato for vedtekter" , "Dato for stiftelse" , "Dato for start" , "Fusjon" , "Varsling" , "Prokura" , "Fisjon" ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+vcard:hasEmail  a  owl:ObjectProperty .
 
 dct:publisher  a  owl:ObjectProperty .
 
@@ -398,11 +405,6 @@ vcard:telefon  a  owl:ObjectProperty .
         dcat:dataset     <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/40> , <http://data.brreg.no/datakatalog/dataset/34> , <http://data.brreg.no/datakatalog/dataset/30> , <http://data.brreg.no/datakatalog/dataset/37> , <http://data.brreg.no/datakatalog/dataset/42> , <http://data.brreg.no/datakatalog/dataset/29> , <http://data.brreg.no/datakatalog/dataset/32> , <http://data.brreg.no/datakatalog/dataset/36> , <http://data.brreg.no/datakatalog/dataset/41> , <http://data.brreg.no/datakatalog/dataset/28> , <http://data.brreg.no/datakatalog/dataset/31> , <http://data.brreg.no/datakatalog/dataset/27> , <http://data.brreg.no/datakatalog/dataset/26> , <http://data.brreg.no/datakatalog/dataset/33> , <http://data.brreg.no/datakatalog/dataset/39> , <http://data.brreg.no/datakatalog/dataset/38> ;
         foaf:homepage    <http://altinn.no> .
 
-<http://data.brreg.no/enhetsregisteret/enhet/Kommune>
-        a               foaf:Agent ;
-        dct:identifier  "Kommune" ;
-        foaf:name       "Kommune" .
-
 <http://data.brreg.no/datakatalog/dataset/21>
         a                dcat:Dataset ;
         dct:description  "Legestillingsregisteret (LSR) er helsemyndighetenes register over ansatte leger og legestillinger i primær- og spesialisthelsetjenesten."@nb , "A register of all physicians employed and their positions in the public health service. This covers the primary and specialist health services."@en ;
@@ -422,9 +424,14 @@ vcard:Organization  a  owl:Class .
         dct:description  "Søke serveringsbevilgning"@nb ;
         dct:identifier   "34" ;
         dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Kommune> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971032146> ;
         dct:title        "Søke serveringsbevilgning"@nb ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971032146>
+        a               foaf:Agent ;
+        dct:identifier  "971032146" ;
+        foaf:name       "KS" .
 
 dcat:Catalog  a  owl:Class .
 
@@ -449,11 +456,6 @@ dct:isVersionOf  a  owl:ObjectProperty .
 dcat:theme  a   owl:ObjectProperty .
 
 dcat:contactPoint  a  owl:ObjectProperty .
-
-<http://data.brreg.no/enhetsregisteret/enhet/Oslo+Kommune>
-        a               foaf:Agent ;
-        dct:identifier  "Oslo Kommune" ;
-        foaf:name       "Oslo Kommune" .
 
 <http://data.brreg.no/datakatalog/dataset/9>
         a                dcat:Dataset ;
@@ -535,8 +537,6 @@ dct:ProvenanceStatement
         dcat:dataset     <http://data.brreg.no/datakatalog/dataset/20> , <http://data.brreg.no/datakatalog/dataset/23> , <http://data.brreg.no/datakatalog/dataset/22> , <http://data.brreg.no/datakatalog/dataset/17> , <http://data.brreg.no/datakatalog/dataset/21> , <http://data.brreg.no/datakatalog/dataset/24> , <http://data.brreg.no/datakatalog/dataset/19> , <http://data.brreg.no/datakatalog/dataset/18> ;
         foaf:homepage    <http://helseportalen.no> .
 
-vcard:email  a  owl:ObjectProperty .
-
 <http://data.brreg.no/datakatalog/dataset/20>
         a                dcat:Dataset ;
         dct:description  "A register representing the administrative organizational chart of the government-funded health services in Norway."@en , "I Register over Enheter i Spesialisthelsetjenesten (RESH) vedlikeholdes det administrative organisasjonskartet for den statlig finansierte spesialisthelsetjenesten i Norge, med detaljert beskrivelse av tjenestene som tilbys i kliniske enheter ved hjelp av et kodeverk for spesialisthelsetjenesten (OK2007 versjon 2.0). I tillegg blir alle kliniske enheter knyttet til en bedrift, slik at man kan se eksakt hvilke behandlingssteder disse fordeler seg til.\n\nDen enkelte enhet som registreres i databasen får tildelt en unik identifikator kalt RESH-id. Denne beholdes for alltid, selv om enheten flytter og blir underlagt et annet helseforetak, en annen klinikk/avdeling, eller legges ned. Uttrekk fra databasen eller oppslag i RESH forteller hvor enheten med en bestemt HER-id til enhver tid befinner seg. Bruk av kodeverk og retningslinjer for registrering sikrer at enhetene med lik virksomhet blir sammenlignbare. Enheter med klinisk virksomhet oppgir RESH-id i sine rapporter om aktivitet, kvalitet og ventelister til Norsk Pasientregister (NPR) og Statistisk Sentralbyrå (SSB). Med RESH-id plasseres innrapporterte data til riktig foretak og behandlingssted på grunnlag av uttrekk fra RESH. RESH bidrar dermed til god statistikk og bedre styringsinformasjon. De administrative organisasjonskartene er typisk informasjon til bruk i foretakenes ledelsesinformasjonssystemer (LIS), mens NPR og SSB er mest interessert i plasseringen av kliniske enheter til behandlingssted.\n\nStatlig eide foretak og større private virksomheter som har avtale med de regionale helseforetakene har selv ansvar for å vedlikeholde beskrivelsen av egen virksomhet i RESH."@nb ;
@@ -555,7 +555,7 @@ dct:issued  a   owl:DatatypeProperty .
         dct:description  "Søke sjenkebevilgning"@nb ;
         dct:identifier   "33" ;
         dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Kommune> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971032146> ;
         dct:title        "Søke sjenkebevilgning"@nb ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
@@ -570,11 +570,6 @@ dct:issued  a   owl:DatatypeProperty .
         foaf:page        <https://register-web.test.nhn.no/> .
 
 prov:wasGeneratedBy  a  owl:DatatypeProperty .
-
-<http://data.brreg.no/enhetsregisteret/enhet/Ruter>
-        a               foaf:Agent ;
-        dct:identifier  "Ruter" ;
-        foaf:name       "Ruter" .
 
 dct:provenance  a  owl:ObjectProperty .
 
@@ -705,6 +700,11 @@ dcat:Dataset  a  owl:Class .
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/982531950> ;
         dct:title        "Politiattest"@nb ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/958935420>
+        a               foaf:Agent ;
+        dct:identifier  "958935420" ;
+        foaf:name       "Oslo Kommune" .
 
 <http://data.brreg.no/datakatalog/dataset/45>
         a                dcat:Dataset ;
