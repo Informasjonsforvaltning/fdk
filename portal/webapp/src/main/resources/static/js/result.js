@@ -8,8 +8,6 @@ var size = 10;
 var total = 0;
 var searchUrl = "http://dcat.no/unknown";
 
-
-
 function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
@@ -148,7 +146,7 @@ function doSearch() {
 
 
 
-window.onload = function () {
+function showPage () {
 
 var sElement = document.getElementById("dcatQueryService");
 
@@ -217,7 +215,8 @@ if (search)
     };
 };
 
-
+// starts the page initializing code;
+showPage();
 
 
 
