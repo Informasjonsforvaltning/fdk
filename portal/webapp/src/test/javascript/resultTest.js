@@ -36,7 +36,7 @@ var keyword = {
         expect(getLanguageString(title)).toEqual({ value: "English", language: "en" });
     });
 
-    it("pageLanguage = nb and literal only contains no should return unknown langugae no", function () {
+    it("pageLanguage = nb and literal only contains no should return unknown language no", function () {
         pageLanguage = "nb";
         expect(getLanguageString(keyword)).toEqual({ value: "Gulating", language: "no" });
     });

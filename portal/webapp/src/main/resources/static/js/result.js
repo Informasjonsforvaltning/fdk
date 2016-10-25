@@ -1,5 +1,4 @@
 
-// tree toggler -> http://cssdeck.com
 
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = "nb";
@@ -10,85 +9,11 @@ var total = 0;
 var searchUrl = "http://dcat.no/unknown";
 
 
-window.onload = function () {
-
-var sElement = document.getElementById("dcatQueryService");
-
-if (sElement) // !== undefined)
-    searchUrl = sElement.innerHTML;
-
-console.log("service: " + searchUrl);
-
-// find the chosen language from the page
-var chosenLanguage = document.getElementById("chosenLanguage");
-var languageList = document.getElementById("language-list");
-
-var langName = "Norsk (bokmål)";
-if (chosenLanguage && chosenLanguage.textContent) langName = chosenLanguage.textContent;
-
-// set page language. HACK TODO FIX
-if (langName == "English") pageLanguage="en";
-if (langName == "Norsk (bokmål)") pageLanguage="nb";
-if (langName == "Norsk (nynorsk)") pageLanguage = "nn";
-
-console.log(pageLanguage);
-
-// First call to search
-httpGetAsync(searchUrl, showResults);
-
-var prev = document.getElementById("prev");
-if (prev)
-    prev.onclick = function (e) {
-        e.preventDefault();
-        from -= size;
-        if (from < 0) from = 0;
-        console.log(from + " " + size);
-
-        doSearch();
-    };
-
-var next = document.getElementById("next");
-if (next)
-    next.onclick = function(e) {
-        e.preventDefault();
-        var oldFrom = from;
-        from += size;
-        if (from > total) from = odlFrom;
-
-        console.log(from + " " + size);
-
-        doSearch();
-    };
-
-var search = document.getElementById("search");
-var dosearch = document.getElementById("dosearch");
-
-if (dosearch)
-    dosearch.onclick = function (event) {
-        console.log("q: " + search.value);
-        from = 0;
-        doSearch();
-    };
-
-if (search)
-    search.onkeypress = function (event) {
-        if (event.keyCode == 13) {
-            from = 0;
-            doSearch();
-        }
-    };
-};
-
-function doSearch() {
-    var urlstring = searchUrl + "?q=" + search.value +"&from="+from +"&size="+size ;
-    console.log(urlstring);
-    httpGetAsync(urlstring, showResults);
-}
 
 function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
             callback(xmlHttp.responseText);
     };
     xmlHttp.open("GET", theUrl, true); // true for asynchronous
@@ -128,10 +53,12 @@ function getLanguageString(literal) {
         // Handle unexpected language keys (select first in list)
         if (result.value === undefined) {
             for (var k in literal) {
-                result.value = literal[k];
-                result.language = k;
+                if (literal[k]) {
+                    result.value = literal[k];
+                    result.language = k;
 
-                return result;
+                    return result;
+                }
             }
         }
     } else { // default language values found
@@ -142,9 +69,9 @@ function getLanguageString(literal) {
     return result;
 }
 
-function showResults(search_result) {
+function showResults(searchResult) {
 
-    var res = JSON.parse(search_result);
+    var res = JSON.parse(searchResult);
 
     var results = document.getElementById("datasets");
     // fjerner forrige resultat
@@ -164,7 +91,6 @@ function showResults(search_result) {
         //if (from == 0) summary.innerHTML = "Viser de " + fra +  " første datasettene av totalt " + total + " treff";
         summary.innerHTML = "Viser datasett " + fra  + " til " + til + " av " + total + " treff";
     }
-
 
     // handles hits
     var hits  = res.hits.hits;
@@ -213,4 +139,85 @@ function showResults(search_result) {
     });
 
 }
+
+function doSearch() {
+    var urlstring = searchUrl + "?q=" + search.value +"&from="+from +"&size="+size ;
+    console.log(urlstring);
+    httpGetAsync(urlstring, showResults);
+}
+
+
+
+window.onload = function () {
+
+var sElement = document.getElementById("dcatQueryService");
+
+if (sElement) // !== undefined)
+    searchUrl = sElement.innerHTML;
+
+console.log("service: " + searchUrl);
+
+// find the chosen language from the page
+var chosenLanguage = document.getElementById("chosenLanguage");
+var languageList = document.getElementById("language-list");
+
+var langName = "Norsk (bokmål)";
+if (chosenLanguage && chosenLanguage.textContent) langName = chosenLanguage.textContent;
+
+// set page language. HACK TODO FIX
+if (langName === "English") pageLanguage="en";
+if (langName === "Norsk (bokmål)") pageLanguage="nb";
+if (langName === "Norsk (nynorsk)") pageLanguage = "nn";
+
+console.log(pageLanguage);
+
+// First call to search
+httpGetAsync(searchUrl, showResults);
+
+var prev = document.getElementById("prev");
+if (prev)
+    prev.onclick = function (e) {
+        e.preventDefault();
+        from -= size;
+        if (from < 0) from = 0;
+        console.log(from + " " + size);
+
+        doSearch();
+    };
+
+var next = document.getElementById("next");
+if (next)
+    next.onclick = function(e) {
+        e.preventDefault();
+        var oldFrom = from;
+        from += size;
+        if (from > total) from = odlFrom;
+
+        console.log(from + " " + size);
+
+        doSearch();
+    };
+
+var search = document.getElementById("search");
+var dosearch = document.getElementById("dosearch");
+
+if (dosearch)
+    dosearch.onclick = function (event) {
+        console.log("q: " + search.value);
+        from = 0;
+        doSearch();
+    };
+
+if (search)
+    search.onkeypress = function (event) {
+        if (event.keyCode === 13) {
+            from = 0;
+            doSearch();
+        }
+    };
+};
+
+
+
+
 
