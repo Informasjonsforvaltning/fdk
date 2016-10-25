@@ -62,6 +62,12 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
+            <artifactId>jasmine-jquery</artifactId>
+            <version>1.4.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>3.1.1</version>
         </dependency>
@@ -111,7 +117,34 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>com.cj.jshintmojo</groupId>
+                <artifactId>jshint-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>lint</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <version>2.5.6</version>
+                    <options>maxparams:3,indent,camelcase,eqeqeq,forin,immed,latedef,noarg,noempty,nonew</options>
+                    <globals>require,$,yourFunkyJavascriptModule</globals>
+                    <configFile>src/main/resources/jshint.conf.js</configFile>
+                    <directories>
+                        <directory>src/main/resources/static/js</directory>
+                    </directories>
+                    <!--excludes>
+                        <exclude>src/main/webapp/hackyScript.js</exclude>
+                        <exclude>src/main/webapp/myDirectoryForThirdyPartyStuff</exclude>
+                    </excludes-->
+                    <reporter>jslint</reporter>
+                    <reportFile>target/jshint.xml</reportFile>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.github.searls</groupId>
                 <artifactId>jasmine-maven-plugin</artifactId>
