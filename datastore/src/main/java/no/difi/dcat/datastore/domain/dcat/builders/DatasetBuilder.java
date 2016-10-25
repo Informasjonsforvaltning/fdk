@@ -63,8 +63,9 @@ public class DatasetBuilder extends AbstractBuilder {
 			created.setModified(extractDate(dataset, DCTerms.modified));
 			created.setLanguage(extractAsString(dataset, DCTerms.language));
 			created.setLandingPage(extractAsString(dataset, DCAT.landingPage));
-			created.setKeywords(extractMultipleLanguageLiterals(dataset, DCAT.keyword));
+			created.setKeyword(extractMultipleLanguageLiterals(dataset, DCAT.keyword));
 			created.setContact(extractContact(dataset));
+			created.setTheme(extractTheme(dataset, DCAT.theme));
 		}
 		if (catalog != null) {
 			created.setCatalog(CatalogBuilder.create(catalog));

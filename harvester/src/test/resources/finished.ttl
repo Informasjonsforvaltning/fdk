@@ -612,7 +612,7 @@ foaf:name  a    owl:DatatypeProperty .
                 "915933149" ;
         foaf:name  "Direktoratet for e-Helse" .
 
-:keywords  a    owl:DatatypeProperty .
+:keyword  a    owl:DatatypeProperty .
 
 <http://purl.org/dc/terms/isVersionOf>
         a       owl:ObjectProperty .

@@ -102,11 +102,16 @@ function showResults(searchResult) {
         }
 
         var publisher = source.publisher;
-        if (publisher === undefined) {
-            pbElement = document.createElement("kbd");
+        if (!publisher) {
+            publisher = source.catalog.publisher.name;
+        }
+        if (publisher) {
+            pbElement = document.createElement("button");
+            pbElement.className = "btn btn-default btn-sm pull-right"
             pbElement.innerHTML =  publisher;
         }
 
+        var modified = source.modified;
 
         if (keywords !== undefined && keywords.value !== undefined) {
             kwElement = document.createElement("span");

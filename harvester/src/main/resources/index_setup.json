@@ -29,7 +29,7 @@
 					}
 				}
 			},
-			"keywords": {
+			"keyword": {
 				"properties": {
 					"nb": {
 						"type": "string",

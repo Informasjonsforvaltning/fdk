@@ -52,7 +52,17 @@ public abstract class AbstractBuilder {
 		}
 		return map;
 	}
-	
+
+	public static List<String> extractTheme(Resource resource, Property property) {
+		List<String> result = new ArrayList<>();
+		StmtIterator iterator = resource.listProperties(property);
+		while (iterator.hasNext()) {
+			Statement statement = iterator.next();
+			result.add(statement.getObject().toString());
+		}
+		return result;
+	}
+
 	public static Map<String, List<String>> extractMultipleLanguageLiterals(Resource resource, Property property) {
 		Map<String, List<String>> map = new HashMap<>();
 		StmtIterator iterator = resource.listProperties(property);

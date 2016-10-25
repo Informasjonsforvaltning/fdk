@@ -10,13 +10,15 @@ public class Dataset {
 	private Map<String,String> title;
 	private Map<String,String> description;
 	private Contact contact;
-	private Map<String, List<String>> keywords;
+	private Map<String, List<String>> keyword;
 	private Publisher publisher;
 	private Date issued;
 	private Date modified;
 	private String language;
 	private String landingPage;
-	
+	private List<String> theme;
+	public List<String> getTheme() { return theme; }
+	public void setTheme(List<String> theme) { this.theme = theme; }
 	private Catalog catalog;
 	private List<Distribution> distributions;
 	
@@ -56,11 +58,11 @@ public class Dataset {
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
-	public Map<String, List<String>> getKeywords() {
-		return keywords;
+	public Map<String, List<String>> getKeyword() {
+		return keyword;
 	}
-	public void setKeywords(Map<String, List<String>> keywords) {
-		this.keywords = keywords;
+	public void setKeyword(Map<String, List<String>> keyword) {
+		this.keyword = keyword;
 	}
 	public Publisher getPublisher() {
 		return publisher;
