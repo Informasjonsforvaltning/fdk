@@ -117,6 +117,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- test javascript files by running jsHint -->
             <plugin>
                 <groupId>com.cj.jshintmojo</groupId>
                 <artifactId>jshint-maven-plugin</artifactId>
@@ -132,7 +133,7 @@
                     <version>2.5.6</version>
                     <options>maxparams:3,indent,camelcase,eqeqeq,forin,immed,latedef,noarg,noempty,nonew</options>
                     <globals>require,$,yourFunkyJavascriptModule</globals>
-                    <configFile>src/main/resources/jshint.conf.js</configFile>
+                    <configFile>src/test/resources/jshint.conf.js</configFile>
                     <directories>
                         <directory>src/main/resources/static/js</directory>
                     </directories>
@@ -145,6 +146,7 @@
                     <failOnError>false</failOnError>
                 </configuration>
             </plugin>
+            <!-- Runs Jasmine tests -->
             <plugin>
                 <groupId>com.github.searls</groupId>
                 <artifactId>jasmine-maven-plugin</artifactId>
