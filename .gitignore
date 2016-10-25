@@ -6,3 +6,4 @@ docker/git.properties
 logs/
 **/.env
 */git.properties
+/phantomjsdriver.log
