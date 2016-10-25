@@ -86,7 +86,7 @@
             <div id="pagenav" class="col-xs-8 col-xm-8 col-md-8 col-lg-8"-->
                 <center>
                     <nav th:attr="aria-label=#{page.navigation}">
-                        <span id="summary" th:text="#{page.result.summary}">Søkeresultat</span>
+                        <span class="pagination" id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
                         <ul class="pagination">
                             <li>
                                 <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
@@ -113,26 +113,23 @@
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
                     <!-- fasettering -->
                     <div class="list-group">
-                        <a class="list-group-item disabled" href="#">Virksomhet<span class="badge">2</span></a>
-                        <a class="list-group-item disabled" href="#">Tema<span class="badge">3</span></a>
-                        <a class="list-group-item disabled" href="#">Begrep<span class="badge">5</span></a>
-                        <a class="list-group-item disabled" href="#">Hjemmel<span class="badge">1</span></a>
-                        <a class="list-group-item disabled" href="#">Geografi</a>
-                        <a class="list-group-item disabled" href="#">Tid</a>
-                        <a class="list-group-item disabled" href="#">Standard<span class="badge">2</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.organisation}">Virksomhet</span><span class="badge">2</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.theme}">Tema</span><span class="badge">3</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span><span class="badge">5</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span><span class="badge">1</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.spatial}">Geografi</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.temporal}">Tid</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.standard}">Standard</span><span class="badge">2</span></a>
                     </div>
                 </div>
 
                 <!-- søkeresultat -->
                 <div id="datasets" class="col-xs-8 col-xm-8 col-md-8 col-lg-8 list-group">
 
-                    <a class="row list-group-item dataset" href="#"><strong>Enhetsregisteret</strong></a>
-                    <a class="row list-group-item dataset" href="#"><strong>Oppgaveregisteret</strong></a>
-                    <a class="row list-group-item dataset" href="#"><strong>Spesialregisteret</strong></a>
-                    <a class="row list-group-item dataset" href="#"><strong>Hemmeligregisteret</strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong><span th:text="#{result.waiting}">Henter data ...</span></strong></a>
 
                 </div>
-                </div>
+            </div>
 
         </div>
 
@@ -152,8 +149,8 @@
                                     <img src="brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
                                 </a>
 
-                                <p>Organisasjonsnummer: <span class="nowrap">974 760 673</span></p>
-                                <a href="//www.brreg.no/personvern/personvernerklaering/">Informasjonskapsler - personvern</a>
+                                <p><span th:text="#{footer.organisation.number}">Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span></p>
+                                <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler - personvern</a>
                             </div>
                         </div>
 

@@ -78,16 +78,9 @@ function showResults(searchResult) {
     }
     // Oppdaterer søkeinformasjon
     total = res.hits.total;
-    var summary = document.getElementById("summary");
-    if (total === 0 )
-        summary.innerHTML = "Ingen treff";
-    else {
-        var til = from + size ;
-        var fra = from + 1;
-        if (fra > total) fra = total;
-        if (til > total ) til = total;
-        //if (from == 0) summary.innerHTML = "Viser de " + fra +  " første datasettene av totalt " + total + " treff";
-        summary.innerHTML = "Viser datasett " + fra  + " til " + til + " av " + total + " treff";
+    var summary = document.getElementById("total.hits");
+    if (summary) {
+        summary.innerHTML = total;
     }
 
     // handles hits
