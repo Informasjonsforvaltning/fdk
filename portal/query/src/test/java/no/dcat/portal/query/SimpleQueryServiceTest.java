@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.*;
  */
 
 @RunWith(SpringRunner.class)
-@EnableConfigurationProperties
+//@EnableConfigurationProperties
 //@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SimpleQueryServiceTest {
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryServiceTest.class);
@@ -30,7 +30,7 @@ public class SimpleQueryServiceTest {
     //@Autowired
     //private TestRestTemplate restTemplate;
 
-
+    /* TODO This is an integration test, move ...
     @Test
     public void apiFailsWithoutConfiguredDatabase () {
         SimpleQueryService sqs = new SimpleQueryService();
@@ -40,7 +40,7 @@ public class SimpleQueryServiceTest {
 
         logger.info(actual.getBody());
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
+    } */
 
     @Test
     public void return400IfFromIsBelowZero() {
