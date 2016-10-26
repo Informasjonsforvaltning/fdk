@@ -11,6 +11,7 @@
     top: 0;
     right: 0;
 }
+
     </style>
 </head>
 <body>
@@ -140,23 +141,25 @@
     </section>
 
         <footer class="sitefooter hidden-print">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-lg-2"/>
+                    <div class="col-md-3 col-lg-3" id="logo-footer">
 
-            <div id="some-share-section" class="container center-block">
-            </div>
-            <div class="black-container center-block" lang="nb">
-                <div class="container">
-                    <div class="row" id="footer-row">
-                        <div class="col-xs-12 col-md-4" id="logo-footer">
+                            <a href="//www.brreg.no">
+                                <img src="img/brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
+                            </a>
 
-                            <div class="footer-content">
-                                <a href="//www.brreg.no">
-                                    <img src="brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
-                                </a>
+                            <p><span th:text="#{footer.organisation.number}">Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span></p>
+                            <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler - personvern</a>
 
-                                <p><span th:text="#{footer.organisation.number}">Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span></p>
-                                <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler - personvern</a>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2"/>
+
+                    <div class="col-md-3 col-lg-3 ">
+                            <a href="//www.difi.no">
+                                <img src="img/difi-logo.png" alt="Difi logo"/>
+                            </a>
 
                     </div>
                 </div>
