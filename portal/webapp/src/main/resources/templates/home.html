@@ -12,6 +12,16 @@
     right: 0;
 }
 
+.overflow-text {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 1em;     /* fallback */
+   max-height: 3em;      /* fallback */
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+
     </style>
 </head>
 <body>
@@ -92,7 +102,7 @@
                 <center>
                     <nav th:attr="aria-label=#{page.navigation}">
                         <span class="pagination" id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
-                        <ul class="pagination">
+                        <ul class="pagination pagination-sm">
                             <li>
                                 <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
                                     <span aria-hidden="true">&laquo;</span>

@@ -94,7 +94,8 @@ function showResults(searchResult) {
         var keyword = getLanguageString(source.keyword);
 
         if (description) {
-            descriptionElement = document.createElement("span");
+            descriptionElement = document.createElement("div");
+            descriptionElement.className= "overflow-text";
             descriptionElement.innerHTML = description.value;
         }
 
