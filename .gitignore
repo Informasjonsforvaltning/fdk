@@ -7,3 +7,7 @@ logs/
 **/.env
 */git.properties
 /phantomjsdriver.log
+/test/*.zip
+/test/elasticsearch-2.4.1/data/
+/test/elasticsearch-2.4.1/logs/
+/test/lib/

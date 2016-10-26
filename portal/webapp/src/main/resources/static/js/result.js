@@ -87,11 +87,28 @@ function showResults(searchResult) {
     var hits  = res.hits.hits;
     hits.forEach(function(dataset) {
         var source = dataset._source;
-        var lpElement, pbElement, kwElement;
+        var lpElement, pbElement, kwElement, themeElement, descriptionElement;
 
         var title = getLanguageString(source.title);
         var description = getLanguageString(source.description);
-        var keywords = getLanguageString(source.keywords);
+        var keyword = getLanguageString(source.keyword);
+
+        if (description) {
+            descriptionElement = document.createElement("span");
+            descriptionElement.innerHTML = description.value;
+        }
+
+        var theme = source.theme;
+        if (theme) {
+            themeElement = document.createElement("span");
+            themeElement.className = "label label-default";
+            var content = [];
+            theme.forEach(function (element) {
+                var inx = element.lastIndexOf("/");
+                content.push(element.substring(inx +1, element.length));
+            });
+            themeElement.innerHTML = content.join(", ");
+        }
 
         var landingPage = source.landingPage;
         if (landingPage !== undefined) {
@@ -107,29 +124,34 @@ function showResults(searchResult) {
         }
         if (publisher) {
             pbElement = document.createElement("button");
-            pbElement.className = "btn btn-default btn-sm pull-right"
+            pbElement.className = "btn btn-default btn-sm publisher";
             pbElement.innerHTML =  publisher;
         }
 
         var modified = source.modified;
 
-        if (keywords !== undefined && keywords.value !== undefined) {
+        if (keyword !== undefined && keyword.value !== undefined) {
             kwElement = document.createElement("span");
 
-            kwElement.innerHTML = " [" + keywords.value.join(", ") + "] ";
+            kwElement.innerHTML = " [" + keyword.value.join(", ") + "] ";
         }
 
         var row = document.createElement("a");
         row.className = "row list-group-item dataset";
         row.href = "#";
-        row.innerHTML = "<strong>" + title.value + " [" + title.language + "]</strong></br>" + description.value ;
+        row.innerHTML = "<strong>" + title.value + " [" + title.language + "]</strong></br>" ;
 
-        if (keywords !== undefined)
-            row.appendChild(kwElement);
-        if (landingPage !== undefined)
-            row.appendChild(lpElement);
         if (publisher !== undefined)
             row.appendChild(pbElement);
+        if (description)
+            row.appendChild(descriptionElement);
+        if (keyword !== undefined)
+            row.appendChild(kwElement);
+        if (theme)
+            row.appendChild(themeElement);
+        if (landingPage !== undefined)
+            row.appendChild(lpElement);
+
 
         results.appendChild(row);
     });
@@ -211,7 +233,7 @@ if (search)
             doSearch();
         }
     };
-};
+}
 
 // starts the page initializing code;
 showPage();
