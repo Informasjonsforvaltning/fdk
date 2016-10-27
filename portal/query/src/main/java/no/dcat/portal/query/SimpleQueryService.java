@@ -34,6 +34,7 @@ import java.net.UnknownHostException;
 public class SimpleQueryService {
     static private Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     static private Client client = null;
+    private static final String DEFAULT_QUERY_LANGUAGE = "nb";
 
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost ;
@@ -50,7 +51,10 @@ public class SimpleQueryService {
                          @RequestParam(value="from", defaultValue="0") int from,
                          @RequestParam(value="size", defaultValue="10") int size) {
 
-        logger.debug("query: \""+ query + "\" from:" + from + " size:" + size );
+        //TODO: Pass user's language selection from client?
+        //For now we set the default language from a constant
+        String language = DEFAULT_QUERY_LANGUAGE;
+        logger.debug("query: \""+ query + "\" from:" + from + " size:" + size + " language: "+ language);
 
         if (from < 0) {
             return new ResponseEntity<String>("{\"error\": \"parameter error: from is less than zero\"}",HttpStatus.BAD_REQUEST);
@@ -83,7 +87,11 @@ public class SimpleQueryService {
                 "match_all" : { }
              }*/
         } else {
-            search = QueryBuilders.queryStringQuery(query);
+            //search = QueryBuilders.queryStringQuery(query);
+            search = QueryBuilders.multiMatchQuery(query,
+                        "title" + "." + language,
+                        "keywords" + "." + language,
+                        "description" + "." + language);
             /*JSON: {
                 "query": {
                    "query_string": {
