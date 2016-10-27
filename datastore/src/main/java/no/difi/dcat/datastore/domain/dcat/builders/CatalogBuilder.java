@@ -1,5 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.DCTerms;
 
@@ -18,6 +19,7 @@ public class CatalogBuilder extends AbstractBuilder {
 			created.setModified(extractDate(catalog, DCTerms.modified));
 			created.setLanguage(extractAsString(catalog, DCTerms.language));
 			created.setPublisher(extractPublisher(catalog));
+			created.setThemeTaxonomy(extractTheme(catalog, DCAT.themeTaxonomy ));
 		}
 		
 		return created;
