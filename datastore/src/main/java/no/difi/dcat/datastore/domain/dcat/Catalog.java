@@ -1,6 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class Catalog {
@@ -12,6 +13,7 @@ public class Catalog {
 	private Date issued;
 	private Date modified;
 	private String language;
+	private List<String> themeTaxonomy;
 	
 	public String getId() {
 		return id;
@@ -55,6 +57,8 @@ public class Catalog {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+	public List<String> getThemeTaxonomy() { return themeTaxonomy; }
+	public void setThemeTaxonomy(List<String> themeTaxonomy) { this.themeTaxonomy = themeTaxonomy; }
 	
 	
 }
