@@ -92,7 +92,7 @@ public class SimpleQueryService {
                         "title" + "." + language,
                         "keywords" + "." + language,
                         "description" + "." + language,
-                        "publisher.name");
+                        "catalog.publisher.name");
             /*JSON: {
                 "query": {
                    "query_string": {
