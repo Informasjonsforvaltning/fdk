@@ -91,7 +91,8 @@ public class SimpleQueryService {
             search = QueryBuilders.multiMatchQuery(query,
                         "title" + "." + language,
                         "keywords" + "." + language,
-                        "description" + "." + language);
+                        "description" + "." + language,
+                        "publisher.name");
             /*JSON: {
                 "query": {
                    "query_string": {
