@@ -27,7 +27,7 @@ public class LoadExampleData {
     @Test
     public void createExampleData() throws IOException {
 
-        loadDatasetFromFile("datasett-from-gdocs.ttl");
+        loadDatasetFromFile("dataset.ttl");
 
         /*
         //loadDatasetFromFile("test_entryscape_brreg.jsonld.rdf");
