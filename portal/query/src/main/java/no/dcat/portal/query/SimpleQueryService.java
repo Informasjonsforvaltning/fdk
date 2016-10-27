@@ -53,7 +53,7 @@ public class SimpleQueryService {
 
         //TODO: Pass user's language selection from client?
         //For now we set the default language from a constant
-        String language = DEFAULT_QUERY_LANGUAGE;
+        String language = "*"; //DEFAULT_QUERY_LANGUAGE;
         logger.debug("query: \""+ query + "\" from:" + from + " size:" + size + " language: "+ language);
 
         if (from < 0) {
