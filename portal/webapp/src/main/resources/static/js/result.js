@@ -87,6 +87,8 @@ function showResults(searchResult) {
     var hits  = res.hits.hits;
     hits.forEach(function(dataset) {
         var source = dataset._source;
+        var score = dataset._score;
+
         var lpElement, pbElement, kwElement, themeElement, descriptionElement, modifiedElement;
 
         var title = getLanguageString(source.title);
@@ -145,7 +147,7 @@ function showResults(searchResult) {
         var row = document.createElement("a");
         row.className = "row list-group-item dataset";
         row.href = "#";
-        row.innerHTML = "<strong>" + title.value + " <sup>" + title.language + "</sup></strong></br>" ;
+        row.innerHTML = "<strong>" + title.value + "</strong> <sup>" + title.language + " ("+score+")</sup></br>" ;
 
         if (publisher !== undefined)
             row.appendChild(pbElement);
