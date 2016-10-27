@@ -93,16 +93,17 @@
 
     <!-- Resultatfelt -->
     <section id="resultPanel">
+        <div class="container-fluid">
+            <!-- top row for navigation -->
+            <div class="row">
 
-        <div class="row">
-            <!--div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
-
-            </div>
-            <div id="pagenav" class="col-xs-8 col-xm-8 col-md-8 col-lg-8"-->
-                <center>
-                    <nav th:attr="aria-label=#{page.navigation}">
-                        <span class="pagination" id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
-                        <ul class="pagination pagination-sm">
+                <div class="col-sm-4 col-md-6 col-lg-6"/>
+                <div class="col-sm-2 col-md-1 col-lg-1" >
+                    <span  id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
+                </div>
+                <div class="col-sm-4 col-md-5 col-lg-5" th:attr="aria-label=#{page.navigation}">
+                    <nav>
+                        <ul class="pagination pagination-sm" style="margin:0;">
                             <li>
                                 <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
                                     <span aria-hidden="true">&laquo;</span>
@@ -119,10 +120,11 @@
                             </li>
                         </ul>
                     </nav>
-                </center>
-            <!--/div-->
-        </div>
-        <div class="container-fluid">
+                </div>
+
+                <!--/div-->
+            </div>
+            <!-- results row -->
             <div class="row">
 
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
@@ -138,7 +140,7 @@
                     </div>
                 </div>
 
-                <!-- søkeresultat -->
+                <!-- search result -->
                 <div id="datasets" class="col-xs-8 col-xm-8 col-md-8 col-lg-8 list-group">
 
                     <a class="row list-group-item dataset" href="#"><strong><span th:text="#{result.waiting}">Henter data ...</span></strong></a>
@@ -150,31 +152,31 @@
 
     </section>
 
-        <footer class="sitefooter hidden-print">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 col-lg-2"/>
-                    <div class="col-md-3 col-lg-3" id="logo-footer">
+    <footer class="sitefooter hidden-print">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-lg-2"/>
+                <div class="col-md-3 col-lg-3" id="logo-footer">
 
-                            <a href="//www.brreg.no">
-                                <img src="img/brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
-                            </a>
+                        <a href="//www.brreg.no">
+                            <img src="img/brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
+                        </a>
 
-                            <p><span th:text="#{footer.organisation.number}">Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span></p>
-                            <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler - personvern</a>
+                        <p><span th:text="#{footer.organisation.number}">Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span></p>
+                        <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler - personvern</a>
 
-                    </div>
-                    <div class="col-md-2 col-lg-2"/>
+                </div>
+                <div class="col-md-2 col-lg-2"/>
 
-                    <div class="col-md-3 col-lg-3 ">
-                            <a href="//www.difi.no">
-                                <img src="img/difi-logo.png" alt="Difi logo"/>
-                            </a>
+                <div class="col-md-3 col-lg-3 ">
+                        <a href="//www.difi.no">
+                            <img src="img/difi-logo.png" alt="Difi logo"/>
+                        </a>
 
-                    </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
     </div>
     <script src="webjars/jquery/3.1.1/jquery.min.js"></script>

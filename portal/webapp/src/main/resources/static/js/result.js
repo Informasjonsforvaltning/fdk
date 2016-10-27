@@ -87,7 +87,7 @@ function showResults(searchResult) {
     var hits  = res.hits.hits;
     hits.forEach(function(dataset) {
         var source = dataset._source;
-        var lpElement, pbElement, kwElement, themeElement, descriptionElement;
+        var lpElement, pbElement, kwElement, themeElement, descriptionElement, modifiedElement;
 
         var title = getLanguageString(source.title);
         var description = getLanguageString(source.description);
@@ -130,6 +130,11 @@ function showResults(searchResult) {
         }
 
         var modified = source.modified;
+        if (modified) {
+            var ix2 = modified.indexOf("T");
+            modifiedElement = document.createElement("span");
+            modifiedElement.innerHTML = modified.substring(0,ix2);
+        }
 
         if (keyword !== undefined && keyword.value !== undefined) {
             kwElement = document.createElement("span");
@@ -140,7 +145,7 @@ function showResults(searchResult) {
         var row = document.createElement("a");
         row.className = "row list-group-item dataset";
         row.href = "#";
-        row.innerHTML = "<strong>" + title.value + " [" + title.language + "]</strong></br>" ;
+        row.innerHTML = "<strong>" + title.value + " <sup>" + title.language + "</sup></strong></br>" ;
 
         if (publisher !== undefined)
             row.appendChild(pbElement);
@@ -152,7 +157,8 @@ function showResults(searchResult) {
             row.appendChild(themeElement);
         if (landingPage !== undefined)
             row.appendChild(lpElement);
-
+        if (modified)
+            row.appendChild(modifiedElement);
 
         results.appendChild(row);
     });
