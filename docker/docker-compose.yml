@@ -24,14 +24,6 @@ services:
     networks:
       platform:
 
-  catalog:
-    image: "fdk/catalog:${TAG}"
-    ports:
-      - "8084:8080"
-    networks:
-      platform:
-      logging:
-
   fuseki:
     image: "fdk/fuseki:${TAG}"
     volumes:
