@@ -2,7 +2,8 @@
 
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = "nb";
-
+var sortField = "";
+var sortOrder = "asc";
 var from = 0;
 var size = 10;
 var total = 0;
@@ -169,11 +170,46 @@ function showResults(searchResult) {
 
 function doSearch() {
     var urlstring = searchUrl + "?q=" + search.value +"&from="+from +"&size="+size ;
+    if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+
     console.log(urlstring);
+
     httpGetAsync(urlstring, showResults);
 }
 
+function prepareSort() {
+    console.log("Prepare Sort");
 
+    var sortSelectElement = document.getElementById("sort.select");
+    var sortChooseElement = document.getElementById("sort.choice");
+
+    sortSelectElement.onclick = function (event) {
+        var oldSortField = sortField;
+
+        var sortElement = event.target;
+        var sortVal = event.target.innerHTML;
+
+        sortChooseElement.innerHTML = sortVal;
+        var attr = sortElement.getAttribute("id");
+        sortDirection = "asc";
+        if (attr === "sort.relevance") {
+            sortField = undefined;
+            sortDirection = "desc";
+        } else if (attr === "sort.title") {
+            sortField = "title." + pageLanguage;
+        } else if (attr === "sort.publisher") {
+            sortField = "publisher.name" ;
+        } else if (attr === "sort.modified") {
+            sortField = "modified";
+        }
+
+        //if (oldSortField !=== sortField) {
+            doSearch();
+        //}
+
+    };
+
+}
 
 function showPage () {
 
@@ -242,6 +278,8 @@ if (search)
             doSearch();
         }
     };
+
+prepareSort();
 }
 
 // starts the page initializing code;

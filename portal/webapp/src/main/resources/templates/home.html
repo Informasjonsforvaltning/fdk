@@ -94,14 +94,16 @@
     <!-- Resultatfelt -->
     <section id="resultPanel">
         <div class="container-fluid">
-            <!-- top row for navigation -->
-            <div class="row">
+
+            <!-- Resultat navigering -->
+            <div class="row-fluid">
 
                 <div class="col-sm-4 col-md-6 col-lg-6"/>
-                <div class="col-sm-2 col-md-1 col-lg-1" >
+                <div class="col-md-1 col-lg-1" >
                     <span  id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
                 </div>
-                <div class="col-sm-4 col-md-5 col-lg-5" th:attr="aria-label=#{page.navigation}">
+
+                <div class="col-md-2 col-lg-2" th:attr="aria-label=#{page.navigation}">
                     <nav>
                         <ul class="pagination pagination-sm" style="margin:0;">
 
@@ -123,6 +125,21 @@
                     </nav>
                 </div>
 
+                <!-- SORT Controller -->
+                <div class="col-md-1 col-lg-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span th:text="#{sort.by}">Sorter på:</span>
+                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
+                        </button>
+                        <ul id="sort.select" class="dropdown-menu">
+                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
+                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
+                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
+                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Dato</a></li>
+                        </ul>
+                    </div>
+                </div>
                 <!--/div-->
             </div>
             <!-- results row -->

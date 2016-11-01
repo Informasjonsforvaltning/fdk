@@ -108,6 +108,7 @@ public class SimpleQueryService {
 
                 //.addHighlightedField("description.no")
                 .setQuery(search)
+                
 
                 .setFrom(from)
                 .setSize(size)
