@@ -52,7 +52,6 @@
 
 	<modules>
 		<module>portal</module>
-		<module>catalog</module>
 		<module>elasticsearch</module>
 		<module>fuseki</module>
 		<module>kibana</module>
