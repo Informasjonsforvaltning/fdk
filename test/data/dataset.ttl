@@ -550,6 +550,7 @@ vcard:email  a  owl:ObjectProperty .
         dct:title        "Register over Enheter i Spesialisthelsetjenesten"@nb ;
         dcat:keyword     "Adminstrative enheter" ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        dcat:landingPage <https://ehelse.no/helseadministrative-registre/register-for-enheter-i-spesialisthelsetjenesten-resh> ;
         foaf:page        <https://register-web.test.nhn.no/> .
 
 dct:issued  a   owl:DatatypeProperty .
@@ -689,6 +690,7 @@ dct:accruralPeriodicity
         dcat:distriution         <http://data.brreg.no/datakatalog/distibusjon/12> ;
         dcat:keyword             "Grunndata" , "Enhetsnavn" , "Organisasjonsnummer" , "Roller" , "Enhet" , "Bransje" ;
         dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        dcat:landingPage         <http://data.brreg.no/oppslag/enhetsregisteret/enheter.xhtml> ;
         foaf:page                <https://confluence.brreg.no/display/DBNPUB/API> .
 
 <http://data.brreg.no/datakatalog/katalog/1>
