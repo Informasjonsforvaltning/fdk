@@ -5,6 +5,16 @@ public class Contact {
 	private String id;
 	private String fullname;
 	private String email;
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	private String telephone;
 	
 	public String getId() {
 		return id;

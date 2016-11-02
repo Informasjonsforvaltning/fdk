@@ -154,6 +154,21 @@ dct:source  a   owl:ObjectProperty .
         dcat:keyword     "Juridisk enhet" , "Virksomhetsenheten" ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/4>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:bjarne.base@brreg.no>;
+        vcard:fn                 "Kontakt for Altinn";
+        vcard:organization-unit  "AAS" ;
+        vcard:hasTelephone       <tel:+4775007500> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974760673>
+        a               foaf:Agent ;
+        dct:identifier  "974760673" ;
+        dct:type        "AAS" ;
+        foaf:name       "Brønnøysundregistrene" .
+
+
 <http://data.brreg.no/datakatalog/avdeling/4>
         a                        vcard:Organization ;
         vcard:email              <mbox:0> ;
@@ -228,10 +243,6 @@ dct:relation  a  owl:ObjectProperty .
 
 dct:title  a    owl:DatatypeProperty .
 
-<http://data.brreg.no/enhetsregisteret/enhet/974760673>
-        a               foaf:Agent ;
-        dct:identifier  "974760673" ;
-        foaf:name       "Brønnøysundregistrene" .
 
 <http://data.brreg.no/enhetsregisteret/enhet/985399077>
         a               foaf:Agent ;

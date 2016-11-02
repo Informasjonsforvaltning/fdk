@@ -97,11 +97,18 @@ public abstract class AbstractBuilder {
 		try {
 			Contact contact = new Contact();
 			Statement property = resource.getProperty(DCAT.contactPoint);
+
+			if (property == null ) {
+				logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
+				return null;
+			}
+
 			Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+
 			contact.setId(object.getURI());
-			//TODO: use correct vcard
 			contact.setFullname(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#fn")));
 			contact.setEmail(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail")).replace("mailto:", ""));
+			contact.setTelephone(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasTelephone")).replace("tel:",""));
 			
 			return contact;
 		} catch (Exception e) {
