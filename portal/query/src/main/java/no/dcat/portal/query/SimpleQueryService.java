@@ -135,12 +135,13 @@ public class SimpleQueryService {
                 .actionGet();
         } else {
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
+            StringBuilder sbSortField = new StringBuilder().append(sortfield).append(".raw");
             response = client.prepareSearch("dcat")
                     .setTypes("dataset")
                     .setQuery(search)
                     .setFrom(from)
                     .setSize(size)
-                    .addSort(sortfield, sortOrder)
+                    .addSort(sbSortField.toString(), sortOrder)
                     .execute()
                     .actionGet();
         }

@@ -44,9 +44,9 @@ public class SimpleQueryServiceMochitoTest {
      */
     @Test
     public void testElasticSearchIsCalledWithCorrectParameters() {
-        ResponseEntity<String> actual =  sqs.search("query", 1, 10, "tema", "ascending");
+        ResponseEntity<String> actual =  sqs.search("query", 1, 10, "tema.nb", "ascending");
 
-        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10)).addSort("tema", SortOrder.ASC);
+        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10)).addSort("tema.nb.raw", SortOrder.ASC);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
