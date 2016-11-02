@@ -9,7 +9,7 @@ public class Dataset {
 	private String id;
 	private Map<String,String> title;
 	private Map<String,String> description;
-	private Contact contact;
+	private Contact contactPoint;
 	private Map<String, List<String>> keyword;
 	private Publisher publisher;
 	private Date issued;
@@ -52,11 +52,11 @@ public class Dataset {
 	public void setDescription(Map<String, String> description) {
 		this.description = description;
 	}
-	public Contact getContact() {
-		return contact;
+	public Contact getContactPoint() {
+		return contactPoint;
 	}
-	public void setContact(Contact contact) {
-		this.contact = contact;
+	public void setContactPoint(Contact contactPoint) {
+		this.contactPoint = contactPoint;
 	}
 	public Map<String, List<String>> getKeyword() {
 		return keyword;
