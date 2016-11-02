@@ -183,6 +183,7 @@ function prepareSort() {
     var sortSelectElement = document.getElementById("sort.select");
     var sortChooseElement = document.getElementById("sort.choice");
 
+    if (sortSelectElement)
     sortSelectElement.onclick = function (event) {
         var oldSortField = sortField;
 
