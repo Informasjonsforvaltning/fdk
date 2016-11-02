@@ -15,7 +15,23 @@
 						"properties": {
 							"nb": {
 								"type": "string",
-								"analyzer": "norwegian"
+								"analyzer": "norwegian",
+								"fields": {
+									"raw": {
+										"type":  "string",
+										"index": "not_analyzed"
+									}
+								}
+							},
+							"en": {
+								"type": "string",
+								"analyzer": "english",
+								"fields": {
+									"raw": {
+										"type":  "string",
+										"index": "not_analyzed"
+									}
+								}
 							}
 						}
 					}
@@ -41,15 +57,48 @@
 				"properties": {
 					"nb": {
 						"type": "string",
-						"analyzer": "norwegian"
+						"analyzer": "norwegian",
+						"fields": {
+							"raw": {
+								"type":  "string",
+								"index": "not_analyzed"
+							}
+						}
+					},
+					"nn": {
+						"type": "string",
+						"analyzer": "norwegian",
+						"fields": {
+							"raw": {
+								"type":  "string",
+								"index": "not_analyzed"
+							}
+						}
+					},
+					"en": {
+						"type": "string",
+						"analyzer": "english",
+						"fields": {
+							"raw": {
+								"type":  "string",
+								"index": "not_analyzed"
+							}
+						}
 					}
+
 				}
 			},
 			"publisher": {
 				"properties": {
 					"name": {
 						"type": "string",
-						"analyzer": "norwegian"
+						"analyzer": "norwegian",
+						"fields": {
+							"raw": {
+								"type":  "string",
+								"index": "not_analyzed"
+							}
+						}
 					}
 				}
 			}

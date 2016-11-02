@@ -12,7 +12,7 @@ WHERE {
   ?s a dcat:Dataset.
   ?s dcat:contactPoint ?o.
   ?o ?pred ?val.
-  FILTER(!(EXISTS {?o a vcard:Kind} || EXISTS {?o a vcard:Organization} || EXISTS {?o a vcard:Individual ) ).
+  FILTER(!(EXISTS {?o a vcard:Kind} || EXISTS {?o a vcard:Organization} || EXISTS {?o a vcard:Individual } )).
   BIND (dcat:contactPoint AS ?p).
   BIND ("Dataset" AS ?Class_Name).
   BIND (43 AS ?Rule_ID).
