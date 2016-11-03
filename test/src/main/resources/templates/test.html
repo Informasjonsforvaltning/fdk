@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nb"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.min.css" media="all"/>
+</head>
+<body>
+<h1>Dataktalog Testverktøy</h1>
+
+<label class="btn btn-default btn-file">
+    Last inn fil <input type="file" style="display: none;"/>
+</label>
+
+
+<button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+    Slett DCAT index
+</button>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Bekreft slett database</h4>
+            </div>
+            <div class="modal-body">
+                Dette sletter Elasticstore indeksen "dcat". Vil du fortsette?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/testadmin.js"></script>
+</body>
+</html>
