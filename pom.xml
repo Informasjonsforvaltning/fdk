@@ -61,6 +61,7 @@
 		<module>admin-webapp</module>
 		<module>api-app</module>
 		<module>docker</module>
+		<module>test</module>
     </modules>
 
     <properties>

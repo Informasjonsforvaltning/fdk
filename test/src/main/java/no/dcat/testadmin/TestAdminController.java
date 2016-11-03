@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import no.dcat.harvester.crawler.Loader;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -21,56 +25,93 @@ import java.net.URL;
 @Controller
 public class TestAdminController {
 
-        private static Logger logger = LoggerFactory.getLogger(TestAdminController.class);
+    private static Logger logger = LoggerFactory.getLogger(TestAdminController.class);
 
 
+    /**
+     * The resultSet page. Sets callback service and version identification and returns home.html page
+     */
+    @RequestMapping({"/"})
+    String index(HttpSession session) {
 
-        /**
-         * The resultSet page. Sets callback service and version identification and returns home.html page
-         */
-        @RequestMapping({"/"})
-        String index (HttpSession session) {
+        //session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
 
-            //session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
+        //session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
 
-            //session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
+        return "test"; // templates/home.html
+    }
 
-            return "test"; // templates/home.html
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.DELETE, value = "esdata")
+    public ResponseEntity<String> deleteEsdata(HttpServletResponse response) {
+        HttpURLConnection httpCon = null;
+
+        try {
+
+            URL url = new URL("http://localhost:9200/dcat");
+
+            httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            httpCon.setRequestMethod("DELETE");
+
+            logger.debug(httpCon.toString());
+            //httpCon.getOutputStream().write("dcat".getBytes());
+
+            int responseCode = httpCon.getResponseCode();
+
+            if (responseCode == HttpStatus.OK.value()) {
+
+                logger.info("Database deleted");
+                return new ResponseEntity<String>(HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            logger.error("Failed to delete", e);
+        } finally {
+            if (httpCon != null) {
+                httpCon.disconnect();
+            }
         }
 
-        @CrossOrigin
-        @RequestMapping(method= RequestMethod.DELETE, value = "esdata")
-        public ResponseEntity<String> deleteEsdata(HttpServletResponse response) {
-            HttpURLConnection httpCon = null;
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+    }
 
-                try {
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, value = "load")
+    public ResponseEntity<String> load(@RequestParam(value = "filename") String filename,
+                                               @RequestParam(value = "data") String base64,
+                                               HttpServletResponse response) {
+        try {
+            logger.info("Test load request: " +filename + " " + base64.length() + " " + response.getContentType());
 
-                        URL url = new URL("http://localhost:9200/dcat");
+            byte[] txt = DatatypeConverter.parseBase64Binary(base64.split(",")[1]);
 
-                        httpCon = (HttpURLConnection) url.openConnection();
-                        httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                        httpCon.setRequestMethod("DELETE");
+            File tempDir = new File(System.getProperty("java.io.tmpdir"));
 
-                    logger.debug(httpCon.toString());
-                        //httpCon.getOutputStream().write("dcat".getBytes());
+            String prefix = filename.substring(0,filename.indexOf('.'));
+            String postfix = filename.substring(filename.indexOf('.'),filename.length());
 
-                        int responseCode = httpCon.getResponseCode();
+            File tempFile = File.createTempFile(prefix, postfix, tempDir);
+            FileOutputStream fos = new FileOutputStream(tempFile);
+            fos.write(txt);
+            fos.close();
+            logger.debug(tempFile.getAbsolutePath());
 
-                    if (responseCode == HttpStatus.OK.value()) {
+            Loader loader = new Loader();
 
-                        logger.info("Database deleted");
-                        return new ResponseEntity<String>(HttpStatus.OK);
-                    }
-                } catch (Exception e) {
-                        logger.error("Failed to delete",e);
-                } finally {
-                    if (httpCon != null) {
-                        httpCon.disconnect();
-                    }
-                }
+            //loader.loadDatasetFromFile(url.toString());
+            String url = tempFile.toURL().toString();
+            logger.debug ("reading tempfile " + url);
+            loader.loadDatasetFromFile(url);
 
-               return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            logger.info("Load File Success");
+            String message = "{\"success\": \""+filename+ " successfully loaded!\"}";
+            return new ResponseEntity<String>(message,HttpStatus.OK);
 
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+    }
+
 }

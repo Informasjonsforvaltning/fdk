@@ -1,4 +1,5 @@
 console.log("TestAdmin");
+$('#loader').hide();
 
 $(function () {
   var token = $("meta[name='_csrf']").attr("content");
@@ -31,5 +32,53 @@ $('#confirm-delete').on('click', '.btn-ok', function(e) {
       }
   });
 
+});
+
+$('form').on('submit', function (e) {
+    e.preventDefault();
+
+    var reader = new FileReader(),
+        file = $('#resume')[0];
+
+
+    if (!file.files.length) {
+        alert('no file uploaded');
+        return false;
+    }
+    reader.fileName = file.files[0].name;
+
+    reader.onload = function (event) {
+        var data = reader.result;
+            //base64 = data.replace(/^[^,]*,/, ''),
+
+        var info = {
+           filename: event.target.fileName ,
+           data: data
+        };
+
+        console.log(event.target.fileName);
+
+        $('#loader').show();
+
+        $.ajax({
+            url: "load",
+            type: "POST",
+            dataType: "JSON",
+            data: info,
+            success: function (response) {
+                console.log("SUCCESS: ");
+                console.log(response);
+                alert("SUCCESS: " + response.success);
+                $('#loader').hide();
+            },
+            error: function (response) {
+                console.log(response)
+                alert("ERROR: "+ response.responseText);
+                $('#loader').hide();
+            }
+        });
+    };
+
+    reader.readAsDataURL(file.files[0]);
 });
 

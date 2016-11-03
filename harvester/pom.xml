@@ -104,6 +104,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.0.0</version>
+                <configuration>
+                    <attachClasses>true</attachClasses>  <!-- to make them visible to dependen modules -->
+                    <classesClassifier>classes</classesClassifier>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>pl.project13.maven</groupId>
