@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://config-cloudserver:8080}
+      username: ${CONFIG_USER:defaultusername}
+      password: ${CONFIG_PASSWORD:defaultpassword}
+  application:
+    name: fellesdatakatalog-portal-query
