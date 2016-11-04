@@ -1,3 +1,11 @@
+
+#Denne filen brukes når applikasjonen kjører på utvikler pc.
+logging:
+  level.: ERROR
+  level.no.brreg: DEBUG
+  level.org.springframework: ERROR
+
+#Kanskje kan disse fjernes?
 spring:
     profiles: docker
 application:
