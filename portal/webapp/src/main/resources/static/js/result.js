@@ -129,7 +129,7 @@ function showResults(searchResult) {
         if (publisher) {
             pbElement = document.createElement("button");
             pbElement.className = "btn btn-default btn-sm publisher";
-            pbElement.innerHTML =  publisher;
+            pbElement.innerHTML =  publisher.name;
         }
 
         var modified = source.modified;
@@ -148,7 +148,9 @@ function showResults(searchResult) {
         var row = document.createElement("a");
         row.className = "row list-group-item dataset";
         row.href = "#";
-        row.innerHTML = "<strong>" + title.value + "</strong> <sup>" + title.language + " ("+score+")</sup></br>" ;
+        var scoreString = "(" + score + ")"
+        if (!score) scoreString = "";
+        row.innerHTML = "<strong>" + title.value + "</strong> <sup>" + title.language + " " + scoreString + "</sup></br>" ;
 
         if (publisher !== undefined)
             row.appendChild(pbElement);
