@@ -1,17 +1,15 @@
-
-#Denne filen brukes når applikasjonen kjører på utvikler pc.
 logging:
   level.: ERROR
   level.no.brreg: DEBUG
   level.org.springframework: ERROR
-
-#Kanskje kan disse fjernes?
+---
 spring:
     profiles: docker
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
 ---
+#Utv-miljø lokalt på egen PC
 spring:
     profiles: development
 application:
