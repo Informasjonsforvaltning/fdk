@@ -1,11 +1,25 @@
+logging:
+  level.: ERROR
+  level.no.brreg: DEBUG
+  level.org.springframework: ERROR
+---
+#Utviklingsmiljø på Openshift
 spring:
-    profiles: docker
+    profiles: fellesdatakatalog-ut1
 application:
-  elasticsearchHost: elasticsearch
+  elasticsearchHost: localhost
   elasticsearchPort: 9300
 ---
+# Systemtest-miljø på Openshift
 spring:
-    profiles: development
+    profiles: fellesdatakatalog-st1
+application:
+  elasticsearchHost: localhost
+  elasticsearchPort: 9300
+---
+# Integrasjonstest-miljø på Openshift
+spring:
+    profiles: fellesdatakatalog-tt1
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
