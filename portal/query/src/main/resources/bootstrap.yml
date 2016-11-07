@@ -2,7 +2,7 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_SERVER_URI:http://config-cloudserver:8080}
-      username: ${CONFIG_USER:defaultusername}
-      password: ${CONFIG_PASSWORD:defaultpassword}
+      username: ${CONFIG_USER:propadmin}
+      password: ${CONFIG_PASSWORD:Pbp|`@e0;E,obYY&OplUc^E=P`tk=/}
   application:
     name: fellesdatakatalog-portal-query

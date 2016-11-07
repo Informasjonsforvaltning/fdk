@@ -32,6 +32,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Nødvendig for å bruke configserver på openshift -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -42,6 +47,19 @@
         <version>${elasticsearch.version}</version>
     </dependency>
     </dependencies>
+
+    <!-- Nødvendig for å brukes på openshift-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Brixton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -70,5 +88,52 @@
         </plugins>
     </build>
 
-
+    <profiles>
+        <profile>
+            <id>Props on windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/test-local/resources/</directory>
+                        <includes>
+                            <include>properties/*.*</include>
+                            <include>application.yml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/resources/</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>Include test-property files</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <testResources>
+                    <testResource>
+                        <filtering>true</filtering>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
+                        <filtering>true</filtering>
+                        <directory>src/test-local/resources/</directory>
+                        <includes>
+                            <include>properties/*.*</include>
+                            <include>application.yml</include>
+                        </includes>
+                    </testResource>
+                </testResources>
+            </build>
+        </profile>
+    </profiles>
 </project>
