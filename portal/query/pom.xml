@@ -81,10 +81,6 @@
                 <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
 
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
@@ -111,6 +107,15 @@
                         <directory>src/main/resources/</directory>
                     </resource>
                 </resources>
+
+                <!-- Docker image skal kun lages på Windows. -->
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+
             </build>
         </profile>
         <profile>
