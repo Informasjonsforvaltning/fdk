@@ -1,4 +1,4 @@
-package no.dcat.harvester.dcat.domain.theme;
+package no.difi.dcat.datastore.domain.dcat;
 
 /**
  * Models the part of the DataTheme class called concepttheme.

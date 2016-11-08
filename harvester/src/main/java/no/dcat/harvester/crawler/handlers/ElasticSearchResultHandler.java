@@ -3,8 +3,10 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
+import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
@@ -60,24 +63,26 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
-        List<Distribution> distributions = new DistributionBuilder(model).build();
+        Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+
+        List<Distribution> distributions = new DistributionBuilder(model).build(dataThemes);
         logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
         for (Distribution distribution : distributions) {
             String json = gson.toJson(distribution);
 
-            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX,DISTRIBUTION_TYPE, distribution.getId());
+            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DISTRIBUTION_TYPE, distribution.getId());
             indexRequest.source(gson.toJson(distribution));
 
             logger.debug("Add distribution document {} to bulk request", distribution.getId());
             bulkRequest.add(indexRequest);
         }
 
-        List<Dataset> datasets = new DatasetBuilder(model).build();
+        List<Dataset> datasets = new DatasetBuilder(model).build(dataThemes);
         logger.info("Number of distribution documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
             String json = gson.toJson(dataset);
 
-            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX,DATASET_TYPE,dataset.getId());
+            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DATASET_TYPE, dataset.getId());
             indexRequest.source(gson.toJson(dataset));
 
             logger.debug("Add dataset document {} to bulk request", dataset.getId());
@@ -85,7 +90,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-        if(bulkResponse.hasFailures()) {
+        if (bulkResponse.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
         }
     }

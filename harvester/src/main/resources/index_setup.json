@@ -88,6 +88,53 @@
 
 				}
 			},
+			"theme": {
+					"properties": {
+						"id": {
+							"type": "string",
+							"index": "not_analyzed"
+						},
+						"code": {
+							"type": "string",
+							"index": "analyzed"
+						},
+						"startUse": {
+							"type": "string",
+							"index": "not_analyzed"
+						},
+						"title": {
+							"nb": {
+								"type": "string",
+								"analyzer": "norwegian",
+								"index": "analyzed"
+							},
+							"en": {
+								"type": "string",
+								"analyzer": "english",
+								"index": "analyzed"
+							}
+						},
+						"conceptSchema": {
+							"id": {
+								"type": "string",
+								"index": "not_analyzed"
+							},
+							"title": {
+								"type": "string",
+								"index": "not_analyzed"
+							},
+							"versioninfo": {
+								"type": "string",
+								"index": "not_analyzed"
+							},
+							"versionnumber": {
+								"type": "string",
+								"index": "not_analyzed"
+							}
+						}
+
+					}
+			},
 			"publisher": {
 				"properties": {
 					"name": {
