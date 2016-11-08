@@ -25,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,9 @@ public class CrawlerJob implements Runnable {
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
+    private List<String> validationResult = new ArrayList<>();
+
+    public List<String> getValidationResult() {return validationResult;}
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
@@ -81,7 +85,7 @@ public class CrawlerJob implements Runnable {
 
 
 
-            if (isValid(union)) {
+            if (isValid(union,validationResult)) {
                 logger.debug("Dataset is valid!");
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
@@ -189,10 +193,12 @@ public class CrawlerJob implements Runnable {
 
     }
 
-    private boolean isValid(Model model) {
+    private boolean isValid(Model model,List<String> validationMessage) {
 
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
         final String[] message = {null};
+
+        validationMessage.clear();
 
         boolean validated = DcatValidation.validate(model, (error) -> {
             if (error.isError()) {
@@ -206,7 +212,9 @@ public class CrawlerJob implements Runnable {
             } else {
                 status[0] = error.getRuleSeverity();
             }
-            logger.error("[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString());
+            String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
+            validationMessage.add(msg);
+            logger.error(msg);
         });
 
         Resource rdfStatus = null;

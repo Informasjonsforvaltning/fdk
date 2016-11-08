@@ -18,6 +18,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by nodavsko on 02.11.2016.
@@ -101,11 +102,29 @@ public class TestAdminController {
             //loader.loadDatasetFromFile(url.toString());
             String url = tempFile.toURL().toString();
             logger.debug ("reading tempfile " + url);
-            loader.loadDatasetFromFile(url);
 
-            logger.info("Load File Success");
-            String message = "{\"success\": \""+filename+ " successfully loaded!\"}";
-            return new ResponseEntity<String>(message,HttpStatus.OK);
+
+            List<String> resultMsgs = loader.loadDatasetFromFile(url);
+
+            StringBuffer msg = new StringBuffer();
+            boolean success = true;
+            for (String s : resultMsgs) {
+                if (s.contains("validation_error")) success = false;
+                String sub = s.substring(0, s.indexOf(", crawler_id"));
+                msg.append(sub + "\n");
+            }
+
+            String finalMessage = msg.toString();
+            logger.debug(finalMessage);
+
+            if (success) {
+                logger.info("Load File Success");
+                //String message = "{\"success\": \"" + filename + " successfully loaded!\"}";
+                return new ResponseEntity<String>(finalMessage, HttpStatus.OK);
+            } else {
+                logger.info("Unsucsesfull in loading");
+                return new ResponseEntity<String>(finalMessage, HttpStatus.BAD_REQUEST);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

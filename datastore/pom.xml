@@ -4,24 +4,13 @@
 
 	<artifactId>datastore</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.0</version>
+	<version>0.2.0-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>no.dcat</groupId>
 		<version>0.1.0</version>
 	</parent>
-
-	<distributionManagement>
-		<repository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
-		</repository>
-		<snapshotRepository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<dependencies>
 

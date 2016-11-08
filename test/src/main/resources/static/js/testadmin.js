@@ -1,6 +1,7 @@
 console.log("TestAdmin");
 $('#loader').hide();
 
+// Get security headers
 $(function () {
   var token = $("meta[name='_csrf']").attr("content");
   var header = $("meta[name='_csrf_header']").attr("content");
@@ -72,9 +73,29 @@ $('form').on('submit', function (e) {
                 $('#loader').hide();
             },
             error: function (response) {
-                console.log(response)
-                alert("ERROR: "+ response.responseText);
+                console.log(response);
+
                 $('#loader').hide();
+
+                var validationElement = document.getElementById("validation");
+                // delete old rows
+                while (validationElement.firstChild) {
+                    validationElement.removeChild(validationElement.firstChild);
+                }
+
+                if (response.responseText) {
+                    alert(response.status);
+                    response.responseText.split("\n").forEach(function (element) {
+                        var status;
+                        if (element.indexOf("validation_warning") !== -1) status = "list-group-item-warning";
+                        else if (element.indexOf("validation_error") !== -1) status = "list-group-item-danger";
+                        else status ="list-group-item-info";
+
+                        $('#validation').append('<li class="list-group-item '+status + '">' + element + '</li>');
+                    });
+
+                }
+
             }
         });
     };
