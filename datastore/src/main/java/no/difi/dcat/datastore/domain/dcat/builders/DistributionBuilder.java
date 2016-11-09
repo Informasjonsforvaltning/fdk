@@ -1,14 +1,15 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
+import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
-import no.difi.dcat.datastore.domain.dcat.Distribution;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class DistributionBuilder extends AbstractBuilder {
 
@@ -18,7 +19,7 @@ public class DistributionBuilder extends AbstractBuilder {
         this.model = model;
     }
 
-    public List<Distribution> build() {
+    public List<Distribution> build(Map<String, DataTheme> dataThemes) {
         List<Distribution> distributions = new ArrayList<>();
 
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
@@ -38,7 +39,7 @@ public class DistributionBuilder extends AbstractBuilder {
 
                     if (next.getObject().isResource()) {
                         Resource distribution = next.getResource();
-                        distributions.add(create(distribution, dataset, catalog));
+                        distributions.add(create(distribution, dataset, catalog, dataThemes));
                     }
                 }
             }
@@ -48,7 +49,7 @@ public class DistributionBuilder extends AbstractBuilder {
 
     }
 
-    public static Distribution create(Resource distribution, Resource dataset, Resource catalog) {
+    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, DataTheme> dataThemes) {
         Distribution created = new Distribution();
 
         if (distribution != null) {
@@ -60,7 +61,7 @@ public class DistributionBuilder extends AbstractBuilder {
             created.setFormat(extractAsString(distribution, DCTerms.format));
         }
         if (dataset != null && dataset != null) {
-            created.setDataset(DatasetBuilder.create(dataset, catalog));
+            created.setDataset(DatasetBuilder.create(dataset, catalog, dataThemes));
         }
 
         return created;

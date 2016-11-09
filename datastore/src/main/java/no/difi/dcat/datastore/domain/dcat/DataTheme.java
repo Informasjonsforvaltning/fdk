@@ -1,4 +1,4 @@
-package no.dcat.harvester.dcat.domain.theme;
+package no.difi.dcat.datastore.domain.dcat;
 
 import java.util.Map;
 
