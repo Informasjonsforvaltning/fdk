@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-     - application.simpleQueryServiceURL=http://192.168.99.100:8083/search
+     - application.simpleQueryServiceURL=http://localhost:8083/search
     links:
       - query
     networks:
