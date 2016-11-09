@@ -4,12 +4,12 @@
 
 	<artifactId>admin-webapp</artifactId>
 	<packaging>war</packaging>
-	<version>0.1.0</version>
+	<version>0.2.0-SNAPSHOT</version>
 	
 	<parent>
 		<groupId>no.dcat</groupId>
 		<artifactId>parent</artifactId>		
-		<version>0.1.0</version>
+		<version>0.2.0-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>no.dcat</groupId>
 			<artifactId>datastore</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -73,7 +73,6 @@
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 			</plugin>
-
 		</plugins>
 	</build>
 

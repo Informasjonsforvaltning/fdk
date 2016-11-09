@@ -7,23 +7,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>no.dcat</groupId>
-        <version>0.1.0</version>
+        <version>0.2.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>harvester</artifactId>
-    <version>0.2.0</version>
-    <packaging>jar</packaging>
-
-    <!--distributionManagement>
-        <repository>
-            <id>Felles datakatalog</id>
-            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
-        </repository>
-        <snapshotRepository>
-            <id>Felles datakatalog</id>
-            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog/</url>
-        </snapshotRepository>
-    </distributionManagement-->
+    <version>0.2.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <!--dependency>
@@ -44,7 +33,6 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.3.1</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -69,34 +57,21 @@
         <dependency>
             <groupId>no.acando</groupId>
             <artifactId>xmltordf</artifactId>
-            <version>1.6.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>${elasticsearch.version}</version>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-            <!--plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
@@ -110,22 +85,20 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin-->
-            <!-- to make them visible to dependen modules -->
-            <!--plugin>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.0.0</version>
-                <configuration>
-                    <attachClasses>true</attachClasses>
-                    <classesClassifier>classes</classesClassifier>
-                </configuration>
-            </plugin-->
-            <!--plugin>
+            </plugin>
+            <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
-            </plugin-->
-
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 

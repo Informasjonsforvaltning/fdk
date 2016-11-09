@@ -9,7 +9,7 @@
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>no.dcat</groupId>
-		<version>0.1.0</version>
+		<version>0.2.0-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -17,60 +17,33 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-fuseki-core</artifactId>
-			<version>2.3.1</version>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<artifactId>slf4j-log4j12</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>apache-jena-libs</artifactId>
-			<version>3.0.1</version>
 			<type>pom</type>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<artifactId>slf4j-log4j12</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.2.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>19.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
-			<version>${elasticsearch.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
-			<version>4.1.0</version>
 		</dependency>
 
 	</dependencies>
@@ -79,9 +52,5 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
-	<build>
-
-	</build>
 
 </project>
