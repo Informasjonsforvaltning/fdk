@@ -15,7 +15,6 @@
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
-        <version>${spring.boot.version}</version>
     </dependency>
     <!-- må være med for å kjøre i intellij -->
     <dependency>
@@ -39,7 +38,6 @@
     <dependency>
         <groupId>org.elasticsearch</groupId>
         <artifactId>elasticsearch</artifactId>
-        <version>${elasticsearch.version}</version>
     </dependency>
     </dependencies>
 
