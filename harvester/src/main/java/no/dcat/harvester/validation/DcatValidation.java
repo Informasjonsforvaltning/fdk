@@ -63,7 +63,7 @@ public class DcatValidation {
 				try {
 					resultSet = QueryExecutionFactory.create(query, model).execSelect();
 
-				} catch (QueryParseException e) {
+				} catch (Exception e) {
 
 					logger.error("QueryParseException in " + r.toString() + " : " + e.getMessage());
 					throw e;

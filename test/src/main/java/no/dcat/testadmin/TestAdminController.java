@@ -106,11 +106,16 @@ public class TestAdminController {
 
             List<String> resultMsgs = loader.loadDatasetFromFile(url);
 
+            // Format results
             StringBuffer msg = new StringBuffer();
             boolean success = true;
             for (String s : resultMsgs) {
                 if (s.contains("validation_error")) success = false;
-                String sub = s.substring(0, s.indexOf(", crawler_id"));
+                int index = s.indexOf(", crawler_id");
+                String sub = null;
+                if (index != -1) sub = s.substring(0,index);
+                else sub = s;
+
                 msg.append(sub + "\n");
             }
 

@@ -45,7 +45,7 @@ public class DcatValidationTest {
             model = FileManager.get().loadModel(file.getCanonicalPath());
 
         } catch (Exception e) {
-
+            Assert.assertTrue("Exception thrown reading file with wrong syntax", true);
             return;
         }
 
