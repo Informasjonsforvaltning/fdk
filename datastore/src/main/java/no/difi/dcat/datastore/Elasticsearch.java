@@ -2,6 +2,7 @@ package no.difi.dcat.datastore;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
@@ -11,8 +12,11 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -93,32 +97,30 @@ public class Elasticsearch implements AutoCloseable {
 	public void createIndex(String index) {
 		//Set mapping for correct language stemming and indexing
 		ClassLoader classLoader = getClass().getClassLoader();
-		File mappingJsonFile = new File(classLoader.getResource(DCAT_INDEX_SETUP_FILENAME).getFile());
 
-        StringBuilder mappingStr = new StringBuilder("");
-        try (Scanner scanner = new Scanner(mappingJsonFile)) {
+		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+		try {
+			Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETUP_FILENAME);
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                mappingStr.append(line).append("\n");
-            }
+			for (Resource r : resources) {
 
-            scanner.close();
+				InputStream is = r.getInputStream();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+				String mappingJson = IOUtils.toString(is, "UTF-8");
 
-        String mappingJson = mappingStr.toString();
 
-        logger.debug("[createIndex] mappingJson prepared: " + mappingJson);
+				logger.debug("[createIndex] mappingJson prepared: " + mappingJson);
 
-        client.admin().indices().prepareCreate(index).execute().actionGet();
-        logger.debug("[createIndex] before preparePutMapping");
-		client.admin().indices().preparePutMapping(index).setType("dataset").setSource(mappingJson).execute().actionGet();
-        logger.debug("[createIndex] after preparePutMapping");
-		client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-        logger.debug("[createIndex] after prepareHealth");
+				client.admin().indices().prepareCreate(index).execute().actionGet();
+				logger.debug("[createIndex] before preparePutMapping");
+				client.admin().indices().preparePutMapping(index).setType("dataset").setSource(mappingJson).execute().actionGet();
+				logger.debug("[createIndex] after preparePutMapping");
+				client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+				logger.debug("[createIndex] after prepareHealth");
+			}
+		} catch (IOException e) {
+			logger.error("Unable to create index for Elasticsearch " + e.getMessage() );
+		}
 	}
 
 	public boolean indexDocument(String index, String type, String id, JsonObject jsonObject) {

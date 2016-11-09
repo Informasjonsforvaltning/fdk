@@ -3,7 +3,7 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.dcat.harvester.dcat.domain.theme.DataTheme;
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.dcat.harvester.dcat.domain.theme.builders.DataThemeBuilders;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;

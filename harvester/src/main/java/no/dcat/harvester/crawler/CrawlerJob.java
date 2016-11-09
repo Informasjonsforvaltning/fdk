@@ -25,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,9 @@ public class CrawlerJob implements Runnable {
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
+    private List<String> validationResult = new ArrayList<>();
+
+    public List<String> getValidationResult() {return validationResult;}
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
@@ -75,13 +79,11 @@ public class CrawlerJob implements Runnable {
             Model enrichedUnion = enricher.enrichData(union);
             union = enrichedUnion;
 
-
+            // Checks if publisher is registrered in BRREG Enhetsregistret
             BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
             brregAgentConverter.collectFromModel(union);
 
-
-
-            if (isValid(union)) {
+            if (isValid(union,validationResult)) {
                 logger.debug("Dataset is valid!");
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
@@ -189,25 +191,49 @@ public class CrawlerJob implements Runnable {
 
     }
 
-    private boolean isValid(Model model) {
+    /**
+     * Checks if a RDF model is valid according to the validation rules that are defined for DCAT.
+     *
+     * @param model the model to be validated (must be according to DCAT-AP-EU and DCAT-AP-NO
+     * @param validationMessage a list of validation messages
+     * @return returns true if model is valid (only contains warnings) and false if it has errors
+     */
+    private boolean isValid(Model model,List<String> validationMessage) {
 
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
         final String[] message = {null};
 
+        validationMessage.clear();
+
+        final int[] errors ={0}, warnings ={0}, others ={0};
+
         boolean validated = DcatValidation.validate(model, (error) -> {
+            String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
+            validationMessage.add(msg);
+
             if (error.isError()) {
+                errors[0]++;
                 status[0] = error.getRuleSeverity();
                 message[0] = error.toString();
+                logger.error(msg);
             }
             if (error.isWarning()) {
+                warnings[0]++;
                 if (status[0] != ValidationError.RuleSeverity.error) {
                     status[0] = error.getRuleSeverity();
                 }
+                logger.warn(msg);
             } else {
+                others[0]++;
                 status[0] = error.getRuleSeverity();
+                logger.warn(msg);
             }
-            logger.error("[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString());
+
         });
+
+        String summary = "[validation_summary] " + errors[0] + " errors, "+ warnings[0] + " warnings and " + others[0] + " other messages ";
+        validationMessage.add(0, summary);
+        logger.info(summary);
 
         Resource rdfStatus = null;
 

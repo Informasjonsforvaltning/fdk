@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by nodavsko on 29.09.2016.
@@ -32,7 +33,7 @@ public class Loader {
         loader.loadDatasetFromFile(file);
     }
 
-    public void loadDatasetFromFile(String filename) {
+    public List<String> loadDatasetFromFile(String filename) {
         URL url;
         try {
              url = new URL(filename);
@@ -47,10 +48,14 @@ public class Loader {
 
 
             job.run();
+
+            return job.getValidationResult();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
+        return null;
 
     }
 }

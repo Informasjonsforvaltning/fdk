@@ -1,6 +1,6 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
-import no.dcat.harvester.dcat.domain.theme.DataTheme;
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class DataThemeBuildersTest {
     @Test
     public void testDataThemeBuilders() {
         final Model model = ModelFactory.createDefaultModel();
-        model.read("file:/development/fdk/harvester/src/test/resources/test-data-theme-skos.rdf");
+        model.read(this.getClass().getClassLoader().getResource("test-data-theme-skos.rdf").getFile());
 
         List<DataTheme> dataThemes = new DataThemeBuilders(model).build();
 
