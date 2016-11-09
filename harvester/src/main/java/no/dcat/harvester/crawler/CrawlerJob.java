@@ -79,11 +79,9 @@ public class CrawlerJob implements Runnable {
             Model enrichedUnion = enricher.enrichData(union);
             union = enrichedUnion;
 
-
+            // Checks if publisher is registrered in BRREG Enhetsregistret
             BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
             brregAgentConverter.collectFromModel(union);
-
-
 
             if (isValid(union,validationResult)) {
                 logger.debug("Dataset is valid!");
@@ -193,6 +191,13 @@ public class CrawlerJob implements Runnable {
 
     }
 
+    /**
+     * Checks if a RDF model is valid according to the validation rules that are defined for DCAT.
+     *
+     * @param model the model to be validated (must be according to DCAT-AP-EU and DCAT-AP-NO
+     * @param validationMessage a list of validation messages
+     * @return returns true if model is valid (only contains warnings) and false if it has errors
+     */
     private boolean isValid(Model model,List<String> validationMessage) {
 
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
@@ -200,22 +205,35 @@ public class CrawlerJob implements Runnable {
 
         validationMessage.clear();
 
+        final int[] errors ={0}, warnings ={0}, others ={0};
+
         boolean validated = DcatValidation.validate(model, (error) -> {
+            String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
+            validationMessage.add(msg);
+
             if (error.isError()) {
+                errors[0]++;
                 status[0] = error.getRuleSeverity();
                 message[0] = error.toString();
+                logger.error(msg);
             }
             if (error.isWarning()) {
+                warnings[0]++;
                 if (status[0] != ValidationError.RuleSeverity.error) {
                     status[0] = error.getRuleSeverity();
                 }
+                logger.warn(msg);
             } else {
+                others[0]++;
                 status[0] = error.getRuleSeverity();
+                logger.warn(msg);
             }
-            String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
-            validationMessage.add(msg);
-            logger.error(msg);
+
         });
+
+        String summary = "[validation_summary] " + errors[0] + " errors, "+ warnings[0] + " warnings and " + others[0] + " other messages ";
+        validationMessage.add(0, summary);
+        logger.info(summary);
 
         Resource rdfStatus = null;
 

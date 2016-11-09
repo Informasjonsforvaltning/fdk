@@ -1,0 +1,27 @@
+@prefix :      <http://data.brreg.no/vocab/temp/> .
+@prefix d2rq:  <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix apf:   <http://jena.apache.org/ARQ/property#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix map:   <file:///usr/local/src/semex/mapping.n3#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://data.brreg.no/datakatalog/dataset/17>
+        a                dcat:Dataset ;
+        dct:description  "Adresseregisteret (AR) er et felles nasjonalt register for presis adressering ved utveksling av helseopplysninger som sendes elektronisk eller per post innen helse- og omsorgssektoren."@no-nb ;
+        dct:identifier   "17" .
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Ehelse> ;
+        dct:title        "Adresseregisteret"@no ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        foaf:page        <https://register-web.test.nhn.no/> .
+
+<http://data.brreg.no/datakatalog/dataset/27>
+        a                dcat:Dataset ;

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.Assert;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,31 +19,42 @@ import java.util.Arrays;
 
 /**
  * Created by havardottestad on 04/01/16.
+ * Rewritten by nodavsko on 07/11/16.
  */
 public class DcatValidation {
 
 	private static final Logger logger = LoggerFactory.getLogger(DcatValidation.class);
 
-
+	/**
+	 * Validates the model argument against the various validation rules of DCAT-AP-xx
+	 * Validation warnings and errors are recorded in the validationHandler parameter.
+	 * <p>
+	 * The operation returns false if errors are detected. It returns true if only warnings have been detected.
+	 * It reads validation files in SPARQL format that is stored under src/main/resources/validation-rules.
+	 *
+	 * @param model the DCAT RDF model to be validated.
+	 * @param validationHandler a handler for reporting validation problems
+	 * @return a boolean that is true if no errors are detected and false if errors are detected
+	 */
 	public static boolean validate(Model model, ValidationHandler validationHandler) {
+		Assert.notNull(model);
+
 		if (validationHandler == null) {
 			validationHandler = (error) -> {
 			};
 		}
 
-		ClassLoader classLoader = DcatValidation.class.getClassLoader();
-		File file = new File(classLoader.getResource("validation-rules").getFile());
-		logger.info("Reading validation rules: "  +file.toString());
-
 		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		try {
+			// identify validation rules files
 			Resource[] resources = resolver.getResources("classpath*:validation-rules/**/*.rq");
 
 			final boolean[] valid = {true};
 			final ValidationHandler finalValidationHandler = validationHandler;
 
+			// for each file validate
 			for (Resource r : resources) {
-				logger.info("validation-file: " + r.toString());
+				//logger.trace("Checking against validation-rule in file: " + r.toString());
 				InputStream is = r.getInputStream();
 
 				String query = IOUtils.toString(is, "UTF-8");
@@ -55,53 +67,19 @@ public class DcatValidation {
 
 					logger.error("QueryParseException in " + r.toString() + " : " + e.getMessage());
 					throw e;
+				} finally {
+					IOUtils.closeQuietly(is);
 				}
 
-				while (resultSet.hasNext()) {
+				while (resultSet != null && resultSet.hasNext()) {
 					ValidationError error = new ValidationError(resultSet.next());
 					finalValidationHandler.handle(error);
 					if (error.isError()) {
 						valid[0] = false;
 					}
 				}
-
 			}
-			/*
-			// iterate over directories inside resources/validation-rules
-			Arrays.stream(file.listFiles((f) -> f.isDirectory()))
-					.sorted()
-					.forEach((d) -> {
-						// iterate over rules inside given directory
-						Arrays.stream(d.listFiles((dir) -> dir.getName().endsWith(".rq")))
-								.sorted()
-								.forEach((f) -> {
-									try {
-										String query = FileUtils.readFileToString(f);
-										ResultSet resultSet = null;
-										try {
-											resultSet = QueryExecutionFactory.create(query, model).execSelect();
 
-										} catch (QueryParseException e) {
-
-											logger.error("QueryParseException in " + f.getCanonicalPath() + " : " + e.getMessage());
-											throw e;
-										}
-
-										while (resultSet.hasNext()) {
-											ValidationError error = new ValidationError(resultSet.next());
-											finalValidationHandler.handle(error);
-											if (error.isError()) {
-												valid[0] = false;
-											}
-										}
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-
-								});
-					});
-
-*/
 			return valid[0];
 		} catch (IOException e) {
 			logger.error("Unable to load validation rules " + e.getMessage());
