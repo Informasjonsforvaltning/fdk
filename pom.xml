@@ -9,6 +9,7 @@
     <version>0.1.0</version>
 	<packaging>pom</packaging>
 
+	<!-- Fjernet for å være kompatibel med Openshift
 	<repositories>
 		<repository>
 			<id>brJEE-release</id>
@@ -18,7 +19,7 @@
 			<id>Felles datakatalog</id>
 			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
 		</repository>
-	</repositories>
+	</repositories> -->
 
 	<distributionManagement>
 		<repository>
