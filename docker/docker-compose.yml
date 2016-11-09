@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-     - application.simpleQueryServiceURL=http://localhost:8083/search
+     - application.simpleQueryServiceURL=http://192.168.99.100:8083/search
     links:
       - query
     networks:
@@ -34,7 +34,7 @@ services:
       platform:
 
   harvester:
-    image: "fdk/harvester:${TAG}"
+    image: "fdk/harvester-war:${TAG}"
     ports:
      - "8081:8080"
     environment:
