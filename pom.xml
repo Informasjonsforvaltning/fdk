@@ -1,202 +1,230 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.dcat</groupId>
     <artifactId>parent</artifactId>
     <version>0.2.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <packaging>pom</packaging>
 
-	<repositories>
-		<repository>
-			<id>brJEE-release</id>
-			<url>https://nexus.brreg.no/content/repositories/brJEE-release/</url>
-		</repository>
-		<repository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>brJEE-release</id>
+            <url>https://nexus.brreg.no/content/repositories/brJEE-release/</url>
+        </repository>
+        <repository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+        </repository>
+    </repositories>
 
-	<distributionManagement>
-		<repository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
-		</repository>
-		<snapshotRepository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+        </repository>
+        <snapshotRepository>
+            <id>Felles datakatalog</id>
+            <url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+        </snapshotRepository>
+    </distributionManagement>
 
-	<!-- BR parent pom for Spring Boot 1.4.0. Tar med Sonar-konfig -->
-	<parent>
-		<groupId>no.brreg.felles</groupId>
-		<artifactId>br-maven-main-msn</artifactId>
-		<version>1.1.0</version>
-	</parent>
+    <!-- BR parent pom for Spring Boot 1.4.0. Tar med Sonar-konfig -->
+    <parent>
+        <groupId>no.brreg.felles</groupId>
+        <artifactId>br-maven-main-msn</artifactId>
+        <version>1.1.0</version>
+    </parent>
 
-	<!-- This parent changes default parameter substitution from ${param} to @param@ in resource filtering -->
-	<!--<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
-	</parent> -->
-	
-	<organization>
-		<name>Brønnøysundregistrene</name>
-		<url>http://brreg.no</url>
-	</organization>
+    <!-- This parent changes default parameter substitution from ${param} to @param@ in resource filtering -->
+    <!--<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.0.RELEASE</version>
+    </parent> -->
 
-	<modules>
-		<module>portal</module>
-		<module>elasticsearch</module>
-		<module>fuseki</module>
-		<module>kibana</module>
-		<module>logstash</module>
-		<module>datastore</module>
-		<module>harvester</module>
-		<module>admin-webapp</module>
-		<module>api-app</module>
-		<module>docker</module>
+    <organization>
+        <name>Brønnøysundregistrene</name>
+        <url>http://brreg.no</url>
+    </organization>
+
+    <modules>
+        <module>portal</module>
+        <module>elasticsearch</module>
+        <module>fuseki</module>
+        <module>kibana</module>
+        <module>logstash</module>
+        <module>datastore</module>
+        <module>harvester</module>
+        <module>admin-webapp</module>
+        <module>api-app</module>
+        <module>docker</module>
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>	
-		<docker.image.prefix>fdk</docker.image.prefix>
-		<docker.registry></docker.registry>		
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.4.0.RELEASE</spring.boot.version>
-		<elasticsearch.version>2.4.0</elasticsearch.version>
-		<sonar.language>java</sonar.language>
-		<build.profile.id>dev</build.profile.id>
-		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
-		<skipIntegrationTests>true</skipIntegrationTests>
-		<java.version>1.8</java.version>
-	</properties>
+        <java.version>1.8</java.version>
+        <docker.image.prefix>fdk</docker.image.prefix>
+        <docker.registry></docker.registry>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>1.4.0.RELEASE</spring.boot.version>
+        <elasticsearch.version>2.4.0</elasticsearch.version>
+        <sonar.language>java</sonar.language>
+        <build.profile.id>dev</build.profile.id>
+        <integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
+        <skipIntegrationTests>true</skipIntegrationTests>
+        <java.version>1.8</java.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>			
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-			<version>${spring.boot.version}</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
-		
-	<pluginManagement>
-        <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.commonjava.maven.plugins</groupId>
-				<artifactId>directory-maven-plugin</artifactId>
-				<version>0.1</version>
-				<executions>
-					<execution>
-						<id>directories</id>
-						<goals>
-							<goal>highest-basedir</goal>
-						</goals>
-						<phase>initialize</phase>
-						<configuration>
-							<property>main.basedir</property>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+        <pluginManagement>
+            <plugins>
 
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<version>2.2.1</version>
-				<executions>
-					<execution>
-						<id>get-the-git-infos</id>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-					<dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
-					<dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
-					<!-- false is default here, it prints some more information during the build -->
-					<verbose>false</verbose>
-					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-					<format>properties</format>
-					<injectAllReactorProjects>true</injectAllReactorProjects>
-					<failOnNoGitDirectory>true</failOnNoGitDirectory>
-					<failOnUnableToExtractRepoInfo>true</failOnUnableToExtractRepoInfo>
-					<skip>false</skip>
-					<abbrevLength>7</abbrevLength>
-				</configuration>
-			</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.commonjava.maven.plugins</groupId>
+                    <artifactId>directory-maven-plugin</artifactId>
+                    <version>0.1</version>
+                    <executions>
+                        <execution>
+                            <id>directories</id>
+                            <goals>
+                                <goal>highest-basedir</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                            <configuration>
+                                <property>main.basedir</property>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
-			 <plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.9</version>
-				<executions>
-					<execution>
-					<phase>package</phase>
-					<goals>
-						<goal>build</goal>
-					</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<imageName>${docker.registry}${docker.image.prefix}/${project.artifactId}:${git.commit.id.abbrev}</imageName>
-					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-					<!--dockerDirectory>docker</dockerDirectory  -->
-					<pushImage>false</pushImage>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-							<include>${project.build.finalName}.war</include>
-							<excludes>
-								<exclude>target/**/*</exclude>
-								<exclude>pom.xml</exclude>
-								<exclude>*.iml</exclude>
-							</excludes>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>get-the-git-infos</id>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                        <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
+                        <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
+                        <!-- false is default here, it prints some more information during the build -->
+                        <verbose>false</verbose>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                        </generateGitPropertiesFilename>
+                        <format>properties</format>
+                        <injectAllReactorProjects>true</injectAllReactorProjects>
+                        <failOnNoGitDirectory>true</failOnNoGitDirectory>
+                        <failOnUnableToExtractRepoInfo>true</failOnUnableToExtractRepoInfo>
+                        <skip>false</skip>
+                        <abbrevLength>7</abbrevLength>
+                    </configuration>
+                </plugin>
 
-    	</plugins>
-	</pluginManagement>
-
-	</build>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.4.9</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <imageName>
+                            ${docker.registry}${docker.image.prefix}/${project.artifactId}:${git.commit.id.abbrev}
+                        </imageName>
+                        <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                        <!--dockerDirectory>docker</dockerDirectory  -->
+                        <pushImage>false</pushImage>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                                <include>${project.build.finalName}.war</include>
+                                <excludes>
+                                    <exclude>target/**/*</exclude>
+                                    <exclude>pom.xml</exclude>
+                                    <exclude>*.iml</exclude>
+                                </excludes>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>analyze</id>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <configuration>
+                                <failOnWarning>false</failOnWarning>
+                                <ignoreNonCompile>true</ignoreNonCompile>
+                                <verbose>false</verbose>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>analyze-pom</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>analyze-dep-mgt</goal>
+                            </goals>
+                            <configuration>
+                                <failBuild>false</failBuild>
+                                <ignoreDirect>false</ignoreDirect>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 
 </project>

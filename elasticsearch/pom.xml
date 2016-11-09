@@ -28,6 +28,10 @@
             <artifactId>docker-maven-plugin</artifactId>
             
 		</plugin>
+
+        <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+        </plugin>
     </plugins>
     </build>
 	

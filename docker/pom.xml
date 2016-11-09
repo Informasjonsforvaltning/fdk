@@ -98,6 +98,9 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 
