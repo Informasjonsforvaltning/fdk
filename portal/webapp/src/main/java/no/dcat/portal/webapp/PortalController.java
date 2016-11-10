@@ -5,15 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpSession;
 
 /**
- * Delivers html pages to support the DCAT Portal application
+ * Delivers html pages to support the DCAT Portal application.
  *
  * Created by nodavsko on 12.10.2016.
  */
-
 @Controller
 public class PortalController {
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
@@ -21,15 +19,19 @@ public class PortalController {
     private final PortalConfiguration buildMetadata;
 
     @Autowired
-    public PortalController(PortalConfiguration metadata) {
+    public PortalController(final PortalConfiguration metadata) {
         this.buildMetadata = metadata;
     }
 
     /**
-     * The result page. Sets callback service and version identification and returns result.html page
+     * The result page. Sets callback service and version identification and returns
+     * result.html page.
+     *
+     * @param session the session object
+     * @return the result html page (or just the name of the page)
      */
     @RequestMapping({"/"})
-    String result(HttpSession session) {
+    final String result(final HttpSession session) {
 
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
 

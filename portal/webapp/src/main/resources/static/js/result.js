@@ -149,9 +149,9 @@ function pagination () {
 
     // .. if last of section is < numPages -1
     if (resultCursor.sectionStart + setup.numPagesInSection < numPages - 1) {
-        var dotElement = createListElement(setup.manySymbol);
-        dotElement[0].className = "disabled";
-        $('.pager').append(dotElement);
+        var dotElement2 = createListElement(setup.manySymbol)[0];
+        dotElement2.className = "disabled";
+        $('.pager').append(dotElement2);
     }
 
     // last element
@@ -239,6 +239,7 @@ function showResults(searchResult) {
         if (publisher) {
             pbElement = document.createElement("button");
             pbElement.className = "btn btn-default btn-sm publisher";
+            pbElement.type = "button";
             pbElement.innerHTML =  publisher.name;
         }
 
@@ -258,22 +259,29 @@ function showResults(searchResult) {
         var row = document.createElement("a");
         row.className = "row list-group-item dataset";
         row.href = "#";
+        // dataset
+        var ds = document.createElement("div");
+        ds.className = "col-sm-12";
+        row.appendChild(ds);
+
         var scoreString = "(" + score + ")";
         if (!score) scoreString = "";
-        row.innerHTML = "<strong>" + title.value + "</strong> <sup>" + title.language + " " + scoreString + "</sup></br>" ;
+        ds.innerHTML = "<h4>" + title.value + " <sup>" + title.language + " " + scoreString + "</sup></h4>" ;
 
         if (publisher !== undefined)
-            row.appendChild(pbElement);
+           ds.appendChild(pbElement);
         if (description)
-            row.appendChild(descriptionElement);
+            ds.appendChild(descriptionElement);
         if (keyword !== undefined)
-            row.appendChild(kwElement);
+            ds.appendChild(kwElement);
         if (theme)
-            row.appendChild(themeElement);
+            ds.appendChild(themeElement);
         if (landingPage !== undefined)
-            row.appendChild(lpElement);
-        if (modified)
-            row.appendChild(modifiedElement);
+            ds.appendChild(lpElement);
+        if (modified) {
+            ds.appendChild(document.createTextNode(" "));
+            ds.appendChild(modifiedElement);
+        }
 
         results.appendChild(row);
     });
