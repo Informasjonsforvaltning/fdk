@@ -1,14 +1,14 @@
 spring:
-    profiles: docker
+  profiles: docker
 application:
   queryServiceURL: http://localhost:8081/search
 ---
 spring:
-    profiles: development
+  profiles: development
 application:
   queryServiceURL: http://localhost:8091/search
-
-  spring:
-      profiles: test
-  application:
-    queryServiceURL: http://localhost:8071/search
+---
+spring:
+  profiles: test
+application:
+  queryServiceURL: http://localhost:8071/search

@@ -26,10 +26,10 @@ public class PortalController {
     }
 
     /**
-     * The resultSet page. Sets callback service and version identification and returns home.html page
+     * The result page. Sets callback service and version identification and returns result.html page
      */
     @RequestMapping({"/"})
-    String index (HttpSession session) {
+    String result(HttpSession session) {
 
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
 
@@ -38,6 +38,6 @@ public class PortalController {
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
 
-        return "home"; // templates/home.html
+        return "result"; // templates/result.html
     }
 }

@@ -4,6 +4,7 @@
     <title th:text="#{app.title}">Felles datakatalog</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.min.css" media="all"/>
     <style>
 .publisher {
@@ -96,26 +97,23 @@
         <div class="container-fluid">
 
             <!-- Resultat navigering -->
-            <div class="row-fluid">
+            <div class="row">
 
-                <div class="col-sm-4 col-md-6 col-lg-6"/>
+                <div class="col-sm-4 col-md-4 col-lg-4"/>
                 <div class="col-md-1 col-lg-1" >
                     <span  id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
                 </div>
 
-                <div class="col-md-2 col-lg-2" th:attr="aria-label=#{page.navigation}">
+                <div class="col-md-3 col-lg-3" th:attr="aria-label=#{page.navigation}">
                     <nav>
-                        <ul class="pagination pagination-sm" style="margin:0;">
+                        <ul class="pager pagination pagination-sm" style="margin:0;">
 
                             <li>
                                 <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <!--li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">...</a></li>
-                            <li><a href="#">4</a></li-->
+
                             <li>
                                 <a id="next" href="#" th:attr="aria-label=#{page.next}">
                                     <span aria-hidden="true">&raquo;</span>
@@ -126,7 +124,7 @@
                 </div>
 
                 <!-- SORT Controller -->
-                <div class="col-md-1 col-lg-2">
+                <div class="col-md-2 col-lg-2">
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                             <span th:text="#{sort.by}">Sorter på:</span>
@@ -141,6 +139,8 @@
                     </div>
                 </div>
                 <!--/div-->
+
+                <div class="col-md-2 col-lg-2">Empty</div>
             </div>
             <!-- results row -->
             <div class="row">
