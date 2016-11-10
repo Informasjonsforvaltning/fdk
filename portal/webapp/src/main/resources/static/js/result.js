@@ -346,7 +346,7 @@ function prepareSort() {
 
 function showPage () {
 
-searchUrl = $("meta[name='dcatQueryService']").attr("content");
+searchUrl = $('meta[name="dcatQueryService"]').attr('content');
 
 console.log("service: " + searchUrl);
 
@@ -366,8 +366,6 @@ console.log(pageLanguage);
 
 // First call to search
 httpGetAsync(searchUrl, showResults);
-
-
 
 var search = document.getElementById("search");
 var dosearch = document.getElementById("dosearch");
@@ -391,7 +389,7 @@ prepareSort();
 }
 
 // starts the page initializing code;
-showPage();
+$(document).ready(showPage);
 
 
 
