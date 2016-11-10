@@ -4,24 +4,98 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Model class for dcat:Dataset
+ * See https://doc.difi.no/dcat-ap-no/#_datasett_2
+ **/
 public class Dataset {
-	
+
+	// dct:identifier
+	// Norwegian: Identifikator
 	private String id;
+
+	// dct:title
+	// Norwegian: Tittel
 	private Map<String,String> title;
+
+	//dct:description
+	//Norwegian: Beskrivelse
 	private Map<String,String> description;
+
+	//dcat:contactPoint
+	//Norwegian: Kontaktpunkt
 	private Contact contactPoint;
+
+	//dcat:keyword
+	//Norwegian: Emneord
 	private Map<String, List<String>> keyword;
+
+	//dct:publisher
+	//Norwegian: Utgiver
 	private Publisher publisher;
+
+	//dct:issued
+	//Norwegian: Utgivelsesdato
 	private Date issued;
+
+	//dct:modified
+	//Norwegian: Modifiseringsdato
 	private Date modified;
+
+	//dct:language
+	//Norwegian: Språk
 	private String language;
+
+	//dcat:landingPage
+	//Norwegian: Landingsside
 	private String landingPage;
+
+	//dcat:theme
+	//Norwegian: Tema
 	private List<String> theme;
+
+	//dcat:catalog
+	//Norwegian: Katalog
+	//Reference to catalog owning the dataset
+	private Catalog catalog;
+
+	//dcat:distribution
+	//Norwegian: Datasett distribusjon
+	private List<Distribution> distributions;
+
+	//dcat:conformsTo
+	//Norwegian: I samsvar med
+	//TODO: Finne ut hva som er riktig datatype
+	private List<String> conformsTo;
+
+	//dct:temporal
+	//Norwegian: tidsperiode
+	//TODO: Finne ut hva som skal være riktig datatype. Dette er foreløpig en placeholder
+	private List<String> temporal;
+
+	//dct:spatial
+	//Norwegian: dekningsområde
+	//TODO: Finne ut hva som skal være riktig datatype
+	private List<String> spatial;
+
+	//dct:accessRights
+	//Norwegian: tilgangsnivå
+	//TODO: Finne ut hva som skal være riktig datatype
+	private String accessRights;
+
+	//dcatno:accessRightsComment
+	//Norwegian: Skjermingshjemmel.
+	//Norwegian extension to the dcat standard. Recommended used with accesRights.
+	//TODO: Finne ut hva som skal være riktig datatype
+	private List<String> accessRightsComment;
+
+	//dcatno:references
+	//Norwegian: Refererer til.
+	//TODO: Finne ut hva som skal være riktig datatype
+	private List<String> references;
+
 	public List<String> getTheme() { return theme; }
 	public void setTheme(List<String> theme) { this.theme = theme; }
-	private Catalog catalog;
-	private List<Distribution> distributions;
-	
 	public String getId() {
 		return id;
 	}
@@ -94,7 +168,46 @@ public class Dataset {
 	public void setLandingPage(String landingPage) {
 		this.landingPage = landingPage;
 	}
+	public List<String> getConformsTo() { return conformsTo; }
+	public void setConformsTo(List<String> conformsTo)  this.conformsTo = conformsTo; }
 
-	
-	
+	public List<String> getTemporal() {
+		return temporal;
+	}
+
+	public void setTemporal(List<String> temporal) {
+		this.temporal = temporal;
+	}
+
+	public List<String> getSpatial() {
+		return spatial;
+	}
+
+	public void setSpatial(List<String> spatial) {
+		this.spatial = spatial;
+	}
+
+	public String getAccessRights() {
+		return accessRights;
+	}
+
+	public void setAccessRights(String accessRights) {
+		this.accessRights = accessRights;
+	}
+
+	public List<String> getAccessRightsComment() {
+		return accessRightsComment;
+	}
+
+	public void setAccessRightsComment(List<String> accessRightsComment) {
+		this.accessRightsComment = accessRightsComment;
+	}
+
+	public List<String> getReferences() {
+		return references;
+	}
+
+	public void setReferences(List<String> references) {
+		this.references = references;
+	}
 }
