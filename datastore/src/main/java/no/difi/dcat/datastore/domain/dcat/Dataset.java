@@ -52,7 +52,7 @@ public class Dataset {
 
 	//dcat:theme
 	//Norwegian: Tema
-	private List<String> theme;
+    private List<DataTheme> theme;
 
 	//dcat:catalog
 	//Norwegian: Katalog
@@ -93,8 +93,13 @@ public class Dataset {
 	private String provenance;
 
 
-	public List<String> getTheme() { return theme; }
-	public void setTheme(List<String> theme) { this.theme = theme; }
+    public List<DataTheme> getTheme() {
+        return theme;
+    }
+
+    public void setTheme(List<DataTheme> theme) {
+        this.theme = theme;
+    }
 
 	public String getId() {
 		return id;

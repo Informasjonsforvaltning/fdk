@@ -1,8 +1,8 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
 import no.dcat.harvester.crawler.handlers.ElasticSearchSkosResultHandler;
-import no.dcat.harvester.dcat.domain.theme.ConceptSchema;
-import no.dcat.harvester.dcat.domain.theme.DataTheme;
+import no.difi.dcat.datastore.domain.dcat.ConceptSchema;
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.RDF;
