@@ -65,33 +65,27 @@ public class Dataset {
 
 	//dcat:conformsTo
 	//Norwegian: I samsvar med
-	//TODO: Finne ut hva som er riktig datatype
 	private List<String> conformsTo;
 
 	//dct:temporal
 	//Norwegian: tidsperiode
-	//TODO: Finne ut hva som skal være riktig datatype. Dette er foreløpig en placeholder
-	private List<String> temporal;
+	private List<PeriodOfTime> temporal;
 
 	//dct:spatial
 	//Norwegian: dekningsområde
-	//TODO: Finne ut hva som skal være riktig datatype
-	private List<String> spatial;
+	private List<String> string;
 
 	//dct:accessRights
 	//Norwegian: tilgangsnivå
-	//TODO: Finne ut hva som skal være riktig datatype
 	private String accessRights;
 
 	//dcatno:accessRightsComment
 	//Norwegian: Skjermingshjemmel.
 	//Norwegian extension to the dcat standard. Recommended used with accesRights.
-	//TODO: Finne ut hva som skal være riktig datatype
 	private List<String> accessRightsComment;
 
 	//dcatno:references
 	//Norwegian: Refererer til.
-	//TODO: Finne ut hva som skal være riktig datatype
 	private List<String> references;
 
 	public List<String> getTheme() { return theme; }
@@ -184,8 +178,8 @@ public class Dataset {
 	public List<String> getConformsTo() { return conformsTo; }
 	public void setConformsTo(List<String> conformsTo)  this.conformsTo = conformsTo; }
 
-	public List<String> getTemporal() { return temporal; }
-	public void setTemporal(List<String> temporal) { this.temporal = temporal; }
+	public List<PeriodOfTime> getTemporal() { return temporal; }
+	public void setTemporal(List<PeriodOfTime> temporal) { this.temporal = temporal; }
 
 	public List<String> getSpatial() { return spatial; }
 	public void setSpatial(List<String> spatial) { this.spatial = spatial; }
