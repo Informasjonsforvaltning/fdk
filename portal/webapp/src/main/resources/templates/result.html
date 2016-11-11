@@ -56,15 +56,19 @@
                     <a href="#" class="dropdown-toggle" th:attr="title=#{about.title}" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
                         <span th:text="#{about}">Om</span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="help/help.html" target="_blank" th:text="#{about.help}">Hjelp</a></li>
-                        <li><a href="coverage.html" target="_blank" th:text="#{about.status}">Status implementasjon</a></li>
-                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{about.standard}">DCAT-AP-NO 1.1</a></li>
-                        <li><a href="#" th:text="#{about.guide}">Veileder</a></li>
-                        <li><a href="#" th:text="#{about.fordataowners}">For dataeiere</a></li>
-                        <li><a href="#" th:text="#{about.fordatausers}">For databrukere</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#" th:text="#{about.technical}">Teknisk</a></li>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown" th:text="#{about.help}">Hjelp</li>
+                                <ul class="dropdown-menu">
+                                    <li><a href="help/help.html" target="_blank">Språkstøtte</a></li>
+                                    <li><a href="help/ResulPageNavigation.html" target="_blank">Navigering i søkeresultat</a></li>
+                                </ul>
+                            <li><a href="coverage.html" target="_blank" th:text="#{about.status}">Status implementasjon</a></li>
+                            <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{about.standard}">DCAT-AP-NO 1.1</a></li>
+                            <li><a href="#" th:text="#{about.guide}">Veileder</a></li>
+                            <li><a href="#" th:text="#{about.fordataowners}">For dataeiere</a></li>
+                            <li><a href="#" th:text="#{about.fordatausers}">For databrukere</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" th:text="#{about.technical}">Teknisk</a></li>
                     </ul>
                 </li>
             </ul>
@@ -142,7 +146,22 @@
                 </div>
                 <!--/div-->
 
-                <div class="col-sm-1">Empty</div>
+                <div class="col-sm-1">
+                    <div class="dropdown">
+                        <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span id="hits.choice">10</span> <span class="caret"></span>
+                        </button>
+                        <ul id="hits.select" class="dropdown-menu">
+                            <li><a class="number" href="#">5</a></li>
+                            <li><a class="number" href="#">10</a></li>
+                            <li><a class="number" href="#">25</a></li>
+                            <li><a class="number" href="#">30</a></li>
+                            <li><a class="number" href="#">40</a></li>
+                            <li><a class="number" href="#">50</a></li>
+                        </ul>
+
+                    </div>
+                </div>
             </div>
             <!-- results row -->
             <div class="row">
