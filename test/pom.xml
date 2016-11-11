@@ -5,23 +5,29 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>no.dcat</groupId>
-        <version>0.1.0</version>
+        <version>0.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
 
     <artifactId>test</artifactId>
     <description>Test Admin Application</description>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
+            <groupId>no.dcat</groupId>
+            <artifactId>harvester</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- må være med for å kjøre i intellij -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,143 +78,30 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>3.1.1</version>
+
         </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>harvester</artifactId>
-            <version>0.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>datastore</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-        </dependency>
+
 
     </dependencies>
-
     <build>
-
-
-        <!-- enable filtering to generate project.properties with information from build process -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </resource>
-        </resources>
-
         <plugins>
-
-            <!-- hack to get the build time out of maven. Default is GMT and we need local time -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.12</version>
-                <executions>
-                    <execution>
-                        <id>timestamp-property</id>
-                        <goals>
-                            <goal>timestamp-property</goal>
-                        </goals>
-                        <configuration>
-                            <name>build.time</name>
-                            <pattern>yyyy-MM-dd HH:mm</pattern>
-                            <locale>no_NO</locale>
-                            <unit>hour</unit>
-                            <offset>2</offset>
-                            <timeZone>+02:00</timeZone>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- test javascript files by running jsHint -->
-            <plugin>
-                <groupId>com.cj.jshintmojo</groupId>
-                <artifactId>jshint-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>lint</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <version>2.5.6</version>
-                    <options>maxparams:3,indent,camelcase,eqeqeq,forin,immed,latedef,noarg,noempty,nonew</options>
-                    <globals>require,$,yourFunkyJavascriptModule</globals>
-                    <configFile>src/test/resources/jshint.conf.js</configFile>
-                    <directories>
-                        <directory>src/main/resources/static/js</directory>
-                    </directories>
-                    <!--excludes>
-                        <exclude>src/main/webapp/hackyScript.js</exclude>
-                        <exclude>src/main/webapp/myDirectoryForThirdyPartyStuff</exclude>
-                    </excludes-->
-                    <reporter>jslint</reporter>
-                    <reportFile>target/jshint.xml</reportFile>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--configuration>
-                    <includes>
-                        <include>
-                            <groupId>no.dcat</groupId>
-                            <artifactId>harvester</artifactId>
-                        </include>
-                        <include>
-                            <groupId>no.dcat</groupId>
-                            <artifactId>datastore</artifactId>
-                        </include>
-                    </includes>
-                </configuration-->
                 <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
-                        <!--configuration>
-                            <classifier>exec</classifier>
-                        </configuration-->
                     </execution>
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>get-the-git-infos</id>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generateGitPropertiesFilename>${basedir}/target/classes/git.properties</generateGitPropertiesFilename>
-                </configuration>
-            </plugin>
-
-            <!--plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin-->
         </plugins>
+
     </build>
-
-
 </project>

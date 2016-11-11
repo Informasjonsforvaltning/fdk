@@ -2,9 +2,11 @@
 <html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title th:text="#{app.title}">Felles datakatalog</title>
-    <meta charset="UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.min.css" media="all"/>
+    <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
     <style>
 .publisher {
     position: absolute;
@@ -25,13 +27,14 @@
     </style>
 </head>
 <body>
-    <div id="dcatQueryService" th:text="${session.dcatQueryService}" style="display:none"></div>
+    <!--div id="dcatQueryService" th:text="${session.dcatQueryService}" style="display:none"></div-->
     <div id="versionInformation" class="text-muted small text-right" th:text="${session.versionInformation}"></div>
 
     <div class="container-fluid">
 
     <header class="a-header" role="banner">
         <nav class="navbar navbar-default">
+            <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#" th:text="#{app.title}">Felles datakatalog</a>
             </div>
@@ -65,6 +68,7 @@
                     </ul>
                 </li>
             </ul>
+            </div>
         </nav>
     </header>
 
@@ -96,26 +100,22 @@
         <div class="container-fluid">
 
             <!-- Resultat navigering -->
-            <div class="row-fluid">
+            <div class="row">
 
-                <div class="col-sm-4 col-md-6 col-lg-6"/>
-                <div class="col-md-1 col-lg-1" >
+                <div class="col-sm-1 col-sm-offset-4" >
                     <span  id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
                 </div>
 
-                <div class="col-md-2 col-lg-2" th:attr="aria-label=#{page.navigation}">
+                <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
                     <nav>
-                        <ul class="pagination pagination-sm" style="margin:0;">
+                        <ul class="pager pagination pagination-sm" style="margin:0;">
 
                             <li>
                                 <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <!--li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">...</a></li>
-                            <li><a href="#">4</a></li-->
+
                             <li>
                                 <a id="next" href="#" th:attr="aria-label=#{page.next}">
                                     <span aria-hidden="true">&raquo;</span>
@@ -126,7 +126,7 @@
                 </div>
 
                 <!-- SORT Controller -->
-                <div class="col-md-1 col-lg-2">
+                <div class="col-sm-2">
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                             <span th:text="#{sort.by}">Sorter på:</span>
@@ -141,11 +141,13 @@
                     </div>
                 </div>
                 <!--/div-->
+
+                <div class="col-sm-1">Empty</div>
             </div>
             <!-- results row -->
             <div class="row">
 
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 sidebar">
+                <div class="col-sm-4 sidebar">
                     <!-- fasettering -->
                     <div class="list-group">
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.organisation}">Virksomhet</span><span class="badge">2</span></a>
@@ -159,7 +161,7 @@
                 </div>
 
                 <!-- search result -->
-                <div id="datasets" class="col-xs-8 col-xm-8 col-md-8 col-lg-8 list-group">
+                <div id="datasets" class="col-sm-8 list-group">
 
                     <a class="row list-group-item dataset" href="#"><strong><span th:text="#{result.waiting}">Henter data ...</span></strong></a>
 
@@ -173,8 +175,8 @@
     <footer class="sitefooter hidden-print">
         <div class="container">
             <div class="row">
-                <div class="col-md-2 col-lg-2"/>
-                <div class="col-md-3 col-lg-3" id="logo-footer">
+
+                <div class="col-sm-3 col-sm-offset-2" id="logo-footer">
 
                         <a href="//www.brreg.no">
                             <img src="img/brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
@@ -184,13 +186,11 @@
                         <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler - personvern</a>
 
                 </div>
-                <div class="col-md-2 col-lg-2"/>
 
-                <div class="col-md-3 col-lg-3 ">
+                <div class="col-sm-3 col-sm-offset-2">
                         <a href="//www.difi.no">
                             <img src="img/difi-logo.png" alt="Difi logo"/>
                         </a>
-
                 </div>
             </div>
         </div>
@@ -198,7 +198,7 @@
 
     </div>
     <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
-    <script src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/result.js"></script>
 </body>
 </html>

@@ -104,8 +104,8 @@ public class TestAdminController {
             logger.debug ("reading tempfile " + url);
 
 
+            //List<String> resultMsgs = loader.loadDatasetFromFile(url);
             List<String> resultMsgs = loader.loadDatasetFromFile(url);
-
             // Format results
             StringBuffer msg = new StringBuffer();
             boolean success = true;

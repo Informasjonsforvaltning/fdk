@@ -122,8 +122,6 @@ public class SimpleQueryService {
 
         logger.trace(search.toString());
 
-
-
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
         response = client.prepareSearch("dcat")
@@ -135,7 +133,10 @@ public class SimpleQueryService {
                 .actionGet();
         } else {
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
-            StringBuilder sbSortField = new StringBuilder().append(sortfield).append(".raw");
+            StringBuilder sbSortField = new StringBuilder();
+            if (!sortfield.equals("modified")) sbSortField.append(sortfield).append(".raw");
+            else sbSortField.append(sortfield);
+
             response = client.prepareSearch("dcat")
                     .setTypes("dataset")
                     .setQuery(search)
@@ -170,36 +171,5 @@ public class SimpleQueryService {
 
     }
 
-    /* Laster en json fil. Prototyping */
-    private String loadFromFile(String filename) {
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        String json = "{}";
-        try {
-            String u = classLoader.getResource("brreg-dataset-result.json").getFile();
-            logger.debug(u);
-
-            try (BufferedReader br = new BufferedReader(new FileReader(u))) {
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-
-                while (line != null) {
-                    sb.append(line);
-                    sb.append(System.lineSeparator());
-                    line = br.readLine();
-                }
-                json = sb.toString();
-
-            } catch (IOException io) {
-                logger.error("IO: " + io);
-            } catch (Exception e) {
-                logger.error("E: " + e);
-            }
-
-        } catch (NullPointerException npe) {
-            logger.error("NP: ", npe);
-        }
-        return json;
-    }
 
 }
