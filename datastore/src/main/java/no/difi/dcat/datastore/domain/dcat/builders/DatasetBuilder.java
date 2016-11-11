@@ -10,6 +10,7 @@ import org.apache.jena.vocabulary.RDF;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 
 public class DatasetBuilder extends AbstractBuilder {
 
@@ -67,6 +68,13 @@ public class DatasetBuilder extends AbstractBuilder {
 			created.setContactPoint(extractContact(dataset));
 			created.setPublisher(extractPublisher(dataset));
 			created.setTheme(extractTheme(dataset, DCAT.theme));
+			created.setConformsTo(extractMultipleStrings(dataset, DCTerms.conformsTo));
+			created.setTemporal(extractPeriodOfTime(dataset));
+			created.setSpatial(extractMultipleStrings(dataset, DCTerms.spatial));
+			created.setAccessRights(extractAsString(dataset, DCTerms.accessRights));
+			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
+			created.setReferences(extractMultipleStrings(dataset, DCTerms.references));
+			created.setProvenance(extractAsString(dataset, DCTerms.provenance));
 		}
 		if (catalog != null) {
 			created.setCatalog(CatalogBuilder.create(catalog));

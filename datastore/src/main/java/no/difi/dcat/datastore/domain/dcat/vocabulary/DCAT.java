@@ -39,4 +39,5 @@ public class DCAT {
 
 	public static final Property theme = model.createProperty(NS, "theme");
 
+
 }

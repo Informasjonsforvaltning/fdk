@@ -73,7 +73,7 @@ public class Dataset {
 
 	//dct:spatial
 	//Norwegian: dekningsområde
-	private List<String> string;
+	private List<String> spatial;
 
 	//dct:accessRights
 	//Norwegian: tilgangsnivå
@@ -84,9 +84,14 @@ public class Dataset {
 	//Norwegian extension to the dcat standard. Recommended used with accesRights.
 	private List<String> accessRightsComment;
 
-	//dcatno:references
+	//dct:references
 	//Norwegian: Refererer til.
 	private List<String> references;
+
+	//dct:provenance
+	//Norwegian: Opphav
+	private String provenance;
+
 
 	public List<String> getTheme() { return theme; }
 	public void setTheme(List<String> theme) { this.theme = theme; }
@@ -176,7 +181,7 @@ public class Dataset {
 	}
 
 	public List<String> getConformsTo() { return conformsTo; }
-	public void setConformsTo(List<String> conformsTo)  this.conformsTo = conformsTo; }
+	public void setConformsTo(List<String> conformsTo) { this.conformsTo = conformsTo; }
 
 	public List<PeriodOfTime> getTemporal() { return temporal; }
 	public void setTemporal(List<PeriodOfTime> temporal) { this.temporal = temporal; }
@@ -192,4 +197,7 @@ public class Dataset {
 
 	public List<String> getReferences() { return references; }
 	public void setReferences(List<String> references) { this.references = references; }
+
+	public String getProvenance() { return provenance; }
+	public void setProvenance(String provenance) { this.provenance = provenance; }
 }
