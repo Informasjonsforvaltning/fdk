@@ -57,7 +57,7 @@
         dct:spatial              <http://sws.geonames.org/3144096/> ;
         dct:title                "Jegerregisteret"@nb ;
         dcat:keyword             "Lisensjeger" , "Personopplysninger" , "Jaktår" , "Jeger" , "Lisensfelling" , "Jegeravgift" ;
-        dct:modified             "2016-05-22"^^xsd:date ;
+        dct:modified             "2016-05-23"^^xsd:date ;
         dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/> .
 
 <http://data.brreg.no/datakatalog/dataset/24>
@@ -66,6 +66,7 @@
         dct:identifier   "24" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/> ;
         dct:title        "Barnehagefakta"@nb ;
+        dct:modified             "2014-03-23"^^xsd:date ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/enhetsregisteret/provinence/bruker>
@@ -79,6 +80,7 @@
         dct:provenance   <http://data.brreg.no/datakatalog/provinens/vedtak> ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
         dct:title        "MVA registeret"@nb ;
+        dct:modified             "2015-06-30"^^xsd:date ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/1>
@@ -120,6 +122,7 @@ dct:source  a   owl:ObjectProperty .
         dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
         dct:title        "Levere A-melding"@nb ;
+        dct:modified             "2016-05-01"^^xsd:date ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.brreg.no/datakatalog/dataset/44>

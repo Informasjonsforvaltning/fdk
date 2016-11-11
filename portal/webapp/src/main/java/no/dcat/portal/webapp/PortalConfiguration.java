@@ -2,16 +2,14 @@ package no.dcat.portal.webapp;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
 
 /**
  * Created by nodavsko on 17.10.2016.
  */
 @Configuration
-//@EnableAutoConfiguration
 @PropertySource("classpath:project.properties") // for maven build properties
 @PropertySource("classpath:git.properties") // for git properties
 @ConfigurationProperties(prefix = "application") // for application.yml
@@ -22,16 +20,32 @@ public class PortalConfiguration {
 
     /* application.queryServiceURL */
     private String queryServiceURL = "http://dummy.org/";
-    public void setQueryServiceURL (String serviceURL) {
+    public final void setQueryServiceURL(final String serviceURL) {
+
         this.queryServiceURL = serviceURL;
     }
 
-    public String getQueryServiceURL() {
+    /**
+     * Returns the URL to the query service.
+     *
+     * @return the query service URL string
+     */
+    public final  String getQueryServiceURL() {
+
         return this.queryServiceURL;
     }
 
-    public String getVersionInformation() {
-        String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
+    /**
+     * Returns the version identification information for the application.
+     *
+     * @return the version information string
+     */
+    public final String getVersionInformation() {
+        String versionInfo = artifactId + "-"
+                + version + "/"
+                + commitAbbrev +  "/"
+                + buildDate + "/"
+                + profile;
         return versionInfo;
     }
 
@@ -40,24 +54,23 @@ public class PortalConfiguration {
 
     @Value("${version:ver}")
     private String version;
-    public String getVersion() { return version; }
+    public final String getVersion() {
+        return version;
+    }
 
     @Value("${artifactId:aid}")
     private String artifactId = "artifactId";
-    public String getArtifactId() { return artifactId; }
+    public final String getArtifactId() {
+        return artifactId;
+    }
 
     @Value("${build.date:1999-99-99}")
     private String buildDate;
-    public void setBuildDate(String buildDate) { this.buildDate = buildDate; }
-    public String getBuildDate() { return buildDate; }
+    public final void setBuildDate(final String buildDateString) {
+        buildDate = buildDateString;
+    }
+    public final String getBuildDate() {
+        return buildDate;
+    }
 
-
-/*
- @Bean
- public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-   PropertySourcesPlaceholderConfigurer c = new PropertySourcesPlaceholderConfigurer();
-   c.setIgnoreUnresolvablePlaceholders(true);
-  return c;
-  }
-*/
 }

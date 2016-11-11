@@ -11,30 +11,37 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+/**
+ * Security settings for the project.
+ */
 @Configuration
 @EnableWebSecurity
 public class PortalSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+   protected final void configure(final HttpSecurity http) throws Exception {
 
         http
-
-                .authorizeRequests()
-                    .antMatchers("/", "/home").permitAll()
-                    //.anyRequest().authenticated()
-                    .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                    .and()
-                .logout()
-                    .permitAll();
+            .authorizeRequests()
+                .antMatchers("/", "/result", "/details").permitAll()
+                //.anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll();
     }
 
+    /**
+     * Possible login code. Experimental and not in use.
+     * @param auth the autorisation object
+     * @throws Exception
+     */
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public final void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+            .inMemoryAuthentication()
+            .withUser("user").password("password").roles("USER");
     }
 }
