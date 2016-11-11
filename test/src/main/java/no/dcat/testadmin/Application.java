@@ -12,14 +12,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @SpringBootApplication
 public class Application extends WebMvcConfigurerAdapter {
-    static Logger logger = LoggerFactory.getLogger(Application.class);
+    private static  Logger logger = LoggerFactory.getLogger(Application.class);
 
     /**
-     * Standard magic for starting the spring boot application
+     * Standard magic for starting the spring boot application.
      *
      * @param args any parameters that you want to transfer to the spring boot application
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
+
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
     }
 

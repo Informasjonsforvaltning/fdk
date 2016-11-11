@@ -218,8 +218,7 @@ function showResults(searchResult) {
             themeElement.className = "label label-default";
             var content = [];
             theme.forEach(function (element) {
-                var inx = element.lastIndexOf("/");
-                content.push(element.substring(inx +1, element.length));
+                content.push(element.code);
             });
             themeElement.innerHTML = content.join(", ");
         }
