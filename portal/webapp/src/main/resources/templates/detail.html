@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detail view</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 th:text="${dataset.title.nb}" />
+        <h2 th:text="${dataset.catalog.publisher.name}"/>
+        <p th:text="${dataset.description.nb}"></p>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div>
+                <h3>Kontaktinformasjon</h3>
+                <dl>Navn
+                    <dt th:text="${dataset.contactPoint} ? ${dataset.contactPoint.fullname} : ''" />
+                </dl>
+                <dl>Epost
+                    <dt th:text="${dataset.contactPoint} ? ${dataset.contactPoint.email} : ''" />
+                </dl>
+                <dl>Telefon
+                    <dt th:text="${dataset.contactPoint} ? ${dataset.contactPoint.telephone} : ''" />
+                </dl>
+            </div>
+            <div>
+                <h3>Konformitet</h3>
+            </div>
+            <div>
+                <h3>Distribusjon</h3>
+            </div>
+            <div>
+                <h3>Kvalitet</h3>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+                <h3>Opplysninger</h3>
+                <span th:each="opplysninger: ${dataset.keyword.get('nb')}">
+                    <span th:each="opplysning: ${opplysninger}">
+                        <span th:text="${opplysning} + ', '" />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <h3>Restriksjoner</h3>
+            </div>
+            <div>
+                <h3>Formål</h3>
+            </div>
+            <div>
+                <h3>Relaterte</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

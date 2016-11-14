@@ -49,13 +49,14 @@ public class SimpleQueryService {
     /**
      * Compose and execute an elasticsearch query on dcat based on the inputparameters.
      * <p>
-     * @param  query  The search query to be executed as defined in
-     *                https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
-     *                The search is performed on the fileds titel, keyword, description and publisher.name.
-     * @param  from   The starting index of the sorted hits that is returned.
-     * @param  size   The number of hits that is returned.
-     * @param  sortfield Defines that field that the search result shall be sorted on. Default is best match.
-     * @param  sortdirection Defines the direction of the sort, ascending or descending.
+     *
+     * @param query         The search query to be executed as defined in
+     *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
+     *                      The search is performed on the fileds titel, keyword, description and publisher.name.
+     * @param from          The starting index of the sorted hits that is returned.
+     * @param size          The number of hits that is returned.
+     * @param sortfield     Defines that field that the search result shall be sorted on. Default is best match.
+     * @param sortdirection Defines the direction of the sort, ascending or descending.
      * @return List of  elasticsearch records.
      */
 
@@ -84,19 +85,8 @@ public class SimpleQueryService {
 
         if (size < 5) size = 5;
 
-        String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
-
-        // TODO - check if client is availabl
-
-        logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
-        if (client == null) {
-            if (elasticsearchHost == null) {
-                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
-                return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-            client = returnElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
-        }
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+        if (jsonError != null) return jsonError;
 
         QueryBuilder search;
 
@@ -124,13 +114,13 @@ public class SimpleQueryService {
 
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
-        response = client.prepareSearch("dcat")
-                .setTypes("dataset")
-                .setQuery(search)
-                .setFrom(from)
-                .setSize(size)
-                .execute()
-                .actionGet();
+            response = client.prepareSearch("dcat")
+                    .setTypes("dataset")
+                    .setQuery(search)
+                    .setFrom(from)
+                    .setSize(size)
+                    .execute()
+                    .actionGet();
         } else {
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
             StringBuilder sbSortField = new StringBuilder();
@@ -153,7 +143,48 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
-    public Client returnElasticsearchTransportClient(String host, int port) {
+    /**
+     * Retrieves the dataset record identified by the provided id.
+     * @param id Id that identifies the dataset..
+     * @return Rekord for the retrieved dataset.
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/detail", produces = "application/json")
+    public ResponseEntity<String> detail(@RequestParam(value = "id", defaultValue = "") String id) {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
+
+        logger.debug(String.format("Get dataset with id: %s", id));
+        SearchResponse response = client.prepareSearch("dcat").setQuery(search).execute().actionGet();
+
+        if (response.getHits().getTotalHits() == 0) {
+            logger.error(String.format("Found no dataset with id: %s", id));
+            jsonError = new ResponseEntity<String>(String.format("Found no dataset with id: %s", id), HttpStatus.NOT_FOUND);
+        }
+        logger.trace(String.format("Found dataset: %s", response.toString()));
+
+        if (jsonError != null) return jsonError;
+
+        return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
+    }
+
+    private ResponseEntity<String> initializeElasticsearchTransportClient() {
+        String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
+
+        logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
+        if (client == null) {
+            if (elasticsearchHost == null) {
+                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
+                return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            client = createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
+        }
+        return null;
+    }
+
+    public Client createElasticsearchTransportClient(String host, int port) {
         client = null;
         try {
             InetAddress inetaddress = InetAddress.getByName(host);
