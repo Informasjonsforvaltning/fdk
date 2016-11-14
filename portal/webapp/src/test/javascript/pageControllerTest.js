@@ -13,9 +13,9 @@ describe("pageNavigationController", function() {
 
         expect(true).toEqual(true);
 
-    }
+    });
 
 
 
 
-}
+});
