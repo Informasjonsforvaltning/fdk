@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
  * Class for testing SimpleQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleQueryServiceMochitoTest {
+public class SimpleQueryServiceSearchTest {
 
     SimpleQueryService sqs;
     Client client;
