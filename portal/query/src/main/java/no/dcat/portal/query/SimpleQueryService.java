@@ -112,10 +112,6 @@ public class SimpleQueryService {
 
         logger.trace(search.toString());
 
-<<<<<<< HEAD
-=======
-
->>>>>>> FDK-105 : Added detail page.
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
             response = client.prepareSearch("dcat")

@@ -9,17 +9,10 @@ spring:
 application:
   retrieveDatasetServiceURL: http://localhost:8091/detail
   queryServiceURL: http://localhost:8091/search
-<<<<<<< HEAD
 ---
 spring:
   profiles: test
 application:
+  retrieveDatasetServiceURL: http://localhost:8071/detail
   queryServiceURL: http://localhost:8071/search
-=======
 
-  spring:
-      profiles: test
-  application:
-    retrieveDatasetServiceURL: http://localhost:8071/detail
-    queryServiceURL: http://localhost:8071/search
->>>>>>> FDK-105 : Added detail page.

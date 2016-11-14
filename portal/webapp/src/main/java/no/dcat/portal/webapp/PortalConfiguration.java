@@ -35,19 +35,6 @@ public class PortalConfiguration {
         return this.queryServiceURL;
     }
 
-<<<<<<< HEAD
-    /**
-     * Returns the version identification information for the application.
-     *
-     * @return the version information string
-     */
-    public final String getVersionInformation() {
-        String versionInfo = artifactId + "-"
-                + version + "/"
-                + commitAbbrev +  "/"
-                + buildDate + "/"
-                + profile;
-=======
     /* application.queryServiceURL */
     private String retrieveDatasetServiceURL = "http://dummy.org/detail";
     public void setRetrieveDatasetServiceURL (String retrieveDatasetServiceURL) {
@@ -60,7 +47,6 @@ public class PortalConfiguration {
 
     public String getVersionInformation() {
         String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
->>>>>>> FDK-105 : Added detail page.
         return versionInfo;
     }
 

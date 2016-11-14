@@ -14,12 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
->>>>>>> FDK-105 : Added detail page.
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 
@@ -52,12 +48,7 @@ public class PortalController {
      * @return the result html page (or just the name of the page)
      */
     @RequestMapping({"/"})
-<<<<<<< HEAD
     final String result(final HttpSession session) {
-=======
-    String index(HttpSession session) {
->>>>>>> FDK-105 : Added detail page.
-
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
 
         logger.debug(buildMetadata.getQueryServiceURL());
