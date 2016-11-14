@@ -103,13 +103,30 @@
     <section id="resultPanel">
         <div class="container-fluid">
 
-            <!-- Resultat navigering -->
+            <!-- Resultat navigerings verktøy -->
             <div class="row">
 
                 <div class="col-sm-1 col-sm-offset-4" >
                     <span  id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
                 </div>
 
+                <!-- SORT Controller -->
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span th:text="#{sort.by}">Sorter på:</span>
+                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
+                        </button>
+                        <ul id="sort.select" class="dropdown-menu">
+                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
+                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
+                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
+                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Dato</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Page navigation controller -->
                 <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
                     <nav>
                         <ul class="pager pagination pagination-sm" style="margin:0;">
@@ -129,23 +146,7 @@
                     </nav>
                 </div>
 
-                <!-- SORT Controller -->
-                <div class="col-sm-2">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span th:text="#{sort.by}">Sorter på:</span>
-                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
-                        </button>
-                        <ul id="sort.select" class="dropdown-menu">
-                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
-                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
-                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
-                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Dato</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!--/div-->
-
+                <!-- Number of hits per page controller -->
                 <div class="col-sm-1">
                     <div class="dropdown">
                         <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

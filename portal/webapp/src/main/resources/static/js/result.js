@@ -352,9 +352,7 @@ function prepareSort() {
             sortField = "modified";
         }
 
-        //if (oldSortField !=== sortField) {
-            doSearch();
-        //}
+        doSearch();
 
     };
 
