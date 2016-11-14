@@ -56,15 +56,19 @@
                     <a href="#" class="dropdown-toggle" th:attr="title=#{about.title}" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
                         <span th:text="#{about}">Om</span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="help/help.html" target="_blank" th:text="#{about.help}">Hjelp</a></li>
-                        <li><a href="coverage.html" target="_blank" th:text="#{about.status}">Status implementasjon</a></li>
-                        <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{about.standard}">DCAT-AP-NO 1.1</a></li>
-                        <li><a href="#" th:text="#{about.guide}">Veileder</a></li>
-                        <li><a href="#" th:text="#{about.fordataowners}">For dataeiere</a></li>
-                        <li><a href="#" th:text="#{about.fordatausers}">For databrukere</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#" th:text="#{about.technical}">Teknisk</a></li>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown" th:text="#{about.help}">Hjelp</li>
+                                <ul class="dropdown-menu">
+                                    <li><a href="help/help.html" target="_blank">Språkstøtte</a></li>
+                                    <li><a href="help/ResulPageNavigation.html" target="_blank">Navigering i søkeresultat</a></li>
+                                </ul>
+                            <li><a href="coverage.html" target="_blank" th:text="#{about.status}">Status implementasjon</a></li>
+                            <li><a href="https://doc.difi.no/dcat-ap-no/" target = "_blank" th:text="#{about.standard}">DCAT-AP-NO 1.1</a></li>
+                            <li><a href="#" th:text="#{about.guide}">Veileder</a></li>
+                            <li><a href="#" th:text="#{about.fordataowners}">For dataeiere</a></li>
+                            <li><a href="#" th:text="#{about.fordatausers}">For databrukere</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" th:text="#{about.technical}">Teknisk</a></li>
                     </ul>
                 </li>
             </ul>
@@ -99,13 +103,30 @@
     <section id="resultPanel">
         <div class="container-fluid">
 
-            <!-- Resultat navigering -->
+            <!-- Resultat navigerings verktøy -->
             <div class="row">
 
                 <div class="col-sm-1 col-sm-offset-4" >
                     <span  id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span id="total.hits">0</span>
                 </div>
 
+                <!-- SORT Controller -->
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span th:text="#{sort.by}">Sorter på:</span>
+                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
+                        </button>
+                        <ul id="sort.select" class="dropdown-menu">
+                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
+                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
+                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
+                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Dato</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Page navigation controller -->
                 <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
                     <nav>
                         <ul class="pager pagination pagination-sm" style="margin:0;">
@@ -125,24 +146,23 @@
                     </nav>
                 </div>
 
-                <!-- SORT Controller -->
-                <div class="col-sm-2">
+                <!-- Number of hits per page controller -->
+                <div class="col-sm-1">
                     <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span th:text="#{sort.by}">Sorter på:</span>
-                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
+                        <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span id="hits.choice">10</span> <span class="caret"></span>
                         </button>
-                        <ul id="sort.select" class="dropdown-menu">
-                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
-                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
-                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
-                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Dato</a></li>
+                        <ul id="hits.select" class="dropdown-menu">
+                            <li><a class="number" href="#">5</a></li>
+                            <li><a class="number" href="#">10</a></li>
+                            <li><a class="number" href="#">25</a></li>
+                            <li><a class="number" href="#">30</a></li>
+                            <li><a class="number" href="#">40</a></li>
+                            <li><a class="number" href="#">50</a></li>
                         </ul>
+
                     </div>
                 </div>
-                <!--/div-->
-
-                <div class="col-sm-1">Empty</div>
             </div>
             <!-- results row -->
             <div class="row">

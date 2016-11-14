@@ -305,6 +305,25 @@ function goTo(page){
     doSearch();
 }
 
+// Sets up event handler to select the number of hits per page.
+function hitsPerPageController() {
+    var hitsSelectElement = document.getElementById('hits.select');
+    var hitsChooseElement = document.getElementById('hits.choice');
+    if (hitsSelectElement) {
+        hitsSelectElement.onclick = function (event) {
+            var hitsVal = parseInt(event.target.innerHTML);
+            if (hitsVal) {
+                // The easiest thing is to reset the page controller
+                resultCursor.currentPage = 0;
+                resultCursor.from = 0;
+                resultCursor.size = hitsVal;
+                hitsChooseElement.innerHTML = hitsVal;
+                doSearch();
+            }
+        }
+    }
+}
+
 // sets up sort controller
 function prepareSort() {
 
@@ -333,9 +352,7 @@ function prepareSort() {
             sortField = "modified";
         }
 
-        //if (oldSortField !=== sortField) {
-            doSearch();
-        //}
+        doSearch();
 
     };
 
@@ -385,6 +402,8 @@ if (search)
     };
 
 prepareSort();
+hitsPerPageController();
+
 }
 
 // starts the page initializing code;
