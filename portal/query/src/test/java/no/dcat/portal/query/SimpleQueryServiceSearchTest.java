@@ -22,10 +22,10 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing detail resr API in SimpleQueryService.
+ * Class for testing SimpleQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleQueryServiceSearchTest {
+public class SimpleQueryServiceMochitoTest {
 
     SimpleQueryService sqs;
     Client client;
@@ -36,6 +36,7 @@ public class SimpleQueryServiceSearchTest {
         client = mock(Client.class);
         populateMock();
         sqs.client = client;
+
     }
 
     /**
