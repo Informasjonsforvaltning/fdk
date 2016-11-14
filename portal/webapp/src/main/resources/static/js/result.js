@@ -256,8 +256,8 @@ function showResults(searchResult) {
         }
 
         var row = document.createElement("a");
+        row.setAttribute('href', "detail?id=" + dataset._id);
         row.className = "row list-group-item dataset";
-        row.href = "#";
         // dataset
         var ds = document.createElement("div");
         ds.className = "col-sm-12";
