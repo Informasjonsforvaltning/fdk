@@ -377,7 +377,7 @@ vcard:telefon  a  owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/4>
         a                           dcat:Dataset ;
-        dcatno:accessRightsComment  "https://lovdata.no/lov/1998-07-17-56/§8-1" ;
+        dcatno:accessRightsComment  "https://lovdata.no/lov/1998-07-17-56/§8-1", "en til accessrightscomment" ;
         dct:accessRights            <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
         dct:accruralPeriodicity     <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
         dct:description             "Regnskapsregisteret er ett av de offentlige registrene i Brønnøysundregistrene i Brønnøysund. Det er den viktigste datakilden for alle som vil skaffe seg rede på den økonomiske tilstanden i norsk næringsliv.\nInnsendingspliktige foretak skal hvert år sende inn årsregnskap, årsberetning og revisjonsberetning til Regnskapsregisteret innen en måned etter at det er vedtatt. Formålet med ordningen er å sikre økonomisk trygghet og effektivitet mellom selskapene og myndighetene, mellom selskapene og publikum, og ikke minst, selskapene i mellom. Regnskapsinformasjon er av offentlig interesse, og gjennom registrering i Regnskapsregisteret blir denne informasjonen offentlig tilgjengelig i 10 år. Mottatte årsregnskap blir kunngjort etter registrering."@nb ;
@@ -656,7 +656,7 @@ dct:accruralPeriodicity
         a                        dcat:Dataset ;
         dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
         dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
-        dct:conformsTo           <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret> ;
+        dct:conformsTo           <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret>, <http://www.brreg.no> ;
         dct:description          "Einingsregisteret samordnar opplysningar om næringslivet og offentlege etatar som finst i ulike offentlege register.I Enhetsregisteret finner du alle som er registrert for momspliktig virksomhet, har registrerte ansatte eller er med i Foretaksregisteret. Dessuten finner du mange næringsdrivende enkeltpersonforetak, foreninger og andre økonomiske enheter uten registreringsplikt, som har valgt å bli med i Enhetsregisteret på frivillig grunnlag. Registeret inneholder også alle enheter som er registrert i fylkesmennenes stiftelsesregistre og skattemanntallet for etterskuddspliktige."@nb , "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis."@en ;
         dct:hasVersion           <http://data.brreg.no/datakatalog/dataset/99> ;
         dct:identifier           "2" ;
@@ -664,11 +664,11 @@ dct:accruralPeriodicity
         dct:issued               "1999-12-03"^^xsd:dateTime ;
         dct:landingPage          <https://www.brreg.no/> ;
         dct:language             <http://publications.europa.eu/resource/authority/language/2> ;
-        dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak>;
         dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
         dct:relation             <http://data.brreg.no/datakatalog/dataset/99> ;
         dct:source               <http://data.brreg.no/datakatalog/distibusjon/2> ;
-        dct:spatial              <http://sws.geonames.org/3144096/> ;
+        dct:spatial              <http://sws.geonames.org/3144096/>, <http://www.brreg.no> ;
         dct:subject              <http://brreg.no/begrep/orgnr> ;
         dct:temporal             [ a                  dct:PeriodOfTime ;
                                    time:hasBeginning  [ a                   time:Instant ;
@@ -685,7 +685,8 @@ dct:accruralPeriodicity
         dcat:distriution         <http://data.brreg.no/datakatalog/distibusjon/12> ;
         dcat:keyword             "Grunndata" , "Enhetsnavn" , "Organisasjonsnummer" , "Roller" , "Enhet" , "Bransje" ;
         dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        foaf:page                <https://confluence.brreg.no/display/DBNPUB/API> .
+        foaf:page                <https://confluence.brreg.no/display/DBNPUB/API> ;
+        dct:references           <http://data.brreg.no/datakatalog/dataset/1>, <http://data.brreg.no/datakatalog/dataset/4> .
 
 <http://data.brreg.no/datakatalog/katalog/1>
         a                dcat:Catalog ;
