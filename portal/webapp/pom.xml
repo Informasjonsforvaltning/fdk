@@ -70,7 +70,16 @@
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>harvester</artifactId>
+            <version>0.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
