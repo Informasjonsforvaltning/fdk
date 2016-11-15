@@ -123,6 +123,12 @@ public class BrregAgentConverter {
 
 		//logger.debug(property.toString());
 		while (incomingModelIterator.hasNext()) {
+			// was
+			/*
+			Resource existingResource = existingModel.getResource(incomingModelIterator.next().getURI());
+			existingResource.removeAll(property); */
+
+
 			Resource incomingResource =  incomingModelIterator.next();
 			/* TODO - fix this mess. Nodes are not found in merged model!
 			String uri = incomingResource.getProperty(p).getString();
