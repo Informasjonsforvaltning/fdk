@@ -49,7 +49,7 @@ public class DatasetBuilder extends AbstractBuilder {
                     }
 
                 }
-                datasetObj.setDistributions(distributions);
+                datasetObj.setDistribution(distributions);
                 datasets.add(datasetObj);
             }
         }
