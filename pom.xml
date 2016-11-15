@@ -11,12 +11,12 @@
 
 	<distributionManagement>
 		<repository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+			<id>Felles datakatalog release</id>
+			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-release/</url>
 		</repository>
 		<snapshotRepository>
-			<id>Felles datakatalog</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog</url>
+			<id>Felles datakatalog snapshot</id>
+			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
