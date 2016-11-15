@@ -1,5 +1,4 @@
 
-
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = "nb";
 var sortField = "";
@@ -12,6 +11,13 @@ var resultCursor = {
     };
 var total = 0;
 var searchUrl = "http://dcat.no/unknown";
+
+function resetResultCursor() {
+    resultCursor.currentPage = 0;
+    resultCursor.sectionStart = 1;
+    resultCursor.from = 0;
+    resultCursor.size = 10;
+}
 
 function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
@@ -82,7 +88,7 @@ function getLanguageString(literal) {
 
  ... &hellip;
 */
-function pagination () {
+function paginationController () {
 
     var setup = {
         numPagesInSection: 3,
@@ -94,11 +100,12 @@ function pagination () {
     // empty pager list
     $('.pager').empty();
 
+    // helper to create elipse element ...
     function createListElement(pageSymbol) {
       var element = $('<li><a href="#">'+ pageSymbol +'</a></li>');
       return element;
     }
-
+    // helper function to create page number element (2)
     function createPageElement(page) {
         var pageNumber = page + 1;
         var pageElement = createListElement(pageNumber)[0];
@@ -175,7 +182,7 @@ function pagination () {
     $('.pager').append(nextElement);
 
 }
-
+// Results
 function showResults(searchResult) {
 
     var res = JSON.parse(searchResult);
@@ -188,11 +195,15 @@ function showResults(searchResult) {
     // Oppdaterer søkeinformasjon
     total = res.hits.total;
     var summary = document.getElementById("total.hits");
+    var info = document.getElementById("search.info");
     if (summary) {
+        if (info && total === 0) {
+            info.innerHTML = "Ingen resultater funnet";
+        }
         summary.innerHTML = total;
     }
 
-    pagination();
+    paginationController();
 
     // handles hits
     var hits  = res.hits.hits;
@@ -218,7 +229,11 @@ function showResults(searchResult) {
             themeElement.className = "label label-default";
             var content = [];
             theme.forEach(function (element) {
-                content.push(element.code);
+                if (pageLanguage === "en") { // theme comes with only two languages
+                    content.push(element.title.en);
+                } else {
+                    content.push(element.title.nb);
+                }
             });
             themeElement.innerHTML = content.join(", ");
         }
@@ -246,13 +261,31 @@ function showResults(searchResult) {
         if (modified) {
             var ix2 = modified.indexOf("T");
             modifiedElement = document.createElement("span");
-            modifiedElement.innerHTML = modified.substring(0,ix2);
+            if (ix2 !== -1) {
+                modifiedElement.innerHTML = modified.substring(0,ix2);
+            } else {
+                modifiedElement.innerHTML = modified;
+            }
         }
 
         if (keyword !== undefined && keyword.value !== undefined) {
             kwElement = document.createElement("span");
 
             kwElement.innerHTML = " [" + keyword.value.join(", ") + "] ";
+        }
+
+        var distributionList = document.createElement("span");
+        if (source.distribution) {
+
+            source.distribution.forEach(function (dist) {
+                 console.log(dist.format);
+                 var a = document.createElement("a");
+                 a.href = dist.accessURL;
+                 a.innerHTML = dist.format;
+                 a.className = "label label-info";
+                 distributionList.appendChild(a);
+                 distributionList.appendChild(document.createTextNode(" "));
+            });
         }
 
         var row = document.createElement("a");
@@ -273,13 +306,20 @@ function showResults(searchResult) {
             ds.appendChild(descriptionElement);
         if (keyword !== undefined)
             ds.appendChild(kwElement);
+
         if (theme)
             ds.appendChild(themeElement);
-        if (landingPage !== undefined)
-            ds.appendChild(lpElement);
         if (modified) {
             ds.appendChild(document.createTextNode(" "));
             ds.appendChild(modifiedElement);
+        }
+        if (distributionList) {
+            ds.appendChild(document.createTextNode(" "));
+            ds.appendChild(distributionList);
+        }
+        if (landingPage) {
+           ds.appendChild(document.createTextNode(" "));
+           ds.appendChild(lpElement);
         }
 
         results.appendChild(row);
@@ -293,6 +333,7 @@ function doSearch() {
 
     console.log(urlstring);
 
+    // does an asynchronous call and calls showResults function.
     httpGetAsync(urlstring, showResults);
 }
 
@@ -313,19 +354,19 @@ function hitsPerPageController() {
         hitsSelectElement.onclick = function (event) {
             var hitsVal = parseInt(event.target.innerHTML);
             if (hitsVal) {
-                // The easiest thing is to reset the page controller
-                resultCursor.currentPage = 0;
-                resultCursor.from = 0;
-                resultCursor.size = hitsVal;
-                hitsChooseElement.innerHTML = hitsVal;
+                // The easiest thing is to reset the Result Cursor
+                resetResultCursor();
+                resultCursor.size = hitsVal; // set new size
+                hitsChooseElement.innerHTML = hitsVal; // show hits per page
+
                 doSearch();
             }
-        }
+        };
     }
 }
 
 // sets up sort controller
-function prepareSort() {
+function sortController() {
 
     var sortSelectElement = document.getElementById("sort.select");
     var sortChooseElement = document.getElementById("sort.choice");
@@ -358,8 +399,27 @@ function prepareSort() {
 
 }
 
+// Set up searchbar controller
+function searchController() {
+    var search = document.getElementById("search");
+    var dosearch = document.getElementById("dosearch");
 
+    if (dosearch)
+        dosearch.onclick = function (event) {
+            resetResultCursor();
+            doSearch();
+        };
 
+    if (search)
+        search.onkeypress = function (event) {
+            if (event.keyCode === 13) {
+                resetResultCursor();
+                doSearch();
+            }
+        };
+}
+
+// Set up page
 function showPage () {
 
 searchUrl = $('meta[name="dcatQueryService"]').attr('content');
@@ -383,25 +443,8 @@ console.log(pageLanguage);
 // First call to search
 httpGetAsync(searchUrl, showResults);
 
-var search = document.getElementById("search");
-var dosearch = document.getElementById("dosearch");
-
-if (dosearch)
-    dosearch.onclick = function (event) {
-        console.log("q: " + search.value);
-        from = 0;
-        doSearch();
-    };
-
-if (search)
-    search.onkeypress = function (event) {
-        if (event.keyCode === 13) {
-            from = 0;
-            doSearch();
-        }
-    };
-
-prepareSort();
+searchController();
+sortController();
 hitsPerPageController();
 
 }

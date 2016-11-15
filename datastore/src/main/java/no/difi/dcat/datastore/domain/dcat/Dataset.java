@@ -61,7 +61,7 @@ public class Dataset {
 
 	//dcat:distribution
 	//Norwegian: Datasett distribusjon
-	private List<Distribution> distributions;
+	private List<Distribution> distribution;
 
 	//dcat:conformsTo
 	//Norwegian: I samsvar med
@@ -108,11 +108,11 @@ public class Dataset {
 		this.id = id;
 	}
 
-	public List<Distribution> getDistributions() {
-		return distributions;
+	public List<Distribution> getDistribution() {
+		return distribution;
 	}
-	public void setDistributions(List<Distribution> distributions) {
-		this.distributions = distributions;
+	public void setDistribution(List<Distribution> distribution) {
+		this.distribution = distribution;
 	}
 
 	public Catalog getCatalog() {

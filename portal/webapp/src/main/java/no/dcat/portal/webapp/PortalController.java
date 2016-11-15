@@ -20,13 +20,10 @@ import javax.servlet.http.HttpSession;
 import java.net.URI;
 
 /**
-<<<<<<< HEAD
+
  * Delivers html pages to support the DCAT Portal application.
  *
-=======
- * Delivers html pages to support the DCAT Portal application
  * <p>
->>>>>>> FDK-105 : Added detail page.
  * Created by nodavsko on 12.10.2016.
  */
 @Controller
