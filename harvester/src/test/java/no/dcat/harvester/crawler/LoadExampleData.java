@@ -45,6 +45,12 @@ public class LoadExampleData {
     public void loadDatasetFromFile(String filename) {
         ClassLoader classLoader = getClass().getClassLoader();
 
+        //Load themes from url
+        SkosLoader sl = new SkosLoader();
+        String[] args = new String[1];
+        args[0] = "http://publications.europa.eu/mdr/resource/authority/data-theme/skos/data-theme-skos.rdf";
+        sl.main(args);
+
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", classLoader.getResource(filename).getFile(), "admin_user", "123456789");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
