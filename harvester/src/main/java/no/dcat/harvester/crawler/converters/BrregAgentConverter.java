@@ -118,10 +118,19 @@ public class BrregAgentConverter {
 
 	private void removeDuplicateProperties(Model existingModel, Model incomingModel, Property property) {
 		ResIterator incomingModelIterator = incomingModel.listResourcesWithProperty(property);
-		
+
+		final Property p = ResourceFactory.createProperty("http://www.w3.org/2005/Atom#href");
+
+		//logger.debug(property.toString());
 		while (incomingModelIterator.hasNext()) {
-			Resource existingResource = existingModel.getResource(incomingModelIterator.next().getURI());
+			Resource incomingResource =  incomingModelIterator.next();
+			/* TODO - fix this mess. Nodes are not found in merged model!
+			String uri = incomingResource.getProperty(p).getString();
+			Resource existingResource = existingModel.getResource(uri);
+			logger.debug("old:" +existingResource.getPropertyResourceValue(property)); //getProperty(property).getString());
+			logger.debug("new:" +incomingModel.getResource(uri).getPropertyResourceValue(property)); //.getProperty(property).getString());
 			existingResource.removeAll(property);
+			*/
 		}
 	}
 

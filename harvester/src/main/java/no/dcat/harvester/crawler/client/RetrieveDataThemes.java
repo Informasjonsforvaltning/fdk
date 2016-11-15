@@ -20,6 +20,7 @@ public class RetrieveDataThemes {
 
     public static final String INDEX_THEME = "theme";
     public static final String TYPE_DATA_THEME = "data-theme";
+    public static final int THEME_SEARCH_SIZE = 50;
     private final Client client;
 
     public RetrieveDataThemes(Elasticsearch elasticsearch) {
@@ -39,7 +40,7 @@ public class RetrieveDataThemes {
     public Map<String, DataTheme> getAllDataThemes() throws DataThemesNotLoadedException {
         Map<String, DataTheme> dataThemes = new HashMap<>();
 
-        SearchResponse response = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).execute().actionGet();
+        SearchResponse response = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).setSize(THEME_SEARCH_SIZE).execute().actionGet();
         SearchHits searchHits = response.getHits();
 
         if (searchHits.getTotalHits() == 0) {
