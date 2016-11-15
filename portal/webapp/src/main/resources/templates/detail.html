@@ -15,6 +15,7 @@
         <h1 th:text="${dataset.title.nb}" />
         <h2 th:text="${dataset.catalog.publisher.name}"/>
         <p th:text="${dataset.description.nb}"></p>
+        <a href="${dataset.landingPage}">..landingsside</a>
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -32,12 +33,48 @@
             </div>
             <div>
                 <h3>Konformitet</h3>
+                <dt th:text="${dataset.conformsTo}" />
             </div>
             <div>
                 <h3>Distribusjon</h3>
+                <span th:each="distribution : ${dataset.distributions}">
+                    <span th:text="'Tittel: ' + ${distribution.title.get('nb'}" />
+                    <span th:text="'Besrivelse: ' + ${distribution.description.get('nb'} + ', '" />
+                </span>
             </div>
             <div>
                 <h3>Kvalitet</h3>
+                <dl>Opphav
+                    <dt th:text="${dataset.provenance}"/>
+                </dl>
+            </div>
+            <div>
+                <h3>Øvrig info</h3>
+                <dl>Opprettet dato
+                    <dt th:text="${dataset.issued != null}  ? ${#dates.format(dataset.issued, 'yyyy-MMM-dd')} : ''" />
+                </dl>
+                <dl>Modifisert dato
+                    <dt th:text="${dataset.modified != null} ? ${#dates.format(dataset.modified, 'yyyy-MMM-dd')} : ''" />
+                </dl>
+                <dl>Språk
+                    <dt th:text="${dataset.language}"/>
+                </dl>
+                <dl>Temaen
+                    <dt th:each="theme : ${dataset.theme}" >
+                        <dt th:text="${theme.title.get('nb')}"/>
+                    </dt>
+                </dl>
+                <dl>Tidsperiode
+                    <dt th:each="periode : ${dataset.temporal}" >
+                        <dt th:text="'Fra: ' + ${dataset.startDate != null}  ? ${#dates.format(dataset.startDate, 'yyyy-MMM-dd')} : ''"/>
+                        <dt th:text="'Til: ' + ${dataset.endDate != null}  ? ${#dates.format(dataset.endDate, 'yyyy-MMM-dd')} : '' + ', '"/>
+                    </dt>
+                </dl>
+                <dl>Dekningsområde
+                    <dt th:each="omrade : ${dataset.spatial}" >
+                        <dt th:text="${omrade} + ', '"/>
+                    </dt>
+                </dl>
             </div>
         </div>
         <div class="col-lg-6">
@@ -51,12 +88,19 @@
             </div>
             <div>
                 <h3>Restriksjoner</h3>
+                <dt th:text="'Restriksjon: ' + ${dataset.accessRights}"/>
+                <dt th:each="kommentar : ${dataset.accessRightsComment}" >
+                    <dt th:text="${kommentar}"/>
+                </dt>
             </div>
             <div>
                 <h3>Formål</h3>
             </div>
             <div>
                 <h3>Relaterte</h3>
+                <dt th:each="relatert : ${dataset.references}" >
+                    <dt th:text="${relatert}"/>
+                </dt>
             </div>
         </div>
     </div>
