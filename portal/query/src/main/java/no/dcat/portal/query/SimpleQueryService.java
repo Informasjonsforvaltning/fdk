@@ -96,12 +96,27 @@ public class SimpleQueryService {
                 "match_all" : { }
              }*/
         } else {
+            String themeLanguage = "nb";
+            if (language.equals("en")) themeLanguage="en";
+
             //search = QueryBuilders.queryStringQuery(query);
+            /*
             search = QueryBuilders.multiMatchQuery(query,
                     "title" + "." + language,
                     "keyword" + "." + language,
                     "description" + "." + language,
-                    "publisher.name");
+                    "publisher.name",
+                    "theme.title" + "." + themeLanguage);
+*/
+            search = QueryBuilders.simpleQueryStringQuery(query)
+                    .analyzer("norwegian")
+                    .field("title" + "." + language)
+                    .field("keyword" + "." + language)
+                    .field("theme.title" + "." + themeLanguage)
+                    .field("description" + "." + language)
+                    .field("publisher.name");
+
+
             /*JSON: {
                 "query": {
                    "query_string": {
