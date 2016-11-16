@@ -14,6 +14,36 @@
 
     <dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- må være med for å kjøre i intellij -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!--<scope>provided</scope>-->
+		</dependency>
+
+		<!-- Nødvendig for konfigurasjon i openshift -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Nødvendig for å bruke configserver på openshift -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+
+		<!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
@@ -42,6 +72,19 @@
 
 	</dependencies>
 
+	<!-- Nødvendig for å brukes på openshift-->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Brixton.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -62,6 +105,64 @@
 	        </plugin>
         </plugins>
     </build>
+
+	<profiles>
+		<profile>
+			<id>Props on windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<filtering>true</filtering>
+						<directory>src/test-local/resources/</directory>
+						<includes>
+							<include>properties/*.*</include>
+							<include>application.yml</include>
+						</includes>
+					</resource>
+					<resource>
+						<filtering>true</filtering>
+						<directory>src/main/resources/</directory>
+					</resource>
+				</resources>
+
+				<!-- Docker image skal kun lages på Windows. -->
+				<plugins>
+					<plugin>
+						<groupId>com.spotify</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+		<profile>
+			<id>Include test-property files</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<testResources>
+					<testResource>
+						<filtering>true</filtering>
+						<directory>src/test/resources</directory>
+					</testResource>
+					<testResource>
+						<filtering>true</filtering>
+						<directory>src/test-local/resources/</directory>
+						<includes>
+							<include>properties/*.*</include>
+							<include>application.yml</include>
+						</includes>
+					</testResource>
+				</testResources>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
 
