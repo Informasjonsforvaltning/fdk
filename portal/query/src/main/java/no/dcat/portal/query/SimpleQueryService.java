@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -32,8 +29,8 @@ import java.net.UnknownHostException;
  */
 @RestController
 public class SimpleQueryService {
-    static private Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
-    static public Client client = null;
+    private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
+    public static Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
 
     @Value("${application.elasticsearchHost}")
@@ -55,6 +52,7 @@ public class SimpleQueryService {
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
      * @param from          The starting index of the sorted hits that is returned.
      * @param size          The number of hits that is returned.
+     * @param lang          The language of the query string. Used for analyzing the query-string.
      * @param sortfield     Defines that field that the search result shall be sorted on. Default is best match.
      * @param sortdirection Defines the direction of the sort, ascending or descending.
      * @return List of  elasticsearch records.
@@ -65,15 +63,24 @@ public class SimpleQueryService {
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
+                                         @RequestParam(value = "lang", defaultValue = "nb") String lang,
                                          @RequestParam(value = "sortfield", defaultValue = "") String sortfield,
-                                         @RequestParam(value = "sortdirection", defaultValue = "desc") String sortdirection
-    ) {
+                                         @RequestParam(value = "sortdirection", defaultValue = "desc") String sortdirection) {
 
-        //TODO: Pass user's language selection from client?
-        //For now we set the default language from a constant
-        String language = "*"; //DEFAULT_QUERY_LANGUAGE;
-        StringBuilder loggMsg = new StringBuilder().append("query: \"").append(query).append("\" from:").append(from).append(" size:").append(size).append(" language: ").append(language).append(" sortfield:").append(sortfield);
+
+        StringBuilder loggMsg = new StringBuilder()
+                .append("query: \"").append(query)
+                .append("\" from:").append(from)
+                .append(" size:").append(size)
+                .append(" lang:").append(lang)
+                .append(" sortfield:").append(sortfield)
+                .append(" sortdirection:").append(sortdirection);
+
         logger.debug(loggMsg.toString());
+
+        if (lang == null || "".equals(lang)) {
+            lang = "nb";
+        }
 
         if (from < 0) {
             return new ResponseEntity<String>("{\"error\": \"parameter error: from is less than zero\"}", HttpStatus.BAD_REQUEST);
@@ -96,8 +103,14 @@ public class SimpleQueryService {
                 "match_all" : { }
              }*/
         } else {
+
             String themeLanguage = "nb";
-            if (language.equals("en")) themeLanguage="en";
+            String analyzerLang  = "norwegian";
+
+            if ("en".equals(lang)) {
+                themeLanguage="en";
+                analyzerLang = "english";
+            }
 
             //search = QueryBuilders.queryStringQuery(query);
             /*
@@ -109,11 +122,11 @@ public class SimpleQueryService {
                     "theme.title" + "." + themeLanguage);
 */
             search = QueryBuilders.simpleQueryStringQuery(query)
-                    .analyzer("norwegian")
-                    .field("title" + "." + language)
-                    .field("keyword" + "." + language)
+                    .analyzer(analyzerLang)
+                    .field("title" + "." + lang)
+                    .field("keyword" + "." + lang)
                     .field("theme.title" + "." + themeLanguage)
-                    .field("description" + "." + language)
+                    .field("description" + "." + lang)
                     .field("publisher.name");
 
 
@@ -139,8 +152,12 @@ public class SimpleQueryService {
         } else {
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
             StringBuilder sbSortField = new StringBuilder();
-            if (!sortfield.equals("modified")) sbSortField.append(sortfield).append(".raw");
-            else sbSortField.append(sortfield);
+
+            if (!sortfield.equals("modified")) {
+                sbSortField.append(sortfield).append(".raw");
+            } else {
+                sbSortField.append(sortfield);
+            }
 
             response = client.prepareSearch("dcat")
                     .setTypes("dataset")
@@ -161,7 +178,7 @@ public class SimpleQueryService {
     /**
      * Retrieves the dataset record identified by the provided id.
      * @param id Id that identifies the dataset..
-     * @return Rekord for the retrieved dataset.
+     * @return the record (JSON) of the retrieved dataset.
      */
     @CrossOrigin
     @RequestMapping(value = "/detail", produces = "application/json")
@@ -179,12 +196,14 @@ public class SimpleQueryService {
         }
         logger.trace(String.format("Found dataset: %s", response.toString()));
 
-        if (jsonError != null) return jsonError;
+        if (jsonError != null) {
+            return jsonError;
+        }
 
         return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
     }
 
-    private ResponseEntity<String> initializeElasticsearchTransportClient() {
+    final private ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
 
         logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
@@ -199,7 +218,7 @@ public class SimpleQueryService {
         return null;
     }
 
-    public Client createElasticsearchTransportClient(String host, int port) {
+    final public Client createElasticsearchTransportClient(final String host, final int port) {
         client = null;
         try {
             InetAddress inetaddress = InetAddress.getByName(host);

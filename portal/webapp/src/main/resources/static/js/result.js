@@ -288,8 +288,10 @@ function showResults(searchResult) {
             });
         }
 
+        // reference to detail page
         var row = document.createElement("a");
         row.setAttribute('href', "detail?id=" + dataset._id);
+        row.target = "_blank";  // open in new page
         row.className = "row list-group-item dataset";
         // dataset
         var ds = document.createElement("div");
@@ -328,7 +330,12 @@ function showResults(searchResult) {
 }
 
 function doSearch() {
-    var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size ;
+    var urlstring = searchUrl
+        + "?q=" + search.value
+        +"&from="+resultCursor.from
+        +"&size="+resultCursor.size
+        +"&lang="+pageLanguage;
+
     if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
 
     console.log(urlstring);
