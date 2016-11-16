@@ -17,7 +17,7 @@
         <h1 th:text="${dataset.title.nb}" />
         <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}"/>
         <p th:text="${dataset.description.nb}"></p>
-        <a href="${dataset.landingPage}">..landingsside</a>
+        <a th:attr='href=${dataset.landingPage}'>..landingsside</a>
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -67,9 +67,9 @@
                     </dt>
                 </dl>
                 <dl>Tidsperiode
-                    <dt th:each="periode : ${dataset.temporal}" >
-                        <dt th:text="'Fra: ' + ${dataset.startDate != null}  ? ${#dates.format(dataset.startDate, 'yyyy-MM-dd')} : ''"/>
-                        <dt th:text="'Til: ' + ${dataset.endDate != null}  ? ${#dates.format(dataset.endDate, 'yyyy-MM-dd')} : '' + ', '"/>
+                    <dt th:each="period : ${dataset.temporal}" >
+                        <dt th:text="'Fra: ' + ${period.startDate != null}  ? ${#dates.format(period.startDate, 'yyyy-MM-dd')} : ''"/>
+                        <dt th:text="'Til: ' + ${period.endDate != null}  ? ${#dates.format(period.endDate, 'yyyy-MM-dd')} : '' + ', '"/>
                     </dt>
                 </dl>
                 <dl>Dekningsområde

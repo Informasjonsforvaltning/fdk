@@ -1,0 +1,87 @@
+{
+  "id": "http://data.brreg.no/datakatalog/dataset/2",
+"title": {
+"nb": "Enhetsregisteret",
+"en": "Central Coordinating Register for Legal Entities"
+},
+"description": {
+"nb": "Einingsregisteret samordnar opplysningar om næringslivet og offentlege etatar som finst i ulike offentlege register.I Enhetsregisteret finner du alle som er registrert for momspliktig virksomhet, har registrerte ansatte eller er med i Foretaksregisteret. Dessuten finner du mange næringsdrivende enkeltpersonforetak, foreninger og andre økonomiske enheter uten registreringsplikt, som har valgt å bli med i Enhetsregisteret på frivillig grunnlag. Registeret inneholder også alle enheter som er registrert i fylkesmennenes stiftelsesregistre og skattemanntallet for etterskuddspliktige.",
+"en": "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis."
+},
+"contactPoint": {
+"id": "http://data.brreg.no/datakatalog/kontaktpunkt/4",
+"email": "aas@brreg.no",
+"telephone": "+4775007500"
+},
+"keyword": {
+"nb": [
+"Organisasjonsnummer",
+"Bransje",
+"Roller",
+"Enhet",
+"Grunndata",
+"Enhetsnavn"
+]
+},
+"publisher": {
+"id": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+"name": "Brønnøysundregistrene"
+},
+"issued": "1999-12-03T00:00:00+01",
+"language": "http://publications.europa.eu/resource/authority/language/NOR",
+"landingPage": "http://data.brreg.no/oppslag/enhetsregisteret/enheter.xhtml",
+"theme": [
+{
+"id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+"code": "GOVE",
+"startUse": "2015-10-01",
+"title": {
+"nb": "Forvaltning og offentlig sektor",
+"en": "Government and public sector"
+},
+"conceptSchema": {
+"id": "http://publications.europa.eu/resource/authority/data-theme",
+"title": "Dataset types Named Authority List",
+"versioninfo": "20160921-0",
+"versionnumber": "20160921-0"
+}
+}
+],
+"catalog": {
+"id": "http://data.brreg.no/datakatalog/katalog/1",
+"title": {
+"nb": "Brønnøysundregistrene datakatalog"
+},
+"description": {
+"nb": "Katalog over datasett i Brønnøysundregistrene"
+},
+"publisher": {
+"id": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+"name": "Brønnøysundregistrene"
+},
+"themeTaxonomy": []
+},
+"distribution": [
+{
+"id": "http://data.brreg.no/datakatalog/distibusjon/12",
+"title": {},
+"description": {}
+}
+],
+"conformsTo": [
+"https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret"
+],
+"temporal": [
+{
+"startDate": "2001-07-03T02:00:00+02",
+"endDate": "2048-05-12T02:00:00+02"
+}
+],
+"spatial": [
+"http://sws.geonames.org/3144096/"
+],
+"accessRights": "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC",
+"accessRightsComment": [],
+"references": [],
+"provenance": "http://data.brreg.no/datakatalog/provinens/vedtak"
+}
