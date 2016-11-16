@@ -53,6 +53,16 @@ public class PortalConfiguration {
         return this.retrieveDatasetServiceUrl;
     }
 
+    /* application.queryServiceURL */
+    private String retrieveDatathemesServiceURL = "http://dummy.org/detail";
+    public void setRetrieveDatathemesServiceURL (String retrieveDatasetServiceURL) {
+        this.retrieveDatasetServiceURL = retrieveDatasetServiceURL;
+    }
+
+    public String getRetrieveDatathemesServiceURL() {
+        return this.retrieveDatasetServiceURL;
+    }
+
     public String getVersionInformation() {
         String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
         return versionInfo;

@@ -6,6 +6,7 @@ import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
@@ -21,11 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.net.URISyntaxException;
+import java.util.*;
 
 /**
  * Delivers html pages to support the DCAT Portal application.
@@ -63,6 +63,42 @@ public class PortalController {
         return "result"; // templates/result.html
     }
 
+    /**
+     *
+     * @return
+     */
+    @RequestMapping({"/theme"})
+    public ModelAndView theme() {
+        ModelAndView model = new ModelAndView("theme");
+        HttpClient httpClient = HttpClientBuilder.create().build();
+
+        URI uri = null;
+        try {
+            uri = new URIBuilder(buildMetadata.getRetrieveDatathemesServiceURL()).build();
+
+            logger.debug("Query for all themes");
+            HttpGet getRequest = new HttpGet(uri);
+
+            HttpResponse response = httpClient.execute(getRequest);
+
+            checkStatusCode(response);
+
+            String json = EntityUtils.toString(response.getEntity(), "UTF-8");
+
+            logger.debug(String.format("Found datathemes: %s", json));
+            // TODO: hvordan håndterer vi en liste av objekter.
+            //List<DataTheme> dataThemes = new Gson().fromJson(json, DataTheme.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // TODO: get datathemes.
+        List<DataTheme> dataThemes = new ArrayList<>();
+
+        model.addObject("themes", dataThemes);
+        return model;
+    }
     /**
      * Controller for getting the dataset corresponding to the provided id.
      *
@@ -151,6 +187,7 @@ public class PortalController {
 
                 if (altVal != null) {
                     map.put(language, altVal);
+                }
                 }
             }
         }

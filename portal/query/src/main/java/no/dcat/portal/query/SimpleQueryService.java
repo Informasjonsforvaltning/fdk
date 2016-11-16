@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
 
 
 /**
@@ -211,6 +212,13 @@ public class SimpleQueryService {
         }
 
         return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/themes", produces = "application/json")
+    public ResponseEntity<String> themes(@RequestParam(value = "id", defaultValue = "") String id) {
+        Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
     }
 
 
