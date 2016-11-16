@@ -139,13 +139,16 @@ public class PortalController {
                 langs.add("nn");
                 langs.add("en");
 
-                Object altVal = "";
+                Object altVal = null;
                 Iterator iter = langs.iterator();
                 while (iter.hasNext()) {
                     altVal = map.get(iter.next());
                     if (altVal != null) break;
                 }
-                map.put(language, altVal);
+
+                if(altVal != null) {
+                    map.put(language, altVal);
+                }
             }
         }
     }
