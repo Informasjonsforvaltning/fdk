@@ -47,20 +47,20 @@ public class BrregAgentConverter {
 	}
 
 	/**
-	 * TODO - must use resource stream
+	 * Applies the rules found in the referred SPARQL files for post processing of the official enhetsregisteret data.
 	 *
-	 * @param postProcessing
-	 * @return
+	 * @param postProcessing the postprocessing hook
+	 * @return the extracted model
 	 */
 	private Model convert(PostProcessingJena postProcessing) {
 		Model extractedModel = ModelFactory.createDefaultModel();
 		try {
-			File intermediary = new File("/tmp/brreg");
-			intermediary.mkdirs();
+			//File intermediary = new File("/tmp/brreg");
+			//intermediary.mkdirs();
 			
 			ClassLoader classLoader = BrregAgentConverter.class.getClassLoader();
-			File transforms = new File(classLoader.getResource("brreg/transforms").getFile());
-			File constructs = new File(classLoader.getResource("brreg/constructs").getFile());
+			//File transforms = new File(classLoader.getResource("brreg/transforms").getFile());
+			//File constructs = new File(classLoader.getResource("brreg/constructs").getFile());
 			
 			extractedModel = postProcessing
 					.mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00001.qr"), new Object())
