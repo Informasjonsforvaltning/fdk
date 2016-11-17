@@ -78,9 +78,14 @@ public class SimpleQueryService {
 
         logger.debug(loggMsg.toString());
 
-        if (lang == null || "".equals(lang)) {
-            lang = "nb";
+        String themeLanguage = "*";
+        String analyzerLang  = "norwegian";
+
+        if ("en".equals(lang)) {
+            //themeLanguage="en";
+            analyzerLang = "english";
         }
+        lang = "*"; // hardcode to search in all language fields
 
         if (from < 0) {
             return new ResponseEntity<String>("{\"error\": \"parameter error: from is less than zero\"}", HttpStatus.BAD_REQUEST);
@@ -104,13 +109,7 @@ public class SimpleQueryService {
              }*/
         } else {
 
-            String themeLanguage = "nb";
-            String analyzerLang  = "norwegian";
 
-            if ("en".equals(lang)) {
-                themeLanguage="en";
-                analyzerLang = "english";
-            }
 
             //search = QueryBuilders.queryStringQuery(query);
             /*
