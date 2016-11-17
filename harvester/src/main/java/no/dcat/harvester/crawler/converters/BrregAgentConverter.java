@@ -150,17 +150,16 @@ public class BrregAgentConverter {
 				if (officialProperty == null) {
 					// do nothing
 				} else {
-					logger.debug("publisher name is missing from dataset. Found " + officialProperty.getString() + " for resource " + incomingResource.getURI());
+					logger.debug("Publisher name: is missing from dataset. Found " + officialProperty.getString() + " which is added to dataset. for resource " + incomingResource.getURI());
 				}
 			} else {
 				if (officialProperty == null) {
 					// keep existing property
 				} else {
-					logger.debug("replaces " + oldProperty.getString() + " with " + officialProperty.getString() + " for resource " + incomingResource.getURI());
+					logger.debug("Publisher name: found " + oldProperty.getString() + " which is replaced with " + officialProperty.getString() + " for resource " + incomingResource.getURI());
+					existingResource.removeAll(property);
 				}
 			}
-
-			existingResource.removeAll(property);
 		}
 	}
 
