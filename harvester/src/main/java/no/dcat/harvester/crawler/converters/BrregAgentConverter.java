@@ -46,6 +46,12 @@ public class BrregAgentConverter {
 		}
 	}
 
+	/**
+	 * TODO - must use resource stream
+	 *
+	 * @param postProcessing
+	 * @return
+	 */
 	private Model convert(PostProcessingJena postProcessing) {
 		Model extractedModel = ModelFactory.createDefaultModel();
 		try {
@@ -98,11 +104,12 @@ public class BrregAgentConverter {
 			if (brregCache != null) {
 
 				String content = brregCache.get(url);
-				logger.debug(content);
+				logger.trace("[model_before_conversion] "+ content);
+
 				InputStream inputStream = new ByteArrayInputStream(content.getBytes());
 				Model incomingModel = convert(inputStream);
 
-				logger.debug(incomingModel.toString());
+				logger.trace("[model_after_conversion] "+incomingModel.toString());
 				removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
 
 				model.add(incomingModel);
@@ -116,31 +123,49 @@ public class BrregAgentConverter {
 		}	
 	}
 
+	/**
+	 * Removes duplicated properties in @existingModel@ if they are found in @incomingModel@.
+	 *
+	 * @param existingModel the existing model, loaded from url
+	 * @param incomingModel the incoming model with official properties collected from Enhetsregisteret
+	 * @param property the property to remove
+	 */
 	private void removeDuplicateProperties(Model existingModel, Model incomingModel, Property property) {
 		ResIterator incomingModelIterator = incomingModel.listResourcesWithProperty(property);
 
-		final Property p = ResourceFactory.createProperty("http://www.w3.org/2005/Atom#href");
-
-		//logger.debug(property.toString());
 		while (incomingModelIterator.hasNext()) {
 			// was
 			/*
 			Resource existingResource = existingModel.getResource(incomingModelIterator.next().getURI());
-			existingResource.removeAll(property); */
-
-
-			Resource incomingResource =  incomingModelIterator.next();
-			/* TODO - fix this mess. Nodes are not found in merged model!
-			String uri = incomingResource.getProperty(p).getString();
-			Resource existingResource = existingModel.getResource(uri);
-			logger.debug("old:" +existingResource.getPropertyResourceValue(property)); //getProperty(property).getString());
-			logger.debug("new:" +incomingModel.getResource(uri).getPropertyResourceValue(property)); //.getProperty(property).getString());
 			existingResource.removeAll(property);
 			*/
+
+			Resource incomingResource = incomingModelIterator.next();
+			Resource existingResource = existingModel.getResource(incomingResource.getURI());
+
+			Statement oldProperty = existingResource.getProperty(property);
+			Statement officialProperty = incomingResource.getProperty(property);
+
+			if (oldProperty == null) {
+				if (officialProperty == null) {
+					// do nothing
+				} else {
+					logger.debug("publisher name is missing from dataset. Found " + officialProperty.getString() + " for resource " + incomingResource.getURI());
+				}
+			} else {
+				if (officialProperty == null) {
+					// keep existing property
+				} else {
+					logger.debug("replaces " + oldProperty.getString() + " with " + officialProperty.getString() + " for resource " + incomingResource.getURI());
+				}
+			}
+
+			existingResource.removeAll(property);
 		}
 	}
 
 	private static void applyNamespaces(Model extractedModel) {
+
 		extractedModel.setNsPrefix("foaf", FOAF.getURI());
 	}
 }

@@ -102,25 +102,58 @@ public abstract class AbstractBuilder {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Extracts contactInformation from RDF as a vcard:Kind. If no attributes are found it returns null.
+	 *
+	 * @param resource the resource which contains the contact point resource
+	 * @return a instantiated Contact object.
+	 */
 	public static Contact extractContact(Resource resource) {
 		try {
 			Contact contact = new Contact();
-			Statement property = resource.getProperty(DCAT.contactPoint);
+			boolean hasAttributes = false;
+
+			final Statement property = resource.getProperty(DCAT.contactPoint);
 
 			if (property == null ) {
 				logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
 				return null;
 			}
 
-			Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+			final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
 
 			contact.setId(object.getURI());
-			contact.setFullname(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#fn")));
-			contact.setEmail(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail")).replace("mbox:", ""));
-			contact.setTelephone(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasTelephone")).replace("tel:",""));
+			final String fn = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#fn"));
+			if (fn != null) {
+				hasAttributes = true;
+				contact.setFullname(fn);
+			}
 
-			return contact;
+			final String email = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail"));
+			if (email != null) {
+				hasAttributes = true;
+				contact.setEmail(email.replace("mbox:", ""));
+			}
+
+			final String telephone = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasTelephone"));
+			if (telephone != null) {
+				hasAttributes = true;
+				contact.setTelephone(telephone.replace("tel:", ""));
+			}
+
+			// TODO - sets fullname, Contact should have a separate attribute perhaps?
+			final String organizationUnit = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#organization-unit"));
+			if (organizationUnit != null && contact.getFullname() == null) {
+				hasAttributes = true;
+				contact.setFullname(organizationUnit);
+			}
+
+			if (hasAttributes) {
+				return contact;
+			} else {
+				return null;
+			}
 		} catch (Exception e) {
 			logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
 		}
@@ -129,7 +162,8 @@ public abstract class AbstractBuilder {
 	}
 
 	/**
-	 * Extract period of time property from DCAT resource and map to model class
+	 * Extract period of time property from DCAT resource and map to model class.
+	 * 
 	 * @param resource DCAT RDF resource
 	 * @return List of period of time objects
 	 * TODO: implement extraction of time period name

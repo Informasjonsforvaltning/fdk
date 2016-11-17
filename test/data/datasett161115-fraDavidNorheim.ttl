@@ -187,7 +187,7 @@
         dct:description  "Katalog over datasett for Mattilsynet" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
         dct:title        "Mattilsynets datakatalog" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/45> , <http://data.brreg.no/datakatalog/dataset/35> ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/45>  ;
         foaf:homepage    <http://mattilsynet.no> .
 
 dct:hasVersion  a  owl:ObjectProperty .
@@ -335,13 +335,7 @@ dct:relation  a  owl:ObjectProperty .
         dcat:keyword                "Finansinntekter"@nb , "Kostnader"@nb , "Overføringer"@nb , "Finanskostnader"@nb , "Driftsresultat"@nb , "Balanse"@nb , "Resultat"@nb , "Egenkapital"@nb , "Inntekter"@nb ;
         dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
-<http://data.brreg.no/datakatalog/katalog/3>
-        a                dcat:Catalog ;
-        dct:description  "Katalog over datasett som inngår i brukerreise ny bedift" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
-        dct:title        "Brukerreise ny bedrift" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/> ;
-        foaf:homepage    <http://altinn.no> .
+
 
 <http://data.brreg.no/datakatalog/dataset/21>
         a                dcat:Dataset ;
