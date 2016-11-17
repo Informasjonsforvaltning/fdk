@@ -1,7 +1,9 @@
 package no.dcat.portal.webapp;
 
 import com.google.gson.Gson;
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
+import no.difi.dcat.datastore.domain.dcat.Distribution;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
@@ -16,17 +18,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpSession;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
-<<<<<<< HEAD
  * Delivers html pages to support the DCAT Portal application.
- *
-=======
- * Delivers html pages to support the DCAT Portal application
  * <p>
->>>>>>> FDK-105 : Added detail page.
+ * <p>
  * Created by nodavsko on 12.10.2016.
  */
 @Controller
@@ -61,6 +64,7 @@ public class PortalController {
 
     /**
      * Controller for getting the dataset corresponding to the provided id.
+     *
      * @param id The id that identifies the dataset.
      * @return ModelAndView for detail view.
      */
@@ -85,6 +89,8 @@ public class PortalController {
             logger.debug(String.format("Found dataset: %s", json));
             Dataset dataset = new Gson().fromJson(json, Dataset.class);
 
+            fillWithAlternativeLangValIfEmpty(dataset, "nb");
+
             model.addObject("dataset", dataset);
 
         } catch (Exception e) {
@@ -94,6 +100,57 @@ public class PortalController {
         }
 
         return model;
+    }
+
+    /**
+     * Loops over all properties with a language tagg, and if the specified language is not filled out, fills it
+     * with values from an other language.
+     */
+    private void fillWithAlternativeLangValIfEmpty(Dataset dataset, String lang) {
+        fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
+        fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
+
+        if (dataset.getTheme() != null) {
+            for (DataTheme dataTheme : dataset.getTheme()) {
+                fillPropWithAlternativeValIfEmpty(dataTheme.getTitle(), lang);
+            }
+        }
+
+        fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
+
+        if (dataset.getDistribution() != null) {
+            for (Distribution distribution : dataset.getDistribution()) {
+                fillPropWithAlternativeValIfEmpty(distribution.getTitle(), lang);
+                fillPropWithAlternativeValIfEmpty(distribution.getDescription(), lang);
+            }
+        }
+    }
+
+    /**
+     * If the property is not defined for the specified language, fill in with values from an other language.
+     *
+     */
+    private void fillPropWithAlternativeValIfEmpty(Map map, String language) {
+        if(map != null) {
+            Object nbVal = map.get(language);
+            if (nbVal == null) {
+                List langs = new ArrayList<String>();
+                langs.add("nb");
+                langs.add("nn");
+                langs.add("en");
+
+                Object altVal = null;
+                Iterator iter = langs.iterator();
+                while (iter.hasNext()) {
+                    altVal = map.get(iter.next());
+                    if (altVal != null) break;
+                }
+
+                if(altVal != null) {
+                    map.put(language, altVal);
+                }
+            }
+        }
     }
 
     private void checkStatusCode(HttpResponse response) {

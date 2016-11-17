@@ -3,6 +3,8 @@
 <head>
     <title>Detail view</title>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -10,10 +12,12 @@
 <body>
 
 <div class="container">
+    <a href="/" class="btn btn-info pull-right" role="button">Hjem</a>
     <div class="jumbotron">
         <h1 th:text="${dataset.title.nb}" />
-        <h2 th:text="${dataset.catalog.publisher.name}"/>
+        <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}"/>
         <p th:text="${dataset.description.nb}"></p>
+        <a th:attr='href=${dataset.landingPage}'>..landingsside</a>
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -31,12 +35,48 @@
             </div>
             <div>
                 <h3>Konformitet</h3>
+                <dt th:text="${dataset.conformsTo}" />
             </div>
             <div>
                 <h3>Distribusjon</h3>
+                <span th:each="distribution : ${dataset.distribution}">
+                    <span th:text="'Tittel: ' + ${distribution.title.get('nb')}" />
+                    <span th:text="'Besrivelse: ' + ${distribution.description.get('nb')} + ', '" />
+                </span>
             </div>
             <div>
                 <h3>Kvalitet</h3>
+                <dl>Opphav
+                    <dt th:text="${dataset.provenance}"/>
+                </dl>
+            </div>
+            <div>
+                <h3>Øvrig info</h3>
+                <dl>Opprettet dato
+                    <dt th:text="${dataset.issued != null}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''" />
+                </dl>
+                <dl>Modifisert dato
+                    <dt th:text="${dataset.modified != null} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" />
+                </dl>
+                <dl>Språk
+                    <dt th:text="${dataset.language}"/>
+                </dl>
+                <dl>Temaen
+                    <dt th:each="theme : ${dataset.theme}" >
+                        <dt th:text="${theme.title.get('nb')}"/>
+                    </dt>
+                </dl>
+                <dl>Tidsperiode
+                    <dt th:each="period : ${dataset.temporal}" >
+                        <dt th:text="'Fra: ' + ${period.startDate != null}  ? ${#dates.format(period.startDate, 'yyyy-MM-dd')} : ''"/>
+                        <dt th:text="'Til: ' + ${period.endDate != null}  ? ${#dates.format(period.endDate, 'yyyy-MM-dd')} : '' + ', '"/>
+                    </dt>
+                </dl>
+                <dl>Dekningsområde
+                    <dt th:each="omrade : ${dataset.spatial}" >
+                        <dt th:text="${omrade} + ', '"/>
+                    </dt>
+                </dl>
             </div>
         </div>
         <div class="col-lg-6">
@@ -50,12 +90,19 @@
             </div>
             <div>
                 <h3>Restriksjoner</h3>
+                <dt th:text="'Restriksjon: ' + ${dataset.accessRights}"/>
+                <dt th:each="kommentar : ${dataset.accessRightsComment}" >
+                    <dt th:text="${kommentar}"/>
+                </dt>
             </div>
             <div>
                 <h3>Formål</h3>
             </div>
             <div>
                 <h3>Relaterte</h3>
+                <dt th:each="relatert : ${dataset.references}" >
+                    <dt th:text="${relatert}"/>
+                </dt>
             </div>
         </div>
     </div>

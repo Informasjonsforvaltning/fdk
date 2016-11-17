@@ -18,8 +18,8 @@
    overflow: hidden;
    text-overflow: ellipsis;
    display: -webkit-box;
-   line-height: 1em;     /* fallback */
-   max-height: 3em;      /* fallback */
+   line-height: 120%; //1em;     /* fallback */
+   max-height: 360%; // 3em;      /* fallback */
    -webkit-line-clamp: 3; /* number of lines to show */
    -webkit-box-orient: vertical;
 }
@@ -183,7 +183,7 @@
                 <!-- search result -->
                 <div id="datasets" class="col-sm-8 list-group">
 
-                    <a class="row list-group-item dataset" href="#"><strong><span th:text="#{result.waiting}">Henter data ...</span></strong></a>
+                    <a class="row list-group-item dataset" href="#"><strong><span id="search.info" th:text="#{result.waiting}">Henter data ...</span></strong></a>
 
                 </div>
             </div>

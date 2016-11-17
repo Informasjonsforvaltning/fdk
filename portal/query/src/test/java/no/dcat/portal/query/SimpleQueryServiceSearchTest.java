@@ -1,3 +1,4 @@
+
 package no.dcat.portal.query;
 
 import org.elasticsearch.action.ListenableActionFuture;
@@ -22,7 +23,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing SimpleQueryService.
+ * Class for testing detail resr API in SimpleQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleQueryServiceSearchTest {
@@ -36,7 +37,6 @@ public class SimpleQueryServiceSearchTest {
         client = mock(Client.class);
         populateMock();
         sqs.client = client;
-
     }
 
     /**
@@ -44,9 +44,13 @@ public class SimpleQueryServiceSearchTest {
      */
     @Test
     public void testElasticSearchIsCalledWithCorrectParameters() {
-        ResponseEntity<String> actual =  sqs.search("query", 1, 10, "tema.nb", "ascending");
+        ResponseEntity<String> actual =  sqs.search("query", 1, 10, "nb", "tema.nb", "ascending");
 
-        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10)).addSort("tema.nb.raw", SortOrder.ASC);
+        verify(client.prepareSearch("dcat")
+                .setTypes("dataset")
+                .setQuery(any(QueryBuilder.class))
+                .setFrom(1).setSize(10))
+                .addSort("tema.nb.raw", SortOrder.ASC);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
@@ -55,7 +59,7 @@ public class SimpleQueryServiceSearchTest {
      */
     @Test
     public void testElasticSearchIsCalledWithCorrectParametersDefaultDirection() {
-        ResponseEntity<String> actual =  sqs.search("query", 1, 10, "", "");
+        ResponseEntity<String> actual =  sqs.search("query", 1, 10, "nb", "", "");
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10), never()).addSort("", SortOrder.DESC);
@@ -68,7 +72,7 @@ public class SimpleQueryServiceSearchTest {
     @Test
     public void return400IfFromIsBelowZero() {
         SimpleQueryService sqs = new SimpleQueryService();
-        ResponseEntity<String> actual =  sqs.search("", -10, 1000, "", "");
+        ResponseEntity<String> actual =  sqs.search("", -10, 1000, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
@@ -79,7 +83,7 @@ public class SimpleQueryServiceSearchTest {
     @Test
     public void return400IfSizeIsLargerThan100() {
         SimpleQueryService sqs = new SimpleQueryService();
-        ResponseEntity<String> actual =  sqs.search("", 10, 101, "", "");
+        ResponseEntity<String> actual =  sqs.search("", 10, 101, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
@@ -106,4 +110,5 @@ public class SimpleQueryServiceSearchTest {
 
         when(client.prepareSearch("dcat")).thenReturn(builder);
     }
+
 }

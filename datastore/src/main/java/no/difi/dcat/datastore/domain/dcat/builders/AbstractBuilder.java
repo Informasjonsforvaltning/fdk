@@ -117,7 +117,7 @@ public abstract class AbstractBuilder {
 
 			contact.setId(object.getURI());
 			contact.setFullname(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#fn")));
-			contact.setEmail(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail")).replace("mailto:", ""));
+			contact.setEmail(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail")).replace("mbox:", ""));
 			contact.setTelephone(extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasTelephone")).replace("tel:",""));
 
 			return contact;
@@ -180,11 +180,13 @@ public abstract class AbstractBuilder {
 		try {
 			Publisher publisher = new Publisher();
 			Statement property = resource.getProperty(DCTerms.publisher);
-			Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
-			publisher.setId(object.getURI());
-			publisher.setName(extractAsString(object, FOAF.name));
-			
-			return publisher;
+			if (property != null) {
+				Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+				publisher.setId(object.getURI());
+				publisher.setName(extractAsString(object, FOAF.name));
+
+				return publisher;
+			}
 		} catch (Exception e) {
 			logger.warn("Error when extracting property {} from resource {}", DCTerms.publisher, resource.getURI(), e);
 		}
