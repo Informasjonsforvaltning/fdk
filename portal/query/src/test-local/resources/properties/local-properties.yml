@@ -1,9 +1,15 @@
+logging:
+  level.: ERROR
+  level.no.brreg: DEBUG
+  level.org.springframework: ERROR
+---
 spring:
     profiles: docker
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
 ---
+#Utv-miljø lokalt på egen PC
 spring:
     profiles: development
 application:

@@ -1,3 +1,4 @@
+
 package no.dcat.portal.query;
 
 import org.elasticsearch.action.ListenableActionFuture;
@@ -109,4 +110,5 @@ public class SimpleQueryServiceSearchTest {
 
         when(client.prepareSearch("dcat")).thenReturn(builder);
     }
+
 }

@@ -12,3 +12,4 @@ logs/
 /test/elasticsearch-2.4.1/logs/
 /test/lib/
 /portal/webapp/phantomjsdriver.log
+/portal/phantomjsdriver.log
