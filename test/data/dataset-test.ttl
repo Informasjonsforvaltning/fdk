@@ -78,6 +78,11 @@
         dct:identifier  "870917732" ;
         foaf:name       "Oljedirektoratet" .  
         
+<http://data.brreg.no/enhetsregisteret/enhet/972417807>
+        a               foaf:Agent ;
+        dct:identifier  "972417807" ;
+        foaf:name       "Finansdepartementet" . 
+        
 <http://data.brreg.no/enhetsregisteret/enhet/974761076>
         a               foaf:Agent ;
         dct:identifier  "974761076" ;
@@ -127,7 +132,13 @@
         a                        vcard:Organization ;
         vcard:hasEmail           <mbox:aas@brreg.no> ;
         vcard:hasTelephone       <tel:+4775007500> ;
-        vcard:organization-unit  "AAS" .      
+        vcard:organization-unit  "AAS" . 
+        
+<http://data.brreg.no/datakatalog/kontaktpunkt/5>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mbox:postmottak@mattilsynet.no> ;
+        vcard:hasTelephone       <tel:+4722400000> ;
+        vcard:organization-unit  "Mattilsynet" .              
         
 <http://data.brreg.no/datakatalog/distibusjon/3>	
         a                        dcat:Distribution ;
@@ -167,7 +178,7 @@
         dct:description  "Katalog over datasett som inngår i brukerreise ny bedift" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
         dct:title        "Brukerreise ny bedrift" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/26> , <http://data.brreg.no/datakatalog/dataset/27> , <http://data.brreg.no/datakatalog/dataset/28> , <http://data.brreg.no/datakatalog/dataset/29> , <http://data.brreg.no/datakatalog/dataset/30> ,  <http://data.brreg.no/datakatalog/dataset/31>  , <http://data.brreg.no/datakatalog/dataset/32> , <http://data.brreg.no/datakatalog/dataset/33> , <http://data.brreg.no/datakatalog/dataset/34> , <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/36> , <http://data.brreg.no/datakatalog/dataset/37> , <http://data.brreg.no/datakatalog/dataset/38> , <http://data.brreg.no/datakatalog/dataset/39> , <http://data.brreg.no/datakatalog/dataset/40> , <http://data.brreg.no/datakatalog/dataset/41> , <http://data.brreg.no/datakatalog/dataset/42>  ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/26> , <http://data.brreg.no/datakatalog/dataset/27> , <http://data.brreg.no/datakatalog/dataset/28> , <http://data.brreg.no/datakatalog/dataset/29> , <http://data.brreg.no/datakatalog/dataset/30> ,  <http://data.brreg.no/datakatalog/dataset/31>  , <http://data.brreg.no/datakatalog/dataset/32> , <http://data.brreg.no/datakatalog/dataset/33> , <http://data.brreg.no/datakatalog/dataset/34> , <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/36> , <http://data.brreg.no/datakatalog/dataset/37> , <http://data.brreg.no/datakatalog/dataset/38> , <http://data.brreg.no/datakatalog/dataset/39> , <http://data.brreg.no/datakatalog/dataset/40> , <http://data.brreg.no/datakatalog/dataset/41> , <http://data.brreg.no/datakatalog/dataset/43> ,<http://data.brreg.no/datakatalog/dataset/44>  ;
         foaf:homepage    <http://altinn.no> .
 
 <http://data.brreg.no/datakatalog/katalog/4>
@@ -183,20 +194,34 @@
         dct:description  "Katalog over datasett for Mattilsynet" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
         dct:title        "Mattilsynets datakatalog" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/45>  ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/42> , <http://data.brreg.no/datakatalog/dataset/45> , <http://data.brreg.no/datakatalog/dataset/65> , <http://data.brreg.no/datakatalog/dataset/72> ;
         foaf:homepage    <http://mattilsynet.no> .
 	dct:hasVersion  a  owl:ObjectProperty .
 	
 <http://data.brreg.no/datakatalog/katalog/6>
         a                dcat:Catalog ;
-        dct:description  "Katalog over testdata" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
+        dct:description  "Katalog over datasett for Mattilsynet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971527412> ;
         dct:title        "Test datakatalog" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/43> ,<http://data.brreg.no/datakatalog/dataset/44> , <http://data.brreg.no/datakatalog/dataset/49> , <http://data.brreg.no/datakatalog/dataset/50> , <http://data.brreg.no/datakatalog/dataset/51> , <http://data.brreg.no/datakatalog/dataset/52> , <http://data.brreg.no/datakatalog/dataset/53> , <http://data.brreg.no/datakatalog/dataset/54> , <http://data.brreg.no/datakatalog/dataset/55> , <http://data.brreg.no/datakatalog/dataset/56> , <http://data.brreg.no/datakatalog/dataset/57> , <http://data.brreg.no/datakatalog/dataset/58> , <http://data.brreg.no/datakatalog/dataset/59> , <http://data.brreg.no/datakatalog/dataset/60> , <http://data.brreg.no/datakatalog/dataset/61> , <http://data.brreg.no/datakatalog/dataset/62> , <http://data.brreg.no/datakatalog/dataset/63> , <http://data.brreg.no/datakatalog/dataset/64> , <http://data.brreg.no/datakatalog/dataset/65> , <http://data.brreg.no/datakatalog/dataset/66> , <http://data.brreg.no/datakatalog/dataset/67> , <http://data.brreg.no/datakatalog/dataset/68> , <http://data.brreg.no/datakatalog/dataset/69> , <http://data.brreg.no/datakatalog/dataset/70> , <http://data.brreg.no/datakatalog/dataset/71> , <http://data.brreg.no/datakatalog/dataset/72> , <http://data.brreg.no/datakatalog/dataset/73> , <http://data.brreg.no/datakatalog/dataset/74> , <http://data.brreg.no/datakatalog/dataset/75> , <http://data.brreg.no/datakatalog/dataset/76> , <http://data.brreg.no/datakatalog/dataset/77> , <http://data.brreg.no/datakatalog/dataset/78> , <http://data.brreg.no/datakatalog/dataset/79> , <http://data.brreg.no/datakatalog/dataset/80> , <http://data.brreg.no/datakatalog/dataset/81> , <http://data.brreg.no/datakatalog/dataset/82>, <http://data.brreg.no/datakatalog/dataset/83>, <http://data.brreg.no/datakatalog/dataset/84>, <http://data.brreg.no/datakatalog/dataset/85>, <http://data.brreg.no/datakatalog/dataset/86>, <http://data.brreg.no/datakatalog/dataset/87>, <http://data.brreg.no/datakatalog/dataset/88>, <http://data.brreg.no/datakatalog/dataset/89> , <http://data.brreg.no/datakatalog/dataset/90>  ;
-        foaf:homepage    <http://mattilsynet.no> .
-	dct:hasVersion  a  owl:ObjectProperty .	
-        
-
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/52> , <http://data.brreg.no/datakatalog/dataset/53> , <http://data.brreg.no/datakatalog/dataset/54> , <http://data.brreg.no/datakatalog/dataset/55> , <http://data.brreg.no/datakatalog/dataset/57> , <http://data.brreg.no/datakatalog/dataset/58> , <http://data.brreg.no/datakatalog/dataset/59> , <http://data.brreg.no/datakatalog/dataset/60> , <http://data.brreg.no/datakatalog/dataset/61> , <http://data.brreg.no/datakatalog/dataset/62> , <http://data.brreg.no/datakatalog/dataset/63> , <http://data.brreg.no/datakatalog/dataset/64>  , <http://data.brreg.no/datakatalog/dataset/66> , <http://data.brreg.no/datakatalog/dataset/67> , <http://data.brreg.no/datakatalog/dataset/68> , <http://data.brreg.no/datakatalog/dataset/69> , <http://data.brreg.no/datakatalog/dataset/70> , <http://data.brreg.no/datakatalog/dataset/71>  , <http://data.brreg.no/datakatalog/dataset/73> , <http://data.brreg.no/datakatalog/dataset/74> , <http://data.brreg.no/datakatalog/dataset/75> , <http://data.brreg.no/datakatalog/dataset/76> , <http://data.brreg.no/datakatalog/dataset/77> , <http://data.brreg.no/datakatalog/dataset/79> , <http://data.brreg.no/datakatalog/dataset/80> , <http://data.brreg.no/datakatalog/dataset/83>, <http://data.brreg.no/datakatalog/dataset/84>, <http://data.brreg.no/datakatalog/dataset/85>, <http://data.brreg.no/datakatalog/dataset/86>, <http://data.brreg.no/datakatalog/dataset/87> , <http://data.brreg.no/datakatalog/dataset/89> , <http://data.brreg.no/datakatalog/dataset/90>  ;
+        foaf:homepage    <http://brreg.no> .
+		      
+<http://data.brreg.no/datakatalog/katalog/7>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett Stavanger kommune" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/939508295> ;
+        dct:title        "Test datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/49> , <http://data.brreg.no/datakatalog/dataset/51> , <http://data.brreg.no/datakatalog/dataset/81> , <http://data.brreg.no/datakatalog/dataset/82> , <http://data.brreg.no/datakatalog/dataset/88>  ;
+        foaf:homepage    <http://www.stavanger.kommune.no/> .
+	
+<http://data.brreg.no/datakatalog/katalog/8>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett for Norsk kulturråd" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971527412> ;
+        dct:title        "Test datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/50> , <http://data.brreg.no/datakatalog/dataset/56> , <http://data.brreg.no/datakatalog/dataset/78>  ;
+        foaf:homepage    <www.kulturrad.no/> .
+	
 <http://data.brreg.no/datakatalog/dataset/1>
         a                        dcat:Dataset ;
         dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
@@ -393,7 +418,8 @@
         dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
         dct:spatial              <http://sws.geonames.org/3144096/> ;
         dct:title                "Jegerregisteret"@nb ;
-        dcat:keyword             "Lisensjeger"@nb , "Personopplysninger"@nb , "Jaktår"@nb , "Jeger"@nb , "Lisensfelling"@nb , "Jegeravgift"@nb .
+        dcat:keyword             "Lisensjeger"@nb , "Personopplysninger"@nb , "Jaktår"@nb , "Jeger"@nb , "Lisensfelling"@nb , "Jegeravgift"@nb ;
+        dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/AGRI> .
        
 <http://data.brreg.no/datakatalog/dataset/12>
         a                  dcat:Dataset ;
@@ -662,6 +688,7 @@
         dct:provenance   <http://data.brreg.no/datakatalog/provinens/bruker> ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
         dct:title        "Registrere ny næringsmiddelvirksomhet"@nb ;
+        dcat:contactPoint <http://data.brreg.no/datakatalog/kontaktpunkt/5> ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 	adms:identifier  a  owl:ObjectProperty .
 	dct:identifier  a  owl:DatatypeProperty .
@@ -758,7 +785,7 @@
          dct:identifier   "45" ;
          dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
          dct:title        "Matvaretabellen"@nb , "Matvaretabellen"@en ;
-        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
         
 <http://data.brreg.no/datakatalog/dataset/46>
 	a                dcat:Dataset ;
@@ -772,7 +799,7 @@
 	a                dcat:Dataset ;
 	dct:description  "Husbankens statistikkbank er et selvbetjent system der du selv kan hente ut ditt egen statistikk. Her vil du finne oppdaterte tall for forbruk av Husbankens ordninger og du selv kan hente ut din egen statistikk."@nb ;
 	dct:identifier   "47" ;
-	dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
+	dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/942114184> ;
 	dct:title        "Husbankens statistikkbank"@nb ;
 	dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/ECON> .
 
@@ -839,7 +866,6 @@
 	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/971277882> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
 	dct:title                "Norsk bistand i tall - visning pr sektor"@nb ;
-	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
 	dcat:keyword             "bistand" ;
 	dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
 
@@ -847,12 +873,11 @@
 	a                        dcat:Dataset ;
 	dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
 	dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
-	dct:description          "Sektorvis visning over all norsk offentlig bistand fra 1960 til siste kalenderår."@nb ;
+	dct:description          "Meteorologisk institutt sine data og produkter er fritt tilgjengelig gjennom ulike tjenester og i ulike format. Eksempel på værdata som du finner tilgjengelig fra Meteorologisk institutt er værvarsler, klimadata og norske radarbilder."@nb ;
 	dct:identifier           "54" ;
 	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/971274042> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
 	dct:title                "Værdata fra Meteorologisk institutt"@nb ;
-	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
 	dcat:keyword             "værvarsel" ;
 	dct:modified             "2011-09-19"^^xsd:date ;
 	dcat:landingPage         <http://www.met.no/?module=Articles%3Baction%3DArticle.publicShow%3BID%3D620> ;
@@ -965,7 +990,6 @@
 	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/972417807> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
 	dct:title                "Revidert statsbudsjett 2016"@nb ;
-	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
 	dcat:keyword             "budsjett" , "statsbudsjett" , "revidert statsbudsjett 2016" ;
 	dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/ECON> .
 
@@ -1006,7 +1030,7 @@
 	dct:spatial              <http://sws.geonames.org/3144096/> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
 	dct:title                "Vannverk - Vann levert til andre"@nb ;
-	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/5> ;
 	dcat:keyword             "drikkevann" , "vannleveranser" , "behandlingsanlegg" ;
 	dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
 
@@ -1107,6 +1131,7 @@
 	dct:description          "Datasettene gir oversikt over utvalgte data om vannverk som er registrert hos Mattilsynet. Informasjonen er meldt inn av vannverkene gjennom søknadsbehandlinger eller ved annen innrapportering til Mattilsynet."@nb ;
 	dct:identifier           "72" ;
 	dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/5> ;
 	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
 	dct:title                "Vannverk - transportsystem"@nb ;
 	dcat:keyword             "drikkevann" , "ledningsnett" , "vannverk" , "vanntransportsystem" ;
@@ -1168,25 +1193,25 @@
 	a                        dcat:Dataset ;
 	dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
 	dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
-	dct:description          "Sektorvis visning over all norsk offentlig bistand fra 1960 til siste kalenderår."@en ;
+	dct:description          "Kartlegging av internasjonalisering i videregående opplæring (2011) er en kvantitativ internettbasert spørreundersøkelse som ble sendt ut til alle videregående skoler i Norge våren 2011."@nb ;
 	dct:identifier           "77" ;
-	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/971277882> ;
+	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/986339523> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
-	dct:title                "Norsk bistand i tall - visning pr sektor"@en ;
-	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
-	dcat:keyword             "bistand" ;
+	dct:title                "Kartlegging av internasjonalisering i videregående opplæring (2011)"@nb ;
+	dcat:keyword             "utdanning" , "internasjonalisering" , "mobilitet" , "videregående opplæring" , "skolesamarbeid" ;
+	dct:modified             "2014-11-05"^^xsd:date ;
 	dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/INTR> .
 
 <http://data.brreg.no/datakatalog/dataset/78>
 	a                        dcat:Dataset ;
 	dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
 	dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
-	dct:description          "Europeana.eu fungerer som et grensesnitt til over 40 millioner bøker, malerier, filmer, gjenstander og arkivmateriale fra hele Europa."@nn ;
+	dct:description          "Europeana.eu fungerer som et grensesnitt til over 40 millioner bøker, malerier, filmer, gjenstander og arkivmateriale fra hele Europa."@nb ;
 	dct:identifier           "78" ;
 	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/971527412> ;
 	dct:spatial              <http://sws.geonames.org/3144096/> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
-	dct:title                "Norsk kulturråd"@nn ;
+	dct:title                "Europeana API"@nb ;
 	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
 	dcat:keyword             "kart" , "kultur" , "kulturarv" , "foto" , "kunst"  ;
 	dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/INTR> .
