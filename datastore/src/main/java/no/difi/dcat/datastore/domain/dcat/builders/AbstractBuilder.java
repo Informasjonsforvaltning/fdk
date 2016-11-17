@@ -163,7 +163,7 @@ public abstract class AbstractBuilder {
 
 	/**
 	 * Extract period of time property from DCAT resource and map to model class.
-	 * 
+	 *
 	 * @param resource DCAT RDF resource
 	 * @return List of period of time objects
 	 * TODO: implement extraction of time period name
