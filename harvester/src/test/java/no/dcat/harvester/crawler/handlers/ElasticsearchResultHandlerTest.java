@@ -1,7 +1,13 @@
 package no.dcat.harvester.crawler.handlers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
@@ -92,14 +98,40 @@ public class ElasticsearchResultHandlerTest {
 		assertTrue(healthResponse.getStatus() != null);
 	}
 
-	@Test
-	public void testCrawlingIndexesToElasticsearch() {
+	private String theme1 = "{\n" +
+			"  \"id\": \"http://publications.europa.eu/resource/authority/data-theme/SOCI\",\n" +
+			"  \"code\": \"SOCI\",\n" +
+			"  \"startUse\": \"2015-10-01\",\n" +
+			"  \"title\": {\n" +
+			"    \"nb\": \"Befolkning og samfunn\",\n" +
+			"    \"en\": \"Population and society\"\n" +
+			"  },\n" +
+			"  \"conceptSchema\": {\n" +
+			"    \"id\": \"http://publications.europa.eu/resource/authority/data-theme\",\n" +
+			"    \"title\": \"Dataset types Named Authority List\",\n" +
+			"    \"versioninfo\": \"20160921-0\",\n" +
+			"    \"versionnumber\": \"20160921-0\"\n" +
+			"  }\n" +
+			"}";
 
+	/**
+	 * Tests if indexWithElasticsearch.
+	 */
+	@Test
+	public void testCrawlingIndexesToElasticsearchIT() {
+		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
+		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("npolar.jsonld").getFile(), "tester",
 				"123456789");
-
 
 		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0);
 		handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client));

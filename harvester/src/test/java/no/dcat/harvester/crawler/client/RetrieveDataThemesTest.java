@@ -17,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -63,6 +64,7 @@ public class RetrieveDataThemesTest {
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
         when(client.prepareSearch(anyString())).thenReturn(builder);
         when(builder.setTypes(anyString())).thenReturn(builder);
+        when(builder.setSize(anyInt())).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
         return elasticsearch;
     }

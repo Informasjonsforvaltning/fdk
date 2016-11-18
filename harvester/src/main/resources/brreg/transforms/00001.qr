@@ -12,9 +12,9 @@ delete{
 
     ?a a foaf:Agent .
 
-    ?a <http://www.w3.org/2005/Atomlink> [
-    <http://www.w3.org/2005/Atomhref> ?uri ;
-    <http://www.w3.org/2005/Atomrel> "self"
+    ?a <http://www.w3.org/2005/Atom#link> [
+    <http://www.w3.org/2005/Atom#href> ?uri ;
+    <http://www.w3.org/2005/Atom#rel> "self"
     ] .
 
 
