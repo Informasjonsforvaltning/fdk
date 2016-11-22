@@ -20,6 +20,13 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<scm>
+		<url>https://github.com/Altinn/fdk</url>
+		<connection>scm:git:git://github.com/Altinn/fdk.git</connection>
+		<!-- bruker extmargus brukernavn tils en fellesbruker blitt opprettet -->
+		<developerConnection>scm:git:MarcusGustafson74@github.com:Altinn/fdk.git</developerConnection>
+	</scm>
+
 	<!-- BR parent pom for Spring Boot 1.4.0. Tar med Sonar-konfig -->
 	<parent>
 		<groupId>no.brreg.felles</groupId>
