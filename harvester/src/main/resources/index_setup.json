@@ -105,7 +105,7 @@
           },
           "code": {
             "type": "string",
-            "index": "analyzed"
+            "index": "not_analyzed"
           },
           "startUse": {
             "type": "string",

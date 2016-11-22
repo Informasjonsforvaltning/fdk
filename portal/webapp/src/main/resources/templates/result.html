@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
+    <meta name="theme" th:content="${session.theme}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
     <style>
 .publisher {
@@ -88,7 +89,7 @@
             <!-- Input  -->
             <input id="search" aria-labelledby="searchLarge" type="search"
                       class="form-control form-control-noleft form-control-withBtn"
-                   value="" th:attr="placeholder=#{query.intro}"/>
+                      th:attr="placeholder=#{query.intro}, value=${query}"/>
 
             <!-- Search buttton -->
             <div class="input-group-btn">

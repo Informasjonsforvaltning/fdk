@@ -330,13 +330,14 @@ function showResults(searchResult) {
 }
 
 function doSearch() {
-    var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
+    var theme = $('meta[name="theme"]').attr('content');
 
-    if (sortField) {
-        urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
-    }
-
+    var urlstring = searchUrl + "?q=" + search.value + "&from="+resultCursor.from +"&size="+resultCursor.size ;
+    if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+    if (theme && theme !== "") urlstring += "&theme=" + theme;
     console.log(urlstring);
+
+    $('meta[name="theme"]').attr("content", "");
 
     // does an asynchronous call and calls showResults function.
     httpGetAsync(urlstring, showResults);
@@ -446,7 +447,7 @@ function showPage () {
     console.log(pageLanguage);
 
     // First call to search
-    httpGetAsync(searchUrl, showResults);
+doSearch();
 
     searchController();
     sortController();

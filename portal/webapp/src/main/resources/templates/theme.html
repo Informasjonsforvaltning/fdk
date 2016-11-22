@@ -76,31 +76,36 @@
         </nav>
     </header>
 
-    <!-- Søkefelt -->
-    <div class="form-group a-form-group">
-        <div class="input-group input-group-large">
+    <form class="site-search" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
+        <div class="form-group a-form-group  col-sm-10">
+            <div class="input-group  col-sm-10">
 
-            <!-- Label -->
-            <label for="search" id="searchLarge">
-                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
-            </label>
+                <label for="search" id="searchLarge">
+                    <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
+                </label>
 
-            <!-- Input  -->
-            <input id="search" aria-labelledby="searchLarge" type="search"
-                   class="form-control form-control-noleft form-control-withBtn"
-                   value="" th:attr="placeholder=#{query.intro}"/>
-
-            <!-- Search buttton -->
-            <div class="input-group-btn">
-                <button id="dosearch" class="btn btn-primary" type="button">
-                    <i class="material-icons a-input-icon"><span class="sr-only" th:text="#{query.do}">Utfør søk</span><span class="glyphicon glyphicon-search"></span></i>
-                </button>
+                <div class="custom-search-input  col-sm-10">
+                    <div class="input-group col-sm-10">
+                        <input type="text" class="form-control" placeholder="#" th:attr="placeholder=#{query.intro}" th:field="*{q}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <span th:each="theme : ${themes}">
-        <button type="button" class="btn btn-info" value="${theme.title}"/>
-    </span>
+    </form>
+
+    <th:block th:with="colCount=${4}">
+        <div th:each="r : ${#numbers.sequence(0, themes.size(), colCount)}"  class="row col-sm-4">
+            <h4 th:each="c : ${#numbers.sequence(0, colCount - 1)}">
+                <a th:if="${r + c &lt; themes.size()}" th:text="${themes.get(r + c).title.get('nb')} != null ? ${themes.get(r + c).title.get('nb')} : ${themes.get(r + c).title.get('nn')}" href="#" th:href="${'/results?theme=' + {themes.get(r + c).code}}" class="span3" />
+            </h4>
+        </div>
+    </th:block>
+
 </div>
 </body>
 </html>

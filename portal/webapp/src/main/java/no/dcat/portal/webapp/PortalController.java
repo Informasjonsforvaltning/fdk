@@ -1,6 +1,6 @@
 package no.dcat.portal.webapp;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
@@ -51,68 +51,35 @@ public class PortalController {
      * @param session the session object
      * @return the result html page (or just the name of the page)
      */
-    @RequestMapping({"/"})
-    final String result(final HttpSession session) {
+    @RequestMapping(value={"/results"})
+    final ModelAndView result(final HttpSession session, @RequestParam(value = "q", defaultValue = "") String q, @RequestParam(value = "theme", defaultValue = "") String theme) {
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceUrl());
+        ModelAndView model = new ModelAndView("result");
 
         logger.debug(buildMetadata.getQueryServiceUrl());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
+        session.setAttribute("theme", theme);
 
-        return "result"; // templates/result.html
+        model.addObject("query", q);
+        return model; // templates/result.html
     }
 
-    /**
-     *
-     * @return
-     */
-    @RequestMapping({"/theme"})
-    public ModelAndView theme() {
-        ModelAndView model = new ModelAndView("theme");
-        HttpClient httpClient = HttpClientBuilder.create().build();
-
-        URI uri = null;
-        try {
-            uri = new URIBuilder(buildMetadata.getRetrieveDatathemesServiceURL()).build();
-
-            logger.debug("Query for all themes");
-            HttpGet getRequest = new HttpGet(uri);
-
-            HttpResponse response = httpClient.execute(getRequest);
-
-            checkStatusCode(response);
-
-            String json = EntityUtils.toString(response.getEntity(), "UTF-8");
-
-            logger.debug(String.format("Found datathemes: %s", json));
-            // TODO: hvordan håndterer vi en liste av objekter.
-            //List<DataTheme> dataThemes = new Gson().fromJson(json, DataTheme.class);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // TODO: get datathemes.
-        List<DataTheme> dataThemes = new ArrayList<>();
-
-        model.addObject("themes", dataThemes);
-        return model;
-    }
     /**
      * Controller for getting the dataset corresponding to the provided id.
      *
      * @param id The id that identifies the dataset.
-     * @return ModelAndView for detail view.
+     * @return One Dataset attatched to a ModelAndView.
      */
     @RequestMapping({"/detail"})
-    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") final String id) {
+    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
         ModelAndView model = new ModelAndView("detail");
         HttpClient httpClient = HttpClientBuilder.create().build();
 
         URI uri = null;
         try {
-            uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceUrl()).addParameter("id", id).build();
+            uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceURL()).addParameter("id", id).build();
 
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
             HttpGet getRequest = new HttpGet(uri);
@@ -124,9 +91,9 @@ public class PortalController {
             String json = EntityUtils.toString(response.getEntity(), "UTF-8");
 
             logger.debug(String.format("Found dataset: %s", json));
-            Dataset dataset = new Gson().fromJson(json, Dataset.class);
+            Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
 
-            fillWithAlternativeLangValIfEmpty(dataset, "nb");
+            dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
 
             model.addObject("dataset", dataset);
 
@@ -140,57 +107,46 @@ public class PortalController {
     }
 
     /**
-     * Loops over all properties with a language tagg, and if the specified language is not filled out, fills it
-     * with values from an other language.
-     */
-    private void fillWithAlternativeLangValIfEmpty(final Dataset dataset, final String lang) {
-        fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
-        fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
-
-        if (dataset.getTheme() != null) {
-            for (DataTheme dataTheme : dataset.getTheme()) {
-                fillPropWithAlternativeValIfEmpty(dataTheme.getTitle(), lang);
-            }
-        }
-
-        fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
-
-        if (dataset.getDistribution() != null) {
-            for (Distribution distribution : dataset.getDistribution()) {
-                fillPropWithAlternativeValIfEmpty(distribution.getTitle(), lang);
-                fillPropWithAlternativeValIfEmpty(distribution.getDescription(), lang);
-            }
-        }
-    }
-
-    /**
-     * If the property is not defined for the specified language, fill in with values from an other language.
+     * Controller for getting all themes loaded in elasticsearch.
      *
+     * @return A list of DatatTheme attatched to a ModelAndView.
      */
-    private void fillPropWithAlternativeValIfEmpty(final Map map, final String language) {
-        if (map != null) {
-            Object nbVal = map.get(language);
-            if (nbVal == null) {
-                List langs = new ArrayList<String>();
-                langs.add("nb");
-                langs.add("nn");
-                langs.add("en");
+    @RequestMapping({"/"})
+    public ModelAndView themes() {
+        ModelAndView model = new ModelAndView("theme");
+        HttpClient httpClient = HttpClientBuilder.create().build();
 
-                Object altVal = null;
-                Iterator iter = langs.iterator();
-                while (iter.hasNext()) {
-                    altVal = map.get(iter.next());
-                    if (altVal != null) {
+        URI uri = null;
+        List<DataTheme> dataThemes = new ArrayList<>();
+        try {
+            uri = new URIBuilder(buildMetadata.getRetrieveDatathemesServiceURL()).build();
+
+            logger.debug("Query for all themes");
+            HttpGet getRequest = new HttpGet(uri);
+
+            HttpResponse response = httpClient.execute(getRequest);
+
+            checkStatusCode(response);
+
+            String json = EntityUtils.toString(response.getEntity(), "UTF-8");
+
+            logger.debug(String.format("Found datathemes: %s", json));
+
+            dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
+
+        } catch (Exception e) {
+            logger.error(String.format("An error occured: %s", e.getMessage()));
+            model.addObject("exceptionmessage", e.getMessage());
+            model.setViewName("error");
+        }
+
                         break;
                     }
-                }
 
-                if (altVal != null) {
-                    map.put(language, altVal);
-                }
-                }
-            }
-        }
+        model.addObject("themes", dataThemes);
+        model.addObject("dataitemquery", new DataitemQuery());
+        return model;
+    }
     }
 
     private void checkStatusCode(final HttpResponse response) {

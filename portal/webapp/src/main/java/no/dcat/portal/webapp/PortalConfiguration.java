@@ -56,11 +56,11 @@ public class PortalConfiguration {
     /* application.queryServiceURL */
     private String retrieveDatathemesServiceURL = "http://dummy.org/detail";
     public void setRetrieveDatathemesServiceURL (String retrieveDatasetServiceURL) {
-        this.retrieveDatasetServiceURL = retrieveDatasetServiceURL;
+        this.retrieveDatathemesServiceURL = retrieveDatasetServiceURL;
     }
 
     public String getRetrieveDatathemesServiceURL() {
-        return this.retrieveDatasetServiceURL;
+        return this.retrieveDatathemesServiceURL;
     }
 
     public String getVersionInformation() {

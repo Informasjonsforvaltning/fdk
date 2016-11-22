@@ -38,7 +38,7 @@ public class SimpleQueryServiceTest {
     @Test
     public void return400IfFromIsBelowZero() {
         SimpleQueryService sqs = new SimpleQueryService();
-        ResponseEntity<String> actual =  sqs.search("", -10, 1000, "nb", "", "");
+        ResponseEntity<String> actual =  sqs.search("","", -10, 1000, "", "");
 
         logger.info(actual.getBody());
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -47,7 +47,7 @@ public class SimpleQueryServiceTest {
     @Test
     public void return400IfSizeIsLargerThan100() {
         SimpleQueryService sqs = new SimpleQueryService();
-        ResponseEntity<String> actual =  sqs.search("", 10, 101, "nb", "", "");
+        ResponseEntity<String> actual =  sqs.search("","", 10, 101, "", "");
 
         logger.info(actual.getBody());
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());

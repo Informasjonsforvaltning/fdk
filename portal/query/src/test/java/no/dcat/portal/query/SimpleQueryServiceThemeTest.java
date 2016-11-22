@@ -10,17 +10,16 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- * Class for testing detail rest-API in SimpleQueryService.
+ * Class for testing theme rest-API in SimpleQueryService.
  */
-public class SimpleQueryServiceDetailTest {
+public class SimpleQueryServiceThemeTest {
     SimpleQueryService sqs;
     Client client;
     SearchResponse response;
@@ -34,26 +33,11 @@ public class SimpleQueryServiceDetailTest {
     }
 
     /**
-     * Tests when dataset is found.
-     */
-    @Test
-    public void testWithHits() {
-        ResponseEntity<String> actual = sqs.detail("29");
-
-        verify(client.prepareSearch("dcat").setQuery(any(QueryBuilder.class)).execute()).actionGet();
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    /**
      * Tests when dataset is not found.
      */
     @Test
-    public void testWithNoHits() {
-        when(response.getHits().getTotalHits()).thenReturn((long) 0);
-        ResponseEntity<String> actual = sqs.detail("29");
-
-        verify(client.prepareSearch("dcat").setQuery(any(QueryBuilder.class)).execute()).actionGet();
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    public void testValidWithSortdirection() {
+        ResponseEntity<String> actual = sqs.themes();
     }
 
     private void populateMock() {
@@ -79,6 +63,6 @@ public class SimpleQueryServiceDetailTest {
         when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
-        when(client.prepareSearch("dcat")).thenReturn(builder);
+        when(client.prepareSearch("theme")).thenReturn(builder);
     }
 }

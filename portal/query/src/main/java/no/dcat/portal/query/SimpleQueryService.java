@@ -1,10 +1,15 @@
 package no.dcat.portal.query;
 
 
+import org.apache.lucene.queryparser.flexible.core.util.StringUtils;
+import org.apache.lucene.queryparser.xml.FilterBuilder;
+import org.apache.lucene.queryparser.xml.builders.FilteredQueryBuilder;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -57,6 +62,7 @@ public class SimpleQueryService {
      * @param query         The search query to be executed as defined in
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
+     * @param theme         Narrows the search to the specified theme.
      * @param from          The starting index of the sorted hits that is returned.
      * @param size          The number of hits that is returned.
      * @param lang          The language of the query string. Used for analyzing the query-string.
@@ -68,6 +74,7 @@ public class SimpleQueryService {
     @CrossOrigin
     @RequestMapping(value = "/search", produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
+                                         @RequestParam(value = "theme", defaultValue = "") String theme,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -111,6 +118,7 @@ public class SimpleQueryService {
 
         if ("".equals(query)) {
             search = QueryBuilders.matchAllQuery();
+
             /*JSON: {
                 "match_all" : { }
              }*/
@@ -127,6 +135,7 @@ public class SimpleQueryService {
                     "publisher.name",
                     "theme.title" + "." + themeLanguage);
 */
+
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
@@ -151,9 +160,10 @@ public class SimpleQueryService {
 
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
+
             response = client.prepareSearch("dcat")
                     .setTypes("dataset")
-                    .setQuery(search)
+                    .setQuery(boolQuery)
                     .setFrom(from)
                     .setSize(size)
                     .addAggregation(themeAggregation)
@@ -185,11 +195,22 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+    private BoolQueryBuilder addFilter(@RequestParam(value = "theme", defaultValue = "") String theme, QueryBuilder search) {
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+                .must(search);
+
+        if (!org.springframework.util.StringUtils.isEmpty(theme)) {
+            boolQuery = boolQuery.filter(QueryBuilders.termQuery("theme.code",theme));
+        }
+        return boolQuery;
+    }
 
     /**
      * Retrieves the dataset record identified by the provided id.
+     * <p/>
      * @param id Id that identifies the dataset..
      * @return the record (JSON) of the retrieved dataset.
+     * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
     @RequestMapping(value = "/detail", produces = "application/json")
@@ -211,14 +232,33 @@ public class SimpleQueryService {
             return jsonError;
         }
 
-        return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+    /**
+     * Finds all themes loaded into elasticsearch.
+     * <p/>
+     * @return The complete elasticsearch response.
+     */
     @CrossOrigin
     @RequestMapping(value = "/themes", produces = "application/json")
-    public ResponseEntity<String> themes(@RequestParam(value = "id", defaultValue = "") String id) {
-        Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+    public ResponseEntity<String> themes() {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        QueryBuilder  search = QueryBuilders.matchAllQuery();
+
+        SearchRequestBuilder searchQuery = client.prepareSearch("theme").setTypes("data-theme").setQuery(search);
+        SearchResponse response = searchQuery.execute().actionGet();
+
+        int totNrOfThemes = (int)response.getHits().getTotalHits();
+        logger.debug(String.format("Found total number of themes: %d", totNrOfThemes));
+
+        response = searchQuery.setSize(totNrOfThemes).execute().actionGet();
+        logger.debug(String.format("Found themes: %s", response.toString()));
+
+        if (jsonError != null) return jsonError;
+
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
 
@@ -338,6 +378,4 @@ public class SimpleQueryService {
         return client;
 
     }
-
-
 }
