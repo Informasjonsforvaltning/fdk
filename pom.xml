@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>no.dcat</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<distributionManagement>
@@ -22,10 +21,13 @@
 
 	<scm>
 		<url>https://github.com/Altinn/fdk</url>
-		<connection>scm:git:git://github.com/Altinn/fdk.git</connection>
+		<!--connection>scm:git:git://github.com:MarcusGustafson74/Altinn/fdk.git</connection-->
+		<connection>scm:git:git://github.com:MarcusGustafson74/Altinn/fdk.git</connection>
 		<!-- bruker extmargus brukernavn tils en fellesbruker blitt opprettet -->
-		<developerConnection>scm:git:MarcusGustafson74@github.com:Altinn/fdk.git</developerConnection>
-	</scm>
+		<!--developerConnection>scm:git:git@github.com:MarcusGustafson74/Altinn/fdk.git</developerConnection-->
+		<developerConnection>scm:git:https://github.com/Altinn/fdk.git</developerConnection>
+	  <tag>HEAD</tag>
+  </scm>
 
 	<!-- BR parent pom for Spring Boot 1.4.0. Tar med Sonar-konfig -->
 	<parent>
@@ -64,7 +66,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>fdk</docker.image.prefix>
-		<docker.registry></docker.registry>
+		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.boot.version>1.4.0.RELEASE</spring.boot.version>
 		<elasticsearch.version>2.4.0</elasticsearch.version>
@@ -337,7 +339,7 @@
 							${docker.registry}${docker.image.prefix}/${project.artifactId}:${git.commit.id.abbrev}
 						</imageName>
 						<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-						<!--dockerDirectory>docker</dockerDirectory  -->
+						<!--dockerDirectory>docker</dockerDirectory -->
 						<pushImage>false</pushImage>
 						<resources>
 							<resource>
