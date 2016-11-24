@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -153,6 +154,7 @@ public class SimpleQueryService {
 
         //Count the number of datasets for each theme in the search result
         AggregationBuilder themeAggregation = createThemeAggregation();
+        BoolQueryBuilder boolQuery =  addFilter(theme, search);
 
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
@@ -195,7 +197,7 @@ public class SimpleQueryService {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
-        if (!org.springframework.util.StringUtils.isEmpty(theme)) {
+        if (!StringUtils.isEmpty(theme)) {
             boolQuery = boolQuery.filter(QueryBuilders.termQuery("theme.code", theme));
         }
         return boolQuery;

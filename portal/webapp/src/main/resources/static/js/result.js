@@ -455,8 +455,5 @@ doSearch();
 
 }
 
-// starts the page initializing code;
-$(document).ready(showPage);
-
 
 

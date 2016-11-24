@@ -77,7 +77,7 @@ public class PortalController {
         ModelAndView model = new ModelAndView("detail");
 
         try {
-            URI uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceURL()).addParameter("id", id).build();
+            URI uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceUrl()).addParameter("id", id).build();
             HttpClient httpClient = HttpClientBuilder.create().build();
 
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
@@ -118,14 +118,11 @@ public class PortalController {
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
             logger.debug(String.format("Found datathemes: %s", json));
         } catch (Exception e) {
-
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
 
-                        break;
-                    }
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
@@ -154,7 +151,6 @@ public class PortalController {
             }
         }
         return json;
-    }
     }
 
     private void checkStatusCode(final HttpResponse response) {
