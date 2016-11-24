@@ -1,7 +1,7 @@
 package no.dcat.portal.webapp;
 
 /**
- * Created by mgu on 17.11.2016.
+ * Class for holding dataitem info, used by thymleaf.
  */
 public class DataitemQuery {
     private String q;

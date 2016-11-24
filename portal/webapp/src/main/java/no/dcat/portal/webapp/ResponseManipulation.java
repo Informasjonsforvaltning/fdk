@@ -23,8 +23,12 @@ public final class ResponseManipulation {
     }
 
     /**
-     * Loops over all properties with a language tagg, and if the specified language is not filled out, fills it
+     Loops over all properties with a language tagg, and if the specified language is not filled out, fills it
      * with values from an other language.
+     * <p/>
+     * @param dataset The dataset to loop over.
+     * @param lang The specified language.
+     * @return The original dataset. Where all Tags that don't have the specified language is set with an alternative language.
      */
     public Dataset fillWithAlternativeLangValIfEmpty(Dataset dataset, String lang) {
         fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);

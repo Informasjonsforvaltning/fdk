@@ -1,9 +1,6 @@
 package no.dcat.portal.query;
 
 
-import org.apache.lucene.queryparser.flexible.core.util.StringUtils;
-import org.apache.lucene.queryparser.xml.FilterBuilder;
-import org.apache.lucene.queryparser.xml.builders.FilteredQueryBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -29,11 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Map;
 
 
 /**
- * A simple search service. Receives a query and forwards the query to Elasticsearch, reports back results.
+ * A simple search service. Receives a query and forwards the query to Elasticsearch, return results.
  * <p>
  * Created by nodavsko on 29.09.2016.
  */
@@ -62,9 +58,9 @@ public class SimpleQueryService {
      * @param query         The search query to be executed as defined in
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
-     * @param theme         Narrows the search to the specified theme.
-     * @param from          The starting index of the sorted hits that is returned.
-     * @param size          The number of hits that is returned.
+     * @param theme         Narrows the search to the specified theme. ex. GOVE
+     * @param from          The starting index (starting from 0) of the sorted hits that is returned.
+     * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
      * @param sortfield     Defines that field that the search result shall be sorted on. Default is best match.
      * @param sortdirection Defines the direction of the sort, ascending or descending.
@@ -200,16 +196,18 @@ public class SimpleQueryService {
                 .must(search);
 
         if (!org.springframework.util.StringUtils.isEmpty(theme)) {
-            boolQuery = boolQuery.filter(QueryBuilders.termQuery("theme.code",theme));
+            boolQuery = boolQuery.filter(QueryBuilders.termQuery("theme.code", theme));
         }
         return boolQuery;
     }
 
     /**
-     * Retrieves the dataset record identified by the provided id.
+     * Retrieves the dataset record identified by the provided id. The complete dataset, as defined in elasticsearch,
+     * is returned on Json-format.
      * <p/>
-     * @param id Id that identifies the dataset..
+     *
      * @return the record (JSON) of the retrieved dataset.
+     * @return The complete elasticsearch response on Json-fornat is returned.
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
@@ -238,19 +236,20 @@ public class SimpleQueryService {
     /**
      * Finds all themes loaded into elasticsearch.
      * <p/>
-     * @return The complete elasticsearch response.
+     *
+     * @return The complete elasticsearch response on Json-fornat is returned..
      */
     @CrossOrigin
     @RequestMapping(value = "/themes", produces = "application/json")
     public ResponseEntity<String> themes() {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
-        QueryBuilder  search = QueryBuilders.matchAllQuery();
+        QueryBuilder search = QueryBuilders.matchAllQuery();
 
         SearchRequestBuilder searchQuery = client.prepareSearch("theme").setTypes("data-theme").setQuery(search);
         SearchResponse response = searchQuery.execute().actionGet();
 
-        int totNrOfThemes = (int)response.getHits().getTotalHits();
+        int totNrOfThemes = (int) response.getHits().getTotalHits();
         logger.debug(String.format("Found total number of themes: %d", totNrOfThemes));
 
         response = searchQuery.setSize(totNrOfThemes).execute().actionGet();
@@ -371,6 +370,7 @@ public class SimpleQueryService {
                     .addTransportAddress(address);
             logger.debug("Client returns! " + address.toString());
         } catch (UnknownHostException e) {
+            // TODO: throw exception.
             logger.error(e.toString());
         }
 
