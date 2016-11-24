@@ -39,7 +39,7 @@ public class Application extends WebMvcConfigurerAdapter {
      * @return default session locale resolver object
      */
     @Bean
-    public final LocaleResolver localeResolver() {
+    public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(new Locale("nb", "NO")); //Locale.forLanguageTag("nb-NO"));
 
@@ -52,7 +52,7 @@ public class Application extends WebMvcConfigurerAdapter {
      * @return the message source for the application
      */
     @Bean
-    public final MessageSource messageSource() {
+    public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -65,7 +65,7 @@ public class Application extends WebMvcConfigurerAdapter {
      * @return the interceptor for changing locale
      */
     @Bean
-    public final LocaleChangeInterceptor localeChangeInterceptor() {
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
