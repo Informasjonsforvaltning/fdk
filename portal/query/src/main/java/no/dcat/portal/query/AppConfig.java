@@ -15,7 +15,7 @@ import org.springframework.core.io.ClassPathResource;
 public class AppConfig {
     //Det må lages en egen PropertySourcePlaceholderConfigurer siden @PropertySource fortsatt ikke støtter yaml format.
     @Bean
-    @Profile("default") //Skal kun brukes når spring_active_profiles inneholder default
+    @Profile("development") //Skal kun brukes når spring_active_profiles inneholder default
     public static PropertySourcesPlaceholderConfigurer properties() {
         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
