@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,9 +53,9 @@ public class PortalController {
      */
     @RequestMapping({"/"})
     final String result(final HttpSession session) {
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceUrl());
 
-        logger.debug(buildMetadata.getQueryServiceURL());
+        logger.debug(buildMetadata.getQueryServiceUrl());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
@@ -69,13 +70,13 @@ public class PortalController {
      * @return ModelAndView for detail view.
      */
     @RequestMapping({"/detail"})
-    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
+    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") final String id) {
         ModelAndView model = new ModelAndView("detail");
         HttpClient httpClient = HttpClientBuilder.create().build();
 
         URI uri = null;
         try {
-            uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceURL()).addParameter("id", id).build();
+            uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceUrl()).addParameter("id", id).build();
 
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
             HttpGet getRequest = new HttpGet(uri);
@@ -106,7 +107,7 @@ public class PortalController {
      * Loops over all properties with a language tagg, and if the specified language is not filled out, fills it
      * with values from an other language.
      */
-    private void fillWithAlternativeLangValIfEmpty(Dataset dataset, String lang) {
+    private void fillWithAlternativeLangValIfEmpty(final Dataset dataset, final String lang) {
         fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
         fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
 
@@ -130,8 +131,8 @@ public class PortalController {
      * If the property is not defined for the specified language, fill in with values from an other language.
      *
      */
-    private void fillPropWithAlternativeValIfEmpty(Map map, String language) {
-        if(map != null) {
+    private void fillPropWithAlternativeValIfEmpty(final Map map, final String language) {
+        if (map != null) {
             Object nbVal = map.get(language);
             if (nbVal == null) {
                 List langs = new ArrayList<String>();
@@ -143,19 +144,21 @@ public class PortalController {
                 Iterator iter = langs.iterator();
                 while (iter.hasNext()) {
                     altVal = map.get(iter.next());
-                    if (altVal != null) break;
+                    if (altVal != null) {
+                        break;
+                    }
                 }
 
-                if(altVal != null) {
+                if (altVal != null) {
                     map.put(language, altVal);
                 }
             }
         }
     }
 
-    private void checkStatusCode(HttpResponse response) {
+    private void checkStatusCode(final HttpResponse response) {
         StatusLine statusLine = response.getStatusLine();
-        if (statusLine.getStatusCode() != 200) {
+        if (statusLine.getStatusCode() != HttpStatus.OK.value()) {
             logger.error(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
             throw new RuntimeException(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
         }

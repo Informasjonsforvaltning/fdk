@@ -1,17 +1,17 @@
 spring:
   profiles: docker
 application:
-  retrieveDatasetServiceURL: http://localhost:8081/detail
-  queryServiceURL: http://localhost:8081/search
----
-spring:
-  profiles: development
-application:
-  retrieveDatasetServiceURL: http://localhost:8091/detail
-  queryServiceURL: http://localhost:8091/search
+  retrieveDatasetServiceUrl: http://localhost:8080/detail
+  queryServiceUrl: http://localhost:8081/search
 ---
 spring:
   profiles: test
 application:
-  retrieveDatasetServiceURL: http://localhost:8071/detail
-  queryServiceURL: http://localhost:8071/search
+  retrieveDatasetServiceUrl: http://localhost:8070/detail
+  queryServiceUrl: http://localhost:8071/search
+---
+spring:
+  profiles: development
+application:
+  retrieveDatasetServiceUrl: http://localhost:8090/detail
+  queryServiceUrl: http://localhost:8091/search

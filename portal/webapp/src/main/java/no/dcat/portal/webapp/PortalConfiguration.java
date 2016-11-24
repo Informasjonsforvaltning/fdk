@@ -23,11 +23,12 @@ public class PortalConfiguration {
     @Value("${spring.profiles.active:development}")
     private String profile;
 
-    /* application.queryServiceURL */
-    private String queryServiceURL = "http://dummy.org/";
-    public final void setQueryServiceURL(final String serviceURL) {
+    /* application.queryServiceUrl */
+    private String queryServiceUrl = "http://dummy.org/";
 
-        this.queryServiceURL = serviceURL;
+    public final void setQueryServiceUrl(final String serviceURL) {
+
+        this.queryServiceUrl = serviceURL;
     }
 
     /**
@@ -35,19 +36,21 @@ public class PortalConfiguration {
      *
      * @return the query service URL string
      */
-    public final  String getQueryServiceURL() {
+    public final  String getQueryServiceUrl() {
 
-        return this.queryServiceURL;
+        return this.queryServiceUrl;
     }
 
-    /* application.queryServiceURL */
-    private String retrieveDatasetServiceURL = "http://dummy.org/detail";
-    public void setRetrieveDatasetServiceURL (String retrieveDatasetServiceURL) {
-        this.retrieveDatasetServiceURL = retrieveDatasetServiceURL;
+    /* application.queryServiceUrl */
+    private String retrieveDatasetServiceUrl = "http://dummy.org/detail";
+
+    public void setRetrieveDatasetServiceUrl(String retrieveDatasetServiceUrl) {
+        this.retrieveDatasetServiceUrl = retrieveDatasetServiceUrl;
     }
 
-    public String getRetrieveDatasetServiceURL() {
-        return this.retrieveDatasetServiceURL;
+    public String getRetrieveDatasetServiceUrl() {
+
+        return this.retrieveDatasetServiceUrl;
     }
 
     public String getVersionInformation() {
@@ -60,32 +63,42 @@ public class PortalConfiguration {
 
     @Value("${version:ver}")
     private String version;
+
     public final String getVersion() {
         return version;
     }
 
     @Value("${artifactId:aid}")
     private String artifactId = "artifactId";
+
     public final String getArtifactId() {
+
         return artifactId;
     }
 
     @Value("${build.date:1999-99-99}")
     private String buildDate;
+
     public final void setBuildDate(final String buildDateString) {
+
         buildDate = buildDateString;
     }
+
     public final String getBuildDate() {
+
         return buildDate;
     }
 
     //Det må lages en egen PropertySourcePlaceholderConfigurer siden @PropertySource fortsatt ikke støtter yaml format.
     @Bean
-    @Profile("default") //Skal kun brukes når spring_active_profiles inneholder default
+    @Profile("development") //Skal kun brukes når spring_active_profiles inneholder development
     public static PropertySourcesPlaceholderConfigurer properties() {
         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-        yaml.setResources(new ClassPathResource("properties/local-properties.yml")); //Path til propertiesfiler som skal brukes for JUnit og kjøring på lokal maskin
+
+        //Path til propertiesfiler som skal brukes for JUnit og kjøring på lokal maskin
+        yaml.setResources(new ClassPathResource("properties/local-properties.yml"));
+
         propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
         return propertySourcesPlaceholderConfigurer;
     }

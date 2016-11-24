@@ -330,13 +330,11 @@ function showResults(searchResult) {
 }
 
 function doSearch() {
-    var urlstring = searchUrl
-        + "?q=" + search.value
-        +"&from="+resultCursor.from
-        +"&size="+resultCursor.size
-        +"&lang="+pageLanguage;
+    var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
 
-    if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+    if (sortField) {
+        urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+    }
 
     console.log(urlstring);
 
@@ -429,30 +427,30 @@ function searchController() {
 // Set up page
 function showPage () {
 
-searchUrl = $('meta[name="dcatQueryService"]').attr('content');
+    searchUrl = $('meta[name="dcatQueryService"]').attr('content');
 
-console.log("service: " + searchUrl);
+    console.log("service: " + searchUrl);
 
-// find the chosen language from the page
-var chosenLanguage = document.getElementById("chosenLanguage");
-var languageList = document.getElementById("language-list");
+    // find the chosen language from the page
+    var chosenLanguage = document.getElementById("chosenLanguage");
+    var languageList = document.getElementById("language-list");
 
-var langName = "Norsk (bokmål)";
-if (chosenLanguage && chosenLanguage.textContent) langName = chosenLanguage.textContent;
+    var langName = "Norsk (bokmål)";
+    if (chosenLanguage && chosenLanguage.textContent) langName = chosenLanguage.textContent;
 
-// set page language. HACK TODO FIX
-if (langName === "English") pageLanguage="en";
-if (langName === "Norsk (bokmål)") pageLanguage="nb";
-if (langName === "Norsk (nynorsk)") pageLanguage = "nn";
+    // set page language. HACK TODO FIX
+    if (langName === "English") pageLanguage="en";
+    if (langName === "Norsk (bokmål)") pageLanguage="nb";
+    if (langName === "Norsk (nynorsk)") pageLanguage = "nn";
 
-console.log(pageLanguage);
+    console.log(pageLanguage);
 
-// First call to search
-httpGetAsync(searchUrl, showResults);
+    // First call to search
+    httpGetAsync(searchUrl, showResults);
 
-searchController();
-sortController();
-hitsPerPageController();
+    searchController();
+    sortController();
+    hitsPerPageController();
 
 }
 
