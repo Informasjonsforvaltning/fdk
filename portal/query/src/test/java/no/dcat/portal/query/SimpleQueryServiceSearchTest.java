@@ -8,6 +8,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Before;
 import org.junit.Test;
@@ -106,6 +107,7 @@ public class SimpleQueryServiceSearchTest {
         when(builder.setFrom(anyInt())).thenReturn(builder);
         when(builder.setSize(anyInt())).thenReturn(builder);
         when(builder.addSort(anyString(), any(SortOrder.class))).thenReturn(builder);
+        when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);
