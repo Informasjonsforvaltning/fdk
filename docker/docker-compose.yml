@@ -6,6 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.simpleQueryServiceURL=http://localhost:8083/search
     links:
       - query
@@ -17,6 +18,7 @@ services:
     ports:
       - "8083:8080"
     environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
     links:

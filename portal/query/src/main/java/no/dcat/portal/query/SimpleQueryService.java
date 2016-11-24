@@ -7,7 +7,9 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +34,7 @@ public class SimpleQueryService {
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     public static Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
+    private static final int NO_HITS = 0;
 
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost;
@@ -201,6 +204,71 @@ public class SimpleQueryService {
 
         return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
     }
+
+    /**
+     * Return a count of the number of data sets for each theme code
+     * The query will not return the data sets themselves, only the counts.
+     * If no parameter is specified, the result will be a set of counts for
+     * all used theme codes.
+     * For each theme, the result will include the theme code and an integer
+     * representing the number of data sets with this theme code.
+     * I the optional themecode parameter is specified, only the theme code
+     * and number of data sets for this code is returned
+     *
+     * @param themecode optional parameter specifiying which theme should be counted
+     * @return json containing theme code and integer count of number of data sets
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/themecount", produces = "application/json")
+    public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "") String themecode) {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        QueryBuilder search;
+
+        if ("".equals(themecode)) {
+            search = QueryBuilders.matchAllQuery();
+            /*JSON: {
+                "match_all" : { }
+             }*/
+        } else {
+
+            search = QueryBuilders.simpleQueryStringQuery(themecode)
+                    .field("theme.code");
+
+            /*JSON: {
+                "query": {
+                    "match": {"theme.code" : "GOVE"}
+                }
+            }*/
+        }
+
+        AggregationBuilder aggregation =
+                AggregationBuilders
+                    .terms("theme_count")
+                    .field("theme.code");
+
+        logger.debug(String.format("Get theme with code: %s", themecode));
+        SearchResponse response = client.prepareSearch("dcat")
+                .setQuery(search)
+                .setSize(NO_HITS)  //only the aggregation should be returned
+                .setTypes("dataset")
+                .addAggregation(aggregation)
+                .execute().actionGet();
+
+        if (response.getHits().getTotalHits() == 0) {
+            logger.error(String.format("No themes found"));
+            jsonError = new ResponseEntity<String>(String.format("Found no themes to count: %s"), HttpStatus.NOT_FOUND);
+        }
+        logger.trace(String.format("Dataset count for themes: %s", response.toString()));
+
+        if (jsonError != null) {
+            return jsonError;
+        }
+
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+    }
+
+
 
     final private ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
