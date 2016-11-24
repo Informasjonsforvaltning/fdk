@@ -1,10 +1,12 @@
 package no.dcat.portal.query;
 
 
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +30,7 @@ import java.net.UnknownHostException;
 
 
 /**
- * A simple search service. Receives a query and forwards the query to Elasticsearch, reports back results.
+ * A simple search service. Receives a query and forwards the query to Elasticsearch, return results.
  * <p>
  * Created by nodavsko on 29.09.2016.
  */
@@ -56,8 +59,9 @@ public class SimpleQueryService {
      * @param query         The search query to be executed as defined in
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
-     * @param from          The starting index of the sorted hits that is returned.
-     * @param size          The number of hits that is returned.
+     * @param theme         Narrows the search to the specified theme. ex. GOVE
+     * @param from          The starting index (starting from 0) of the sorted hits that is returned.
+     * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
      * @param sortfield     Defines that field that the search result shall be sorted on. Default is best match.
      * @param sortdirection Defines the direction of the sort, ascending or descending.
@@ -67,6 +71,7 @@ public class SimpleQueryService {
     @CrossOrigin
     @RequestMapping(value = "/search", produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
+                                         @RequestParam(value = "theme", defaultValue = "") String theme,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -110,6 +115,7 @@ public class SimpleQueryService {
 
         if ("".equals(query)) {
             search = QueryBuilders.matchAllQuery();
+
             /*JSON: {
                 "match_all" : { }
              }*/
@@ -126,6 +132,7 @@ public class SimpleQueryService {
                     "publisher.name",
                     "theme.title" + "." + themeLanguage);
 */
+
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
@@ -147,12 +154,14 @@ public class SimpleQueryService {
 
         //Count the number of datasets for each theme in the search result
         AggregationBuilder themeAggregation = createThemeAggregation();
+        BoolQueryBuilder boolQuery =  addFilter(theme, search);
 
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
+
             response = client.prepareSearch("dcat")
                     .setTypes("dataset")
-                    .setQuery(search)
+                    .setQuery(boolQuery)
                     .setFrom(from)
                     .setSize(size)
                     .addAggregation(themeAggregation)
@@ -184,11 +193,24 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+    private BoolQueryBuilder addFilter(@RequestParam(value = "theme", defaultValue = "") String theme, QueryBuilder search) {
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+                .must(search);
+
+        if (!StringUtils.isEmpty(theme)) {
+            boolQuery = boolQuery.filter(QueryBuilders.termQuery("theme.code", theme));
+        }
+        return boolQuery;
+    }
 
     /**
-     * Retrieves the dataset record identified by the provided id.
-     * @param id Id that identifies the dataset..
+     * Retrieves the dataset record identified by the provided id. The complete dataset, as defined in elasticsearch,
+     * is returned on Json-format.
+     * <p/>
+     *
      * @return the record (JSON) of the retrieved dataset.
+     * @return The complete elasticsearch response on Json-fornat is returned.
+     * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
     @RequestMapping(value = "/detail", produces = "application/json")
@@ -210,7 +232,34 @@ public class SimpleQueryService {
             return jsonError;
         }
 
-        return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+    }
+
+    /**
+     * Finds all themes loaded into elasticsearch.
+     * <p/>
+     *
+     * @return The complete elasticsearch response on Json-fornat is returned..
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/themes", produces = "application/json")
+    public ResponseEntity<String> themes() {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        QueryBuilder search = QueryBuilders.matchAllQuery();
+
+        SearchRequestBuilder searchQuery = client.prepareSearch("theme").setTypes("data-theme").setQuery(search);
+        SearchResponse response = searchQuery.execute().actionGet();
+
+        int totNrOfThemes = (int) response.getHits().getTotalHits();
+        logger.debug(String.format("Found total number of themes: %d", totNrOfThemes));
+
+        response = searchQuery.setSize(totNrOfThemes).execute().actionGet();
+        logger.debug(String.format("Found themes: %s", response.toString()));
+
+        if (jsonError != null) return jsonError;
+
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
 
@@ -323,6 +372,7 @@ public class SimpleQueryService {
                     .addTransportAddress(address);
             logger.debug("Client returns! " + address.toString());
         } catch (UnknownHostException e) {
+            // TODO: throw exception.
             logger.error(e.toString());
         }
 
@@ -330,6 +380,4 @@ public class SimpleQueryService {
         return client;
 
     }
-
-
 }

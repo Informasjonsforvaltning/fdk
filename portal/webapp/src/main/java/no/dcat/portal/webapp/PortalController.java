@@ -1,13 +1,13 @@
 package no.dcat.portal.webapp;
 
-import com.google.gson.Gson;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
-import no.difi.dcat.datastore.domain.dcat.Distribution;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Delivers html pages to support the DCAT Portal application.
@@ -35,6 +34,7 @@ import java.util.Map;
  */
 @Controller
 public class PortalController {
+    public static final String MODEL_THEME = "theme";
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
     private final PortalConfiguration buildMetadata;
@@ -51,49 +51,43 @@ public class PortalController {
      * @param session the session object
      * @return the result html page (or just the name of the page)
      */
-    @RequestMapping({"/"})
-    final String result(final HttpSession session) {
+    @RequestMapping(value = {"/results"})
+    final ModelAndView result(final HttpSession session, @RequestParam(value = "q", defaultValue = "") String q, @RequestParam(value = "theme", defaultValue = "") String theme) {
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceUrl());
+        ModelAndView model = new ModelAndView("result");
 
         logger.debug(buildMetadata.getQueryServiceUrl());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
+        session.setAttribute("theme", theme);
 
-        return "result"; // templates/result.html
+        model.addObject("query", q);
+        return model; // templates/result.html
     }
 
     /**
      * Controller for getting the dataset corresponding to the provided id.
      *
      * @param id The id that identifies the dataset.
-     * @return ModelAndView for detail view.
+     * @return One Dataset attatched to a ModelAndView.
      */
     @RequestMapping({"/detail"})
-    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") final String id) {
+    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
         ModelAndView model = new ModelAndView("detail");
-        HttpClient httpClient = HttpClientBuilder.create().build();
 
-        URI uri = null;
         try {
-            uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceUrl()).addParameter("id", id).build();
+            URI uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceUrl()).addParameter("id", id).build();
+            HttpClient httpClient = HttpClientBuilder.create().build();
 
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
-            HttpGet getRequest = new HttpGet(uri);
-
-            HttpResponse response = httpClient.execute(getRequest);
-
-            checkStatusCode(response);
-
-            String json = EntityUtils.toString(response.getEntity(), "UTF-8");
+            String json = httpGet(httpClient, uri);
 
             logger.debug(String.format("Found dataset: %s", json));
-            Dataset dataset = new Gson().fromJson(json, Dataset.class);
+            Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
 
-            fillWithAlternativeLangValIfEmpty(dataset, "nb");
-
+            dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
             model.addObject("dataset", dataset);
-
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
@@ -104,56 +98,59 @@ public class PortalController {
     }
 
     /**
-     * Loops over all properties with a language tagg, and if the specified language is not filled out, fills it
-     * with values from an other language.
+     * Controller for getting all themes loaded in elasticsearch.
+     *
+     * @return A list of DatatTheme attatched to a ModelAndView.
      */
-    private void fillWithAlternativeLangValIfEmpty(final Dataset dataset, final String lang) {
-        fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
-        fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
+    @RequestMapping({"/"})
+    public ModelAndView themes() {
+        ModelAndView model = new ModelAndView(MODEL_THEME);
+        List<DataTheme> dataThemes = new ArrayList<>();
+        URI uri;
 
-        if (dataset.getTheme() != null) {
-            for (DataTheme dataTheme : dataset.getTheme()) {
-                fillPropWithAlternativeValIfEmpty(dataTheme.getTitle(), lang);
-            }
+        try {
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            uri = new URIBuilder(buildMetadata.getRetrieveDatathemesServiceURL()).build();
+            logger.debug("Query for all themes");
+
+            String json = httpGet(httpClient, uri);
+
+            dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
+            logger.debug(String.format("Found datathemes: %s", json));
+        } catch (Exception e) {
+            logger.error(String.format("An error occured: %s", e.getMessage()));
+            model.addObject("exceptionmessage", e.getMessage());
+            model.setViewName("error");
         }
 
-        fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
-
-        if (dataset.getDistribution() != null) {
-            for (Distribution distribution : dataset.getDistribution()) {
-                fillPropWithAlternativeValIfEmpty(distribution.getTitle(), lang);
-                fillPropWithAlternativeValIfEmpty(distribution.getDescription(), lang);
-            }
-        }
+        model.addObject("themes", dataThemes);
+        model.addObject("dataitemquery", new DataitemQuery());
+        return model;
     }
 
-    /**
-     * If the property is not defined for the specified language, fill in with values from an other language.
-     *
-     */
-    private void fillPropWithAlternativeValIfEmpty(final Map map, final String language) {
-        if (map != null) {
-            Object nbVal = map.get(language);
-            if (nbVal == null) {
-                List langs = new ArrayList<String>();
-                langs.add("nb");
-                langs.add("nn");
-                langs.add("en");
+    private String httpGet(HttpClient httpClient, URI uri) throws IOException {
+        HttpEntity entity;
+        HttpResponse response = null;
+        String json = null;
+        try {
+            HttpGet getRequest = new HttpGet(uri);
+            response = httpClient.execute(getRequest);
 
-                Object altVal = null;
-                Iterator iter = langs.iterator();
-                while (iter.hasNext()) {
-                    altVal = map.get(iter.next());
-                    if (altVal != null) {
-                        break;
-                    }
-                }
+            checkStatusCode(response);
 
-                if (altVal != null) {
-                    map.put(language, altVal);
-                }
+            entity = response.getEntity();
+
+            json = EntityUtils.toString(entity, "UTF-8");
+
+            // Release used resources.
+            EntityUtils.consume(entity);
+        } finally {
+            // Release used resources.
+            if (response != null) {
+                HttpClientUtils.closeQuietly(response);
             }
         }
+        return json;
     }
 
     private void checkStatusCode(final HttpResponse response) {
