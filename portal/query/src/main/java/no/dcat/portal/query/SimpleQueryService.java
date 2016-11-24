@@ -8,6 +8,8 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.slf4j.Logger;
@@ -35,6 +37,7 @@ public class SimpleQueryService {
     public static Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
     private static final int NO_HITS = 0;
+    private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost;
@@ -142,6 +145,9 @@ public class SimpleQueryService {
 
         logger.trace(search.toString());
 
+        //Count the number of datasets for each theme in the search result
+        AggregationBuilder themeAggregation = createThemeAggregation();
+
         SearchResponse response;
         if (sortfield.trim().isEmpty()) {
             response = client.prepareSearch("dcat")
@@ -149,6 +155,7 @@ public class SimpleQueryService {
                     .setQuery(search)
                     .setFrom(from)
                     .setSize(size)
+                    .addAggregation(themeAggregation)
                     .execute()
                     .actionGet();
         } else {
@@ -176,6 +183,7 @@ public class SimpleQueryService {
 
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
+
 
     /**
      * Retrieves the dataset record identified by the provided id.
@@ -205,6 +213,7 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.getHits().getHits()[0].getSourceAsString(), HttpStatus.OK);
     }
 
+
     /**
      * Return a count of the number of data sets for each theme code
      * The query will not return the data sets themselves, only the counts.
@@ -212,7 +221,7 @@ public class SimpleQueryService {
      * all used theme codes.
      * For each theme, the result will include the theme code and an integer
      * representing the number of data sets with this theme code.
-     * I the optional themecode parameter is specified, only the theme code
+     * If the optional themecode parameter is specified, only the theme code
      * and number of data sets for this code is returned
      *
      * @param themecode optional parameter specifiying which theme should be counted
@@ -242,10 +251,8 @@ public class SimpleQueryService {
             }*/
         }
 
-        AggregationBuilder aggregation =
-                AggregationBuilders
-                    .terms("theme_count")
-                    .field("theme.code");
+        //Create the aggregation object that counts the datasets
+        AggregationBuilder aggregation = createThemeAggregation();
 
         logger.debug(String.format("Get theme with code: %s", themecode));
         SearchResponse response = client.prepareSearch("dcat")
@@ -269,6 +276,20 @@ public class SimpleQueryService {
     }
 
 
+    /**
+     * Create aggregation object that counts the number of
+     * datasets for each theme code
+     *
+     * @return Aggregation builder object to be used in query
+     */
+    private AggregationBuilder createThemeAggregation() {
+        return AggregationBuilders
+            .terms("theme_count")
+            .field("theme.code")
+            .size(AGGREGATION_NUMBER_OF_COUNTS)
+            .order(Order.count(false));
+    }
+
 
     final private ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
@@ -285,6 +306,13 @@ public class SimpleQueryService {
         return null;
     }
 
+    /**
+     * Create transport client for communication with elasticsearch database
+     *
+     * @param host Hostname of elasticsearch database
+     * @param port Port number where elasticsearch service can be reached. Usually 9300
+     * @return Transport client object
+     */
     final public Client createElasticsearchTransportClient(final String host, final int port) {
         client = null;
         try {
