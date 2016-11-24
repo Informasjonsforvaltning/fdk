@@ -10,7 +10,6 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -313,7 +312,7 @@ public class SimpleQueryService {
 
         if (response.getHits().getTotalHits() == 0) {
             logger.error(String.format("No themes found"));
-            jsonError = new ResponseEntity<String>(String.format("Found no themes to count: %s"), HttpStatus.NOT_FOUND);
+            jsonError = new ResponseEntity<String>(String.format("Found no themes to count"), HttpStatus.NOT_FOUND);
         }
         logger.trace(String.format("Dataset count for themes: %s", response.toString()));
 

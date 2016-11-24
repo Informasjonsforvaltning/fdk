@@ -120,6 +120,7 @@ public class SimpleQueryServiceSearchTest {
         when(builder.setSize(anyInt())).thenReturn(builder);
         when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.addSort(anyString(), any(SortOrder.class))).thenReturn(builder);
+        when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);
