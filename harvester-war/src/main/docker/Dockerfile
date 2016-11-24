@@ -8,7 +8,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 #RUN apt-get install haveged -y
 
-ADD harvester-war-0.2.0-SNAPSHOT.war /usr/local/tomcat/webapps/harvester.war
+ADD harvester-war-0.2.1-SNAPSHOT.war /usr/local/tomcat/webapps/harvester.war
 
 ADD tomcat-users.xml /usr/local/tomcat/conf/
 ADD server.xml /usr/local/tomcat/conf/

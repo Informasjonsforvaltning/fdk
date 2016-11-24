@@ -330,13 +330,11 @@ function showResults(searchResult) {
 }
 
 function doSearch() {
-    var urlstring = searchUrl
-        + "?q=" + search.value
-        +"&from="+resultCursor.from
-        +"&size="+resultCursor.size
-        +"&lang="+pageLanguage;
+    var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
 
-    if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+    if (sortField) {
+        urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+    }
 
     console.log(urlstring);
 

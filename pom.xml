@@ -80,6 +80,63 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>harvester</artifactId>
+				<version>0.2.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>datastore</artifactId>
+				<version>0.2.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>4.1.1.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>4.3.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>4.3.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>4.3.2.RELEASE</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-autoconfigure</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-test</artifactId>
+				<version>${spring.boot.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>4.3.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.7</version>
+			</dependency>
+			<dependency>
 				<groupId>org.codehaus.castor</groupId>
 				<artifactId>castor-xml</artifactId>
 				<version>1.4.0</version>
@@ -90,9 +147,29 @@
 				<version>19.0</version>
 			</dependency>
 			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.21</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+			</dependency>
+			<dependency>
 				<groupId>com.rometools</groupId>
 				<artifactId>rome</artifactId>
 				<version>1.5.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.4.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>4.4.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.jena</groupId>
@@ -165,10 +242,19 @@
 				<artifactId>jquery</artifactId>
 				<version>3.1.1</version>
 			</dependency>
+			<!-- Nødvendig for å brukes på openshift-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Brixton.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
 
-	<dependencies>
+	<!--dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -188,7 +274,7 @@
 			<artifactId>spring-boot-maven-plugin</artifactId>
 			<version>${spring.boot.version}</version>
 		</dependency>
-	</dependencies>
+	</dependencies-->
 
 	<build>
 		<plugins>
@@ -246,7 +332,7 @@
 						<id>validate</id>
 						<phase>validate</phase>
 						<configuration>
-							<!--configLocation>checkstyle.xml</configLocation-->
+							<configLocation>google_checks.xml</configLocation>
 							<encoding>UTF-8</encoding>
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>false</failsOnError>

@@ -36,7 +36,7 @@ public class PortalSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Possible login code. Experimental and not in use.
      * @param auth the autorisation object
-     * @throws Exception
+     * @throws Exception if the user is not authenticated.
      */
     @Autowired
     public final void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {

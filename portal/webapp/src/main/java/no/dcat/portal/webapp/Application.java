@@ -39,7 +39,7 @@ public class Application extends WebMvcConfigurerAdapter {
      * @return default session locale resolver object
      */
     @Bean
-    public  LocaleResolver localeResolver() {
+    public final LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(new Locale("nb", "NO")); //Locale.forLanguageTag("nb-NO"));
 
@@ -52,7 +52,7 @@ public class Application extends WebMvcConfigurerAdapter {
      * @return the message source for the application
      */
     @Bean
-    public MessageSource messageSource() {
+    public final MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -61,10 +61,11 @@ public class Application extends WebMvcConfigurerAdapter {
 
     /**
      * Makes the application to reload with correct language. This is done by adding the parameter ?lang=nb.
+     *
      * @return the interceptor for changing locale
      */
     @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
+    public final LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
@@ -72,10 +73,11 @@ public class Application extends WebMvcConfigurerAdapter {
 
     /**
      * Register the locale change interceptor.
+     *
      * @param registry the interceptor registry that we want to register our interceptor in
      */
     @Override
-    public void addInterceptors(final InterceptorRegistry registry) {
+    public final void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
 

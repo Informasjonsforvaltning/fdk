@@ -1,24 +1,11 @@
 package no.dcat.portal.webapp;
 
-import com.gargoylesoftware.htmlunit.TextPage;
-import com.gargoylesoftware.htmlunit.WebClient;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
-
-import static org.assertj.core.api.Assertions.*;
 
 /**
  * Created by nodavsko on 17.10.2016.
@@ -50,7 +37,7 @@ public class PortalConfigurationTest {
     public void queryCallbackIsNotNull() {
 
         PortalConfiguration pc = new PortalConfiguration();
-        String actual = pc.getQueryServiceURL();
+        String actual = pc.getQueryServiceUrl();
         logger.info(actual);
         Assert.assertNotEquals("Query Service URL is not null", null, actual);
     }
