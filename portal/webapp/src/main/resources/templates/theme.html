@@ -98,13 +98,17 @@
         </div>
     </form>
 
-    <th:block th:with="colCount=${4}">
-        <div th:each="r : ${#numbers.sequence(0, themes.size(), colCount)}"  class="row col-sm-4">
-            <h4 th:each="c : ${#numbers.sequence(0, colCount - 1)}">
-                <a th:if="${r + c &lt; themes.size()}" th:text="${themes.get(r + c).title.get('nb')} != null ? ${themes.get(r + c).title.get('nb')} : ${themes.get(r + c).title.get('nn')}" href="#" th:href="${'/results?theme=' + {themes.get(r + c).code}}" class="span3" />
-            </h4>
-        </div>
-    </th:block>
+    <div class = "row">
+        <th:block th:with="rowCount=${3}">
+            <div th:each="r : ${#numbers.sequence(0, rowCount - 1)}"  class="col-sm-4">
+                <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
+                    <a th:if="${r &lt; themes.size()}"
+                       th:text="${themes.get(c).title.get('nb')} != null ? ${themes.get(c).title.get('nb')} : ${themes.get(c).title.get('nn')}"
+                       href="#" th:href="${'/results?theme=' + {themes.get(c).code}}" class="span3" />
+                </h4>
+            </div>
+        </th:block>
+    </div>
 
 </div>
 </body>

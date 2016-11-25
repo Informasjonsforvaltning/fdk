@@ -1,11 +1,11 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
 import no.dcat.harvester.crawler.handlers.ElasticSearchSkosResultHandler;
+import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.FdkRDF;
 import no.difi.dcat.datastore.domain.dcat.ConceptSchema;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,10 +24,6 @@ public class DataThemeBuilders extends AbstractBuilder {
     public static final String ENGLISH = "en";
     public static final String NORWEGIAN_EXTRACT = "no";
     public static final String NORWEGIAN = "nb";
-    public static final String PREDICATE_INSCHEMA = "inScheme";
-    public static final String PREDICATE_INACHEMA_PREFLABEL = "prefLabel";
-    public static final String PREDICATE_INSCHEMA_VERSIONINFO = "versionInfo";
-    public static final String PREDICATE_INSCHEMA_VERSIONNUMBER = "table.version.number";
     public static final String PREDICATE_STARTUSE = "start.use";
     private final Model model;
 
@@ -40,15 +36,15 @@ public class DataThemeBuilders extends AbstractBuilder {
 
         List<DataTheme> dataThemeObjs = new ArrayList<>();
 
-        ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type);
+
+        ResIterator catalogIterator = model.listResourcesWithProperty(FdkRDF.rdfsLabel);
         ConceptSchema conceptSchema = new ConceptSchema();
-        boolean found = false;
+
         while (catalogIterator.hasNext()) {
-            populateConceptSchema(catalogIterator.next(), conceptSchema, found);
-            if (found) break;
+            conceptSchema = populateConceptSchema(catalogIterator.next());
         }
 
-        catalogIterator = model.listResourcesWithProperty(RDF.type);
+        catalogIterator = model.listResourcesWithProperty(FdkRDF.atAuthorityName);
         while (catalogIterator.hasNext()) {
             DataTheme dataThemeObj = new DataTheme();
             dataThemeObj.setTitle(new HashMap<String, String>());
@@ -61,17 +57,16 @@ public class DataThemeBuilders extends AbstractBuilder {
         return dataThemeObjs;
     }
 
-    private void populateConceptSchema(Resource catalog, ConceptSchema conceptSchema, boolean found) {
-        StmtIterator dataThemeIterator = catalog.listProperties();
+    private ConceptSchema populateConceptSchema(Resource catalog) {
+        ConceptSchema conceptSchema = new ConceptSchema();
+        catalog.getProperty(FdkRDF.atTableId);
 
-        while (dataThemeIterator.hasNext()) {
-            Statement dataTheme = dataThemeIterator.next();
+        conceptSchema.setId(catalog.getProperty(FdkRDF.atTableId).getSubject().getURI());
+        conceptSchema.setTitle(catalog.getProperty(FdkRDF.atPreflabel).getObject().asLiteral().getString());
+        conceptSchema.setVersioninfo(catalog.getProperty(FdkRDF.owlVersionInfo).getObject().asLiteral().getString());
+        conceptSchema.setVersionnumber(catalog.getProperty(FdkRDF.atVersionNumber).getObject().asLiteral().getString());
 
-            if (Objects.equals(dataTheme.getPredicate().getLocalName(), PREDICATE_INSCHEMA)) {
-                createConceptSchema(dataTheme, conceptSchema, found);
-            }
-        }
-
+        return conceptSchema;
     }
 
     private void populateDataTheme(List<DataTheme> dataThemeObjs, Resource catalog, DataTheme dataThemeObj) {
@@ -103,32 +98,5 @@ public class DataThemeBuilders extends AbstractBuilder {
         dataThemeObj.setId(dataTheme.getSubject().getURI());
         dataThemeObj.setCode(dataTheme.getSubject().getLocalName());
         dataThemeObj.getTitle().put(lang, dataTheme.getObject().asLiteral().getString());
-    }
-
-    private void createConceptSchema(Statement dataTheme, ConceptSchema conceptSchema, boolean found) {
-        StmtIterator inSchemaProperties = dataTheme.getResource().listProperties();
-
-        while (inSchemaProperties.hasNext()) {
-            Statement inSchemaProperty = inSchemaProperties.next();
-            if (inSchemaProperty.getObject().isLiteral()) {
-                if (Objects.equals(inSchemaProperty.getPredicate().getLocalName(), PREDICATE_INACHEMA_PREFLABEL)) {
-                    conceptSchema.setTitle(inSchemaProperty.getObject().asLiteral().getString());
-                    found = true;
-                }
-                if (Objects.equals(inSchemaProperty.getPredicate().getLocalName(), PREDICATE_INSCHEMA_VERSIONINFO)) {
-                    conceptSchema.setVersioninfo(inSchemaProperty.getObject().asLiteral().getString());
-                    found = true;
-                }
-                if (Objects.equals(inSchemaProperty.getPredicate().getLocalName(), PREDICATE_INSCHEMA_VERSIONNUMBER)) {
-                    conceptSchema.setVersionnumber(inSchemaProperty.getObject().asLiteral().getString());
-                    found = true;
-                }
-                if (Objects.equals(inSchemaProperty.getPredicate().getLocalName(), "table.id")) {
-                    conceptSchema.setId(inSchemaProperty.getSubject().getURI());
-                    found = true;
-                }
-                //conceptSchema.setId(inSchemaProperty.getSubject().getURI());
-            }
-        }
     }
 }

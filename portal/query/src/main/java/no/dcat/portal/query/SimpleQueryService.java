@@ -35,6 +35,8 @@ import java.net.UnknownHostException;
  */
 @RestController
 public class SimpleQueryService {
+    public static final String INDEX_THEME = "theme";
+    public static final String TYPE_DATA_THEME = "data-theme";
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     public static Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
@@ -247,7 +249,7 @@ public class SimpleQueryService {
 
         QueryBuilder search = QueryBuilders.matchAllQuery();
 
-        SearchRequestBuilder searchQuery = client.prepareSearch("theme").setTypes("data-theme").setQuery(search);
+        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).setQuery(search);
         SearchResponse response = searchQuery.execute().actionGet();
 
         int totNrOfThemes = (int) response.getHits().getTotalHits();

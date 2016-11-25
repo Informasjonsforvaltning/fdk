@@ -1,5 +1,6 @@
 package no.dcat.portal.webapp;
 
+import no.dcat.portal.webapp.comparator.ThemeTitleComparator;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import org.apache.http.HttpEntity;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -116,6 +118,9 @@ public class PortalController {
             String json = httpGet(httpClient, uri);
 
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
+
+            Collections.sort(dataThemes , new ThemeTitleComparator());
+
             logger.debug(String.format("Found datathemes: %s", json));
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));

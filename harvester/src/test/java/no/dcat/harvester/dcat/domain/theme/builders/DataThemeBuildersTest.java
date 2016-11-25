@@ -13,6 +13,9 @@ import static org.junit.Assert.assertEquals;
  * Test class for DataThemeBuilders
  */
 public class DataThemeBuildersTest {
+
+    public static final int NR_OF_THEMES = 13;
+
     @Test
     public void testDataThemeBuilders() {
         final Model model = ModelFactory.createDefaultModel();
@@ -20,7 +23,7 @@ public class DataThemeBuildersTest {
 
         List<DataTheme> dataThemes = new DataThemeBuilders(model).build();
 
-        assertEquals("15 records shall have been created.",15,dataThemes.size());
+        assertEquals("13 records shall have been created.", NR_OF_THEMES,dataThemes.size());
         assertEquals("Check id on first record.","http://publications.europa.eu/resource/authority/data-theme/TRAN",dataThemes.get(0).getId());
         assertEquals("Check code on first record.","TRAN",dataThemes.get(0).getCode());
         assertEquals("Check startuse on first record.","2015-10-01",dataThemes.get(0).getStartUse());
