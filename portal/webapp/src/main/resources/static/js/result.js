@@ -447,11 +447,12 @@ function showPage () {
     console.log(pageLanguage);
 
     // First call to search
-doSearch();
+
 
     searchController();
     sortController();
     hitsPerPageController();
+    doSearch();
 
 }
 

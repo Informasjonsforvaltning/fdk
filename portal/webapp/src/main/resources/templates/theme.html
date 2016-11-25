@@ -75,29 +75,27 @@
             </div>
         </nav>
     </header>
-
-    <form class="site-search" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
-        <div class="form-group a-form-group  col-sm-10">
-            <div class="input-group  col-sm-10">
+<div class="row">
+    <form class="form-group a-form-group site-search col-sm-8 col-sm-offset-2" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
+            <div class="input-group input-group-large">
 
                 <label for="search" id="searchLarge">
                     <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
                 </label>
 
-                <div class="custom-search-input  col-sm-10">
-                    <div class="input-group col-sm-10">
-                        <input type="text" class="form-control" placeholder="#" th:attr="placeholder=#{query.intro}" th:field="*{q}" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+                <input id="search" type="text" class="form-control" placeholder="#" th:attr="placeholder=#{query.intro}" th:field="*{q}" />
+                <span class="input-group-btn">
+                    <button id="dosearch" class="btn btn-info" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
 
+
+            </div>
+
+    </form>
+</div>
+<section>
     <th:block th:with="colCount=${4}">
         <div th:each="r : ${#numbers.sequence(0, themes.size(), colCount)}"  class="row col-sm-4">
             <h4 th:each="c : ${#numbers.sequence(0, colCount - 1)}">
@@ -105,7 +103,7 @@
             </h4>
         </div>
     </th:block>
-
+</section>
 </div>
 </body>
 </html>
