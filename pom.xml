@@ -8,6 +8,14 @@
 	<version>0.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+	<repositories>
+		<repository>
+			<id>Felles datakatalog snapshot</id>
+			<name>Felles datakatalog shnapshot</name>
+			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>
+		</repository>
+	</repositories>
+
 	<distributionManagement>
 		<repository>
 			<id>Felles datakatalog release</id>
@@ -181,10 +189,12 @@
 				<artifactId>jena-fuseki-core</artifactId>
 				<version>2.3.1</version>
 				<exclusions>
+					<!--
 					<exclusion>
 						<artifactId>log4j</artifactId>
 						<groupId>log4j</groupId>
 					</exclusion>
+					-->
 					<exclusion>
 						<artifactId>slf4j-log4j12</artifactId>
 						<groupId>org.slf4j</groupId>
