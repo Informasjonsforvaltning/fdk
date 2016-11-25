@@ -133,13 +133,20 @@ public abstract class AbstractBuilder {
 			final String email = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail"));
 			if (email != null) {
 				hasAttributes = true;
-				contact.setEmail(email.replace("mbox:", ""));
+				contact.setEmail(email.replace("mailto:", ""));
 			}
 
 			final String telephone = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasTelephone"));
 			if (telephone != null) {
 				hasAttributes = true;
 				contact.setTelephone(telephone.replace("tel:", ""));
+			}
+
+			// TODO - set fullname
+			final String organisationName = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#organization-name"));
+			if (telephone != null) {
+				hasAttributes = true;
+				contact.setFullname(organisationName);
 			}
 
 			// TODO - sets fullname, Contact should have a separate attribute perhaps?
