@@ -100,19 +100,15 @@
         </div>
 
         <!-- Filter line -->
-        <!--div class="input-group input-group-sm">
+        <div class="input-group input-group-sm">
             <div id="filter" class="well well-sm">
-                <button class="btn btn-secondary btn-sm" type="button">
-                    <span>Kultur</span>
-                    <span class="glyphicon glyphicon-remove"/>
-                </button>
-                <button class="btn btn-secondary btn-sm" type="button">
-                    <span>FilterB</span>
-                    <span class="glyphicon glyphicon-remove"/>
-                </button>
+
+                <span class="label label-default">Forvaltning og offentlig sektor <span class="glyphicon glyphicon-remove"/></span>
+                <span class="label label-default">Jordbruk, fiskeri, skogbruk og mat <span class="glyphicon glyphicon-remove"/></span>
+
             </div>
 
-        </div-->
+        </div>
     </div>
 
     <!-- Resultatfelt -->
@@ -187,7 +183,13 @@
                     <!-- fasettering -->
                     <div class="list-group">
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.organisation}">Virksomhet</span><span class="badge">2</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.theme}">Tema</span><span class="badge">3</span></a>
+                        <a class="list-group-item" href="#"><span th:text="#{facet.theme}">Tema</span><span class="badge">4</span>
+                            <ul >
+                                <li >Forvaltning og offentlig sektor <span class="badge">5</span></li>
+                                <li >Jordbruk, fiskeri, skogbruk og mat <span class="badge">3</span></li>
+                                <li >Internasjonale temaer <span class="badge">2</span></li>
+                            </ul>
+                        </a>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span><span class="badge">5</span></a>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span><span class="badge">1</span></a>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.spatial}">Geografi</span></a>

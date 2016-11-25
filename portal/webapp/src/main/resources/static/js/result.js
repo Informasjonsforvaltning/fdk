@@ -330,17 +330,27 @@ function showResults(searchResult) {
 }
 
 function doSearch() {
+
     var theme = $('meta[name="theme"]').attr('content');
-
-    var urlstring = searchUrl + "?q=" + search.value + "&from="+resultCursor.from +"&size="+resultCursor.size ;
-    if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
-    if (theme && theme !== "") urlstring += "&theme=" + theme;
-    console.log(urlstring);
-
     $('meta[name="theme"]').attr("content", "");
 
-    // does an asynchronous call and calls showResults function.
-    httpGetAsync(urlstring, showResults);
+    if (search) {
+        var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
+
+        if (sortField) {
+            urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+        }
+
+        if (theme && theme !== "") {
+            urlstring += "&theme=" + theme;
+        }
+
+        console.log(urlstring);
+
+        // does an asynchronous call and calls showResults function.
+        httpGetAsync(urlstring, showResults);
+    }
+
 }
 
 // changes page and starts a new search
@@ -452,8 +462,6 @@ function showPage () {
 
     // First call to search
     doSearch();
-
 }
-
 
 
