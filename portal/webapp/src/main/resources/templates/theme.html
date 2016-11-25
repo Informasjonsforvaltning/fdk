@@ -75,8 +75,8 @@
             </div>
         </nav>
     </header>
-<div class="row">
-    <form class="form-group a-form-group site-search col-sm-8 col-sm-offset-2" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
+    <div class="row">
+        <form class="form-group a-form-group site-search col-sm-8 col-sm-offset-2" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
             <div class="input-group input-group-large">
 
                 <label for="search" id="searchLarge">
@@ -93,6 +93,8 @@
 
             </div>
 
+        </form>
+    </div>
     <div class = "row">
         <th:block th:with="rowCount=${3}">
             <div th:each="r : ${#numbers.sequence(0, rowCount - 1)}"  class="col-sm-4">
