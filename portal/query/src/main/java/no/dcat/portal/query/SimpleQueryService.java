@@ -312,10 +312,6 @@ public class SimpleQueryService {
                 .addAggregation(aggregation)
                 .execute().actionGet();
 
-        if (response.getHits().getTotalHits() == 0) {
-            logger.error(String.format("No themes found"));
-            jsonError = new ResponseEntity<String>(String.format("Found no themes to count"), HttpStatus.NOT_FOUND);
-        }
         logger.trace(String.format("Dataset count for themes: %s", response.toString()));
 
         if (jsonError != null) {
