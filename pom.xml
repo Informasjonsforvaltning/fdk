@@ -77,7 +77,7 @@
 		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.boot.version>1.4.0.RELEASE</spring.boot.version>
-		<elasticsearch.version>2.4.0</elasticsearch.version>
+		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<sonar.language>java</sonar.language>
 		<build.profile.id>dev</build.profile.id>
 		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
