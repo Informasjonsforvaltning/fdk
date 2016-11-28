@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -58,14 +59,12 @@ public class SimpleQueryServiceThemecountTest {
                 .order(Terms.Order.count(false));
 
         verify(client.prepareSearch("dcat")
-                .setTypes("dataset")
-                .setSize(0)
                 .setQuery(any(QueryBuilder.class))
-                .addAggregation(builder));
+                .setSize(0)
+                .setTypes("dataset")
+                .addAggregation(builder).execute()).actionGet();
 
-        //Denne returnerer HTTP status 404 i stedet for 200, fordi response.getHits().getTotalHits() == 0
-        //i SimpleQueryService line 264. Tenkte jeg skulle mocke getTotalHits, se kommentar i populateMock
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+        assertEquals(HttpStatus.OK.value(), actual.getStatusCodeValue());
     }
 
 
