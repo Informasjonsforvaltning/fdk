@@ -5,6 +5,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -372,7 +373,11 @@ public class SimpleQueryService {
             InetAddress inetaddress = InetAddress.getByName(host);
             InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
 
-            client = TransportClient.builder().build()
+            Settings settings = Settings.builder()
+                    .put("cluster.name", "fellesdatakatalog").build();
+                    //.put("client.transport.sniff", true).build();
+
+            client = TransportClient.builder().settings(settings).build()
                     .addTransportAddress(address);
             logger.debug("Client returns! " + address.toString());
         } catch (UnknownHostException e) {
