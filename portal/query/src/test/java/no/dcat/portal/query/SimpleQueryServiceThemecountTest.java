@@ -72,10 +72,6 @@ public class SimpleQueryServiceThemecountTest {
     private void populateMock() {
         SearchHit[] hits = null;
 
-        //Tenkte å mocke getTotalHits, men får det ikke til
-        //pga at SearchHit[] er  en array.
-        //when(hits.getTotalHits()).thenReturn(1) går ikke an...
-
         SearchHits searchHits = mock(SearchHits.class);
         when(searchHits.getHits()).thenReturn(hits);
 
