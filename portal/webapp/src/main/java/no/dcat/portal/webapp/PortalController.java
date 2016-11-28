@@ -55,10 +55,10 @@ public class PortalController {
      */
     @RequestMapping(value = {"/results"})
     final ModelAndView result(final HttpSession session, @RequestParam(value = "q", defaultValue = "") String q, @RequestParam(value = "theme", defaultValue = "") String theme) {
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceUrl());
+        session.setAttribute("dcatQueryService", buildMetadata.getSearchServiceUrl());
         ModelAndView model = new ModelAndView("result");
 
-        logger.debug(buildMetadata.getQueryServiceUrl());
+        logger.debug(buildMetadata.getSearchServiceUrl());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
@@ -79,7 +79,7 @@ public class PortalController {
         ModelAndView model = new ModelAndView("detail");
 
         try {
-            URI uri = new URIBuilder(buildMetadata.getRetrieveDatasetServiceUrl()).addParameter("id", id).build();
+            URI uri = new URIBuilder(buildMetadata.getDetailsServiceUrl()).addParameter("id", id).build();
             HttpClient httpClient = HttpClientBuilder.create().build();
 
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
@@ -112,7 +112,7 @@ public class PortalController {
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
-            uri = new URIBuilder(buildMetadata.getRetrieveDatathemesServiceURL()).build();
+            uri = new URIBuilder(buildMetadata.getThemeServiceUrl()).build();
             logger.debug("Query for all themes");
 
             String json = httpGet(httpClient, uri);

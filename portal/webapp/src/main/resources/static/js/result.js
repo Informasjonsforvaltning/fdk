@@ -446,12 +446,11 @@ function showPage () {
 
     console.log(pageLanguage);
 
-    // First call to search
-
-
     searchController();
     sortController();
     hitsPerPageController();
+
+    // First call to search
     doSearch();
 
 }

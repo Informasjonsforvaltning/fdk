@@ -20,15 +20,19 @@ import org.springframework.core.io.ClassPathResource;
 @ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
 
+    private static String QUERY_SERVICE_SEARCH = "/search";
+    private static String QUERY_SERVICE_DETAIL = "/detail";
+    private static String QUERY_SERVICE_THEMES = "/themes";
+
     @Value("${spring.profiles.active:development}")
     private String profile;
 
-    /* application.queryServiceUrl */
-    private String queryServiceUrl = "http://dummy.org/";
+    /* application.queryService */
+    private String queryService = "http://dcat.dummy.org";
 
-    public final void setQueryServiceUrl(final String serviceURL) {
+    public final void setQueryService(final String serviceURL) {
 
-        this.queryServiceUrl = serviceURL;
+        this.queryService = serviceURL;
     }
 
     /**
@@ -36,33 +40,28 @@ public class PortalConfiguration {
      *
      * @return the query service URL string
      */
-    public final  String getQueryServiceUrl() {
+    public final  String getQueryService() {
 
-        return this.queryServiceUrl;
+        return this.queryService;
     }
 
-    /* application.queryServiceUrl */
-    private String retrieveDatasetServiceUrl = "http://dummy.org/detail";
-
-    public void setRetrieveDatasetServiceUrl(String retrieveDatasetServiceUrl) {
-        this.retrieveDatasetServiceUrl = retrieveDatasetServiceUrl;
+    public final String getSearchServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_SEARCH;
     }
 
-    public String getRetrieveDatasetServiceUrl() {
-
-        return this.retrieveDatasetServiceUrl;
+    public final String getThemeServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_THEMES;
     }
 
-    /* application.queryServiceURL */
-    private String retrieveDatathemesServiceURL = "http://dummy.org/detail";
-    public void setRetrieveDatathemesServiceURL (String retrieveDatasetServiceURL) {
-        this.retrieveDatathemesServiceURL = retrieveDatasetServiceURL;
+    public final String getDetailsServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_DETAIL;
     }
 
-    public String getRetrieveDatathemesServiceURL() {
-        return this.retrieveDatathemesServiceURL;
-    }
-
+    /**
+     * Provides a formated string that includes the version number of the current built application
+     *
+     * @return the version information string
+     */
     public String getVersionInformation() {
         String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
         return versionInfo;
@@ -110,6 +109,7 @@ public class PortalConfiguration {
         yaml.setResources(new ClassPathResource("properties/local-properties.yml"));
 
         propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
+
         return propertySourcesPlaceholderConfigurer;
     }
 
