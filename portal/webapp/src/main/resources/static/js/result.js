@@ -194,6 +194,9 @@ function showResults(searchResult) {
     }
     // Oppdaterer søkeinformasjon
     total = res.hits.total;
+
+    facetController(res);
+
     var summary = document.getElementById("total.hits");
     var info = document.getElementById("search.info");
     if (summary) {
@@ -463,5 +466,4 @@ function showPage () {
     // First call to search
     doSearch();
 }
-
 

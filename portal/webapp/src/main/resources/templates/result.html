@@ -102,9 +102,10 @@
         <!-- Filter line -->
         <div class="input-group input-group-sm">
             <div id="filter" class="well well-sm">
-
+                <!--
                 <a href="#" class="label label-default">Forvaltning og offentlig sektor <span class="glyphicon glyphicon-remove"/></a>
                 <a href="#" class="label label-default">Jordbruk, fiskeri, skogbruk og mat <span class="glyphicon glyphicon-remove"/></a>
+                -->
 
             </div>
 
@@ -181,10 +182,10 @@
 
                 <div class="col-sm-4 sidebar">
                     <!-- fasettering -->
-                    <div class="list-group">
+                    <div id="facet" class="list-group">
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.organisation}">Virksomhet</span><span class="badge">2</span></a>
-                        <div id="theme.facet" class="list-group-item" href="#"><span th:text="#{facet.theme}">Tema</span><span class="badge">4</span>
-                            <ul class="list-group" >
+                        <div id="facet.theme" class="list-group-item" href="#"><span th:text="#{facet.theme}">Tema</span><span id="facet.theme.total" class="badge">4</span>
+                            <ul class="list-group">
                                 <a class="list-group-item" href="#">Forvaltning og offentlig sektor <span class="badge">5</span></a>
                                 <a class="list-group-item" href="#">Jordbruk, fiskeri, skogbruk og mat <span class="badge">3</span></a>
                                 <a class="list-group-item" href="#">Internasjonale temaer <span class="badge">2</span></a>
@@ -237,6 +238,7 @@
     </div>
     <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/facets.js"></script>
     <script type="text/javascript" src="js/result.js"></script>
     <script type="text/javascript" >
         $(document).ready(showPage);
