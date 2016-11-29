@@ -101,7 +101,7 @@
                 <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
                     <a th:if="${r &lt; themes.size()}"
                        th:text="${themes.get(c).title.get('nb')} != null ? ${themes.get(c).title.get('nb')} : ${themes.get(c).title.get('nn')}"
-                       href="#" th:href="${'/results?theme=' + {themes.get(c).code}}" class="span3" />
+                       href="#" th:href="${'/results?theme=' + {themes.get(c).code}}" class="span3" th:id="${themes.get(c).title.get('nb')}" />
                 </h4>
             </div>
         </th:block>
