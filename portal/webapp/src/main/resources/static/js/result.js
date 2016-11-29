@@ -1,4 +1,3 @@
-
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = "nb";
 var sortField = "";
@@ -334,9 +333,6 @@ function showResults(searchResult) {
 
 function doSearch() {
 
-    var theme = $('meta[name="theme"]').attr('content');
-    $('meta[name="theme"]').attr("content", "");
-
     if (search) {
         var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
 
@@ -344,8 +340,8 @@ function doSearch() {
             urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
         }
 
-        if (theme && theme !== "") {
-            urlstring += "&theme=" + theme;
+        if (themeFilter.length > 0) {
+            urlstring += "&theme=" + themeFilter.join(",");
         }
 
         console.log(urlstring);
@@ -442,6 +438,12 @@ function searchController() {
 function showPage () {
 
     searchUrl = $('meta[name="dcatQueryService"]').attr('content');
+
+    var t = $('meta[name="theme"]').attr('content');
+    if ( t !== "") {
+        setThemeFilter(t);
+        $('meta[name="theme"]').attr("content", "");
+    }
 
     console.log("service: " + searchUrl);
 
