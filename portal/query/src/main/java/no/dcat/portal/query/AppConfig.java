@@ -20,7 +20,8 @@ public class AppConfig {
         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
 
-        yaml.setResources(new ClassPathResource("properties/local-properties.yml")); //Path til propertiesfiler som skal brukes for JUnit og kjøring på lokal maskin
+        //Path til propertiesfiler som skal brukes for JUnit og kjøring på lokal maskin
+        yaml.setResources(new ClassPathResource("properties/local-properties.yml"));
         propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
         return propertySourcesPlaceholderConfigurer;
     }

@@ -37,7 +37,7 @@ public class PortalConfigurationTest {
     public void queryCallbackIsNotNull() {
 
         PortalConfiguration pc = new PortalConfiguration();
-        String actual = pc.getQueryServiceUrl();
+        String actual = pc.getQueryService();
         logger.info(actual);
         Assert.assertNotEquals("Query Service URL is not null", null, actual);
     }

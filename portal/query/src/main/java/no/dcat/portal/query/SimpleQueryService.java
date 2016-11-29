@@ -43,6 +43,13 @@ public class SimpleQueryService {
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
+    /** api names */
+    public static final String QUERY_SEARCH = "/search";
+    public static final String QUERY_DETAIL = "/detail";
+    public static final String QUERY_THEMES = "/themes";
+    public static final String QUERY_THEME_COUNT = "/themecount";
+
+
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost;
 
@@ -70,7 +77,7 @@ public class SimpleQueryService {
      */
 
     @CrossOrigin
-    @RequestMapping(value = "/search", produces = "application/json")
+    @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
                                          @RequestParam(value = "theme", defaultValue = "") String theme,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
@@ -214,7 +221,7 @@ public class SimpleQueryService {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @RequestMapping(value = "/detail", produces = "application/json")
+    @RequestMapping(value = QUERY_DETAIL, produces = "application/json")
     public ResponseEntity<String> detail(@RequestParam(value = "id", defaultValue = "") String id) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
@@ -243,7 +250,7 @@ public class SimpleQueryService {
      * @return The complete elasticsearch response on Json-fornat is returned..
      */
     @CrossOrigin
-    @RequestMapping(value = "/themes", produces = "application/json")
+    @RequestMapping(value = QUERY_THEMES, produces = "application/json")
     public ResponseEntity<String> themes() {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
@@ -278,7 +285,7 @@ public class SimpleQueryService {
      * @return json containing theme code and integer count of number of data sets
      */
     @CrossOrigin
-    @RequestMapping(value = "/themecount", produces = "application/json")
+    @RequestMapping(value = QUERY_THEME_COUNT, produces = "application/json")
     public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "") String themecode) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
