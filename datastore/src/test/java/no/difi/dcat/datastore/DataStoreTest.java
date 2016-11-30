@@ -75,10 +75,13 @@ public class DataStoreTest {
 			server.stop();
 		}
 
+
 		StoreConnection.reset();
 
-		Thread.sleep(1000);
 		server = null;
+		System.gc();
+		Thread.sleep(1000);
+
 		// Clear out the registry.
 		Collection<String> keys = Iter.toList(DataAccessPointRegistry.get().keys().iterator());
 		for (String k : keys) {
@@ -96,6 +99,7 @@ public class DataStoreTest {
 		FileUtils.cleanDirectory(dcatDB);
 		FileUtils.cleanDirectory(adminDB);
 
+		System.gc();
 		Thread.sleep(1000);
 	}
 
@@ -110,6 +114,7 @@ public class DataStoreTest {
 		Model defaultModel = ModelFactory.createDefaultModel();
 		defaultModel.createResource().addLiteral(RDFS.label, "yay");
 		fuseki.update("http://example.com/a", defaultModel);
+
 		System.out.println(ResultSetFormatter.asText(fuseki.select("select * where {?a ?b ?c}")));
 
 		//BG: Hva gjør denne?
@@ -185,6 +190,7 @@ public class DataStoreTest {
 			select.next();
 		}
 
+		adminDataStore.deleteUser("testUserName");
 		assertEquals("Should be exactly 1 user with this username", 1, count);
 	}
 
@@ -559,6 +565,7 @@ public class DataStoreTest {
 		JettyFuseki.initializeServer(make(3131, false, true));
 		JettyFuseki instance = JettyFuseki.instance;
 		instance.start();
+
 		server = instance;
 	}
 

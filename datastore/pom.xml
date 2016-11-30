@@ -58,7 +58,13 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- Testkoden trenger eksakt versjon 1.2.12, derfor overskrives dependencyManagement -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<properties>
@@ -66,4 +72,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-noverify</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
