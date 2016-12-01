@@ -93,7 +93,8 @@ public class SimpleQueryService {
                 .append(" size:").append(size)
                 .append(" lang:").append(lang)
                 .append(" sortfield:").append(sortfield)
-                .append(" sortdirection:").append(sortdirection);
+                .append(" sortdirection:").append(sortdirection)
+                .append(" theme:").append(theme);
 
         logger.debug(loggMsg.toString());
 
@@ -318,6 +319,8 @@ public class SimpleQueryService {
                 .setTypes("dataset")
                 .addAggregation(aggregation)
                 .execute().actionGet();
+
+        logger.debug(aggregation.toString());
 
         logger.trace(String.format("Dataset count for themes: %s", response.toString()));
 

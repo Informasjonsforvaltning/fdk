@@ -96,6 +96,11 @@ function paginationController () {
     // compute the number of pages available in the search
     var numPages = Math.ceil(total / resultCursor.size);
 
+    // if filters are in play, we need to reset page cursor
+    if (resultCursor.currentPage >= numPages) {
+        resetResultCursor();
+    }
+
     // empty pager list
     $('.pager').empty();
 
@@ -197,12 +202,13 @@ function showResults(searchResult) {
     facetController(res);
 
     var summary = document.getElementById("total.hits");
-    var info = document.getElementById("search.info");
-    if (summary) {
-        if (info && total === 0) {
-            info.innerHTML = "Ingen resultater funnet";
-        }
-        summary.innerHTML = total;
+    summary.innerHTML = total;
+
+    if (total === 0) {
+       var zeroHitElement = document.createElement("a");
+       zeroHitElement.className = "row list-group-item dataset";
+       zeroHitElement.innerHTML = "<h4><center>Ingen resultater funnet</center></h4>";
+       results.appendChild(zeroHitElement);
     }
 
     paginationController();
@@ -280,13 +286,15 @@ function showResults(searchResult) {
         if (source.distribution) {
 
             source.distribution.forEach(function (dist) {
-                 console.log(dist.format);
-                 var a = document.createElement("a");
-                 a.href = dist.accessURL;
-                 a.innerHTML = dist.format;
-                 a.className = "label label-info";
-                 distributionList.appendChild(a);
-                 distributionList.appendChild(document.createTextNode(" "));
+                if (dist.format) {
+                     var a = document.createElement("a");
+                     a.href = dist.accessURL;
+                     a.innerHTML = dist.format;
+                     a.className = "label label-info";
+                     // TODO add href to distribution page
+                     distributionList.appendChild(a);
+                     distributionList.appendChild(document.createTextNode(" "));
+                 }
             });
         }
 
@@ -334,7 +342,7 @@ function showResults(searchResult) {
 function doSearch() {
 
     if (search) {
-        var urlstring = searchUrl + "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
+        var urlstring = searchUrl + "/search?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
 
         if (sortField) {
             urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
@@ -440,12 +448,12 @@ function showPage () {
     searchUrl = $('meta[name="dcatQueryService"]').attr('content');
 
     var t = $('meta[name="theme"]').attr('content');
-    if ( t !== "") {
+    if ( t !== undefined && t !== "") {
         setThemeFilter(t);
         $('meta[name="theme"]').attr("content", "");
     }
 
-    console.log("service: " + searchUrl);
+    console.log("query service: " + searchUrl);
 
     // find the chosen language from the page
     var chosenLanguage = document.getElementById("chosenLanguage");

@@ -28,7 +28,6 @@
     </style>
 </head>
 <body>
-    <!--div id="dcatQueryService" th:text="${session.dcatQueryService}" style="display:none"></div-->
     <div id="versionInformation" class="text-muted small text-right" th:text="${session.versionInformation}"></div>
 
     <div class="container-fluid">
@@ -101,14 +100,9 @@
 
         <!-- Filter line -->
         <div class="input-group input-group-sm">
-            <div id="filter" class="well well-sm">
-                <!--
-                <a href="#" class="label label-default">Forvaltning og offentlig sektor <span class="glyphicon glyphicon-remove"/></a>
-                <a href="#" class="label label-default">Jordbruk, fiskeri, skogbruk og mat <span class="glyphicon glyphicon-remove"/></a>
-                -->
+            <div id="filter">
 
             </div>
-
         </div>
     </div>
 
@@ -183,19 +177,15 @@
                 <div class="col-sm-4 sidebar">
                     <!-- fasettering -->
                     <div id="facet" class="list-group">
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.organisation}">Virksomhet</span><span class="badge">2</span></a>
-                        <div id="facet.theme" class="list-group-item" href="#"><span th:text="#{facet.theme}">Tema</span><span id="facet.theme.total" class="badge">4</span>
-                            <ul class="list-group">
-                                <a class="list-group-item" href="#">Forvaltning og offentlig sektor <span class="badge">5</span></a>
-                                <a class="list-group-item" href="#">Jordbruk, fiskeri, skogbruk og mat <span class="badge">3</span></a>
-                                <a class="list-group-item" href="#">Internasjonale temaer <span class="badge">2</span></a>
-                            </ul>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.organisation}">Virksomhet</span></a>
+                        <div id="facet.theme" class="list-group-item" href="#"><span th:text="#{facet.theme}">Tema</span>
+                            <ul class="list-group"/>
                         </div>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span><span class="badge">5</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span><span class="badge">1</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span></a>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.spatial}">Geografi</span></a>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.temporal}">Tid</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.standard}">Standard</span><span class="badge">2</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.standard}">Standard</span></a>
                     </div>
                 </div>
 
@@ -238,6 +228,7 @@
     </div>
     <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:utext="${themes}"></script>
     <script type="text/javascript" src="js/facets.js"></script>
     <script type="text/javascript" src="js/result.js"></script>
     <script type="text/javascript" >

@@ -40,6 +40,7 @@ public class PortalController {
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
     private final PortalConfiguration buildMetadata;
+    private static String codeLists = null;
 
     @Autowired
     public PortalController(final PortalConfiguration metadata) {
@@ -54,15 +55,21 @@ public class PortalController {
      * @return the result html page (or just the name of the page)
      */
     @RequestMapping(value = {"/results"})
-    final ModelAndView result(final HttpSession session, @RequestParam(value = "q", defaultValue = "") String q, @RequestParam(value = "theme", defaultValue = "") String theme) {
-        session.setAttribute("dcatQueryService", buildMetadata.getSearchServiceUrl());
+    final ModelAndView result(final HttpSession session,
+                              @RequestParam(value = "q", defaultValue = "") String q,
+                              @RequestParam(value = "theme", defaultValue = "") String theme) {
+
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryService());
+
         ModelAndView model = new ModelAndView("result");
 
-        logger.debug(buildMetadata.getSearchServiceUrl());
+        logger.debug(buildMetadata.getQueryService());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
-        session.setAttribute("theme", theme);
+        session.setAttribute("theme",theme);
+
+        model.addObject("themes", getCodeLists());
 
         model.addObject("query", q);
         return model; // templates/result.html
@@ -131,6 +138,35 @@ public class PortalController {
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
+    }
+
+    /**
+     * Returns a JSON structure that contains the code-lists that the portal webapp uses.
+     * The code-lists are fetched from the query service first time.
+     *
+     * Code lists:
+     *  - data-theme (EU Themes)
+     *
+     * TODO - add necessary codelists
+     *
+     * @return a JSON of the code-lists. { "data-theme" : [ {"AGRI" : {"nb": "Jord og skogbruk"}}, ...], ...}
+     */
+    private String getCodeLists() {
+        if (codeLists == null) {
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            try {
+                URI uri = new URIBuilder(buildMetadata.getThemeServiceUrl() + "?size=50").build();
+
+                String json = httpGet(httpClient, uri);
+
+                codeLists = "var codeList = { \"data-themes\":" + json +"};";
+
+            } catch (Exception e) {
+                logger.error(String.format("Could not load data-themes: %s",e.getMessage()));
+                codeLists= null;
+            }
+        }
+        return codeLists;
     }
 
     private String httpGet(HttpClient httpClient, URI uri) throws IOException {
