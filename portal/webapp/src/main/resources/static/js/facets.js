@@ -97,7 +97,8 @@ function createFilterElement(data, name, label) {
     var f = $('#filter').find('a[data="'+data+'"]')[0];
 
     if (f === undefined) {
-        var filterLabel = $(' <a href="#" class="label '+ label +'" data="'+data+'">' + name + ' <span class="glyphicon glyphicon-remove"/></a>')[0];
+        var filterLabel = $('<a href="#" class="label '+ label +'" data="'+data+'">' + name + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
+        //$("#filter").append(document.createTextNode(" "));
         $("#filter").append(filterLabel);
 
         // add delete hook
@@ -121,9 +122,12 @@ function createBadge(count) {
 }
 
 function deactivateFacet(data) {
-
-    var element = $('.list-group-item[data="'+data+'"]')[0];
-    element.className = 'list-group-item';
+    if (data) {
+        var element = $('.list-group-item[data="'+data+'"]')[0];
+        if (element) {
+            element.className = 'list-group-item';
+        }
+    }
 }
 
 /**
@@ -146,6 +150,7 @@ function facetThemeController(theme) {
 
             // data contains the code to the theme
             themeElem.setAttribute("data", item.key);
+            themeElem.setAttribute("href", "#");
 
             if (themeFilter.indexOf(item.key) > -1) {
                 themeElem.className = "list-group-item active";
@@ -155,6 +160,7 @@ function facetThemeController(theme) {
             themeElem.innerHTML = getTheme(item.key) + " " + createBadge(item.doc_count);
             themeElem.onclick = function (event) {
                 event.preventDefault();
+                event.stopPropagation();
 
                 // select/unselect theme
                 if (this.className.indexOf("active") > -1) {

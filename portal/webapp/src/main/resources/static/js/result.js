@@ -234,16 +234,23 @@ function showResults(searchResult) {
         var theme = source.theme;
         if (theme) {
             themeElement = document.createElement("span");
-            themeElement.className = "label label-default";
-            var content = [];
+            var content = false;
             theme.forEach(function (element) {
+                var span = document.createElement("span");
+                span.className = "label label-default";
+
                 if (pageLanguage === "en") { // theme comes with only two languages
-                    content.push(element.title.en);
+                    span.innerHTML = element.title.en;
                 } else {
-                    content.push(element.title.nb);
+                    span.innerHTML = element.title.nb;
                 }
+                if (content) {
+                    themeElement.appendChild(document.createTextNode(" "));
+                }
+                themeElement.appendChild(span);
+                content = true;
             });
-            themeElement.innerHTML = content.join(", ");
+
         }
 
         var landingPage = source.landingPage;
@@ -467,7 +474,7 @@ function showPage () {
     if (langName === "Norsk (bokmål)") pageLanguage="nb";
     if (langName === "Norsk (nynorsk)") pageLanguage = "nn";
 
-    console.log(pageLanguage);
+    console.log("page lang: " + pageLanguage);
 
     searchController();
     sortController();
