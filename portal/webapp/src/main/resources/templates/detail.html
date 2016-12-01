@@ -23,82 +23,95 @@
         <div class="col-lg-6">
             <div>
                 <h3>Kontaktinformasjon</h3>
-                <dl>Navn
-                    <dt th:text="${dataset.contactPoint} ? ${dataset.contactPoint.fullname} : ''" />
-                </dl>
-                <dl>Epost
-                    <dt th:text="${dataset.contactPoint} ? ${dataset.contactPoint.email} : ''" />
-                </dl>
-                <dl>Telefon
-                    <dt th:text="${dataset.contactPoint} ? ${dataset.contactPoint.telephone} : ''" />
+                <dl class="dl-horizontal">
+                    <dt>Navn</dt>
+                    <dd th:text="${dataset.contactPoint} ? ${dataset.contactPoint.fullname} : ''" />
+                    <dt>Epost</dt>
+                    <dd th:text="${dataset.contactPoint} ? ${dataset.contactPoint.email} : ''" />
+                    <dt>Telefon</dt>
+                    <dd th:text="${dataset.contactPoint} ? ${dataset.contactPoint.telephone} : ''" />
                 </dl>
             </div>
-            <div>
+            <div th:if="${dataset.conformsTo != null and not #lists.isEmpty(dataset.conformsTo)}">
                 <h3>Konformitet</h3>
-                <dt th:text="${dataset.conformsTo}" />
+                <dl class="dl-horizontal">
+                    <dt th:each="conformsTo : ${dataset.conformsTo}" >
+                        <dd th:text="${conformsTo} + ' '"/>
+                    </dt>
+                </dl>
             </div>
-            <div>
+            <div th:if="${dataset.distribution != null and not #lists.isEmpty(dataset.distribution)}">
                 <h3>Distribusjon</h3>
-                <span th:each="distribution : ${dataset.distribution}">
-                    <span th:text="'Tittel: ' + ${distribution.title.get('nb')}" />
-                    <span th:text="'Besrivelse: ' + ${distribution.description.get('nb')} + ', '" />
-                </span>
+                <dl class="dl-horizontal" th:each="distribution : ${dataset.distribution}">
+                    <dt th:text="${distribution.title.get('nb')}" />
+                    <dd th:text="${distribution.description.get('nb')}" />
+                </dl>
             </div>
             <div>
                 <h3>Kvalitet</h3>
-                <dl>Opphav
-                    <dt th:text="${dataset.provenance}"/>
+                <dl class="dl-horizontal">
+                    <dt>Opphav: </dt>
+                    <dd th:text="${dataset.provenance}"/>
                 </dl>
             </div>
             <div>
                 <h3>Øvrig info</h3>
-                <dl>Opprettet dato
-                    <dt th:text="${dataset.issued != null}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''" />
-                </dl>
-                <dl>Modifisert dato
-                    <dt th:text="${dataset.modified != null} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" />
-                </dl>
-                <dl>Språk
-                    <dt th:text="${dataset.language}"/>
-                </dl>
-                <dl>Temaen
-                    <dt th:each="theme : ${dataset.theme}" >
-                        <dt th:text="${theme.title.get('nb')}"/>
-                    </dt>
-                </dl>
-                <dl>Tidsperiode
-                    <dt th:each="period : ${dataset.temporal}" >
-                        <dt th:text="'Fra: ' + ${period.startDate != null}  ? ${#dates.format(period.startDate, 'yyyy-MM-dd')} : ''"/>
-                        <dt th:text="'Til: ' + ${period.endDate != null}  ? ${#dates.format(period.endDate, 'yyyy-MM-dd')} : '' + ', '"/>
-                    </dt>
-                </dl>
-                <dl>Dekningsområde
-                    <dt th:each="omrade : ${dataset.spatial}" >
-                        <dt th:text="${omrade} + ', '"/>
-                    </dt>
+                <dl class="dl-horizontal">
+                    <dt>Opprettet dato</dt>
+                    <dd th:text="${dataset.issued != null}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''" />
+                    <dt>Modifisert dato</dt>
+                    <dd th:text="${dataset.modified != null} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" />
+                    <dt>Språk</dt>
+                    <dd th:text="${dataset.language}"/>
+                    <dt>Tema</dt>
+                    <dd th:each="theme : ${dataset.theme}" >
+                        <span th:text="${theme.title.get('nb')}"/>
+                    </dd>
+                    <dt>Tidsperiode</dt>
+                    <dd th:each="period : ${dataset.temporal}" >
+                        <dd th:text="'Fra: ' + ${period.startDate != null}  ? ${#dates.format(period.startDate, 'yyyy-MM-dd')} : ''"/>
+                        <dd th:text="'Til: ' + ${period.endDate != null}  ? ${#dates.format(period.endDate, 'yyyy-MM-dd')} : '' + ', '"/>
+                    </dd>
+                    <dt>Dekningsområde</dt>
+                    <dd th:each="omrade : ${dataset.spatial}" >
+                        <span th:text="${omrade} + ', '"/>
+                    </dd>
                 </dl>
             </div>
         </div>
         <div class="col-lg-6">
-            <div>
+            <div class="dl-horizontal">
                 <h3>Opplysninger</h3>
-                <span th:each="opplysninger: ${dataset.keyword.get('nb')}">
-                    <span th:each="opplysning: ${opplysninger}">
-                        <span th:text="${opplysning} + ', '" />
-                    </span>
-                </span>
+                <dl>
+                    <dt>Emneord</dt>
+                    <dd>
+                        <span th:each="opplysninger: ${dataset.keyword.get('nb')}">
+                            <span th:each="opplysning: ${opplysninger}">
+                                <span th:text="${opplysning} + ', '" />
+                            </span>
+                        </span>
+                    </dd>
+                    <dt>Begrep</dt>
+                    <dd th:each="theme : ${dataset.theme}" >
+                        <span th:text="${theme.conceptSchema.title}"/>
+                    </dd>
+                </dl>
             </div>
-            <div>
+            <div th:if="${dataset.accessRights} != null">
                 <h3>Restriksjoner</h3>
-                <dt th:text="'Restriksjon: ' + ${dataset.accessRights}"/>
-                <dt th:each="kommentar : ${dataset.accessRightsComment}" >
-                    <dt th:text="${kommentar}"/>
-                </dt>
+                <dl class="dl-horizontal">
+                    <dt>Restriksjon</dt>
+                    <dd th:text="${dataset.accessRights}"/>
+                    <dt>Kommentar</dt>
+                    <dd th:each="kommentar : ${dataset.accessRightsComment}" >
+                        <dd th:if="${kommentar} != null" th:text="${kommentar}"/>
+                    </dd>
+                </dl>
             </div>
             <div>
                 <h3>Formål</h3>
             </div>
-            <div>
+            <div th:if="${dataset.references} != null">
                 <h3>Relaterte</h3>
                 <dt th:each="relatert : ${dataset.references}" >
                     <dt th:text="${relatert}"/>
