@@ -3,6 +3,8 @@ var themeFacetElement = document.getElementById("facet.theme");
 var themeFilter = []; // contains theme codes that dataset should be filtered upon
 var themeMap = {}; // contains codes and corresponding theme titles
 var themeLanguage = "nb";
+var themeViewToggle = true;
+var themeData = {};
 
 /**
 * Sets the theme filter code to be used by the query
@@ -134,6 +136,7 @@ function deactivateFacet(data) {
 * Sets up the theme Facet
 */
 function facetThemeController(theme) {
+    themeData = theme;
 
     if (theme && theme.buckets) {
 
@@ -143,11 +146,12 @@ function facetThemeController(theme) {
 
         var ul = themeFacetElement.getElementsByTagName("ul")[0];
 
+        var themeCounter = 0;
         // for each theme found in dataset
         theme.buckets.forEach(function (item){
 
             var themeElem = document.createElement("a");
-
+            themeCounter++;
             // data contains the code to the theme
             themeElem.setAttribute("data", item.key);
             themeElem.setAttribute("href", "#");
@@ -156,6 +160,9 @@ function facetThemeController(theme) {
                 themeElem.className = "list-group-item active";
             } else {
                 themeElem.className = "list-group-item";
+            }
+            if (themeViewToggle && themeCounter > 6) {
+                themeElem.className += " hidden";
             }
             themeElem.innerHTML = getTheme(item.key) + " " + createBadge(item.doc_count);
             themeElem.onclick = function (event) {
@@ -179,6 +186,27 @@ function facetThemeController(theme) {
 
             ul.appendChild(themeElem);
         });
+        // more/less toggle
+        var toggleElement = document.createElement("a");
+        toggleElement.className = "btn btn-outline-secondary btn-sm";
+        if (pageLanguage === "nb") {
+            toggleElement.innerHTML = themeViewToggle ? "Mer" : "Mindre";
+        } else if (pageLanguage === "nn") {
+            toggleElement.innerHTML = themeViewToggle ? "Meir" : "Mindre";
+        } else {
+            toggleElement.innerHTML = themeViewToggle ? "More" : "Less";
+        }
+        toggleElement.onclick = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            themeViewToggle = !themeViewToggle;
+            resetFacets();
+            facetThemeController(themeData);
+        };
+
+        ul.appendChild(toggleElement);
+
     }
 
 }
