@@ -3,9 +3,11 @@ package no.difi.dcat.datastore.domain.dcat.builders;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
@@ -63,6 +65,7 @@ public class DatasetBuilder extends AbstractBuilder {
         if (dataset != null) {
             created.setId(dataset.getURI());
             created.setTitle(extractLanguageLiteral(dataset, DCTerms.title));
+            created.setIdentifier(extractMultipleStrings(dataset, DCTerms.identifier));
             created.setDescription(extractLanguageLiteral(dataset, DCTerms.description));
             created.setIssued(extractDate(dataset, DCTerms.issued));
             created.setModified(extractDate(dataset, DCTerms.modified));
@@ -73,13 +76,17 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setPublisher(extractPublisher(dataset));
             created.setTheme(extractTheme(dataset, DCAT.theme, dataThemes));
 			created.setConformsTo(extractMultipleStrings(dataset, DCTerms.conformsTo));
+            created.setPage(extractMultipleStrings(dataset, FOAF.page));
+            created.setAccruralPeriodicity(extractAsString(dataset, DCTerms.accrualPeriodicity));
 			created.setTemporal(extractPeriodOfTime(dataset));
 			created.setSpatial(extractMultipleStrings(dataset, DCTerms.spatial));
 			created.setAccessRights(extractAsString(dataset, DCTerms.accessRights));
 			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
+            created.setSubject(extractMultipleStrings(dataset, DCTerms.subject));
 			created.setReferences(extractMultipleStrings(dataset, DCTerms.references));
 			created.setProvenance(extractAsString(dataset, DCTerms.provenance));
-
+            created.setADMSIdentifier(extractMultipleStrings(dataset, ADMS.identifier));
+            created.setType(extractAsString(dataset, DCTerms.type));
 		}
         if (catalog != null) {
             created.setCatalog(CatalogBuilder.create(catalog));

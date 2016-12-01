@@ -5,6 +5,9 @@ public class Contact {
 	private String id;
 	private String fullname;
 	private String email;
+	private String organisationName;
+	private String organizationUnit;
+	private String hasURL;
 
 	public String getTelephone() {
 		return telephone;
@@ -34,7 +37,29 @@ public class Contact {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
+
+	public void setOrganisationName(String organisationName) {
+		this.organisationName = organisationName;
+	}
+
+	public String getOrganisationName() {
+		return organisationName;
+	}
+
+	public void setOrganizationUnit(String organizationUnit) {
+		this.organizationUnit = organizationUnit;
+	}
+
+	public String getOrganizationUnit() {
+		return organizationUnit;
+	}
+
+	public void setHasURL(String hasURL) {
+		this.hasURL = hasURL;
+	}
+
+	public String getHasURL() {
+		return hasURL;
+	}
 }

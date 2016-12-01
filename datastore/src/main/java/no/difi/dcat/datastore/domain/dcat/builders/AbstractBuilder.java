@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
+import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
@@ -124,36 +125,40 @@ public abstract class AbstractBuilder {
 			final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
 
 			contact.setId(object.getURI());
-			final String fn = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#fn"));
+			final String fn = extractAsString(object, Vcard.fn);
 			if (fn != null) {
 				hasAttributes = true;
 				contact.setFullname(fn);
 			}
 
-			final String email = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasEmail"));
+			final String email = extractAsString(object, Vcard.hasEmail);
 			if (email != null) {
 				hasAttributes = true;
 				contact.setEmail(email.replace("mailto:", ""));
 			}
 
-			final String telephone = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#hasTelephone"));
+			final String telephone = extractAsString(object, Vcard.hasTelephone);
 			if (telephone != null) {
 				hasAttributes = true;
 				contact.setTelephone(telephone.replace("tel:", ""));
 			}
 
-			// TODO - set fullname
-			final String organisationName = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#organization-name"));
-			if (telephone != null) {
+			final String organisationName = extractAsString(object, Vcard.organizationName);
+			if (organisationName != null) {
 				hasAttributes = true;
-				contact.setFullname(organisationName);
+				contact.setOrganisationName(organisationName);
 			}
 
-			// TODO - sets fullname, Contact should have a separate attribute perhaps?
-			final String organizationUnit = extractAsString(object, ResourceFactory.createProperty("http://www.w3.org/2006/vcard/ns#organization-unit"));
-			if (organizationUnit != null && contact.getFullname() == null) {
+			final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
+			if (organizationUnit != null) {
 				hasAttributes = true;
-				contact.setFullname(organizationUnit);
+				contact.setOrganizationUnit(organizationUnit);
+			}
+
+			final String hasURL = extractAsString(object, Vcard.hasURL);
+			if (hasURL != null) {
+				hasAttributes = true;
+				contact.setHasURL(hasURL);
 			}
 
 			if (hasAttributes) {
