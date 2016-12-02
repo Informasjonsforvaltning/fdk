@@ -23,13 +23,25 @@
         <div class="col-lg-6">
             <div>
                 <h3>Kontaktinformasjon</h3>
-                <dl class="dl-horizontal">
-                    <dt>Navn</dt>
-                    <dd th:text="${dataset.contactPoint} ? ${dataset.contactPoint.fullname} : ''" />
-                    <dt>Epost</dt>
-                    <dd th:text="${dataset.contactPoint} ? ${dataset.contactPoint.email} : ''" />
-                    <dt>Telefon</dt>
-                    <dd th:text="${dataset.contactPoint} ? ${dataset.contactPoint.telephone} : ''" />
+                <dl class="dl-horizontal" th:if="${dataset.contactPoint}">
+                    <dt th:if="${dataset.contactPoint.fullname} != null">Navn
+                        <dd th:text="${dataset.contactPoint.fullname}" />
+                    </dt>
+                    <dt th:if="${dataset.contactPoint.email} != null">Epost
+                        <dd th:text="${dataset.contactPoint.email}" />
+                    </dt>
+                    <dt th:if="${dataset.contactPoint.telephone} != null">Telefon
+                        <dd th:text="${dataset.contactPoint.telephone}" />
+                    </dt>
+                    <dt th:if="${dataset.contactPoint.organizationName} != null">Telefon
+                        <dd th:text="${dataset.contactPoint.organizationName}" />
+                    </dt>
+                    <dt th:if="${dataset.contactPoint.organizationUnit} != null">Telefon
+                        <dd th:text="${dataset.contactPoint.organizationUnit}" />
+                    </dt>
+                    <dt th:if="${dataset.contactPoint.hasURL} != null">Telefon
+                        <dd th:text="${dataset.contactPoint.hasURL}" />
+                    </dt>
                 </dl>
             </div>
             <div th:if="${dataset.conformsTo != null and not #lists.isEmpty(dataset.conformsTo)}">
@@ -92,8 +104,8 @@
                         </span>
                     </dd>
                     <dt>Begrep</dt>
-                    <dd th:each="theme : ${dataset.theme}" >
-                        <span th:text="${theme.conceptSchema.title}"/>
+                    <dd th:each="subject : ${dataset.subject}" >
+                        <span th:text="${subject}"/>
                     </dd>
                 </dl>
             </div>

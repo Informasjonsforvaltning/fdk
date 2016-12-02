@@ -92,8 +92,32 @@ public class Dataset {
 	//Norwegian: Opphav
 	private String provenance;
 
+	//dct:identifier
+	//Norwegian: identifikator
+	private List<String> identifier;
 
-    public List<DataTheme> getTheme() {
+	//foaf:page
+	//Norwegian: dokumentasjon
+	private List<String> page;
+
+	//dct:accruralPeriodicity
+	//Norwegian: frekvens
+	private String accruralPeriodicity;
+
+	//dct:subject
+	//Norwegian: begrep
+	private List<String> subject;
+
+	//dct:type
+	//Norwegian: type
+	private String type;
+
+	//adms:identifier
+	//Norwegian: annen identifikator
+	private List<String> ADMSIdentifier;
+
+
+	public List<DataTheme> getTheme() {
         return theme;
     }
 
@@ -205,4 +229,52 @@ public class Dataset {
 
 	public String getProvenance() { return provenance; }
 	public void setProvenance(String provenance) { this.provenance = provenance; }
+
+	public void setIdentifier(List<String> identifier) {
+		this.identifier = identifier;
+	}
+
+	public List<String> getIdentifier() {
+		return identifier;
+	}
+
+	public void setPage(List<String> page) {
+		this.page = page;
+	}
+
+	public List<String> getPage() {
+		return page;
+	}
+
+	public void setAccruralPeriodicity(String accrualPeriodicity) {
+		this.accruralPeriodicity = accrualPeriodicity;
+	}
+
+	public String getAccruralPeriodicity() {
+		return accruralPeriodicity;
+	}
+
+	public void setSubject(List<String> subject) {
+		this.subject = subject;
+	}
+
+	public List<String> getSubject() {
+		return subject;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setADMSIdentifier(List<String> ADMSIdentifier) {
+		this.ADMSIdentifier = ADMSIdentifier;
+	}
+
+	public List<String> getADMSIdentifier() {
+		return ADMSIdentifier;
+	}
 }
