@@ -41,7 +41,7 @@ public class Loader {
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300);
+            ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
 
 
             CrawlerJob job = new CrawlerJob(dcatSource, null, Application.getBrregCache(), esHandler);

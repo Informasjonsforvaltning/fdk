@@ -33,6 +33,9 @@ public class CrawlerJobFactory {
 	private FusekiResultHandler fusekiResultHandler;
 	private ElasticSearchResultHandler elasticSearchResultHandler;
 
+	//TODO: gjør om til property
+	private String elasticSearchClusterName = "fellesdatakatalog";
+
 	@PostConstruct
 	public void initialize() {
 		adminDataStore = new AdminDataStore(new Fuseki(fusekiSettings.getAdminServiceUri()));
@@ -42,7 +45,7 @@ public class CrawlerJobFactory {
 	}
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
-		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort());
+		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), elasticSearchClusterName);
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler);
 	}
 
