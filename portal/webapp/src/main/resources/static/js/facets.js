@@ -7,54 +7,6 @@ var themeViewToggle = true;
 var themeData = {};
 
 /**
-* Sets the theme filter code to be used by the query
-* This is later used by themeFacetController to add filter and highlight facets
-*/
-function setThemeFilter(code) {
-    if (themeFilter.indexOf(code) === -1) {
-        themeFilter.push(code);
-    }
-}
-/**
-* adds a code to the theme filter.
-* 1) creates filter element
-* 2) add code to filter array
-*/
-
-function addThemeFilter(code) {
-    if (code && themeFilter.indexOf(code) === -1) {
-        createFilterElement(code,getTheme(code),'label-default');
-        themeFilter.push(code);
-
-        // Execute search
-        resetResultCursor();
-        doSearch();
-    }
-}
-
-/**
-* Removes a code from the theme filter.
-* 1) remove filter element
-* 2) deactivate facet
-* 3) remove code from theme filter array
-*/
-function removeThemeFilter(code) {
-    if (code && themeFilter.indexOf(code) > -1) {
-
-        removeFilterElement(code);
-
-        deactivateFacet(code);
-
-        var index = themeFilter.indexOf(code);
-        themeFilter.splice(index,1);
-
-        // Execute search
-        resetResultCursor();
-        doSearch();
-    }
-}
-
-/**
 * returns the title of the theme code
 */
 function getTheme(code) {
@@ -70,21 +22,22 @@ function getTheme(code) {
 
 
 /**
-* If themeMap is empty fetch themes from codeList and update the themeMap
-*
+* Sets the theme filter code to be used by the query
+* This is later used by themeFacetController to add filter and highlight facets
 */
-function createThemeMap() {
-    if (Object.keys(themeMap).length === 0) {
-        var res = codeList["data-themes"];
-        res.hits.hits.forEach(function (theme) {
-            var code = theme._source.code;
+function setThemeFilter(code) {
+    if (themeFilter.indexOf(code) === -1) {
+        themeFilter.push(code);
+    }
+}
 
-            var title = {
-                "nb": theme._source.title.nb,
-                "en": theme._source.title.en
-            };
-            themeMap[code] = title;
-        });
+/**
+* Identifies and removes a filter element with the corresponding data attribute
+*/
+function removeFilterElement(name) {
+    var f = $("#filter").find("a[data='" + name +"']")[0];
+    if (f) {
+        filterElement.removeChild(f);
     }
 }
 
@@ -112,17 +65,25 @@ function createFilterElement(data, name, label) {
     }
 }
 
-function removeFilterElement(name) {
-    var f = $("#filter").find("a[data='" + name +"']")[0];
-    if (f) {
-        filterElement.removeChild(f);
+/**
+* adds a code to the theme filter.
+* 1) creates filter element
+* 2) add code to filter array
+*/
+function addThemeFilter(code) {
+    if (code && themeFilter.indexOf(code) === -1) {
+        createFilterElement(code,getTheme(code),'label-default');
+        themeFilter.push(code);
+
+        // Execute search
+        resetResultCursor();
+        doSearch();
     }
 }
 
-function createBadge(count) {
-    return "<span class='badge'>" + count + "</span>";
-}
-
+/**
+* Changes class on facet with corresponding data attribute to non active
+*/
 function deactivateFacet(data) {
     if (data) {
         var element = $('.list-group-item[data="'+data+'"]')[0];
@@ -130,6 +91,85 @@ function deactivateFacet(data) {
             element.className = 'list-group-item';
         }
     }
+}
+
+
+/**
+* Removes a theme filter.
+* 1) remove filter element
+* 2) deactivate facet
+* 3) remove code from theme filter array
+*/
+function removeThemeFilter(code) {
+    if (code && themeFilter.indexOf(code) > -1) {
+
+        removeFilterElement(code);
+
+        deactivateFacet(code);
+
+        var index = themeFilter.indexOf(code);
+        themeFilter.splice(index,1);
+
+        // Execute search
+        resetResultCursor();
+        doSearch();
+    }
+}
+
+
+
+/**
+* If themeMap is empty fetch themes from codeList and update the themeMap
+*
+*/
+function createThemeMap() {
+    if (Object.keys(themeMap).length === 0) {
+        var res = codeList["data-themes"];
+        res.hits.hits.forEach(function (theme) {
+            var code = theme._source.code;
+
+            var title = {
+                "nb": theme._source.title.nb,
+                "en": theme._source.title.en
+            };
+            themeMap[code] = title;
+        });
+    }
+}
+
+
+
+function createBadge(count) {
+    return "<span class='badge'>" + count + "</span>";
+}
+
+
+// removes all facet information
+function resetFacets() {
+    var facets = [ themeFacetElement ];
+
+    facets.forEach(function (facet) {
+        var ul = facet.getElementsByTagName("ul")[0];
+        while (ul.firstChild) {
+            ul.removeChild(ul.firstChild);
+        }
+    });
+}
+
+/**
+* Returns toggle text for the three langauages supported.
+*/
+function getToggleText() {
+    var result = "";
+    if (pageLanguage === "nb") {
+        result = themeViewToggle ? "Mer" : "Mindre";
+    } else if (pageLanguage === "nn") {
+        result = themeViewToggle ? "Meir" : "Mindre";
+    } else {
+       result = themeViewToggle ? "More" : "Less";
+    }
+
+    return result;
 }
 
 /**
@@ -189,13 +229,7 @@ function facetThemeController(theme) {
         // more/less toggle
         var toggleElement = document.createElement("a");
         toggleElement.className = "btn btn-outline-secondary btn-sm";
-        if (pageLanguage === "nb") {
-            toggleElement.innerHTML = themeViewToggle ? "Mer" : "Mindre";
-        } else if (pageLanguage === "nn") {
-            toggleElement.innerHTML = themeViewToggle ? "Meir" : "Mindre";
-        } else {
-            toggleElement.innerHTML = themeViewToggle ? "More" : "Less";
-        }
+        toggleElement.innerHTML = getToggleText();
         toggleElement.onclick = function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -211,17 +245,7 @@ function facetThemeController(theme) {
 
 }
 
-// removes facet information
-function resetFacets() {
-    var facets = [ themeFacetElement ];
 
-    facets.forEach(function (facet) {
-        var ul = facet.getElementsByTagName("ul")[0];
-        while (ul.firstChild) {
-            ul.removeChild(ul.firstChild);
-        }
-    });
-}
 
 /**
 * Sets up the facet controller. Calls the individual facets
