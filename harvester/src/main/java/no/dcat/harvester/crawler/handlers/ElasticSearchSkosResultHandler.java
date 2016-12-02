@@ -23,17 +23,19 @@ public class ElasticSearchSkosResultHandler implements CrawlerResultHandler {
     private final Logger logger = LoggerFactory.getLogger(ElasticSearchSkosResultHandler.class);
     private final String hostename;
     private final int port;
+    private final String clustername;
 
-    public ElasticSearchSkosResultHandler(String hostname, int port) {
+    public ElasticSearchSkosResultHandler(String hostname, int port, String clustername) {
         this.hostename = hostname;
         this.port = port;
+        this.clustername = clustername;
     }
 
     @Override
     public void process(DcatSource dcatSource, Model model) {
         logger.trace("Processing results Elasticsearch");
 
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port)) {
+        try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {
             logger.trace("Start indexing");
             indexWithElasticsearch(dcatSource, model, elasticsearch);
         } catch (Exception e) {

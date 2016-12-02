@@ -398,6 +398,7 @@ public class SimpleQueryService {
             InetAddress inetaddress = InetAddress.getByName(host);
             InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
 
+            //TODO: Gjør cluster name til en property
             Settings settings = Settings.builder()
                     .put("cluster.name", "fellesdatakatalog").build();
                     //.put("client.transport.sniff", true).build();

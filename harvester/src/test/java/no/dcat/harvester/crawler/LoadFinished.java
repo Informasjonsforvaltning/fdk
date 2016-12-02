@@ -29,7 +29,7 @@ public class LoadFinished {
         Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
 
         //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300);
+        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
 
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
