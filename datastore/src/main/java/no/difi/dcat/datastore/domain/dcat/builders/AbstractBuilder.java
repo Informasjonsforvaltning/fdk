@@ -13,7 +13,6 @@ import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,7 +145,7 @@ public abstract class AbstractBuilder {
 			final String organisationName = extractAsString(object, Vcard.organizationName);
 			if (organisationName != null) {
 				hasAttributes = true;
-				contact.setOrganisationName(organisationName);
+				contact.setOrganizationName(organisationName);
 			}
 
 			final String organizationUnit = extractAsString(object, Vcard.organizationUnit);

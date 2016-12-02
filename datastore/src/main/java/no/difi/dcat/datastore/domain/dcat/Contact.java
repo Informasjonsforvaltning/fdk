@@ -5,7 +5,7 @@ public class Contact {
 	private String id;
 	private String fullname;
 	private String email;
-	private String organisationName;
+	private String organizationName;
 	private String organizationUnit;
 	private String hasURL;
 
@@ -39,12 +39,12 @@ public class Contact {
 	}
 
 
-	public void setOrganisationName(String organisationName) {
-		this.organisationName = organisationName;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 
-	public String getOrganisationName() {
-		return organisationName;
+	public String getOrganizationName() {
+		return organizationName;
 	}
 
 	public void setOrganizationUnit(String organizationUnit) {
