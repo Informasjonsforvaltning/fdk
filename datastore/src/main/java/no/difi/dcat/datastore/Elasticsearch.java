@@ -69,10 +69,12 @@ public class Elasticsearch implements AutoCloseable {
 					.put("cluster.name", clusterName)
 					.put("client.transport.sniff", true).build();
 
+			//TODO: cleanup. clustername parameteriseres
 			//client = new TransportClient(settings).addTransportAddress(address);
-
-			client = TransportClient.builder().settings(settings).build()
+			client = TransportClient.builder().build()
 					.addTransportAddress(address);
+			//client = TransportClient.builder().settings(settings).build()
+			//		.addTransportAddress(address);
 
 			logger.debug("Client returns! " + address.toString() );
 
