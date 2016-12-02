@@ -8,22 +8,6 @@
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
     <style>
-.publisher {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.overflow-text {
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   line-height: 120%; //1em;     /* fallback */
-   max-height: 360%; // 3em;      /* fallback */
-   -webkit-line-clamp: 3; /* number of lines to show */
-   -webkit-box-orient: vertical;
-}
-
     </style>
 </head>
 <body>
@@ -48,23 +32,26 @@
                     </button>
                 </span>
 
-
             </div>
 
         </form>
     </div>
+
     <div class = "row">
         <th:block th:with="rowCount=${3}">
             <div th:each="r : ${#numbers.sequence(0, rowCount - 1)}"  class="col-sm-4">
                 <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
                     <a th:if="${r &lt; themes.size()}"
-                       th:text="${themes.get(c).title.get('nb')} != null ? ${themes.get(c).title.get('nb')} : ${themes.get(c).title.get('nn')}"
-                       href="#" th:href="${'/results?theme=' + {themes.get(c).code}}" class="span3" />
+                       th:text="${lang == 'en' ? themes.get(c).title.get('en') : themes.get(c).title.get('nb')}"
+                       th:href="${'/results?theme=' + {themes.get(c).code}}" />
                 </h4>
             </div>
         </th:block>
     </div>
+
+    <div lang="en" th:replace="footer :: footer" />
 </div>
-<div lang="en" th:replace="footer :: footer" />
+<script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

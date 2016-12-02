@@ -1,4 +1,5 @@
 var filterElement = document.getElementById("filter");
+var facetDefaultCount = 6;
 var themeFacetElement = document.getElementById("facet.theme");
 var themeFilter = []; // contains theme codes that dataset should be filtered upon
 var themeMap = {}; // contains codes and corresponding theme titles
@@ -201,7 +202,7 @@ function facetThemeController(theme) {
             } else {
                 themeElem.className = "list-group-item";
             }
-            if (themeViewToggle && themeCounter > 6) {
+            if (themeViewToggle && themeCounter > facetDefaultCount) {
                 themeElem.className += " hidden";
             }
             themeElem.innerHTML = getTheme(item.key) + " " + createBadge(item.doc_count);
@@ -226,26 +227,25 @@ function facetThemeController(theme) {
 
             ul.appendChild(themeElem);
         });
-        // more/less toggle
-        var toggleElement = document.createElement("a");
-        toggleElement.className = "btn btn-outline-secondary btn-sm";
-        toggleElement.innerHTML = getToggleText();
-        toggleElement.onclick = function (event) {
-            event.preventDefault();
-            event.stopPropagation();
+        if (themeCounter > facetDefaultCount) {
+            // more/less toggle
+            var toggleElement = document.createElement("a");
+            toggleElement.className = "btn btn-outline-secondary btn-sm";
+            toggleElement.innerHTML = getToggleText();
+            toggleElement.onclick = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
 
-            themeViewToggle = !themeViewToggle;
-            resetFacets();
-            facetThemeController(themeData);
-        };
+                themeViewToggle = !themeViewToggle;
+                resetFacets();
+                facetThemeController(themeData);
+            };
 
-        ul.appendChild(toggleElement);
-
+            ul.appendChild(toggleElement);
+        }
     }
 
 }
-
-
 
 /**
 * Sets up the facet controller. Calls the individual facets

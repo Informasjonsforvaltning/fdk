@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
  * Class for testing ThemeTitleComparator
  */
 public class ThemeTitleComparatorTest {
-    private static ThemeTitleComparator ttc = new ThemeTitleComparator();
+    private static ThemeTitleComparator ttc = new ThemeTitleComparator("nb");
     private static DataTheme d1 = new DataTheme();
     private static DataTheme d2 = new DataTheme();
     private static int equal = 0;

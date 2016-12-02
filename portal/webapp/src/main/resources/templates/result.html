@@ -24,8 +24,6 @@
    -webkit-line-clamp: 3; /* number of lines to show */
    -webkit-box-orient: vertical;
 }
-
-
     </style>
 </head>
 <body>
@@ -62,7 +60,6 @@
         <!-- Filter line -->
 
         <div id="filter" aria-label="Filters">
-
         </div>
 
     </div>
@@ -137,7 +134,8 @@
             <div class="row">
 
                 <div class="col-sm-4 sidebar">
-                    <!-- fasettering -->
+
+                    <!-- facets -->
                     <div id="facet" class="list-group">
                         <a class="list-group-item disabled" href="#"><span
                                 th:text="#{facet.organisation}">Virksomhet</span></a>
@@ -158,8 +156,11 @@
                 <!-- search result -->
                 <div id="datasets" class="col-sm-8 list-group">
 
-                    <a class="row list-group-item dataset" href="#"><strong><span id="search.info"
-                                                                                  th:text="#{result.waiting}">Henter data ...</span></strong></a>
+                    <a class="row list-group-item dataset" href="#">
+                        <strong>
+                            <span id="search.info" th:text="#{result.waiting}">Henter data ...</span>
+                        </strong>
+                    </a>
 
                 </div>
             </div>
@@ -178,7 +179,6 @@
 <script type="text/javascript" src="js/result.js"></script>
 <script type="text/javascript">
         $(document).ready(showPage);
-
 </script>
 </body>
 </html>

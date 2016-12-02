@@ -8,6 +8,11 @@ import java.util.Comparator;
  * Class for comparing title property on DataTheme.
  */
 public class ThemeTitleComparator implements Comparator<DataTheme> {
+    private final String lang;
+
+    public ThemeTitleComparator(String language) {
+        lang = language;
+    }
 
     /**
      * Compare the property title on to objects of type DataTheme.
@@ -31,18 +36,18 @@ public class ThemeTitleComparator implements Comparator<DataTheme> {
             return 1;
         }
 
-        if (o1.getTitle().get("nb") == null && o2.getTitle().get("nb") == null) {
+        if (o1.getTitle().get(lang) == null && o2.getTitle().get(lang) == null) {
             return 0;
         }
 
-        if (o1.getTitle().get("nb") == null) {
+        if (o1.getTitle().get(lang) == null) {
             return -1;
         }
 
-        if (o2.getTitle().get("nb") == null) {
+        if (o2.getTitle().get(lang) == null) {
             return 1;
         }
 
-        return o1.getTitle().get("nb").compareTo(o2.getTitle().get("nb"));
+        return o1.getTitle().get(lang).compareTo(o2.getTitle().get(lang));
     }
 }

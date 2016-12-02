@@ -15,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Delivers html pages to support the DCAT Portal application.
@@ -116,6 +118,8 @@ public class PortalController {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
         URI uri;
+        Locale l = LocaleContextHolder.getLocale();
+        logger.debug(l.getLanguage());
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
@@ -126,7 +130,7 @@ public class PortalController {
 
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
 
-            Collections.sort(dataThemes , new ThemeTitleComparator());
+            Collections.sort(dataThemes , new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
 
             logger.debug(String.format("Found datathemes: %s", json));
         } catch (Exception e) {
@@ -135,6 +139,7 @@ public class PortalController {
             model.setViewName("error");
         }
 
+        model.addObject("lang", l.getLanguage() == "en" ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
