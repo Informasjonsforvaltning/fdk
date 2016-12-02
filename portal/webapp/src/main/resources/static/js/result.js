@@ -1,4 +1,3 @@
-
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = "nb";
 var sortField = "";
@@ -97,6 +96,11 @@ function paginationController () {
     // compute the number of pages available in the search
     var numPages = Math.ceil(total / resultCursor.size);
 
+    // if filters are in play, we need to reset page cursor
+    if (resultCursor.currentPage >= numPages) {
+        resetResultCursor();
+    }
+
     // empty pager list
     $('.pager').empty();
 
@@ -194,13 +198,17 @@ function showResults(searchResult) {
     }
     // Oppdaterer søkeinformasjon
     total = res.hits.total;
+
+    facetController(res);
+
     var summary = document.getElementById("total.hits");
-    var info = document.getElementById("search.info");
-    if (summary) {
-        if (info && total === 0) {
-            info.innerHTML = "Ingen resultater funnet";
-        }
-        summary.innerHTML = total;
+    summary.innerHTML = total;
+
+    if (total === 0) {
+       var zeroHitElement = document.createElement("a");
+       zeroHitElement.className = "row list-group-item dataset";
+       zeroHitElement.innerHTML = "<h4><center>Ingen resultater funnet</center></h4>";
+       results.appendChild(zeroHitElement);
     }
 
     paginationController();
@@ -226,16 +234,23 @@ function showResults(searchResult) {
         var theme = source.theme;
         if (theme) {
             themeElement = document.createElement("span");
-            themeElement.className = "label label-default";
-            var content = [];
+            var content = false;
             theme.forEach(function (element) {
+                var span = document.createElement("span");
+                span.className = "label label-default";
+
                 if (pageLanguage === "en") { // theme comes with only two languages
-                    content.push(element.title.en);
+                    span.innerHTML = element.title.en;
                 } else {
-                    content.push(element.title.nb);
+                    span.innerHTML = element.title.nb;
                 }
+                if (content) {
+                    themeElement.appendChild(document.createTextNode(" "));
+                }
+                themeElement.appendChild(span);
+                content = true;
             });
-            themeElement.innerHTML = content.join(", ");
+
         }
 
         var landingPage = source.landingPage;
@@ -278,13 +293,15 @@ function showResults(searchResult) {
         if (source.distribution) {
 
             source.distribution.forEach(function (dist) {
-                 console.log(dist.format);
-                 var a = document.createElement("a");
-                 a.href = dist.accessURL;
-                 a.innerHTML = dist.format;
-                 a.className = "label label-info";
-                 distributionList.appendChild(a);
-                 distributionList.appendChild(document.createTextNode(" "));
+                if (dist.format) {
+                     var a = document.createElement("a");
+                     a.href = dist.accessURL;
+                     a.innerHTML = dist.format;
+                     a.className = "label label-info";
+                     // TODO add href to distribution page
+                     distributionList.appendChild(a);
+                     distributionList.appendChild(document.createTextNode(" "));
+                 }
             });
         }
 
@@ -330,17 +347,24 @@ function showResults(searchResult) {
 }
 
 function doSearch() {
-    var theme = $('meta[name="theme"]').attr('content');
 
-    var urlstring = searchUrl + "?q=" + search.value + "&from="+resultCursor.from +"&size="+resultCursor.size ;
-    if (sortField) urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
-    if (theme && theme !== "") urlstring += "&theme=" + theme;
-    console.log(urlstring);
+    if (search) {
+        var urlstring = searchUrl + "/search?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
 
-    $('meta[name="theme"]').attr("content", "");
+        if (sortField) {
+            urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+        }
 
-    // does an asynchronous call and calls showResults function.
-    httpGetAsync(urlstring, showResults);
+        if (themeFilter.length > 0) {
+            urlstring += "&theme=" + themeFilter.join(",");
+        }
+
+        console.log(urlstring);
+
+        // does an asynchronous call and calls showResults function.
+        httpGetAsync(urlstring, showResults);
+    }
+
 }
 
 // changes page and starts a new search
@@ -430,7 +454,13 @@ function showPage () {
 
     searchUrl = $('meta[name="dcatQueryService"]').attr('content');
 
-    console.log("service: " + searchUrl);
+    var t = $('meta[name="theme"]').attr('content');
+    if ( t !== undefined && t !== "") {
+        setThemeFilter(t);
+        $('meta[name="theme"]').attr("content", "");
+    }
+
+    console.log("query service: " + searchUrl);
 
     // find the chosen language from the page
     var chosenLanguage = document.getElementById("chosenLanguage");
@@ -444,7 +474,7 @@ function showPage () {
     if (langName === "Norsk (bokmål)") pageLanguage="nb";
     if (langName === "Norsk (nynorsk)") pageLanguage = "nn";
 
-    console.log(pageLanguage);
+    console.log("page lang: " + pageLanguage);
 
     searchController();
     sortController();
@@ -452,8 +482,5 @@ function showPage () {
 
     // First call to search
     doSearch();
-
 }
-
-
 

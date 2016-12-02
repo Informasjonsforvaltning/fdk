@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -93,7 +95,8 @@ public class SimpleQueryService {
                 .append(" size:").append(size)
                 .append(" lang:").append(lang)
                 .append(" sortfield:").append(sortfield)
-                .append(" sortdirection:").append(sortdirection);
+                .append(" sortdirection:").append(sortdirection)
+                .append(" theme:").append(theme);
 
         logger.debug(loggMsg.toString());
 
@@ -187,9 +190,10 @@ public class SimpleQueryService {
 
             response = client.prepareSearch("dcat")
                     .setTypes("dataset")
-                    .setQuery(search)
+                    .setQuery(boolQuery)
                     .setFrom(from)
                     .setSize(size)
+                    .addAggregation(themeAggregation)
                     .addSort(sbSortField.toString(), sortOrder)
                     .execute()
                     .actionGet();
@@ -201,12 +205,31 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+    /**
+     * Adds theme filter to query. Multiple themes can be specified. It should return only those datasets that have
+     * all themes. To get an exact match we ned to use Elasticsearch tag count trick.
+     *
+     * @param theme comma separated list of theme codes
+     * @param search the search object
+     *
+     * @return a new bool query with the added filter.
+     */
     private BoolQueryBuilder addFilter(@RequestParam(value = "theme", defaultValue = "") String theme, QueryBuilder search) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
+        BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
+
+        // theme can contain multiple themes, example: AGRI,HEAL
         if (!StringUtils.isEmpty(theme)) {
-            boolQuery = boolQuery.filter(QueryBuilders.termQuery("theme.code", theme));
+
+            for (String t : theme.split(",")) {
+                boolFilter.must(QueryBuilders.termQuery("theme.code", t));
+            }
+
+            //boolQuery = boolQuery.filter(QueryBuilders.termsQuery("theme.code", themes));
+            boolQuery = boolQuery.filter(boolFilter);
+
         }
         return boolQuery;
     }
@@ -318,6 +341,8 @@ public class SimpleQueryService {
                 .setTypes("dataset")
                 .addAggregation(aggregation)
                 .execute().actionGet();
+
+        logger.debug(aggregation.toString());
 
         logger.trace(String.format("Dataset count for themes: %s", response.toString()));
 
