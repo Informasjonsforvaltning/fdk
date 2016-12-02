@@ -28,7 +28,7 @@ public class PortalConfiguration {
     private String profile;
 
     /* application.queryService */
-    private String queryService = "http://dcat.dummy.org";
+    // private String queryService = "http://dcat.dummy.org";
     //TODO: fix. hvorfor settes ikke dette automatisk?
     private String queryService = "http://fdk-pqr-fellesdatakatalog-ut1.ose-npc.brreg.no";
 
