@@ -15,6 +15,7 @@ fuseki:
 application:
   elasticSearchHost: es
   elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
 ---
 spring:
     profiles: development
@@ -24,3 +25,4 @@ fuseki:
 application:
   elasticSearchHost: localhost
   elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch

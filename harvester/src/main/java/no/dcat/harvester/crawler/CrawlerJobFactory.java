@@ -38,6 +38,9 @@ public class CrawlerJobFactory {
 	//TODO: gjør om til property
 	private String elasticSearchClusterName = "fellesdatakatalog";
 
+	//TODO: gjør om til property
+	private String elasticSearchClusterName = "fellesdatakatalog";
+
 	private final Logger logger = LoggerFactory.getLogger(CrawlerJobFactory.class);
 
 	@PostConstruct
