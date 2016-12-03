@@ -10,11 +10,11 @@ public class SkosLoader {
 
     public static void main(String[] args) {
         // TODO: the hard coded values shall be parametrized.
-        String clustername = "fellesdatakatalog";
+        String clustername = "elasticsearch";
         String skosUrl = "http://publications.europa.eu/mdr/resource/authority/data-theme/skos/data-theme-skos.rdf";
         //String skosUrl = args[0];
 
-        ElasticSearchSkosResultHandler esSkosHandler = new ElasticSearchSkosResultHandler("elasticsearch-9300-fellesdatakatalog-ut1.ose-npc.brreg.no", 9300, clustername);
+        ElasticSearchSkosResultHandler esSkosHandler = new ElasticSearchSkosResultHandler("192.168.99.100", 9300, clustername);
         DcatSource themeSource = new DcatSource("http//dcat.no/test", "Test", skosUrl, "admin_user", "123456789");
 
         CrawlerSkosJob job = new CrawlerSkosJob(themeSource, null, skosUrl, esSkosHandler);
