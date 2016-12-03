@@ -47,7 +47,7 @@ public class LoadExampleData {
 
         //TODO: putte dette i properties?
         //Elasticsearch clustername on local: elasticsearch. On Openshift: fellesdatakatalog
-        String clustername = "fellesdatakatalog";
+        String clustername = "elasticsearch";
 
         //Load themes from url
         SkosLoader sl = new SkosLoader();
@@ -62,7 +62,7 @@ public class LoadExampleData {
 
         //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
         //ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("192.168.99.100",9300);
-        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("elasticsearch-9300-fellesdatakatalog-ut1.ose-npc.brreg.no",9300, clustername);
+        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("192.168.99.100",9300, clustername);
 
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
