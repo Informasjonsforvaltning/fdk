@@ -159,18 +159,7 @@
     </dependencies>
 
 
-
     <build>
-        <!-- enable filtering to generate project.properties with information from build process -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </resource>
-        </resources>
 
         <plugins>
 
@@ -285,6 +274,22 @@
 
     <profiles>
         <profile>
+            <id>openshift</id>
+            <build>
+                <!-- enable filtering to generate project.properties with information from build process -->
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
+        <profile>
             <id>Props on windows</id>
             <activation>
                 <os>
@@ -304,6 +309,12 @@
                     <resource>
                         <filtering>true</filtering>
                         <directory>src/main/resources/</directory>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                        <excludes>
+                            <exclude>bootstrap.yml</exclude>
+                        </excludes>
                     </resource>
                 </resources>
 
@@ -330,7 +341,7 @@
                     </testResource>
                     <testResource>
                         <filtering>true</filtering>
-                        <directory>src/test-local/resources/</directory>
+                        <directory>src/test-local/resources</directory>
                         <includes>
                             <include>properties/*.*</include>
                             <include>application.yml</include>
