@@ -31,6 +31,8 @@ RUN unzip -o /usr/local/tomcat/fusekiDownloadTemp/apache-jena-fuseki-2.3.1.zip
 
 RUN mv /usr/local/tomcat/fusekiDownloadTemp/apache-jena-fuseki-2.3.1/fuseki.war /usr/local/tomcat/webapps/fuseki.war
 
+RUN chmod 775 -R /usr/local/tomcat/webapps
+
 ADD dcat-config.ttl /etc/fuseki/configuration/
 ADD admin-config.ttl /etc/fuseki/configuration/
 ADD shiro.ini /etc/fuseki/
