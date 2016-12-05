@@ -17,7 +17,6 @@ ADD server.xml /usr/local/tomcat/conf/
 RUN chmod 755 -R /usr/local/tomcat/conf
 RUN chmod 775 -R /usr/local/tomcat/logs
 RUN chmod 775 -R /usr/local/tomcat/temp
-RUN mkdir /usr/local/tomcat/webapps/fuseki
 RUN chmod 775 -R /usr/local/tomcat/webapps
 RUN mkdir /usr/local/tomcat/conf/Catalina
 RUN chmod 775 -R /usr/local/tomcat/conf/Catalina
