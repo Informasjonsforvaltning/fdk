@@ -14,6 +14,10 @@ ADD apache-jena-fuseki-2.3.1.zip /usr/local/tomcat/fusekiDownloadTemp
 ADD tomcat-users.xml /usr/local/tomcat/conf/
 ADD server.xml /usr/local/tomcat/conf/
 
+RUN chmod 755 -R /usr/local/tomcat/conf
+RUN chmod 775 -R /usr/local/tomcat/logs
+
+
 WORKDIR /usr/local/tomcat/fusekiDownloadTemp/
 
 RUN unzip -o /usr/local/tomcat/fusekiDownloadTemp/apache-jena-fuseki-2.3.1.zip
