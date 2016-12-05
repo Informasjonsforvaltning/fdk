@@ -21,7 +21,6 @@ RUN chmod 775 -R /usr/local/tomcat/webapps
 RUN mkdir /usr/local/tomcat/conf/Catalina
 RUN chmod 775 -R /usr/local/tomcat/conf/Catalina
 RUN chmod 775 -R /usr/local/tomcat/work
-RUN chmod 775 -R /etc/fuseki
 
 WORKDIR /usr/local/tomcat/fusekiDownloadTemp/
 
@@ -34,5 +33,6 @@ RUN chmod 777 -R /usr/local/tomcat/webapps
 ADD dcat-config.ttl /etc/fuseki/configuration/
 ADD admin-config.ttl /etc/fuseki/configuration/
 ADD shiro.ini /etc/fuseki/
+RUN chmod 775 -R /etc/fuseki
 
 WORKDIR /usr/local/tomcat/
