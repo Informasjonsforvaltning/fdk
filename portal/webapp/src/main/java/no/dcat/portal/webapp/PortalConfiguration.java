@@ -75,6 +75,10 @@ public class PortalConfiguration {
         return getQueryService() + QUERY_SERVICE_PUBLISHER;
     }
 
+    public final String getPublisherServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_PUBLISHER;
+    }
+
     public final String getDetailsServiceUrl() {
         return getQueryService() + QUERY_SERVICE_DETAIL;
     }
