@@ -33,7 +33,7 @@ public class Elasticsearch implements AutoCloseable {
 	private Client client;
 
 	public Elasticsearch(String host, int port, String clusterName) {
-		logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port);
+		logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
 		this.client = returnElasticsearchTransportClient(host, port, clusterName);
 		logger.debug("transportclient success ...? "+ this.client);
 	}
@@ -69,6 +69,7 @@ public class Elasticsearch implements AutoCloseable {
 			Settings settings = Settings.builder()
 					.put("cluster.name", clusterName).build();
 
+			//TODO: cleanup. clustername parameteriseres
 			//client = new TransportClient(settings).addTransportAddress(address);
 
 			client = TransportClient.builder().settings(settings).build()
