@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title th:text="#{app.title}">Felles datakatalog</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <style>
+.publisher {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.overflow-text {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 120%; //1em;     /* fallback */
+   max-height: 360%; // 3em;      /* fallback */
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="row">
+    <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
+        <a th:text="${publisher.get(r).name}" href="#"
+           th:href="${'/results?publisher=' + {publisher.get(r).name}}" class="span3"/>
+    </div>
+</div>
+</body>
+</html>

@@ -20,9 +20,10 @@ import org.springframework.core.io.ClassPathResource;
 @ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
 
-    private static String QUERY_SERVICE_SEARCH = "/search";
-    private static String QUERY_SERVICE_DETAIL = "/detail";
-    private static String QUERY_SERVICE_THEMES = "/themes";
+    private static final String QUERY_SERVICE_SEARCH = "/search";
+    private static final String QUERY_SERVICE_DETAIL = "/detail";
+    private static final String QUERY_SERVICE_THEMES = "/themes";
+    private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
 
 
     @Value("${spring.profiles.active:development}")
@@ -68,6 +69,10 @@ public class PortalConfiguration {
 
     public final String getThemeServiceUrl() {
         return getQueryService() + QUERY_SERVICE_THEMES;
+    }
+
+    public final String getPublisherServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_PUBLISHER;
     }
 
     public final String getDetailsServiceUrl() {
