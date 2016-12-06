@@ -136,18 +136,6 @@ public class SimpleQueryService {
              }*/
         } else {
 
-
-
-            //search = QueryBuilders.queryStringQuery(query);
-            /*
-            search = QueryBuilders.multiMatchQuery(query,
-                    "title" + "." + language,
-                    "keyword" + "." + language,
-                    "description" + "." + language,
-                    "publisher.name",
-                    "theme.title" + "." + themeLanguage);
-*/
-
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
@@ -156,33 +144,25 @@ public class SimpleQueryService {
                     .field("description" + "." + lang)
                     .field("publisher.name");
 
-
-            /*JSON: {
-                "query": {
-                   "query_string": {
-                   "query": {query string}
-                }
-            }*/
         }
 
         logger.trace(search.toString());
 
-        //Count the number of datasets for each theme in the search result
-        AggregationBuilder themeAggregation = createThemeAggregation();
+        // add filter
         BoolQueryBuilder boolQuery =  addFilter(theme, search);
 
-        SearchResponse response;
-        if (sortfield.trim().isEmpty()) {
+        // set up search query with aggregations
+        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
+                .setTypes("dataset")
+                .setQuery(boolQuery)
+                .setFrom(from)
+                .setSize(size)
+                .addAggregation(createThemeAggregation())
+                .addAggregation(createPublisherAggregation());
 
-            response = client.prepareSearch("dcat")
-                    .setTypes("dataset")
-                    .setQuery(boolQuery)
-                    .setFrom(from)
-                    .setSize(size)
-                    .addAggregation(themeAggregation)
-                    .execute()
-                    .actionGet();
-        } else {
+
+        if (!sortfield.trim().isEmpty()) {
+
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
             StringBuilder sbSortField = new StringBuilder();
 
@@ -192,20 +172,15 @@ public class SimpleQueryService {
                 sbSortField.append(sortfield);
             }
 
-            response = client.prepareSearch("dcat")
-                    .setTypes("dataset")
-                    .setQuery(boolQuery)
-                    .setFrom(from)
-                    .setSize(size)
-                    .addAggregation(themeAggregation)
-                    .addSort(sbSortField.toString(), sortOrder)
-                    .execute()
-                    .actionGet();
+            searchBuilder.addSort(sbSortField.toString(), sortOrder);
         }
 
-        logger.trace("Search response: " + response.toString());
-        // Build query
+        // Execute search
+        SearchResponse response = searchBuilder.execute().actionGet();
 
+        logger.trace("Search response: " + response.toString());
+
+        // return response
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
@@ -370,6 +345,22 @@ public class SimpleQueryService {
             .field("theme.code")
             .size(AGGREGATION_NUMBER_OF_COUNTS)
             .order(Order.count(false));
+    }
+
+    /**
+     * Create a aggregation object that counts the number of datasets
+     * for each theme code.
+     *
+     * Notice: at the moment
+     *
+     * @return aggregation builder object to be used in query
+     */
+    private AggregationBuilder createPublisherAggregation() {
+        return AggregationBuilders
+                .terms("publisherCount")
+                .field("publisher.name.raw")
+                .size(AGGREGATION_NUMBER_OF_COUNTS)
+                .order(Order.count(false));
     }
 
 
