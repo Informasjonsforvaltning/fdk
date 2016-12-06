@@ -137,10 +137,12 @@
 
                     <!-- facets -->
                     <div id="facet" class="list-group">
-                        <a class="list-group-item disabled" href="#"><span
-                                th:text="#{facet.organisation}">Virksomhet</span></a>
-                        <div id="facet.theme" class="list-group-item" data-toggle="collapse" href="#"><span
-                                th:text="#{facet.theme}">Tema</span>
+                        <div class="list-group-item disabled" aria-label="Virksomhet" data-toggle="collapse">
+                            <span th:text="#{facet.organisation}">Virksomhet</span>
+                            <ul class="list-group"/>
+                        </div>
+                        <div id="facet.theme" class="list-group-item" data-toggle="collapse">
+                            <span th:text="#{facet.theme}">Tema</span>
                             <ul class="list-group"/>
                         </div>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span></a>
