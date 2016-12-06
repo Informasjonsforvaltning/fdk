@@ -6,6 +6,8 @@ public class Publisher {
     private String name;
     private String overordnetEnhet;
     private String organisasjonsform;
+    // private List<Publisher> underPublishers;
+    // private Publisher superierPublishers;
 
     public String getId() {
         return id;
