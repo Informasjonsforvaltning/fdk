@@ -1,11 +1,7 @@
 var filterElement = document.getElementById("filter");
 var facetDefaultCount = 6;
-var themeFacetElement = document.getElementById("facet.theme");
-var themeFilter = []; // contains theme codes that dataset should be filtered upon
+
 var themeMap = {}; // contains codes and corresponding theme titles
-var themeLanguage = "nb";
-var themeViewToggle = true;
-var themeData = {};
 
 /**
 * returns the title of the theme code
@@ -14,12 +10,35 @@ function getTheme(code) {
     if (code) {
         var title = themeMap[code];
         if (title) {
-            return title[themeLanguage];
+            return title[filters.theme.language];
         } else {
             return undefined;
         }
     }
 }
+
+function getPublisher(code) {
+    return code;
+}
+
+
+var filters = {
+    "publisher": {
+        facet: document.getElementById("facet.publisher"),
+        active: [], // contains active filters
+        hideMany: true,
+        label: "label-primary",
+        getName: getPublisher
+    },
+    "theme": {
+        facet: document.getElementById("facet.theme"),
+        active: [], // contains active filters
+        hideMany : true,
+        language : "nb",
+        label: "label-default",
+        getName: getTheme
+    }
+};
 
 
 /**
@@ -27,8 +46,8 @@ function getTheme(code) {
 * This is later used by themeFacetController to add filter and highlight facets
 */
 function setThemeFilter(code) {
-    if (themeFilter.indexOf(code) === -1) {
-        themeFilter.push(code);
+    if (filters.theme.active.indexOf(code) === -1) {
+        filters.theme.active.push(code);
     }
 }
 
@@ -43,17 +62,15 @@ function removeFilterElement(name) {
 }
 
 /**
-*
+* @filter the filter to remove
 * @data the data identifier to find the facet
-* @name the name to show in filter label
-* @label the bootstrap-label type for the label: default-label, ...
 */
-function createFilterElement(data, name, label) {
+function createFilterElement(filter, data) {
     // check if filter already exists
     var f = $('#filter').find('a[data="'+data+'"]')[0];
 
     if (f === undefined) {
-        var filterLabel = $('<a href="#" class="label '+ label +'" data="'+data+'">' + name + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
+        var filterLabel = $('<a href="#" class="label '+ filter.label +'" data="'+data+'">' + filter.getName(data) + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
         //$("#filter").append(document.createTextNode(" "));
         $("#filter").append(filterLabel);
 
@@ -61,22 +78,38 @@ function createFilterElement(data, name, label) {
         filterLabel.onclick = function (event) {
             event.preventDefault();
 
-            removeThemeFilter(this.getAttribute("data"));
+            removeFilter(this.getAttribute("data"),filter.active);
         };
     }
 }
 
 /**
-* adds a code to the theme filter.
+* adds a code to the filter.
 * 1) creates filter element
 * 2) add code to filter array
 */
 function addThemeFilter(code) {
-    if (code && themeFilter.indexOf(code) === -1) {
-        createFilterElement(code,getTheme(code),'label-default');
-        themeFilter.push(code);
+    if (code && filters.theme.active.indexOf(code) === -1) {
+        createFilterElement(filters.theme, code);
+        filters.theme.active.push(code);
 
         // Execute search
+        resetResultCursor();
+        doSearch();
+    }
+}
+
+/**
+* adds a code to the filter.
+* 1) creates filter element
+* 2) add code to active filter array
+* 3) executes new search
+*/
+function addFilter(filter, code) {
+    if (filter && code) {
+        createFilterElement(filter, code);
+        filter.active.push(code);
+
         resetResultCursor();
         doSearch();
     }
@@ -96,20 +129,20 @@ function deactivateFacet(data) {
 
 
 /**
-* Removes a theme filter.
+* Removes a filter.
 * 1) remove filter element
 * 2) deactivate facet
 * 3) remove code from theme filter array
 */
-function removeThemeFilter(code) {
-    if (code && themeFilter.indexOf(code) > -1) {
+function removeFilter(code, filterArray) {
+    if (code && filterArray.indexOf(code) > -1) {
 
         removeFilterElement(code);
 
         deactivateFacet(code);
 
-        var index = themeFilter.indexOf(code);
-        themeFilter.splice(index,1);
+        var index = filterArray.indexOf(code);
+        filterArray.splice(index,1);
 
         // Execute search
         resetResultCursor();
@@ -151,7 +184,7 @@ function createBadge(count) {
 
 // removes all facet information
 function resetFacets() {
-    var facets = [ themeFacetElement ];
+    var facets = [ filters.theme.facet, filters.publisher.facet ];
 
     facets.forEach(function (facet) {
         var ul = facet.getElementsByTagName("ul")[0];
@@ -164,32 +197,50 @@ function resetFacets() {
 /**
 * Returns toggle text for the three langauages supported.
 */
-function getToggleText() {
+function getToggleText(filter) {
     var result = "";
     if (pageLanguage === "nb") {
-        result = themeViewToggle ? "Mer" : "Mindre";
+        result = filter.hideMany ? "Mer" : "Mindre";
     } else if (pageLanguage === "nn") {
-        result = themeViewToggle ? "Meir" : "Mindre";
+        result = filter.hideMany ? "Meir" : "Mindre";
     } else {
-       result = themeViewToggle ? "More" : "Less";
+       result = filter.hideMany ? "More" : "Less";
     }
 
     return result;
+}
+
+function toggleFacets(ulElement, hideMany) {
+    if (ulElement) {
+        var counter = 0;
+        var children = $(ulElement).children("a.list-group-item"); // .children; //).find("a"); //$(ulElement).getChildren().getElementsByTagName("a");
+        for (var i = 0; i < children.length; i++) {
+            if (counter > facetDefaultCount) {
+                var element = children[i];
+
+                if (!hideMany) {
+                    $(element).removeClass("hidden");
+                } else {
+                    $(element).addClass("hidden");
+                }
+            }
+            counter ++;
+        }
+    }
 }
 
 /**
 * Sets up the theme Facet
 */
 function facetThemeController(theme) {
-    themeData = theme;
 
     if (theme && theme.buckets) {
 
-        themeFilter.forEach(function (code) {
-            createFilterElement(code, getTheme(code), 'label-default');
+        filters.theme.active.forEach(function (code) {
+            createFilterElement(filters.theme, code);
         });
 
-        var ul = themeFacetElement.getElementsByTagName("ul")[0];
+        var ul = filters.theme.facet.getElementsByTagName("ul")[0];
 
         var themeCounter = 0;
         // for each theme found in dataset
@@ -201,12 +252,12 @@ function facetThemeController(theme) {
             themeElem.setAttribute("data", item.key);
             themeElem.setAttribute("href", "#");
 
-            if (themeFilter.indexOf(item.key) > -1) {
+            if (filters.theme.active.indexOf(item.key) > -1) {
                 themeElem.className = "list-group-item active";
             } else {
                 themeElem.className = "list-group-item";
             }
-            if (themeViewToggle && themeCounter > facetDefaultCount) {
+            if (filters.theme.hideMany && themeCounter > facetDefaultCount) {
                 themeElem.className += " hidden";
             }
             themeElem.innerHTML = getTheme(item.key) + " " + createBadge(item.doc_count);
@@ -219,7 +270,7 @@ function facetThemeController(theme) {
                     // show no longer active
                     this.className = "list-group-item";
                     // remove if exist in filter line
-                    removeThemeFilter(this.getAttribute("data"));
+                    removeFilter(this.getAttribute("data"), filters.theme.active);
                 } else {
                     // show active
                     this.className = "list-group-item active";
@@ -235,14 +286,16 @@ function facetThemeController(theme) {
             // more/less toggle
             var toggleElement = document.createElement("a");
             toggleElement.className = "btn btn-outline-secondary btn-sm";
-            toggleElement.innerHTML = getToggleText();
+            toggleElement.innerHTML = getToggleText(filters.theme);
             toggleElement.onclick = function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 
-                themeViewToggle = !themeViewToggle;
-                resetFacets();
-                facetThemeController(themeData);
+                filters.theme.hideMany = !filters.theme.hideMany;
+                this.innerHTML = getToggleText(filter);
+                toggleFacets(this.parentElement,filters.theme.hideMany);
+                //resetFacets();
+                //facetThemeController(themeData);
             };
 
             ul.appendChild(toggleElement);
@@ -251,15 +304,90 @@ function facetThemeController(theme) {
 
 }
 
+
+/**
+* Sets up the theme Facet
+*/
+function createFacetController(filter, aggregation) {
+
+    if (aggregation && aggregation.buckets) {
+
+        var ul = filter.facet.getElementsByTagName("ul")[0];
+
+       // filter.active.forEach(function (code) {
+        //    createFilterElement(code, getTheme(code), 'label-default');
+        //});
+
+        var counter = 0;
+        // for each theme found in dataset
+        aggregation.buckets.forEach(function (item){
+
+            var elem = document.createElement("a");
+            counter++;
+            // data contains the code to the theme
+            elem.setAttribute("data", item.key);
+            elem.setAttribute("href", "#");
+
+            if (filters.publisher.active.indexOf(item.key) > -1) {
+                elem.className = "list-group-item active";
+            } else {
+                elem.className = "list-group-item";
+            }
+            if (filters.publisher.hideMany && counter > facetDefaultCount) {
+                elem.className += " hidden";
+            }
+            elem.innerHTML = item.key + " " + createBadge(item.doc_count);
+            elem.onclick = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // select/unselect theme
+                if (this.className.indexOf("active") > -1) {
+                    // show no longer active
+                    this.className = "list-group-item";
+                    // remove if exist in filter line
+                    removeFilter(this.getAttribute("data"),filter.active);
+                } else {
+                    // show active
+                    this.className = "list-group-item active";
+                    // add filter line
+                    addFilter(filter, this.getAttribute("data"));
+                }
+
+            };
+
+            ul.appendChild(elem);
+        });
+        if (counter > facetDefaultCount) {
+            // more/less toggle
+            var toggleElement = document.createElement("a");
+            toggleElement.className = "btn btn-outline-secondary btn-sm";
+            toggleElement.innerHTML = getToggleText(filter);
+            toggleElement.onclick = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                filter.hideMany = !filter.hideMany;
+                this.innerHTML = getToggleText(filter);
+                toggleFacets(this.parentElement,filter.hideMany);
+            };
+
+            ul.appendChild(toggleElement);
+        }
+    }
+
+}
+
+
 /**
 * Sets up the facet controller. Calls the individual facets
 */
 function facetController(result) {
     // themes only come in two languages
     if (pageLanguage === "en") {
-        themeLanguage = "en";
+        filters.theme.language = "en";
     } else {
-        themeLanguage = "nb";
+        filters.theme.language = "nb";
     }
     if (typeof result !== 'undefined') {
         createThemeMap();
@@ -268,6 +396,7 @@ function facetController(result) {
         // build facets
         if (result.aggregations) {
             facetThemeController(result.aggregations.theme_count);
+            createFacetController(filters.publisher, result.aggregations.publisherCount);
         }
     } else {
         throw new Error("FacetController bad input " + result);

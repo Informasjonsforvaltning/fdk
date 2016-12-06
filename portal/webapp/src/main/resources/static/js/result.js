@@ -356,8 +356,8 @@ function doSearch() {
             urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
         }
 
-        if (themeFilter.length > 0) {
-            urlstring += "&theme=" + themeFilter.join(",");
+        if (filters.theme.active.length > 0) {
+            urlstring += "&theme=" + filters.theme.active.join(",");
         }
 
         console.log(urlstring);
