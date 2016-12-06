@@ -36,12 +36,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
+
+        logger.debug("ES clustername: " + this.clustername);
     }
 
 
     @Override
     public void process(DcatSource dcatSource, Model model) {
-        logger.trace("Processing results Elasticsearch");
+        logger.debug("Processing results Elasticsearch: " + this.hostename +":" + this.port + " cluster: "+ this.clustername);
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {
             logger.trace("Start indexing");
