@@ -11,6 +11,8 @@ public class Publisher {
     private String name;
     private String overordnetEnhet;
     private String organisasjonsform;
+    // private List<Publisher> underPublishers;
+    // private Publisher superierPublishers;
 
     // All Publisher first level below.
     private List<Publisher> subPublisher = new ArrayList<>();
