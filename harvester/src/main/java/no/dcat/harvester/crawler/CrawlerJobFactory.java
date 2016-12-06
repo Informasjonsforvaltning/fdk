@@ -34,7 +34,7 @@ public class CrawlerJobFactory {
 	private ElasticSearchResultHandler elasticSearchResultHandler;
 
 	//TODO: gjør om til property
-	private String elasticSearchClusterName = "fellesdatakatalog";
+	//private String elasticSearchClusterName = "fellesdatakatalog";
 
 	@PostConstruct
 	public void initialize() {
@@ -45,7 +45,7 @@ public class CrawlerJobFactory {
 	}
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
-		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), elasticSearchClusterName);
+		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler);
 	}
 

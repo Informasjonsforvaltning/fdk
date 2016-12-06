@@ -18,6 +18,7 @@ public class ApplicationSettings {
 	
 	private String elasticSearchHost;
 	private int elasticSearchPort;
+	private String elasticSearchCluster;
 	
 	public String getElasticSearchHost() {
 		return elasticSearchHost;
@@ -34,6 +35,10 @@ public class ApplicationSettings {
 	public void setElasticSearchPort(int elasticSearchPort) {
 		this.elasticSearchPort = elasticSearchPort;
 	}
+
+	public void setElasticSearchCluster(String elasticSearchCluster) {this.elasticSearchCluster = elasticSearchCluster; }
+
+	public String getElasticSearchCluster() { return elasticSearchCluster; }
 
 	public int getCrawlerThreadPoolSize() {
 		return crawlerThreadPoolSize;
