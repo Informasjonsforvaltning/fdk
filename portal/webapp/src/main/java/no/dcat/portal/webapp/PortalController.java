@@ -184,6 +184,40 @@ public class PortalController {
         return model;
     }
 
+     /**
+     * Controller for getting all publisher loaded in elasticsearch.
+     * <P/>
+      * TODO: describe function.
+     * @return A list of Publisher attatched to a ModelAndView.
+     */
+    @RequestMapping({"/publisher"})
+    public ModelAndView publisher() {
+        ModelAndView model = new ModelAndView(MODEL_PUBLISHER);
+        List<Publisher> publishers = new ArrayList<>();
+
+        try {
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            URI uri = new URIBuilder(buildMetadata.getPublisherServiceUrl()).build();
+            logger.debug("Query for all publisher");
+
+            String json = httpGet(httpClient, uri);
+
+            publishers = new ElasticSearchResponse().toListOfObjects(json, Publisher.class);
+
+            //Collections.sort(publishers , new ThemeTitleComparator());
+
+            logger.debug(String.format("Found datathemes: %s", json));
+        } catch (Exception e) {
+            logger.error(String.format("An error occured: %s", e.getMessage()));
+            model.addObject("exceptionmessage", e.getMessage());
+            model.setViewName("error");
+        }
+
+        model.addObject("publisher", publishers);
+        model.addObject("dataitemquery", new DataitemQuery());
+        return model;
+    }
+
     /**
      * Returns a JSON structure that contains the code-lists that the portal webapp uses.
      * The code-lists are fetched from the query service first time.
