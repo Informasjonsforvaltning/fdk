@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title th:text="#{app.title}">Felles datakatalog</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
+    <meta name="theme" th:content="${session.theme}"/>
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <style>
+.publisher {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.overflow-text {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 120%; //1em;     /* fallback */
+   max-height: 360%; // 3em;      /* fallback */
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+    </style>
+</head>
+<body>
+
+<div lang="en" th:replace="header :: version" />
+
+<div class="container-fluid">
+    <div lang="en" th:replace="header :: header"/>
+
+    <!-- Søkefelt -->
+    <div class="form-group a-form-group">
+        <div class="input-group input-group-large">
+
+            <!-- Label -->
+            <label for="search" id="searchLarge">
+                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
+            </label>
+
+            <!-- Input  -->
+            <input id="search" aria-labelledby="searchLarge" type="search"
+                   class="form-control form-control-noleft form-control-withBtn"
+                   th:attr="placeholder=#{query.intro}, value=${query}"/>
+
+            <!-- Search buttton -->
+            <div class="input-group-btn">
+                <button id="dosearch" class="btn btn-primary" type="button">
+                    <i class="material-icons a-input-icon"><span class="sr-only"
+                                                                 th:text="#{query.do}">Utfør søk</span><span
+                            class="glyphicon glyphicon-search"></span></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter line -->
+
+        <div id="filter" aria-label="Filters">
+        </div>
+
+    </div>
+
+    <!-- Resultatfelt -->
+    <section id="resultPanel">
+        <div class="container-fluid">
+
+            <!-- Resultat navigerings verktøy -->
+            <div class="row">
+
+                <div class="col-sm-1 col-sm-offset-4">
+                    <span id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span
+                        id="total.hits">0</span>
+                </div>
+
+                <!-- SORT Controller -->
+                <div class="col-sm-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span th:text="#{sort.by}">Sorter på:</span>
+                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
+                        </button>
+                        <ul id="sort.select" class="dropdown-menu">
+                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
+                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
+                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
+                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Dato</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Page navigation controller -->
+                <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
+                    <nav>
+                        <ul class="pager pagination pagination-sm" style="margin:0;">
+
+                            <li>
+                                <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a id="next" href="#" th:attr="aria-label=#{page.next}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Number of hits per page controller -->
+                <div class="col-sm-1">
+                    <div class="dropdown">
+                        <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span id="hits.choice">10</span> <span class="caret"></span>
+                        </button>
+                        <ul id="hits.select" class="dropdown-menu">
+                            <li><a class="number" href="#">5</a></li>
+                            <li><a class="number" href="#">10</a></li>
+                            <li><a class="number" href="#">25</a></li>
+                            <li><a class="number" href="#">30</a></li>
+                            <li><a class="number" href="#">40</a></li>
+                            <li><a class="number" href="#">50</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- results row -->
+            <div class="row">
+
+                <div class="col-sm-4 sidebar">
+
+                    <!-- facets -->
+                    <div id="facet" class="list-group">
+                        <a class="list-group-item disabled" href="#"><span
+                                th:text="#{facet.organisation}">Virksomhet</span></a>
+                        <div id="facet.theme" class="list-group-item" data-toggle="collapse" href="#"><span
+                                th:text="#{facet.theme}">Tema</span>
+                            <ul class="list-group"/>
+                        </div>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span></a>
+                        <a class="list-group-item disabled" href="#"><span
+                                th:text="#{facet.spatial}">Geografi</span></a>
+                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.temporal}">Tid</span></a>
+                        <a class="list-group-item disabled" href="#"><span
+                                th:text="#{facet.standard}">Standard</span></a>
+                    </div>
+                </div>
+
+                <!-- search result -->
+                <div id="datasets" class="col-sm-8 list-group">
+
+                    <a class="row list-group-item dataset" href="#">
+                        <strong>
+                            <span id="search.info" th:text="#{result.waiting}">Henter data ...</span>
+                        </strong>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div lang="en" th:replace="footer :: footer" />
+
+</div>
+<script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:utext="${themes}"></script>
+<script type="text/javascript" src="js/facets.js"></script>
+<script type="text/javascript" src="js/result.js"></script>
+<script type="text/javascript">
+        $(document).ready(showPage);
+</script>
+</body>
+</html>
+

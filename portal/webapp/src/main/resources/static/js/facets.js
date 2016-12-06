@@ -125,16 +125,20 @@ function removeThemeFilter(code) {
 */
 function createThemeMap() {
     if (Object.keys(themeMap).length === 0) {
-        var res = codeList["data-themes"];
-        res.hits.hits.forEach(function (theme) {
-            var code = theme._source.code;
+        if (typeof codeList !== 'undefined') {
+            var res = codeList["data-themes"];
+            res.hits.hits.forEach(function (theme) {
+                var code = theme._source.code;
 
-            var title = {
-                "nb": theme._source.title.nb,
-                "en": theme._source.title.en
-            };
-            themeMap[code] = title;
-        });
+                var title = {
+                    "nb": theme._source.title.nb,
+                    "en": theme._source.title.en
+                };
+                themeMap[code] = title;
+            });
+        } else {
+            throw new Error("Codelist 'data-themes' is not defined");
+        }
     }
 }
 
@@ -257,11 +261,15 @@ function facetController(result) {
     } else {
         themeLanguage = "nb";
     }
-    createThemeMap();
+    if (typeof result !== 'undefined') {
+        createThemeMap();
 
-    resetFacets();
-    // build facets
-    if (result.aggregations) {
-        facetThemeController(result.aggregations.theme_count);
+        resetFacets();
+        // build facets
+        if (result.aggregations) {
+            facetThemeController(result.aggregations.theme_count);
+        }
+    } else {
+        throw new Error("FacetController bad input " + result);
     }
 }

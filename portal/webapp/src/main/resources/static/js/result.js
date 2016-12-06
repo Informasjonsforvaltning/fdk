@@ -186,6 +186,7 @@ function paginationController () {
     $('.pager').append(nextElement);
 
 }
+
 // Results
 function showResults(searchResult) {
 
