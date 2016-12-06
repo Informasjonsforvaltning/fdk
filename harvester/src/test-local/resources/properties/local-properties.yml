@@ -5,6 +5,7 @@ application:
   crawlerThreadPoolSize: 2
   elasticSearchHost: localhost
   elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
 ---
 spring:
     profiles: docker
