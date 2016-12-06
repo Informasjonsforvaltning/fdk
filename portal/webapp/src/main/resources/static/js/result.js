@@ -360,6 +360,10 @@ function doSearch() {
             urlstring += "&theme=" + filters.theme.active.join(",");
         }
 
+        if (filters.publisher.active.length > 0) {
+            urlstring += "&publisher=" + filters.publisher.active.join(",");
+        }
+
         console.log(urlstring);
 
         // does an asynchronous call and calls showResults function.
