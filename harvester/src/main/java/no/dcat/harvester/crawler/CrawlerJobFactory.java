@@ -52,7 +52,7 @@ public class CrawlerJobFactory {
 
 		logger.debug("applicationsettings.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
 		logger.debug("applicationsettings.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
-		logger.debug("applicationsettings.elasticSearchHost: " + applicationSettings.getElasticSearchCluster());
+		logger.debug("applicationsettings.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
 
 
 		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());

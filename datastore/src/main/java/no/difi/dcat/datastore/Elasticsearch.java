@@ -33,7 +33,7 @@ public class Elasticsearch implements AutoCloseable {
 	private Client client;
 
 	public Elasticsearch(String host, int port, String clusterName) {
-		logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port);
+		logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
 		this.client = returnElasticsearchTransportClient(host, port, clusterName);
 		logger.debug("transportclient success ...? "+ this.client);
 	}
@@ -59,7 +59,7 @@ public class Elasticsearch implements AutoCloseable {
 	public Client returnElasticsearchTransportClient(String host, int port, String clusterName) {
 		Client client = null;
 		try {
-			logger.debug("Connect to elasticsearch: " + host + " : "+ port);
+			logger.debug("Connect to elasticsearch: " + host + " : "+ port + " cluster: " + clusterName);
 
 			InetAddress inetaddress = InetAddress.getByName(host);
 			logger.debug("ES inetddress: " + inetaddress.toString());
@@ -69,12 +69,11 @@ public class Elasticsearch implements AutoCloseable {
 					.put("cluster.name", clusterName)
 					.put("client.transport.sniff", true).build();
 
-			//TODO: cleanup. clustername parameteriseres
 			//client = new TransportClient(settings).addTransportAddress(address);
-			client = TransportClient.builder().build()
-					.addTransportAddress(address);
-			//client = TransportClient.builder().settings(settings).build()
+			//client = TransportClient.builder().build()
 			//		.addTransportAddress(address);
+			client = TransportClient.builder().settings(settings).build()
+					.addTransportAddress(address);
 
 			logger.debug("Client returns! " + address.toString() );
 
