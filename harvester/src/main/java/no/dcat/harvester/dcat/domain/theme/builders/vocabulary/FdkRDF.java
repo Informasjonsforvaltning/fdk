@@ -4,7 +4,8 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 /**
- * RDF vocabulary associated with Fellesdata katalog.
+ * Vocabulary definitions from Fellesdatakatalog
+ * @author Marcus Gustafson
  */
 public class FdkRDF {
     public static final Property atAuthorityName = atProperty("authority-code");
@@ -16,15 +17,15 @@ public class FdkRDF {
 
     public static final Property owlVersionInfo = owlProperty("versionInfo");
 
-    private static final Property atProperty(String local) {
+    private static Property atProperty(String local) {
         return ResourceFactory.createProperty("http://publications.europa.eu/ontology/authority/", local);
     }
 
-    private static final Property rdfsProperty(String local) {
+    private static Property rdfsProperty(String local) {
         return ResourceFactory.createProperty("http://www.w3.org/2000/01/rdf-schema#", local);
     }
 
-    private static final Property owlProperty(String local) {
+    private static Property owlProperty(String local) {
         return ResourceFactory.createProperty("http://www.w3.org/2002/07/owl#", local);
     }
 }
