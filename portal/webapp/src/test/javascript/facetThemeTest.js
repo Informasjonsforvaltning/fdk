@@ -35,13 +35,13 @@ describe("Theme facets", function() {
 
     it("Facet Theme Controller handles bad input parameter", function() {
 
-        expect(function() {facetThemeController(badInput);}).not.toThrow();
+        expect(function() {createFacetThemeController(badInput);}).not.toThrow();
     });
 
     it("Facet Theme Controller handles bad input parameter2", function() {
         var badBucket = {buckets:["very", "bad", "indeed"]};
 
-        expect(function() {facetThemeController(badBucket);}).toThrow();
+        expect(function() {createFacetThemeController(badBucket);}).toThrow();
     });
 
 });
