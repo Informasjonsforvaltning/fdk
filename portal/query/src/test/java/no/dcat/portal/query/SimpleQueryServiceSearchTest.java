@@ -45,7 +45,7 @@ public class SimpleQueryServiceSearchTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", 1, 10, "nb", "tema.nb", "ascending");
+        ResponseEntity<String> actual = sqs.search("query", "", "", 1, 10, "nb", "tema.nb", "ascending");
 
         verify(client.prepareSearch("dcat")
                 .setTypes("dataset")
@@ -60,7 +60,7 @@ public class SimpleQueryServiceSearchTest {
      */
     @Test
     public void testValidWithDefaultSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", 1, 10, "nb","", "");
+        ResponseEntity<String> actual = sqs.search("query","",  "", 1, 10, "nb","", "");
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10), never()).addSort("", SortOrder.DESC);
@@ -72,12 +72,22 @@ public class SimpleQueryServiceSearchTest {
      */
     @Test
     public void testValidWithTema() {
-        ResponseEntity<String> actual = sqs.search("query", "GOVE", 1, 10, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("query", "GOVE", "", 1, 10, "nb", "", "");
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
+    /**
+     * Valid call, with publisher TODO - does this test anything?
+     */
+    @Test
+    public void testValidWithPublisher() {
+        ResponseEntity<String> actual = sqs.search("query", "", "REGISTERENHETEN I BRØNNØYSUND", 1, 10, "nb", "", "");
+
+        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+    }
 
     /**
      * Inputparameter validation. Minus from value shall throw http-error bad request.
@@ -85,7 +95,7 @@ public class SimpleQueryServiceSearchTest {
     @Test
     public void return400IfFromIsBelowZero() {
         SimpleQueryService sqs = new SimpleQueryService();
-        ResponseEntity<String> actual = sqs.search("", "", -10, 1000, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("", "", "", -10, 1000, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
@@ -96,7 +106,7 @@ public class SimpleQueryServiceSearchTest {
     @Test
     public void return400IfSizeIsLargerThan100() {
         SimpleQueryService sqs = new SimpleQueryService();
-        ResponseEntity<String> actual = sqs.search("", "", 10, 101, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("", "", "", 10, 101, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
