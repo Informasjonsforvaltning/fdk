@@ -86,6 +86,7 @@ public class SimpleQueryService {
     @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
                                          @RequestParam(value = "theme", defaultValue = "") String theme,
+                                         @RequestParam(value = "publisher", defaultValue = "") String publisher,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -100,7 +101,8 @@ public class SimpleQueryService {
                 .append(" lang:").append(lang)
                 .append(" sortfield:").append(sortfield)
                 .append(" sortdirection:").append(sortdirection)
-                .append(" theme:").append(theme);
+                .append(" theme:").append(theme)
+                .append(" publisher:").append(publisher);
 
         logger.debug(loggMsg.toString());
 
@@ -143,13 +145,12 @@ public class SimpleQueryService {
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
                     .field("publisher.name");
-
         }
 
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery =  addFilter(theme, search);
+        BoolQueryBuilder boolQuery =  addFilter(theme, publisher, search);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
@@ -193,7 +194,7 @@ public class SimpleQueryService {
      *
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(@RequestParam(value = "theme", defaultValue = "") String theme, QueryBuilder search) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, QueryBuilder search) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -206,10 +207,16 @@ public class SimpleQueryService {
                 boolFilter.must(QueryBuilders.termQuery("theme.code", t));
             }
 
-            //boolQuery = boolQuery.filter(QueryBuilders.termsQuery("theme.code", themes));
-            boolQuery = boolQuery.filter(boolFilter);
-
+            boolQuery.filter(boolFilter);
         }
+
+        if (!StringUtils.isEmpty(publisher)){
+            BoolQueryBuilder boolFilter2 = QueryBuilders.boolQuery();
+            boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw",publisher));
+
+            boolQuery.filter(boolFilter2);
+        }
+
         return boolQuery;
     }
 
