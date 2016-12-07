@@ -160,7 +160,6 @@
     </dependencies>
 
 
-
     <build>
         <!-- enable filtering to generate project.properties with information from build process -->
         <resources>
@@ -168,7 +167,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>**/*</include>
+                   <include>**/*</include>
                 </includes>
             </resource>
         </resources>
@@ -305,6 +304,9 @@
                     <resource>
                         <filtering>true</filtering>
                         <directory>src/main/resources/</directory>
+                        <excludes>
+                            <exclude>bootstrap.yml</exclude>
+                        </excludes>
                     </resource>
                 </resources>
 
@@ -331,7 +333,7 @@
                     </testResource>
                     <testResource>
                         <filtering>true</filtering>
-                        <directory>src/test-local/resources/</directory>
+                        <directory>src/test-local/resources</directory>
                         <includes>
                             <include>properties/*.*</include>
                             <include>application.yml</include>

@@ -24,11 +24,17 @@ public class PortalConfiguration {
     private static String QUERY_SERVICE_DETAIL = "/detail";
     private static String QUERY_SERVICE_THEMES = "/themes";
 
+
     @Value("${spring.profiles.active:development}")
     private String profile;
 
+    @Value("${application.queryService}")
+    private String queryService;
+
     /* application.queryService */
-    private String queryService = "http://dcat.dummy.org";
+    // private String queryService = "http://dcat.dummy.org";
+    //private String queryService = "http://fdk-pqr-fellesdatakatalog-ut1.ose-npc.brreg.no";
+
 
     public final void setQueryService(final String serviceURL) {
 

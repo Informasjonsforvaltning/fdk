@@ -124,7 +124,7 @@ public class PortalController {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             uri = new URIBuilder(buildMetadata.getThemeServiceUrl()).build();
-            logger.debug("Query for all themes");
+            logger.debug("Query for all themes at URL: " + uri.toString());
 
             String json = httpGet(httpClient, uri);
 
