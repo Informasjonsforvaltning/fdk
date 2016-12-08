@@ -1,11 +1,7 @@
 var filterElement = document.getElementById("filter");
 var facetDefaultCount = 6;
-var themeFacetElement = document.getElementById("facet.theme");
-var themeFilter = []; // contains theme codes that dataset should be filtered upon
+
 var themeMap = {}; // contains codes and corresponding theme titles
-var themeLanguage = "nb";
-var themeViewToggle = true;
-var themeData = {};
 
 /**
 * returns the title of the theme code
@@ -14,12 +10,35 @@ function getTheme(code) {
     if (code) {
         var title = themeMap[code];
         if (title) {
-            return title[themeLanguage];
+            return title[filters.theme.language];
         } else {
             return undefined;
         }
     }
 }
+
+function getPublisher(code) {
+    return code;
+}
+
+
+var filters = {
+    "publisher": {
+        facet: document.getElementById("facet.publisher"),
+        active: [], // contains active filters
+        hideMany: true,
+        label: "label-primary",
+        getName: getPublisher
+    },
+    "theme": {
+        facet: document.getElementById("facet.theme"),
+        active: [], // contains active filters
+        hideMany : true,
+        language : "nb",
+        label: "label-default",
+        getName: getTheme
+    }
+};
 
 
 /**
@@ -27,60 +46,45 @@ function getTheme(code) {
 * This is later used by themeFacetController to add filter and highlight facets
 */
 function setThemeFilter(code) {
-    if (themeFilter.indexOf(code) === -1) {
-        themeFilter.push(code);
+    if (filters.theme.active.indexOf(code) === -1) {
+        filters.theme.active.push(code);
     }
 }
 
 /**
 * Identifies and removes a filter element with the corresponding data attribute
 */
-function removeFilterElement(name) {
-    var f = $("#filter").find("a[data='" + name +"']")[0];
+function removeFilterElement(data) {
+    var f = $("#filter").find("a[data='" + data +"']")[0];
     if (f) {
         filterElement.removeChild(f);
     }
 }
 
 /**
+* Creates a filter element.
 *
+* @filter the filter to remove
 * @data the data identifier to find the facet
-* @name the name to show in filter label
-* @label the bootstrap-label type for the label: default-label, ...
 */
-function createFilterElement(data, name, label) {
+function createFilterElement(filter, data) {
     // check if filter already exists
     var f = $('#filter').find('a[data="'+data+'"]')[0];
 
     if (f === undefined) {
-        var filterLabel = $('<a href="#" class="label '+ label +'" data="'+data+'">' + name + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
-        //$("#filter").append(document.createTextNode(" "));
+        var filterLabel = $('<a href="#" class="label '+ filter.label +'" data="'+data+'">' + filter.getName(data) + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
         $("#filter").append(filterLabel);
 
         // add delete hook
         filterLabel.onclick = function (event) {
             event.preventDefault();
 
-            removeThemeFilter(this.getAttribute("data"));
+            removeFilter(this.getAttribute("data"),filter.active);
         };
     }
 }
 
-/**
-* adds a code to the theme filter.
-* 1) creates filter element
-* 2) add code to filter array
-*/
-function addThemeFilter(code) {
-    if (code && themeFilter.indexOf(code) === -1) {
-        createFilterElement(code,getTheme(code),'label-default');
-        themeFilter.push(code);
 
-        // Execute search
-        resetResultCursor();
-        doSearch();
-    }
-}
 
 /**
 * Changes class on facet with corresponding data attribute to non active
@@ -94,22 +98,39 @@ function deactivateFacet(data) {
     }
 }
 
+/**
+* adds a filter.
+*
+* 1) creates filter element
+* 2) add code to active filter array
+* 3) executes new search
+*/
+function addFilter(filter, code) {
+    if (filter && code) {
+        createFilterElement(filter, code);
+        filter.active.push(code);
+
+        resetResultCursor();
+        doSearch();
+    }
+}
+
 
 /**
-* Removes a theme filter.
+* Removes a filter.
 * 1) remove filter element
 * 2) deactivate facet
 * 3) remove code from theme filter array
 */
-function removeThemeFilter(code) {
-    if (code && themeFilter.indexOf(code) > -1) {
+function removeFilter(code, filterArray) {
+    if (code && filterArray.indexOf(code) > -1) {
 
         removeFilterElement(code);
 
         deactivateFacet(code);
 
-        var index = themeFilter.indexOf(code);
-        themeFilter.splice(index,1);
+        var index = filterArray.indexOf(code);
+        filterArray.splice(index,1);
 
         // Execute search
         resetResultCursor();
@@ -151,7 +172,7 @@ function createBadge(count) {
 
 // removes all facet information
 function resetFacets() {
-    var facets = [ themeFacetElement ];
+    var facets = [ filters.theme.facet, filters.publisher.facet ];
 
     facets.forEach(function (facet) {
         var ul = facet.getElementsByTagName("ul")[0];
@@ -164,53 +185,76 @@ function resetFacets() {
 /**
 * Returns toggle text for the three langauages supported.
 */
-function getToggleText() {
+function getToggleText(filter) {
     var result = "";
     if (pageLanguage === "nb") {
-        result = themeViewToggle ? "Mer" : "Mindre";
+        result = filter.hideMany ? "Mer" : "Mindre";
     } else if (pageLanguage === "nn") {
-        result = themeViewToggle ? "Meir" : "Mindre";
+        result = filter.hideMany ? "Meir" : "Mindre";
     } else {
-       result = themeViewToggle ? "More" : "Less";
+       result = filter.hideMany ? "More" : "Less";
     }
 
     return result;
 }
 
+function toggleFacets(ulElement, hideMany) {
+    if (ulElement) {
+        var counter = 0;
+        var children = $(ulElement).children("a.list-group-item"); // .children; //).find("a"); //$(ulElement).getChildren().getElementsByTagName("a");
+        for (var i = 0; i < children.length; i++) {
+            if (counter > facetDefaultCount) {
+                var element = children[i];
+
+                if (!hideMany) {
+                    $(element).removeClass("hidden");
+                } else {
+                    $(element).addClass("hidden");
+                }
+            }
+            counter ++;
+        }
+    }
+}
+
+
 /**
-* Sets up the theme Facet
+* Creates a Facet Controller for a specific filter facet.
+*
+* @filter the filter to create facet controller for
+* @aggregation the aggregation data to show in the facet
 */
-function facetThemeController(theme) {
-    themeData = theme;
+function createFacetController(filter, aggregation) {
 
-    if (theme && theme.buckets) {
+    if (aggregation && aggregation.buckets) {
 
-        themeFilter.forEach(function (code) {
-            createFilterElement(code, getTheme(code), 'label-default');
+        var ul = filter.facet.getElementsByTagName("ul")[0];
+
+        // if filter array already has active filters make sure they are created
+        filter.active.forEach(function (code) {
+            createFilterElement(filter, code);
         });
 
-        var ul = themeFacetElement.getElementsByTagName("ul")[0];
-
-        var themeCounter = 0;
+        var counter = 0;
         // for each theme found in dataset
-        theme.buckets.forEach(function (item){
+        aggregation.buckets.forEach(function (item){
 
-            var themeElem = document.createElement("a");
-            themeCounter++;
+            var elem = document.createElement("a");
+            counter++;
             // data contains the code to the theme
-            themeElem.setAttribute("data", item.key);
-            themeElem.setAttribute("href", "#");
+            elem.setAttribute("data", item.key);
+            elem.setAttribute("href", "#");
 
-            if (themeFilter.indexOf(item.key) > -1) {
-                themeElem.className = "list-group-item active";
+            if (filter.active.indexOf(item.key) > -1) {
+                elem.className = "list-group-item active";
             } else {
-                themeElem.className = "list-group-item";
+                elem.className = "list-group-item";
             }
-            if (themeViewToggle && themeCounter > facetDefaultCount) {
-                themeElem.className += " hidden";
+            if (filter.hideMany && counter > facetDefaultCount) {
+                elem.className += " hidden";
             }
-            themeElem.innerHTML = getTheme(item.key) + " " + createBadge(item.doc_count);
-            themeElem.onclick = function (event) {
+            elem.innerHTML = filter.getName(item.key) + " " + createBadge(item.doc_count);
+            elem.onclick = function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 
@@ -219,30 +263,35 @@ function facetThemeController(theme) {
                     // show no longer active
                     this.className = "list-group-item";
                     // remove if exist in filter line
-                    removeThemeFilter(this.getAttribute("data"));
+                    removeFilter(this.getAttribute("data"),filter.active);
                 } else {
                     // show active
                     this.className = "list-group-item active";
                     // add filter line
-                    addThemeFilter(this.getAttribute("data"));
+                    addFilter(filter, this.getAttribute("data"));
                 }
 
             };
 
-            ul.appendChild(themeElem);
+            ul.appendChild(elem);
         });
-        if (themeCounter > facetDefaultCount) {
+        if (counter > facetDefaultCount) {
             // more/less toggle
             var toggleElement = document.createElement("a");
             toggleElement.className = "btn btn-outline-secondary btn-sm";
-            toggleElement.innerHTML = getToggleText();
+            var numberOfHiddenElements = counter - facetDefaultCount;
+            if (filter.hideMany) {
+                toggleElement.innerHTML = numberOfHiddenElements + " " + getToggleText(filter);
+            } else {
+                toggleElement.innerHTML = getToggleText(filter);
+            }
             toggleElement.onclick = function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 
-                themeViewToggle = !themeViewToggle;
-                resetFacets();
-                facetThemeController(themeData);
+                filter.hideMany = !filter.hideMany;
+                this.innerHTML = getToggleText(filter);
+                toggleFacets(this.parentElement,filter.hideMany);
             };
 
             ul.appendChild(toggleElement);
@@ -251,15 +300,16 @@ function facetThemeController(theme) {
 
 }
 
+
 /**
 * Sets up the facet controller. Calls the individual facets
 */
 function facetController(result) {
     // themes only come in two languages
     if (pageLanguage === "en") {
-        themeLanguage = "en";
+        filters.theme.language = "en";
     } else {
-        themeLanguage = "nb";
+        filters.theme.language = "nb";
     }
     if (typeof result !== 'undefined') {
         createThemeMap();
@@ -267,7 +317,9 @@ function facetController(result) {
         resetFacets();
         // build facets
         if (result.aggregations) {
-            facetThemeController(result.aggregations.theme_count);
+           // facetThemeController(result.aggregations.theme_count);
+            createFacetController(filters.theme, result.aggregations.theme_count);
+            createFacetController(filters.publisher, result.aggregations.publisherCount);
         }
     } else {
         throw new Error("FacetController bad input " + result);

@@ -22,18 +22,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
+import java.util.List;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.net.URI;
+import java.io.IOException;
+import javax.servlet.http.HttpSession;
 
 /**
  * Delivers html pages to support the DCAT Portal application.
- * <p>
- * <p>
+ *
+ *
  * Created by nodavsko on 12.10.2016.
  */
 @Controller
@@ -61,11 +61,11 @@ public class PortalController {
                               @RequestParam(value = "q", defaultValue = "") String q,
                               @RequestParam(value = "theme", defaultValue = "") String theme) {
 
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryService());
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
         ModelAndView model = new ModelAndView("result");
 
-        logger.debug(buildMetadata.getQueryService());
+        logger.debug(buildMetadata.getQueryServiceExternal());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
@@ -168,7 +168,7 @@ public class PortalController {
 
             } catch (Exception e) {
                 logger.error(String.format("Could not load data-themes: %s",e.getMessage()));
-                codeLists= null;
+                codeLists = null;
             }
         }
         return codeLists;

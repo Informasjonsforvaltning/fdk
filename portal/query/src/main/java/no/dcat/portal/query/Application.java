@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Application {
-    static private Logger logger = LoggerFactory.getLogger(Application.class);
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
 
