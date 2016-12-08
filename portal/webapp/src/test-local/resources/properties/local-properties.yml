@@ -2,13 +2,16 @@ spring:
   profiles: docker
 application:
   queryService: http://localhost:8081
+  queryServiceExternal: http://localhost:8081
 ---
 spring:
   profiles: test
 application:
   queryService: http://localhost:8071
+  queryServiceExternal: http://localhost:8071
 ---
 spring:
   profiles: development
 application:
   queryService: http://localhost:8091
+  queryServiceExternal: http://localhost:8091
