@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+gpackage no.dcat.portal.webapp;
 
 import no.dcat.portal.webapp.comparator.ThemeTitleComparator;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
@@ -61,11 +61,11 @@ public class PortalController {
                               @RequestParam(value = "q", defaultValue = "") String q,
                               @RequestParam(value = "theme", defaultValue = "") String theme) {
 
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryService());
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
         ModelAndView model = new ModelAndView("result");
 
-        logger.debug(buildMetadata.getQueryService());
+        logger.debug(buildMetadata.getQueryServiceExternal());
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());

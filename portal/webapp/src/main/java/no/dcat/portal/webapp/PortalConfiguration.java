@@ -28,6 +28,15 @@ public class PortalConfiguration {
     @Value("${spring.profiles.active:development}")
     private String profile;
 
+    @Value("${application.queryServiceExternal")
+    private String queryServiceExternal;
+    public final String getQueryServiceExternal() {
+        return queryServiceExternal;
+    }
+    public final void setQueryServiceExternal(final String serviceURL) {
+        queryServiceExternal = serviceURL;
+    }
+
     @Value("${application.queryService}")
     private String queryService;
 
@@ -40,6 +49,8 @@ public class PortalConfiguration {
 
         this.queryService = serviceURL;
     }
+
+
 
     /**
      * Returns the URL to the query service.
