@@ -1,13 +1,23 @@
 package no.difi.dcat.datastore.domain.dcat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Publisher {
+
+    public static String PUBLISHERID_URI = "http://data.brreg.no/enhetsregisteret/enhet/%s";
 
     private String id;
     private String name;
     private String overordnetEnhet;
     private String organisasjonsform;
-    // private List<Publisher> underPublishers;
-    // private Publisher superierPublishers;
+
+    // All Publisher first level below.
+    private List<Publisher> subPublisher = new ArrayList<>();
+    private Publisher superiorPublisher;
+
+    // All Publisher all levels below.
+    private List<Publisher> aggrSubPublisher= new ArrayList<>();;
 
     public String getId() {
         return id;
@@ -40,5 +50,21 @@ public class Publisher {
 
     public String getOrganisasjonsform() {
         return organisasjonsform;
+    }
+
+    public List<Publisher> getSubPublisher() {
+        return subPublisher;
+    }
+
+    public void setSuperiorPublisher(Publisher superiorPublisher) {
+        this.superiorPublisher = superiorPublisher;
+    }
+
+    public Publisher getSuperiorPublisher() {
+        return superiorPublisher;
+    }
+
+    public List<Publisher> getAggrSubPublisher() {
+        return aggrSubPublisher;
     }
 }

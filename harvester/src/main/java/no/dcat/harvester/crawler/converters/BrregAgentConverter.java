@@ -5,6 +5,7 @@ import com.google.common.cache.LoadingCache;
 import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.EnhetsregisteretRDF;
+import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
@@ -19,7 +20,7 @@ import java.net.URL;
 
 public class BrregAgentConverter {
 
-    public String publisherIdURI = "http://data.brreg.no/enhetsregisteret/enhet/%s";
+    public String publisherIdURI = Publisher.PUBLISHERID_URI;
     public static final String ORGANISASJONSLEDD = "ORGL";
     private final XmlToRdfAdvancedJena xmlToRdfObject;
     private final LoadingCache<URL, String> brregCache;
