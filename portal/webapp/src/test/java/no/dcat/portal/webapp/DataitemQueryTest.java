@@ -1,5 +1,6 @@
 package no.dcat.portal.webapp;
 
+import no.dcat.portal.webapp.utility.DataitemQuery;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

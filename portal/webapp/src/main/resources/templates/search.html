@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.springframework.org/schema/security">
+<head>
+</head>
+<body>
+
+<div class="row" th:fragment="search">>
+    <form class="form-group a-form-group site-search col-sm-8 col-sm-offset-2" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
+        <div class="input-group input-group-large">
+
+            <label for="search" id="searchLarge">
+                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
+            </label>
+
+            <input id="search" type="text" class="form-control" placeholder="#" th:attr="placeholder=#{query.intro}" th:field="*{q}" />
+            <span class="input-group-btn">
+                    <button id="dosearch" class="btn btn-info" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

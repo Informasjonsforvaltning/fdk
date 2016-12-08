@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.webapp.utility;
 
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
