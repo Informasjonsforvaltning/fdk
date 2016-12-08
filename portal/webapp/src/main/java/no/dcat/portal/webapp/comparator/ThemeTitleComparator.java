@@ -19,7 +19,7 @@ public class ThemeTitleComparator implements Comparator<DataTheme> {
      *
      * @param o1 First object of type DataTheme to be compared.
      * @param o2 Second object of type DataTheme to be compared with the first object.
-     * @return
+     * @return integer: 0 if both titles are null, -1 if o1 is null, 1 of o2 is null
      */
     @Override
     public int compare(DataTheme o1, DataTheme o2) {
