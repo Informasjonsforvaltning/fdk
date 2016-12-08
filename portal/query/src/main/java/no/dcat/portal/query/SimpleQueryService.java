@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -40,6 +38,7 @@ import java.util.List;
 public class SimpleQueryService {
     public static final String INDEX_THEME = "theme";
     public static final String TYPE_DATA_THEME = "data-theme";
+
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     public static Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
@@ -62,6 +61,10 @@ public class SimpleQueryService {
 
     @Value("${application.elasticsearchPort}")
     private int elasticsearchPort = 9300;
+
+    @Value("${application.clusterName:elasticsearch}")
+    private String clusterName;
+    public void setClusterName(String cn) { clusterName = cn; }
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the inputparameters.
@@ -398,7 +401,7 @@ public class SimpleQueryService {
 
             //TODO: Gjør cluster name til en property
             Settings settings = Settings.builder()
-                    .put("cluster.name", "fellesdatakatalog").build();
+                    .put("cluster.name", clusterName).build();
                     //.put("client.transport.sniff", true).build();
 
             client = TransportClient.builder().settings(settings).build()

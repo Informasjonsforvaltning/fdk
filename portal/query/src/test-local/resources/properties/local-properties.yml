@@ -8,6 +8,7 @@ spring:
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
+  clusterName: elasticsearch
 ---
 #Utv-miljø lokalt på egen PC
 spring:
@@ -15,3 +16,4 @@ spring:
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
+  clusterName: elasticsearch
