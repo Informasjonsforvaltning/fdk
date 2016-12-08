@@ -75,7 +75,7 @@ public class PortalConfiguration {
     }
 
     /**
-     * Provides a formated string that includes the version number of the current built application
+     * Provides a formated string that includes the version number of the current built application.
      *
      * @return the version information string
      */
@@ -115,7 +115,13 @@ public class PortalConfiguration {
         return buildDate;
     }
 
-    //Det må lages en egen PropertySourcePlaceholderConfigurer siden @PropertySource fortsatt ikke støtter yaml format.
+
+    /**
+     * PropertySourcePlaceholderConfigurer must be created as
+     * PropertySource doesnt support  yaml configuration file format
+     *
+     * @return
+     */
     @Bean
     @Profile("development") //Skal kun brukes når spring_active_profiles inneholder development
     public static PropertySourcesPlaceholderConfigurer properties() {

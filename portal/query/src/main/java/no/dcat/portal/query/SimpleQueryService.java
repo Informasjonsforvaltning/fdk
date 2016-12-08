@@ -11,9 +11,9 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.sort.SortOrder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +45,7 @@ public class SimpleQueryService {
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
-    /** api names */
+    /* api names */
     public static final String QUERY_SEARCH = "/search";
     public static final String QUERY_DETAIL = "/detail";
     public static final String QUERY_THEMES = "/themes";
@@ -66,8 +66,9 @@ public class SimpleQueryService {
     private String clusterName;
     public void setClusterName(String cn) { clusterName = cn; }
 
+
     /**
-     * Compose and execute an elasticsearch query on dcat based on the inputparameters.
+     * Compose and execute an elasticsearch query on dcat based on the input parameters.
      * <p>
      *
      * @param query         The search query to be executed as defined in
@@ -81,7 +82,6 @@ public class SimpleQueryService {
      * @param sortdirection Defines the direction of the sort, ascending or descending.
      * @return List of  elasticsearch records.
      */
-
     @CrossOrigin
     @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
@@ -185,6 +185,7 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+
     /**
      * Adds theme filter to query. Multiple themes can be specified. It should return only those datasets that have
      * all themes. To get an exact match we ned to use Elasticsearch tag count trick.
@@ -210,7 +211,7 @@ public class SimpleQueryService {
             boolQuery.filter(boolFilter);
         }
 
-        if (!StringUtils.isEmpty(publisher)){
+        if (!StringUtils.isEmpty(publisher)) {
             BoolQueryBuilder boolFilter2 = QueryBuilders.boolQuery();
             boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw",publisher));
 
@@ -220,13 +221,13 @@ public class SimpleQueryService {
         return boolQuery;
     }
 
+
     /**
      * Retrieves the dataset record identified by the provided id. The complete dataset, as defined in elasticsearch,
      * is returned on Json-format.
      * <p/>
      *
-     * @return the record (JSON) of the retrieved dataset.
-     * @return The complete elasticsearch response on Json-fornat is returned.
+     * @return the record (JSON) of the retrieved dataset. The complete elasticsearch response on Json-fornat is returned.
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
@@ -342,7 +343,7 @@ public class SimpleQueryService {
 
     /**
      * Create aggregation object that counts the number of
-     * datasets for each theme code
+     * datasets for each theme code.
      *
      * @return Aggregation builder object to be used in query
      */
@@ -371,7 +372,7 @@ public class SimpleQueryService {
     }
 
 
-    final private ResponseEntity<String> initializeElasticsearchTransportClient() {
+    private final ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
 
         logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
@@ -386,6 +387,7 @@ public class SimpleQueryService {
         return null;
     }
 
+
     /**
      * Create transport client for communication with elasticsearch database
      *
@@ -393,7 +395,7 @@ public class SimpleQueryService {
      * @param port Port number where elasticsearch service can be reached. Usually 9300
      * @return Transport client object
      */
-    final public Client createElasticsearchTransportClient(final String host, final int port) {
+    public final Client createElasticsearchTransportClient(final String host, final int port) {
         client = null;
         try {
             InetAddress inetaddress = InetAddress.getByName(host);
@@ -402,7 +404,6 @@ public class SimpleQueryService {
             //TODO: Gjør cluster name til en property
             Settings settings = Settings.builder()
                     .put("cluster.name", clusterName).build();
-                    //.put("client.transport.sniff", true).build();
 
             client = TransportClient.builder().settings(settings).build()
                     .addTransportAddress(address);
