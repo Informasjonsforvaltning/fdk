@@ -5,9 +5,11 @@ import no.dcat.harvester.Application;
 import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
+import no.dcat.harvester.settings.ApplicationSettings;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.io.File;
@@ -22,7 +24,12 @@ import java.util.List;
 
 public class Loader {
 
+    @Autowired
+    private ApplicationSettings applicationSettings;
+
     public static void main(String[] args) {
+
+
 
         String file = args[0];
 
@@ -43,14 +50,20 @@ public class Loader {
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
+            ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler(
+                    applicationSettings.getElasticSearchHost(),
+                    applicationSettings.getElasticSearchPort(),
+                    applicationSettings.getElasticSearchHost());
 
             LoadingCache<URL, String> brregCach = Application.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler);
 
             job.run();
 
-            ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300, "elasticsearch");
+            ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler(
+                    applicationSettings.getElasticSearchHost(),
+                    applicationSettings.getElasticSearchPort(),
+                    applicationSettings.getElasticSearchCluster());
             CrawlerPublisherJob jobER = new CrawlerPublisherJob(dcatSource, null, brregCach, publisherHandler);
 
             jobER.run();

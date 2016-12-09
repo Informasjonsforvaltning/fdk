@@ -3,6 +3,8 @@ package no.dcat.testadmin;
 import no.dcat.harvester.crawler.Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ import java.util.List;
 public class TestAdminController {
 
     private static Logger logger = LoggerFactory.getLogger(TestAdminController.class);
+
+    @Value("${application.elasticSearchHost}")
+    private String elasticSearchHost;
 
 
     /**
@@ -58,7 +63,7 @@ public class TestAdminController {
 
         try {
 
-            URL url = new URL("http://localhost:9200/dcat");
+            URL url = new URL("http://" + elasticSearchHost + ":9200/dcat");
 
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
