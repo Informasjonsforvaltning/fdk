@@ -50,7 +50,7 @@ public class Loader {
 
             job.run();
 
-            ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300);
+            ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300, "elasticsearch");
             CrawlerPublisherJob jobER = new CrawlerPublisherJob(dcatSource, null, brregCach, publisherHandler);
 
             jobER.run();

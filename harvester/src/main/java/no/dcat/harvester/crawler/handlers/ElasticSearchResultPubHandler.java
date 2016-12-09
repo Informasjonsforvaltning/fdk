@@ -31,10 +31,12 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
 
     String hostname;
     int port;
+    String clustername;
 
-    public ElasticSearchResultPubHandler(String hostname, int port) {
+    public ElasticSearchResultPubHandler(String hostname, int port, String clustername) {
         this.hostname = hostname;
         this.port = port;
+        this.clustername = clustername;
     }
 
     /**
@@ -48,7 +50,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     public void process(DcatSource dcatSource, Model model) {
         logger.trace("Processing results Elasticsearch");
 
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port)) {
+        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
             logger.trace("Start indexing");
             indexWithElasticsearch(model, elasticsearch);
         } catch (Exception e) {
