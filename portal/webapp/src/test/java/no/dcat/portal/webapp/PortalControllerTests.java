@@ -24,7 +24,7 @@ public class PortalControllerTests {
     public void testIndex () throws Exception {
         PortalController controller = new PortalController(config);
         MockHttpSession session = new MockHttpSession();
-        ModelAndView actual = controller.result(session, "", "");
+        ModelAndView actual = controller.result(session, "", "", "");
 
         Assert.assertNotEquals("result == home", null, actual);
     }

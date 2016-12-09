@@ -465,6 +465,12 @@ function showPage () {
         $('meta[name="theme"]').attr("content", "");
     }
 
+    var t = $('meta[name="publisher"]').attr('content');
+    if ( t !== undefined && t !== "") {
+        setPublisherFilter(t);
+        $('meta[name="publisher"]').attr("content", "");
+    }
+
     console.log("query service: " + searchUrl);
 
     // find the chosen language from the page
