@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.webapp.utility;
 
 /**
  * Class for holding dataitem info, used by thymleaf.

@@ -38,6 +38,8 @@ import java.net.UnknownHostException;
 public class SimpleQueryService {
     public static final String INDEX_THEME = "theme";
     public static final String TYPE_DATA_THEME = "data-theme";
+    public static final String TYPE_DATA_PUBLISHER = "publisher";
+    public static final String INDEX_DCAT = "dcat";
 
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     public static Client client = null;
@@ -50,6 +52,7 @@ public class SimpleQueryService {
     public static final String QUERY_DETAIL = "/detail";
     public static final String QUERY_THEMES = "/themes";
     public static final String QUERY_THEME_COUNT = "/themecount";
+    public static final String QUERY_PUBLISHER = "/publisher";
 
 
     @Value("${application.elasticsearchHost}")
@@ -238,7 +241,7 @@ public class SimpleQueryService {
         QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
 
         logger.debug(String.format("Get dataset with id: %s", id));
-        SearchResponse response = client.prepareSearch("dcat").setQuery(search).execute().actionGet();
+        SearchResponse response = client.prepareSearch(INDEX_DCAT).setQuery(search).execute().actionGet();
 
         if (response.getHits().getTotalHits() == 0) {
             logger.error(String.format("Found no dataset with id: %s", id));
@@ -256,7 +259,6 @@ public class SimpleQueryService {
     /**
      * Finds all themes loaded into elasticsearch.
      * <p/>
-     *
      * @return The complete elasticsearch response on Json-fornat is returned..
      */
     @CrossOrigin
@@ -267,17 +269,20 @@ public class SimpleQueryService {
         QueryBuilder search = QueryBuilders.matchAllQuery();
 
         SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).setQuery(search);
-        SearchResponse response = searchQuery.execute().actionGet();
+        SearchResponse responseSize = searchQuery.execute().actionGet();
 
-        int totNrOfThemes = (int) response.getHits().getTotalHits();
-        logger.debug(String.format("Found total number of themes: %d", totNrOfThemes));
+        int totNrOfThemes = (int) responseSize.getHits().getTotalHits();
+        logger.debug("Found total number of themes: {}", totNrOfThemes);
 
-        response = searchQuery.setSize(totNrOfThemes).execute().actionGet();
-        logger.debug(String.format("Found themes: %s", response.toString()));
+        SearchResponse responseThemes = searchQuery.setSize(totNrOfThemes).execute().actionGet();
+        logger.debug("Found themes: {}", responseThemes);
 
-        if (jsonError != null) return jsonError;
+        if (jsonError != null) {
+            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
+            return jsonError;
+        }
 
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<String>(responseThemes.toString(), HttpStatus.OK);
     }
 
 
@@ -322,7 +327,7 @@ public class SimpleQueryService {
         AggregationBuilder aggregation = createThemeAggregation();
 
         logger.debug(String.format("Get theme with code: %s", themecode));
-        SearchResponse response = client.prepareSearch("dcat")
+        SearchResponse response = client.prepareSearch(INDEX_DCAT)
                 .setQuery(search)
                 .setSize(NO_HITS)  //only the aggregation should be returned
                 .setTypes("dataset")
@@ -340,6 +345,34 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+    /**
+     * Finds all publisher loaded into elasticsearch.
+     * <p/>
+     * @return The complete elasticsearch response on Json-fornat is returned..
+     */
+    @CrossOrigin
+    @RequestMapping(value = QUERY_PUBLISHER, produces = "application/json")
+    public ResponseEntity<String> publishers() {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        QueryBuilder search = QueryBuilders.matchAllQuery();
+
+        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
+        SearchResponse responseSize = searchQuery.execute().actionGet();
+
+        int totNrOfPublisher = (int) responseSize.getHits().getTotalHits();
+        logger.debug("Found total number of publisher: {}", totNrOfPublisher);
+
+        SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
+        logger.debug("Found publisher: {}", responsePublisher);
+
+        if (jsonError != null) {
+            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
+            return jsonError;
+        }
+
+        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+    }
 
     /**
      * Create aggregation object that counts the number of

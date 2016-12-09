@@ -1,8 +1,10 @@
 package no.dcat.harvester.crawler;
 
+import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.Application;
 import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
@@ -43,11 +45,15 @@ public class Loader {
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
             ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
 
-
-            CrawlerJob job = new CrawlerJob(dcatSource, null, Application.getBrregCache(), esHandler);
-
+            LoadingCache<URL, String> brregCach = Application.getBrregCache();
+            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler);
 
             job.run();
+
+            ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300, "elasticsearch");
+            CrawlerPublisherJob jobER = new CrawlerPublisherJob(dcatSource, null, brregCach, publisherHandler);
+
+            jobER.run();
 
             return job.getValidationResult();
 

@@ -1,8 +1,13 @@
 package no.dcat.portal.webapp;
 
+import no.dcat.portal.webapp.comparator.PublisherOrganisasjonsformComparator;
 import no.dcat.portal.webapp.comparator.ThemeTitleComparator;
+import no.dcat.portal.webapp.utility.DataitemQuery;
+import no.dcat.portal.webapp.utility.ResponseManipulation;
+import no.dcat.portal.webapp.utility.TransformModel;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
+import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -39,6 +44,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class PortalController {
     public static final String MODEL_THEME = "theme";
+    public static final String MODEL_PUBLISHER = "publisher";
+
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
     private final PortalConfiguration buildMetadata;
@@ -69,7 +76,7 @@ public class PortalController {
         logger.debug(buildMetadata.getVersionInformation());
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
-        session.setAttribute("theme",theme);
+        session.setAttribute("theme", theme);
 
         model.addObject("themes", getCodeLists());
 
@@ -110,6 +117,10 @@ public class PortalController {
 
     /**
      * Controller for getting all themes loaded in elasticsearch.
+     * <p/>
+     * Retrieves all themes that is loaded into elasticsearch.
+     * The list is sorted on theme-name and finally added to the viewmodell.
+     * <p/>
      *
      * @return A list of DatatTheme attatched to a ModelAndView.
      */
@@ -117,20 +128,19 @@ public class PortalController {
     public ModelAndView themes() {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
-        URI uri;
         Locale l = LocaleContextHolder.getLocale();
         logger.debug(l.getLanguage());
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
-            uri = new URIBuilder(buildMetadata.getThemeServiceUrl()).build();
+            URI uri = new URIBuilder(buildMetadata.getThemeServiceUrl()).build();
             logger.debug("Query for all themes at URL: " + uri.toString());
 
             String json = httpGet(httpClient, uri);
 
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
 
-            Collections.sort(dataThemes , new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
+            Collections.sort(dataThemes, new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
 
             logger.debug(String.format("Found datathemes: %s", json));
         } catch (Exception e) {
@@ -146,12 +156,53 @@ public class PortalController {
     }
 
     /**
+     * Controller for getting all publisher loaded in elasticsearch.
+     * <p/>
+     * Retrieves all publisher loaded into elasticsearch.
+     * Transfrom the list into an hierarchical model where the top-publisher is added to a list
+     * which is added to the modelView. The list is sorted on type of Publisher.
+     *
+     * @return A list of Publisher attatched to a ModelAndView.
+     */
+    @RequestMapping({"/publisher"})
+    public ModelAndView publisher() {
+        ModelAndView model = new ModelAndView(MODEL_PUBLISHER);
+        List<Publisher> publisherGrouped = new ArrayList<>();
+
+        try {
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            URI uri = new URIBuilder(buildMetadata.getPublisherServiceUrl()).build();
+            logger.debug("Query for all publisher");
+
+            String json = httpGet(httpClient, uri);
+
+            List<Publisher> publishersFlat = new ElasticSearchResponse().toListOfObjects(json, Publisher.class);
+
+            List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
+
+            publisherGrouped = TransformModel.groupPublisher(publishersHier);
+
+            Collections.sort(publisherGrouped , new PublisherOrganisasjonsformComparator());
+
+            logger.debug(String.format("Found publishers: %s", json));
+        } catch (Exception e) {
+            logger.error(String.format("An error occured: %s", e.getMessage()));
+            model.addObject("exceptionmessage", e.getMessage());
+            model.setViewName("error");
+        }
+
+        model.addObject("publisher", publisherGrouped);
+        model.addObject("dataitemquery", new DataitemQuery());
+        return model;
+    }
+
+    /**
      * Returns a JSON structure that contains the code-lists that the portal webapp uses.
      * The code-lists are fetched from the query service first time.
-     *
+     * <p>
      * Code lists:
-     *  - data-theme (EU Themes)
-     *
+     * - data-theme (EU Themes)
+     * <p>
      * TODO - add necessary codelists
      *
      * @return a JSON of the code-lists. { "data-theme" : [ {"AGRI" : {"nb": "Jord og skogbruk"}}, ...], ...}
@@ -164,10 +215,10 @@ public class PortalController {
 
                 String json = httpGet(httpClient, uri);
 
-                codeLists = "var codeList = { \"data-themes\":" + json +"};";
+                codeLists = "var codeList = { \"data-themes\":" + json + "};";
 
             } catch (Exception e) {
-                logger.error(String.format("Could not load data-themes: %s",e.getMessage()));
+                logger.error(String.format("Could not load data-themes: %s", e.getMessage()));
                 codeLists = null;
             }
         }

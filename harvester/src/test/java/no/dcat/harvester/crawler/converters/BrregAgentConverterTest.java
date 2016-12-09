@@ -1,22 +1,22 @@
 package no.dcat.harvester.crawler.converters;
 
 import no.dcat.harvester.Application;
-import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.sparql.util.Symbol;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
 
+import java.io.File;
 import java.net.URL;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class BrregConverterTest {
+public class BrregAgentConverterTest {
 	
 	@Test
 	public void testConvertBrregFile() throws Exception {
@@ -25,14 +25,18 @@ public class BrregConverterTest {
 		Model model = ModelFactory.createDefaultModel();
 		
 		URL uri = Paths.get("src/test/resources/brreg/814716902.xml").toUri().toURL();
-		
+
+		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
+
+		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
 		converter.collectFromUri(uri.toString(), model);
 
 		model.write(System.out, "TTL");
 		
-		NodeIterator iterator = model.listObjectsOfProperty(RDF.type);
-		
-		assertEquals("Expected model to contain one resource of type foaf:Agent", "http://xmlns.com/foaf/0.1/Agent", iterator.next().asResource().getURI());
+		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
+
+		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
+		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/814716872", iterator.nextResource().getURI());
 	}
 
 	@Test
