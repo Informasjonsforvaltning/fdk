@@ -66,8 +66,8 @@ public class DatasetTest {
         Contact expected = new Contact();
         expected.setId("http://data.brreg.no/datakatalog/kontaktpunkt/4");
         expected.setFullname("Kontakt for Altinn");
-        expected.setTelephone("+4775007500");
-        expected.setEmail("bjarne.base@brreg.no");
+        expected.setTelephone("tel:+4775007500");
+        expected.setEmail("mailto:bjarne.base@brreg.no");
         expected.setOrganizationName("Skatt");
         expected.setOrganizationUnit("AAS");
         expected.setHasURL("httpd://skatt.no/schema");

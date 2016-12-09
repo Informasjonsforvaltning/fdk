@@ -133,13 +133,13 @@ public abstract class AbstractBuilder {
 			final String email = extractAsString(object, Vcard.hasEmail);
 			if (email != null) {
 				hasAttributes = true;
-				contact.setEmail(email.replace("mailto:", ""));
+				contact.setEmail(email); //.replace("mailto:", ""));
 			}
 
 			final String telephone = extractAsString(object, Vcard.hasTelephone);
 			if (telephone != null) {
 				hasAttributes = true;
-				contact.setTelephone(telephone.replace("tel:", ""));
+				contact.setTelephone(telephone); //.replace("tel:", ""));
 			}
 
 			final String organisationName = extractAsString(object, Vcard.organizationName);
