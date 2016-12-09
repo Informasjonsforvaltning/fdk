@@ -60,13 +60,16 @@ public class PortalController {
      * The result page. Sets callback service and version identification and returns
      * result.html page.
      *
-     * @param session the session object
+     * @param session the session objec
+     * @param theme Filter on the specified filter.
+     * @param publisher Filter on the specified publisher.
      * @return the result html page (or just the name of the page)
      */
     @RequestMapping(value = {"/results"})
     final ModelAndView result(final HttpSession session,
                               @RequestParam(value = "q", defaultValue = "") String q,
-                              @RequestParam(value = "theme", defaultValue = "") String theme) {
+                              @RequestParam(value = "theme", defaultValue = "") String theme,
+                              @RequestParam(value = "publisher", defaultValue = "") String publisher) {
 
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
@@ -77,6 +80,7 @@ public class PortalController {
 
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("theme", theme);
+        session.setAttribute("publisher", publisher);
 
         model.addObject("themes", getCodeLists());
 

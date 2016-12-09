@@ -52,6 +52,16 @@ function setThemeFilter(code) {
 }
 
 /**
+* Sets the publisher filter code to be used by the query
+* This is later used by themeFacetController to add filter and highlight facets
+*/
+function setPublisherFilter(code) {
+    if (filters.publisher.active.indexOf(code) === -1) {
+        filters.publisher.active.push(code);
+    }
+}
+
+/**
 * Identifies and removes a filter element with the corresponding data attribute
 */
 function removeFilterElement(data) {
