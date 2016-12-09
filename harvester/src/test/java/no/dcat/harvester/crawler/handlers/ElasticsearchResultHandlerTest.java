@@ -19,15 +19,13 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+import static org.apache.jena.mem.HashCommon.NotifyEmpty.ignore;
 import static org.junit.Assert.assertTrue;
 
 public class ElasticsearchResultHandlerTest {
@@ -118,6 +116,7 @@ public class ElasticsearchResultHandlerTest {
 	 * Tests if indexWithElasticsearch.
 	 */
 	@Test
+	@Ignore
 	public void testCrawlingIndexesToElasticsearchIT() {
 		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
 		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);

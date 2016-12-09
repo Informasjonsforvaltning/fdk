@@ -20,12 +20,14 @@ public class ElasticSearchResultPubHandlerTest {
             "  \"id\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n" +
             "  \"name\": \"BR\",\n" +
             "  \"overordnetEnhet\": \"814716872\",\n" +
-            "  \"organisasjonsform\": \"ORGL\"\n" +
+            "  \"organisasjonsform\": \"ORGL\",\n" +
+            "  \"subPublisher\": [],\n" +
+            "  \"aggrSubPublisher\": []\n" +
             "}]}";
     @Test
     public void test() {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-        ElasticSearchResultPubHandler handler = new ElasticSearchResultPubHandler(null, 0);
+        ElasticSearchResultPubHandler handler = new ElasticSearchResultPubHandler(null, 0, null);
 
         String pudlisherUri = "http://data.brreg.no/enhetsregisteret/enhet/983887457";
         String organisasjonsform    = "ORGL";
