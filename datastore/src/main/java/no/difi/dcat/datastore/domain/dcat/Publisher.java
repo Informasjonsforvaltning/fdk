@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Publisher {
 
-    public static String PUBLISHERID_URI = "http://data.brreg.no/enhetsregisteret/enhet/%s";
+    public static String PUBLISHERID_ENHETSREGISTERET_URI = "http://data.brreg.no/enhetsregisteret/enhet/%s";
 
     private String id;
     private String name;

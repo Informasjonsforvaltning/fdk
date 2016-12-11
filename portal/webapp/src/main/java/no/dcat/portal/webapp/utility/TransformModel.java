@@ -35,7 +35,7 @@ public class TransformModel {
         List<Publisher> publisherHier = new ArrayList<>();
         for (Publisher publisher : publisherFlat) {
             if (StringUtils.isNoneEmpty(publisher.getOverordnetEnhet())) {
-                Publisher publisherSuperior = publisherMap.get(String.format(Publisher.PUBLISHERID_URI, publisher.getOverordnetEnhet()));
+                Publisher publisherSuperior = publisherMap.get(String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, publisher.getOverordnetEnhet()));
                 publisherSuperior.getSubPublisher().add(publisher);
                 publisher.setSuperiorPublisher(publisherSuperior);
             } else {

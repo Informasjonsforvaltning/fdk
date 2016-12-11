@@ -3,17 +3,18 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.sparql.vocabulary.FOAF;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Class for loading the complete publisher-hieararchi.
@@ -63,13 +64,13 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
-        logger.debug("Preparing bulkRequest");
+        logger.debug("Preparing bulkRequest for Publishers.");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
-        ResIterator publisherRDF = model.listSubjectsWithProperty(EnhetsregisteretRDF.organisasjonsform);
-        while (publisherRDF.hasNext()) {
-            IndexRequest indexRequest = extractAndCreatePublisher(gson, publisherRDF.nextResource());
+        List<Publisher> publishers = new PublisherBuilder(model).build();
+        for (Publisher publisher: publishers) {
 
+            IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
             bulkRequest.add(indexRequest);
         }
 
@@ -80,29 +81,11 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         }
     }
 
-    protected IndexRequest extractAndCreatePublisher(Gson gson, Resource pub) {
-        Publisher publisher = new Publisher();
-
-        publisher.setOrganisasjonsform(extractPropertyValue(pub, EnhetsregisteretRDF.organisasjonsform));
-        publisher.setOverordnetEnhet(extractPropertyValue(pub, EnhetsregisteretRDF.overordnetEnhet));
-        publisher.setName(extractPropertyValue(pub, FOAF.name));
-        publisher.setId(pub.getURI());
-
+    protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
         logger.debug("Add publisher {} to index.", publisher.getId());
 
         IndexRequest indexRequest = new IndexRequest(DCAT, PUBLISHER_TYPE, publisher.getId());
         indexRequest.source(gson.toJson(publisher));
         return indexRequest;
-    }
-
-    protected String extractPropertyValue(Resource pub, Property property) {
-        Statement stmt = pub.getProperty(property);
-
-        if (stmt == null) {
-            return null;
-        }
-
-        logger.debug("Extract value {} from property {}", stmt.getObject(), property.getLocalName());
-        return stmt.getObject().toString();
     }
 }

@@ -29,21 +29,21 @@ public class TransformModelTest {
         List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
         assertEquals("One top-level Publisher.", 1, publishersHier.size());
         assertEquals("Name of top-level Publisher.", name_lev1, publishersHier.get(0).getName());
-        assertEquals("Id of top-level Publisher.", String.format(Publisher.PUBLISHERID_URI, id_lev1), publishersHier.get(0).getId());
+        assertEquals("Id of top-level Publisher.", String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, id_lev1), publishersHier.get(0).getId());
         assertEquals("Number og all Publishers below.", 2, publishersHier.get(0).getAggrSubPublisher().size());
 
         List<Publisher> subPublisher = publishersHier.get(0).getSubPublisher();
         assertEquals("One second-level Publisher.", 1, subPublisher.size());
         assertEquals("Name of second-level Publisher.", name_lev2, subPublisher.get(0).getName());
-        assertEquals("Id of second-level Publisher.", String.format(Publisher.PUBLISHERID_URI, id_lev2), subPublisher.get(0).getId());
-        assertEquals("Id of related top-level Publisher.", String.format(Publisher.PUBLISHERID_URI, id_lev1), subPublisher.get(0).getSuperiorPublisher().getId());
+        assertEquals("Id of second-level Publisher.", String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, id_lev2), subPublisher.get(0).getId());
+        assertEquals("Id of related top-level Publisher.", String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, id_lev1), subPublisher.get(0).getSuperiorPublisher().getId());
         assertEquals("Number og all Publishers below.", 1, subPublisher.get(0).getAggrSubPublisher().size());
 
         subPublisher = subPublisher.get(0).getSubPublisher();
         assertEquals("One third-level Publisher.", 1, subPublisher.size());
         assertEquals("Name of third-level Publisher.", name_lev3, subPublisher.get(0).getName());
-        assertEquals("Id of third-level Publisher.", String.format(Publisher.PUBLISHERID_URI, id_lev3), subPublisher.get(0).getId());
-        assertEquals("Id of related second-level Publisher.", String.format(Publisher.PUBLISHERID_URI, id_lev2), subPublisher.get(0).getSuperiorPublisher().getId());
+        assertEquals("Id of third-level Publisher.", String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, id_lev3), subPublisher.get(0).getId());
+        assertEquals("Id of related second-level Publisher.", String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, id_lev2), subPublisher.get(0).getSuperiorPublisher().getId());
         assertEquals("Number og all Publishers below.", 0, subPublisher.get(0).getAggrSubPublisher().size());
     }
 
@@ -55,7 +55,7 @@ public class TransformModelTest {
 
     private Publisher createPublisher(String id, String name, String orgForm, String overEnhet) {
         Publisher publisher = new Publisher();
-        publisher.setId(String.format(Publisher.PUBLISHERID_URI, id));
+        publisher.setId(String.format(Publisher.PUBLISHERID_ENHETSREGISTERET_URI, id));
         publisher.setName(name);
         publisher.setOrganisasjonsform(orgForm);
         publisher.setOverordnetEnhet(overEnhet);

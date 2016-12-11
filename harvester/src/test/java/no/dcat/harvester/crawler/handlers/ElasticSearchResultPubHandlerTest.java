@@ -2,11 +2,7 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.EnhetsregisteretRDF;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.sparql.vocabulary.FOAF;
+import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Test;
 
@@ -34,15 +30,12 @@ public class ElasticSearchResultPubHandlerTest {
         String overordnetEnhet     = "814716872";
         String name     = "BR";
 
-        Model model = ModelFactory.createDefaultModel();
+        Publisher publisher = new Publisher();
+        publisher.setOrganisasjonsform(organisasjonsform);
+        publisher.setOverordnetEnhet(overordnetEnhet);
+        publisher.setName(name);
 
-        Resource publisher = model.createResource(pudlisherUri);
-
-        publisher.addProperty(EnhetsregisteretRDF.organisasjonsform, organisasjonsform);
-        publisher.addProperty(EnhetsregisteretRDF.overordnetEnhet, overordnetEnhet);
-        publisher.addProperty(FOAF.name, name);
-
-        IndexRequest index = handler.extractAndCreatePublisher(gson, publisher);
+        IndexRequest index = handler.addPublisherToIndex(gson, publisher);
 
         assertEquals(result, index.toString());
     }
