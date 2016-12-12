@@ -20,7 +20,7 @@ import java.net.URL;
 
 public class BrregAgentConverter {
 
-    public String publisherIdURI = Publisher.PUBLISHERID_URI;
+    public String publisherIdURI = Publisher.PUBLISHERID_ENHETSREGISTERET_URI;
     public static final String ORGANISASJONSLEDD = "ORGL";
     private final XmlToRdfAdvancedJena xmlToRdfObject;
     private final LoadingCache<URL, String> brregCache;

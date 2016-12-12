@@ -43,17 +43,13 @@ public class Loader {
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
+            CrawlerResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
+            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300, "elasticsearch");
 
             LoadingCache<URL, String> brregCach = Application.getBrregCache();
-            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler);
+            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
 
             job.run();
-
-            ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300, "elasticsearch");
-            CrawlerPublisherJob jobER = new CrawlerPublisherJob(dcatSource, null, brregCach, publisherHandler);
-
-            jobER.run();
 
             return job.getValidationResult();
 
