@@ -34,6 +34,7 @@ public class ElasticSearchResultPubHandlerTest {
         publisher.setOrganisasjonsform(organisasjonsform);
         publisher.setOverordnetEnhet(overordnetEnhet);
         publisher.setName(name);
+        publisher.setId(pudlisherUri);
 
         IndexRequest index = handler.addPublisherToIndex(gson, publisher);
 
