@@ -9,4 +9,4 @@ echo Start query service - http://localhost:8071/search
 START /b "test-query" java -Dfile.encoding=UTF-8 -jar lib\query-0.2.1-SNAPSHOT.jar --spring.profiles.active=test --application.elasticsearchHost=localhost --application.elasticsearchPort=9300 --server.port=8071
 
 echo Start portal - http://localhost:8070
-START /b "test-portal" java -Dfile.encoding=UTF-8 -jar lib\webapp-0.2.1-SNAPSHOT.jar --spring.profiles.active=test --application.queryService=http://localhost:8071 --server.port=8070
+START /b "test-portal" java -Dfile.encoding=UTF-8 -jar lib\webapp-0.2.1-SNAPSHOT.jar --spring.profiles.active=test --application.queryServiceExternal=http://localhost:8071 --application.queryService=http://localhost:8071 --server.port=8070

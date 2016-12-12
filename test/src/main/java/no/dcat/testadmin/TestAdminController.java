@@ -42,6 +42,16 @@ public class TestAdminController {
         return "test"; // templates/home.html
     }
 
+    @RequestMapping({"/gdoc"})
+    String gdoc(HttpSession session) {
+
+        //session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
+
+        //session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
+
+        return "gdoc-2016-12-12.ttl"; // templates/home.html
+    }
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE, value = "esdata")
     public ResponseEntity<String> deleteEsdata(HttpServletResponse response) {
