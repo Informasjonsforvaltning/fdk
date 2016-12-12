@@ -12,6 +12,7 @@ import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 
 import java.io.File;
@@ -28,6 +29,18 @@ public class Loader {
 
     @Autowired
     private ApplicationSettings applicationSettings;
+
+    //TODO: sende disse som parametre? Må vurderes
+    @Value("${application.elasticSearchHost}")
+    private String elasticSearchHost;
+
+    @Value("${application.elasticSearchPort}")
+    private int elasticSearchPort;
+
+    @Value("${application.elasticSearchCluster}")
+    private String elasticSearchCluster;
+
+
 
     private static Logger logger = LoggerFactory.getLogger(Loader.class);
 
@@ -53,16 +66,16 @@ public class Loader {
             DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
             logger.debug("loadDatasetFromFile: filename: " + filename);
-            logger.debug("loadDatasetFromFile: elasticsearch host: " + applicationSettings.getElasticSearchHost());
-            logger.debug("loadDatasetFromFile: elasticsearch port: " + applicationSettings.getElasticSearchPort());
-            logger.debug("loadDatasetFromFile: elasticsearch cluster: " + applicationSettings.getElasticSearchCluster());
+            logger.debug("loadDatasetFromFile: elasticsearch host: " + elasticSearchHost);
+            logger.debug("loadDatasetFromFile: elasticsearch port: " + elasticSearchPort);
+            logger.debug("loadDatasetFromFile: elasticsearch cluster: " +elasticSearchCluster);
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
             ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler(
-                    applicationSettings.getElasticSearchHost(),
-                    applicationSettings.getElasticSearchPort(),
-                    applicationSettings.getElasticSearchCluster());
+                    elasticSearchHost,
+                    elasticSearchPort,
+                    elasticSearchCluster);
 
             LoadingCache<URL, String> brregCach = Application.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler);
@@ -70,9 +83,9 @@ public class Loader {
             job.run();
 
             ElasticSearchResultPubHandler publisherHandler = new ElasticSearchResultPubHandler(
-                    applicationSettings.getElasticSearchHost(),
-                    applicationSettings.getElasticSearchPort(),
-                    applicationSettings.getElasticSearchCluster());
+                    elasticSearchHost,
+                    elasticSearchPort,
+                    elasticSearchCluster;
             CrawlerPublisherJob jobER = new CrawlerPublisherJob(dcatSource, null, brregCach, publisherHandler);
 
             jobER.run();
