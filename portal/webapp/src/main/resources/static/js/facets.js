@@ -64,14 +64,16 @@ function setPublisherFilter(code) {
 /**
 * Identifies and removes a filter element with the corresponding data attribute
 */
-function removeFilterElement(name) {
-    var f = $("#filter").find("a[data='" + name +"']")[0];
+function removeFilterElement(data) {
+    var f = $("#filter").find("a[data='" + data +"']")[0];
     if (f) {
         filterElement.removeChild(f);
     }
 }
 
 /**
+* Creates a filter element.
+*
 * @filter the filter to remove
 * @data the data identifier to find the facet
 */
@@ -81,7 +83,6 @@ function createFilterElement(filter, data) {
 
     if (f === undefined) {
         var filterLabel = $('<a href="#" class="label '+ filter.label +'" data="'+data+'">' + filter.getName(data) + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
-        //$("#filter").append(document.createTextNode(" "));
         $("#filter").append(filterLabel);
 
         // add delete hook
@@ -93,24 +94,23 @@ function createFilterElement(filter, data) {
     }
 }
 
-/**
-* adds a code to the filter.
-* 1) creates filter element
-* 2) add code to filter array
-*/
-function addThemeFilter(code) {
-    if (code && filters.theme.active.indexOf(code) === -1) {
-        createFilterElement(filters.theme, code);
-        filters.theme.active.push(code);
 
-        // Execute search
-        resetResultCursor();
-        doSearch();
+
+/**
+* Changes class on facet with corresponding data attribute to non active
+*/
+function deactivateFacet(data) {
+    if (data) {
+        var element = $('.list-group-item[data="'+data+'"]')[0];
+        if (element) {
+            element.className = 'list-group-item';
+        }
     }
 }
 
 /**
-* adds a code to the filter.
+* adds a filter.
+*
 * 1) creates filter element
 * 2) add code to active filter array
 * 3) executes new search
@@ -122,18 +122,6 @@ function addFilter(filter, code) {
 
         resetResultCursor();
         doSearch();
-    }
-}
-
-/**
-* Changes class on facet with corresponding data attribute to non active
-*/
-function deactivateFacet(data) {
-    if (data) {
-        var element = $('.list-group-item[data="'+data+'"]')[0];
-        if (element) {
-            element.className = 'list-group-item';
-        }
     }
 }
 
@@ -239,84 +227,12 @@ function toggleFacets(ulElement, hideMany) {
     }
 }
 
-/**
-* Sets up the theme Facet
-*/
-function facetThemeController(theme) {
-
-    if (theme && theme.buckets) {
-
-        filters.theme.active.forEach(function (code) {
-            createFilterElement(filters.theme, code);
-        });
-
-        var ul = filters.theme.facet.getElementsByTagName("ul")[0];
-
-        var themeCounter = 0;
-        // for each theme found in dataset
-        theme.buckets.forEach(function (item){
-
-            var themeElem = document.createElement("a");
-            themeCounter++;
-            // data contains the code to the theme
-            themeElem.setAttribute("data", item.key);
-            themeElem.setAttribute("href", "#");
-
-            if (filters.theme.active.indexOf(item.key) > -1) {
-                themeElem.className = "list-group-item active";
-            } else {
-                themeElem.className = "list-group-item";
-            }
-            if (filters.theme.hideMany && themeCounter > facetDefaultCount) {
-                themeElem.className += " hidden";
-            }
-            themeElem.innerHTML = getTheme(item.key) + " " + createBadge(item.doc_count);
-            themeElem.onclick = function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-
-                // select/unselect theme
-                if (this.className.indexOf("active") > -1) {
-                    // show no longer active
-                    this.className = "list-group-item";
-                    // remove if exist in filter line
-                    removeFilter(this.getAttribute("data"), filters.theme.active);
-                } else {
-                    // show active
-                    this.className = "list-group-item active";
-                    // add filter line
-                    addThemeFilter(this.getAttribute("data"));
-                }
-
-            };
-
-            ul.appendChild(themeElem);
-        });
-        if (themeCounter > facetDefaultCount) {
-            // more/less toggle
-            var toggleElement = document.createElement("a");
-            toggleElement.className = "btn btn-outline-secondary btn-sm";
-            toggleElement.innerHTML = getToggleText(filters.theme);
-            toggleElement.onclick = function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-
-                filters.theme.hideMany = !filters.theme.hideMany;
-                this.innerHTML = getToggleText(filter);
-                toggleFacets(this.parentElement,filters.theme.hideMany);
-                //resetFacets();
-                //facetThemeController(themeData);
-            };
-
-            ul.appendChild(toggleElement);
-        }
-    }
-
-}
-
 
 /**
-* Sets up the theme Facet
+* Creates a Facet Controller for a specific filter facet.
+*
+* @filter the filter to create facet controller for
+* @aggregation the aggregation data to show in the facet
 */
 function createFacetController(filter, aggregation) {
 
@@ -324,9 +240,10 @@ function createFacetController(filter, aggregation) {
 
         var ul = filter.facet.getElementsByTagName("ul")[0];
 
-       // filter.active.forEach(function (code) {
-        //    createFilterElement(code, getTheme(code), 'label-default');
-        //});
+        // if filter array already has active filters make sure they are created
+        filter.active.forEach(function (code) {
+            createFilterElement(filter, code);
+        });
 
         var counter = 0;
         // for each theme found in dataset
@@ -338,15 +255,15 @@ function createFacetController(filter, aggregation) {
             elem.setAttribute("data", item.key);
             elem.setAttribute("href", "#");
 
-            if (filters.publisher.active.indexOf(item.key) > -1) {
+            if (filter.active.indexOf(item.key) > -1) {
                 elem.className = "list-group-item active";
             } else {
                 elem.className = "list-group-item";
             }
-            if (filters.publisher.hideMany && counter > facetDefaultCount) {
+            if (filter.hideMany && counter > facetDefaultCount) {
                 elem.className += " hidden";
             }
-            elem.innerHTML = item.key + " " + createBadge(item.doc_count);
+            elem.innerHTML = filter.getName(item.key) + " " + createBadge(item.doc_count);
             elem.onclick = function (event) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -372,7 +289,12 @@ function createFacetController(filter, aggregation) {
             // more/less toggle
             var toggleElement = document.createElement("a");
             toggleElement.className = "btn btn-outline-secondary btn-sm";
-            toggleElement.innerHTML = getToggleText(filter);
+            var numberOfHiddenElements = counter - facetDefaultCount;
+            if (filter.hideMany) {
+                toggleElement.innerHTML = numberOfHiddenElements + " " + getToggleText(filter);
+            } else {
+                toggleElement.innerHTML = getToggleText(filter);
+            }
             toggleElement.onclick = function (event) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -405,7 +327,8 @@ function facetController(result) {
         resetFacets();
         // build facets
         if (result.aggregations) {
-            facetThemeController(result.aggregations.theme_count);
+           // facetThemeController(result.aggregations.theme_count);
+            createFacetController(filters.theme, result.aggregations.theme_count);
             createFacetController(filters.publisher, result.aggregations.publisherCount);
         }
     } else {

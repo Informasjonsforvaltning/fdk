@@ -35,12 +35,6 @@ public class CrawlerJobFactory {
 	private FusekiResultHandler fusekiResultHandler;
 	private ElasticSearchResultHandler elasticSearchResultHandler;
 
-	//TODO: gjør om til property
-	private String elasticSearchClusterName = "fellesdatakatalog";
-
-	//TODO: gjør om til property
-	private String elasticSearchClusterName = "fellesdatakatalog";
-
 	private final Logger logger = LoggerFactory.getLogger(CrawlerJobFactory.class);
 
 	@PostConstruct

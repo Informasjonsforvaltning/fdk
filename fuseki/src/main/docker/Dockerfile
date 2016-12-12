@@ -21,7 +21,6 @@ RUN chmod 775 -R /usr/local/tomcat/webapps
 RUN mkdir /usr/local/tomcat/conf/Catalina
 RUN chmod 775 -R /usr/local/tomcat/conf/Catalina
 RUN chmod 775 -R /usr/local/tomcat/work
-RuN chmod 775 -R /etc/fuseki/databases
 
 WORKDIR /usr/local/tomcat/fusekiDownloadTemp/
 
