@@ -32,6 +32,12 @@ public class TestAdminController {
     @Value("${application.elasticSearchHost}")
     private String elasticSearchHost;
 
+    @Value("${application.elasticSearchPort}")
+    private int elasticSearchPort;
+
+    @Value("${application.elasticSearchCluster}")
+    private String elasticSearchCluster;
+
 
     /**
      * The resultSet page. Sets callback service and version identification and returns home.html page
@@ -46,6 +52,13 @@ public class TestAdminController {
         return "test"; // templates/home.html
     }
 
+
+    /**
+     * Returns file with datasets from Google docs spreadsheet
+     *
+     * @param session
+     * @return
+     */
     @RequestMapping({"/gdoc"})
     String gdoc(HttpSession session) {
 
@@ -56,6 +69,13 @@ public class TestAdminController {
         return "gdoc-2016-12-12.ttl"; // templates/home.html
     }
 
+
+    /**
+     * Delete dcat index from Elasticsearch
+     *
+     * @param response
+     * @return HTTP 200 OK if index was deleted succesfully
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE, value = "esdata")
     public ResponseEntity<String> deleteEsdata(HttpServletResponse response) {
@@ -90,6 +110,15 @@ public class TestAdminController {
         return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
 
+
+    /**
+     * Load DCAT data file into elasticsearch
+     *
+     * @param filename Name of file to be loaded. Must be Turlte, json-ld or RFD/XML format
+     * @param base64 Base64 encoded DCAT data
+     * @param response
+     * @return HTTP 200 OK if data was successfully loaded, HTTP 400 Bad request if loading did not succeed
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, value = "load")
     public ResponseEntity<String> load(@RequestParam(value = "filename") String filename,
@@ -119,7 +148,7 @@ public class TestAdminController {
 
 
             //List<String> resultMsgs = loader.loadDatasetFromFile(url);
-            List<String> resultMsgs = loader.loadDatasetFromFile(url);
+            List<String> resultMsgs = loader.loadDatasetFromFile(url, elasticSearchHost, elasticSearchPort, elasticSearchCluster);
             // Format results
             StringBuffer msg = new StringBuffer();
             boolean success = true;
