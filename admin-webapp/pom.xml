@@ -3,12 +3,12 @@
 
 	<artifactId>admin-webapp</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.2-SNAPSHOT</version>
 	
 	<parent>
 		<groupId>no.dcat</groupId>
 		<artifactId>parent</artifactId>		
-		<version>0.2.1-SNAPSHOT</version>
+		<version>0.2.2-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>no.dcat</groupId>
 			<artifactId>datastore</artifactId>
-			<version>0.2.1-SNAPSHOT</version>
+			<version>0.2.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
