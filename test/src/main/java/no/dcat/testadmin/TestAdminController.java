@@ -49,6 +49,10 @@ public class TestAdminController {
 
         //session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
 
+        logger.debug("Requestmapping / : es host: " + elasticSearchHost);
+        logger.debug("Requestmapping / : es port: " + elasticSearchPort);
+        logger.debug("Requestmapping / : es cluster: " + elasticSearchCluster);
+
         return "test"; // templates/home.html
     }
 
