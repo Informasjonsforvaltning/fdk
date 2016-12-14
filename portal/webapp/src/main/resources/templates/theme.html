@@ -29,7 +29,7 @@
                 <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
                     <a th:if="${r &lt; themes.size()}"
                        th:text="${lang == 'en' ? themes.get(c).title.get('en') : themes.get(c).title.get('nb')}"
-                       th:href="${'/results?theme=' + {themes.get(c).code}}" />
+                       th:href="${'/results?theme=' + {themes.get(c).code}}" th:id="${themes.get(c).title.get('nb')}" />
                 </h4>
             </div>
         </th:block>
