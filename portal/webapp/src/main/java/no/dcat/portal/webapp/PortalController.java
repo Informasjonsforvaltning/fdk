@@ -1,4 +1,4 @@
-gpackage no.dcat.portal.webapp;
+package no.dcat.portal.webapp;
 
 import no.dcat.portal.webapp.comparator.PublisherOrganisasjonsformComparator;
 import no.dcat.portal.webapp.comparator.ThemeTitleComparator;
