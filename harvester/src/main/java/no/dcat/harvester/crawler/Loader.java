@@ -22,6 +22,22 @@ import java.util.List;
 
 public class Loader {
 
+    private final String hostname;
+    private final int port;
+
+
+    public Loader() {
+        //TODO: shall be localhost.
+        hostname = "192.168.99.100";
+        port = 9300;
+
+    }
+
+    public Loader(String hostname, int port ) {
+        this.hostname = hostname;
+        this.port = port;
+    }
+
     public static void main(String[] args) {
 
         String file = args[0];
@@ -43,8 +59,8 @@ public class Loader {
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            CrawlerResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch");
-            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler("localhost",9300, "elasticsearch");
+            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, "elasticsearch");
+            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(this.hostname,this.port, "elasticsearch");
 
             LoadingCache<URL, String> brregCach = Application.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
@@ -58,6 +74,5 @@ public class Loader {
         }
 
         return null;
-
     }
 }

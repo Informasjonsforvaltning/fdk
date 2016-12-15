@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 
-import static org.junit.Assert.assertTrue;
+import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 
 /**
  *
