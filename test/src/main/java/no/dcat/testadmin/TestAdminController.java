@@ -151,8 +151,8 @@ public class TestAdminController {
             logger.debug ("reading tempfile " + url);
 
 
-            List<String> resultMsgs = loader.loadDatasetFromFile(url);
-            //List<String> resultMsgs = loader.loadDatasetFromFile(url, elasticSearchHost, elasticSearchPort, elasticSearchCluster);
+            //List<String> resultMsgs = loader.loadDatasetFromFile(url);
+            List<String> resultMsgs = loader.loadDatasetFromFile(url, elasticSearchHost, elasticSearchPort, elasticSearchCluster);
             // Format results
             StringBuffer msg = new StringBuffer();
             boolean success = true;
