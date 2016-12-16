@@ -79,10 +79,13 @@ services:
 
   elasticsearch:
     image: "fdk/elasticsearch:${TAG}"
+    #command: elasticsearch -Des.cluster.name=fellesdatakatalog
     environment:
-      - node.name=es1
-    volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data
+      - es.cluster.name=fellesdatakatalog
+      - ES_CLUSTER_NAME="fellesdatakatalog"
+      - cluster_name="fellesdatakatalog"
+    #volumes:
+    #  - ./data/esdata:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"

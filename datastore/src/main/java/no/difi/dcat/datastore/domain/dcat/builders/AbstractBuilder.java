@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
+import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
@@ -133,13 +134,13 @@ public abstract class AbstractBuilder {
 			final String email = extractAsString(object, Vcard.hasEmail);
 			if (email != null) {
 				hasAttributes = true;
-				contact.setEmail(email.replace("mailto:", ""));
+				contact.setEmail(email); //.replace("mailto:", ""));
 			}
 
 			final String telephone = extractAsString(object, Vcard.hasTelephone);
 			if (telephone != null) {
 				hasAttributes = true;
-				contact.setTelephone(telephone.replace("tel:", ""));
+				contact.setTelephone(telephone); //.replace("tel:", ""));
 			}
 
 			final String organisationName = extractAsString(object, Vcard.organizationName);
@@ -227,8 +228,7 @@ public abstract class AbstractBuilder {
 			Statement property = resource.getProperty(DCTerms.publisher);
 			if (property != null) {
 				Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
-				publisher.setId(object.getURI());
-				publisher.setName(extractAsString(object, FOAF.name));
+				extractPublisherFromStmt(publisher, object);
 
 				return publisher;
 			}
@@ -237,5 +237,20 @@ public abstract class AbstractBuilder {
 		}
 		
 		return null;
+	}
+
+	protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
+		publisher.setId(object.getURI());
+		publisher.setName(extractAsString(object, FOAF.name));
+
+		Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
+		if (hasProperty != null) {
+            publisher.setOrganisasjonsform(extractAsString(object, EnhetsregisteretRDF.organisasjonsform));
+        }
+
+		hasProperty = object.getProperty(EnhetsregisteretRDF.overordnetEnhet);
+		if (hasProperty != null) {
+            publisher.setOverordnetEnhet(extractAsString(object, EnhetsregisteretRDF.overordnetEnhet));
+        }
 	}
 }

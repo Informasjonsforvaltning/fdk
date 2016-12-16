@@ -1,5 +1,6 @@
 package no.dcat.testadmin;
 
+import no.dcat.harvester.crawler.Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -9,8 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import no.dcat.harvester.crawler.Loader;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -59,7 +58,7 @@ public class TestAdminController {
 
         try {
 
-            URL url = new URL("http://localhost:9200/dcat");
+            URL url = new URL("http://192.168.99.100:9200/dcat");
 
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");

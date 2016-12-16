@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.webapp.utility;
 
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
@@ -16,6 +16,9 @@ public final class ResponseManipulation {
 
     private static List langs = new ArrayList<String>();
 
+    /**
+     * Constructor sets up correct languages.
+     */
     public ResponseManipulation() {
         langs.add("nb");
         langs.add("nn");
@@ -57,7 +60,7 @@ public final class ResponseManipulation {
      *
      */
     private void fillPropWithAlternativeValIfEmpty(Map map, String language) {
-        if(map != null) {
+        if (map != null) {
             Object nbVal = map.get(language);
             if (nbVal == null) {
 
@@ -68,7 +71,7 @@ public final class ResponseManipulation {
                     if (altVal != null) break;
                 }
 
-                if(altVal != null) {
+                if (altVal != null) {
                     map.put(language, altVal);
                 }
             }

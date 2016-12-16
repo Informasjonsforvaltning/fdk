@@ -17,25 +17,11 @@
 <div class="container-fluid">
     <div lang="en" th:replace="header :: header" />
 
-    <div class="row">
-        <form class="form-group a-form-group site-search col-sm-8 col-sm-offset-2" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
-            <div class="input-group input-group-large">
-
-                <label for="search" id="searchLarge">
-                    <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
-                </label>
-
-                <input id="search" type="text" class="form-control" placeholder="#" th:attr="placeholder=#{query.intro}" th:field="*{q}" />
-                <span class="input-group-btn">
-                    <button id="dosearch" class="btn btn-info" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </span>
-
-            </div>
-
-        </form>
+    <div>
+          <a href="/publisher" th:text="#{app.publisher}" style="float: right">Publisher</a>
     </div>
+
+    <div lang="en" th:replace="search :: search" />
 
     <div class = "row">
         <th:block th:with="rowCount=${3}">
@@ -43,7 +29,7 @@
                 <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
                     <a th:if="${r &lt; themes.size()}"
                        th:text="${lang == 'en' ? themes.get(c).title.get('en') : themes.get(c).title.get('nb')}"
-                       th:href="${'/results?theme=' + {themes.get(c).code}}" />
+                       th:href="${'/results?theme=' + {themes.get(c).code}}" th:id="${themes.get(c).title.get('nb')}" />
                 </h4>
             </div>
         </th:block>

@@ -1,5 +1,6 @@
 package no.dcat.portal.webapp;
 
+import no.dcat.portal.webapp.utility.ResponseManipulation;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;

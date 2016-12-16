@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <meta name="theme" th:content="${session.theme}"/>
+    <meta name="publisher" th:content="${session.publisher}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
     <style>
 .publisher {
@@ -137,10 +138,12 @@
 
                     <!-- facets -->
                     <div id="facet" class="list-group">
-                        <a class="list-group-item disabled" href="#"><span
-                                th:text="#{facet.organisation}">Virksomhet</span></a>
-                        <div id="facet.theme" class="list-group-item" data-toggle="collapse" href="#"><span
-                                th:text="#{facet.theme}">Tema</span>
+                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse">
+                            <span th:text="#{facet.organisation}">Virksomhet</span>
+                            <ul class="list-group"/>
+                        </div>
+                        <div id="facet.theme" class="list-group-item" data-toggle="collapse">
+                            <span th:text="#{facet.theme}">Tema</span>
                             <ul class="list-group"/>
                         </div>
                         <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span></a>

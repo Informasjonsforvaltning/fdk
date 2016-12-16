@@ -20,20 +20,38 @@ import org.springframework.core.io.ClassPathResource;
 @ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
 
-    private static String QUERY_SERVICE_SEARCH = "/search";
-    private static String QUERY_SERVICE_DETAIL = "/detail";
-    private static String QUERY_SERVICE_THEMES = "/themes";
+    private static final String QUERY_SERVICE_SEARCH = "/search";
+    private static final String QUERY_SERVICE_DETAIL = "/detail";
+    private static final String QUERY_SERVICE_THEMES = "/themes";
+    private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
+
 
     @Value("${spring.profiles.active:development}")
     private String profile;
 
+    @Value("${application.queryServiceExternal")
+    private String queryServiceExternal;
+    public final String getQueryServiceExternal() {
+        return queryServiceExternal;
+    }
+    public final void setQueryServiceExternal(final String serviceURL) {
+        queryServiceExternal = serviceURL;
+    }
+
+    @Value("${application.queryService}")
+    private String queryService;
+
     /* application.queryService */
-    private String queryService = "http://dcat.dummy.org";
+    // private String queryService = "http://dcat.dummy.org";
+    //private String queryService = "http://fdk-pqr-fellesdatakatalog-ut1.ose-npc.brreg.no";
+
 
     public final void setQueryService(final String serviceURL) {
 
         this.queryService = serviceURL;
     }
+
+
 
     /**
      * Returns the URL to the query service.
@@ -53,12 +71,16 @@ public class PortalConfiguration {
         return getQueryService() + QUERY_SERVICE_THEMES;
     }
 
+    public final String getPublisherServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_PUBLISHER;
+    }
+
     public final String getDetailsServiceUrl() {
         return getQueryService() + QUERY_SERVICE_DETAIL;
     }
 
     /**
-     * Provides a formated string that includes the version number of the current built application
+     * Provides a formated string that includes the version number of the current built application.
      *
      * @return the version information string
      */
@@ -98,7 +120,13 @@ public class PortalConfiguration {
         return buildDate;
     }
 
-    //Det må lages en egen PropertySourcePlaceholderConfigurer siden @PropertySource fortsatt ikke støtter yaml format.
+
+    /**
+     * PropertySourcePlaceholderConfigurer must be created as
+     * PropertySource doesnt support  yaml configuration file format
+     *
+     * @return
+     */
     @Bean
     @Profile("development") //Skal kun brukes når spring_active_profiles inneholder development
     public static PropertySourcesPlaceholderConfigurer properties() {

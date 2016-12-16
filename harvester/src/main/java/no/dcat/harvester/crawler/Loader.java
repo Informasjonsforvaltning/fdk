@@ -1,8 +1,10 @@
 package no.dcat.harvester.crawler;
 
+import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.Application;
 import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
@@ -19,6 +21,8 @@ import java.util.List;
  */
 
 public class Loader {
+
+    public static final String HOST_NAME = "192.168.99.100"; //"localhost";
 
     public static void main(String[] args) {
 
@@ -41,11 +45,11 @@ public class Loader {
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300);
+            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(HOST_NAME,9300, "elasticsearch");
+            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(HOST_NAME,9300, "elasticsearch");
 
-
-            CrawlerJob job = new CrawlerJob(dcatSource, null, Application.getBrregCache(), esHandler);
-
+            LoadingCache<URL, String> brregCach = Application.getBrregCache();
+            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
 
             job.run();
 

@@ -9,6 +9,8 @@ import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.Fuseki;
 import no.difi.dcat.datastore.domain.DcatSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,8 @@ public class CrawlerJobFactory {
 	private FusekiResultHandler fusekiResultHandler;
 	private ElasticSearchResultHandler elasticSearchResultHandler;
 
+	private final Logger logger = LoggerFactory.getLogger(CrawlerJobFactory.class);
+
 	@PostConstruct
 	public void initialize() {
 		adminDataStore = new AdminDataStore(new Fuseki(fusekiSettings.getAdminServiceUri()));
@@ -42,7 +46,13 @@ public class CrawlerJobFactory {
 	}
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
-		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort());
+
+		logger.debug("applicationsettings.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
+		logger.debug("applicationsettings.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
+		logger.debug("applicationsettings.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
+
+
+		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler);
 	}
 

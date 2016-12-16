@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+
     @Autowired
     final public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth

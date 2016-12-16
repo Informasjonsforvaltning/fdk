@@ -1,6 +1,5 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
-import no.dcat.harvester.crawler.handlers.ElasticSearchSkosResultHandler;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.FdkRDF;
 import no.difi.dcat.datastore.domain.dcat.ConceptSchema;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
@@ -18,7 +17,7 @@ import java.util.Objects;
  * Class for extracting data from Skos themes into Java DataTheme-class.
  */
 public class DataThemeBuilders extends AbstractBuilder {
-    private final Logger logger = LoggerFactory.getLogger(ElasticSearchSkosResultHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(DataThemeBuilders.class);
 
     public static final String ENGLISH_EXTRACT = "en";
     public static final String ENGLISH = "en";

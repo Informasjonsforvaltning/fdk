@@ -125,66 +125,70 @@ function paginationController () {
         return pageElement;
     }
 
-    // PREV element
-    var prevElement = createListElement('&laquo;')[0];
-    prevElement.id = "prev";
-    prevElement.onclick = function (e) {
-        e.preventDefault();
-        if (resultCursor.currentPage > 0) {
-             resultCursor.currentPage -- ;
-             if (resultCursor.currentPage < resultCursor.sectionStart && resultCursor.sectionStart > 1)
-                 resultCursor.sectionStart --;
-             else if (resultCursor.sectionStart + setup.numPagesInSection <= resultCursor.currentPage )
-                 resultCursor.sectionStart = resultCursor.currentPage - setup.numPagesInSection + 1;
-             goTo(resultCursor.currentPage);
-            }
-        };
-    $('.pager').append(prevElement);
+    if (total === 0) {
+        $('.pager li').remove();
+    } else {
 
-    // first element
-    $('.pager').append(createPageElement(0));
+        // PREV element
+        var prevElement = createListElement('&laquo;')[0];
+        prevElement.id = "prev";
+        prevElement.onclick = function (e) {
+            e.preventDefault();
+            if (resultCursor.currentPage > 0) {
+                 resultCursor.currentPage -- ;
+                 if (resultCursor.currentPage < resultCursor.sectionStart && resultCursor.sectionStart > 1)
+                     resultCursor.sectionStart --;
+                 else if (resultCursor.sectionStart + setup.numPagesInSection <= resultCursor.currentPage )
+                     resultCursor.sectionStart = resultCursor.currentPage - setup.numPagesInSection + 1;
+                 goTo(resultCursor.currentPage);
+                }
+            };
+        $('.pager').append(prevElement);
 
-    // .. if larger than 2
-    if (resultCursor.sectionStart > 1) {
-        var dotElement = createListElement(setup.manySymbol);
-        dotElement[0].className = "disabled";
-        $('.pager').append(dotElement);
-    }
+        // first element
+        $('.pager').append(createPageElement(0));
 
-    for (var i = 0; i < setup.numPagesInSection; i++) {
-        var curr = resultCursor.sectionStart + i;
-        if (curr < numPages) {
-            $('.pager').append(createPageElement(curr));
+        // .. if larger than 2
+        if (resultCursor.sectionStart > 1) {
+            var dotElement = createListElement(setup.manySymbol);
+            dotElement[0].className = "disabled";
+            $('.pager').append(dotElement);
         }
+
+        for (var i = 0; i < setup.numPagesInSection; i++) {
+            var curr = resultCursor.sectionStart + i;
+            if (curr < numPages) {
+                $('.pager').append(createPageElement(curr));
+            }
+        }
+
+        // .. if last of section is < numPages -1
+        if (resultCursor.sectionStart + setup.numPagesInSection < numPages - 1) {
+            var dotElement2 = createListElement(setup.manySymbol)[0];
+            dotElement2.className = "disabled";
+            $('.pager').append(dotElement2);
+        }
+
+        // last element
+        if (resultCursor.sectionStart + setup.numPagesInSection < numPages )
+            $('.pager').append(createPageElement(numPages - 1));
+
+        // NEXT element
+        var nextElement = createListElement('&raquo;')[0];
+        nextElement.id = "next";
+        nextElement.onclick = function (e) {
+             e.preventDefault();
+             if (resultCursor.currentPage < numPages - 1) {
+                resultCursor.currentPage ++;
+                if ((resultCursor.currentPage >= resultCursor.sectionStart + setup.numPagesInSection) && (resultCursor.sectionStart + setup.numPagesInSection -1 < numPages - setup.numPagesInSection + 1))
+                    resultCursor.sectionStart ++;
+                else if (resultCursor.sectionStart > resultCursor.currentPage )
+                     resultCursor.sectionStart = resultCursor.currentPage ;
+                goTo(resultCursor.currentPage);
+             }
+        };
+        $('.pager').append(nextElement);
     }
-
-    // .. if last of section is < numPages -1
-    if (resultCursor.sectionStart + setup.numPagesInSection < numPages - 1) {
-        var dotElement2 = createListElement(setup.manySymbol)[0];
-        dotElement2.className = "disabled";
-        $('.pager').append(dotElement2);
-    }
-
-    // last element
-    if (resultCursor.sectionStart + setup.numPagesInSection < numPages )
-        $('.pager').append(createPageElement(numPages - 1));
-
-    // NEXT element
-    var nextElement = createListElement('&raquo;')[0];
-    nextElement.id = "next";
-    nextElement.onclick = function (e) {
-         e.preventDefault();
-         if (resultCursor.currentPage < numPages - 1) {
-            resultCursor.currentPage ++;
-            if ((resultCursor.currentPage >= resultCursor.sectionStart + setup.numPagesInSection) && (resultCursor.sectionStart + setup.numPagesInSection -1 < numPages - setup.numPagesInSection + 1))
-                resultCursor.sectionStart ++;
-            else if (resultCursor.sectionStart > resultCursor.currentPage )
-                 resultCursor.sectionStart = resultCursor.currentPage ;
-            goTo(resultCursor.currentPage);
-         }
-    };
-    $('.pager').append(nextElement);
-
 }
 
 // Results
@@ -356,8 +360,12 @@ function doSearch() {
             urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
         }
 
-        if (themeFilter.length > 0) {
-            urlstring += "&theme=" + themeFilter.join(",");
+        if (filters.theme.active.length > 0) {
+            urlstring += "&theme=" + filters.theme.active.join(",");
+        }
+
+        if (filters.publisher.active.length > 0) {
+            urlstring += "&publisher=" + filters.publisher.active.join(",");
         }
 
         console.log(urlstring);
@@ -459,6 +467,12 @@ function showPage () {
     if ( t !== undefined && t !== "") {
         setThemeFilter(t);
         $('meta[name="theme"]').attr("content", "");
+    }
+
+    var t = $('meta[name="publisher"]').attr('content');
+    if ( t !== undefined && t !== "") {
+        setPublisherFilter(t);
+        $('meta[name="publisher"]').attr("content", "");
     }
 
     console.log("query service: " + searchUrl);

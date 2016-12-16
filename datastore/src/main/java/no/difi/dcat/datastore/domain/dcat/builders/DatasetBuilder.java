@@ -20,7 +20,7 @@ import java.util.Map;
 public class DatasetBuilder extends AbstractBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DatasetBuilder.class);
 
-    private final Model model;
+    protected final Model model;
 
     public DatasetBuilder(Model model) {
         this.model = model;
