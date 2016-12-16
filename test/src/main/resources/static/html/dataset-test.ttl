@@ -131,6 +131,11 @@ dct:ProvenanceStatement        a       owl:Class .
         a               foaf:Agent ;
         dct:identifier  "915933149" ;
         foaf:name       "Direktoratet for e-Helse" .
+        
+<http://data.brreg.no/enhetsregisteret/enhet/972417858>
+        a               foaf:Agent ;
+        dct:identifier  "971040238" ;
+        foaf:name       "Statens Kartverk" .
 	
 
 <http://data.brreg.no/enhetsregisteret/enhet/Oslo+Kommune>
@@ -172,7 +177,7 @@ dct:ProvenanceStatement        a       owl:Class .
 <http://data.brreg.no/datakatalog/kontaktpunkt/6>
         a                        vcard:Organization ;
         vcard:hasEmail           <mbox:post@kartverket.no> ;
-        vcard:hasTelephone       <tel:+4708700> ;
+        vcard:hasTelephone       <tel:+47 08700> ;
         vcard:organization-unit  "Statens Kartverk" .             
         
 <http://data.brreg.no/datakatalog/distibusjon/3>	
