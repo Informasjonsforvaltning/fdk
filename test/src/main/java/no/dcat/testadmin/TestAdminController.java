@@ -48,7 +48,7 @@ public class TestAdminController {
 
         try {
 
-            URL url = new URL("http://localhost:9200/dcat");
+            URL url = new URL("http://192.168.99.100:9200/dcat");
 
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
