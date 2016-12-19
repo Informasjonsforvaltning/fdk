@@ -52,12 +52,13 @@
                         -
                     </a>
 
-                    <a th:text="${publisher.get(r).name}" href="#" th:href="${'/results?publisher=' + {publisher.get(r).name}}" class="span3"/>
+                    <a th:text="${publisher.get(r).name}" th:id="${publisher.get(r).name}" href="#" th:href="${'/results?publisher=' + {publisher.get(r).name}}" class="span3"/>
                 </h4>
                 <div th:id="${'collaps_' + {r}}"  class="panel-collapse collapse" th:if="${publisher.get(r).aggrSubPublisher.size()} > 0">
                     <div th:each="c : ${#numbers.sequence(0, publisher.get(r).aggrSubPublisher.size() - 1)}">
                         <a th:text="${publisher.get(r).aggrSubPublisher.get(c).name}" href="#"
-                           th:href="${'/results?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}" class="span3"/>
+                           th:href="${'/results?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}" class="span3"
+                           th:id="${publisher.get(r).aggrSubPublisher.get(c).name}"/>
                     </div>
                 </div>
             </div>

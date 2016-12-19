@@ -5,14 +5,28 @@ import cucumber.api.java.en.Then;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.io.File;
+
+import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
+import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
 
 /**
  * Cucumber glue class for the publisher feature.
  */
 public class PublisherPage {
+    public static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
     private final String index = "dcat";
-    private final String filename = "file://";
+    private final String filename = "dataset-w-distribution.ttl";
+    WebDriver driver = null;
 
+    private final String page = "publisher";
     @Given("^I clean elastic search\\.$")
     public void cleanElasticSearch() throws Throwable {
         String hostname = getEnv("elasticsearch.hostname");
@@ -26,20 +40,53 @@ public class PublisherPage {
         String hostname = getEnv("elasticsearch.hostname");
         int port = getEnvInt("elasticsearch.port");
 
-        new Loader(hostname, port).loadDatasetFromFile(filename);
+        String defultPath = new File(".").getCanonicalPath().toString();
+        String fileWithPath = String.format("file:%s/src/main/resources/%s", defultPath, filename);
+
+        new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
     }
 
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+        File file = new File(LOCAL_PATH_TO_IE_DRIVER);
+        File fileC = new File("src/main/resources/chromedriver.exe");
+
+        System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+        System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
+
+        DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
+        DesiredCapabilities capsC = DesiredCapabilities.chrome();
+
+        caps.setCapability("ignoreZoomSetting", true);
+
+        //driver = new InternetExplorerDriver(caps);
+        driver = new ChromeDriver(capsC);
+
+        String hostname = getEnv("fdk.hostname");
+        int port = getEnvInt("fdk.port");
+
+        driver.navigate().to(String.format("http://%s:%d/%s", hostname, port, page));
     }
 
-    @Then("^ shall have $")
-    public void shall_have() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+    @Then("^the \"([^\"]*)\" shall have (\\d+)$")
+    public void shallHave(String arg1, String arg2) throws Throwable {
+        WebElement element = null;
+        try {
+            assertTrue(String.format("The page shall have an element with id %s", arg1),driver.findElement(By.id(arg1)).isEnabled());
+
+            String text = driver.findElement(By.id(arg1)).getText();
+            String nr = "";
+            if (text.contains("(") && text.contains(")")) {
+                nr = text.substring(text.indexOf("(") + 1, text.indexOf(")"));
+            }
+
+            assertTrue(String.format("The element %s shall have %s datasets, had %s.", arg1, arg2, nr),nr.equals(arg2));
+        } finally {
+            driver.close();
+        }
     }
 
-    private String getEnv(String env) {
+    protected String getEnv(String env) {
         String value = System.getenv(env);
 
         if (StringUtils.isEmpty(value)) {
@@ -49,7 +96,7 @@ public class PublisherPage {
         return value;
     }
 
-    private int getEnvInt(String env) {
+    protected int getEnvInt(String env) {
         return Integer.valueOf(getEnv(env));
     }
 }

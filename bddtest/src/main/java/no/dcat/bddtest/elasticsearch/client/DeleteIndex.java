@@ -6,6 +6,7 @@ import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.index.IndexNotFoundException;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,10 @@ public class DeleteIndex {
     }
 
     private void deleteIndexInElasticsearch(Elasticsearch elasticsearch, String index) {
-        DeleteIndexResponse deleteResponse = elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
+        try {
+            elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
+        } catch (IndexNotFoundException e) {
+            logger.info("Index not found.");
+        }
     }
 }
