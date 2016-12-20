@@ -1,0 +1,10 @@
+# Rule #1: Dataset has a catalog
+prefix dcat:  <http://www.w3.org/ns/dcat#> 
+SELECT ?ruleId ?ruleDescription ?resourceId ?status
+WHERE {
+      ?resourceId a dcat:Catalog .
+      ?resourceId dcat:dataset ?dataset .
+      BIND (1 as ?ruleId) 
+      BIND (("datacatalog has datasets") as ?ruleDescription) 
+      BIND (bound(?dataset) as ?status)
+}     GROUP BY ?resourceId
