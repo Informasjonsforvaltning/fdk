@@ -4,7 +4,9 @@ import no.difi.dcat.datastore.domain.dcat.Dataset;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 /**
@@ -85,6 +87,37 @@ public class ElasticSearchResponseTest {
             "  }\n" +
             "}";
 
+    private static String THEME_COUNT = "{\n" +
+            "    \"took\": 5,\n" +
+            "    \"timed_out\": false,\n" +
+            "    \"_shards\": {\n" +
+            "        \"total\": 5,\n" +
+            "        \"successful\": 5,\n" +
+            "        \"failed\": 0\n" +
+            "    },\n" +
+            "    \"hits\": {\n" +
+            "        \"total\": 91,\n" +
+            "        \"max_score\": 0,\n" +
+            "        \"hits\": []\n" +
+            "    },\n" +
+            "    \"aggregations\": {\n" +
+            "        \"theme_count\": {\n" +
+            "            \"doc_count_error_upper_bound\": 0,\n" +
+            "            \"sum_other_doc_count\": 0,\n" +
+            "            \"buckets\": [\n" +
+            "                {\n" +
+            "                    \"key\": \"GOVE\",\n" +
+            "                    \"doc_count\": 49\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"key\": \"TRAN\",\n" +
+            "                    \"doc_count\": 9\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+
     @Test
     public void testConverionToDataset() {
         ElasticSearchResponse esr = new ElasticSearchResponse();
@@ -96,5 +129,15 @@ public class ElasticSearchResponseTest {
         assertEquals(_ID, ds.getId());
         assertEquals(BESKRIVELSE, ds.getDescription().get("nb"));
         assertEquals(TITLE, ds.getTitle().get("nb"));
+    }
+
+    @Test
+    public void toMapOfObects_themeCount_mapOfKeyAndDocCount() throws Exception {
+        ElasticSearchResponse esr = new ElasticSearchResponse();
+
+        Map<String, Integer> result = esr.toMapOfObjects(THEME_COUNT, "theme_count", "doc_count", Integer.class);
+
+        assertThat(result.get("GOVE"), is(49));
+        assertThat(result.get("TRAN"), is(9));
     }
 }

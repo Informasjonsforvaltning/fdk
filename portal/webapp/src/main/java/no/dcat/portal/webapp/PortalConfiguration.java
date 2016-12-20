@@ -24,6 +24,7 @@ public class PortalConfiguration {
     private static final String QUERY_SERVICE_DETAIL = "/detail";
     private static final String QUERY_SERVICE_THEMES = "/themes";
     private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
+    private static final String QUERY_THEME_COUNT = "/themecount";
 
 
     @Value("${spring.profiles.active:development}")
@@ -41,8 +42,6 @@ public class PortalConfiguration {
     @Value("${application.queryService}")
     private String queryService;
 
-    /* application.queryService */
-    // private String queryService = "http://dcat.dummy.org";
     //private String queryService = "http://fdk-pqr-fellesdatakatalog-ut1.ose-npc.brreg.no";
 
 
@@ -77,6 +76,10 @@ public class PortalConfiguration {
 
     public final String getDetailsServiceUrl() {
         return getQueryService() + QUERY_SERVICE_DETAIL;
+    }
+
+    public final String getThemeCounterUrl() {
+        return getQueryService() + QUERY_THEME_COUNT;
     }
 
     /**
@@ -115,11 +118,11 @@ public class PortalConfiguration {
         buildDate = buildDateString;
     }
 
+
     public final String getBuildDate() {
 
         return buildDate;
     }
-
 
     /**
      * PropertySourcePlaceholderConfigurer must be created as
@@ -140,5 +143,4 @@ public class PortalConfiguration {
 
         return propertySourcesPlaceholderConfigurer;
     }
-
 }

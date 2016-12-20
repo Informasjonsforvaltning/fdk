@@ -308,19 +308,10 @@ public class SimpleQueryService {
 
         if ("".equals(themecode)) {
             search = QueryBuilders.matchAllQuery();
-            /*JSON: {
-                "match_all" : { }
-             }*/
         } else {
 
             search = QueryBuilders.simpleQueryStringQuery(themecode)
                     .field("theme.code");
-
-            /*JSON: {
-                "query": {
-                    "match": {"theme.code" : "GOVE"}
-                }
-            }*/
         }
 
         //Create the aggregation object that counts the datasets
@@ -342,7 +333,7 @@ public class SimpleQueryService {
             return jsonError;
         }
 
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
     /**

@@ -27,13 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Locale;
-import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.net.URI;
-import java.io.IOException;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 /**
  * Delivers html pages to support the DCAT Portal application.
@@ -123,10 +122,10 @@ public class PortalController {
      * Controller for getting all themes loaded in elasticsearch.
      * <p/>
      * Retrieves all themes that is loaded into elasticsearch.
-     * The list is sorted on theme-name and finally added to the viewmodell.
+     * The list is sorted on theme-name and finally added to the view model.
      * <p/>
      *
-     * @return A list of DatatTheme attatched to a ModelAndView.
+     * @return A list of DataTheme attached to a ModelAndView.
      */
     @RequestMapping({"/"})
     public ModelAndView themes() {
@@ -141,13 +140,15 @@ public class PortalController {
             logger.debug("Query for all themes at URL: " + uri.toString());
 
             String json = httpGet(httpClient, uri);
-
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
+
+            Map<String, BigInteger> themeCounts = getNumberOfElementsForThemes();
+            dataThemes.forEach(dataTheme -> dataTheme.setNumberOfHits(themeCounts.get(dataTheme.getCode()).intValue()));
 
             Collections.sort(dataThemes, new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
 
             logger.debug(String.format("Found datathemes: %s", json));
-        } catch (Exception e) {
+        } catch (IOException | URISyntaxException e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
@@ -157,6 +158,17 @@ public class PortalController {
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
+    }
+
+    private Map<String, BigInteger> getNumberOfElementsForThemes() throws URISyntaxException, IOException{
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        URI uri = new URIBuilder(buildMetadata.getThemeCounterUrl()).build();
+        logger.debug("Query for all themes at URL: " + uri.toString());
+
+        String json = httpGet(httpClient, uri);
+
+        Map<String, BigInteger> themeCounts = new ElasticSearchResponse().toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
+        return themeCounts;
     }
 
     /**

@@ -30,9 +30,10 @@
                     <a th:if="${r &lt; themes.size()}"
                        th:text="${lang == 'en' ? themes.get(c).title.get('en') : themes.get(c).title.get('nb')}"
                        th:href="${'/results?theme=' + {themes.get(c).code}}" th:id="${themes.get(c).title.get('nb')}" />
+                    <span class="badge" th:text="${themes.get(c).numberOfHits}"></span>
                 </h4>
             </div>
-        </th:block>
+        </th:block>z
     </div>
 
     <div lang="en" th:replace="footer :: footer" />
