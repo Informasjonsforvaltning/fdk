@@ -7,7 +7,7 @@ services:
       - "8080:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.simpleQueryServiceURL=http://localhost:8083/search
+     - application.simpleQueryServiceURL=http://192.168.99.100:8083/search
     links:
       - query
     networks:
@@ -19,7 +19,7 @@ services:
       - "8083:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.elasticsearchHost=elasticsearch
+     - application.elasticsearchHost=192.168.99.100
      - application.elasticsearchPort=9300
     links:
       - elasticsearch
@@ -36,7 +36,7 @@ services:
       platform:
 
   harvester:
-    image: "fdk/harvester-war:${TAG}"
+    image: "fdk/harvester:${TAG}"
     ports:
      - "8081:8080"
     environment:
@@ -81,9 +81,9 @@ services:
     image: "fdk/elasticsearch:${TAG}"
     #command: elasticsearch -Des.cluster.name=fellesdatakatalog
     environment:
-      - es.cluster.name=fellesdatakatalog
-      - ES_CLUSTER_NAME="fellesdatakatalog"
-      - cluster_name="fellesdatakatalog"
+      - es.cluster.name=elasticsearch
+      - ES_CLUSTER_NAME="elasticsearch"
+      - cluster_name="elasticsearch"
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     ports:
