@@ -10,14 +10,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
-import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
 
 /**
  * Cucumber glue class for the publisher feature.
@@ -53,9 +52,11 @@ public class PublisherPage {
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
         File file = new File(LOCAL_PATH_TO_IE_DRIVER);
         File fileC = new File("src/main/resources/chromedriver.exe");
+        File fileF = new File("src/main/resources/phantomjs.exe");
 
         System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
         System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
+        System.setProperty("phantomjs.binary.path", fileF.getAbsolutePath());
 
         DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
         DesiredCapabilities capsC = DesiredCapabilities.chrome();
@@ -63,7 +64,8 @@ public class PublisherPage {
         caps.setCapability("ignoreZoomSetting", true);
 
         //driver = new InternetExplorerDriver(caps);
-        driver = new ChromeDriver(capsC);
+        //driver = new ChromeDriver(capsC);
+        driver = new PhantomJSDriver();
 
         String hostname = getEnv("fdk.hostname");
         int port = getEnvInt("fdk.port");

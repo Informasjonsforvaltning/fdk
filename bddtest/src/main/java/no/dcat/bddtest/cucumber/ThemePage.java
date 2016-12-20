@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
@@ -22,16 +23,13 @@ public class ThemePage {
 
     @Given("^I have open the browser$")
     public void openBrowser() throws MalformedURLException {
-        //System.out.println(HttpClientBuilder.class.getProtectionDomain().getCodeSource().getLocation());
-        //driver = new FirefoxDriver();
-        //WebDriver driver = new FirefoxDriver();
-
-        //driver.get("http://localhost:8081");
-        //File file = new File("C:/development/fdk/bddtest/src/main/resources/IEDriverServer.exe");
         File file = new File("src/main/resources/IEDriverServer.exe");
         File fileC = new File("src/main/resources/chromedriver.exe");
+        File fileF = new File("src/main/resources/phantomjs.exe");
+
         System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
         System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
+        System.setProperty("phantomjs.binary.path", fileF.getAbsolutePath());
 
         DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
         DesiredCapabilities capsC = DesiredCapabilities.chrome();
@@ -41,7 +39,8 @@ public class ThemePage {
         options.setBinary(fileC.getAbsolutePath());
 
         //driver = new InternetExplorerDriver(caps);
-        driver = new ChromeDriver(capsC);
+        //driver = new ChromeDriver(capsC);
+        driver = new PhantomJSDriver();
         //driver = new ChromeDriver();
     }
 
