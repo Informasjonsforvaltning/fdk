@@ -354,19 +354,21 @@ function showResults(searchResult) {
 function doSearch() {
 
     if (search) {
-        var urlstring = searchUrl + "/search?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
+        var query = "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
 
         if (sortField) {
-            urlstring += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
+            query += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
         }
 
         if (filters.theme.active.length > 0) {
-            urlstring += "&theme=" + filters.theme.active.join(",");
+            query += "&theme=" + filters.theme.active.join(",");
         }
 
         if (filters.publisher.active.length > 0) {
-            urlstring += "&publisher=" + filters.publisher.active.join(",");
+            query += "&publisher=" + filters.publisher.active.join(",");
         }
+        var urlstring =  searchUrl + "/search" + query;
+        pushHistory(query);
 
         console.log(urlstring);
 
@@ -383,6 +385,15 @@ function goTo(page){
     resultCursor.from = page * resultCursor.size;
 
     doSearch();
+}
+
+// Simultaes browser history.
+function pushHistory(query) {
+
+    var urlhistory = window.location.protocol + '//' + window.location.host + window.location.pathname;
+    urlhistory += query;
+
+    history.pushState(null, null, urlhistory);
 }
 
 // Sets up event handler to select the number of hits per page.
