@@ -131,6 +131,11 @@ dct:ProvenanceStatement        a       owl:Class .
         a               foaf:Agent ;
         dct:identifier  "915933149" ;
         foaf:name       "Direktoratet for e-Helse" .
+        
+<http://data.brreg.no/enhetsregisteret/enhet/971040238>
+        a               foaf:Agent ;
+        dct:identifier  "971040238" ;
+        foaf:name       "Statens Kartverk" .
 	
 
 <http://data.brreg.no/enhetsregisteret/enhet/Oslo+Kommune>
@@ -167,7 +172,13 @@ dct:ProvenanceStatement        a       owl:Class .
         a                        vcard:Organization ;
         vcard:hasEmail           <mbox:postmottak@mattilsynet.no> ;
         vcard:hasTelephone       <tel:+4722400000> ;
-        vcard:organization-unit  "Mattilsynet" .              
+        vcard:organization-unit  "Mattilsynet" .       
+        
+<http://data.brreg.no/datakatalog/kontaktpunkt/6>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mbox:post@kartverket.no> ;
+        vcard:hasTelephone       <tel:+4708700> ;
+        vcard:organization-unit  "Statens Kartverk" .             
         
 <http://data.brreg.no/datakatalog/distibusjon/3>	
         a                        dcat:Distribution ;
@@ -265,6 +276,13 @@ dct:ProvenanceStatement        a       owl:Class .
         dcat:dataset     <http://data.brreg.no/datakatalog/dataset/52> , <http://data.brreg.no/datakatalog/dataset/79> , <http://data.brreg.no/datakatalog/dataset/80> , <http://data.brreg.no/datakatalog/dataset/86>  ;
         foaf:homepage    <www.vegvesen.no/> .    
         
+<http://data.brreg.no/datakatalog/katalog/11>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett for Statens Kartverk" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971040238> ;
+        dct:title        "Katalog over datasett Statens Kartverk" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/92> ;
+        foaf:homepage    <www.vegvesen.no/> .          
 	
 <http://data.brreg.no/datakatalog/dataset/1>
         a                        dcat:Dataset ;
@@ -1416,7 +1434,42 @@ dct:ProvenanceStatement        a       owl:Class .
 	dct:modified             "2013-12-11"^^xsd:date ;
 	dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/TECH>, <http://publications.europa.eu/resource/authority/data-theme/TRAN>, <http://publications.europa.eu/resource/authority/data-theme/EDUC>, <http://publications.europa.eu/resource/authority/data-theme/GOVE>, <http://publications.europa.eu/resource/authority/data-theme/JUST>, <http://publications.europa.eu/resource/authority/data-theme/REGI>, <http://publications.europa.eu/resource/authority/data-theme/SOCI>, <http://publications.europa.eu/resource/authority/data-theme/ECON>, <http://publications.europa.eu/resource/authority/data-theme/ENVI>, <http://publications.europa.eu/resource/authority/data-theme/INTR>, <http://publications.europa.eu/resource/authority/data-theme/ENER>, <http://publications.europa.eu/resource/authority/data-theme/HEAL>, <http://publications.europa.eu/resource/authority/data-theme/AGRI> .	
 
-
+<http://data.brreg.no/datakatalog/dataset/92>
+        a                        dcat:Dataset ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo           <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Kartverket> ;
+        dct:description          "Datasettet gir informasjon om representativ trafikkmengde for en vegstrekning på europa-, riks- eller fylkesveger.Trafikkmengden er beregnet gjennom ÅDT-modul i NorTraf eller anslått. Det utgis som et Årsdatasett og er sentralt i forvaltning av vegene.Vegnett som er oppdatert etter ÅDT-beregningene, vil kunne mangle trafikmengde tall."@nb  ;
+        dct:hasVersion           <http://data.brreg.no/datakatalog/dataset/99> ;
+        dct:identifier           "2" ;
+        dct:isVersionOf          <http://data.brreg.no/datakatalog/dataset/99> ;
+        dct:issued               "1999-12-03"^^xsd:dateTime ;
+        dct:landingPage          <https://www.brreg.no/> ;
+        dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/971040238> ;
+        dct:relation             <http://data.brreg.no/datakatalog/dataset/99> ;
+        dct:source               <http://data.brreg.no/datakatalog/distibusjon/2> ;
+        dct:spatial              <http://sws.geonames.org/3144096/> ;
+        dct:subject              <http://brreg.no/begrep/orgnr> ;
+        dct:temporal             [ a                  dct:PeriodOfTime ;
+                                   time:hasBeginning  [ a                   time:Instant ;
+                                                        time:inXSDDateTime  "2001-07-03T00:00:00Z"^^xsd:dateTime
+                                                      ] ;
+                                   time:hasEnd        [ a                   time:Instant ;
+                                                        time:inXSDDateTime  "2048-05-12T00:00:00Z"^^xsd:dateTime
+                                                      ]
+                                 ] ;
+        dct:title                "Trafikkmengde"@nb ;
+        adms:identifier          <http://data.brreg.no/identifikator/99> ;
+        adms:sample              <http://brreg.no/enhetsregisteret> ;
+        dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/6> ;
+        dcat:distribution         <http://data.brreg.no/datakatalog/distibusjon/3> ;
+        dcat:keyword             "Trafikkdata"@nb , "fylkesveier"@nb , "trafikk"@nb , "ADT"@nb ;
+        dct:modified             "2016-11-10"^^xsd:date ;
+        dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/TRAN> ;
+        dcat:landingPage         <http://www.kartverket.no/data/Vegvisar-til-gratis-kartdata/> ;
+        foaf:page                <http://www.kartverket.no/> .
 
 
 

@@ -38,7 +38,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -82,8 +89,8 @@
 
         </dependency>
 
-
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -101,4 +108,54 @@
         </plugins>
 
     </build>
+
+    <profiles>
+        <profile>
+            <id>Props on windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/test-local/resources/</directory>
+                        <includes>
+                            <include>properties/*.*</include>
+                            <include>application.yml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/resources/</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>Include test-property files</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <testResources>
+                    <testResource>
+                        <filtering>true</filtering>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
+                        <filtering>true</filtering>
+                        <directory>src/test-local/resources/</directory>
+                        <includes>
+                            <include>properties/*.*</include>
+                            <include>application.yml</include>
+                        </includes>
+                    </testResource>
+                </testResources>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
