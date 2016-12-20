@@ -1,5 +1,6 @@
 package no.dcat.bddtest.cucumber;
 
+import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -10,7 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 
-import static org.junit.Assert.assertTrue;
+
 
 /**
  *

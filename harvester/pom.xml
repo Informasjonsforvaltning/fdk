@@ -100,7 +100,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
                 <configuration>
-                    <mainClass>no.dcat.harvester.Application</mainClass>
+                    <mainClass>no.dcat.harvester.no.dcat.gdoc.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>

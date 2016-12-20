@@ -1,6 +1,15 @@
 version: "2"
 
 services:
+  gdoc:
+    image: "fdk/gdoc-import:${TAG}"
+    ports:
+      - "8084:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    networks:
+      platform:
+
   portal:
     image: "fdk/webapp:${TAG}"
     ports:
