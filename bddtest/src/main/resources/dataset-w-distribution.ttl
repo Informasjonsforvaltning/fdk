@@ -538,7 +538,7 @@
         a                dcat:Dataset ;
         dct:description  "Barnehagefakta.no kan du finne barnehager og se informasjon om dem."@nb ;
         dct:identifier   "24" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
         dct:title        "Barnehagefakta"@nb ;
         dct:modified     "2014-03-23"^^xsd:date ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
@@ -1038,7 +1038,7 @@
 	dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
 	dct:description          "The Free Public Data Product is a downloadable data snapshot containing basic company data of live companies on the register. "@en ;
 	dct:identifier           "67" ;
-	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/> ;
+	dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
 	dct:subject              <http://brreg.no/begrep/orgnr> ;
 	dct:title                "Basic Company Data"@en ;
 	dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
@@ -1148,7 +1148,7 @@
 	a                dcat:Dataset ;
 	dct:description  "Barnehageområde - informasjon ."@no ;
 	dct:identifier   "75" ;
-	dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/> ;
+	dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
 	dct:title        "Barnehageområde" @no ;
 	dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/SOCI> .	
 

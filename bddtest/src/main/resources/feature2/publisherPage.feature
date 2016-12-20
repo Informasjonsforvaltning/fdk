@@ -14,11 +14,12 @@ Feature: Page for presenting all Publishers.
     And I load the dataset.
     And I open the Publisher page in the browser.
 
-  Scenario Outline: Number of dataset for each Publisher shall be presented.
-    Then the "<Publisher>" shall have <Datasets>
+  Scenario: Number of dataset for each Publisher shall be presented.
+    Then the following Publisher and dataset aggregation shall exist:
+      | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  |
+      | ARBEIDSTILSYNET  | 1 |
+      | ARBEIDS- OG VELFERDSETATEN | 1 |
+      | NÆRINGS- OG FISKERIDEPARTEMENTET | 22 |
+      | PATENTSTYRET | 2 |
+      | REGISTERENHETEN I BRØNNØYSUND | 20 |
 
-    Examples:
-    |Publisher|Datasets|
-    | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  |
-    | ARBEIDSTILSYNET  | 1 |
-    | ARBEIDS- OG VELFERDSETATEN | 1 |

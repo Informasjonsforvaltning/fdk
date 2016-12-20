@@ -1,5 +1,6 @@
 package no.dcat.bddtest.cucumber;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
@@ -13,6 +14,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
+import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
@@ -27,6 +29,7 @@ public class PublisherPage {
     WebDriver driver = null;
 
     private final String page = "publisher";
+
     @Given("^I clean elastic search\\.$")
     public void cleanElasticSearch() throws Throwable {
         String hostname = getEnv("elasticsearch.hostname");
@@ -68,19 +71,30 @@ public class PublisherPage {
         driver.navigate().to(String.format("http://%s:%d/%s", hostname, port, page));
     }
 
-    @Then("^the \"([^\"]*)\" shall have (\\d+)$")
-    public void shallHave(String arg1, String arg2) throws Throwable {
+    @Then("^the following Publisher and dataset aggregation shall exist:$")
+    public void shallHave(DataTable publisherAggrs) throws Throwable {
         WebElement element = null;
         try {
-            assertTrue(String.format("The page shall have an element with id %s", arg1),driver.findElement(By.id(arg1)).isEnabled());
+            List<List<String>> publisherAggrsRaw = publisherAggrs.raw();
 
-            String text = driver.findElement(By.id(arg1)).getText();
-            String nr = "";
-            if (text.contains("(") && text.contains(")")) {
-                nr = text.substring(text.indexOf("(") + 1, text.indexOf(")"));
+            for (List<String> publisherAggr : publisherAggrsRaw) {
+                String publisherExp = publisherAggr.get(0);
+                String countExp = publisherAggr.get(1);
+
+                assertTrue(String.format("The page shall have an element with id %s", publisherExp), driver.findElement(By.id(publisherExp)).isEnabled());
+
+                WebElement publisherElement = driver.findElement(By.id(publisherExp));
+
+                WebElement publisherName = publisherElement.findElement(By.name("publisher"));
+                String publisherNameStr = publisherName.getAttribute("innerHTML");
+
+                assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
+
+                WebElement publisherCount = publisherElement.findElement(By.className("badge"));
+                String count = publisherCount.getAttribute("innerHTML");
+
+                assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, count, count), countExp.equals(count));
             }
-
-            assertTrue(String.format("The element %s shall have %s datasets, had %s.", arg1, arg2, nr),nr.equals(arg2));
         } finally {
             driver.close();
         }

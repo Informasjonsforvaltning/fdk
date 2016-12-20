@@ -4,6 +4,7 @@ import no.difi.dcat.datastore.domain.dcat.Dataset;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +18,10 @@ public class ElasticSearchResponseTest {
     public static final String TITLE = "Barnehageområde";
     public static final String BESKRIVELSE = "Barnehageområde - informasjon .";
 
-    private static String JSON_STRING = "{\n" +
+    public static final String PUBLISHER = "brønnøysund";
+    public static final String NR_OF_DATASETS = "20";
+
+    private static String JSON_STRING_DATASETS = "{\n" +
             "  \"took\" : 14,\n" +
             "  \"timed_out\" : false,\n" +
             "  \"_shards\" : {\n" +
@@ -85,16 +89,56 @@ public class ElasticSearchResponseTest {
             "  }\n" +
             "}";
 
+    private static String JSON_STRING_PUBLISHER_AGG = "{\n" +
+            "  \"took\" : 71,\n" +
+            "  \"timed_out\" : false,\n" +
+            "  \"_shards\" : {\n" +
+            "    \"total\" : 5,\n" +
+            "    \"successful\" : 5,\n" +
+            "    \"failed\" : 0\n" +
+            "  },\n" +
+            "  \"hits\" : {\n" +
+            "    \"total\" : 81,\n" +
+            "    \"max_score\" : 0.0,\n" +
+            "    \"hits\" : [ ]\n" +
+            "  },\n" +
+            "  \"aggregations\" : {\n" +
+            "    \"publisherCount\" : {\n" +
+            "      \"doc_count_error_upper_bound\" : 0,\n" +
+            "      \"sum_other_doc_count\" : 0,\n" +
+            "      \"buckets\" : [ {\n" +
+            "        \"key\" : \"" + PUBLISHER + "\",\n" +
+            "        \"doc_count\" : " + NR_OF_DATASETS + "\n" +
+            "      }, {\n" +
+            "        \"key\" : \"registeren\",\n" +
+            "        \"doc_count\" : 20\n" +
+            "      } ]\n" +
+            "    }\n" +
+            "  }\n" +
+            "}";
+
+
     @Test
     public void testConverionToDataset() {
         ElasticSearchResponse esr = new ElasticSearchResponse();
 
-        List<Dataset> l = esr.toListOfObjects(JSON_STRING, Dataset.class);
+        List<Dataset> l = esr.toListOfObjects(JSON_STRING_DATASETS, Dataset.class);
 
         Dataset ds = l.get(0);
 
         assertEquals(_ID, ds.getId());
         assertEquals(BESKRIVELSE, ds.getDescription().get("nb"));
         assertEquals(TITLE, ds.getTitle().get("nb"));
+    }
+
+    @Test
+    public void testConverionAggPublisher() {
+        ElasticSearchResponse esr = new ElasticSearchResponse();
+
+        Map<String, String> l = esr.toMapOfStrings(JSON_STRING_PUBLISHER_AGG);
+
+        String ads = l.get(PUBLISHER);
+
+        assertEquals(NR_OF_DATASETS, ads);
     }
 }
