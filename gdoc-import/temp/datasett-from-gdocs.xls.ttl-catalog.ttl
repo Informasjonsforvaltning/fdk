@@ -1,0 +1,86 @@
+@prefix :      <http://data.brreg.no/vocab/temp/> .
+@prefix d2rq:  <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://www.geonames.org/ontology#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3c.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix apf:   <http://jena.apache.org/ARQ/property#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix time:  <http://www.w3.org/TR/owl-time/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix map:   <file:///usr/local/src/semex/mapping.n3#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://data.brreg.no/datakatalog/katalog/2>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i direktoratet for e-helse" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Direktoratet for e-helse datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/20> , <http://data.brreg.no/datakatalog/dataset/22> , <http://data.brreg.no/datakatalog/dataset/25> , <http://data.brreg.no/datakatalog/dataset/21> , <http://data.brreg.no/datakatalog/dataset/24> , <http://data.brreg.no/datakatalog/dataset/28> , <http://data.brreg.no/datakatalog/dataset/27> , <http://data.brreg.no/datakatalog/dataset/26> ;
+        foaf:homepage    <http://helseportalen.no> .
+
+<http://data.brreg.no/datakatalog/katalog/7>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Lånekassen" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:title        "Lånekassa datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/37> , <http://data.brreg.no/datakatalog/dataset/38> , <http://data.brreg.no/datakatalog/dataset/39> , <http://data.brreg.no/datakatalog/dataset/34> , <http://data.brreg.no/datakatalog/dataset/35> , <http://data.brreg.no/datakatalog/dataset/40> , <http://data.brreg.no/datakatalog/dataset/36> , <http://data.brreg.no/datakatalog/dataset/41> .
+
+<http://data.brreg.no/datakatalog/katalog/5>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Skattedirektoratet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "SKD datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/32> , <http://data.brreg.no/datakatalog/dataset/31> .
+
+<http://data.brreg.no/datakatalog/katalog/3>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Helsedirektoratet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/983544622> ;
+        dct:title        "Helsedir datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/39> ;
+        foaf:homepage    <http://helsedirektoratet.no> .
+
+<http://data.brreg.no/datakatalog/katalog/8>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Oslo Kommune" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:title        "Oslo Kommunes datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/44> .
+
+<http://data.brreg.no/datakatalog/katalog/1>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Brønnøysundregistrene" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title        "Brønnøysundregistrene datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/13> , <http://data.brreg.no/datakatalog/dataset/1> , <http://data.brreg.no/datakatalog/dataset/12> , <http://data.brreg.no/datakatalog/dataset/19> , <http://data.brreg.no/datakatalog/dataset/5> , <http://data.brreg.no/datakatalog/dataset/4> , <http://data.brreg.no/datakatalog/dataset/10> , <http://data.brreg.no/datakatalog/dataset/7> , <http://data.brreg.no/datakatalog/dataset/15> , <http://data.brreg.no/datakatalog/dataset/17> , <http://data.brreg.no/datakatalog/dataset/6> , <http://data.brreg.no/datakatalog/dataset/14> , <http://data.brreg.no/datakatalog/dataset/16> , <http://data.brreg.no/datakatalog/dataset/11> , <http://data.brreg.no/datakatalog/dataset/9> , <http://data.brreg.no/datakatalog/dataset/8> , <http://data.brreg.no/datakatalog/dataset/18> , <http://data.brreg.no/datakatalog/dataset/3> , <http://data.brreg.no/datakatalog/dataset/2> ;
+        foaf:homepage    <http://brreg.no> .
+
+<http://data.brreg.no/datakatalog/katalog/6>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Statistisk Sentralbyrå" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971526920> ;
+        dct:title        "SSB datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/33> .
+
+<http://data.brreg.no/datakatalog/katalog/4>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett for NAV" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/889640782> ;
+        dct:title        "NAVs datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/30> ;
+        foaf:homepage    <http://www.nav.no> .
+
+<http://data.brreg.no/datakatalog/katalog/9>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett for Mattilsynet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
+        dct:title        "Mattilsynets datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/43> , <http://data.brreg.no/datakatalog/dataset/42> ;
+        foaf:homepage    <http://mattilsynet.no> .
