@@ -84,7 +84,7 @@ public class CrawlerJob implements Runnable {
             brregAgentConverter.collectFromModel(union);
 
             if (isValid(union,validationResult)) {
-                logger.debug("Dataset is valid!");
+                logger.debug("[crawler_operations] Valid datasets exists in input data!");
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
                 }
@@ -200,6 +200,7 @@ public class CrawlerJob implements Runnable {
      */
     private boolean isValid(Model model,List<String> validationMessage) {
 
+        //most severe error status
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
         final String[] message = {null};
 
@@ -251,7 +252,16 @@ public class CrawlerJob implements Runnable {
 
         if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, message[0]);
 
-        return validated;
+        //check in validation results if any datasets meets minimum criteria
+        boolean minimumCriteriaMet = false;
+        if (others[0] >= 1 || warnings[0] >= 1) {
+            minimumCriteriaMet = true;
+        }
+
+        logger.debug("[validation] minimumCriteriaMet: " + minimumCriteriaMet);
+
+        return minimumCriteriaMet;
+        //return validated;
     }
 
     private String returnCrawlDuration(LocalDateTime start, LocalDateTime stop) {

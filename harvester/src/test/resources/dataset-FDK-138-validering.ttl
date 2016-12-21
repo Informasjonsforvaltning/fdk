@@ -83,6 +83,7 @@
                                                         time:inXSDDateTime  "2046-05-12T00:00:00Z"^^xsd:dateTime
                                                       ]
                                  ] ;
+        dct:title                "Foretaksregisteret"@nb;
         dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
         dcat:keyword             "Forretningsadresse"@nb , "Foretaksnavn"@nb , "Organisasjonsnummer"@nb ;
         dct:modified             "2016-05-22"^^xsd:date ;
