@@ -388,6 +388,8 @@
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>false</failsOnError>
 							<failOnViolation>false</failOnViolation>
+							<suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+							<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
 						</configuration>
 						<goals>
 							<goal>check</goal>
