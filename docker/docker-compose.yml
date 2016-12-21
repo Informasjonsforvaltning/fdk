@@ -84,8 +84,6 @@ services:
       - es.cluster.name=fellesdatakatalog
       - ES_CLUSTER_NAME="fellesdatakatalog"
       - cluster_name="fellesdatakatalog"
-    volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"

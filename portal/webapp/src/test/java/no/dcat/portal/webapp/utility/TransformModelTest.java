@@ -4,7 +4,9 @@ import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -61,5 +63,56 @@ public class TransformModelTest {
         publisher.setOverordnetEnhet(overEnhet);
 
         return publisher;
+    }
+
+    @Test
+    public void testAggregateDataSetCount() {
+        List<Publisher> publishersFlat = new ArrayList<>();
+        createPublisherFlat(publishersFlat);
+        List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
+        List<Publisher> publishersGroup = TransformModel.groupPublisher(publishersHier);
+
+        Map<String, String> aggDataSetPbu = new HashMap<>();
+        aggDataSetPbu.put(name_lev1, "1");
+        aggDataSetPbu.put(name_lev2, "1");
+        aggDataSetPbu.put(name_lev3, "1");
+
+        aggDataSetPbu = TransformModel.aggregateDataSetCount(aggDataSetPbu, publishersGroup);
+        assertEquals("Toplevel publisher shall add subPublishers in the total number of aggregated Dataset.", "3", aggDataSetPbu.get(name_lev1));
+        assertEquals("1", "1", aggDataSetPbu.get(name_lev2));
+        assertEquals("1", aggDataSetPbu.get(name_lev3));
+    }
+
+    @Test
+    public void testAggregateDataSetCountOnePublisherHasNoAggregation() {
+        List<Publisher> publishersFlat = new ArrayList<>();
+        createPublisherFlat(publishersFlat);
+        List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
+        List<Publisher> publishersGroup = TransformModel.groupPublisher(publishersHier);
+
+        Map<String, String> aggDataSetPbu = new HashMap<>();
+        aggDataSetPbu.put(name_lev1, "1");
+        aggDataSetPbu.put(name_lev2, "1");
+
+        aggDataSetPbu = TransformModel.aggregateDataSetCount(aggDataSetPbu, publishersGroup);
+        assertEquals("Toplevel publisher shall add subPublishers in the total number of aggregated Dataset.", "2", aggDataSetPbu.get(name_lev1));
+        assertEquals("1", "1", aggDataSetPbu.get(name_lev2));
+    }
+
+    @Test
+    public void testAggregateDataSetCountTopPublisherHasNoAggregation() {
+        List<Publisher> publishersFlat = new ArrayList<>();
+        createPublisherFlat(publishersFlat);
+        List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
+        List<Publisher> publishersGroup = TransformModel.groupPublisher(publishersHier);
+
+        Map<String, String> aggDataSetPbu = new HashMap<>();
+        aggDataSetPbu.put(name_lev2, "1");
+        aggDataSetPbu.put(name_lev3, "1");
+
+        aggDataSetPbu = TransformModel.aggregateDataSetCount(aggDataSetPbu, publishersGroup);
+        assertEquals("Toplevel publisher shall add subPublishers in the total number of aggregated Dataset.", "2", aggDataSetPbu.get(name_lev1));
+        assertEquals("1", "1", aggDataSetPbu.get(name_lev2));
+        assertEquals("1", aggDataSetPbu.get(name_lev3));
     }
 }

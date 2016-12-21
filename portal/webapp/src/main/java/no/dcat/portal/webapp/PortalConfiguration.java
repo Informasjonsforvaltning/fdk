@@ -24,6 +24,7 @@ public class PortalConfiguration {
     private static final String QUERY_SERVICE_DETAIL = "/detail";
     private static final String QUERY_SERVICE_THEMES = "/themes";
     private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
+    private static final String QUERY_SERVICE_PUBLISHER_COUNT = "/publishercount";
 
 
     @Value("${spring.profiles.active:development}")
@@ -73,6 +74,10 @@ public class PortalConfiguration {
 
     public final String getPublisherServiceUrl() {
         return getQueryService() + QUERY_SERVICE_PUBLISHER;
+    }
+
+    public final String getPublisherCountServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_PUBLISHER_COUNT;
     }
 
     public final String getDetailsServiceUrl() {
