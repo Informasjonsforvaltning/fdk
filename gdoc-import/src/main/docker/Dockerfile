@@ -20,6 +20,7 @@ COPY mapper /usr/local/dcat/mapper
 COPY semex.jar /usr/local/dcat/lib/
 COPY lib2/*.jar /usr/local/dcat/lib/
 COPY lib/*.jar /usr/local/dcat/lib/
+COPY log4j.properties /usr/local/dcat/
 
 ADD dcat.sh /usr/local/dcat/dcat.sh
 RUN chmod +x /usr/local/dcat/dcat.sh

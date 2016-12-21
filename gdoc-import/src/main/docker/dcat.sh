@@ -3,10 +3,12 @@
 LIB=/usr/local/dcat/lib
 
 # Download from google docs
+echo STEP 1 - Download from google
 curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=xlsx&authuser=0" > ./in/datasett-from-gdocs.xlsx
 echo downloaded datasett-from-gdocs.xlsx
 
 # Convert all XLSX to XLS
+echo STEP 2 - Convert XLSX to XLS
 for file in in/*.xlsx
 do
     echo converting $file to xls...
@@ -18,17 +20,20 @@ echo conversion done.
 
 java -version
 
-# Syntactical translation from Excel to RDF
+#Syntactical translation from Excel to RDF
+echo STEP 3 - Syntactical translation from Excel to RDF
 for file in in/*.xls
 do 
     echo converting $file to ttl
     filename=$(basename "$file")
+    #java -Xss2m -Xmx512M -cp "$LIB/*" com.computas.opendata.semex.Semex -Dlog4j.configuration=file:log4j.properties -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
     java -Xss2m -Xmx512M -cp "$LIB/*" com.computas.opendata.semex.Semex -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
-    echo convered $file to $filename.ttl
+    echo converted $file to $filename.ttl
 done
 
 
 # Catalog
+echo STEP 4 - Create catalogs
 for file in in/*.ttl
 do 
     echo creating catalogs from $file
@@ -38,6 +43,7 @@ do
 done
 
 # Dataset
+echo STEP 5 - Create datasets
 for file in in/*.ttl
 do 
     echo creating datasets from $file
@@ -48,6 +54,7 @@ done
 
 
 # Period of dataset
+echo STEP 6 - Period of dataset
 for file in in/*.ttl
 do
     echo converting $file to dcat format
@@ -57,6 +64,7 @@ do
 done
 
 # Publisher
+echo STEP 7 - Create Publisher
 for file in in/*.ttl
 do 
     echo creating publisher from $file
@@ -66,6 +74,7 @@ do
 done
 
 # Contact point
+echo STEP 8 - Create ContactPoint
 for file in in/*.ttl
 do 
     echo creating contact point from $file
@@ -75,6 +84,7 @@ do
 done
 
 # Provenance
+echo STEP 9 - Create Provenance
 for file in in/*.ttl
 do 
     echo creating provenance from $file
@@ -84,6 +94,7 @@ do
 done
 
 # Location
+echo STEP 10 - Create Location
 for file in in/*.ttl
 do 
     echo creating location from $file
@@ -93,6 +104,7 @@ do
 done
 
 # Access Rights
+echo STEP 11 - Create Access Rights
 for file in in/*.ttl
 do 
     echo creating access rights from $file
@@ -103,6 +115,7 @@ done
 
 
 # Merge all
+echo STEP 12 - MERGE ALL
 now=`date +"%Y-%m-%d"`
 for file in in/*.ttl
 do
@@ -114,6 +127,7 @@ done
 
 
 # Validate
+echo STEP 13 - VALIDATE
 for file in publish/*-finished-$now.ttl
 do
     for rule in validation/*.sparql

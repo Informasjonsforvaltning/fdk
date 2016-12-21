@@ -2,66 +2,92 @@ package no.dcat.gdoc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.Enumeration;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by dask on 19.12.2016.
  */
 @Controller
 public class GdocController {
+
     private static Logger logger = LoggerFactory.getLogger(GdocController.class);
 
+    private static final String GET_A_VERSION = "versions/{versionId}";
+    private static final String LIST_VERSIONS = "versions";
+    private static final String CONVERT_GDOC  = "convert";
+
+    @Value("${application.converterHomeDir}")
+    private String converterHomeDir ; //= "/usr/local/dcat/";
+
+    public void setConverterHomeDir(final String converterHomeDir) {
+        this.converterHomeDir = converterHomeDir;
+    }
+
+    @Value("${application.converterResultDir}")
+    private String converterResultDir ; //= "/usr/local/dcat/publish";
+
+    public void setConverterResultDir(final String converterResultDir) {
+        this.converterResultDir = converterResultDir;
+    }
+
+
+    /**
+     * Gets the google sheet document from google and converts it to turtle format. The resulting
+     * file is stored with the current date in its filename. If convert is run more than once on
+     * the same day the previous file for that day is overwritten.
+     *
+     * <p>The resulting turtle file can be accessed by the /versions service.
+     *
+     * @return the output log of the conversion run
+     */
     @CrossOrigin
-    @RequestMapping(value = {"/harvest"})
-    final ResponseEntity<String> result(final HttpServletRequest request, HttpSession session) {
+    @RequestMapping(value = {CONVERT_GDOC}, produces = "text/plain;charset=UTF-8")
+    public final ResponseEntity<String> convert() {
         long start = System.currentTimeMillis();
-        logger.info("Startet harvest of gdoc");
+        logger.info("Startet " + CONVERT_GDOC);
         String command = "bash dcat.sh;";
         logger.debug("command: " + command);
 
-        Process p;
+        Process process;
         String line;
         try {
             ProcessBuilder pb = new ProcessBuilder("bash", "dcat.sh");
-            pb.directory(new File("/usr/local/dcat/"));
+            pb.directory(new File(converterHomeDir));
+            File log = File.createTempFile("convert","log");
+            pb.redirectOutput(log);
+            pb.redirectError(log);
 
-            p = pb.start();
+            process = pb.start();
+
+            int retValue = process.waitFor();
 
             StringBuilder outMsg = new StringBuilder();
-            StringBuilder errMsg = new StringBuilder();
-
-            //process standard output stream
-            BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((line = stdoutReader.readLine()) != null) {
-                outMsg.append(line); outMsg.append("\n\n");
+            BufferedReader logReader = new BufferedReader(
+                    new InputStreamReader( new FileInputStream(log), StandardCharsets.UTF_8 ));
+            while ((line = logReader.readLine()) != null) {
+                // remove the bloody debug messages.
+                // I didn't succed in adding log4j file to the semtex call
+                if (!line.contains("DEBUG org.vedantatree.")) {
+                    outMsg.append(line);
+                    outMsg.append(System.lineSeparator());
+                }
             }
-            logger.debug("out: " +outMsg.toString());
-            //process standard error stream
-            BufferedReader errReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            while ((line = errReader.readLine()) != null) {
-                errMsg.append(line); errMsg.append("\n\n");
-            }
-            logger.debug("err: "+ errMsg.toString());
+            logReader.close();
 
-            int retValue = p.waitFor();
-            //stdoutReader.close();
-            //errReader.close();
-
-            String message = "return: " + retValue + ",\n" +
-                    "out: "+ outMsg.toString() + ",\n" +
-                    "err: "+ errMsg.toString() + "\n";
-
+            String message = "ReturnValue: " + retValue + "\n"
+                    + outMsg.toString() + "\n" ;
 
             ResponseEntity<String> response = new ResponseEntity<String>(message, HttpStatus.OK);
 
@@ -70,52 +96,125 @@ public class GdocController {
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
-            logger.info("Harvest used: " + (System.currentTimeMillis() - start));
+            logger.info(CONVERT_GDOC + " used " + (System.currentTimeMillis() - start));
         }
 
     }
 
+    /**
+     * Fetches a spesific version of the gdoc converted turtle file. A file will typically have
+     * the generation date in the file name. This date (YYYY-MM-DD) is used as versionId.
+     *
+     * @param versionId the version id to download. Use "latest" to get the last generated file
+     * @return the turtle file as a text/turtle content
+     */
     @CrossOrigin
-    @RequestMapping(value = {"/latest"}, produces = "application/json")
-    final ResponseEntity<String>  latest() {
+    @RequestMapping(value = { "versions/{versionId}"}, produces = "text/turtle;charset=UTF-8")
+    public final ResponseEntity<String> versions(@PathVariable String versionId) {
         long startTime = System.currentTimeMillis();
-        logger.info("Startet latest");
-        Process p;
+        logger.info("Startet " + GET_A_VERSION);
+        logger.info("versionId=" + versionId);
+
+        File dir = new File(converterResultDir);
+
+        File found = null;
+
+        File[] versions = dir.listFiles();
+        if (versions != null) {
+            if ("latest".equals(versionId)) {
+                long modified = 0;
+                for (File f : versions) {
+                    logger.debug(f.getName() + " " + f.lastModified());
+                    if (modified < f.lastModified()) {
+                        modified = f.lastModified();
+                        found = f;
+                    }
+                }
+            } else {
+                for (File f : versions) {
+                    if (f.getName().contains(versionId)) {
+                        found = f;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (found != null) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                    found.toURI().toURL().openStream(), StandardCharsets.UTF_8))) {
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+
+                while (line != null) {
+                    sb.append(line);
+                    sb.append(System.lineSeparator());
+                    line = br.readLine();
+                }
+                return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            } finally {
+                logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
+            }
+        } else {
+            logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
+            return new ResponseEntity<String>(versionId, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Simple method to list the gdoc converted versions that has been generated.
+     *
+     * @return the output of the ls command in the service's publish directory
+     */
+    @CrossOrigin
+    @RequestMapping(value = {LIST_VERSIONS}, produces = "text/plain;charset=UTF-8")
+    public final ResponseEntity<String>  list() {
+        long startTime = System.currentTimeMillis();
+        logger.info("Startet " + LIST_VERSIONS);
+
+        Process process;
         String line;
         try {
-            ProcessBuilder pb = new ProcessBuilder("ls", "-l");
-            pb.directory(new File("/usr/local/dcat/publish"));
+            ProcessBuilder pb = new ProcessBuilder("ls");
+            pb.directory(new File(converterResultDir));
 
-            p = pb.start(); //Runtime.getRuntime().exec(command);
+            process = pb.start();
 
-            logger.debug(p.toString());
-
+            logger.debug(process.toString());
 
             StringBuilder outMsg = new StringBuilder();
             StringBuilder errMsg = new StringBuilder();
 
             //process standard output stream
-            BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader stdoutReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
             while ((line = stdoutReader.readLine()) != null) {
                 outMsg.append(line);
-                outMsg.append("\n");
+                outMsg.append(System.lineSeparator());
             }
             //process standard error stream
-            BufferedReader errReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            BufferedReader errReader = new BufferedReader(
+                    new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
             while ((line = errReader.readLine()) != null) {
-                errMsg.append(line); errMsg.append("\n");
+                errMsg.append(line);
+                errMsg.append(System.lineSeparator());
             }
 
-            int retValue = p.waitFor();
+            int retValue = process.waitFor();
+            errReader.close();
+            stdoutReader.close();
 
-            return new ResponseEntity<String>(outMsg.toString()+ "\n" + errMsg.toString(), HttpStatus.OK);
+            return new ResponseEntity<String>(
+                    retValue + "\n" + outMsg.toString() + "\n" + errMsg.toString(),
+                    HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
-            logger.info("latest used " + (System.currentTimeMillis() - startTime));
+            logger.info(LIST_VERSIONS + " used " + (System.currentTimeMillis() - startTime));
         }
 
-    };
-
+    }
 
 }

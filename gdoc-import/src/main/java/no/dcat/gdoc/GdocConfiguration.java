@@ -19,16 +19,16 @@ public class GdocConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("*", "/search").permitAll();
+                .antMatchers("*").permitAll();
 
     }
 
-
+/*
     @Autowired
-    final public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
+    public final void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
     }
-
+*/
 }

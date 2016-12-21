@@ -1,0 +1,3 @@
+application:
+  converterHomeDir: /usr/local/dcat/
+  converterResultDir: /usr/local/dcat/publish
