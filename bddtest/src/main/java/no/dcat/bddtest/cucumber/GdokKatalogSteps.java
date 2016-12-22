@@ -5,7 +5,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import no.dcat.bddtest.WebDriverFactory;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static java.lang.Thread.sleep;
-import static org.junit.Assert.*;
+import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 
 /**
  * Created by dask on 16.12.2016.
