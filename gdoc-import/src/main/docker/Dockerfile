@@ -27,7 +27,7 @@ RUN chmod +x /usr/local/dcat/dcat.sh
 
 VOLUME /usr/local/dcat
 
-ADD gdoc-import-?.?.?-SNAPSHOT.jar app.jar
+ADD gdoc-import*.jar app.jar
 RUN sh -c 'touch /app.jar'
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
