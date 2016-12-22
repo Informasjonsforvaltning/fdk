@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
@@ -15,6 +16,9 @@ public class WebDriverFactory {
     public static WebDriver createWebDriver() {
         String webdriver = System.getProperty("browser", "chrome");
         switch(webdriver) {
+            case "phantomjs": {
+                return new PhantomJSDriver();
+            }
             case "firefox": return new FirefoxDriver();
             case "chrome": {
                 File file = new File("target/classes/chromedriver.exe");

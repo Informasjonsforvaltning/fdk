@@ -17,14 +17,16 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 /**
  * Created by dask on 16.12.2016.
  */
-public class GdokKatalogSteps {
+public class GdocCatalogSteps {
 
     private final WebDriver driver = WebDriverFactory.createWebDriver();
 
-    private static Logger logger = LoggerFactory.getLogger(GdokKatalogSteps.class);
+    private static Logger logger = LoggerFactory.getLogger(GdocCatalogSteps.class);
 
     public static String PORTAL_URL = "http://fdk-por-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://portal-fdk.tt1.brreg.no";
     public static String ADMIN_URL = "http://fdk-adm-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://admin-fdk.tt1.brreg.no";
+    public static String GDOC_CONVERT_URL  = "http://192.168.99.100:8084/convert";
+    public static String GDOC_LATEST_URL  = "http://192.168.99.100:8084/versions/latest";
 
 
     @Given("^brukeren har lagt til nytt datasett med tittel \"([^\"]*)\" i google dokumentet$")
@@ -37,6 +39,7 @@ public class GdokKatalogSteps {
     public void brukerenStarterGdokKonverteringen() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         //throw new cucumber.api.PendingException();
+        driver.get(GDOC_CONVERT_URL);
     }
 
     @Given("^brukeren går inn i admin-grensesnittet og velger harvest 'gdok-katalog'$")
@@ -59,6 +62,8 @@ public class GdokKatalogSteps {
         WebElement harvest = row.findElement(By.xpath("td/a[contains(@href,'admin/harvestDcatSource?')]"));
 
         logger.info("harvest-url " + harvest.getAttribute("href"));
+
+        sleep(15000); // to allow for harvest time
 
     }
 
