@@ -33,3 +33,4 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 #WORKDIR /usr/local/dcat
 #CMD ./dcat.sh
+#

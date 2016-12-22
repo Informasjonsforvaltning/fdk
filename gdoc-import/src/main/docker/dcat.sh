@@ -1,4 +1,5 @@
 #!/bin/sh
+# Main file to convert google sheet to DCAT turtle
 
 LIB=/usr/local/dcat/lib
 
