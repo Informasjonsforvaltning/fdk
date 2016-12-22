@@ -38,6 +38,7 @@ public class CrawlerJob implements Runnable {
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
+    private List<ValidationError> validationErrors = new ArrayList<>();
 
     public List<String> getValidationResult() {return validationResult;}
 
@@ -85,6 +86,10 @@ public class CrawlerJob implements Runnable {
 
             if (isValid(union,validationResult)) {
                 logger.debug("[crawler_operations] Valid datasets exists in input data!");
+
+                //remove non-valid datasets
+                removeNonValidDatasets(union);
+
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
                 }
@@ -205,12 +210,14 @@ public class CrawlerJob implements Runnable {
         final String[] message = {null};
 
         validationMessage.clear();
+        validationErrors.clear();
 
         final int[] errors ={0}, warnings ={0}, others ={0};
 
         boolean validated = DcatValidation.validate(model, (error) -> {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
             validationMessage.add(msg);
+            validationErrors.add(error);
 
             if (error.isError()) {
                 errors[0]++;
@@ -262,6 +269,18 @@ public class CrawlerJob implements Runnable {
 
         return minimumCriteriaMet;
         //return validated;
+    }
+
+
+    /**
+     * Remove non-valida datasets from model
+     * Non-valid datasets are those with ruleSeverity=error
+     * in global variable validationErrors
+     * @param model
+     */
+    private void removeNonValidDatasets(Model model) {
+        //todo: implement
+        //todo: allow specification of ruleseverity to be accepted
     }
 
     private String returnCrawlDuration(LocalDateTime start, LocalDateTime stop) {
