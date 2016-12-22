@@ -140,8 +140,18 @@
         </dependency-->
     </dependencies>
 	<build>
+        <!-- enable filtering to generate project.properties with information from build process -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
 	<plugins>
-   
+
 		<plugin>
             <groupId>pl.project13.maven</groupId>
             <artifactId>git-commit-id-plugin</artifactId>
