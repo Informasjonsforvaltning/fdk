@@ -1,21 +1,19 @@
 package no.dcat.gdoc;
 
+import org.apache.tomcat.jni.Proc;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
+import java.io.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -27,44 +25,121 @@ import static org.mockito.Mockito.*;
 @PrepareForTest({GdocController.class,ProcessBuilder.class,Process.class})
 public class GdocControllerTest {
 
-    @MockBean
-    GdocConfiguration config;
+    private GdocController gdocController;
 
     @Before
     public void setup () {
-
+        gdocController = new GdocController();
     }
 
     @Test
     public void convertReturnsInternalSericeErrorTest() throws Exception {
-        GdocController controller = new GdocController();
-        ResponseEntity actual = controller.convert();
+
+        ResponseEntity actual = gdocController.convert();
 
         assertEquals(actual.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /*
-    @Test
-    public void convertReturns() throws Exception {
 
-        Process mockProcess = mock(Process.class);
+    @Test
+    public void convertReturnsOK() throws Exception {
+
+        Process mockProcess = PowerMockito.mock(Process.class);
         when(mockProcess.waitFor()).thenReturn(0);
 
         ProcessBuilder mockProcessBuilder = PowerMockito.mock(ProcessBuilder.class);
 
-        PowerMockito.whenNew(ProcessBuilder.class).withAnyArguments().thenReturn(mockProcessBuilder);
-        when(mockProcessBuilder.start()).thenReturn(mockProcess);
+        PowerMockito.whenNew(ProcessBuilder.class).withArguments(anyString(), anyString()).thenReturn(mockProcessBuilder);
+
         when(mockProcessBuilder.directory(Matchers.anyObject())).thenReturn(mockProcessBuilder);
+        when(mockProcessBuilder.start()).thenReturn(mockProcess);
+
         when(mockProcessBuilder.redirectOutput()).thenReturn(null);
+        when(mockProcessBuilder.redirectError()).thenReturn(null);
 
-        GdocController controller = new GdocController();
+        ReflectionTestUtils.setField(gdocController, "converterHomeDir", "/usr/local/dcat");
+        ResponseEntity actual = gdocController.convert();
 
-        ReflectionTestUtils.setField(controller, "converterHomeDir", "usr/local/dcat");
+        PowerMockito.verifyNew(ProcessBuilder.class);
 
-        ResponseEntity actual = controller.convert();
-
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
 
     }
 
-    */
+    @Test
+    public void listReturnsOK () throws Exception {
+
+        Process mockProcess = PowerMockito.mock(Process.class);
+        when(mockProcess.waitFor()).thenReturn(0);
+
+        ProcessBuilder mockProcessBuilder = PowerMockito.mock(ProcessBuilder.class);
+        PowerMockito.whenNew(ProcessBuilder.class).withArguments(anyString()).thenReturn(mockProcessBuilder);
+        when(mockProcessBuilder.directory(Matchers.anyObject())).thenReturn(mockProcessBuilder);
+        when(mockProcessBuilder.start()).thenReturn(mockProcess);
+
+        BufferedReader mockBufferedReader = mock(BufferedReader.class);
+        PowerMockito.whenNew(BufferedReader.class).withAnyArguments().thenReturn(mockBufferedReader);
+        when(mockBufferedReader.readLine()).thenReturn("line").thenReturn(null);
+
+        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
+        ResponseEntity actual = gdocController.list();
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+
+    }
+
+    @Test
+    public void versionsWithoutArgumentsReturnsNotFound() throws Exception {
+        File mockFile = mock(File.class);
+        when(mockFile.listFiles()).thenReturn(null);
+
+        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
+        ResponseEntity<String> actual = gdocController.versions(null);
+
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode() );
+    }
+
+    @Test
+    public void versionsWithArgumentReturnsFileOK() throws Exception {
+
+        File f1 = File.createTempFile("anyname2016-11-24","ttl");
+        File f2 = File.createTempFile("anyname2016-12-24","ttl");
+        File[] dir = new File[2];
+        dir[0] = f1;
+        dir[1] = f2;
+
+        File mockFile = mock(File.class);
+        PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(mockFile);
+        when(mockFile.listFiles()).thenReturn(dir);
+
+        BufferedReader mockBufferedReader = mock(BufferedReader.class);
+        PowerMockito.whenNew(BufferedReader.class).withAnyArguments().thenReturn(mockBufferedReader);
+        when(mockBufferedReader.readLine()).thenReturn("line").thenReturn(null);
+
+        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
+        ResponseEntity<String> actual = gdocController.versions("2016-12-24");
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode() );
+    }
+
+    @Test
+    public void versionsWithLatestArgumentReturnsFileOK() throws Exception {
+        File[] dir = new File[2];
+        dir[0] = File.createTempFile("anyname2016-11-22", "ttl");
+        Thread.sleep(100);
+        dir[1] = File.createTempFile("anyname2016-12-24", "ttl");
+        PrintWriter writer = new PrintWriter(dir[1]);
+        writer.println("This is the latest file");
+        writer.close();
+
+        File mockFile = mock(File.class);
+        PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(mockFile);
+        when(mockFile.listFiles()).thenReturn(dir);
+
+        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
+        ResponseEntity<String> actual = gdocController.versions("latest");
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode() );
+        assertTrue(actual.toString().contains("latest"));
+    }
 }

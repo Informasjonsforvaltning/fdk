@@ -29,14 +29,14 @@ public class GdocController {
     private static final String CONVERT_GDOC  = "convert";
 
     @Value("${application.converterHomeDir}")
-    private String converterHomeDir ; //= "/usr/local/dcat/";
+    private String converterHomeDir ;
 
     public void setConverterHomeDir(final String converterHomeDir) {
         this.converterHomeDir = converterHomeDir;
     }
 
     @Value("${application.converterResultDir}")
-    private String converterResultDir ; //= "/usr/local/dcat/publish";
+    private String converterResultDir ;
 
     public void setConverterResultDir(final String converterResultDir) {
         this.converterResultDir = converterResultDir;
@@ -179,35 +179,31 @@ public class GdocController {
         try {
             ProcessBuilder pb = new ProcessBuilder("ls");
             pb.directory(new File(converterResultDir));
+            File log = File.createTempFile("list","log");
+            pb.redirectOutput(log);
+            pb.redirectError(log);
 
             process = pb.start();
 
             logger.debug(process.toString());
 
-            StringBuilder outMsg = new StringBuilder();
-            StringBuilder errMsg = new StringBuilder();
-
-            //process standard output stream
-            BufferedReader stdoutReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
-            while ((line = stdoutReader.readLine()) != null) {
-                outMsg.append(line);
-                outMsg.append(System.lineSeparator());
-            }
-            //process standard error stream
-            BufferedReader errReader = new BufferedReader(
-                    new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
-            while ((line = errReader.readLine()) != null) {
-                errMsg.append(line);
-                errMsg.append(System.lineSeparator());
-            }
-
             int retValue = process.waitFor();
-            errReader.close();
-            stdoutReader.close();
+
+            StringBuilder outMsg = new StringBuilder();
+            BufferedReader logReader = new BufferedReader(
+                    new InputStreamReader( new FileInputStream(log), StandardCharsets.UTF_8 ));
+            while ((line = logReader.readLine()) != null) {
+                // remove the bloody debug messages.
+                // I didn't succed in adding log4j file to the semtex call
+                if (!line.contains("DEBUG org.vedantatree.")) {
+                    outMsg.append(line);
+                    outMsg.append(System.lineSeparator());
+                }
+            }
+            logReader.close();
 
             return new ResponseEntity<String>(
-                    retValue + "\n" + outMsg.toString() + "\n" + errMsg.toString(),
+                    retValue + "\n" + outMsg.toString(),
                     HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
