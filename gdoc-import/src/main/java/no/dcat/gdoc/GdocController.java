@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by dask on 19.12.2016.
+ * Main REST controller for GDOC-Import Service.
+ *
+ * <p>Created by dask on 19.12.2016.
  */
 @Controller
 public class GdocController {
@@ -32,6 +35,7 @@ public class GdocController {
     private String converterHomeDir ;
 
     public void setConverterHomeDir(final String converterHomeDir) {
+
         this.converterHomeDir = converterHomeDir;
     }
 
@@ -39,6 +43,7 @@ public class GdocController {
     private String converterResultDir ;
 
     public void setConverterResultDir(final String converterResultDir) {
+
         this.converterResultDir = converterResultDir;
     }
 
@@ -55,7 +60,9 @@ public class GdocController {
     @CrossOrigin
     @RequestMapping(value = {CONVERT_GDOC}, produces = "text/plain;charset=UTF-8")
     public final ResponseEntity<String> convert() {
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
+        ResponseEntity<String> result;
+
         logger.info("Startet " + CONVERT_GDOC);
         String command = "bash dcat.sh;";
         logger.debug("command: " + command);
@@ -89,15 +96,16 @@ public class GdocController {
             String message = "ReturnValue: " + retValue + "\n"
                     + outMsg.toString() + "\n" ;
 
-            ResponseEntity<String> response = new ResponseEntity<String>(message, HttpStatus.OK);
-
-            return response;
+            logger.info(message);
+            result = new ResponseEntity<>(message, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-            logger.info(CONVERT_GDOC + " used " + (System.currentTimeMillis() - start));
+            logger.error(e.getMessage());
+            result = new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        logger.info(CONVERT_GDOC + " used " + (System.currentTimeMillis() - start));
+        return result;
 
     }
 
@@ -111,9 +119,11 @@ public class GdocController {
     @CrossOrigin
     @RequestMapping(value = { "versions/{versionId}"}, produces = "text/turtle;charset=UTF-8")
     public final ResponseEntity<String> versions(@PathVariable String versionId) {
-        long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
+
         logger.info("Startet " + GET_A_VERSION);
         logger.info("versionId=" + versionId);
+        ResponseEntity<String> result;
 
         File dir = new File(converterResultDir);
 
@@ -122,7 +132,7 @@ public class GdocController {
         File[] versions = dir.listFiles();
         if (versions != null) {
             if ("latest".equals(versionId)) {
-                long modified = 0;
+                long modified = -1;
                 for (File f : versions) {
                     logger.debug(f.getName() + " " + f.lastModified());
                     if (modified < f.lastModified()) {
@@ -141,8 +151,11 @@ public class GdocController {
         }
 
         if (found != null) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(
+            logger.info("return " + found.getName());
+
+            try (final BufferedReader br = new BufferedReader(new InputStreamReader(
                     found.toURI().toURL().openStream(), StandardCharsets.UTF_8))) {
+
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
 
@@ -151,16 +164,19 @@ public class GdocController {
                     sb.append(System.lineSeparator());
                     line = br.readLine();
                 }
-                return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
-            } catch (Exception e) {
-                return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-            } finally {
-                logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
+
+                result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+                result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } else {
-            logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
-            return new ResponseEntity<String>(versionId, HttpStatus.NOT_FOUND);
+            logger.warn("Not found: " + versionId);
+            result = new ResponseEntity<>(versionId, HttpStatus.NOT_FOUND);
         }
+
+        logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
+        return result;
     }
 
     /**
@@ -171,8 +187,9 @@ public class GdocController {
     @CrossOrigin
     @RequestMapping(value = {LIST_VERSIONS}, produces = "text/plain;charset=UTF-8")
     public final ResponseEntity<String>  list() {
-        long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         logger.info("Startet " + LIST_VERSIONS);
+        ResponseEntity<String> result;
 
         Process process;
         String line;
@@ -185,31 +202,28 @@ public class GdocController {
 
             process = pb.start();
 
-            logger.debug(process.toString());
-
             int retValue = process.waitFor();
 
             StringBuilder outMsg = new StringBuilder();
             BufferedReader logReader = new BufferedReader(
                     new InputStreamReader( new FileInputStream(log), StandardCharsets.UTF_8 ));
             while ((line = logReader.readLine()) != null) {
-                // remove the bloody debug messages.
-                // I didn't succed in adding log4j file to the semtex call
-                if (!line.contains("DEBUG org.vedantatree.")) {
-                    outMsg.append(line);
-                    outMsg.append(System.lineSeparator());
-                }
+                outMsg.append(line);
+                outMsg.append(System.lineSeparator());
             }
             logReader.close();
 
-            return new ResponseEntity<String>(
-                    retValue + "\n" + outMsg.toString(),
-                    HttpStatus.OK);
+            String message = retValue + "\n" + outMsg.toString();
+            logger.info(message);
+
+            result = new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-            logger.info(LIST_VERSIONS + " used " + (System.currentTimeMillis() - startTime));
+            logger.error(e.getMessage());
+            result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        logger.info(LIST_VERSIONS + " used " + (System.currentTimeMillis() - startTime));
+        return result;
 
     }
 
