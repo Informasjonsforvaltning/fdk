@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -58,7 +59,8 @@ public class GdocController {
      * @return the output log of the conversion run
      */
     @CrossOrigin
-    @RequestMapping(value = {CONVERT_GDOC}, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = {CONVERT_GDOC}, method = {RequestMethod.GET, RequestMethod.POST},
+            produces = "text/plain;charset=UTF-8")
     public final ResponseEntity<String> convert() {
         final long start = System.currentTimeMillis();
         ResponseEntity<String> result;
