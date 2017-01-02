@@ -305,7 +305,7 @@ public class GdocControllerTest {
     public void versionsWithLatestArgumentReturnsFileOK() throws Exception {
         File[] dir = new File[2];
         dir[0] = File.createTempFile("anyname2016-11-22", "ttl");
-        Thread.sleep(100);
+        Thread.sleep(1000);
         dir[1] = File.createTempFile("anyname2016-12-24", "ttl");
         PrintWriter writer = new PrintWriter(dir[1]);
         writer.println("This is the latest file");
