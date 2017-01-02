@@ -184,9 +184,12 @@ public class PortalController {
     public ModelAndView publisher() {
         ModelAndView model = new ModelAndView(MODEL_PUBLISHER);
         List<Publisher> publisherGrouped = new ArrayList<>();
+        Map<String, String> publisherDataSetCount = new HashMap<>();
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
+
+            // Get publishers.
             URI uri = new URIBuilder(buildMetadata.getPublisherServiceUrl()).build();
             logger.debug("Query for all publisher");
 
@@ -194,10 +197,21 @@ public class PortalController {
 
             List<Publisher> publishersFlat = new ElasticSearchResponse().toListOfObjects(json, Publisher.class);
 
-            List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
+            // Get aggregation on dataset for publishers.
+            URI uriAggPublisher = new URIBuilder(buildMetadata.getPublisherCountServiceUrl()).build();
+            logger.debug("Query for all publisher count.");
 
+            String jsonAggPublisher = httpGet(httpClient, uriAggPublisher);
+            publisherDataSetCount = new ElasticSearchResponse().toMapOfStrings(jsonAggPublisher);
+
+            // Organise publishers from flat to hierarchical.
+            List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
             publisherGrouped = TransformModel.groupPublisher(publishersHier);
 
+            // Aggregate dataset count up the hierarchy
+            publisherDataSetCount = TransformModel.aggregateDataSetCount(publisherDataSetCount, publisherGrouped);
+
+            //Sort publisher alphabetic.
             Collections.sort(publisherGrouped , new PublisherOrganisasjonsformComparator());
 
             logger.debug(String.format("Found publishers: %s", json));
@@ -208,6 +222,7 @@ public class PortalController {
         }
 
         model.addObject("publisher", publisherGrouped);
+        model.addObject("aggpublishercount", publisherDataSetCount);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
     }

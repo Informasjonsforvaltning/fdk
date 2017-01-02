@@ -25,6 +25,7 @@ public class PortalConfiguration {
     private static final String QUERY_SERVICE_THEMES = "/themes";
     private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
     private static final String QUERY_THEME_COUNT = "/themecount";
+    private static final String QUERY_SERVICE_PUBLISHER_COUNT = "/publishercount";
 
 
     @Value("${spring.profiles.active:development}")
@@ -74,6 +75,10 @@ public class PortalConfiguration {
         return getQueryService() + QUERY_SERVICE_PUBLISHER;
     }
 
+    public final String getPublisherCountServiceUrl() {
+        return getQueryService() + QUERY_SERVICE_PUBLISHER_COUNT;
+    }
+
     public final String getDetailsServiceUrl() {
         return getQueryService() + QUERY_SERVICE_DETAIL;
     }
@@ -118,7 +123,6 @@ public class PortalConfiguration {
         buildDate = buildDateString;
     }
 
-
     public final String getBuildDate() {
 
         return buildDate;
@@ -143,4 +147,5 @@ public class PortalConfiguration {
 
         return propertySourcesPlaceholderConfigurer;
     }
+
 }

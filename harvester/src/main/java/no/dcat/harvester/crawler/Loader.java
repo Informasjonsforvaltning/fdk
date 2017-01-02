@@ -28,6 +28,31 @@ public class Loader {
     private final String DEFAULT_ELASTICSEARCH_CLUSTER = "elasticsearch";
 
     private static Logger logger = LoggerFactory.getLogger(Loader.class);
+  
+    private String hostname;
+    private int port;
+    private String elasticsearchCluster;
+
+
+    public Loader() {
+        hostname = DEFAULT_ELASTICSEARCH_HOST;
+        port = DEFAULT_ELASTICSEARCH_PORT;
+        elasticsearchCluster = DEFAULT_ELASTICSEARCH_CLUSTER;
+
+    }
+
+    public Loader(String hostname, int port ) {
+        this.hostname = hostname;
+        this.port = port;
+        this.elasticsearchCluster = DEFAULT_ELASTICSEARCH_CLUSTER;
+    }
+  
+    public Loader(String hostname, int port, String cluster ) {
+        this.hostname = hostname;
+        this.port = port;
+        this.elasticsearchCluster = cluster;
+    }
+  
 
     public static void main(String[] args) {
 
@@ -52,7 +77,7 @@ public class Loader {
     public List<String> loadDatasetFromFile(String filename) {
         //Kompatibilitetsmetode - sikrer kompatibiltet med opprinnelig metodesignator
 
-        return loadDatasetFromFile(filename, DEFAULT_ELASTICSEARCH_HOST, DEFAULT_ELASTICSEARCH_PORT, DEFAULT_ELASTICSEARCH_CLUSTER);
+        return loadDatasetFromFile(filename, this.hostname, this.port, this.elasticsearchCluster);
     }
 
 
@@ -67,6 +92,12 @@ public class Loader {
      */
     public List<String> loadDatasetFromFile(String filename, String elasticSearchHost, int elasticSearchPort, String elasticSearchCluster) {
         URL url;
+        
+        this.hostname = elasticSearchHost;
+        this.port = elasticSearchPort;
+        this.elasticsearchCluster = elasticSearchCluster;
+        
+      
         try {
 
             logger.debug("loadDatasetFromFile: filename: " + filename);
@@ -79,8 +110,8 @@ public class Loader {
 
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(elasticSearchHost,elasticSearchPort, elasticSearchCluster);
-            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(elasticSearchHost,elasticSearchPort, elasticSearchCluster);
+            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, this.elasticsearchCluster);
+            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(this.hostname,this.port, this.elasticsearchCluster);
 
             LoadingCache<URL, String> brregCach = Application.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
@@ -94,6 +125,5 @@ public class Loader {
         }
 
         return null;
-
     }
 }
