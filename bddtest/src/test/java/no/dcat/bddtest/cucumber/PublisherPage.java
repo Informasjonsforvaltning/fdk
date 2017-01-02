@@ -3,7 +3,7 @@ package no.dcat.bddtest.cucumber;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import bddtest.elasticsearch.client.DeleteIndex;
+import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
