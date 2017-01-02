@@ -262,7 +262,6 @@ public class GdocControllerTest {
         /* THROW */
         when(mockReader.readLine()).thenThrow(new IOException("Exception in readline"));
 
-        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
         ResponseEntity<String> actual = gdocController.versions("2016-11-24");
         logger.debug(actual.toString());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode() );
@@ -291,7 +290,6 @@ public class GdocControllerTest {
         when(mockFile.listFiles()).thenReturn(dir);
 
 
-        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
         ResponseEntity<String> actual = gdocController.versions("latest");
         logger.debug(actual.toString());
 
@@ -317,7 +315,6 @@ public class GdocControllerTest {
         PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(mockFile);
         when(mockFile.listFiles()).thenReturn(dir);
 
-        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
         ResponseEntity<String> actual = gdocController.versions("latest");
 
         assertEquals(HttpStatus.OK, actual.getStatusCode() );
@@ -335,7 +332,7 @@ public class GdocControllerTest {
         File[] dir = new File[2];
 
         dir[1] = File.createTempFile("anyname2016-12-24", "ttl");
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         dir[0] = File.createTempFile("anyname2016-11-22", "ttl");
         PrintWriter writer = new PrintWriter(dir[0]);
@@ -346,7 +343,6 @@ public class GdocControllerTest {
         PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(mockFile);
         when(mockFile.listFiles()).thenReturn(dir);
 
-        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
         ResponseEntity<String> actual = gdocController.versions("latest");
 
         logger.debug(actual.toString());
