@@ -3,13 +3,12 @@ package no.dcat.bddtest.cucumber;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
+import bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
