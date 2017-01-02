@@ -30,6 +30,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
         if (!registry.hasMappingForPattern("/**")) {
             registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         }
+        if (!registry.hasMappingForPattern("/webjars/**")) {
+            registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        }
     }
 
     @Override

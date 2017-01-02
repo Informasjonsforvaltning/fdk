@@ -17,6 +17,7 @@ services:
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.queryService=http://192.168.99.100:8083
+     - application.queryServiceExternal=http://192.168.99.100:8083
      #- application.simpleQueryServiceURL=http://localhost:8083/search
     links:
       - query
@@ -31,6 +32,7 @@ services:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
+     - application.elasticSearchCluster=elasticsearch
     links:
       - elasticsearch
     networks:
@@ -56,6 +58,7 @@ services:
      - application.crawlerThreadPoolSize=2
      - application.elasticSearchHost=es
      - application.elasticSearchPort=9300
+     - application.elasticSearchCluster=elasticsearch
     #volumes:
     # - ./logs:/usr/local/tomcat/logs:rw
     networks:
@@ -73,7 +76,7 @@ services:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.harvesterUrl=http://harvester:8080/harvester
+     - application.harvesterUrl=http://harvester:8080
      - application.kibanaLinkFirstHalf="/app/kibana/#/dashboard/dashboard_template?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Crawler-Operations,panelIndex:1,row:3,size_x:9,size_y:3,type:visualization),(col:1,id:Crawler-Results,panelIndex:2,row:3,size_x:3,size_y:3,type:visualization),(col:1,id:Crawler-Metadata,panelIndex:4,row:1,size_x:12,size_y:2,type:visualization),(col:7,id:Validation-RuleId,panelIndex:6,row:6,size_x:6,size_y:4,type:visualization),(col:1,columns:!(ruleSeverity,event,cause,ruleId),id:validation_ruleId,panelIndex:7,row:6,size_x:6,size_y:4,sort:!(timestamp,desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:'%22"
      - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
     #volumes:
