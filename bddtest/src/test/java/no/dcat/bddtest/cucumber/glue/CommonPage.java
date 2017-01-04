@@ -1,6 +1,7 @@
 package no.dcat.bddtest.cucumber.glue;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -31,6 +32,16 @@ public abstract class CommonPage {
         //driver = new InternetExplorerDriver(caps);
         //driver = new ChromeDriver(capsC);
         driver = new PhantomJSDriver();
+    }
+
+    protected String getElement(String idProvenanceText) {
+        String element;
+        try {
+            element = driver.findElement(By.id(idProvenanceText)).getText();
+        } catch(Exception e) {
+            element = "";
+        }
+        return element;
     }
 
     public void openPage(String page) throws Throwable {
