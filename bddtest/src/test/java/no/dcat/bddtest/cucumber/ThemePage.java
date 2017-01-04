@@ -3,6 +3,7 @@ package no.dcat.bddtest.cucumber;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,9 +24,9 @@ public class ThemePage {
 
     @Given("^I have open the browser$")
     public void openBrowser() throws MalformedURLException {
-        File file = new File("src/main/resources/IEDriverServer.exe");
-        File fileC = new File("src/main/resources/chromedriver.exe");
-        File fileF = new File("src/main/resources/phantomjs.exe");
+        /*File file = new File("src/test/resources/IEDriverServer.exe");
+        File fileC = new File("src/test/resources/chromedriver.exe");
+        File fileF = new File("src/test/resources/phantomjs.exe");
 
         System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
         System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
@@ -37,11 +38,15 @@ public class ThemePage {
 
         ChromeOptions options = new ChromeOptions();
         options.setBinary(fileC.getAbsolutePath());
+        */
 
         //driver = new InternetExplorerDriver(caps);
         //driver = new ChromeDriver(capsC);
+        PhantomJsDriverManager.getInstance().setup();
         driver = new PhantomJSDriver();
         //driver = new ChromeDriver();
+
+
     }
 
     @When("^I open Fellesdatakatalog website$")

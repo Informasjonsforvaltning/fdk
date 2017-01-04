@@ -1,0 +1,10 @@
+logging:
+  level.: DEBBUG
+  level.no.brreg: DEBUG
+  level.org.springframework: ERROR
+spring:
+  data:
+    elasticsearch:
+      properties:
+        http:
+          enabled: true

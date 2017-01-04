@@ -3,14 +3,24 @@ package no.dcat.bddtest.cucumber;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import io.github.bonigarcia.wdm.PhantomJsDriverManager;
+import no.dcat.bddtest.Application;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.SpringApplicationContextLoader;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.File;
 import java.util.List;
@@ -20,7 +30,8 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 /**
  * Cucumber glue class for the publisher feature.
  */
-public class PublisherPage {
+
+public class PublisherPage extends SpringIntegrationTest {
     public static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
     private final String index = "dcat";
     private final String filename = "dataset-w-distribution.ttl";
@@ -30,25 +41,33 @@ public class PublisherPage {
 
     @Given("^I clean elastic search\\.$")
     public void cleanElasticSearch() throws Throwable {
-        String hostname = getEnv("elasticsearch.hostname");
-        int port = getEnvInt("elasticsearch.port");
 
-        new DeleteIndex(hostname, port).deleteIndex(index);
+        String hostname = "localhost";
+        int port = 9300;
+        //String hostname = getEnv("elasticsearch.hostname");
+        //int port = getEnvInt("elasticsearch.port");
+
+       //new DeleteIndex(hostname, port).deleteIndex(index);
     }
 
     @Given("^I load the dataset\\.$")
     public void iLoadDataset() throws Throwable {
-        String hostname = getEnv("elasticsearch.hostname");
-        int port = getEnvInt("elasticsearch.port");
+        String hostname = "localhost"; //getEnv("elasticsearch.hostname");
+        int port = 9300; //getEnvInt("elasticsearch.port");
 
         String defultPath = new File(".").getCanonicalPath().toString();
-        String fileWithPath = String.format("file:%s/src/main/resources/%s", defultPath, filename);
+        String fileWithPath = String.format("file:%s/bddtest/src/test/resources/%s", defultPath, filename);
 
         new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
     }
 
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
+
+        PhantomJsDriverManager.getInstance().setup();
+        driver = new PhantomJSDriver();
+
+        /*
         File file = new File(LOCAL_PATH_TO_IE_DRIVER);
         File fileC = new File("src/main/resources/chromedriver.exe");
         File fileF = new File("src/main/resources/phantomjs.exe");
@@ -61,13 +80,13 @@ public class PublisherPage {
         DesiredCapabilities capsC = DesiredCapabilities.chrome();
 
         caps.setCapability("ignoreZoomSetting", true);
-
+        */
         //driver = new InternetExplorerDriver(caps);
         //driver = new ChromeDriver(capsC);
-        driver = new PhantomJSDriver();
+        //driver = new PhantomJSDriver();
 
-        String hostname = getEnv("fdk.hostname");
-        int port = getEnvInt("fdk.port");
+        String hostname = "localhost"; // getEnv("fdk.hostname");
+        int port = 8080; //getEnvInt("fdk.port");
 
         driver.navigate().to(String.format("http://%s:%d/%s", hostname, port, page));
     }
@@ -101,6 +120,7 @@ public class PublisherPage {
         }
     }
 
+    /*
     protected String getEnv(String env) {
         String value = System.getenv(env);
 
@@ -114,4 +134,5 @@ public class PublisherPage {
     protected int getEnvInt(String env) {
         return Integer.valueOf(getEnv(env));
     }
+    */
 }
