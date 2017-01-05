@@ -2,12 +2,13 @@ package no.dcat.portal.webapp.comparator;
 
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Class for comparing title property on DataTheme.
  */
-public class ThemeTitleComparator implements Comparator<DataTheme> {
+public class ThemeTitleComparator implements Comparator<DataTheme>, Serializable {
     private final String lang;
 
     public ThemeTitleComparator(String language) {

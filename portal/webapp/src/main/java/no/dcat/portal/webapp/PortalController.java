@@ -27,10 +27,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
-import java.net.URI;
-import java.io.IOException;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 
 /**
  * Delivers html pages to support the DCAT Portal application.
@@ -42,6 +48,7 @@ import javax.servlet.http.HttpSession;
 public class PortalController {
     public static final String MODEL_THEME = "theme";
     public static final String MODEL_PUBLISHER = "publisher";
+    public static final String MODEL_RESULT = "result";
 
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
@@ -69,21 +76,19 @@ public class PortalController {
                               @RequestParam(value = "theme", defaultValue = "") String theme,
                               @RequestParam(value = "publisher", defaultValue = "") String publisher) {
 
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
-
-        ModelAndView model = new ModelAndView("result");
+        ModelAndView model = new ModelAndView(MODEL_RESULT);
+        model.addObject("themes", getCodeLists());
+        model.addObject("query", q);
 
         logger.debug(buildMetadata.getQueryServiceExternal());
         logger.debug(buildMetadata.getVersionInformation());
 
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("theme", theme);
         session.setAttribute("publisher", publisher);
 
-        model.addObject("themes", getCodeLists());
-
-        model.addObject("query", q);
-        return model; // templates/result.html
+        return model;
     }
 
     /**
@@ -200,7 +205,7 @@ public class PortalController {
             //Sort publisher alphabetic.
             Collections.sort(publisherGrouped , new PublisherOrganisasjonsformComparator());
 
-            logger.debug(String.format("Found publishers: %s", json));
+            logger.trace(String.format("Found publishers: %s", json));
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());

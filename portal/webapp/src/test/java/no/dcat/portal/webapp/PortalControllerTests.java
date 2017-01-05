@@ -1,34 +1,22 @@
 package no.dcat.portal.webapp;
 
-import static org.junit.Assert.*;
-
-import com.fasterxml.jackson.core.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URI;
+import java.util.Locale;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
@@ -44,8 +32,8 @@ public class PortalControllerTests {
     @Before
     public void setup() {
         PortalConfiguration config = new PortalConfiguration();
-        ReflectionTestUtils.setField(config, "queryServiceExternal", "http://query.service.external.no/");
-        ReflectionTestUtils.setField(config, "queryService", "http://query.service.no/");
+        ReflectionTestUtils.setField(config, "queryServiceExternal", "http://query.service.external.no");
+        ReflectionTestUtils.setField(config, "queryService", "http://query.service.no");
 
         portal = new PortalController(config);
 
@@ -70,7 +58,6 @@ public class PortalControllerTests {
         assertEquals("error", actual.getViewName());
     }
 
-
     @Test
     public void testDetailWithOKIdReturnsDetailView() throws Exception {
         String detailJson = readFile("detailTestDataset.json");
@@ -83,7 +70,63 @@ public class PortalControllerTests {
     }
 
 
-    public String readFile(String filename) {
+    @Test
+    public void themesThrowsException() throws  Exception {
+
+        ModelAndView actual = portal.themes();
+
+        ModelAndViewAssert.assertViewName(actual, "error");
+    }
+
+    @Test
+    public void themesReturnsOK() throws  Exception {
+        String themesJson = readFile("themesDataset.json");
+        PortalController spyPortal = spy(portal);
+
+        doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
+        ModelAndView actual = spyPortal.themes();
+
+        ModelAndViewAssert.assertViewName(actual, "theme");
+        assertEquals("nb",actual.getModel().get("lang"));
+    }
+
+    @Test
+    public void themesReturnWithLangENOK() throws  Exception {
+        String themesJson = readFile("themesDataset.json");
+        PortalController spyPortal = spy(portal);
+        LocaleContextHolder.setLocale(Locale.UK);
+
+        doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
+        ModelAndView actual = spyPortal.themes();
+
+        ModelAndViewAssert.assertViewName(actual, "theme");
+        assertEquals("en",actual.getModel().get("lang"));
+    }
+
+    @Test
+    public void publisherWithNoMockReturnsErrorView () throws Exception {
+
+        ModelAndView actual = portal.publisher();
+
+        ModelAndViewAssert.assertViewName(actual, "error");
+    }
+
+    @Test
+    public void publisherWithMockReturnPublisherView() throws  Exception {
+        String publisherJson = readFile("publisherDataset.json");
+        String publishercount = readFile("publishercount.json");
+        PortalController spyPortal = spy(portal);
+
+        doReturn(publisherJson).doReturn(publishercount).when(spyPortal).httpGet(anyObject(), anyObject());
+
+        ModelAndView actual = spyPortal.publisher();
+
+        ModelAndViewAssert.assertViewName(actual, "publisher");
+
+    }
+
+
+    private String readFile(String filename) {
         String result = null;
         try {
             result = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(filename));
@@ -92,4 +135,5 @@ public class PortalControllerTests {
         }
         return result;
     }
+
 }
