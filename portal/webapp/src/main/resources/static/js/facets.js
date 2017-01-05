@@ -213,7 +213,7 @@ function toggleFacets(ulElement, hideMany) {
         var counter = 0;
         var children = $(ulElement).children("a.list-group-item"); // .children; //).find("a"); //$(ulElement).getChildren().getElementsByTagName("a");
         for (var i = 0; i < children.length; i++) {
-            if (counter > facetDefaultCount) {
+            if (counter > facetDefaultCount -1) {
                 var element = children[i];
 
                 if (!hideMany) {
@@ -250,7 +250,7 @@ function createFacetController(filter, aggregation) {
         aggregation.buckets.forEach(function (item){
 
             var elem = document.createElement("a");
-            counter++;
+
             // data contains the code to the theme
             elem.setAttribute("data", item.key);
             elem.setAttribute("href", "#");
@@ -260,7 +260,7 @@ function createFacetController(filter, aggregation) {
             } else {
                 elem.className = "list-group-item";
             }
-            if (filter.hideMany && counter > facetDefaultCount) {
+            if (filter.hideMany && counter > facetDefaultCount - 1) {
                 elem.className += " hidden";
             }
             elem.innerHTML = filter.getName(item.key) + " " + createBadge(item.doc_count);
@@ -282,6 +282,8 @@ function createFacetController(filter, aggregation) {
                 }
 
             };
+
+            counter++;
 
             ul.appendChild(elem);
         });

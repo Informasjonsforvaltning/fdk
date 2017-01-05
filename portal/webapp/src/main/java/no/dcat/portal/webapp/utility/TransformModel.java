@@ -92,14 +92,14 @@ public class TransformModel {
             int nrOfDataset = 0;
 
             if (nrOfDatasetStr != null ) {
-                nrOfDataset = Integer.valueOf(nrOfDatasetStr);
+                nrOfDataset = Integer.parseInt(nrOfDatasetStr);
             }
 
             for(Publisher subPublisher: subPublishers) {
                 String nrOfDatasetSubStr = publisherDataSetCount.get(subPublisher.getName());
 
                 if (nrOfDatasetSubStr != null ) {
-                    int nrOfDatasetSub = Integer.valueOf(nrOfDatasetSubStr);
+                    int nrOfDatasetSub = Integer.parseInt(nrOfDatasetSubStr);
                     nrOfDataset += nrOfDatasetSub;
                 }
             }

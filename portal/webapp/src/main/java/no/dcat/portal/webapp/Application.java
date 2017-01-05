@@ -30,7 +30,7 @@ public class Application extends WebMvcConfigurerAdapter {
      */
     public static void main(final String[] args) {
 
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     /**

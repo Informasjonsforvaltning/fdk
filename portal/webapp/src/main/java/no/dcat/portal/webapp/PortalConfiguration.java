@@ -26,20 +26,23 @@ public class PortalConfiguration {
     private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
     private static final String QUERY_SERVICE_PUBLISHER_COUNT = "/publishercount";
 
-
     @Value("${spring.profiles.active:development}")
     private String profile;
 
-    @Value("${application.queryServiceExternal")
+    @Value("${queryServiceExternal:qse}")
     private String queryServiceExternal;
+
     public final String getQueryServiceExternal() {
+
         return queryServiceExternal;
     }
-    public final void setQueryServiceExternal(final String serviceURL) {
-        queryServiceExternal = serviceURL;
+
+    public final void setQueryServiceExternal(final String serviceUrl) {
+
+        queryServiceExternal = serviceUrl;
     }
 
-    @Value("${application.queryService}")
+    @Value("${queryService:qs}")
     private String queryService;
 
     /* application.queryService */
@@ -47,9 +50,9 @@ public class PortalConfiguration {
     //private String queryService = "http://fdk-pqr-fellesdatakatalog-ut1.ose-npc.brreg.no";
 
 
-    public final void setQueryService(final String serviceURL) {
+    public final void setQueryService(final String serviceUrl) {
 
-        this.queryService = serviceURL;
+        this.queryService = serviceUrl;
     }
 
 
@@ -126,12 +129,7 @@ public class PortalConfiguration {
     }
 
 
-    /**
-     * PropertySourcePlaceholderConfigurer must be created as
-     * PropertySource doesnt support  yaml configuration file format
-     *
-     * @return
-     */
+
     @Bean
     @Profile("development") //Skal kun brukes når spring_active_profiles inneholder development
     public static PropertySourcesPlaceholderConfigurer properties() {
