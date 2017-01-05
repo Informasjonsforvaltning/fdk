@@ -50,6 +50,7 @@ public class PortalController {
 
     @Autowired
     public PortalController(final PortalConfiguration metadata) {
+
         this.buildMetadata = metadata;
     }
 
@@ -102,7 +103,7 @@ public class PortalController {
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
             String json = httpGet(httpClient, uri);
 
-            logger.debug(String.format("Found dataset: %s", json));
+            logger.trace(String.format("Found dataset: %s", json));
             Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
 
             dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
@@ -241,7 +242,7 @@ public class PortalController {
         return codeLists;
     }
 
-    private String httpGet(HttpClient httpClient, URI uri) throws IOException {
+    protected String httpGet(HttpClient httpClient, URI uri) throws IOException {
         HttpEntity entity;
         HttpResponse response = null;
         String json = null;

@@ -26,11 +26,10 @@ public class PortalConfiguration {
     private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
     private static final String QUERY_SERVICE_PUBLISHER_COUNT = "/publishercount";
 
-
     @Value("${spring.profiles.active:development}")
     private String profile;
 
-    @Value("${application.queryServiceExternal")
+    @Value("${queryServiceExternal:qse}")
     private String queryServiceExternal;
     public final String getQueryServiceExternal() {
         return queryServiceExternal;
@@ -39,7 +38,7 @@ public class PortalConfiguration {
         queryServiceExternal = serviceURL;
     }
 
-    @Value("${application.queryService}")
+    @Value("${queryService:qs}")
     private String queryService;
 
     /* application.queryService */
@@ -132,6 +131,7 @@ public class PortalConfiguration {
      *
      * @return
      */
+    /*
     @Bean
     @Profile("development") //Skal kun brukes når spring_active_profiles inneholder development
     public static PropertySourcesPlaceholderConfigurer properties() {
@@ -145,5 +145,5 @@ public class PortalConfiguration {
 
         return propertySourcesPlaceholderConfigurer;
     }
-
+*/
 }
