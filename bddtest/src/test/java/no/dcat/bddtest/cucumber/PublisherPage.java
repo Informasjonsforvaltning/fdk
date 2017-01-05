@@ -37,28 +37,32 @@ public class PublisherPage extends SpringIntegrationTest {
     private final String filename = "dataset-w-distribution.ttl";
     WebDriver driver = null;
 
+    //Erstatt med properties
+    private final String elasticsearchHostname = "localhost";
+    private final int elasticsearchPort = 9300;
+    private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
+    private int portalPort = 8080; //getEnvInt("fdk.port");
+
     private final String page = "publisher";
 
     @Given("^I clean elastic search\\.$")
     public void cleanElasticSearch() throws Throwable {
 
-        String hostname = "localhost";
-        int port = 9300;
+
         //String hostname = getEnv("elasticsearch.hostname");
         //int port = getEnvInt("elasticsearch.port");
 
-       //new DeleteIndex(hostname, port).deleteIndex(index);
+       new DeleteIndex(elasticsearchHostname, elasticsearchPort).deleteIndex(index);
     }
 
     @Given("^I load the dataset\\.$")
     public void iLoadDataset() throws Throwable {
-        String hostname = "localhost"; //getEnv("elasticsearch.hostname");
-        int port = 9300; //getEnvInt("elasticsearch.port");
+
 
         String defultPath = new File(".").getCanonicalPath().toString();
         String fileWithPath = String.format("file:%s/bddtest/src/test/resources/%s", defultPath, filename);
 
-        new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
+        new Loader(elasticsearchHostname, elasticsearchPort).loadDatasetFromFile(fileWithPath);
     }
 
     @Given("^I open the Publisher page in the browser\\.$")
@@ -85,10 +89,7 @@ public class PublisherPage extends SpringIntegrationTest {
         //driver = new ChromeDriver(capsC);
         //driver = new PhantomJSDriver();
 
-        String hostname = "localhost"; // getEnv("fdk.hostname");
-        int port = 8080; //getEnvInt("fdk.port");
-
-        driver.navigate().to(String.format("http://%s:%d/%s", hostname, port, page));
+        driver.navigate().to(String.format("http://%s:%d/%s", portalHostname, portalPort, page));
     }
 
     @Then("^the following Publisher and dataset aggregation shall exist:$")
