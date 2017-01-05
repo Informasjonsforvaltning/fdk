@@ -29,13 +29,13 @@ public class TestAdminController {
 
     private static Logger logger = LoggerFactory.getLogger(TestAdminController.class);
 
-    @Value("${application.elasticSearchHost}")
+    @Value("${application.elasticsearchHost}")
     private String elasticSearchHost;
 
-    @Value("${application.elasticSearchPort}")
+    @Value("${application.elasticsearchPort}")
     private int elasticSearchPort;
 
-    @Value("${application.elasticSearchCluster}")
+    @Value("${application.elasticsearchCluster}")
     private String elasticSearchCluster;
 
 
