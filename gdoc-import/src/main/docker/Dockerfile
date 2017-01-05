@@ -21,6 +21,14 @@ COPY semex.jar /usr/local/dcat/lib/
 COPY lib2/*.jar /usr/local/dcat/lib/
 COPY lib/*.jar /usr/local/dcat/lib/
 
+RUN chmod 775 -R /usr/local/dcat
+RUN chmod 777 -R /usr/local/dcat/temp
+RUN chmod 775 -R /usr/local/dcat/in
+RUN chmod 777 -R /usr/local/dcat/publish
+RUN chmod 775 -R /usr/local/dcat/validation
+RUN chmod 775 -R /usr/local/dcat/mapper
+RUN chmod 775 -R /usr/local/dcat/lib
+
 ADD dcat.sh /usr/local/dcat/dcat.sh
 RUN chmod +x /usr/local/dcat/dcat.sh
 
