@@ -19,8 +19,11 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 /**
  *
  */
-public class ThemePage {
+public class ThemePage extends SpringIntegrationTest{
     WebDriver driver = null;
+
+    private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
+    private int portalPort = 8080; //getEnvInt("fdk.port");
 
     @Given("^I have open the browser$")
     public void openBrowser() throws MalformedURLException {
@@ -51,7 +54,8 @@ public class ThemePage {
 
     @When("^I open Fellesdatakatalog website$")
     public void goToFDK() {
-        driver.get("http://localhost:8081/");
+        driver.get("http://" + portalHostname + ":" + portalPort +"/");
+
         //driver.navigate().to("http://localhost:8081/");
         //driver.getPageSource();
     }

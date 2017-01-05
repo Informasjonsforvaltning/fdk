@@ -21,8 +21,4 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @IntegrationTest
 public class SpringIntegrationTest {
-    @Test
-    public void testing() {
-
-    }
 }
