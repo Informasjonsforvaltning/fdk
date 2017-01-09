@@ -33,10 +33,15 @@ COPY lib2/*.jar /app/dcat/lib/
 COPY lib/*.jar /app/dcat/lib/
 
 COPY dcat.sh /app/dcat/dcat.sh
+
 WORKDIR /app/dcat
 RUN ls -al
 
-#RUN chmod +x dcat.sh
+USER root
+RUN chown app:app /app/dcat/dcat.sh
+RUN chmod +x /app/dcat/dcat.sh
+USER app
+RUN ls -al
 
 VOLUME /app/dcat
 
