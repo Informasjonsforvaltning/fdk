@@ -7,32 +7,38 @@ RUN apt-get update
 RUN apt-get -y install libreoffice
 RUN apt-get -y install openjdk-8-jre curl
 
-RUN mkdir /usr/local/dcat
-RUN mkdir /usr/local/dcat/temp
-RUN mkdir /usr/local/dcat/in
-RUN mkdir /usr/local/dcat/publish
-RUN mkdir /usr/local/dcat/validation
-RUN mkdir /usr/local/dcat/mapper
-RUN mkdir /usr/local/dcat/lib
 
-COPY validation /usr/local/dcat/validation
-COPY mapper /usr/local/dcat/mapper
-COPY semex.jar /usr/local/dcat/lib/
-COPY lib2/*.jar /usr/local/dcat/lib/
-COPY lib/*.jar /usr/local/dcat/lib/
+# Add the user UID:1000, GID:1000, home at /app
+RUN groupadd -r app -g 1000 && useradd -u 1000 -r -g app -m -d /app -s /sbin/nologin -c "App user" app && \
+    chmod 755 /app
 
-RUN chmod 775 -R /usr/local/dcat
-RUN chmod 777 -R /usr/local/dcat/temp
-RUN chmod 775 -R /usr/local/dcat/in
-RUN chmod 777 -R /usr/local/dcat/publish
-RUN chmod 775 -R /usr/local/dcat/validation
-RUN chmod 775 -R /usr/local/dcat/mapper
-RUN chmod 775 -R /usr/local/dcat/lib
+# Set the working directory to app home directory
+WORKDIR /app
 
-ADD dcat.sh /usr/local/dcat/dcat.sh
-RUN chmod +x /usr/local/dcat/dcat.sh
+# Specify the user to execute all commands below
+USER app
 
-VOLUME /usr/local/dcat
+RUN mkdir /app/dcat
+RUN mkdir /app/dcat/temp
+RUN mkdir /app/dcat/in
+RUN mkdir /app/dcat/publish
+RUN mkdir /app/dcat/validation
+RUN mkdir /app/dcat/mapper
+RUN mkdir /app/dcat/lib
+
+COPY validation /app/dcat/validation
+COPY mapper /app/dcat/mapper
+COPY semex.jar /app/dcat/lib/
+COPY lib2/*.jar /app/dcat/lib/
+COPY lib/*.jar /app/dcat/lib/
+
+COPY dcat.sh /app/dcat/dcat.sh
+WORKDIR /app/dcat
+RUN ls -al
+
+#RUN chmod +x dcat.sh
+
+VOLUME /app/dcat
 
 #ADD gdoc-import*.jar app.jar
 #RUN sh -c 'touch /app.jar'
