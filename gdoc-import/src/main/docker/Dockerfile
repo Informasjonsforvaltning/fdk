@@ -16,7 +16,7 @@ RUN groupadd -r app -g 1000 && useradd -u 1000 -r -g app -m -d /app -s /sbin/nol
 WORKDIR /app
 
 # Specify the user to execute all commands below
-USER app
+USER 1000
 
 RUN mkdir /app/dcat
 RUN mkdir /app/dcat/temp
@@ -40,7 +40,7 @@ RUN ls -al
 USER root
 RUN chown app:app /app/dcat/dcat.sh
 RUN chmod +x /app/dcat/dcat.sh
-USER app
+USER 1000
 RUN ls -al
 
 VOLUME /app/dcat
