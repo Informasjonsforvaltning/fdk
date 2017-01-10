@@ -30,12 +30,12 @@ import java.util.Map;
  */
 public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
-    public static String DCAT_INDEX = "dcat";
-    public static String THEME_INDEX = "theme";
-    public static String DISTRIBUTION_TYPE = "distribution";
-    public static String DATASET_TYPE = "dataset";
-    public static String THEME_TYPE = "data-theme";
-    public static String DATA_THEME_URL = "http://publications.europa.eu/mdr/resource/authority/data-theme/skos/data-theme-skos.rdf";
+    public static final String DCAT_INDEX = "dcat";
+    public static final String THEME_INDEX = "theme";
+    public static final String DISTRIBUTION_TYPE = "distribution";
+    public static final String DATASET_TYPE = "dataset";
+    public static final String THEME_TYPE = "data-theme";
+    public static final String DATA_THEME_URL = "http://publications.europa.eu/mdr/resource/authority/data-theme/skos/data-theme-skos.rdf";
     private final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
 
     String hostename;

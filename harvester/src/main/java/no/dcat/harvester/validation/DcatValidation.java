@@ -28,7 +28,7 @@ public class DcatValidation {
 	/**
 	 * Validates the model argument against the various validation rules of DCAT-AP-xx
 	 * Validation warnings and errors are recorded in the validationHandler parameter.
-	 * <p>
+	 * <predicate>
 	 * The operation returns false if errors are detected. It returns true if only warnings have been detected.
 	 * It reads validation files in SPARQL format that is stored under src/main/resources/validation-rules.
 	 *
