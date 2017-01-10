@@ -1,18 +1,15 @@
 package no.dcat.bddtest.cucumber.glue;
 
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
-import no.dcat.bddtest.cucumber.SpringIntegrationTest;
+import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
 
 /**
  * Common class for glue-code for pagetesting.
  */
-public abstract class CommonPage extends SpringIntegrationTest {
+public abstract class CommonPage extends SpringIntegrationTestConfig {
     WebDriver driver = null;
 
     public void openBrowser() throws Throwable {

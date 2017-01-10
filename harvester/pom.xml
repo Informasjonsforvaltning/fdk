@@ -176,8 +176,6 @@
                         </includes>
                     </testResource>
                 </testResources>
-
-
             </build>
         </profile>
     </profiles>
