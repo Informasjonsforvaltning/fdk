@@ -4,23 +4,12 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
-import no.dcat.bddtest.Application;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.SpringApplicationContextLoader;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.File;
 import java.util.List;
@@ -31,7 +20,7 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
  * Cucumber glue class for the publisher feature.
  */
 
-public class PublisherPage extends SpringIntegrationTest {
+public class PublisherPage extends SpringIntegrationTestConfig {
     public static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
     private final String index = "dcat";
     private final String filename = "dataset-w-distribution.ttl";

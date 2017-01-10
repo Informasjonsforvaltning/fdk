@@ -36,7 +36,7 @@ services:
       platform:
 
   harvester:
-    image: "fdk/harvester-war:${TAG}"
+    image: "fdk/harvester:${TAG}"
     ports:
      - "8081:8080"
     environment:
@@ -95,15 +95,15 @@ services:
         aliases:
           - log_es
 
-  logstash:
-    image: "fdk/logstash:${TAG}"
-    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./logs:/usr/local/tomcat/logs:rw
-    depends_on:
-      - elasticsearch
-    networks:
-      logging:
+#  logstash:
+#    image: "fdk/logstash:${TAG}"
+#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
 
   kibana:
     image: "fdk/kibana:${TAG}"

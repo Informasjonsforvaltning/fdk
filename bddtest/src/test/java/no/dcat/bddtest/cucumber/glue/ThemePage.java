@@ -4,14 +4,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
+import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.File;
 import java.net.MalformedURLException;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -19,7 +16,7 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 /**
  *
  */
-public class ThemePage extends SpringIntegrationTest{
+public class ThemePage extends SpringIntegrationTestConfig {
     WebDriver driver = null;
 
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
