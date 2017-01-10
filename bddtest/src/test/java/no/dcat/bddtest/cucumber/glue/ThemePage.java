@@ -1,4 +1,4 @@
-package no.dcat.bddtest.cucumber;
+package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
