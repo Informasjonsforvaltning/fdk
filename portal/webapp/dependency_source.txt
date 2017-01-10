@@ -1,9 +1,0 @@
-io.netty:netty:jar ; org.elasticsearch:elasticsearch:jar:2.4.1
-joda-time:joda-time:jar ; org.elasticsearch:elasticsearch:jar:2.4.1
-commons-logging:commons-logging:jar ; org.apache.httpcomponents:httpclient:jar:4.4.1 
-com.google.guava:guava:jar ; datastore.jar
-com.google.code.gson:gson:jar ; datastore.jar
-org.hibernate:hibernate-validator:jar ; datastore.jar
-cglib:cglib-nodep:jar ; org.seleniumhq.selenium:selenium-htmlunit-driver:jar 
-commons-collections:commons-collections:jar ; org.seleniumhq.selenium:selenium-htmlunit-driver:jar
-junit:junit:jar ; org.springframework.boot:spring-boot-starter-test:jar
