@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class for loading themes into elasticsearch. The rdf-formated Themes are retrieved from an URL.
