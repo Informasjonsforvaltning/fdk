@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -37,10 +36,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * Delivers html pages to support the DCAT Portal application.
- *
  *
  * Created by nodavsko on 12.10.2016.
  */
@@ -72,13 +72,13 @@ public class PortalController {
      */
     @RequestMapping(value = {"/results"})
     final ModelAndView result(final HttpSession session,
-                              @RequestParam(value = "q", defaultValue = "") String q,
+                              @RequestParam(value = "q", defaultValue = "") String query,
                               @RequestParam(value = "theme", defaultValue = "") String theme,
                               @RequestParam(value = "publisher", defaultValue = "") String publisher) {
 
         ModelAndView model = new ModelAndView(MODEL_RESULT);
         model.addObject("themes", getCodeLists());
-        model.addObject("query", q);
+        model.addObject("query", query);
 
         logger.debug(buildMetadata.getQueryServiceExternal());
         logger.debug(buildMetadata.getVersionInformation());
@@ -135,8 +135,8 @@ public class PortalController {
     public ModelAndView themes() {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
-        Locale l = LocaleContextHolder.getLocale();
-        logger.debug(l.getLanguage());
+        Locale locale = LocaleContextHolder.getLocale();
+        logger.debug(locale.getLanguage());
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
@@ -147,7 +147,7 @@ public class PortalController {
 
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
 
-            Collections.sort(dataThemes, new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
+            Collections.sort(dataThemes, new ThemeTitleComparator(locale.getLanguage() == "en" ? "en" : "nb"));
 
             logger.debug(String.format("Found datathemes: %s", json));
         } catch (Exception e) {
@@ -156,7 +156,7 @@ public class PortalController {
             model.setViewName("error");
         }
 
-        model.addObject("lang", l.getLanguage() == "en" ? "en" : "nb");
+        model.addObject("lang", locale.getLanguage() == "en" ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
@@ -221,11 +221,9 @@ public class PortalController {
     /**
      * Returns a JSON structure that contains the code-lists that the portal webapp uses.
      * The code-lists are fetched from the query service first time.
-     * <p>
-     * Code lists:
+     * <p> Code lists:
      * - data-theme (EU Themes)
-     * <p>
-     * TODO - add necessary codelists
+     * <p> TODO - add necessary codelists
      *
      * @return a JSON of the code-lists. { "data-theme" : [ {"AGRI" : {"nb": "Jord og skogbruk"}}, ...], ...}
      */
