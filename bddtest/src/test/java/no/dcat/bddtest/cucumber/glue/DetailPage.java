@@ -1,6 +1,8 @@
 package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
@@ -20,9 +22,19 @@ public class DetailPage extends CommonPage {
     private final String NOR_PAGE = "detail?id=%s";
     private final String ENG_PAGE = "detail?id=%s";
 
+    @Before
+    public void setup() {
+        setupDriver();
+    }
+
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
+
     @Given("^I open the browser\\.$")
     public void i_open_the_browser() throws Throwable {
-        openBrowser();
+
     }
 
     @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-rigth, locations\\):$")

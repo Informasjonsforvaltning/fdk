@@ -5,10 +5,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -21,17 +19,15 @@ public class ThemePage extends CommonPage {
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
     private int portalPort = 8080; //getEnvInt("fdk.port");
 
+
     @Before
     public void setup() {
-        PhantomJsDriverManager.getInstance().setup();
-        driver = new PhantomJSDriver();
+        setupDriver();
     }
 
     @After
     public void shutdown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        stopDriver();
     }
 
     @Given("^I have open the browser$")

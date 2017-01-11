@@ -1,7 +1,8 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
-import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +21,16 @@ public class BackgroundPage extends CommonPage {
 
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
     private int portalPort = 8080; //getEnvInt("fdk.port");
+
+    @Before
+    public void setup() {
+        setupDriver();
+    }
+
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
 
     @Given("^I clean elastic search\\.$")
     public void cleanElasticSearch() throws Throwable {
@@ -56,7 +67,6 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^man har åpnet Fellesdatakatalog i en nettleser")
     public void openBrowserToHomepage() {
-        openBrowser();
         driver.get("http://" + portalHostname + ":" + portalPort +"/");
     }
 

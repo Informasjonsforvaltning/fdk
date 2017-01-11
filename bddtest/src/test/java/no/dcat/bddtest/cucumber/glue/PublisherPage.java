@@ -1,16 +1,13 @@
 package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
 import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -22,9 +19,18 @@ public class PublisherPage extends CommonPage {
     private static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
     private final String page = "publisher";
 
+    @Before
+    public void setup() {
+        setupDriver();
+    }
+
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
+
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        openBrowser();
         openPage(page);
     }
 
