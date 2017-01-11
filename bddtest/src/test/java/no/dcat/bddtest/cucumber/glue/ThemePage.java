@@ -14,8 +14,6 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
  *
  */
 public class ThemePage extends CommonPage {
-    WebDriver driver = null;
-
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
     private int portalPort = 8080; //getEnvInt("fdk.port");
 
