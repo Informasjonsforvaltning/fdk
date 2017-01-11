@@ -30,10 +30,7 @@ public class ThemePage extends CommonPage {
 
     @Given("^I have open the browser$")
     public void openBrowser()  {
-//        PhantomJsDriverManager.getInstance().setup();
-//        ChromeDriverManager.getInstance().setup();
-//        driver = new PhantomJSDriver();
-//        driver = new ChromeDriver();
+
     }
 
     @When("^I open Fellesdatakatalog website$")
