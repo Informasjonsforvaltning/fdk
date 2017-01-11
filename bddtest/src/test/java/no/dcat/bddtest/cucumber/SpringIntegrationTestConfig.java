@@ -6,7 +6,6 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Created by bjg on 03.01.2017.
@@ -15,7 +14,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ContextConfiguration(
         classes = BddTestApplication.class,
         loader = SpringApplicationContextLoader.class)
-@WebAppConfiguration
 @IntegrationTest
 public class SpringIntegrationTestConfig {
 }

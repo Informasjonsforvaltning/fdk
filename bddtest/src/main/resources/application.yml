@@ -2,12 +2,3 @@ logging:
   level.: DEBUG
   level.no.brreg: INFO
   level.org.springframework: INFO
-spring:
-  data:
-    elasticsearch:
-      properties:
-        node:
-          local: false
-        port: 9300
-        http:
-          enabled: true

@@ -1,12 +1,16 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.net.MalformedURLException;
@@ -22,31 +26,25 @@ public class ThemePage extends SpringIntegrationTestConfig {
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
     private int portalPort = 8080; //getEnvInt("fdk.port");
 
-    @Given("^I have open the browser$")
-    public void openBrowser() throws MalformedURLException {
-        /*File file = new File("src/test/resources/IEDriverServer.exe");
-        File fileC = new File("src/test/resources/chromedriver.exe");
-        File fileF = new File("src/test/resources/phantomjs.exe");
-
-        System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-        System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
-        System.setProperty("phantomjs.binary.path", fileF.getAbsolutePath());
-
-        DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
-        DesiredCapabilities capsC = DesiredCapabilities.chrome();
-        caps.setCapability("ignoreZoomSetting", true);
-
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary(fileC.getAbsolutePath());
-        */
-
-        //driver = new InternetExplorerDriver(caps);
-        //driver = new ChromeDriver(capsC);
+    @Before
+    public void setup() {
         PhantomJsDriverManager.getInstance().setup();
         driver = new PhantomJSDriver();
-        //driver = new ChromeDriver();
+    }
 
+    @After
+    public void shutdown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
+    @Given("^I have open the browser$")
+    public void openBrowser() throws MalformedURLException {
+//        PhantomJsDriverManager.getInstance().setup();
+//        ChromeDriverManager.getInstance().setup();
+//        driver = new PhantomJSDriver();
+//        driver = new ChromeDriver();
     }
 
     @When("^I open Fellesdatakatalog website$")
@@ -60,6 +58,8 @@ public class ThemePage extends SpringIntegrationTestConfig {
     @Then("^link befolking og samfunn should exist$")
     public void ThemeBoS() {
         assertTrue(driver.findElement(By.id("Befolkning og samfunn")).isEnabled());
-        driver.close();
+        driver.quit();
     }
+
+
 }
