@@ -10,5 +10,5 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(format = { "pretty", "html:target/cucumber" },features = "classpath:feature/detailPage.feature"
 )
-public class RunDetailTest {
+public class DetailTestRunner {
 }

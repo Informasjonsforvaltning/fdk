@@ -8,8 +8,7 @@ import org.junit.runner.RunWith;
  * Class for starting cucumbertest for Theme page.
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(format = { "pretty", "html:target/cucumber" },features = "classpath:feature/cucumberTheme.feature"
+@CucumberOptions(format = { "pretty", "html:target/cucumber" },features = {"classpath:feature/cucumberTheme.feature", "classpath:feature/theme.feature"}
 )
-
-public class RunThemeTest {
+public class ThemeTestRunner {
 }

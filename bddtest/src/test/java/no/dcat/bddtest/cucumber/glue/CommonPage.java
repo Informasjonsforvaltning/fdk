@@ -12,12 +12,12 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 public abstract class CommonPage extends SpringIntegrationTestConfig {
     WebDriver driver = null;
 
-    public void openBrowser() throws Throwable {
+    public void openBrowser() {
         PhantomJsDriverManager.getInstance().setup();
         driver = new PhantomJSDriver();
     }
 
-    public void openPage(String page) throws Throwable {
+    public void openPage(String page) {
         String hostname = "localhost";
         int port = 8080;
 
