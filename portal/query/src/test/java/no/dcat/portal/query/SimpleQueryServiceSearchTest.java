@@ -93,22 +93,21 @@ public class SimpleQueryServiceSearchTest {
      * Inputparameter validation. Minus from value shall throw http-error bad request.
      */
     @Test
-    public void return400IfFromIsBelowZero() {
-        SimpleQueryService sqs = new SimpleQueryService();
+    public void return200IfFromIsBelowZero() {
         ResponseEntity<String> actual = sqs.search("", "", "", -10, 1000, "nb", "", "");
 
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
     /**
      * Inputparameter validation. Over 100 size shall throw http-error bad request.
      */
     @Test
-    public void return400IfSizeIsLargerThan100() {
-        SimpleQueryService sqs = new SimpleQueryService();
+    public void return200IfSizeIsLargerThan100() {
         ResponseEntity<String> actual = sqs.search("", "", "", 10, 101, "nb", "", "");
 
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
     }
 
     private void populateMock() {

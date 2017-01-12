@@ -1,13 +1,11 @@
 package no.difi.dcat.admin.web.dcat;
 
-import java.net.URL;
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
-
-import com.github.jsonldjava.utils.Obj;
+import no.difi.dcat.admin.settings.ApplicationSettings;
+import no.difi.dcat.admin.settings.FusekiSettings;
+import no.difi.dcat.datastore.AdminDataStore;
+import no.difi.dcat.datastore.Fuseki;
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import no.difi.dcat.admin.settings.ApplicationSettings;
-import no.difi.dcat.admin.settings.FusekiSettings;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.User;
+import javax.annotation.PostConstruct;
+import java.net.URL;
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @CrossOrigin(origins = "*")
@@ -81,13 +78,8 @@ public class DcatAdminController {
 
 	@RequestMapping("/dcatSource")
 	public ModelAndView viewSingleDcatSource(@RequestParam(value="id", required=true) String id, Principal principal) {
-		String name = principal.getName();
 
-		System.out.println(id);
 		Optional<DcatSource> dcatSourceById = adminDataStore.getDcatSourceById(id);
-
-		System.out.println(dcatSourceById.get());
-
 
 		ModelAndView model = new ModelAndView("dcatSource");
 		model.addObject("dcatSource", dcatSourceById.get());
@@ -96,7 +88,6 @@ public class DcatAdminController {
 		return model;
 	}
 
-
 	
 	@RequestMapping(value= "/admin/harvestDcatSource", method = RequestMethod.GET)
 	public ModelAndView harvestDcatSource(@RequestParam("id") String dcatSourceId, ModelMap model) {
@@ -104,8 +95,7 @@ public class DcatAdminController {
 			URL url = new URL(applicationSettings.getHarvesterUrl() + "/api/admin/harvest?id=" + dcatSourceId);
 			url.openConnection().getInputStream();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("unable to harvest dcat source {}", dcatSourceId,e);
 		}
 		
 		model.clear();

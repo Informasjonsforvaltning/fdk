@@ -1,22 +1,28 @@
 package no.dcat.harvester.crawler.converters;
 
 import com.google.common.cache.LoadingCache;
-
+import no.acando.xmltordf.Builder;
 import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.acando.xmltordf.Builder;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class BrregAgentConverter {
 
@@ -58,12 +64,8 @@ public class BrregAgentConverter {
     private Model convert(PostProcessingJena postProcessing) {
         Model extractedModel = ModelFactory.createDefaultModel();
         try {
-            //File intermediary = new File("/tmp/brreg");
-            //intermediary.mkdirs();
 
-            ClassLoader classLoader = BrregAgentConverter.class.getClassLoader();
-            //File transforms = new File(classLoader.getResource("brreg/transforms").getFile());
-            //File constructs = new File(classLoader.getResource("brreg/constructs").getFile());
+            ClassLoader classLoader = getClass().getClassLoader();
 
             extractedModel = postProcessing
                     .mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00001.qr"), new Object())
@@ -108,7 +110,7 @@ public class BrregAgentConverter {
                 String content = brregCache.get(new URL(uri));
                 logger.trace("[model_before_conversion] {}", content);
 
-                InputStream inputStream = new ByteArrayInputStream(content.getBytes());
+                InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
                 Model incomingModel = convert(inputStream);
 
                 logger.trace("[model_after_conversion] {}", incomingModel);
