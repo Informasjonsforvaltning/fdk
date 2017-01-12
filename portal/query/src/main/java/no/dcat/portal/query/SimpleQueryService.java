@@ -31,18 +31,26 @@ import java.net.UnknownHostException;
 
 /**
  * A simple search service. Receives a query and forwards the query to Elasticsearch, return results.
- * <p>
+ *
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
 public class SimpleQueryService {
     public static final String INDEX_THEME = "theme";
-    public static final String TYPE_DATA_THEME = "data-theme";
-    public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String INDEX_DCAT = "dcat";
 
+    public static final String TYPE_DATA_THEME = "data-theme";
+    public static final String TYPE_DATA_PUBLISHER = "publisher";
+    public static final String TYPE_DATASET = "dataset";
+
+    public static final String FIELD_THEME_CODE = "theme.code";
+    public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
+
+    public static final String TERMS_THEME_COUNT = "theme_count";
+    public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
+
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
-    public static Client client = null;
+    protected Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
@@ -53,6 +61,7 @@ public class SimpleQueryService {
     public static final String QUERY_THEMES = "/themes";
     public static final String QUERY_THEME_COUNT = "/themecount";
     public static final String QUERY_PUBLISHER = "/publisher";
+    public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
 
 
     @Value("${application.elasticsearchHost}")
@@ -67,12 +76,14 @@ public class SimpleQueryService {
 
     @Value("${application.clusterName:elasticsearch}")
     private String clusterName;
-    public void setClusterName(String cn) { clusterName = cn; }
+
+    public void setClusterName(String cn) {
+        clusterName = cn;
+    }
 
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
-     * <p>
      *
      * @param query         The search query to be executed as defined in
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
@@ -126,10 +137,14 @@ public class SimpleQueryService {
             return new ResponseEntity<String>("{\"error\": \"parameter error: size is larger than 100\"}", HttpStatus.BAD_REQUEST);
         }
 
-        if (size < 5) size = 5;
+        if (size < 5) {
+            size = 5;
+        }
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-        if (jsonError != null) return jsonError;
+        if (jsonError != null) {
+            return jsonError;
+        }
 
         QueryBuilder search;
 
@@ -161,8 +176,8 @@ public class SimpleQueryService {
                 .setQuery(boolQuery)
                 .setFrom(from)
                 .setSize(size)
-                .addAggregation(createThemeAggregation())
-                .addAggregation(createPublisherAggregation());
+                .addAggregation(createAggregation(TERMS_THEME_COUNT,FIELD_THEME_CODE))
+                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME));
 
 
         if (!sortfield.trim().isEmpty()) {
@@ -302,47 +317,22 @@ public class SimpleQueryService {
     @CrossOrigin
     @RequestMapping(value = QUERY_THEME_COUNT, produces = "application/json")
     public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "") String themecode) {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+        return aggregateOnField(FIELD_THEME_CODE, themecode, TERMS_THEME_COUNT);
+    }
 
-        QueryBuilder search;
-
-        if ("".equals(themecode)) {
-            search = QueryBuilders.matchAllQuery();
-            /*JSON: {
-                "match_all" : { }
-             }*/
-        } else {
-
-            search = QueryBuilders.simpleQueryStringQuery(themecode)
-                    .field("theme.code");
-
-            /*JSON: {
-                "query": {
-                    "match": {"theme.code" : "GOVE"}
-                }
-            }*/
-        }
-
-        //Create the aggregation object that counts the datasets
-        AggregationBuilder aggregation = createThemeAggregation();
-
-        logger.debug(String.format("Get theme with code: %s", themecode));
-        SearchResponse response = client.prepareSearch(INDEX_DCAT)
-                .setQuery(search)
-                .setSize(NO_HITS)  //only the aggregation should be returned
-                .setTypes("dataset")
-                .addAggregation(aggregation)
-                .execute().actionGet();
-
-        logger.debug(aggregation.toString());
-
-        logger.trace(String.format("Dataset count for themes: %s", response.toString()));
-
-        if (jsonError != null) {
-            return jsonError;
-        }
-
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+    /**
+     * Returns a list of publishers and the total number of dataset for each of them.
+     * <p/>
+     * The returnlist will consist of the defined publisher or for all publishers, registered in
+     * elastic search, if no publisher is defined.
+     * <p/>
+     * @param publisher optional parameter specifiying which publisher should be counted
+     * @return json containing publishers and integer count of number of data sets
+     */
+    @CrossOrigin
+    @RequestMapping(value = QUERY_PUBLISHER_COUNT, produces = "application/json")
+    public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "") String publisher) {
+        return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT);
     }
 
     /**
@@ -355,6 +345,11 @@ public class SimpleQueryService {
     public ResponseEntity<String> publishers() {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
+        if (jsonError != null) {
+            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
+            return jsonError;
+        }
+
         QueryBuilder search = QueryBuilders.matchAllQuery();
 
         SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
@@ -366,44 +361,68 @@ public class SimpleQueryService {
         SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
         logger.debug("Found publisher: {}", responsePublisher);
 
+        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+    }
+
+    private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term) {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
         if (jsonError != null) {
-            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
             return jsonError;
         }
 
-        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+        QueryBuilder search;
+
+        if (StringUtils.isEmpty(fieldValue)) {
+            logger.debug(String.format("Count datasets for all %s", field));
+            search = QueryBuilders.matchAllQuery();
+            /*JSON: {
+                "match_all" : { }
+             }*/
+        } else {
+            logger.debug(String.format("Count datasets for %s of type %s.", fieldValue, field));
+            search = QueryBuilders.simpleQueryStringQuery(fieldValue)
+                    .field(field);
+
+            /*JSON: {
+                "query": {
+                    "match": {"theme.code" : "GOVE"}
+                }
+            }*/
+        }
+
+        //Create the aggregation object that counts the datasets
+        AggregationBuilder aggregation = createAggregation(term, field);
+
+        SearchResponse response = client.prepareSearch(INDEX_DCAT)
+                .setQuery(search)
+                .setSize(NO_HITS)  //only the aggregation should be returned
+                .setTypes(TYPE_DATASET)
+                .addAggregation(aggregation)
+                .execute().actionGet();
+
+        logger.debug(aggregation.toString());
+
+        logger.trace(String.format("Dataset count for field %s: %s", field, response.toString()));
+
+
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
     /**
      * Create aggregation object that counts the number of
-     * datasets for each theme code.
-     *
+     * datasets for each value of the defined field.
+     *<p/>
+     * @param field The field to be aggregated.
      * @return Aggregation builder object to be used in query
      */
-    private AggregationBuilder createThemeAggregation() {
+    private AggregationBuilder createAggregation(String terms, String field) {
         return AggregationBuilders
-            .terms("theme_count")
-            .field("theme.code")
+            .terms(terms)
+            .field(field)
             .size(AGGREGATION_NUMBER_OF_COUNTS)
             .order(Order.count(false));
     }
-
-    /**
-     * Create a aggregation object that counts the number of datasets
-     * for each theme code.
-     *
-     * Notice: at the moment
-     *
-     * @return aggregation builder object to be used in query
-     */
-    private AggregationBuilder createPublisherAggregation() {
-        return AggregationBuilders
-                .terms("publisherCount")
-                .field("publisher.name.raw")
-                .size(AGGREGATION_NUMBER_OF_COUNTS)
-                .order(Order.count(false));
-    }
-
 
     private final ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
@@ -415,7 +434,7 @@ public class SimpleQueryService {
                 return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            client = createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
+            createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
         }
         return null;
     }

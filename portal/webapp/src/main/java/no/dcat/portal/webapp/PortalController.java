@@ -27,17 +27,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Locale;
-import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.net.URI;
 import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
+
 
 /**
  * Delivers html pages to support the DCAT Portal application.
- *
  *
  * Created by nodavsko on 12.10.2016.
  */
@@ -45,6 +48,7 @@ import javax.servlet.http.HttpSession;
 public class PortalController {
     public static final String MODEL_THEME = "theme";
     public static final String MODEL_PUBLISHER = "publisher";
+    public static final String MODEL_RESULT = "result";
 
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
@@ -53,6 +57,7 @@ public class PortalController {
 
     @Autowired
     public PortalController(final PortalConfiguration metadata) {
+
         this.buildMetadata = metadata;
     }
 
@@ -67,25 +72,23 @@ public class PortalController {
      */
     @RequestMapping(value = {"/results"})
     final ModelAndView result(final HttpSession session,
-                              @RequestParam(value = "q", defaultValue = "") String q,
+                              @RequestParam(value = "q", defaultValue = "") String query,
                               @RequestParam(value = "theme", defaultValue = "") String theme,
                               @RequestParam(value = "publisher", defaultValue = "") String publisher) {
 
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
-
-        ModelAndView model = new ModelAndView("result");
+        ModelAndView model = new ModelAndView(MODEL_RESULT);
+        model.addObject("themes", getCodeLists());
+        model.addObject("query", query);
 
         logger.debug(buildMetadata.getQueryServiceExternal());
         logger.debug(buildMetadata.getVersionInformation());
 
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("theme", theme);
         session.setAttribute("publisher", publisher);
 
-        model.addObject("themes", getCodeLists());
-
-        model.addObject("query", q);
-        return model; // templates/result.html
+        return model;
     }
 
     /**
@@ -105,7 +108,7 @@ public class PortalController {
             logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
             String json = httpGet(httpClient, uri);
 
-            logger.debug(String.format("Found dataset: %s", json));
+            logger.trace(String.format("Found dataset: %s", json));
             Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
 
             dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
@@ -132,8 +135,8 @@ public class PortalController {
     public ModelAndView themes() {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
-        Locale l = LocaleContextHolder.getLocale();
-        logger.debug(l.getLanguage());
+        Locale locale = LocaleContextHolder.getLocale();
+        logger.debug(locale.getLanguage());
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
@@ -144,7 +147,7 @@ public class PortalController {
 
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
 
-            Collections.sort(dataThemes, new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
+            Collections.sort(dataThemes, new ThemeTitleComparator(locale.getLanguage() == "en" ? "en" : "nb"));
 
             logger.debug(String.format("Found datathemes: %s", json));
         } catch (Exception e) {
@@ -153,7 +156,7 @@ public class PortalController {
             model.setViewName("error");
         }
 
-        model.addObject("lang", l.getLanguage() == "en" ? "en" : "nb");
+        model.addObject("lang", locale.getLanguage() == "en" ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
@@ -172,9 +175,12 @@ public class PortalController {
     public ModelAndView publisher() {
         ModelAndView model = new ModelAndView(MODEL_PUBLISHER);
         List<Publisher> publisherGrouped = new ArrayList<>();
+        Map<String, String> publisherDataSetCount = new HashMap<>();
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
+
+            // Get publishers.
             URI uri = new URIBuilder(buildMetadata.getPublisherServiceUrl()).build();
             logger.debug("Query for all publisher");
 
@@ -182,13 +188,24 @@ public class PortalController {
 
             List<Publisher> publishersFlat = new ElasticSearchResponse().toListOfObjects(json, Publisher.class);
 
-            List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
+            // Get aggregation on dataset for publishers.
+            URI uriAggPublisher = new URIBuilder(buildMetadata.getPublisherCountServiceUrl()).build();
+            logger.debug("Query for all publisher count.");
 
+            String jsonAggPublisher = httpGet(httpClient, uriAggPublisher);
+            publisherDataSetCount = new ElasticSearchResponse().toMapOfStrings(jsonAggPublisher);
+
+            // Organise publishers from flat to hierarchical.
+            List<Publisher> publishersHier = TransformModel.organisePublisherHierarcally(publishersFlat);
             publisherGrouped = TransformModel.groupPublisher(publishersHier);
 
+            // Aggregate dataset count up the hierarchy
+            publisherDataSetCount = TransformModel.aggregateDataSetCount(publisherDataSetCount, publisherGrouped);
+
+            //Sort publisher alphabetic.
             Collections.sort(publisherGrouped , new PublisherOrganisasjonsformComparator());
 
-            logger.debug(String.format("Found publishers: %s", json));
+            logger.trace(String.format("Found publishers: %s", json));
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
@@ -196,6 +213,7 @@ public class PortalController {
         }
 
         model.addObject("publisher", publisherGrouped);
+        model.addObject("aggpublishercount", publisherDataSetCount);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
     }
@@ -203,11 +221,9 @@ public class PortalController {
     /**
      * Returns a JSON structure that contains the code-lists that the portal webapp uses.
      * The code-lists are fetched from the query service first time.
-     * <p>
-     * Code lists:
+     * <p> Code lists:
      * - data-theme (EU Themes)
-     * <p>
-     * TODO - add necessary codelists
+     * <p> TODO - add necessary codelists
      *
      * @return a JSON of the code-lists. { "data-theme" : [ {"AGRI" : {"nb": "Jord og skogbruk"}}, ...], ...}
      */
@@ -229,7 +245,7 @@ public class PortalController {
         return codeLists;
     }
 
-    private String httpGet(HttpClient httpClient, URI uri) throws IOException {
+    protected String httpGet(HttpClient httpClient, URI uri) throws IOException {
         HttpEntity entity;
         HttpResponse response = null;
         String json = null;

@@ -7,7 +7,8 @@ services:
       - "8080:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.simpleQueryServiceURL=http://192.168.99.100:8083/search
+     - application.queryService=http://query:8080
+     - application.queryServiceExternal=http://localhost:8083
     links:
       - query
     networks:
@@ -19,7 +20,7 @@ services:
       - "8083:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.elasticsearchHost=192.168.99.100
+     - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
     links:
       - elasticsearch
@@ -97,15 +98,15 @@ services:
         aliases:
           - log_es
 
-  logstash:
-    image: "fdk/logstash:${TAG}"
-    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./logs:/usr/local/tomcat/logs:rw
-    depends_on:
-      - elasticsearch
-    networks:
-      logging:
+#  logstash:
+#    image: "fdk/logstash:${TAG}"
+#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
 
   kibana:
     image: "fdk/kibana:${TAG}"

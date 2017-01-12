@@ -22,6 +22,7 @@ public class TransformModel {
      * Sub and superior Publisher is defined for each Publisher.
      * Sub has both alle the aggregated subPublisher and the subPublisher the level below.
      * <p/>
+     *
      * @param publisherFlat A list of flat structured Publisher.
      * @return List of top publisher which has relation to the other Publisher downward the hierarchy.
      */
@@ -53,7 +54,7 @@ public class TransformModel {
     private static List<Publisher> aggregateSubPublisher(Publisher publisher) {
         List<Publisher> aggPublisher = new ArrayList<Publisher>();
 
-        for (Publisher subPublisher: publisher.getSubPublisher()) {
+        for (Publisher subPublisher : publisher.getSubPublisher()) {
             publisher.getAggrSubPublisher().addAll(aggregateSubPublisher(subPublisher));
         }
 
@@ -67,10 +68,43 @@ public class TransformModel {
      * Transform a hieracical model into a list og top-publisher where all sub-publisher is relted directly to the
      * top-publisher.
      * <p/>
+     *
      * @param publishersHier A list of hieracical structured Publisher.
      * @return List of top publisher which has a direct relation to the other Publisher downward the hierarchy.
      */
     public static List<Publisher> groupPublisher(List<Publisher> publishersHier) {
         return publishersHier;
+    }
+
+    /**
+     * Calculates a topPublishers number of datasets by adding all subPublishers number of dataset.
+     * <\P>
+     * @param publisherDataSetCount Number of datasets attached to each Publisher. When Publisher is key.
+     * @param publisherGrouped A list of top level publisher.
+     * @return A list of top level publisher with total number of datasets calculated.
+     */
+    public static Map<String, String> aggregateDataSetCount(Map<String, String> publisherDataSetCount, List<Publisher>
+            publisherGrouped) {
+        for (Publisher publisher : publisherGrouped) {
+            List<Publisher> subPublishers = publisher.getAggrSubPublisher();
+            String nrOfDatasetStr = publisherDataSetCount.get(publisher.getName());
+
+            int nrOfDataset = 0;
+
+            if (nrOfDatasetStr != null ) {
+                nrOfDataset = Integer.parseInt(nrOfDatasetStr);
+            }
+
+            for (Publisher subPublisher: subPublishers) {
+                String nrOfDatasetSubStr = publisherDataSetCount.get(subPublisher.getName());
+
+                if (nrOfDatasetSubStr != null ) {
+                    int nrOfDatasetSub = Integer.parseInt(nrOfDatasetSubStr);
+                    nrOfDataset += nrOfDatasetSub;
+                }
+            }
+            publisherDataSetCount.put(publisher.getName(), Integer.toString(nrOfDataset));
+        }
+        return publisherDataSetCount;
     }
 }

@@ -147,14 +147,12 @@
                 </resources>
 
                 <!-- Docker image skal kun lages på Windows. -->
-                <!--
                 <plugins>
                     <plugin>
                         <groupId>com.spotify</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
-                -->
 
             </build>
         </profile>

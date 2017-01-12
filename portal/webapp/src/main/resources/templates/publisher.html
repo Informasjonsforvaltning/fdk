@@ -8,8 +8,8 @@
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -20,51 +20,71 @@
             right: 0;
         }
 
+        .badge {
+            float: right
+        }
+
         .overflow-text {
-           overflow: hidden;
-           text-overflow: ellipsis;
-           display: -webkit-box;
-           line-height: 120%; //1em;     /* fallback */
-           max-height: 360%; // 3em;      /* fallback */
-           -webkit-line-clamp: 3; /* number of lines to show */
-           -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            line-height: 120%;
+        / / 1 em; /* fallback */
+            max-height: 360%;
+        / / 3 em; /* fallback */
+            -webkit-line-clamp: 3; /* number of lines to show */
+            -webkit-box-orient: vertical;
         }
     </style>
 
 </head>
-    <body>
-        <div lang="en" th:replace="header :: version" />
-        <div class="container-fluid">
-            <div lang="en" th:replace="header :: header" />
-            <div lang="en" th:replace="search :: search" />
-        </div>
+<body>
+<div lang="en" th:replace="header :: version"/>
+<div class="container-fluid">
+    <div lang="en" th:replace="header :: header"/>
+    <div lang="en" th:replace="search :: search"/>
+</div>
 
-        <div class="row">
-            <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
-                <h4>
-                    <a class="btn btn-primary" data-toggle="collapse" th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
-                       href="#" th:href="${'#collaps_' + {r}}" aria-expanded="false" aria-controls="collapseExample">
-                        +
+<div class="container-fluid">
+    <div class="row">
+        <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
+            <h4>
+                <a class="btn btn-primary" data-toggle="collapse"
+                   th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
+                   href="#" th:href="${'#collaps_' + {r}}" aria-expanded="false" aria-controls="collapseExample">
+                    +
+                </a>
+
+                <a class="btn btn-primary" data-toggle="collapse"
+                   th:if="${publisher.get(r).aggrSubPublisher.size()} == 0"
+                   aria-disabled="true">
+                    -
+                </a>
+
+                <a th:id="${publisher.get(r).name}" href="#"
+                   th:href="${'/results?publisher=' + {publisher.get(r).name}}">
+                    <span name="publisher" th:text="${publisher.get(r).name}"/>
+                    <span class="badge" th:text="${aggpublishercount.get(publisher.get(r).name)}"/>
+                </a>
+            </h4>
+            <div th:id="${'collaps_' + {r}}" class="panel-collapse collapse"
+                 th:if="${publisher.get(r).aggrSubPublisher.size()} > 0">
+                <div th:each="c : ${#numbers.sequence(0, publisher.get(r).aggrSubPublisher.size() - 1)}">
+                    <a href="#"
+                       th:href="${'/results?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}"
+                       th:id="${publisher.get(r).aggrSubPublisher.get(c).name}">
+                        <span name="publisher" th:text="${publisher.get(r).aggrSubPublisher.get(c).name}"/>
+                        <span class="badge"
+                              th:text="${aggpublishercount.get(publisher.get(r).aggrSubPublisher.get(c).name)}"/>
                     </a>
-
-                    <a class="btn btn-primary" data-toggle="collapse" th:if="${publisher.get(r).aggrSubPublisher.size()} == 0"
-                        aria-disabled="true">
-                        -
-                    </a>
-
-                    <a th:text="${publisher.get(r).name}" href="#" th:href="${'/results?publisher=' + {publisher.get(r).name}}" class="span3"/>
-                </h4>
-                <div th:id="${'collaps_' + {r}}"  class="panel-collapse collapse" th:if="${publisher.get(r).aggrSubPublisher.size()} > 0">
-                    <div th:each="c : ${#numbers.sequence(0, publisher.get(r).aggrSubPublisher.size() - 1)}">
-                        <a th:text="${publisher.get(r).aggrSubPublisher.get(c).name}" href="#"
-                           th:href="${'/results?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}" class="span3"/>
-                    </div>
                 </div>
             </div>
         </div>
-        <p/>
-        <p/>
+    </div>
+</div>
+<p/>
+<p/>
 
-        <div lang="en" th:replace="footer :: footer" />
-    </body>
+<div lang="en" th:replace="footer :: footer"/>
+</body>
 </html>

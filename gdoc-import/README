@@ -1,0 +1,21 @@
+Har nå prøvd meg på
+
+VOLUME /usr/local/dcat
+
+men da blir ikke katalogene automatisk oppdatert. Måtte kjøre disse manuelt.
+
+Oppstart:
+
+mvn install -- bygger image fdk/.....
+
+Kjøre gdoc
+
+docker run -v dcat/:/usr/local/dcat fdk/gdoc-import:148374c bash dcat.sh
+
+Hente ut det genererte dokumentet:
+
+docker run -v dcat/:/usr/local/dcat fdk/gdoc-import:148374c cat publish/datasett-from-gdocs.xls.ttl-finished-2016-12-08.ttl
+
+Se hva som ligger på publish
+
+docker run -v dcat/:/usr/local/dcat fdk/gdoc-import:148374c ls -l publish
