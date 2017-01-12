@@ -217,7 +217,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--version>2.5.6</version-->
                     <options>maxparams:3,indent,camelcase,eqeqeq,forin,immed,latedef,noarg,noempty,nonew</options>
                     <globals>require,$,yourFunkyJavascriptModule</globals>
                     <configFile>src/test/resources/jshint.conf.js</configFile>
@@ -282,12 +281,6 @@
                     <generateGitPropertiesFilename>${basedir}/target/classes/git.properties</generateGitPropertiesFilename>
                 </configuration>
             </plugin>
-
-            <!-- flyttet inn i profil. skal ikke brukes på openshift
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin> -->
         </plugins>
     </build>
 
