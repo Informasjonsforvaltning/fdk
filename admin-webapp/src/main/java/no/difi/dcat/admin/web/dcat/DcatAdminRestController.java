@@ -1,16 +1,12 @@
 package no.difi.dcat.admin.web.dcat;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-import javax.validation.Valid;
-
-import no.difi.dcat.datastore.*;
+import no.difi.dcat.admin.settings.FusekiSettings;
+import no.difi.dcat.datastore.AdminDataStore;
+import no.difi.dcat.datastore.AdminDcatDataService;
+import no.difi.dcat.datastore.DcatDataStore;
+import no.difi.dcat.datastore.Fuseki;
+import no.difi.dcat.datastore.UserNotFoundException;
 import no.difi.dcat.datastore.domain.DcatSource;
-
 import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import no.difi.dcat.admin.settings.FusekiSettings;
+import javax.annotation.PostConstruct;
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
