@@ -15,10 +15,9 @@ import org.springframework.core.io.ClassPathResource;
 public class AppConfig {
 
     /**
-     * PropertySourcePlaceholderConfigurer is used
-     * as PrpoertySource dont support yaml format.
-
-     * @return
+     * PropertySourcePlaceholderConfigurer is used as PrpoertySource dont support yaml format.
+     *
+     * @return property configurer
      */
     @Bean
     @Profile("development") //Skal kun brukes når spring_active_profiles inneholder default
