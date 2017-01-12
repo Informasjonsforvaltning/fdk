@@ -39,11 +39,11 @@ public class HarvesterApplication {
 
     public static void main(String[] args) {
 
-        logger.debug("STARTING HARVESTER APPLICATION");
+        logger.debug("Starting harvester application");
 
         ApplicationContext ctx = SpringApplication.run(HarvesterApplication.class, args);
 
-        logger.debug("HARVESTER APPLICATION STARTED");
+        logger.debug("Harvester application started");
 
     }
 
