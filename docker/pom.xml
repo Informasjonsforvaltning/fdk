@@ -75,7 +75,7 @@
 				<executions>
 					<execution>
 						<id>default-jar</id>
-						<phase>never</phase>
+						<phase>none</phase>
 						<configuration>
 							<finalName>unwanted</finalName>
 							<classifier>unwanted</classifier>
@@ -89,11 +89,7 @@
 				<executions>
 					<execution>
 						<id>default-install</id>
-						<phase>never</phase>
-						<configuration>
-							<finalName>unwanted</finalName>
-							<classifier>unwanted</classifier>
-						</configuration>
+						<phase>none</phase>
 					</execution>
 				</executions>
 			</plugin>

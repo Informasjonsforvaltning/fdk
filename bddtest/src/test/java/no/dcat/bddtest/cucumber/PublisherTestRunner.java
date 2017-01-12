@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
  * Class for starting cucumbertest for Publisher page.
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(format = { "pretty", "html:target/cucumber" },features = "classpath:feature2/publisherPage.feature"
+@CucumberOptions(format = { "pretty", "html:target/cucumber" },features = "classpath:feature/publisherPage.feature"
 )
-public class RunPublisherTest {
+public class PublisherTestRunner {
 }
