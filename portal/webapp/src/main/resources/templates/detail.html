@@ -83,7 +83,7 @@
                     <dt th:if="${dataset.issued}">Opprettet dato</dt>
                     <dd th:text="${dataset.issued}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''" ></dd>
 
-                    <dt th:if="${dataset.modified}">Modifisert dato</dt>
+                    <dt th:if="${dataset.modified}">Sist endret</dt>
                     <dd th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" ></dd>
 
                     <dt th:if="${dataset.language}">Språk</dt>
