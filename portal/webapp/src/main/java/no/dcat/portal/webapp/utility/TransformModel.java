@@ -95,7 +95,7 @@ public class TransformModel {
                 nrOfDataset = Integer.parseInt(nrOfDatasetStr);
             }
 
-            for(Publisher subPublisher: subPublishers) {
+            for (Publisher subPublisher: subPublishers) {
                 String nrOfDatasetSubStr = publisherDataSetCount.get(subPublisher.getName());
 
                 if (nrOfDatasetSubStr != null ) {
