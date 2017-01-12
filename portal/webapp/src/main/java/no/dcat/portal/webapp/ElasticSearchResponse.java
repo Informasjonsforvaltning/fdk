@@ -1,6 +1,10 @@
 package no.dcat.portal.webapp;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,7 +77,7 @@ public final class ElasticSearchResponse {
         JsonObject publCountObj = aggObj.getAsJsonObject(TAG_DEFINING_PUBLISHER_COUNT);
         JsonArray bucketsArray = publCountObj.getAsJsonArray(TAG_DEFINING_BUCKETS);
 
-        for(JsonElement j: bucketsArray) {
+        for (JsonElement j: bucketsArray) {
             JsonObject obj = j.getAsJsonObject();
             JsonElement key = obj.get("key");
             JsonElement count = obj.get("doc_count");

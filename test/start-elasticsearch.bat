@@ -1,0 +1,1 @@
+START /b "test-elastic" elasticsearch-2.4.1\bin\elasticsearch.bat

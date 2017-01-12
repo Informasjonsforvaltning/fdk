@@ -20,8 +20,8 @@ import java.util.Locale;
  * Main webapp application.
  */
 @SpringBootApplication
-public class Application extends WebMvcConfigurerAdapter {
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
+public class WebappApplication extends WebMvcConfigurerAdapter {
+    private static Logger logger = LoggerFactory.getLogger(WebappApplication.class);
 
     /**
      * Standard magic for starting the spring boot application.
@@ -30,7 +30,7 @@ public class Application extends WebMvcConfigurerAdapter {
      */
     public static void main(final String[] args) {
 
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        ApplicationContext ctx = SpringApplication.run(WebappApplication.class, args);
     }
 
     /**

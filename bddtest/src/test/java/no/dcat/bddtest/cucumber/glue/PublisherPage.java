@@ -1,19 +1,13 @@
-package no.dcat.bddtest.cucumber;
+package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
-import no.dcat.harvester.crawler.Loader;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
 import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -21,56 +15,23 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 /**
  * Cucumber glue class for the publisher feature.
  */
-public class PublisherPage {
-    public static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
-    private final String index = "dcat";
-    private final String filename = "dataset-w-distribution.ttl";
-    WebDriver driver = null;
-
+public class PublisherPage extends CommonPage {
+    private static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
     private final String page = "publisher";
 
-    @Given("^I clean elastic search\\.$")
-    public void cleanElasticSearch() throws Throwable {
-        String hostname = getEnv("elasticsearch.hostname");
-        int port = getEnvInt("elasticsearch.port");
-
-        new DeleteIndex(hostname, port).deleteIndex(index);
+    @Before
+    public void setup() {
+        setupDriver();
     }
 
-    @Given("^I load the dataset\\.$")
-    public void iLoadDataset() throws Throwable {
-        String hostname = getEnv("elasticsearch.hostname");
-        int port = getEnvInt("elasticsearch.port");
-
-        String defultPath = new File(".").getCanonicalPath().toString();
-        String fileWithPath = String.format("file:%s/src/main/resources/%s", defultPath, filename);
-
-        new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
+    @After
+    public void shutdown() {
+        stopDriver();
     }
 
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        File file = new File(LOCAL_PATH_TO_IE_DRIVER);
-        File fileC = new File("src/main/resources/chromedriver.exe");
-        File fileF = new File("src/main/resources/phantomjs.exe");
-
-        System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-        System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
-        System.setProperty("phantomjs.binary.path", fileF.getAbsolutePath());
-
-        DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
-        DesiredCapabilities capsC = DesiredCapabilities.chrome();
-
-        caps.setCapability("ignoreZoomSetting", true);
-
-        //driver = new InternetExplorerDriver(caps);
-        //driver = new ChromeDriver(capsC);
-        driver = new PhantomJSDriver();
-
-        String hostname = getEnv("fdk.hostname");
-        int port = getEnvInt("fdk.port");
-
-        driver.navigate().to(String.format("http://%s:%d/%s", hostname, port, page));
+        openPage(page);
     }
 
     @Then("^the following Publisher and dataset aggregation shall exist:$")

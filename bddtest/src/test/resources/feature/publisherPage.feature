@@ -11,7 +11,7 @@ Feature: Page for presenting all Publishers.
 
   Background: Load dataset and open homepage browser.
     Given I clean elastic search.
-    And I load the dataset.
+    And I load the "dataset-w-distribution.ttl" dataset.
     And I open the Publisher page in the browser.
 
   Scenario: Number of dataset for each Publisher shall be presented.
