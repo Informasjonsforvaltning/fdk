@@ -28,14 +28,13 @@ public class RetrieveDataThemes {
     }
 
     /**
-     * Method for retrieving al Skos themes from Elasticsearch.
+     * Method for retrieving all Skos themes from Elasticsearch.
      * <p/>
-     * All Skos themes are retrievd from on Elastic-search, transformed from Json to Java-objects and returned in
+     * All Skos themes are retrieved from on Elastic-search, transformed from Json to Java-objects and returned in
      * a map, where the theme-id is the key.
      * <p/>
-     *
-     * @return All Skos-themes defines in Elasticsearch.
-     * @throws DataThemesNotLoadedException Is thrown if no themes are found.
+     * @return All Skos-themes defined in Elasticsearch.
+     * @throws DataThemesNotLoadedException Is thrown if no themes were found.
      */
     public Map<String, DataTheme> getAllDataThemes() throws DataThemesNotLoadedException {
         Map<String, DataTheme> dataThemes = new HashMap<>();

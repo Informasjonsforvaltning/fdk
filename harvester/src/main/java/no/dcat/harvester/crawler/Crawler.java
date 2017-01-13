@@ -38,7 +38,11 @@ public class Crawler {
 	public Future<?> execute(CrawlerJob crawlerJob) {
 		return executorService.submit(crawlerJob);
 	}
-	
+
+	public Future<?> execute(CrawlerCodeJob crawlerCodeJob) {
+		return executorService.submit(crawlerCodeJob);
+	}
+
 	public List<Future<?>> execute(List<CrawlerJob> crawlerJobs) {
 		List<Future<?>> futures = new ArrayList<>();
 		for (CrawlerJob crawlerJob : crawlerJobs) {

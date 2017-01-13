@@ -3,14 +3,14 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
+import no.dcat.harvester.crawler.client.LoadLocations;
+import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.dcat.harvester.crawler.client.RetrieveRemote;
 import no.dcat.harvester.dcat.domain.theme.builders.DataThemeBuilders;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
-import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.*;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DistributionBuilder;
 import org.apache.jena.rdf.model.Model;
@@ -44,8 +44,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
 
     /**
-     * Creates a new elasticsearch result handler connected to
-     * a particular elasticsearch instance
+     * Creates a new elasticsearch code result handler connected to
+     * a particular elasticsearch instance.
      *
      * @param hostname host name where elasticsearch cluster is found
      * @param port port for connection to elasticserach cluster. Usually 9300
@@ -78,8 +78,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             throw e;
         }
         logger.trace("finished");
-
-
     }
 
     /**
@@ -100,9 +98,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
+        // Retrieve all codes from elasticsearch.
         Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+        Map<String, SkosCode> locations = new LoadLocations(elasticsearch).extractLocations(model).retrieveLocTitle()
+                .indexLocationsWithElasticSearch().refresh().getLocations();
+        Map<String,Map<String, SkosCode>> codes = new RetrieveCodes(elasticsearch).getAllCodes();
 
-        List<Distribution> distributions = new DistributionBuilder(model).build(dataThemes);
+
+        List<Distribution> distributions = new DistributionBuilder(model, locations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
         for (Distribution distribution : distributions) {
             String json = gson.toJson(distribution);
@@ -114,7 +117,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             bulkRequest.add(indexRequest);
         }
 
-        List<Dataset> datasets = new DatasetBuilder(model).build(dataThemes);
+
+        List<Dataset> datasets = new DatasetBuilder(model, locations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
             String json = gson.toJson(dataset);

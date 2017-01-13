@@ -21,7 +21,7 @@ public class DetailPage extends CommonPage {
     public static final String ID_LANGUAGE_TEXT = "languageText";
     public static final String ID_LOCATIONS_TEXT = "locationsText";
     public static final String ID_ACCESS_RIGTH_TEXT = "accessRightText";
-    public static final String ID_FREQUENCE_TEXT = "frequenceText";
+    public static final String ID_FREQUENCE_TEXT = "accruralPeriodicityText";
 
     private final String NOR_PAGE = "detail?id=%s";
     private final String ENG_PAGE = "detail?id=%s";
@@ -42,27 +42,27 @@ public class DetailPage extends CommonPage {
 
                 String provenanceText = dsProperties.get(1);
                 String provenanceTextActual = getElement(ID_PROVENANCE_TEXT);
-                assertTrue(String.format("The user %s shall have provenance equal to %s", id, provenanceText),
+                assertTrue(String.format("The user %s shall have provenance equal to %s but had %s", id, provenanceText, provenanceTextActual),
                         provenanceText.equals(provenanceTextActual));
 
                 String frequenceText = dsProperties.get(2);
                 String frequenceTextActual = getElement(ID_FREQUENCE_TEXT);
-                assertTrue(String.format("The user %s shall have frequency equal to %s", id, frequenceText),
+                assertTrue(String.format("The user %s shall have frequency equal to %s but had %s", id, frequenceText, frequenceTextActual),
                         frequenceText.equals(frequenceTextActual));
 
                 String languageText = dsProperties.get(3);
                 String languageTextActual = getElement(ID_LANGUAGE_TEXT);
-                assertTrue(String.format("The user %s shall have language equal to %s", id, languageText),
+                assertTrue(String.format("The user %s shall have language equal to %s but had %s", id, languageText, languageTextActual),
                         languageText.equals(languageTextActual));
 
                 String accessRigthText = dsProperties.get(4);
                 String accessRigthTextActual = getElement(ID_ACCESS_RIGTH_TEXT);
-                assertTrue(String.format("The user %s shall have access-rigth equal to %s", id, accessRigthText),
+                assertTrue(String.format("The user %s shall have access-rigth equal to %s but had %s", id, accessRigthText, accessRigthTextActual),
                         accessRigthText.equals(accessRigthTextActual));
 
                 String locationsText = dsProperties.get(5);
                 String locationsTextActual = getElement(ID_LOCATIONS_TEXT);
-                assertTrue(String.format("The user %s shall have location equal to %s", id, locationsText),
+                assertTrue(String.format("The user %s shall have location equal to %s but had %s", id, locationsText, locationsTextActual),
                         locationsText.equals(locationsTextActual));
             }
         } finally {

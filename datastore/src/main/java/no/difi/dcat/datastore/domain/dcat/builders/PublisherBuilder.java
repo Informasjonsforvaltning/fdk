@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class for buildeing Publishers to be loaded into elasticsearch.
+ * Class for building Publishers to be loaded into elasticsearch.
  */
-public class PublisherBuilder extends DatasetBuilder {
+public class PublisherBuilder extends AbstractBuilder {
+
+    protected final Model model;
 
     public PublisherBuilder(Model model) {
-        super(model);
+        this.model = model;
     }
 
     public List<Publisher> build() {

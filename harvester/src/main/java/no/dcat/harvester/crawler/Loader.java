@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.Application;
 import no.dcat.harvester.crawler.CrawlerJob;
+import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.difi.dcat.datastore.AdminDataStore;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * Created by nodavsko on 29.09.2016.
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class Loader {
 
-    private final String DEFAULT_ELASTICSEARCH_HOST = "localhost";
+    private final String DEFAULT_ELASTICSEARCH_HOST = "192.168.99.100";
     private final int DEFAULT_ELASTICSEARCH_PORT = 9300;
     private final String DEFAULT_ELASTICSEARCH_CLUSTER = "elasticsearch";
 
@@ -108,6 +110,8 @@ public class Loader {
             url = new URL(filename);
             DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
+            // Load all codes.
+            harvestAllCodes(true);
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
             CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, this.elasticsearchCluster);
@@ -122,8 +126,23 @@ public class Loader {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return null;
+    }
+    private void harvestAllCodes(boolean reload) throws InterruptedException {
+        for(Types type:Types.values()) {
+            logger.debug("Loading type {}", type);
+            harvestCode(reload, type.getSourceUrl(), type.getType());
+        }
+    }
+
+    private void harvestCode(boolean reload, String sourceURL, String indexType) throws InterruptedException {
+        CrawlerResultHandler codeHandler = new CodeCrawlerHandler(this.hostname, this.port, this.elasticsearchCluster, indexType, reload);
+        CrawlerCodeJob jobCode = new CrawlerCodeJob(sourceURL, codeHandler);
+
+        jobCode.run();
     }
 }
