@@ -68,7 +68,6 @@
 		<module>api-app</module>
 		<module>docker</module>
 		<module>test</module>
-		<module>bddtest</module>
 	</modules>
 
 	<properties>
