@@ -17,7 +17,7 @@
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -50,7 +50,7 @@
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
         <http://purl.org/dc/terms/description>
@@ -82,7 +82,7 @@
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
@@ -114,7 +114,7 @@
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -148,7 +148,7 @@
         :spatial           "http://sws.geonames.org/3144096/" ;
         :til               "12/31/15" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
@@ -185,7 +185,7 @@
 <http://data.brreg.no/datakatalog/dataset/16>
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -221,7 +221,7 @@
 <http://data.brreg.no/datakatalog/dataset/6>
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -254,7 +254,7 @@
         :page              "https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/" ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
@@ -293,7 +293,7 @@
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -344,7 +344,7 @@
 <http://data.brreg.no/datakatalog/dataset/15>
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -381,7 +381,7 @@ dcatno:accessRightsComment
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/WEEKLY> ;
         <http://purl.org/dc/terms/description>
@@ -415,7 +415,7 @@ dcat:distriution  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -462,7 +462,7 @@ vcard:telefon  a  owl:ObjectProperty .
 <http://data.brreg.no/datakatalog/dataset/14>
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -494,7 +494,7 @@ vcard:telefon  a  owl:ObjectProperty .
         :spatial                    "http://sws.geonames.org/3144096/" ;
         dcatno:accessRightsComment  "https://lovdata.no/lov/1998-07-17-56/§8-1" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
         <http://purl.org/dc/terms/description>
@@ -528,7 +528,7 @@ vcard:telefon  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -579,7 +579,7 @@ foaf:name  a    owl:DatatypeProperty .
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -626,7 +626,7 @@ dcat:theme  a   owl:ObjectProperty .
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -658,7 +658,7 @@ dcat:theme  a   owl:ObjectProperty .
 <http://data.brreg.no/datakatalog/dataset/13>
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -691,7 +691,7 @@ foaf:Agent  a   owl:Class .
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
@@ -724,7 +724,7 @@ foaf:Agent  a   owl:Class .
         :spatial                    "http://sws.geonames.org/3144096/" ;
         dcatno:accessRightsComment  "https://lovdata.no/dokument/NL/lov/1935-06-07-2" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
@@ -760,7 +760,7 @@ vcard:email  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -802,7 +802,7 @@ vcard:email  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -837,7 +837,7 @@ vcard:email  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -870,7 +870,7 @@ vcard:email  a  owl:ObjectProperty .
 <http://data.brreg.no/datakatalog/dataset/25>
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/> ;
+                <http://publications.europa.eu/resource/authority/access-right/> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
@@ -906,7 +906,7 @@ vcard:email  a  owl:ObjectProperty .
         :sample            "http://brreg.no/enhetsregisteret" ;
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
-                <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+                <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         <http://purl.org/dc/terms/accruralPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>

@@ -34,8 +34,8 @@
 
 <http://data.brreg.no/datakatalog/dataset/7>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
         dct:description          "Partiregisteret er eit register over politiske parti, og hovudformålet er å gi parti høve til å skaffe seg einerett til eit partinamn. \n\nPartiregisteret inneheld opplysningar om namnet, organisasjonsnummeret, adressa og kontaktpersonen til partiet som er registrert i Einingsregisteret. I tillegg skal Partiregisteret innehalde opplysningar om partiet sitt utøvande organ som etter vallova skal representere partiet overfor valstyresmaktene. Ved førebuinga av val legg valstyresmaktene til grunn dei opplysningane som er registrert i Partiregisteret per 31. mars i valåret." ;
         dct:identifier           "7" ;
         dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak> ;
@@ -117,7 +117,7 @@ dct:description  a  owl:DatatypeProperty .
 
 dct:language  a  owl:ObjectProperty .
 
-dct:accruralPeriodicity
+dct:accrualPeriodicity
         a       owl:ObjectProperty .
 
 dcat:Dataset  a  owl:Class .

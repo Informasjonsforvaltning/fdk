@@ -90,7 +90,7 @@ public class DatasetTest {
         expected.setPage(createListOfStrings("https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/"));
         expected.setADMSIdentifier(createListOfStrings("http://data.brreg.no/identifikator/99"));
         expected.setType("Type");
-        expected.setAccessRights("http://publications.europa.eu/resource/authority/dataset-access/PUBLIC");
+        expected.setAccessRights("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
         expected.setDescription(createMapOfStrings("Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"));
         expected.setIssued(createDate("01-01-2009 00:00:00"));
         expected.setLandingPage("https://w2.brreg.no/frivillighetsregisteret/");
