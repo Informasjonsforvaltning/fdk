@@ -68,6 +68,7 @@
 		<module>api-app</module>
 		<module>docker</module>
 		<module>test</module>
+		<module>bddtest</module>
 	</modules>
 
 	<properties>
@@ -101,7 +102,11 @@
 				<artifactId>query</artifactId>
 				<version>0.2.2-SNAPSHOT</version>
 			</dependency>
-
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>webapp</artifactId>
+				<version>0.2.2-SNAPSHOT</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
@@ -328,6 +333,11 @@
 				<version>3.3.2</version>
 			</dependency>
 			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+			<dependency>
 				<groupId>info.cukes</groupId>
 				<artifactId>cucumber-core</artifactId>
 				<version>1.2.5</version>
@@ -403,6 +413,8 @@
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>false</failsOnError>
 							<failOnViolation>false</failOnViolation>
+							<suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+							<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
 						</configuration>
 						<goals>
 							<goal>check</goal>

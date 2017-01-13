@@ -5,6 +5,8 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDFS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -16,6 +18,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DcatSource {
+
+	private static Logger logger = LoggerFactory.getLogger(DcatSource.class);
 
 	private String id;
 	private String description;
@@ -139,7 +143,7 @@ public class DcatSource {
 		try {
 			return URLEncoder.encode(id, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			logger.error("URL wrong Encoding",e);
 		}
 		return "";
 	}
@@ -237,6 +241,7 @@ public class DcatSource {
 
 		@Override
 		public int compareTo(Harvest o) {
+
 			return o.createdDate.compareTo(createdDate);
 		}
 	}

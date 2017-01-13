@@ -125,7 +125,7 @@ public class Loader {
             return job.getValidationResult();
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+           logger.error("URL not valid: "+ filename,e);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

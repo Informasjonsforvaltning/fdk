@@ -155,7 +155,6 @@ public class Elasticsearch implements AutoCloseable {
      */
     public void createIndex(String index) {
         //Set mapping for correct language stemming and indexing
-        ClassLoader classLoader = getClass().getClassLoader();
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {

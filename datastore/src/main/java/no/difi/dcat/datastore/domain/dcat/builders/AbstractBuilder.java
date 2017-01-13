@@ -1,27 +1,29 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.difi.dcat.datastore.domain.dcat.Contact;
+import no.difi.dcat.datastore.domain.dcat.PeriodOfTime;
+import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.SkosCode;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.sparql.vocabulary.FOAF;
+import org.apache.jena.vocabulary.DCTerms;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.DatatypeConverter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
-
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.sparql.vocabulary.FOAF;
-import org.apache.jena.vocabulary.DCTerms;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import no.difi.dcat.datastore.domain.dcat.Contact;
-import no.difi.dcat.datastore.domain.dcat.PeriodOfTime;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 
 public abstract class AbstractBuilder {
 

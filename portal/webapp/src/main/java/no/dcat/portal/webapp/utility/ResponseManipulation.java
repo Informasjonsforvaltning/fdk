@@ -70,7 +70,9 @@ public final class ResponseManipulation {
                 Iterator iter = langs.iterator();
                 while (iter.hasNext()) {
                     altVal = map.get(iter.next());
-                    if (altVal != null) break;
+                    if (altVal != null) {
+                        break;
+                    }
                 }
 
                 if (altVal != null) {

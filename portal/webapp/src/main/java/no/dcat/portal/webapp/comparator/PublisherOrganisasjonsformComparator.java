@@ -3,12 +3,13 @@ package no.dcat.portal.webapp.comparator;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Class for comparing organisasjonsform property on Publisher.
  */
-public class PublisherOrganisasjonsformComparator implements Comparator<Publisher> {
+public class PublisherOrganisasjonsformComparator implements Comparator<Publisher>, Serializable {
 
     public static final String STAT = "STAT";
     public static final String KOMM = "KOMM";
@@ -19,7 +20,7 @@ public class PublisherOrganisasjonsformComparator implements Comparator<Publishe
      *
      * @param o1 First object of type Publisher to be compared.
      * @param o2 First object of type DataTheme to be compared with.
-     * @return
+     * @return value that tells us if o1 is less than o2 or not
      */
     @Override
     public int compare(Publisher o1, Publisher o2) {
@@ -28,6 +29,7 @@ public class PublisherOrganisasjonsformComparator implements Comparator<Publishe
 
         return comVal1.compareTo(comVal2);
     }
+
     private Integer getComVal(String orgForm) {
         if (orgForm == null) {
             return 3;

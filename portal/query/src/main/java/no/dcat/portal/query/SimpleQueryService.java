@@ -50,7 +50,7 @@ public class SimpleQueryService {
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
 
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
-    public static Client client = null;
+    protected Client client = null;
     private static final String DEFAULT_QUERY_LANGUAGE = "nb";
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
@@ -127,15 +127,8 @@ public class SimpleQueryService {
         }
         lang = "*"; // hardcode to search in all language fields
 
-        if (from < 0) {
-            return new ResponseEntity<String>("{\"error\": \"parameter error: from is less than zero\"}", HttpStatus.BAD_REQUEST);
-        }
-
-        if (size > 100) {
-            return new ResponseEntity<String>("{\"error\": \"parameter error: size is larger than 100\"}", HttpStatus.BAD_REQUEST);
-        }
-
-        if (size < 5) size = 5;
+        from = checkAndAdjustFrom(from);
+        size = checkAndAdjustSize(size);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
@@ -144,12 +137,7 @@ public class SimpleQueryService {
 
         if ("".equals(query)) {
             search = QueryBuilders.matchAllQuery();
-
-            /*JSON: {
-                "match_all" : { }
-             }*/
         } else {
-
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
@@ -173,7 +161,18 @@ public class SimpleQueryService {
                 .addAggregation(createAggregation(TERMS_THEME_COUNT,FIELD_THEME_CODE))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME));
 
+        addSort(sortfield, sortdirection, searchBuilder);
 
+        // Execute search
+        SearchResponse response = searchBuilder.execute().actionGet();
+
+        logger.trace("Search response: " + response.toString());
+
+        // return response
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+    }
+
+    private void addSort(@RequestParam(value = "sortfield", defaultValue = "") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "desc") String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
 
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
@@ -187,14 +186,26 @@ public class SimpleQueryService {
 
             searchBuilder.addSort(sbSortField.toString(), sortOrder);
         }
+    }
 
-        // Execute search
-        SearchResponse response = searchBuilder.execute().actionGet();
+    private int checkAndAdjustFrom(int from) {
+        if (from < 0) {
+            return 0;
+        } else {
+            return from;
+        }
+    }
 
-        logger.trace("Search response: " + response.toString());
+    private int checkAndAdjustSize(int size) {
+        if (size > 100) {
+            return 100;
+        }
 
-        // return response
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        if (size < 5) {
+            return 5;
+        }
+
+        return size;
     }
 
 
@@ -427,7 +438,7 @@ public class SimpleQueryService {
                 return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            client = createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
+            createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
         }
         return null;
     }
