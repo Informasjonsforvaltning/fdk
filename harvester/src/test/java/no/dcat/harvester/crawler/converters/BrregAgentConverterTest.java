@@ -1,6 +1,6 @@
 package no.dcat.harvester.crawler.converters;
 
-import no.dcat.harvester.Application;
+import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
@@ -20,7 +20,7 @@ public class BrregAgentConverterTest {
 	
 	@Test
 	public void testConvertBrregFile() throws Exception {
-		BrregAgentConverter converter = new BrregAgentConverter(Application.getBrregCache());
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		
 		Model model = ModelFactory.createDefaultModel();
 		
@@ -41,7 +41,7 @@ public class BrregAgentConverterTest {
 
 	@Test
 	public void testConvertBrregFileBlankNode() throws Exception {
-		BrregAgentConverter converter = new BrregAgentConverter(Application.getBrregCache());
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 
 		Model model = FileManager.get().loadModel("src/test/resources/brreg/blankNodeTest.xml");
 
@@ -53,7 +53,7 @@ public class BrregAgentConverterTest {
 	
 	@Test
 	public void testMissingBrregFile() throws Exception {
-		BrregAgentConverter converter = new BrregAgentConverter(Application.getBrregCache());
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		
 		Model model = ModelFactory.createDefaultModel();
 		

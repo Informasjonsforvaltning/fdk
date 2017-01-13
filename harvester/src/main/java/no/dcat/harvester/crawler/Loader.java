@@ -1,18 +1,13 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
-import no.dcat.harvester.Application;
-import no.dcat.harvester.crawler.CrawlerJob;
+import no.dcat.harvester.HarvesterApplication;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -113,7 +108,7 @@ public class Loader {
             CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, this.elasticsearchCluster);
             CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(this.hostname,this.port, this.elasticsearchCluster);
 
-            LoadingCache<URL, String> brregCach = Application.getBrregCache();
+            LoadingCache<URL, String> brregCach = HarvesterApplication.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
 
             job.run();
