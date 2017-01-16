@@ -1,21 +1,31 @@
-Har nå prøvd meg på
+The image defines to VOLUMES:
 
-VOLUME /usr/local/dcat
+/app/dcat/temp
+/app/dcat/publish
 
-men da blir ikke katalogene automatisk oppdatert. Måtte kjøre disse manuelt.
+DOCKER
 
-Oppstart:
+docker run fdk/gdoc-import:xxxxx
 
-mvn install -- bygger image fdk/.....
+You can log into the container and see its files
 
-Kjøre gdoc
+docker exec -it 0113f8a2f1c8 /bin/bash
 
-docker run -v dcat/:/usr/local/dcat fdk/gdoc-import:148374c bash dcat.sh
+DOCKER HUB - export image to docker hub
 
-Hente ut det genererte dokumentet:
+docker tag 3e74058f0676 dskogan/gdoc:latest
+docker push dskogan/gdoc:latest
 
-docker run -v dcat/:/usr/local/dcat fdk/gdoc-import:148374c cat publish/datasett-from-gdocs.xls.ttl-finished-2016-12-08.ttl
 
-Se hva som ligger på publish
+BUILD
 
-docker run -v dcat/:/usr/local/dcat fdk/gdoc-import:148374c ls -l publish
+mvn install -- builds image fdk/gdoc-import:xyz
+
+
+Fetch a genererated document:
+
+docker exec -it 0113f8a2f1c8 cat publish/datasett-from-gdocs.xls.ttl-finished-2016-12-08.ttl
+
+List content of publish directory
+
+docker exec -it 0113f8a2f1c8 ls -l /app/dcat/publish

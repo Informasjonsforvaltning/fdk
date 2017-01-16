@@ -47,8 +47,8 @@ public class GdocControllerTest {
     public void setup () {
 
         gdocController = new GdocController();
-        ReflectionTestUtils.setField(gdocController, "converterHomeDir", "/usr/local/dcat");
-        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
+        ReflectionTestUtils.setField(gdocController, "converterHomeDir", "/app/dcat");
+        ReflectionTestUtils.setField(gdocController, "converterResultDir", "/app/dcat/publish");
     }
 
     /**
@@ -72,7 +72,7 @@ public class GdocControllerTest {
      * @throws Exception
      */
     @Test
-    public void convertReturnsOK() throws Exception {
+    public void runConvertReturnsOK() throws Exception {
 
         Process mockProcess = mock(Process.class);
         when(mockProcess.waitFor()).thenReturn(0);
@@ -86,15 +86,46 @@ public class GdocControllerTest {
         when(mockProcessBuilder.redirectOutput()).thenReturn(null);
         when(mockProcessBuilder.redirectError()).thenReturn(null);
 
+        FileOutputStream mockOutputStream = mock(FileOutputStream.class);
+        PowerMockito.whenNew(FileOutputStream.class).withAnyArguments().thenReturn(mockOutputStream);
+
+        OutputStreamWriter mockWriter = mock(OutputStreamWriter.class);
+        PowerMockito.whenNew(OutputStreamWriter.class).withAnyArguments().thenReturn(mockWriter);
+        when(mockWriter.append(anyString())).thenReturn(mockWriter);
+
         BufferedReader mockBufferedReader = mock(BufferedReader.class);
         PowerMockito.whenNew(BufferedReader.class).withAnyArguments().thenReturn(mockBufferedReader);
         when(mockBufferedReader.readLine()).thenReturn("line").thenReturn("DEBUG org.vedantatree.this.is.a.test").thenReturn(null);
 
-        ResponseEntity actual = gdocController.convert();
+        String actual = gdocController.runConvert();
 
         PowerMockito.verifyNew(ProcessBuilder.class);
 
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        logger.info(actual);
+        assertNotNull(actual);
+
+    }
+
+    /**
+     * Here we mock test when runConvert fails
+     *
+     * @throws Exception
+     */
+    @Test
+    public void runConvertReturnsException() throws Exception {
+
+        ProcessBuilder mockProcessBuilder = PowerMockito.mock(ProcessBuilder.class);
+        PowerMockito.whenNew(ProcessBuilder.class).withArguments(anyString(), anyString()).thenReturn(mockProcessBuilder);
+        when(mockProcessBuilder.start()).thenThrow(new IOException());
+
+        try {
+            String actual = gdocController.runConvert();
+        } catch (IOException e) {
+            assertTrue(true);
+            return;
+        }
+
+        assertFalse(true);
 
     }
 
@@ -276,17 +307,17 @@ public class GdocControllerTest {
     @Test
     public void versionsWithKnownVersionIdFailsIncorrectFileNameInternalServerError() throws Exception {
 
-        File f2 = new File("htp:/www.gogole.com");
+        File f2 = new File("htp:/www.gogole.ttl");
         File[] dir = new File[1];
 
         dir[0] = f2;
-        URI uri = new URI("htp:/www.google.com");
+        URI uri = new URI("htp:/www.google.ttl");
 
       //  when(f2.toURI()).thenReturn(uri);
       //  when(f2.lastModified()).thenReturn(0L);
 
         File mockFile = mock(File.class);
-        PowerMockito.whenNew(File.class).withArguments("/usr/local/dcat/publish").thenReturn(mockFile);
+        PowerMockito.whenNew(File.class).withArguments("/app/dcat/publish").thenReturn(mockFile);
         when(mockFile.listFiles()).thenReturn(dir);
 
 
@@ -304,9 +335,9 @@ public class GdocControllerTest {
     @Test
     public void versionsWithLatestArgumentReturnsFileOK() throws Exception {
         File[] dir = new File[2];
-        dir[0] = File.createTempFile("anyname2016-11-22", "ttl");
+        dir[0] = File.createTempFile("anyname2016-11-22", ".ttl");
         Thread.sleep(1000);
-        dir[1] = File.createTempFile("anyname2016-12-24", "ttl");
+        dir[1] = File.createTempFile("anyname2016-12-24", ".ttl");
         PrintWriter writer = new PrintWriter(dir[1]);
         writer.println("This is the latest file");
         writer.close();
@@ -331,10 +362,10 @@ public class GdocControllerTest {
     public void versionsWithLatestArgumentReturnsLastModifiedFileOK() throws Exception {
         File[] dir = new File[2];
 
-        dir[1] = File.createTempFile("anyname2016-12-24", "ttl");
+        dir[1] = File.createTempFile("anyname2016-12-24", ".ttl");
         Thread.sleep(1000);
 
-        dir[0] = File.createTempFile("anyname2016-11-22", "ttl");
+        dir[0] = File.createTempFile("anyname2016-11-22", ".ttl");
         PrintWriter writer = new PrintWriter(dir[0]);
         writer.println("This is the 2016-11-22 file");
         writer.close();

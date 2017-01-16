@@ -3,51 +3,58 @@ FROM ubuntu:latest
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update
-RUN apt-get -y install libreoffice
-RUN apt-get -y install openjdk-8-jre curl
+RUN apt-get update && apt-get -y install curl && apt-get -y install libreoffice && \
+    apt-get -y install libreoffice-calc && apt-get -y install openjdk-8-jre
 
+#RUN apt-get update
+#RUN apt-get -y install libreoffice
+#RUN apt-get -y install openjdk-8-jre c
 
 # Add the user UID:1000, GID:1000, home at /app
-RUN groupadd -r app -g 1000 && useradd -u 1000 -r -g app -m -d /app -s /sbin/nologin -c "App user" app && \
-    chmod 755 /app
+#RUN groupadd -r app -g 1000 && useradd -u 1000 -r -g app -m -d /app -s /sbin/nologin -c "App user" app && \
+#    chmod 755 /app
+
+RUN useradd -ms /bin/bash 1000
 
 # Set the working directory to app home directory
-WORKDIR /app
+WORKDIR /home/1000
 
 # Specify the user to execute all commands below
 USER 1000
 
-RUN mkdir /app/dcat
-RUN mkdir /app/dcat/temp
-RUN mkdir /app/dcat/in
-RUN mkdir /app/dcat/publish
-RUN mkdir /app/dcat/validation
-RUN mkdir /app/dcat/mapper
-RUN mkdir /app/dcat/lib
+RUN mkdir dcat && mkdir dcat/temp && mkdir dcat/in && mkdir dcat/publish && mkdir dcat/validation && mkdir dcat/mapper && mkdir dcat/lib
 
-COPY validation /app/dcat/validation
-COPY mapper /app/dcat/mapper
-COPY semex.jar /app/dcat/lib/
-COPY lib2/*.jar /app/dcat/lib/
-COPY lib/*.jar /app/dcat/lib/
-
-COPY dcat.sh /app/dcat/dcat.sh
-
-WORKDIR /app/dcat
 RUN ls -al
+
+COPY validation dcat/validation
+COPY mapper dcat/mapper
+COPY semex.jar dcat/lib/
+COPY lib2/*.jar dcat/lib/
+COPY lib/*.jar dcat/lib/
+
+RUN ls -al dcat/lib
+
+COPY dcat.sh dcat/dcat.sh
 
 USER root
-RUN chown app:app /app/dcat/dcat.sh
-RUN chmod +x /app/dcat/dcat.sh
-USER 1000
+RUN chown 1000:1000 dcat/dcat.sh && chmod +x dcat/dcat.sh
+
+RUN ls -al dcat
+
+ADD gdoc-import-?.?.?-SNAPSHOT.jar app.jar
+RUN chown 1000:1000 app.jar
+RUN sh -c 'touch app.jar'
+
 RUN ls -al
 
-VOLUME /app/dcat
+USER 1000
 
-#ADD gdoc-import*.jar app.jar
-#RUN sh -c 'touch /app.jar'
-#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+VOLUME /home/1000/dcat/in
+VOLUME /home/1000/dcat/temp
+VOLUME /home/1000/dcat/publish
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
+
 
 #WORKDIR /usr/local/dcat
 #CMD ./dcat.sh

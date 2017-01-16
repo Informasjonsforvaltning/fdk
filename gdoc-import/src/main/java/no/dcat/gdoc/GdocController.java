@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Main REST controller for GDOC-Import Service.
- *
+ * <p>
  * <p>Created by dask on 19.12.2016.
  */
 @Controller
@@ -30,10 +35,10 @@ public class GdocController {
 
     private static final String GET_A_VERSION = "versions/{versionId}";
     private static final String LIST_VERSIONS = "versions";
-    private static final String CONVERT_GDOC  = "convert";
+    private static final String CONVERT_GDOC = "convert";
 
     @Value("${application.converterHomeDir}")
-    private String converterHomeDir ;
+    private String converterHomeDir;
 
     public void setConverterHomeDir(final String converterHomeDir) {
 
@@ -41,11 +46,62 @@ public class GdocController {
     }
 
     @Value("${application.converterResultDir}")
-    private String converterResultDir ;
+    private String converterResultDir;
 
     public void setConverterResultDir(final String converterResultDir) {
 
         this.converterResultDir = converterResultDir;
+    }
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
+
+    /**
+     * Runs the convert operation every hour.
+     */
+    @Scheduled(cron = "0 0 * * * *")
+    String runConvert() throws Exception {
+
+        String date = dateFormat.format(new Date());
+        logger.debug("Start conversion {}", date);
+
+        Process process;
+
+        ProcessBuilder pb = new ProcessBuilder("bash", "dcat.sh");
+        pb.directory(new File(converterHomeDir));
+        File tempLogfileName = File.createTempFile("convert", "log");
+        pb.redirectOutput(tempLogfileName);
+        pb.redirectError(tempLogfileName);
+
+        process = pb.start();
+
+        int retValue = process.waitFor();
+
+        String logfileName = "conversion-" + date + ".log";
+        String logfilePath = converterResultDir + "/" + logfileName;
+        logger.debug(logfilePath);
+
+        // process data, filter messages
+
+        OutputStreamWriter writer = new OutputStreamWriter(
+                new FileOutputStream(logfilePath), StandardCharsets.UTF_8);
+
+        BufferedReader logReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(tempLogfileName), StandardCharsets.UTF_8));
+
+        String line;
+        while ((line = logReader.readLine()) != null) {
+            // remove the bloody debug messages.
+            // I didn't succed in adding log4j file to the semtex call
+            if (!line.contains("DEBUG org.vedantatree.")) {
+                writer.append(line);
+                writer.append(System.lineSeparator());
+            }
+        }
+        logReader.close();
+        writer.close();
+        logger.debug("finished conversion {}", logfileName);
+
+        return logfileName;
     }
 
 
@@ -53,7 +109,7 @@ public class GdocController {
      * Gets the google sheet document from google and converts it to turtle format. The resulting
      * file is stored with the current date in its filename. If convert is run more than once on
      * the same day the previous file for that day is overwritten.
-     *
+     * <p>
      * <p>The resulting turtle file can be accessed by the /versions service.
      *
      * @return the output log of the conversion run
@@ -66,44 +122,16 @@ public class GdocController {
         ResponseEntity<String> result;
 
         logger.info("Startet " + CONVERT_GDOC);
-        String command = "bash dcat.sh;";
-        logger.debug("command: " + command);
 
-        Process process;
-        String line;
         try {
-            ProcessBuilder pb = new ProcessBuilder("bash", "dcat.sh");
-            pb.directory(new File(converterHomeDir));
-            File log = File.createTempFile("convert","log");
-            pb.redirectOutput(log);
-            pb.redirectError(log);
+            String resultLogfileName = runConvert();
 
-            process = pb.start();
-
-            int retValue = process.waitFor();
-
-            StringBuilder outMsg = new StringBuilder();
-            BufferedReader logReader = new BufferedReader(
-                    new InputStreamReader( new FileInputStream(log), StandardCharsets.UTF_8 ));
-            while ((line = logReader.readLine()) != null) {
-                // remove the bloody debug messages.
-                // I didn't succed in adding log4j file to the semtex call
-                if (!line.contains("DEBUG org.vedantatree.")) {
-                    outMsg.append(line);
-                    outMsg.append(System.lineSeparator());
-                }
-            }
-            logReader.close();
-
-            String message = "ReturnValue: " + retValue + "\n"
-                    + outMsg.toString() + "\n" ;
-
-            logger.info(message);
-            result = new ResponseEntity<>(message, HttpStatus.OK);
+            result = new ResponseEntity<>("Conversion executed, see logfile for more info: " + resultLogfileName,
+                    HttpStatus.OK);
 
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            result = new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            result = new ResponseEntity<>("Error occured in conversion: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         logger.info(CONVERT_GDOC + " used " + (System.currentTimeMillis() - start));
@@ -119,7 +147,7 @@ public class GdocController {
      * @return the turtle file as a text/turtle content
      */
     @CrossOrigin
-    @RequestMapping(value = { "versions/{versionId}"}, produces = "text/turtle;charset=UTF-8")
+    @RequestMapping(value = {"versions/{versionId}"}, produces = "text/turtle;charset=UTF-8")
     public final ResponseEntity<String> versions(@PathVariable String versionId) {
         final long startTime = System.currentTimeMillis();
 
@@ -137,9 +165,11 @@ public class GdocController {
                 long modified = -1;
                 for (File f : versions) {
                     logger.debug(f.getName() + " " + f.lastModified());
-                    if (modified < f.lastModified()) {
-                        modified = f.lastModified();
-                        found = f;
+                    if (f.getName().endsWith(".ttl")) {
+                        if (modified < f.lastModified()) {
+                            modified = f.lastModified();
+                            found = f;
+                        }
                     }
                 }
             } else {
@@ -188,7 +218,7 @@ public class GdocController {
      */
     @CrossOrigin
     @RequestMapping(value = {LIST_VERSIONS}, produces = "text/plain;charset=UTF-8")
-    public final ResponseEntity<String>  list() {
+    public final ResponseEntity<String> list() {
         final long startTime = System.currentTimeMillis();
         logger.info("Startet " + LIST_VERSIONS);
         ResponseEntity<String> result;
@@ -198,7 +228,7 @@ public class GdocController {
         try {
             ProcessBuilder pb = new ProcessBuilder("ls");
             pb.directory(new File(converterResultDir));
-            File log = File.createTempFile("list","log");
+            File log = File.createTempFile("list", "log");
             pb.redirectOutput(log);
             pb.redirectError(log);
 
@@ -208,7 +238,7 @@ public class GdocController {
 
             StringBuilder outMsg = new StringBuilder();
             BufferedReader logReader = new BufferedReader(
-                    new InputStreamReader( new FileInputStream(log), StandardCharsets.UTF_8 ));
+                    new InputStreamReader(new FileInputStream(log), StandardCharsets.UTF_8));
             while ((line = logReader.readLine()) != null) {
                 outMsg.append(line);
                 outMsg.append(System.lineSeparator());
