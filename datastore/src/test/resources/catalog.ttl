@@ -26,7 +26,7 @@
 
 <http://data.brreg.no/datakatalog/dataset/10>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
         dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description          "Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"@nb , "Register of clubs and associations. The purpose is to improve and simplify the interaction between NGOs and public authorities. The Registry will ensure systematic information that can strengthen the legitimacy and knowledge of the voluntary activity. Managed by Brønnøysund Registre"@en ;
         dct:identifier           "10" ;
