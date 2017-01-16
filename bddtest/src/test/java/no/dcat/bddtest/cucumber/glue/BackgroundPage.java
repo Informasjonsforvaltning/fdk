@@ -3,10 +3,12 @@ package no.dcat.bddtest.cucumber.glue;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -43,14 +45,15 @@ public class BackgroundPage extends CommonPage {
     }
 
     @Given("^I load the \"([^\"]*)\" dataset\\.$")
-    public void loadDataset(String filename) throws Throwable {
+    public void loadDataset(String filename) throws IOException {
         String hostname = "localhost"; //getEnv("elasticsearch.hostname");
         int port = 9300; //getEnvInt("elasticsearch.port");
-
+        new DeleteIndex(hostname, port).deleteIndex(index);
         String defultPath = new File(".").getCanonicalPath().toString();
         String fileWithPath = String.format("file:%s/bddtest/src/test/resources/%s", defultPath, filename);
 
         new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
+
     }
 
     @Given("^Elasticsearch kjører")
@@ -60,9 +63,17 @@ public class BackgroundPage extends CommonPage {
         assertThat(health, is(not(nullValue())));
     }
 
-    @Given("^bruker datasett dataset-test.ttl")
-    public void setupTestData() {
-        //TODO
+    @Given("^bruker datasett (.*).ttl")
+    public void setupTestData(String datasett) throws IOException {
+        String hostname = "localhost"; //getEnv("elasticsearch.hostname");
+        int port = 9300; //getEnvInt("elasticsearch.port");
+
+        new DeleteIndex(hostname, port).deleteIndex(index);
+
+        String defultPath = new File(".").getCanonicalPath().toString();
+        String fileWithPath = String.format("file:%s/test/data/%s.ttl", defultPath, datasett);
+
+        new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
     }
 
     @Given("^man har åpnet Fellesdatakatalog i en nettleser")

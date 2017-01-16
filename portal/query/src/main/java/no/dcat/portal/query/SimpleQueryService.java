@@ -410,7 +410,7 @@ public class SimpleQueryService {
             return jsonError;
         }
 
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
     /**
