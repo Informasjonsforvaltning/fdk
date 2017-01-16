@@ -63,6 +63,25 @@ public class PublisherPage extends CommonPage {
         }
     }
 
+    @Then("^(\\d+) publisher shall be present as clickable links\\.$")
+    public void publisher_shall_be_present_as_clickable_links(int nrOfPublisher) throws Throwable {
+        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/result')]"));
+        assertTrue(String.format("Expecting %d number of publisher.", nrOfPublisher), nrOfPublisher == publisher.size());
+    }
+
+    @Then("^a search-field shall be present\\.$")
+    public void a_search_field_shall_be_present() throws Throwable {
+        String inputName = driver.findElement(By.xpath("html/body/div[2]/div[1]/form/div/input")).getAttribute("name");
+        assertTrue(String.format("Expecting %d number of publisher.", 1), "q".equals(inputName));
+    }
+
+    @Then("^a header and a footer shall be present\\.$")
+    public void a_header_and_a_footer_shall_be_present() throws Throwable {
+        String header = driver.findElement(By.xpath("html/body/div[2]/header")).getText();
+        String footer = driver.findElement(By.xpath("html/footer")).getText();
+        assertTrue(String.format("Expecting %d number of publisher.", 1), header.contains("Felles datakatalog"));
+   }
+
     protected String getEnv(String env) {
         String value = System.getenv(env);
 
