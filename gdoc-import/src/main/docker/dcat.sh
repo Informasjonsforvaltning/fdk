@@ -16,7 +16,7 @@ echo STEP 2 - Convert XLSX to XLS
 for file in in/*.xlsx
 do
     echo converting $file to xls...
-    soffice --headless --convert-to xls --outdir ./in $file
+    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
     echo converted $file to xls
 done
 echo conversion done.
