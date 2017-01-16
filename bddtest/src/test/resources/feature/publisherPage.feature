@@ -16,10 +16,19 @@ Feature: Page for presenting all Publishers.
 
   Scenario: Number of dataset for each Publisher shall be presented.
     Then the following Publisher and dataset aggregation shall exist:
-      | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  |
-      | ARBEIDSTILSYNET  | 1 |
-      | ARBEIDS- OG VELFERDSETATEN | 1 |
-      | NÆRINGS- OG FISKERIDEPARTEMENTET | 22 |
-      | PATENTSTYRET | 2 |
-      | REGISTERENHETEN I BRØNNØYSUND | 20 |
+      | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  	|
+      | ARBEIDSTILSYNET  				| 1 	|
+      | ARBEIDS- OG VELFERDSETATEN 		| 1 	|
+      | NÆRINGS- OG FISKERIDEPARTEMENTET| 22 	|
+      | PATENTSTYRET 					| 2 	|
+      | REGISTERENHETEN I BRØNNØYSUND 	| 20 	|
+      |STAVANGER KOMMUNE				| 5 	|
+      | MATTILSYNET						| 5 	|
+      |DIREKTORATET FOR E-HELSE			| 7 	|
+      |STATISTISK SENTRALBYRÅ			| 5 	|
+      |SKATTEETATEN 					| 4		|
+      |STATENS VEGVESEN					| 4		|
+      |NORSK KULTURRÅD					| 3		|
+      |PATENTSTYRET 					| 2		|
+      |ARBEIDS- OG VELFERDSETATEN 		| 1		|
 

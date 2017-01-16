@@ -8,10 +8,20 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 
+import com.google.common.base.Predicate;
+import io.github.bonigarcia.wdm.PhantomJsDriverManager;
+import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
+import org.apache.commons.lang3.StringUtils;;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Topclass for glue-code for pagetesting.
  */
-public abstract class CommonPage {
+public abstract class CommonPage extends SpringIntegrationTestConfig {
+    private final Logger logger = LoggerFactory.getLogger(CommonPage.class);
     WebDriver driver = null;
     private static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
 
@@ -48,7 +58,27 @@ public abstract class CommonPage {
         String hostname = getEnv("fdk.hostname");
         int port = getEnvInt("fdk.port");
 
-        driver.navigate().to(String.format("http://%s:%d/%s", hostname, port, page));
+        driver.get(String.format("http://%s:%d/%s", hostname, port, page));
+    }
+
+    public boolean openPageWaitRetry(String page, String idToFind, int waitTimes) {
+        return openPageWaitRetry(page, d -> driver.findElement(By.id(idToFind)).isDisplayed(), waitTimes);
+    }
+
+    public boolean openPageWaitRetry(String page, Predicate<WebDriver> waitCondition, int waitTimes) {
+        logger.info(String.format("Waiting for page %s %d times", page, waitTimes));
+        openPage(page);
+        if (waitTimes <= 0) {
+            return false;
+        }
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(waitCondition);
+            return true;
+        } catch (TimeoutException toe) {
+            openPageWaitRetry(page, waitCondition, --waitTimes);
+        }
+        return false;
     }
 
     protected String getEnv(String env) {

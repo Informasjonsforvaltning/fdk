@@ -397,7 +397,7 @@
        
 <http://data.brreg.no/datakatalog/dataset/12>
         a                  dcat:Dataset ;
-        dct:accessRights   <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description    "Ektepaktregisteret inneheld avtalar mellom ektefellar som regulerer formueforhold på andre måtar enn det som automatisk følgjer av lovverket. Ektefellar som til dømes ønskjer særeige, må opprette ei ektepakt. For at ektepakta skal få rettsvern overfor eventuelle kreditorar, må ho tinglysast i Ektepaktregisteret. Dei same reglane gjeld for registrerte partnarar. Opplysningane frå Ektepaktregisteret er offentleg tilgjengelege."@nb ;
         dct:identifier     "12" ;
         dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -448,7 +448,7 @@
 
 <http://data.brreg.no/datakatalog/dataset/16>
         a                  dcat:Dataset ;
-        dct:accessRights   <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description    "Registeret for utøvarar av alternativ behandling inneheld opplysningar om registrerte utøvarar og om utøvarorganisasjonar.\nRegisteret for utøvarar av alternativ behandling blei oppretta i 2004, og er viktig for alle som treng opplysningar om registrerte utøvarar og om godkjende utøvarorganisasjonar.\nRegisterordninga skal vere med på å vareta pasientvernet og forbrukarrettane for den som oppsøkjer ein registrert alternativ behandlar. I tillegg skal ordninga medverke til seriøsitet og ordna forretningstilhøve blant utøvarar av alternativ behandling. Registreringa gjeld berre for alternativ behandling som er retta mot menneske. Behandling av dyr fell utanfor."@nn ;
         dct:identifier     "16" ;
         dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;

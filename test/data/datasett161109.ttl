@@ -32,8 +32,8 @@
 
 <http://data.brreg.no/datakatalog/dataset/7>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
         dct:description          "Partiregisteret er eit register over politiske parti, og hovudformålet er å gi parti høve til å skaffe seg einerett til eit partinamn. \n\nPartiregisteret inneheld opplysningar om namnet, organisasjonsnummeret, adressa og kontaktpersonen til partiet som er registrert i Einingsregisteret. I tillegg skal Partiregisteret innehalde opplysningar om partiet sitt utøvande organ som etter vallova skal representere partiet overfor valstyresmaktene. Ved førebuinga av val legg valstyresmaktene til grunn dei opplysningane som er registrert i Partiregisteret per 31. mars i valåret."@nb ;
         dct:identifier           "7" ;
         dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -49,8 +49,8 @@
 
 <http://data.brreg.no/datakatalog/dataset/11>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description          "Jegerregisteret er et register over hvem som er kvalifisert til å drive jakt i Norge, og har oversikt over hvem som har betalt jegeravgift."@nb ;
         dct:identifier           "11" ;
         dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -83,8 +83,8 @@
 
 <http://data.brreg.no/datakatalog/dataset/1>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description          "Føretaksregisteret registrerer alle norske og utanlandske føretak i Norge, og skal sikre rettsvern og økonomisk oversikt. Føretaksregisteret har ansvar for registrering av alle norske og utenlandske føretak i Noreg. Registeret skal sikre rettsvern og økonomisk oversikt, og det er ei viktig kjelde for alle som treng korrekte opplysningar om aktørane i norsk næringsliv.\nAlle næringsdrivande føretak – med avgrensa så vel som med uavgrensa ansvar – pliktar å registrere seg i Føretaksregisteret. Det same gjeld enkeltpersonføretak som driv handel med innkjøpte varer eller har meir enn fem tilsette i hovudstilling. Andre enkeltpersonføretak kan registrere seg på frivillig grunnlag."@nb ;
         dct:identifier           "1" ;
         dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -131,7 +131,7 @@ dct:source  a   owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/16>
         a                  dcat:Dataset ;
-        dct:accessRights   <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description    "Registeret for utøvarar av alternativ behandling inneheld opplysningar om registrerte utøvarar og om utøvarorganisasjonar.\nRegisteret for utøvarar av alternativ behandling blei oppretta i 2004, og er viktig for alle som treng opplysningar om registrerte utøvarar og om godkjende utøvarorganisasjonar.\nRegisterordninga skal vere med på å vareta pasientvernet og forbrukarrettane for den som oppsøkjer ein registrert alternativ behandlar. I tillegg skal ordninga medverke til seriøsitet og ordna forretningstilhøve blant utøvarar av alternativ behandling. Registreringa gjeld berre for alternativ behandling som er retta mot menneske. Behandling av dyr fell utanfor."@nb ;
         dct:identifier     "16" ;
         dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -173,8 +173,8 @@ dct:source  a   owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/10>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description          "Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"@nb , "Register of clubs and associations. The purpose is to improve and simplify the interaction between NGOs and public authorities. The Registry will ensure systematic information that can strengthen the legitimacy and knowledge of the voluntary activity. Managed by Brønnøysund Registre"@en ;
         dct:identifier           "10" ;
         dct:isVersionOf          <http://data.brreg.no/datakatalog/dataset/99> ;
@@ -269,7 +269,7 @@ dct:title  a    owl:DatatypeProperty .
 
 <http://data.brreg.no/datakatalog/dataset/15>
         a                  dcat:Dataset ;
-        dct:accessRights   <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description    "Registeret for offentleg støtte er eit nasjonalt register for offentlege støttetildelingar som fell inn under EØS-avtalen. Registeret vart oppretta den 1. juli 2016 med bakgrunn i reglane om offentleg støtte i EØS-avtalen. Formålet med registeret er å skape meir openheit rundt offentleg støtte. Registeret skal gjere det enklare for offentlege myndigheiter som vurderer å gi offentleg støtte, å få informasjon om føretaket har fått anna offentleg støtte som må takast med i vurderinga. "@nb ;
         dct:identifier     "15" ;
         dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -296,8 +296,8 @@ dct:publisher  a  owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/5>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/WEEKLY> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/WEEKLY> ;
         dct:description          "Oversikt over akvakulturtillatelser og enkelte vesentlige vedtak knyttet til disse. I tillegg inneholder registeret en oversikt over overføringer, pantsettelser og andre rettigheter som er tinglyst på tillatelsene."@nb ;
         dct:identifier           "5" ;
         dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -372,8 +372,8 @@ dct:identifier  a  owl:DatatypeProperty .
 
 <http://data.brreg.no/datakatalog/dataset/27>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description          "Søknad om varemerkeregistrering. En varemerkeregistrering gir deg enerett til å bruke varemerket som kjennetegn for dine varer og/eller tjenester."@nb ;
         dct:identifier           "27" ;
         dct:provenance           <http://data.brreg.no/datakatalog/provinens/bruker> ;
@@ -387,8 +387,8 @@ dct:identifier  a  owl:DatatypeProperty .
 <http://data.brreg.no/datakatalog/dataset/4>
         a                           dcat:Dataset ;
         dcatno:accessRightsComment  <https://lovdata.no/lov/1998-07-17-56/§8-1> ;
-        dct:accessRights            <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
-        dct:accruralPeriodicity     <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity     <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
         dct:description             "Regnskapsregisteret er ett av de offentlige registrene i Brønnøysundregistrene i Brønnøysund. Det er den viktigste datakilden for alle som vil skaffe seg rede på den økonomiske tilstanden i norsk næringsliv.\nInnsendingspliktige foretak skal hvert år sende inn årsregnskap, årsberetning og revisjonsberetning til Regnskapsregisteret innen en måned etter at det er vedtatt. Formålet med ordningen er å sikre økonomisk trygghet og effektivitet mellom selskapene og myndighetene, mellom selskapene og publikum, og ikke minst, selskapene i mellom. Regnskapsinformasjon er av offentlig interesse, og gjennom registrering i Regnskapsregisteret blir denne informasjonen offentlig tilgjengelig i 10 år. Mottatte årsregnskap blir kunngjort etter registrering."@nb ;
         dct:identifier              "4" ;
         dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -522,8 +522,8 @@ dct:ProvenanceStatement
 <http://data.brreg.no/datakatalog/dataset/3>
         a                           dcat:Dataset ;
         dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/1935-06-07-2> ;
-        dct:accessRights            <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
-        dct:accruralPeriodicity     <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity     <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description             "Løsøreregisteret ble vedtatt opprettet i 1979 og ble offisielt åpnet i Brønnøysund i januar 1981. Bakgrunn for opprettelsen: Etter hvert ble det behov og mulighet for å tinglyse heftelser (pant) i løsøre, uten tilknytning til fast eiendom. Etter at Løsøreregisteret i Brønnøysund ble opprettet, ble all tinglysing med pant i løsøre ble overført dit. Det er stort sett registrerte biler og kjøretøyer som har slike panteheftelser, men det kan også være inventar, maskiner, varelager og annet i forbindelse med en produksjonbedrift."@nb ;
         dct:identifier              "3" ;
         dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -610,12 +610,12 @@ dct:language  a  owl:ObjectProperty .
         dcat:keyword       "Gjeldsforhandling"@nb , "Konkursbo"@nb , "Tvangsakkord"@nb , "Konkurskarantene"@nb , "Tvangsavviklingsbo"@nb , "Konkurs"@nb ;
         dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
-dct:accruralPeriodicity
+dct:accrualPeriodicity
         a       owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/12>
         a                  dcat:Dataset ;
-        dct:accessRights   <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description    "Ektepaktregisteret inneheld avtalar mellom ektefellar som regulerer formueforhold på andre måtar enn det som automatisk følgjer av lovverket. Ektefellar som til dømes ønskjer særeige, må opprette ei ektepakt. For at ektepakta skal få rettsvern overfor eventuelle kreditorar, må ho tinglysast i Ektepaktregisteret. Dei same reglane gjeld for registrerte partnarar. Opplysningane frå Ektepaktregisteret er offentleg tilgjengelege."@nb ;
         dct:identifier     "12" ;
         dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
@@ -634,8 +634,8 @@ dct:accruralPeriodicity
 
 <http://data.brreg.no/datakatalog/dataset/25>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:description          "Registeret inneheld oversikt over godkjende aktørar i lotterimarknaden og gjeldande løyve for lotteri og bingo."@nb ;
         dct:identifier           "25" ;
         dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
@@ -657,8 +657,8 @@ dct:accruralPeriodicity
 
 <http://data.brreg.no/datakatalog/dataset/2>
         a                        dcat:Dataset ;
-        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
-        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         dct:conformsTo           <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret> ;
         dct:description          "Einingsregisteret samordnar opplysningar om næringslivet og offentlege etatar som finst i ulike offentlege register.I Enhetsregisteret finner du alle som er registrert for momspliktig virksomhet, har registrerte ansatte eller er med i Foretaksregisteret. Dessuten finner du mange næringsdrivende enkeltpersonforetak, foreninger og andre økonomiske enheter uten registreringsplikt, som har valgt å bli med i Enhetsregisteret på frivillig grunnlag. Registeret inneholder også alle enheter som er registrert i fylkesmennenes stiftelsesregistre og skattemanntallet for etterskuddspliktige."@nb , "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis."@en ;
         dct:hasVersion           <http://data.brreg.no/datakatalog/dataset/99> ;

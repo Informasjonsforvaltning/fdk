@@ -11,6 +11,10 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -19,7 +23,7 @@ import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
  * Cucumber glue class for the publisher feature.
  */
 public class PublisherPage extends CommonPage {
-    private static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
+    private final Logger logger = LoggerFactory.getLogger(PublisherPage.class);
     private final String page = "publisher";
 
     @Given("^I open the Publisher page in the browser\\.$")
@@ -29,28 +33,30 @@ public class PublisherPage extends CommonPage {
     }
 
     @Then("^the following Publisher and dataset aggregation shall exist:$")
-    public void shallHave(DataTable publisherAggrs) throws Throwable {
+    public void shallHave(DataTable publisherAggrs) {
         WebElement element = null;
         try {
-            List<List<String>> publisherAggrsRaw = publisherAggrs.raw();
+            if (openPageWaitRetry(page, "publishers", 3)) {
+                List<List<String>> publisherAggrsRaw = publisherAggrs.raw();
 
-            for (List<String> publisherAggr : publisherAggrsRaw) {
-                String publisherExp = publisherAggr.get(0);
-                String countExp = publisherAggr.get(1);
+                for (List<String> publisherAggr : publisherAggrsRaw) {
+                    String publisherExp = publisherAggr.get(0);
+                    String countExp = publisherAggr.get(1);
 
-                assertTrue(String.format("The page shall have an element with id %s", publisherExp), driver.findElement(By.id(publisherExp)).isEnabled());
+                    assertTrue(String.format("The page shall have an element with id %s", publisherExp), driver.findElement(By.id(publisherExp)).isEnabled());
 
-                WebElement publisherElement = driver.findElement(By.id(publisherExp));
+                    WebElement publisherElement = driver.findElement(By.id(publisherExp));
 
-                WebElement publisherName = publisherElement.findElement(By.name("publisher"));
-                String publisherNameStr = publisherName.getAttribute("innerHTML");
+                    WebElement publisherName = publisherElement.findElement(By.name("publisher"));
+                    String publisherNameStr = publisherName.getAttribute("innerHTML");
 
-                assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
+                    assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
 
-                WebElement publisherCount = publisherElement.findElement(By.className("badge"));
-                String count = publisherCount.getAttribute("innerHTML");
+                    WebElement publisherCount = publisherElement.findElement(By.className("badge"));
+                    String count = publisherCount.getAttribute("innerHTML");
 
-                assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, count, count), countExp.equals(count));
+                    assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, count, count), countExp.equals(count));
+                }
             }
         } finally {
             driver.close();
