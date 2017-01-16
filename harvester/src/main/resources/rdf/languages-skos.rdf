@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:at="http://publications.europa.eu/ontology/authority/" xmlns:atold="http://publications.europa.eu/resource/authority/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+   <skos:ConceptScheme rdf:about="http://publications.europa.eu/resource/authority/language" at:table.id="language" at:table.version.number="20160921-0">
+      <owl:versionInfo>20160921-0</owl:versionInfo>
+      <rdfs:label xml:lang="en">Languages Named Authority List</rdfs:label>
+      <at:prefLabel xml:lang="en">Languages Named Authority List</at:prefLabel>
+   </skos:ConceptScheme>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/ENG" at:deprecated="false" at:protocol.order="EU-08">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+      <at:authority-code>ENG</at:authority-code>
+      <at:op-code>ENG</at:op-code>
+      <atold:op-code>ENG</atold:op-code>
+      <dc:identifier>ENG</dc:identifier>
+      <at:protocol-order>EU-08</at:protocol-order>
+      <at:start.use>1950-05-09</at:start.use>
+      <skos:prefLabel xml:lang="no">engelsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">engelsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">engelsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">English</skos:prefLabel>
+   </skos:Concept>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NOR" at:deprecated="false" at:protocol.order="EU-08">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+      <at:authority-code>NOR</at:authority-code>
+      <at:op-code>NOR</at:op-code>
+      <atold:op-code>NOR</atold:op-code>
+      <dc:identifier>NOR</dc:identifier>
+      <at:protocol-order>EU-08</at:protocol-order>
+      <at:start.use>1950-05-09</at:start.use>
+      <skos:prefLabel xml:lang="no">norsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">norsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">norsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Norwegian Bokmål</skos:prefLabel>
+   </skos:Concept>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NNO" at:deprecated="false" at:protocol.order="EU-08">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+      <at:authority-code>NNO</at:authority-code>
+      <at:op-code>NNO</at:op-code>
+      <atold:op-code>NNO</atold:op-code>
+      <dc:identifier>NNO</dc:identifier>
+      <at:protocol-order>EU-08</at:protocol-order>
+      <at:start.use>1950-05-09</at:start.use>
+      <skos:prefLabel xml:lang="no">nynorsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">nynorsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">nynorsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Norwegian Nynorsk</skos:prefLabel>
+   </skos:Concept>
+</rdf:RDF>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+		 xmlns:atold="http://publications.europa.eu/resource/authority/"
+		 xmlns:at="http://publications.europa.eu/ontology/authority/">
+    <skos:ConceptScheme rdf:about="http://data.brreg.no/datakatalog/provinens" at:table.id="provinens">
+        <owl:versionInfo>20170104-0</owl:versionInfo>
+        <rdfs:label xml:lang="en">Provinens</rdfs:label>
+        <at:prefLabel xml:lang="en">Provinens</at:prefLabel>
+        <at:prefLabel xml:lang="no">Opphav</at:prefLabel>
+    </skos:ConceptScheme>
+    <skos:Concept rdf:about="http://data.brreg.no/datakatalog/provinens/vedtak" at:deprecated="false">
+        <skos:inScheme rdf:resource="http://data.brreg.no/datakatalog/provinens"/>
+		<at:authority-code>VEDTAK</at:authority-code>
+		<at:op-code>VEDTAK</at:op-code>
+		<atold:op-code>VEDTAK</atold:op-code>
+		<dc:identifier>VEDTAK</dc:identifier>
+        <skos:prefLabel xml:lang="en">Governmental decisions</skos:prefLabel>
+        <skos:prefLabel xml:lang="nb">Statlig vedtak</skos:prefLabel>
+        <skos:prefLabel xml:lang="nn">Statlig vedtak</skos:prefLabel>
+    </skos:Concept>
+     <skos:Concept rdf:about="http://data.brreg.no/datakatalog/provinens/bruker" at:deprecated="false">
+        <skos:inScheme rdf:resource="http://data.brreg.no/datakatalog/provinens"/>
+		<at:authority-code>BRUKER</at:authority-code>
+		<at:op-code>BRUKER</at:op-code>
+		<atold:op-code>BRUKER</atold:op-code>
+		<dc:identifier>BRUKERINNSAMLING</dc:identifier>
+        <skos:prefLabel xml:lang="en">User collection</skos:prefLabel>
+        <skos:prefLabel xml:lang="nb">Brukerinnsamling</skos:prefLabel>
+        <skos:prefLabel xml:lang="nn">Brukerinnsamling</skos:prefLabel>
+    </skos:Concept>
+</rdf:RDF>

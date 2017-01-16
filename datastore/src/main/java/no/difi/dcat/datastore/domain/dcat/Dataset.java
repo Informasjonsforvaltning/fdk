@@ -44,7 +44,7 @@ public class Dataset {
 
 	//dct:language
 	//Norwegian: Språk
-	private String language;
+	private Map<String, String> language;
 
 	//dcat:landingPage
 	//Norwegian: Landingsside
@@ -73,11 +73,11 @@ public class Dataset {
 
 	//dct:spatial
 	//Norwegian: dekningsområde
-	private List<String> spatial;
+	private List<Map<String, String>> spatial;
 
 	//dct:accessRights
 	//Norwegian: tilgangsnivå
-	private String accessRights;
+	private Map<String, String> accessRights;
 
 	//dcatno:accessRightsComment
 	//Norwegian: Skjermingshjemmel.
@@ -90,7 +90,7 @@ public class Dataset {
 
 	//dct:provenance
 	//Norwegian: Opphav
-	private String provenance;
+	private Map<String, String> provenance;
 
 	//dct:identifier
 	//Norwegian: identifikator
@@ -102,7 +102,7 @@ public class Dataset {
 
 	//dct:accruralPeriodicity
 	//Norwegian: frekvens
-	private String accruralPeriodicity;
+	private Map<String, String> accrualPeriodicity;
 
 	//dct:subject
 	//Norwegian: begrep
@@ -195,10 +195,10 @@ public class Dataset {
 		this.modified = modified;
 	}
 
-	public String getLanguage() {
+	public Map<String, String> getLanguage() {
 		return language;
 	}
-	public void setLanguage(String language) {
+	public void setLanguage(Map<String, String>  language) {
 		this.language = language;
 	}
 
@@ -215,11 +215,11 @@ public class Dataset {
 	public List<PeriodOfTime> getTemporal() { return temporal; }
 	public void setTemporal(List<PeriodOfTime> temporal) { this.temporal = temporal; }
 
-	public List<String> getSpatial() { return spatial; }
-	public void setSpatial(List<String> spatial) { this.spatial = spatial; }
+	public List<Map<String, String>> getSpatial() { return spatial; }
+	public void setSpatial(List<Map<String, String>> spatial) { this.spatial = spatial; }
 
-	public String getAccessRights() { return accessRights; }
-	public void setAccessRights(String accessRights) { this.accessRights = accessRights; }
+	public Map<String, String> getAccessRights() { return accessRights; }
+	public void setAccessRights(Map<String, String> accessRights) { this.accessRights = accessRights; }
 
 	public List<String> getAccessRightsComment() { return accessRightsComment; }
 	public void setAccessRightsComment(List<String> accessRightsComment) { this.accessRightsComment = accessRightsComment; }
@@ -227,8 +227,8 @@ public class Dataset {
 	public List<String> getReferences() { return references; }
 	public void setReferences(List<String> references) { this.references = references; }
 
-	public String getProvenance() { return provenance; }
-	public void setProvenance(String provenance) { this.provenance = provenance; }
+	public Map<String, String> getProvenance() { return provenance; }
+	public void setProvenance(Map<String, String> provenance) { this.provenance = provenance; }
 
 	public void setIdentifier(List<String> identifier) {
 		this.identifier = identifier;
@@ -246,12 +246,12 @@ public class Dataset {
 		return page;
 	}
 
-	public void setAccruralPeriodicity(String accrualPeriodicity) {
-		this.accruralPeriodicity = accrualPeriodicity;
+	public void setAccrualPeriodicity(Map<String, String> accrualPeriodicity) {
+		this.accrualPeriodicity = accrualPeriodicity;
 	}
 
-	public String getAccruralPeriodicity() {
-		return accruralPeriodicity;
+	public Map<String, String> getAccrualPeriodicity() {
+		return accrualPeriodicity;
 	}
 
 	public void setSubject(List<String> subject) {

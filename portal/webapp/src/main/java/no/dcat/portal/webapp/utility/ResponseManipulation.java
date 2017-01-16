@@ -22,6 +22,7 @@ public final class ResponseManipulation {
     public ResponseManipulation() {
         langs.add("nb");
         langs.add("nn");
+        langs.add("no");
         langs.add("en");
     }
 
@@ -44,6 +45,7 @@ public final class ResponseManipulation {
         }
 
         fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
+        fillPropWithAlternativeValIfEmpty(dataset.getAccrualPeriodicity(), lang);
 
         if (dataset.getDistribution() != null) {
             for (Distribution distribution : dataset.getDistribution()) {

@@ -3,7 +3,7 @@ package no.difi.dcat.datastore.domain.dcat;
 import java.util.Map;
 
 /**
- * Models the DataTheme class.
+ * Model class themes:data-theme.
  */
 public class DataTheme {
     private String id;

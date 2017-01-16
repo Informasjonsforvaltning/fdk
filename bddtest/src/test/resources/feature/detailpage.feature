@@ -10,11 +10,11 @@ Feature: Page for presenting properties for a dataset.
     And I load the "dataset-detailpage.ttl" dataset.
     And I open the browser.
 
-#  Scenario: Load of properties.
-#    Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-rigth, locations):
-#      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | kontinuerlig | norsk | Offentlig | Kongeriget Norge|
-#      | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Begrenset | Kongeriget Norge |
-#      | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Ikke-offentlig | Kongeriget Norge |
+  Scenario: Load of properties.
+    Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-rigth, locations):
+      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | kontinuerlig | norsk | offentlig | Norge,|
+      | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | begrenset | Norge, |
+      | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | ikke-offentlig | Norge, |
 
 #    Then the following dataset shall have the following english properties (id, provenance, frequency, language, access-rigth, locations):
 #      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | continuous | norwgian | Public | Kingdom of Norway|

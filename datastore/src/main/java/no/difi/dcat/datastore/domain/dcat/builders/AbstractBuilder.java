@@ -4,6 +4,7 @@ import no.difi.dcat.datastore.domain.dcat.Contact;
 import no.difi.dcat.datastore.domain.dcat.PeriodOfTime;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.Property;
@@ -25,234 +26,268 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractBuilder {
-	
-	private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
-	
-	public static String extractAsString(Resource resource, Property property) {
-		try {
-			Statement statement = resource.getProperty(property);
-			if (statement != null) {
-				if (statement.getObject().isLiteral()) {
-					return statement.getString();
-				} else {
-					return statement.getObject().asResource().getURI();
-				}
-			}
-		} catch (Exception e) {
-			logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
-		}
-		return null;
-	}
+
+    private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
+
+    public static String extractAsString(Resource resource, Property property) {
+        try {
+            Statement statement = resource.getProperty(property);
+            if (statement != null) {
+                if (statement.getObject().isLiteral()) {
+                    return statement.getString();
+                } else {
+                    return statement.getObject().asResource().getURI();
+                }
+            }
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
+        }
+        return null;
+    }
 
 
-	public static List<String> extractMultipleStrings(Resource resource, Property property) {
-		List<String> result = new ArrayList<>();
-		StmtIterator iterator = resource.listProperties(property);
-		while (iterator.hasNext()) {
-			Statement statement = iterator.next();
-			result.add(statement.getObject().toString());
-		}
-		return result;
-	}
+    public static List<String> extractMultipleStrings(Resource resource, Property property) {
+        List<String> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            result.add(statement.getObject().toString());
+        }
+        return result;
+    }
 
-	
-	public static Map<String, String> extractLanguageLiteral(Resource resource, Property property) {
-		Map<String,String> map = new HashMap<>();
-		StmtIterator iterator = resource.listProperties(property);
-		while (iterator.hasNext()) {
-			Statement statement = iterator.next();
-			map.put(statement.getLanguage(), statement.getString());
-		}
-		return map;
-	}
 
-	public static List<String> extractTheme(Resource resource, Property property) {
-		List<String> result = new ArrayList<>();
-		StmtIterator iterator = resource.listProperties(property);
-		while (iterator.hasNext()) {
-			Statement statement = iterator.next();
-			result.add(statement.getObject().toString());
-		}
-		return result;
-	}
+    public static Map<String, String> extractLanguageLiteral(Resource resource, Property property) {
+        Map<String, String> map = new HashMap<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            map.put(statement.getLanguage(), statement.getString());
+        }
+        return map;
+    }
 
-	public static Map<String, List<String>> extractMultipleLanguageLiterals(Resource resource, Property property) {
-		Map<String, List<String>> map = new HashMap<>();
-		StmtIterator iterator = resource.listProperties(property);
-		while (iterator.hasNext()) {
-			Statement statement = iterator.next();
-			String key = statement.getLanguage();
-			String value = statement.getString();
-			if (!map.containsKey(key)) {
-				map.put(key, new ArrayList<>());
-			}
-			map.get(key).add(value);
-		}
-		return map;
-	}
-	
-	public static Date extractDate(Resource resource, Property property) {
-		StmtIterator iterator = resource.listProperties(property);
-		while (iterator.hasNext()) {
-			Statement statement = iterator.next();
-			Calendar cal = null;
-			try {
-				cal = DatatypeConverter.parseDate(statement.getString());
-				return cal.getTime();
-			} catch (Exception e) {
-				logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
-			}
-		}
-		return null;
-	}
+    public static List<String> extractTheme(Resource resource, Property property) {
+        List<String> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            result.add(statement.getObject().toString());
+        }
+        return result;
+    }
 
-	/**
-	 * Extracts contactInformation from RDF as a vcard:Kind. If no attributes are found it returns null.
-	 *
-	 * @param resource the resource which contains the contact point resource
-	 * @return a instantiated Contact object.
-	 */
-	public static Contact extractContact(Resource resource) {
-		try {
-			Contact contact = new Contact();
-			boolean hasAttributes = false;
+    public static Map<String, List<String>> extractMultipleLanguageLiterals(Resource resource, Property property) {
+        Map<String, List<String>> map = new HashMap<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            String key = statement.getLanguage();
+            String value = statement.getString();
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+            map.get(key).add(value);
+        }
+        return map;
+    }
 
-			final Statement property = resource.getProperty(DCAT.contactPoint);
+    public static Date extractDate(Resource resource, Property property) {
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            Calendar cal = null;
+            try {
+                cal = DatatypeConverter.parseDate(statement.getString());
+                return cal.getTime();
+            } catch (Exception e) {
+                logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
+            }
+        }
+        return null;
+    }
 
-			if (property == null ) {
-				logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
-				return null;
-			}
+    /**
+     * Extracts contactInformation from RDF as a vcard:Kind. If no attributes are found it returns null.
+     *
+     * @param resource the resource which contains the contact point resource
+     * @return a instantiated Contact object.
+     */
+    public static Contact extractContact(Resource resource) {
+        try {
+            Contact contact = new Contact();
+            boolean hasAttributes = false;
 
-			final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            final Statement property = resource.getProperty(DCAT.contactPoint);
 
-			contact.setId(object.getURI());
-			final String fn = extractAsString(object, Vcard.fn);
-			if (fn != null) {
-				hasAttributes = true;
-				contact.setFullname(fn);
-			}
+            if (property == null) {
+                logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
+                return null;
+            }
 
-			final String email = extractAsString(object, Vcard.hasEmail);
-			if (email != null) {
-				hasAttributes = true;
-				contact.setEmail(email); //.replace("mailto:", ""));
-			}
+            final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
 
-			final String telephone = extractAsString(object, Vcard.hasTelephone);
-			if (telephone != null) {
-				hasAttributes = true;
-				contact.setTelephone(telephone); //.replace("tel:", ""));
-			}
+            contact.setId(object.getURI());
+            final String fn = extractAsString(object, Vcard.fn);
+            if (fn != null) {
+                hasAttributes = true;
+                contact.setFullname(fn);
+            }
 
-			final String organisationName = extractAsString(object, Vcard.organizationName);
-			if (organisationName != null) {
-				hasAttributes = true;
-				contact.setOrganizationName(organisationName);
-			}
+            final String email = extractAsString(object, Vcard.hasEmail);
+            if (email != null) {
+                hasAttributes = true;
+                contact.setEmail(email); //.replace("mailto:", ""));
+            }
 
-			final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
-			if (organizationUnit != null) {
-				hasAttributes = true;
-				contact.setOrganizationUnit(organizationUnit);
-			}
+            final String telephone = extractAsString(object, Vcard.hasTelephone);
+            if (telephone != null) {
+                hasAttributes = true;
+                contact.setTelephone(telephone); //.replace("tel:", ""));
+            }
 
-			final String hasURL = extractAsString(object, Vcard.hasURL);
-			if (hasURL != null) {
-				hasAttributes = true;
-				contact.setHasURL(hasURL);
-			}
+            final String organisationName = extractAsString(object, Vcard.organizationName);
+            if (organisationName != null) {
+                hasAttributes = true;
+                contact.setOrganizationName(organisationName);
+            }
 
-			if (hasAttributes) {
-				return contact;
-			} else {
-				return null;
-			}
-		} catch (Exception e) {
-			logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
-		}
+            final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
+            if (organizationUnit != null) {
+                hasAttributes = true;
+                contact.setOrganizationUnit(organizationUnit);
+            }
 
-		return null;
-	}
+            final String hasURL = extractAsString(object, Vcard.hasURL);
+            if (hasURL != null) {
+                hasAttributes = true;
+                contact.setHasURL(hasURL);
+            }
 
-	/**
-	 * Extract period of time property from DCAT resource and map to model class.
-	 *
-	 * @param resource DCAT RDF resource
-	 * @return List of period of time objects
-	 * TODO: implement extraction of time period name
-	 */
-	public static List<PeriodOfTime> extractPeriodOfTime(Resource resource) {
+            if (hasAttributes) {
+                return contact;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
+        }
 
-		List<PeriodOfTime> result = new ArrayList<>();
+        return null;
+    }
 
-		try {
-			//Denne virker av en eller annen grunn ikke. Må i stedet iterere gjennom alle statemts og sjekke predikat
-			//StmtIterator iterator = resource.listProperties(DCTerms.temporal);
+    /**
+     * Extract period of time property from DCAT resource and map to model class.
+     *
+     * @param resource DCAT RDF resource
+     * @return List of period of time objects
+     * TODO: implement extraction of time period name
+     */
+    public static List<PeriodOfTime> extractPeriodOfTime(Resource resource) {
 
-			StmtIterator iterator = resource.listProperties();
-			while (iterator.hasNext()) {
-				Statement stmt = iterator.next();
-				if(stmt.getPredicate().equals(DCTerms.temporal)) {
+        List<PeriodOfTime> result = new ArrayList<>();
 
-					PeriodOfTime period = new PeriodOfTime();
-					Resource timePeriodRes = stmt.getObject().asResource();
+        try {
+            //Denne virker av en eller annen grunn ikke. Må i stedet iterere gjennom alle statemts og sjekke predikat
+            //StmtIterator iterator = resource.listProperties(DCTerms.temporal);
 
-					StmtIterator timePeriodStmts = timePeriodRes.listProperties();
-					while(timePeriodStmts.hasNext()) {
-						Statement tpStmt = timePeriodStmts.next();
-						if(tpStmt.getPredicate().equals(ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning"))) {
-							Resource hasBeginningRes = tpStmt.getObject().asResource();
-							StmtIterator begIt = hasBeginningRes.listProperties();
-							period.setStartDate(extractDate(hasBeginningRes, ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/inXSDDateTime")));
+            StmtIterator iterator = resource.listProperties();
+            while (iterator.hasNext()) {
+                Statement stmt = iterator.next();
+                if (stmt.getPredicate().equals(DCTerms.temporal)) {
 
-						}
-						if(tpStmt.getPredicate().equals(ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd"))) {
-							Resource hasEndRes = tpStmt.getObject().asResource();
-							StmtIterator endIt = hasEndRes.listProperties();
-							period.setEndDate(extractDate(hasEndRes, ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/inXSDDateTime")));
-						}
-					}
-					logger.debug("   POT: Periode identifisert: start: " + period.getStartDate() + " end: " + period.getEndDate());
-					result.add(period);
-				}
-			}
-		} catch (Exception e) {
-			logger.warn("Error when extracting property {} from resource {}", DCTerms.temporal, resource.getURI(), e);
-		}
-		return result;
-	}
+                    PeriodOfTime period = new PeriodOfTime();
+                    Resource timePeriodRes = stmt.getObject().asResource();
 
-	
-	public static Publisher extractPublisher(Resource resource) {
-		try {
-			Publisher publisher = new Publisher();
-			Statement property = resource.getProperty(DCTerms.publisher);
-			if (property != null) {
-				Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
-				extractPublisherFromStmt(publisher, object);
+                    StmtIterator timePeriodStmts = timePeriodRes.listProperties();
+                    while (timePeriodStmts.hasNext()) {
+                        Statement tpStmt = timePeriodStmts.next();
+                        if (tpStmt.getPredicate().equals(ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning"))) {
+                            Resource hasBeginningRes = tpStmt.getObject().asResource();
+                            StmtIterator begIt = hasBeginningRes.listProperties();
+                            period.setStartDate(extractDate(hasBeginningRes, ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/inXSDDateTime")));
 
-				return publisher;
-			}
-		} catch (Exception e) {
-			logger.warn("Error when extracting property {} from resource {}", DCTerms.publisher, resource.getURI(), e);
-		}
-		
-		return null;
-	}
+                        }
+                        if (tpStmt.getPredicate().equals(ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd"))) {
+                            Resource hasEndRes = tpStmt.getObject().asResource();
+                            StmtIterator endIt = hasEndRes.listProperties();
+                            period.setEndDate(extractDate(hasEndRes, ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/inXSDDateTime")));
+                        }
+                    }
+                    logger.debug("   POT: Periode identifisert: start: " + period.getStartDate() + " end: " + period.getEndDate());
+                    result.add(period);
+                }
+            }
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}", DCTerms.temporal, resource.getURI(), e);
+        }
+        return result;
+    }
 
-	protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
-		publisher.setId(object.getURI());
-		publisher.setName(extractAsString(object, FOAF.name));
 
-		Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
-		if (hasProperty != null) {
+    public static Publisher extractPublisher(Resource resource) {
+        try {
+            Publisher publisher = new Publisher();
+            Statement property = resource.getProperty(DCTerms.publisher);
+            if (property != null) {
+                Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+                extractPublisherFromStmt(publisher, object);
+
+                return publisher;
+            }
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}", DCTerms.publisher, resource.getURI(), e);
+        }
+
+        return null;
+    }
+
+    protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
+        publisher.setId(object.getURI());
+        publisher.setName(extractAsString(object, FOAF.name));
+
+        Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
+        if (hasProperty != null) {
             publisher.setOrganisasjonsform(extractAsString(object, EnhetsregisteretRDF.organisasjonsform));
         }
 
-		hasProperty = object.getProperty(EnhetsregisteretRDF.overordnetEnhet);
-		if (hasProperty != null) {
+        hasProperty = object.getProperty(EnhetsregisteretRDF.overordnetEnhet);
+        if (hasProperty != null) {
             publisher.setOverordnetEnhet(extractAsString(object, EnhetsregisteretRDF.overordnetEnhet));
         }
-	}
+    }
+
+    protected static List<Map<String, String>> getTitlesOfCodes(Map<String, SkosCode> locations, List<String> locsUri) {
+        List<Map<String, String>> result = new ArrayList();
+
+        for (String locUri : locsUri) {
+            SkosCode locCode = locations.get(locUri);
+
+            if (locCode == null) {
+                logger.info("Location wit uri {} does not exist.", locsUri);
+                continue;
+            }
+
+            result.add(locCode.getTitle());
+        }
+        return result;
+    }
+
+    protected static Map<String, String> getTitlesOfCode(Map<String, Map<String, SkosCode>> allCodes, String type, String codeKey) {
+
+        Map<String, SkosCode> codesOfType = allCodes.get(type);
+
+        if (codesOfType == null) {
+            logger.info("Codes of type {} does not exist.", type);
+            return null;
+        }
+
+        SkosCode code = codesOfType.get(codeKey);
+        if (code == null) {
+            logger.info("Codes of type {} and key {} does not exist.", type, codeKey);
+            return null;
+        }
+
+        return code.getTitle();
+    }
 }

@@ -30,7 +30,7 @@ public class PortalConfiguration {
     @Value("${spring.profiles.active:development}")
     private String profile;
 
-    @Value("${queryServiceExternal:qse}")
+    @Value("${application.queryServiceExternal:qse}")
     private String queryServiceExternal;
 
     public final String getQueryServiceExternal() {
