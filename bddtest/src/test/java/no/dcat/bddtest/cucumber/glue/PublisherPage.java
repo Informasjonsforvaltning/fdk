@@ -1,17 +1,12 @@
 package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
-
+import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +21,18 @@ public class PublisherPage extends CommonPage {
     private final Logger logger = LoggerFactory.getLogger(PublisherPage.class);
     private final String page = "publisher";
 
+    @Before
+    public void setup() {
+        setupDriver();
+    }
+
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
+
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        openBrowser();
         openPage(page);
     }
 
@@ -55,7 +59,7 @@ public class PublisherPage extends CommonPage {
                     WebElement publisherCount = publisherElement.findElement(By.className("badge"));
                     String count = publisherCount.getAttribute("innerHTML");
 
-                    assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, count, count), countExp.equals(count));
+                    assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, countExp, count), countExp.equals(count));
                 }
             }
         } finally {
