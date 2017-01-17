@@ -7,7 +7,6 @@ import no.difi.dcat.datastore.domain.DcatSource;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +14,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.apache.jena.assembler.Assembler.ontModel;
 
 /**
  * Crawler for harvesting and load elasticsearch with publishers.

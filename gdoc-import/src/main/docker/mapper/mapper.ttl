@@ -114,7 +114,7 @@ d2rq:condition "Dataset.@dekningsområde != ''";
 map:tilgangsnivå a d2rq:PropertyBridge;
 d2rq:belongsToClassMap map:Dataset;
 d2rq:property :tilgangsnivå ;
-d2rq:uriPattern "http://publications.europa.eu/resource/authority/dataset-access/@@Dataset.tilgangsnivå@@";
+d2rq:uriPattern "http://publications.europa.eu/resource/authority/access-right/@@Dataset.tilgangsnivå@@";
 d2rq:condition "Dataset.@tilgangsnivå != ''"; # optional
 .
 
@@ -129,7 +129,7 @@ d2rq:condition "Dataset.@skjermingshjemmel != ''"; # optional
 # Frekvens - ok
 map:frekvens a d2rq:PropertyBridge;
 d2rq:belongsToClassMap map:Dataset;
-d2rq:property :frekvens ;#dct:accruralPeriodicity ;
+d2rq:property :frekvens ;#dct:accrualPeriodicity ;
 d2rq:uriPattern "http://publications.europa.eu/resource/authority/frequency/@@Dataset.frekvens@@";
 d2rq:condition "Dataset.@frekvens != ''"; # optional
 .
@@ -444,7 +444,7 @@ d2rq:condition "Location.@navn (en) != ''";
 # Spreadsheeet - AccessRights
 map:Tilgangsrettighet a d2rq:ClassMap ;
 d2rq:dataStorage map:excel;
-d2rq:uriPattern "http://publications.europa.eu/resource/authority/dataset-access/@@Tilgangsrettighet.id@@";
+d2rq:uriPattern "http://publications.europa.eu/resource/authority/access-right/@@Tilgangsrettighet.id@@";
 d2rq:condition "Tilgangsrettighet.@id != ''";
 d2rq:class dct:RightsStatement ;
 .

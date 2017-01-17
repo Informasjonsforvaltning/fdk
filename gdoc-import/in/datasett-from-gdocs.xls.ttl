@@ -34,7 +34,7 @@ dct:RightsStatement  a  owl:Class .
 
 :avdelingsnavn  a  owl:DatatypeProperty .
 
-<http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED>
+<http://publications.europa.eu/resource/authority/access-right/RESTRICTED>
         a                      dct:RightsStatement ;
         :tilgangsrettighet_en  "Restricted" ;
         :tilgangsrettighet_no  "Begrenset" .
@@ -54,7 +54,7 @@ dct:RightsStatement  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Partiregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -73,7 +73,7 @@ dct:RightsStatement  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/AGRI> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Jegerregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -108,7 +108,7 @@ dct:RightsStatement  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Hybeladresser til elever og studenter med støtte fra Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -136,7 +136,7 @@ dct:RightsStatement  a  owl:Class .
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         :til                      "2046-05-12"^^xsd:dateTime ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no                "Foretaksregisteret" ;
         :utgivelsesDato           "1988-01-01"^^xsd:dateTime ;
         :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
@@ -179,7 +179,7 @@ dct:RightsStatement  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Registeret for utøvere av alternativ behandling" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -197,7 +197,7 @@ dct:RightsStatement  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Bevilgningsregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/983544622> .
 
@@ -241,7 +241,7 @@ dct:RightsStatement  a  owl:Class .
         :spatial                  "http://sws.geonames.org/3144096/" ;
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no                "Frivillighetsregisteret" ;
         :utgivelsesDato           "2009-01-01"^^xsd:dateTime ;
         :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
@@ -279,7 +279,7 @@ dct:hasVersion  a  owl:ObjectProperty .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Elever og studenter ved norske utdanningssteder" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -342,7 +342,7 @@ dct:relation  a  owl:ObjectProperty .
         :spatial            "http://sws.geonames.org/3144096/" ;
         :språk              <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema               <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå       <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå       <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no          "Arbeidsgiver- og arbeidstakerregisteret " ;
         :utgiver            <http://data.brreg.no/enhetsregisteret/enhet/889640782> .
 
@@ -377,7 +377,7 @@ dct:relation  a  owl:ObjectProperty .
         :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Registeret for offentlig støtte" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -395,7 +395,7 @@ dct:relation  a  owl:ObjectProperty .
         :landingsside             "https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060" ;
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no                "Helsepersonell" ;
         :utgivelsesDato           "287.10.2010"^^xsd:dateTime ;
         :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
@@ -418,7 +418,7 @@ dct:relation  a  owl:ObjectProperty .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Akvakulturregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -456,7 +456,7 @@ dct:relation  a  owl:ObjectProperty .
         :spatial         "http://sws.geonames.org/6295630/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Norske elever og studenter ved utlandske utdanningssteder støttet av Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -536,7 +536,7 @@ dct:relation  a  owl:ObjectProperty .
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
         :til             "365.12.2018"^^xsd:dateTime ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Prosedyrekodeverkene (Kodeverk for medisinske, kirurgiske og radiologiske prosedyrer, NCMP, NCSP og NCRP)" ;
         :utgivelsesDato  "267.9.2016"^^xsd:dateTime ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
@@ -563,7 +563,7 @@ dct:relation  a  owl:ObjectProperty .
         :spatial                  "http://sws.geonames.org/3144096/" ;
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no                "Regnskapsregisteret" ;
         :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -598,7 +598,7 @@ vcard:Organization  a  owl:Class .
         :spatial         "http://sws.geonames.org/6295630/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Elever og studenter med utdanning i utlandet med støtte fra Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -666,7 +666,7 @@ dct:isVersionOf  a  owl:ObjectProperty .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Svenske statsborgere med støtte fra Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -712,7 +712,7 @@ foaf:Agent  a   owl:Class .
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
         :til                      "366.12.2016"^^xsd:dateTime ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_en                "International Statistical Classification of Diseases and Related Health Problems 10th Revision" ;
         :tittel_no                "ICD-10: Den internasjonale statistiske klassifikasjonen av sykdommer og beslektede helseproblemer" ;
         :utgivelsesDato           "1.1.2016"^^xsd:dateTime ;
@@ -740,7 +740,7 @@ foaf:Agent  a   owl:Class .
         :spatial                  "http://sws.geonames.org/3144096/" ;
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no                "Løsøreregisteret" ;
         :utgivelsesDato           "1980-01-01"^^xsd:dateTime ;
         :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
@@ -757,7 +757,7 @@ foaf:Agent  a   owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Tildelt stipend og lån fra Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -806,7 +806,7 @@ dct:ProvenanceStatement
         :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
         :spatial         "http://sws.geonames.org/3144096/" ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Lotteriregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -857,7 +857,7 @@ dct:Location  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Danske statsborgere med støtte fra Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
@@ -871,7 +871,7 @@ dct:Location  a  owl:Class .
         :spatial         "http://sws.geonames.org/3144096/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_no       "Ektepaktregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
 
@@ -899,7 +899,7 @@ dct:Location  a  owl:Class .
         :tittel_no       "Fastlegeregisteret" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
 
-<http://publications.europa.eu/resource/authority/dataset-access/PUBLIC>
+<http://publications.europa.eu/resource/authority/access-right/PUBLIC>
         a                      dct:RightsStatement ;
         :tilgangsrettighet_en  "Public" ;
         :tilgangsrettighet_no  "Offentlig" .
@@ -914,11 +914,11 @@ dct:Location  a  owl:Class .
         :spatial         "http://sws.geonames.org/6295630/" ;
         :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        :tilgangsnivå    <http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
         :tittel_no       "Studenter med avsluttede utdanninger i utlandet støtet av Lånekassen" ;
         :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
 
-<http://publications.europa.eu/resource/authority/dataset-access/NON-PUBLIC>
+<http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC>
         a                      dct:RightsStatement ;
         :tilgangsrettighet_en  "Non-public" ;
         :tilgangsrettighet_no  "Ikke-offentlig" .
@@ -946,7 +946,7 @@ dct:Location  a  owl:Class .
         :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
         :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         :til                      "2048-05-12"^^xsd:dateTime ;
-        :tilgangsnivå             <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         :tittel_en                "Central Coordinating Register for Legal Entities" ;
         :tittel_no                "Enhetsregisteret" ;
         :utgivelsesDato           "1999-12-03"^^xsd:dateTime ;

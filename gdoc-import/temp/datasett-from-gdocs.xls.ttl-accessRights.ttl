@@ -17,14 +17,14 @@
 @prefix prov:  <http://www.w3.org/ns/prov#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 
-<http://publications.europa.eu/resource/authority/dataset-access/PUBLIC>
+<http://publications.europa.eu/resource/authority/access-right/PUBLIC>
         a               dct:RightsStatement ;
         skos:prefLabel  "Public"@en , "Offentlig"@no .
 
-<http://publications.europa.eu/resource/authority/dataset-access/NON-PUBLIC>
+<http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC>
         a               dct:RightsStatement ;
         skos:prefLabel  "Non-public"@en , "Ikke-offentlig"@no .
 
-<http://publications.europa.eu/resource/authority/dataset-access/RESTRICTED>
+<http://publications.europa.eu/resource/authority/access-right/RESTRICTED>
         a               dct:RightsStatement ;
         skos:prefLabel  "Restricted"@en , "Begrenset"@no .

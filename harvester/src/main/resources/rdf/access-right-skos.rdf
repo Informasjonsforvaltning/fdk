@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:at="http://publications.europa.eu/ontology/authority/" xmlns:atold="http://publications.europa.eu/resource/authority/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+   <skos:ConceptScheme rdf:about="http://publications.europa.eu/resource/authority/access-right" at:table.id="access-right" at:table.version.number="20160920-0">
+      <owl:versionInfo>20160920-0</owl:versionInfo>
+      <rdfs:label xml:lang="en">Access right Named Authority List</rdfs:label>
+      <at:prefLabel xml:lang="en">Access right Named Authority List</at:prefLabel>
+   </skos:ConceptScheme>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC" at:deprecated="false">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right" />
+      <at:authority-code>PUBLIC</at:authority-code>
+      <at:op-code>PUBLIC</at:op-code>
+      <atold:op-code>PUBLIC</atold:op-code>
+      <dc:identifier>PUBLIC</dc:identifier>
+      <at:start.use>2013-01-01</at:start.use>
+      <skos:prefLabel xml:lang="en">public</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">offentlig</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">offentlig</skos:prefLabel>
+   </skos:Concept>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/RESTRICTED" at:deprecated="false">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right" />
+      <at:authority-code>RESTRICTED</at:authority-code>
+      <at:op-code>RESTRICTED</at:op-code>
+      <atold:op-code>RESTRICTED</atold:op-code>
+      <dc:identifier>RESTRICTED</dc:identifier>
+      <at:start.use>2013-01-01</at:start.use>
+      <skos:prefLabel xml:lang="en">restricted</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">begrenset</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">begrenset</skos:prefLabel>
+   </skos:Concept>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC" at:deprecated="false">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right" />
+      <at:authority-code>NON_PUBLIC</at:authority-code>
+      <at:op-code>NON_PUBLIC</at:op-code>
+      <atold:op-code>NON_PUBLIC</atold:op-code>
+      <dc:identifier>NON_PUBLIC</dc:identifier>
+      <at:start.use>2013-01-01</at:start.use>
+      <skos:prefLabel xml:lang="en">non-public</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">ikke-offentlig</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">ikke-offentlig</skos:prefLabel>
+   </skos:Concept>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/OP_DATPRO">
+      <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right" />
+      <at:op-code>OP_DATPRO</at:op-code>
+      <atold:op-code>OP_DATPRO</atold:op-code>
+      <dc:identifier>OP_DATPRO</dc:identifier>
+      <skos:prefLabel xml:lang="bg">НЕОКОНЧАТЕЛНИ ДАННИ</skos:prefLabel>
+      <skos:prefLabel xml:lang="cs">Předběžné údaje</skos:prefLabel>
+      <skos:prefLabel xml:lang="da">Midlertidige data</skos:prefLabel>
+      <skos:prefLabel xml:lang="de">Vorläufige Daten</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Provisional data</skos:prefLabel>
+      <skos:prefLabel xml:lang="el">Προσωρινά δεδομένα</skos:prefLabel>
+      <skos:prefLabel xml:lang="es">Datos provisionales</skos:prefLabel>
+      <skos:prefLabel xml:lang="et">Esialgsed andmed</skos:prefLabel>
+      <skos:prefLabel xml:lang="fi">Alustavat tiedot</skos:prefLabel>
+      <skos:prefLabel xml:lang="fr">Données provisoires</skos:prefLabel>
+      <skos:prefLabel xml:lang="ga">Sonraí sealadacha</skos:prefLabel>
+      <skos:prefLabel xml:lang="hr">Privremeni podaci</skos:prefLabel>
+      <skos:prefLabel xml:lang="hu">Ideiglenes adatok</skos:prefLabel>
+      <skos:prefLabel xml:lang="it">Dati provvisori</skos:prefLabel>
+      <skos:prefLabel xml:lang="lt">Laikinieji duomenys</skos:prefLabel>
+      <skos:prefLabel xml:lang="lv">Provizoriski dati</skos:prefLabel>
+      <skos:prefLabel xml:lang="mt">Dejta provviżorja</skos:prefLabel>
+      <skos:prefLabel xml:lang="nl">Voorlopige gegevens</skos:prefLabel>
+      <skos:prefLabel xml:lang="pl">Dane tymczasowe</skos:prefLabel>
+      <skos:prefLabel xml:lang="pt">Dados provisórios</skos:prefLabel>
+      <skos:prefLabel xml:lang="ro">Date provizorii</skos:prefLabel>
+      <skos:prefLabel xml:lang="sk">Predbežné údaje</skos:prefLabel>
+      <skos:prefLabel xml:lang="sl">Začasni podatki</skos:prefLabel>
+      <skos:prefLabel xml:lang="sv">Tillfälliga uppgifter</skos:prefLabel>
+   </skos:Concept>
+</rdf:RDF>

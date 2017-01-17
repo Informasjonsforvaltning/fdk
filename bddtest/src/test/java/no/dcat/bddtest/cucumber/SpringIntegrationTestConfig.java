@@ -15,5 +15,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
         classes = BddTestApplication.class,
         loader = SpringApplicationContextLoader.class)
 @IntegrationTest
+/**
+ * Set up test, add Environment variables:
+ *  elasticsearch.hostname  192.168.99.100
+ *  elasticsearch.port      9300
+ *  fdk.hostname            localhost
+ *  fdk.port                8081
+ */
 public class SpringIntegrationTestConfig {
 }

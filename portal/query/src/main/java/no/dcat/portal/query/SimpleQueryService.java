@@ -31,7 +31,7 @@ import java.net.UnknownHostException;
 
 /**
  * A simple search service. Receives a query and forwards the query to Elasticsearch, return results.
- *
+ * <p>
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
@@ -76,14 +76,12 @@ public class SimpleQueryService {
 
     @Value("${application.clusterName:elasticsearch}")
     private String clusterName;
-
-    public void setClusterName(String cn) {
-        clusterName = cn;
-    }
+    public void setClusterName(String cn) { clusterName = cn; }
 
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
+     * <p>
      *
      * @param query         The search query to be executed as defined in
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
@@ -129,33 +127,17 @@ public class SimpleQueryService {
         }
         lang = "*"; // hardcode to search in all language fields
 
-        if (from < 0) {
-            return new ResponseEntity<String>("{\"error\": \"parameter error: from is less than zero\"}", HttpStatus.BAD_REQUEST);
-        }
-
-        if (size > 100) {
-            return new ResponseEntity<String>("{\"error\": \"parameter error: size is larger than 100\"}", HttpStatus.BAD_REQUEST);
-        }
-
-        if (size < 5) {
-            size = 5;
-        }
+        from = checkAndAdjustFrom(from);
+        size = checkAndAdjustSize(size);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-        if (jsonError != null) {
-            return jsonError;
-        }
+        if (jsonError != null) return jsonError;
 
         QueryBuilder search;
 
         if ("".equals(query)) {
             search = QueryBuilders.matchAllQuery();
-
-            /*JSON: {
-                "match_all" : { }
-             }*/
         } else {
-
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
@@ -179,7 +161,18 @@ public class SimpleQueryService {
                 .addAggregation(createAggregation(TERMS_THEME_COUNT,FIELD_THEME_CODE))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME));
 
+        addSort(sortfield, sortdirection, searchBuilder);
 
+        // Execute search
+        SearchResponse response = searchBuilder.execute().actionGet();
+
+        logger.trace("Search response: " + response.toString());
+
+        // return response
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+    }
+
+    private void addSort(@RequestParam(value = "sortfield", defaultValue = "") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "desc") String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
 
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
@@ -193,14 +186,26 @@ public class SimpleQueryService {
 
             searchBuilder.addSort(sbSortField.toString(), sortOrder);
         }
+    }
 
-        // Execute search
-        SearchResponse response = searchBuilder.execute().actionGet();
+    private int checkAndAdjustFrom(int from) {
+        if (from < 0) {
+            return 0;
+        } else {
+            return from;
+        }
+    }
 
-        logger.trace("Search response: " + response.toString());
+    private int checkAndAdjustSize(int size) {
+        if (size > 100) {
+            return 100;
+        }
 
-        // return response
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        if (size < 5) {
+            return 5;
+        }
+
+        return size;
     }
 
 
@@ -345,11 +350,6 @@ public class SimpleQueryService {
     public ResponseEntity<String> publishers() {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
-        if (jsonError != null) {
-            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
-            return jsonError;
-        }
-
         QueryBuilder search = QueryBuilders.matchAllQuery();
 
         SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
@@ -361,15 +361,16 @@ public class SimpleQueryService {
         SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
         logger.debug("Found publisher: {}", responsePublisher);
 
+        if (jsonError != null) {
+            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
+            return jsonError;
+        }
+
         return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
     }
 
     private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-
-        if (jsonError != null) {
-            return jsonError;
-        }
 
         QueryBuilder search;
 
@@ -405,8 +406,11 @@ public class SimpleQueryService {
 
         logger.trace(String.format("Dataset count for field %s: %s", field, response.toString()));
 
+        if (jsonError != null) {
+            return jsonError;
+        }
 
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
     /**

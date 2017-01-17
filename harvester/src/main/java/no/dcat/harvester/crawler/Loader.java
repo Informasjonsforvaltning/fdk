@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * Created by nodavsko on 29.09.2016.
@@ -103,6 +104,8 @@ public class Loader {
             url = new URL(filename);
             DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
+            // Load all codes.
+            harvestAllCodes(true);
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
             CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, this.elasticsearchCluster);
@@ -116,9 +119,24 @@ public class Loader {
             return job.getValidationResult();
 
         } catch (MalformedURLException e) {
+           logger.error("URL not valid: "+ filename,e);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+    private void harvestAllCodes(boolean reload) throws InterruptedException {
+        for(Types type:Types.values()) {
+            logger.debug("Loading type {}", type);
+            harvestCode(reload, type.getSourceUrl(), type.getType());
+        }
+    }
+
+    private void harvestCode(boolean reload, String sourceURL, String indexType) throws InterruptedException {
+        CrawlerResultHandler codeHandler = new CodeCrawlerHandler(this.hostname, this.port, this.elasticsearchCluster, indexType, reload);
+        CrawlerCodeJob jobCode = new CrawlerCodeJob(sourceURL, codeHandler);
+
+        jobCode.run();
     }
 }

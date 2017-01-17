@@ -11,7 +11,9 @@ import no.difi.dcat.datastore.domain.DifiMeta;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +73,7 @@ public class CrawlerJob implements Runnable {
             Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
             Iterator<String> stringIterator = dataset.listNames();
 
-             while (stringIterator.hasNext()) {
+            while (stringIterator.hasNext()) {
                 union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
             }
             verifyModelByParsing(union);
@@ -84,6 +87,7 @@ public class CrawlerJob implements Runnable {
             BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
             brregAgentConverter.collectFromModel(union);
 
+            // if model is valid run the various handlers process method
             if (isValid(union,validationResult)) {
                 logger.debug("[crawler_operations] Valid datasets exists in input data!");
 
@@ -100,100 +104,89 @@ public class CrawlerJob implements Runnable {
 
 
         } catch (JenaException e) {
-            String message = e.getMessage();
-
-            try {
-                if (message.contains("[line: ")) {
-                    String[] split = message.split("]");
-                    split[0] = "";
-                    message = Arrays.stream(split)
-                        .map(i -> i.toString())
-                        .collect(Collectors.joining("]"));
-                    message = message.substring(1, message.length()).trim();
-                }
-            }catch (Exception e2){}
-            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, DifiMeta.syntaxError, message);
+            String message = formatJenaException(e);
+            if (adminDataStore != null) {
+                adminDataStore.addCrawlResults(dcatSource, DifiMeta.syntaxError, message);
+            }
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
 
         } catch (HttpException e) {
-            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, DifiMeta.networkError, e.getMessage());
+            if (adminDataStore != null) {
+                adminDataStore.addCrawlResults(dcatSource, DifiMeta.networkError, e.getMessage());
+            }
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
         } catch (Exception e) {
+            if (adminDataStore != null) {
+                adminDataStore.addCrawlResults(dcatSource, DifiMeta.error, e.getMessage());
+            }
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
-            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, DifiMeta.error, e.getMessage());
         }
 
     }
 
-    protected void verifyModelByParsing(Model union) {
+    protected static String formatJenaException(JenaException e) {
+        String message = e.getMessage();
+
+        try {
+            if (message.contains("[line: ")) {
+                String[] split = message.split("]");
+                split[0] = "";
+                message = Arrays.stream(split)
+                    .map(i -> i.toString())
+                    .collect(Collectors.joining("]"));
+                message = message.substring(1, message.length()).trim();
+            }
+        } catch (Exception e2){}
+        return message;
+    }
+
+    void verifyModelByParsing(Model union) {
         StringWriter str = new StringWriter();
+
+        // writes and parses RDF turtle
         union.write(str, RDFLanguages.strLangTurtle);
-        RDFDataMgr.parse(new StreamRDF() {
-            @Override
-            public void start() {
-
-            }
-
-            @Override
-            public void triple(Triple triple) {
-
-            }
-
-            @Override
-            public void quad(Quad quad) {
-
-            }
-
-            @Override
-            public void base(String base) {
-
-            }
-
-            @Override
-            public void prefix(String prefix, String iri) {
-
-            }
-
-            @Override
-            public void finish() {
-
-            }
-        }, new ByteArrayInputStream(str.toString().getBytes()), Lang.TTL);
+        RDFDataMgr.parse(new MyStreamRDF(), new ByteArrayInputStream(str.toString().getBytes(StandardCharsets.UTF_8)), Lang.TTL);
 
         str = new StringWriter();
+
+        // writes and parses RDF XML
         union.write(str, RDFLanguages.strLangRDFXML);
-        RDFDataMgr.parse(new StreamRDF() {
-            @Override
-            public void start() {
+        RDFDataMgr.parse(new MyStreamRDF(), new ByteArrayInputStream(str.toString().getBytes(StandardCharsets.UTF_8)), Lang.RDFXML);
+    }
 
-            }
+    /**
+     * Needed in RDFDataMgr for parsing.
+     */
+    static class MyStreamRDF implements StreamRDF {
+        @Override
+        public void start() {
 
-            @Override
-            public void triple(Triple triple) {
+        }
 
-            }
+        @Override
+        public void triple(Triple triple) {
 
-            @Override
-            public void quad(Quad quad) {
+        }
 
-            }
+        @Override
+        public void quad(Quad quad) {
 
-            @Override
-            public void base(String base) {
+        }
 
-            }
+        @Override
+        public void base(String base) {
 
-            @Override
-            public void prefix(String prefix, String iri) {
+        }
 
-            }
+        @Override
+        public void prefix(String prefix, String iri) {
 
-            @Override
-            public void finish() {
+        }
 
-            }
-        }, new ByteArrayInputStream(str.toString().getBytes()), Lang.RDFXML);
+        @Override
+        public void finish() {
 
+        }
     }
 
     /**

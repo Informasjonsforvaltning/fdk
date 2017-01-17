@@ -5,13 +5,9 @@ Feature: Datasett på temasiden
     And bruker datasett dataset-test.ttl
     And man har åpnet Fellesdatakatalog i en nettleser
 
-  Scenario Outline: C-Antall datasett på temasiden
+  Scenario: C-Antall datasett på temasiden
     When jeg åpner temasiden i fellesdatakatalog
-    Then vises alle '<tema>'
-#    And <antall> datasett som inngår i hvert enkelt tema
-
-    Examples:
-      | tema | antall |
+    Then vises følgende tema og antall:
       | Jordbruk, fiskeri, skogbruk og mat | 4 |
       | Økonomi og finans | 4 |
       | Utdanning, kultur og sport | 4 |

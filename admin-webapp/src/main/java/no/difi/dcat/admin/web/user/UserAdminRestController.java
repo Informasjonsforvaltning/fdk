@@ -5,6 +5,11 @@ import java.security.Principal;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
+import no.difi.dcat.admin.settings.FusekiSettings;
+import no.difi.dcat.datastore.AdminDcatDataService;
+import no.difi.dcat.datastore.UserAlreadyExistsException;
+import no.difi.dcat.datastore.UserNotFoundException;
+import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import no.difi.dcat.admin.settings.FusekiSettings;
 import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.AdminDcatDataService;
 import no.difi.dcat.datastore.DcatDataStore;
 import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.UserAlreadyExistsException;
-import no.difi.dcat.datastore.UserNotFoundException;
-import no.difi.dcat.datastore.domain.User;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -54,16 +54,32 @@ public class UserAdminRestController {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 
+		if (isUserAuthorized(principal)) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+
+		ResponseEntity<String> userExistsResponse = addUser(userDto);
+		if (userExistsResponse != null) {
+			return userExistsResponse;
+		}
+
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+	}
+
+	private boolean isUserAuthorized(Principal principal) {
 		try {
 			User userObject = adminDataStore.getUserObject(principal.getName());
 			// only admin can create a user
 			if(!userObject.isAdmin()){
-				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+				return true;
 			}
 		} catch (UserNotFoundException e) {
-			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+			return true;
 		}
+		return false;
+	}
 
+	private ResponseEntity<String> addUser(@Valid @RequestBody UserDto userDto) {
 		try {
 			User user = convertToDomain(userDto);
 			if (user.getPassword() != null && !user.getPassword().isEmpty()) {
@@ -73,10 +89,9 @@ public class UserAdminRestController {
 		} catch (UserAlreadyExistsException e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		return null;
 	}
-	
+
 	@RequestMapping(value = "/api/admin/user", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteUser(@Valid @RequestParam("delete") String username, Principal principal) throws UserNotFoundException {
 		if (principal == null) {
