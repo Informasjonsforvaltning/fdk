@@ -30,30 +30,24 @@ import static org.hamcrest.Matchers.is;
 /**
  * Cucumber glue class for the Themepage feature.
  */
-public class ThemePage {
-    WebDriver driver = null;
+public class ThemePage extends CommonPage {
+    private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
+    private int portalPort = 8080; //getEnvInt("fdk.port");
+
+
+    @Before
+    public void setup() {
+        setupDriver();
+    }
+
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
 
     @Given("^I have open the browser$")
-    public void openBrowser() throws MalformedURLException {
-        File file = new File("src/test/resources/IEDriverServer.exe");
-        File fileC = new File("src/test/resources/chromedriver.exe");
-        File fileF = new File("src/test/resources/phantomjs.exe");
+    public void openBrowser()  {
 
-        System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-        System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
-        System.setProperty("phantomjs.binary.path", fileF.getAbsolutePath());
-
-        DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
-        DesiredCapabilities capsC = DesiredCapabilities.chrome();
-        caps.setCapability("ignoreZoomSetting", true);
-
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary(fileC.getAbsolutePath());
-
-        //driver = new InternetExplorerDriver(caps);
-        //driver = new ChromeDriver(capsC);
-        driver = new PhantomJSDriver();
-        //driver = new ChromeDriver();
     }
 
     @When("^I open Fellesdatakatalog website$")
@@ -68,17 +62,8 @@ public class ThemePage {
 
     @When("^jeg åpner temasiden i fellesdatakatalog")
     public void goToFDK() {
-        driver.get("http://localhost:8081/");
-        //driver.navigate().to("http://localhost:8081/");
-        //driver.getPageSource();
+        driver.get("http://" + portalHostname + ":" + portalPort +"/");
     }
-
-
-    @Then("^link befolking og samfunn should exist$")
-    public void ThemeBoS() {
-        assertTrue(driver.findElement(By.id("Befolkning og samfunn")).isEnabled());
-        driver.close();
-
 
     @Then("vises følgende tema og antall:$")
     public void ThemeBoS(DataTable themes) {

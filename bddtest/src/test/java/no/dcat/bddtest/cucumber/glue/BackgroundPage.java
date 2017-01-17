@@ -1,11 +1,19 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
+
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Glue-code common for all page-tests.
@@ -13,12 +21,27 @@ import java.io.IOException;
 public class BackgroundPage extends CommonPage {
     private final String index = "dcat";
 
+    private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
+    private int portalPort = 8080; //getEnvInt("fdk.port");
+
+    @Before
+    public void setup() {
+        setupDriver();
+    }
+
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
+
     @Given("^I clean elastic search\\.$")
     public void cleanElasticSearch() throws Throwable {
-        String hostname = getEnv("elasticsearch.hostname");
-        int port = getEnvInt("elasticsearch.port");
+        String hostname = "localhost";
+        int port = 9300;
+        //String hostname = getEnv("elasticsearch.hostname");
+        //int port = getEnvInt("elasticsearch.port");
 
-        new DeleteIndex(hostname, port).deleteIndex(index);
+        //new DeleteIndex(hostname, port).deleteIndex(index);
     }
 
     @Given("^I load the \"([^\"]*)\" dataset\\.$")
@@ -27,7 +50,7 @@ public class BackgroundPage extends CommonPage {
         int port = 9300; //getEnvInt("elasticsearch.port");
         new DeleteIndex(hostname, port).deleteIndex(index);
         String defultPath = new File(".").getCanonicalPath().toString();
-        String fileWithPath = String.format("file:%s/src/test/resources/%s", defultPath, filename);
+        String fileWithPath = String.format("file:%s/bddtest/src/test/resources/%s", defultPath, filename);
 
         new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
 
