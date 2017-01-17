@@ -1,7 +1,11 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import com.google.common.base.Predicate;
+import io.github.bonigarcia.wdm.PhantomJsDriverManager;
+import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,45 +22,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Topclass for glue-code for pagetesting.
+ * Common class for glue-code for pagetesting.
  */
 public abstract class CommonPage extends SpringIntegrationTestConfig {
     private final Logger logger = LoggerFactory.getLogger(CommonPage.class);
     WebDriver driver = null;
-    private static final String LOCAL_PATH_TO_IE_DRIVER = "src/main/resources/IEDriverServer.exe";
 
-    public void openBrowser() throws Throwable {
-        File file = new File(LOCAL_PATH_TO_IE_DRIVER);
-        File fileC = new File("src/test/resources/chromedriver.exe");
-        File fileF = new File("src/test/resources/phantomjs.exe");
-
-        System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-        System.setProperty("webdriver.chrome.driver", fileC.getAbsolutePath());
-        System.setProperty("phantomjs.binary.path", fileF.getAbsolutePath());
-
-        DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
-        DesiredCapabilities capsC = DesiredCapabilities.chrome();
-
-        caps.setCapability("ignoreZoomSetting", true);
-
-        //driver = new InternetExplorerDriver(caps);
-        //driver = new ChromeDriver(capsC);
-        driver = new PhantomJSDriver();
-    }
-
-    protected String getElement(String idProvenanceText) {
-        String element;
-        try {
-            element = driver.findElement(By.id(idProvenanceText)).getText();
-        } catch(Exception e) {
-            element = "";
-        }
-        return element;
-    }
-
-    public void openPage(String page) throws Throwable {
-        String hostname = getEnv("fdk.hostname");
-        int port = getEnvInt("fdk.port");
+    public void openPage(String page) {
+        String hostname = "localhost";
+        int port = 8080;
 
         driver.get(String.format("http://%s:%d/%s", hostname, port, page));
     }
@@ -93,6 +67,18 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
         }
 
         return value;
+    }
+
+    protected void setupDriver() {
+        PhantomJsDriverManager.getInstance().setup();
+        driver = new PhantomJSDriver();
+    }
+
+
+    protected void stopDriver() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     protected int getEnvInt(String env) {
