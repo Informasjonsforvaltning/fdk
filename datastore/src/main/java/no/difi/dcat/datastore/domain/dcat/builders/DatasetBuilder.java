@@ -1,8 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
-import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.*;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
@@ -21,12 +19,19 @@ public class DatasetBuilder extends AbstractBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DatasetBuilder.class);
 
     protected final Model model;
+    protected final Map<String, SkosCode> locations;
+    protected final Map<String, Map<String, SkosCode>> codes;
+    protected final Map<String, DataTheme> dataThemes;
 
-    public DatasetBuilder(Model model) {
+    public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
+                          Map<String, DataTheme> dataThemes) {
         this.model = model;
+        this.locations = locations;
+        this.codes = codes;
+        this.dataThemes = dataThemes;
     }
 
-    public List<Dataset> build(Map<String, DataTheme> dataThemes) {
+    public List<Dataset> build() {
 
         List<Dataset> datasets = new ArrayList<>();
 
@@ -38,7 +43,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
             while (datasetIterator.hasNext()) {
                 Resource dataset = datasetIterator.next().getResource();
-                Dataset datasetObj = create(dataset, catalog, dataThemes);
+                Dataset datasetObj = create(dataset, catalog, locations, codes, dataThemes);
                 StmtIterator distributionIterator = dataset.listProperties(DCAT.distribution);
                 List<Distribution> distributions = new ArrayList<>();
                 while (distributionIterator.hasNext()) {
@@ -47,7 +52,8 @@ public class DatasetBuilder extends AbstractBuilder {
 
                     if (next.getObject().isResource()) {
                         Resource distribution = next.getResource();
-                        distributions.add(DistributionBuilder.create(distribution, null, null, null));
+                        distributions.add(DistributionBuilder.create(distribution, null, null, null,
+                                null, null));
                     }
 
                 }
@@ -59,7 +65,8 @@ public class DatasetBuilder extends AbstractBuilder {
         return datasets;
     }
 
-    public static Dataset create(Resource dataset, Resource catalog, Map<String, DataTheme> dataThemes) {
+    public static Dataset create(Resource dataset, Resource catalog, Map<String, SkosCode> locations,
+                                 Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         Dataset created = new Dataset();
 
         if (dataset != null) {
@@ -69,7 +76,7 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setDescription(extractLanguageLiteral(dataset, DCTerms.description));
             created.setIssued(extractDate(dataset, DCTerms.issued));
             created.setModified(extractDate(dataset, DCTerms.modified));
-            created.setLanguage(extractAsString(dataset, DCTerms.language));
+            created.setLanguage(getTitlesOfCode(codes, Types.LINGUISTICSYSTEM.getType(), extractAsString(dataset, DCTerms.language)));
             created.setLandingPage(extractAsString(dataset, DCAT.landingPage));
             created.setKeyword(extractMultipleLanguageLiterals(dataset, DCAT.keyword));
             created.setContactPoint(extractContact(dataset));
@@ -77,14 +84,14 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setTheme(extractTheme(dataset, DCAT.theme, dataThemes));
 			created.setConformsTo(extractMultipleStrings(dataset, DCTerms.conformsTo));
             created.setPage(extractMultipleStrings(dataset, FOAF.page));
-            created.setAccruralPeriodicity(extractAsString(dataset, DCTerms.accrualPeriodicity));
+            created.setAccrualPeriodicity(getTitlesOfCode(codes, Types.FREQUENCY.getType(), extractAsString(dataset, DCTerms.accrualPeriodicity)));
 			created.setTemporal(extractPeriodOfTime(dataset));
-			created.setSpatial(extractMultipleStrings(dataset, DCTerms.spatial));
-			created.setAccessRights(extractAsString(dataset, DCTerms.accessRights));
+			created.setSpatial(getTitlesOfCodes(locations, extractMultipleStrings(dataset, DCTerms.spatial)));
+			created.setAccessRights(getTitlesOfCode(codes, Types.RIGTHSSTATEMENT.getType(), extractAsString(dataset, DCTerms.accessRights)));
 			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
             created.setSubject(extractMultipleStrings(dataset, DCTerms.subject));
 			created.setReferences(extractMultipleStrings(dataset, DCTerms.references));
-			created.setProvenance(extractAsString(dataset, DCTerms.provenance));
+			created.setProvenance(getTitlesOfCode(codes, Types.PROVENANCESTATEMENT.getType(), extractAsString(dataset, DCTerms.provenance)));
             created.setADMSIdentifier(extractMultipleStrings(dataset, ADMS.identifier));
             created.setType(extractAsString(dataset, DCTerms.type));
 		}

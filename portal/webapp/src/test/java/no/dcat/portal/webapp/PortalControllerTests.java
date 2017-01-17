@@ -82,6 +82,7 @@ public class PortalControllerTests {
     public void themesReturnsOK() throws  Exception {
         String themesJson = readFile("themesDataset.json");
         PortalController spyPortal = spy(portal);
+        LocaleContextHolder.setLocale(new Locale("nb", "NO"));
 
         doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
         ModelAndView actual = spyPortal.themes();

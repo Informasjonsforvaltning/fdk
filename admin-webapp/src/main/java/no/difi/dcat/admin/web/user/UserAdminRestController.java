@@ -87,4 +87,5 @@ public class UserAdminRestController {
         return new UserDto(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getRole());
     }
 
+
 }

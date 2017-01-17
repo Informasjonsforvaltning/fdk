@@ -73,8 +73,12 @@
             <div>
                 <h3>Kvalitet</h3>
                 <dl class="dl-horizontal">
-                    <dt th:if="${dataset.provenance}">Opphav</dt>
-                    <dd th:text="${dataset.provenance}"></dd>
+                    <dt th:if="${dataset.provenance}">Opphav
+                        <dd th:text="${dataset.provenance.get('nb')}" id="provenanceText"></dd>
+                    </dt>
+                    <dt th:if="${dataset.accrualPeriodicity}">Frekvens
+                        <dd th:text="${dataset.accrualPeriodicity.get('nb')}" id="accruralPeriodicityText"></dd>
+                    </dt>
                 </dl>
             </div>
             <div>
@@ -83,11 +87,12 @@
                     <dt th:if="${dataset.issued}">Opprettet dato</dt>
                     <dd th:text="${dataset.issued}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''" ></dd>
 
-                    <dt th:if="${dataset.modified}">Modifisert dato</dt>
+                    <dt th:if="${dataset.modified}">Sist endret</dt>
                     <dd th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" ></dd>
 
-                    <dt th:if="${dataset.language}">Språk</dt>
-                    <dd th:text="${dataset.language}"></dd>
+                    <dt th:if="${dataset.language}">Språk
+                        <dd th:text="${dataset.language.get('nb')}" id="languageText"></dd>
+                    </dt>
 
                     <dt th:if="${dataset.theme.size() > 0}">Tema</dt>
                     <dd th:each="theme : ${dataset.theme}" >
@@ -102,8 +107,8 @@
                     </dd>
 
                     <dt th:if="${dataset.spatial.size() > 0}">Dekningsområde</dt>
-                    <dd th:each="omrade : ${dataset.spatial}" th:if="${omrade}" >
-                        <span th:text="${omrade} + ', '"></span>
+                    <dd th:each="omrade : ${dataset.spatial}" th:if="${omrade}" id="locationsText">
+                        <span th:text="${omrade.get('nb')} + ', '"></span>
                     </dd>
 
                 </dl>
@@ -131,8 +136,9 @@
             <div>
                 <h3>Restriksjoner</h3>
                 <dl class="dl-horizontal">
-                    <dt th:if="${dataset.accessRights}">Restriksjon</dt>
-                    <dd th:text="${dataset.accessRights}"></dd>
+                    <dt th:if="${dataset.accessRights}">Restriksjon
+                        <dd th:text="${dataset.accessRights.get('nb')}" id="accessRightText"></dd>
+                    </dt>
 
                     <dt th:if="${dataset.accessRightsComment.size() > 0 }">Kommentar</dt>
                     <dd th:each="kommentar : ${dataset.accessRightsComment}" >

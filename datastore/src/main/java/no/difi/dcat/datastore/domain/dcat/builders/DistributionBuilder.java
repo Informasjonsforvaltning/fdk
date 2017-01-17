@@ -2,6 +2,7 @@ package no.difi.dcat.datastore.domain.dcat.builders;
 
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.DCTerms;
@@ -13,13 +14,20 @@ import java.util.Map;
 
 public class DistributionBuilder extends AbstractBuilder {
 
-    private Model model;
+    protected final Model model;
+    protected final Map<String, SkosCode> locations;
+    protected final Map<String, Map<String, SkosCode>> codes;
+    protected final Map<String, DataTheme> dataThemes;
 
-    public DistributionBuilder(Model model) {
+    public DistributionBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
+                               Map<String, DataTheme> dataThemes) {
         this.model = model;
+        this.locations = locations;
+        this.codes = codes;
+        this.dataThemes = dataThemes;
     }
 
-    public List<Distribution> build(Map<String, DataTheme> dataThemes) {
+    public List<Distribution> build() {
         List<Distribution> distributions = new ArrayList<>();
 
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
@@ -39,7 +47,7 @@ public class DistributionBuilder extends AbstractBuilder {
 
                     if (next.getObject().isResource()) {
                         Resource distribution = next.getResource();
-                        distributions.add(create(distribution, dataset, catalog, dataThemes));
+                        distributions.add(create(distribution, dataset, catalog, locations, codes, dataThemes));
                     }
                 }
             }
@@ -49,7 +57,8 @@ public class DistributionBuilder extends AbstractBuilder {
 
     }
 
-    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, DataTheme> dataThemes) {
+    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
+                                      Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         Distribution created = new Distribution();
 
         if (distribution != null) {
@@ -61,7 +70,7 @@ public class DistributionBuilder extends AbstractBuilder {
             created.setFormat(extractAsString(distribution, DCTerms.format));
         }
         if (dataset != null && dataset != null) {
-            created.setDataset(DatasetBuilder.create(dataset, catalog, dataThemes));
+            created.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
         }
 
         return created;

@@ -1,0 +1,1006 @@
+@prefix :      <http://data.brreg.no/vocab/temp/> .
+@prefix d2rq:  <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://www.geonames.org/ontology#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3c.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix map:   <file:///usr/local/src/semex/mapping.n3#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://data.brreg.no/datakatalog/dataset/17>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Pre-Legal Entity Identifer (pre-LEI) er en internasjonal identifikator,\npå samme måten som organisasjonsnummer er det nasjonalt.\nPre-LEI skal identifisere juridiske personar som deltar i finansielle transaksjonar, også når handelen går over landegrensene. Identifikatoren skal i tillegg brukes i rapporteringer i finansmarkedet. Global Legal Entity Identifier Norway (GLEI Norway) er den norske tjenesten for forvaltning av pre-LEI.\n\n" ;
+        :identifikator   "17" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "GLEI Norway" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971526157>
+        a                     foaf:Agent ;
+        :navn                 "Patentstyret" ;
+        :organisasjonsnummer  "971526157" .
+
+dct:RightsStatement  a  owl:Class .
+
+:generertAv  a  owl:DatatypeProperty .
+
+:avdelingsnavn  a  owl:DatatypeProperty .
+
+<http://publications.europa.eu/resource/authority/access-right/RESTRICTED>
+        a                      dct:RightsStatement ;
+        :tilgangsrettighet_en  "Restricted" ;
+        :tilgangsrettighet_no  "Begrenset" .
+
+:modifisert  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/7>
+        a                dcat:Dataset ;
+        :begrep          "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_no  "Partiregisteret er et register over politiske parti i Norge. Hovedformålet med registeret er å gi part anledning til å skaffe seg enerett på partinavn.\n\n" ;
+        :distribusjon    <http://data.brreg.no/datakatalog/distibusjon/3> ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
+        :identifikator   "7" ;
+        :keywords        "Parti, Partinavn, Organisasjonsnummer, Kontaktperson, Utøvende organ" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Partiregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/970018131>
+        a                     foaf:Agent ;
+        :navn                 "Utdanningsdirektoratet" ;
+        :organisasjonsnummer  "970018131" .
+
+<http://data.brreg.no/datakatalog/dataset/11>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Jegerregisteret er et register over hvemsom er kvalifisert til å drive jakt i Norge, samt oversikt over hvem som har betalt jegeravgift.\n\n" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "11" ;
+        :keywords        "Jeger, Jegeravgift, Jaktår, Lisensjeger, Lisensfelling, Personopplysninger" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/AGRI> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Jegerregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+:identifikator  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/katalog/6>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i Statistisk Sentralbyrå" ;
+        :datasets     "33" ;
+        :tittel       "SSB datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/971526920> .
+
+:dokumentasjon  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/24>
+        a                dcat:Dataset ;
+        :beskrivelse_en  "A register of all physicians employed and their positions in the public health service. This covers the primary and specialist health services." ;
+        :beskrivelse_no  "Legestillingsregisteret (LSR) er helsemyndighetenes register over ansatte leger og legestillinger i primær- og spesialisthelsetjenesten." ;
+        :dokumentasjon   "https://register-web.test.nhn.no/" ;
+        :identifikator   "24" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tittel_no       "Legestillingsregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/dataset/37>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "37" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Hybeladresser til elever og studenter med støtte fra Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/983544622>
+        a                     foaf:Agent ;
+        :navn                 "Helsedirektoratet" ;
+        :organisasjonsnummer  "983544622" .
+
+<http://data.brreg.no/datakatalog/dataset/1>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/1> ;
+        :begrep                   "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_no           "Foretaksregisteret registrerer alle norske og utenlandske foretak i Norge, og skal sikre rettsvern og økonomisk oversikt. Enkeltpersonforetak som ikke driver handel med innkjøpte varer eller har mindre enn 5 ansatte i full stilling har ikke registreringsplikt, men har registreringsrett. Foretaksregisteret skal sikre rettsvern og økonomisk oversikt, og er en viktig kilde til informasjon om norsk næringsliv." ;
+        :dokumentasjon            "https://www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/foretaksregisteret/" ;
+        :fra                      "2001-01-01"^^xsd:dateTime ;
+        :frekvens                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :iSamsvarMed              "https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret" ;
+        :identifikator            "1" ;
+        :keywords                 "Organisasjonsnummer, Foretaksnavn, Forretningsadresse" ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/1> ;
+        :landingsside             "https://www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/foretaksregisteret/" ;
+        :modifisert               "2043-12-12"^^xsd:dateTime ;
+        :provinens                <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial                  "http://sws.geonames.org/3144096/" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :til                      "2046-05-12"^^xsd:dateTime ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no                "Foretaksregisteret" ;
+        :utgivelsesDato           "1988-01-01"^^xsd:dateTime ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/985821585>
+        a                     foaf:Agent ;
+        :navn                 "Uninett Norid" ;
+        :organisasjonsnummer  "985821585" .
+
+:distribusjon  a  owl:ObjectProperty .
+
+<http://data.brreg.no/datakatalog/dataset/31>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "MVA registeret" ;
+        :identifikator   "31" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "MVA registeret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974761076> .
+
+:utgiver  a     owl:ObjectProperty .
+
+<http://data.brreg.no/datakatalog/dataset/44>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "City cycles" ;
+        :identifikator   "44" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_en       "City cycles" ;
+        :tittel_no       "City cycles" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/958935420> .
+
+<http://data.brreg.no/datakatalog/dataset/16>
+        a                dcat:Dataset ;
+        :begrep          "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_no  "Registeret for utøvere av alternativ behandling inneholder opplysninger om registrerte utøvere og godkjente utøverorganisasjoner. Registeret skal bidra med å vareta pasientvernet og forbrukerrettighetene for den som oppsøker en registrert alternativ behandler. I tillegg skal registeret medvirke til seriøsitet og ordnede forretningsvilkår\nblant utøvere av alternativ behandling.\n" ;
+        :identifikator   "16" ;
+        :keywords        "Organisasjonsnummer, Registrert utøver, Utøvarorganisasjon" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Registeret for utøvere av alternativ behandling" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+:homepage  a    owl:DatatypeProperty .
+
+:navn   a       owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/29>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Registeret inneholder oversikt over gyldige salgs- og skjenkebevilgninger i Norge, samt alle tilvirkere, importører og grosisster av alkohol." ;
+        :dokumentasjon   "http://sites.helsedirektoratet.no/bevilgningsregisteret" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "29" ;
+        :keywords        "Enhet, Salgsbevilgning, Skjenkebevilgning, Tilvirkning, Importør, Grossist, Utlevering, Alkohol" ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Bevilgningsregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/983544622> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/4>
+        a               vcard:Organization ;
+        :avdelingsnavn  "AAS" ;
+        :hasEmail       <mailto:aas%40brreg.no> ;
+        :hasTelephone   <tel:%2B4775007500> .
+
+:opphavsKommentar  a  owl:DatatypeProperty .
+
+:skjermingshjemmel  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/6>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Kunngjøringer kan trolig ikke defineres som et datasett. Kunngjøringer\nfra Brønnøysundregistrene er et sett med XML-filer med publiserte hendelser i\ngitte tidsrom.\n\n" ;
+        :identifikator   "6" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Kunngjøringer" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/dataset/10>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/99> ;
+        :begrep                   "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_en           "Register of clubs and associations. The purpose is to improve and simplify the interaction between NGOs and public authorities. The Registry will ensure systematic information that can strengthen the legitimacy and knowledge of the voluntary activity. Managed by Brønnøysund Registre" ;
+        :beskrivelse_no           "Frivillighetsregisteret har oversikt over lag og foreninger i Norge, og har som formål å forenkle samhandlingen mellom frivillige organisasjoner og offentlig sektor. De som registrerer seg i Frivillighetsregisteret kan delta i grasrotandelen til Norsk Tipping, og motta/få momskompensasjon." ;
+        :distribusjon             <http://data.brreg.no/datakatalog/distibusjon/11> ;
+        :dokumentasjon            "https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/" ;
+        :fra                      "2009-01-01"^^xsd:dateTime ;
+        :frekvens                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator            "10" ;
+        :keywords                 "Forening, Kontonummer, Organisasjonsnummer, Lag, Grasrotandel, Forretningsadresse, Postadresse, Organisasjonsform, Kategori, Vedtekter, Årsregnskap" ;
+        :kilde                    <http://data.brreg.no/datakatalog/dataset/2> ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :landingsside             "https://w2.brreg.no/frivillighetsregisteret/" ;
+        :provinens                <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial                  "http://sws.geonames.org/3144096/" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no                "Frivillighetsregisteret" ;
+        :utgivelsesDato           "2009-01-01"^^xsd:dateTime ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:isVersionOf           <http://data.brreg.no/datakatalog/dataset/99> ;
+        dct:relation              <http://data.brreg.no/datakatalog/dataset/99> .
+
+<http://data.brreg.no/datakatalog/katalog/5>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i Skattedirektoratet" ;
+        :datasets     "31, 32" ;
+        :tittel       "SKD datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/974761076> .
+
+dct:hasVersion  a  owl:ObjectProperty .
+
+<http://data.brreg.no/datakatalog/dataset/23>
+        a                dcat:Dataset ;
+        :beskrivelse_en  "A register representing the administrative organizational chart of the government-funded health services in Norway." ;
+        :beskrivelse_no  "I Register over Enheter i Spesialisthelsetjenesten (RESH) vedlikeholdes det administrative organisasjonskartet for den statlig finansierte spesialisthelsetjenesten i Norge, med detaljert beskrivelse av tjenestene som tilbys i kliniske enheter ved hjelp av et kodeverk for spesialisthelsetjenesten (OK2007 versjon 2.0). I tillegg blir alle kliniske enheter knyttet til en bedrift, slik at man kan se eksakt hvilke behandlingssteder disse fordeler seg til.\n\nDen enkelte enhet som registreres i databasen får tildelt en unik identifikator kalt RESH-id. Denne beholdes for alltid, selv om enheten flytter og blir underlagt et annet helseforetak, en annen klinikk/avdeling, eller legges ned. Uttrekk fra databasen eller oppslag i RESH forteller hvor enheten med en bestemt HER-id til enhver tid befinner seg. Bruk av kodeverk og retningslinjer for registrering sikrer at enhetene med lik virksomhet blir sammenlignbare. Enheter med klinisk virksomhet oppgir RESH-id i sine rapporter om aktivitet, kvalitet og ventelister til Norsk Pasientregister (NPR) og Statistisk Sentralbyrå (SSB). Med RESH-id plasseres innrapporterte data til riktig foretak og behandlingssted på grunnlag av uttrekk fra RESH. RESH bidrar dermed til god statistikk og bedre styringsinformasjon. De administrative organisasjonskartene er typisk informasjon til bruk i foretakenes ledelsesinformasjonssystemer (LIS), mens NPR og SSB er mest interessert i plasseringen av kliniske enheter til behandlingssted.\n\nStatlig eide foretak og større private virksomheter som har avtale med de regionale helseforetakene har selv ansvar for å vedlikeholde beskrivelsen av egen virksomhet i RESH." ;
+        :dokumentasjon   "https://register-web.test.nhn.no/" ;
+        :identifikator   "23" ;
+        :keywords        "Adminstrative enheter" ;
+        :landingsside    "https://register.nhn.no/resh" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tittel_no       "Register over Enheter i Spesialisthelsetjenesten" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/dataset/36>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "36" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Elever og studenter ved norske utdanningssteder" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+:hasTelephone  a  owl:ObjectProperty .
+
+:geo_navn  a    owl:DatatypeProperty .
+
+dct:relation  a  owl:ObjectProperty .
+
+<http://data.brreg.no/datakatalog/dataset/49>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Ruter routes" ;
+        :identifikator   "49" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_en       "Ruter routes" ;
+        :tittel_no       "Ruter routes" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/991609407> .
+
+:spatial  a     owl:DatatypeProperty .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974760673>
+        a                     foaf:Agent ;
+        :navn                 "Brønnøysundregistrene" ;
+        :organisasjonsnummer  "974760673" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/985399077>
+        a                     foaf:Agent ;
+        :navn                 "Mattilsynet" ;
+        :organisasjonsnummer  "985399077" .
+
+:tilgangsnivå  a  owl:ObjectProperty .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971526920>
+        a                     foaf:Agent ;
+        :navn                 "SSB" ;
+        :organisasjonsnummer  "971526920" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/991609407>
+        a                     foaf:Agent ;
+        :navn                 "Ruter" ;
+        :organisasjonsnummer  "991609407" .
+
+:språk  a       owl:ObjectProperty .
+
+:tilgangsrettighet_no
+        a       owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/30>
+        a                   dcat:Dataset ;
+        :begrep             "http://www.nav.no/begrep" ;
+        :beskrivelse_no     "Arbeidsgiver- og arbeidstakerregisteret (Aa-registeret) er et register over arbeidsforhold i Norge som Arbeids- og velferdsdirektoratet forvalter. Registeret viser koblingen mellom en arbeidsgiver og dennes arbeidstakere, inneholder opplysninger om arbeidsforholdets type og omfang m.m.\n\nFra 1. januar 2015 har arbeidsgiver innrapportert til Aa-registeret gjennom a-ordningen. A-ordningen er en digital samordning av all rapportering om inntekt, arbeidsforhold og skattetrekk til NAV, Skatteetaten og Statistisk sentralbyrå. Se www.altinn.no/no/a-ordningen/ for mer informasjon.\n\nOffentlige virksomheter kan etter søknad få tilgang til å gjøre oppslag i registeret.\n\nUnntak: SFU, frilanser, selvstendig næringsdrivende" ;
+        :distribusjon       <http://data.brreg.no/datakatalog/distibusjon/13%2C+14> ;
+        :fra                "1978"^^xsd:dateTime ;
+        :frekvens           <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
+        :identifikator      "30" ;
+        :keywords           "Arbeidsforhold, arbeidsgiver, arbeidstaker, arbeidstid, yrke, stillingsprosent, arbeidsforholdstype, permisjon, permittering, Aa-registeret, Aa-reg" ;
+        :kontaktpunkt       <http://data.brreg.no/datakatalog/kontaktpunkt/6> ;
+        :provinens          <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :skjermingshjemmel  "https://www.nav.no/no/Bedrift/Skjemaer%2C+oppgjor%2C+innkreving/NAV+Registerforvaltning/Hva+er+er+Aa-registeret/Tilgang+til+Aa-registret" ;
+        :spatial            "http://sws.geonames.org/3144096/" ;
+        :språk              <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema               <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå       <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no          "Arbeidsgiver- og arbeidstakerregisteret " ;
+        :utgiver            <http://data.brreg.no/enhetsregisteret/enhet/889640782> .
+
+<http://data.brreg.no/datakatalog/location/http%3A%2F%2Fsws.geonames.org%2F6295630%2F>
+        a             dct:Location ;
+        :geo_navn     "World" ;
+        :geo_navn_en  "Verden" ;
+        :geo_navn_no  "Verden" ;
+        :geo_uri      "http://sws.geonames.org/6295630/" .
+
+<http://data.brreg.no/enhetsregisteret/provenance/vedtak>
+        a                  dct:ProvenanceStatement ;
+        :generertAv        "vedtak" ;
+        :opphavsKommentar  "statlig vedtak" .
+
+<http://data.brreg.no/datakatalog/dataset/43>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Matvaretabellen" ;
+        :identifikator   "43" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_en       "Matvaretabellen" ;
+        :tittel_no       "Matvaretabellen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/985399077> .
+
+<http://data.brreg.no/datakatalog/dataset/15>
+        a                dcat:Dataset ;
+        :begrep          "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_no  "Registeret for offentlig støtte (ROFS) er et nasjonalt register for offentlige støttetildelinger som faller inn under EØS-avtalen. Registeret skal gjøre det enklere for offentlige myndigheter, som vurderer å gi offentlig støtte, å få informasjon om foretakene har fått annen offentlig støtte som må tas med i vurderingen.\n" ;
+        :identifikator   "15" ;
+        :keywords        "Offentlig støtte, Foretak" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Registeret for offentlig støtte" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/dataset/28>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/OID+2.16.578.1.12.4.1.1.9060> ;
+        :begrep                   "helsepersonellkategori" ;
+        :beskrivelse_no           "Kodeverket inneholder koder som benyttes for å kategorisere helsepersonell." ;
+        :distribusjon             <http://data.brreg.no/datakatalog/distibusjon/17> ;
+        :dokumentasjon            "https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060" ;
+        :eksempel                 "https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060" ;
+        :identifikator            "28" ;
+        :keywords                 "helsepersonell, kategori, kodeverk" ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/2> ;
+        :landingsside             "https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no                "Helsepersonell" ;
+        :utgivelsesDato           "287.10.2010"^^xsd:dateTime ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/3>
+        a               vcard:Organization ;
+        :avdelingsnavn  "Avdeling datafangst" ;
+        :hasEmail       <mailto:> .
+
+<http://data.brreg.no/datakatalog/dataset/5>
+        a                dcat:Dataset ;
+        :begrep          "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_no  "Akvakulturregisteret inneholder oversikt over akvakulturtillatelser og enkelte vesentlige vedtak knyttet til disse. I tillegg inneholder registeret en oversikt over overføringer, pantsettelser og andre rettigheter som er tinglyst på tillatelsene.\n\n" ;
+        :distribusjon    <http://data.brreg.no/datakatalog/distibusjon/1> ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/WEEKLY> ;
+        :identifikator   "5" ;
+        :keywords        "Organisasjonsnummer" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Akvakulturregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+:iSamsvarMed  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/katalog/4>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett for NAV" ;
+        :datasets     "30" ;
+        :homepage     "http://www.nav.no" ;
+        :tittel       "NAVs datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/889640782> .
+
+<http://data.brreg.no/enhetsregisteret/provenance/bruker>
+        a                  dct:ProvenanceStatement ;
+        :generertAv        "brukerinnsamling" ;
+        :opphavsKommentar  "brukerinnsamlede data" .
+
+<http://data.brreg.no/datakatalog/dataset/22>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Helsetjenestekatalogen (HTK) er en oversikt over behandlingstjenester som tilbys i spesialisthelsetjeneste delvis primærhelsetjeneste\n" ;
+        :dokumentasjon   "https://register-web.test.nhn.no/" ;
+        :identifikator   "22" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tittel_no       "Helsetjenestekatalogen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/dataset/35>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "35" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/6295630/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Norske elever og studenter ved utlandske utdanningssteder støttet av Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+:geo_navn_no  a  owl:DatatypeProperty .
+
+:landingsside  a  owl:DatatypeProperty .
+
+:hasEmail  a    owl:ObjectProperty .
+
+:alternativIdentifikator
+        a       owl:ObjectProperty .
+
+:beskrivelse  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/48>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Domeneregisteret" ;
+        :identifikator   "48" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Domeneregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/985821585> .
+
+:geo_uri  a     owl:DatatypeProperty .
+
+:utgivelsesDato  a  owl:DatatypeProperty .
+
+:til    a       owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/42>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "MATS" ;
+        :identifikator   "42" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "MATS" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/985399077> .
+
+<http://data.brreg.no/datakatalog/dataset/14>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Reservasjonsregisteret inneholder informasjon om privatpersoner som har reservert seg mot direkte adressert reklame i posten og/eller telefonsalg. Alle foretak som sender ut reklame rettet mot privatpersoner, plikter å oppdatere sine kundelister mot Reservasjonsregisteret minst 1 gang per måned.\n" ;
+        :identifikator   "14" ;
+        :keywords        "Personopplysninger" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Reservasjonsregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/katalog/9>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett for Mattilsynet" ;
+        :datasets     "42, 43" ;
+        :homepage     "http://mattilsynet.no" ;
+        :tittel       "Mattilsynets datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/985399077> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/889640782>
+        a                     foaf:Agent ;
+        :navn                 "NAV" ;
+        :organisasjonsnummer  "889640782" .
+
+<http://data.brreg.no/datakatalog/dataset/27>
+        a                dcat:Dataset ;
+        :begrep          "prosedyre" ;
+        :beskrivelse_no  "De medisinske, kirurgiske og radiologiske prosedyrene utføres av ulike deler av spesialisthelsetjenesten. Kodeverkene NCMP, NCSP og NCRP er tilpasset hverandre slik at de kan brukes uten forveksling." ;
+        :distribusjon    <http://data.brreg.no/datakatalog/distibusjon/16> ;
+        :dokumentasjon   "https://ehelse.no/standarder-kodeverk-og-referansekatalog/helsefaglige-kodeverk/prosedyrekodeverkene-kodeverk-for-medisinske-kirurgiske-og-radiologiske-prosedyrer-ncmp-ncsp-og-ncrp" ;
+        :fra             "1.1.2017"^^xsd:dateTime ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        :identifikator   "27" ;
+        :keywords        "spesialisthelsetjeneste, prosedyre, kodeverk" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/2> ;
+        :landingsside    "https://ehelse.no/standarder-kodeverk-og-referansekatalog/helsefaglige-kodeverk/prosedyrekodeverkene-kodeverk-for-medisinske-kirurgiske-og-radiologiske-prosedyrer-ncmp-ncsp-og-ncrp" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :til             "365.12.2018"^^xsd:dateTime ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Prosedyrekodeverkene (Kodeverk for medisinske, kirurgiske og radiologiske prosedyrer, NCMP, NCSP og NCRP)" ;
+        :utgivelsesDato  "267.9.2016"^^xsd:dateTime ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/2>
+        a               vcard:Organization ;
+        :avdelingsnavn  "e-helse, kodeverk" ;
+        :hasEmail       <mailto:kodehjelp%40ehelse.no> ;
+        :hasTelephone   <tel:%2B4721495070> .
+
+:tilgangsrettighet_en
+        a       owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/4>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/4> ;
+        :beskrivelse_no           "Regnskapsregisteret mottar årlig ca 315 000 (pr år 2017) årsregnskap fra aksjeselskaper, sparebanker, forsikringsselskaper og andre regnskapspliktige foretak i Norge. Årsregnskapene inneholder regnskapstall i elektronisk form. I tillegg er det vedlagt styrets årsberetning, noter, kontantstrømanalyse og revisors beretning, hvor dette kreves.\nAlle årsregnskap er tilgjengelig for enhver, og er den viktigste datakilden for alle som vil skaffe seg rede på den økonomiske tilstanden i norsk næringsliv.\n\n" ;
+        :frekvens                 <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        :identifikator            "4" ;
+        :keywords                 "Inntekter, Kostnader, Driftsresultat, Finansinntekter, Finanskostnader, Resultat, Overføringer, Balanse, Egenkapital" ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens                <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :skjermingshjemmel        "https://lovdata.no/lov/1998-07-17-56/§8-1" ;
+        :spatial                  "http://sws.geonames.org/3144096/" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no                "Regnskapsregisteret" ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/katalog/3>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i Helsedirektoratet" ;
+        :datasets     "39" ;
+        :homepage     "http://helsedirektoratet.no" ;
+        :tittel       "Helsedir datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/983544622> .
+
+<http://data.brreg.no/datakatalog/dataset/21>
+        a                dcat:Dataset ;
+        :beskrivelse_en  "A register of all healthcare personnel who are authorized to practice in Norway in accordance with current legislation; this includes licensed veterinarians. The registry is managed and governed by the Directorate of Health." ;
+        :beskrivelse_no  "Helsepersonellregisteret (HPR) er helsemyndighetens register over alt helsepersonell med autorisasjon eller lisens etter helsepersonelloven, og veterinærer med autorisasjon eller lisens etter dyrehelsepersonelloven. Ved søk gis opplysning om gjeldende autorisasjon, lisens og forskrivningsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere." ;
+        :dokumentasjon   "https://register-web.test.nhn.no/" ;
+        :identifikator   "21" ;
+        :keywords        "Personopplysninger, Helsepersonell, HPR-nummer, Navn, Fødselsdato, Kjønn, Privatadresse, Statsborgerskap, annen identifikasjon, SSB-koden, Opplysninger om godkjenning, Helsepersonellkategori, Godkjenningsdato, Vilkår, Utløpsdato, Opplysninger om utdanning, Opplysninger om ansettelse/ansvar" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tittel_no       "Helsepersonellregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+vcard:Organization  a  owl:Class .
+
+<http://data.brreg.no/datakatalog/dataset/34>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "34" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/6295630/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Elever og studenter med utdanning i utlandet med støtte fra Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971032146>
+        a                     foaf:Agent ;
+        :navn                 "KS" ;
+        :organisasjonsnummer  "971032146" .
+
+:kilde  a       owl:ObjectProperty .
+
+dcat:Catalog  a  owl:Class .
+
+<http://data.brreg.no/datakatalog/dataset/47>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Varemerkeregisteret" ;
+        :identifikator   "47" ;
+        :keywords        "Søknadsnummer, Søker, Nice-klassifikasjon, Type merke, Vare, Varefortegnelse, Figurative elementer " ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Varemerkeregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/971526157> .
+
+:beskrivelse_no  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/19>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Kommunalt oppgaveregister er..." ;
+        :identifikator   "19" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Kommunalt rapporteringsregister" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/915933149>
+        a                     foaf:Agent ;
+        :navn                 "Direktoratet for e-Helse" ;
+        :organisasjonsnummer  "915933149" .
+
+:keywords  a    owl:DatatypeProperty .
+
+:provinens  a   owl:ObjectProperty .
+
+dct:isVersionOf  a  owl:ObjectProperty .
+
+:frekvens  a    owl:ObjectProperty .
+
+<http://data.brreg.no/datakatalog/dataset/13>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Gjeldsordningsregisteret inneholder opplysninger om hvem som har fått innvilget gjeldsforhandlinger og gjeldsordninger.\n\n" ;
+        :identifikator   "13" ;
+        :keywords        "Personopplysninger" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Gjeldsordningsregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/dataset/41>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "41" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Svenske statsborgere med støtte fra Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+<http://data.brreg.no/datakatalog/dataset/9>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "EMAS er et register med frivillig ordning for miljøregistrering av\norganisasjoner innen EU. \nEMAS-godkjenning betyr at organisasjonen både overholder og går lenger i\nsitt miljøarbeid enn det som er lovfestede miljøkrav. Klima- og\nmiljødepartementet er hovedansvarlig for EMAS-ordningen i Norge, med\nMiljødirektoratet som utøvende organ" ;
+        :identifikator   "9" ;
+        :keywords        "Konkurskarantene" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "EMAS-registeret (Eco-Management and Audit Scheme)" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+:geo_navn_en  a  owl:DatatypeProperty .
+
+:tittel  a      owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/katalog/8>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i Oslo Kommune" ;
+        :datasets     "44" ;
+        :tittel       "Oslo Kommunes datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/958935420> .
+
+foaf:Agent  a   owl:Class .
+
+<http://data.brreg.no/datakatalog/dataset/26>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/OID+2.16.578.1.12.4.1.1.7110> ;
+        :begrep                   "helsetilstand" ;
+        :beskrivelse_no           "Dette kodeverket benyttes for koding av sykdommer og beslektede helseproblemer. Anvendes i spesialisthelsetjenesten." ;
+        :distribusjon             <http://data.brreg.no/datakatalog/distibusjon/15> ;
+        :dokumentasjon            "https://ehelse.no/Sider/RK_002_1_ICD-10.aspx" ;
+        :fra                      "1.1.2016"^^xsd:dateTime ;
+        :frekvens                 <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        :iSamsvarMed              "ICD-10 utgitt av WHO" ;
+        :identifikator            "26" ;
+        :keywords                 "spesialisthelsetjeneste, diagnose, sykdom, skade, symptom, kodeverk" ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/2> ;
+        :landingsside             "https://ehelse.no/Sider/Kodeverket-ICD-10-(og-ICD-11).aspx" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :til                      "366.12.2016"^^xsd:dateTime ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_en                "International Statistical Classification of Diseases and Related Health Problems 10th Revision" ;
+        :tittel_no                "ICD-10: Den internasjonale statistiske klassifikasjonen av sykdommer og beslektede helseproblemer" ;
+        :utgivelsesDato           "1.1.2016"^^xsd:dateTime ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/1>
+        a               vcard:Organization ;
+        :avdelingsnavn  "Foretaksregisteret" ;
+        :hasEmail       <mailto:firmapost%40brreg.no> ;
+        :hasTelephone   <tel:%2B4775007500> .
+
+:tema   a       owl:ObjectProperty .
+
+<http://data.brreg.no/datakatalog/dataset/3>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/3> ;
+        :beskrivelse_no           "Løsøreregisteret er et tinglysingsregister for rettigheter og pant i løsøre. En tinglyst rettighet eller pant, gir rettsvern overfor kreditorer. Løsøreregisteret omfatter ikke tinglysning i fast eiendom, skip og luftfartøyer." ;
+        :frekvens                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator            "3" ;
+        :keywords                 "Løsøre, Pant" ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :modifisert               "2043-12-12"^^xsd:dateTime ;
+        :provinens                <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :skjermingshjemmel        "https://lovdata.no/dokument/NL/lov/1935-06-07-2" ;
+        :spatial                  "http://sws.geonames.org/3144096/" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no                "Løsøreregisteret" ;
+        :utgivelsesDato           "1980-01-01"^^xsd:dateTime ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+:tittel_no  a   owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/39>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "39" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Tildelt stipend og lån fra Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+dct:ProvenanceStatement
+        a       owl:Class .
+
+:datasets  a    owl:DatatypeProperty .
+
+:organisasjonsnummer  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/katalog/2>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i direktoratet for e-helse" ;
+        :datasets     "20,21,22,24,25,26,27,28" ;
+        :homepage     "http://helseportalen.no" ;
+        :tittel       "Direktoratet for e-helse datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/dataset/20>
+        a                dcat:Dataset ;
+        :beskrivelse_en  "A common address book containing data for precise exchange of health data sent electronically and by mail within the healthcare sector. This applies both to the exchange of electronic messages and mail shipments." ;
+        :beskrivelse_no  "Adresseregisteret (AR) er et felles nasjonalt register for presis adressering ved utveksling av helseopplysninger som sendes elektronisk eller per post innen helse- og omsorgssektoren." ;
+        :dokumentasjon   "https://register-web.test.nhn.no/" ;
+        :identifikator   "20" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tittel_no       "Adresseregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://data.brreg.no/datakatalog/dataset/33>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Virksomhets- og foretaksregister" ;
+        :identifikator   "33" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Virksomhets- og foretaksregister" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/971526920> .
+
+<http://data.brreg.no/datakatalog/dataset/46>
+        a                dcat:Dataset ;
+        :begrep          "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_no  "Registeret inneheld oversikt over godkjende aktørar i lotterimarknaden og gjeldande løyve for lotteri og bingo." ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "46" ;
+        :keywords        "Lotteri, Bingo, Organisasjonsnummer, Adresse, Lokale, Formål" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Lotteriregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/dataset/18>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Oppgaveregisteret er..." ;
+        :identifikator   "18" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Oppgaveregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+:fra    a       owl:DatatypeProperty .
+
+:eksempel  a    owl:DatatypeProperty .
+
+dct:Location  a  owl:Class .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/6>
+        a               vcard:Organization ;
+        :avdelingsnavn  "NAV Registerforvaltning" ;
+        :hasEmail       <mailto:nav.registerforvaltning%40nav.no> .
+
+<http://data.brreg.no/datakatalog/dataset/8>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Konkursregisteret inneholder opplysninger om konkursbo og tvangsavviklingsbo. Herunder informasjon om konkursåpning/-slutning, samt ansvarlige personer knyttet til det aktuelle foretak og roller disse har i andre foretak. Konkursregisteret har også opplysninger om hvilke personer som er ilagt konkurskarantene.\n" ;
+        :identifikator   "8" ;
+        :keywords        "Konkurs, Gjeldsforhandling, Tvangsakkord, Konkursbo, Tvangsavviklingsbo, Konkurskarantene" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Konkursregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974761076>
+        a                     foaf:Agent ;
+        :navn                 "Skatteetaten" ;
+        :organisasjonsnummer  "974761076" .
+
+<http://data.brreg.no/datakatalog/dataset/40>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "40" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Danske statsborgere med støtte fra Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+<http://data.brreg.no/datakatalog/dataset/12>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Ektepaktregisteret inneholder tinglyste avtaler mellom ektefeller/registrerte partnere, som regulerer formueforhold på andre måter enn det som følger det ordinære lovverket, f.eks særeie.\n" ;
+        :identifikator   "12" ;
+        :keywords        "Ektepakt, Personopplysninger,  Adresse, Formueforhold, Tinglysning, Ektefelle, Særeie, Felleseie, Avtale" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/3144096/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_no       "Ektepaktregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/datakatalog/katalog/7>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i Lånekassen" ;
+        :datasets     "34,35,36,37,38,39,40,41" ;
+        :tittel       "Lånekassa datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/982531950>
+        a                     foaf:Agent ;
+        :navn                 "Politidirektoratet" ;
+        :organisasjonsnummer  "982531950" .
+
+:beskrivelse_en  a  owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/25>
+        a                dcat:Dataset ;
+        :beskrivelse_en  "This register provides an overview of all the doctors and their respectrive patients, who are part of the Municipal Regular GP Scheme (Fastlegeordning)." ;
+        :beskrivelse_no  "Fastlegeregisteret" ;
+        :dokumentasjon   "https://register-web.test.nhn.no/" ;
+        :identifikator   "25" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        :tittel_no       "Fastlegeregisteret" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/915933149> .
+
+<http://publications.europa.eu/resource/authority/access-right/PUBLIC>
+        a                      dct:RightsStatement ;
+        :tilgangsrettighet_en  "Public" ;
+        :tilgangsrettighet_no  "Offentlig" .
+
+<http://data.brreg.no/datakatalog/dataset/38>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "lorum ipsum" ;
+        :frekvens        <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :identifikator   "38" ;
+        :kontaktpunkt    <http://data.brreg.no/datakatalog/kontaktpunkt/3> ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial         "http://sws.geonames.org/6295630/" ;
+        :språk           <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        :tilgangsnivå    <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        :tittel_no       "Studenter med avsluttede utdanninger i utlandet støtet av Lånekassen" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/960885406> .
+
+<http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC>
+        a                      dct:RightsStatement ;
+        :tilgangsrettighet_en  "Non-public" ;
+        :tilgangsrettighet_no  "Ikke-offentlig" .
+
+<http://data.brreg.no/datakatalog/dataset/2>
+        a                         dcat:Dataset ;
+        :alternativIdentifikator  <http://data.brreg.no/datakatalog/identifikator/2> ;
+        :begrep                   "http://brreg.no/begrep/orgnr" ;
+        :beskrivelse_en           "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis." ;
+        :beskrivelse_no           "Enhetsregisteret inneholder oversikt over alle registrerte enheter Norge innen næringsliv, offentlig og frivillig sektor. Enhetsregisteret tildeler organisasjonsnummer, og samordner opplysninger om næringsliv og offentlige etater som finnes i ulike offentlige registre." ;
+        :distribusjon             <http://data.brreg.no/datakatalog/distibusjon/12> ;
+        :dokumentasjon            "https://confluence.brreg.no/display/DBNPUB/API" ;
+        :eksempel                 "http://data.brreg.no/enhetsregisteret/enhet.json?page=0&size=5&$filter=antallAnsatte%20ge%2010" ;
+        :fra                      "2001-07-03"^^xsd:dateTime ;
+        :frekvens                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        :iSamsvarMed              "https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret" ;
+        :identifikator            "2" ;
+        :keywords                 "Organisasjonsnummer, Grunndata, Roller, Enhet, Enhetsnavn, Bransje" ;
+        :kilde                    <http://data.brreg.no/datakatalog/dataset/2> ;
+        :kontaktpunkt             <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        :landingsside             "https://www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/einingsregisteret/" ;
+        :modifisert               "2043-12-12"^^xsd:dateTime ;
+        :provinens                <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :spatial                  "http://sws.geonames.org/3144096/" ;
+        :språk                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        :tema                     <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :til                      "2048-05-12"^^xsd:dateTime ;
+        :tilgangsnivå             <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        :tittel_en                "Central Coordinating Register for Legal Entities" ;
+        :tittel_no                "Enhetsregisteret" ;
+        :utgivelsesDato           "1999-12-03"^^xsd:dateTime ;
+        :utgiver                  <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:hasVersion            <http://data.brreg.no/datakatalog/dataset/99> ;
+        dct:isVersionOf           <http://data.brreg.no/datakatalog/dataset/99> ;
+        dct:relation              <http://data.brreg.no/datakatalog/dataset/99> .
+
+<http://data.brreg.no/datakatalog/location/http%3A%2F%2Fsws.geonames.org%2F3144096%2F>
+        a             dct:Location ;
+        :geo_navn     "Norway" ;
+        :geo_navn_en  "Norway" ;
+        :geo_navn_no  "Norge" ;
+        :geo_uri      "http://sws.geonames.org/3144096/" .
+
+<http://data.brreg.no/datakatalog/katalog/1>
+        a             dcat:Catalog ;
+        :beskrivelse  "Katalog over datasett i Brønnøysundregistrene" ;
+        :datasets     "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19" ;
+        :homepage     "http://brreg.no" ;
+        :tittel       "Brønnøysundregistrene datakatalog" ;
+        :utgiver      <http://data.brreg.no/enhetsregisteret/enhet/974760673> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/960885406>
+        a                     foaf:Agent ;
+        :navn                 "Statens Lånekasse for Utdanning" ;
+        :organisasjonsnummer  "960885406" .
+
+dcat:Dataset  a  owl:Class .
+
+<http://data.brreg.no/datakatalog/dataset/32>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Register over upersonlige skatteytere" ;
+        :identifikator   "32" ;
+        :provinens       <http://data.brreg.no/datakatalog/provenance/vedtak> ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Register over upersonlige skatteytere" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/974761076> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/958935420>
+        a                     foaf:Agent ;
+        :navn                 "Oslo Kommune" ;
+        :organisasjonsnummer  "958935420" .
+
+:kontaktpunkt  a  owl:ObjectProperty .
+
+:tittel_en  a   owl:DatatypeProperty .
+
+<http://data.brreg.no/datakatalog/dataset/45>
+        a                dcat:Dataset ;
+        :beskrivelse_no  "Barnehagefakta.no kan du finne barnehager og se informasjon om dem." ;
+        :identifikator   "45" ;
+        :tema            <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        :tittel_no       "Barnehagefakta" ;
+        :utgiver         <http://data.brreg.no/enhetsregisteret/enhet/970018131> .
+
+:begrep  a      owl:DatatypeProperty .

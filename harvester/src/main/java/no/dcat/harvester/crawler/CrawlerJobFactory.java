@@ -1,6 +1,7 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
+import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
@@ -36,6 +37,7 @@ public class CrawlerJobFactory {
 	private FusekiResultHandler fusekiResultHandler;
 	private ElasticSearchResultHandler elasticSearchResultHandler;
 	private CrawlerResultHandler publisherHandler;
+	private CrawlerResultHandler codeHandler;
 
 	private final Logger logger = LoggerFactory.getLogger(CrawlerJobFactory.class);
 
@@ -44,7 +46,6 @@ public class CrawlerJobFactory {
 		adminDataStore = new AdminDataStore(new Fuseki(fusekiSettings.getAdminServiceUri()));
 		dcatDataStore = new DcatDataStore(new Fuseki(fusekiSettings.getDcatServiceUri()));
 		fusekiResultHandler = new FusekiResultHandler(dcatDataStore, adminDataStore);
-		
 	}
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
@@ -59,6 +60,13 @@ public class CrawlerJobFactory {
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}
 
+	public CrawlerCodeJob createCrawlerCodeJob(String sourceUrl, String indexType, Boolean reload) {
 
+		logger.debug("applicationsettings.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
+		logger.debug("applicationsettings.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
+		logger.debug("applicationsettings.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
 
+		codeHandler = new CodeCrawlerHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster(), indexType, reload);
+		return new CrawlerCodeJob(sourceUrl, codeHandler);
+	}
 }

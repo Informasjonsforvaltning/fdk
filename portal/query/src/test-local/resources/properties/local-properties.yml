@@ -14,7 +14,6 @@ application:
 spring:
     profiles: development
 application:
-  #elasticsearchHost: localhost
-  elasticsearchHost: 192.168.99.100
+  elasticsearchHost: localhost
   elasticsearchPort: 9300
   clusterName: elasticsearch

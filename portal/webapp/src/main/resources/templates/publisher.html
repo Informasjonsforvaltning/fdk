@@ -45,7 +45,7 @@
     <div lang="en" th:replace="search :: search"/>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" id="publishers">
     <div class="row">
         <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
             <h4>

@@ -50,6 +50,24 @@ public final class ElasticSearchResponse {
         return listObjects;
     }
 
+    public <T> Map<String, T> toMapOfObjects(String json, String queryName, String valueName, Class<T> classOfT) {
+        Map<String, T> mapOfObjects = new HashMap<>();
+
+        JsonElement completeResponseAsElement = new JsonParser().parse(json);
+        JsonObject completeResponseAsObject = completeResponseAsElement.getAsJsonObject();
+        JsonObject aggregationsAsElement = completeResponseAsObject.getAsJsonObject("aggregations");
+        JsonObject themeCountAsElement = aggregationsAsElement.getAsJsonObject(queryName);
+        JsonArray bucketsAsArray = themeCountAsElement.getAsJsonArray("buckets");
+
+        bucketsAsArray
+                .forEach(bucket ->
+                        mapOfObjects.put(bucket.getAsJsonObject().get("key").getAsString(),
+                                new Gson().fromJson(bucket.getAsJsonObject().get(valueName), classOfT)));
+
+
+        return mapOfObjects;
+    }
+
     public Map<String, String> toMapOfStrings(String json) {
         Map maoResponse = new HashMap<>();
 

@@ -12,7 +12,7 @@ RUN adduser --disabled-password --gid 0 --gecos "GDOC" gdoc
 # This is important. Must allow any user to make files in home directory
 RUN mkdir -m 0777 /home/1000 && chown gdoc:root /home/1000
 
-#Force home for any user to be
+#Force home for any user to be. Home is not set for openshift user.
 ENV HOME=/home/1000
 
 # Set the working directory to home directory

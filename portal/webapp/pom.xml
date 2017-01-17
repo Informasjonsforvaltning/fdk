@@ -17,25 +17,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
         </dependency>
-        <!--dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency-->
-        <!-- må være med for å kjøre i intellij -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>runtime</scope>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -50,7 +42,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -217,7 +208,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--version>2.5.6</version-->
                     <options>maxparams:3,indent,camelcase,eqeqeq,forin,immed,latedef,noarg,noempty,nonew</options>
                     <globals>require,$,yourFunkyJavascriptModule</globals>
                     <configFile>src/test/resources/jshint.conf.js</configFile>
@@ -282,12 +272,6 @@
                     <generateGitPropertiesFilename>${basedir}/target/classes/git.properties</generateGitPropertiesFilename>
                 </configuration>
             </plugin>
-
-            <!-- flyttet inn i profil. skal ikke brukes på openshift
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin> -->
         </plugins>
     </build>
 

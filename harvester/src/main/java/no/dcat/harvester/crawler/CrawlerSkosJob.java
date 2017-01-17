@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class for loading themes into elasticsearch. The rdf-formated Themes are retrieved from an URL.
@@ -45,29 +44,22 @@ public class CrawlerSkosJob implements Runnable {
                 handler.process(themeSource, model);
             }
         } catch (JenaException e) {
-            String message = e.getMessage();
-
-            try {
-                if (message.contains("[line: ")) {
-                    String[] split = message.split("]");
-                    split[0] = "";
-                    message = Arrays.stream(split)
-                            .map(i -> i.toString())
-                            .collect(Collectors.joining("]"));
-                    message = message.substring(1, message.length()).trim();
-                }
-            } catch (Exception e2) {
+            String message = CrawlerJob.formatJenaException(e);
+            if (adminDataStore != null) {
+                adminDataStore.addCrawlResults(themeSource, DifiMeta.syntaxError, message);
             }
-            if (adminDataStore != null) adminDataStore.addCrawlResults(themeSource, DifiMeta.syntaxError, message);
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", themeSource.toString(), e.toString()), e);
 
         } catch (HttpException e) {
-            if (adminDataStore != null)
+            if (adminDataStore != null) {
                 adminDataStore.addCrawlResults(themeSource, DifiMeta.networkError, e.getMessage());
+            }
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", themeSource.toString(), e.toString()), e);
         } catch (Exception e) {
+            if (adminDataStore != null) {
+                adminDataStore.addCrawlResults(themeSource, DifiMeta.error, e.getMessage());
+            }
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", themeSource.toString(), e.toString()), e);
-            if (adminDataStore != null) adminDataStore.addCrawlResults(themeSource, DifiMeta.error, e.getMessage());
         }
     }
 }

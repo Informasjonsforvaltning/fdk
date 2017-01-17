@@ -24,12 +24,13 @@ public class PortalConfiguration {
     private static final String QUERY_SERVICE_DETAIL = "/detail";
     private static final String QUERY_SERVICE_THEMES = "/themes";
     private static final String QUERY_SERVICE_PUBLISHER = "/publisher";
+    private static final String QUERY_THEME_COUNT = "/themecount";
     private static final String QUERY_SERVICE_PUBLISHER_COUNT = "/publishercount";
 
     @Value("${spring.profiles.active:development}")
     private String profile;
 
-    @Value("${queryServiceExternal:qse}")
+    @Value("${application.queryServiceExternal:qse}")
     private String queryServiceExternal;
 
     public final String getQueryServiceExternal() {
@@ -85,6 +86,10 @@ public class PortalConfiguration {
 
     public final String getDetailsServiceUrl() {
         return getQueryService() + QUERY_SERVICE_DETAIL;
+    }
+
+    public final String getThemeCounterUrl() {
+        return getQueryService() + QUERY_THEME_COUNT;
     }
 
     /**

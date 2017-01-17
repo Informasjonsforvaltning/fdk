@@ -29,18 +29,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.net.URISyntaxException;
+import java.util.*;
 
 
 /**
  * Delivers html pages to support the DCAT Portal application.
- *
  *
  * Created by nodavsko on 12.10.2016.
  */
@@ -72,13 +68,13 @@ public class PortalController {
      */
     @RequestMapping(value = {"/results"})
     final ModelAndView result(final HttpSession session,
-                              @RequestParam(value = "q", defaultValue = "") String q,
+                              @RequestParam(value = "q", defaultValue = "") String query,
                               @RequestParam(value = "theme", defaultValue = "") String theme,
                               @RequestParam(value = "publisher", defaultValue = "") String publisher) {
 
         ModelAndView model = new ModelAndView(MODEL_RESULT);
         model.addObject("themes", getCodeLists());
-        model.addObject("query", q);
+        model.addObject("query", query);
 
         logger.debug(buildMetadata.getQueryServiceExternal());
         logger.debug(buildMetadata.getVersionInformation());
@@ -126,17 +122,17 @@ public class PortalController {
      * Controller for getting all themes loaded in elasticsearch.
      * <p/>
      * Retrieves all themes that is loaded into elasticsearch.
-     * The list is sorted on theme-name and finally added to the viewmodell.
+     * The list is sorted on theme-name and finally added to the view model.
      * <p/>
      *
-     * @return A list of DatatTheme attatched to a ModelAndView.
+     * @return A list of DataTheme attached to a ModelAndView.
      */
     @RequestMapping({"/"})
     public ModelAndView themes() {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
-        Locale l = LocaleContextHolder.getLocale();
-        logger.debug(l.getLanguage());
+        Locale locale = LocaleContextHolder.getLocale();
+        logger.debug(locale.getLanguage());
 
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
@@ -144,22 +140,35 @@ public class PortalController {
             logger.debug("Query for all themes at URL: " + uri.toString());
 
             String json = httpGet(httpClient, uri);
-
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
 
-            Collections.sort(dataThemes, new ThemeTitleComparator(l.getLanguage() == "en" ? "en" : "nb"));
+            Map<String, BigInteger> themeCounts = getNumberOfElementsForThemes();
+            dataThemes.forEach(dataTheme -> dataTheme.setNumberOfHits(themeCounts.get(dataTheme.getCode()).intValue()));
+
+            Collections.sort(dataThemes, new ThemeTitleComparator(locale.getLanguage() == "en" ? "en" : "nb"));
 
             logger.debug(String.format("Found datathemes: %s", json));
-        } catch (Exception e) {
+        } catch (IOException | URISyntaxException e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
 
-        model.addObject("lang", l.getLanguage() == "en" ? "en" : "nb");
+        model.addObject("lang", locale.getLanguage() == "en" ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
+    }
+
+    private Map<String, BigInteger> getNumberOfElementsForThemes() throws URISyntaxException, IOException{
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        URI uri = new URIBuilder(buildMetadata.getThemeCounterUrl()).build();
+        logger.debug("Query for all themes at URL: " + uri.toString());
+
+        String json = httpGet(httpClient, uri);
+
+        Map<String, BigInteger> themeCounts = new ElasticSearchResponse().toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
+        return themeCounts;
     }
 
     /**
@@ -221,11 +230,9 @@ public class PortalController {
     /**
      * Returns a JSON structure that contains the code-lists that the portal webapp uses.
      * The code-lists are fetched from the query service first time.
-     * <p>
-     * Code lists:
+     * <p> Code lists:
      * - data-theme (EU Themes)
-     * <p>
-     * TODO - add necessary codelists
+     * <p> TODO - add necessary codelists
      *
      * @return a JSON of the code-lists. { "data-theme" : [ {"AGRI" : {"nb": "Jord og skogbruk"}}, ...], ...}
      */

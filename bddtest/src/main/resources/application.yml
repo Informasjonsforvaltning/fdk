@@ -1,8 +1,5 @@
-application:
-  portal: http://192.168.99.100:8080
-  elasticsearch:
-    host: http://192.168.99.100
-    port: 9200
-  admin: http://192.168.99.100:8082
-  gdoc: http://192.168.99.100:8084
+logging:
+  level.: DEBUG
+  level.no.brreg: INFO
+  level.org.springframework: INFO
 

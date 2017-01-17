@@ -88,3 +88,4 @@ public class DcatAdminRestController {
         return new DcatSourceDto(domain.getId(), domain.getDescription(), domain.getUrl(), domain.getUser(), domain.getOrgnumber());
     }
 }
+

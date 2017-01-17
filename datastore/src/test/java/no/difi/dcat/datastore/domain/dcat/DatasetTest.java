@@ -43,7 +43,17 @@ public class DatasetTest {
         Resource catalogResource = catalogIterator.next();
         Resource datasetResource = datasetIterator.next();
 
-        data = DatasetBuilder.create(datasetResource, catalogResource, new HashMap<>());
+        //Create codes.
+        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
+        Map<String, SkosCode> locations = new HashMap<>();
+
+        codes.put(Types.PROVENANCESTATEMENT.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
+        codes.put(Types.LINGUISTICSYSTEM.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
+        codes.put(Types.RIGTHSSTATEMENT.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
+        codes.put(Types.FREQUENCY.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
+        locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
+
+        data = DatasetBuilder.create(datasetResource, catalogResource, locations, codes, new HashMap<>());
     }
 
     @Test
@@ -72,13 +82,13 @@ public class DatasetTest {
         expected.setOrganizationUnit("AAS");
         expected.setHasURL("httpd://skatt.no/schema");
 
-        Assert.assertEquals("id expected",expected.getId(), actual.getId());
-        Assert.assertEquals("id expected",expected.getFullname(), actual.getFullname());
-        Assert.assertEquals("id expected",expected.getTelephone(), actual.getTelephone());
-        Assert.assertEquals("id expected",expected.getEmail(), actual.getEmail());
-        Assert.assertEquals("Org. name expected",expected.getOrganizationName(), actual.getOrganizationName());
-        Assert.assertEquals("Org. unit expected",expected.getOrganizationUnit(), actual.getOrganizationUnit());
-        Assert.assertEquals("Url expected",expected.getHasURL(), actual.getHasURL());
+        Assert.assertEquals("id expected", expected.getId(), actual.getId());
+        Assert.assertEquals("id expected", expected.getFullname(), actual.getFullname());
+        Assert.assertEquals("id expected", expected.getTelephone(), actual.getTelephone());
+        Assert.assertEquals("id expected", expected.getEmail(), actual.getEmail());
+        Assert.assertEquals("Org. name expected", expected.getOrganizationName(), actual.getOrganizationName());
+        Assert.assertEquals("Org. unit expected", expected.getOrganizationUnit(), actual.getOrganizationUnit());
+        Assert.assertEquals("Url expected", expected.getHasURL(), actual.getHasURL());
     }
 
     @Test
@@ -86,22 +96,38 @@ public class DatasetTest {
         Dataset expected = new Dataset();
         expected.setIdentifier(createListOfStrings("10"));
         expected.setSubject(createListOfStrings("http://brreg.no/begrep/orgnr"));
-        expected.setAccruralPeriodicity("http://publications.europa.eu/resource/authority/frequency/CONT");
+
+        Map<String, String> accrualPeriodicity = new HashMap<String, String>();
+        accrualPeriodicity.put("no", "kontinuerlig");
+        expected.setAccrualPeriodicity(accrualPeriodicity);
+
         expected.setPage(createListOfStrings("https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/"));
         expected.setADMSIdentifier(createListOfStrings("http://data.brreg.no/identifikator/99"));
         expected.setType("Type");
-        expected.setAccessRights("http://publications.europa.eu/resource/authority/dataset-access/PUBLIC");
+
+        Map<String, String> accessRigth = new HashMap<String, String>();
+        accessRigth.put("no", "Offentlig");
+        expected.setAccessRights(accessRigth);
+
         expected.setDescription(createMapOfStrings("Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"));
         expected.setIssued(createDate("01-01-2009 00:00:00"));
         expected.setLandingPage("https://w2.brreg.no/frivillighetsregisteret/");
-        expected.setLanguage("http://publications.europa.eu/resource/authority/language/2");
-        expected.setProvenance("http://data.brreg.no/datakatalog/provinens/vedtak");
-        expected.setSpatial(createListOfStrings("http://sws.geonames.org/3144096/"));
+
+        Map<String, String> language = new HashMap<String, String>();
+        language.put("no", "norsk");
+        expected.setLanguage(language);
+
+        Map<String, String> provinance = new HashMap<String, String>();
+        provinance.put("no", "statlig vedtak");
+        expected.setProvenance(provinance);
+
         expected.setTitle(createMapOfStrings("Frivillighetsregisteret"));
+
+        expected.setSpatial(createListOfMaps("Norge"));
 
         Assert.assertEquals(expected.getIdentifier(), data.getIdentifier());
         Assert.assertEquals(expected.getSubject(), data.getSubject());
-        Assert.assertEquals(expected.getAccruralPeriodicity(), data.getAccruralPeriodicity());
+        Assert.assertEquals(expected.getAccrualPeriodicity(), data.getAccrualPeriodicity());
         Assert.assertEquals(expected.getPage(), data.getPage());
         Assert.assertEquals(expected.getADMSIdentifier(), data.getADMSIdentifier());
         Assert.assertEquals(expected.getType(), data.getType());
@@ -115,6 +141,17 @@ public class DatasetTest {
         Assert.assertEquals(expected.getTitle(), data.getTitle());
     }
 
+    private Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
+        Map titles = new HashMap();
+        titles.put("no", norwegianTitle);
+
+        SkosCode skosCode = new SkosCode(code, titles);
+        Map<String, SkosCode> CodeMap = new HashMap<>();
+
+        CodeMap.put(code, skosCode);
+        return CodeMap;
+    }
+
     private Date createDate(String dateInString) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         return sdf.parse(dateInString);
@@ -123,6 +160,15 @@ public class DatasetTest {
     private List createListOfStrings(String data) {
         List list = new ArrayList<>();
         list.add(data);
+        return list;
+    }
+
+    private List<Map<String, String>> createListOfMaps(String data) {
+        Map<String, String> map = new HashMap<>();
+        map.put("no", data);
+
+        List<Map<String, String>> list = new ArrayList<>();
+        list.add(map);
         return list;
     }
 

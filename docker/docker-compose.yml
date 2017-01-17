@@ -1,14 +1,7 @@
 version: "2"
 
 services:
-  gdoc:
-    image: "fdk/gdoc-import:${TAG}"
-    ports:
-      - "8084:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-    networks:
-      platform:
+
 
   portal:
     image: "fdk/webapp:${TAG}"
@@ -16,9 +9,8 @@ services:
       - "8080:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.queryService=http://192.168.99.100:8083
-     - application.queryServiceExternal=http://192.168.99.100:8083
-     #- application.simpleQueryServiceURL=http://localhost:8083/search
+     - application.queryService=http://query:8080
+     - application.queryServiceExternal=http://localhost:8083
     links:
       - query
     networks:
@@ -32,16 +24,25 @@ services:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
     links:
       - elasticsearch
     networks:
       platform:
 
+  gdoc:
+    image: "fdk/gdoc-import:${TAG}"
+    ports:
+      - "8084:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    networks:
+      platform:
+
+
   fuseki:
     image: "fdk/fuseki:${TAG}"
-    #volumes:
-    #  - ./data/fuseki:/etc/fuseki/databases/
+    volumes:
+      - ./data/fuseki:/etc/fuseki/databases/
     ports:
      - "3030:8080"
     networks:
@@ -53,14 +54,13 @@ services:
      - "8081:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
+     - fuseki.dcatServiceUri=http://fuseki:3030/fuseki/dcat
+     - fuseki.adminServiceUri=http://fuseki:3030/fuseki/admin
      - application.crawlerThreadPoolSize=2
      - application.elasticSearchHost=es
      - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
-    #volumes:
-    # - ./logs:/usr/local/tomcat/logs:rw
+    volumes:
+     - ./logs:/usr/local/tomcat/logs:rw
     networks:
       platform:
       logging:
@@ -74,13 +74,13 @@ services:
      - "8082:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.harvesterUrl=http://harvester:8080
+     - fuseki.dcatServiceUri=http://fuseki:3030/fuseki/dcat
+     - fuseki.adminServiceUri=http://fuseki:3030/fuseki/admin
+     - application.harvesterUrl=http://harvester:8081/harvester
      - application.kibanaLinkFirstHalf="/app/kibana/#/dashboard/dashboard_template?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Crawler-Operations,panelIndex:1,row:3,size_x:9,size_y:3,type:visualization),(col:1,id:Crawler-Results,panelIndex:2,row:3,size_x:3,size_y:3,type:visualization),(col:1,id:Crawler-Metadata,panelIndex:4,row:1,size_x:12,size_y:2,type:visualization),(col:7,id:Validation-RuleId,panelIndex:6,row:6,size_x:6,size_y:4,type:visualization),(col:1,columns:!(ruleSeverity,event,cause,ruleId),id:validation_ruleId,panelIndex:7,row:6,size_x:6,size_y:4,sort:!(timestamp,desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:'%22"
      - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
-    #volumes:
-    # - ./logs:/usr/local/tomcat/logs:rw
+    volumes:
+     - ./logs:/usr/local/tomcat/logs:rw
     networks:
       platform:
       logging:
@@ -97,8 +97,6 @@ services:
       - es.cluster.name=fellesdatakatalog
       - ES_CLUSTER_NAME="fellesdatakatalog"
       - cluster_name="fellesdatakatalog"
-    #volumes:
-    #  - ./data/esdata/:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -110,15 +108,15 @@ services:
         aliases:
           - log_es
 
-  logstash:
-    image: "fdk/logstash:${TAG}"
-    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-    #volumes:
-    #  - ./logs:/usr/local/tomcat/logs:rw
-    depends_on:
-      - elasticsearch
-    networks:
-      logging:
+#  logstash:
+#    image: "fdk/logstash:${TAG}"
+#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
 
   kibana:
     image: "fdk/kibana:${TAG}"
