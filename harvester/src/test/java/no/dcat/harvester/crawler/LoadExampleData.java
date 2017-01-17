@@ -37,7 +37,7 @@ public class LoadExampleData {
         //TODO: putte dette i properties
         //Elasticsearch clustername on local: elasticsearch. On Openshift: fellesdatakatalog
 
-        String elasthcSearchHost = "192.168.99.100";
+        String elasthcSearchHost = "localhost";
         int port = 9300;
         String clustername = "elasticsearch";
 

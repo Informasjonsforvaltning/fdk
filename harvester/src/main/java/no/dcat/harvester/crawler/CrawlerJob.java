@@ -91,6 +91,9 @@ public class CrawlerJob implements Runnable {
             if (isValid(union,validationResult)) {
                 logger.debug("[crawler_operations] Valid datasets exists in input data!");
 
+                //TEST: Skriv ut validationresult for å se om innholdet er som forventet
+                logger.debug("[crawler_operations] validationResult: " + validationResult.toString());
+
                 //remove non-valid datasets
                 removeNonValidDatasets(union);
 
@@ -202,7 +205,7 @@ public class CrawlerJob implements Runnable {
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
         final String[] message = {null};
 
-        validationMessage.clear();
+        validationMessage.clear();  //TODO: cleanup: trengs egentlig validationMessage?
         validationErrors.clear();
 
         final int[] errors ={0}, warnings ={0}, others ={0};
@@ -272,8 +275,19 @@ public class CrawlerJob implements Runnable {
      * @param model
      */
     private void removeNonValidDatasets(Model model) {
-        //todo: implement
         //todo: allow specification of ruleseverity to be accepted
+        logger.debug("[crawler_operations] Start removing non-valid datasets");
+
+        //BG: utviklingshjelp. Sjekk om alle ikke-valide datasett er i validationErrors
+        for(ValidationError error : validationErrors) {
+            if(error.getRuleSeverity() == ValidationError.RuleSeverity.error) {
+                logger.debug("[crawler_operations] dataset error: Subject: ("
+                        + error.getSubject() + ","
+                        + error.getPredicate() + ","
+                        + error.getObject() + ")");
+            }
+        }
+
     }
 
     private String returnCrawlDuration(LocalDateTime start, LocalDateTime stop) {

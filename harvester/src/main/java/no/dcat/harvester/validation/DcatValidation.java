@@ -68,6 +68,7 @@ public class DcatValidation {
 				}
 
 				while (resultSet != null && resultSet.hasNext()) {
+
 					ValidationError error = new ValidationError(resultSet.next());
 					finalValidationHandler.handle(error);
 					if (error.isError()) {
