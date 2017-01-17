@@ -59,7 +59,7 @@ public class PublisherPage extends CommonPage {
                     WebElement publisherCount = publisherElement.findElement(By.className("badge"));
                     String count = publisherCount.getAttribute("innerHTML");
 
-                    assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, count, count), countExp.equals(count));
+                    assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, countExp, count), countExp.equals(count));
                 }
             }
         } finally {
