@@ -80,7 +80,7 @@ public class PortalControllerTests {
 
     @Test
     public void themesReturnsOK() throws  Exception {
-        String themesJson = readFile("themesDataset.json");
+        String themesJson = readFile("themeCount.json");
         PortalController spyPortal = spy(portal);
         LocaleContextHolder.setLocale(new Locale("nb", "NO"));
 
@@ -93,7 +93,7 @@ public class PortalControllerTests {
 
     @Test
     public void themesReturnWithLangENOK() throws  Exception {
-        String themesJson = readFile("themesDataset.json");
+        String themesJson = readFile("themeCount.json");
         PortalController spyPortal = spy(portal);
         LocaleContextHolder.setLocale(Locale.UK);
 

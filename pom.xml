@@ -69,6 +69,7 @@
 		<module>docker</module>
 		<module>test</module>
 		<module>gdoc-import</module>
+		<module>bddtest</module>
 	</modules>
 
 	<properties>

@@ -2,25 +2,19 @@ package no.dcat.bddtest.cucumber.glue;
 
 
 import cucumber.api.DataTable;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.WebElement;
 
-import java.util.List;
 import java.io.File;
 import java.net.MalformedURLException;
-
-
+import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,6 +26,7 @@ import static org.hamcrest.Matchers.is;
  */
 public class ThemePage {
     WebDriver driver = null;
+    public static final String PORTAL = "http://localhost:8080";
 
     @Given("^I have open the browser$")
     public void openBrowser() throws MalformedURLException {
@@ -58,7 +53,7 @@ public class ThemePage {
 
     @When("^I open Fellesdatakatalog website$")
     public void goToFDK_eng() {
-        driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        driver.get(PORTAL);
     }
 
     @Then("^link '(.+)'$ should exist$")
@@ -78,7 +73,7 @@ public class ThemePage {
     public void ThemeBoS() {
         assertTrue(driver.findElement(By.id("Befolkning og samfunn")).isEnabled());
         driver.close();
-
+    }
 
     @Then("vises følgende tema og antall:$")
     public void ThemeBoS(DataTable themes) {
