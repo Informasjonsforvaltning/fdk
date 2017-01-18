@@ -2,6 +2,7 @@ The image defines to VOLUMES:
 
 /app/dcat/temp
 /app/dcat/publish
+/app/dcat/in
 
 DOCKER
 

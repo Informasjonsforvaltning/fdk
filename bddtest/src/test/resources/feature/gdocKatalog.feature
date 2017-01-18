@@ -1,12 +1,12 @@
-Feature: Innføringsteamets testdata i google sheet er tilgjengelig som en DCAT-katalog
+Feature: Introduction team's test data written in google sheet is available as a DCAT catalog
 
-  Background: Endrer, konverterer og høster.
+  Background: Reset database and harvest gdoc
+    Given I clean elastic search.
+    And I open the admin portal
+    And I select harvest gdoc catalog
 
-  Scenario: Det nye datasettet er tilgjengelig etter harvest
-    Given Databasen er tom.
-    And brukeren har lagt til nytt datasett med tittel "Test datasett" i google dokumentet
-    And brukeren starter gdok-konverteringen
-    And brukeren går inn i admin-grensesnittet og velger harvest 'gdok-katalog'
-    When brukeren åpner portalen
-    And søker etter "Test datasett".
-    Then skal datasettet med tittel "Test datasett" finnes øverst på resultatsiden
+  Scenario: The dataset from gdoc is available
+    Then the following dataset detail pages shall exist:
+    | http://data.brreg.no/datakatalog/dataset/2 |
+    | http://data.brreg.no/datakatalog/dataset/26 |
+    | http://data.brreg.no/datakatalog/dataset/43 |
