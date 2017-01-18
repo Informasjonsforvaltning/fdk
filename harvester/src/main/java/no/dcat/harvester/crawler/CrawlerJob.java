@@ -13,6 +13,7 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
@@ -278,15 +279,39 @@ public class CrawlerJob implements Runnable {
         //todo: allow specification of ruleseverity to be accepted
         logger.debug("[crawler_operations] Start removing non-valid datasets");
 
+        //Liste over alle Subjekter med feil
+        ArrayList<RDFNode> errorSubjects = new ArrayList<RDFNode>();
+
         //BG: utviklingshjelp. Sjekk om alle ikke-valide datasett er i validationErrors
         for(ValidationError error : validationErrors) {
             if(error.getRuleSeverity() == ValidationError.RuleSeverity.error) {
-                logger.debug("[crawler_operations] dataset error: Subject: ("
-                        + error.getSubject() + ","
-                        + error.getPredicate() + ","
+                logger.debug("[crawler_operations] dataset error: RDF statement: ("
+                        + error.getSubject() + ", "
+                        + error.getPredicate() + ", "
                         + error.getObject() + ")");
+
+                //Legg subjekt med feil i feilliste
+                errorSubjects.add(error.getSubject());
             }
         }
+
+        logger.debug("[crawler_operations] errorSubjects: " + errorSubjects.toString());
+
+        //Find subjects to be removed
+        for (RDFNode node : errorSubjects) {
+            Resource res = model.getResource( node.toString());
+            logger.debug("funnet ressurs: " + res.toString());
+
+            //Slett alle statements der gjeldende datasett er subject eller objekt
+            model.removeAll(res, null, null);
+            model.removeAll(null, null, res);
+            model.write(System.out, "TTL");
+
+            //DETTE SER UT TIL Å FUNKE. TEST MED STØRRE DATASETT I REELL IMPORT.
+            //Finn ut hvordan logge infoen til admin, varsle brukere.
+
+        }
+
 
     }
 
