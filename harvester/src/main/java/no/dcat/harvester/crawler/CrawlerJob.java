@@ -4,6 +4,7 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
+import no.dcat.harvester.validation.ImportStatus;
 import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
@@ -29,10 +30,7 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
@@ -43,6 +41,7 @@ public class CrawlerJob implements Runnable {
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
     private List<ValidationError> validationErrors = new ArrayList<>();
+    private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
 
     public List<String> getValidationResult() {return validationResult;}
 
@@ -89,13 +88,11 @@ public class CrawlerJob implements Runnable {
             brregAgentConverter.collectFromModel(union);
 
             // if model is valid run the various handlers process method
+            //TODO: Nå er det et salig rot av lokale og globale variabler, parametre....
             if (isValid(union,validationResult)) {
                 logger.debug("[crawler_operations] Valid datasets exists in input data!");
+                logger.debug("[crawler_operations] nonValidDatasets.size: " + nonValidDatasets.size());
 
-                //TEST: Skriv ut validationresult for å se om innholdet er som forventet
-                logger.debug("[crawler_operations] validationResult: " + validationResult.toString());
-
-                //remove non-valid datasets
                 removeNonValidDatasets(union);
 
                 for (CrawlerResultHandler handler : handlers) {
@@ -208,6 +205,7 @@ public class CrawlerJob implements Runnable {
 
         validationMessage.clear();  //TODO: cleanup: trengs egentlig validationMessage?
         validationErrors.clear();
+        nonValidDatasets.clear();
 
         final int[] errors ={0}, warnings ={0}, others ={0};
 
@@ -215,6 +213,28 @@ public class CrawlerJob implements Runnable {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
             validationMessage.add(msg);
             validationErrors.add(error);
+
+            //add validation status per dataset for non-valid datasets
+            if(error.getClassName().equals("Dataset")) {
+                ImportStatus is = new ImportStatus();
+                is.className = error.getClassName();
+                is.mostSevereValidationResult = error.getRuleSeverity();
+                if(error.getRuleSeverity() == ValidationError.RuleSeverity.error) {
+                    is.shouldBeImported = false;
+                } else {
+                    is.shouldBeImported = true;
+                }
+
+                if(!nonValidDatasets.containsKey(error.getSubject())) {
+                    nonValidDatasets.put(error.getSubject(), is);
+                } else {
+                    if(nonValidDatasets.get(error.getSubject()).mostSevereValidationResult == ValidationError.RuleSeverity.warning) {
+                        //if the preexisting most severe error level is warning, we must put the new one
+                        //in case it is higher severity (error). Otherwise we skip, as it is already at highest severity.
+                        nonValidDatasets.put(error.getSubject(), is);
+                    }
+                }
+            }
 
             if (error.isError()) {
                 errors[0]++;
@@ -262,8 +282,9 @@ public class CrawlerJob implements Runnable {
             minimumCriteriaMet = true;
         }
 
-        logger.debug("[validation] minimumCriteriaMet: " + minimumCriteriaMet);
+        logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
 
+        //TODO: Heller returnere valideringsresultatene?
         return minimumCriteriaMet;
         //return validated;
     }
@@ -276,44 +297,18 @@ public class CrawlerJob implements Runnable {
      * @param model
      */
     private void removeNonValidDatasets(Model model) {
-        //todo: allow specification of ruleseverity to be accepted
-        logger.debug("[crawler_operations] Start removing non-valid datasets");
 
-        //Liste over alle Subjekter med feil
-        ArrayList<RDFNode> errorSubjects = new ArrayList<RDFNode>();
-
-        //BG: utviklingshjelp. Sjekk om alle ikke-valide datasett er i validationErrors
-        for(ValidationError error : validationErrors) {
-            if(error.getRuleSeverity() == ValidationError.RuleSeverity.error) {
-                logger.debug("[crawler_operations] dataset error: RDF statement: ("
-                        + error.getSubject() + ", "
-                        + error.getPredicate() + ", "
-                        + error.getObject() + ")");
-
-                //Legg subjekt med feil i feilliste
-                errorSubjects.add(error.getSubject());
+        for(Map.Entry<RDFNode, ImportStatus> entry : nonValidDatasets.entrySet()) {
+            ImportStatus is = entry.getValue();
+            if(!is.shouldBeImported) {
+                Resource res = model.getResource( entry.getKey().toString());
+                //Remove triples where dataset is subject or object from model
+                model.removeAll(res, null, null);
+                model.removeAll(null, null, res);
             }
         }
-
-        logger.debug("[crawler_operations] errorSubjects: " + errorSubjects.toString());
-
-        //Find subjects to be removed
-        for (RDFNode node : errorSubjects) {
-            Resource res = model.getResource( node.toString());
-            logger.debug("funnet ressurs: " + res.toString());
-
-            //Slett alle statements der gjeldende datasett er subject eller objekt
-            model.removeAll(res, null, null);
-            model.removeAll(null, null, res);
-            model.write(System.out, "TTL");
-
-            //DETTE SER UT TIL Å FUNKE. TEST MED STØRRE DATASETT I REELL IMPORT.
-            //Finn ut hvordan logge infoen til admin, varsle brukere.
-
-        }
-
-
     }
+
 
     private String returnCrawlDuration(LocalDateTime start, LocalDateTime stop) {
         return String.valueOf(stop.compareTo(start));
