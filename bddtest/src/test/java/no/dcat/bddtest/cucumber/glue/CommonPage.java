@@ -54,9 +54,8 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
             wait.until(waitCondition);
             return true;
         } catch (TimeoutException toe) {
-            openPageWaitRetry(page, waitCondition, --waitTimes);
+            return openPageWaitRetry(page, waitCondition, --waitTimes);
         }
-        return false;
     }
 
     protected String getEnv(String env) {

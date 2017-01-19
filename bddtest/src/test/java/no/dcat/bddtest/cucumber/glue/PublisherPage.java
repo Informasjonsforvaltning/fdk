@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.fail;
 
 /**
  * Cucumber glue class for the publisher feature.
@@ -33,35 +36,40 @@ public class PublisherPage extends CommonPage {
 
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        openPage(page);
+        if (openPageWaitRetry(page, "publishers", 5)) {
+            openPage(page);
+        } else {
+            fail();
+        }
+
     }
 
     @Then("^the following Publisher and dataset aggregation shall exist:$")
     public void shallHave(DataTable publisherAggrs) {
         WebElement element = null;
         try {
-            if (openPageWaitRetry(page, "publishers", 3)) {
-                List<List<String>> publisherAggrsRaw = publisherAggrs.raw();
 
-                for (List<String> publisherAggr : publisherAggrsRaw) {
-                    String publisherExp = publisherAggr.get(0);
-                    String countExp = publisherAggr.get(1);
+            List<List<String>> publisherAggrsRaw = publisherAggrs.raw();
 
-                    assertTrue(String.format("The page shall have an element with id %s", publisherExp), driver.findElement(By.id(publisherExp)).isEnabled());
+            for (List<String> publisherAggr : publisherAggrsRaw) {
+                String publisherExp = publisherAggr.get(0);
+                String countExp = publisherAggr.get(1);
 
-                    WebElement publisherElement = driver.findElement(By.id(publisherExp));
+                assertTrue(String.format("The page shall have an element with id %s", publisherExp), driver.findElement(By.id(publisherExp)).isEnabled());
 
-                    WebElement publisherName = publisherElement.findElement(By.name("publisher"));
-                    String publisherNameStr = publisherName.getAttribute("innerHTML");
+                WebElement publisherElement = driver.findElement(By.id(publisherExp));
 
-                    assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
+                WebElement publisherName = publisherElement.findElement(By.name("publisher"));
+                String publisherNameStr = publisherName.getAttribute("innerHTML");
 
-                    WebElement publisherCount = publisherElement.findElement(By.className("badge"));
-                    String count = publisherCount.getAttribute("innerHTML");
+                assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
 
-                    assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, countExp, count), countExp.equals(count));
-                }
+                WebElement publisherCount = publisherElement.findElement(By.className("badge"));
+                String count = publisherCount.getAttribute("innerHTML");
+
+                assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, countExp, count), countExp.equals(count));
             }
+
         } finally {
             driver.close();
         }
@@ -70,7 +78,7 @@ public class PublisherPage extends CommonPage {
     @Then("^(\\d+) publisher shall be present as clickable links\\.$")
     public void publisher_shall_be_present_as_clickable_links(int nrOfPublisher) throws Throwable {
         List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/result')]"));
-        assertTrue(String.format("Expecting %d number of publisher.", nrOfPublisher), nrOfPublisher == publisher.size());
+        assertThat(publisher.size(), is(nrOfPublisher));
     }
 
     @Then("^a search-field shall be present\\.$")
