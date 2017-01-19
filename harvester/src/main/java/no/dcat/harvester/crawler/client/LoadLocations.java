@@ -124,7 +124,7 @@ public class LoadLocations {
         logger.debug("Retrieve name of location with URI {}", locUri);
 
         String locUriAbout = String.format("%sabout.rdf", locUri);
-        Model locModel = RetrieveRemote.remoteRDF(locUriAbout);
+        Model locModel = RetrieveModel.remoteRDF(locUriAbout);
         locModel.listSubjectsWithProperty(GeonamesRDF.gnOfficialName);
         return locModel;
     }

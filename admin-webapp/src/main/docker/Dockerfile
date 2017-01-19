@@ -1,12 +1,9 @@
-FROM tomcat:8-jre8
-#ENV TERM xterm
+FROM frolvlad/alpine-oraclejdk8:slim
 
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ADD admin-webapp-?.?.?-SNAPSHOT.jar /usr/local/tomcat/webapps/admin-webapp.jar
-
-ADD tomcat-users.xml /usr/local/tomcat/conf/
-ADD server.xml /usr/local/tomcat/conf/
-
-WORKDIR /usr/local/tomcat/
+VOLUME /tmp
+ADD admin-webapp-?.?.?-SNAPSHOT.jar app.jar
+RUN sh -c 'touch /app.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
