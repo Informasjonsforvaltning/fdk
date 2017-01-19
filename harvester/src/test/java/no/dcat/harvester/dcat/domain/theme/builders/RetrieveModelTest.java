@@ -1,6 +1,6 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
-import no.dcat.harvester.crawler.client.RetrieveRemote;
+import no.dcat.harvester.crawler.client.RetrieveModel;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class RetrieveModelTest {
 
     @Test
     public void retrieveLocalModell() {
-        Model actual = RetrieveRemote.localRDF("rdf/provenance.rdf");
+        Model actual = RetrieveModel.localRDF("rdf/provenance.rdf");
 
         assertNotNull(actual);
     }

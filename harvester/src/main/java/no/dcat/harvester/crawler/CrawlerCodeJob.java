@@ -1,11 +1,10 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.crawler.client.RetrieveRemote;
+import no.dcat.harvester.crawler.client.RetrieveModel;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,9 +35,9 @@ public class CrawlerCodeJob implements Runnable {
         Model model;
 
         if (sourceUrl.startsWith("rdf/")) {
-            model = RetrieveRemote.localRDF(sourceUrl);
+            model = RetrieveModel.localRDF(sourceUrl);
         } else {
-            model = RetrieveRemote.remoteRDF(sourceUrl);
+            model = RetrieveModel.remoteRDF(sourceUrl);
         }
         if (model != null) {
             for (CrawlerResultHandler handler : handlers) {
