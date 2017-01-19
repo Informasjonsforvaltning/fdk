@@ -37,7 +37,7 @@ public class GdocController {
     private static final String LIST_VERSIONS = "versions";
     private static final String CONVERT_GDOC = "convert";
 
-    @Value("${application.converterHomeDir}")
+    @Value("${application.converterHomeDir:/home/1000/dcat/}")
     private String converterHomeDir;
 
     public void setConverterHomeDir(final String converterHomeDir) {
@@ -45,7 +45,7 @@ public class GdocController {
         this.converterHomeDir = converterHomeDir;
     }
 
-    @Value("${application.converterResultDir}")
+    @Value("${application.converterResultDir:/home/1000/dcat/publish}")
     private String converterResultDir;
 
     public void setConverterResultDir(final String converterResultDir) {
@@ -75,6 +75,8 @@ public class GdocController {
         process = pb.start();
 
         int retValue = process.waitFor();
+
+        logger.debug("bash dcat.sh returned {}",retValue);
 
         String logfileName = "conversion-" + date + ".log";
         String logfilePath = converterResultDir + "/" + logfileName;
@@ -130,7 +132,7 @@ public class GdocController {
                     HttpStatus.OK);
 
         } catch (Exception e) {
-            result = new ResponseEntity<>("Error occured in conversion: " + e.getMessage(),
+            result = new ResponseEntity<>("Conversion error: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

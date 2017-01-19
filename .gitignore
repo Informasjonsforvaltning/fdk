@@ -14,3 +14,4 @@ logs/
 /portal/webapp/phantomjsdriver.log
 /portal/phantomjsdriver.log
 /test/zip/
+/bddtest/data/

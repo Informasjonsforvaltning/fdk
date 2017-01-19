@@ -129,6 +129,26 @@ public class GdocControllerTest {
 
     }
 
+    @Test
+    public void converReturnsThrows() throws Exception {
+        gdocController.convert();
+
+    }
+
+    @Test
+    public void convertReturnsOK() throws Exception {
+        String logfileName = "conversion-2017-03-44.log";
+
+        GdocController gdocSpy = spy(gdocController);
+        doReturn(logfileName).when(gdocSpy).runConvert();
+
+        ResponseEntity<String> actual = gdocSpy.convert();
+
+        assertNotNull(actual);
+        assertEquals("convert shall return true", HttpStatus.OK, actual.getStatusCode());
+        assertTrue("convert shall return text that contains logfilename",actual.toString().contains(logfileName));
+    }
+
     /**
      * Mocks filesystem and returns list call.
      *
