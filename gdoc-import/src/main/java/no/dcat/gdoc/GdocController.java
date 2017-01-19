@@ -161,6 +161,53 @@ public class GdocController {
 
         File found = null;
 
+        found = getFile(versionId, dir);
+
+        if (found != null) {
+            logger.info("return " + found.getName());
+
+            result = getFileContent(found);
+        } else {
+            logger.warn("Not found: " + versionId);
+            result = new ResponseEntity<>(versionId, HttpStatus.NOT_FOUND);
+        }
+
+        logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
+        return result;
+    }
+
+
+    /**
+     * Reads the file and drops it to a ResponseEntity.
+     *
+     * @param found the file to read
+     * @return response with the file as text content.
+     */
+    private ResponseEntity<String> getFileContent(File found) {
+        ResponseEntity<String> result;
+        try (final BufferedReader br = new BufferedReader(new InputStreamReader(
+                found.toURI().toURL().openStream(), StandardCharsets.UTF_8))) {
+
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+
+            result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return result;
+    }
+
+    private File getFile(@PathVariable String versionId, File dir) {
+        File found = null;
+
         File[] versions = dir.listFiles();
         if (versions != null) {
             if ("latest".equals(versionId)) {
@@ -183,34 +230,7 @@ public class GdocController {
                 }
             }
         }
-
-        if (found != null) {
-            logger.info("return " + found.getName());
-
-            try (final BufferedReader br = new BufferedReader(new InputStreamReader(
-                    found.toURI().toURL().openStream(), StandardCharsets.UTF_8))) {
-
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-
-                while (line != null) {
-                    sb.append(line);
-                    sb.append(System.lineSeparator());
-                    line = br.readLine();
-                }
-
-                result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-                result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            logger.warn("Not found: " + versionId);
-            result = new ResponseEntity<>(versionId, HttpStatus.NOT_FOUND);
-        }
-
-        logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
-        return result;
+        return found;
     }
 
     /**
