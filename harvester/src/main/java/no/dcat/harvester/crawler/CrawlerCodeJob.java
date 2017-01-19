@@ -1,11 +1,10 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.crawler.client.RetrieveRemote;
+import no.dcat.harvester.crawler.client.RetrieveModel;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,10 +31,20 @@ public class CrawlerCodeJob implements Runnable {
     public void run() {
         logger.debug("Load codes through URL: {}", sourceUrl);
         //Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
-        Model model = RetrieveRemote.remoteRDF(sourceUrl);
 
-        for (CrawlerResultHandler handler : handlers) {
-            handler.process(null, model);
+        Model model;
+
+        if (sourceUrl.startsWith("rdf/")) {
+            model = RetrieveModel.localRDF(sourceUrl);
+        } else {
+            model = RetrieveModel.remoteRDF(sourceUrl);
+        }
+        if (model != null) {
+            for (CrawlerResultHandler handler : handlers) {
+                handler.process(null, model);
+            }
+        } else {
+            logger.error("Failed to load codes from {} due to error", sourceUrl);
         }
     }
 }

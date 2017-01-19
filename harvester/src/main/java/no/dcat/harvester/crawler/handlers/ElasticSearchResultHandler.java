@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
-import no.dcat.harvester.crawler.client.RetrieveRemote;
+import no.dcat.harvester.crawler.client.RetrieveModel;
 import no.dcat.harvester.dcat.domain.theme.builders.DataThemeBuilders;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.difi.dcat.datastore.Elasticsearch;
@@ -143,7 +143,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      */
     private void indexThemeCodesWithElasticSearch(String skosUrl, Elasticsearch elasticsearch) {
 
-        Model model = RetrieveRemote.remoteRDF(skosUrl);
+        Model model = RetrieveModel.remoteRDF(skosUrl);
         DcatSource themeSource = new DcatSource("http//dcat.no/test", "Test", skosUrl, "admin_user", "123456789");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 

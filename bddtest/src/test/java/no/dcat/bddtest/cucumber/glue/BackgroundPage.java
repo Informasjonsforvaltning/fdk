@@ -41,7 +41,7 @@ public class BackgroundPage extends CommonPage {
         //String hostname = getEnv("elasticsearch.hostname");
         //int port = getEnvInt("elasticsearch.port");
 
-        //new DeleteIndex(hostname, port).deleteIndex(index);
+        new DeleteIndex(hostname, port).deleteIndex(index);
     }
 
     @Given("^I load the \"([^\"]*)\" dataset\\.$")

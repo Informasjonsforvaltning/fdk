@@ -27,6 +27,16 @@ services:
     networks:
       platform:
 
+  gdoc:
+    image: "fdk/gdoc-import:${TAG}"
+    ports:
+      - "8084:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    networks:
+      platform:
+
+
   fuseki:
     image: "fdk/fuseki:${TAG}"
     volumes:
@@ -45,8 +55,9 @@ services:
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=es
+     - application.elasticSearchHost=elasticsearch
      - application.elasticSearchPort=9300
+     - application.elasticSearchCluster=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
     networks:
@@ -80,11 +91,6 @@ services:
 
   elasticsearch:
     image: "fdk/elasticsearch:${TAG}"
-    #command: elasticsearch -Des.cluster.name=fellesdatakatalog
-    environment:
-      - es.cluster.name=fellesdatakatalog
-      - ES_CLUSTER_NAME="fellesdatakatalog"
-      - cluster_name="fellesdatakatalog"
     ports:
       - "9200:9200"
       - "9300:9300"
