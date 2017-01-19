@@ -7,6 +7,6 @@ Feature: Introduction team's test data written in google sheet is available as a
 
   Scenario: The dataset from gdoc is available
     Then the following dataset detail pages shall exist:
-    | http://data.brreg.no/datakatalog/dataset/2 |
-    | http://data.brreg.no/datakatalog/dataset/26 |
-    | http://data.brreg.no/datakatalog/dataset/43 |
+      | http://data.brreg.no/datakatalog/dataset/2 |
+      | http://data.brreg.no/datakatalog/dataset/26 |
+      | http://data.brreg.no/datakatalog/dataset/43 |
