@@ -32,12 +32,12 @@ Feature: Page for presenting all Publishers.
       | PATENTSTYRET 					| 2 	|
       | REGISTERENHETEN I BRØNNØYSUND 	| 20 	|
       |STAVANGER KOMMUNE				| 4 	|
-      | MATTILSYNET						| 5 	|
-      |DIREKTORATET FOR E-HELSE			| 7 	|
-      |STATISTISK SENTRALBYRÅ			| 5 	|
+      | MATTILSYNET						| 6 	|
+      |DIREKTORATET FOR E-HELSE			| 10 	|
+      |STATISTISK SENTRALBYRÅ			| 4 	|
       |SKATTEETATEN 					| 4		|
       |STATENS VEGVESEN					| 4		|
-      |NORSK KULTURRÅD					| 3		|
+      |NORSK KULTURRÅD					| 2		|
       |PATENTSTYRET 					| 2		|
       |ARBEIDS- OG VELFERDSETATEN 		| 1		|
 
