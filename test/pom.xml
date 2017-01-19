@@ -9,7 +9,7 @@
 
 
     <artifactId>test</artifactId>
-    <description>Test Admin Application</description>
+    <description>Test Admin no.dcat.gdoc.Application</description>
     <version>0.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 

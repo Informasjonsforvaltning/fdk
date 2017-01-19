@@ -2,3 +2,4 @@ logging:
   level.: DEBUG
   level.no.brreg: INFO
   level.org.springframework: INFO
+

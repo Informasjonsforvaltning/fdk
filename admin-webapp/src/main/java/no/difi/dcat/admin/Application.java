@@ -12,32 +12,34 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @SpringBootApplication
 @EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder;
+    }
 
-	@Autowired
-	private ErrorAttributes errorAttributes;
+    @Autowired
+    private ErrorAttributes errorAttributes;
 
-	@Bean
-	public AppErrorController appErrorController() {
+    @Bean
+    public AppErrorController appErrorController() {
+        return new AppErrorController(errorAttributes);
+    }
 
-		return new AppErrorController(errorAttributes);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
-		 SpringApplication.run(Application.class, args);
-	}
+        SpringApplication.run(Application.class, args);
+    }
 
 }
+

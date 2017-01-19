@@ -7,9 +7,10 @@
 
 <head>
     <title>DCAT Source</title>
-    <link rel="stylesheet"
+    <!--link rel="stylesheet"
           href="${pageContext.request.contextPath}/css/bootstrap.min.css"
-    >
+    -->
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
 </head>
 
 <body>
