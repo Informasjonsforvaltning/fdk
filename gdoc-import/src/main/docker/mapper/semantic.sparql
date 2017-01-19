@@ -32,7 +32,7 @@ construct {
     ?s dct:accessRights ?accessRights .
     ?s dct:spatial ?spatialIRI .
     ?s dcatno:accessRightsComment ?skjermingshjemmelIRI .
-    ?s dct:accruralPeriodicity ?accruralPeriodicity .
+    ?s dct:accrualPeriodicity ?accrualPeriodicity .
     ?s dcat:contactPoint ?contactPoint .
     ?s dct:conformsTo ?conformsToIRI .
     ?s foaf:page ?pageIRI .
@@ -140,8 +140,8 @@ WHERE {
      OPTIONAL {?id :skjermingshjemmel ?skjermingshjemmel} .
      BIND (IRI(?skjermingshjemmel) AS ?skjermingshjemmelIRI)
 
-     # add accruralPeriodicity (ok)
-     OPTIONAL {?id :frekvens ?accruralPeriodicity. }
+     # add accrualPeriodicity (ok)
+     OPTIONAL {?id :frekvens ?accrualPeriodicity. }
 
      # add contactPoint (ok)
      OPTIONAL {?id :kontaktpunkt ?contactPoint . }

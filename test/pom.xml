@@ -9,7 +9,7 @@
 
 
     <artifactId>test</artifactId>
-    <description>Test Admin Application</description>
+    <description>Test Admin no.dcat.gdoc.Application</description>
     <version>0.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -88,8 +88,20 @@
             <artifactId>jquery</artifactId>
 
         </dependency>
-
     </dependencies>
+
+    <!-- Nødvendig for å brukes på openshift-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Brixton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

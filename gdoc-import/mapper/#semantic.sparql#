@@ -1,9 +1,0 @@
-prefix afp: <http://jena.hpl.hp.com/ARQ/property#>
-
-construct {
-    ?id dcat:keyword ?keyword .
-}
-where {
-     ?id dcat:keyword ?keywords .
-     FILTER apf:strSplit(?keywords)
-}

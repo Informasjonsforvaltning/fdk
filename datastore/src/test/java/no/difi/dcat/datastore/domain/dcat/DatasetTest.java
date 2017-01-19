@@ -49,7 +49,7 @@ public class DatasetTest {
 
         codes.put(Types.PROVENANCESTATEMENT.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
         codes.put(Types.LINGUISTICSYSTEM.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
-        codes.put(Types.RIGTHSSTATEMENT.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/dataset-access/PUBLIC"));
+        codes.put(Types.RIGTHSSTATEMENT.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
         codes.put(Types.FREQUENCY.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
         locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
 

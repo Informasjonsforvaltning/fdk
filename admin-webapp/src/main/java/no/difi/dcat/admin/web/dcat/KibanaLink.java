@@ -5,12 +5,12 @@ import no.difi.dcat.admin.settings.ApplicationSettings;
 /**
  * Created by havardottestad on 12/05/16.
  */
-public class KibanaLink{
+public class KibanaLink {
 
     String firstHalf;
     String secondHalf;
 
-    KibanaLink(ApplicationSettings applicationSettings){
+    KibanaLink(ApplicationSettings applicationSettings) {
         firstHalf = applicationSettings.getKibanaLinkFirstHalf();
         secondHalf = applicationSettings.getKibanaLinkSecondHalf();
     }

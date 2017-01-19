@@ -14,7 +14,16 @@ Feature: Page for presenting all Publishers.
     And I load the "dataset-w-distribution.ttl" dataset.
     And I open the Publisher page in the browser.
 
-  Scenario: Number of dataset for each Publisher shall be presented.
+  Scenario: The following shall be available:
+          1. All publisher that has at least one dataset or who has a child publisher with at least one dataset shall be presented.
+          2. Each publisher shall be presented as a clickable link.
+          3. The total number of datasets shall be presented for each Publisher.
+          4. A search filed shall be present.
+          5. A header and a footer shall be present.
+
+    Then 49 publisher shall be present as clickable links.
+    Then a search-field shall be present.
+    Then a header and a footer shall be present.
     Then the following Publisher and dataset aggregation shall exist:
       | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  	|
       | ARBEIDSTILSYNET  				| 1 	|

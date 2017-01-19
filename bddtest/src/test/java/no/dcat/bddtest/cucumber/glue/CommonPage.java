@@ -41,7 +41,11 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
 
     public boolean openPageWaitRetry(String page, Predicate<WebDriver> waitCondition, int waitTimes) {
         logger.info(String.format("Waiting for page %s %d times", page, waitTimes));
-        openPage(page);
+        try {
+            openPage(page);
+        } catch (Throwable t) {
+            logger.error("Open page failed {}",t.getMessage());
+        }
         if (waitTimes <= 0) {
             return false;
         }
