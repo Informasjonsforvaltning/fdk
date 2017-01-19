@@ -143,7 +143,12 @@ public class PortalController {
             dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
 
             Map<String, BigInteger> themeCounts = getNumberOfElementsForThemes();
-            dataThemes.forEach(dataTheme -> dataTheme.setNumberOfHits(themeCounts.get(dataTheme.getCode()).intValue()));
+            dataThemes.forEach(dataTheme -> dataTheme.setNumberOfHits(themeCounts.getOrDefault(dataTheme.getCode(), BigInteger.ZERO).intValue()));
+            dataThemes.forEach(dataTheme -> {
+                if (themeCounts.containsKey(dataTheme.getCode())) {
+                    dataTheme.setNumberOfHits(themeCounts.get(dataTheme.getCode()).intValue());
+                }
+            });
 
             Collections.sort(dataThemes, new ThemeTitleComparator(locale.getLanguage() == "en" ? "en" : "nb"));
 

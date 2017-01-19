@@ -25,6 +25,8 @@ public class RetrieveModel {
 
         Resource resource = new ClassPathResource(url);
         try {
+            logger.info("Remapping of url from {} to {}",url, resource.getURL().toString());
+
             model.read(resource.getInputStream(), url);
         } catch (Exception e) {
             logger.error("Unable to load {}", url, e);

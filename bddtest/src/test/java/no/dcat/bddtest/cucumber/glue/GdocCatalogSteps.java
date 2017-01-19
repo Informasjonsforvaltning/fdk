@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static java.lang.Thread.sleep;
@@ -21,7 +22,7 @@ import static java.lang.Thread.sleep;
  */
 public class GdocCatalogSteps extends CommonPage {
 
-  //  private final WebDriver driver = WebDriverFactory.createWebDriver();
+    //  private final WebDriver driver = WebDriverFactory.createWebDriver();
 
     private static Logger logger = LoggerFactory.getLogger(GdocCatalogSteps.class);
 
@@ -38,7 +39,7 @@ public class GdocCatalogSteps extends CommonPage {
     private static String elasticsearch_host = "http://localhost"; // = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no/";
 
 
-    private static int    elasticsearch_port  = 9200;
+    private static int elasticsearch_port = 9200;
 
     @Before
     public void setup() {
@@ -66,17 +67,37 @@ public class GdocCatalogSteps extends CommonPage {
         sleep(2000);
 
     }
+
+    void registerCatalog() {
+        WebElement description = driver.findElement(By.id("inputDescription"));
+        description.sendKeys("Innføringsteamets gdoc data");
+        WebElement url = driver.findElement(By.id("inputUrl"));
+        url.sendKeys("http://gdoc:8080/versions/latest");
+        WebElement orgnumber = driver.findElement(By.id("inputOrgnumber"));
+        orgnumber.sendKeys("12345");
+
+        WebElement saveButton = driver.findElement(By.xpath("/html/body/div/div[3]/div[1]/button"));
+        saveButton.click();
+    }
+
     @Given("^I select harvest gdoc catalog$")
     public void doHarvestGdoc() throws Throwable {
-    // find gdoc import
+        // find gdoc import
+        WebElement row;
+        boolean catalogExists = driver.findElements(By.xpath("//tr[td[contains(text(),'gdoc')]]")).size() > 0;
 
-        WebElement row = driver.findElement(By.xpath("//tr[td[contains(text(),'gdoc')]]"));
+        if (!catalogExists) {
+            registerCatalog();
+            sleep(1000);
+        }
+
+        row = driver.findElement(By.xpath("//tr[td[contains(text(),'gdoc')]]"));
         WebElement harvest = row.findElement(By.xpath("td/a[contains(@href,'admin/harvestDcatSource?')]"));
         logger.info("harvest-url " + harvest.getAttribute("href"));
 
         harvest.click();
 
-        sleep(10000); // to allow for harvest time
+        sleep(2000); // to allow for harvest time
     }
 
     @Then("^the following dataset detail pages shall exist:$")

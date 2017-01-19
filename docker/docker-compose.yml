@@ -55,8 +55,9 @@ services:
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=es
+     - application.elasticSearchHost=elasticsearch
      - application.elasticSearchPort=9300
+     - application.elasticSearchCluster=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
     networks:
