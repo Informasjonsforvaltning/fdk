@@ -90,7 +90,7 @@ public class PublisherPage extends CommonPage {
     @Then("^a header and a footer shall be present\\.$")
     public void a_header_and_a_footer_shall_be_present() throws Throwable {
         String header = driver.findElement(By.xpath("html/body/div[2]/header")).getText();
-        String footer = driver.findElement(By.xpath("html/footer")).getText();
+        String footer = driver.findElement(By.xpath("html/body/footer")).getText();
         assertTrue(String.format("Expecting %d number of publisher.", 1), header.contains("Felles datakatalog"));
    }
 
