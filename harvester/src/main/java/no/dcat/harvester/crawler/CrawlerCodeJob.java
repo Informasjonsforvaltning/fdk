@@ -32,10 +32,20 @@ public class CrawlerCodeJob implements Runnable {
     public void run() {
         logger.debug("Load codes through URL: {}", sourceUrl);
         //Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
-        Model model = RetrieveRemote.remoteRDF(sourceUrl);
 
-        for (CrawlerResultHandler handler : handlers) {
-            handler.process(null, model);
+        Model model;
+
+        if (sourceUrl.startsWith("rdf/")) {
+            model = RetrieveRemote.localRDF(sourceUrl);
+        } else {
+            model = RetrieveRemote.remoteRDF(sourceUrl);
+        }
+        if (model != null) {
+            for (CrawlerResultHandler handler : handlers) {
+                handler.process(null, model);
+            }
+        } else {
+            logger.error("Failed to load codes from {} due to error", sourceUrl);
         }
     }
 }
