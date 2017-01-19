@@ -21,7 +21,7 @@ Feature: Page for presenting all Publishers.
           4. A search filed shall be present.
           5. A header and a footer shall be present.
 
-    Then 49 publisher shall be present as clickable links.
+    Then 41 publisher shall be present as clickable links.
     Then a search-field shall be present.
     Then a header and a footer shall be present.
     Then the following Publisher and dataset aggregation shall exist:
@@ -31,7 +31,7 @@ Feature: Page for presenting all Publishers.
       | NÆRINGS- OG FISKERIDEPARTEMENTET| 22 	|
       | PATENTSTYRET 					| 2 	|
       | REGISTERENHETEN I BRØNNØYSUND 	| 20 	|
-      |STAVANGER KOMMUNE				| 5 	|
+      |STAVANGER KOMMUNE				| 4 	|
       | MATTILSYNET						| 5 	|
       |DIREKTORATET FOR E-HELSE			| 7 	|
       |STATISTISK SENTRALBYRÅ			| 5 	|
