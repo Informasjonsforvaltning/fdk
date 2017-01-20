@@ -1,0 +1,138 @@
+@prefix :      <http://data.brreg.no/vocab/temp/> .
+@prefix d2rq:  <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix apf:   <http://jena.apache.org/ARQ/property#> .
+@prefix time:  <http://www.w3.org/TR/owl-time/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix map:   <file:///usr/local/src/semex/mapping.n3#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+
+<http://data.brreg.no/enhetsregisteret/enhet/974760673>
+        a               foaf:Agent ;
+        dct:identifier  "974760673" ;
+        dct:type        "AAS" ;
+        foaf:name       "Brønnøysundregistrene" .
+
+
+	dct:isVersionOf  a  owl:ObjectProperty .
+	dcat:theme  a   owl:ObjectProperty .
+	dcat:contactPoint  a  owl:ObjectProperty .
+
+
+
+<http://data.brreg.no/datakatalog/avdeling/4>
+        a                        vcard:Organization ;
+        vcard:email              <mbox:0> ;
+        vcard:organization-unit  "AAS" ;
+        vcard:telefon            <tel:4775007500> .	
+
+<http://data.brreg.no/enhetsregisteret/provinence/vedtak>
+        a                    dct:ProvenanceStatement ;
+        prov:wasGeneratedBy  "vedtak" .        
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/4>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mbox:aas@brreg.no> ;
+        vcard:hasTelephone       <tel:+4775007500> ;
+        vcard:organization-unit  "AAS" . 
+
+
+<http://data.brreg.no/datakatalog/distibusjon/2>
+        a                        dcat:Distribution ;
+	dct:format               "XML" ;
+	dcat:accessURL           <http://example.org/xml>.
+
+
+
+<http://data.brreg.no/datakatalog/katalog/1>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Brønnøysundregistrene" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title        "Brønnøysundregistrene datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/1> , <http://data.brreg.no/datakatalog/dataset/2>;
+        foaf:homepage    <http://brreg.no> .
+
+	dcat:Dataset  a  owl:Class .
+
+
+<http://data.brreg.no/datakatalog/dataset/1>
+        a                        dcat:Dataset ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description          "Føretaksregisteret registrerer alle norske og utanlandske føretak i Norge, og skal sikre rettsvern og økonomisk oversikt. Føretaksregisteret har ansvar for registrering av alle norske og utenlandske føretak i Noreg. Registeret skal sikre rettsvern og økonomisk oversikt, og det er ei viktig kjelde for alle som treng korrekte opplysningar om aktørane i norsk næringsliv.\nAlle næringsdrivande føretak – med avgrensa så vel som med uavgrensa ansvar – pliktar å registrere seg i Føretaksregisteret. Det same gjeld enkeltpersonføretak som driv handel med innkjøpte varer eller har meir enn fem tilsette i hovudstilling. Andre enkeltpersonføretak kan registrere seg på frivillig grunnlag."@nb ;
+        dct:identifier           "1" ;
+        dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial              <http://sws.geonames.org/3144096/> ;
+        dct:subject              <http://brreg.no/begrep/orgnr> ;
+        dct:temporal             [ a                  dct:PeriodOfTime ;
+                                   time:hasBeginning  [ a                   time:Instant ;
+                                                        time:inXSDDateTime  "2001-01-01T00:00:00Z"^^xsd:dateTime
+                                                      ] ;
+                                   time:hasEnd        [ a                   time:Instant ;
+                                                        time:inXSDDateTime  "2046-05-12T00:00:00Z"^^xsd:dateTime
+                                                      ]
+                                 ] ;
+        dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        dcat:keyword             "Forretningsadresse"@nb , "Foretaksnavn"@nb , "Organisasjonsnummer"@nb ;
+        dct:modified             "2016-05-22"^^xsd:date ;
+        dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/2>
+        a                        dcat:Dataset ;
+        dct:accessRights         <http://publications.europa.eu/resource/authority/dataset-access/PUBLIC> ;
+        dct:accruralPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo           <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret> ;
+        dct:description          "Einingsregisteret samordnar opplysningar om næringslivet og offentlege etatar som finst i ulike offentlege register.I Enhetsregisteret finner du alle som er registrert for momspliktig virksomhet, har registrerte ansatte eller er med i Foretaksregisteret. Dessuten finner du mange næringsdrivende enkeltpersonforetak, foreninger og andre økonomiske enheter uten registreringsplikt, som har valgt å bli med i Enhetsregisteret på frivillig grunnlag. Registeret inneholder også alle enheter som er registrert i fylkesmennenes stiftelsesregistre og skattemanntallet for etterskuddspliktige."@nb , "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis."@en ;
+        dct:identifier           "2" ;
+        dct:issued               "1999-12-03"^^xsd:dateTime ;
+        dct:landingPage          <https://www.brreg.no/> ;
+        dct:language             <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:language             <http://publications.europa.eu/resource/authority/language/2> ;
+        dct:provenance           <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher            <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial              <http://sws.geonames.org/3144096/> ;
+        dct:subject              <http://brreg.no/begrep/orgnr> ;
+        dct:temporal             [ a                  dct:PeriodOfTime ;
+                                   time:hasBeginning  [ a                   time:Instant ;
+                                                        time:inXSDDateTime  "2001-07-03T00:00:00Z"^^xsd:dateTime
+                                                      ] ;
+                                   time:hasEnd        [ a                   time:Instant ;
+                                                        time:inXSDDateTime  "2048-05-12T00:00:00Z"^^xsd:dateTime
+                                                      ]
+                                 ] ;
+        dct:title                "Enhetsregisteret"@nb , "Central Coordinating Register for Legal Entities"@en ;
+        adms:identifier          <http://data.brreg.no/identifikator/99> ;
+        adms:sample              <http://brreg.no/enhetsregisteret> ;
+        dcat:contactPoint        <http://data.brreg.no/datakatalog/kontaktpunkt/4> ;
+        dcat:distribution         <http://data.brreg.no/datakatalog/distibusjon/2> ;
+        dcat:keyword             "Grunndata"@nb , "Enhetsnavn"@nb , "Organisasjonsnummer"@nb , "Roller"@nb , "Enhet"@nb , "Bransje"@nb ;
+        dcat:theme               <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+        dcat:landingPage         <http://data.brreg.no/oppslag/enhetsregisteret/enheter.xhtml> ;
+        foaf:page                <https://confluence.brreg.no/display/DBNPUB/API> .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
