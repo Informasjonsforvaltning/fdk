@@ -131,6 +131,7 @@ public class GdocController {
                     HttpStatus.OK);
 
         } catch (Exception e) {
+            logger.error("Conversion failed {}",e.getMessage(),e);
             result = new ResponseEntity<>("Conversion error: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -195,7 +196,7 @@ public class GdocController {
 
             result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
         } catch (IOException e) {
-            logger.error("Unable to retrieve file {}",e.getMessage());
+            logger.error("Unable to retrieve file {}",e.getMessage(),e);
             result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;
