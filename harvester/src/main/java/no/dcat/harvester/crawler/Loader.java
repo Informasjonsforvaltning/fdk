@@ -125,9 +125,9 @@ public class Loader {
             return job.getValidationResult();
 
         } catch (MalformedURLException e) {
-           logger.error("URL not valid: "+ filename,e);
+           logger.error("URL not valid: {} ", filename,e);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("Interrupted: {}",e.getMessage());
         }
 
         return null;
