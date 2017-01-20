@@ -19,13 +19,17 @@ public class GdocStartConvert implements ApplicationListener<ApplicationReadyEve
     @Autowired
     private ApplicationContext context;
 
+    public GdocController getController() {
+        return context.getBean(GdocController.class);
+    }
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
         try {
             logger.debug("Startup code get application context");
 
-            GdocController gdoc = context.getBean(GdocController.class);
+            GdocController gdoc = getController();
 
             if (gdoc != null) {
                 logger.info("Run gdoc conversion at application startup");

@@ -36,6 +36,7 @@ public class GdocController {
     private static final String GET_A_VERSION = "versions/{versionId}";
     private static final String LIST_VERSIONS = "versions";
     private static final String CONVERT_GDOC = "convert";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
 
     @Value("${application.converterHomeDir:/home/1000/dcat/}")
     private String converterHomeDir;
@@ -53,13 +54,11 @@ public class GdocController {
         this.converterResultDir = converterResultDir;
     }
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
-
     /**
      * Runs the convert operation every hour.
      */
     @Scheduled(cron = "0 0 * * * *")
-    String runConvert() throws Exception {
+    String runConvert() throws IOException, InterruptedException {
 
         String date = dateFormat.format(new Date());
         logger.debug("Start conversion {}", date);
@@ -108,10 +107,10 @@ public class GdocController {
 
 
     /**
-     * Gets the google sheet document from google and converts it to turtle format. The resulting
-     * file is stored with the current date in its filename. If convert is run more than once on
-     * the same day the previous file for that day is overwritten.
-     * <p>
+     * Gets the google sheet document from google and converts it to turtle format.
+     * The resulting file is stored with the current date in its filename. If convert is
+     * run more than once onthe same day the previous file for that day is overwritten.
+     *
      * <p>The resulting turtle file can be accessed by the /versions service.
      *
      * @return the output log of the conversion run
@@ -159,17 +158,14 @@ public class GdocController {
 
         File dir = new File(converterResultDir);
 
-        File found = null;
+        File found = getFile(versionId, dir);
 
-        found = getFile(versionId, dir);
-
-        if (found != null) {
-            logger.info("return " + found.getName());
-
-            result = getFileContent(found);
-        } else {
+        if (found == null) {
             logger.warn("Not found: " + versionId);
             result = new ResponseEntity<>(versionId, HttpStatus.NOT_FOUND);
+        } else {
+            logger.info("return " + found.getName());
+            result = getFileContent(found);
         }
 
         logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
@@ -199,7 +195,7 @@ public class GdocController {
 
             result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            logger.error("Unable to retrieve file {}",e.getMessage());
             result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;
@@ -214,11 +210,9 @@ public class GdocController {
                 long modified = -1;
                 for (File f : versions) {
                     logger.debug(f.getName() + " " + f.lastModified());
-                    if (f.getName().endsWith(".ttl")) {
-                        if (modified < f.lastModified()) {
+                    if (f.getName().endsWith(".ttl") &&modified < f.lastModified()) {
                             modified = f.lastModified();
                             found = f;
-                        }
                     }
                 }
             } else {
@@ -272,7 +266,7 @@ public class GdocController {
 
             result = new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("Unable to list versions {}",e.getMessage(),e);
             result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
