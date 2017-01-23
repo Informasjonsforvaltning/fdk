@@ -148,11 +148,13 @@ dct:ProvenanceStatement        a       owl:Class .
         dct:identifier  "Ruter" ;
         foaf:name       "Ruter" .
 	
-<http://data.brreg.no/datakatalog/avdeling/4>
+<http://data.brreg.no/datakatalog/kontaktpunkt/4>
         a                        vcard:Organization ;
-        vcard:email              <mbox:0> ;
-        vcard:organization-unit  "AAS" ;
-        vcard:telefon            <tel:4775007500> .	
+        vcard:fn                 "Informasjonstjenesten" ;
+        vcard:hasEmail           <mailto:aas@brreg.no> ;
+        vcard:hasTelephone       <tel:+4775007500> ;
+        vcard:organization-name  "Brønnøysundregistrene" ;
+        vcard:organization-unit  "AAS" .
 
 <http://data.brreg.no/enhetsregisteret/provinence/vedtak>
         a                    dct:ProvenanceStatement ;
@@ -161,13 +163,7 @@ dct:ProvenanceStatement        a       owl:Class .
 <http://data.brreg.no/enhetsregisteret/provinence/bruker>
         a                    dct:ProvenanceStatement ;
         prov:wasGeneratedBy  "brukerinnsamling" .  
-        
-<http://data.brreg.no/datakatalog/kontaktpunkt/4>
-        a                        vcard:Organization ;
-        vcard:hasEmail           <mbox:aas@brreg.no> ;
-        vcard:hasTelephone       <tel:+4775007500> ;
-        vcard:organization-unit  "AAS" . 
-        
+
 <http://data.brreg.no/datakatalog/kontaktpunkt/5>
         a                        vcard:Organization ;
         vcard:hasEmail           <mbox:postmottak@mattilsynet.no> ;

@@ -146,10 +146,10 @@ public abstract class AbstractBuilder {
                 contact.setTelephone(telephone); //.replace("tel:", ""));
             }
 
-            final String organisationName = extractAsString(object, Vcard.organizationName);
-            if (organisationName != null) {
+            final String organizationName = extractAsString(object, Vcard.organizationName);
+            if (organizationName != null) {
                 hasAttributes = true;
-                contact.setOrganizationName(organisationName);
+                contact.setOrganizationName(organizationName);
             }
 
             final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
