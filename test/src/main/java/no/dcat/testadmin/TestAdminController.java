@@ -179,7 +179,7 @@ public class TestAdminController {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Unable to load file due to {}",e.getMessage());
         }
 
         return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
