@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableScheduling
-public class Application extends SpringBootServletInitializer {
+public class AdminApplication extends SpringBootServletInitializer {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,12 +33,12 @@ public class Application extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
+        return application.sources(AdminApplication.class);
     }
 
     public static void main(String[] args) {
 
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 
 }

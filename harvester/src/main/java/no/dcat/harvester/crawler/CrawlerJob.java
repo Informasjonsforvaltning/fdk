@@ -24,6 +24,7 @@ import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Import;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
@@ -88,10 +89,10 @@ public class CrawlerJob implements Runnable {
             brregAgentConverter.collectFromModel(union);
 
             // if model is valid run the various handlers process method
-            //TODO: Nå er det et salig rot av lokale og globale variabler, parametre....
+            //TODO: Refaktorering. Nå er det et salig rot av lokale og globale variabler, parametre....
             if (isValid(union,validationResult)) {
                 logger.debug("[crawler_operations] Valid datasets exists in input data!");
-                logger.debug("[crawler_operations] nonValidDatasets.size: " + nonValidDatasets.size());
+                logger.debug("[crawler_operations] Number of non-valid datasets: " + nonValidDatasets.size());
 
                 removeNonValidDatasets(union);
 
@@ -260,11 +261,25 @@ public class CrawlerJob implements Runnable {
         validationMessage.add(0, summary);
         logger.info(summary);
 
+        //check in validation results if any datasets meets minimum criteria
+        boolean minimumCriteriaMet = false;
+        if (others[0] >= 1 || warnings[0] >= 1) {
+            minimumCriteriaMet = true;
+        }
+
+        logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
+
         Resource rdfStatus = null;
 
         switch (status[0]) {
             case error:
-                rdfStatus = DifiMeta.error;
+                if (minimumCriteriaMet) {
+                    //if at least one dataset is valid, set status to warning
+                    //even if validation results contains errors for other datasets
+                    rdfStatus = DifiMeta.warning;
+                } else {
+                    rdfStatus = DifiMeta.error;
+                }
                 break;
             case warning:
                 rdfStatus = DifiMeta.warning;
@@ -274,19 +289,33 @@ public class CrawlerJob implements Runnable {
                 break;
         }
 
-        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, message[0]);
-
-        //check in validation results if any datasets meets minimum criteria
-        boolean minimumCriteriaMet = false;
-        if (others[0] >= 1 || warnings[0] >= 1) {
-            minimumCriteriaMet = true;
+        //Prepare status summary message for non valid datasets, if any exists
+        StringBuilder datasetSummary = new StringBuilder();
+        if (nonValidDatasets.size() > 0) {
+            if (status[0] == ValidationError.RuleSeverity.error){
+                datasetSummary.append("Non-valid datasets not imported:\n");
+                for(Map.Entry<RDFNode, ImportStatus> entry : nonValidDatasets.entrySet()) {
+                    if(!entry.getValue().shouldBeImported) {
+                        datasetSummary.append("   " + entry.getKey().toString() + "\n");
+                    }
+                }
+                datasetSummary.append("\nDetails:\n");
+            } else {
+                datasetSummary.append("All datasets imported (some with warnings)\n\n");
+            }
+        } else {
+            datasetSummary.append("Datasets imported\n\n");
         }
 
-        logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
+        //Prepend summary message before detailed error message
+        if (message[0] != null) {
+            datasetSummary.append(message[0]);
+        }
+        String crawlMessage = datasetSummary.toString();
+        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlMessage);
 
-        //TODO: Heller returnere valideringsresultatene?
         return minimumCriteriaMet;
-        //return validated;
+
     }
 
 
