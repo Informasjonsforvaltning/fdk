@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Stream;
 
 /**
  * Main REST controller for GDOC-Import Service.
@@ -180,29 +183,27 @@ public class GdocController {
      * @param found the file to read
      * @return response with the file as text content.
      */
-    private ResponseEntity<String> getFileContent(File found) {
+    ResponseEntity<String> getFileContent(File found) {
         ResponseEntity<String> result;
-        try (final BufferedReader br = new BufferedReader(new InputStreamReader(
-                found.toURI().toURL().openStream(), StandardCharsets.UTF_8))) {
 
+       try (Stream<String> stream = Files.lines(found.toPath())) {
             StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-
-            result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
-        } catch (IOException e) {
+            stream.forEach(line -> sb.append(line).append(System.lineSeparator()));
+            return new ResponseEntity<>(sb.toString(), HttpStatus.OK);
+        } catch (IOException | InvalidPathException e) {
             logger.error("Unable to retrieve file {}",e.getMessage(),e);
-            result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return result;
     }
 
-    private File getFile(@PathVariable String versionId, File dir) {
+    /**
+     * Finds a file in the publish directory.
+     *
+     * @param versionId the id or substring to match
+     * @param dir the directory to search
+     * @return the file that matches versionId
+     */
+    File getFile(@PathVariable String versionId, File dir) {
         File found = null;
 
         File[] versions = dir.listFiles();
