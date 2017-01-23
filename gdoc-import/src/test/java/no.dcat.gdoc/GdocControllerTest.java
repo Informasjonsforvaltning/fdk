@@ -1,30 +1,45 @@
 package no.dcat.gdoc;
 
-import org.apache.tomcat.jni.Proc;
+import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.agent.PowerMockAgent;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by dask on 22.12.2016.
@@ -174,6 +189,37 @@ public class GdocControllerTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
     }
 
+    @Test
+    public void getFileContentThrowsIOException() {
+        GdocController controller = new GdocController();
+
+        Files filesMock = PowerMockito.mock(Files.class);
+        File mockFile = mock(File.class);
+
+        try {
+            doThrow(new IOException("io")).when(filesMock).lines(anyObject());
+            controller.getFileContent(mockFile);
+        } catch (Exception e) {
+            assertTrue(true);
+        }
+    }
+    @Test
+    public void getFileContentThrowsIllegalPath() {
+        GdocController controller = new GdocController();
+
+        File f = new File("htp:/www.gogole.ttl");
+
+        File mockFile = mock(File.class);
+        doThrow(new InvalidPathException("en", "to")).when(mockFile).toPath();
+
+        try {
+            controller.getFileContent(mockFile);
+        } catch (InvalidPathException ip) {
+            assertTrue(true);
+        }
+    }
+
+
     /**
      * Whitout mocked filesystem list will fail.
      *
@@ -276,47 +322,20 @@ public class GdocControllerTest {
         dir[0] = f1;
         dir[1] = f2;
 
+        ResponseEntity<String> response =  new ResponseEntity<>("test",HttpStatus.INTERNAL_SERVER_ERROR);
         File mockFile = mock(File.class);
-        PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(mockFile);
-        when(mockFile.listFiles()).thenReturn(dir);
+        File mockDir = mock(File.class);
 
-        PowerMockito.whenNew(BufferedReader.class).withAnyArguments().thenThrow(new IOException("Mock Exceptions"));
+        GdocController spyController = spy(gdocController);
+        doReturn(mockDir).when(spyController).getFile(anyString(), anyObject());
+        doReturn(response).when(spyController).getFileContent(anyObject());
 
         ReflectionTestUtils.setField(gdocController, "converterResultDir", "/usr/local/dcat/publish");
-        ResponseEntity<String> actual = gdocController.versions("2016-11-24");
+        ResponseEntity<String> actual = spyController.versions("2016-11-24");
         logger.debug(actual.toString());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode() );
     }
 
-    /**
-     * Tries: GET /versions/2016-11-24. But an IOException occurs when the file is read from file (readLine).
-     * Therefore it returns internal service error.
-     *
-     * @throws Exception
-     */
-    @Test
-    public void versionsWithKnownVersionIdFailsBufferedReadLineAndReturnsInternalServerError() throws Exception {
-
-        File f1 = File.createTempFile("anyname2016-11-24","ttl");
-        File f2 = File.createTempFile("anyname2016-12-24","ttl");
-        File[] dir = new File[2];
-        dir[0] = f1;
-        dir[1] = f2;
-
-        File mockFile = mock(File.class);
-        PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(mockFile);
-        when(mockFile.listFiles()).thenReturn(dir);
-
-        BufferedReader mockReader = mock(BufferedReader.class);
-        PowerMockito.whenNew(BufferedReader.class).withAnyArguments().thenReturn(mockReader);
-
-        /* THROW */
-        when(mockReader.readLine()).thenThrow(new IOException("Exception in readline"));
-
-        ResponseEntity<String> actual = gdocController.versions("2016-11-24");
-        logger.debug(actual.toString());
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode() );
-    }
 
     /**
      * Tries: GET versions/latest. But the file stored in the publish directory has illegal path-name and can
@@ -339,7 +358,6 @@ public class GdocControllerTest {
         File mockFile = mock(File.class);
         PowerMockito.whenNew(File.class).withArguments("/app/dcat/publish").thenReturn(mockFile);
         when(mockFile.listFiles()).thenReturn(dir);
-
 
         ResponseEntity<String> actual = gdocController.versions("latest");
         logger.debug(actual.toString());

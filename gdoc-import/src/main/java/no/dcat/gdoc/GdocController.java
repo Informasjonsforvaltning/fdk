@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Stream;
 
 /**
  * Main REST controller for GDOC-Import Service.
@@ -36,6 +39,7 @@ public class GdocController {
     private static final String GET_A_VERSION = "versions/{versionId}";
     private static final String LIST_VERSIONS = "versions";
     private static final String CONVERT_GDOC = "convert";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
 
     @Value("${application.converterHomeDir:/home/1000/dcat/}")
     private String converterHomeDir;
@@ -53,13 +57,11 @@ public class GdocController {
         this.converterResultDir = converterResultDir;
     }
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
-
     /**
      * Runs the convert operation every hour.
      */
     @Scheduled(cron = "0 0 * * * *")
-    String runConvert() throws Exception {
+    String runConvert() throws IOException, InterruptedException {
 
         String date = dateFormat.format(new Date());
         logger.debug("Start conversion {}", date);
@@ -108,10 +110,10 @@ public class GdocController {
 
 
     /**
-     * Gets the google sheet document from google and converts it to turtle format. The resulting
-     * file is stored with the current date in its filename. If convert is run more than once on
-     * the same day the previous file for that day is overwritten.
-     * <p>
+     * Gets the google sheet document from google and converts it to turtle format.
+     * The resulting file is stored with the current date in its filename. If convert is
+     * run more than once onthe same day the previous file for that day is overwritten.
+     *
      * <p>The resulting turtle file can be accessed by the /versions service.
      *
      * @return the output log of the conversion run
@@ -132,6 +134,7 @@ public class GdocController {
                     HttpStatus.OK);
 
         } catch (Exception e) {
+            logger.error("Conversion failed {}",e.getMessage(),e);
             result = new ResponseEntity<>("Conversion error: " + e.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -159,6 +162,48 @@ public class GdocController {
 
         File dir = new File(converterResultDir);
 
+        File found = getFile(versionId, dir);
+
+        if (found == null) {
+            logger.warn("Not found: " + versionId);
+            result = new ResponseEntity<>(versionId, HttpStatus.NOT_FOUND);
+        } else {
+            logger.info("return " + found.getName());
+            result = getFileContent(found);
+        }
+
+        logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
+        return result;
+    }
+
+
+    /**
+     * Reads the file and drops it to a ResponseEntity.
+     *
+     * @param found the file to read
+     * @return response with the file as text content.
+     */
+    ResponseEntity<String> getFileContent(File found) {
+        ResponseEntity<String> result;
+
+       try (Stream<String> stream = Files.lines(found.toPath())) {
+            StringBuilder sb = new StringBuilder();
+            stream.forEach(line -> sb.append(line).append(System.lineSeparator()));
+            return new ResponseEntity<>(sb.toString(), HttpStatus.OK);
+        } catch (IOException | InvalidPathException e) {
+            logger.error("Unable to retrieve file {}",e.getMessage(),e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Finds a file in the publish directory.
+     *
+     * @param versionId the id or substring to match
+     * @param dir the directory to search
+     * @return the file that matches versionId
+     */
+    File getFile(@PathVariable String versionId, File dir) {
         File found = null;
 
         File[] versions = dir.listFiles();
@@ -167,11 +212,9 @@ public class GdocController {
                 long modified = -1;
                 for (File f : versions) {
                     logger.debug(f.getName() + " " + f.lastModified());
-                    if (f.getName().endsWith(".ttl")) {
-                        if (modified < f.lastModified()) {
+                    if (f.getName().endsWith(".ttl") &&modified < f.lastModified()) {
                             modified = f.lastModified();
                             found = f;
-                        }
                     }
                 }
             } else {
@@ -183,34 +226,7 @@ public class GdocController {
                 }
             }
         }
-
-        if (found != null) {
-            logger.info("return " + found.getName());
-
-            try (final BufferedReader br = new BufferedReader(new InputStreamReader(
-                    found.toURI().toURL().openStream(), StandardCharsets.UTF_8))) {
-
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-
-                while (line != null) {
-                    sb.append(line);
-                    sb.append(System.lineSeparator());
-                    line = br.readLine();
-                }
-
-                result = new ResponseEntity<>(sb.toString(), HttpStatus.OK);
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-                result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            logger.warn("Not found: " + versionId);
-            result = new ResponseEntity<>(versionId, HttpStatus.NOT_FOUND);
-        }
-
-        logger.info(GET_A_VERSION + " used " + (System.currentTimeMillis() - startTime));
-        return result;
+        return found;
     }
 
     /**
@@ -252,7 +268,7 @@ public class GdocController {
 
             result = new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("Unable to list versions {}",e.getMessage(),e);
             result = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
