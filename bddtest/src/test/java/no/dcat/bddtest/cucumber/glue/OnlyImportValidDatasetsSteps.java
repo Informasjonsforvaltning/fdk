@@ -70,6 +70,7 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
         saveButton.click();
     }
 
+    //TODO: Refktorere. Svært lik metode i gdoc steps. Gjør generell med parameter for katalognavn?
     @Given("^I select harvest FDK-138 catalog$")
     public void doHarvestFDK138() throws Throwable {
         // wait until login complete, then find FDK-138 import
@@ -93,7 +94,7 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
     }
 
 
-    //TODO: Duplisert med Gdoc-steps, litt endret ordlyd for å gjøre den unik
+    //TODO: Duplisert med Gdoc-steps, litt endret ordlyd for å gjøre den unik. Bør refaktoreres
     @Then("^the following dataset detail pages exists:$")
     public void datasetPageExists(DataTable datasets) throws Throwable {
         try {
