@@ -41,7 +41,7 @@ public class DetailPage extends CommonPage {
 
     }
 
-    @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-rigth, locations\\):$")
+    @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-right, locations\\):$")
     public void norwegianProperties(DataTable datasets) throws Throwable {
         try {
             List<List<String>> dataset = datasets.raw();

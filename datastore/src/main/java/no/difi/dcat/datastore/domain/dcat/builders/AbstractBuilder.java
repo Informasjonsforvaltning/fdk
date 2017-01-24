@@ -257,18 +257,18 @@ public abstract class AbstractBuilder {
         }
     }
 
-    protected static List<Map<String, String>> getTitlesOfCodes(Map<String, SkosCode> locations, List<String> locsUri) {
-        List<Map<String, String>> result = new ArrayList();
+    protected static List<SkosCode> getCodes(Map<String, SkosCode> locations, List<String> locsUri) {
+        List<SkosCode> result = new ArrayList();
 
         for (String locUri : locsUri) {
             SkosCode locCode = locations.get(locUri);
 
             if (locCode == null) {
-                logger.info("Location wit uri {} does not exist.", locsUri);
+                logger.info("Location with uri {} does not exist.", locsUri);
                 continue;
             }
 
-            result.add(locCode.getTitle());
+            result.add(locCode);
         }
         return result;
     }

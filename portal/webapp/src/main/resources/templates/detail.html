@@ -108,7 +108,7 @@
 
                     <dt th:if="${dataset.spatial.size() > 0}">Dekningsområde</dt>
                     <dd th:each="omrade : ${dataset.spatial}" th:if="${omrade}" id="locationsText">
-                        <span th:text="${omrade.get('nb')} + ', '"></span>
+                        <a th:href="${omrade.getCode()}" th:text="${omrade.getTitle().get('nb')} + ', '"></a>
                     </dd>
 
                 </dl>

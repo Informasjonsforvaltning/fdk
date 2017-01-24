@@ -49,7 +49,7 @@ public class DatasetTest {
 
         codes.put(Types.PROVENANCESTATEMENT.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
         codes.put(Types.LINGUISTICSYSTEM.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
-        codes.put(Types.RIGTHSSTATEMENT.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
+        codes.put(Types.RIGHTSSTATEMENT.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
         codes.put(Types.FREQUENCY.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
         locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
 
@@ -105,9 +105,9 @@ public class DatasetTest {
         expected.setADMSIdentifier(createListOfStrings("http://data.brreg.no/identifikator/99"));
         expected.setType("Type");
 
-        Map<String, String> accessRigth = new HashMap<String, String>();
-        accessRigth.put("no", "Offentlig");
-        expected.setAccessRights(accessRigth);
+        Map<String, String> accessRight = new HashMap<String, String>();
+        accessRight.put("no", "Offentlig");
+        expected.setAccessRights(accessRight);
 
         expected.setDescription(createMapOfStrings("Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"));
         expected.setIssued(createDate("01-01-2009 00:00:00"));
@@ -123,7 +123,7 @@ public class DatasetTest {
 
         expected.setTitle(createMapOfStrings("Frivillighetsregisteret"));
 
-        expected.setSpatial(createListOfMaps("Norge"));
+        expected.setSpatial(createListOfMaps("http://sws.geonames.org/3144096/", "Norge"));
 
         Assert.assertEquals(expected.getIdentifier(), data.getIdentifier());
         Assert.assertEquals(expected.getSubject(), data.getSubject());
@@ -137,7 +137,8 @@ public class DatasetTest {
         Assert.assertEquals(expected.getLandingPage(), data.getLandingPage());
         Assert.assertEquals(expected.getLanguage(), data.getLanguage());
         Assert.assertEquals(expected.getProvenance(), data.getProvenance());
-        Assert.assertEquals(expected.getSpatial(), data.getSpatial());
+        Assert.assertEquals(expected.getSpatial().get(0).getCode(), data.getSpatial().get(0).getCode());
+        Assert.assertEquals(expected.getSpatial().get(0).getTitle().get("no"), data.getSpatial().get(0).getTitle().get("no"));
         Assert.assertEquals(expected.getTitle(), data.getTitle());
     }
 
@@ -163,12 +164,17 @@ public class DatasetTest {
         return list;
     }
 
-    private List<Map<String, String>> createListOfMaps(String data) {
-        Map<String, String> map = new HashMap<>();
-        map.put("no", data);
+    private List<SkosCode> createListOfMaps(String code, String title) {
+        SkosCode co = new SkosCode();
+        co.setCode(code);
 
-        List<Map<String, String>> list = new ArrayList<>();
-        list.add(map);
+        Map<String, String> map = new HashMap<>();
+        map.put("no", title);
+
+        co.setTitle(map);
+
+        List<SkosCode> list = new ArrayList<>();
+        list.add(co);
         return list;
     }
 

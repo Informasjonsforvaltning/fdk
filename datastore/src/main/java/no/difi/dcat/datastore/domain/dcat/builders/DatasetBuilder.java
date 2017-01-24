@@ -86,8 +86,8 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setPage(extractMultipleStrings(dataset, FOAF.page));
             created.setAccrualPeriodicity(getTitlesOfCode(codes, Types.FREQUENCY.getType(), extractAsString(dataset, DCTerms.accrualPeriodicity)));
 			created.setTemporal(extractPeriodOfTime(dataset));
-			created.setSpatial(getTitlesOfCodes(locations, extractMultipleStrings(dataset, DCTerms.spatial)));
-			created.setAccessRights(getTitlesOfCode(codes, Types.RIGTHSSTATEMENT.getType(), extractAsString(dataset, DCTerms.accessRights)));
+			created.setSpatial(getCodes(locations, extractMultipleStrings(dataset, DCTerms.spatial)));
+			created.setAccessRights(getTitlesOfCode(codes, Types.RIGHTSSTATEMENT.getType(), extractAsString(dataset, DCTerms.accessRights)));
 			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
             created.setSubject(extractMultipleStrings(dataset, DCTerms.subject));
 			created.setReferences(extractMultipleStrings(dataset, DCTerms.references));

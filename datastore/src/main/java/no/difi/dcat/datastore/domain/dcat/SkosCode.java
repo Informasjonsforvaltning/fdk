@@ -7,6 +7,7 @@ import java.util.Map;
  */
 public class SkosCode {
     private String code;
+
     private Map<String, String> title;
 
     public SkosCode() {

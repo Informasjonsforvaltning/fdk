@@ -11,7 +11,7 @@ Feature: Page for presenting properties for a dataset.
     And I open the browser.
 
   Scenario: Load of properties.
-    Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-rigth, locations):
+    Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-right, locations):
       | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | kontinuerlig | norsk | offentlig | Norge,|
       | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | begrenset | Norge, |
       | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | ikke-offentlig | Norge, |

@@ -73,7 +73,7 @@ public class Dataset {
 
 	//dct:spatial
 	//Norwegian: dekningsområde
-	private List<Map<String, String>> spatial;
+	private List<SkosCode> spatial;
 
 	//dct:accessRights
 	//Norwegian: tilgangsnivå
@@ -215,8 +215,8 @@ public class Dataset {
 	public List<PeriodOfTime> getTemporal() { return temporal; }
 	public void setTemporal(List<PeriodOfTime> temporal) { this.temporal = temporal; }
 
-	public List<Map<String, String>> getSpatial() { return spatial; }
-	public void setSpatial(List<Map<String, String>> spatial) { this.spatial = spatial; }
+	public List<SkosCode> getSpatial() { return spatial; }
+	public void setSpatial(List<SkosCode> spatial) { this.spatial = spatial; }
 
 	public Map<String, String> getAccessRights() { return accessRights; }
 	public void setAccessRights(Map<String, String> accessRights) { this.accessRights = accessRights; }
