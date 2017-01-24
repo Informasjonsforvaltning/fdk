@@ -102,6 +102,20 @@ services:
         aliases:
           - log_es
 
+  test:
+    image: "fdk/test:${TAG}"
+    ports:
+      - "8085:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - application.elasticsearchHost=elasticsearch
+     - application.elasticsearchPort=9300
+     - application.elasticsearchCluster=elasticsearch
+    links:
+      - elasticsearch
+    networks:
+      platform:
+
 #  logstash:
 #    image: "fdk/logstash:${TAG}"
 #    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
