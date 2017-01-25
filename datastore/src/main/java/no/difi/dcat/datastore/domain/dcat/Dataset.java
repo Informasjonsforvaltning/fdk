@@ -100,7 +100,7 @@ public class Dataset {
 	//Norwegian: dokumentasjon
 	private List<String> page;
 
-	//dct:accruralPeriodicity
+	//dct:accrualPeriodicity
 	//Norwegian: frekvens
 	private Map<String, String> accrualPeriodicity;
 
@@ -115,7 +115,6 @@ public class Dataset {
 	//adms:identifier
 	//Norwegian: annen identifikator
 	private List<String> ADMSIdentifier;
-
 
 	public List<DataTheme> getTheme() {
         return theme;

@@ -18,7 +18,7 @@
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -51,7 +51,7 @@
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
         <http://purl.org/dc/terms/description>
                 "Partiregisteret er eit register over politiske parti, og hovudformålet er å gi parti høve til å skaffe seg einerett til eit partinamn. \n\nPartiregisteret inneheld opplysningar om namnet, organisasjonsnummeret, adressa og kontaktpersonen til partiet som er registrert i Einingsregisteret. I tillegg skal Partiregisteret innehalde opplysningar om partiet sitt utøvande organ som etter vallova skal representere partiet overfor valstyresmaktene. Ved førebuinga av val legg valstyresmaktene til grunn dei opplysningane som er registrert i Partiregisteret per 31. mars i valåret." ;
@@ -83,7 +83,7 @@
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
                 "Jegerregisteret er et register over hvem som er kvalifisert til å drive jakt i Norge, og har oversikt over hvem som har betalt jegeravgift." ;
@@ -115,7 +115,7 @@
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -149,7 +149,7 @@
         :til               "12/31/15" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
                 "Føretaksregisteret registrerer alle norske og utanlandske føretak i Norge, og skal sikre rettsvern og økonomisk oversikt. Føretaksregisteret har ansvar for registrering av alle norske og utenlandske føretak i Noreg. Registeret skal sikre rettsvern og økonomisk oversikt, og det er ei viktig kjelde for alle som treng korrekte opplysningar om aktørane i norsk næringsliv.\nAlle næringsdrivande føretak – med avgrensa så vel som med uavgrensa ansvar – pliktar å registrere seg i Føretaksregisteret. Det same gjeld enkeltpersonføretak som driv handel med innkjøpte varer eller har meir enn fem tilsette i hovudstilling. Andre enkeltpersonføretak kan registrere seg på frivillig grunnlag." ;
@@ -186,7 +186,7 @@
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -222,7 +222,7 @@
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -255,7 +255,7 @@
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
                 "Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008" ;
@@ -294,7 +294,7 @@
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -345,7 +345,7 @@
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Registeret for offentleg støtte er eit nasjonalt register for offentlege støttetildelingar som fell inn under EØS-avtalen. Registeret vart oppretta den 1. juli 2016 med bakgrunn i reglane om offentleg støtte i EØS-avtalen. Formålet med registeret er å skape meir openheit rundt offentleg støtte. Registeret skal gjere det enklare for offentlege myndigheiter som vurderer å gi offentleg støtte, å få informasjon om føretaket har fått anna offentleg støtte som må takast med i vurderinga. " ;
@@ -382,7 +382,7 @@ dcatno:accessRightsComment
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/WEEKLY> ;
         <http://purl.org/dc/terms/description>
                 "Oversikt over akvakulturtillatelser og enkelte vesentlige vedtak knyttet til disse. I tillegg inneholder registeret en oversikt over overføringer, pantsettelser og andre rettigheter som er tinglyst på tillatelsene." ;
@@ -416,7 +416,7 @@ dcat:distriution  a  owl:ObjectProperty .
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -463,7 +463,7 @@ vcard:telefon  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Reservasjonsregisteret skal gjere det enklare for privatpersonar å reservere seg mot adressert reklame i posten eller til telefonsal. Reservasjonsregisteret blei oppretta i 2001. I registeret kan privatpersonar reservere seg mot at deira adresse blir brukt til direkte adressert reklame i posten eller til telefonsa. Ein reservasjon blir registrert i eit sentralt register. Alle som sender ut reklame retta mot privatpersonar som kundar, pliktar å oppdatere listene sine mot Reservasjonsregisteret minst kvar månad." ;
@@ -495,7 +495,7 @@ vcard:telefon  a  owl:ObjectProperty .
         dcatno:accessRightsComment  "https://lovdata.no/lov/1998-07-17-56/§8-1" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
         <http://purl.org/dc/terms/description>
                 "Regnskapsregisteret er ett av de offentlige registrene i Brønnøysundregistrene i Brønnøysund. Det er den viktigste datakilden for alle som vil skaffe seg rede på den økonomiske tilstanden i norsk næringsliv.\nInnsendingspliktige foretak skal hvert år sende inn årsregnskap, årsberetning og revisjonsberetning til Regnskapsregisteret innen en måned etter at det er vedtatt. Formålet med ordningen er å sikre økonomisk trygghet og effektivitet mellom selskapene og myndighetene, mellom selskapene og publikum, og ikke minst, selskapene i mellom. Regnskapsinformasjon er av offentlig interesse, og gjennom registrering i Regnskapsregisteret blir denne informasjonen offentlig tilgjengelig i 10 år. Mottatte årsregnskap blir kunngjort etter registrering." ;
@@ -529,7 +529,7 @@ vcard:telefon  a  owl:ObjectProperty .
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -580,7 +580,7 @@ foaf:name  a    owl:DatatypeProperty .
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -627,7 +627,7 @@ dcat:theme  a   owl:ObjectProperty .
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Konkurskaranteneregisteret blei oppretta i 1991 for å registrere konkurskarantenar ilagde av tingretten, slik at personar med konkurskarantene ikkje kan stifte nytt selskap eller påta seg andre roller i eit slikt selskap." ;
@@ -659,7 +659,7 @@ dcat:theme  a   owl:ObjectProperty .
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Gjeldsordningsregisteret inneheld opplysningar om kven som har fått innvilga gjeldsforandlingar og gjeldsordningar." ;
@@ -692,7 +692,7 @@ foaf:Agent  a   owl:Class .
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
                 "Registeret inneheld oversikt over godkjende aktørar i lotterimarknaden og gjeldande løyve for lotteri og bingo." ;
@@ -725,7 +725,7 @@ foaf:Agent  a   owl:Class .
         dcatno:accessRightsComment  "https://lovdata.no/dokument/NL/lov/1935-06-07-2" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
                 "Løsøreregisteret ble vedtatt opprettet i 1979 og ble offisielt åpnet i Brønnøysund i januar 1981. Bakgrunn for opprettelsen: Etter hvert ble det behov og mulighet for å tinglyse heftelser (pant) i løsøre, uten tilknytning til fast eiendom. Etter at Løsøreregisteret i Brønnøysund ble opprettet, ble all tinglysing med pant i løsøre ble overført dit. Det er stort sett registrerte biler og kjøretøyer som har slike panteheftelser, men det kan også være inventar, maskiner, varelager og annet i forbindelse med en produksjonbedrift." ;
@@ -761,7 +761,7 @@ vcard:email  a  owl:ObjectProperty .
         :page              "https://register-web.test.nhn.no/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "" ;
@@ -803,7 +803,7 @@ vcard:email  a  owl:ObjectProperty .
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Konkursregisteret blei oppretta i 1993, og inneheld opplysningar om konkursbu og tvangsavviklingsbu. Registeret innehold sentrale opplysningar om kvart bu, blant anna kven som er eller har vore dagleg leiar, styreleiar og revisor i eit konkursramma føretak, og om styreleiar, dagleg leiar eller innehavar har roller i andre føretak på tidspunktet for konkursopning." ;
@@ -830,7 +830,7 @@ vcard:email  a  owl:ObjectProperty .
         dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
         dct:spatial        <http://sws.geonames.org/3144096/> .
 
-<http://purl.org/dc/terms/accruralPeriodicity>
+<http://purl.org/dc/terms/accrualPeriodicity>
         a       owl:ObjectProperty .
 
 <http://data.brreg.no/datakatalog/dataset/12>
@@ -838,7 +838,7 @@ vcard:email  a  owl:ObjectProperty .
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Ektepaktregisteret inneheld avtalar mellom ektefellar som regulerer formueforhold på andre måtar enn det som automatisk følgjer av lovverket. Ektefellar som til dømes ønskjer særeige, må opprette ei ektepakt. For at ektepakta skal få rettsvern overfor eventuelle kreditorar, må ho tinglysast i Ektepaktregisteret. Dei same reglane gjeld for registrerte partnarar. Opplysningane frå Ektepaktregisteret er offentleg tilgjengelege." ;
@@ -871,7 +871,7 @@ vcard:email  a  owl:ObjectProperty .
         a                  dcat:Dataset ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/> ;
         <http://purl.org/dc/terms/description>
                 "Barnehagefakta.no kan du finne barnehager og se informasjon om dem." ;
@@ -907,7 +907,7 @@ vcard:email  a  owl:ObjectProperty .
         :spatial           "http://sws.geonames.org/3144096/" ;
         <http://purl.org/dc/terms/accessRights>
                 <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-        <http://purl.org/dc/terms/accruralPeriodicity>
+        <http://purl.org/dc/terms/accrualPeriodicity>
                 <http://publications.europa.eu/resource/authority/frequency/CONT> ;
         <http://purl.org/dc/terms/description>
                 "Einingsregisteret samordnar opplysningar om næringslivet og offentlege etatar som finst i ulike offentlege register.I Enhetsregisteret finner du alle som er registrert for momspliktig virksomhet, har registrerte ansatte eller er med i Foretaksregisteret. Dessuten finner du mange næringsdrivende enkeltpersonforetak, foreninger og andre økonomiske enheter uten registreringsplikt, som har valgt å bli med i Enhetsregisteret på frivillig grunnlag. Registeret inneholder også alle enheter som er registrert i fylkesmennenes stiftelsesregistre og skattemanntallet for etterskuddspliktige." ;

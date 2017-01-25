@@ -103,7 +103,12 @@
         "references" : [ ],
         "identifier" : [ "bb632639-d04e-4cd3-9807-4e71a1cde8b7" ],
         "page" : [ ],
-        "accruralPeriodicity" : "asNeeded",
+        "accrualPeriodicity" : {
+
+              "no": "kontinuerlig",
+              "en": "continuous"
+
+        },
         "subject" : [ ],
         "ADMSIdentifier" : [ ]
       }
