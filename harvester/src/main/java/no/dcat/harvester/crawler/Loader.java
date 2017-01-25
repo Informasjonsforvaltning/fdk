@@ -115,7 +115,11 @@ public class Loader {
             LoadingCache<URL, String> brregCach = HarvesterApplication.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
 
-            job.run();
+
+            Thread crawlerThread = new Thread(job);
+            crawlerThread.start();
+
+            //job.run();
 
             return job.getValidationResult();
 
@@ -138,6 +142,9 @@ public class Loader {
         CrawlerResultHandler codeHandler = new CodeCrawlerHandler(this.hostname, this.port, this.elasticsearchCluster, indexType, reload);
         CrawlerCodeJob jobCode = new CrawlerCodeJob(sourceURL, codeHandler);
 
-        jobCode.run();
+        Thread codeCrawlerThread = new Thread(jobCode);
+        codeCrawlerThread.start();
+
+        //jobCode.run();
     }
 }

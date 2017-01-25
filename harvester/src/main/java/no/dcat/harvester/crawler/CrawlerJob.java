@@ -253,26 +253,7 @@ public class CrawlerJob implements Runnable {
 
         logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
 
-        Resource rdfStatus = null;
-
-        switch (status[0]) {
-            case error:
-                if (minimumCriteriaMet) {
-                    //if at least one dataset is valid, set status to warning
-                    //even if validation results contains errors for other datasets
-                    rdfStatus = DifiMeta.warning;
-                } else {
-                    rdfStatus = DifiMeta.error;
-                }
-                break;
-            case warning:
-                rdfStatus = DifiMeta.warning;
-                break;
-            default:
-                rdfStatus = DifiMeta.ok;
-                break;
-        }
-
+        Resource rdfStatus = createCrawlerStatusForAdmin(status[0], boolean minimumCriteriaMet);
         StringBuilder datasetSummary = createDatasetSummaryMessage();
 
         //Prepend summary message before detailed error message
@@ -280,11 +261,11 @@ public class CrawlerJob implements Runnable {
             datasetSummary.append(message[0]);
         }
 
+        //Log validation result in admin data store
         String crawlMessage = datasetSummary.toString();
         if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlMessage);
 
         return minimumCriteriaMet;
-
     }
 
 
@@ -398,6 +379,36 @@ public class CrawlerJob implements Runnable {
                 nonValidDatasets.put(error.getSubject(), is);
             }
         }
+    }
+
+
+    /**
+     * Create the status value of the crawl to be stored in Admin data store
+     *
+     * @param status Array of status values reported from DcatValidation
+     * @param minimumCriteriaMet Boolean value. True if one or more datasets meets minimum validation criteria
+     * @return RDF Resource containing DifiMeta status (error, warning or ok)
+     */
+    private Resource createCrawlerStatusForAdmin(ValidationError.RuleSeverity[] status, boolean minimumCriteriaMet){
+       Resource rdfStatus;
+        switch (status[0]) {
+            case error:
+                if (minimumCriteriaMet) {
+                    //if at least one dataset is valid, set status to warning
+                    //even if validation results contains errors for other datasets
+                    rdfStatus = DifiMeta.warning;
+                } else {
+                    rdfStatus = DifiMeta.error;
+                }
+                break;
+            case warning:
+                rdfStatus = DifiMeta.warning;
+                break;
+            default:
+                rdfStatus = DifiMeta.ok;
+                break;
+        }
+        return rdfStatus;
     }
 
 }
