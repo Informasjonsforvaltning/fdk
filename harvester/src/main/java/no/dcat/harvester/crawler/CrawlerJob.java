@@ -253,7 +253,7 @@ public class CrawlerJob implements Runnable {
 
         logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
 
-        Resource rdfStatus = createCrawlerStatusForAdmin(status[0], boolean minimumCriteriaMet);
+        Resource rdfStatus = createCrawlerStatusForAdmin(status, minimumCriteriaMet);
         StringBuilder datasetSummary = createDatasetSummaryMessage();
 
         //Prepend summary message before detailed error message
