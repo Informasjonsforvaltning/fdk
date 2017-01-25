@@ -97,28 +97,28 @@ public class DatasetTest {
         expected.setIdentifier(createListOfStrings("10"));
         expected.setSubject(createListOfStrings("http://brreg.no/begrep/orgnr"));
 
-        Map<String, String> accrualPeriodicity = new HashMap<String, String>();
-        accrualPeriodicity.put("no", "kontinuerlig");
+        SkosCode accrualPeriodicity = new SkosCode("http://publications.europa.eu/resource/authority/frequency/CONT", new HashMap<String, String>());
+        accrualPeriodicity.getTitle().put("no", "kontinuerlig");
         expected.setAccrualPeriodicity(accrualPeriodicity);
 
         expected.setPage(createListOfStrings("https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/"));
         expected.setADMSIdentifier(createListOfStrings("http://data.brreg.no/identifikator/99"));
         expected.setType("Type");
 
-        Map<String, String> accessRight = new HashMap<String, String>();
-        accessRight.put("no", "Offentlig");
+        SkosCode accessRight = new SkosCode("http://publications.europa.eu/resource/authority/access-right/PUBLIC", new HashMap<String, String>());
+        accessRight.getTitle().put("no", "Offentlig");
         expected.setAccessRights(accessRight);
 
         expected.setDescription(createMapOfStrings("Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"));
         expected.setIssued(createDate("01-01-2009 00:00:00"));
         expected.setLandingPage("https://w2.brreg.no/frivillighetsregisteret/");
 
-        Map<String, String> language = new HashMap<String, String>();
-        language.put("no", "norsk");
+        SkosCode language = new SkosCode("http://publications.europa.eu/resource/authority/language/2", new HashMap<String,String>());
+        language.getTitle().put("no", "norsk");
         expected.setLanguage(language);
 
-        Map<String, String> provinance = new HashMap<String, String>();
-        provinance.put("no", "statlig vedtak");
+        SkosCode provinance = new SkosCode("http://data.brreg.no/datakatalog/provinens/vedtak", new HashMap<String, String>());
+        provinance.getTitle().put("no", "statlig vedtak");
         expected.setProvenance(provinance);
 
         expected.setTitle(createMapOfStrings("Frivillighetsregisteret"));
@@ -127,16 +127,16 @@ public class DatasetTest {
 
         Assert.assertEquals(expected.getIdentifier(), data.getIdentifier());
         Assert.assertEquals(expected.getSubject(), data.getSubject());
-        Assert.assertEquals(expected.getAccrualPeriodicity(), data.getAccrualPeriodicity());
+        Assert.assertEquals(expected.getAccrualPeriodicity().getCode(), data.getAccrualPeriodicity().getCode());
         Assert.assertEquals(expected.getPage(), data.getPage());
         Assert.assertEquals(expected.getADMSIdentifier(), data.getADMSIdentifier());
         Assert.assertEquals(expected.getType(), data.getType());
-        Assert.assertEquals(expected.getAccessRights(), data.getAccessRights());
+        Assert.assertEquals(expected.getAccessRights().getCode(), data.getAccessRights().getCode());
         Assert.assertEquals(expected.getDescription().get("nb"), data.getDescription().get("nb"));
         Assert.assertEquals(expected.getIssued(), data.getIssued());
         Assert.assertEquals(expected.getLandingPage(), data.getLandingPage());
-        Assert.assertEquals(expected.getLanguage(), data.getLanguage());
-        Assert.assertEquals(expected.getProvenance(), data.getProvenance());
+        Assert.assertEquals(expected.getLanguage().getCode(), data.getLanguage().getCode());
+        Assert.assertEquals(expected.getProvenance().getCode(), data.getProvenance().getCode());
         Assert.assertEquals(expected.getSpatial().get(0).getCode(), data.getSpatial().get(0).getCode());
         Assert.assertEquals(expected.getSpatial().get(0).getTitle().get("no"), data.getSpatial().get(0).getTitle().get("no"));
         Assert.assertEquals(expected.getTitle(), data.getTitle());
@@ -158,8 +158,8 @@ public class DatasetTest {
         return sdf.parse(dateInString);
     }
 
-    private List createListOfStrings(String data) {
-        List list = new ArrayList<>();
+    private List<String> createListOfStrings(String data) {
+        List list = new ArrayList<String>();
         list.add(data);
         return list;
     }
@@ -178,8 +178,8 @@ public class DatasetTest {
         return list;
     }
 
-    private Map createMapOfStrings(String data) {
-        Map map = new HashMap<>();
+    private Map<String, String> createMapOfStrings(String data) {
+        Map map = new HashMap<String, String>();
         map.put("nb", data);
         return map;
     }
