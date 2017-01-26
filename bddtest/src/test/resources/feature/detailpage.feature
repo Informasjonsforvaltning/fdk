@@ -21,7 +21,3 @@ Feature: Page for presenting properties for a dataset.
 #      | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Restricted | Kingdom of Norway |
 #      | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Non-public | Kingdom of Norway |
 
-  Scenario: Contact information should exist (Navn, E-post, Telefon, Organisasjon, Organisasjonsenhet)
-    Then the following datasets shall have contact information as specified:
-      | http://data.brreg.no/datakatalog/dataset/1 | Informasjonstjenesten | mailto:aas@brreg.no | tel:+4775007500 | Brønnøysundregistrene | AAS |
-      | http://data.brreg.no/datakatalog/dataset/35 |  | mbox:postmottak@mattilsynet.no | tel:+4722400000 |  | Mattilsynet |
