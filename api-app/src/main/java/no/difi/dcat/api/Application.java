@@ -9,14 +9,11 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
@@ -24,7 +21,7 @@ import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
-public class Application extends SpringBootServletInitializer {
+public class Application {
 
 
 	@Bean
@@ -42,16 +39,19 @@ public class Application extends SpringBootServletInitializer {
 							public String load(Key key) throws IOException {
 
 								logger.error("CACHE MISS!!!");
-								CloseableHttpClient httpclient = HttpClients.createDefault();
+								CloseableHttpResponse response1;
+								HttpEntity entity;
+								try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
-								HttpGet httpGet = new HttpGet(key.getUrl());
+									HttpGet httpGet = new HttpGet(key.getUrl());
 
-								httpGet.setHeader("Accept", key.getContentType());
+									httpGet.setHeader("Accept", key.getContentType());
 
-								CloseableHttpResponse response1 = httpclient.execute(httpGet);
+									response1 = httpclient.execute(httpGet);
+								}
 
 
-								HttpEntity entity = response1.getEntity();
+								entity = response1.getEntity();
 
 								return EntityUtils.toString(entity, Charset.forName("UTF-8"));
 
@@ -61,14 +61,7 @@ public class Application extends SpringBootServletInitializer {
 
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
-
-
 	public static void main(String[] args) {
-
 		SpringApplication.run(Application.class, args);
 	}
 

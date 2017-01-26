@@ -13,5 +13,7 @@ application:
 spring:
   profiles: development
 application:
-  queryService: http://localhost:8091
-  queryServiceExternal: http://localhost:8091
+  queryService: http://localhost:8083
+  queryServiceExternal: http://localhost:8083
+server:
+  port: 8080

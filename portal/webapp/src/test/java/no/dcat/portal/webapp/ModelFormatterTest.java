@@ -1,0 +1,40 @@
+package no.dcat.portal.webapp;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+
+public class ModelFormatterTest {
+
+    private ModelFormatter modelFormatter;
+
+    @Before
+    public void setUp() throws Exception {
+        Model model = ModelFactory.createDefaultModel();
+        modelFormatter = new ModelFormatter(model);
+    }
+
+    @Test
+    public void format_xml() throws Exception {
+        String expectedResult = "<rdf:RDF\r\n    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\r\n</rdf:RDF>\r\n";
+        assertThat(modelFormatter.format(SupportedFormat.RDF_XML.getAccept()), is(expectedResult));
+    }
+
+    @Test
+    public void format_jsonld() throws Exception {
+        String expectedResult = "{ }\n";
+        assertThat(modelFormatter.format(SupportedFormat.JSON_LD.getAccept()), is(expectedResult));
+    }
+
+    @Test
+    public void format_csv() throws Exception {
+        String expectedResult = "";
+        assertThat(modelFormatter.format(SupportedFormat.TURTLE.getAccept()), is(expectedResult));
+    }
+
+}

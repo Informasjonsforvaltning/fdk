@@ -59,7 +59,7 @@ public class DcatRestController {
 			final HttpHeaders httpHeaders= new HttpHeaders();
 			httpHeaders.setContentType(supportedFormat.getMimetype());
 
-			return new ResponseEntity<String>(dcatCache.get(key),httpHeaders, HttpStatus.OK);
+			return new ResponseEntity<>(dcatCache.get(key),httpHeaders, HttpStatus.OK);
 
 
 		} catch (ExecutionException e) {
