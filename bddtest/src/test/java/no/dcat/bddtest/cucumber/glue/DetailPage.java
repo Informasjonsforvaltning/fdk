@@ -25,6 +25,7 @@ public class DetailPage extends CommonPage {
     public static final String ID_LANGUAGE_TEXT = "languageText";
     public static final String ID_LOCATIONS_TEXT = "locationsText";
     public static final String ID_ACCESS_RIGTH_TEXT = "accessRightText";
+    public static final String ID_ACCRUAL_PERIODICITY_TEXT = "accrualPeriodicityText";
     private final String NOR_PAGE = "detail?id=%s";
     private final String ENG_PAGE = "detail?id=%s";
 
@@ -43,70 +44,52 @@ public class DetailPage extends CommonPage {
 
     }
 
-    @Then ("^the following datasets shall have contact information as specified:$")
-    public void contactInformation(DataTable datasets) throws Throwable {
+   @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-right, locations\\):$")
+   public void norwegianProperties(DataTable datasets) throws Throwable {
         try {
+            List<List<String>> dataset = datasets.raw();
 
-            for (List<String> dataset : datasets.raw()) {
-                String dsId = dataset.get(0);
-                logger.info("Test dataset {}",dsId);
-                String name = dataset.get(1);
-                String email = dataset.get(2);
-                String telephone = dataset.get(3);
-                String organization = dataset.get(4);
-                String orgUnit = dataset.get(5);
+            final String[] idrefs = {
+                    ID_PROVENANCE_TEXT,
+                    ID_ACCRUAL_PERIODICITY_TEXT,
+                    ID_LANGUAGE_TEXT,
+                    ID_ACCESS_RIGTH_TEXT,
+                    ID_LOCATIONS_TEXT
+            };
 
-                openPage("detail?id="+ dsId);
+            for (List<String> dsProperties : dataset) {
+                String id = dsProperties.get(0);
 
-                assertTrue("Detail page has title ", driver.getTitle() != null);
-                if (!"".equals(name)) {
-                    WebElement nameElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Navn']/following-sibling::dd[1]"));
-                    assertEquals(name, nameElement.getText());
-                }
+                String[] actualValues = {
+                        dsProperties.get(1),
+                        dsProperties.get(2),
+                        dsProperties.get(3),
+                        dsProperties.get(4),
+                        dsProperties.get(5)
+                };
 
-                if (!"".equals(email)) {
-                    WebElement emailElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Epost']/following-sibling::dd[1]"));
-                    assertEquals(email, emailElement.getText());
-                }
-
-                if (!"".equals(telephone)) {
-                    WebElement telephoneElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Telefon']/following-sibling::dd[1]"));
-                    assertEquals(telephone, telephoneElement.getText());
-                }
-
-                if (!"".equals(organization)) {
-                    WebElement organisationElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Organisasjon']/following-sibling::dd[1]"));
-                    assertEquals(organization, organisationElement.getText());
-                }
-
-                if (!"".equals(orgUnit)) {
-                    WebElement orgUnitElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Organisasjonsenhet']/following-sibling::dd[1]"));
-                    assertEquals(orgUnit, orgUnitElement.getText());
-                }
+                check(id, actualValues, idrefs);
             }
         } finally {
             driver.close();
         }
     }
 
+    void check(String pageUrl, String[] values, String[] idrefs) {
 
-    @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-rigth, locations\\):$")
-    public void norwegianProperties(DataTable datasets) throws Throwable {
-        try {
-            List<List<String>> dataset = datasets.raw();
+        openPageWaitRetry(String.format(NOR_PAGE, pageUrl), idrefs[0], 2);
 
-            for (List<String> dsProperties : dataset) {
-                String id = dsProperties.get(0);
-                openPage(String.format(NOR_PAGE, id));
+        int i = 0;
+        for (String htmlId : idrefs ) {
+            String value = values[i++];
 
-                String provenanceText = dsProperties.get(1);
-                String provenanceTextActual = driver.findElement(By.id(ID_PROVENANCE_TEXT)).getText();
-                assertTrue(String.format("The user %s shall have provenance equal to %s", id, provenanceText),
-                        provenanceText.equals(provenanceTextActual));
+            if (value != null && !"".equals(value)) {
+
+                String textActual = driver.findElement(By.id(htmlId)).getText();
+                assertTrue(String.format("The user %s shall have %s equal to %s", pageUrl, htmlId, value),
+                        value.equals(textActual));
 
             }
-        } finally {
-            driver.close();
         }
     }
 
