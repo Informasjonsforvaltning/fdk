@@ -38,7 +38,7 @@ public class ModelFormatterTest {
     }
 
     private String removeLinebreak(String input) {
-        return input.replaceAll(" \\r\\n", "");
+        return input.replaceAll("[ \\r\\n]", "");
     }
 
 }
