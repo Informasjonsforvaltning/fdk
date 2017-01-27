@@ -1,9 +1,7 @@
 Feature: Contact information for dataset.
 
   Background: Load dataset.
-    Given I clean elastic search.
-    And I load the "dataset-detailpage.ttl" dataset.
-    And I open the browser.
+    Given I load the "dataset-detailpage.ttl" dataset.
 
 
   Scenario: Contact information should exist (Navn, E-post, Telefon, Organisasjon, Organisasjonsenhet)
