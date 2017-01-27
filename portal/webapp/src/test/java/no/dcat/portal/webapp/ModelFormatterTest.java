@@ -22,19 +22,23 @@ public class ModelFormatterTest {
     @Test
     public void format_xml() throws Exception {
         String expectedResult = "<rdf:RDF\r\n    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\r\n</rdf:RDF>\r\n";
-        assertThat(modelFormatter.format(SupportedFormat.RDF_XML.getAccept()), is(expectedResult));
+        assertThat(removeLinebreak(modelFormatter.format(SupportedFormat.RDF_XML.getAccept())), is(removeLinebreak(expectedResult)));
     }
 
     @Test
     public void format_jsonld() throws Exception {
         String expectedResult = "{ }\n";
-        assertThat(modelFormatter.format(SupportedFormat.JSON_LD.getAccept()), is(expectedResult));
+        assertThat(removeLinebreak(modelFormatter.format(SupportedFormat.JSON_LD.getAccept())), is(removeLinebreak(expectedResult)));
     }
 
     @Test
     public void format_csv() throws Exception {
         String expectedResult = "";
         assertThat(modelFormatter.format(SupportedFormat.TURTLE.getAccept()), is(expectedResult));
+    }
+
+    private String removeLinebreak(String input) {
+        return input.replaceAll(" \\r\\n", "");
     }
 
 }
