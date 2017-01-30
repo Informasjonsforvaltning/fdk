@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableScheduling
-public class Application{
+public class AdminApplication  {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -26,12 +26,14 @@ public class Application{
 
     @Bean
     public AppErrorController appErrorController() {
+
         return new AppErrorController(errorAttributes);
     }
 
+
     public static void main(String[] args) {
 
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 
 }

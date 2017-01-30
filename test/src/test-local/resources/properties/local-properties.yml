@@ -21,3 +21,4 @@ server:
   port: 8084
 management:
   port: 8994
+
