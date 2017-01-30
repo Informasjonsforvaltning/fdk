@@ -1,19 +1,14 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
-import no.dcat.harvester.Application;
-import no.dcat.harvester.crawler.CrawlerJob;
-import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
+import no.dcat.harvester.HarvesterApplication;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
+import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -25,7 +20,7 @@ import java.util.concurrent.Future;
 
 public class Loader {
 
-    private final String DEFAULT_ELASTICSEARCH_HOST = "192.168.99.100";
+    private final String DEFAULT_ELASTICSEARCH_HOST = "localhost";
     private final int DEFAULT_ELASTICSEARCH_PORT = 9300;
     private final String DEFAULT_ELASTICSEARCH_CLUSTER = "elasticsearch";
 
@@ -117,10 +112,14 @@ public class Loader {
             CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, this.elasticsearchCluster);
             CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(this.hostname,this.port, this.elasticsearchCluster);
 
-            LoadingCache<URL, String> brregCach = Application.getBrregCache();
+            LoadingCache<URL, String> brregCach = HarvesterApplication.getBrregCache();
             CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
 
-            job.run();
+
+            Thread crawlerThread = new Thread(job);
+            crawlerThread.start();
+
+            //job.run();
 
             return job.getValidationResult();
 
@@ -143,6 +142,9 @@ public class Loader {
         CrawlerResultHandler codeHandler = new CodeCrawlerHandler(this.hostname, this.port, this.elasticsearchCluster, indexType, reload);
         CrawlerCodeJob jobCode = new CrawlerCodeJob(sourceURL, codeHandler);
 
-        jobCode.run();
+        Thread codeCrawlerThread = new Thread(jobCode);
+        codeCrawlerThread.start();
+
+        //jobCode.run();
     }
 }
