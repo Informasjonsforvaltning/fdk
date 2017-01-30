@@ -4,6 +4,7 @@ import no.dcat.portal.webapp.utility.ResponseManipulation;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class ResponseManipulationTest {
         Map<String, List<String>> kw = createKeyWords(englishKeyWords, "en");
 
         List<Distribution> ld = createDistrubution("en", "Dist.titel", "Dist.beskr");
+
+        SkosCode accrual = new SkosCode("testcode", new HashMap<String,String>());
+        accrual.getTitle().put("en", "very often");
 
         Dataset ds = new Dataset();
         ds.setTheme(ldt);
