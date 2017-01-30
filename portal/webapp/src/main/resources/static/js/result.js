@@ -11,6 +11,13 @@ var resultCursor = {
 var total = 0;
 var searchUrl = "http://dcat.no/unknown";
 
+$(document).ready(function() {
+  console.log('ready');
+});
+$(window).on('popstate', function() {
+  showPage(false);
+});
+
 function resetResultCursor() {
     resultCursor.currentPage = 0;
     resultCursor.sectionStart = 1;
@@ -351,7 +358,7 @@ function showResults(searchResult) {
 
 }
 
-function doSearch() {
+function doSearch(doPushistory) {
 
     if (search) {
         var query = "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
@@ -368,7 +375,7 @@ function doSearch() {
             query += "&publisher=" + filters.publisher.active.join(",");
         }
         var urlstring =  searchUrl + "/search" + query;
-        pushHistory(query);
+        if(doPushistory) pushHistory(query);
 
         console.log(urlstring);
 
@@ -395,6 +402,7 @@ function pushHistory(query) {
 
     history.pushState(null, null, urlhistory);
 }
+
 
 // Sets up event handler to select the number of hits per page.
 function hitsPerPageController() {
@@ -470,8 +478,8 @@ function searchController() {
 }
 
 // Set up page
-function showPage () {
-
+function showPage (doPushistory) {
+    if(!doPushistory) doPushistory = true;
     searchUrl = $('meta[name="dcatQueryService"]').attr('content');
 
     var t = $('meta[name="theme"]').attr('content');
@@ -507,6 +515,5 @@ function showPage () {
     hitsPerPageController();
 
     // First call to search
-    doSearch();
+    doSearch(doPushistory);
 }
-

@@ -1,0 +1,97 @@
+<html>
+
+<head>
+	<title>Sample App</title>
+	<!-- Latest compiled and minified CSS -->
+
+  <link href="https://cdn.jsdelivr.net/searchkit/0.9.0/theme.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<style>
+.publisher {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.sk-item-list-option *{
+display:inline;
+}
+.sk-item-list-option__count:before {
+content: '(';
+}
+
+.sk-item-list-option__count:after {
+content: ')';
+}
+.sk-item-list-option__text {
+text-transform: lowercase;
+padding-left: 3px;
+}
+/*
+.sk-item-list-option__text:hover {
+text-transform: none;
+}
+.sk-item-list-option__text:first-letter:hover {
+text-transform: none;
+}*/
+.sk-item-list-option__text:first-letter { text-transform: uppercase; }
+.list-group-item {
+width: 100%;
+}
+.btn.publisher:empty {
+display:none;
+}
+.label {
+margin: 1px;
+display: inline-block;
+}
+.sk-layout__top-bar {
+	position: static;
+	background:none;
+	box-shadow: none;
+	margin-bottom: 10px;
+}
+.sk-search-box {
+	border: 1px solid #ccc;
+	color: #000;
+}
+.sk-search-box__text {
+	color: #000;
+}
+.sk-layout__top-bar {
+	color: #000 !important;
+}
+</style>
+<!-- Latest compiled and minified JavaScript -->
+</head>
+
+<body>
+	<div id='root'>
+	</div>
+		<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+		<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/js/bundle.js"></script>
+<!--	<div class="row">
+
+	            <div class="col-sm-3 col-sm-offset-2" id="logo-footer">
+
+	                <a href="//www.brreg.no">
+	                    <img src="/static/img/brreg_logo.svg" alt="Brønnøysundregistrene logo">
+	                </a>
+
+	                <p><span>Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span>
+	                </p>
+	                <a href="//www.brreg.no/personvern/personvernerklaering/">Informasjonskapsler - personvern</a>
+
+	            </div>
+
+	            <div class="col-sm-3 col-sm-offset-2">
+	                <a href="//www.difi.no">
+	                    <img src="/static/img/difi-logo.png" alt="Difi logo">
+	                </a>
+	            </div>
+	        </div>-->
+</body>
+
+</html>
