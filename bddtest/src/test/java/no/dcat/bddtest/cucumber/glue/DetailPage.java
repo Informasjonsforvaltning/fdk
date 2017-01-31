@@ -5,20 +5,22 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import no.dcat.harvester.crawler.Loader;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.List;
 
+import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 
 /**
  * Cucumber glue class for the detail feature.
  */
 public class DetailPage extends CommonPage {
+    private static final Logger logger = LoggerFactory.getLogger(DetailPage.class);
+
     public static final String ID_PROVENANCE_TEXT = "provenanceText";
     public static final String ID_LANGUAGE_TEXT = "languageText";
     public static final String ID_LOCATIONS_TEXT = "locationsText";
@@ -42,8 +44,8 @@ public class DetailPage extends CommonPage {
 
     }
 
-    @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-right, locations\\):$")
-    public void norwegianProperties(DataTable datasets) throws Throwable {
+   @Then("^the following dataset shall have the following norwegian properties \\(id, provenance, frequency, language, access-right, locations\\):$")
+   public void norwegianProperties(DataTable datasets) throws Throwable {
         try {
             List<List<String>> dataset = datasets.raw();
 

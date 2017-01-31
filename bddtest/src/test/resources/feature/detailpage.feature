@@ -16,3 +16,10 @@ Feature: Page for presenting properties for a dataset.
       | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Begrenset | Norge, |
       | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Ikke-offentlig | Norge, |
 
+
+#    Then the following dataset shall have the following english properties (id, provenance, frequency, language, access-rigth, locations):
+#      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | continuous | norwgian | Public | Kingdom of Norway|
+#      | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Restricted | Kingdom of Norway |
+#      | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Non-public | Kingdom of Norway |
+
+
