@@ -12,8 +12,13 @@ application:
 ---
 #Utv-miljø lokalt på egen PC
 spring:
-    profiles: development
+  profiles: development
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
   clusterName: elasticsearch
+server:
+  port: 8083
+management:
+  port: 8993
+

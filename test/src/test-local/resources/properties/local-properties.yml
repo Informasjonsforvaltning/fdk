@@ -4,7 +4,7 @@ logging:
   level.org.springframework: ERROR
 ---
 spring:
-    profiles: docker
+  profiles: docker
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
@@ -12,12 +12,13 @@ application:
 ---
 #Utv-miljø lokalt på egen PC
 spring:
-    profiles: development
+  profiles: development
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
   elasticsearchCluster: elasticsearch
 server:
-  port: 8085
+  port: 8084
 management:
-  port: 8185
+  port: 8994
+

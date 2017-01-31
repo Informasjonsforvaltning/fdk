@@ -265,7 +265,7 @@ public class SimpleQueryService {
 
         if (response.getHits().getTotalHits() == 0) {
             logger.error(String.format("Found no dataset with id: %s", id));
-            jsonError = new ResponseEntity<String>(String.format("Found no dataset with id: %s", id), HttpStatus.NOT_FOUND);
+            jsonError = new ResponseEntity<>(String.format("Found no dataset with id: %s", id), HttpStatus.NOT_FOUND);
         }
         logger.trace(String.format("Found dataset: %s", response.toString()));
 
@@ -273,7 +273,7 @@ public class SimpleQueryService {
             return jsonError;
         }
 
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
     /**
