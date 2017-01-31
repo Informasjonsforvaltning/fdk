@@ -14,7 +14,7 @@ public class CodeTypesTest {
 
     @Test
     public void getRights() {
-        String sourceUrl = Types.RIGTHSSTATEMENT.getSourceUrl();
+        String sourceUrl = Types.RIGHTSSTATEMENT.getSourceUrl();
         logger.info(sourceUrl);
 
         Assert.assertNotNull(sourceUrl);

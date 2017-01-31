@@ -4,7 +4,6 @@ import no.dcat.harvester.crawler.Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -77,7 +78,7 @@ public class TestAdminController {
     /**
      * Delete dcat index from Elasticsearch
      *
-     * @param response
+     * @param response the httpservlet response (not used)
      * @return HTTP 200 OK if index was deleted succesfully
      */
     @CrossOrigin
@@ -147,14 +148,14 @@ public class TestAdminController {
             Loader loader = new Loader();
 
             //loader.loadDatasetFromFile(url.toString());
-            String url = tempFile.toURL().toString();
+            String url = tempFile.toURI().toURL().toString();
             logger.debug ("reading tempfile " + url);
 
 
             //List<String> resultMsgs = loader.loadDatasetFromFile(url);
             List<String> resultMsgs = loader.loadDatasetFromFile(url, elasticSearchHost, elasticSearchPort, elasticSearchCluster);
             // Format results
-            StringBuffer msg = new StringBuffer();
+            StringBuilder msg = new StringBuilder();
             boolean success = true;
             for (String s : resultMsgs) {
                 if (s.contains("validation_error")) success = false;
