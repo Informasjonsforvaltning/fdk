@@ -15,3 +15,5 @@ logs/
 /portal/phantomjsdriver.log
 /test/zip/
 .DS_Store
+.hot-update.js
+*/node_modules/

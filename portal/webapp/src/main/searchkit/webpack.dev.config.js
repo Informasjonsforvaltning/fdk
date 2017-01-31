@@ -6,7 +6,7 @@ module.exports = {
   devtool:"eval",
   context:path.join(__dirname),
   entry: [
-    'webpack-hot-middleware/client?reload=true',
+//    'webpack-hot-middleware/client?reload=true',
     './src/index.jsx'
   ],
   output: {

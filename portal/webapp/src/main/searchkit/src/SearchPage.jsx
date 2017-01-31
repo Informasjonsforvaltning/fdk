@@ -14,68 +14,15 @@ import {
 } from "searchkit";
 import * as axios from "axios";
 import {SearchBox} from './SearchBox.jsx';
+import {QueryTransport} from './QueryTransport.jsx';
 
 const defaults = require("lodash/defaults");
 
 const host = "/dcat";
-//const searchkit = new SearchkitManager(host, {transport: new MyTransport()});
-const searchkit = new SearchkitManager(host);
+const searchkit = new SearchkitManager(host, {transport: new QueryTransport()});
+//const searchkit = new SearchkitManager(host);
 
 
-/*
-export class MyTransport extends AxiosESTransport {
-  constructor(host, options){
-    super()
-    this.options = defaults(options, {
-      headers:{},
-      searchUrlPath:"http://localhost:8083/search"
-    })
-    if(this.options.basicAuth){
-      this.options.headers["Authorization"] = (
-        "Basic " + btoa(this.options.basicAuth))
-    }
-    this.axios = axios.create({
-      baseURL:this.host,
-      timeout:AxiosESTransport.timeout,
-      headers:this.options.headers
-    })
-  }
-
-  search(query){
-		console.log('query is ', query);
-		// http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
-    return this.axios.get(
-			'http://localhost:8083/search?q=' +
-			(query.query ? query.query.simple_query_string.query : '') +
-			'&from=' +
-			((!query.from) ? '0' : query.from) +
-			'&size=10&lang=nb&publisher=' +
-			((query.filter && query.filter.term['publisher.name.raw']) ? query.filter.term['publisher.name.raw'] : '') +
-			'&theme=' +
-			((query.filter && query.filter.term['theme.id']) ? query.filter.term['theme.id'].substr(-4) : '')
-		)
-      .then(this.getData)
-  }
-
-  getData(response){
-
-		    // Check for the old property name to avoid a ReferenceError in strict mode.
-		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('publisherCount')) {
-		        response.data.aggregations['publisher.name.raw3'] = {'publisher.name.raw' : response.data.aggregations['publisherCount'], size: '10'};
-						response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets = response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets.slice(0,10);
-		        delete response.data.aggregations['publisherCount'];
-		    }
-		    // Check for the old property name to avoid a ReferenceError in strict mode.
-		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('theme_count')) {
-		        response.data.aggregations['theme.id3'] = {'theme.id' : response.data.aggregations['theme_count'], size: '10'};
-		        delete response.data.aggregations['theme_count'];
-		    }
-		console.log(response)
-    return response.data
-  }
-
-}
-*/
 require("./index.scss");
 const sa = require('superagent');
 
@@ -124,7 +71,6 @@ class RefinementOption extends React.Component {
 			return (
 				<div className={props.bemBlocks.option().state({selected:props.selected}).mix(props.bemBlocks.container("item"))} onClick={props.onClick}>
 						<input type="checkbox" data-qa="checkbox" checked={active} readOnly className={block("checkbox").state({ active }) } ></input>
-
 					<div className={props.bemBlocks.option("text")}>{themeLabel}</div>
 					<div className={props.bemBlocks.option("count")}>{props.count}</div>
 				</div>
@@ -194,13 +140,7 @@ export class SearchPage extends React.Component {
 		let that = this;
 		if(!window.themes) {
 			window.themes = [];
-			sa.post('/theme/_search')
-				.send({
-					"size": 100,
-			 		"query": {
-						"match_all": {}
-				 }
-				})
+			sa.get('http://localhost:8083/themes')
 				.end(function(err, res) {
 						if(!err && res) {
 							res.body.hits.hits.forEach(function (hit) {
@@ -290,23 +230,22 @@ export class SearchPage extends React.Component {
 												<RefinementListFilter
 													id="theme"
 													title="Tema"
-													field="theme.id"
+													field="theme.code.raw"
 													operator="AND"
-													size={10}
+													size={100}
 													itemComponent={RefinementOption}
 													/>
 											</div>
 											<div id="datasets" className="col-sm-8 list-group">
 											<ActionBar>
-											{/*
+
 												<ActionBarRow>
 													<HitsStats/>
 													<SortingSelector options={[
-														{label:"Relevance", field:"_score", order:"desc", defaultOption:true},
-														{label:"Latest Releases", field:"released", order:"desc"},
-														{label:"Earliest Releases", field:"released", order:"asc"}
+														{label:"Relevans", field:"_score", order:"desc", defaultOption:true},
+														{label:"Virksomhet", field:"publisher"},
 													]}/>
-												</ActionBarRow> */}
+												</ActionBarRow>
 												<ActionBarRow>
 													<ResetFilters/>
 												</ActionBarRow>
