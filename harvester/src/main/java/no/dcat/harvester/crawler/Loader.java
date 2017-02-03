@@ -120,6 +120,8 @@ public class Loader {
             crawlerThread.start();
 
             //job.run();
+            // wait for the job to finish
+            crawlerThread.join();
 
             return job.getValidationResult();
 
@@ -131,7 +133,7 @@ public class Loader {
 
         return null;
     }
-    private void harvestAllCodes(boolean reload) throws InterruptedException {
+    public void harvestAllCodes(boolean reload) throws InterruptedException {
         for(Types type:Types.values()) {
             logger.debug("Loading type {}", type);
             harvestCode(reload, type.getSourceUrl(), type.getType());

@@ -326,12 +326,6 @@
 				<version>1.2.5</version>
 			</dependency>
 			<dependency>
-				<groupId>info.cukes</groupId>
-				<artifactId>cucumber-core</artifactId>
-				<version>1.2.5</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
 				<groupId>com.vimalselvam</groupId>
 				<artifactId>cucumber-extentsreport</artifactId>
 				<version>1.0.0</version>
