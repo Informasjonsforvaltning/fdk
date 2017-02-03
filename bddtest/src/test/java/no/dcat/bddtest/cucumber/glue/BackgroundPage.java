@@ -5,10 +5,13 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -46,14 +49,7 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^I load the \"([^\"]*)\" dataset\\.$")
     public void loadDataset(String filename) throws IOException {
-        String hostname = "localhost"; //getEnv("elasticsearch.hostname");
-        int port = 9300; //getEnvInt("elasticsearch.port");
-        new DeleteIndex(hostname, port).deleteIndex(index);
-        String defultPath = new File(".").getCanonicalPath().toString();
-        String fileWithPath = String.format("file:%s/bddtest/src/test/resources/%s", defultPath, filename);
-
-        new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
-
+        deleteAndLoad(filename);
     }
 
     @Given("^Elasticsearch kjører")
@@ -65,15 +61,31 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^bruker datasett (.*).ttl")
     public void setupTestData(String datasett) throws IOException {
+        deleteAndLoad(datasett + ".ttl");
+
+        //String defultPath = new File(".").getCanonicalPath().toString();
+        //String fileWithPath = String.format("file://%s/test/data/%s.ttl", defultPath, datasett);
+
+
+    }
+
+    private void deleteAndLoad(String datasett) throws IOException {
         String hostname = "localhost"; //getEnv("elasticsearch.hostname");
         int port = 9300; //getEnvInt("elasticsearch.port");
 
         new DeleteIndex(hostname, port).deleteIndex(index);
+        Loader loader = new Loader(hostname, port);
+        try {
+            loader.harvestAllCodes(true);
 
-        String defultPath = new File(".").getCanonicalPath().toString();
-        String fileWithPath = String.format("file:%s/test/data/%s.ttl", defultPath, datasett);
+            Thread.sleep(3000);
 
-        new Loader(hostname, port).loadDatasetFromFile(fileWithPath);
+            Resource resource = new ClassPathResource(datasett);
+
+            loader.loadDatasetFromFile(resource.getURL().toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Given("^man har åpnet Fellesdatakatalog i en nettleser")

@@ -106,7 +106,7 @@ public class Loader {
             DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
             // Load all codes.
-            harvestAllCodes(true);
+            //harvestAllCodes(true);
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
             CrawlerResultHandler esHandler = new ElasticSearchResultHandler(this.hostname, this.port, this.elasticsearchCluster);

@@ -9,6 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -54,7 +55,14 @@ public class ThemePage extends CommonPage {
 
     @When("^jeg åpner temasiden i fellesdatakatalog")
     public void goToFDK() {
+
         driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -72,7 +80,7 @@ public class ThemePage extends CommonPage {
             WebElement themeCount = themeElement.findElement(By.name("hits"));
             String count = themeCount.getAttribute("innerHTML");
 
-            assertThat( String.format("Antall stemmer ikke med forventet antall for %s", theme), antall, is(count));
+            assertThat( String.format("Antall stemmer ikke med forventet antall for %s", theme),  count, is(antall));
         }
     }
 }
