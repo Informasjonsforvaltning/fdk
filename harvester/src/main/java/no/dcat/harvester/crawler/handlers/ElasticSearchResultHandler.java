@@ -100,6 +100,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         // Retrieve all codes from elasticsearch.
         Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+
         Map<String, SkosCode> locations = new LoadLocations(elasticsearch).extractLocations(model).retrieveLocTitle()
                 .indexLocationsWithElasticSearch().refresh().getLocations();
         Map<String,Map<String, SkosCode>> codes = new RetrieveCodes(elasticsearch).getAllCodes();

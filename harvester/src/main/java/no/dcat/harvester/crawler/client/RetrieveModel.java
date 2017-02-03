@@ -15,6 +15,7 @@ public class RetrieveModel {
 
     public static Model remoteRDF(String url) {
         final Model model = ModelFactory.createDefaultModel();
+        logger.debug("remote rdf url: " + url);
         model.read(url);
 
         return model;
