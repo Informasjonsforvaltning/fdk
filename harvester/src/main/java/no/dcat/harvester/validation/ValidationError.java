@@ -24,9 +24,9 @@ public class ValidationError{
             
             message = messageLiteral.toString();
             
-            subject = next.get("subject");
-            predicate = next.get("predicate");
-            object = next.get("object");
+            subject = next.get("s");
+            predicate = next.get("p");
+            object = next.get("o");
 
       }
 

@@ -45,7 +45,9 @@ public final class ResponseManipulation {
         }
 
         fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
-        fillPropWithAlternativeValIfEmpty(dataset.getAccrualPeriodicity(), lang);
+        if (dataset.getAccrualPeriodicity() != null) {
+            fillPropWithAlternativeValIfEmpty(dataset.getAccrualPeriodicity().getTitle(), lang);
+        }
 
         if (dataset.getDistribution() != null) {
             for (Distribution distribution : dataset.getDistribution()) {

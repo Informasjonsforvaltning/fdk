@@ -28,6 +28,8 @@ export class QueryTransport extends AxiosESTransport {
     const themeKey = 'theme.code.raw';
     let publisherFilter = '';
     let themeFilter = '';
+    let multiplePublishers = false;
+    let multipleThemes = false;
     if(query.filter) { // there is an aggregation filter
       if(query.filter.bool) { // array of filters
         query.filter.bool.must.forEach((filter) => {
@@ -35,16 +37,22 @@ export class QueryTransport extends AxiosESTransport {
             if(publisherFilter.length === 0) {
               publisherFilter += '&publisher=';
             }
+            if (multiplePublishers) {
+                publisherFilter += ',';
+            }
             publisherFilter += filter.term[publisherKey];
-            publisherFilter += ',';
+            multiplePublishers = true;
           } else if(filter.term[themeKey]) {
             console.log('filter is ', filter, filter.term, filter.term[themeKey]);
 
             if(themeFilter.length === 0) {
               themeFilter += '&theme=';
             }
+            if (multipleThemes) {
+                themeFilter += ",";
+            }
             themeFilter += filter.term[themeKey];
-            themeFilter += ',';
+            multipleThemes = true;
           }
         })
       } else if(query.filter.term) { // single filter

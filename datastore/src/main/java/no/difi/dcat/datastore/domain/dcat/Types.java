@@ -9,7 +9,7 @@ package no.difi.dcat.datastore.domain.dcat;
 public enum Types {
 
     PROVENANCESTATEMENT("rdf/provenance.rdf", "provenancestatement"),
-    RIGTHSSTATEMENT("rdf/access-right-skos.rdf","rigthsstatement"),
+    RIGHTSSTATEMENT("rdf/access-right-skos.rdf","rightsstatement"),
     FREQUENCY("http://publications.europa.eu/mdr/resource/authority/frequency/skos/frequencies-skos.rdf","frequency"),
     // To bigfile, contains over 7700 languages, 5 milllion lines og code.
     //LINGUISTICSYSTEM("http://publications.europa.eu/mdr/resource/authority/language/skos/languages-skos.rdf", "linguisticsystem");

@@ -169,6 +169,16 @@
                    <include>**/*</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/searchkit</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <exclude>node_modules/*</exclude>
+                </excludes>
+            </resource>
         </resources>
 
         <plugins>
@@ -272,6 +282,29 @@
                     <generateGitPropertiesFilename>${basedir}/target/classes/git.properties</generateGitPropertiesFilename>
                 </configuration>
             </plugin>
+
+            <!--plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/searchkit</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/searchkit</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin -->
         </plugins>
     </build>
 

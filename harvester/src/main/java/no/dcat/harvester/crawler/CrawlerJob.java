@@ -4,6 +4,7 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
+import no.dcat.harvester.validation.ImportStatus;
 import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
@@ -13,6 +14,7 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
@@ -20,18 +22,17 @@ import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
+import org.elasticsearch.common.recycler.Recycler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Import;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
@@ -41,6 +42,8 @@ public class CrawlerJob implements Runnable {
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
+    private List<ValidationError> validationErrors = new ArrayList<>();
+    private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
 
     public List<String> getValidationResult() {return validationResult;}
 
@@ -65,6 +68,7 @@ public class CrawlerJob implements Runnable {
         logger.info("[crawler_operations] [success] Started crawler job: {}", dcatSource.toString());
         LocalDateTime start = LocalDateTime.now();
 
+
         try {
             logger.debug("loadDataset: "+ dcatSource.getUrl());
             Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
@@ -86,8 +90,13 @@ public class CrawlerJob implements Runnable {
             brregAgentConverter.collectFromModel(union);
 
             // if model is valid run the various handlers process method
-            if (isValid(union,validationResult)) {
-                logger.debug("Dataset is valid!");
+            //TODO: Refaktorering. Nå er det et salig rot av lokale og globale variabler, parametre....
+            if (isValid(union)) {
+                logger.debug("[crawler_operations] Valid datasets exists in input data!");
+                logger.debug("[crawler_operations] Number of non-valid datasets: " + nonValidDatasets.size());
+
+                removeNonValidDatasets(union);
+
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
                 }
@@ -95,6 +104,7 @@ public class CrawlerJob implements Runnable {
 
             LocalDateTime stop = LocalDateTime.now();
             logger.info("[crawler_operations] [success] Finished crawler job: {}", dcatSource.toString() + ", Duration=" + returnCrawlDuration(start, stop));
+
 
         } catch (JenaException e) {
             String message = formatJenaException(e);
@@ -189,18 +199,27 @@ public class CrawlerJob implements Runnable {
      * @param validationMessage a list of validation messages
      * @return returns true if model is valid (only contains warnings) and false if it has errors
      */
-    private boolean isValid(Model model,List<String> validationMessage) {
+    private boolean isValid(Model model) {
 
+        //most severe error status
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
         final String[] message = {null};
 
-        validationMessage.clear();
+        validationResult.clear();  //TODO: cleanup: trengs egentlig validationMessage/validationResult?
+        validationErrors.clear();
+        nonValidDatasets.clear();
 
         final int[] errors ={0}, warnings ={0}, others ={0};
 
         boolean validated = DcatValidation.validate(model, (error) -> {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
-            validationMessage.add(msg);
+            validationResult.add(msg);
+            validationErrors.add(error);
+
+            //add validation status per dataset for non-valid datasets
+            if(error.getClassName().equals("Dataset")) {
+                registerValidationStatusForDataset(error);
+            }
 
             if (error.isError()) {
                 errors[0]++;
@@ -223,14 +242,164 @@ public class CrawlerJob implements Runnable {
         });
 
         String summary = "[validation_summary] " + errors[0] + " errors, "+ warnings[0] + " warnings and " + others[0] + " other messages ";
-        validationMessage.add(0, summary);
+        validationResult.add(0, summary);
         logger.info(summary);
 
-        Resource rdfStatus = null;
+        //check in validation results if any datasets meets minimum criteria
+        boolean minimumCriteriaMet = false;
+        if (others[0] >= 1 || warnings[0] >= 1) {
+            minimumCriteriaMet = true;
+        }
 
+        logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
+
+        Resource rdfStatus = createCrawlerStatusForAdmin(status, minimumCriteriaMet);
+        StringBuilder datasetSummary = createDatasetSummaryMessage();
+
+        //Prepend summary message before detailed error message
+        if (message[0] != null) {
+            datasetSummary.append(message[0]);
+        }
+
+        //Log validation result in admin data store
+        String crawlMessage = datasetSummary.toString();
+        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlMessage);
+
+        return minimumCriteriaMet;
+    }
+
+
+    /**
+     * Remove non-valida datasets from model
+     * Non-valid datasets are those with ruleSeverity=error
+     * in global variable validationErrors
+     * @param model
+     */
+    private void removeNonValidDatasets(Model model) {
+
+        for(Map.Entry<RDFNode, ImportStatus> entry : nonValidDatasets.entrySet()) {
+            ImportStatus is = entry.getValue();
+            if(!is.shouldBeImported) {
+                Resource res = model.getResource( entry.getKey().toString());
+                //Remove triples where dataset is subject or object from model
+                model.removeAll(res, null, null);
+                model.removeAll(null, null, res);
+            }
+        }
+    }
+
+
+    private String returnCrawlDuration(LocalDateTime start, LocalDateTime stop) {
+        return String.valueOf(stop.compareTo(start));
+    }
+
+    /**
+     * Return the most severe validation result in list of non-valid dataset
+     * Severity order from most to least severe: error, warning, ok
+     * @return ValidationError.RuleSeverity
+     */
+    private ValidationError.RuleSeverity findMostSevereValidationResult() {
+        ValidationError.RuleSeverity mostSevereResult = ValidationError.RuleSeverity.ok;
+        for(Map.Entry<RDFNode, ImportStatus> entry : nonValidDatasets.entrySet()) {
+            ImportStatus is = entry.getValue();
+            switch (is.mostSevereValidationResult) {
+                case error:
+                    mostSevereResult = is.mostSevereValidationResult;
+                    break;
+                case warning:
+                    if (mostSevereResult == ValidationError.RuleSeverity.error){
+                        break;
+                    } else {
+                        mostSevereResult = is.mostSevereValidationResult;
+                        break;
+                    }
+                case ok:
+                    break;
+            }
+        }
+        return mostSevereResult;
+    }
+
+
+    /**
+     * Prepare status summary message for non valid datasets, if any exists
+     * The message contains a list of datasets IDs that will not be imported
+     * due to validation failure.
+     * The message is created from contents of global variable nonValidDatasets
+     *
+     * @return String containing validation summary message
+     */
+    private StringBuilder createDatasetSummaryMessage() {
+        //Prepare status summary message for non valid datasets, if any exists
+        StringBuilder datasetSummary = new StringBuilder();
+        if (nonValidDatasets.size() > 0) {
+            if (findMostSevereValidationResult() == ValidationError.RuleSeverity.error){
+                datasetSummary.append("Non-valid datasets not imported:\n");
+                for(Map.Entry<RDFNode, ImportStatus> entry : nonValidDatasets.entrySet()) {
+                    if(!entry.getValue().shouldBeImported) {
+                        datasetSummary.append("   " + entry.getKey().toString() + "\n");
+                    }
+                }
+                datasetSummary.append("\nDetails:\n");
+            } else {
+                datasetSummary.append("All datasets imported (some with warnings)\n\n");
+            }
+        } else {
+            datasetSummary.append("Datasets imported\n\n");
+        }
+        return datasetSummary;
+    }
+
+
+    /**
+     * Helper method to update the validation status per dataset.
+     * The individua errors are per validation rule, and there are
+     * many rules for each dataset.
+     * This method creates an overall status based on all rules applied
+     * to one dtaset.
+     *
+     * @param error a reported validation error
+     */
+    private void registerValidationStatusForDataset(ValidationError error) {
+        ImportStatus is = new ImportStatus();
+        is.className = error.getClassName();
+        is.mostSevereValidationResult = error.getRuleSeverity();
+        if(error.getRuleSeverity() == ValidationError.RuleSeverity.error) {
+            is.shouldBeImported = false;
+        } else {
+            is.shouldBeImported = true;
+        }
+
+        if(!nonValidDatasets.containsKey(error.getSubject())) {
+            nonValidDatasets.put(error.getSubject(), is);
+        } else {
+            if(nonValidDatasets.get(error.getSubject()).mostSevereValidationResult == ValidationError.RuleSeverity.warning) {
+                //if the preexisting most severe error level is warning, we must put the new one
+                //in case it is higher severity (error). Otherwise we skip, as it is already at highest severity.
+                nonValidDatasets.put(error.getSubject(), is);
+            }
+        }
+    }
+
+
+    /**
+     * Create the status value of the crawl to be stored in Admin data store
+     *
+     * @param status Array of status values reported from DcatValidation
+     * @param minimumCriteriaMet Boolean value. True if one or more datasets meets minimum validation criteria
+     * @return RDF Resource containing DifiMeta status (error, warning or ok)
+     */
+    private Resource createCrawlerStatusForAdmin(ValidationError.RuleSeverity[] status, boolean minimumCriteriaMet){
+       Resource rdfStatus;
         switch (status[0]) {
             case error:
-                rdfStatus = DifiMeta.error;
+                if (minimumCriteriaMet) {
+                    //if at least one dataset is valid, set status to warning
+                    //even if validation results contains errors for other datasets
+                    rdfStatus = DifiMeta.warning;
+                } else {
+                    rdfStatus = DifiMeta.error;
+                }
                 break;
             case warning:
                 rdfStatus = DifiMeta.warning;
@@ -239,14 +408,7 @@ public class CrawlerJob implements Runnable {
                 rdfStatus = DifiMeta.ok;
                 break;
         }
-
-        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, message[0]);
-
-        return validated;
-    }
-
-    private String returnCrawlDuration(LocalDateTime start, LocalDateTime stop) {
-        return String.valueOf(stop.compareTo(start));
+        return rdfStatus;
     }
 
 }

@@ -3,6 +3,7 @@ package no.difi.dcat.datastore;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
+import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -143,7 +144,13 @@ public class Elasticsearch implements AutoCloseable {
      * @return True if index exists
      */
     public boolean typeExists(String type) {
-        return client.admin().indices().prepareTypesExists(type).execute().actionGet().isExists();
+        try {
+            return client.admin().indices().prepareTypesExists(type).execute().actionGet().isExists();
+        } catch (ActionRequestValidationException e) {
+            logger.error("XXXType {} does not exist",type);
+        }
+
+        return false;
     }
 
     /**

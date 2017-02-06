@@ -1,6 +1,6 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.crawler.client.RetrieveRemote;
+import no.dcat.harvester.crawler.client.RetrieveModel;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
@@ -37,7 +37,7 @@ public class CrawlerSkosJob implements Runnable {
     @Override
     public void run() {
         logger.info("[crawler_operations] [success] Started crawler job: {}", themeSource.toString());
-        Model model = RetrieveRemote.remoteRDF(skosUrl);
+        Model model = RetrieveModel.remoteRDF(skosUrl);
 
         try {
             for (CrawlerResultHandler handler : handlers) {
