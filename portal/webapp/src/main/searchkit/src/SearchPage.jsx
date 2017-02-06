@@ -242,10 +242,10 @@ export class SearchPage extends React.Component {
 												<ActionBarRow>
 													<HitsStats/>
 													<SortingSelector options={[
-														{label:"Relevans", field:"_score", order:"desc", defaultOption:true},
-                                                        {label:"Tittel", field:"title", order:"desc"},
-														{label:"Sist endret", field:"modified", order:"asc"},
-														{label:"Virksomhet", field:"publisher"},
+														{label:"Relevans", field:"_score", order:"asc", defaultOption:true},
+                                                        {label:"Tittel", field:"title", order:"asc"},
+														{label:"Sist endret", field:"modified", order:"desc"},
+														{label:"Virksomhet", field:"publisher.name", order:"asc"},
 													]}/>
 												</ActionBarRow>
 												<ActionBarRow>

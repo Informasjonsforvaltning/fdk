@@ -63,6 +63,25 @@ export class QueryTransport extends AxiosESTransport {
       console.log('themeFilter is ', themeFilter);
     }
 
+    let sortfield = "_score";
+    let sortdirection = "asc";
+    if (query.sort) { // there is a sort code
+        if (query.sort.length > 0) {
+            let sort = query.sort[0]; // assume that only one sort field is possible
+            if (_.has(sort, '_score')) {
+                sortfield="_score";
+                sortdirection="asc";
+            } else if (_.has(sort, 'title')) {
+                sortfield= "title.nb";
+            } else if (_.has(sort, 'modified')) {
+                sortfield= "modified";
+                sortdirection = "desc";
+            } else if (_.has(sort,'publisher.name')) {
+                sortfield= "publisher.name";
+            }
+        }
+    }
+
 
     return this.axios.get(
 			'http://localhost:8083/search?q=' +
@@ -71,7 +90,7 @@ export class QueryTransport extends AxiosESTransport {
 			((!query.from) ? '0' : query.from) +
 			'&size=10&lang=nb' +
       publisherFilter +
-      themeFilter
+      themeFilter + (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
       .then(this.getData)
   }
