@@ -34,6 +34,7 @@ public class PortalControllerTests {
         PortalConfiguration config = new PortalConfiguration();
         ReflectionTestUtils.setField(config, "queryServiceExternal", "http://query.service.external.no");
         ReflectionTestUtils.setField(config, "queryService", "http://query.service.no");
+        ReflectionTestUtils.setField(config, "fusekiService", "http://fuseki.service.no");
 
         portal = new PortalController(config);
 
