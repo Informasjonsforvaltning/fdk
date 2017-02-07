@@ -9,39 +9,86 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
     <link rel="stylesheet" href="css/main.css" media="all"/>
     <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
     </style>
 </head>
 <body>
 
 <div lang="en" th:replace="header :: version" />
 
-<div class="container-fluid">
-    <div lang="en" th:replace="header :: header" />
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="fdk-heading">Felles Datakatalog</h1>
 
-    <div>
-          <a href="/publisher" th:text="#{app.publisher}" style="float: right">Publisher</a>
+            <input id="search" class="fdk-search" type="search" placeholder="Søk etter datasett..." />
+
+            <section class="frontpage-themes">
+                <a th:each="t : ${themes}" th:href="${'/results?theme=' + {t.code}}">
+                    <span class="fdk-label fdk-label-default" th:text="${lang == 'en' ? t.title.get('en') : t.title.get('nb') + ' (' + t.numberOfHits +')'}"/>
+                </a>
+                <!--span class="fdk-label fdk-label-default">Temaknapp (10)</span>
+                <span class="fdk-label fdk-label-default">Temaknapp (6)</span-->
+            </section>
+
+            <section>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Language: Norsk (bokmål)
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">Norsk (bokmål)</a></li>
+                        <li><a href="#">Norsk (nynorsk)</a></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
     </div>
-
-    <div lang="en" th:replace="search :: search" />
-
-    <div class = "row">
-        <th:block th:with="rowCount=${3}">
-            <div th:each="r : ${#numbers.sequence(0, rowCount - 1)}"  class="col-sm-4">
-                <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
-                    <a th:if="${r &lt; themes.size()}"
-                       th:href="${'/results?theme=' + {themes.get(c).code}}" th:id="${themes.get(c).title.get('nb')}" >
-                        <span name="theme" th:text="${lang == 'en' ? themes.get(c).title.get('en') : themes.get(c).title.get('nb')}"/>
-                        <span name="hits" class="badge" th:text="${themes.get(c).numberOfHits}"></span>
-                    </a>
-
-                </h4>
-            </div>
-        </th:block>
-    </div>
-
-    <div lang="en" th:replace="footer :: footer" />
 </div>
+
+
+<div>
+    <a href="/publisher" th:text="#{app.publisher}">Publisher</a>
+</div>
+
+
+<div lang="en" th:replace="footer :: footer" />
+
 <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+/*<![CDATA[*/
+    // Set up searchbar controller
+    function searchController() {
+        var search = document.getElementById("search");
+        var dosearch = document.getElementById("dosearch");
+
+        if (dosearch)
+            dosearch.onclick = function (event) {
+                var query = "?q=" + search.value ;
+                console.log("traverse ", query);
+                window.location = "/results" + query;
+
+            };
+
+        if (search)
+            search.onkeypress = function (event) {
+                if (event.keyCode === 13) {
+                    var query = "?q=" + search.value  ;
+                    console.log("traverse ", query);
+                    window.location = "/results" + query;
+
+                }
+            };
+    }
+    $(document).ready(searchController());
+/*]]>*/
+</script>
 </body>
 </html>
