@@ -3,14 +3,10 @@ package no.dcat.portal.webapp;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,8 +18,6 @@ import static org.mockito.Mockito.*;
 /**
  * Created by nodavsko on 18.10.2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
 public class PortalControllerTests {
     private static Logger logger = LoggerFactory.getLogger(PortalControllerTests.class);
 
@@ -32,12 +26,7 @@ public class PortalControllerTests {
     @Before
     public void setup() {
         PortalConfiguration config = new PortalConfiguration();
-        ReflectionTestUtils.setField(config, "queryServiceExternal", "http://query.service.external.no");
-        ReflectionTestUtils.setField(config, "queryService", "http://query.service.no");
-        ReflectionTestUtils.setField(config, "fusekiService", "http://fuseki.service.no");
-
         portal = new PortalController(config);
-
     }
 
     @Test
