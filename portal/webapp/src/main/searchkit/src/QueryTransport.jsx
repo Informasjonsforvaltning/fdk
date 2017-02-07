@@ -82,13 +82,13 @@ export class QueryTransport extends AxiosESTransport {
         }
     }
 
-
     return this.axios.get(
 			'http://localhost:8083/search?q=' +
 			(query.query ? query.query.simple_query_string.query : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
-			'&size=10&lang=nb' +
+			'&size=' + query.size +
+            '&lang=nb' +
       publisherFilter +
       themeFilter + (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)

@@ -5,6 +5,7 @@ import {
 	SimpleQueryString, ImmutableQuery,
 	RefinementListFilter, MenuFilter, QueryAccessor,
 	Hits, HitsStats, NoHits, Pagination, SortingSelector,
+	PageSizeSelector, Select, Toggle,
 	SelectedFilters, ResetFilters, ItemHistogramList,
 	Layout, LayoutBody, LayoutResults, TopBar,
 	SideBar, ActionBar, ActionBarRow,
@@ -15,6 +16,15 @@ import {
 import * as axios from "axios";
 import {SearchBox} from './SearchBox.jsx';
 import {QueryTransport} from './QueryTransport.jsx';
+import {injectIntl, addLocaleData, IntlProvider, FormattedMessage} from 'react-intl';
+import en from 'react-intl/locale-data/en';
+import nb from 'react-intl/locale-data/nb';
+import nn from 'react-intl/locale-data/nn';
+//import nbMessages from './l10n/nb.json';
+
+addLocaleData([...nb, ...nn, ...en]);
+console.log(navigator.language);
+var nbMessages = { "fdk": "Felles Datakatalog NB"};
 
 const defaults = require("lodash/defaults");
 
@@ -158,13 +168,14 @@ export class SearchPage extends React.Component {
   }
 	render(){
 		return (
+			<IntlProvider locale={'nb'} messages={nbMessages}>
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
 				<header className="a-header" role="banner">
 			    <nav className="navbar navbar-default">
 			        <div className="container">
 			            <div className="navbar-header">
-			                <a className="navbar-brand" href="/">Felles datakatalog</a>
+			                <a className="navbar-brand" href="/">Felles Datakatalog</a>
 			            </div>
 			            <ul className="nav navbar-nav navbar-right">
 			                <li><a href="#" title="Tilbakemelding"><span className="glyphicon glyphicon-envelope"></span></a>
@@ -240,13 +251,14 @@ export class SearchPage extends React.Component {
 											<ActionBar>
 
 												<ActionBarRow>
-													<HitsStats/>
 													<SortingSelector options={[
 														{label:"Relevans", field:"_score", order:"asc", defaultOption:true},
                                                         {label:"Tittel", field:"title", order:"asc"},
 														{label:"Sist endret", field:"modified", order:"desc"},
 														{label:"Virksomhet", field:"publisher.name", order:"asc"},
 													]}/>
+													<HitsStats/>
+													<PageSizeSelector options={[5,10,25,30,40,50]}/>
 												</ActionBarRow>
 												<ActionBarRow>
 													<ResetFilters/>
@@ -262,6 +274,7 @@ export class SearchPage extends React.Component {
 							</section>
 		    </Layout>
 		  </SearchkitProvider>
+			</IntlProvider>
 		)
 	}
 }
