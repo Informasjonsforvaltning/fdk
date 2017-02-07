@@ -1,0 +1,174 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/*  H E A D E R   &   F O O T E R  */
+
+.fdk-header-beta {
+    background-color: #5A6778;
+    padding: 8px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+}
+
+footer.fdk-footer {
+    border-top: 1px solid #C8CDD4;
+    background-color: #fff;
+    padding: 30px 0px 10px 0px;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.fdk-footer-logo {
+    align-content: center;
+    margin: 0px 20px 0px 20px;
+}
+
+/*  B U T T O N S   &   D R O P D O W N S   &   I N P U T  */
+
+input.fdk-search {
+    color: #5A6778;
+    border: 1px solid #5A6778;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px 15px 10px 15px;
+    font-size: 28px;
+    margin: 40px 0px 40px 0px;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #C8CDD4;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #C8CDD4;
+   opacity: 1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #C8CDD4;
+   opacity: 1;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #C8CDD4;
+}
+
+.fdk-label-default {
+    background-color: #fff;
+    color: #5A6778;
+    border: 1px solid #5A6778;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+    margin-bottom: 10safasfapx;
+    display: inline-block;
+}
+
+.fdk-label-default:hover {
+    background-color: #5A6778;
+    color: #fff;
+}    
+
+.fdk-label {
+    color: #5A6778;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.btn-default {
+    text-shadow: none;
+    border: 1px solid #5A6778;
+}
+
+.btn-default.active {
+    text-shadow: none;
+    border: 1px solid #5A6778;
+}
+
+.btn-default:hover {
+    text-shadow: none;
+    color: #5A6778;
+    border: 1px solid #5A6778;
+}
+
+.dropdown-toggle {
+    background-image: none;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 8px 15px 8px 15px;
+    font-size: 15px;
+    line-height: 18px;
+    color: #5A6778;
+}
+
+.active {
+    background-color: #5A6778;
+}
+
+.dropdown-toggle:hover {
+    background-image: none;
+    background-color: #fff;
+    
+}
+
+
+/*  F O N T S  */
+
+h1 {
+    font-size: 40px;
+    line-height: 46px;
+    color: #213B4C;
+}
+
+h1.fdk-heading {
+    text-align: center;
+}
+
+h2 {
+    font-size: 22px;
+    line-height: 26px;
+    color: #213B4C;
+}
+
+h3 {
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: 300;
+    color: #213B4C;
+}
+
+h4 {
+    font-size: 18px;
+    line-height: 26px;
+    color: #213B4C;
+}
+
+p {
+    color: #5A6778;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding-bottom: 12px;
+}
+
+a.white-link {
+    color: #fff;
+    text-decoration: underline;
+}
+
+a.white-link:hover {
+    color: #C8CDD4;
+}
+
+
+
+
+
+
+
+
+

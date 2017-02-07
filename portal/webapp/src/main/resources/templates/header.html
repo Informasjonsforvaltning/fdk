@@ -3,11 +3,13 @@
 <head>
 </head>
 <body>
-<div id="versionInformation" class="text-muted small text-right" th:text="${session.versionInformation}"
-     th:fragment="version"></div>
+
+<div class="fdk-header-beta" th:fragment="version">
+    Dette er en beta-versjon. Gi oss gjerne <a class="white-link" th:href="'mailto:fellesdatakatalog@brreg.no?subject=Tilbakemelding ' + ${session.versionInformation}">tilbakemeldinger</a> om hva du synes!
+</div>
 
 <header class="a-header" role="banner" th:fragment="header">
-    <nav class="navbar navbar-default">
+    <!--nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/" th:text="#{app.title}">Felles datakatalog</a>
@@ -51,7 +53,7 @@
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav -->
 </header>
 </body>
 </html>

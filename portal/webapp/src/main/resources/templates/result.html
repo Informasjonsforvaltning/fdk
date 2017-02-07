@@ -3,7 +3,7 @@
 <head>
     <title th:text="#{app.title}">Felles datakatalog</title>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <meta name="theme" th:content="${session.theme}"/>
@@ -107,8 +107,7 @@
                             <li>
                                 <a id="next" href="#" th:attr="aria-label=#{page.next}">
                                     <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
+                                </a></li>
                         </ul>
                     </nav>
                 </div>
