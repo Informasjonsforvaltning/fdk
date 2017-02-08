@@ -162,7 +162,7 @@ public class PortalController {
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
-        model.addObject("lang", locale.getLanguage() == "en" ? "en" : "nb");
+        model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;

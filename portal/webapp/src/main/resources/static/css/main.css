@@ -2,6 +2,14 @@
    Author's custom styles
    ========================================================================== */
 
+.glyphicon-search-frontpage {
+    position: absolute;
+    right: 30px;
+    top: 129px;
+    font-size: 32px;
+    z-index: 2;
+}
+
 /*  H E A D E R   &   F O O T E R  */
 
 .fdk-header-beta {
@@ -48,18 +56,20 @@ input.fdk-search {
 }
 
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: #C8CDD4;
-    opacity: 1;
+   color: #C8CDD4;
+   opacity: 1;
 }
 
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: #C8CDD4;
-    opacity: 1;
+   color: #C8CDD4;
+   opacity: 1;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #C8CDD4;
+   color: #C8CDD4;
 }
+
+/*  L A B E L S   &   B U T T O N S  */
 
 .fdk-label-default {
     background-color: #fff;
@@ -74,7 +84,7 @@ input.fdk-search {
 .fdk-label-default:hover {
     background-color: #5A6778;
     color: #fff;
-}
+}    
 
 .frontpage-themes * {
     display: inline-block;
@@ -106,46 +116,83 @@ input.fdk-search {
     color: #5A6778;
     border: 1px solid #5A6778;
 }
-.dropdown-language {
+
+/*  D R O P D O W N   L A N G U A G E  */
+
+.fdk-dropdown-language {
     top: 45px;
     position: absolute;
     right: 100px;
-    z-index: 2;
+    z-index: 2;   
 }
 
-.dropdown-toggle {
+.fdk-dropdown-toggle-language {
     background-image: none;
     background-color: #fff;
+    border: 1px solid #5A6778;
     border-radius: 20px;
-    padding: 8px 15px 8px 15px;
+    padding: 8px 10px 8px 15px;
     font-size: 15px;
     line-height: 18px;
     color: #5A6778;
+
 }
 
-.active {
-    background-color: #5A6778;
-}
-
-.dropdown-toggle:hover {
-    background-image: none;
+.fdk-dropdown-toggle-language:hover {
+    color: #5A6778;
     background-color: #fff;
-
 }
+
+.fdk-dropdown-toggle-language:enabled {
+    color: #5A6778;
+    background-color: #fff;
+}
+
+.fdk-dropdown-toggle-language>a {
+    color: #5A6778;
+    background-color: #678;
+}
+
+.fdk-dropdown-menu-language {
+    z-index: 3;
+}
+
+
+.fdk-dropdown-menu-language>li>a {
+    color: #5A6778;
+    font-size: 16px;
+    line-height: 1.2px;
+    padding: 20px 20px 5px 20px;
+}
+
+.fdk-dropdown-menu-language>li:hover {
+    background-color: #fff;
+    background-image: none;
+    color: #5A6778;
+    font-size: 16px;
+    line-height: 1.2px;
+}
+
+/*.fdk-dropdown-toggle-language>li>a {
+    color: #5A6778;
+    line-height: 2.2px;
+}*/
+
+/*  F D K   D R O P D O W N   &   D R O P D O W N   M E N U  */
 
 .fdk-dropdown {
+    color: #213B4C;
     position: absolute;
     right: 0;
     width: 90px;
     z-index: 2;
 }
 .fdk-dropdown > a {
-    color: #000;
+    color: #213B4C;
     font-size: 60px;
     text-decoration: none;
 }
 .fdk-dropdown > a:hover {
-
     color: #5A6778;
 }
 .fdk-dropdown > a:active {
@@ -154,17 +201,18 @@ input.fdk-search {
 .fdk-dropdown .dropdown-menu {
     right:0;
     left:auto;
-    background-color: #5A6778;
+    background-color: #213B4C;
     color:#fff;
     min-width: 200px;
 }
 .fdk-dropdown .dropdown-menu li {
-    padding: 3px;
-    border-top: 1px solid #fff;
+    border-top: 1px solid #5A6778;
     font-size: 16px;
+    color: #fff;
 }
 .fdk-dropdown .dropdown-menu li:first-child {
-    border:0;
+    border: 0;
+    padding: 0;
 }
 
 .dropdown-menu:before {
@@ -190,6 +238,20 @@ input.fdk-search {
     content: '';
 }
 
+.dropdown-menu>li>a {
+    color: #5A6778;
+    line-height: 1.2px;
+    padding: 20px 20px 5px 20px;
+}
+
+.fdk-flag {
+    margin-right: 5px;
+    width: 20px;
+}
+
+.fdk-menu {
+    padding: 0;
+}
 
 /*  F O N T S  */
 
@@ -238,5 +300,3 @@ a.white-link {
 a.white-link:hover {
     color: #C8CDD4;
 }
-
-

@@ -20,34 +20,24 @@
 <div lang="en" th:replace="header :: version" />
 
 <div class="container">
-    <!-- Example row of columns -->
+
+    <div th:replace="header :: header"/>
+
+    <span id="dosearch" class="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+
     <div class="row">
         <div class="col-md-12">
-            <h1 class="fdk-heading">Felles Datakatalog</h1>
+            <h1 class="fdk-heading" th:text="#{app.title}">Felles Datakatalog</h1>
 
-            <input id="search" class="fdk-search" type="search" placeholder="Søk etter datasett..." />
+            <input id="search" class="fdk-search" type="search" th:attr="placeholder=#{query.intro}"/>
 
             <section class="frontpage-themes">
                 <a th:each="t : ${themes}" th:href="${'/results?theme=' + {t.code}}">
-                    <span class="fdk-label fdk-label-default" th:text="${lang == 'en' ? t.title.get('en') : t.title.get('nb') + ' (' + t.numberOfHits +')'}"/>
+                    <span class="fdk-label fdk-label-default"
+                          th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb')) + ' (' + t.numberOfHits +')'}"/>
                 </a>
-                <!--span class="fdk-label fdk-label-default">Temaknapp (10)</span>
-                <span class="fdk-label fdk-label-default">Temaknapp (6)</span-->
             </section>
 
-            <section>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Language: Norsk (bokmål)
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">English</a></li>
-                        <li><a href="#">Norsk (bokmål)</a></li>
-                        <li><a href="#">Norsk (nynorsk)</a></li>
-                    </ul>
-                </div>
-            </section>
         </div>
     </div>
 </div>
@@ -64,6 +54,25 @@
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 /*<![CDATA[*/
+
+    var lang = navigator.language || navigator.userLanguage;
+    console.log("browser language: ", lang);
+    var params= window.location.search.substr(1);
+    var pair = params.split("=");
+    if (pair[0] === "lang") {
+       lang = pair[1];
+    }
+
+    console.log("application lang: " , lang);
+    // set correct chosen language
+    var langElement = document.getElementById("lang." + lang);
+    $("#chosenLanguage").html($(langElement).html() + ' <span class="caret"></span>');
+
+    // handle language toggle
+    /*$(".dropdown-menu li a").click(function(event){
+        $(this).parents(".dropdown").find('.btn').html($(this).html() + ' <span class="caret"></span>');
+    });*/
+
     // Set up searchbar controller
     function searchController() {
         var search = document.getElementById("search");
