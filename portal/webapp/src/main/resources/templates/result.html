@@ -39,8 +39,10 @@
 <div lang="en" th:replace="header :: version" />
 
 <div class="container">
-    <!-- Example row of columns -->
+    <div th:replace="header :: header"/>
+
     <span id="dosearch" class="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+
     <div class="row">
         <div class="col-md-12">
             <a href="/"><h1 class="fdk-heading">Felles Datakatalog</h1></a>
@@ -64,15 +66,10 @@
             <!-- Resultat navigerings verktøy -->
             <div class="row">
 
-                <div class="col-sm-1 col-sm-offset-4">
-                    <span id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span
-                        id="total.hits">0</span>
-                </div>
-
                 <!-- SORT Controller -->
-                <div class="col-sm-2">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                <div class="col-sm-2 col-sm-offset-4">
+                    <div class="dropdown fdk-dropdown-language">
+                        <button class="btn btn-default dropdown-toggle fdk-dropdown-toggle-language" type="button" data-toggle="dropdown">
                             <span th:text="#{sort.by}">Sorter på:</span>
                             <span id="sort.choice">Relevans</span> <span class="caret"></span>
                         </button>
@@ -85,30 +82,16 @@
                     </div>
                 </div>
 
-                <!-- Page navigation controller -->
-                <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
-                    <nav>
-                        <ul class="pager pagination pagination-sm" style="margin:0;">
-
-                            <li>
-                                <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a id="next" href="#" th:attr="aria-label=#{page.next}">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a></li>
-                        </ul>
-                    </nav>
+                <div class="col-sm-2">
+                    <span id="summary" th:text="#{page.result.summary}">Søket ga</span> <strong><span
+                        id="total.hits">0</span></strong> <span th:text="#{page.result.hits}">treff</span>
                 </div>
 
                 <!-- Number of hits per page controller -->
-                <div class="col-sm-1">
-                    <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span id="hits.choice">10</span> <span class="caret"></span>
+                <div class="col-sm-2">
+                    <div class="dropdown fdk-dropdown-language">
+                        <button class="btn btn-default dropdown-toggle fdk-dropdown-toggle-language" type="button" data-toggle="dropdown">
+                            <span id="hits.choice">10</span> <span th:text="#{hits.perpage}">treff per side</span> <span class="caret"></span>
                         </button>
                         <ul id="hits.select" class="dropdown-menu">
                             <li><a class="number" href="#">5</a></li>
@@ -152,6 +135,25 @@
                         </strong>
                     </a>
 
+
+                </div>
+                <!-- Page navigation controller -->
+                <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
+                    <nav>
+                        <ul class="pager pagination pagination-sm" style="margin:0;">
+
+                            <li>
+                                <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a id="next" href="#" th:attr="aria-label=#{page.next}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 
