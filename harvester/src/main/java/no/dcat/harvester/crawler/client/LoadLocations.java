@@ -89,7 +89,7 @@ public class LoadLocations {
                 continue;
             }
 
-            //Only add location if location URI can be resolved
+            //Only add location title if location URI can be resolved
             Model locModel = ModelFactory.createDefaultModel();
             try {
                 URL locUrl = new URL(locUri);
