@@ -45,7 +45,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="/"><h1 class="fdk-heading">Felles Datakatalog</h1></a>
+            <a href="/"><h1 class="fdk-heading" th:text="#{app.title}">Felles Datakatalog</h1></a>
 
             <input id="search" class="fdk-search" type="search"
                    th:attr="placeholder=#{query.intro}, value=${query}" placeholder="Søk etter datasett..." />
@@ -113,14 +113,14 @@
                     <!-- facets -->
                     <div id="facet" class="list-group">
 
-                        <div id="facet.theme" class="list-group-item" data-toggle="collapse">
-                            <span th:text="#{facet.theme}">Tema</span>
-                            <ul class="list-group"/>
+                        <div id="facet.theme" class="list-group-item" data-toggle="collapse" data-target="#theme-list">
+                            <span th:text="#{facet.theme}">Tema</span> <span class="glyphicon glyphicon-triangle-bottom"></span>
+                            <ul id="theme-list" class="collapse in list-group"/>
                         </div>
 
-                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse">
-                            <span th:text="#{facet.organisation}">Virksomhet</span>
-                            <ul class="list-group"/>
+                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse" data-target="#publisher-list">
+                            <span th:text="#{facet.organisation}">Virksomhet</span> <span class="glyphicon glyphicon-triangle-bottom"></span>
+                            <ul id="publisher-list" class="collapse in list-group"/>
                         </div>
 
                     </div>
@@ -169,8 +169,12 @@
 <script type="text/javascript" th:utext="${themes}"></script>
 <script type="text/javascript" src="js/facets.js"></script>
 <script type="text/javascript" src="js/result.js"></script>
+<script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript">
-        $(document).ready(showPage);
+        $(document).ready(function () {
+            searchController();
+            showPage();
+        });
 </script>
 </body>
 </html>

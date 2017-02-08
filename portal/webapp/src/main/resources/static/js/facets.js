@@ -65,10 +65,11 @@ function setPublisherFilter(code) {
 * Identifies and removes a filter element with the corresponding data attribute
 */
 function removeFilterElement(data) {
+    /*
     var f = $("#filter").find("a[data='" + data +"']")[0];
     if (f) {
         filterElement.removeChild(f);
-    }
+    }*/
 }
 
 /**
@@ -78,6 +79,7 @@ function removeFilterElement(data) {
 * @data the data identifier to find the facet
 */
 function createFilterElement(filter, data) {
+    /*
     // check if filter already exists
     var f = $('#filter').find('a[data="'+data+'"]')[0];
 
@@ -91,7 +93,7 @@ function createFilterElement(filter, data) {
 
             removeFilter(this.getAttribute("data"),filter.active);
         };
-    }
+    }*/
 }
 
 
@@ -176,7 +178,7 @@ function createThemeMap() {
 
 
 function createBadge(count) {
-    return "<span class='badge'>" + count + "</span>";
+    return "<span class='fdk-badge'>(<span class='fdk-count'>" + count + "</span>)</span>";
 }
 
 
@@ -256,9 +258,9 @@ function createFacetController(filter, aggregation) {
             elem.setAttribute("href", "#");
 
             if (filter.active.indexOf(item.key) > -1) {
-                elem.className = "list-group-item active";
+                elem.className = "list-group-item fdk-label fdk-label-default active"; //list-group-item active";
             } else {
-                elem.className = "list-group-item";
+                elem.className = "list-group-item fdk-label fdk-label-default"; //"list-group-item";
             }
             if (filter.hideMany && counter > facetDefaultCount - 1) {
                 elem.className += " hidden";
@@ -271,12 +273,12 @@ function createFacetController(filter, aggregation) {
                 // select/unselect theme
                 if (this.className.indexOf("active") > -1) {
                     // show no longer active
-                    this.className = "list-group-item";
+                    this.className = "fdk-label fdk-label-default";
                     // remove if exist in filter line
                     removeFilter(this.getAttribute("data"),filter.active);
                 } else {
                     // show active
-                    this.className = "list-group-item active";
+                    this.className = "list-group-item fdk-label fdk-label-default active";
                     // add filter line
                     addFilter(filter, this.getAttribute("data"));
                 }
@@ -337,3 +339,9 @@ function facetController(result) {
         throw new Error("FacetController bad input " + result);
     }
 }
+
+$('.collapse').on('shown.bs.collapse', function(){
+    $(this).parent().find(".glyphicon-triangle-left").removeClass("glyphicon-triangle-left").addClass("glyphicon-triangle-bottom");
+}).on('hidden.bs.collapse', function(){
+    $(this).parent().find(".glyphicon-triangle-bottom").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-left");
+});
