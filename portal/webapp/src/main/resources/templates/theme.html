@@ -32,9 +32,11 @@
             <input id="search" class="fdk-search" type="search" th:attr="placeholder=#{query.intro}"/>
 
             <section class="frontpage-themes">
-                <a th:each="t : ${themes}" th:href="${'/results?theme=' + {t.code}}">
-                    <span class="fdk-label fdk-label-default"
-                          th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb')) + ' (' + t.numberOfHits +')'}"/>
+                <a th:each="t : ${themes}" th:href="${'/results?theme=' + {t.code}}" th:attr="id=${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}">
+                    <span class="fdk-label fdk-label-default">
+                         <span th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}"/>
+                        (<span name="hits" th:text="${t.numberOfHits}"/>)
+                    </span>
                 </a>
             </section>
 
