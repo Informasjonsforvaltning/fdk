@@ -58,29 +58,18 @@ public class LoadLocations {
     public LoadLocations extractLocations(Model model) {
 
         ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
+
         while (locIter.hasNext()) {
             Resource resource = locIter.next();
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
 
-            //Only add location if location URI can be resolved
-            try {
-                URL locUrl = new URL(locUri);
-                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
-                locConnection.setRequestMethod("GET");
-                if (locConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    SkosCode code = new SkosCode(locUri, new HashMap<>());
-                    locations.put(locUri, code);
-                    logger.info("Extract location with URI {}", locUri);
-                } else {
-                    logger.warn("Location URI cannot be resolved: " + locUri);
-                }
-            } catch (MalformedURLException e) {
-                logger.error("URL not valid: {} ", locUri,e);
-            } catch (IOException e) {
-                logger.error("IOException: {} ", locUri,e);
+            SkosCode code = new SkosCode(locUri, new HashMap<>());
+            locations.put(locUri, code);
+            logger.info("Extract location with URI {}", locUri);
         }
         return this;
     }
+
 
     /**
      * Looops over the list of locations and retrieves the title for each of them.
@@ -100,14 +89,32 @@ public class LoadLocations {
                 continue;
             }
 
-            //TODO: skal ikke gjøres hvis locuri returnerer 404
-            Model locModel = retrieveTitleOfLocations(locUri);
+            //Only add location if location URI can be resolved
+            Model locModel = ModelFactory.createDefaultModel();
+            try {
+                URL locUrl = new URL(locUri);
+                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
+                locConnection.setRequestMethod("GET");
+                if (locConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    locModel = retrieveTitleOfLocations(locUri);
+                } else {
+                    //Remove non-resolvable location from dataset
+                    locModel = null;
+                    logger.warn("Location URI cannot be resolved. Location removed form dataset: " + locUri);
+                }
+            } catch (MalformedURLException e) {
+                logger.error("URL not valid: {} ", locUri,e);
+            } catch (IOException e) {
+                logger.error("IOException: {} ", locUri, e);
+            }
 
-            ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
-            while (resIter.hasNext()) {
-                Map<String, String> titleMap = extractLocationTitle(resIter.next());
-                SkosCode code = (SkosCode) loc.getValue();
-                code.setTitle(titleMap);
+            if (locModel != null) {
+                ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
+                while (resIter.hasNext()) {
+                    Map<String, String> titleMap = extractLocationTitle(resIter.next());
+                    SkosCode code = (SkosCode) loc.getValue();
+                    code.setTitle(titleMap);
+                }
             }
         }
 
