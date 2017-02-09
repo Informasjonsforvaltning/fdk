@@ -1,5 +1,5 @@
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
-var pageLanguage = "nb";
+var pageLanguage = lang;
 var sortField = "";
 var sortOrder = "asc";
 var resultCursor = {
@@ -237,25 +237,18 @@ function showResults(searchResult) {
         }
 
         var theme = source.theme;
+        var themeList = [];
         if (theme) {
             themeElement = document.createElement("span");
             var content = false;
             theme.forEach(function (element) {
-                var span = document.createElement("span");
-                span.className = "label label-default";
 
                 if (pageLanguage === "en") { // theme comes with only two languages
-                    span.innerHTML = element.title.en;
+                    themeList.push(element.title.en);
                 } else {
-                    span.innerHTML = element.title.nb;
+                    themeList.push(element.title.nb);
                 }
-                if (content) {
-                    themeElement.appendChild(document.createTextNode(" "));
-                }
-                themeElement.appendChild(span);
-                content = true;
             });
-
         }
 
         var landingPage = source.landingPage;
@@ -271,12 +264,11 @@ function showResults(searchResult) {
             publisher = source.catalog.publisher.name;
         }
         if (publisher) {
-            pbElement = document.createElement("button");
-            pbElement.className = "btn btn-default btn-sm publisher";
-            pbElement.type = "button";
-            pbElement.innerHTML =  publisher.name;
+            pbElement = document.createElement("h4");
+            pbElement.innerHTML =  '<strong>'+publisher.name + ' &centerdot;</strong> ' + themeList.join(", ");
         }
 
+        /*
         var modified = source.modified;
         if (modified) {
             var ix2 = modified.indexOf("T");
@@ -287,7 +279,8 @@ function showResults(searchResult) {
                 modifiedElement.innerHTML = modified;
             }
         }
-
+*/
+        /*
         if (keyword !== undefined && keyword.value !== undefined) {
             kwElement = document.createElement("span");
 
@@ -309,11 +302,11 @@ function showResults(searchResult) {
                  }
             });
         }
-
+        */
         // reference to detail page
         var row = document.createElement("a");
         row.setAttribute('href', "detail?id=" + dataset._id);
-        row.target = "_blank";  // open in new page
+        //row.target = "_blank";  // open in new page
         row.className = "row list-group-item dataset";
         // dataset
         var ds = document.createElement("div");
@@ -322,12 +315,13 @@ function showResults(searchResult) {
 
         var scoreString = "(" + score + ")";
         if (!score) scoreString = "";
-        ds.innerHTML = "<h4>" + title.value + " <sup>" + title.language + " " + scoreString + "</sup></h4>" ;
+        ds.innerHTML = "<h2>" + title.value + "</h2>" ;
 
         if (publisher !== undefined)
            ds.appendChild(pbElement);
         if (description)
             ds.appendChild(descriptionElement);
+        /*
         if (keyword !== undefined)
             ds.appendChild(kwElement);
 
@@ -340,7 +334,7 @@ function showResults(searchResult) {
         if (distributionList) {
             ds.appendChild(document.createTextNode(" "));
             ds.appendChild(distributionList);
-        }
+        }*/
         if (landingPage) {
            ds.appendChild(document.createTextNode(" "));
            ds.appendChild(lpElement);

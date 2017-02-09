@@ -10,36 +10,40 @@
 </div>
 
 
-<header role="banner" th:fragment="header">
+<div class="fdk-header-menu" th:fragment="header">
 
-    <div class="dropdown fdk-dropdown-language">
+    <!-- DROPDOWN MENU -->
+    <div class="dropdown fdk-container-dropdown-menu">
+        <div class="dropdown fdk-dropdown-toggle-menu">
+            <a data-toggle="dropdown" href="#">&#9776;</a>
+            <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        
+                <li><a href="#" th:text="#{about.title}">Om Felles Datakatalog</a></li>
+                        
+                <li><a href="help/FAQ datakatalog.htm" th:text="#{faq}">Spørsmål og svar</a></li>
+                        
+                <li><a href="https://doc.difi.no/dcat-ap-no/">DCAT-AP-NO 1.1-Standarden</a></li>
+                        
+                <li><a href="coverage.html" th:text="#{about.status}">Status implementasjon</a></li>
+                      
+            </ul>
+        </div>
+    </div>
+
+    <!-- DROPDOWN LANGUAGE -->
+    <div class="dropdown fdk-container-dropdown-language">
         <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="chosenLanguage" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="true">
-            <img class="fdk-flag" src="img/flag-norway.png"/>NB
+            <img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>NB
             <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu fdk-dropdown-menu-language" aria-labelledby="dropdownMenu1">
-            <li><a id="lang.en" href="?lang=en"><img class="fdk-flag" src="img/flag-england.png"/>EN</a></li>
-            <li><a id="lang.nb" href="?lang=nb"><img class="fdk-flag" src="img/flag-norway.png"/>NB</a></li>
-            <li><a id="lang.nn" href="?lang=nn"><img class="fdk-flag" src="img/flag-norway.png"/>NN</a></li>
+        <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+            <li><a id="lang.en" href="?lang=en"><img class="fdk-dropdown-language-flag" src="img/flag-england.png"/>EN</a></li>
+            <li><a id="lang.nb" href="?lang=nb"><img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>NB</a></li>
+            <li><a id="lang.nn" href="?lang=nn"><img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>NN</a></li>
         </ul>
     </div>
 
-    <div class="dropdown fdk-dropdown">
-              <a data-toggle="dropdown" href="#">&#9776;</a>
-              
-        <ul class="fdk-menu dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    
-            <li><a href="#" th:text="#{about.title}">Om Felles Datakatalog</a></li>
-                    
-            <li><a href="help/FAQ datakatalog.htm" th:text="#{faq}">Spørsmål og svar</a></li>
-                    
-            <li><a href="https://doc.difi.no/dcat-ap-no/">DCAT-AP-NO 1.1-Standarden</a></li>
-                    
-            <li><a href="coverage.html" th:text="#{about.status}">Status implementasjon</a></li>
-                  
-        </ul>
-    </div>
     <!--nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -85,6 +89,6 @@
             </ul>
         </div>
     </nav -->
-</header>
+</div>
 </body>
 </html>
