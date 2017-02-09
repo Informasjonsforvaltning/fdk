@@ -27,7 +27,7 @@
 
     <div class="row">
         <section class="frontpage-themes">
-            <a th:each="t : ${themes}" th:href="${'/results?theme=' + {t.code}}"
+            <a th:each="t : ${themes}" th:href="${'/datasets?theme=' + {t.code}}"
                th:attr="id=${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}">
                     <span class="fdk-label fdk-label-default">
                          <span th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}"/>

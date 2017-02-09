@@ -1,4 +1,4 @@
-var filterElement = document.getElementById("filter");
+
 var facetDefaultCount = 6;
 
 var themeMap = {}; // contains codes and corresponding theme titles
@@ -118,7 +118,7 @@ function deactivateFacet(data) {
 * 3) executes new search
 */
 function addFilter(filter, code) {
-    if (filter && code) {
+    if (filter && code ) {
         createFilterElement(filter, code);
         filter.active.push(code);
 
@@ -325,6 +325,24 @@ function facetController(result) {
     } else {
         filters.theme.language = "nb";
     }
+
+    if (themeList) {
+        if (themeList.indexOf(",") !== -1) {
+            themeList.split(",").forEach(function (t) {
+                setThemeFilter(t);
+            });
+        } else {
+            setThemeFilter(themeList);
+        }
+    }
+    themeList = "";
+
+    if (publisherList) {
+        setPublisherFilter(publisherList);
+    }
+    publisherList= "";
+
+
     if (typeof result !== 'undefined') {
         createThemeMap();
 
@@ -340,6 +358,7 @@ function facetController(result) {
     }
 }
 
+// Collapsible facets
 $('.collapse').on('shown.bs.collapse', function(){
     $(this).parent().find(".glyphicon-triangle-left").removeClass("glyphicon-triangle-left").addClass("glyphicon-triangle-bottom");
 }).on('hidden.bs.collapse', function(){

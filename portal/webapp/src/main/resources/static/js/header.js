@@ -1,10 +1,28 @@
 
 var lang = navigator.language || navigator.userLanguage;
+var themeList = "";
+var publisherList= "";
 console.log("browser language: ", lang);
 var params= window.location.search.substr(1);
-var pair = params.split("=");
-if (pair[0] === "lang") {
-    lang = pair[1];
+console.log(params);
+if (params.indexOf("\&") !== -1 ) {
+    console.log(params.split("&"));
+    params.split("&").forEach(function (param){
+        var pair = param.split("=");
+
+        if (pair[0] === "lang") {
+            lang = pair[1];
+        } else if (pair[0] === "theme") {
+            themeList =pair[1];
+        } else if (pair[0] === "publisher") {
+            publisherList = pair[1];
+        }
+    });
+} else {
+    var pair = params.split("=");
+    if (pair[0] === "lang") {
+        lang = pair[1];
+    }
 }
 
 console.log("application lang: " , lang);
@@ -26,7 +44,7 @@ function searchController() {
         dosearch.onclick = function (event) {
             var query = "?q=" + search.value ;
             console.log("traverse ", query);
-            window.location = "/results" + query;
+            window.location = "/datasets" + query;
 
         };
 
@@ -35,7 +53,7 @@ function searchController() {
             if (event.keyCode === 13) {
                 var query = "?q=" + search.value  ;
                 console.log("traverse ", query);
-                window.location = "/results" + query;
+                window.location = "/datasets" + query;
 
             }
         };

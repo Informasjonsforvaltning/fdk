@@ -265,7 +265,7 @@ function showResults(searchResult) {
         }
         if (publisher) {
             pbElement = document.createElement("h4");
-            pbElement.innerHTML =  '<strong>'+publisher.name + ' &centerdot;</strong> ' + themeList.join(", ");
+            pbElement.innerHTML =  '<b>'+publisher.name + ' &centerdot;</b> ' + themeList.join(", ");
         }
 
         /*
@@ -359,7 +359,8 @@ function doSearch() {
         }
 
         if (filters.publisher.active.length > 0) {
-            query += "&publisher=" + filters.publisher.active.join(",");
+            var publ = encodeURIComponent(filters.publisher.active.join(","));
+            query += "&publisher=" + publ;
         }
         var urlstring =  searchUrl + "/search" + query;
         pushHistory(query);
@@ -489,10 +490,6 @@ function showPage () {
     var langName = "Norsk (bokmål)";
     if (chosenLanguage && chosenLanguage.textContent) langName = chosenLanguage.textContent;
 
-    // set page language. HACK TODO FIX
-    if (langName === "English") pageLanguage="en";
-    if (langName === "Norsk (bokmål)") pageLanguage="nb";
-    if (langName === "Norsk (nynorsk)") pageLanguage = "nn";
 
     console.log("page lang: " + pageLanguage);
 
