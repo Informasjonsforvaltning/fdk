@@ -1,12 +1,19 @@
 
 var lang = navigator.language || navigator.userLanguage;
+
 var themeList = "";
-var publisherList= "";
+var queryParameterPublisher= "";
+var queryParameterQuery = "";
+var queryParameterFrom = "";
+var queryParameterSize = "";
+var queryParameterSortfield = "";
+var queryParameterSortdirection = "";
+
 console.log("browser language: ", lang);
+
 var params= window.location.search.substr(1);
-console.log(params);
+
 if (params.indexOf("\&") !== -1 ) {
-    console.log(params.split("&"));
     params.split("&").forEach(function (param){
         var pair = param.split("=");
 
@@ -15,7 +22,17 @@ if (params.indexOf("\&") !== -1 ) {
         } else if (pair[0] === "theme") {
             themeList =pair[1];
         } else if (pair[0] === "publisher") {
-            publisherList = pair[1];
+            queryParameterPublisher = decodeURIComponent(pair[1]);
+        } else if (pair[0] === "q") {
+            queryParameterQuery = pair[1];
+        } else if (pair[0] === "from") {
+            queryParameterFrom = pair[1];
+        } else if (pair[0] === "size") {
+            queryParameterSize = pair[1];
+        } else if (pair[0] === "sortfield") {
+            queryParameterSortfield = pair[1];
+        } else if (pair[0] === "sortdirection") {
+            queryParameterSortdirection = pair[1];
         }
     });
 } else {
@@ -26,6 +43,7 @@ if (params.indexOf("\&") !== -1 ) {
 }
 
 console.log("application lang: " , lang);
+
 // set correct chosen language
 var langElement = document.getElementById("lang." + lang);
 $("#chosenLanguage").html($(langElement).html() + ' <span class="caret"></span>');

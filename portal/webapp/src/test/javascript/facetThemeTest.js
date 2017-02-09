@@ -25,7 +25,7 @@ describe("Theme facets", function() {
 
         pageLanguage = "en";
 
-        expect(getToggleText({ hideMany: true})).toBe("More");
+        expect(getToggleText({ hideMany: true})).toBe("Show more");
     });
 
     it("Create Facet Controller handles undefined input parameter", function() {

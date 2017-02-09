@@ -62,55 +62,6 @@ function setPublisherFilter(code) {
 }
 
 /**
-* Identifies and removes a filter element with the corresponding data attribute
-*/
-function removeFilterElement(data) {
-    /*
-    var f = $("#filter").find("a[data='" + data +"']")[0];
-    if (f) {
-        filterElement.removeChild(f);
-    }*/
-}
-
-/**
-* Creates a filter element.
-*
-* @filter the filter to remove
-* @data the data identifier to find the facet
-*/
-function createFilterElement(filter, data) {
-    /*
-    // check if filter already exists
-    var f = $('#filter').find('a[data="'+data+'"]')[0];
-
-    if (f === undefined) {
-        var filterLabel = $('<a href="#" class="label '+ filter.label +'" data="'+data+'">' + filter.getName(data) + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
-        $("#filter").append(filterLabel);
-
-        // add delete hook
-        filterLabel.onclick = function (event) {
-            event.preventDefault();
-
-            removeFilter(this.getAttribute("data"),filter.active);
-        };
-    }*/
-}
-
-
-
-/**
-* Changes class on facet with corresponding data attribute to non active
-*/
-function deactivateFacet(data) {
-    if (data) {
-        var element = $('.list-group-item[data="'+data+'"]')[0];
-        if (element) {
-            element.className = 'list-group-item';
-        }
-    }
-}
-
-/**
 * adds a filter.
 *
 * 1) creates filter element
@@ -118,15 +69,17 @@ function deactivateFacet(data) {
 * 3) executes new search
 */
 function addFilter(filter, code) {
+
     if (filter && code ) {
-        createFilterElement(filter, code);
-        filter.active.push(code);
+
+        if (filter.active.indexOf(code) === -1) {
+            filter.active.push(code);
+        }
 
         resetResultCursor();
         doSearch();
     }
 }
-
 
 /**
 * Removes a filter.
@@ -136,10 +89,6 @@ function addFilter(filter, code) {
 */
 function removeFilter(code, filterArray) {
     if (code && filterArray.indexOf(code) > -1) {
-
-        removeFilterElement(code);
-
-        deactivateFacet(code);
 
         var index = filterArray.indexOf(code);
         filterArray.splice(index,1);
@@ -200,11 +149,11 @@ function resetFacets() {
 function getToggleText(filter) {
     var result = "";
     if (pageLanguage === "nb") {
-        result = filter.hideMany ? "Mer" : "Mindre";
+        result = filter.hideMany ? "Vis mer" : "Vis mindre";
     } else if (pageLanguage === "nn") {
-        result = filter.hideMany ? "Meir" : "Mindre";
+        result = filter.hideMany ? "Vis meir" : "Vis mindre";
     } else {
-       result = filter.hideMany ? "More" : "Less";
+       result = filter.hideMany ? "Show more" : "Show less";
     }
 
     return result;
@@ -242,11 +191,6 @@ function createFacetController(filter, aggregation) {
 
         var ul = filter.facet.getElementsByTagName("ul")[0];
 
-        // if filter array already has active filters make sure they are created
-        filter.active.forEach(function (code) {
-            createFilterElement(filter, code);
-        });
-
         var counter = 0;
         // for each theme found in dataset
         aggregation.buckets.forEach(function (item){
@@ -273,7 +217,7 @@ function createFacetController(filter, aggregation) {
                 // select/unselect theme
                 if (this.className.indexOf("active") > -1) {
                     // show no longer active
-                    this.className = "fdk-label fdk-label-default";
+                    this.className = "list-group-item fdk-label fdk-label-default";
                     // remove if exist in filter line
                     removeFilter(this.getAttribute("data"),filter.active);
                 } else {
@@ -293,9 +237,9 @@ function createFacetController(filter, aggregation) {
             // more/less toggle
             var toggleElement = document.createElement("a");
             toggleElement.className = "btn btn-outline-secondary btn-sm";
-            var numberOfHiddenElements = counter - facetDefaultCount;
+
             if (filter.hideMany) {
-                toggleElement.innerHTML = numberOfHiddenElements + " " + getToggleText(filter);
+                toggleElement.innerHTML = getToggleText(filter);
             } else {
                 toggleElement.innerHTML = getToggleText(filter);
             }
@@ -327,8 +271,11 @@ function facetController(result) {
     }
 
     if (themeList) {
+        filters.theme.active = [];
         if (themeList.indexOf(",") !== -1) {
-            themeList.split(",").forEach(function (t) {
+            var themeArray = themeList.split(",");
+
+            themeArray.forEach(function (t) {
                 setThemeFilter(t);
             });
         } else {
@@ -337,10 +284,10 @@ function facetController(result) {
     }
     themeList = "";
 
-    if (publisherList) {
-        setPublisherFilter(publisherList);
+    if (queryParameterPublisher) {
+        setPublisherFilter(queryParameterPublisher);
     }
-    publisherList= "";
+    queryParameterPublisher= "";
 
 
     if (typeof result !== 'undefined') {

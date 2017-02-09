@@ -1,7 +1,7 @@
 var languages = [ "nb", "nn", "en", "sv", "dk", "de", "fr", "es", "pl", "ru" ];
 var pageLanguage = lang;
-var sortField = "";
-var sortOrder = "asc";
+var sortField = queryParameterSortfield;
+var sortDirection = "asc";
 var resultCursor = {
     currentPage: 0,
     sectionStart: 1,
@@ -15,7 +15,7 @@ function resetResultCursor() {
     resultCursor.currentPage = 0;
     resultCursor.sectionStart = 1;
     resultCursor.from = 0;
-    resultCursor.size = 10;
+    //resultCursor.size = 10;
 }
 
 function httpGetAsync(theUrl, callback) {
@@ -77,6 +77,7 @@ function getLanguageString(literal) {
     return result;
 }
 
+
 /*
  Creates the page navigation controller
  for 5 pages, page 1 active: << *1* 2 3 4 5 >>
@@ -99,6 +100,14 @@ function paginationController () {
     // if filters are in play, we need to reset page cursor
     if (resultCursor.currentPage >= numPages) {
         resetResultCursor();
+    }
+
+    if (queryParameterFrom > 0) {
+        resultCursor.from = queryParameterFrom;
+        if (resultCursor.from < 0) resultCursor.from = 0;
+        resultCursor.currentPage = Math.ceil(resultCursor.from / resultCursor.size);
+        resultCursor.sectionStart = resultCursor.currentPage - 1 ;
+        if (resultCursor.sectionStart < 1) resultCursor.sectionStart = 1;
     }
 
     // empty pager list
@@ -345,31 +354,45 @@ function showResults(searchResult) {
 
 }
 
-function doSearch() {
-
+function urlSearchComponents() {
     if (search) {
-        var query = "?q=" + search.value +"&from="+resultCursor.from +"&size="+resultCursor.size +"&lang="+pageLanguage;
+        var query = "?q=" + search.value + "&from=" + resultCursor.from + "&size=" + resultCursor.size + "&lang=" + pageLanguage;
 
         if (sortField) {
             query += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
         }
 
         if (filters.theme.active.length > 0) {
-            query += "&theme=" + filters.theme.active.join(",");
+            var themeStr = "";
+            var commaT = false;
+            filters.theme.active.forEach(function(t){
+                if (commaT) {
+                    themeStr += ",";
+                }
+                themeStr += t;
+                commaT = true;
+            });
+            query += "&theme=" + themeStr;
         }
 
         if (filters.publisher.active.length > 0) {
             var publ = encodeURIComponent(filters.publisher.active.join(","));
             query += "&publisher=" + publ;
         }
-        var urlstring =  searchUrl + "/search" + query;
-        pushHistory(query);
 
-        console.log(urlstring);
-
-        // does an asynchronous call and calls showResults function.
-        httpGetAsync(urlstring, showResults);
+        return query;
     }
+}
+
+function getData() {
+    var urlstring =  searchUrl + "/search" + urlSearchComponents();
+
+    httpGetAsync(urlstring, showResults);
+}
+
+function doSearch() {
+    console.log("/datasets" + urlSearchComponents());
+    window.location = "/datasets" + urlSearchComponents();
 
 }
 
@@ -382,25 +405,21 @@ function goTo(page){
     doSearch();
 }
 
-// Simultaes browser history.
-function pushHistory(query) {
-
-    var urlhistory = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    urlhistory += query;
-
-    history.pushState(null, null, urlhistory);
-}
-
 // Sets up event handler to select the number of hits per page.
 function hitsPerPageController() {
     var hitsSelectElement = document.getElementById('hits.select');
     var hitsChooseElement = document.getElementById('hits.choice');
+
+    if (queryParameterSize !== "") {
+        hitsChooseElement.innerHTML = queryParameterSize;
+        resultCursor.size = queryParameterSize;
+    }
     if (hitsSelectElement) {
         hitsSelectElement.onclick = function (event) {
             var hitsVal = parseInt(event.target.innerHTML);
             if (hitsVal) {
                 // The easiest thing is to reset the Result Cursor
-                resetResultCursor();
+                //resetResultCursor();
                 resultCursor.size = hitsVal; // set new size
                 hitsChooseElement.innerHTML = hitsVal; // show hits per page
 
@@ -416,32 +435,49 @@ function sortController() {
     var sortSelectElement = document.getElementById("sort.select");
     var sortChooseElement = document.getElementById("sort.choice");
 
-    if (sortSelectElement)
-    sortSelectElement.onclick = function (event) {
-        var oldSortField = sortField;
+    if (sortChooseElement) {
 
-        var sortElement = event.target;
-        var sortVal = event.target.innerHTML;
-
-        sortChooseElement.innerHTML = sortVal;
-        var attr = sortElement.getAttribute("id");
-        sortDirection = "asc";
-        if (attr === "sort.relevance") {
-            sortField = undefined;
-            sortDirection = "desc";
-        } else if (attr === "sort.title") {
-            sortField = "title." + pageLanguage;
-        } else if (attr === "sort.publisher") {
-            sortField = "publisher.name" ;
-        } else if (attr === "sort.modified") {
-            sortDirection = "desc";
-            sortField = "modified";
+        var sortText;
+        if (queryParameterSortfield.indexOf("title") !== -1) {
+            sortText = document.getElementById("sort.title").innerHTML;
+        } else if (queryParameterSortfield.indexOf("publisher") !== -1) {
+            sortText = document.getElementById("sort.publisher").innerHTML;
+        } else if (queryParameterSortfield.indexOf("modified") !== -1) {
+            sortText = document.getElementById("sort.modified").innerHTML;
+        } else if (queryParameterSortfield.indexOf("relevance") !== -1) {
+            sortText = document.getElementById("sort.relevance").innerHTML;
         }
+        if (sortText) {
+            sortChooseElement.innerHTML = sortText;
+        }
+    }
+    if (sortSelectElement) {
 
-        doSearch();
+        sortSelectElement.onclick = function (event) {
+            var oldSortField = sortField;
 
-    };
+            var sortElement = event.target;
+            var sortVal = event.target.innerHTML;
 
+            sortChooseElement.innerHTML = sortVal;
+            var attr = sortElement.getAttribute("id");
+            sortDirection = "asc";
+            if (attr === "sort.relevance") {
+                sortField = undefined;
+                sortDirection = "desc";
+            } else if (attr === "sort.title") {
+                sortField = "title." + pageLanguage;
+            } else if (attr === "sort.publisher") {
+                sortField = "publisher.name";
+            } else if (attr === "sort.modified") {
+                sortDirection = "desc";
+                sortField = "modified";
+            }
+
+            doSearch();
+
+        };
+    }
 }
 
 // Set up searchbar controller
@@ -449,6 +485,9 @@ function searchController() {
     var search = document.getElementById("search");
     var dosearch = document.getElementById("dosearch");
 
+    if (queryParameterQuery !== "") {
+        search.value = decodeURIComponent(queryParameterQuery);
+    }
     if (dosearch)
         dosearch.onclick = function (event) {
             resetResultCursor();
@@ -490,14 +529,11 @@ function showPage () {
     var langName = "Norsk (bokmål)";
     if (chosenLanguage && chosenLanguage.textContent) langName = chosenLanguage.textContent;
 
-
-    console.log("page lang: " + pageLanguage);
-
     searchController();
+
     sortController();
     hitsPerPageController();
 
-    // First call to search
-    doSearch();
+    getData();
 }
 

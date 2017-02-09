@@ -18,6 +18,17 @@
     text-align: center;
 }
 
+.list-group-item > ul > a {
+    width: 100%;
+}
+
+.list-group-item .fdk-badge {
+    float: right;
+}
+
+.list-group-item .glyphicon {
+    float: right;
+}
 
 /*  H E A D E R   &   F O O T E R  */
 
