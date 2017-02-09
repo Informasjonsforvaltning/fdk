@@ -30,6 +30,12 @@
     float: right;
 }
 
+.center-block {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
 /*  H E A D E R   &   F O O T E R  */
 
 .fdk-header-beta {

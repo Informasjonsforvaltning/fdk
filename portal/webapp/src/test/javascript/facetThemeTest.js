@@ -44,8 +44,4 @@ describe("Theme facets", function() {
         expect(function() {createFacetController(badBucket);}).not.toThrow();
     });
 
-    it("Remove Filter Element handles undefined data", function() {
-        expect(function() {removeFilterElement(undefined);}).not.toThrow();
-    });
-
 });
