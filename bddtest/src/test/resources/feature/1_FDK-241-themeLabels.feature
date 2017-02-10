@@ -21,4 +21,3 @@ Feature: Forbedringer design
   Given I am on the homepage of the National Data Catalog
   Then I should see all the existing themes
   And I should be able to click on the 13 themes
-		And I should be able to click on the 13 themes

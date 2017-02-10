@@ -23,81 +23,32 @@
 
     <div th:replace="header :: header"/>
 
-    <span id="dosearch" class="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+    <div th:replace="search :: search"/>
 
     <div class="row">
-        <div class="col-md-12">
-            <h1 class="fdk-heading" th:text="#{app.title}">Felles Datakatalog</h1>
-
-            <input id="search" class="fdk-search" type="search" th:attr="placeholder=#{query.intro}"/>
-
-            <section class="frontpage-themes">
-                <a th:each="t : ${themes}" th:href="${'/results?theme=' + {t.code}}" th:attr="id=${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}">
+        <section class="frontpage-themes">
+            <a th:each="t : ${themes}" th:href="${'/datasets?theme=' + {t.code}}"
+               th:attr="id=${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}">
                     <span class="fdk-label fdk-label-default">
                          <span th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}"/>
                         (<span name="hits" th:text="${t.numberOfHits}"/>)
                     </span>
-                </a>
-            </section>
+            </a>
+        </section>
+    </div>
 
-        </div>
+    <div style="text-align:center;margin-top:20px;">
+        <a href="/publisher" th:text="#{app.publisher}">Søk på virksomhet</a>
     </div>
 </div>
-
-
-<div>
-    <a href="/publisher" th:text="#{app.publisher}">Publisher</a>
-</div>
-
 
 <div lang="en" th:replace="footer :: footer" />
 
 <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/header.js"></script>
 <script>
 /*<![CDATA[*/
-
-    var lang = navigator.language || navigator.userLanguage;
-    console.log("browser language: ", lang);
-    var params= window.location.search.substr(1);
-    var pair = params.split("=");
-    if (pair[0] === "lang") {
-       lang = pair[1];
-    }
-
-    console.log("application lang: " , lang);
-    // set correct chosen language
-    var langElement = document.getElementById("lang." + lang);
-    $("#chosenLanguage").html($(langElement).html() + ' <span class="caret"></span>');
-
-    // handle language toggle
-    /*$(".dropdown-menu li a").click(function(event){
-        $(this).parents(".dropdown").find('.btn').html($(this).html() + ' <span class="caret"></span>');
-    });*/
-
-    // Set up searchbar controller
-    function searchController() {
-        var search = document.getElementById("search");
-        var dosearch = document.getElementById("dosearch");
-
-        if (dosearch)
-            dosearch.onclick = function (event) {
-                var query = "?q=" + search.value ;
-                console.log("traverse ", query);
-                window.location = "/results" + query;
-
-            };
-
-        if (search)
-            search.onkeypress = function (event) {
-                if (event.keyCode === 13) {
-                    var query = "?q=" + search.value  ;
-                    console.log("traverse ", query);
-                    window.location = "/results" + query;
-
-                }
-            };
-    }
     $(document).ready(searchController());
 /*]]>*/
 </script>

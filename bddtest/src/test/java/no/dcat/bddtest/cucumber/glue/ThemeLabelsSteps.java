@@ -53,7 +53,7 @@ public class ThemeLabelsSteps extends CommonPage{
     @Then("^I should be able to click on the (\\d+) themes$")
     public void i_should_be_able_to_click_on_the_themes(int numberOfThemes) throws Throwable {
         // sjekke at et tema er en klikkbar lenke
-        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/result')]"));
+        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/datasets')]"));
         assertThat(publisher.size(), is(numberOfThemes));
     }
 
