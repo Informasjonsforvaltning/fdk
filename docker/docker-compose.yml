@@ -9,6 +9,7 @@ services:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.queryService=http://query:8080
      - application.queryServiceExternal=http://localhost:8083
+     - application.fusekiService=http://fuseki:8080/fuseki
     links:
       - query
     networks:

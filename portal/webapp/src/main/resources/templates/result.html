@@ -3,12 +3,19 @@
 <head>
     <title th:text="#{app.title}">Felles datakatalog</title>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <meta name="theme" th:content="${session.theme}"/>
     <meta name="publisher" th:content="${session.publisher}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" href="css/main.css" media="all"/>
+    <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+    </style>
     <style>
 .publisher {
     position: absolute;
@@ -31,31 +38,16 @@
 
 <div lang="en" th:replace="header :: version" />
 
-<div class="container-fluid">
-    <div lang="en" th:replace="header :: header"/>
+<div class="container">
+    <!-- Example row of columns -->
+    <span id="dosearch" class="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/"><h1 class="fdk-heading">Felles Datakatalog</h1></a>
 
-    <!-- Søkefelt -->
-    <div class="form-group a-form-group">
-        <div class="input-group input-group-large">
+            <input id="search" class="fdk-search" type="search"
+                   th:attr="placeholder=#{query.intro}, value=${query}" placeholder="Søk etter datasett..." />
 
-            <!-- Label -->
-            <label for="search" id="searchLarge">
-                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
-            </label>
-
-            <!-- Input  -->
-            <input id="search" aria-labelledby="searchLarge" type="search"
-                   class="form-control form-control-noleft form-control-withBtn"
-                   th:attr="placeholder=#{query.intro}, value=${query}"/>
-
-            <!-- Search buttton -->
-            <div class="input-group-btn">
-                <button id="dosearch" class="btn btn-primary" type="button">
-                    <i class="material-icons a-input-icon"><span class="sr-only"
-                                                                 th:text="#{query.do}">Utfør søk</span><span
-                            class="glyphicon glyphicon-search"></span></i>
-                </button>
-            </div>
         </div>
 
         <!-- Filter line -->
@@ -107,8 +99,7 @@
                             <li>
                                 <a id="next" href="#" th:attr="aria-label=#{page.next}">
                                     <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
+                                </a></li>
                         </ul>
                     </nav>
                 </div>
@@ -138,21 +129,17 @@
 
                     <!-- facets -->
                     <div id="facet" class="list-group">
-                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse">
-                            <span th:text="#{facet.organisation}">Virksomhet</span>
-                            <ul class="list-group"/>
-                        </div>
+
                         <div id="facet.theme" class="list-group-item" data-toggle="collapse">
                             <span th:text="#{facet.theme}">Tema</span>
                             <ul class="list-group"/>
                         </div>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span></a>
-                        <a class="list-group-item disabled" href="#"><span
-                                th:text="#{facet.spatial}">Geografi</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.temporal}">Tid</span></a>
-                        <a class="list-group-item disabled" href="#"><span
-                                th:text="#{facet.standard}">Standard</span></a>
+
+                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse">
+                            <span th:text="#{facet.organisation}">Virksomhet</span>
+                            <ul class="list-group"/>
+                        </div>
+
                     </div>
                 </div>
 
