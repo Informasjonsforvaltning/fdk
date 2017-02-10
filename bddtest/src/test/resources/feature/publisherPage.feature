@@ -23,7 +23,6 @@ Feature: Page for presenting all Publishers.
 
     Then 41 publisher shall be present as clickable links.
     Then a search-field shall be present.
-    Then a header and a footer shall be present.
     Then the following Publisher and dataset aggregation shall exist:
       | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  	|
       | ARBEIDSTILSYNET  				| 1 	|

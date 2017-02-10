@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
@@ -62,8 +63,8 @@ public class PortalControllerTests {
 
     @Test
     public void themesThrowsException() throws  Exception {
-
-        ModelAndView actual = portal.themes();
+        HttpSession mockSession = mock(HttpSession.class);
+        ModelAndView actual = portal.themes(mockSession);
 
         ModelAndViewAssert.assertViewName(actual, "error");
     }
@@ -75,7 +76,9 @@ public class PortalControllerTests {
         LocaleContextHolder.setLocale(new Locale("nb", "NO"));
 
         doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
-        ModelAndView actual = spyPortal.themes();
+        HttpSession mockSession = mock(HttpSession.class);
+
+        ModelAndView actual = spyPortal.themes(mockSession);
 
         ModelAndViewAssert.assertViewName(actual, "theme");
         assertEquals("nb",actual.getModel().get("lang"));
@@ -88,7 +91,9 @@ public class PortalControllerTests {
         LocaleContextHolder.setLocale(Locale.UK);
 
         doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
-        ModelAndView actual = spyPortal.themes();
+        HttpSession mockSession = mock(HttpSession.class);
+
+        ModelAndView actual = spyPortal.themes(mockSession);
 
         ModelAndViewAssert.assertViewName(actual, "theme");
         assertEquals("en",actual.getModel().get("lang"));

@@ -66,7 +66,7 @@ public class PortalController {
      * @param publisher Filter on the specified publisher.
      * @return the result html page (or just the name of the page)
      */
-    @RequestMapping(value = {"/results"})
+    @RequestMapping(value = {"/datasets"}, produces = "text/html")
     final ModelAndView result(final HttpSession session,
                               @RequestParam(value = "q", defaultValue = "") String query,
                               @RequestParam(value = "theme", defaultValue = "") String theme,
@@ -93,7 +93,7 @@ public class PortalController {
      * @param id The id that identifies the dataset.
      * @return One Dataset attatched to a ModelAndView.
      */
-    @RequestMapping({"/detail"})
+    @RequestMapping(value={"/detail"}, produces = "text/html")
     public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
         ModelAndView model = new ModelAndView("detail");
 
@@ -127,8 +127,8 @@ public class PortalController {
      *
      * @return A list of DataTheme attached to a ModelAndView.
      */
-    @RequestMapping({"/"})
-    public ModelAndView themes() {
+    @RequestMapping(value={"/"}, produces = "text/html")
+    public ModelAndView themes(final HttpSession session) {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
         Locale locale = LocaleContextHolder.getLocale();
@@ -152,14 +152,17 @@ public class PortalController {
 
             Collections.sort(dataThemes, new ThemeTitleComparator(locale.getLanguage() == "en" ? "en" : "nb"));
 
-            logger.debug(String.format("Found datathemes: %s", json));
+            logger.trace(String.format("Found datathemes: %s", json));
         } catch (IOException | URISyntaxException e) {
             logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
 
-        model.addObject("lang", locale.getLanguage() == "en" ? "en" : "nb");
+        session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
+        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
+
+        model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
@@ -185,7 +188,7 @@ public class PortalController {
      *
      * @return A list of Publisher attatched to a ModelAndView.
      */
-    @RequestMapping({"/publisher"})
+    @RequestMapping(value={"/publisher"}, produces = "text/html")
     public ModelAndView publisher() {
         ModelAndView model = new ModelAndView(MODEL_PUBLISHER);
         List<Publisher> publisherGrouped = new ArrayList<>();
