@@ -214,6 +214,13 @@ a.row.list-group-item.dataset {
     margin: 12px 0px;
     padding: 20px 15px;
 }
+.dataset .overflow-text {
+    border-top: 1px solid #C8CDD4;
+    padding-top: 15px;
+}
+.dataset h4 {
+  margin-bottom:6px
+}
 .publisher a {
     color: #000;
     font-size: 86%;
