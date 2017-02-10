@@ -9,26 +9,28 @@ import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
+import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.vocabulary.DCTerms;
 import org.elasticsearch.common.recycler.Recycler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Import;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -96,6 +98,8 @@ public class CrawlerJob implements Runnable {
                 logger.debug("[crawler_operations] Number of non-valid datasets: " + nonValidDatasets.size());
 
                 removeNonValidDatasets(union);
+                removeNonResolvableLocations(union);
+
 
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
@@ -285,6 +289,36 @@ public class CrawlerJob implements Runnable {
                 model.removeAll(res, null, null);
                 model.removeAll(null, null, res);
             }
+        }
+    }
+
+
+    /**
+     * Remove triples containing DCTerms.spatial URLs that cannot be resolved
+     *
+     * @param model
+     */
+    private void removeNonResolvableLocations(Model model) {
+        ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
+        while (locIter.hasNext()) {
+            Resource resource = locIter.next();
+            String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
+            try {
+                URL locUrl = new URL(locUri);
+                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
+                locConnection.setRequestMethod("GET");
+                if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    //Remove non-resolvable location from dataset
+                    //TODO: Presentere logg-info til brukeren i admin-grensesnitt
+                    model.removeAll(resource,DCTerms.spatial,null);
+                    logger.warn("Location URI cannot be resolved. Location removed form dataset: " + locUri);
+                }
+            } catch (MalformedURLException e) {
+                logger.error("URL not valid: {} ", locUri,e);
+            } catch (IOException e) {
+                logger.error("IOException: {} ", locUri, e);
+            }
+
         }
     }
 

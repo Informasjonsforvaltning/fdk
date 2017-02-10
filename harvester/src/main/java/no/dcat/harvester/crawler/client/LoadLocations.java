@@ -16,11 +16,6 @@ import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,7 +42,6 @@ public class LoadLocations {
 
     /**
      * Extracts all location-uris from the model and adds it to the map of locations.
-     * Location uri is only added to map if it can be resolved.
      * The locations-uri represent the key in the map. Titel is empty while these are fetched
      * from a web-call over the net.
      * <p/>
@@ -58,18 +52,16 @@ public class LoadLocations {
     public LoadLocations extractLocations(Model model) {
 
         ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
-
         while (locIter.hasNext()) {
             Resource resource = locIter.next();
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
-
             SkosCode code = new SkosCode(locUri, new HashMap<>());
             locations.put(locUri, code);
+
             logger.info("Extract location with URI {}", locUri);
         }
         return this;
     }
-
 
     /**
      * Looops over the list of locations and retrieves the title for each of them.
@@ -89,32 +81,13 @@ public class LoadLocations {
                 continue;
             }
 
-            //Only add location title if location URI can be resolved
-            Model locModel = ModelFactory.createDefaultModel();
-            try {
-                URL locUrl = new URL(locUri);
-                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
-                locConnection.setRequestMethod("GET");
-                if (locConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    locModel = retrieveTitleOfLocations(locUri);
-                } else {
-                    //Remove non-resolvable location from dataset
-                    locModel = null;
-                    logger.warn("Location URI cannot be resolved. Location removed form dataset: " + locUri);
-                }
-            } catch (MalformedURLException e) {
-                logger.error("URL not valid: {} ", locUri,e);
-            } catch (IOException e) {
-                logger.error("IOException: {} ", locUri, e);
-            }
+            Model locModel = retrieveTitleOfLocations(locUri);
 
-            if (locModel != null) {
-                ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
-                while (resIter.hasNext()) {
-                    Map<String, String> titleMap = extractLocationTitle(resIter.next());
-                    SkosCode code = (SkosCode) loc.getValue();
-                    code.setTitle(titleMap);
-                }
+            ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
+            while (resIter.hasNext()) {
+                Map<String, String> titleMap = extractLocationTitle(resIter.next());
+                SkosCode code = (SkosCode) loc.getValue();
+                code.setTitle(titleMap);
             }
         }
 
@@ -164,26 +137,26 @@ public class LoadLocations {
         BulkRequestBuilder bulkRequest = client.prepareBulk();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-        if (locations.size() > 0) {
-            Iterator locations = this.locations.entrySet().iterator();
-            while (locations.hasNext()) {
-                Map.Entry locEntry = (Map.Entry) locations.next();
-                SkosCode location = (SkosCode) locEntry.getValue();
 
-                IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getCode());
-                indexRequest.source(gson.toJson(location));
-                bulkRequest.add(indexRequest);
+        Iterator locations = this.locations.entrySet().iterator();
+        while (locations.hasNext()) {
+            Map.Entry locEntry = (Map.Entry) locations.next();
+            SkosCode location = (SkosCode) locEntry.getValue();
 
-                logger.debug("Add location {} to bulk request", location.getCode());
-            }
+            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getCode());
+            indexRequest.source(gson.toJson(location));
+            bulkRequest.add(indexRequest);
 
-            BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-
-            if (bulkResponse.hasFailures()) {
-                throw new RuntimeException(
-                        String.format("Load of locations to elasticsearch has error: %s", bulkResponse.buildFailureMessage()));
-            }
+            logger.debug("Add location {} to bulk request", location.getCode());
         }
+
+        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+
+        if (bulkResponse.hasFailures()) {
+            throw new RuntimeException(
+                    String.format("Load of locations to elasticsearch has error: %s", bulkResponse.buildFailureMessage()));
+        }
+
         return this;
     }
 
