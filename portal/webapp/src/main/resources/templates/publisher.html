@@ -10,27 +10,15 @@
     <link rel="stylesheet" href="css/main.css" media="all"/>
 
     <style>
+        .fdk-sub-publisher {
+            text-indent: 10px;
+        }
         .publisher {
             position: absolute;
             top: 0;
             right: 0;
         }
 
-        .badge {
-            float: right
-        }
-
-        .overflow-text {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            line-height: 120%;
-        / / 1 em; /* fallback */
-            max-height: 360%;
-        / / 3 em; /* fallback */
-            -webkit-line-clamp: 3; /* number of lines to show */
-            -webkit-box-orient: vertical;
-        }
     </style>
 
 </head>
@@ -38,39 +26,33 @@
 <div lang="en" th:replace="header :: version"/>
 
 <div class="container" id="publisher">
-    <div lang="en" th:replace="header :: header"/>
-    <div lang="en" th:replace="search :: search"/>
+    <div th:replace="header :: header"/>
+    <div th:replace="search :: search"/>
 
     <div class="row">
         <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
             <h4>
-                <a class="btn btn-primary" data-toggle="collapse"
+                <a data-toggle="collapse"
                    th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
-                   href="#" th:href="${'#collaps_' + {r}}" aria-expanded="false" aria-controls="collapseExample">
-                    +
+                   th:href="${'#collaps_' + {r}}" aria-expanded="false" aria-controls="collapseExample">
+                   <span class="glyphicon glyphicon-triangle-right"/>
+                    <span name="publisher" th:text="${publisher.get(r).name}"/>
+                    <span class="fdk-badge">(<span  th:text="${aggpublishercount.get(publisher.get(r).name)}"/>)</span>
                 </a>
 
-                <a class="btn btn-primary" data-toggle="collapse"
-                   th:if="${publisher.get(r).aggrSubPublisher.size()} == 0"
-                   aria-disabled="true">
-                    -
-                </a>
-
-                <a th:id="${publisher.get(r).name}" href="#"
+                <a th:if="${publisher.get(r).aggrSubPublisher.size()} == 0" th:id="${publisher.get(r).name}"
                    th:href="${'/datasets?publisher=' + {publisher.get(r).name}}">
                     <span name="publisher" th:text="${publisher.get(r).name}"/>
-                    <span class="badge" th:text="${aggpublishercount.get(publisher.get(r).name)}"/>
+                    <span class="fdk-badge">(<span  th:text="${aggpublishercount.get(publisher.get(r).name)}"/>)</span>
                 </a>
             </h4>
             <div th:id="${'collaps_' + {r}}" class="panel-collapse collapse"
                  th:if="${publisher.get(r).aggrSubPublisher.size()} > 0">
                 <div th:each="c : ${#numbers.sequence(0, publisher.get(r).aggrSubPublisher.size() - 1)}">
-                    <a href="#"
-                       th:href="${'/datasets?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}"
+                    <a class="fdk-sub-publisher" th:href="${'/datasets?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}"
                        th:id="${publisher.get(r).aggrSubPublisher.get(c).name}">
                         <span name="publisher" th:text="${publisher.get(r).aggrSubPublisher.get(c).name}"/>
-                        <span class="badge"
-                              th:text="${aggpublishercount.get(publisher.get(r).aggrSubPublisher.get(c).name)}"/>
+                        <span class="fdk-badge">(<span th:text="${aggpublishercount.get(publisher.get(r).aggrSubPublisher.get(c).name)}"/>)</span>
                     </a>
                 </div>
             </div>
