@@ -1,8 +1,16 @@
 
 var lang = navigator.language || navigator.userLanguage;
+if (lang === undefined) {
+    lang = "nb";
+}
 if (lang.indexOf("en") === 0 ) {
     lang = "en";
 }
+if (lang.indexOf("nb") === 0) {
+    lang = "nb";
+}
+
+
 var themeList = "";
 var queryParameterPublisher= "";
 var queryParameterQuery = "";
