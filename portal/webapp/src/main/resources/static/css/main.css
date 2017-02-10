@@ -201,6 +201,10 @@ input.fdk-search {
 a.list-group-item:hover {
   background-color: #F2F3F7;
 }
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #5A6778;
+    border-color: #5A6778;
+}
 .fdk-dropdown-menu:after {
     position: absolute;
     top: -6px;
