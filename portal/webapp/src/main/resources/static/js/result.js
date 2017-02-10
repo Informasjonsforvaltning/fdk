@@ -274,7 +274,7 @@ function showResults(searchResult) {
         }
         if (publisher) {
             pbElement = document.createElement("h4");
-            pbElement.innerHTML =  publisher.name + ' &centerdot;<normal> ' + themeList.join(", ") + '</normal>';
+            pbElement.innerHTML =  publisher.name + ' &centerdot;<label> ' + themeList.join(", ") + '</label>';
         }
 
         /*
