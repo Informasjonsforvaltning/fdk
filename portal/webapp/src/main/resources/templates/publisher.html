@@ -7,19 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
-    <link rel="stylesheet" href="css/main.css" media="all"/>
-
-    <style>
-        .fdk-sub-publisher {
-            text-indent: 10px;
-        }
-        .publisher {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/main.css" media="all"/
 
 </head>
 <body>
@@ -29,8 +17,8 @@
     <div th:replace="header :: header"/>
     <div th:replace="search :: search"/>
 
-    <div class="row">
-        <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" >
+    <div class="row publisher-directory">
+        <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="publisher">
             <h4 th:if="${publisher.get(r).name != null}">
                 <a data-toggle="collapse"
                    th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
