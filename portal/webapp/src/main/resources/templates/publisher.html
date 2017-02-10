@@ -31,7 +31,7 @@
 
     <div class="row">
         <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" >
-            <h4>
+            <h4 th:if="${publisher.get(r).name != null}">
                 <a data-toggle="collapse"
                    th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
                    th:href="${'#collaps_' + {r}}" aria-expanded="false" aria-controls="collapseExample">
