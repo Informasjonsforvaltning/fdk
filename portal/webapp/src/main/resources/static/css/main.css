@@ -7,7 +7,7 @@
     right: 26px;
     top: 92px;
     font-size: 32px;
-    z-index: 2;
+    z-index: 1;
 }
 
 .frontpage-themes * {
@@ -189,14 +189,15 @@ input.fdk-search {
 .fdk-dropdown-menu li {
     font-size: 14px;
     background-color: #213B4C;
+    margin-bottom: -20px;
 }
 
 .fdk-dropdown-menu > li > a {
     color: #fff;
 }
-
 .fdk-dropdown-menu > li > a:hover {
-    color: #213B4C;
+  background-color: #5A6778;
+  color: #fff;
 }
 
 .fdk-dropdown-menu:after {
