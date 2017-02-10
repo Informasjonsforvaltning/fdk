@@ -205,7 +205,15 @@ a.list-group-item:hover {
     background-color: #5A6778;
     border-color: #5A6778;
 }
-
+.publisher a {
+    color: #000;
+    font-size: 86%;
+    margin-left: 15px;
+}
+.publisher .panel-collapse {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
 .dataset h4 label {
   font-weight: normal;
 }
