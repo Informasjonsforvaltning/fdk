@@ -205,6 +205,15 @@ a.list-group-item:hover {
     background-color: #5A6778;
     border-color: #5A6778;
 }
+#resultPanel .fdk-dropdown-language {
+  background-color: transparent;
+}
+a.row.list-group-item.dataset {
+    border: 0;
+    background-color: #F2F3F7;
+    margin: 12px 0px;
+    padding: 20px 15px;
+}
 .publisher a {
     color: #000;
     font-size: 86%;
