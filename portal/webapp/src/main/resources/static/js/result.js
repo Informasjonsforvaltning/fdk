@@ -314,7 +314,7 @@ function showResults(searchResult) {
         */
         // reference to detail page
         var row = document.createElement("a");
-        row.setAttribute('href', "detail?id=" + dataset._id);
+        row.setAttribute('href', "datasets?id=" + encodeURIComponent(dataset._id) + "&lang=" + pageLanguage) ;
         //row.target = "_blank";  // open in new page
         row.className = "row list-group-item dataset";
         // dataset

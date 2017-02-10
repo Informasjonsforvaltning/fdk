@@ -62,7 +62,7 @@ function searchController() {
         dosearch.onclick = function (event) {
             var query = "?q=" + search.value ;
             console.log("traverse ", query);
-            window.location = "/datasets" + query;
+            window.location = "/datasets" + query + "&lang=" + lang;
 
         };
 
@@ -71,7 +71,7 @@ function searchController() {
             if (event.keyCode === 13) {
                 var query = "?q=" + search.value  ;
                 console.log("traverse ", query);
-                window.location = "/datasets" + query;
+                window.location = "/datasets" + query + "&lang=" + lang;
 
             }
         };

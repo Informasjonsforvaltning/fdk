@@ -34,7 +34,7 @@ public class PortalControllerTests {
     public void testResultReturnsModelAndView () throws Exception {
 
         MockHttpSession session = new MockHttpSession();
-        ModelAndView actual = portal.result(session, "", "", "");
+        ModelAndView actual = portal.result(session, "","", "", "");
 
         assertEquals("result", actual.getViewName());
         assertEquals(null, actual.getModel().get("themes"));
