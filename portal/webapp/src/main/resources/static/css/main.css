@@ -233,7 +233,9 @@ a.row.list-group-item.dataset {
 }
 .dataset h4 label {
   font-weight: normal;
+  display: inline;
 }
+
 .fdk-dropdown-menu:after {
     position: absolute;
     top: -6px;
