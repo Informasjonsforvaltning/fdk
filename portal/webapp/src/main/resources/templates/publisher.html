@@ -30,7 +30,7 @@
     <div th:replace="search :: search"/>
 
     <div class="row">
-        <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
+        <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" >
             <h4>
                 <a data-toggle="collapse"
                    th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
