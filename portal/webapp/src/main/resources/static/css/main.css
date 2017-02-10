@@ -205,6 +205,10 @@ a.list-group-item:hover {
     background-color: #5A6778;
     border-color: #5A6778;
 }
+
+.dataset h4 label {
+  font-weight: normal;
+}
 .fdk-dropdown-menu:after {
     position: absolute;
     top: -6px;
