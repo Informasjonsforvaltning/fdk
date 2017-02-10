@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
     <link rel="stylesheet" href="css/main.css" media="all"/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <style>
         .publisher {
             position: absolute;
@@ -39,12 +36,11 @@
 </head>
 <body>
 <div lang="en" th:replace="header :: version"/>
-<div class="container-fluid">
+
+<div class="container" id="publisher">
     <div lang="en" th:replace="header :: header"/>
     <div lang="en" th:replace="search :: search"/>
-</div>
 
-<div class="container-fluid" id="publishers">
     <div class="row">
         <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="col-sm-4">
             <h4>
@@ -81,9 +77,16 @@
         </div>
     </div>
 </div>
-<p/>
-<p/>
 
 <div lang="en" th:replace="footer :: footer"/>
+
+<script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/header.js"></script>
+<script>
+    /*<![CDATA[*/
+    $(document).ready(searchController());
+    /*]]>*/
+</script>
 </body>
 </html>

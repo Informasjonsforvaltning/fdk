@@ -16,16 +16,11 @@
     <div class="dropdown fdk-container-dropdown-menu">
         <div class="dropdown fdk-dropdown-toggle-menu">
             <a data-toggle="dropdown" href="#">&#9776;</a>
-            <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        
+            <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">   
                 <li><a href="#" th:text="#{about.title}">Om Felles Datakatalog</a></li>
-                        
                 <li><a href="help/FAQ datakatalog.htm" th:text="#{faq}">Spørsmål og svar</a></li>
-                        
                 <li><a href="https://doc.difi.no/dcat-ap-no/">DCAT-AP-NO 1.1-Standarden</a></li>
-                        
                 <li><a href="coverage.html" th:text="#{about.status}">Status implementasjon</a></li>
-                      
             </ul>
         </div>
     </div>
@@ -44,51 +39,6 @@
         </ul>
     </div>
 
-    <!--nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/" th:text="#{app.title}">Felles datakatalog</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" th:attr="title=#{feedback.title}"><span class="glyphicon glyphicon-envelope"></span></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" th:attr="title=#{lang.choose}" data-toggle="dropdown"
-                       role="button" aria-haspopup="true" aria-expanded="false">
-                        <span id="chosenLanguage" th:text="#{lang.chosenLanguage}">Norsk (bokmål)</span>
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" id="language-list">
-                        <li><a href="?lang=nb" lang="nb" th:text="#{lang.norwegian-nb}">Norsk (bokmål)</a></li>
-                        <li><a href="?lang=nn" lang="nn" th:text="#{lang.norwegian-nn}">Norsk (nynorsk)</a></li>
-                        <li><a href="?lang=en" lang="en" th:text="#{lang.english-en}">Engelsk</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" th:attr="title=#{login.title}"><span class="glyphicon glyphicon-user"></span></a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" th:attr="title=#{about.title}" data-toggle="dropdown"
-                       role="button" aria-haspopup="true" aria-expanded="false">
-                        <span th:text="#{about}">Om</span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown" th:text="#{about.help}">Hjelp</li>
-                        <ul class="dropdown-menu">
-                            <li><a href="help/help.html" target="_blank">Språkstøtte</a></li>
-                            <li><a href="help/ResulPageNavigation.html" target="_blank">Navigering i søkeresultat</a>
-                            </li>
-                        </ul>
-                        <li><a href="coverage.html" target="_blank" th:text="#{about.status}">Status implementasjon</a>
-                        </li>
-                        <li><a href="https://doc.difi.no/dcat-ap-no/" target="_blank" th:text="#{about.standard}">DCAT-AP-NO
-                            1.1</a></li>
-                        <li><a href="#" th:text="#{about.guide}">Veileder</a></li>
-                        <li><a href="#" th:text="#{about.fordataowners}">For dataeiere</a></li>
-                        <li><a href="#" th:text="#{about.fordatausers}">For databrukere</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#" th:text="#{about.technical}">Teknisk</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav -->
 </div>
 </body>
 </html>
