@@ -1,6 +1,8 @@
 
 var lang = navigator.language || navigator.userLanguage;
-
+if (lang.indexOf("en") === 0 ) {
+    lang = "en";
+}
 var themeList = "";
 var queryParameterPublisher= "";
 var queryParameterQuery = "";
