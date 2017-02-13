@@ -356,7 +356,7 @@ function showResults(searchResult) {
 
 function urlSearchComponents() {
     if (search) {
-        var query = "?q=" + search.value + "&from=" + resultCursor.from + "&size=" + resultCursor.size + "&lang=" + pageLanguage;
+        var query = "?q=" + encodeURIComponent(search.value) + "&from=" + resultCursor.from + "&size=" + resultCursor.size + "&lang=" + pageLanguage;
 
         if (sortField) {
             query += "&sortfield=" + sortField + "&sortdirection=" + sortDirection;
