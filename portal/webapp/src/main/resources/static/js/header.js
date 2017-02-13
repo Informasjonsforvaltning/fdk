@@ -14,8 +14,8 @@ if (lang.indexOf("nb") === 0) {
 var themeList = "";
 var queryParameterPublisher= "";
 var queryParameterQuery = "";
-var queryParameterFrom = "";
-var queryParameterSize = "";
+var queryParameterFrom = 0;
+var queryParameterSize = 10;
 var queryParameterSortfield = "";
 var queryParameterSortdirection = "";
 
