@@ -77,7 +77,7 @@ public class PublisherPage extends CommonPage {
 
     @Then("^(\\d+) publisher shall be present as clickable links\\.$")
     public void publisher_shall_be_present_as_clickable_links(int nrOfPublisher) throws Throwable {
-        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/datasets')]"));
+        List<WebElement> publisher = driver.findElements(By.name("publisher"));
         assertThat(publisher.size(), is(nrOfPublisher));
     }
 

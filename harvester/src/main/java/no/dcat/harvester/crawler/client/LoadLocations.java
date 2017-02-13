@@ -150,13 +150,13 @@ public class LoadLocations {
             logger.debug("Add location {} to bulk request", location.getCode());
         }
 
-        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-
-        if (bulkResponse.hasFailures()) {
-            throw new RuntimeException(
-                    String.format("Load of locations to elasticsearch has error: %s", bulkResponse.buildFailureMessage()));
+        if(bulkRequest.numberOfActions() > 0){
+            BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+            if (bulkResponse.hasFailures()) {
+                throw new RuntimeException(
+                        String.format("Load of locations to elasticsearch has error: %s", bulkResponse.buildFailureMessage()));
+            }
         }
-
         return this;
     }
 
