@@ -3,6 +3,7 @@ package no.dcat.bddtest.cucumber.glue;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import no.dcat.bddtest.cucumber.model.ThemeCountSmall;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.springframework.core.io.ClassPathResource;
@@ -12,7 +13,10 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,12 +65,12 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^bruker datasett (.*).ttl")
     public void setupTestData(String datasett) throws IOException {
-        deleteAndLoad(datasett + ".ttl");
-
-        //String defultPath = new File(".").getCanonicalPath().toString();
-        //String fileWithPath = String.format("file://%s/test/data/%s.ttl", defultPath, datasett);
-
-
+        RestTemplate restTemplate = new RestTemplate();
+        deleteLoadAndWait(datasett + ".ttl", () -> restTemplate.getForObject("http://localhost:8083/themecount", ThemeCountSmall.class).getHits().getTotal() == 92);
+    }
+    private void deleteLoadAndWait(String dataset, Callable<Boolean> waitFor) throws IOException {
+        deleteAndLoad(dataset);
+        await().atMost(30, SECONDS).until(waitFor);
     }
 
     private void deleteAndLoad(String datasett) throws IOException {
