@@ -8,6 +8,7 @@
 	<version>0.2.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Felles Datakatalog</name>
+	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
 
 	<repositories>
 		<repository>
