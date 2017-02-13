@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.*;
 
 
@@ -68,23 +69,52 @@ public class PortalController {
      */
     @RequestMapping(value = {"/datasets"}, produces = "text/html")
     final ModelAndView result(final HttpSession session,
+                              @RequestParam(value = "id", defaultValue = "") String id,
                               @RequestParam(value = "q", defaultValue = "") String query,
                               @RequestParam(value = "theme", defaultValue = "") String theme,
                               @RequestParam(value = "publisher", defaultValue = "") String publisher) {
 
-        ModelAndView model = new ModelAndView(MODEL_RESULT);
-        model.addObject("themes", getCodeLists());
-        model.addObject("query", query);
+        Locale locale = LocaleContextHolder.getLocale();
+        logger.info("users locale: " + locale.toLanguageTag());
 
-        logger.debug(buildMetadata.getQueryServiceExternal());
-        logger.debug(buildMetadata.getVersionInformation());
+        if ("".equals(id)) {
+            ModelAndView model = new ModelAndView(MODEL_RESULT);
+            model.addObject("themes", getCodeLists());
+            model.addObject("query", query);
 
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
-        session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
-        session.setAttribute("theme", theme);
-        session.setAttribute("publisher", publisher);
+            logger.debug(buildMetadata.getQueryServiceExternal());
+            logger.debug(buildMetadata.getVersionInformation());
 
-        return model;
+            session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
+            session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
+            session.setAttribute("theme", theme);
+            session.setAttribute("publisher", publisher);
+
+
+            return model;
+        } else {
+            ModelAndView model = new ModelAndView("detail");
+
+            try {
+                URI uri = new URIBuilder(buildMetadata.getDetailsServiceUrl()).addParameter("id", id).build();
+                HttpClient httpClient = HttpClientBuilder.create().build();
+
+                logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
+                String json = httpGet(httpClient, uri);
+
+                logger.trace(String.format("Found dataset: %s", json));
+                Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
+
+                dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
+                model.addObject("dataset", dataset);
+            } catch (Exception e) {
+                logger.error(String.format("An error occured: %s", e.getMessage()));
+                model.addObject("exceptionmessage", e.getMessage());
+                model.setViewName("error");
+            }
+
+            return model;
+        }
     }
 
     /**

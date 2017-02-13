@@ -7,7 +7,8 @@
     right: 26px;
     top: 92px;
     font-size: 32px;
-    z-index: 2;
+    z-index: 1;
+    color: #213B4C;
 }
 
 .frontpage-themes * {
@@ -194,9 +195,45 @@ input.fdk-search {
 .fdk-dropdown-menu > li > a {
     color: #fff;
 }
-
 .fdk-dropdown-menu > li > a:hover {
-    color: #213B4C;
+  background-color: #5A6778;
+  color: #fff;
+}
+a.list-group-item:hover {
+  background-color: #F2F3F7;
+}
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #5A6778;
+    border-color: #5A6778;
+}
+#resultPanel .fdk-dropdown-language {
+  background-color: transparent;
+}
+a.row.list-group-item.dataset {
+    border: 0;
+    background-color: #F2F3F7;
+    margin: 12px 0px;
+    padding: 20px 15px;
+}
+.dataset .overflow-text {
+    border-top: 1px solid #C8CDD4;
+    padding-top: 15px;
+}
+.dataset h4 {
+  margin-bottom:6px
+}
+.publisher a {
+    color: #000;
+    font-size: 86%;
+    margin-left: 15px;
+}
+.publisher .panel-collapse {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+.dataset h4 label {
+  font-weight: normal;
+  display: inline;
 }
 
 .fdk-dropdown-menu:after {
@@ -268,10 +305,12 @@ h1 {
     line-height: 40px;
     color: #213B4C;
     margin: 0px 0px 18px 0px;
+    font-weight: bold;
 }
 
 h1.fdk-heading {
     text-align: center;
+    font-weight: bold;
 }
 
 h2 {
@@ -279,6 +318,7 @@ h2 {
     line-height: 26px;
     color: #213B4C;
     margin: 0px 0px 11px 0px;
+    font-weight: bold;
 }
 
 h3 {
@@ -287,6 +327,7 @@ h3 {
     font-weight: 300;
     color: #213B4C;
     margin: 0px 0px 13px 0px;
+    font-weight: bold;
 }
 
 h4 {
@@ -294,6 +335,7 @@ h4 {
     line-height: 24px;
     color: #213B4C;
     margin: 0px 0px 12px 0px;
+    font-weight: bold;
 }
 
 p {

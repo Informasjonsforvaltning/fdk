@@ -5,8 +5,8 @@ var sortDirection = "asc";
 var resultCursor = {
     currentPage: 0,
     sectionStart: 1,
-    from: 0,
-    size: 10
+    from: queryParameterFrom,
+    size: queryParameterSize
     };
 var total = 0;
 var searchUrl = "http://dcat.no/unknown";
@@ -274,7 +274,7 @@ function showResults(searchResult) {
         }
         if (publisher) {
             pbElement = document.createElement("h4");
-            pbElement.innerHTML =  '<b>'+publisher.name + ' &centerdot;</b> ' + themeList.join(", ");
+            pbElement.innerHTML =  publisher.name + ' &centerdot;<label> ' + themeList.join(", ") + '</label>';
         }
 
         /*
@@ -314,7 +314,7 @@ function showResults(searchResult) {
         */
         // reference to detail page
         var row = document.createElement("a");
-        row.setAttribute('href', "detail?id=" + dataset._id);
+        row.setAttribute('href', "datasets?id=" + encodeURIComponent(dataset._id) + "&lang=" + pageLanguage) ;
         //row.target = "_blank";  // open in new page
         row.className = "row list-group-item dataset";
         // dataset
