@@ -7,22 +7,18 @@ Dette er den første felleskomponenten som utvikles i regi av Skate (https://www
 Applikasjoner
 
 * portal
-* admin
 * harvester
-* datastore
+* editor
 * api
 
 Komponenter
 
-* elasticsearch, kibana og logstash
-* fuseki
+* søkedatabase - elasticsearch, kibana og logstash
+* grafdatabase - fuseki
 
 ## Kompilere og installere
 ### Compile:
-mvn clean install -DskipTests
-
-admin-webapp and harvester
-mvn package -DskipTests
+mvn clean install
 
 ### Docker:
 #### Start
@@ -34,28 +30,21 @@ docker-compose down
 
 
 ## Kjøre applikasjonene 
+Dette krever at du har docker, java, maven installert. 
 
-Admin:
-http://localhost:8080/admin-webapp/admin
+Portal: 
+http://localhost:8080/
 
-test_user password
-test_admin password
+Harvester-admin:
+http://localhost:8082/
 
-Elasticsearch
+Elasticsearch:
 http://localhost:9200
 
-Kibana
-http://localhost:5601/
+Test-admin:
+http://localhost:8085
+her kan man finne testdata inne på test/data
 
-FUSEKI
+Fuseki:
 http://localhost:3030/fuseki/
 
-
-## Common Problems
-
-ERROR: for elasticsearch  No such image: sha256:09e6a3991c52f2fd3466fdc1bc34eb7a5e0929ed3367cf964c4f7e58a1fc5231
-Solution: remove old containers
-bash: docker rm -f $(docker ps -aq)
-
-Remove old images
-bash: docker rmi -f $(docker images -q)
