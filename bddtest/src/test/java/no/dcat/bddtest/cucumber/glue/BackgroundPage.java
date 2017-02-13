@@ -3,6 +3,7 @@ package no.dcat.bddtest.cucumber.glue;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import no.dcat.bddtest.cucumber.model.ThemeCountSmall;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package no.dcat.bddtest.cucumber.glue;
+package no.dcat.bddtest.cucumber.model;
 
 public class ThemeCountSmall {
     private Hits hits;
