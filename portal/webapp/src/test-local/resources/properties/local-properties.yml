@@ -20,3 +20,5 @@ application:
   fusekiService: http://localhost:3030/fuseki
 server:
   port: 8080
+management:
+  port: 9090
