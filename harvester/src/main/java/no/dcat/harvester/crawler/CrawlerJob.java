@@ -46,6 +46,8 @@ public class CrawlerJob implements Runnable {
     private List<String> validationResult = new ArrayList<>();
     private List<ValidationError> validationErrors = new ArrayList<>();
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
+    private StringBuilder crawlerResultMessage;
+    private Resource rdfStatus;
 
     public List<String> getValidationResult() {return validationResult;}
 
@@ -98,13 +100,16 @@ public class CrawlerJob implements Runnable {
                 logger.debug("[crawler_operations] Number of non-valid datasets: " + nonValidDatasets.size());
 
                 removeNonValidDatasets(union);
-                removeNonResolvableLocations(union);
-
+                crawlerResultMessage.append(removeNonResolvableLocations(union));
 
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
                 }
             }
+
+            //Write info about crawl results to store
+            String crawlerResultStr = crawlerResultMessage.toString();
+            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlerResultStr);
 
             LocalDateTime stop = LocalDateTime.now();
             logger.info("[crawler_operations] [success] Finished crawler job: {}", dcatSource.toString() + ", Duration=" + returnCrawlDuration(start, stop));
@@ -257,17 +262,13 @@ public class CrawlerJob implements Runnable {
 
         logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
 
-        Resource rdfStatus = createCrawlerStatusForAdmin(status, minimumCriteriaMet);
-        StringBuilder datasetSummary = createDatasetSummaryMessage();
+        rdfStatus = createCrawlerStatusForAdmin(status, minimumCriteriaMet);
+        crawlerResultMessage = createDatasetSummaryMessage();
 
         //Prepend summary message before detailed error message
         if (message[0] != null) {
-            datasetSummary.append(message[0]);
+            crawlerResultMessage.append(message[0]);
         }
-
-        //Log validation result in admin data store
-        String crawlMessage = datasetSummary.toString();
-        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlMessage);
 
         return minimumCriteriaMet;
     }
@@ -298,7 +299,8 @@ public class CrawlerJob implements Runnable {
      *
      * @param model
      */
-    private void removeNonResolvableLocations(Model model) {
+    private String removeNonResolvableLocations(Model model) {
+        StringBuilder resultMsg = new StringBuilder();
         ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
         while (locIter.hasNext()) {
             Resource resource = locIter.next();
@@ -310,6 +312,7 @@ public class CrawlerJob implements Runnable {
                 if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     //Remove non-resolvable location from dataset
                     //TODO: Presentere logg-info til brukeren i admin-grensesnitt
+                    resultMsg.append("Resource with non-resolvable DCTerms.spatial URL: " + resource.toString() + "\n");
                     model.removeAll(resource,DCTerms.spatial,null);
                     logger.warn("Location URI cannot be resolved. Location removed form dataset: " + locUri);
                 }
@@ -320,6 +323,7 @@ public class CrawlerJob implements Runnable {
             }
 
         }
+        return resultMsg.toString();
     }
 
 
