@@ -5,8 +5,8 @@ var sortDirection = "asc";
 var resultCursor = {
     currentPage: 0,
     sectionStart: 1,
-    from: 0,
-    size: 10
+    from: queryParameterFrom,
+    size: queryParameterSize
     };
 var total = 0;
 var searchUrl = "http://dcat.no/unknown";
