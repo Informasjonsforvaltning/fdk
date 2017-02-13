@@ -37,7 +37,7 @@
             <div th:id="${'collaps_' + {r}}" class="panel-collapse collapse"
                  th:if="${publisher.get(r).aggrSubPublisher.size()} > 0">
                 <div th:each="c : ${#numbers.sequence(0, publisher.get(r).aggrSubPublisher.size() - 1)}">
-                    <a class="fdk-sub-publisher" th:href="${'/datasets?publisher=' + {publisher.get(r).aggrSubPublisher.get(c).name}}"
+                    <a class="fdk-sub-publisher" th:href="@{/datasets(publisher=${publisher.get(r).aggrSubPublisher.get(c).name})}"
                        th:id="${publisher.get(r).aggrSubPublisher.get(c).name}">
                         <span name="publisher" th:text="${publisher.get(r).aggrSubPublisher.get(c).name}"/>
                         <span class="fdk-badge">(<span th:text="${aggpublishercount.get(publisher.get(r).aggrSubPublisher.get(c).name)}"/>)</span>

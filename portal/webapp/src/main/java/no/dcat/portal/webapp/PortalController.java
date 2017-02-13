@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.*;
 
 
@@ -88,6 +89,7 @@ public class PortalController {
             session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
             session.setAttribute("theme", theme);
             session.setAttribute("publisher", publisher);
+
 
             return model;
         } else {
