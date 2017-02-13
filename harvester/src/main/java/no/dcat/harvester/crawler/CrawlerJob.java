@@ -311,10 +311,9 @@ public class CrawlerJob implements Runnable {
                 locConnection.setRequestMethod("GET");
                 if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     //Remove non-resolvable location from dataset
-                    //TODO: Presentere logg-info til brukeren i admin-grensesnitt
                     resultMsg.append("Resource with non-resolvable DCTerms.spatial URL: " + resource.toString() + "\n");
                     model.removeAll(resource,DCTerms.spatial,null);
-                    logger.warn("Location URI cannot be resolved. Location removed form dataset: " + locUri);
+                    logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: " + locUri);
                 }
             } catch (MalformedURLException e) {
                 logger.error("URL not valid: {} ", locUri,e);
