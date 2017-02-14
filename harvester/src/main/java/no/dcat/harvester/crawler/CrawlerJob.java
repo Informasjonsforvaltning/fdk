@@ -74,24 +74,7 @@ public class CrawlerJob implements Runnable {
 
 
         try {
-            logger.debug("loadDataset: "+ dcatSource.getUrl());
-            Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
-            Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
-            Iterator<String> stringIterator = dataset.listNames();
-
-            while (stringIterator.hasNext()) {
-                union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
-            }
-            verifyModelByParsing(union);
-
-            //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
-            DataEnricher enricher = new DataEnricher();
-            Model enrichedUnion = enricher.enrichData(union);
-            union = enrichedUnion;
-
-            // Checks if publisher is registrered in BRREG Enhetsregistret
-            BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-            brregAgentConverter.collectFromModel(union);
+            Model union = prepareModelForValidation();
 
             // if model is valid run the various handlers process method
             //TODO: Refaktorering. Nå er det et salig rot av lokale og globale variabler, parametre....
@@ -152,6 +135,7 @@ public class CrawlerJob implements Runnable {
         return message;
     }
 
+
     void verifyModelByParsing(Model union) {
         StringWriter str = new StringWriter();
 
@@ -165,6 +149,38 @@ public class CrawlerJob implements Runnable {
         union.write(str, RDFLanguages.strLangRDFXML);
         RDFDataMgr.parse(new MyStreamRDF(), new ByteArrayInputStream(str.toString().getBytes(StandardCharsets.UTF_8)), Lang.RDFXML);
     }
+
+
+    /**
+     * Do necessary preparations in model before it can be validated
+     * - enrichement of missing values
+     * - validation of publisher
+     *
+     * @return enriched model
+     */
+    private Model prepareModelForValidation() {
+        logger.debug("loadDataset: "+ dcatSource.getUrl());
+        Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
+        Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+        Iterator<String> stringIterator = dataset.listNames();
+
+        while (stringIterator.hasNext()) {
+            union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
+        }
+        verifyModelByParsing(union);
+
+        //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
+        DataEnricher enricher = new DataEnricher();
+        Model enrichedUnion = enricher.enrichData(union);
+        union = enrichedUnion;
+
+        // Checks if publisher is registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
+
+        return union;
+    }
+
 
     /**
      * Needed in RDFDataMgr for parsing.
