@@ -15,6 +15,6 @@ spring:
 application:
   queryService: http://localhost:8083
   queryServiceExternal: http://localhost:8083
-  fusekiService: http://fuseki:3030/fuseki
+  fusekiService: http://localhost:3030/fuseki
 server:
   port: 8080
