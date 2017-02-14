@@ -2,7 +2,10 @@
 # Main file to convert google sheet to DCAT turtle
 
 LIB=/app/dcat/lib
-CLASSPATH=lib/collection-0.6.jar:lib/httpcore-4.4.4.jar:lib/jena-iri-3.1.1.jar:lib/semex.jar:lib/commons-cli-1.3.jar:lib/jackson-annotations-2.7.0.jar:lib/jena-shaded-guava-3.1.1.jar:lib/simple-xml-2.3.6.jar:lib/commons-codec-1.10.jar:lib/jackson-core-2.7.4.jar:lib/jena-tdb-3.1.1.jar:lib/slf4j-api-1.7.21.jar:lib/commons-csv-1.3.jar:lib/jackson-databind-2.7.4.jar:lib/jsonld-java-0.7.0.jar:lib/slf4j-log4j12-1.7.21.jar:lib/commons-io-2.5.jar:lib/jcl-over-slf4j-1.7.21.jar:lib/jsonld-java-0.8.3.jar:lib/utilities.jar:lib/:lib/commons-lang3-3.4.jar:lib/jena-arq-3.1.1.jar:lib/junit-4.8.1.jar:lib/xercesImpl-2.11.0.jar:lib/expressionoasis-3.2.jar:lib/jena-base-3.1.1.jar:lib/jxl.jar:lib/xml-apis-1.4.01.jar:lib/httpclient-4.5.2.jar:lib/jena-cmds-3.1.1.jar:lib/libthrift-0.9.3.jar:lib/httpclient-cache-4.5.2.jar:lib/jena-core-3.1.1.jar:lib/log4j-1.2.17.jar
+CLASSPATH=lib/collection-0.6.jar:lib/httpcore-4.4.4.jar:lib/jena-iri-3.1.1.jar:lib/semex.jar:lib/commons-cli-1.3.jar:lib/jackson-annotations-2.7.0.jar:lib/jena-shaded-guava-3.1.1.jar:lib2/simple-xml-2.3.6.jar:lib/commons-codec-1.10.jar:lib/jackson-core-2.7.4.jar:lib/jena-tdb-3.1.1.jar:lib/slf4j-api-1.7.21.jar:lib/commons-csv-1.3.jar:lib/jackson-databind-2.7.4.jar:lib/jsonld-java-0.7.0.jar:lib/slf4j-log4j12-1.7.21.jar:lib/commons-io-2.5.jar:lib/jcl-over-slf4j-1.7.21.jar:lib/jsonld-java-0.8.3.jar:lib2/utilities.jar:lib/:lib/commons-lang3-3.4.jar:lib/jena-arq-3.1.1.jar:lib2/junit-4.8.1.jar:lib/xercesImpl-2.11.0.jar:lib2/expressionoasis-3.2.jar:lib/jena-base-3.1.1.jar:lib2/jxl.jar:lib/xml-apis-1.4.01.jar:lib/httpclient-4.5.2.jar:lib/jena-cmds-3.1.1.jar:lib/libthrift-0.9.3.jar:lib/httpclient-cache-4.5.2.jar:lib/jena-core-3.1.1.jar:lib/log4j-1.2.17.jar:./semex.jar
+#CLASSPATH=lib/collection-0.6.jar:lib/httpcore-4.4.4.jar:lib/jena-iri-3.1.1.jar:lib/semex.jar:lib/commons-cli-1.3.jar:lib/jackson-annotations-2.7.0.jar:lib/jena-shaded-guava-3.1.1.jar:lib2/simple-xml-2.3.6.jar:lib/commons-codec-1.10.jar:lib/jackson-core-2.7.4.jar:lib/jena-tdb-3.1.1.jar:lib/slf4j-api-1.7.21.jar:lib/commons-csv-1.3.jar:lib/jackson-databind-2.7.4.jar:lib/jsonld-java-0.7.0.jar:lib/slf4j-log4j12-1.7.21.jar:lib/commons-io-2.5.jar:lib/jcl-over-slf4j-1.7.21.jar:lib/jsonld-java-0.8.3.jar:lib/utilities.jar:lib/:lib/commons-lang3-3.4.jar:lib/jena-arq-3.1.1.jar:lib/junit-4.8.1.jar:lib/xercesImpl-2.11.0.jar:lib2/expressionoasis-3.2.jar:lib/jena-base-3.1.1.jar:lib/jxl.jar:lib/xml-apis-1.4.01.jar:lib/httpclient-4.5.2.jar:lib/jena-cmds-3.1.1.jar:lib/libthrift-0.9.3.jar:lib/httpclient-cache-4.5.2.jar:lib/jena-core-3.1.1.jar:lib/log4j-1.2.17.jar
+
+
 echo STARTING GDOC SCRIPT
 java -version
 
@@ -16,13 +19,14 @@ echo STEP 2 - Convert XLSX to XLS
 for file in in/*.xlsx
 do
     echo converting $file to xls...
-    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
+#    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
+ soffice --headless --convert-to xls --outdir ./in $file
     echo converted $file to xls
 done
 echo conversion done.
 
 
-#Syntactical translation from Excel to RDF
+# Syntactical translation from Excel to RDF
 echo STEP 3 - Syntactical translation from Excel to RDF
 for file in in/*.xls
 do 
@@ -116,6 +120,17 @@ do
 done
 
 
+# Distribution
+echo STEP 12 - Create Distributions
+for file in in/*.ttl
+do
+    echo creating distributions from $file
+    filename=$(basename "$file")
+    java -cp $CLASSPATH jena.sparql --data=$file --query=mapper/distribution.sparql >temp/$filename-distribution.ttl
+    echo created distribution in $filename-distribution.ttl
+done
+
+
 # Merge all
 echo STEP 12 - MERGE ALL
 now=`date +"%Y-%m-%d"`
@@ -123,7 +138,7 @@ for file in in/*.ttl
 do
     echo converting $file to dcat format
     filename=$(basename "$file")
-    java -cp $CLASSPATH jena.riot  --formatted=TTL temp/$filename-catalog.ttl temp/$filename-dataset.ttl temp/$filename-period.ttl  temp/$filename-publisher.ttl temp/$filename-contact.ttl temp/$filename-provenance.ttl  temp/$filename-location.ttl temp/$filename-accessRights.ttl  > publish/$filename-finished-$now.ttl
+    java -cp $CLASSPATH jena.riot  --formatted=TTL temp/$filename-catalog.ttl temp/$filename-dataset.ttl temp/$filename-period.ttl  temp/$filename-publisher.ttl temp/$filename-contact.ttl temp/$filename-provenance.ttl  temp/$filename-location.ttl temp/$filename-accessRights.ttl  temp/$filename-distribution.ttl > publish/$filename-finished-$now.ttl
     echo merged 
 done
 

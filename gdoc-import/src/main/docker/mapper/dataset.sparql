@@ -81,11 +81,13 @@ WHERE {
      OPTIONAL {?id :keywords ?keywords .
      ?keyword apf:strSplit(?keywords ",") 
      BIND (STRLANG(?keyword, "nb") as ?keyword_no)}
-     
+
+     # Split :begrep into multiple begrep     
      # create IRI of :begrep, if exsist (ok)
-     OPTIONAL {?id :begrep ?begrep} .
-     BIND (IRI(?begrep) AS ?begrepIRI)
-     
+     OPTIONAL {?id :begrep ?begreper .
+     ?begrep apf:strSplit(?begreper ",")
+     BIND (IRI(?begrep) AS ?begrepIRI)} 
+
      # create IRI of spatial, if exists (ok)    
      OPTIONAL {?id :spatial ?spatial} .
      BIND (IRI(?spatial) AS ?spatialIRI)
