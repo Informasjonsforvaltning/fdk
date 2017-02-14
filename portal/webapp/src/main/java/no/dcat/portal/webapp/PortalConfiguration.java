@@ -1,14 +1,9 @@
 package no.dcat.portal.webapp;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
 
 
 /**
@@ -33,6 +28,21 @@ public class PortalConfiguration {
     @Value("${queryServiceExternal:qse}")
     private String queryServiceExternal;
 
+    @Value("${queryService:qs}")
+    private String queryService;
+
+    @Value("${git.commit.id.abbrev:gitcid}")
+    private String commitAbbrev;
+
+    @Value("${version:ver}")
+    private String version;
+
+    @Value("${artifactId:aid}")
+    private String artifactId = "artifactId";
+
+    @Value("${build.date:1999-99-99}")
+    private String buildDate;
+
     public final String getQueryServiceExternal() {
 
         return queryServiceExternal;
@@ -43,20 +53,12 @@ public class PortalConfiguration {
         queryServiceExternal = serviceUrl;
     }
 
-    @Value("${queryService:qs}")
-    private String queryService;
-
-    /* application.queryService */
-    // private String queryService = "http://dcat.dummy.org";
-    //private String queryService = "http://fdk-pqr-fellesdatakatalog-ut1.ose-npc.brreg.no";
 
 
     public final void setQueryService(final String serviceUrl) {
 
         this.queryService = serviceUrl;
     }
-
-
 
     /**
      * Returns the URL to the query service.
@@ -98,30 +100,17 @@ public class PortalConfiguration {
      * @return the version information string
      */
     public String getVersionInformation() {
-        String versionInfo = artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
-        return versionInfo;
+        return artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
     }
-
-    @Value("${git.commit.id.abbrev:gitcid}")
-    private String commitAbbrev;
-
-    @Value("${version:ver}")
-    private String version;
 
     public final String getVersion() {
         return version;
     }
 
-    @Value("${artifactId:aid}")
-    private String artifactId = "artifactId";
-
     public final String getArtifactId() {
 
         return artifactId;
     }
-
-    @Value("${build.date:1999-99-99}")
-    private String buildDate;
 
     public final void setBuildDate(final String buildDateString) {
 
@@ -131,22 +120,6 @@ public class PortalConfiguration {
     public final String getBuildDate() {
 
         return buildDate;
-    }
-
-
-
-    @Bean
-    @Profile("development") //Skal kun brukes når spring_active_profiles inneholder development
-    public static PropertySourcesPlaceholderConfigurer properties() {
-        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-        YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-
-        //Path til propertiesfiler som skal brukes for JUnit og kjøring på lokal maskin
-        yaml.setResources(new ClassPathResource("properties/local-properties.yml"));
-
-        propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
-
-        return propertySourcesPlaceholderConfigurer;
     }
 
 }
