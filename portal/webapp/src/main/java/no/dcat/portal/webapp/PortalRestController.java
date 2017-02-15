@@ -9,6 +9,7 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class PortalRestController {
 
-    public static final String SERVICE_URI = "http://localhost:3030/fuseki/dcat";
     private final static Logger logger = LoggerFactory.getLogger(PortalRestController.class);
+
+    @Value("${application.fusekiService}")
+    private String fusekiService;
 
     /**
      * API to find dataset based on id from .../dataset?id={id}
@@ -49,7 +52,7 @@ public class PortalRestController {
     }
 
     private String findSubjectById(String id, String format) {
-        DcatDataStore dcatDataStore = new DcatDataStore(new Fuseki(SERVICE_URI));
+        DcatDataStore dcatDataStore = new DcatDataStore(new Fuseki(fusekiService + "/dcat"));
         Model model = dcatDataStore.getAllDataCatalogues();
 
         String queryString =

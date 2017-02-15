@@ -6,42 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" href="css/main.css" media="all"/>
 </head>
 <body>
 
+
+<div lang="en" th:replace="header :: version" />
+
 <div class="container">
-    <a href="/" class="btn btn-info pull-right" role="button">Hjem</a>
+    <a href="javascript:history.back()" class="fdk-label fdk-label-default pull-left" role="button" style="margin-top:10px;">&lt;Tilbake</a>
+    <div th:replace="header :: header"/>
+
     <div class="jumbotron">
         <h1 th:text="${dataset.title.nb}" />
         <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}"/>
         <p th:text="${dataset.description.nb}"></p>
-        <a th:attr='href=${dataset.landingPage}'>..landingsside</a>
+        <a th:if="${dataset.landingPage}" th:href='${dataset.landingPage}'><span class="glyphicon glyphicon-home"></span></a>
     </div>
     <div class="row">
         <div class="col-lg-6">
             <div>
-                <h3>Kontaktinformasjon</h3>
+                <h3 th:text="#{contact.header}">Kontaktinformasjon</h3>
                 <dl class="dl-horizontal" th:if="${dataset.contactPoint}">
 
-                    <dt th:if="${dataset.contactPoint.fullname} != null">Navn</dt>
+                    <dt th:if="${dataset.contactPoint.fullname} != null" th:text="#{contact.name}">Navn</dt>
                     <dd th:text="${dataset.contactPoint.fullname}" ></dd>
 
-                    <dt th:if="${dataset.contactPoint.email} != null">Epost</dt>
+                    <dt th:if="${dataset.contactPoint.email} != null" th:text="#{contact.email}">E-post</dt>
                     <dd><a th:href="${dataset.contactPoint.email}"><span th:text="${dataset.contactPoint.email}"></span></a></dd>
 
-                    <dt th:if="${dataset.contactPoint.telephone} != null">Telefon</dt>
+                    <dt th:if="${dataset.contactPoint.telephone} != null" th:text="#{contact.telephone}">Telefon</dt>
                     <dd><a th:href="${dataset.contactPoint.telephone}"><span th:text="${dataset.contactPoint.telephone}"></span></a></dd>
 
-                    <dt th:if="${dataset.contactPoint.organizationName} != null">Organisasjon</dt>
+                    <dt th:if="${dataset.contactPoint.organizationName} != null" th:text="#{contact.organization}">Organisasjon</dt>
                     <dd th:text="${dataset.contactPoint.organizationName}" ></dd>
 
-
-                    <dt th:if="${dataset.contactPoint.organizationUnit} != null">Organisasjonsenhet</dt>
+                    <dt th:if="${dataset.contactPoint.organizationUnit} != null" th:text="#{contact.organization-unit}">Organisasjonsenhet</dt>
                     <dd th:text="${dataset.contactPoint.organizationUnit}" ></dd>
 
-                    <dt th:if="${dataset.contactPoint.hasURL} != null">Url</dt>
+                    <dt th:if="${dataset.contactPoint.hasURL} != null" th:text="#{contact.url}">Url</dt>
                     <dd><a th:href="${dataset.contactPoint.hasURL}"><span th:text="${dataset.contactPoint.hasURL}"/></a></dd>
 
                 </dl>
@@ -160,5 +164,10 @@
     </div>
 </div>
 
+<div lang="en" th:replace="footer :: footer" />
+
+<script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/header.js"></script>
 </body>
 </html>

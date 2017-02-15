@@ -4,23 +4,14 @@
 <body>
 
 <div class="row" th:fragment="search">
-    <form class="form-group a-form-group site-search col-sm-8 col-sm-offset-2" ation="#" th:action="@{/results}" th:object="${dataitemquery}"  method="post" >
-        <div class="input-group input-group-large">
 
-            <label for="search" id="searchLarge">
-                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
-            </label>
+    <div class="col-md-12">
+        <a href="/"><h1 class="fdk-heading" th:text="#{app.title}">Felles Datakatalog</h1></a>
 
-            <input id="search" type="text" class="form-control" placeholder="#" th:attr="placeholder=#{query.intro}" th:field="*{q}" />
-            <span class="input-group-btn">
-                    <button id="dosearch" class="btn btn-info" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </span>
+        <span id="dosearch" class="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+        <input id="search" class="fdk-search" type="search" th:attr="placeholder=#{query.intro}"/>
+    </div>
 
-        </div>
-
-    </form>
 </div>
 
 </body>

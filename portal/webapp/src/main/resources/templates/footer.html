@@ -4,31 +4,10 @@
 </head>
 <body>
 
-<footer class="sitefooter hidden-print" th:fragment="footer">
-    <div class="container">
-        <div class="row">
-
-            <div class="col-sm-3 col-sm-offset-2" id="logo-footer">
-
-                <a href="//www.brreg.no">
-                    <img src="img/brreg_logo.svg" alt="Brønnøysundregistrene logo"/>
-                </a>
-
-                <p><span th:text="#{footer.organisation.number}">Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span>
-                </p>
-                <a href="//www.brreg.no/personvern/personvernerklaering/" th:text="#{footer.information}">Informasjonskapsler
-                    - personvern</a>
-
-            </div>
-
-            <div class="col-sm-3 col-sm-offset-2">
-                <a href="//www.difi.no">
-                    <img src="img/difi-logo.png" alt="Difi logo"/>
-                </a>
-            </div>
-        </div>
-    </div>
-</footer>
+    <footer class="fdk-footer" th:fragment="footer">
+        <a href="http://www.brreg.no"><img class="fdk-footer-logo" src="img/logo-brreg.jpg" alt="Brønnøysundregistrene logo"/></a>
+        <a href="http://www.difi.no"><img class="fdk-footer-logo" src="img/logo-difi.jpg" alt="Difi logo"/></a>
+    </footer>
 
 </body>
 </html>

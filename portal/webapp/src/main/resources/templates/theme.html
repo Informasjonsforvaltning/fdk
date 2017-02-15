@@ -7,40 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" href="css/main.css" media="all"/>
     <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
     </style>
 </head>
 <body>
 
 <div lang="en" th:replace="header :: version" />
 
-<div class="container-fluid">
-    <div lang="en" th:replace="header :: header" />
+<div class="container">
 
-    <div>
-          <a href="/publisher" th:text="#{app.publisher}" style="float: right">Publisher</a>
+    <div th:replace="header :: header"/>
+
+    <div th:replace="search :: search"/>
+
+    <div class="row">
+        <section class="frontpage-themes">
+            <a th:each="t : ${themes}" th:href="${'/datasets?theme=' + {t.code}}"
+               th:attr="id=${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}">
+                    <span class="fdk-label fdk-label-default">
+                         <span th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}"/>
+                        (<span name="hits" th:text="${t.numberOfHits}"/>)
+                    </span>
+            </a>
+        </section>
     </div>
 
-    <div lang="en" th:replace="search :: search" />
-
-    <div class = "row">
-        <th:block th:with="rowCount=${3}">
-            <div th:each="r : ${#numbers.sequence(0, rowCount - 1)}"  class="col-sm-4">
-                <h4 th:each="c : ${#numbers.sequence(r*(themes.size()/rowCount), themes.size() > (r + 2)*(themes.size()/rowCount) - 1? (r+1)*(themes.size()/rowCount) - 1 : themes.size()-1)}">
-                    <a th:if="${r &lt; themes.size()}"
-                       th:href="${'/results?theme=' + {themes.get(c).code}}" th:id="${themes.get(c).title.get('nb')}" >
-                        <span name="theme" th:text="${lang == 'en' ? themes.get(c).title.get('en') : themes.get(c).title.get('nb')}"/>
-                        <span name="hits" class="badge" th:text="${themes.get(c).numberOfHits}"></span>
-                    </a>
-
-                </h4>
-            </div>
-        </th:block>
+    <div style="text-align:center;margin-top:20px;">
+        <a href="/publisher" th:text="#{app.publisher}">Søk på virksomhet</a>
     </div>
-
-    <div lang="en" th:replace="footer :: footer" />
 </div>
+
+<div lang="en" th:replace="footer :: footer" />
+
 <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/header.js"></script>
+<script>
+/*<![CDATA[*/
+    $(document).ready(searchController());
+/*]]>*/
+</script>
 </body>
 </html>
