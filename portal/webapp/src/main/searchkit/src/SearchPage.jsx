@@ -21,7 +21,6 @@ const defaults = require("lodash/defaults");
 import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
-console.log('getText returns ', getText('Datakatalog'));
 const host = "/dcat";
 const searchkit = new SearchkitManager(
 	host,
@@ -192,7 +191,7 @@ export class SearchPage extends React.Component {
 			    <nav className="navbar navbar-default">
 			        <div className="container">
 			            <div className="navbar-header">
-			                <a className="navbar-brand" href="/">Felles Datakatalog</a>
+			                <a className="navbar-brand" href="/">{getText('Datakatalog')}</a>
 			            </div>
 			            <ul className="nav navbar-nav navbar-right">
 			                <li><a href="#" title="Tilbakemelding"><span className="glyphicon glyphicon-envelope"></span></a>

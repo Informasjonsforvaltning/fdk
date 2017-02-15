@@ -14,7 +14,8 @@ const Home = () => {
 
 ReactDOM.render((
 <Router history={browserHistory}>
-  <Route path="/datasets" component={App}>
+  <Route path="/datasets" component={SearchPage}>
+    <Route path="*" component={SearchPage}/>
     <IndexRoute component={SearchPage}/>
   </Route>
 </Router>
