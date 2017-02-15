@@ -3,7 +3,7 @@ spring:
 application:
   queryService: http://query:8080
   queryServiceExternal: http://localhost:8081
-  fusekiService: http://localhost:3030/fuseki
+  fusekiService: http://fuseki:8080/fuseki
 ---
 spring:
   profiles: test
