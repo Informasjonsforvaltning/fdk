@@ -1,5 +1,5 @@
 
-var lang = navigator.language || navigator.userLanguage;
+var lang = "nb"; // force default to be nb, or as browser= navigator.language || navigator.userLanguage;
 if (lang === undefined) {
     lang = "nb";
 }

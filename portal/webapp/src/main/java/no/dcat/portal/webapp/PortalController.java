@@ -59,7 +59,7 @@ public class PortalController {
     }
 
     /**
-     * The result page. Sets callback service and version identification and returns
+     * The OLD result page. Sets callback service and version identification and returns
      * result.html page.
      *
      * @param session the session objec
