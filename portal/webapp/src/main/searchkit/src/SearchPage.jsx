@@ -107,7 +107,7 @@ class RefinementOption extends React.Component {
 
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props;
-  let url =  'http://localhost:8070/detail?id=' + result._id;
+  let url =  'datasets?id=' + encodeURIComponent(result._id);
   const source:any = _.extend({}, result._source, result.highlight)
 	let themeLabels = '';
 	if(source.theme) {
@@ -115,7 +115,7 @@ const MovieHitsGridItem = (props)=> {
 				if(singleTheme.title) {
 					themeLabels += '<span className="label label-default">';
 					themeLabels += singleTheme.title.nb; // translate!
-					themeLabels += '</span>';
+					themeLabels += '</label>';
 				}
 			});
 	}
@@ -148,15 +148,13 @@ const MovieHitsGridItem = (props)=> {
 		themeTitle = source.theme.title.nb;
 	}
   return (
-    <a href="" target="_blank" className="row list-group-item dataset">
+    <a href="{url}"  className="row list-group-item dataset">
         <div alt="{props.source.url}" className="col-sm-12">
-						<span dangerouslySetInnerHTML={{__html:''}}></span>
-            <h4 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h4>
-						<button className="btn btn-default btn-sm publisher" type="button" dangerouslySetInnerHTML={{__html:source.publisher ? source.publisher.name : ''}}></button>
-						<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description.nb}}></div>
-						<span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
-						<span dangerouslySetInnerHTML={{__html:distributionLabels}}></span>
-				</div>
+
+            <h2 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h2>
+			<h4 dangerouslySetInnerHTML={{__html:source.publisher ? source.publisher.name : ''}}></h4>
+			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description.nb}}></div>
+		</div>
     </a>
   )
 }
