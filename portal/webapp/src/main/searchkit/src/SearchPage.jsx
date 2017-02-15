@@ -19,7 +19,7 @@ import {QueryTransport} from './QueryTransport.jsx';
 const defaults = require("lodash/defaults");
 
 import { createHistory as createHistoryFn, useQueries } from 'history';
-
+const qs = require('qs');
 const host = "/dcat";
 const searchkit = new SearchkitManager(
 	host,
