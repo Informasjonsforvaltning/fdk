@@ -20,6 +20,8 @@ const defaults = require("lodash/defaults");
 
 import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
+import {getText} from './getText.js';
+console.log('getText returns ', getText('Datakatalog'));
 const host = "/dcat";
 const searchkit = new SearchkitManager(
 	host,
