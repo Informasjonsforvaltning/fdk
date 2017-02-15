@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+
 <style>
 .publisher {
 	position: absolute;
@@ -72,7 +73,15 @@ display: inline-block;
 	</div>
 	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
 	<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="/dist/bundle.js"></script>
+	<script>var bundleLoaded = false;</script>
+	<script src="http://localhost:3000/static/bundle.js" onload="bundleLoaded = true;"></script>
+	<script>
+	$(window).on('load',function() {
+		if(!bundleLoaded) {
+			$.getScript('/dist/bundle.js');
+		}
+	});
+	</script>
 <!--	<div class="row">
 
 	            <div class="col-sm-3 col-sm-offset-2" id="logo-footer">
@@ -94,5 +103,4 @@ display: inline-block;
 	            </div>
 	        </div>-->
 </body>
-
 </html>
