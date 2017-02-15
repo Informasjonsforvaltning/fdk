@@ -17,3 +17,4 @@ logs/
 .DS_Store
 .hot-update.js
 */node_modules/
+node_modules/

@@ -18,8 +18,34 @@ import {QueryTransport} from './QueryTransport.jsx';
 
 const defaults = require("lodash/defaults");
 
+import { createHistory as createHistoryFn, useQueries } from 'history';
+
 const host = "/dcat";
-const searchkit = new SearchkitManager(host, {transport: new QueryTransport()});
+const searchkit = new SearchkitManager(
+	host,
+	{
+		transport: new QueryTransport(),
+		createHistoryFunc: useQueries(createHistoryFn)({
+      stringifyQuery(ob){
+				Object.keys(ob).map((e) => {
+						if(typeof ob[e] === 'object') { // is array
+							ob[e] = ob[e].join(',');
+						}
+						if(ob[e].length === 0) delete ob[e];
+				});
+				return qs.stringify(ob, {encode:false})
+      },
+      parseQueryString(str) {
+				let parsedQuery = qs.parse(str);
+				Object.keys(parsedQuery).map((e) => {
+						if(parsedQuery[e].indexOf(',')) parsedQuery[e] = parsedQuery[e].split(',');
+				});
+        return parsedQuery;
+      }
+    })
+
+	}
+);
 //const searchkit = new SearchkitManager(host);
 
 
