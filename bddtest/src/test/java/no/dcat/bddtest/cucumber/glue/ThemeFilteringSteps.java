@@ -1,30 +1,54 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by bjg on 14.02.2017.
  */
 public class ThemeFilteringSteps extends CommonPage {
-    @Given("^I see all the existing themes$")
-    public void i_see_all_the_existing_themes() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions    throw new PendingException();
+    private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
+    private int portalPort = 8080; //getEnvInt("fdk.port");
+    private String themeLink;
+
+    @Before
+    public void setup() {
+        setupDriver();
     }
 
+    @After
+    public void shutdown() {
+        stopDriver();
+    }
+
+
     @When("^I click on theme \"([^\"]*)\"$")
-    public void i_click_on_theme(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        assertTrue(false);
+    public void i_click_on_theme(String theme) throws Throwable {
+        driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        WebElement themeElement = driver.findElement(By.id(theme));
+        themeLink = themeElement.getAttribute("href");
+        driver.get(themeLink);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Then("^the result list should show (\\d+) datasets$")
-    public void the_result_list_should_show_datasets(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        assertTrue(false);
+    public void the_result_list_should_show_datasets(int expectedNoOfDatasets) throws Throwable {
+        WebElement reportedNoOfHits = driver.findElement(By.id("total.hits"));
+        int foundNoOfDatasets = Integer.parseInt(reportedNoOfHits.getText());
+        assertThat(foundNoOfDatasets, is(expectedNoOfDatasets));
     }
 
 }
