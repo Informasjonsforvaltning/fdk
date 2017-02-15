@@ -18,6 +18,5 @@ Feature: Forbedringer design
 	#@TEST_FDK_297 @TESTSETT_FDK_323
 	Scenario: C-Test FDK: Forbedringer design - theme filtering
 		Given I am on the homepage of the National Data Catalog
-		And I see all the existing themes
 		When I click on theme "Energi"
 		Then the result list should show 3 datasets
