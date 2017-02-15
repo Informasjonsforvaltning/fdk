@@ -113,7 +113,7 @@ const MovieHitsGridItem = (props)=> {
 	if(source.theme) {
 			source.theme.forEach((singleTheme, index)=> {
 				if(singleTheme.title) {
-					themeLabels += '<span class="label label-default">';
+					themeLabels += '<span className="label label-default">';
 					themeLabels += singleTheme.title.nb; // translate!
 					themeLabels += '</span>';
 				}
@@ -123,7 +123,7 @@ const MovieHitsGridItem = (props)=> {
 	if(source.distribution) {
 		source.distribution.forEach((dist) => {
 			if(dist.format) {
-				distributionLabels += '<span class="label label-info">';
+				distributionLabels += '<span className="label label-info">';
 				distributionLabels += dist.format; // translate!
 				distributionLabels += '</span>';
 			}
@@ -132,7 +132,7 @@ const MovieHitsGridItem = (props)=> {
 	let commaSeparatedKeywords = '';
 	if(source.keyword && source.keyword.nb) {
 			source.keyword.nb.forEach(function(keyword, index) {
-				commaSeparatedKeywords += '<span class="label label-default">';
+				commaSeparatedKeywords += '<span className="label label-default">';
 				commaSeparatedKeywords += keyword; // translate!
 				commaSeparatedKeywords += '</span>';
 			});
@@ -186,53 +186,39 @@ export class SearchPage extends React.Component {
 	render(){
 		return (
 			<SearchkitProvider searchkit={searchkit}>
-		    <Layout>
-				<header className="a-header" role="banner">
-			    <nav className="navbar navbar-default">
-			        <div className="container">
-			            <div className="navbar-header">
-			                <a className="navbar-brand" href="/">{getText('Datakatalog')}</a>
-			            </div>
-			            <ul className="nav navbar-nav navbar-right">
-			                <li><a href="#" title="Tilbakemelding"><span className="glyphicon glyphicon-envelope"></span></a>
-			                </li>
-			                <li className="dropdown">
-			                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Velg språk">
-			                        <span id="chosenhistoryEntry">Norsk (bokmål)</span>
-			                        <span className="caret"></span></a>
-			                    <ul className="dropdown-menu" id="historyEntry-list">
-			                        <li><a href="?lang=nb" lang="nb">Norsk (bokmål)</a></li>
-			                        <li><a href="?lang=nn" lang="nn">Norsk (nynorsk)</a></li>
-			                        <li><a href="?lang=en" lang="en">Engelsk</a></li>
-			                    </ul>
-			                </li>
-			                <li><a href="#" title="Logg inn"><span className="glyphicon glyphicon-user"></span></a></li>
-			                <li className="dropdown">
-			                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Om applikasjonen">
-			                        <span>Om</span>
-															<span className="caret"></span>
-													</a>
-			                    <ul className="dropdown-menu">
-			                        <li className="dropdown">Hjelp</li>
-			                        <ul className="dropdown-menu">
-			                            <li><a href="help/help.html" target="_blank">Språkstøtte</a></li>
-			                            <li><a href="help/ResulPageNavigation.html" target="_blank">Navigering i søkeresultat</a>
-			                            </li>
-			                        </ul>
-			                        <li><a href="coverage.html" target="_blank">Status implementasjon</a>
-			                        </li>
-			                        <li><a href="https://doc.difi.no/dcat-ap-no/" target="_blank">DCAT-AP-NO 1.1 standarden</a></li>
-			                        <li><a href="#">Veileder</a></li>
-			                        <li><a href="#">For dataeiere</a></li>
-			                        <li><a href="#">For databrukere</a></li>
-			                        <li role="separator" className="divider"></li>
-			                        <li><a href="#">Teknisk</a></li>
-			                    </ul>
-			                </li>
-			            </ul>
-			        </div>
-			    	</nav>
-					</header>
+
+<div>
+			<div className="fdk-header-beta">
+					Dette er en beta-versjon. Gi oss gjerne <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
+			</div>
+
+			<div className="container">
+					<div className="fdk-header-menu">
+							<div className="dropdown fdk-container-dropdown-menu">
+									<div className="dropdown fdk-dropdown-toggle-menu">
+											<a data-toggle="dropdown" href="#">&#9776;</a>
+											<ul className="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
+													<li><a href="#">Om Felles Datakatalog</a></li>
+													<li><a href="#">Spørsmål og svar</a></li>
+													<li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
+													<li><a href="#">Status implementasjon</a></li>
+											</ul>
+									</div>
+							</div>
+							<div className="dropdown fdk-container-dropdown-language">
+									<button className="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											<img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nb
+											<span className="caret"></span>
+									</button>
+									<ul className="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>En</a></li>
+											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nb</a></li>
+											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nn</a></li>
+									</ul>
+							</div>
+
+					</div>
+						<h1 className="fdk-heading">Felles datakatalog</h1>
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}
@@ -240,55 +226,53 @@ export class SearchPage extends React.Component {
 							placeholder="Søk etter datasett"
 							/>
 		      </TopBar>
-
-					    <section id="resultPanel">
-					        <div className="container-fluid">
-										<div className="row">
-										</div>
-										<div className="row">
-											<div className="col-sm-3">
-												<RefinementListFilter
-													id="publisher"
-													title="Virksomhet"
-													field="publisher.name.raw"
-													operator="AND"
-													size={10}
-													/>
-												<RefinementListFilter
-													id="theme"
-													title="Tema"
-													field="theme.code.raw"
-													operator="AND"
-													size={100}
-													itemComponent={RefinementOption}
-													/>
-											</div>
-											<div id="datasets" className="col-sm-8 list-group">
-											<ActionBar>
-
-												<ActionBarRow>
-													<SortingSelector options={[
-														{label:"Relevans", field:"_score", order:"asc", defaultOption:true},
-                                                        {label:"Tittel", field:"title", order:"asc"},
-														{label:"Sist endret", field:"modified", order:"desc"},
-														{label:"Virksomhet", field:"publisher.name", order:"asc"},
-													]}/>
-													<HitsStats/>
-													<PageSizeSelector options={[5,10,25,30,40,50]}/>
-												</ActionBarRow>
-												<ActionBarRow>
-													<ResetFilters/>
-												</ActionBarRow>
-											</ActionBar>
-											<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={MovieHitsGridItem}
-												sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
-											<NoHits/>
-											<Pagination showNumbers={true}/>
-											</div>
-										</div>
+			    <section id="resultPanel">
+			        <div className="container-fluid">
+								<div className="row">
+								</div>
+								<div className="row">
+									<div className="col-sm-3">
+										<RefinementListFilter
+											id="publisher"
+											title="Virksomhet"
+											field="publisher.name.raw"
+											operator="AND"
+											size={10}
+											/>
+										<RefinementListFilter
+											id="theme"
+											title="Tema"
+											field="theme.code.raw"
+											operator="AND"
+											size={100}
+											itemComponent={RefinementOption}
+											/>
 									</div>
-							</section>
-		    </Layout>
+									<div id="datasets" className="col-sm-8 list-group">
+									<ActionBar>
+										<ActionBarRow>
+											<SortingSelector options={[
+												{label:"Relevans", field:"_score", order:"asc", defaultOption:true},
+                                                    {label:"Tittel", field:"title", order:"asc"},
+												{label:"Sist endret", field:"modified", order:"desc"},
+												{label:"Virksomhet", field:"publisher.name", order:"asc"},
+											]}/>
+											<HitsStats/>
+											<PageSizeSelector options={[5,10,25,30,40,50]}/>
+										</ActionBarRow>
+										<ActionBarRow>
+											<ResetFilters/>
+										</ActionBarRow>
+									</ActionBar>
+									<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={MovieHitsGridItem}
+										sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
+									<NoHits/>
+									<Pagination showNumbers={true}/>
+									</div>
+								</div>
+							</div>
+					</section>
+				</div></div>
 		  </SearchkitProvider>
 		)
 	}
