@@ -3,12 +3,19 @@
 <head>
     <title th:text="#{app.title}">Felles datakatalog</title>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="dcatQueryService" th:content="${session.dcatQueryService}"/>
     <meta name="theme" th:content="${session.theme}"/>
     <meta name="publisher" th:content="${session.publisher}"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" href="css/main.css" media="all"/>
+    <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+    </style>
     <style>
 .publisher {
     position: absolute;
@@ -21,8 +28,8 @@
    text-overflow: ellipsis;
    display: -webkit-box;
    line-height: 120%; //1em;     /* fallback */
-   max-height: 360%; // 3em;      /* fallback */
-   -webkit-line-clamp: 3; /* number of lines to show */
+   max-height: 480%; // 3em;      /* fallback */
+   -webkit-line-clamp: 4; /* number of lines to show */
    -webkit-box-orient: vertical;
 }
     </style>
@@ -31,93 +38,45 @@
 
 <div lang="en" th:replace="header :: version" />
 
-<div class="container-fluid">
-    <div lang="en" th:replace="header :: header"/>
+<div class="container">
+    <div th:replace="header :: header"/>
 
-    <!-- Søkefelt -->
-    <div class="form-group a-form-group">
-        <div class="input-group input-group-large">
-
-            <!-- Label -->
-            <label for="search" id="searchLarge">
-                <span class="sr-only" th:text="#{query.intro}"> Søk etter datasett </span>
-            </label>
-
-            <!-- Input  -->
-            <input id="search" aria-labelledby="searchLarge" type="search"
-                   class="form-control form-control-noleft form-control-withBtn"
-                   th:attr="placeholder=#{query.intro}, value=${query}"/>
-
-            <!-- Search buttton -->
-            <div class="input-group-btn">
-                <button id="dosearch" class="btn btn-primary" type="button">
-                    <i class="material-icons a-input-icon"><span class="sr-only"
-                                                                 th:text="#{query.do}">Utfør søk</span><span
-                            class="glyphicon glyphicon-search"></span></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Filter line -->
-
-        <div id="filter" aria-label="Filters">
-        </div>
-
-    </div>
+    <div th:replace="search :: search"/>
 
     <!-- Resultatfelt -->
     <section id="resultPanel">
         <div class="container-fluid">
 
             <!-- Resultat navigerings verktøy -->
-            <div class="row">
-
-                <div class="col-sm-1 col-sm-offset-4">
-                    <span id="summary" th:text="#{page.result.summary}">Antall treff:</span> <span
-                        id="total.hits">0</span>
-                </div>
+            <div class="row" style="vertical-align: middle;">
 
                 <!-- SORT Controller -->
-                <div class="col-sm-2">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span th:text="#{sort.by}">Sorter på:</span>
-                            <span id="sort.choice">Relevans</span> <span class="caret"></span>
+                <div class="col-sm-2 col-sm-offset-4">
+                    <div class="dropdown fdk-dropdown-language">
+                        <button class="btn btn-default dropdown-toggle fdk-dropdown-toggle-language" type="button" data-toggle="dropdown">
+                            <span th:text="#{sort.by}">Sorter på</span>
+                            <span id="sort.choice" th:text="#{sort.by.relevance}">relevans</span> <span class="caret"></span>
                         </button>
                         <ul id="sort.select" class="dropdown-menu">
-                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">Relevans</a></li>
-                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">Tittel</a></li>
-                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">Utgiver</a></li>
-                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">Sist endret</a></li>
+                            <li><a id="sort.relevance" href="#" th:text="#{sort.by.relevance}">relevans</a></li>
+                            <li><a id="sort.title" href="#" th:text="#{sort.by.title}">tittel</a></li>
+                            <li><a id="sort.publisher" href="#" th:text="#{sort.by.publisher}">utgiver</a></li>
+                            <li><a id="sort.modified" href="#" th:text="#{sort.by.modified}">sist endret</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Page navigation controller -->
-                <div class="col-sm-4" th:attr="aria-label=#{page.navigation}">
-                    <nav>
-                        <ul class="pager pagination pagination-sm" style="margin:0;">
-
-                            <li>
-                                <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a id="next" href="#" th:attr="aria-label=#{page.next}">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                <!-- RESULT COUNT -->
+                <div class="col-sm-4" style="text-align:center">
+                    <span id="summary" th:text="#{page.result.summary}">Søket ga</span> <strong><span
+                        id="total.hits">0</span></strong> <span th:text="#{page.result.hits}">treff</span>
                 </div>
 
                 <!-- Number of hits per page controller -->
-                <div class="col-sm-1">
-                    <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span id="hits.choice">10</span> <span class="caret"></span>
+                <div class="col-sm-2">
+                    <div class="dropdown fdk-dropdown-language">
+                        <button class="btn btn-default dropdown-toggle fdk-dropdown-toggle-language" type="button" data-toggle="dropdown">
+                            <span id="hits.choice">10</span> <span th:text="#{hits.perpage}">treff per side</span> <span class="caret"></span>
                         </button>
                         <ul id="hits.select" class="dropdown-menu">
                             <li><a class="number" href="#">5</a></li>
@@ -138,21 +97,17 @@
 
                     <!-- facets -->
                     <div id="facet" class="list-group">
-                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse">
-                            <span th:text="#{facet.organisation}">Virksomhet</span>
-                            <ul class="list-group"/>
+
+                        <div id="facet.theme" class="list-group-item" data-toggle="collapse" data-target="#theme-list">
+                            <span th:text="#{facet.theme}">Tema</span> <span class="glyphicon glyphicon-triangle-bottom"></span>
+                            <ul id="theme-list" class="collapse in list-group"/>
                         </div>
-                        <div id="facet.theme" class="list-group-item" data-toggle="collapse">
-                            <span th:text="#{facet.theme}">Tema</span>
-                            <ul class="list-group"/>
+
+                        <div id="facet.publisher" class="list-group-item" aria-label="Virksomhet" data-toggle="collapse" data-target="#publisher-list">
+                            <span th:text="#{facet.organisation}">Virksomhet</span> <span class="glyphicon glyphicon-triangle-bottom"></span>
+                            <ul id="publisher-list" class="collapse in list-group"/>
                         </div>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.concept}">Begrep</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.legal}">Hjemmel</span></a>
-                        <a class="list-group-item disabled" href="#"><span
-                                th:text="#{facet.spatial}">Geografi</span></a>
-                        <a class="list-group-item disabled" href="#"><span th:text="#{facet.temporal}">Tid</span></a>
-                        <a class="list-group-item disabled" href="#"><span
-                                th:text="#{facet.standard}">Standard</span></a>
+
                     </div>
                 </div>
 
@@ -166,6 +121,25 @@
                     </a>
 
                 </div>
+                <!-- Page navigation controller -->
+                <div class="col-sm-8 col-sm-offset-6" th:attr="aria-label=#{page.navigation}">
+                    <nav>
+                        <ul class="pager pagination pagination-sm" style="margin:0;">
+
+                            <li>
+                                <a id="prev" href="#" th:attr="aria-label=#{page.prev}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a id="next" href="#" th:attr="aria-label=#{page.next}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
 
         </div>
@@ -177,11 +151,17 @@
     </div>
 <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script type="text/javascript" th:utext="${themes}"></script>
+<script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript" src="js/facets.js"></script>
 <script type="text/javascript" src="js/result.js"></script>
+
 <script type="text/javascript">
-        $(document).ready(showPage);
+        $(document).ready(function () {
+            searchController();
+            showPage();
+        });
 </script>
 </body>
 </html>

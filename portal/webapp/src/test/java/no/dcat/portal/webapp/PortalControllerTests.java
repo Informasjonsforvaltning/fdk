@@ -3,17 +3,14 @@ package no.dcat.portal.webapp;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
@@ -22,8 +19,6 @@ import static org.mockito.Mockito.*;
 /**
  * Created by nodavsko on 18.10.2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
 public class PortalControllerTests {
     private static Logger logger = LoggerFactory.getLogger(PortalControllerTests.class);
 
@@ -32,18 +27,14 @@ public class PortalControllerTests {
     @Before
     public void setup() {
         PortalConfiguration config = new PortalConfiguration();
-        ReflectionTestUtils.setField(config, "queryServiceExternal", "http://query.service.external.no");
-        ReflectionTestUtils.setField(config, "queryService", "http://query.service.no");
-
         portal = new PortalController(config);
-
     }
 
     @Test
     public void testResultReturnsModelAndView () throws Exception {
 
         MockHttpSession session = new MockHttpSession();
-        ModelAndView actual = portal.result(session, "", "", "");
+        ModelAndView actual = portal.result(session, "","", "", "");
 
         assertEquals("result", actual.getViewName());
         assertEquals(null, actual.getModel().get("themes"));
@@ -72,8 +63,8 @@ public class PortalControllerTests {
 
     @Test
     public void themesThrowsException() throws  Exception {
-
-        ModelAndView actual = portal.themes();
+        HttpSession mockSession = mock(HttpSession.class);
+        ModelAndView actual = portal.themes(mockSession);
 
         ModelAndViewAssert.assertViewName(actual, "error");
     }
@@ -85,7 +76,9 @@ public class PortalControllerTests {
         LocaleContextHolder.setLocale(new Locale("nb", "NO"));
 
         doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
-        ModelAndView actual = spyPortal.themes();
+        HttpSession mockSession = mock(HttpSession.class);
+
+        ModelAndView actual = spyPortal.themes(mockSession);
 
         ModelAndViewAssert.assertViewName(actual, "theme");
         assertEquals("nb",actual.getModel().get("lang"));
@@ -98,7 +91,9 @@ public class PortalControllerTests {
         LocaleContextHolder.setLocale(Locale.UK);
 
         doReturn(themesJson).when(spyPortal).httpGet(anyObject(), anyObject());
-        ModelAndView actual = spyPortal.themes();
+        HttpSession mockSession = mock(HttpSession.class);
+
+        ModelAndView actual = spyPortal.themes(mockSession);
 
         ModelAndViewAssert.assertViewName(actual, "theme");
         assertEquals("en",actual.getModel().get("lang"));

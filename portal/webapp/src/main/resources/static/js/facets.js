@@ -1,4 +1,4 @@
-var filterElement = document.getElementById("filter");
+
 var facetDefaultCount = 6;
 
 var themeMap = {}; // contains codes and corresponding theme titles
@@ -62,53 +62,6 @@ function setPublisherFilter(code) {
 }
 
 /**
-* Identifies and removes a filter element with the corresponding data attribute
-*/
-function removeFilterElement(data) {
-    var f = $("#filter").find("a[data='" + data +"']")[0];
-    if (f) {
-        filterElement.removeChild(f);
-    }
-}
-
-/**
-* Creates a filter element.
-*
-* @filter the filter to remove
-* @data the data identifier to find the facet
-*/
-function createFilterElement(filter, data) {
-    // check if filter already exists
-    var f = $('#filter').find('a[data="'+data+'"]')[0];
-
-    if (f === undefined) {
-        var filterLabel = $('<a href="#" class="label '+ filter.label +'" data="'+data+'">' + filter.getName(data) + ' <span class="glyphicon glyphicon-remove"/></a> ')[0];
-        $("#filter").append(filterLabel);
-
-        // add delete hook
-        filterLabel.onclick = function (event) {
-            event.preventDefault();
-
-            removeFilter(this.getAttribute("data"),filter.active);
-        };
-    }
-}
-
-
-
-/**
-* Changes class on facet with corresponding data attribute to non active
-*/
-function deactivateFacet(data) {
-    if (data) {
-        var element = $('.list-group-item[data="'+data+'"]')[0];
-        if (element) {
-            element.className = 'list-group-item';
-        }
-    }
-}
-
-/**
 * adds a filter.
 *
 * 1) creates filter element
@@ -116,15 +69,17 @@ function deactivateFacet(data) {
 * 3) executes new search
 */
 function addFilter(filter, code) {
-    if (filter && code) {
-        createFilterElement(filter, code);
-        filter.active.push(code);
+
+    if (filter && code ) {
+
+        if (filter.active.indexOf(code) === -1) {
+            filter.active.push(code);
+        }
 
         resetResultCursor();
         doSearch();
     }
 }
-
 
 /**
 * Removes a filter.
@@ -134,10 +89,6 @@ function addFilter(filter, code) {
 */
 function removeFilter(code, filterArray) {
     if (code && filterArray.indexOf(code) > -1) {
-
-        removeFilterElement(code);
-
-        deactivateFacet(code);
 
         var index = filterArray.indexOf(code);
         filterArray.splice(index,1);
@@ -176,7 +127,7 @@ function createThemeMap() {
 
 
 function createBadge(count) {
-    return "<span class='badge'>" + count + "</span>";
+    return "<span class='fdk-badge'>(<span class='fdk-count'>" + count + "</span>)</span>";
 }
 
 
@@ -198,11 +149,11 @@ function resetFacets() {
 function getToggleText(filter) {
     var result = "";
     if (pageLanguage === "nb") {
-        result = filter.hideMany ? "Mer" : "Mindre";
+        result = filter.hideMany ? "Vis mer" : "Vis mindre";
     } else if (pageLanguage === "nn") {
-        result = filter.hideMany ? "Meir" : "Mindre";
+        result = filter.hideMany ? "Vis meir" : "Vis mindre";
     } else {
-       result = filter.hideMany ? "More" : "Less";
+       result = filter.hideMany ? "Show more" : "Show less";
     }
 
     return result;
@@ -240,11 +191,6 @@ function createFacetController(filter, aggregation) {
 
         var ul = filter.facet.getElementsByTagName("ul")[0];
 
-        // if filter array already has active filters make sure they are created
-        filter.active.forEach(function (code) {
-            createFilterElement(filter, code);
-        });
-
         var counter = 0;
         // for each theme found in dataset
         aggregation.buckets.forEach(function (item){
@@ -256,9 +202,9 @@ function createFacetController(filter, aggregation) {
             elem.setAttribute("href", "#");
 
             if (filter.active.indexOf(item.key) > -1) {
-                elem.className = "list-group-item active";
+                elem.className = "list-group-item fdk-label fdk-label-default active"; //list-group-item active";
             } else {
-                elem.className = "list-group-item";
+                elem.className = "list-group-item fdk-label fdk-label-default"; //"list-group-item";
             }
             if (filter.hideMany && counter > facetDefaultCount - 1) {
                 elem.className += " hidden";
@@ -271,12 +217,12 @@ function createFacetController(filter, aggregation) {
                 // select/unselect theme
                 if (this.className.indexOf("active") > -1) {
                     // show no longer active
-                    this.className = "list-group-item";
+                    this.className = "list-group-item fdk-label fdk-label-default";
                     // remove if exist in filter line
                     removeFilter(this.getAttribute("data"),filter.active);
                 } else {
                     // show active
-                    this.className = "list-group-item active";
+                    this.className = "list-group-item fdk-label fdk-label-default active";
                     // add filter line
                     addFilter(filter, this.getAttribute("data"));
                 }
@@ -291,9 +237,9 @@ function createFacetController(filter, aggregation) {
             // more/less toggle
             var toggleElement = document.createElement("a");
             toggleElement.className = "btn btn-outline-secondary btn-sm";
-            var numberOfHiddenElements = counter - facetDefaultCount;
+
             if (filter.hideMany) {
-                toggleElement.innerHTML = numberOfHiddenElements + " " + getToggleText(filter);
+                toggleElement.innerHTML = getToggleText(filter);
             } else {
                 toggleElement.innerHTML = getToggleText(filter);
             }
@@ -323,6 +269,27 @@ function facetController(result) {
     } else {
         filters.theme.language = "nb";
     }
+
+    if (themeList) {
+        filters.theme.active = [];
+        if (themeList.indexOf(",") !== -1) {
+            var themeArray = themeList.split(",");
+
+            themeArray.forEach(function (t) {
+                setThemeFilter(t);
+            });
+        } else {
+            setThemeFilter(themeList);
+        }
+    }
+    themeList = "";
+
+    if (queryParameterPublisher) {
+        setPublisherFilter(queryParameterPublisher);
+    }
+    queryParameterPublisher= "";
+
+
     if (typeof result !== 'undefined') {
         createThemeMap();
 
@@ -337,3 +304,10 @@ function facetController(result) {
         throw new Error("FacetController bad input " + result);
     }
 }
+
+// Collapsible facets
+$('.collapse').on('shown.bs.collapse', function(){
+    $(this).parent().find(".glyphicon-triangle-left").removeClass("glyphicon-triangle-left").addClass("glyphicon-triangle-bottom");
+}).on('hidden.bs.collapse', function(){
+    $(this).parent().find(".glyphicon-triangle-bottom").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-left");
+});

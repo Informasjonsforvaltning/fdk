@@ -51,9 +51,9 @@ public class ContactInformation extends CommonPage {
                 String organization = dataset.get(4);
                 String orgUnit = dataset.get(5);
 
-                openPage("detail?id="+ dsId);
 
                 assertTrue("Detail page has title ", driver.getTitle() != null);
+                openPageWaitRetry("detail?id="+ dsId, "detailspage", 10 );
                 if (!"".equals(name)) {
                     WebElement nameElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Navn']/following-sibling::dd[1]"));
                     assertEquals(name, nameElement.getText());

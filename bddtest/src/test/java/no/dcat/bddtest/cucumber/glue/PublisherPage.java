@@ -77,14 +77,14 @@ public class PublisherPage extends CommonPage {
 
     @Then("^(\\d+) publisher shall be present as clickable links\\.$")
     public void publisher_shall_be_present_as_clickable_links(int nrOfPublisher) throws Throwable {
-        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/result')]"));
+        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/datasets')]"));
         assertThat(publisher.size(), is(nrOfPublisher));
     }
 
     @Then("^a search-field shall be present\\.$")
     public void a_search_field_shall_be_present() throws Throwable {
-        String inputName = driver.findElement(By.xpath("html/body/div[2]/div[1]/form/div/input")).getAttribute("name");
-        assertTrue(String.format("Expecting %d number of publisher.", 1), "q".equals(inputName));
+        String inputType = driver.findElement(By.id("search")).getAttribute("type");
+        assertTrue(inputType.equals("search"));
     }
 
     @Then("^a header and a footer shall be present\\.$")
