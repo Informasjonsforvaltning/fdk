@@ -152,7 +152,11 @@ const MovieHitsGridItem = (props)=> {
         <div alt="{props.source.url}" className="col-sm-12">
 
             <h2 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h2>
-			<h4 dangerouslySetInnerHTML={{__html:source.publisher ? source.publisher.name : ''}}></h4>
+			<h4>
+                {source.publisher ? source.publisher.name : ''}
+                <small> • </small>
+				<span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
+			</h4>
 			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description.nb}}></div>
 		</div>
     </a>
