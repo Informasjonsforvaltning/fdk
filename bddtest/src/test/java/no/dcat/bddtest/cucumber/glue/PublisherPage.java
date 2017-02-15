@@ -36,7 +36,7 @@ public class PublisherPage extends CommonPage {
 
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        if (openPageWaitRetry(page, "publishers", 5)) {
+        if (openPageWaitRetry(page, "publisher", 5)) {
             openPage(page);
         } else {
             fail();
