@@ -24,8 +24,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public final void addViewControllers(final ViewControllerRegistry registry) {
-        registry.addViewController("/hello").setViewName("hello");
-        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/datasets").setViewName("forward:/searchkit.html");
+
     }
 
 
