@@ -16,16 +16,6 @@ import {
 import * as axios from "axios";
 import {SearchBox} from './SearchBox.jsx';
 import {QueryTransport} from './QueryTransport.jsx';
-import {injectIntl, addLocaleData, IntlProvider, FormattedMessage} from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import nb from 'react-intl/locale-data/nb';
-import nn from 'react-intl/locale-data/nn';
-//import nbMessages from './l10n/nb.json';
-
-addLocaleData([...nb, ...nn, ...en]);
-console.log(navigator.language);
-var nbMessages = { "fdk": "Felles Datakatalog NB"};
-
 const defaults = require("lodash/defaults");
 
 import { createHistory as createHistoryFn, useQueries } from 'history';
@@ -194,7 +184,6 @@ export class SearchPage extends React.Component {
   }
 	render(){
 		return (
-			<IntlProvider locale={'nb'} messages={nbMessages}>
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
 				<header className="a-header" role="banner">
@@ -300,7 +289,6 @@ export class SearchPage extends React.Component {
 							</section>
 		    </Layout>
 		  </SearchkitProvider>
-			</IntlProvider>
 		)
 	}
 }
