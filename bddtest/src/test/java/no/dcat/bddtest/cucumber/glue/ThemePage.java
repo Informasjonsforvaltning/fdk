@@ -8,19 +8,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.io.File;
-import java.net.MalformedURLException;
-
-
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Cucumber glue class for the Themepage feature.
  */
+
 public class ThemePage extends CommonPage {
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
     private int portalPort = 8080; //getEnvInt("fdk.port");
@@ -44,6 +36,7 @@ public class ThemePage extends CommonPage {
     public void shutdown() {
         stopDriver();
     }
+
 
     @Given("^I have open the browser$")
     public void openBrowser()  {
@@ -62,8 +55,16 @@ public class ThemePage extends CommonPage {
 
     @When("^jeg åpner temasiden i fellesdatakatalog")
     public void goToFDK() {
+
         driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
+
 
     @Then("vises følgende tema og antall:$")
     public void ThemeBoS(DataTable themes) {
@@ -79,7 +80,8 @@ public class ThemePage extends CommonPage {
             WebElement themeCount = themeElement.findElement(By.name("hits"));
             String count = themeCount.getAttribute("innerHTML");
 
-            assertThat( String.format("Antall stemmer ikke med forventet antall for %s", theme), antall, is(count));
+            assertThat( String.format("Antall stemmer ikke med forventet antall for %s", theme),  count, is(antall));
         }
     }
 }
+

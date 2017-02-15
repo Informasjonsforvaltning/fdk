@@ -1,31 +1,20 @@
 package no.difi.dcat.datastore;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.DifiMeta;
+import no.difi.dcat.datastore.domain.User;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.atlas.iterator.Iter;
 import org.apache.jena.atlas.lib.FileOps;
 import org.apache.jena.fuseki.jetty.JettyFuseki;
 import org.apache.jena.fuseki.jetty.JettyServerConfig;
-import org.apache.jena.fuseki.server.DataAccessPointRegistry;
-import org.apache.jena.fuseki.server.FusekiEnv;
-import org.apache.jena.fuseki.server.FusekiServer;
-import org.apache.jena.fuseki.server.FusekiServerListener;
-import org.apache.jena.fuseki.server.ServerInitialConfig;
-import org.apache.jena.fuseki.server.SystemState;
+import org.apache.jena.fuseki.server.*;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.tdb.StoreConnection;
 import org.apache.jena.tdb.base.file.Location;
 import org.apache.jena.vocabulary.RDFS;
@@ -35,9 +24,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.DifiMeta;
-import no.difi.dcat.datastore.domain.User;
+import java.io.File;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 /**
  * @author havardottestad, sebnmuller
@@ -549,7 +542,6 @@ public class DataStoreTest {
 		long size = allDataCatalogues.size();
 
 		assertEquals("Two graphs with 1 triple each should make 2 triples.", 2, size);
-
 	}
 
 	public void fuseki() throws Exception {

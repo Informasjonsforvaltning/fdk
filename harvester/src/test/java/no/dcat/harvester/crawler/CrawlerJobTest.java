@@ -75,9 +75,10 @@ public class CrawlerJobTest {
         handler.process(dcatSource, ModelFactory.createDefaultModel());
     }
 
+
     @Test
-    public void testCrawlerJobWithBrregLink() {
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "src/test/resources/brreg-link.jsonld", "tester", "");
+    public void testCrawlerJobWithInvalidDataset() {
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "src/test/resources/dataset-FDK-138-validering.ttl", "tester", "");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
@@ -89,6 +90,7 @@ public class CrawlerJobTest {
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
         job.run();
     }
+
 
 
     @Test

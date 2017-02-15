@@ -10,35 +10,35 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private FusekiUserDetailsService fusekiUserDetailsService;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
+    @Autowired
+    private FusekiUserDetailsService fusekiUserDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        	.csrf().disable() //TODO: enable CSRF protection: https://docs.spring.io/spring-security/site/docs/current/reference/html/csrf.html#csrf-include-csrf-token
-            .authorizeRequests()
-            	.antMatchers("/").permitAll()
-            	.antMatchers("/admin/users").hasAuthority("ADMIN")
+                .csrf().disable() //TODO: enable CSRF protection: https://docs.spring.io/spring-security/site/docs/current/reference/html/csrf.html#csrf-include-csrf-token
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/admin/users").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+                .formLogin()
                 .permitAll()
                 .and()
-            .logout()
+                .logout()
                 .permitAll();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {    	
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .userDetailsService(fusekiUserDetailsService)
-            .passwordEncoder(passwordEncoder);
+                .userDetailsService(fusekiUserDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
-	
+
 }

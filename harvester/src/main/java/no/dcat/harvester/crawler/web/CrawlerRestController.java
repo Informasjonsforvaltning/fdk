@@ -76,7 +76,7 @@ public class CrawlerRestController {
     }
 
     private void harvestAllCodes(boolean reload) throws InterruptedException {
-        for(Types type:Types.values()) {
+        for(Types type : Types.values()) {
             logger.debug("Loading type {}", type);
             harvestCode(reload, type.getSourceUrl(), type.getType());
         }

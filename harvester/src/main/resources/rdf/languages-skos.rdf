@@ -13,9 +13,9 @@
       <dc:identifier>ENG</dc:identifier>
       <at:protocol-order>EU-08</at:protocol-order>
       <at:start.use>1950-05-09</at:start.use>
-      <skos:prefLabel xml:lang="no">engelsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="nn">engelsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="nb">engelsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="no">Engelsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">Engelsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">Engelsk</skos:prefLabel>
       <skos:prefLabel xml:lang="en">English</skos:prefLabel>
    </skos:Concept>
    <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NOR" at:deprecated="false" at:protocol.order="EU-08">
@@ -26,9 +26,9 @@
       <dc:identifier>NOR</dc:identifier>
       <at:protocol-order>EU-08</at:protocol-order>
       <at:start.use>1950-05-09</at:start.use>
-      <skos:prefLabel xml:lang="no">norsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="nn">norsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="nb">norsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="no">Norsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">Norsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">Norsk</skos:prefLabel>
       <skos:prefLabel xml:lang="en">Norwegian Bokmål</skos:prefLabel>
    </skos:Concept>
    <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NNO" at:deprecated="false" at:protocol.order="EU-08">
@@ -39,9 +39,9 @@
       <dc:identifier>NNO</dc:identifier>
       <at:protocol-order>EU-08</at:protocol-order>
       <at:start.use>1950-05-09</at:start.use>
-      <skos:prefLabel xml:lang="no">nynorsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="nn">nynorsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="nb">nynorsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="no">Nynorsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nn">Nynorsk</skos:prefLabel>
+      <skos:prefLabel xml:lang="nb">Nynorsk</skos:prefLabel>
       <skos:prefLabel xml:lang="en">Norwegian Nynorsk</skos:prefLabel>
    </skos:Concept>
 </rdf:RDF>

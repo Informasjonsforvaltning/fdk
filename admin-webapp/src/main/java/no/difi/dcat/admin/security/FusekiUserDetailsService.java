@@ -23,43 +23,44 @@ import java.util.Map;
 @Component
 public class FusekiUserDetailsService implements UserDetailsService {
 
-	@Autowired
-	private FusekiSettings fusekiSettings;
-	private AdminDataStore adminDataStore;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
-	private final Logger logger = LoggerFactory.getLogger(FusekiUserDetailsService.class);
+    @Autowired
+    private FusekiSettings fusekiSettings;
+    private AdminDataStore adminDataStore;
 
-	@PostConstruct
-	public void initialize() {
-		adminDataStore = new AdminDataStore(new Fuseki(fusekiSettings.getAdminServiceUri()));
-	}
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    private final Logger logger = LoggerFactory.getLogger(FusekiUserDetailsService.class);
 
-		Map<String,String> userMap;
-	
-		createTestUser("test_user", "password", "USER");
-		createTestUser("test_admin", "password", "ADMIN");
-		
-		try {
-			userMap = adminDataStore.getUser(username);
-		} catch (UserNotFoundException e) {
-			throw new UsernameNotFoundException(e.getMessage());
-		}
-		
-		return new User(username, userMap.get("password"), Arrays.asList(new SimpleGrantedAuthority(userMap.get("role"))));
-	}
-	
-	private void createTestUser(String username, String password, String role) {
-		try {
-			no.difi.dcat.datastore.domain.User user = new no.difi.dcat.datastore.domain.User(null, username, passwordEncoder.encode(password), username+"@example.org", role);
-			adminDataStore.addUser(user);
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
-		}
-	}
+    @PostConstruct
+    public void initialize() {
+        adminDataStore = new AdminDataStore(new Fuseki(fusekiSettings.getAdminServiceUri()));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Map<String, String> userMap = new HashMap<>();
+
+        createTestUser("test_user", "password", "USER");
+        createTestUser("test_admin", "password", "ADMIN");
+
+        try {
+            userMap = adminDataStore.getUser(username);
+        } catch (UserNotFoundException e) {
+            throw new UsernameNotFoundException(e.getMessage());
+        }
+
+        return new User(username, userMap.get("password"), Arrays.asList(new SimpleGrantedAuthority(userMap.get("role"))));
+    }
+
+    private void createTestUser(String username, String password, String role) {
+        try {
+            no.difi.dcat.datastore.domain.User user = new no.difi.dcat.datastore.domain.User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
+            adminDataStore.addUser(user);
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+        }
+    }
 }
+

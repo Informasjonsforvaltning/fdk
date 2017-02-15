@@ -125,9 +125,11 @@
         
 <http://data.brreg.no/datakatalog/kontaktpunkt/4>
         a                        vcard:Organization ;
-        vcard:hasEmail           <mbox:aas@brreg.no> ;
+        vcard:fn                 "Informasjonstjenesten" ;
+        vcard:hasEmail           <mailto:aas@brreg.no> ;
         vcard:hasTelephone       <tel:+4775007500> ;
-        vcard:organization-unit  "AAS" .      
+        vcard:organization-name  "Brønnøysundregistrene" ;
+        vcard:organization-unit  "AAS" .
 
 <http://data.brreg.no/datakatalog/katalog/1>
         a                dcat:Catalog ;

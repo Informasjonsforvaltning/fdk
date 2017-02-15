@@ -13,9 +13,9 @@ fuseki:
   dcatServiceUri: http://fuseki:3030/fuseki/dcat
   adminServiceUri: http://fuseki:3030/fuseki/admin
 application:
-  elasticSearchHost: es
-  elasticSearchPort: 9300
-  elasticSearchCluster: elasticsearch
+  elasticsearchHost: es
+  elasticsearchPort: 9300
+  elasticsearchCluster: elasticsearch
 ---
 spring:
     profiles: development
@@ -23,6 +23,10 @@ fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin
 application:
-  elasticSearchHost: 192.168.99.100
-  elasticSearchPort: 9300
-  elasticSearchCluster: elasticsearch
+  elasticsearchHost: localhost
+  elasticsearchPort: 9300
+  elasticsearchCluster: elasticsearch
+server:
+  port: 8090
+management:
+  port: 8990

@@ -1,0 +1,2 @@
+#Feature files should not be added to git.
+*.feature

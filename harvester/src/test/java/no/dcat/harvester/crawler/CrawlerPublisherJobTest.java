@@ -1,6 +1,6 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.Application;
+import no.dcat.harvester.HarvesterApplication;
 import no.difi.dcat.datastore.domain.DcatSource;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -24,7 +24,7 @@ public class CrawlerPublisherJobTest {
         URL url = getClass().getClassLoader().getResource("datasett-mini.ttl");
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
-        CrawlerPublisherJob j = new CrawlerPublisherJob(dcatSource, null, Application.getBrregCache(), handler);
+        CrawlerPublisherJob j = new CrawlerPublisherJob(dcatSource, null, HarvesterApplication.getBrregCache(), handler);
 
         j.run();
 

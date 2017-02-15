@@ -14,7 +14,16 @@ Feature: Page for presenting all Publishers.
     And I load the "dataset-w-distribution.ttl" dataset.
     And I open the Publisher page in the browser.
 
-  Scenario: Number of dataset for each Publisher shall be presented.
+  Scenario: The following shall be available:
+          1. All publisher that has at least one dataset or who has a child publisher with at least one dataset shall be presented.
+          2. Each publisher shall be presented as a clickable link.
+          3. The total number of datasets shall be presented for each Publisher.
+          4. A search filed shall be present.
+          5. A header and a footer shall be present.
+
+    Then 41 publisher shall be present as clickable links.
+    Then a search-field shall be present.
+    Then a header and a footer shall be present.
     Then the following Publisher and dataset aggregation shall exist:
       | ARBEIDS- OG SOSIALDEPARTEMENTET | 2  	|
       | ARBEIDSTILSYNET  				| 1 	|
@@ -22,13 +31,13 @@ Feature: Page for presenting all Publishers.
       | NÆRINGS- OG FISKERIDEPARTEMENTET| 22 	|
       | PATENTSTYRET 					| 2 	|
       | REGISTERENHETEN I BRØNNØYSUND 	| 20 	|
-      |STAVANGER KOMMUNE				| 5 	|
-      | MATTILSYNET						| 5 	|
-      |DIREKTORATET FOR E-HELSE			| 7 	|
-      |STATISTISK SENTRALBYRÅ			| 5 	|
+      |STAVANGER KOMMUNE				| 4 	|
+      | MATTILSYNET						| 6 	|
+      |DIREKTORATET FOR E-HELSE			| 10 	|
+      |STATISTISK SENTRALBYRÅ			| 4 	|
       |SKATTEETATEN 					| 4		|
       |STATENS VEGVESEN					| 4		|
-      |NORSK KULTURRÅD					| 3		|
+      |NORSK KULTURRÅD					| 2		|
       |PATENTSTYRET 					| 2		|
       |ARBEIDS- OG VELFERDSETATEN 		| 1		|
 

@@ -28,6 +28,8 @@ export class QueryTransport extends AxiosESTransport {
     const themeKey = 'theme.code.raw';
     let publisherFilter = '';
     let themeFilter = '';
+    let multiplePublishers = false;
+    let multipleThemes = false;
     if(query.filter) { // there is an aggregation filter
       if(query.filter.bool) { // array of filters
         query.filter.bool.must.forEach((filter) => {
@@ -35,16 +37,22 @@ export class QueryTransport extends AxiosESTransport {
             if(publisherFilter.length === 0) {
               publisherFilter += '&publisher=';
             }
+            if (multiplePublishers) {
+                publisherFilter += ',';
+            }
             publisherFilter += filter.term[publisherKey];
-            publisherFilter += ',';
+            multiplePublishers = true;
           } else if(filter.term[themeKey]) {
             console.log('filter is ', filter, filter.term, filter.term[themeKey]);
 
             if(themeFilter.length === 0) {
               themeFilter += '&theme=';
             }
+            if (multipleThemes) {
+                themeFilter += ",";
+            }
             themeFilter += filter.term[themeKey];
-            themeFilter += ',';
+            multipleThemes = true;
           }
         })
       } else if(query.filter.term) { // single filter
@@ -55,15 +63,34 @@ export class QueryTransport extends AxiosESTransport {
       console.log('themeFilter is ', themeFilter);
     }
 
+    let sortfield = "_score";
+    let sortdirection = "asc";
+    if (query.sort) { // there is a sort code
+        if (query.sort.length > 0) {
+            let sort = query.sort[0]; // assume that only one sort field is possible
+            if (_.has(sort, '_score')) {
+                sortfield="_score";
+                sortdirection="asc";
+            } else if (_.has(sort, 'title')) {
+                sortfield= "title.nb";
+            } else if (_.has(sort, 'modified')) {
+                sortfield= "modified";
+                sortdirection = "desc";
+            } else if (_.has(sort,'publisher.name')) {
+                sortfield= "publisher.name";
+            }
+        }
+    }
 
     return this.axios.get(
 			'http://localhost:8083/search?q=' +
 			(query.query ? query.query.simple_query_string.query : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
-			'&size=10&lang=nb' +
+			'&size=' + query.size +
+            '&lang=nb' +
       publisherFilter +
-      themeFilter
+      themeFilter + (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
       .then(this.getData)
   }

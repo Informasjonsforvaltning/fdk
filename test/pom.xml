@@ -9,7 +9,7 @@
 
 
     <artifactId>test</artifactId>
-    <description>Test Admin Application</description>
+    <description>Test Admin no.dcat.gdoc.Application</description>
     <version>0.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -27,7 +27,7 @@
         <!-- må være med for å kjøre i intellij -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
@@ -88,8 +88,20 @@
             <artifactId>jquery</artifactId>
 
         </dependency>
-
     </dependencies>
+
+    <!-- Nødvendig for å brukes på openshift-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Brixton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -105,8 +117,12 @@
                 </executions>
             </plugin>
 
-        </plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
 
+        </plugins>
     </build>
 
     <profiles>
@@ -132,6 +148,15 @@
                         <directory>src/main/resources/</directory>
                     </resource>
                 </resources>
+
+                <!-- Docker image skal kun lages på Windows. -->
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+
             </build>
         </profile>
         <profile>

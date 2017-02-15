@@ -46,14 +46,14 @@
 
                 </dl>
             </div>
-            <div th:if="${dataset.conformsTo != null and not #lists.isEmpty(dataset.conformsTo)}">
+            <div>
                 <h3>Konformitet</h3>
-                <dl class="dl-horizontal">
-                    <dt th:each="conformsTo : ${dataset.conformsTo}" ></dt>
-                    <dd th:if="${conformsTo}"><a th:href="${conformsTo}"><span th:text="${conformsTo.substring(conformsTo.lastIndexOf('/') + 1)} + ' '"></span></a></dd>
+                <dl class="dl-horizontal" th:if="${dataset.conformsTo.size() > 0}" th:each="conformsTo : ${dataset.conformsTo}">
+                    <dt></dt>
+                    <dd><a  th:href="${conformsTo}" th:text="${conformsTo.substring(conformsTo.lastIndexOf('/') + 1)} + ' '"></a></dd>
                 </dl>
             </div>
-            <div th:if="${dataset.distribution != null and not #lists.isEmpty(dataset.distribution)}">
+            <div th:if="${dataset.distribution.size() > 0}">
                 <h3>Distribusjon</h3>
                 <dl class="dl-horizontal" th:each="distribution : ${dataset.distribution}">
                     <dt th:if="${distribution.title.size() > 0}" >Tittel</dt>
@@ -74,10 +74,10 @@
                 <h3>Kvalitet</h3>
                 <dl class="dl-horizontal">
                     <dt th:if="${dataset.provenance}">Opphav
-                        <dd th:text="${dataset.provenance.get('nb')}" id="provenanceText"></dd>
+                        <dd th:text="${dataset.provenance.getTitle().get('nb')}" id="provenanceText"></dd>
                     </dt>
                     <dt th:if="${dataset.accrualPeriodicity}">Frekvens
-                        <dd th:text="${dataset.accrualPeriodicity.get('nb')}" id="accruralPeriodicityText"></dd>
+                        <dd th:text="${dataset.accrualPeriodicity.getTitle().get('nb')}" id="accrualPeriodicityText"></dd>
                     </dt>
                 </dl>
             </div>
@@ -91,7 +91,7 @@
                     <dd th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" ></dd>
 
                     <dt th:if="${dataset.language}">Språk
-                        <dd th:text="${dataset.language.get('nb')}" id="languageText"></dd>
+                        <dd th:text="${dataset.language.getTitle().get('nb')}" id="languageText"></dd>
                     </dt>
 
                     <dt th:if="${dataset.theme.size() > 0}">Tema</dt>
@@ -108,7 +108,7 @@
 
                     <dt th:if="${dataset.spatial.size() > 0}">Dekningsområde</dt>
                     <dd th:each="omrade : ${dataset.spatial}" th:if="${omrade}" id="locationsText">
-                        <span th:text="${omrade.get('nb')} + ', '"></span>
+                        <a th:href="${omrade.getCode()}" th:text="${omrade.getTitle().get('nb')} + ', '"></a>
                     </dd>
 
                 </dl>
@@ -137,7 +137,7 @@
                 <h3>Restriksjoner</h3>
                 <dl class="dl-horizontal">
                     <dt th:if="${dataset.accessRights}">Restriksjon
-                        <dd th:text="${dataset.accessRights.get('nb')}" id="accessRightText"></dd>
+                        <dd th:text="${dataset.accessRights.getTitle().get('nb')}" id="accessRightText"></dd>
                     </dt>
 
                     <dt th:if="${dataset.accessRightsComment.size() > 0 }">Kommentar</dt>

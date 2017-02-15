@@ -44,7 +44,7 @@ public class Dataset {
 
 	//dct:language
 	//Norwegian: Språk
-	private Map<String, String> language;
+	private SkosCode language;
 
 	//dcat:landingPage
 	//Norwegian: Landingsside
@@ -73,11 +73,11 @@ public class Dataset {
 
 	//dct:spatial
 	//Norwegian: dekningsområde
-	private List<Map<String, String>> spatial;
+	private List<SkosCode> spatial;
 
 	//dct:accessRights
 	//Norwegian: tilgangsnivå
-	private Map<String, String> accessRights;
+	private SkosCode accessRights;
 
 	//dcatno:accessRightsComment
 	//Norwegian: Skjermingshjemmel.
@@ -90,7 +90,7 @@ public class Dataset {
 
 	//dct:provenance
 	//Norwegian: Opphav
-	private Map<String, String> provenance;
+	private SkosCode provenance;
 
 	//dct:identifier
 	//Norwegian: identifikator
@@ -100,9 +100,9 @@ public class Dataset {
 	//Norwegian: dokumentasjon
 	private List<String> page;
 
-	//dct:accruralPeriodicity
+	//dct:accrualPeriodicity
 	//Norwegian: frekvens
-	private Map<String, String> accrualPeriodicity;
+	private SkosCode accrualPeriodicity;
 
 	//dct:subject
 	//Norwegian: begrep
@@ -115,7 +115,6 @@ public class Dataset {
 	//adms:identifier
 	//Norwegian: annen identifikator
 	private List<String> ADMSIdentifier;
-
 
 	public List<DataTheme> getTheme() {
         return theme;
@@ -195,10 +194,10 @@ public class Dataset {
 		this.modified = modified;
 	}
 
-	public Map<String, String> getLanguage() {
+	public SkosCode getLanguage() {
 		return language;
 	}
-	public void setLanguage(Map<String, String>  language) {
+	public void setLanguage(SkosCode  language) {
 		this.language = language;
 	}
 
@@ -215,11 +214,11 @@ public class Dataset {
 	public List<PeriodOfTime> getTemporal() { return temporal; }
 	public void setTemporal(List<PeriodOfTime> temporal) { this.temporal = temporal; }
 
-	public List<Map<String, String>> getSpatial() { return spatial; }
-	public void setSpatial(List<Map<String, String>> spatial) { this.spatial = spatial; }
+	public List<SkosCode> getSpatial() { return spatial; }
+	public void setSpatial(List<SkosCode> spatial) { this.spatial = spatial; }
 
-	public Map<String, String> getAccessRights() { return accessRights; }
-	public void setAccessRights(Map<String, String> accessRights) { this.accessRights = accessRights; }
+	public SkosCode getAccessRights() { return accessRights; }
+	public void setAccessRights(SkosCode accessRights) { this.accessRights = accessRights; }
 
 	public List<String> getAccessRightsComment() { return accessRightsComment; }
 	public void setAccessRightsComment(List<String> accessRightsComment) { this.accessRightsComment = accessRightsComment; }
@@ -227,8 +226,8 @@ public class Dataset {
 	public List<String> getReferences() { return references; }
 	public void setReferences(List<String> references) { this.references = references; }
 
-	public Map<String, String> getProvenance() { return provenance; }
-	public void setProvenance(Map<String, String> provenance) { this.provenance = provenance; }
+	public SkosCode getProvenance() { return provenance; }
+	public void setProvenance(SkosCode provenance) { this.provenance = provenance; }
 
 	public void setIdentifier(List<String> identifier) {
 		this.identifier = identifier;
@@ -246,11 +245,11 @@ public class Dataset {
 		return page;
 	}
 
-	public void setAccrualPeriodicity(Map<String, String> accrualPeriodicity) {
+	public void setAccrualPeriodicity(SkosCode accrualPeriodicity) {
 		this.accrualPeriodicity = accrualPeriodicity;
 	}
 
-	public Map<String, String> getAccrualPeriodicity() {
+	public SkosCode getAccrualPeriodicity() {
 		return accrualPeriodicity;
 	}
 
