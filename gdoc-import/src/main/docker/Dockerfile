@@ -28,8 +28,6 @@ RUN ls -al
 # copy the various files
 COPY validation dcat/validation
 COPY mapper dcat/mapper
-COPY semex.jar dcat/lib/
-COPY lib2/*.jar dcat/lib/
 COPY lib/*.jar dcat/lib/
 
 RUN ls -al dcat/lib
