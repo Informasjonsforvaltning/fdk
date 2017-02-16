@@ -16,10 +16,10 @@ fuseki:
   adminServiceUri: http://localhost:3030/fuseki/admin
 application:
   crawlerThreadPoolSize: 2
-  elasticsearchHost: localhost
-  elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
+  elasticSearchHost: localhost
+  elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
 server:
-  port: 8090
+  port: 8081
 management:
   port: 8990
