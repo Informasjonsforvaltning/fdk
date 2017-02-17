@@ -67,7 +67,7 @@ public class PortalController {
      * @param publisher Filter on the specified publisher.
      * @return the result html page (or just the name of the page)
      */
-    @RequestMapping(value = {"/result"}, produces = "text/html")
+    @RequestMapping(value = {"/datasetss"}, produces = "text/html")
     final ModelAndView result(final HttpSession session,
                               @RequestParam(value = "id", defaultValue = "") String id,
                               @RequestParam(value = "q", defaultValue = "") String query,
