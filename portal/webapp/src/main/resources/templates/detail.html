@@ -32,7 +32,7 @@
                     <dt th:text="#{identifier}">Identifikator</dt>
                     <dd th:each="id : ${dataset.identifier}"><span th:text="${id}"/></dd>
                     <dt th:text="#{catalog}">Katalog</dt>
-                    <dd th:text="${dataset.publisher.name}"/>
+                    <dd th:text="${dataset.catalog.title.nb}"/>
                 </dl>
                 <h3 th:text="#{contact.header}">Kontaktinformasjon</h3>
                 <dl class="dl-horizontal" th:if="${dataset.contactPoint}">
