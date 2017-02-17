@@ -107,18 +107,22 @@ class RefinementOption extends React.Component {
 
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props;
-  let url =  'datasets?id=' + encodeURIComponent(result._id);
+  let url =  'dataset?id=' + encodeURIComponent(result._id);
   const source:any = _.extend({}, result._source, result.highlight)
 	let themeLabels = '';
 	if(source.theme) {
 			source.theme.forEach((singleTheme, index)=> {
 				if(singleTheme.title) {
-					themeLabels += '<span className="label label-default">';
+					themeLabels += '<label>';
 					themeLabels += singleTheme.title.nb; // translate!
 					themeLabels += '</label>';
 				}
 			});
 	}
+    let landingPage = '';
+    if (source.landingPage) {
+    	landingPage += '<a href="' + source.landingPage + '" target="_blank"><span class=\"glyphicon glyphicon-home\"></span></a>'
+    }
 	let distributionLabels = '';
 	if(source.distribution) {
 		source.distribution.forEach((dist) => {
@@ -148,8 +152,8 @@ const MovieHitsGridItem = (props)=> {
 		themeTitle = source.theme.title.nb;
 	}
   return (
-    <a href="{url}"  className="row list-group-item dataset">
-        <div alt="{props.source.url}" className="col-sm-12">
+    <a href={url}  className="row list-group-item dataset">
+        <div className="col-sm-12">
 
             <h2 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h2>
 			<h4>
@@ -158,6 +162,7 @@ const MovieHitsGridItem = (props)=> {
 				<span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
 			</h4>
 			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description.nb}}></div>
+			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
 		</div>
     </a>
   )
