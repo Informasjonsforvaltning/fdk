@@ -108,7 +108,7 @@ class RefinementOption extends React.Component {
 
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props;
-  let url =  'dataset?id=' + encodeURIComponent(result._id);
+  let url =  'datasets?id=' + encodeURIComponent(result._id);
   const source:any = _.extend({}, result._source, result.highlight)
 	let themeLabels = '';
 	if(source.theme) {

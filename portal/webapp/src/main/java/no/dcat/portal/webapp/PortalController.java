@@ -67,7 +67,7 @@ public class PortalController {
      * @param publisher Filter on the specified publisher.
      * @return the result html page (or just the name of the page)
      */
-    @RequestMapping(value = {"/result"}, produces = "text/html")
+    @RequestMapping(value = {"/datasets"}, produces = "text/html")
     final ModelAndView result(final HttpSession session,
                               @RequestParam(value = "id", defaultValue = "") String id,
                               @RequestParam(value = "q", defaultValue = "") String query,
@@ -78,6 +78,8 @@ public class PortalController {
         logger.info("users locale: " + locale.toLanguageTag());
 
         if ("".equals(id)) {
+            return new ModelAndView("forward:/searchkit.html");
+            /*
             ModelAndView model = new ModelAndView(MODEL_RESULT);
             model.addObject("themes", getCodeLists());
             model.addObject("query", query);
@@ -91,8 +93,9 @@ public class PortalController {
             session.setAttribute("publisher", publisher);
 
 
-            return model;
+            return model;*/
         } else {
+
             ModelAndView model = new ModelAndView("detail");
 
             try {
@@ -114,6 +117,7 @@ public class PortalController {
             }
 
             return model;
+
         }
     }
 
