@@ -21,6 +21,7 @@ const defaults = require("lodash/defaults");
 import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
+import {addOrReplaceParam} from './addOrReplaceUrlParam.js';
 const host = "/dcat";
 const searchkit = new SearchkitManager(
 	host,
@@ -190,6 +191,11 @@ export class SearchPage extends React.Component {
 		}
   }
 	render(){
+
+		var enUrl = addOrReplaceParam(window.location.href, 'lang', 'en');
+		var nbUrl = addOrReplaceParam(window.location.href, 'lang', 'nb');
+		var nnUrl = addOrReplaceParam(window.location.href, 'lang', 'nn');
+
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 
@@ -217,14 +223,14 @@ export class SearchPage extends React.Component {
 											<span className="caret"></span>
 									</button>
 									<ul className="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>En</a></li>
-											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nb</a></li>
-											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nn</a></li>
+											<li><a href={enUrl}><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>En</a></li>
+											<li><a href={nbUrl}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nb</a></li>
+											<li><a href={nnUrl}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nn</a></li>
 									</ul>
 							</div>
 
 					</div>
-						<h1 className="fdk-heading">Felles datakatalog</h1>
+						<h1 className="fdk-heading">{getText('Felles datakatalog')}</h1>
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}
