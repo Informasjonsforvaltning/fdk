@@ -101,10 +101,12 @@ var SearchBox = (function (_super) {
     return (
       <div className={block().state({focused:this.state.focused})}>
         <form onSubmit={this.onSubmit.bind(this)}>
-          <div className={block("icon")}></div>
-          <input type="text"
+
+
+        <span id="dosearch" className="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+          <input type="search"
           data-qa="query"
-          className={block("text")}
+          className={block("text") + ' fdk-search'}
           placeholder={this.props.placeholder || this.translate("searchbox.placeholder")}
           value={this.getValue()}
           onFocus={this.setFocusState.bind(this, true)}
@@ -112,7 +114,6 @@ var SearchBox = (function (_super) {
           ref="queryField"
           autoFocus={this.props.autofocus}
           onInput={this.onChange.bind(this)}/>
-          <input type="submit" value="search" className={block("action")} data-qa="submit"/>
           <div data-qa="loader" className={block("loader").mix("sk-spinning-loader").state({hidden:!this.isLoading()})}></div>
         </form>
       </div>

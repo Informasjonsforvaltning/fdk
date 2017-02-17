@@ -5,7 +5,7 @@
 .glyphicon-search-frontpage {
     position: absolute;
     right: 26px;
-    top: 92px;
+    top: 153px;
     font-size: 32px;
     z-index: 1;
     color: #213B4C;
@@ -353,4 +353,8 @@ a.white-link {
 
 a.white-link:hover {
     color: #C8CDD4;
+}
+
+.sk-item-list__item * {
+    display: inline;
 }
