@@ -315,7 +315,7 @@
 	<build>
 		<plugins>
 
-			<plugin>
+			<!--plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
@@ -341,7 +341,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
 
 
 		</plugins>
