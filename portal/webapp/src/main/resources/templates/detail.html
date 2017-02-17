@@ -23,10 +23,17 @@
         <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}"/>
         <p th:text="${dataset.description.nb}"></p>
         <a th:if="${dataset.landingPage}" th:href='${dataset.landingPage}'><span class="glyphicon glyphicon-home"></span></a>
+
     </div>
     <div class="row">
         <div class="col-lg-6">
             <div>
+                <dl class="dl-horizontal" th:if="${dataset.identifier.size() > 0}">
+                    <dt th:text="#{identifier}">Identifikator</dt>
+                    <dd th:each="id : ${dataset.identifier}"><span th:text="${id}"/></dd>
+                    <dt th:text="#{catalog}">Katalog</dt>
+                    <dd th:text="${dataset.publisher.name}"/>
+                </dl>
                 <h3 th:text="#{contact.header}">Kontaktinformasjon</h3>
                 <dl class="dl-horizontal" th:if="${dataset.contactPoint}">
 
