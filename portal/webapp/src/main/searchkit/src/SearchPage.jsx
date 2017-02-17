@@ -154,7 +154,6 @@ const MovieHitsGridItem = (props)=> {
   return (
     <a href={url}  className="row list-group-item dataset">
         <div className="col-sm-12">
-
             <h2 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h2>
 			<h4>
                 {source.publisher ? source.publisher.name : ''}
@@ -238,7 +237,7 @@ export class SearchPage extends React.Component {
 								<div className="row">
 								</div>
 								<div className="row">
-									<div className="col-sm-3">
+									<div className="col-sm-4">
 										<RefinementListFilter
 											id="publisher"
 											title="Virksomhet"
