@@ -60,7 +60,7 @@ public class ContactInformation extends CommonPage {
                 }
 
                 if (!"".equals(email)) {
-                    WebElement emailElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Epost']/following-sibling::dd[1]"));
+                    WebElement emailElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='E-post']/following-sibling::dd[1]"));
                     assertEquals(email, emailElement.getText());
                 }
 
