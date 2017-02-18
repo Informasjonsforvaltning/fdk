@@ -42,8 +42,10 @@ module.exports = {
           modules: false
         }
       }));
-
+      var dirname = __dirname.substr(0, 69);
       app.use(webpackHotMiddleware(compiler));
+      console.log('__dirname is ', dirname + 'dist');
+      app.use("/static", express.static(dirname + 'dist/'));
 
 
     } else {

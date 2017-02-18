@@ -361,3 +361,12 @@ a.white-link:hover {
 .sk-item-list__item * {
     display: inline;
 }
+.sorting-control {
+  padding:0;
+}
+.sorting-control select {
+    border: 0;
+    background: none transparent;
+    height: 35px;
+    padding: 0;
+}

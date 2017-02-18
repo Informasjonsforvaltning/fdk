@@ -15,6 +15,7 @@ import {
 } from "searchkit";
 import * as axios from "axios";
 import {SearchBox} from './SearchBox.jsx';
+import {Select2} from './select.jsx';
 import {QueryTransport} from './QueryTransport.jsx';
 const defaults = require("lodash/defaults");
 
@@ -263,14 +264,14 @@ export class SearchPage extends React.Component {
 									<div id="datasets" className="col-sm-8 list-group">
 									<ActionBar>
 										<ActionBarRow>
-											<SortingSelector options={[
-												{label:"Relevans", field:"_score", order:"asc", defaultOption:true},
-                                                    {label:"Tittel", field:"title", order:"asc"},
+											<SortingSelector listComponent={Select2} className="bbbbb" options={[
+												{label:"Sorter på Relevans", className:"aaa", field:"_score", order:"asc", defaultOption:true},
+                        {label:"Tittel", field:"title", order:"asc"},
 												{label:"Sist endret", field:"modified", order:"desc"},
 												{label:"Virksomhet", field:"publisher.name", order:"asc"},
 											]}/>
 											<HitsStats/>
-											<PageSizeSelector options={[5,10,25,30,40,50]}/>
+											<PageSizeSelector listComponent={Select2} options={[5,10,25,30,40,50]}/>
 										</ActionBarRow>
 										<ActionBarRow>
 											<ResetFilters/>
