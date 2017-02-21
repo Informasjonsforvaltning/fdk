@@ -1,3 +1,16 @@
+spring:
+    profiles: docker
+fuseki:
+  dcatServiceUri: http://fuseki:3030/fuseki/dcat
+  adminServiceUri: http://fuseki:3030/fuseki/admin
+application:
+  crawlerThreadPoolSize: 2
+  elasticsearchHost: es
+  elasticsearchPort: 9300
+  elasticsearchCluster: elasticsearch
+---
+spring:
+    profiles: develop
 fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin
@@ -6,26 +19,6 @@ application:
   elasticSearchHost: localhost
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
----
-spring:
-    profiles: docker
-fuseki:
-  dcatServiceUri: http://fuseki:3030/fuseki/dcat
-  adminServiceUri: http://fuseki:3030/fuseki/admin
-application:
-  elasticsearchHost: es
-  elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
----
-spring:
-    profiles: development
-fuseki:
-  dcatServiceUri: http://localhost:3030/fuseki/dcat
-  adminServiceUri: http://localhost:3030/fuseki/admin
-application:
-  elasticsearchHost: localhost
-  elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
 server:
   port: 8081
 management:

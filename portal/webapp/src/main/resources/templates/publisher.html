@@ -21,7 +21,7 @@
         <div th:each="r : ${#numbers.sequence(0, publisher.size() - 1)}" class="publisher">
             <h4 th:if="${publisher.get(r).name != null}">
                 <a data-toggle="collapse"
-                   th:if="${publisher.get(r).aggrSubPublisher.size()} > 0"
+                   th:if="${publisher.get(r).aggrSubPublisher.size()} > 0" th:id="${publisher.get(r).name}"
                    th:href="${'#collaps_' + {r}}" aria-expanded="false" aria-controls="collapseExample">
                    <span class="glyphicon glyphicon-triangle-right"/>
                     <span name="publisher" th:text="${publisher.get(r).name}"/>

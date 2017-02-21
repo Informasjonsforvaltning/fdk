@@ -15,10 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -30,10 +26,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
@@ -43,39 +35,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
         <!-- Nødvendig for å bruke configserver på openshift -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -88,26 +52,12 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -195,55 +145,26 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- test javascript files by running jsHint -->
-            <plugin>
-                <groupId>com.cj.jshintmojo</groupId>
-                <artifactId>jshint-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>lint</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <options>maxparams:3,indent,camelcase,eqeqeq,forin,immed,latedef,noarg,noempty,nonew</options>
-                    <globals>require,$,yourFunkyJavascriptModule</globals>
-                    <configFile>src/test/resources/jshint.conf.js</configFile>
-                    <directories>
-                        <directory>src/main/resources/static/js</directory>
-                    </directories>
-                    <!--excludes>
-                        <exclude>src/main/webapp/hackyScript.js</exclude>
-                        <exclude>src/main/webapp/myDirectoryForThirdyPartyStuff</exclude>
-                    </excludes-->
-                    <reporter>jslint</reporter>
-                    <reportFile>target/jshint.xml</reportFile>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-            <!-- Runs Jasmine tests -->
-            <plugin>
-                <groupId>com.github.searls</groupId>
-                <artifactId>jasmine-maven-plugin</artifactId>
-                <version>2.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <!-- keep the configuration out of the execution so that the bdd goal has access to it -->
-                <configuration>
-                    <jsSrcDir>${project.basedir}${file.separator}src${file.separator}main/resources${file.separator}static${file.separator}js</jsSrcDir>
-                    <!-- configuration properties will go here -->
-                    <preloadSources>
-                        <source>webjars/jquery/3.1.1/jquery.js</source>
-                    </preloadSources>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.github.searls</groupId>-->
+                <!--<artifactId>jasmine-maven-plugin</artifactId>-->
+                <!--<version>2.2</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>test</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--&lt;!&ndash; keep the configuration out of the execution so that the bdd goal has access to it &ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--<jsSrcDir>${project.basedir}${file.separator}src${file.separator}main/resources${file.separator}static${file.separator}js</jsSrcDir>-->
+                    <!--&lt;!&ndash; configuration properties will go here &ndash;&gt;-->
+                    <!--<preloadSources>-->
+                        <!--<source>webjars/jquery/3.1.1/jquery.js</source>-->
+                    <!--</preloadSources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>

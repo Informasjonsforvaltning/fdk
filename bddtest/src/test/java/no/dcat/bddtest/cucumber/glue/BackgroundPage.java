@@ -6,13 +6,13 @@ import cucumber.api.java.en.Given;
 import no.dcat.bddtest.cucumber.model.ThemeCountSmall;
 import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
 import no.dcat.harvester.crawler.Loader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.is;
  * Glue-code common for all page-tests.
  */
 public class BackgroundPage extends CommonPage {
+    private static Logger logger = LoggerFactory.getLogger(BackgroundPage.class);
     private final String index = "dcat";
 
     private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
@@ -68,6 +69,7 @@ public class BackgroundPage extends CommonPage {
         RestTemplate restTemplate = new RestTemplate();
         deleteLoadAndWait(datasett + ".ttl", () -> restTemplate.getForObject("http://localhost:8083/themecount", ThemeCountSmall.class).getHits().getTotal() == 92);
     }
+
     private void deleteLoadAndWait(String dataset, Callable<Boolean> waitFor) throws IOException {
         deleteAndLoad(dataset);
         await().atMost(30, SECONDS).until(waitFor);

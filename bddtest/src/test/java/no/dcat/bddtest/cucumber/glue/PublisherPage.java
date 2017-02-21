@@ -64,8 +64,9 @@ public class PublisherPage extends CommonPage {
 
                 assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
 
-                WebElement publisherCount = publisherElement.findElement(By.className("badge"));
-                String count = publisherCount.getAttribute("innerHTML");
+                WebElement publisherCount = publisherElement.findElement(By.className("fdk-badge"));
+                WebElement publisherCountElement = publisherCount.findElement(By.tagName("span"));
+                String count = publisherCountElement.getAttribute("innerHTML");
 
                 assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, countExp, count), countExp.equals(count));
             }

@@ -1,24 +1,27 @@
+spring:
+    profiles: docker
 logging:
   level.: ERROR
   level.no.brreg: DEBUG
   level.org.springframework: ERROR
----
-spring:
-  profiles: docker
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
+  clusterName: elasticsearch
 ---
 #Utv-miljø lokalt på egen PC
 spring:
-  profiles: development
+  profiles: develop
+logging:
+  level.: ERROR
+  level.no.brreg: DEBUG
+  level.org.springframework: ERROR
 application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
+  clusterName: elasticsearch
 server:
-  port: 8085
+  port: 8083
 management:
-  port: 8994
+  port: 8993
 
