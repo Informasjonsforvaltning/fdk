@@ -14,8 +14,5 @@ To shut down all containers:
 To start a single container e.g.:
 >`docker-compose up -d elasticsearch`
 
-To shut down a single container e.g.:
->`docker-compose down elasticsearch`
-
 To get help:
 >`docker-compose --help`

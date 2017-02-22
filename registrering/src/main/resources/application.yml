@@ -1,0 +1,24 @@
+spring:
+  profiles: develop
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
+      properties:
+        http:
+          enabled: true
+server:
+  port: 8099
+management:
+  port: 8999
+---
+
+spring:
+  profiles: unit-integration
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
+      cluster-name: elasticsearch
+server:
+  port: 8099
+management:
+  port: 8999

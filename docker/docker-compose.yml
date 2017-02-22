@@ -90,6 +90,23 @@ services:
      - fuseki
      - harvester
 
+
+  elasticsearch5:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
+    environment:
+      - xpack.security.enabled=false
+      - cluster.name=elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      platform:
+        aliases:
+          - es
+      logging:
+        aliases:
+          - log_es
+
   elasticsearch:
     image: "fdk/elasticsearch:${TAG}"
     ports:

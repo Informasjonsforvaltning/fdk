@@ -10,6 +10,13 @@
 	<name>Felles Datakatalog</name>
 	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
 
+	<parent>
+		<groupId>no.brreg.felles</groupId>
+		<artifactId>br-maven-main-msn</artifactId>
+		<version>1.3.0</version>
+		<relativePath>br-maven-main-msn</relativePath>
+	</parent>
+
 	<repositories>
 		<repository>
 			<id>Felles datakatalog snapshot</id>
@@ -36,12 +43,6 @@
 	  <tag>HEAD</tag>
   </scm>
 
-	<parent>
-		<groupId>no.brreg.felles</groupId>
-		<artifactId>br-maven-main-msn</artifactId>
-		<version>1.3.0</version>
-		<relativePath>br-maven-main-msn</relativePath>
-	</parent>
 
 
 	<organization>
@@ -63,6 +64,8 @@
 		<module>test</module>
 		<module>gdoc-import</module>
 		<module>bddtest</module>
+		<module>registrering</module>
+		<module>br-maven-main-msn</module>
 	</modules>
 
 	<properties>
