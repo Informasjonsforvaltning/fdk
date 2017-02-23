@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableSpringDataWebSupport
 public class RegisterApplication {
 
-    private RegisterApplication(){}
 
     public static void main(String... args) {
         SpringApplication.run(RegisterApplication.class, args);

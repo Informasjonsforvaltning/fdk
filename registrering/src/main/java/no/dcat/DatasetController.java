@@ -29,6 +29,12 @@ public class DatasetController {
     private ElasticsearchTemplate elasticsearchTemplate;
 
 
+    /**
+     * Get complete dataset
+     * @param id Identifier of dataset
+     * @return complete dataset. HTTP status 200 OK is returned if dataset is found.
+     * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HttpEntity<Dataset> getDataset(@PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
@@ -39,6 +45,12 @@ public class DatasetController {
         return new ResponseEntity<>(dataset, HttpStatus.OK);
     }
 
+
+    /**
+     * Create new dataset in catalog. ID for the dataset is created automatically.
+     * @param description Description of dataset
+     * @return HTTP 200 OK if dataset could be could be created.
+     */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public HttpEntity<Dataset> addDataset(@RequestBody String description) {
         Dataset dataset = datasetFactory.createDataset();
