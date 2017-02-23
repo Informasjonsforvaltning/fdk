@@ -85,7 +85,7 @@ public class DatasetController {
     public HttpEntity<PagedResources<Dataset>> listDatasets(Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
 
-        Page<Dataset> datasets = datasetRepository.findAll(new PageRequest(0,20));
+        Page<Dataset> datasets = datasetRepository.findAll(pageable);
         return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
     }
 
