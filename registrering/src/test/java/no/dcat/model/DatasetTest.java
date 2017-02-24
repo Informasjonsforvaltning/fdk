@@ -2,6 +2,9 @@ package no.dcat.model;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,7 +20,9 @@ public class DatasetTest {
     @Test
     public void toString_makesSense() throws Exception {
         Dataset dataset = new Dataset("1");
-        dataset.setDescription("Test");
+        Map languangeDescription = new HashMap();
+        languangeDescription.put("no","test");
+        dataset.setDescription(languangeDescription);
         assertThat(dataset.toString(), is("Dataset(1, Test)"));
     }
 

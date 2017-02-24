@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.hateoas.core.Relation;
 
 import java.util.Date;
@@ -26,15 +27,13 @@ public class Dataset {
 
     // dct:title
     // Norwegian: Tittel
-    //TODO: språkstøtte. I datastore er elementene med språk definert slik:  private Map<String,String> title;
     @Field
-    private String title;
+    private Map<String,String> title;
 
     //dct:description
     //Norwegian: Beskrivelse
-    //Todo språkstøtte
     @Field
-    private String description;
+    private Map<String,String> description;
 
     //dcat:contactPoint
     //Norwegian: Kontaktpunkt
@@ -43,14 +42,13 @@ public class Dataset {
 
     //dcat:keyword
     //Norwegian: Emneord
-    //Todo språkstøtte
     @Field
-    private List<String> keyword;
+    private List<Map<String,String>> keyword;
 
     //dct:publisher
     //Norwegian: Utgiver
-    //@Field
-    //private Publisher publisher;
+    @Field
+    private Publisher publisher;
 
     //dct:issued
     //Norwegian: Utgivelsesdato

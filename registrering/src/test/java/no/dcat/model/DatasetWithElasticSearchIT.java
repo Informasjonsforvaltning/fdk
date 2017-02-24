@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -33,7 +36,9 @@ public class DatasetWithElasticSearchIT {
         assertThat(clusterName, is("elasticsearch"));
 
         Dataset dataset = new Dataset("1");
-        dataset.setDescription("Test");
+        Map languangeDescription = new HashMap();
+        languangeDescription.put("no","test");
+        dataset.setDescription(languangeDescription);
 
         datasetRepository.save(dataset);
 
