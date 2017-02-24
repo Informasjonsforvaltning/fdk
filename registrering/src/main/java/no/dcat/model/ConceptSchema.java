@@ -1,5 +1,6 @@
 package no.dcat.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import lombok.ToString;
  */
 @Data
 @ToString(includeFieldNames = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConceptSchema {
     private String id;
     private String title;

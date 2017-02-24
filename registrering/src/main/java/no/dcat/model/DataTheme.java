@@ -1,5 +1,6 @@
 package no.dcat.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,6 +12,7 @@ import java.util.Map;
  */
 @Data
 @ToString(includeFieldNames = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DataTheme {
     private String id;
     private String code;

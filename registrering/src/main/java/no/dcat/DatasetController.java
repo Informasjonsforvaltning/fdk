@@ -68,8 +68,6 @@ public class DatasetController {
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Dataset> addDataset(@RequestBody Dataset dataset) {
         DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
-        //Dataset dataset = datasetFactory.createDataset();
-        //dataset.setDescription(description);
         logger.info("requestbody dataset: " + dataset.toString());
         if(dataset.getId() == null) {
             dataset.setId(datasetIdGenerator.createId());

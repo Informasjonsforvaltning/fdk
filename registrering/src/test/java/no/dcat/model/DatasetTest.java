@@ -23,7 +23,7 @@ public class DatasetTest {
         Map languangeDescription = new HashMap();
         languangeDescription.put("no","test");
         dataset.setDescription(languangeDescription);
-        assertThat(dataset.toString(), is("Dataset(1, Test)"));
+        assertThat(dataset.toString(), is("Dataset(1, (no=Test)"));
     }
 
 }

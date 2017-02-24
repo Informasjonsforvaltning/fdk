@@ -1,5 +1,6 @@
 package no.dcat.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -9,6 +10,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
  */
 @Data
 @ToString(includeFieldNames = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Contact {
     @Field
     private String id;
