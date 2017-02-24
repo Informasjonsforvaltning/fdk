@@ -83,8 +83,8 @@ public class Dataset {
 
     //dcat:distribution
     //Norwegian: Datasett distribusjon
-    //@Field
-    //private List<Distribution> distribution;
+    @Field
+    private List<Distribution> distribution;
 
     //dcat:conformsTo
     //Norwegian: I samsvar med

@@ -7,4 +7,6 @@ import lombok.ToString;
 @ToString(includeFieldNames = false)
 public class Publisher {
     private String uri;
+    private String id;
+    private String name;
 }
