@@ -1,4 +1,4 @@
-package no.dcat;
+package no.dcat.controller;
 
 import no.dcat.factory.DatasetFactory;
 import no.dcat.factory.DatasetIdGenerator;
@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -23,10 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/dataset")
+@RequestMapping("/datasets")
 public class DatasetController {
 
     private static Logger logger = LoggerFactory.getLogger(DatasetController.class);
@@ -62,7 +59,7 @@ public class DatasetController {
 
     /**
      * Create new dataset in catalog. ID for the dataset is created automatically.
-     * @param description Description of dataset
+     * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
