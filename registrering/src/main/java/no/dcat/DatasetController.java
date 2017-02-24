@@ -1,6 +1,7 @@
 package no.dcat;
 
 import no.dcat.factory.DatasetFactory;
+import no.dcat.factory.DatasetIdGenerator;
 import no.dcat.model.Dataset;
 import no.dcat.service.DatasetRepository;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,10 +65,15 @@ public class DatasetController {
      * @param description Description of dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public HttpEntity<Dataset> addDataset(@RequestBody String description) {
-        Dataset dataset = datasetFactory.createDataset();
-        dataset.setDescription(description);
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<Dataset> addDataset(@RequestBody Dataset dataset) {
+        DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
+        //Dataset dataset = datasetFactory.createDataset();
+        //dataset.setDescription(description);
+        logger.info("requestbody dataset: " + dataset.toString());
+        if(dataset.getId() == null) {
+            dataset.setId(datasetIdGenerator.createId());
+        }
         Dataset savedDataset = datasetRepository.save(dataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
