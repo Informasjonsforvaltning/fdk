@@ -62,8 +62,8 @@ public class Dataset {
 
     //dct:language
     //Norwegian: Språk
-    //@Field
-    //private SkosCode language;
+    @Field
+    private SkosCode language;
 
     //dcat:landingPage
     //Norwegian: Landingsside
@@ -72,8 +72,8 @@ public class Dataset {
 
     //dcat:theme
     //Norwegian: Tema
-    //@Field
-    //private List<DataTheme> theme;
+    @Field
+    private List<DataTheme> theme;
 
     //TODO: Deaktivert, ikke sikkert den skal være med her
     //dcat:catalog
@@ -98,12 +98,13 @@ public class Dataset {
 
     //dct:spatial
     //Norwegian: dekningsområde
-    //@Field
-    //private List<SkosCode> spatial;
+    @Field
+    private List<SkosCode> spatial;
 
     //dct:accessRights
     //Norwegian: tilgangsnivå
-    //private SkosCode accessRights;
+    @Field
+    private SkosCode accessRights;
 
     //dcatno:accessRightsComment
     //Norwegian: Skjermingshjemmel.
@@ -118,8 +119,8 @@ public class Dataset {
 
     //dct:provenance
     //Norwegian: Opphav
-    //@Field
-    //private SkosCode provenance;
+    @Field
+    private SkosCode provenance;
 
     //dct:identifier
     //Norwegian: identifikator
@@ -133,8 +134,8 @@ public class Dataset {
 
     //dct:accrualPeriodicity
     //Norwegian: frekvens
-    //@Field
-    //private SkosCode accrualPeriodicity;
+    @Field
+    private SkosCode accrualPeriodicity;
 
     //dct:subject
     //Norwegian: begrep
