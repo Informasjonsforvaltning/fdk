@@ -37,8 +37,8 @@ public class Dataset {
 
     //dcat:contactPoint
     //Norwegian: Kontaktpunkt
-    //@Field
-    //private Contact contactPoint;
+    @Field
+    private List<Contact> contactPoint;
 
     //dcat:keyword
     //Norwegian: Emneord
