@@ -93,8 +93,8 @@ public class Dataset {
 
     //dct:temporal
     //Norwegian: tidsperiode
-    //@Field
-    //private List<PeriodOfTime> temporal;
+    @Field
+    private List<PeriodOfTime> temporal;
 
     //dct:spatial
     //Norwegian: dekningsområde
