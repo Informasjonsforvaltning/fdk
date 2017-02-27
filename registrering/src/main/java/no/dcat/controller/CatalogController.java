@@ -15,14 +15,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@Controller
+@RestController
 @RequestMapping(value = "/catalogs")
 public class CatalogController {
 
@@ -31,13 +27,14 @@ public class CatalogController {
     @Autowired
     private CatalogRepository catalogRepository;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @CrossOrigin
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable, PagedResourcesAssembler assembler) {
-        Page<Catalog> datasets = catalogRepository.findAll(pageable);
-        return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
+        Page<Catalog> catalogs = catalogRepository.findAll(pageable);
+        return new ResponseEntity<>(assembler.toResource(catalogs), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@RequestBody Catalog catalog) {
         logger.info("Add/modify catalog: " + catalog.toString());
         if(catalog.getId() == null) {
@@ -59,7 +56,7 @@ public class CatalogController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
         Catalog catalog = catalogRepository.findOne(id);
 

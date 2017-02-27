@@ -13,8 +13,20 @@ spring:
   profiles: unit-integration
   data:
     elasticsearch:
-      cluster-nodes: localhost:9300
+      properties:
+        http:
+          enabled: true
+---
+
+spring:
+  profiles: develop_embedded
+  data:
+    elasticsearch:
+      properties:
+        http:
+          enabled: true
 server:
   port: 8099
 management:
   port: 8999
+---

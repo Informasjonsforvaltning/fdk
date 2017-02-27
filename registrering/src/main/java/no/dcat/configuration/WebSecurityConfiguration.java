@@ -3,6 +3,7 @@ package no.dcat.configuration;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,8 +49,16 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
     class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().fullyAuthenticated().and().
-                    httpBasic().and().
+            String catalogsPath = "/catalogs/**";
+            http.authorizeRequests()
+                    .antMatchers(HttpMethod.DELETE, catalogsPath).authenticated()
+                    .antMatchers(HttpMethod.POST, catalogsPath).authenticated()
+                    .antMatchers(HttpMethod.PUT, catalogsPath).authenticated()
+                    .antMatchers(HttpMethod.PATCH, catalogsPath).authenticated()
+                    .anyRequest()
+                    .permitAll()
+                    .and()
+                    .httpBasic().and().
                     csrf().disable();
         }
     }

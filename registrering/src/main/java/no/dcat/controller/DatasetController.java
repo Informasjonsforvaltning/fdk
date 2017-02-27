@@ -46,7 +46,7 @@ public class DatasetController {
      * @return complete dataset. HTTP status 200 OK is returned if dataset is found.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> getDataset(@PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
@@ -62,7 +62,7 @@ public class DatasetController {
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> addDataset(@RequestBody Dataset dataset) {
         DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
         logger.info("requestbody dataset: " + dataset.toString());
@@ -83,7 +83,7 @@ public class DatasetController {
      * @param size number of datasets returned
      * @return List of data sets, with hyperlinks to other pages in search result
      */
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Dataset>> listDatasets(Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
 
