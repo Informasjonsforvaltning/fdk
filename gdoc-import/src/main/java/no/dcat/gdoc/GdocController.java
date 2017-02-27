@@ -22,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Stream;
@@ -34,23 +35,25 @@ import java.util.stream.Stream;
 @Controller
 public class GdocController {
 
+    public static final String STARTED = "Startet ";
     private static Logger logger = LoggerFactory.getLogger(GdocController.class);
 
     private static final String GET_A_VERSION = "versions/{versionId}";
     private static final String LIST_VERSIONS = "versions";
     private static final String CONVERT_GDOC = "convert";
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm");
 
     @Value("${application.converterHomeDir:/home/1000/dcat/}")
     private String converterHomeDir;
+
+    @Value("${application.converterResultDir:/home/1000/dcat/publish}")
+    private String converterResultDir;
+
 
     public void setConverterHomeDir(final String converterHomeDir) {
 
         this.converterHomeDir = converterHomeDir;
     }
-
-    @Value("${application.converterResultDir:/home/1000/dcat/publish}")
-    private String converterResultDir;
 
     public void setConverterResultDir(final String converterResultDir) {
 
@@ -86,23 +89,34 @@ public class GdocController {
 
         // process data, filter messages
 
-        OutputStreamWriter writer = new OutputStreamWriter(
-                new FileOutputStream(logfilePath), StandardCharsets.UTF_8);
+        OutputStreamWriter writer = null;
+        BufferedReader logReader = null;
+        try {
+            writer = new OutputStreamWriter(
+                    new FileOutputStream(logfilePath), StandardCharsets.UTF_8);
 
-        BufferedReader logReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(tempLogfileName), StandardCharsets.UTF_8));
+            logReader = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(tempLogfileName), StandardCharsets.UTF_8));
 
-        String line;
-        while ((line = logReader.readLine()) != null) {
-            // remove the bloody debug messages.
-            // I didn't succed in adding log4j file to the semtex call
-            if (!line.contains("DEBUG org.vedantatree.")) {
-                writer.append(line);
-                writer.append(System.lineSeparator());
+            String line;
+            while ((line = logReader.readLine()) != null) {
+                // remove the bloody debug messages.
+                // I didn't succed in adding log4j file to the semtex call
+                if (!line.contains("DEBUG org.vedantatree.")) {
+                    writer.append(line);
+                    writer.append(System.lineSeparator());
+                }
+            }
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+
+            if (logReader != null) {
+                logReader.close();
             }
         }
-        logReader.close();
-        writer.close();
+
         logger.debug("finished conversion {}", logfileName);
 
         return logfileName;
@@ -125,7 +139,7 @@ public class GdocController {
         final long start = System.currentTimeMillis();
         ResponseEntity<String> result;
 
-        logger.info("Startet " + CONVERT_GDOC);
+        logger.info(STARTED + CONVERT_GDOC);
 
         try {
             String resultLogfileName = runConvert();
@@ -140,6 +154,7 @@ public class GdocController {
         }
 
         logger.info(CONVERT_GDOC + " used " + (System.currentTimeMillis() - start));
+
         return result;
 
     }
@@ -156,7 +171,7 @@ public class GdocController {
     public final ResponseEntity<String> versions(@PathVariable String versionId) {
         final long startTime = System.currentTimeMillis();
 
-        logger.info("Startet " + GET_A_VERSION);
+        logger.info(STARTED + GET_A_VERSION);
         logger.info("versionId=" + versionId);
         ResponseEntity<String> result;
 
@@ -238,7 +253,7 @@ public class GdocController {
     @RequestMapping(value = {LIST_VERSIONS}, produces = "text/plain;charset=UTF-8")
     public final ResponseEntity<String> list() {
         final long startTime = System.currentTimeMillis();
-        logger.info("Startet " + LIST_VERSIONS);
+        logger.info(STARTED + LIST_VERSIONS);
         ResponseEntity<String> result;
 
         Process process;
