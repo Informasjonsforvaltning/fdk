@@ -61,11 +61,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-htmlunit-driver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jasmine</artifactId>
             <scope>test</scope>
