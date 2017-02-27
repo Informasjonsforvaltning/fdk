@@ -12,10 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static java.lang.Thread.sleep;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by dask on 16.12.2016.
