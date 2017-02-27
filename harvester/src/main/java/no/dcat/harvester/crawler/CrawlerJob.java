@@ -221,7 +221,6 @@ public class CrawlerJob implements Runnable {
      * Checks if a RDF model is valid according to the validation rules that are defined for DCAT.
      *
      * @param model the model to be validated (must be according to DCAT-AP-EU and DCAT-AP-NO
-     * @param validationMessage a list of validation messages
      * @return returns true if model is valid (only contains warnings) and false if it has errors
      */
     private boolean isValid(Model model) {
@@ -327,9 +326,10 @@ public class CrawlerJob implements Runnable {
                 locConnection.setRequestMethod("GET");
                 if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     //Remove non-resolvable location from dataset
-                    resultMsg.append("Resource with non-resolvable DCTerms.spatial URL: " + resource.toString() + "\n");
+                    resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
+                    resultMsg.append("\n");
                     model.removeAll(resource,DCTerms.spatial,null);
-                    logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: " + locUri);
+                    logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}",locUri);
                 }
             } catch (MalformedURLException e) {
                 logger.error("URL not valid: {} ", locUri,e);
