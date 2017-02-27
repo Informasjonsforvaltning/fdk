@@ -8,18 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
-
-import com.google.common.base.Predicate;
-import io.github.bonigarcia.wdm.PhantomJsDriverManager;
-import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
-import org.apache.commons.lang3.StringUtils;;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+;
 
 /**
  * Common class for glue-code for pagetesting.

@@ -199,12 +199,6 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-htmlunit-driver</artifactId>
-				<version>2.52.0</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
 				<groupId>org.webjars</groupId>
 				<artifactId>jasmine</artifactId>
 				<version>2.5.0</version>
@@ -235,11 +229,6 @@
 				<version>Brixton.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-server</artifactId>
-				<version>3.0.1</version>
 			</dependency>
 
 			<!-- Cucumber -->
@@ -279,16 +268,6 @@
 				<groupId>commons-cli</groupId>
 				<artifactId>commons-cli</artifactId>
 				<version>1.3.1</version>
-			</dependency>
-            <dependency>
-                <groupId>com.codeborne</groupId>
-                <artifactId>phantomjsdriver</artifactId>
-                <version>LATEST</version>
-            </dependency>
-			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-leg-rc</artifactId>
-				<version>2.53.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
