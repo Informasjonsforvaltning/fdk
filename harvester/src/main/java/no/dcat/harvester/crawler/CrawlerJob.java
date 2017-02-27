@@ -241,13 +241,13 @@ public class CrawlerJob implements Runnable {
 
         final int[] errors ={0}, warnings ={0}, others ={0};
 
-        boolean validated = DcatValidation.validate(model, (error) -> {
+        DcatValidation.validate(model, (error) -> {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
             validationResult.add(msg);
             validationErrors.add(error);
 
             //add validation status per dataset for non-valid datasets
-            if(error.getClassName().equals("Dataset")) {
+            if("Dataset".equals(error.getClassName())) {
                 registerValidationStatusForDataset(error);
             }
 

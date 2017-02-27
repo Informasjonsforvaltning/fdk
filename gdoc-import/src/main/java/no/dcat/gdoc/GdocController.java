@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Stream;
@@ -89,17 +91,22 @@ public class GdocController {
 
         // process data, filter messages
 
-        OutputStreamWriter writer = null;
-        BufferedReader logReader = null;
+        BufferedWriter writer = null;
+        Path lfPath = Paths.get(logfilePath);
+
+        BufferedReader reader = null;
         try {
-            writer = new OutputStreamWriter(
+            writer = Files.newBufferedWriter(lfPath, StandardCharsets.UTF_8);
+            /*writer = new OutputStreamWriter(
                     new FileOutputStream(logfilePath), StandardCharsets.UTF_8);
+            */
 
-            logReader = new BufferedReader(
+            reader = Files.newBufferedReader(tempLogfileName.toPath(), StandardCharsets.UTF_8);
+            /*logReader = new BufferedReader(
                     new InputStreamReader(new FileInputStream(tempLogfileName), StandardCharsets.UTF_8));
-
+            */
             String line;
-            while ((line = logReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 // remove the bloody debug messages.
                 // I didn't succed in adding log4j file to the semtex call
                 if (!line.contains("DEBUG org.vedantatree.")) {
@@ -112,8 +119,8 @@ public class GdocController {
                 writer.close();
             }
 
-            if (logReader != null) {
-                logReader.close();
+            if (reader != null) {
+                reader.close();
             }
         }
 
