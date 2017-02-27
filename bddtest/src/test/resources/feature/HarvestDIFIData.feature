@@ -8,5 +8,5 @@ Feature: Harvester can harvest DIFI data
   Scenario: The dataset from gdoc is available
     Then the following dataset detail pages shall exist:
       | http://data.norge.no/node/581 |
-      | http://data.norge.no/node/1270 |
-      | http://data.norge.no/node/95 |
+      | http://data.norge.no/node/1175 |
+      | http://data.norge.no/node/1651 |
