@@ -25,8 +25,8 @@ public class DetailPage extends CommonPage {
     public static final String ID_LOCATIONS_TEXT = "locationsText";
     public static final String ID_ACCESS_RIGTH_TEXT = "accessRightText";
     public static final String ID_ACCRUAL_PERIODICITY_TEXT = "accrualPeriodicityText";
-    private final String NOR_PAGE = "detail?id=%s";
-    private final String ENG_PAGE = "detail?id=%s";
+    private final String NOR_PAGE = "datasets?id=%s";
+    private final String ENG_PAGE = "datasets?id=%s";
 
     @Before
     public void setup() {
