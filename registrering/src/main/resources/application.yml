@@ -3,9 +3,6 @@ spring:
   data:
     elasticsearch:
       cluster-nodes: localhost:9300
-      properties:
-        http:
-          enabled: true
 server:
   port: 8099
 management:
@@ -17,7 +14,6 @@ spring:
   data:
     elasticsearch:
       cluster-nodes: localhost:9300
-      cluster-name: elasticsearch
 server:
   port: 8099
 management:
