@@ -5,7 +5,7 @@
 
 	<groupId>no.dcat</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.2.3</version>
 	<packaging>pom</packaging>
 	<name>Felles Datakatalog</name>
 	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
