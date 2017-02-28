@@ -465,3 +465,52 @@ d2rq:column "Tilgangsrettighet.@navn (en)" ;
 d2rq:condition "Tilgangsrettighet.@navn (en) != ''";
 .
 
+
+
+# Spreadsheet - Distribution
+map:Distribution a d2rq:ClassMap ;
+d2rq:dataStorage map:excel;
+d2rq:uriPattern "http://data.brreg.no/datakatalog/distibusjon/@@Distribution.id@@";
+d2rq:condition "Distribution.@id != ''";
+d2rq:class :Distribution ;
+.
+
+# id
+map:dist_id a d2rq:PropertyBridge ;
+d2rq:belongsToClassMap map:Distribution;
+d2rq:property :id ;
+d2rq:column "Distribution.@id" ;
+d2rq:condition "Distribution.@id != ''";
+.
+
+# beskrivelse
+map:dist_beskrivelse a d2rq:PropertyBridge ;
+d2rq:belongsToClassMap map:Distribution;
+d2rq:property :beskrivelse ;
+d2rq:column "Distribution.@beskrivelse" ;
+d2rq:condition "Distribution.@beskrivelse != ''";
+.
+
+# format
+map:dist_format a d2rq:PropertyBridge ;
+d2rq:belongsToClassMap map:Distribution;
+d2rq:property :format ;
+d2rq:column "Distribution.@format" ;
+d2rq:condition "Distribution.@format != ''";
+.
+
+# tilgangsURI
+map:dist_tilgangsURL a d2rq:PropertyBridge ;
+d2rq:belongsToClassMap map:Distribution;
+d2rq:property :tilgangsURL ;
+d2rq:column "Distribution.@tilgangsURL";
+d2rq:condition "Distribution.@tilgangsURL != ''";
+.
+
+# lisens
+map:dist_lisens a d2rq:PropertyBridge ;
+d2rq:belongsToClassMap map:Distribution ;
+d2rq:property :lisens ;
+d2rq:column "Distribution.@lisens" ;
+d2rq:condition "Distribution.@lisens != ''";
+.

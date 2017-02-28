@@ -55,32 +55,12 @@
 			<artifactId>guava</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.codehaus.castor</groupId>
 			<artifactId>castor-xml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
 		</dependency>
 
 	</dependencies>
 
-	<!-- Nødvendig for å brukes på openshift-->
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Brixton.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
     <build>
         <plugins>
@@ -95,11 +75,6 @@
 					</execution>
 				</executions>
             </plugin>
-           	<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-war-plugin</artifactId>
-				<version>3.0.0</version>
-	        </plugin>
         </plugins>
     </build>
 
@@ -126,15 +101,6 @@
 						<directory>src/main/resources/</directory>
 					</resource>
 				</resources>
-
-				<!-- Docker image skal kun lages på Windows. TODO: gjøre ferdig docker setup
-				<plugins>
-					<plugin>
-						<groupId>com.spotify</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-					</plugin>
-				</plugins> -->
-
 			</build>
 		</profile>
 		<profile>

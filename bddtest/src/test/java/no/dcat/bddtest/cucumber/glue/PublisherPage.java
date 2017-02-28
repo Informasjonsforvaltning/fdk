@@ -6,15 +6,16 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -36,7 +37,7 @@ public class PublisherPage extends CommonPage {
 
     @Given("^I open the Publisher page in the browser\\.$")
     public void i_open_the_Publisher_page_in_the_browser() throws Throwable {
-        if (openPageWaitRetry(page, "publishers", 5)) {
+        if (openPageWaitRetry(page, "publisher", 5)) {
             openPage(page);
         } else {
             fail();
@@ -64,8 +65,9 @@ public class PublisherPage extends CommonPage {
 
                 assertTrue(String.format("The page shall have an element with text %s", publisherExp), publisherExp.equals(publisherNameStr));
 
-                WebElement publisherCount = publisherElement.findElement(By.className("badge"));
-                String count = publisherCount.getAttribute("innerHTML");
+                WebElement publisherCount = publisherElement.findElement(By.className("fdk-badge"));
+                WebElement publisherCountElement = publisherCount.findElement(By.tagName("span"));
+                String count = publisherCountElement.getAttribute("innerHTML");
 
                 assertTrue(String.format("The element %s shall have %s datasets, had %s.", publisherExp, countExp, count), countExp.equals(count));
             }
@@ -77,7 +79,7 @@ public class PublisherPage extends CommonPage {
 
     @Then("^(\\d+) publisher shall be present as clickable links\\.$")
     public void publisher_shall_be_present_as_clickable_links(int nrOfPublisher) throws Throwable {
-        List<WebElement> publisher = driver.findElements(By.xpath("//a[contains(@href, '/datasets')]"));
+        List<WebElement> publisher = driver.findElements(By.name("publisher"));
         assertThat(publisher.size(), is(nrOfPublisher));
     }
 
