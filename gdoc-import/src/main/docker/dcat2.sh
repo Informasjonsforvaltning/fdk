@@ -13,33 +13,61 @@ java -version
 echo STEP 1 - Cleaning up google docs
 rm in/*
 
-echo STEP 2 - Download from google
-curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=xlsx&authuser=0" > ./in/datasett-from-gdocs.xlsx
-curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=xlsx&authuser=0" > ./in/datasett-oslo-kommune.xlsx
+#echo STEP 2 - Download from google
+#curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=xlsx&authuser=0" > ./in/datasett-from-gdocs.xlsx
+#curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=xlsx&authuser=0" > ./in/datasett-oslo-kommune.xlsx
  
 
-# Convert all XLSX to XLS
-echo STEP 3 - Convert XLSX to XLS
-for file in in/*.xlsx
+echo STEP 2 - Download from google
+curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=ods&authuser=0" > ./in/datasett-from-gdocs.ods
+curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=ods&authuser=0" > ./in/datasett-oslo-kommune.ods
+
+
+echo STEP 3 - extracting content
+unzip -o ./in/datasett-from-gdocs.ods  content.xml -d in
+mv in/content.xml in/datasett-from-gdocs.odsxml
+unzip -o ./in/datasett-oslo-kommune.ods  content.xml -d in
+mv in/content.xml in/datasett-oslo-kommune.odsxml
+
+echo STEP 4 - expand the format due to a compact table format
+for file in in/*.odsxml
 do
-    echo ...converting $file to xls...
-#    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
- soffice --headless --convert-to xls --outdir ./in $file
-    echo ...converted $file to xls
+    echo ...converting $file to XML
+    filename=$(basename "$file")
+    xsltproc mapper/ods2cleanxmltable.xsl  $file > in/$filename.xml
 done
 
+# Convert all XLSX to XLS
+#echo STEP 3 - Convert XLSX to XLS
+#for file in in/*.xlsx
+#do
+#    echo ...converting $file to xls...
+##    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
+# soffice --headless --convert-to xls --outdir ./in $file
+#    echo ...converted $file to xls
+#done
+
+
+echo STEP 5 - convert XML to TTL
+for file in in/*.xml
+do
+    echo ...converting $file to TTL
+    filename=$(basename "$file")
+    xsltproc mapper/cleanxmltable2ttl.xsl $file > in/$filename.ttl
+    echo converted $file to $filename.ttl
+done
 
 
 # Syntactical translation from Excel to RDF
-echo STEP 4 - Syntactical translation from Excel to RDF
-for file in in/*.xls
-do 
-    echo converting $file to ttl
-    filename=$(basename "$file")
-    #java -Xss2m -Xmx512M -cp "$LIB/*" com.computas.opendata.semex.Semex -Dlog4j.configuration=file:log4j.properties -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
-    java -Xss2m -Xmx512M -cp $CLASSPATH com.computas.opendata.semex.Semex -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
-    echo converted $file to $filename.ttl
-done
+#echo STEP 4 - Syntactical translation from Excel to RDF
+#for file in in/*.xls
+#do 
+#    echo converting $file to ttl
+#    filename=$(basename "$file")
+#    #java -Xss2m -Xmx512M -cp "$LIB/*" com.computas.opendata.semex.Semex -Dlog4j.configuration=file:log4j.properties -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
+#    java -Xss2m -Xmx512M -cp $CLASSPATH com.computas.opendata.semex.Semex -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
+#    echo converted $file to $filename.ttl
+#done
 
 
 # Catalog
