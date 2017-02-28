@@ -1,0 +1,9 @@
+{
+  "id" : "1001",
+  "title": {
+    "nb" : "Enhetsregisteret testdatasett"
+  },
+  "description": {
+    "nb": "Datasett med mange attributter"
+  }
+}

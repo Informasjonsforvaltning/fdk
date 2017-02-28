@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Objects;
+
 @Controller
-@RequestMapping("/datasets")
+@RequestMapping("/catalogs/{cat_id}/datasets")
 public class DatasetController {
 
     private static Logger logger = LoggerFactory.getLogger(DatasetController.class);
@@ -47,10 +49,10 @@ public class DatasetController {
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> getDataset(@PathVariable("id") String id) {
+    public HttpEntity<Dataset> getDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
-        if (dataset == null) {
+        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalog())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(dataset, HttpStatus.OK);
@@ -63,12 +65,13 @@ public class DatasetController {
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> addDataset(@RequestBody Dataset dataset) {
+    public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @RequestBody Dataset dataset) {
         DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
         logger.info("requestbody dataset: " + dataset.toString());
         if(dataset.getId() == null) {
             dataset.setId(datasetIdGenerator.createId());
         }
+        dataset.setCatalog(catalogId);
         Dataset savedDataset = datasetRepository.save(dataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
@@ -84,10 +87,10 @@ public class DatasetController {
      * @return List of data sets, with hyperlinks to other pages in search result
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Dataset>> listDatasets(Pageable pageable,
+    public HttpEntity<PagedResources<Dataset>> listDatasets(@PathVariable("cat_id") String catalogId, Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
 
-        Page<Dataset> datasets = datasetRepository.findAll(pageable);
+        Page<Dataset> datasets = datasetRepository.findByCatalog(catalogId, pageable);
         return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
     }
 

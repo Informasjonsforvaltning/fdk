@@ -8,24 +8,31 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Parent;
 import org.springframework.hateoas.core.Relation;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Document(indexName = "register", type = "dataset")
+@Document(indexName = "register", type = Dataset.ELASTIC_TYPE)
 @Data
 @Relation(collectionRelation = "datasets")
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Dataset {
 
+    public static final String ELASTIC_TYPE = "dataset";
+
     // dct:identifier
     // Norwegian: Identifikator
     @Id
     @NonNull
     private String id;
+
+    @Field(type = FieldType.String, store = true)
+    @Parent(type = Catalog.ELASTIC_TYPE)
+    private String catalog;
 
     // dct:title
     // Norwegian: Tittel
@@ -76,12 +83,6 @@ public class Dataset {
     //Norwegian: Tema
     @Field
     private List<DataTheme> theme;
-
-    //TODO: Deaktivert, ikke sikkert den skal være med her
-    //dcat:catalog
-    //Norwegian: Katalog
-    //Reference to catalog owning the dataset
-    //private Catalog catalog;
 
     //dcat:distribution
     //Norwegian: Datasett distribusjon
@@ -152,5 +153,5 @@ public class Dataset {
     //adms:identifier
     //Norwegian: annen identifikator
     @Field
-    private List<String> ADMSIdentifier;
+    private List<String> admsIdentifier;
 }
