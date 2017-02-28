@@ -51,7 +51,7 @@ public class PortalRestController {
             logger.info("Dataset found {} ", id);
             return new ResponseEntity<>(responseBody, OK);
         } catch (NoSuchElementException nsee) {
-            logger.info("ID {} not found {}", id);
+            logger.info("ID {} not found {}", id,nsee.getMessage(),nsee);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

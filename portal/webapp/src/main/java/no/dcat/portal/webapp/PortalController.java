@@ -43,9 +43,9 @@ import java.util.*;
  */
 @Controller
 public class PortalController {
-    public static final String MODEL_THEME = "theme";
-    public static final String MODEL_PUBLISHER = "publisher";
-    public static final String MODEL_RESULT = "result";
+    private static final String MODEL_THEME = "theme";
+    private static final String MODEL_PUBLISHER = "publisher";
+    private static final String MODEL_RESULT = "result";
 
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
@@ -93,38 +93,11 @@ public class PortalController {
 
             return model;
         } else {
-            ModelAndView model = new ModelAndView("detail");
-
-            try {
-                URI uri = new URIBuilder(buildMetadata.getDetailsServiceUrl()).addParameter("id", id).build();
-                HttpClient httpClient = HttpClientBuilder.create().build();
-
-                logger.debug(String.format("Query for dataset: %s", uri.getQuery()));
-                String json = httpGet(httpClient, uri);
-
-                logger.trace(String.format("Found dataset: %s", json));
-                Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
-
-                dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
-                model.addObject("dataset", dataset);
-            } catch (Exception e) {
-                logger.error(String.format("An error occured: %s", e.getMessage()));
-                model.addObject("exceptionmessage", e.getMessage());
-                model.setViewName("error");
-            }
-
-            return model;
+            return getDetailsView(id);
         }
     }
 
-    /**
-     * Controller for getting the dataset corresponding to the provided id.
-     *
-     * @param id The id that identifies the dataset.
-     * @return One Dataset attatched to a ModelAndView.
-     */
-    @RequestMapping(value={"/detail"}, produces = "text/html")
-    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
+    private ModelAndView getDetailsView(@RequestParam(value = "id", defaultValue = "") String id) {
         ModelAndView model = new ModelAndView("detail");
 
         try {
@@ -140,12 +113,24 @@ public class PortalController {
             dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
             model.addObject("dataset", dataset);
         } catch (Exception e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()));
-            model.addObject("exceptionmessage", e.getMessage());
+            logger.error(String.format("An error occured: %s", e.getMessage()),e);
+            model.addObject("exceptionmessage", e.getLocalizedMessage());
             model.setViewName("error");
         }
 
         return model;
+    }
+
+    /**
+     * Controller for getting the dataset corresponding to the provided id.
+     * TODO - remove this old interface
+     *
+     * @param id The id that identifies the dataset.
+     * @return One Dataset attatched to a ModelAndView.
+     */
+    @RequestMapping(value={"/detail"}, produces = "text/html")
+    public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
+        return getDetailsView(id);
     }
 
     /**
@@ -184,7 +169,7 @@ public class PortalController {
 
             logger.trace(String.format("Found datathemes: %s", json));
         } catch (IOException | URISyntaxException e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()));
+            logger.error(String.format("An error occured: %s", e.getMessage()),e);
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
@@ -192,7 +177,7 @@ public class PortalController {
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
-        model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");
+        model.addObject("lang", locale.getLanguage().startsWith("en") ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
@@ -205,8 +190,8 @@ public class PortalController {
 
         String json = httpGet(httpClient, uri);
 
-        Map<String, BigInteger> themeCounts = new ElasticSearchResponse().toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
-        return themeCounts;
+        return new ElasticSearchResponse()
+                .toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
     }
 
     /**
@@ -254,7 +239,7 @@ public class PortalController {
 
             logger.trace(String.format("Found publishers: %s", json));
         } catch (Exception e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()));
+            logger.error(String.format("An error occured: %s", e.getMessage()),e);
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
@@ -262,6 +247,7 @@ public class PortalController {
         model.addObject("publisher", publisherGrouped);
         model.addObject("aggpublishercount", publisherDataSetCount);
         model.addObject("dataitemquery", new DataitemQuery());
+
         return model;
     }
 
@@ -319,9 +305,11 @@ public class PortalController {
 
     private void checkStatusCode(final HttpResponse response) {
         StatusLine statusLine = response.getStatusLine();
+        // Statusline.getReasonPhrase is empty!
+
         if (statusLine.getStatusCode() != HttpStatus.OK.value()) {
-            logger.error(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
-            throw new RuntimeException(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
+            logger.error(String.format("Query Service returned http-code: %s", statusLine.getStatusCode()));
+            throw new RuntimeException(String.format("Query Service returned http-code: %s", statusLine.getStatusCode()));
         }
     }
 }
