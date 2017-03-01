@@ -69,25 +69,23 @@ searchkit.translateFunction = (key) => {
     "facets.view_all": getText('page.seeall'),
     "facets.view_less": getText('page.seefewer'),
 		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": "{hitCount} " + getText("page.results.found.in") + " " + "{timeTaken}ms"
+		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.results.in') + ' ' + "{timeTaken} ms"
   }
   return translations[key]
 }
 
 const extractDomain = (url)=> {
-    var domain;
-    //find & remove protocol (http, ftp, etc.) and get domain
-    if (url.indexOf("://") > -1) {
-        domain = url.split('/')[2];
-    }
-    else {
-        domain = url.split('/')[0];
-    }
-
-    //find & remove port number
-    domain = domain.split(':')[0];
-
-    return domain;
+  var domain;
+  //find & remove protocol (http, ftp, etc.) and get domain
+  if (url.indexOf("://") > -1) {
+      domain = url.split('/')[2];
+  }
+  else {
+      domain = url.split('/')[0];
+  }
+  //find & remove port number
+  domain = domain.split(':')[0];
+  return domain;
 }
 class RefinementOption extends React.Component {
 		render() {
@@ -116,6 +114,14 @@ class RefinementOption extends React.Component {
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props;
   let url =  'datasets?id=' + encodeURIComponent(result._id);
+	let queryObj = qs.parse(window.location.search.substr(1));
+	if(!queryObj.lang || queryObj.lang === 'nb') {
+		url += '&lang=nb';
+	} else if(queryObj.lang === 'nn'){
+		url += '&lang=nn';
+	} else {
+		url += '&lang=en';
+	}
   const source:any = _.extend({}, result._source, result.highlight)
 	let themeLabels = '';
 	if(source.theme) {
@@ -123,7 +129,7 @@ const MovieHitsGridItem = (props)=> {
 				if(singleTheme.title) {
 					themeLabels += '<label>';
 					themeLabels += singleTheme.title.nb; // translate!
-					themeLabels += '</label>';
+					themeLabels += ' </label>';
 				}
 			});
 	}
@@ -185,10 +191,19 @@ export class SearchPage extends React.Component {
 				.end(function(err, res) {
 						if(!err && res) {
 							res.body.hits.hits.forEach(function (hit) {
-								if(hit._source.title.nb) {
-									let obj = {};
-									obj[hit._source.code] = hit._source.title.nb;
-									themes.push(obj);
+						  	let queryObj = qs.parse(window.location.search.substr(1));
+								if(queryObj.lang === 'en') {
+									if(hit._source.title.en) {
+										let obj = {};
+										obj[hit._source.code] = hit._source.title.en;
+										themes.push(obj);
+									}
+								} else {
+									if(hit._source.title.nb) {
+										let obj = {};
+										obj[hit._source.code] = hit._source.title.nb;
+										themes.push(obj);
+									}
 								}
 							});
 						} else {
@@ -218,10 +233,10 @@ export class SearchPage extends React.Component {
 									<div className="dropdown fdk-dropdown-toggle-menu">
 											<a data-toggle="dropdown" href="#">&#9776;</a>
 											<ul className="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
-													<li><a href="#">{getText('Om felles datakatalog')}</a></li>
-													<li><a href="#">{getText('Spørsmål og svar')}</a></li>
-													<li><a href="#">{getText('DCAT-AP-NO 1.1-Standarden')}</a></li>
-													<li><a href="#">{getText('Status implementasjon')}</a></li>
+													<li><a href="#">{getText('about.title')}</a></li>
+													<li><a href="#">{getText('faq')}</a></li>
+													<li><a href="https://doc.difi.no/dcat-ap-no/">{getText('about.standard')}</a></li>
+													<li><a href="http://portal-fdk.tt1.brreg.no/coverage.html">{getText('about.status')}</a></li>
 											</ul>
 									</div>
 							</div>
@@ -237,7 +252,7 @@ export class SearchPage extends React.Component {
 									</ul>
 							</div>
 					</div>
-						<h1 className="fdk-heading">{getText('app.title')}</h1>
+						<h1 className="fdk-heading"><a href={queryObj.lang === 'nb' || !queryObj.lang ? '/' : '/?lang=' + queryObj.lang}>{getText('app.title')}</a></h1>
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}
@@ -256,7 +271,7 @@ export class SearchPage extends React.Component {
 											title={getText('facet.organisation')}
 											field="publisher.name.raw"
 											operator="AND"
-											size={10}
+											size={6}
 											itemComponent={RefinementOptionPublishers}
 											/>
 										<RefinementListFilter
@@ -264,7 +279,7 @@ export class SearchPage extends React.Component {
 											title={getText('facet.theme')}
 											field="theme.code.raw"
 											operator="AND"
-											size={100}
+											size={6}
 											itemComponent={RefinementOptionThemes}
 											/>
 									</div>
