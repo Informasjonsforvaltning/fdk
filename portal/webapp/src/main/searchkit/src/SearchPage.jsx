@@ -272,10 +272,10 @@ export class SearchPage extends React.Component {
 									<ActionBar>
 										<ActionBarRow>
 											<SortingSelector listComponent={Select2} className="bbbbb" options={[
-												{label:getText('sort.by'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
-                        {label:getText('sort.by.title'), field:"title", order:"asc"},
-												{label:getText('last.by.modified'), field:"modified", order:"desc"},
-												{label:getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
+												{label:getText('sort.by') + ' ' + getText('sort.by.relevance'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
+                        {label:getText('sort.by') + ' ' + getText('sort.by.title'), field:"title", order:"asc"},
+												{label:getText('sort.by') + ' ' + getText('sort.by.modified'), field:"modified", order:"desc"},
+												{label:getText('sort.by') + ' ' + getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
 											]}/>
 											<HitsStats/>
 											<PageSizeSelector listComponent={Select2} options={[5,10,25,30,40,50]}/>
