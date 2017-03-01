@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 @Controller
 public class GdocController {
 
+    public static final String DCAT_SCRIPT = "dcat.sh";
     private static Logger logger = LoggerFactory.getLogger(GdocController.class);
 
     private static final String GET_A_VERSION = "versions/{versionId}";
@@ -68,7 +69,7 @@ public class GdocController {
 
         Process process;
 
-        ProcessBuilder pb = new ProcessBuilder("bash", "dcat.sh");
+        ProcessBuilder pb = new ProcessBuilder("bash", DCAT_SCRIPT);
         pb.directory(new File(converterHomeDir));
         File tempLogfileName = File.createTempFile("convert", "log");
         pb.redirectOutput(tempLogfileName);
