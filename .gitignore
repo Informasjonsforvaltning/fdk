@@ -16,3 +16,5 @@ logs/
 /bddtest/data/
 /data/
 .DS_Store
+/**/node_modules
+/**/data/elasticsearch/nodes/
