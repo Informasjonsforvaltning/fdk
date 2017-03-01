@@ -213,9 +213,9 @@ a.list-group-item:hover {
   background-color: #F2F3F7;
 }
 .list-group-item.active, .list-group-item.is-active, .list-group-item.active:focus, .list-group-item.active:hover {
-    background-color: #5A6778;
-    border-color: #5A6778;
-    color: #fff;
+    background-color: #5A6778 !important;
+    border-color: #5A6778 !important;
+    color: #fff !important;
 }
 #resultPanel .fdk-dropdown-language {
   background-color: transparent;
