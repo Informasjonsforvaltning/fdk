@@ -69,7 +69,7 @@ searchkit.translateFunction = (key) => {
     "facets.view_all": getText('page.seeall'),
     "facets.view_less": getText('page.seefewer'),
 		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": "{hitCount} " + getText("page.results.found.in") +  "{timeTaken}ms"
+		"hitstats.results_found": "{hitCount} " + getText("page.results.found.in") + " " + "{timeTaken}ms"
   }
   return translations[key]
 }
