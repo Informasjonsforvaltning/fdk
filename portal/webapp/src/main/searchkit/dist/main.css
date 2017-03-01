@@ -114,7 +114,7 @@ input.fdk-search {
 
 /*  L A B E L S   &   B U T T O N S  */
 
-.list-group-item.fdk-label-default {
+.list-group-item.fdk-label-default, .fdk-label-default {
     background-color: #fff;
     color: #5A6778;
     border: 1px solid #5A6778;
@@ -125,7 +125,7 @@ input.fdk-search {
     min-width: 100%;
 }
 
-.list-group-item.fdk-label-default:hover {
+.list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
     background-color: #5A6778;
     color: #fff;
 }
