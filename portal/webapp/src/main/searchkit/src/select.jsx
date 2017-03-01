@@ -37,12 +37,12 @@ define(["require", "exports", "react", "lodash", "qs"], function (require, expor
             };
         	  let queryObj = qs.parse(window.location.search.substr(1));
             let perPage = '';
-            if(queryObj.lang == 'no') {
+            if(queryObj.lang == 'nb' || !queryObj.lang) {
               perPage = 'per side';
             } else if(queryObj.lang == 'nn') {
-              perPage = 'per side'
+              perPage = 'per side';
             } else {
-              perPage = 'per page'
+              perPage = 'per page';
             }
             return ( // Will sho "per side" if the text values are parsed to integers.
       <div className={bemBlocks.container().mix(className).state({ disabled }) + ' sorting-control btn btn btn-default fdk-dropdown-toggle-language' }>
