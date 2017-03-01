@@ -98,7 +98,7 @@ public class DatasetController {
     /**
      * Delete dataset
      * @param id Identifier of dataset
-     * @return HTTP status 204 NO_CONTENT is returned if dataset was successfully deleted. Body empty.
+     * @return HTTP status 200 OK is returned if dataset was successfully deleted. Body empty.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -110,7 +110,7 @@ public class DatasetController {
         }
         datasetRepository.delete(dataset);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

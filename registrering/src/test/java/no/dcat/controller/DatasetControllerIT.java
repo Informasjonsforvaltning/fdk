@@ -4,15 +4,19 @@ import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.ResourceAccessException;
 
+import javax.print.attribute.standard.Media;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,6 +87,127 @@ public class DatasetControllerIT {
         Dataset getResult = restTemplate.getForObject("/catalogs/" + catalogId + "/datasets/" + datasetId, Dataset.class);
 
         assertThat(getResult, is((expectedDataset)));
+    }
+
+
+    @Test(expected = ResourceAccessException.class)
+    public void createDatasetAccessDenied() throws Exception {
+        Catalog catalog = new Catalog();
+        String catalogId = "974760673";
+        catalog.setId(catalogId);
+        Catalog catResult = restTemplate.withBasicAuth("bjg", "123")
+                .postForObject("/catalogs/", catalog, Catalog.class);
+
+        String datasetId = "101";
+        Dataset dataset = new Dataset(datasetId);
+
+        Map languageTitle = new HashMap();
+        languageTitle.put("nb","Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map languangeDescription = new HashMap();
+        languangeDescription.put("nb","test");
+        dataset.setDescription(languangeDescription);
+
+        dataset.setCatalog(catalogId);
+
+        String datasetUrl = "/catalogs/" + catalogId + "/datasets/";
+
+        //Notice: no authorisation
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        HttpEntity<String> postRequest = new HttpEntity<String>(headers);
+
+        ResponseEntity<Dataset> postResponse = restTemplate.exchange(datasetUrl, HttpMethod.POST, postRequest, Dataset.class);
+        assertThat(postResponse.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
+    }
+
+
+    @Test
+    public void deleteDatasetAccessDenied() throws Exception {
+        Catalog catalog = new Catalog();
+        String catalogId = "974760673";
+        catalog.setId(catalogId);
+        Catalog catResult = restTemplate.withBasicAuth("bjg", "123")
+                .postForObject("/catalogs/", catalog, Catalog.class);
+
+        String datasetId = "101";
+        Dataset dataset = new Dataset(datasetId);
+
+        Map languageTitle = new HashMap();
+        languageTitle.put("nb","Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map languangeDescription = new HashMap();
+        languangeDescription.put("nb","test");
+        dataset.setDescription(languangeDescription);
+
+        dataset.setCatalog(catalogId);
+
+        Dataset result = restTemplate.withBasicAuth("bjg", "123")
+                .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
+
+
+        //Notice: no authorisation
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        HttpEntity<String> deleteRequest = new HttpEntity<String>(headers);
+
+        String datasetResUrl = "/catalogs/" + catalogId + "/datasets/" + datasetId;
+        ResponseEntity<String> deleteResponse = restTemplate.exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
+
+        assertThat(deleteResponse.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
+    }
+
+
+    @Test
+    public void deleteDatasetSuccess() throws Exception {
+        Catalog catalog = new Catalog();
+        String catalogId = "974760673";
+        catalog.setId(catalogId);
+        Catalog catResult = restTemplate.withBasicAuth("bjg", "123")
+                .postForObject("/catalogs/", catalog, Catalog.class);
+
+        String datasetId = "101";
+        Dataset dataset = new Dataset(datasetId);
+
+        Map languageTitle = new HashMap();
+        languageTitle.put("nb","Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map languangeDescription = new HashMap();
+        languangeDescription.put("nb","test");
+        dataset.setDescription(languangeDescription);
+
+        dataset.setCatalog(catalogId);
+
+        Dataset result = restTemplate.withBasicAuth("bjg", "123")
+                .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
+
+        HttpHeaders headers = createHeaders("bjg","123");
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+
+        String datasetResUrl = "/catalogs/" + catalogId + "/datasets/" + datasetId;
+        ResponseEntity<String> deleteResponse = restTemplate.exchange(datasetResUrl, HttpMethod.DELETE, request, String.class);
+
+        assertThat(deleteResponse.getStatusCode(), is(HttpStatus.OK));
+
+        //Check that dataset is actually gone...
+        ResponseEntity<String> getResponse = restTemplate.exchange(datasetResUrl, HttpMethod.GET, request, String.class);
+        assertThat(getResponse.getStatusCode(), is(HttpStatus.NOT_FOUND));
+
+    }
+
+
+    HttpHeaders createHeaders(String username, String password){
+        return new HttpHeaders() {{
+            String auth = username + ":" + password;
+            byte[] encodedAuth = Base64.encodeBase64(
+                    auth.getBytes(Charset.forName("US-ASCII")) );
+            String authHeader = "Basic " + new String( encodedAuth );
+            set( "Authorization", authHeader );
+        }};
     }
 
 }
