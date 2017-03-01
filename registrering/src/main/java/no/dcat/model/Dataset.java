@@ -30,8 +30,8 @@ public class Dataset {
     @NonNull
     private String id;
 
+    //Can't specify parent if no parent field has been configured
     @Field(type = FieldType.String, store = true)
-    @Parent(type = Catalog.ELASTIC_TYPE)
     private String catalog;
 
     // dct:title
