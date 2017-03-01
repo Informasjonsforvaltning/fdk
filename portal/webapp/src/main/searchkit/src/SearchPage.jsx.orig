@@ -13,21 +13,14 @@ import {
   ReactComponentType,
   PureRender, AxiosESTransport
 } from "searchkit";
-
-import {RefinementOptionThemes} from './RefinementOptionThemes.jsx';
-import {RefinementOptionPublishers} from './RefinementOptionPublishers.jsx';
-
 import * as axios from "axios";
 import {SearchBox} from './SearchBox.jsx';
-import {Select2} from './select.jsx';
 import {QueryTransport} from './QueryTransport.jsx';
 const defaults = require("lodash/defaults");
-
 
 import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
-import {addOrReplaceParam} from './addOrReplaceUrlParam.js';
 const host = "/dcat";
 const searchkit = new SearchkitManager(
 	host,
@@ -63,13 +56,12 @@ const sa = require('superagent');
 
 searchkit.translateFunction = (key) => {
   let translations = {
-    "pagination.previous":getText('page.prev'),
-    "pagination.next":getText('page.next'),
-    "facets.view_more":getText('page.viewmore'),
-    "facets.view_all": getText('page.seeall'),
-    "facets.view_less": getText('page.seefewer'),
-		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": "{hitCount} " + getText("page.results.found.in") + " " + "{timeTaken}ms"
+    "pagination.previous":"Forrige side",
+    "pagination.next":"Neste side",
+    "facets.view_more":"Se flere",
+    "facets.view_all": "Se alle",
+    "facets.view_less": "Se færre",
+		"reset.clear_all": "Nullstill filtre"
   }
   return translations[key]
 }
@@ -115,7 +107,7 @@ class RefinementOption extends React.Component {
 
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props;
-  let url =  'datasets?id=' + encodeURIComponent(result._id);
+  let url =  'dataset?id=' + encodeURIComponent(result._id);
   const source:any = _.extend({}, result._source, result.highlight)
 	let themeLabels = '';
 	if(source.theme) {
@@ -160,8 +152,14 @@ const MovieHitsGridItem = (props)=> {
 		themeTitle = source.theme.title.nb;
 	}
   return (
+<<<<<<< HEAD
+    <a href="{url}"  className="row list-group-item dataset">
+        <div alt="{props.source.url}" className="col-sm-12">
+=======
     <a href={url}  className="row list-group-item dataset">
         <div className="col-sm-12">
+
+>>>>>>> 86e497faa5f979422ac26b57e35525e7d0af9e3d
             <h2 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h2>
 			<h4>
                 {source.publisher ? source.publisher.name : ''}
@@ -198,18 +196,12 @@ export class SearchPage extends React.Component {
 		}
   }
 	render(){
-
-		var enUrl = addOrReplaceParam(window.location.href, 'lang', 'en');
-		var nbUrl = addOrReplaceParam(window.location.href, 'lang', '');
-		var nnUrl = addOrReplaceParam(window.location.href, 'lang', 'nn');
-	  let queryObj = qs.parse(window.location.search.substr(1));
-
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 
 <div>
 			<div className="fdk-header-beta">
-					{getText('beta.first')} <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">{getText('beta.second')}</a> {getText('beta.last')}
+					Dette er en beta-versjon. Gi oss gjerne <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
 			</div>
 
 			<div className="container">
@@ -218,31 +210,32 @@ export class SearchPage extends React.Component {
 									<div className="dropdown fdk-dropdown-toggle-menu">
 											<a data-toggle="dropdown" href="#">&#9776;</a>
 											<ul className="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
-													<li><a href="#">{getText('Om felles datakatalog')}</a></li>
-													<li><a href="#">{getText('Spørsmål og svar')}</a></li>
-													<li><a href="#">{getText('DCAT-AP-NO 1.1-Standarden')}</a></li>
-													<li><a href="#">{getText('Status implementasjon')}</a></li>
+													<li><a href="#">Om Felles Datakatalog</a></li>
+													<li><a href="#">Spørsmål og svar</a></li>
+													<li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
+													<li><a href="#">Status implementasjon</a></li>
 											</ul>
 									</div>
 							</div>
 							<div className="dropdown fdk-container-dropdown-language">
 									<button className="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											<img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{queryObj.lang ? queryObj.lang === 'en' ? getText('lang.english-en') : getText('lang.norwegian-nn') : getText('lang.norwegian-nb')}
+											<img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nb
 											<span className="caret"></span>
 									</button>
 									<ul className="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-											<li><a href={enUrl}><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>{getText('lang.english-en')}</a></li>
-											<li><a href={nbUrl}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nb')}</a></li>
-											<li><a href={nnUrl}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nn')}</a></li>
+											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>En</a></li>
+											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nb</a></li>
+											<li><a href="#"><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nn</a></li>
 									</ul>
 							</div>
+
 					</div>
-						<h1 className="fdk-heading">{getText('Felles datakatalog')}</h1>
+						<h1 className="fdk-heading">Felles datakatalog</h1>
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}
 		          searchOnChange={false}
-							placeholder={getText('query.intro')}
+							placeholder="Søk etter datasett"
 							/>
 		      </TopBar>
 			    <section id="resultPanel">
@@ -250,38 +243,37 @@ export class SearchPage extends React.Component {
 								<div className="row">
 								</div>
 								<div className="row">
-									<div className="col-sm-4 flex-move-first-item-to-bottom">
+									<div className="col-sm-4">
 										<RefinementListFilter
 											id="publisher"
-											title={getText('facet.organisation')}
+											title="Virksomhet"
 											field="publisher.name.raw"
 											operator="AND"
 											size={10}
-											itemComponent={RefinementOptionPublishers}
 											/>
 										<RefinementListFilter
 											id="theme"
-											title={getText('facet.theme')}
+											title="Tema"
 											field="theme.code.raw"
 											operator="AND"
 											size={100}
-											itemComponent={RefinementOptionThemes}
+											itemComponent={RefinementOption}
 											/>
 									</div>
 									<div id="datasets" className="col-sm-8 list-group">
 									<ActionBar>
 										<ActionBarRow>
-											<SortingSelector listComponent={Select2} className="bbbbb" options={[
-												{label:getText('sort.by'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
-                        {label:getText('sort.by.title'), field:"title", order:"asc"},
-												{label:getText('last.by.modified'), field:"modified", order:"desc"},
-												{label:getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
+											<SortingSelector options={[
+												{label:"Relevans", field:"_score", order:"asc", defaultOption:true},
+                                                    {label:"Tittel", field:"title", order:"asc"},
+												{label:"Sist endret", field:"modified", order:"desc"},
+												{label:"Virksomhet", field:"publisher.name", order:"asc"},
 											]}/>
 											<HitsStats/>
-											<PageSizeSelector listComponent={Select2} options={[5,10,25,30,40,50]}/>
+											<PageSizeSelector options={[5,10,25,30,40,50]}/>
 										</ActionBarRow>
 										<ActionBarRow>
-											{/*<ResetFilters/> */}
+											<ResetFilters/>
 										</ActionBarRow>
 									</ActionBar>
 									<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={MovieHitsGridItem}
