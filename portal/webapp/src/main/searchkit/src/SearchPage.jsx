@@ -237,7 +237,7 @@ export class SearchPage extends React.Component {
 									</ul>
 							</div>
 					</div>
-						<h1 className="fdk-heading">{getText('Felles datakatalog')}</h1>
+						<h1 className="fdk-heading">{getText('app.title')}</h1>
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}
