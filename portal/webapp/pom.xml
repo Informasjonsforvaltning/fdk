@@ -123,11 +123,8 @@
                 <directory>src/main/searchkit</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>**/*</include>
+                    <include>dist/</include>
                 </includes>
-                <excludes>
-                    <exclude>node_modules/*</exclude>
-                </excludes>
             </resource>
         </resources>
 
