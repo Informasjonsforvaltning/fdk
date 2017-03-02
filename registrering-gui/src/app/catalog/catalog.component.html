@@ -1,14 +1,14 @@
-<div class="panel panel-default">
+<div class="panel panel-default" *ngIf="catalog">
   <div class="panel-heading">
-    <div class="input-group">
-      <input id="tittel-datakatalog" type="text" class="form-control" placeholder="Tittel" value="{{title}}" />
+    <div class="form-group">
+      <input id="tittel-datakatalog" type="text" class="form-control" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
     </div>
   </div>
   <div class="panel-body">
     <h2>{{catalog.id}}</h2>
-    <textarea class="form-control" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse"></textarea>
+    <textarea class="form-control" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse"  >{{catalog.description[language]}}</textarea>
   </div>
 
-  <a routerLink="/catalogs/123/datasets/2"><button class="btn btn-success pull-right" > Nytt datasett </button></a>
+
 </div>
 
