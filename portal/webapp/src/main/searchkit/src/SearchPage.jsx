@@ -73,7 +73,7 @@ searchkit.translateFunction = (key) => {
     "facets.view_all": getText('page.seeall'),
     "facets.view_less": getText('page.seefewer'),
 		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.results')
+		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.result.hits')
   }
   return translations[key]
 }
@@ -274,7 +274,7 @@ export class SearchPage extends React.Component {
 											id="publisher"
 											title={getText('facet.organisation')}
 											field="publisher.name.raw"
-											operator="OR"
+											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionPublishers}
 											/>
@@ -282,7 +282,7 @@ export class SearchPage extends React.Component {
 											id="theme"
 											title={getText('facet.theme')}
 											field="theme.code.raw"
-											operator="OR"
+											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionThemes}
 											/>
