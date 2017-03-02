@@ -126,7 +126,7 @@ input.fdk-search {
 }
 
 .list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
-    background-color: #5A6778;
+    background-color: #F2F3F7;
     color: #fff;
 }
 
@@ -273,7 +273,6 @@ a.row.list-group-item.dataset {
     position: relative;
     float: right;
     z-index: 2;
-    margin-right: 144px;
 }
 
 .fdk-dropdown-toggle-language {
@@ -410,19 +409,10 @@ a.white-link:hover {
   height: 60px;
 }
 
-.fdk-dropdown-toggle-language {
-  position: absolute;
-  left: 0;
-}
-.fdk-dropdown-toggle-language:last-child {
-  position: absolute;
-  right: 0;
-  left: auto;
-}
 .sk-hits-stats {
-  position: absolute;
-  left: 37%;
-  top: 24px;
+    position: absolute;
+    left: 37%;
+    top: 8px;
 }
 
 .sk-pagination-navigation .sk-toggle-option:first-child,
@@ -465,10 +455,10 @@ a.white-link:hover {
     white-space: nowrap;
 }
 
-.sk-toggle-option:hover {  
-    background-color: #5A6778;
-    color: #fff;
-    border-color: #5A6778;
+.sk-toggle-option:hover {
+    background-color: #F2F3F7;
+    color: #000;
+    border-color: #ccc;
 }
 .sk-pagination-navigation .sk-toggle-option:first-child, .sk-pagination-navigation .sk-toggle-option:last-child {
     flex: 4;
@@ -495,6 +485,14 @@ a {
 a:hover {
   color: #000;
 }
-.fdk-label.pull-left {
-  min-width: initial;
+.fdk-label.pull-left .fdk-label.pull-left:focus {
+  min-width: initial !important;
+}
+.sk-results-list__action-bar .dropdown{
+  right: 0;
+  position: absolute;
+}
+.sk-results-list__action-bar .dropdown:first-child{
+  right:auto;
+  left:0;
 }

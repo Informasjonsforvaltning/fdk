@@ -16,12 +16,14 @@ define(["require", "exports", "react", "lodash", "qs"], function (require, expor
         __extends(Select, _super);
         function Select(props) {
             var _this = _super.call(this, props) || this;
-            _this.onChange = _this.onChange.bind(_this);
+            _this.onClick = _this.onClick.bind(_this);
             return _this;
         }
-        Select.prototype.onChange = function (e) {
+        Select.prototype.onClick = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             var setItems = this.props.setItems;
-            var key = e.target.value;
+            var key = e.target.getAttribute('data-value');
             setItems([key]);
         };
         Select.prototype.getSelectedValue = function () {
@@ -44,16 +46,24 @@ define(["require", "exports", "react", "lodash", "qs"], function (require, expor
             } else {
               perPage = 'per page';
             }
+            let selectedValue = this.getSelectedValue();
+            let selectedLabel = '';
+            this.props.items.forEach((item) => {
+              if(item.key === selectedValue) {
+                selectedLabel = item.label;
+              }
+            })
             return ( // Will sho "per side" if the text values are parsed to integers.
-      <div className={bemBlocks.container().mix(className).state({ disabled }) + ' sorting-control btn btn btn-default fdk-dropdown-toggle-language' }>
-        <select onChange={this.onChange} value={this.getSelectedValue()}>
-          {lodash_1.map(items, ({key, label, title, disabled, doc_count}, idx) => {
-            var text = translate(label || title || key)
-            if (showCount && doc_count !== undefined) text += ` (${countFormatter(doc_count)})`
-            return <option key={key} value={key} disabled={disabled}>{parseInt(text) >= 0 ? text + ' ' + perPage : text}</option>
-          })}
-          </select>
-      </div>);
+             <div className="dropdown">
+                  <a href="#" className="btn btn-default dropdown-toggle fdk-dropdown-toggle-language" data-toggle="dropdown">{parseInt(selectedLabel) >= 0 ? selectedLabel + ' ' + perPage : selectedLabel} <b className="caret"></b></a>
+                  <ul className="dropdown-menu">
+                    {lodash_1.map(items, ({key, label, title, disabled, doc_count}, idx) => {
+                      var text = translate(label || title || key)
+                      if (showCount && doc_count !== undefined) text += ` (${countFormatter(doc_count)})`
+                      return <li key={key}><a data-value={key} onClick={this.onClick} href="#">{parseInt(text) >= 0 ? text + ' ' + perPage : text}</a></li>
+                    })}
+                  </ul>
+              </div>);
         };
         return Select;
     }(React.Component));

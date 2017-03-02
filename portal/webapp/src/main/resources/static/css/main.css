@@ -126,7 +126,7 @@ input.fdk-search {
 }
 
 .list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
-    background-color: #5A6778;
+    background-color: #F2F3F7;
     color: #fff;
 }
 
@@ -410,19 +410,10 @@ a.white-link:hover {
   height: 60px;
 }
 
-.fdk-dropdown-toggle-language {
-  position: absolute;
-  left: 0;
-}
-.fdk-dropdown-toggle-language:last-child {
-  position: absolute;
-  right: 0;
-  left: auto;
-}
 .sk-hits-stats {
-  position: absolute;
-  left: 37%;
-  top: 24px;
+    position: absolute;
+    left: 37%;
+    top: 8px;
 }
 
 .sk-pagination-navigation .sk-toggle-option:first-child,
@@ -466,9 +457,9 @@ a.white-link:hover {
 }
 
 .sk-toggle-option:hover {
-    background-color: #5A6778;
-    color: #fff;
-    border-color: #5A6778;
+    background-color: #F2F3F7;
+    color: #000;
+    border-color: #ccc;
 }
 .sk-pagination-navigation .sk-toggle-option:first-child, .sk-pagination-navigation .sk-toggle-option:last-child {
     flex: 4;
@@ -495,6 +486,12 @@ a {
 a:hover {
   color: #000;
 }
-.fdk-label.pull-left {
-  min-width: initial;
+.fdk-label.pull-left .fdk-label.pull-left:focus {
+  min-width: initial !important;
+}
+.sk-results-list__action-bar .dropdown .dropdown-toggle {
+  left:400px;
+}
+.sk-results-list__action-bar .dropdown:first-child  .dropdown-toggle {
+  left:0;
 }
