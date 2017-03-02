@@ -10,12 +10,15 @@ import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
 import {RouterModule} from "@angular/router";
 import {AlertModule} from "ng2-bootstrap";
 import {DatasetComponent} from "./dataset/dataset.component";
+import {StartComponent} from "./start/start.component";
+import {CatalogService} from "./catalog/catalog.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     CatalogComponent,
-    DatasetComponent
+    DatasetComponent,
+    StartComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import {DatasetComponent} from "./dataset/dataset.component";
     AlertModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [CatalogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
