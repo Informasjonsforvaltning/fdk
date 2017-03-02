@@ -73,7 +73,7 @@ searchkit.translateFunction = (key) => {
     "facets.view_all": getText('page.seeall'),
     "facets.view_less": getText('page.seefewer'),
 		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.results.in') + ' ' + "{timeTaken} ms"
+		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.results')
   }
   return translations[key]
 }
@@ -274,16 +274,16 @@ export class SearchPage extends React.Component {
 											id="publisher"
 											title={getText('facet.organisation')}
 											field="publisher.name.raw"
-											operator="AND"
-											size={5}
+											operator="OR"
+											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionPublishers}
 											/>
 										<RefinementListFilter
 											id="theme"
 											title={getText('facet.theme')}
 											field="theme.code.raw"
-											operator="AND"
-											size={2}
+											operator="OR"
+											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionThemes}
 											/>
 									</div>

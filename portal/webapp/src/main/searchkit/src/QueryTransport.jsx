@@ -58,8 +58,6 @@ export class QueryTransport extends AxiosESTransport {
         publisherFilter = (query.filter.term[publisherKey] ? '&publisher=' + encodeURIComponent(query.filter.term[publisherKey]) : '');
   			themeFilter = ((query.filter.term[themeKey]) ? '&theme=' + query.filter.term[themeKey] : '');
       }
-      console.log('publisherFilter is ', publisherFilter);
-      console.log('themeFilter is ', themeFilter);
     }
 
     let sortfield = "_score";
@@ -95,16 +93,16 @@ export class QueryTransport extends AxiosESTransport {
   }
 
   getData(response){
-
 		    // Check for the old property name to avoid a ReferenceError in strict mode.
 		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('publisherCount')) {
-		        response.data.aggregations['publisher.name.raw3'] = {'publisher.name.raw' : response.data.aggregations['publisherCount'], size: '10'};
-						response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets = response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets.slice(0,10);
+		        response.data.aggregations['publisher.name.raw3'] = {'publisher.name.raw' : response.data.aggregations['publisherCount'], size: '5'};
+						response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets = response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets.slice(0,100);
 		        delete response.data.aggregations['publisherCount'];
 		    }
 		    // Check for the old property name to avoid a ReferenceError in strict mode.
 		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('theme_count')) {
-		        response.data.aggregations['theme.code.raw4'] = {'theme.code.raw' : response.data.aggregations['theme_count'], size: '10'};
+		        response.data.aggregations['theme.code.raw4'] = {'theme.code.raw' : response.data.aggregations['theme_count'], size: '5'};
+						response.data.aggregations['theme.code.raw4']['theme.code.raw'].buckets = response.data.aggregations['theme.code.raw4']['theme.code.raw'].buckets.slice(0,100);
 		        delete response.data.aggregations['theme_count'];
 		    }
     return response.data
