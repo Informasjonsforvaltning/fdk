@@ -113,7 +113,9 @@ input.fdk-search {
 }
 
 /*  L A B E L S   &   B U T T O N S  */
-
+.list-group-item.fdk-label-default, .fdk-label-default {
+  min-width: 100%;
+}
 .list-group-item.fdk-label-default, .fdk-label-default, a.fdk-label-default:focus, .fdk-label-default:active {
     background-color: #fff;
     color: #5A6778;
@@ -122,7 +124,6 @@ input.fdk-search {
     padding: 8px 13px 8px 15px;
     margin-bottom: 10px;
     display: inline-block;
-    min-width: 100%;
 }
 
 .list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
@@ -499,5 +500,5 @@ a:hover {
   text-align: center;
 }
 .container > .fdk-label {
-  min-width: 140px;
+  min-width: 89px;
 }
