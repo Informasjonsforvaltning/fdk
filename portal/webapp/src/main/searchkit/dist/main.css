@@ -127,7 +127,6 @@ input.fdk-search {
 
 .list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
     background-color: #F2F3F7;
-    color: #fff;
 }
 
 .fdk-label {
@@ -495,4 +494,10 @@ a:hover {
 .sk-results-list__action-bar .dropdown:first-child{
   right:auto;
   left:0;
+}
+.sk-no-hits__info {
+  text-align: center;
+}
+.container > .fdk-label {
+  min-width: 140px;
 }

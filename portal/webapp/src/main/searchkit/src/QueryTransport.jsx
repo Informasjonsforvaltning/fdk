@@ -8,7 +8,7 @@ export class QueryTransport extends AxiosESTransport {
     super()
     this.options = defaults(options, {
       headers:{},
-      searchUrlPath:"http://10.29.3.108:8083/search"
+      searchUrlPath:"http://" + window.location.hostname +":8083/search"
     })
     if(this.options.basicAuth){
       this.options.headers["Authorization"] = (
@@ -82,7 +82,7 @@ export class QueryTransport extends AxiosESTransport {
     }
 
     return this.axios.get(
-			'http://10.29.3.108:8083/search?q=' +
+			'http://' + window.location.hostname +':8083/search?q=' +
 			(query.query ? query.query.simple_query_string.query : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +

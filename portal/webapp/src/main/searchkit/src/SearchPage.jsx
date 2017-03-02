@@ -191,7 +191,7 @@ export class SearchPage extends React.Component {
 		let that = this;
 		if(!window.themes) {
 			window.themes = [];
-			sa.get('http://10.29.3.108:8083/themes')
+			sa.get('http://' + window.location.hostname +':8083/themes')
 				.end(function(err, res) {
 						if(!err && res) {
 							res.body.hits.hits.forEach(function (hit) {
@@ -305,7 +305,9 @@ export class SearchPage extends React.Component {
 									</ActionBar>
 									<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={MovieHitsGridItem}
 										sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
-									<NoHits/>
+									<NoHits translations={{
+        "NoHits.NoResultsFound":getText('page.nohits')
+      }} />
 									<Pagination showNumbers={true}/>
 									</div>
 								</div>

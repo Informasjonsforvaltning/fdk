@@ -127,7 +127,6 @@ input.fdk-search {
 
 .list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
     background-color: #F2F3F7;
-    color: #fff;
 }
 
 .fdk-label {
@@ -273,7 +272,6 @@ a.row.list-group-item.dataset {
     position: relative;
     float: right;
     z-index: 2;
-    margin-right: 144px;
 }
 
 .fdk-dropdown-toggle-language {
@@ -489,9 +487,17 @@ a:hover {
 .fdk-label.pull-left .fdk-label.pull-left:focus {
   min-width: initial !important;
 }
-.sk-results-list__action-bar .dropdown .dropdown-toggle {
-  left:400px;
+.sk-results-list__action-bar .dropdown{
+  right: 0;
+  position: absolute;
 }
-.sk-results-list__action-bar .dropdown:first-child  .dropdown-toggle {
+.sk-results-list__action-bar .dropdown:first-child{
+  right:auto;
   left:0;
+}
+.sk-no-hits__info {
+  text-align: center;
+}
+.container > .fdk-label {
+  min-width: 140px;
 }
