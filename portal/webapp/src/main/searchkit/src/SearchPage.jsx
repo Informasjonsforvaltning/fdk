@@ -34,10 +34,15 @@ const searchkit = new SearchkitManager(
 	{
 		transport: new QueryTransport(),
 		createHistoryFunc: useQueries(createHistoryFn)({
-      stringifyQuery(ob){
+      stringifyQuery(ob) {
 				Object.keys(ob).map((e) => {
 						if(typeof ob[e] === 'object') { // is array
+							ob[e] = ob[e].map((filterItem) => {
+								return encodeURIComponent(filterItem);
+							});
 							ob[e] = ob[e].join(',');
+						} else {
+							ob[e] = encodeURIComponent(ob[e]);
 						}
 						if(ob[e].length === 0) delete ob[e];
 				});
@@ -51,7 +56,6 @@ const searchkit = new SearchkitManager(
         return parsedQuery;
       }
     })
-
 	}
 );
 //const searchkit = new SearchkitManager(host);
@@ -187,7 +191,7 @@ export class SearchPage extends React.Component {
 		let that = this;
 		if(!window.themes) {
 			window.themes = [];
-			sa.get('http://localhost:8083/themes')
+			sa.get('http://10.29.3.108:8083/themes')
 				.end(function(err, res) {
 						if(!err && res) {
 							res.body.hits.hits.forEach(function (hit) {
@@ -271,7 +275,7 @@ export class SearchPage extends React.Component {
 											title={getText('facet.organisation')}
 											field="publisher.name.raw"
 											operator="AND"
-											size={6}
+											size={5}
 											itemComponent={RefinementOptionPublishers}
 											/>
 										<RefinementListFilter
@@ -279,14 +283,14 @@ export class SearchPage extends React.Component {
 											title={getText('facet.theme')}
 											field="theme.code.raw"
 											operator="AND"
-											size={6}
+											size={2}
 											itemComponent={RefinementOptionThemes}
 											/>
 									</div>
 									<div id="datasets" className="col-sm-8 list-group">
 									<ActionBar>
 										<ActionBarRow>
-											<SortingSelector listComponent={Select2} className="bbbbb" options={[
+											<SortingSelector listComponent={Select2} options={[
 												{label:getText('sort.by') + ' ' + getText('sort.by.relevance'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
                         {label:getText('sort.by') + ' ' + getText('sort.by.title'), field:"title", order:"asc"},
 												{label:getText('sort.by') + ' ' + getText('sort.by.modified'), field:"modified", order:"desc"},

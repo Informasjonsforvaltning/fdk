@@ -8,7 +8,7 @@ export class QueryTransport extends AxiosESTransport {
     super()
     this.options = defaults(options, {
       headers:{},
-      searchUrlPath:"http://localhost:8083/search"
+      searchUrlPath:"http://10.29.3.108:8083/search"
     })
     if(this.options.basicAuth){
       this.options.headers["Authorization"] = (
@@ -40,11 +40,10 @@ export class QueryTransport extends AxiosESTransport {
             if (multiplePublishers) {
                 publisherFilter += ',';
             }
-            publisherFilter += filter.term[publisherKey];
+            publisherFilter += encodeURIComponent(filter.term[publisherKey]);
             multiplePublishers = true;
           } else if(filter.term[themeKey]) {
             console.log('filter is ', filter, filter.term, filter.term[themeKey]);
-
             if(themeFilter.length === 0) {
               themeFilter += '&theme=';
             }
@@ -56,7 +55,7 @@ export class QueryTransport extends AxiosESTransport {
           }
         })
       } else if(query.filter.term) { // single filter
-        publisherFilter = (query.filter.term[publisherKey] ? '&publisher=' + query.filter.term[publisherKey] : '');
+        publisherFilter = (query.filter.term[publisherKey] ? '&publisher=' + encodeURIComponent(query.filter.term[publisherKey]) : '');
   			themeFilter = ((query.filter.term[themeKey]) ? '&theme=' + query.filter.term[themeKey] : '');
       }
       console.log('publisherFilter is ', publisherFilter);
@@ -83,7 +82,7 @@ export class QueryTransport extends AxiosESTransport {
     }
 
     return this.axios.get(
-			'http://localhost:8083/search?q=' +
+			'http://10.29.3.108:8083/search?q=' +
 			(query.query ? query.query.simple_query_string.query : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
