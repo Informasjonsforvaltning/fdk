@@ -479,6 +479,18 @@
         dcat:keyword                "lønn"@nb , "ytelser"@nb , "pensjon"@nb , "arbeidsforhold"@nb ;
         dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
+<http://data.brreg.no/datakatalog/dataset/960885406/35>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Inneholder studenter som studerer i utlandet, enten i form av et ordinært gradstudium eller som et delstudium. Inneholder også elever som går på lavere utdanning, såkalt ungdomsrett, og som tar studier i utlandet i form av utveksling."@nb ;
+        dct:identifier          "35" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:title               "Norske elever og studenter ved utlandske utdanningssteder støttet av Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
 <http://data.brreg.no/datakatalog/distribusjon/9>
         a                dcat:Distribution ;
         dct:description  "Oppslag via data.brreg.no eller API"@nb ;
@@ -500,18 +512,6 @@
         dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/3> ;
         dcat:keyword            "Parti"@nb , "Partinavn"@nb , "Organisasjonsnummer"@nb , "Kontaktperson"@nb , "Utøvende organ"@nb ;
         dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
-
-<http://data.brreg.no/datakatalog/dataset/960885406/35>
-        a                       dcat:Dataset ;
-        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
-        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
-        dct:description         "Inneholder studenter som studerer i utlandet, enten i form av et ordinært gradstudium eller som et delstudium. Inneholder også elever som går på lavere utdanning, såkalt ungdomsrett, og som tar studier i utlandet i form av utveksling."@nb ;
-        dct:identifier          "35" ;
-        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
-        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
-        dct:title               "Norske elever og studenter ved utlandske utdanningssteder støttet av Lånekassen"@nb ;
-        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
-        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
 
 <http://data.brreg.no/datakatalog/distribusjon/14>
         a                dcat:Distribution ;
@@ -1191,11 +1191,6 @@
         dct:identifier  "960885406" ;
         foaf:name       "Statens Lånekasse for Utdanning" .
 
-<http://data.brreg.no/enhetsregisteret/enhet/958935420>
-        a               foaf:Agent ;
-        dct:identifier  "958935420" ;
-        foaf:name       "Oslo Kommune" .
-
 <http://data.brreg.no/datakatalog/dataset/974761076/32>
         a                dcat:Dataset ;
         dct:description  "Register over upersonlige skatteytere"@nb ;
@@ -1203,6 +1198,11 @@
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
         dct:title        "Register over upersonlige skatteytere"@nb ;
         dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/958935420>
+        a               foaf:Agent ;
+        dct:identifier  "958935420" ;
+        foaf:name       "Oslo Kommune" .
 
 <http://data.brreg.no/datakatalog/dataset/958935420/50>
         a                       dcat:Dataset ;
@@ -1218,17 +1218,6 @@
         dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/22> ;
         dcat:keyword            "barnehager"@nb ;
         dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
-
-<http://data.brreg.no/datakatalog/katalog/991825827/14>
-        a                dcat:Catalog ;
-        dct:description  "Katalog over datasett i Difi" ;
-        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/991825827> ;
-        dct:title        "Difis datakatalog" ;
-        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/991825827/52> .
-
-<http://data.brreg.no/datakatalog/kontaktpunkt/a-3>
-        a                        vcard:Organization ;
-        vcard:organization-unit  "Avdeling datafangst" .
 
 <http://data.brreg.no/datakatalog/dataset/915933149/26>
         a                       dcat:Dataset ;
@@ -1256,3 +1245,14 @@
         dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/15> ;
         dcat:keyword            "sykdom"@nb , "skade"@nb , "spesialisthelsetjeneste"@nb , "symptom"@nb , "kodeverk"@nb , "diagnose"@nb ;
         dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/katalog/991825827/14>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Difi" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/991825827> ;
+        dct:title        "Difis datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/991825827/52> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-3>
+        a                        vcard:Organization ;
+        vcard:organization-unit  "Avdeling datafangst" .
