@@ -3,12 +3,24 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+
 	<groupId>no.dcat</groupId>
-	<artifactId>parent</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<artifactId>fdk</artifactId>
+	<version>0.2.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
 	<name>Felles Datakatalog</name>
 	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
+
+	<properties>
+		<fdk.version>0.2.4-SNAPSHOT</fdk.version>
+		<java.version>1.8</java.version>
+		<docker.image.prefix>fdk</docker.image.prefix>
+		<docker.registry />
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
+		<elasticsearch.version>2.4.1</elasticsearch.version>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -33,14 +45,14 @@
 		<url>https://github.com/Altinn/fdk</url>
 		<connection>scm:git:git://github.com:MarcusGustafson74/Altinn/fdk.git</connection>
 		<developerConnection>scm:git:https://github.com/Altinn/fdk.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<parent>
 		<groupId>no.brreg.felles</groupId>
 		<artifactId>br-maven-main-msn</artifactId>
 		<version>1.3.0</version>
-		<relativePath>br-maven-main-msn</relativePath>
+		<relativePath>br-maven-main-msn/pom.xml</relativePath>
 	</parent>
 
 
@@ -63,16 +75,9 @@
 		<module>test</module>
 		<module>gdoc-import</module>
 		<module>bddtest</module>
+		<module>br-maven-main-msn</module>
 	</modules>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<docker.image.prefix>fdk</docker.image.prefix>
-		<docker.registry />
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
-		<elasticsearch.version>2.4.1</elasticsearch.version>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -80,22 +85,22 @@
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>datastore</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>query</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>webapp</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 
 			<dependency>
@@ -198,12 +203,6 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-htmlunit-driver</artifactId>
-				<version>2.52.0</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
 				<groupId>org.webjars</groupId>
 				<artifactId>jasmine</artifactId>
 				<version>2.5.0</version>
@@ -234,11 +233,6 @@
 				<version>Brixton.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-server</artifactId>
-				<version>3.0.1</version>
 			</dependency>
 
 			<!-- Cucumber -->
@@ -279,16 +273,6 @@
 				<artifactId>commons-cli</artifactId>
 				<version>1.3.1</version>
 			</dependency>
-            <dependency>
-                <groupId>com.codeborne</groupId>
-                <artifactId>phantomjsdriver</artifactId>
-                <version>LATEST</version>
-            </dependency>
-			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-leg-rc</artifactId>
-				<version>2.53.1</version>
-			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
@@ -314,7 +298,7 @@
 	<build>
 		<plugins>
 
-			<plugin>
+			<!--plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
@@ -340,7 +324,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
 
 
 		</plugins>

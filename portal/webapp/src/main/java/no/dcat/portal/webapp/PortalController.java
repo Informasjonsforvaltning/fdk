@@ -78,7 +78,15 @@ public class PortalController {
         logger.info("users locale: " + locale.toLanguageTag());
 
         if ("".equals(id)) {
-            return new ModelAndView("forward:/searchkit.html");
+            ModelAndView model = new ModelAndView("searchkit");
+            model.addObject("fdkparameters",
+                    "var fdkSettings = fdkSettings || {\n" +
+                            "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "'\n" +
+                    "};"
+
+            );
+
+            return model;
             /*
             ModelAndView model = new ModelAndView(MODEL_RESULT);
             model.addObject("themes", getCodeLists());

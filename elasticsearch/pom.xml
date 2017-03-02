@@ -4,15 +4,12 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>elasticsearch</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
 	
     <parent>
         <groupId>no.dcat</groupId>
-        <artifactId>parent</artifactId>
-        <version>0.2.2-SNAPSHOT</version>
+        <artifactId>fdk</artifactId>
+        <version>0.2.4-SNAPSHOT</version>
     </parent>
-
-
 
 	<build>
 	<plugins>

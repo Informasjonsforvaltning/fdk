@@ -15,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -55,14 +57,30 @@ public class PortalRestController {
         DcatDataStore dcatDataStore = new DcatDataStore(new Fuseki(fusekiService + "/dcat"));
         Model model = dcatDataStore.getAllDataCatalogues();
 
+        String decodedUri = id;
+        try {
+            decodedUri = new java.net.URI(id).toString();
+        } catch (URISyntaxException e) {
+            logger.error("URI syntax error ", id, e);
+        }
+
         String queryString =
                 "PREFIX dcat: <http://www.w3.org/ns/dcat#> " +
                 "PREFIX dct: <http://purl.org/dc/terms/> " +
                 "PREFIX owl: <http://www.w3.org/TR/owl-time/> " +
                 "PREFIX adms: <http://www.w3.org/ns/adms#>" +
                 "PREFIX foaf: <http://xmlns.com/foaf/0.1/>" +
-                "DESCRIBE <"+ id +">" +
-                "where {?x dcat:Dataset ?y}";
+                "PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>" +
+                "PREFIX dcatno: <http://difi.no/dcatno#>" +
+                "PREFIX enhetsreg: <http://data.brreg.no/meta/>" +
+                "DESCRIBE ?dataset ?publisher ?contact ?distribution" +
+                "where {?dataset a dcat:Dataset. " +
+                " ?dataset dct:publisher ?publisher." +
+                " OPTIONAL {?dataset dcat:contactPoint ?contact} " +
+                " OPTIONAL {?dataset dcat:distribution ?distribution }" +
+                "FILTER (?dataset = <" + decodedUri + "> )" +
+                "}";
+
         Query query = QueryFactory.create(queryString);
 
         try (QueryExecution qexec = QueryExecutionFactory.create(query, model)){

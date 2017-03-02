@@ -2,19 +2,17 @@ package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by bjg on 09.02.2017.
@@ -57,6 +55,18 @@ public class ThemeLabelsSteps extends CommonPage{
         assertThat(publisher.size(), is(numberOfThemes));
     }
 
+    @Then("\"beta-versjon\" shall appear in a topline")
+    public void beta_version_shall_appear_in_topline() {
+        WebElement betaline = driver.findElement(By.xpath("//div[@class='fdk-header-beta']"));
+        assertNotEquals(betaline,null);
+        boolean norsk =betaline.getText().contains("beta-versjon");
+        assertThat(norsk, is(true));
+    }
 
+    @Then("there should exist a link \"tilbakemeldinger\" for email input")
+    public void there_should_exist_a_feedback_link() {
+        WebElement feedback = driver.findElement(By.xpath("//div/a[@href='mailto:fellesdatakatalog@brreg.no?subject=Tilbakemelding Felles datakatalog']"));
+        assertThat(feedback.getText(), is("tilbakemeldinger") );
+    }
 
 }

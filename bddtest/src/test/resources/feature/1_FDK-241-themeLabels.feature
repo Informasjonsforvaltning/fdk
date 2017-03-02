@@ -13,6 +13,12 @@ Feature: Forbedringer design
   And bruker datasett dataset-test.ttl
   And man har åpnet Fellesdatakatalog i en nettleser
 
+ #gitt jeg er på startsiden skal det eksistere en topplinje med betversjon og lenke til epost for innspill
+  @TEST_FDK_295 @TESTSETT_FDK_323
+  Scenario: C-Test FDK: Forbedringer design - betaversjon
+    Given I am on the homepage of the National Data Catalog
+    Then "beta-versjon" shall appear in a topline
+    And there should exist a link "tilbakemeldinger" for email input
 
 
  #gitt jeg er på startsiden kan jeg se alle temaene som avrundede labels og de er klikkbare

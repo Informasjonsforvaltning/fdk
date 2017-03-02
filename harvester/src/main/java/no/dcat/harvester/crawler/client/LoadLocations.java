@@ -137,21 +137,21 @@ public class LoadLocations {
         BulkRequestBuilder bulkRequest = client.prepareBulk();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-        if (locations.size() > 0) {
-            Iterator locations = this.locations.entrySet().iterator();
-            while (locations.hasNext()) {
-                Map.Entry locEntry = (Map.Entry) locations.next();
-                SkosCode location = (SkosCode) locEntry.getValue();
 
-                IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getCode());
-                indexRequest.source(gson.toJson(location));
-                bulkRequest.add(indexRequest);
+        Iterator locations = this.locations.entrySet().iterator();
+        while (locations.hasNext()) {
+            Map.Entry locEntry = (Map.Entry) locations.next();
+            SkosCode location = (SkosCode) locEntry.getValue();
 
-                logger.debug("Add location {} to bulk request", location.getCode());
-            }
+            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getCode());
+            indexRequest.source(gson.toJson(location));
+            bulkRequest.add(indexRequest);
 
+            logger.debug("Add location {} to bulk request", location.getCode());
+        }
+
+        if(bulkRequest.numberOfActions() > 0){
             BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-
             if (bulkResponse.hasFailures()) {
                 throw new RuntimeException(
                         String.format("Load of locations to elasticsearch has error: %s", bulkResponse.buildFailureMessage()));
