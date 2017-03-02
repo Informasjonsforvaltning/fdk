@@ -6,11 +6,18 @@ Dette er den første felleskomponenten som utvikles i regi av Skate (https://www
 
 Applikasjoner
 
+<<<<<<< Updated upstream
 * portal
 * admin
 * harvester
 * datastore
 * api
+=======
+* portal: webapp + query
+* harvester: admin + service
+* api (currently not up)
+* test-admin
+>>>>>>> Stashed changes
 
 Komponenter
 
@@ -35,20 +42,37 @@ docker-compose down
 
 ## Kjøre applikasjonene 
 
-Admin:
-http://localhost:8080/admin-webapp/admin
+
+Portal-webapp:
+http://localhost:8080
+
+Harvester-service: 
+http://localhost:8081/
+
+Harvester-admin:
+http://localhost:8082/
 
 test_user password
 test_admin password
 
-Elasticsearch
+
+Portal-query:
+http://localhost:8083/search
+
+Gdoc-import:
+http://localhost:8084/versions/latest
+
+Test-admin:
+http://localhost:8085/
+
+Fuseki:
+http://localhost:3030/fuseki/
+
+Elasticsearch:
 http://localhost:9200
 
 Kibana
 http://localhost:5601/
-
-FUSEKI
-http://localhost:3030/fuseki/
 
 
 ## Common Problems
