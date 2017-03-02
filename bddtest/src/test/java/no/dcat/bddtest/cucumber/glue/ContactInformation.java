@@ -3,21 +3,17 @@ package no.dcat.bddtest.cucumber.glue;
 import cucumber.api.DataTable;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import no.dcat.bddtest.elasticsearch.client.DeleteIndex;
-import no.dcat.harvester.crawler.Loader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * Created by dask on 26.01.2017.
@@ -53,7 +49,7 @@ public class ContactInformation extends CommonPage {
 
 
                 assertTrue("Detail page has title ", driver.getTitle() != null);
-                openPageWaitRetry("detail?id="+ dsId, "detailspage", 10 );
+                openPageWaitRetry("datasets?id="+ dsId, "chosenLanguage", 10 );
                 if (!"".equals(name)) {
                     WebElement nameElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Navn']/following-sibling::dd[1]"));
                     assertEquals(name, nameElement.getText());

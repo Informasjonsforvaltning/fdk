@@ -6,14 +6,13 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * Cucumber glue class for the detail feature.
@@ -26,8 +25,8 @@ public class DetailPage extends CommonPage {
     public static final String ID_LOCATIONS_TEXT = "locationsText";
     public static final String ID_ACCESS_RIGTH_TEXT = "accessRightText";
     public static final String ID_ACCRUAL_PERIODICITY_TEXT = "accrualPeriodicityText";
-    private final String NOR_PAGE = "detail?id=%s";
-    private final String ENG_PAGE = "detail?id=%s";
+    private final String NOR_PAGE = "datasets?id=%s";
+    private final String ENG_PAGE = "datasets?id=%s";
 
     @Before
     public void setup() {

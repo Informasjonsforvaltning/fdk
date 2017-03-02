@@ -12,10 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static java.lang.Thread.sleep;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by dask on 16.12.2016.
@@ -68,26 +67,30 @@ public class GdocCatalogSteps extends CommonPage {
 
     }
 
-    void registerCatalog() {
+    void registerCatalog(String descriptionInput, String urlInput, String orgnrInput) {
         WebElement description = driver.findElement(By.id("inputDescription"));
-        description.sendKeys("Innføringsteamets gdoc data");
+        description.sendKeys(descriptionInput);
         WebElement url = driver.findElement(By.id("inputUrl"));
-        url.sendKeys("http://gdoc:8080/versions/latest");
+        url.sendKeys(urlInput);
         WebElement orgnumber = driver.findElement(By.id("inputOrgnumber"));
-        orgnumber.sendKeys("12345");
+        orgnumber.sendKeys(orgnrInput);
 
         WebElement saveButton = driver.findElement(By.xpath("/html/body/div/div[3]/div[1]/button"));
         saveButton.click();
     }
 
-    @Given("^I select harvest gdoc catalog$")
-    public void doHarvestGdoc() throws Throwable {
+    @Given("^I select harvest \"([^\"]*)\" catalog$")
+    public void doHarvestGdoc(String query) throws Throwable {
         // find gdoc import
         WebElement row;
-        boolean catalogExists = driver.findElements(By.xpath("//tr[td[contains(text(),'gdoc')]]")).size() > 0;
+        boolean catalogExists = driver.findElements(By.xpath("//tr[td[contains(text(),"+query+")]]")).size() > 0;
 
         if (!catalogExists) {
-            registerCatalog();
+            if ("gdoc".equals(query)) {
+                registerCatalog("Innføringsteamets gdoc data", "http://gdoc:8080/versions/latest", "91919191");
+            } else if ("difi".equals(query)) {
+                registerCatalog("difi katalog", "http://data.norge.no/api/dcat2/991825827/data.jsonld", "991825827");
+            }
             sleep(1000);
         }
 
