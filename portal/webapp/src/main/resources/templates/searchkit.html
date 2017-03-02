@@ -1,10 +1,10 @@
-<!DOCTYPE h
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8" />
-	<title>Sample App</title>
-	<meta charset="utf-8"/>
+	<title>Felles datakatalog</title>
+
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all" />
 	<!--
@@ -16,66 +16,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 -->
 <!--	<link rel="stylesheet" href="css/main.css">-->
-	<link rel="stylesheet" href="http://10.29.3.108:3000/static/main.css">
-<style>
+	<link rel="stylesheet" href="css/main.css"/>
 
-/*
-.sk-item-list-option__text:hover {
-text-transform: none;
-}
-.sk-item-list-option__text:first-letter:hover {
-text-transform: none;
-}*/
-
-/*
-.publisher {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-.sk-item-list-option *{
-display:inline;
-}
-.sk-item-list-option__count:before {
-content: '(';
-}
-
-.sk-item-list-option__count:after {
-content: ')';
-}
-.sk-item-list-option__text {
-text-transform: lowercase;
-padding-left: 3px;
-}
-.sk-item-list-option__text:first-letter { text-transform: uppercase; }
-.list-group-item {
-width: 100%;
-}
-.btn.publisher:empty {
-display:none;
-}
-.label {
-margin: 1px;
-display: inline-block;
-}
-.sk-layout__top-bar {
-	position: static;
-	background:none;
-	box-shadow: none;
-	margin-bottom: 10px;
-}
-.sk-search-box {
-	border: 1px solid #ccc;
-	color: #000;
-}
-.sk-search-box__text {
-	color: #000;
-}
-.sk-layout__top-bar {
-	color: #000 !important;
-}
-*/
-</style>
 <!-- Latest compiled and minified JavaScript -->
 </head>
 
@@ -105,6 +47,7 @@ display: inline-block;
 	            </div>
 	        </div>-->
 
+	<script type="text/javascript" th:utext="${fdkparameters}"></script>
 	<script>
         var langStrings = langStrings || {};
         langStrings.en = langStrings.en || {};
@@ -332,7 +275,7 @@ display: inline-block;
 	</script>
 
 	<script>var bundleLoaded = false;</script>
-	<script src="http://10.29.3.108:3000/static/bundle.js" onload="bundleLoaded = true;"></script>
+	<script src="dist/bundle.js" onload="bundleLoaded = true;"></script>
 	<script>
 	$(window).on('load',function() {
 		if(!bundleLoaded) {
