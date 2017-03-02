@@ -1,20 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>admin-webapp</artifactId>
-	<packaging>jar</packaging>
-	<version>0.2.2-SNAPSHOT</version>
-	
 	<parent>
 		<groupId>no.dcat</groupId>
-		<artifactId>parent</artifactId>		
-		<version>0.2.2-SNAPSHOT</version>
+		<artifactId>fdk</artifactId>
+		<version>0.2.4-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
-	<properties>
-        <java.version>1.8</java.version>	
-	</properties>
+	<artifactId>admin-webapp</artifactId>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
@@ -69,7 +64,6 @@
 		<dependency>
 			<groupId>no.dcat</groupId>
 			<artifactId>datastore</artifactId>
-			<version>0.2.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

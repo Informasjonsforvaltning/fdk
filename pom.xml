@@ -3,12 +3,24 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+
 	<groupId>no.dcat</groupId>
-	<artifactId>parent</artifactId>
+	<artifactId>fdk</artifactId>
 	<version>0.2.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
 	<name>Felles Datakatalog</name>
 	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
+
+	<properties>
+		<fdk.version>0.2.4-SNAPSHOT</fdk.version>
+		<java.version>1.8</java.version>
+		<docker.image.prefix>fdk</docker.image.prefix>
+		<docker.registry />
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
+		<elasticsearch.version>2.4.1</elasticsearch.version>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -33,8 +45,8 @@
 		<url>https://github.com/Altinn/fdk</url>
 		<connection>scm:git:git://github.com:MarcusGustafson74/Altinn/fdk.git</connection>
 		<developerConnection>scm:git:https://github.com/Altinn/fdk.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<parent>
 		<groupId>no.brreg.felles</groupId>
@@ -66,14 +78,6 @@
 		<module>br-maven-main-msn</module>
 	</modules>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<docker.image.prefix>fdk</docker.image.prefix>
-		<docker.registry />
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
-		<elasticsearch.version>2.4.1</elasticsearch.version>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -81,22 +85,22 @@
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>datastore</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>query</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>webapp</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 
 			<dependency>
