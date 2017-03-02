@@ -6,18 +6,11 @@ Dette er den første felleskomponenten som utvikles i regi av Skate (https://www
 
 Applikasjoner
 
-<<<<<<< Updated upstream
-* portal
-* admin
-* harvester
-* datastore
-* api
-=======
 * portal: webapp + query
 * harvester: admin + service
 * api (currently not up)
 * test-admin
->>>>>>> Stashed changes
+
 
 Komponenter
 
