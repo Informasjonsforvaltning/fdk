@@ -77,7 +77,7 @@ xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
         <xsl:for-each select="table:table-row[position() &gt; 1][not(table:table-cell[$identifikator]='')]">
         
                 <!-- create source uri -->
-                <xsl:variable name="uri">http://data.brreg.no/dataset/<xsl:value-of select="normalize-space(table:table-cell[$utgiver])"/>/<xsl:value-of select="normalize-space(table:table-cell[$identifikator])"/></xsl:variable>
+                <xsl:variable name="uri">http://data.brreg.no/datakatalog/dataset/<xsl:value-of select="normalize-space(table:table-cell[$utgiver])"/>/<xsl:value-of select="normalize-space(table:table-cell[$identifikator])"/></xsl:variable>
                
                 <!-- type -->
                 &lt;<xsl:value-of select="$uri"/>&gt;
@@ -210,7 +210,7 @@ xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
                    
                  <!-- distribusjon -->
                 <xsl:if test="normalize-space(table:table-cell[$distribusjon])!=''">
-                    :distribusjon &lt;http://data.brreg.no/datakatalog/distibusjon/<xsl:value-of select="normalize-space(table:table-cell[$distribusjon])"/>&gt; ;
+                    :distribusjon &lt;http://data.brreg.no/datakatalog/distribusjon/<xsl:value-of select="normalize-space(table:table-cell[$distribusjon])"/>&gt; ;
                 </xsl:if>                
                 .
                  
@@ -241,6 +241,9 @@ xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
                 <!-- type -->
                 &lt;<xsl:value-of select="$uri"/>&gt;
                     a dcat:Catalog ;
+
+                <!-- orgnr -->
+                    :orgnr """<xsl:value-of select="normalize-space(table:table-cell[$utgiver])"/>""" ;
 
                 <!-- tittel -->
                 <xsl:if test="normalize-space(table:table-cell[$tittel])!=''">
@@ -521,7 +524,7 @@ xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
             <xsl:for-each select="table:table-row[position() &gt; 1][not(table:table-cell[$id]='')]">
         
                 <!-- create source uri -->
-                <xsl:variable name="uri">http://data.brreg.no/datakatalog/distibusjon/<xsl:value-of select="normalize-space(table:table-cell[$id])"/></xsl:variable>
+                <xsl:variable name="uri">http://data.brreg.no/datakatalog/distribusjon/<xsl:value-of select="normalize-space(table:table-cell[$id])"/></xsl:variable>
                
                 <!-- type -->
                 &lt;<xsl:value-of select="$uri"/>&gt;
