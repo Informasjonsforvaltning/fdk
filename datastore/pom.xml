@@ -3,12 +3,11 @@
 
 	<artifactId>datastore</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.2-SNAPSHOT</version>
 
 	<parent>
-		<artifactId>parent</artifactId>
+		<artifactId>fdk</artifactId>
 		<groupId>no.dcat</groupId>
-		<version>0.2.2-SNAPSHOT</version>
+		<version>0.2.4-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
