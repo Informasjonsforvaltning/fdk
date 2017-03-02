@@ -45,8 +45,11 @@ http://localhost:8082/
 test_user password
 test_admin password
 
+Gdoc-import:
+http://localhost:8084/versions/latest
+
 Test-admin:
-http://loclahost:8084/
+http://localhost:8085/
 
 Elasticsearch
 http://localhost:9200
