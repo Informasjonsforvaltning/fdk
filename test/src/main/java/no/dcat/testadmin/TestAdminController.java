@@ -138,11 +138,16 @@ public class TestAdminController {
 
             String prefix = filename.substring(0,filename.indexOf('.'));
             String postfix = filename.substring(filename.indexOf('.'),filename.length());
-
             File tempFile = File.createTempFile(prefix, postfix, tempDir);
-            FileOutputStream fos = new FileOutputStream(tempFile);
-            fos.write(txt);
-            fos.close();
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(tempFile);
+                fos.write(txt);
+            } finally {
+                if (fos != null) {
+                    fos.close();
+                }
+            }
             logger.debug(tempFile.getAbsolutePath());
 
             Loader loader = new Loader();
@@ -160,7 +165,7 @@ public class TestAdminController {
             for (String s : resultMsgs) {
                 if (s.contains("validation_error")) success = false;
                 int index = s.indexOf(", crawler_id");
-                String sub = null;
+                String sub;
                 if (index != -1) sub = s.substring(0,index);
                 else sub = s;
 
@@ -180,7 +185,7 @@ public class TestAdminController {
             }
 
         } catch (IOException e) {
-            logger.error("Unable to load file due to {}",e.getMessage());
+            logger.error("Unable to load file due to {}",e.getMessage(),e);
         }
 
         return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
