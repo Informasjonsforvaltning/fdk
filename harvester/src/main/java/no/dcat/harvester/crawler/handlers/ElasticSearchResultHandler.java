@@ -109,6 +109,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<Distribution> distributions = new DistributionBuilder(model, locations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
         for (Distribution distribution : distributions) {
+            String json = gson.toJson(distribution);
 
             IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DISTRIBUTION_TYPE, distribution.getId());
             indexRequest.source(gson.toJson(distribution));
@@ -121,6 +122,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<Dataset> datasets = new DatasetBuilder(model, locations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
+            String json = gson.toJson(dataset);
 
             IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DATASET_TYPE, dataset.getId());
             indexRequest.source(gson.toJson(dataset));

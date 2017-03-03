@@ -59,7 +59,7 @@ public class FusekiUserDetailsService implements UserDetailsService {
             no.difi.dcat.datastore.domain.User user = new no.difi.dcat.datastore.domain.User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
             adminDataStore.addUser(user);
         } catch (Exception e) {
-            logger.warn(e.getMessage(),e);
+            logger.warn(e.getMessage());
         }
     }
 }

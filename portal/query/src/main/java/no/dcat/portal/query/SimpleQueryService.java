@@ -266,7 +266,6 @@ public class SimpleQueryService {
         if (response.getHits().getTotalHits() == 0) {
             logger.error(String.format("Found no dataset with id: %s", id));
             jsonError = new ResponseEntity<>(String.format("Found no dataset with id: %s", id), HttpStatus.NOT_FOUND);
-
         }
         logger.trace(String.format("Found dataset: %s", response.toString()));
 
@@ -467,7 +466,7 @@ public class SimpleQueryService {
             logger.debug("Client returns! " + address.toString());
         } catch (UnknownHostException e) {
             // TODO: throw exception.
-            logger.error(e.toString(),e);
+            logger.error(e.toString());
         }
 
         logger.debug("Transport client to elasticsearch created: " + client);

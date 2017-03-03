@@ -13,13 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -51,7 +48,7 @@ public class PortalRestController {
             logger.info("Dataset found {} ", id);
             return new ResponseEntity<>(responseBody, OK);
         } catch (NoSuchElementException nsee) {
-            logger.info("ID {} not found {}", id,nsee.getMessage(),nsee);
+            logger.info("ID {} not found {}", id);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

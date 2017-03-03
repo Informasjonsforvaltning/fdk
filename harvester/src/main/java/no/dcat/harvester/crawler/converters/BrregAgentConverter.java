@@ -137,7 +137,7 @@ public class BrregAgentConverter {
 
 
         } catch (Exception e) {
-            logger.warn("Failed to look up publisher: {} reason {}", uri, e.getMessage(),e);
+            logger.warn("Failed to look up publisher: {} reason {}", uri, e.getMessage());
         }
     }
 

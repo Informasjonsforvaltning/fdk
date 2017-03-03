@@ -72,7 +72,10 @@ public class AppErrorController implements ErrorController {
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         if (statusCode != null) {
-            return HttpStatus.valueOf(statusCode);
+            try {
+                return HttpStatus.valueOf(statusCode);
+            } catch (Exception ex) {
+            }
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }

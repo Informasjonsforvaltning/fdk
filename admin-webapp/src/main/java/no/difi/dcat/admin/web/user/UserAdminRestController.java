@@ -49,7 +49,6 @@ public class UserAdminRestController {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             }
         } catch (UserNotFoundException e) {
-            logger.error("User not found",e);
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
@@ -60,7 +59,6 @@ public class UserAdminRestController {
             }
             adminDataStore.addUser(user);
         } catch (UserAlreadyExistsException e) {
-            logger.error("User already exists",e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
