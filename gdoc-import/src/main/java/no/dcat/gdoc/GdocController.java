@@ -22,7 +22,6 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Stream;
@@ -35,6 +34,7 @@ import java.util.stream.Stream;
 @Controller
 public class GdocController {
 
+    public static final String DCAT_SCRIPT = "dcat.sh";
     public static final String STARTED = "Startet ";
     private static Logger logger = LoggerFactory.getLogger(GdocController.class);
 
@@ -71,7 +71,7 @@ public class GdocController {
 
         Process process;
 
-        ProcessBuilder pb = new ProcessBuilder("bash", "dcat.sh");
+        ProcessBuilder pb = new ProcessBuilder("bash", DCAT_SCRIPT);
         pb.directory(new File(converterHomeDir));
         File tempLogfileName = File.createTempFile("convert", "log");
         pb.redirectOutput(tempLogfileName);

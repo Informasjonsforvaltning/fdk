@@ -59,7 +59,7 @@ public class PortalController {
     }
 
     /**
-     * The result page. Sets callback service and version identification and returns
+     * The OLD result page. Sets callback service and version identification and returns
      * result.html page.
      *
      * @param session the session objec
@@ -78,6 +78,16 @@ public class PortalController {
         logger.info("users locale: " + locale.toLanguageTag());
 
         if ("".equals(id)) {
+            ModelAndView model = new ModelAndView("searchkit");
+            model.addObject("fdkparameters",
+                    "var fdkSettings = fdkSettings || {\n" +
+                            "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "'\n" +
+                    "};"
+
+            );
+
+            return model;
+            /*
             ModelAndView model = new ModelAndView(MODEL_RESULT);
             model.addObject("themes", getCodeLists());
             model.addObject("query", query);
@@ -91,7 +101,7 @@ public class PortalController {
             session.setAttribute("publisher", publisher);
 
 
-            return model;
+            return model;*/
         } else {
             return getDetailsView(id);
         }

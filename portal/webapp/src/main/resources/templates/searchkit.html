@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Felles datakatalog</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all" />
+	<!--
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+-->
+<!--	<link rel="stylesheet" href="css/main.css">-->
+	<link rel="stylesheet" href="css/main.css"/>
+
+<!-- Latest compiled and minified JavaScript -->
+</head>
+
+<body>
+	<div id='root'>
+	</div>
+	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--	<div class="row">
+
+	            <div class="col-sm-3 col-sm-offset-2" id="logo-footer">
+
+	                <a href="//www.brreg.no">
+	                    <img src="/static/img/brreg_logo.svg" alt="Brønnøysundregistrene logo">
+	                </a>
+
+	                <p><span>Organisasjonsnummer:</span> <span class="nowrap">974 760 673</span>
+	                </p>
+	                <a href="//www.brreg.no/personvern/personvernerklaering/">Informasjonskapsler - personvern</a>
+
+	            </div>
+
+	            <div class="col-sm-3 col-sm-offset-2">
+	                <a href="//www.difi.no">
+	                    <img src="/static/img/difi-logo.png" alt="Difi logo">
+	                </a>
+	            </div>
+	        </div>-->
+
+	<script type="text/javascript" th:utext="${fdkparameters}"></script>
+	<script>
+        var langStrings = langStrings || {};
+        langStrings.en = langStrings.en || {};
+        langStrings.nb = langStrings.nb || {};
+        langStrings.nn = langStrings.nn || {};
+
+        langStrings.en["about"] = "About";
+        langStrings.nn["about"] = "Om";
+        langStrings.nb["about"] = "Om";
+
+        langStrings.en["about.fordataowners"] = "For data owners";
+        langStrings.nb["about.fordataowners"] = "For dataeiere";
+        langStrings.nn["about.fordataowners"] = "For dataeigare";
+
+        langStrings.en["about.fordatausers"] = "For data users";
+        langStrings.nn["about.fordatausers"] = "For databrukare";
+        langStrings.nb["about.fordatausers"] = "For databrukere";
+
+        langStrings.nn["about.guide"] = "Rettleiar";
+        langStrings.en["about.guide"] = "Standard Guide";
+        langStrings.nb["about.guide"] = "Veileder";
+
+        langStrings.en["about.help"] = "Help";
+        langStrings.nn["about.help"] = "Hjelp";
+        langStrings.nb["about.help"] = "Hjelp";
+
+        langStrings.nb["about.standard"] = "DCAT-AP-NO 1.1 standarden";
+        langStrings.nn["about.standard"] = "DCAT-AP-NO 1.1 standarden";
+        langStrings.en["about.standard"] = "The DCAT-AP-NO 1.1 standard";
+
+        langStrings.nn["about.status"] = "Status implementasjon";
+        langStrings.nb["about.status"] = "Status implementasjon";
+        langStrings.en["about.status"] = "Status implementation";
+
+        langStrings.en["about.technical"] = "Technical information";
+        langStrings.nb["about.technical"] = "Teknisk";
+        langStrings.nn["about.technical"] = "Teknisk";
+
+        langStrings.en["about.title"] = "About the application";
+        langStrings.nn["about.title"] = "Om applikasjonen";
+        langStrings.nb["about.title"] = "Om applikasjonen";
+
+        langStrings.nn["app.publisher"] = "Søk på verksemd";
+        langStrings.nb["app.publisher"] = "Søk på virksomhet";
+        langStrings.en["app.publisher"] = "Search Publishers";
+
+        langStrings.nn["app.title"] = "Felles datakatalog";
+        langStrings.nb["app.title"] = "Felles datakatalog";
+        langStrings.en["app.title"] = "Norwegian Data Catalog";
+
+        langStrings.nn["beta.first"] = "Dette er ein beta-versjon. Gi oss gjerne ";
+        langStrings.nb["beta.first"] = "Dette er en beta-versjon. Gi oss gjerne";
+		langStrings.en["beta.first"] = "This is a beta version. Please, give feedback"
+
+        langStrings.nb["beta.last"] = "om hva du synes!";
+        langStrings.nn["beta.last"] = "om kva du synast!";
+        langStrings.en["beta.last"] = "about the application!"
+
+        langStrings.nb["beta.second"] = "tilbakemeldinger";
+        langStrings.nn["beta.second"] = "tilbakemeldinger";
+        langStrings.en["beta.second"] = "feedback"
+
+        langStrings.nb["contact.email"] = "E-post";
+        langStrings.nn["contact.email"] = "E-post";
+        langStrings.en["contact.email"] = "Email";
+
+        langStrings.en["contact.header"] = "Contact Information";
+        langStrings.nn["contact.header"] = "Kontaktinformasjon";
+        langStrings.nb["contact.header"] = "Kontaktinformasjon";
+
+        langStrings.en["contact.name"] = "Name";
+        langStrings.nn["contact.name"] = "Namn";
+        langStrings.nb["contact.name"] = "Navn";
+
+        langStrings.nb["contact.organization"] = "Organisasjon";
+        langStrings.nn["contact.organization"] = "Organisasjon";
+        langStrings.en["contact.organization"] = "Organisation";
+
+        langStrings.nn["contact.organization-unit"] = "Organisasjonseining";
+        langStrings.nb["contact.organization-unit"] = "Organisasjonsenhet";
+        langStrings.en["contact.organization-unit"] = "Organisation Unit";
+
+        langStrings.nn["contact.telephone"] = "Telefon";
+        langStrings.nb["contact.telephone"] = "Telefon";
+        langStrings.en["contact.telephone"] = "Telephone";
+
+        langStrings.nb["contact.url"] = "Url";
+        langStrings.nn["contact.url"] = "Url";
+        langStrings.en["contact.url"] = "URL";
+
+        langStrings.nb["facet.concept"] = "Begrep";
+        langStrings.en["facet.concept"] = "Concept";
+        langStrings.nn["facet.concept"] = "Omgrep";
+
+        langStrings.nn["facet.legal"] = "Heimel";
+        langStrings.nb["facet.legal"] = "Hjemmel";
+        langStrings.en["facet.legal"] = "Legal";
+
+        langStrings.en["facet.organisation"] = "ORGANISATION";
+        langStrings.nn["facet.organisation"] = "VERKSEMD";
+        langStrings.nb["facet.organisation"] = "VIRKSOMHET";
+
+        langStrings.nn["facet.spatial"] = "Geografi";
+        langStrings.nb["facet.spatial"] = "Geografi";
+        langStrings.en["facet.spatial"] = "Spatial";
+
+        langStrings.en["facet.standard"] = "Standard";
+        langStrings.nn["facet.standard"] = "Standard";
+        langStrings.nb["facet.standard"] = "Standard";
+
+        langStrings.en["facet.temporal"] = "Temporal";
+        langStrings.nb["facet.temporal"] = "Tidsperiode";
+        langStrings.nn["facet.temporal"] = "Tidsperiode";
+
+        langStrings.nb["facet.theme"] = "TEMA";
+        langStrings.nn["facet.theme"] = "TEMA";
+        langStrings.en["facet.theme"] = "THEME";
+
+        langStrings.en["faq"] = "Frequently asked questions";
+        langStrings.nn["faq"] = "Spørsmål og svar";
+        langStrings.nb["faq"] = "Spørsmål og svar";
+
+        langStrings.en["feedback.title"] = "Feedback";
+        langStrings.nb["feedback.title"] = "Tilbakemelding";
+        langStrings.nn["feedback.title"] = "Tilbakemelding";
+
+        langStrings.nn["footer.information"] = "Informasjonskapslar - personvern";
+        langStrings.nb["footer.information"] = "Informasjonskapsler - personvern";
+        langStrings.en["footer.information"] = "Information capsules";
+
+        langStrings.nb["footer.organisation.number"] = "Organisasjonsnummer:";
+        langStrings.nn["footer.organisation.number"] = "Organisasjonsnummer:";
+        langStrings.en["footer.organisation.number"] = "Organisation number:";
+
+        langStrings.en["hits.perpage"] = "hits per page";
+        langStrings.nn["hits.perpage"] = "treff per side";
+        langStrings.nb["hits.perpage"] = "treff per side";
+
+        langStrings.nb["lang.choose"] = "Velg språk";
+        langStrings.nn["lang.choose"] = "Velg språk";
+
+        langStrings.nb["lang.chosenLanguage"] = "Norsk (bokmål)";
+        langStrings.nn["lang.chosenLanguage"] = "Norsk (nynorsk)";
+
+        langStrings.nn["lang.english-en"] = "English";
+        langStrings.nb["lang.english-en"] = "English";
+        langStrings.en["lang.english-en"] = "English";
+
+        langStrings.nn["lang.norwegian-nb"] = "Bokmål";
+        langStrings.nb["lang.norwegian-nb"] = "Bokmål";
+        langStrings.en["lang.norwegian-nb"] = "Bokmål";
+        langStrings.nb["lang.norwegian-nn"] = "Nynorsk";
+        langStrings.nn["lang.norwegian-nn"] = "Nynorsk";
+        langStrings.en["lang.norwegian-nn"] = "Nynorsk";
+
+        langStrings.en["login.title"] = "Log in";
+        langStrings.nb["login.title"] = "Logg inn";
+        langStrings.nn["login.title"] = "Logg inn";
+
+        langStrings.en["page.navigation"] = "Page navigation";
+        langStrings.nb["page.navigation"] = "Sidenavigering";
+        langStrings.nn["page.navigation"] = "Sidenavigering";
+
+        langStrings.nb["page.next"] = "Neste side";
+        langStrings.nn["page.next"] = "Neste side";
+        langStrings.en["page.next"] = "Next page";
+
+        langStrings.nn["page.prev"] = "Forrige side";
+        langStrings.nb["page.prev"] = "Forrige side";
+        langStrings.en["page.prev"] = "Previous page";
+
+        langStrings.en["page.result.hits"] = "hits";
+        langStrings.nb["page.result.hits"] = "treff";
+        langStrings.nn["page.result.hits"] = "treff";
+
+        langStrings.nb["page.result.summary"] = "Søket ga";
+        langStrings.nn["page.result.summary"] = "Søket gav";
+        langStrings.en["page.result.summary"] = "The search gave";
+
+				langStrings.nb["page.search.gave"] = "treff"
+				langStrings.nn["page.search.gave"] = "treff"
+				langStrings.en["page.search.gave"] = "hits"
+
+				langStrings.nb["page.in"] = "i";
+				langStrings.nn["page.in"] = "i"
+				langStrings.en["page.in"] = "in"
+
+
+				langStrings.nb["page.results"] = "treff"
+				langStrings.nn["page.results"] = "treff"
+				langStrings.en["page.results"] = "hits"
+
+				langStrings.nb["page.nohits"] = "Ingen resultater funnet"
+				langStrings.nn["page.nohits"] = "Ingen resultater funnet"
+				langStrings.en["page.nohits"] = "No results found"
+
+        langStrings.en["query.do"] = "Do search";
+        langStrings.nb["query.do"] = "Utfør søk";
+        langStrings.nn["query.do"] = "Utføre søk";
+
+        langStrings.nb["query.intro"] = "Søk etter datasett...";
+        langStrings.nn["query.intro"] = "Søk etter datasett...";
+        langStrings.en["query.intro"] = "Search for datasets...";
+
+        langStrings.en["result.waiting"] = "Fetching data ...";
+        langStrings.nn["result.waiting"] = "Henter data ...";
+        langStrings.nb["result.waiting"] = "Henter data ...";
+
+        langStrings.en["sort.by"] = "Sort by";
+        langStrings.nn["sort.by"] = "Sorter på";
+        langStrings.nb["sort.by"] = "Sorter på";
+
+        langStrings.en["sort.by.modified"] = "modified";
+        langStrings.nn["sort.by.modified"] = "sist endra";
+        langStrings.nb["sort.by.modified"] = "sist endret";
+
+        langStrings.en["sort.by.publisher"] = "publisher";
+        langStrings.nb["sort.by.publisher"] = "utgiver";
+        langStrings.nn["sort.by.publisher"] = "utgiver";
+
+        langStrings.en["sort.by.relevance"] = "relevance";
+        langStrings.nn["sort.by.relevance"] = "relevans";
+        langStrings.nb["sort.by.relevance"] = "relevans";
+
+        langStrings.en["sort.by.title"] = "title";
+        langStrings.nb["sort.by.title"] = "tittel";
+        langStrings.nn["sort.by.title"] = "tittel";
+
+
+	</script>
+
+	<script>var bundleLoaded = false;</script>
+	<script src="dist/bundle.js" onload="bundleLoaded = true;"></script>
+	<script>
+	$(window).on('load',function() {
+		if(!bundleLoaded) {
+			$.getScript('/dist/bundle.js');
+		}
+	});
+	</script>
+</body>
+</html>
