@@ -191,7 +191,8 @@ export class SearchPage extends React.Component {
 		let that = this;
 		if(!window.themes) {
 			window.themes = [];
-			sa.get('http://' + window.location.hostname +':8083/themes')
+
+			sa.get(window.fdkSettings.queryUrl + '/themes')
 				.end(function(err, res) {
 						if(!err && res) {
 							res.body.hits.hits.forEach(function (hit) {
