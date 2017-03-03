@@ -36,7 +36,7 @@ public class PortalControllerTests {
         MockHttpSession session = new MockHttpSession();
         ModelAndView actual = portal.result(session, "","", "", "");
 
-        assertEquals("forward:/searchkit.html", actual.getViewName());
+        assertEquals("searchkit", actual.getViewName());
     }
 
     @Test
