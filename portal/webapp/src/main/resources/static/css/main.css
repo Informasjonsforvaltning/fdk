@@ -397,6 +397,11 @@ a.white-link:hover {
 .sk-panel__header {
   padding: 5px 0;
 }
+.filter--publisher .sk-panel__header{
+    border-top: 1px solid #ddd;
+    margin: 14px 0 0 0;
+    padding: 14px 0 8px 0;
+}
 .sk-results-list__action-bar * {
 
 }
