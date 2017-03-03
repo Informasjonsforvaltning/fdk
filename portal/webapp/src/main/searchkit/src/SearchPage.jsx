@@ -73,7 +73,9 @@ searchkit.translateFunction = (key) => {
     "facets.view_all": getText('page.seeall'),
     "facets.view_less": getText('page.seefewer'),
 		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.result.hits')
+		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.result.hits'),
+		"NoHits.Error": getText('NoHits.Error'),
+		"NoHits.ResetSearch": '.'
   }
   return translations[key]
 }
