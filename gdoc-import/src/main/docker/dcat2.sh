@@ -13,37 +13,66 @@ java -version
 echo STEP 1 - Cleaning up google docs
 rm in/*
 
-echo STEP 2 - Download from google
-curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=xlsx&authuser=0" > ./in/datasett-from-gdocs.xlsx
-curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=xlsx&authuser=0" > ./in/datasett-oslo-kommune.xlsx
+#echo STEP 2 - Download from google
+#curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=xlsx&authuser=0" > ./in/datasett-from-gdocs.xlsx
+#curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=xlsx&authuser=0" > ./in/datasett-oslo-kommune.xlsx
  
 
-# Convert all XLSX to XLS
-echo STEP 3 - Convert XLSX to XLS
-for file in in/*.xlsx
+echo STEP 2 - Download from google
+curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=ods&authuser=0" > ./in/datasett-from-gdocs.ods
+curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=ods&authuser=0" > ./in/datasett-oslo-kommune.ods
+
+
+echo STEP 3 - extracting content
+unzip -o ./in/datasett-from-gdocs.ods  content.xml -d in
+mv in/content.xml in/datasett-from-gdocs.odsxml
+unzip -o ./in/datasett-oslo-kommune.ods  content.xml -d in
+mv in/content.xml in/datasett-oslo-kommune.odsxml
+
+
+echo STEP 4 - expand the format due to a compact table format
+for file in in/*.odsxml
 do
-    echo ...converting $file to xls...
-#    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
- soffice --headless --convert-to xls --outdir ./in $file
-    echo ...converted $file to xls
+    echo ...converting $file to XML
+    filename=$(basename "$file")
+    xsltproc mapper/ods2cleanxmltable.xsl  $file > in/$filename.xml
 done
 
+# Convert all XLSX to XLS
+#echo STEP 3 - Convert XLSX to XLS
+#for file in in/*.xlsx
+#do
+#    echo ...converting $file to xls...
+##    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
+# soffice --headless --convert-to xls --outdir ./in $file
+#    echo ...converted $file to xls
+#done
 
 
-# Syntactical translation from Excel to RDF
-echo STEP 4 - Syntactical translation from Excel to RDF
-for file in in/*.xls
-do 
-    echo converting $file to ttl
+echo STEP 5 - convert XML to TTL
+for file in in/*.xml
+do
+    echo ...converting $file to TTL
     filename=$(basename "$file")
-    #java -Xss2m -Xmx512M -cp "$LIB/*" com.computas.opendata.semex.Semex -Dlog4j.configuration=file:log4j.properties -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
-    java -Xss2m -Xmx512M -cp $CLASSPATH com.computas.opendata.semex.Semex -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
+    xsltproc mapper/cleanxmltable2ttl.xsl $file > in/$filename.ttl
     echo converted $file to $filename.ttl
 done
 
 
+# Syntactical translation from Excel to RDF
+#echo STEP 4 - Syntactical translation from Excel to RDF
+#for file in in/*.xls
+#do 
+#    echo converting $file to ttl
+#    filename=$(basename "$file")
+#    #java -Xss2m -Xmx512M -cp "$LIB/*" com.computas.opendata.semex.Semex -Dlog4j.configuration=file:log4j.properties -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
+#    java -Xss2m -Xmx512M -cp $CLASSPATH com.computas.opendata.semex.Semex -input $file -mapper mapper/mapper.ttl -output in/$filename.ttl
+#    echo converted $file to $filename.ttl
+#done
+
+
 # Catalog
-echo STEP 4 - Create catalogs
+echo STEP 6a - Create catalogs
 for file in in/*.ttl
 do 
     echo creating catalogs from $file
@@ -52,8 +81,9 @@ do
     echo created catalogs in $filename-catalog.ttl
 done
 
+
 # Dataset
-echo STEP 5 - Create datasets
+echo STEP 6b - Create datasets
 for file in in/*.ttl
 do 
     echo creating datasets from $file
@@ -64,7 +94,7 @@ done
 
 
 # Period of dataset
-echo STEP 6 - Period of dataset
+echo STEP 6c - Period of dataset
 for file in in/*.ttl
 do
     echo converting $file to dcat format
@@ -74,7 +104,7 @@ do
 done
 
 # Publisher
-echo STEP 7 - Create Publisher
+echo STEP 6d - Create Publisher
 for file in in/*.ttl
 do 
     echo creating publisher from $file
@@ -84,7 +114,7 @@ do
 done
 
 # Contact point
-echo STEP 8 - Create ContactPoint
+echo STEP 6e - Create ContactPoint
 for file in in/*.ttl
 do 
     echo creating contact point from $file
@@ -94,7 +124,7 @@ do
 done
 
 # Provenance
-echo STEP 9 - Create Provenance
+echo STEP 6f - Create Provenance
 for file in in/*.ttl
 do 
     echo creating provenance from $file
@@ -104,7 +134,7 @@ do
 done
 
 # Location
-echo STEP 10 - Create Location
+echo STEP 6g - Create Location
 for file in in/*.ttl
 do 
     echo creating location from $file
@@ -114,7 +144,7 @@ do
 done
 
 # Access Rights
-echo STEP 11 - Create Access Rights
+echo STEP 6h - Create Access Rights
 for file in in/*.ttl
 do 
     echo creating access rights from $file
@@ -125,7 +155,7 @@ done
 
 
 # Distribution
-echo STEP 12 - Create Distributions
+echo STEP 6i - Create Distributions
 for file in in/*.ttl
 do
     echo creating distributions from $file
@@ -135,20 +165,35 @@ do
 done
 
 
-# Merge all
-echo STEP 12 - MERGE ALL
-now=`date +"%Y-%m-%d"`
+# Merge all classes
+echo STEP 7 - MERGE ALL
 for file in in/*.ttl
 do
     echo converting $file to dcat format
     filename=$(basename "$file")
-    java -cp $CLASSPATH jena.riot  --formatted=TTL temp/$filename-catalog.ttl temp/$filename-dataset.ttl temp/$filename-period.ttl  temp/$filename-publisher.ttl temp/$filename-contact.ttl temp/$filename-provenance.ttl  temp/$filename-location.ttl temp/$filename-accessRights.ttl  temp/$filename-distribution.ttl > publish/$filename-finished-$now.ttl
+    java -cp $CLASSPATH jena.riot  --formatted=TTL temp/$filename-catalog.ttl temp/$filename-dataset.ttl temp/$filename-period.ttl  temp/$filename-publisher.ttl temp/$filename-contact.ttl temp/$filename-provenance.ttl  temp/$filename-location.ttl temp/$filename-accessRights.ttl  temp/$filename-distribution.ttl > temp/$filename-finished.ttl
     echo merged 
 done
 
 
+# Merge files from all sheets into a single one
+echo STEP 8 - MERGE ALL
+now=`date +"%Y-%m-%d"`
+filelist=""
+for file in in/*.ttl
+do
+    filename=$(basename "$file")
+    filelist=${filelist}" "temp/${filename}-finished.ttl
+    
+done
+echo merging $filelist
+java -cp $CLASSPATH jena.riot  --formatted=TTL $filelist > publish/datasett-from-gdocs-finished-$now.ttl
+echo merged into publish/datasett-from-gdocs-finished-$now.ttl
+
+
+
 # Validate
-echo STEP 13 - VALIDATE
+echo STEP 9 - VALIDATE
 for file in publish/*-finished-$now.ttl
 do
     for rule in validation/*.sparql

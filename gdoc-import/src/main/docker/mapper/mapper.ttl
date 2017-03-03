@@ -19,7 +19,7 @@
 # Spredsheet - Dataset
 map:Dataset a d2rq:ClassMap ;
 d2rq:dataStorage map:excel;
-d2rq:uriPattern "http://data.brreg.no/datakatalog/dataset/@@Dataset.identifikator@@";
+d2rq:uriPattern "http://data.brreg.no/datakatalog/dataset/@@Dataset.utgiver@@/@@Dataset.identifikator@@";
 d2rq:class dcat:Dataset;
 d2rq:condition "Dataset.@identifikator != ''";
 .
@@ -271,7 +271,7 @@ d2rq:condition "Dataset.@relasjon != ''"; # optional
 # Spredsheet - Catalog - ok
 map:Catalog a d2rq:ClassMap ;
 d2rq:dataStorage map:excel;
-d2rq:uriPattern "http://data.brreg.no/datakatalog/katalog/@@Catalog.id@@";
+d2rq:uriPattern "http://data.brreg.no/datakatalog/katalog/@@Catalog.utgiver@@/@@Catalog.id@@";
 d2rq:class dcat:Catalog;
 .
 
