@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Future;
@@ -78,20 +79,25 @@ public class CrawlerRestController {
      */
     @Scheduled(cron = scheduleSpesification)
     void harvestAllDcatSources() throws InterruptedException {
+        logger.info("HARVEST ALL - " + Calendar.getInstance().getTime().toString());
 
         logger.debug("Reload Codes.");
 
         harvestAllCodes(true);
 
         logger.debug("Start Crawler Job for each dcat source");
-        List<DcatSource> dcatSources = adminDataStore.getDcatSources();
+        List<DcatSource> dcatSources = getDcatSources();
         for (DcatSource dcatSource : dcatSources) {
             CrawlerJob job = crawlerJobFactory.createCrawlerJob(dcatSource);
             crawler.execute(job);
         }
     }
 
-    private void harvestAllCodes(boolean reload) throws InterruptedException {
+    List<DcatSource> getDcatSources() {
+        return adminDataStore.getDcatSources();
+    }
+
+    void harvestAllCodes(boolean reload) throws InterruptedException {
         for(Types type : Types.values()) {
             logger.debug("Loading type {}", type);
             harvestCode(reload, type.getSourceUrl(), type.getType());
