@@ -80,14 +80,6 @@
 		<module>br-maven-main-msn</module>
 	</modules>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<docker.image.prefix>fdk</docker.image.prefix>
-		<docker.registry />
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
-		<elasticsearch.version>2.4.1</elasticsearch.version>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
