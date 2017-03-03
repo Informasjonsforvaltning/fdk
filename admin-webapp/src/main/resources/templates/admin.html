@@ -57,7 +57,7 @@
                                                                th:attr="value=${editDcatSource?.orgnumber}"/>
             </div>
             <!--  hidden> fjernet-->
-            <input type="text"
+            <input type="hidden"
                     id="inputUsername"
                    th:attr="value=${editDcatSource?.user}"/>
 
@@ -118,8 +118,8 @@
 
 </div>
 <script th:src="@{/js/scripts.js}" type="text/javascript"></script>
-<script type="text/javascript">
-    var contextRoot = /*[[@{/}]]*/ '';
+<script th:inline="javascript">
+    var contextRoot = /*[[@{/}]]*/;
     var saveDcatSource = function () {
         var id = document.getElementById('inputId').value;
         var description = document.getElementById('inputDescription').value;
@@ -127,8 +127,9 @@
         var orgnumber = document.getElementById('inputOrgnumber').value;
         var username = document.getElementById('inputUsername').value;
 
+
         if(username == null || username == ""){
-            username = '${username}';
+            username = /*[[${username}]]*/;
         }
 
         var data = {
@@ -139,11 +140,11 @@
             'orgnumber': orgnumber
         };
 
-        sendRequest('POST', contextRoot  + '/api/admin/dcat-source' , data);
+        sendRequest('POST', contextRoot  + 'api/admin/dcat-source' , data);
     };
 
     var deleteDcatSource = function (dcatSourceId) {
-        sendRequest('DELETE',  contextRoot + '/api/admin/dcat-source?delete=' + dcatSourceId , null);
+        sendRequest('DELETE',  contextRoot + 'api/admin/dcat-source?delete=' + dcatSourceId , null);
     };
 
     clearErrors();

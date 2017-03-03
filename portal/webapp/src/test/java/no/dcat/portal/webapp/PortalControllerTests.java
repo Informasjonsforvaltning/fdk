@@ -31,14 +31,12 @@ public class PortalControllerTests {
     }
 
     @Test
-    public void testResultReturnsModelAndView () throws Exception {
+    public void testDatasetsRedirectsToSearchkit () throws Exception {
 
         MockHttpSession session = new MockHttpSession();
         ModelAndView actual = portal.result(session, "","", "", "");
 
-        assertEquals("result", actual.getViewName());
-        assertEquals(null, actual.getModel().get("themes"));
-        assertEquals("", actual.getModel().get("query"));
+        assertEquals("searchkit", actual.getViewName());
     }
 
     @Test
