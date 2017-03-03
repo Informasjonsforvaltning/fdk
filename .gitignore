@@ -6,6 +6,7 @@ docker/git.properties
 logs/
 **/.env
 */git.properties
+/phantomjsdriver.log
 /test/*.zip
 /test/elasticsearch-2.4.1/data/
 /test/elasticsearch-2.4.1/logs/
@@ -13,6 +14,9 @@ logs/
 /portal/webapp/phantomjsdriver.log
 **/phantomjsdriver.log
 /test/zip/
+.DS_Store
+.hot-update.js
+**/node_modules/
 /bddtest/data/
 /data/
 .DS_Store

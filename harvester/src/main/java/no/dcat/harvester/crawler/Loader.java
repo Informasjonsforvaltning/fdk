@@ -129,6 +129,7 @@ public class Loader {
            logger.error("URL not valid: {} ", filename,e);
         } catch (InterruptedException e) {
             logger.error("Interrupted: {}",e.getMessage());
+            Thread.currentThread().interrupt();
         }
 
         return null;

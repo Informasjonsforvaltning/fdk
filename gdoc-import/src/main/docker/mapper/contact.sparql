@@ -26,9 +26,9 @@ construct {
 
 WHERE {
           
-    ?id :avdelingsnavn ?organization_unit .
+
     ?id a vcard:Organization . 
-     
+    ?id :avdelingsnavn ?organization_unit .     
      
      # fix hasEmail url
      OPTIONAL {?id :hasEmail ?email .

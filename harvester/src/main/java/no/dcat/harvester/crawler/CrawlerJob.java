@@ -15,6 +15,7 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
@@ -22,17 +23,24 @@ import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
-import org.elasticsearch.common.recycler.Recycler;
+import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Import;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
@@ -44,6 +52,8 @@ public class CrawlerJob implements Runnable {
     private List<String> validationResult = new ArrayList<>();
     private List<ValidationError> validationErrors = new ArrayList<>();
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
+    private StringBuilder crawlerResultMessage;
+    private Resource rdfStatus;
 
     public List<String> getValidationResult() {return validationResult;}
 
@@ -70,24 +80,7 @@ public class CrawlerJob implements Runnable {
 
 
         try {
-            logger.debug("loadDataset: "+ dcatSource.getUrl());
-            Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
-            Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
-            Iterator<String> stringIterator = dataset.listNames();
-
-            while (stringIterator.hasNext()) {
-                union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
-            }
-            verifyModelByParsing(union);
-
-            //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
-            DataEnricher enricher = new DataEnricher();
-            Model enrichedUnion = enricher.enrichData(union);
-            union = enrichedUnion;
-
-            // Checks if publisher is registrered in BRREG Enhetsregistret
-            BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-            brregAgentConverter.collectFromModel(union);
+            Model union = prepareModelForValidation();
 
             // if model is valid run the various handlers process method
             //TODO: Refaktorering. Nå er det et salig rot av lokale og globale variabler, parametre....
@@ -96,11 +89,16 @@ public class CrawlerJob implements Runnable {
                 logger.debug("[crawler_operations] Number of non-valid datasets: " + nonValidDatasets.size());
 
                 removeNonValidDatasets(union);
+                crawlerResultMessage.append(removeNonResolvableLocations(union));
 
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, union);
                 }
             }
+
+            //Write info about crawl results to store
+            String crawlerResultStr = crawlerResultMessage.toString();
+            if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlerResultStr);
 
             LocalDateTime stop = LocalDateTime.now();
             logger.info("[crawler_operations] [success] Finished crawler job: {}", dcatSource.toString() + ", Duration=" + returnCrawlDuration(start, stop));
@@ -143,6 +141,7 @@ public class CrawlerJob implements Runnable {
         return message;
     }
 
+
     void verifyModelByParsing(Model union) {
         StringWriter str = new StringWriter();
 
@@ -156,6 +155,38 @@ public class CrawlerJob implements Runnable {
         union.write(str, RDFLanguages.strLangRDFXML);
         RDFDataMgr.parse(new MyStreamRDF(), new ByteArrayInputStream(str.toString().getBytes(StandardCharsets.UTF_8)), Lang.RDFXML);
     }
+
+
+    /**
+     * Do necessary preparations in model before it can be validated
+     * - enrichement of missing values
+     * - validation of publisher
+     *
+     * @return enriched model
+     */
+    private Model prepareModelForValidation() {
+        logger.debug("loadDataset: "+ dcatSource.getUrl());
+        Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
+        Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+        Iterator<String> stringIterator = dataset.listNames();
+
+        while (stringIterator.hasNext()) {
+            union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
+        }
+        verifyModelByParsing(union);
+
+        //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
+        DataEnricher enricher = new DataEnricher();
+        Model enrichedUnion = enricher.enrichData(union);
+        union = enrichedUnion;
+
+        // Checks if publisher is registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
+
+        return union;
+    }
+
 
     /**
      * Needed in RDFDataMgr for parsing.
@@ -196,7 +227,6 @@ public class CrawlerJob implements Runnable {
      * Checks if a RDF model is valid according to the validation rules that are defined for DCAT.
      *
      * @param model the model to be validated (must be according to DCAT-AP-EU and DCAT-AP-NO
-     * @param validationMessage a list of validation messages
      * @return returns true if model is valid (only contains warnings) and false if it has errors
      */
     private boolean isValid(Model model) {
@@ -211,13 +241,13 @@ public class CrawlerJob implements Runnable {
 
         final int[] errors ={0}, warnings ={0}, others ={0};
 
-        boolean validated = DcatValidation.validate(model, (error) -> {
+        DcatValidation.validate(model, (error) -> {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
             validationResult.add(msg);
             validationErrors.add(error);
 
             //add validation status per dataset for non-valid datasets
-            if(error.getClassName().equals("Dataset")) {
+            if("Dataset".equals(error.getClassName())) {
                 registerValidationStatusForDataset(error);
             }
 
@@ -253,17 +283,13 @@ public class CrawlerJob implements Runnable {
 
         logger.debug("[validation] Is minimum criteria for importing model met: " + minimumCriteriaMet);
 
-        Resource rdfStatus = createCrawlerStatusForAdmin(status, minimumCriteriaMet);
-        StringBuilder datasetSummary = createDatasetSummaryMessage();
+        rdfStatus = createCrawlerStatusForAdmin(status, minimumCriteriaMet);
+        crawlerResultMessage = createDatasetSummaryMessage();
 
         //Prepend summary message before detailed error message
         if (message[0] != null) {
-            datasetSummary.append(message[0]);
+            crawlerResultMessage.append(message[0]);
         }
-
-        //Log validation result in admin data store
-        String crawlMessage = datasetSummary.toString();
-        if (adminDataStore != null) adminDataStore.addCrawlResults(dcatSource, rdfStatus, crawlMessage);
 
         return minimumCriteriaMet;
     }
@@ -286,6 +312,39 @@ public class CrawlerJob implements Runnable {
                 model.removeAll(null, null, res);
             }
         }
+    }
+
+
+    /**
+     * Remove triples containing DCTerms.spatial URLs that cannot be resolved
+     *
+     * @param model
+     */
+    private String removeNonResolvableLocations(Model model) {
+        StringBuilder resultMsg = new StringBuilder();
+        ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
+        while (locIter.hasNext()) {
+            Resource resource = locIter.next();
+            String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
+            try {
+                URL locUrl = new URL(locUri);
+                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
+                locConnection.setRequestMethod("GET");
+                if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    //Remove non-resolvable location from dataset
+                    resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
+                    resultMsg.append("\n");
+                    model.removeAll(resource,DCTerms.spatial,null);
+                    logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}",locUri);
+                }
+            } catch (MalformedURLException e) {
+                logger.error("URL not valid: {} ", locUri,e);
+            } catch (IOException e) {
+                logger.error("IOException: {} ", locUri, e);
+            }
+
+        }
+        return resultMsg.toString();
     }
 
 
@@ -390,25 +449,25 @@ public class CrawlerJob implements Runnable {
      * @return RDF Resource containing DifiMeta status (error, warning or ok)
      */
     private Resource createCrawlerStatusForAdmin(ValidationError.RuleSeverity[] status, boolean minimumCriteriaMet){
-       Resource rdfStatus;
+       Resource rdfStatusResult;
         switch (status[0]) {
             case error:
                 if (minimumCriteriaMet) {
                     //if at least one dataset is valid, set status to warning
                     //even if validation results contains errors for other datasets
-                    rdfStatus = DifiMeta.warning;
+                    rdfStatusResult = DifiMeta.warning;
                 } else {
-                    rdfStatus = DifiMeta.error;
+                    rdfStatusResult = DifiMeta.error;
                 }
                 break;
             case warning:
-                rdfStatus = DifiMeta.warning;
+                rdfStatusResult = DifiMeta.warning;
                 break;
             default:
-                rdfStatus = DifiMeta.ok;
+                rdfStatusResult = DifiMeta.ok;
                 break;
         }
-        return rdfStatus;
+        return rdfStatusResult;
     }
 
 }
