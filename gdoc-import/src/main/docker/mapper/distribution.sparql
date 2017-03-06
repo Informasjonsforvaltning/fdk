@@ -20,7 +20,7 @@ construct {
     ?id a dcat:Distribution .
     ?id dct:description ?description .
     ?id dct:format ?format .
-    ?id dct:downloadURL ?downloadURL .
+    ?id dcat:accessURL ?downloadURL .
     ?id dct:license ?licenseURL .
 } 
 WHERE {

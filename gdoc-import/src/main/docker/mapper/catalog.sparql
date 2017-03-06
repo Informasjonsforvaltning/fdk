@@ -42,13 +42,20 @@ WHERE {
      OPTIONAL {
         ?id :utgiver ?catalogPublisher .
      }
+
+     # organisation number
+     OPTIONAL {
+        ?id :orgnr ?organisationNumber .
+     }
        
      # split :datasets into multiple dataset
-     OPTIONAL {?id :datasets ?datasets .
-        ?dataset apf:strSplit(?datasets ",")
+     OPTIONAL {
+        ?id :datasets ?datasets .
+        ?dataset apf:strSplit(?datasets ",") .
      }
+
      # create IRI of dataset, assume exists
-     BIND (IF(?dataset, IRI(CONCAT("http://data.brreg.no/datakatalog/dataset/", ?dataset)), ?unbound)  AS ?datasetIRI)
+     BIND (IF(?dataset, IRI(CONCAT("http://data.brreg.no/datakatalog/dataset/", ?organisationNumber, "/", ?dataset)), ?unbound)  AS ?datasetIRI)
      
    
      # create IRI of homepage

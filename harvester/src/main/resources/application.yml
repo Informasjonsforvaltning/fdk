@@ -22,4 +22,4 @@ application:
 server:
   port: 8081
 management:
-  port: 8990
+  port: 8991

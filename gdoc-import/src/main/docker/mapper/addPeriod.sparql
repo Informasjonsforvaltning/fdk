@@ -25,8 +25,18 @@ WHERE {
   
      # period
      ?id :fra ?from .
+     BIND(strbefore( ?from, "." ) as ?day1)
+     BIND(strbefore(strafter(?from, "."), ".") as ?month1)
+     BIND(strafter(strafter(?from, "."), ".") as ?year1)
+     BIND(xsd:date(concat(?year1, "-" ,?month1, "-" , ?day1)) as ?fromDate)
      ?id :til ?to .
-     BIND(xsd:dateTime(concat( str(?from) , "T00:00:00Z")) as ?xsdfrom)
-     BIND(xsd:dateTime(concat(str(?to), "T00:00:00Z")) as ?xsdto)   
+     BIND(strbefore( ?to, "." ) as ?day2)
+     BIND(strbefore(strafter(?to, "."), ".") as ?month2)
+     BIND(strafter(strafter(?to, "."), ".") as ?year2)
+     BIND(xsd:date(concat(?year2, "-", ?month2, "-", ?day2)) as ?toDate)
+     
+     
+     BIND(xsd:dateTime(concat( str(?fromDate) , "T00:00:00Z")) as ?xsdfrom)
+     BIND(xsd:dateTime(concat(str(?toDate), "T00:00:00Z")) as ?xsdto)   
   
 }

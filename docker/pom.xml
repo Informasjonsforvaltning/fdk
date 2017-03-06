@@ -2,13 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>parent</artifactId>
+		<artifactId>fdk</artifactId>
 		<groupId>no.dcat</groupId>
-		<version>0.2.2-SNAPSHOT</version>
+		<version>0.2.4-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>docker</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
 
 	<build>
 
