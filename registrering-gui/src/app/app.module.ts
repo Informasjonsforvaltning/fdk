@@ -12,6 +12,7 @@ import {AlertModule} from "ng2-bootstrap";
 import {DatasetComponent} from "./dataset/dataset.component";
 import {StartComponent} from "./start/start.component";
 import {CatalogService} from "./catalog/catalog.service";
+import {DatasetService} from "./dataset/dataset.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {CatalogService} from "./catalog/catalog.service";
     AlertModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
-  providers: [CatalogService],
+  providers: [CatalogService, DatasetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

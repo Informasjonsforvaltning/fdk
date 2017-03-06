@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Catalog} from "./catalog";
-import {Http} from "@angular/http";
+import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 
 const TEST_CATALOGS: Catalog[] = [
@@ -24,6 +24,7 @@ export class CatalogService {
 
   //TODO don't hard code
   private catalogsUrl = "http://localhost:8099/catalogs"
+  private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(): Promise<Catalog[]> {
     return this.http.get(this.catalogsUrl)
@@ -38,15 +39,23 @@ export class CatalogService {
   }
 
   get(id: string): Promise<Catalog> {
-    return this.http.get(this.catalogsUrl + '/' + id)
+    const url = `${this.catalogsUrl}/${id}`
+    return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Catalog)
       .catch(this.handleError);
-
-    // return Promise.resolve(this.clone(TEST_CATALOGS.find(c => c.id === id)));
   }
 
-  save(catalog: Catalog) {
+  save(catalog: Catalog) : Promise<Catalog> {
+    const url = `${this.catalogsUrl}/${catalog.id}`
+    return this.http
+      .put(url, JSON.stringify(catalog), {headers: this.headers})
+      .toPromise()
+      .then(() => catalog)
+      .catch(this.handleError)
+
+
+
     let originalCatalog = TEST_CATALOGS.find(c => c.id === catalog.id);
     if (originalCatalog) Object.assign(originalCatalog, catalog)
   }

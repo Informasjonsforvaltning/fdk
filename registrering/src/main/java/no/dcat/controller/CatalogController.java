@@ -37,10 +37,31 @@ public class CatalogController {
     @CrossOrigin
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@RequestBody Catalog catalog) {
-        logger.info("Add/modify catalog: " + catalog.toString());
+        logger.info("Add catalog: " + catalog.toString());
         if(catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
+        Enhet enhet = restTemplate.getForObject(uri, Enhet.class);
+
+        Publisher publisher = new Publisher();
+        publisher.setId(catalog.getId());
+        publisher.setName(enhet.getNavn());
+        publisher.setUri(uri);
+        catalog.setPublisher(publisher);
+
+        Catalog savedCatalog = catalogRepository.save(catalog);
+        return new ResponseEntity<>(savedCatalog, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Catalog> addCatalog(@PathVariable("id") String id, @RequestBody Catalog catalog) {
+        logger.info("Modify catalog: " + catalog.toString());
+
+        catalog.setId(id);
 
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";

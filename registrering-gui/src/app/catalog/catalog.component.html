@@ -1,3 +1,7 @@
+<alert type="success" *ngIf="saved">
+  <strong>Lagret!</strong> Katalogen har blitt lagret.
+</alert>
+
 <div class="panel panel-default" *ngIf="catalog">
   <div class="panel-heading">
     <div class="form-group">
@@ -8,7 +12,21 @@
     <h2>{{catalog.id}}</h2>
     <textarea class="form-control" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse"  >{{catalog.description[language]}}</textarea>
   </div>
-
-
 </div>
+<button type="button" class="btn btn-default" (click)="save()">Save</button>
+
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Tittel på datasett</th>
+    <th>Sist endret</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let dataset of datasets" (click)="selectDataset(dataset)" >
+    <td>{{dataset.title.nb}}</td>
+    <td>{{dataset.lastChange}}</td>
+  </tr>
+  </tbody>
+</table>
 

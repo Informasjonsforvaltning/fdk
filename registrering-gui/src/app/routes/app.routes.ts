@@ -4,6 +4,6 @@ import {StartComponent} from "../start/start.component";
 
 export const routes = [
   { path: '', component: StartComponent, pathMatch: 'full' },
-  { path: 'catalogs/:id', component: CatalogComponent, pathMatch: 'full'},
-  { path: 'catalogs/:id/datasets/:id', component: DatasetComponent, pathMatch: 'full'}
+  { path: 'catalogs/:cat_id', component: CatalogComponent, pathMatch: 'full'},
+  { path: 'catalogs/:cat_id/datasets/:dataset_id', component: DatasetComponent, pathMatch: 'full'}
 ];
