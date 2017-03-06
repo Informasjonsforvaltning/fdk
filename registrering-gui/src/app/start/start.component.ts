@@ -12,17 +12,16 @@ export class StartComponent implements OnInit {
   catalogs: Catalog[] = [];
   selectedCatalog: Catalog;
 
-  constructor(
-    private _catalogService : CatalogService,
-    private router : Router
-  ) {  }
+  constructor(private _catalogService: CatalogService,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this._catalogService.getAll()
       .then(catalogs => this.catalogs = catalogs);
   }
 
-  selectCatalog(catalog){
+  selectCatalog(catalog) {
     this.router.navigate(['/catalogs', catalog.id])
   }
 

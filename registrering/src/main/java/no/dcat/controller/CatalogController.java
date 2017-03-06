@@ -34,6 +34,7 @@ public class CatalogController {
         return new ResponseEntity<>(assembler.toResource(catalogs), HttpStatus.OK);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@RequestBody Catalog catalog) {
         logger.info("Add/modify catalog: " + catalog.toString());
@@ -55,6 +56,7 @@ public class CatalogController {
         return new ResponseEntity<>(savedCatalog, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
@@ -62,6 +64,7 @@ public class CatalogController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
         Catalog catalog = catalogRepository.findOne(id);

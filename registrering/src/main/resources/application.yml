@@ -20,6 +20,8 @@ spring:
 
 spring:
   profiles: develop_embedded
+  hateoas:
+    use-hal-as-default-json-media-type: false
   data:
     elasticsearch:
       properties:
