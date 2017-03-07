@@ -8,19 +8,26 @@ import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Future;
 
 @RestController
 @CrossOrigin(origins = "*")
+@EnableScheduling
 public class CrawlerRestController {
+
+    /* Start harvesting at 1 o'clock every day */
+    final static String scheduleSpesification = "0 0 1 * * *";
 
     public static final int SLEEP = 1000;
     @Autowired
@@ -42,7 +49,7 @@ public class CrawlerRestController {
 
     @RequestMapping("/api/admin/harvest")
     public void harvestDataSoure(@RequestParam(value = "id") String dcatSourceId) throws InterruptedException {
-        logger.debug("Received request to harvest {}", dcatSourceId);
+        logger.info("Received request to harvest {}", dcatSourceId);
 
         logger.debug("Load Codes.");
         boolean reload = false;
@@ -60,22 +67,37 @@ public class CrawlerRestController {
 
     @RequestMapping("/api/admin/harvest-all")
     public void harvestDataSoure() throws InterruptedException {
-        logger.debug("Received request to harvest all dcat sources");
+        logger.info("Received request to harvest all dcat sources");
+
+        harvestAllDcatSources();
+        logger.debug("Finished all crawler jobs");
+    }
+
+    /**
+     * Gets all datasources from admin database and starts an execution jobb to harvest the data
+     * This job starts at 01:00 every day. Test string "0 *\/1 * * * *" - Every minute
+     */
+    @Scheduled(cron = scheduleSpesification)
+    void harvestAllDcatSources() throws InterruptedException {
+        logger.info("HARVEST ALL - " + Calendar.getInstance().getTime().toString());
 
         logger.debug("Reload Codes.");
-        boolean reload = true;
-        harvestAllCodes(reload);
 
-        logger.debug("Harvest all dcat sources");
-        List<DcatSource> dcatSources = adminDataStore.getDcatSources();
+        harvestAllCodes(true);
+
+        logger.debug("Start Crawler Job for each dcat source");
+        List<DcatSource> dcatSources = getDcatSources();
         for (DcatSource dcatSource : dcatSources) {
             CrawlerJob job = crawlerJobFactory.createCrawlerJob(dcatSource);
             crawler.execute(job);
         }
-        logger.debug("Finished all crawler jobs");
     }
 
-    private void harvestAllCodes(boolean reload) throws InterruptedException {
+    List<DcatSource> getDcatSources() {
+        return adminDataStore.getDcatSources();
+    }
+
+    void harvestAllCodes(boolean reload) throws InterruptedException {
         for(Types type : Types.values()) {
             logger.debug("Loading type {}", type);
             harvestCode(reload, type.getSourceUrl(), type.getType());
