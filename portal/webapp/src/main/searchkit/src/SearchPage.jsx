@@ -275,7 +275,7 @@ export class SearchPage extends React.Component {
 											id="publisher"
 											title={getText('facet.organisation')}
 											field="publisher.name.raw"
-											operator="OR"
+											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionPublishers}
 											/>
@@ -283,7 +283,7 @@ export class SearchPage extends React.Component {
 											id="theme"
 											title={getText('facet.theme')}
 											field="theme.code.raw"
-											operator="OR"
+											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionThemes}
 											/>

@@ -30,3 +30,7 @@ server:
 management:
   port: 8999
 ---
+
+spring:
+  hateoas:
+    use-hal-as-default-json-media-type: false
