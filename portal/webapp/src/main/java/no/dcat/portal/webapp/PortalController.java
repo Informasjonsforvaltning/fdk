@@ -32,20 +32,24 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
  * Delivers html pages to support the DCAT Portal application.
- *
+ * <p>
  * Created by nodavsko on 12.10.2016.
  */
 @Controller
 public class PortalController {
-    private static final String MODEL_THEME = "theme";
-    private static final String MODEL_PUBLISHER = "publisher";
-    private static final String MODEL_RESULT = "result";
+    public static final String MODEL_THEME = "theme";
+    public static final String MODEL_PUBLISHER = "publisher";
+    public static final String MODEL_RESULT = "result";
 
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
@@ -59,11 +63,11 @@ public class PortalController {
     }
 
     /**
-     * The OLD result page. Sets callback service and version identification and returns
+     * The result page. Sets callback service and version identification and returns
      * result.html page.
      *
-     * @param session the session objec
-     * @param theme Filter on the specified filter.
+     * @param session   the session objec
+     * @param theme     Filter on the specified filter.
      * @param publisher Filter on the specified publisher.
      * @return the result html page (or just the name of the page)
      */
@@ -82,7 +86,7 @@ public class PortalController {
             model.addObject("fdkparameters",
                     "var fdkSettings = fdkSettings || {\n" +
                             "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "'\n" +
-                    "};"
+                            "};"
 
             );
 
@@ -123,7 +127,7 @@ public class PortalController {
             dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
             model.addObject("dataset", dataset);
         } catch (Exception e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()),e);
+            logger.error(String.format("An error occured: %s", e.getMessage()), e);
             model.addObject("exceptionmessage", e.getLocalizedMessage());
             model.setViewName("error");
         }
@@ -133,12 +137,11 @@ public class PortalController {
 
     /**
      * Controller for getting the dataset corresponding to the provided id.
-     * TODO - remove this old interface
      *
      * @param id The id that identifies the dataset.
      * @return One Dataset attatched to a ModelAndView.
      */
-    @RequestMapping(value={"/detail"}, produces = "text/html")
+    @RequestMapping(value = {"/detail"}, produces = "text/html")
     public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
         return getDetailsView(id);
     }
@@ -152,7 +155,7 @@ public class PortalController {
      *
      * @return A list of DataTheme attached to a ModelAndView.
      */
-    @RequestMapping(value={"/"}, produces = "text/html")
+    @RequestMapping(value = {"/"}, produces = "text/html")
     public ModelAndView themes(final HttpSession session) {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         List<DataTheme> dataThemes = new ArrayList<>();
@@ -179,7 +182,7 @@ public class PortalController {
 
             logger.trace(String.format("Found datathemes: %s", json));
         } catch (IOException | URISyntaxException e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()),e);
+            logger.error(String.format("An error occured: %s", e.getMessage()), e);
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
@@ -187,21 +190,21 @@ public class PortalController {
         session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
-        model.addObject("lang", locale.getLanguage().startsWith("en") ? "en" : "nb");
+        model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");
         model.addObject("themes", dataThemes);
         model.addObject("dataitemquery", new DataitemQuery());
         return model;
     }
 
-    private Map<String, BigInteger> getNumberOfElementsForThemes() throws URISyntaxException, IOException{
+    private Map<String, BigInteger> getNumberOfElementsForThemes() throws URISyntaxException, IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         URI uri = new URIBuilder(buildMetadata.getThemeCounterUrl()).build();
         logger.debug("Query for all themes at URL: " + uri.toString());
 
         String json = httpGet(httpClient, uri);
 
-        return new ElasticSearchResponse()
-                .toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
+        Map<String, BigInteger> themeCounts = new ElasticSearchResponse().toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
+        return themeCounts;
     }
 
     /**
@@ -213,7 +216,7 @@ public class PortalController {
      *
      * @return A list of Publisher attatched to a ModelAndView.
      */
-    @RequestMapping(value={"/publisher"}, produces = "text/html")
+    @RequestMapping(value = {"/publisher"}, produces = "text/html")
     public ModelAndView publisher() {
         ModelAndView model = new ModelAndView(MODEL_PUBLISHER);
         List<Publisher> publisherGrouped = new ArrayList<>();
@@ -245,11 +248,11 @@ public class PortalController {
             publisherDataSetCount = TransformModel.aggregateDataSetCount(publisherDataSetCount, publisherGrouped);
 
             //Sort publisher alphabetic.
-            Collections.sort(publisherGrouped , new PublisherOrganisasjonsformComparator());
+            Collections.sort(publisherGrouped, new PublisherOrganisasjonsformComparator());
 
             logger.trace(String.format("Found publishers: %s", json));
         } catch (Exception e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()),e);
+            logger.error(String.format("An error occured: %s", e.getMessage()));
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
@@ -257,7 +260,6 @@ public class PortalController {
         model.addObject("publisher", publisherGrouped);
         model.addObject("aggpublishercount", publisherDataSetCount);
         model.addObject("dataitemquery", new DataitemQuery());
-
         return model;
     }
 
@@ -315,11 +317,9 @@ public class PortalController {
 
     private void checkStatusCode(final HttpResponse response) {
         StatusLine statusLine = response.getStatusLine();
-        // Statusline.getReasonPhrase is empty!
-
         if (statusLine.getStatusCode() != HttpStatus.OK.value()) {
-            logger.error(String.format("Query Service returned http-code: %s", statusLine.getStatusCode()));
-            throw new RuntimeException(String.format("Query Service returned http-code: %s", statusLine.getStatusCode()));
+            logger.error(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
+            throw new RuntimeException(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
         }
     }
 }

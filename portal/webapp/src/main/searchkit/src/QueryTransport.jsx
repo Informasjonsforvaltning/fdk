@@ -8,7 +8,7 @@ export class QueryTransport extends AxiosESTransport {
     super()
     this.options = defaults(options, {
       headers:{},
-      searchUrlPath:"http://" + window.location.hostname +":8083/search"
+      searchUrlPath:window.fdkSettings.queryUrl + "/search"
     })
     if(this.options.basicAuth){
       this.options.headers["Authorization"] = (
@@ -80,7 +80,7 @@ export class QueryTransport extends AxiosESTransport {
     }
 
     return this.axios.get(
-			'http://' + window.location.hostname +':8083/search?q=' +
+			window.fdkSettings.queryUrl + '/search?q=' +
 			(query.query ? query.query.simple_query_string.query : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
