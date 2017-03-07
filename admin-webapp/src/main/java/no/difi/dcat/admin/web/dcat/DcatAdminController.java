@@ -79,6 +79,7 @@ public class DcatAdminController {
 
     @RequestMapping("/dcatSource")
     public ModelAndView viewSingleDcatSource(@RequestParam(value = "id", required = true) String id, Principal principal) {
+        String name = principal.getName();
 
         logger.debug("View {}",id);
         Optional<DcatSource> dcatSourceById = adminDataStore.getDcatSourceById(id);
@@ -100,7 +101,7 @@ public class DcatAdminController {
             URL url = new URL(applicationSettings.getHarvesterUrl() + "/api/admin/harvest?id=" + dcatSourceId);
             url.openConnection().getInputStream();
         } catch (Exception e) {
-            logger.error("Unable to open connection to harvester {}", e.getMessage(),e);
+            logger.error("Unable to open connection to harvester {}", e.getMessage());
 
         }
 

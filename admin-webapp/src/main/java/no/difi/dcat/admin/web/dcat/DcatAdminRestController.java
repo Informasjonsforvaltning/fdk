@@ -58,7 +58,6 @@ public class DcatAdminRestController {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             }
         } catch (UserNotFoundException e) {
-            logger.error("User not found",e);
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 

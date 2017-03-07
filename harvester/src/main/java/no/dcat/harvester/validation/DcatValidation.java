@@ -79,7 +79,7 @@ public class DcatValidation {
 
 			return valid[0];
 		} catch (IOException e) {
-			logger.error("Unable to load validation rules " + e.getMessage(),e);
+			logger.error("Unable to load validation rules " + e.getMessage());
 		}
 		return false;
 	}
