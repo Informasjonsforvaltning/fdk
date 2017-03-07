@@ -29,7 +29,9 @@ Feature: Opprette nytt datasett
 	## Når brukeren trykker på opprett-knappen, skal hun redirectes til en side der informasjon om datasettet spesifiseres.
 	@TEST_FDK_377
 	Scenario: C-Test FDK: Opprette nytt datsett -  tilgang
-		Given a catalog exists
+		Given Elasticsearch is running
+		And webservice is running
+		And a catalog exists
 		And user has access to register in the catalog
 		When a the user chooses to create a new dataset
 		Then status code HTTP 201 Created is returned
