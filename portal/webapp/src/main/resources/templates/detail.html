@@ -33,6 +33,14 @@
                     <dd th:each="id : ${dataset.identifier}"><span th:text="${id}"/></dd>
                     <dt th:text="#{catalog}">Katalog</dt>
                     <dd th:text="${dataset.catalog.title.nb}"/>
+                    <dt>Last ned</dt>
+                    <dd><a class="fdk-label fdk-label-default pull-left" th:href="${'/dataset?id='+ dataset.id}" download="dataset.ttl">text/turtle</a>
+                        <select id="download">
+                            <option>text/turtle</option>
+                            <option>xml+rdf</option>
+                            <option>json-ld</option>
+                        </select>
+                    </dd>
 
                 </dl>
                 <h3 th:text="#{contact.header}">Kontaktinformasjon</h3>
