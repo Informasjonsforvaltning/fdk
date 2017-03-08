@@ -63,6 +63,10 @@ public class RestCreateNewDatasetSteps extends AbstractSpringCucumberTest{
 
     }
 
+    @Then("^status code HTTP (\\d+) OK is returned for dataset$")
+    public void status_code_HTTP_Created_is_returned_for_dataset(int arg1) throws Throwable {
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+    }
 
     @Then("^Json containing the dataset id is returned in http body$")
     public void json_containing_the_dataset_id_is_returned_in_http_body() throws Throwable {

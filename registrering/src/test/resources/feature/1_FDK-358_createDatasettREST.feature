@@ -37,5 +37,5 @@ Feature: Opprette nytt datasett
 	Scenario: C-Test FDK: Opprette nytt datsett -  tilgang
 		Given user has access to register in the catalog
 		When a the user chooses to create a new dataset
-		Then status code HTTP 200 OK is returned
+		Then status code HTTP 200 OK is returned for dataset
 		And Json containing the dataset id is returned in http body
