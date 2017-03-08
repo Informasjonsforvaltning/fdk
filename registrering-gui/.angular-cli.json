@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-rc.0",
+    "version": "0.2.4-SNAPSHOT",
     "name": "registrering-gui"
   },
   "apps": [

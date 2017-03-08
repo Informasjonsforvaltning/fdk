@@ -13,6 +13,9 @@ import {DatasetComponent} from "./dataset/dataset.component";
 import {StartComponent} from "./start/start.component";
 import {CatalogService} from "./catalog/catalog.service";
 import {DatasetService} from "./dataset/dataset.service";
+import {AUTH_PROVIDERS} from "angular2-jwt";
+import {AuthGuard} from "./security/auth.guard";
+import {AuthenticationService} from "./security/authentication.service";
 
 @NgModule({
   declarations: [
@@ -29,7 +32,7 @@ import {DatasetService} from "./dataset/dataset.service";
     AlertModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
-  providers: [CatalogService, DatasetService],
+  providers: [CatalogService, DatasetService, AUTH_PROVIDERS, AuthGuard, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

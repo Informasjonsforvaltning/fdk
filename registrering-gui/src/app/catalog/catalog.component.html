@@ -10,7 +10,7 @@
   </div>
   <div class="panel-body">
     <h2>{{catalog.id}}</h2>
-    <textarea class="form-control" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse"  >{{catalog.description[language]}}</textarea>
+    <textarea class="form-control" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
   </div>
 </div>
 <button type="button" class="btn btn-default" (click)="save()">Save</button>

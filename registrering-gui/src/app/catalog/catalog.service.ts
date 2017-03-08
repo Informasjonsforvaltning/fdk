@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Catalog} from "./catalog";
 import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
+import {AuthenticationService} from "../security/authentication.service";
 
 const TEST_CATALOGS: Catalog[] = [
   {
@@ -19,7 +20,7 @@ const TEST_CATALOGS: Catalog[] = [
 @Injectable()
 export class CatalogService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authenticationService: AuthenticationService) {
   }
 
   //TODO don't hard code
@@ -48,16 +49,15 @@ export class CatalogService {
 
   save(catalog: Catalog) : Promise<Catalog> {
     const url = `${this.catalogsUrl}/${catalog.id}`
+
+    let authorization : string = localStorage.getItem("authorization");
+    this.headers.append("Authorization", "Basic " + authorization);
+
     return this.http
       .put(url, JSON.stringify(catalog), {headers: this.headers})
       .toPromise()
       .then(() => catalog)
-      .catch(this.handleError)
-
-
-
-    let originalCatalog = TEST_CATALOGS.find(c => c.id === catalog.id);
-    if (originalCatalog) Object.assign(originalCatalog, catalog)
+      .catch(this.handleError);
   }
 
   private clone(object: any) {

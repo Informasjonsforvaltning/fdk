@@ -18,6 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 @RestController
 @RequestMapping(value = "/catalogs")
 public class CatalogController {
@@ -31,11 +36,11 @@ public class CatalogController {
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable, PagedResourcesAssembler assembler) {
         Page<Catalog> catalogs = catalogRepository.findAll(pageable);
-        return new ResponseEntity<>(assembler.toResource(catalogs), HttpStatus.OK);
+        return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@RequestBody Catalog catalog) {
         logger.info("Add catalog: " + catalog.toString());
         if(catalog.getId() == null) {
@@ -53,11 +58,11 @@ public class CatalogController {
         catalog.setPublisher(publisher);
 
         Catalog savedCatalog = catalogRepository.save(catalog);
-        return new ResponseEntity<>(savedCatalog, HttpStatus.OK);
+        return new ResponseEntity<>(savedCatalog, OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@PathVariable("id") String id, @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
 
@@ -74,15 +79,23 @@ public class CatalogController {
         catalog.setPublisher(publisher);
 
         Catalog savedCatalog = catalogRepository.save(catalog);
-        return new ResponseEntity<>(savedCatalog, HttpStatus.OK);
+        return new ResponseEntity<>(savedCatalog, OK);
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/login", method = POST, produces = APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Boolean> authenticate() {
+        logger.info("Authenticating user: ");
+        return new ResponseEntity<>(true, OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}", method = DELETE, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(OK);
     }
 
     @CrossOrigin
@@ -93,6 +106,6 @@ public class CatalogController {
         if (catalog == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(catalog, HttpStatus.OK);
+        return new ResponseEntity<>(catalog, OK);
     }
 }

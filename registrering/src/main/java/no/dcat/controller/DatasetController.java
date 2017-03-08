@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @Controller
 @RequestMapping("/catalogs/{cat_id}/datasets")
 public class DatasetController {
@@ -46,7 +49,7 @@ public class DatasetController {
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> getDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
@@ -63,7 +66,7 @@ public class DatasetController {
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @CrossOrigin
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @RequestBody Dataset dataset) {
         DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
         logger.info("requestbody dataset: " + dataset.toString());
@@ -91,7 +94,6 @@ public class DatasetController {
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
 
-
     /**
      * Return list of all datasets in catalog.
      * Without parameters, the first 20 datasets are returned
@@ -102,7 +104,7 @@ public class DatasetController {
      * @return List of data sets, with hyperlinks to other pages in search result
      */
     @CrossOrigin
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Dataset>> listDatasets(@PathVariable("cat_id") String catalogId, Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
 
@@ -118,7 +120,7 @@ public class DatasetController {
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> deleteDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
