@@ -16,6 +16,26 @@
     z-index: 1;
     color: #213B4C;
 }
+
+
+.overflow-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 130%; //1em;     /* fallback */
+    max-height: 400%; // 3em;      /* fallback */
+    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+div.col-sm-4.flex-move-first-item-to-bottom {
+    margin-top: 52px;
+}
+
+#datasets {
+    padding-right: 0;
+}
+
 .sk-search-box .glyphicon-search-frontpage{
   top: 153px;
 }
@@ -91,7 +111,7 @@ input.fdk-search {
     width: 100%;
     padding: 10px 15px 10px 15px;
     font-size: 28px;
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px 10px 0px;
 }
 
 ::-webkit-input-placeholder { /* PLACEHOLDER COLOR FOR: WebKit, Blink, Edge */
@@ -224,7 +244,7 @@ a.row.list-group-item.dataset {
     border: 0;
     background-color: #F2F3F7;
     margin: 12px 0px;
-    padding: 20px 15px;
+    padding: 20px 0px;
 }
 .dataset .overflow-text {
     border-top: 1px solid #C8CDD4;
@@ -411,27 +431,29 @@ a.white-link:hover {
 }
 .sk-action-bar {
   position: relative;
-  height: 60px;
+  height: 40px;
 }
 
 .sk-hits-stats {
     position: absolute;
-    left: 37%;
+    left: 42%;
     top: 8px;
+}
+
+.sk-hits-stats__info {
+    margin-top: 12px;
 }
 
 .sk-pagination-navigation .sk-toggle-option:first-child,
 .sk-pagination-navigation .sk-toggle-option:last-child {
-    flex: 4;
+    flex: auto;
 }
 
 .sk-pagination-navigation {
   width:300px;
   margin:10px auto;
 }
-.sk-pagination-navigation.is-numbered {
-    width:600px;
-  }
+
 
 .sk-pagination-select {
   margin: 10px auto;
@@ -439,7 +461,7 @@ a.white-link:hover {
 }
 
 .sk-hits-grid, .sk-hits-list {
-  margin:0 15px 20px;
+  margin:0 0 6px 10px;
 }
 .sk-toggle {
     display: flex;
@@ -466,7 +488,7 @@ a.white-link:hover {
     border-color: #ccc;
 }
 .sk-pagination-navigation .sk-toggle-option:first-child, .sk-pagination-navigation .sk-toggle-option:last-child {
-    flex: 4;
+    flex: auto;
 }
 .sk-toggle-option.is-disabled {
     cursor: initial;
@@ -494,6 +516,7 @@ a:hover {
   min-width: initial !important;
 }
 .sk-results-list__action-bar .dropdown{
+  margin-right: 0;
   right: 0;
   position: absolute;
 }
