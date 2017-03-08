@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.not;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by bjg on 07.03.2017.
@@ -48,14 +52,6 @@ public class RestCreateNewDatasetAccessDeniedSteps extends AbstractSpringCucumbe
         } catch (ResourceAccessException e) {
             exceptions.add(e);
         }
-;
     }
 
-    @Then("^status code HTTP (\\d+) Unauthorized is returned$")
-    public void status_code_HTTP_Unauthorized_is_returned(int arg1) throws Throwable {
-        //assertThat(response.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
-
-        //ikke helt slik det burde være?
-        assert(exceptions.get(0).getClass().equals(ResourceAccessException.class));
-    }
 }

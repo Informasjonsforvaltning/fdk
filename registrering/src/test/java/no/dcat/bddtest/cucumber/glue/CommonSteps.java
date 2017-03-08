@@ -7,6 +7,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -88,5 +89,18 @@ public class CommonSteps extends AbstractSpringCucumberTest {
     @Then("^status code HTTP (\\d+) OK is returned$")
     public void status_code_HTTP_Created_is_returned(int arg1) throws Throwable {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+    }
+
+    @Then("^status code HTTP (\\d+) Unauthorized is returned$")
+    public void status_code_HTTP_Unauthorized_is_returned(int arg1) throws Throwable {
+
+        //Either a HTTP unautoriszed is returned, or a ResourceAccessException is thrown
+        //TODO: Ikke en helt otimal løsning...
+
+        if (response != null) {
+            assertThat(response.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
+        } else {
+            assert(exceptions.get(0).getClass().equals(ResourceAccessException.class));
+        }
     }
 }

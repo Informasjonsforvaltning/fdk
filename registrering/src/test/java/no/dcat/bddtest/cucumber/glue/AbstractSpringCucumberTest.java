@@ -13,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -26,6 +28,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public abstract class AbstractSpringCucumberTest {
 
     protected static ResponseEntity<String> response;
+    protected static List<RuntimeException> exceptions = new ArrayList<>();
 
     @Autowired
     protected TestRestTemplate restTemplate;
