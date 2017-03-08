@@ -13,10 +13,9 @@ import {Dataset} from "../dataset/dataset";
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-
+  title = 'Registrer katalog';
   catalog: Catalog;
   datasets: Dataset[];
-  title: string;
   description: string;
   language: string;
   saved: boolean;
@@ -41,5 +40,9 @@ export class CatalogComponent implements OnInit {
     this.service.save(this.catalog)
       .then(() => this.saved = true)
   }
+  selectDataset(catalog, dataset) {
+    this.router.navigate(['/catalogs', catalog.id, 'datasets', dataset.id]);
+  }
+
 
 }

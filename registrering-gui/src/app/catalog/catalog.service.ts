@@ -3,6 +3,7 @@ import {Catalog} from "./catalog";
 import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {AuthenticationService} from "../security/authentication.service";
+import {Router} from "@angular/router";
 
 const TEST_CATALOGS: Catalog[] = [
   {
@@ -20,7 +21,9 @@ const TEST_CATALOGS: Catalog[] = [
 @Injectable()
 export class CatalogService {
 
-  constructor(private http: Http, private authenticationService: AuthenticationService) {
+  constructor(private http: Http,
+              private router: Router,
+              private authenticationService: AuthenticationService) {
   }
 
   //TODO don't hard code
@@ -59,6 +62,7 @@ export class CatalogService {
       .then(() => catalog)
       .catch(this.handleError);
   }
+
 
   private clone(object: any) {
     return JSON.parse(JSON.stringify(object))

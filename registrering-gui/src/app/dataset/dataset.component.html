@@ -1,16 +1,19 @@
-<div class="panel panel-default">
+<h1>
+  {{title}}
+</h1>
+<div class="panel panel-default" *ngIf="dataset">
   <div class="panel-heading">
-    <div class="input-group">
-      <input id="tittel-datasett" type="text" class="form-control" placeholder="Tittel"/>
+    <div class="form-group">
+      <input id="tittel-datasett" type="text" class="form-control" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
     </div>
   </div>
   <div class="panel-body">
-    <h2>Registerenheten i Brønnøysund</h2>
-    <textarea class="form-control" rows="5" id="beskrivelse-datasett" placeholder="Beskrivelse"></textarea>
+    <h2>{{dataset.catalog}}</h2>
+    <textarea class="form-control" rows="5" id="beskrivelse-datasett" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default" *ngIf="catalog">
   <div class="panel-heading">
     Kontaktinformasjon
   </div>
