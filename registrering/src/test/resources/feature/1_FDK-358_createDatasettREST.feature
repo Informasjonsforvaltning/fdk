@@ -1,6 +1,6 @@
 Feature: Opprette nytt datasett
 	# @BRUKERHISTORIE_FDK_358
- 	# Mulighet til å opprett nytt datasett
+	#Mulighet til å opprett nytt datasett
 	#
 	#Godkjenningskriterier:
 	## På siden med oversikt over  datasett skal det eksistere en knapp for å opprette et nytt datasett
@@ -24,15 +24,18 @@ Feature: Opprette nytt datasett
 	# Brukergrensesnitt-test (ikke cucumber):
 	#Sjekk at knapp eksisterer, og navigerer til redigeringsside
 
+	Background:
+		Given Elasticsearch is running
+		And webservice is running
+		And a catalog exists
+		
+
 	#Godkjenningskriterier:
 	## På siden med oversikt over  datasett skal det eksistere en knapp for å opprette et nytt datasett
 	## Når brukeren trykker på opprett-knappen, skal hun redirectes til en side der informasjon om datasettet spesifiseres.
 	@TEST_FDK_377
 	Scenario: C-Test FDK: Opprette nytt datsett -  tilgang
-		Given Elasticsearch is running
-		And webservice is running
-		And a catalog exists
-		And user has access to register in the catalog
+		Given user has access to register in the catalog
 		When a the user chooses to create a new dataset
-		Then status code HTTP 201 Created is returned
+		Then status code HTTP 200 OK is returned
 		And Json containing the dataset id is returned in http body

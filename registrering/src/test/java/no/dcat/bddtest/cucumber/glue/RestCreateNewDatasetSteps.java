@@ -82,7 +82,7 @@ public class RestCreateNewDatasetSteps extends AbstractSpringCucumberTest{
     }
 
 
-    @Then("^status code HTTP (\\d+) Created is returned$")
+    @Then("^status code HTTP (\\d+) OK is returned$")
     public void status_code_HTTP_Created_is_returned(int arg1) throws Throwable {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }

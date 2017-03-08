@@ -1,6 +1,6 @@
 Feature: Opprette nytt datasett
-	# @BRUKERHISTORIE_FDK_358
- 	#Mulighet til å opprett nytt datasett
+	#BRUKERHISTORIE_FDK_358
+	#Mulighet til å opprett nytt datasett
 	#
 	#Godkjenningskriterier:
 	## På siden med oversikt over  datasett skal det eksistere en knapp for å opprette et nytt datasett
@@ -24,13 +24,16 @@ Feature: Opprette nytt datasett
 	# Brukergrensesnitt-test (ikke cucumber):
 	#Sjekk at knapp eksisterer, og navigerer til redigeringsside
 
+	Background:
+		Given Elasticsearch is running
+		And webservice is running
+		And a catalog exists
+		
+
 	#Godkjenningskriterier:
 	## På siden med oversikt over  datasett skal det eksistere en knapp for å opprette et nytt datasett
 	## Når brukeren trykker på opprett-knappen, skal hun redirectes til en side der informasjon om datasettet spesifiseres.
 	@TEST_FDK_378
 	Scenario: C-Test FDK: Opprette nytt datsett -  ikke tilgang
-		Given Elasticsearch is running
-		And webservice is running
-		And a catalog exists
 		When user try to register a new dataset in a catalog he has no access to
 		Then status code HTTP 401 Unauthorized is returned
