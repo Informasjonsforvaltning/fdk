@@ -154,4 +154,8 @@ public class Dataset {
     //Norwegian: annen identifikator
     @Field
     private List<String> admsIdentifier;
+
+    //Meta information about editiong of the dataset description
+    @Field
+    private Date _lastModified;
 }

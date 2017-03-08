@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -75,6 +76,10 @@ public class DatasetController {
             dataset.setId(datasetIdGenerator.createId());
         }
         dataset.setCatalog(catalogId);
+
+        //Store metainformation about editing
+        dataset.set_lastModified(Calendar.getInstance().getTime());
+
         Dataset savedDataset = datasetRepository.save(dataset);
 
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
@@ -92,6 +97,10 @@ public class DatasetController {
         logger.info("requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
         dataset.setCatalog(catalogId);
+
+        //Add metaifnormation about editing
+        dataset.set_lastModified(Calendar.getInstance().getTime());
+
         Dataset savedDataset = datasetRepository.save(dataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
