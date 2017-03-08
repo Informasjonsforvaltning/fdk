@@ -77,6 +77,22 @@ public class DatasetController {
 
 
     /**
+     * Create new dataset in catalog. ID for the dataset is created automatically.
+     * @param dataset
+     * @return HTTP 200 OK if dataset could be could be created.
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
+        logger.info("requestbody dataset: " + dataset.toString());
+        dataset.setId(datasetId);
+        dataset.setCatalog(catalogId);
+        Dataset savedDataset = datasetRepository.save(dataset);
+        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+    }
+
+
+    /**
      * Return list of all datasets in catalog.
      * Without parameters, the first 20 datasets are returned
      * The returned data contains paging hyperlinks.
