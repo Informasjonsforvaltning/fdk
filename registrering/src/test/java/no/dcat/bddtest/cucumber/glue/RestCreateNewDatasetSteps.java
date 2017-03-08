@@ -39,24 +39,6 @@ public class RestCreateNewDatasetSteps extends AbstractSpringCucumberTest{
     ResponseEntity<Dataset> response;
 
 
-    @Given("^user has access to register in the catalog$")
-    public void user_has_access_to_register_in_the_catalog() throws Throwable {
-        // test that the user has access to register by creating dataset and then deleting it
-        String datasetId = "101";
-        Dataset dataset = new Dataset(datasetId);
-
-        Map languageTitle = new HashMap();
-        languageTitle.put("nb","Test-tittel");
-        dataset.setTitle(languageTitle);
-        dataset.setCatalog("974760673");
-
-        Dataset result = restTemplate.withBasicAuth("bjg", "123")
-                .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
-
-        restTemplate.withBasicAuth("bjg", "123").delete("/catalogs/974760673/datasets/101");
-    }
-
-
     @When("^a the user chooses to create a new dataset$")
     public void a_the_user_chooses_to_create_a_new_dataset() throws Throwable {
         String datasetId = "102";
@@ -81,11 +63,6 @@ public class RestCreateNewDatasetSteps extends AbstractSpringCucumberTest{
 
     }
 
-
-    @Then("^status code HTTP (\\d+) OK is returned$")
-    public void status_code_HTTP_Created_is_returned(int arg1) throws Throwable {
-        assertThat(response.getStatusCode(), is(HttpStatus.OK));
-    }
 
     @Then("^Json containing the dataset id is returned in http body$")
     public void json_containing_the_dataset_id_is_returned_in_http_body() throws Throwable {

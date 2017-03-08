@@ -2,8 +2,11 @@ package no.dcat.bddtest.cucumber.glue;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import no.dcat.model.Catalog;
+import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
+import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,5 +63,30 @@ public class CommonSteps extends AbstractSpringCucumberTest {
         Catalog getResult = restTemplate.getForObject("/catalogs/" + id, Catalog.class);
 
         assertThat(getResult, is((expectedCatalog)));
+    }
+
+
+    @Given("^user has access to register in the catalog$")
+    public void user_has_access_to_register_in_the_catalog() throws Throwable {
+        // test that the user has access to register by creating dataset and then deleting it
+        String datasetId = "101";
+        Dataset dataset = new Dataset(datasetId);
+
+        Map languageTitle = new HashMap();
+        languageTitle.put("nb","Test-tittel");
+        dataset.setTitle(languageTitle);
+        dataset.setCatalog("974760673");
+
+        Dataset result = restTemplate.withBasicAuth("bjg", "123")
+                .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
+
+        restTemplate.withBasicAuth("bjg", "123").delete("/catalogs/974760673/datasets/101");
+    }
+
+
+
+    @Then("^status code HTTP (\\d+) OK is returned$")
+    public void status_code_HTTP_Created_is_returned(int arg1) throws Throwable {
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
 }
