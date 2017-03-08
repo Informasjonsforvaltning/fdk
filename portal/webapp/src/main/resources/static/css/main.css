@@ -113,7 +113,7 @@ input.fdk-search {
 }
 
 /*  L A B E L S   &   B U T T O N S  */
-.list-group-item.fdk-label-default, .fdk-label-default {
+.list-group-item.fdk-label-default {
   min-width: 100%;
 }
 .list-group-item.fdk-label-default, .fdk-label-default, a.fdk-label-default:focus, .fdk-label-default:active {
