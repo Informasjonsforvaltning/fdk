@@ -38,6 +38,8 @@ public final class ResponseManipulation {
         fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
         fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
 
+        fillPropWithAlternativeValIfEmpty(dataset.getCatalog().getTitle(), lang);
+
         if (dataset.getTheme() != null) {
             for (DataTheme dataTheme : dataset.getTheme()) {
                 fillPropWithAlternativeValIfEmpty(dataTheme.getTitle(), lang);
@@ -55,6 +57,8 @@ public final class ResponseManipulation {
                 fillPropWithAlternativeValIfEmpty(distribution.getDescription(), lang);
             }
         }
+
+        //fillPropWithAlternativeValIfEmpty(dataset.getSpatial(),lang);
 
         return dataset;
     }

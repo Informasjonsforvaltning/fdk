@@ -20,9 +20,9 @@
     <div th:replace="header :: header"/>
 
     <div class="jumbotron">
-        <h1 th:text="${dataset.title.nb}" />
+        <h1 th:text="${dataset.title.get(pageLanguage)}" />
         <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}"/>
-        <p th:text="${dataset.description.nb}"></p>
+        <p th:text="${dataset.description.get(pageLanguage)}"></p>
         <a th:if="${dataset.landingPage}" th:href='${dataset.landingPage}'><span class="glyphicon glyphicon-home"></span></a>
 
     </div>
@@ -33,7 +33,7 @@
                     <dt th:text="#{identifier}">Identifikator</dt>
                     <dd th:each="id : ${dataset.identifier}"><span th:text="${id}"/></dd>
                     <dt th:text="#{catalog}">Katalog</dt>
-                    <dd th:text="${dataset.catalog.title.nb}"/>
+                    <dd th:text="${dataset.catalog.title.get(pageLanguage)}"/>
 
                     <dt th:text="#{download}">Last ned</dt>
                     <dd>
@@ -46,8 +46,8 @@
                 <h3 th:text="#{contact.header}">Kontaktinformasjon</h3>
                 <dl class="dl-horizontal" th:if="${dataset.contactPoint}">
 
-                    <dt th:if="${dataset.contactPoint.fullname} != null" th:text="#{contact.name}">Navn</dt>
-                    <dd th:text="${dataset.contactPoint.fullname}" ></dd>
+                    <dt th:if="${dataset.contactPoint.fullname}" th:text="#{contact.name}">Navn</dt>
+                    <dd th:if="${dataset.contactPoint.fullname}" th:text="${dataset.contactPoint.fullname}"></dd>
 
                     <dt th:if="${dataset.contactPoint.email} != null" th:text="#{contact.email}">E-post</dt>
                     <dd><a th:href="${dataset.contactPoint.email}"><span th:text="${dataset.contactPoint.email}"></span></a></dd>
@@ -77,10 +77,10 @@
                 <h3 th:text="#{detail.distribution}">Distribusjon</h3>
                 <dl class="dl-horizontal" th:each="distribution : ${dataset.distribution}">
                     <dt th:if="${distribution.title.size() > 0}" th:text="#{detail.distribution.title}" >Tittel</dt>
-                    <dd th:text="${distribution.title.get('nb')}"></dd>
+                    <dd th:text="${distribution.title.get(pageLanguage)}"></dd>
 
                     <dt th:if="${distribution.description.size() > 0}" th:text="#{detail.distribution.description}">Beskrivelse</dt>
-                    <dd th:text="${distribution.description.get('nb')}" ></dd>
+                    <dd th:text="${distribution.description.get(pageLanguage)}" ></dd>
 
                     <dt th:if="${distribution.format}" th:text="#{detail.distribution.format}">Format</dt>
                     <dd th:text="${distribution.format}" ></dd>
@@ -94,9 +94,9 @@
                 <h3 th:text="#{detail.quality.title}">Kvalitet</h3>
                 <dl class="dl-horizontal">
                     <dt th:if="${dataset.provenance}" th:text="#{detail.provenance}">Opphav</dt>
-                    <dd th:if="${dataset.provenance}" th:text="${dataset.provenance.getTitle().get('nb')}" id="provenanceText"></dd>
+                    <dd th:if="${dataset.provenance}" th:text="${dataset.provenance.getTitle().get(pageLanguage)}" id="provenanceText"></dd>
                     <dt th:if="${dataset.accrualPeriodicity}" th:text="#{detail.frequency}">Frekvens</dt>
-                    <dd th:if="${dataset.accrualPeriodicity}" th:text="${dataset.accrualPeriodicity.getTitle().get('nb')}" id="accrualPeriodicityText"></dd>
+                    <dd th:if="${dataset.accrualPeriodicity}" th:text="${dataset.accrualPeriodicity.getTitle().get(pageLanguage)}" id="accrualPeriodicityText"></dd>
                 </dl>
             </div>
             <div>
@@ -109,12 +109,12 @@
                     <dd th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" ></dd>
 
                     <dt th:if="${dataset.language}" th:text="#{detail.language}">Språk
-                        <dd th:text="${dataset.language.getTitle().get('nb')}" id="languageText"></dd>
+                        <dd th:text="${dataset.language.getTitle().get(pageLanguage)}" id="languageText"></dd>
                     </dt>
 
                     <dt th:if="${dataset.theme.size() > 0}" th:text="#{detail.theme}">Tema</dt>
                     <dd th:each="theme : ${dataset.theme}" >
-                        <span th:text="${theme.title.get('nb')}"></span>
+                        <span th:text="${theme.title.get(pageLanguage)}"></span>
                     </dd>
 
                     <dt th:if="${dataset.temporal.size() > 0}" th:text="#{detail.period}">Tidsperiode</dt>
@@ -126,7 +126,7 @@
 
                     <dt th:if="${dataset.spatial.size() > 0}" th:text="#{detail.spatial}">Dekningsområde</dt>
                     <dd th:each="omrade : ${dataset.spatial}" th:if="${omrade}" id="locationsText">
-                        <a th:href="${omrade.getCode()}" th:text="${omrade.getTitle().get('nb')} + ', '"></a>
+                        <a th:href="${omrade.getCode()}" th:text="${omrade.getTitle().get(pageLanguage)} + ', '"></a>
                     </dd>
 
                 </dl>
@@ -138,7 +138,7 @@
                 <dl>
                     <dt th:if="${dataset.keyword.size() > 0}" th:text="#{detail.keyword}">Emneord</dt>
                     <dd>
-                        <span th:each="opplysninger: ${dataset.keyword.get('nb')}">
+                        <span th:each="opplysninger: ${dataset.keyword.get(pageLanguage)}">
                             <span th:each="opplysning: ${opplysninger}">
                                 <span th:text="${opplysning} + ', '" ></span>
                             </span>
@@ -155,7 +155,7 @@
                 <h3>Restriksjoner</h3>
                 <dl class="dl-horizontal">
                     <dt th:if="${dataset.accessRights}" th:text="#{detail.restrictions}">Restriksjon</dt>
-                    <dd th:if="${dataset.accessRights}" th:text="${dataset.accessRights.getTitle().get('nb')}" id="accessRightText"></dd>
+                    <dd th:if="${dataset.accessRights}" th:text="${dataset.accessRights.getTitle().get(pageLanguage)}" id="accessRightText"></dd>
 
                     <dt th:if="${dataset.accessRightsComment.size() > 0 }" th:text="detail.comments">Kommentar</dt>
                     <dd th:each="kommentar : ${dataset.accessRightsComment}" >

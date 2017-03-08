@@ -112,8 +112,9 @@ public class PortalController {
             logger.trace(String.format("Found dataset: %s", json));
             Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
 
-            dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
+            dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, locale.getLanguage());
             model.addObject("dataset", dataset);
+            model.addObject("pageLanguage", locale.getLanguage());
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()), e);
             model.addObject("exceptionmessage", e.getLocalizedMessage());
