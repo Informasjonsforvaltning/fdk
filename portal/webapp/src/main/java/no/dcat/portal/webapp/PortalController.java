@@ -91,21 +91,7 @@ public class PortalController {
             );
 
             return model;
-            /*
-            ModelAndView model = new ModelAndView(MODEL_RESULT);
-            model.addObject("themes", getCodeLists());
-            model.addObject("query", query);
 
-            logger.debug(buildMetadata.getQueryServiceExternal());
-            logger.debug(buildMetadata.getVersionInformation());
-
-            session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
-            session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
-            session.setAttribute("theme", theme);
-            session.setAttribute("publisher", publisher);
-
-
-            return model;*/
         } else {
             return getDetailsView(id);
         }
@@ -115,6 +101,8 @@ public class PortalController {
         ModelAndView model = new ModelAndView("detail");
 
         try {
+            Locale locale = LocaleContextHolder.getLocale();
+
             URI uri = new URIBuilder(buildMetadata.getDetailsServiceUrl()).addParameter("id", id).build();
             HttpClient httpClient = HttpClientBuilder.create().build();
 
@@ -124,7 +112,7 @@ public class PortalController {
             logger.trace(String.format("Found dataset: %s", json));
             Dataset dataset = new ElasticSearchResponse().toListOfObjects(json, Dataset.class).get(0);
 
-            dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, "nb");
+            dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, locale.getLanguage());
             model.addObject("dataset", dataset);
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()), e);

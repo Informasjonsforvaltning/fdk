@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Detail view</title>
+    <title th:text="#{detail.title}">Datasett</title>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
@@ -67,66 +67,64 @@
                 </dl>
             </div>
             <div>
-                <h3>Konformitet</h3>
+                <h3 th:text="#{detail.conformsTo}">Konformitet</h3>
                 <dl class="dl-horizontal" th:if="${dataset.conformsTo.size() > 0}" th:each="conformsTo : ${dataset.conformsTo}">
                     <dt></dt>
                     <dd><a  th:href="${conformsTo}" th:text="${conformsTo.substring(conformsTo.lastIndexOf('/') + 1)} + ' '"></a></dd>
                 </dl>
             </div>
             <div th:if="${dataset.distribution.size() > 0}">
-                <h3>Distribusjon</h3>
+                <h3 th:text="#{detail.distribution}">Distribusjon</h3>
                 <dl class="dl-horizontal" th:each="distribution : ${dataset.distribution}">
-                    <dt th:if="${distribution.title.size() > 0}" >Tittel</dt>
+                    <dt th:if="${distribution.title.size() > 0}" th:text="#{detail.distribution.title}" >Tittel</dt>
                     <dd th:text="${distribution.title.get('nb')}"></dd>
 
-                    <dt th:if="${distribution.description.size() > 0}">Beskrivelse</dt>
+                    <dt th:if="${distribution.description.size() > 0}" th:text="#{detail.distribution.description}">Beskrivelse</dt>
                     <dd th:text="${distribution.description.get('nb')}" ></dd>
 
-                    <dt th:if="${distribution.format}">Format</dt>
+                    <dt th:if="${distribution.format}" th:text="#{detail.distribution.format}">Format</dt>
                     <dd th:text="${distribution.format}" ></dd>
 
-                    <dt th:if="${distribution.accessURL}">Aksess-url</dt>
+                    <dt th:if="${distribution.accessURL}" th:text="#{detail.distribution.accessUrl}">Aksess-url</dt>
                     <dd th:if="${distribution.accessURL}" ><a th:href="${distribution.accessURL}" th:text="${distribution.accessURL}"></a></dd>
 
                 </dl>
             </div>
             <div>
-                <h3>Kvalitet</h3>
+                <h3 th:text="#{detail.quality.title}">Kvalitet</h3>
                 <dl class="dl-horizontal">
-                    <dt th:if="${dataset.provenance}">Opphav
-                        <dd th:text="${dataset.provenance.getTitle().get('nb')}" id="provenanceText"></dd>
-                    </dt>
-                    <dt th:if="${dataset.accrualPeriodicity}">Frekvens
-                        <dd th:text="${dataset.accrualPeriodicity.getTitle().get('nb')}" id="accrualPeriodicityText"></dd>
-                    </dt>
+                    <dt th:if="${dataset.provenance}" th:text="#{detail.provenance}">Opphav</dt>
+                    <dd th:if="${dataset.provenance}" th:text="${dataset.provenance.getTitle().get('nb')}" id="provenanceText"></dd>
+                    <dt th:if="${dataset.accrualPeriodicity}" th:text="#{detail.frequency}">Frekvens</dt>
+                    <dd th:if="${dataset.accrualPeriodicity}" th:text="${dataset.accrualPeriodicity.getTitle().get('nb')}" id="accrualPeriodicityText"></dd>
                 </dl>
             </div>
             <div>
-                <h3>Øvrig info</h3>
+                <h3 th:text="#{detail.miscInfo}">Øvrig info</h3>
                 <dl class="dl-horizontal">
-                    <dt th:if="${dataset.issued}">Opprettet dato</dt>
+                    <dt th:if="${dataset.issued}" th:text="#{detail.created}">Opprettet dato</dt>
                     <dd th:text="${dataset.issued}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''" ></dd>
 
-                    <dt th:if="${dataset.modified}">Sist endret</dt>
+                    <dt th:if="${dataset.modified}" th:text="#{detail.modified}">Sist endret</dt>
                     <dd th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''" ></dd>
 
-                    <dt th:if="${dataset.language}">Språk
+                    <dt th:if="${dataset.language}" th:text="#{detail.language}">Språk
                         <dd th:text="${dataset.language.getTitle().get('nb')}" id="languageText"></dd>
                     </dt>
 
-                    <dt th:if="${dataset.theme.size() > 0}">Tema</dt>
+                    <dt th:if="${dataset.theme.size() > 0}" th:text="#{detail.theme}">Tema</dt>
                     <dd th:each="theme : ${dataset.theme}" >
                         <span th:text="${theme.title.get('nb')}"></span>
                     </dd>
 
-                    <dt th:if="${dataset.temporal.size() > 0}">Tidsperiode</dt>
+                    <dt th:if="${dataset.temporal.size() > 0}" th:text="#{detail.period}">Tidsperiode</dt>
                     <dd th:each="period : ${dataset.temporal}" >
                         <span th:text="${period.startDate != null} ? ${#dates.format(period.startDate, 'yyyy-MM-dd')} : ''"></span>
                         <span th:if="${period.startDate != null || period.endDate != null}"> - </span>
                         <span th:text="${period.endDate != null} ? ${#dates.format(period.endDate, 'yyyy-MM-dd')} : ''"></span>
                     </dd>
 
-                    <dt th:if="${dataset.spatial.size() > 0}">Dekningsområde</dt>
+                    <dt th:if="${dataset.spatial.size() > 0}" th:text="#{detail.spatial}">Dekningsområde</dt>
                     <dd th:each="omrade : ${dataset.spatial}" th:if="${omrade}" id="locationsText">
                         <a th:href="${omrade.getCode()}" th:text="${omrade.getTitle().get('nb')} + ', '"></a>
                     </dd>
@@ -136,9 +134,9 @@
         </div>
         <div class="col-lg-6">
             <div class="dl-horizontal">
-                <h3>Opplysninger</h3>
+                <h3 th:text="#{detail.information}">Opplysninger</h3>
                 <dl>
-                    <dt th:if="${dataset.keyword.size() > 0}">Emneord</dt>
+                    <dt th:if="${dataset.keyword.size() > 0}" th:text="#{detail.keyword}">Emneord</dt>
                     <dd>
                         <span th:each="opplysninger: ${dataset.keyword.get('nb')}">
                             <span th:each="opplysning: ${opplysninger}">
@@ -147,7 +145,7 @@
                         </span>
                     </dd>
 
-                    <dt th:if="${dataset.subject.size() > 0}">Begrep</dt>
+                    <dt th:if="${dataset.subject.size() > 0}" th:text="#{detail.subject}">Begrep</dt>
                     <dd th:each="subject : ${dataset.subject}" >
                         <span th:text="${subject}"></span>
                     </dd>
@@ -156,23 +154,22 @@
             <div>
                 <h3>Restriksjoner</h3>
                 <dl class="dl-horizontal">
-                    <dt th:if="${dataset.accessRights}">Restriksjon
-                        <dd th:text="${dataset.accessRights.getTitle().get('nb')}" id="accessRightText"></dd>
-                    </dt>
+                    <dt th:if="${dataset.accessRights}" th:text="#{detail.restrictions}">Restriksjon</dt>
+                    <dd th:if="${dataset.accessRights}" th:text="${dataset.accessRights.getTitle().get('nb')}" id="accessRightText"></dd>
 
-                    <dt th:if="${dataset.accessRightsComment.size() > 0 }">Kommentar</dt>
+                    <dt th:if="${dataset.accessRightsComment.size() > 0 }" th:text="detail.comments">Kommentar</dt>
                     <dd th:each="kommentar : ${dataset.accessRightsComment}" >
                         <span th:if="${kommentar}" th:text="${kommentar} + ' '"></span>
                     </dd>
                 </dl>
             </div>
             <div>
-                <h3>Formål</h3>
+                <h3 th:text="#{detail.objective}">Formål</h3>
             </div>
             <div>
-                <h3>Relaterte</h3>
+                <h3 th:text="#{detail.related}">Relaterte</h3>
                 <dl class="dl-horizontal">
-                    <dt th:each="relatert : ${dataset.references}" >Relatert</dt>
+                    <dt th:each="relatert : ${dataset.references}" th:text="#{detail.relates}">Relatert</dt>
                     <dd th:text="${relatert}"></dd>
                 </dl>
             </div>
@@ -184,6 +181,6 @@
 
 <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="js/header.js"></script>
+<script src="js/detail.js"></script>
 </body>
 </html>
