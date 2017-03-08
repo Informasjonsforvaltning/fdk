@@ -1,7 +1,7 @@
 {
   "id" : "1001",
   "title": {
-    "nb" : "Enhetsregisteret testdatasett"
+    "nb" : "Enkelt testdatasett"
   },
   "description": {
     "nb": "Datasett med mange attributter"
