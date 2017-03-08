@@ -115,6 +115,8 @@ public class PortalController {
             dataset = new ResponseManipulation().fillWithAlternativeLangValIfEmpty(dataset, locale.getLanguage());
             model.addObject("dataset", dataset);
             model.addObject("pageLanguage", locale.getLanguage());
+
+
         } catch (Exception e) {
             logger.error(String.format("An error occured: %s", e.getMessage()), e);
             model.addObject("exceptionmessage", e.getLocalizedMessage());
@@ -132,6 +134,7 @@ public class PortalController {
      */
     @RequestMapping(value = {"/detail"}, produces = "text/html")
     public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
+
         return getDetailsView(id);
     }
 
