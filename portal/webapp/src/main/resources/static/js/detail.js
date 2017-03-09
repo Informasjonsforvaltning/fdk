@@ -52,12 +52,3 @@ langElement.href ="datasets?id=" + datasetId + "&lang=nn";
 langElement = document.getElementById("lang.en");
 langElement.href ="datasets?id=" + datasetId + "&lang=en";
 
-var backButton = document.getElementById("backToResult");
-var backURL = localStorage.getItem(datasetId);
-if (backURL === undefined) {
-    backURL = window.referrer;
-    localStorage.setItem(datsetId, backURL)
-}
-backButton.href = backURL;
-console.log(window.referrer);
-console.log(backURL);

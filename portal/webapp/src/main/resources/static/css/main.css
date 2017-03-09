@@ -2,6 +2,13 @@
    Author's custom styles
    ========================================================================== */
 
+.col-center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    /* margin-left: auto; margin-right: auto; */
+}
+
 @media screen and (min-width: 768px) {
     .jumbotron .h1, .jumbotron h1 {
         font-size: 36px;
