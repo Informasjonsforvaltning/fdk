@@ -1,3 +1,6 @@
+<alert type="success" *ngIf="saved">
+  <strong>Lagret!</strong> Datasettet har blitt lagret.
+</alert>
 
 <div class="panel fdk-panel" *ngIf="dataset">
   <div class="fdk-panel-big-heading">
@@ -38,3 +41,5 @@
     </div>
   </div>
 </div>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="save()">Lagre</button>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>

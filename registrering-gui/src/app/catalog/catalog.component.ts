@@ -64,5 +64,9 @@ export class CatalogComponent implements OnInit {
       .then(dataset => this.selectDataset(this.catalog, dataset));
   }
 
+  back(): void {
+    this.router.navigate(['/']);
+  }
+
 
 }

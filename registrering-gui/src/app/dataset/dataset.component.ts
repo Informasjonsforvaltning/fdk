@@ -16,6 +16,7 @@ export class DatasetComponent implements OnInit {
   description: string;
   language: string;
   saved: boolean;
+  catId: string;
 
 
   constructor(
@@ -28,9 +29,18 @@ export class DatasetComponent implements OnInit {
   ngOnInit() {
     this.language = 'nb';
     // snapshot alternative
-    let catId = this.route.snapshot.params['cat_id'];
+    this.catId = this.route.snapshot.params['cat_id'];
     let datasetId = this.route.snapshot.params['dataset_id'];
-    this.service.get(catId, datasetId).then((dataset: Dataset) => this.dataset = dataset);
+    this.service.get(this.catId, datasetId).then((dataset: Dataset) => this.dataset = dataset);
+  }
+
+  save(): void {
+    this.service.save(this.catId, this.dataset)
+      .then(() => this.saved = true)
+  }
+
+  back(): void {
+    this.router.navigate(['/catalogs', this.catId]);
   }
 
 }

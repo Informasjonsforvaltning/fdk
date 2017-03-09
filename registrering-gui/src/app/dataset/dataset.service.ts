@@ -50,8 +50,8 @@ export class DatasetService {
       .catch(this.handleError);
   }
 
-  save(catId: string, datasetId: string, dataset: Dataset) : Promise<Dataset> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${datasetId}/`;
+  save(catId: string, dataset: Dataset) : Promise<Dataset> {
+    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
 
     let authorization : string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
