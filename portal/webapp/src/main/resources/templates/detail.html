@@ -22,11 +22,11 @@
     <div th:replace="header :: header"/>
 
     <div class="jumbotron">
-        <h1 th:text="${dataset.title.get(pageLanguage)}">Tittel</h1>
-        <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}">
+        <h1 th:text="${dataset.title.get(pageLanguage)}" aria-label="Tittel">Tittel</h1>
+        <h2 th:text="${dataset.publisher.name} != null ? ${dataset.publisher.name} : ${dataset.publisher.id}" aria-label="Utgiver">
             Utgiver</h2>
-        <p th:text="${dataset.description.get(pageLanguage)}"></p>
-        <a th:if="${dataset.landingPage}" th:href='${dataset.landingPage}'><span
+        <p th:text="${dataset.description.get(pageLanguage)}" aria-label="Beskrivelse"></p>
+        <a th:if="${dataset.landingPage}" th:href='${dataset.landingPage}' aria-label="Landingsside"><span
                 class="glyphicon glyphicon-home"></span></a>
     </div>
 
@@ -146,7 +146,7 @@
                 <dd th:if="${dataset.accessRights}" th:text="${dataset.accessRights.getTitle().get(pageLanguage)}"
                     id="accessRightText"></dd>
 
-                <dt th:if="${dataset.accessRightsComment.size() > 0 }" th:text="detail.comments">Kommentar</dt>
+                <dt th:if="${dataset.accessRightsComment.size() > 0 }" th:text="#{detail.comments}">Kommentar</dt>
                 <dd th:if="${dataset.accessRightsComment.size() > 0 }">
                     <span th:each="kommentar : ${dataset.accessRightsComment}" th:text="${kommentar}"></span>
                 </dd>
@@ -204,7 +204,7 @@
                 </dd>
 
                 <dt th:text="#{catalog}">Katalog</dt>
-                <dd th:text="${dataset.catalog.title.get(pageLanguage)}"></dd>
+                <dd id="catalogName" th:text="${dataset.catalog.title.get(pageLanguage)}"></dd>
 
             </dl>
         </div>
@@ -213,7 +213,8 @@
 
     <!-- DOWNLOAD ROW -->
     <div class="row">
-        <div class="col-md-4 col-center-block">
+        <div class="col-md-6 col-center-block">
+            <span th:text="#{detail.downloadText}">Last ned DCAT-beskrivelse:</span>
             <a class="fdk-label fdk-label-default"
                th:href="${'/dataset?id='+ dataset.id +'&amp;' + 'format=ttl'}" download="dataset.ttl">TURTLE
                 <i class="fa fdk-fa-button fa-download fa-sm"></i></a>
@@ -221,7 +222,7 @@
                th:href="${'/dataset?id='+ dataset.id +'&amp;' + 'format=jsonld'}" download="dataset.json">JSON-LD
                 <i class="fa fdk-fa-button fa-download fa-sm"></i></a>
             <a class="fdk-label fdk-label-default"
-               th:href="${'/dataset?id='+ dataset.id +'&amp;' + 'format=xml'}" download="dataset.xml">XML <i
+               th:href="${'/dataset?id='+ dataset.id +'&amp;' + 'format=xml'}" download="dataset.xml">RDF/XML <i
                     class="fa fdk-fa-button fa-download fa-sm"></i></a>
         </div>
     </div>
