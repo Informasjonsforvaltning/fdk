@@ -99,15 +99,15 @@
             <dl class="dl-horizontal" th:if="${dataset.distribution.size() > 0}"
                 th:each="distribution : ${dataset.distribution}">
                 <dt th:if="${distribution.title.size() > 0}" th:text="#{detail.distribution.title}">Tittel</dt>
-                <dd th:text="${distribution.title.get(pageLanguage)}"></dd>
+                <dd th:if="${distribution.title.size() > 0}" th:text="${distribution.title.get(pageLanguage)}"></dd>
 
                 <dt th:if="${distribution.description.size() > 0}" th:text="#{detail.distribution.description}">
                     Beskrivelse
                 </dt>
-                <dd th:text="${distribution.description.get(pageLanguage)}"></dd>
+                <dd th:if="${distribution.description.size() > 0}" th:text="${distribution.description.get(pageLanguage)}"></dd>
 
                 <dt th:if="${distribution.format}" th:text="#{detail.distribution.format}">Format</dt>
-                <dd th:text="${distribution.format}"></dd>
+                <dd th:if="${distribution.format}" th:text="${distribution.format}"></dd>
 
                 <dt th:if="${distribution.accessURL}" th:text="#{detail.distribution.accessUrl}">Aksess-url</dt>
                 <dd th:if="${distribution.accessURL}"><a th:href="${distribution.accessURL}"
@@ -174,17 +174,17 @@
             <h3 th:text="#{detail.miscInfo}">Øvrig info</h3>
             <dl class="dl-horizontal">
                 <dt th:if="${dataset.issued}" th:text="#{detail.created}">Opprettet dato</dt>
-                <dd th:text="${dataset.issued}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''"></dd>
+                <dd th:if="${dataset.issued}" th:text="${dataset.issued}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''"></dd>
 
                 <dt th:if="${dataset.modified}" th:text="#{detail.modified}">Sist endret</dt>
-                <dd th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''"></dd>
+                <dd th:if="${dataset.modified}" th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''"></dd>
 
                 <dt th:if="${dataset.language}" th:text="#{detail.language}">Språk</dt>
                 <dd th:if="${dataset.language}" th:text="${dataset.language.getTitle().get(pageLanguage)}"
                     id="languageText"></dd>
 
                 <dt th:if="${dataset.temporal.size() > 0}" th:text="#{detail.period}">Tidsperiode</dt>
-                <dd>
+                <dd th:if="${dataset.temporal.size() > 0}">
                         <span th:each="period : ${dataset.temporal}">
                             <span th:text="${period.startDate != null} ? ${#dates.format(period.startDate, 'yyyy-MM-dd')} : ''"></span>
                             <span th:if="${period.startDate != null || period.endDate != null}"> - </span>
@@ -211,6 +211,7 @@
 
     </div>
 
+    <!-- DOWNLOAD ROW -->
     <div class="row">
         <div class="col-md-4 col-center-block">
             <a class="fdk-label fdk-label-default"
