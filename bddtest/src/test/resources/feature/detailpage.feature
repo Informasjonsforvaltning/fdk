@@ -12,9 +12,9 @@ Feature: Page for presenting properties for a dataset.
 
   Scenario: Load of properties.
     Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-right, locations):
-      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | kontinuerlig | Norsk | Offentlig | Norge,|
-      | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Begrenset | Norge, |
-      | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Ikke-offentlig | Norge, |
+      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | kontinuerlig | Norsk | Offentlig | Norge|
+      | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Begrenset | Norge |
+      | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Ikke-offentlig | Norge |
 
 
 #    Then the following dataset shall have the following english properties (id, provenance, frequency, language, access-rigth, locations):

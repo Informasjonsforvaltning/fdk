@@ -174,10 +174,10 @@
             <h3 th:text="#{detail.miscInfo}">Øvrig info</h3>
             <dl class="dl-horizontal">
                 <dt th:if="${dataset.issued}" th:text="#{detail.created}">Opprettet dato</dt>
-                <dd th:if="${dataset.issued}" th:text="${dataset.issued}  ? ${#dates.format(dataset.issued, 'yyyy-MM-dd')} : ''"></dd>
+                <dd th:if="${dataset.issued}" th:text="${#dates.format(dataset.issued, 'yyyy-MM-dd')}"></dd>
 
                 <dt th:if="${dataset.modified}" th:text="#{detail.modified}">Sist endret</dt>
-                <dd th:if="${dataset.modified}" th:text="${dataset.modified} ? ${#dates.format(dataset.modified, 'yyyy-MM-dd')} : ''"></dd>
+                <dd th:if="${dataset.modified}" th:text="${#dates.format(dataset.modified, 'yyyy-MM-dd')}"></dd>
 
                 <dt th:if="${dataset.language}" th:text="#{detail.language}">Språk</dt>
                 <dd th:if="${dataset.language}" th:text="${dataset.language.getTitle().get(pageLanguage)}"
@@ -193,7 +193,7 @@
                 </dd>
 
                 <dt th:if="${dataset.spatial.size() > 0}" th:text="#{detail.spatial}">Dekningsområde</dt>
-                <dd th:if="${dataset.spatial.size() > 0}">
+                <dd th:if="${dataset.spatial.size() > 0}" id="locationsText">
                     <a th:each="omrade : ${dataset.spatial}" th:href="${omrade.getCode()}"
                        th:text="${omrade.getTitle().get(pageLanguage)}"></a>
                 </dd>
