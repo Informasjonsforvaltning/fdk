@@ -36,9 +36,9 @@
       </table>
     </div>
     <div class="fdk-panel-body">
-      <table class="fdk-register table-hover">
+      <table class="fdk-register fdk-table-hover">
         <tbody>
-        <tr *ngFor="let dataset of datasets" (click)="selectDataset(catalog, dataset)" >
+        <tr *ngFor="let dataset of datasets" class="fdk-row-padding" (click)="selectDataset(catalog, dataset)" >
           <td class="fdk-register fdk-register-datacatalogue-1">{{dataset.title.nb}}</td>
           <td class="fdk-register fdk-register-datacatalogue-2">
             <div class="fdk-text-right" >{{formatDate(dataset._lastModified).toLocaleString()}}</div>
