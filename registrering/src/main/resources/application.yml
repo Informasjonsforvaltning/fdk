@@ -8,7 +8,6 @@ server:
 management:
   port: 8999
 ---
-
 spring:
   profiles: unit-integration
   data:
@@ -17,7 +16,6 @@ spring:
         http:
           enabled: true
 ---
-
 spring:
   profiles: develop_embedded
   data:
@@ -30,7 +28,16 @@ server:
 management:
   port: 8999
 ---
-
+spring:
+  profiles: docker
+  data:
+    elasticsearch:
+      cluster-nodes: elasticsearch:9300
+server:
+  port: 8099
+management:
+  port: 8999
+---
 spring:
   hateoas:
     use-hal-as-default-json-media-type: false
