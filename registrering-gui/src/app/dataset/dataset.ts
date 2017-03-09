@@ -7,4 +7,5 @@ export interface Dataset {
     [language: string]:string
   };
   catalog: string;
+  _lastModified: string;
 }

@@ -1,14 +1,13 @@
 package no.dcat.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.NonNull;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Parent;
 import org.springframework.hateoas.core.Relation;
 
 import java.util.Date;
@@ -27,7 +26,6 @@ public class Dataset {
     // dct:identifier
     // Norwegian: Identifikator
     @Id
-    @NonNull
     private String id;
 
     //Can't specify parent if no parent field has been configured
@@ -157,5 +155,15 @@ public class Dataset {
 
     //Meta information about editiong of the dataset description
     @Field
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date _lastModified;
+
+
+    public Dataset() {
+        //Blank override
+    }
+
+    public Dataset(String id) {
+        this.id = id;
+    }
 }

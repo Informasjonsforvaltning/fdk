@@ -7,7 +7,7 @@ import {Dataset} from "./dataset";
 @Component({
   selector: 'app-dataset',
   templateUrl: './dataset.component.html',
-  styleUrls: ['./dataset.component.css']
+  styleUrls: ['./dataset.component.css', '../../assets/css/designsystem.css', '../../assets/css/registrering.css']
 })
 export class DatasetComponent implements OnInit {
   title = 'Registrer datasett';

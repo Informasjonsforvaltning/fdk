@@ -1,16 +1,66 @@
-<div class="fdk-header-beta">
-  <div class="container" style="padding-top: 1em">
-    <span>Dette er en beta-versjon. Gi oss gjerne</span>
-    <a class="white-link" href="mailto:fellesdatakatalog@brreg.no?subject=Tilbakemelding Felles datakatalog">tilbakemeldinger</a> <span>om hva du synes!</span>
+<section>
+  <div class="fdk-header-beta">
+    Dette er en beta-versjon. Gi oss gjerne <a class="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
   </div>
-</div>
-<div class="container body-container">
-  <router-outlet></router-outlet>
-</div>
-<footer class="footer">
-  <div class="container" style="padding-top: 1em">
-    <a href="http://www.brreg.no">
-      <img src="//scf.brreg.no/bilder/brreg_logo.svg" alt="Brønnøysundregistrene logo" height="200" width="300" class="img-responsive" id="brreg-logo">
-    </a>
+</section>
+<!-- HEADER MENU-->
+<section>
+  <div class="fdk-header-menu-fullwidth">
+    <div class="container">
+
+      <!-- Left column / Empty -->
+      <div class="col-sm-4 col-md-4">
+      </div>
+
+      <!-- Middle column / Heading -->
+      <div class="col-sm-4 col-md-4">
+        <h1 class="fdk-heading">Datakataloger</h1>
+      </div>
+
+      <!-- Right column -->
+      <div class="col-sm-4 col-md-4">
+        <!-- Dropdown menu -->
+        <div class="dropdown fdk-container-dropdown-menu">
+          <div class="dropdown fdk-dropdown-toggle-menu">
+            <a data-toggle="dropdown" href="#"><i class="fa fdk-fa-menu fa-bars"></i></a>
+            <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <li><a href="#">Om Felles Datakatalog</a></li>
+              <li><a href="#">Spørsmål og svar</a></li>
+              <li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
+              <li><a href="#">Status implementasjon</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dropdown language -->
+        <div class="dropdown fdk-container-dropdown-language">
+          <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+            <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-england.png"/>English</a></li>
+            <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål</a></li>
+            <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Nynorsk</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
   </div>
-</footer>
+</section>
+
+<section>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</section>
+<section>
+  <footer class="fdk-footer">
+    <div class="container" style="padding-top: 1em">
+      <a href="http://www.brreg.no">
+        <img src="//scf.brreg.no/bilder/brreg_logo.svg" alt="Brønnøysundregistrene logo" height="200" width="300" class="img-responsive" id="brreg-logo">
+      </a>
+    </div>
+  </footer>
+</section>

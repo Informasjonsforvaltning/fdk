@@ -1,35 +1,51 @@
-<h1>
-  {{title}}
-</h1>
 <alert type="success" *ngIf="saved">
   <strong>Lagret!</strong> Katalogen har blitt lagret.
 </alert>
 
-<div class="panel panel-default" *ngIf="catalog">
-  <div class="panel-heading">
+<div class="panel fdk-panel" *ngIf="catalog">
+  <div class="fdk-panel-big-heading">
     <div class="form-group">
-      <input id="tittel-datakatalog" type="text" class="form-control" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
+      <input id="tittel-datakatalog" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
     </div>
   </div>
-  <div class="panel-body">
+  <div class="fdk-panel-big-body">
     <h2>{{catalog.id}}</h2>
-    <textarea class="form-control" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
+    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
+  </div>
+  <div class="fdk-panel-button">
+    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="save()">Save</button>
   </div>
 </div>
-<button type="button" class="btn btn-default" (click)="save()">Save</button>
 
-<table class="table table-striped table-hover">
-  <thead>
-  <tr>
-    <th>Tittel på datasett</th>
-    <th>Sist endret</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let dataset of datasets" (click)="selectDataset(catalog, dataset)" >
-    <td>{{dataset.title.nb}}</td>
-    <td>{{dataset.lastChange}}</td>
-  </tr>
-  </tbody>
-</table>
 
+
+<div class="col-md-12" *ngIf="catalog">
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">
+      <table class="fdk-register">
+        <tbody>
+          <tr>
+            <td class="fdk-register fdk-register-datacatalogue-1">
+              <h4 class="fdk-text-white fdk-no-margin">Datasett</h4>
+            </td>
+            <td class="fdk-register fdk-register-datacatalogue-2 fdk-text-right">
+              <h4 class="fdk-text-white fdk-text-right fdk-no-margin">Sist endret</h4>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fdk-panel-body">
+      <table class="fdk-register table-hover">
+        <tbody>
+        <tr *ngFor="let dataset of datasets" (click)="selectDataset(catalog, dataset)" >
+          <td class="fdk-register fdk-register-datacatalogue-1">{{dataset.title.nb}}</td>
+          <td class="fdk-register fdk-register-datacatalogue-2">
+            <div class="fdk-text-right" >{{formatDate(dataset._lastModified).toLocaleString()}}</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

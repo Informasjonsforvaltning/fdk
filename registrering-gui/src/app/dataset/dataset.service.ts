@@ -12,7 +12,8 @@ const TEST_DATASETS: Dataset[] = [
     "description": {
       "nb": "Datasett med mange attributter"
     },
-    "catalog": "974760673"
+    "catalog": "974760673",
+    "_lastModified": "2012-04-23"
   }
 ]
 

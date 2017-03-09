@@ -87,7 +87,7 @@ public class DatasetController {
 
 
     /**
-     * Create new dataset in catalog. ID for the dataset is created automatically.
+     * Modify dataset in catalog.
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */

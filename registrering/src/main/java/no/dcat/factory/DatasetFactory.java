@@ -11,6 +11,8 @@ public class DatasetFactory {
     private DatasetIdGenerator datasetIdGenerator;
 
     public Dataset createDataset() {
-        return new Dataset(datasetIdGenerator.createId());
+        Dataset dataset = new Dataset();
+        dataset.setId(datasetIdGenerator.createId());
+        return dataset;
     }
 }

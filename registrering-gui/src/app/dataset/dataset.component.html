@@ -1,54 +1,40 @@
-<h1>
-  {{title}}
-</h1>
-<div class="panel panel-default" *ngIf="dataset">
-  <div class="panel-heading">
-    <div class="form-group">
-      <input id="tittel-datasett" type="text" class="form-control" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
-    </div>
+
+<div class="panel fdk-panel" *ngIf="dataset">
+  <div class="fdk-panel-big-heading">
+    <input  class="fdk-register-h1" id="tittel-datasett" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
-  <div class="panel-body">
+  <div class="fdk-panel-big-body">
     <h2>{{dataset.catalog}}</h2>
-    <textarea class="form-control" rows="5" id="beskrivelse-datasett" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
+    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
 
-<div class="panel panel-default" *ngIf="catalog">
-  <div class="panel-heading">
-    Kontaktinformasjon
-  </div>
-  <div class="panel-body">
-    <div class="form-group">
-      <label for="epost-datasett">E-post:</label>
-      <input id="epost-datasett" type="text" class="form-control" placeholder="E-post"/>
-    </div>
-    <div class="form-group">
-      <label for="telefon-datasett">Telefonnummer:</label>
-      <input id="telefon-datasett" type="text" class="form-control" placeholder="Telefonnummer"/>
-    </div>
-    <div class="form-group">
-      <label for="organisasjon-datasett">Organisasjon:</label>
-      <input id="organisasjon-datasett" type="text" class="form-control" placeholder="Organisasjon"/>
-    </div>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="panel fdk-panel" *ngIf="dataset">
+  <div class="fdk-panel-heading">
     Opplysninger
   </div>
-  <div class="panel-body">
+  <div class="fdk-panel-body">
     <div class="form-group">
-      <label for="emneord-datasett">Emneord:</label>
-      <input id="emneord-datasett" type="text" class="form-control"/>
-    </div>
-    <div class="form-group">
-      <label for="begrep-datasett">Begrep:</label>
-      <input id="begrep-datasett" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label for="tema-datasett">Tema:</label>
-      <input id="tema-datasett" type="text" class="form-control" />
+      <div class="row form-group">
+      <label for="emneord-datasett" class="col-md-1 control-label">Emneord:</label>
+        <div class="col-md-11">
+          <input id="emneord-datasett" type="text" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <label for="begrep-datasett" class="col-md-1 control-label">Begrep:</label>
+        <div class="col-md-11">
+          <input id="begrep-datasett" type="text" class="form-control" />
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
+        <div class="col-md-11">
+          <input id="tema-datasett" type="text" class="form-control" />
+        </div>
+      </div>
     </div>
   </div>
 </div>

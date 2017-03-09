@@ -10,7 +10,7 @@ import {Dataset} from "../dataset/dataset";
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.css']
+  styleUrls: ['./catalog.component.css', '../../assets/css/designsystem.css', '../../assets/css/registrering.css']
 })
 export class CatalogComponent implements OnInit {
   title = 'Registrer katalog';
@@ -42,6 +42,13 @@ export class CatalogComponent implements OnInit {
   }
   selectDataset(catalog, dataset) {
     this.router.navigate(['/catalogs', catalog.id, 'datasets', dataset.id]);
+  }
+
+  formatDate(dateToFormat: Date): Date {
+    if (dateToFormat == null) {
+      return new Date('01-01-2000');
+    }
+    return new Date(dateToFormat);
   }
 
 
