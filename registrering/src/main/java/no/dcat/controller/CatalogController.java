@@ -40,7 +40,7 @@ public class CatalogController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@RequestBody Catalog catalog) {
         logger.info("Add catalog: " + catalog.toString());
         if(catalog.getId() == null) {

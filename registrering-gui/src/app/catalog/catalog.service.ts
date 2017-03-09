@@ -43,7 +43,7 @@ export class CatalogService {
   }
 
   get(id: string): Promise<Catalog> {
-    const url = `${this.catalogsUrl}/${id}`
+    const url = `${this.catalogsUrl}/${id}/`
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Catalog)
@@ -51,7 +51,7 @@ export class CatalogService {
   }
 
   save(catalog: Catalog) : Promise<Catalog> {
-    const url = `${this.catalogsUrl}/${catalog.id}`
+    const url = `${this.catalogsUrl}/${catalog.id}/`
 
     let authorization : string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);

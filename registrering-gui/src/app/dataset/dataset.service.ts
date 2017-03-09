@@ -25,7 +25,7 @@ export class DatasetService {
 
   //TODO don't hard code
   private catalogsUrl = "http://localhost:8099/catalogs"
-  private datasetPath = "/datasets"
+  private datasetPath = "/datasets/"
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -43,7 +43,7 @@ export class DatasetService {
   }
 
   get(catId: string, datasetId: string): Promise<Dataset> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}/${datasetId}`;
+    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
     return this.http.get(datasetUrl)
       .toPromise()
       .then(response => response.json() as Dataset)
@@ -51,7 +51,7 @@ export class DatasetService {
   }
 
   save(catId: string, datasetId: string, dataset: Dataset) : Promise<Dataset> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}/${datasetId}`;
+    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${datasetId}/`;
 
     let authorization : string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
