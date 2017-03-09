@@ -40,6 +40,7 @@ export class CatalogComponent implements OnInit {
     this.service.save(this.catalog)
       .then(() => this.saved = true)
   }
+
   selectDataset(catalog, dataset) {
     this.router.navigate(['/catalogs', catalog.id, 'datasets', dataset.id]);
   }
@@ -56,6 +57,11 @@ export class CatalogComponent implements OnInit {
       return '';
     }
     return dataset.title[this.language];
+  }
+
+  newDataset(): void {
+    this.datasetService.create(this.catalog.id)
+      .then(dataset => this.selectDataset(this.catalog, dataset));
   }
 
 

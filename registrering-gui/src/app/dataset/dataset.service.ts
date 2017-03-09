@@ -51,11 +51,29 @@ export class DatasetService {
   }
 
   save(catId: string, datasetId: string, dataset: Dataset) : Promise<Dataset> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}/${datasetId}`;
+    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}/${datasetId}`;
+
+    let authorization : string = localStorage.getItem("authorization");
+    this.headers.append("Authorization", "Basic " + authorization);
+
     return this.http
       .put(datasetUrl, JSON.stringify(dataset), {headers: this.headers})
       .toPromise()
       .then(() => dataset)
+      .catch(this.handleError)
+  }
+
+  create(catId: string) : Promise<Dataset> {
+    var created: Dataset;
+
+    let authorization : string = localStorage.getItem("authorization");
+    this.headers.append("Authorization", "Basic " + authorization);
+
+    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
+    return this.http
+      .post(datasetUrl, {}, {headers: this.headers})
+      .toPromise()
+      .then(res => res.json())
       .catch(this.handleError)
   }
 
