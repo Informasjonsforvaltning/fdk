@@ -2,18 +2,18 @@
   <strong>Lagret!</strong> Katalogen har blitt lagret.
 </alert>
 
-<div class="panel fdk-panel" *ngIf="catalog">
-  <div class="fdk-panel-big-heading">
-    <div class="form-group">
-      <input id="tittel-datakatalog" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
+<div class="col-md-12" *ngIf="catalog">
+  <div class="panel fdk-panel" *ngIf="catalog">
+    <div class="fdk-panel-big-heading">
+      <div class="form-group">
+        <input id="tittel-datakatalog" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
+      </div>
     </div>
-  </div>
-  <div class="fdk-panel-big-body">
-    <h2>{{catalog.id}}</h2>
-    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
-  </div>
-  <div class="fdk-panel-button">
-    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="save()">Save</button>
+    <div class="fdk-panel-big-body">
+      <h2>{{catalog.id}}</h2>
+      <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
+      <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="save()">Lagre</button>
+    </div>
   </div>
 </div>
 
@@ -36,10 +36,10 @@
       </table>
     </div>
     <div class="fdk-panel-body">
-      <table class="fdk-register table-hover">
+      <table class="fdk-register fdk-table-hover">
         <tbody>
-        <tr *ngFor="let dataset of datasets" (click)="selectDataset(catalog, dataset)" >
-          <td class="fdk-register fdk-register-datacatalogue-1">{{dataset.title.nb}}</td>
+        <tr *ngFor="let dataset of datasets" class="fdk-row-padding" (click)="selectDataset(catalog, dataset)" >
+          <td class="fdk-register fdk-register-datacatalogue-1">{{getTitle(dataset)}}</td>
           <td class="fdk-register fdk-register-datacatalogue-2">
             <div class="fdk-text-right" >{{formatDate(dataset._lastModified).toLocaleString()}}</div>
           </td>
@@ -48,4 +48,6 @@
       </table>
     </div>
   </div>
+  <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="newDataset()">Nytt datasett</button>
 </div>
+

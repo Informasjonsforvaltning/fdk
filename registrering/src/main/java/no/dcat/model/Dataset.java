@@ -3,6 +3,7 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -10,9 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.hateoas.core.Relation;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Document(indexName = "register", type = Dataset.ELASTIC_TYPE)
 @Data
@@ -25,6 +24,7 @@ public class Dataset {
 
     // dct:identifier
     // Norwegian: Identifikator
+    @NonNull
     @Id
     private String id;
 
@@ -35,17 +35,17 @@ public class Dataset {
     // dct:title
     // Norwegian: Tittel
     @Field
-    private Map<String,String> title;
+    private Map<String,String> title = new HashMap<>();
 
     //dct:description
     //Norwegian: Beskrivelse
     @Field
-    private Map<String,String> description;
+    private Map<String,String> description = new HashMap<>();
 
     //dcat:contactPoint
     //Norwegian: Kontaktpunkt
     @Field
-    private List<Contact> contactPoint;
+    private List<Contact> contactPoint = new ArrayList<>();
 
     //dcat:keyword
     //Norwegian: Emneord
@@ -155,7 +155,7 @@ public class Dataset {
 
     //Meta information about editiong of the dataset description
     @Field
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
 
 

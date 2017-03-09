@@ -51,5 +51,12 @@ export class CatalogComponent implements OnInit {
     return new Date(dateToFormat);
   }
 
+  getTitle(dataset: Dataset): string {
+    if (dataset.title == null) {
+      return '';
+    }
+    return dataset.title[this.language];
+  }
+
 
 }
