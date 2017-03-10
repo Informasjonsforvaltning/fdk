@@ -237,7 +237,7 @@ a.row.list-group-item.dataset {
   display: none;
 }
 .dataset h4 label::before {
-    content: ',';
+    content: '•';
     position: relative;
     top: 0px;
     left: -4px;
