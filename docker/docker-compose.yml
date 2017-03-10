@@ -144,6 +144,17 @@ services:
     networks:
       platform:
 
+  registrering-gui:
+    image: "fdk/registrering-gui:${TAG}"
+    ports:
+      - "4200:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    links:
+      - elasticsearch
+    networks:
+      platform:
+
 #  logstash:
 #    image: "fdk/logstash:${TAG}"
 #    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf

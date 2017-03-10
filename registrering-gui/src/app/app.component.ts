@@ -7,4 +7,8 @@ import {Component} from "@angular/core";
 })
 export class AppComponent {
   title = 'Registrer datakatalog';
+
+  getUsername(): string {
+    return localStorage.getItem('username');
+  }
 }

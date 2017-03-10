@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  envName: 'prod',
+  production: false,
+  envName: 'qa',
   api: 'http://localhost:8099'
 };

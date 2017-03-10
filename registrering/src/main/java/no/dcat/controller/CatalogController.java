@@ -15,6 +15,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -85,9 +87,11 @@ public class CatalogController {
 
     @CrossOrigin
     @RequestMapping(value = "/login", method = POST, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Boolean> authenticate() {
+    public HttpEntity<String> authenticate() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName(); //get logged in username
         logger.info("Authenticating user: ");
-        return new ResponseEntity<>(true, OK);
+        return new ResponseEntity<>(username, OK);
     }
 
     @CrossOrigin

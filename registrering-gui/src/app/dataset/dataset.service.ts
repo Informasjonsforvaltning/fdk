@@ -70,6 +70,7 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
+    console.debug(datasetUrl)
     return this.http
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()

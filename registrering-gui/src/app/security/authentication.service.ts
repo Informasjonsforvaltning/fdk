@@ -22,6 +22,7 @@ export class AuthenticationService {
         if (response.ok) {
           // store username and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('authorization', authorization);
+          localStorage.setItem('username', response.text());
           this.authorization = authorization;
           // return true to indicate successful login
           return true;
@@ -36,6 +37,7 @@ export class AuthenticationService {
     // clear token remove user from local storage to log user out
     this.authorization = null;
     localStorage.removeItem('authorization');
+    localStorage.removeItem('username');
   }
 
 }
