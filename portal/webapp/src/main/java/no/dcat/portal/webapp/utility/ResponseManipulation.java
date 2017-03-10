@@ -3,6 +3,7 @@ package no.dcat.portal.webapp.utility;
 import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.SkosCode;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,18 +36,26 @@ public final class ResponseManipulation {
      * @return The original dataset. Where all Tags that don't have the specified language is set with an alternative language.
      */
     public Dataset fillWithAlternativeLangValIfEmpty(Dataset dataset, String lang) {
-        fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
-        fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
+        if (dataset.getTitle() != null) {
+            fillPropWithAlternativeValIfEmpty(dataset.getTitle(), lang);
+        }
 
-        fillPropWithAlternativeValIfEmpty(dataset.getCatalog().getTitle(), lang);
+        if (dataset.getDescription() != null) {
+            fillPropWithAlternativeValIfEmpty(dataset.getDescription(), lang);
+        }
+
+        if(dataset.getCatalog() != null) {
+            fillPropWithAlternativeValIfEmpty(dataset.getCatalog().getTitle(), lang);
+        }
 
         if (dataset.getTheme() != null) {
             for (DataTheme dataTheme : dataset.getTheme()) {
                 fillPropWithAlternativeValIfEmpty(dataTheme.getTitle(), lang);
             }
         }
-
-        fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
+        if (dataset.getKeyword() != null) {
+            fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
+        }
         if (dataset.getAccrualPeriodicity() != null) {
             fillPropWithAlternativeValIfEmpty(dataset.getAccrualPeriodicity().getTitle(), lang);
         }
@@ -58,10 +67,15 @@ public final class ResponseManipulation {
             }
         }
 
-        //fillPropWithAlternativeValIfEmpty(dataset.getSpatial(),lang);
+        if (dataset.getSpatial() != null) {
+            for (SkosCode code : dataset.getSpatial()) {
+                fillPropWithAlternativeValIfEmpty(code.getTitle(), lang);
+            }
+        }
 
         return dataset;
     }
+
 
     /**
      * If the property is not defined for the specified language, fill in with values from an other language.
