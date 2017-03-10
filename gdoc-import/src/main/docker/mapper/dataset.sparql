@@ -96,7 +96,7 @@ WHERE {
      BIND (IRI(?begrep) AS ?begrepIRI)} 
 
      # create IRI of spatial, if exists (ok)    
-     OPTIONAL {?id :spatial ?spatial} .
+     OPTIONAL {?id :dekningsområde ?spatial} .
      BIND (IRI(?spatial) AS ?spatialIRI)
      
      # add accessRights (ok)
