@@ -2,6 +2,13 @@
    Author's custom styles
    ========================================================================== */
 
+.col-center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    /* margin-left: auto; margin-right: auto; */
+}
+
 @media screen and (min-width: 768px) {
     .jumbotron .h1, .jumbotron h1 {
         font-size: 36px;
@@ -133,7 +140,7 @@ input.fdk-search {
 }
 
 /*  L A B E L S   &   B U T T O N S  */
-.list-group-item.fdk-label-default, .fdk-label-default {
+.list-group-item.fdk-label-default {
   min-width: 100%;
 }
 .list-group-item.fdk-label-default, .fdk-label-default, a.fdk-label-default:focus, .fdk-label-default:active {
