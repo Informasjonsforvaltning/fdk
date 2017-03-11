@@ -98,9 +98,13 @@ public class PortalRestController {
                 "PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>" +
                 "PREFIX dcatno: <http://difi.no/dcatno#>" +
                 "PREFIX enhetsreg: <http://data.brreg.no/meta/>" +
-                "DESCRIBE ?dataset ?publisher ?contact ?distribution" +
+                "DESCRIBE ?dataset ?publisher ?contact ?distribution ?fadr ?padr ?sektor ?nace" +
                 "where {?dataset a dcat:Dataset. " +
                 " ?dataset dct:publisher ?publisher." +
+                        "OPTIONAL {?publisher enhetsreg:forretningsadresse ?fadr}" +
+                        "OPTIONAL {?publisher enhetsreg:postadresse ?padr}" +
+                        "OPTIONAL {?publisher enhetsreg:institusjonellSektorkode ?sektor}" +
+                        "OPTIONAL {?publisher enhetsreg:naeringskode1 ?nace}" +
                 " OPTIONAL {?dataset dcat:contactPoint ?contact} " +
                 " OPTIONAL {?dataset dcat:distribution ?distribution }" +
                 "FILTER (?dataset = <" + decodedUri + "> )" +
