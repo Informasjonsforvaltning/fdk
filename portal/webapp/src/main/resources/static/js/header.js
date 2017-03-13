@@ -9,6 +9,9 @@ if (lang.indexOf("en") === 0 ) {
 if (lang.indexOf("nb") === 0) {
     lang = "nb";
 }
+if (lang.indexOf("nn") === 0) {
+    lang = "nn";
+}
 
 
 var themeList = "";
@@ -67,6 +70,7 @@ $("#chosenLanguage").html($(langElement).html() + ' <span class="caret"></span>'
 function searchController() {
     var search = document.getElementById("search");
     var dosearch = document.getElementById("dosearch");
+
 
     if (dosearch)
         dosearch.onclick = function (event) {
