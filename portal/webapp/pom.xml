@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>portal</artifactId>
         <groupId>no.dcat</groupId>
-        <version>0.2.2-SNAPSHOT</version>
+        <version>0.2.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>webapp</artifactId>
     <description>Portal webapplication</description>
-    <version>0.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -111,7 +111,25 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
-                   <include>**/*</include>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <!-- make sure we do not filter the things in static. otherwise binary font files becomes corrupt -->
+                    <exclude>static/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>static/**</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/searchkit</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>dist/</include>
                 </includes>
             </resource>
         </resources>
@@ -141,24 +159,24 @@
                 </executions>
             </plugin>
             <!--<plugin>-->
-                <!--<groupId>com.github.searls</groupId>-->
-                <!--<artifactId>jasmine-maven-plugin</artifactId>-->
-                <!--<version>2.2</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>test</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--&lt;!&ndash; keep the configuration out of the execution so that the bdd goal has access to it &ndash;&gt;-->
-                <!--<configuration>-->
-                    <!--<jsSrcDir>${project.basedir}${file.separator}src${file.separator}main/resources${file.separator}static${file.separator}js</jsSrcDir>-->
-                    <!--&lt;!&ndash; configuration properties will go here &ndash;&gt;-->
-                    <!--<preloadSources>-->
-                        <!--<source>webjars/jquery/3.1.1/jquery.js</source>-->
-                    <!--</preloadSources>-->
-                <!--</configuration>-->
+            <!--<groupId>com.github.searls</groupId>-->
+            <!--<artifactId>jasmine-maven-plugin</artifactId>-->
+            <!--<version>2.2</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>test</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--&lt;!&ndash; keep the configuration out of the execution so that the bdd goal has access to it &ndash;&gt;-->
+            <!--<configuration>-->
+            <!--<jsSrcDir>${project.basedir}${file.separator}src${file.separator}main/resources${file.separator}static${file.separator}js</jsSrcDir>-->
+            <!--&lt;!&ndash; configuration properties will go here &ndash;&gt;-->
+            <!--<preloadSources>-->
+            <!--<source>webjars/jquery/3.1.1/jquery.js</source>-->
+            <!--</preloadSources>-->
+            <!--</configuration>-->
             <!--</plugin>-->
 
             <plugin>
@@ -185,10 +203,36 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <generateGitPropertiesFilename>${basedir}/target/classes/git.properties</generateGitPropertiesFilename>
+                    <generateGitPropertiesFilename>${basedir}/target/classes/git.properties
+                    </generateGitPropertiesFilename>
                 </configuration>
             </plugin>
+
+            <!--plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/searchkit</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/searchkit</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin -->
+
         </plugins>
+
     </build>
 
     <profiles>
@@ -200,23 +244,15 @@
                 </os>
             </activation>
             <build>
-                <resources>
+                <!--resources>
                     <resource>
+                        <directory>src/main/resources</directory>
                         <filtering>true</filtering>
-                        <directory>src/test-local/resources/</directory>
-                        <includes>
-                            <include>properties/*.*</include>
-                            <include>application.yml</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <filtering>true</filtering>
-                        <directory>src/main/resources/</directory>
                         <excludes>
                             <exclude>bootstrap.yml</exclude>
                         </excludes>
                     </resource>
-                </resources>
+                </resources-->
 
                 <!-- Docker image skal kun lages på Windows. -->
                 <plugins>
@@ -238,14 +274,6 @@
                     <testResource>
                         <filtering>true</filtering>
                         <directory>src/test/resources</directory>
-                    </testResource>
-                    <testResource>
-                        <filtering>true</filtering>
-                        <directory>src/test-local/resources</directory>
-                        <includes>
-                            <include>properties/*.*</include>
-                            <include>application.yml</include>
-                        </includes>
                     </testResource>
                 </testResources>
             </build>
