@@ -33,7 +33,7 @@ const searchkit = new SearchkitManager(
 	host,
 	{
 		transport: new QueryTransport(),
-		createHistoryFunc: useQueries(createHistoryFn)({
+		createHistoryFunc: useQueries(createHistoryFn)({ // TODO append lang string if it's not present
       stringifyQuery(ob) {
 				Object.keys(ob).map((e) => {
 						if(typeof ob[e] === 'object') { // is array
@@ -46,14 +46,24 @@ const searchkit = new SearchkitManager(
 						}
 						if(ob[e].length === 0) delete ob[e];
 				});
+				if(window.location.search.indexOf('lang=') !== -1) {
+					let queryObj = qs.parse(window.location.search.substr(1));
+					ob['lang'] = queryObj.lang;
+				}
 				return qs.stringify(ob, {encode:false})
       },
       parseQueryString(str) {
 				let parsedQuery = qs.parse(str);
 				Object.keys(parsedQuery).map((e) => {
 						if(parsedQuery[e].indexOf(',')) parsedQuery[e] = parsedQuery[e].split(',');
+						if(e==='sort') {
+							var key = parsedQuery[e][0].slice(0,-4),
+									value = parsedQuery[e][0].substr(-4);
+							parsedQuery[e][key] = value;
+							delete parsedQuery[e][0];
+						}
 				});
-        return parsedQuery;
+				return parsedQuery;
       }
     })
 	}
@@ -73,7 +83,9 @@ searchkit.translateFunction = (key) => {
     "facets.view_all": getText('page.seeall'),
     "facets.view_less": getText('page.seefewer'),
 		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.results')
+		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.result.hits'),
+		"NoHits.Error": getText('NoHits.Error'),
+		"NoHits.ResetSearch": '.'
   }
   return translations[key]
 }
@@ -169,10 +181,11 @@ const MovieHitsGridItem = (props)=> {
 	if(source.theme && source.theme.title) {
 		themeTitle = source.theme.title.nb;
 	}
+	var language = queryObj.lang ? queryObj.lang : 'nb';
   return (
     <a href={url}  className="row list-group-item dataset">
         <div className="col-sm-12">
-            <h2 dangerouslySetInnerHTML={{__html:source.title.en || source.title.nn || source.title.nb}}></h2>
+            <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb}}></h2>
 			<h4>
                 {source.publisher ? source.publisher.name : ''}
                 <small> • </small>
@@ -212,17 +225,27 @@ export class SearchPage extends React.Component {
 								}
 							});
 						} else {
-							console.log("No response");
+
 						}
 				});
 		}
   }
 	render(){
-
-		var enUrl = addOrReplaceParam(window.location.href, 'lang', 'en');
-		var nbUrl = addOrReplaceParam(window.location.href, 'lang', '');
-		var nnUrl = addOrReplaceParam(window.location.href, 'lang', 'nn');
+		var href = window.location.href;
 	  let queryObj = qs.parse(window.location.search.substr(1));
+		var getLangUrl = (langCode) => {
+			if(langCode === 'nb') {
+				return addOrReplaceParam(href, 'lang', '');
+			} else if(href.indexOf('lang=') === -1) {
+				return href + '&lang=' + langCode;
+			} else if(langCode !== queryObj.lang) {
+				return addOrReplaceParam(href, 'lang', langCode);
+			} else {
+				return href;
+			}
+		}
+		var language = queryObj.lang ? queryObj.lang : 'nb';
+
 
 		return (
 			<SearchkitProvider searchkit={searchkit}>
@@ -247,13 +270,13 @@ export class SearchPage extends React.Component {
 							</div>
 							<div className="dropdown fdk-container-dropdown-language">
 									<button className="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											<img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{queryObj.lang ? queryObj.lang === 'en' ? getText('lang.english-en') : getText('lang.norwegian-nn') : getText('lang.norwegian-nb')}
+											<img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{language  === 'en' ? getText('lang.english-en') : ''}{language  === 'nn' ? getText('lang.norwegian-nn' : '') : ''}{language  === 'nb' ? getText('lang.norwegian-nb') : ''}
 											<span className="caret"></span>
 									</button>
 									<ul className="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-											<li><a href={enUrl}><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>{getText('lang.english-en')}</a></li>
-											<li><a href={nbUrl}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nb')}</a></li>
-											<li><a href={nnUrl}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nn')}</a></li>
+											<li><a href={getLangUrl('en')}><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>{getText('lang.english-en')}</a></li>
+											<li><a href={getLangUrl('nb')}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nb')}</a></li>
+											<li><a href={getLangUrl('nn')}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nn')}</a></li>
 									</ul>
 							</div>
 					</div>
@@ -275,7 +298,7 @@ export class SearchPage extends React.Component {
 											id="publisher"
 											title={getText('facet.organisation')}
 											field="publisher.name.raw"
-											operator="OR"
+											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionPublishers}
 											/>
@@ -283,7 +306,7 @@ export class SearchPage extends React.Component {
 											id="theme"
 											title={getText('facet.theme')}
 											field="theme.code.raw"
-											operator="OR"
+											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
 											itemComponent={RefinementOptionThemes}
 											/>

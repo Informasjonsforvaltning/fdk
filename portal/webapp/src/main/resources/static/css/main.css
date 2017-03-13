@@ -237,7 +237,7 @@ a.row.list-group-item.dataset {
   display: none;
 }
 .dataset h4 label::before {
-    content: ',';
+    content: '•';
     position: relative;
     top: 0px;
     left: -4px;
@@ -417,7 +417,7 @@ a.white-link:hover {
 .sk-hits-stats {
     position: absolute;
     left: 37%;
-    top: 8px;
+    top: 19px;
 }
 
 .sk-pagination-navigation .sk-toggle-option:first-child,
@@ -506,4 +506,7 @@ a:hover {
 }
 .container > .fdk-label {
   min-width: 89px;
+}
+.sk-no-hits__step-action {
+  display: none;
 }
