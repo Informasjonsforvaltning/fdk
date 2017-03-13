@@ -7,18 +7,7 @@
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all" />
-	<!--
-
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
--->
-<!--	<link rel="stylesheet" href="css/main.css">-->
-	<link rel="stylesheet" href="http://localhost:3000/static/main.css"/>
-
-<!-- Latest compiled and minified JavaScript -->
+	<link rel="stylesheet" href="css/main.css"/>
 </head>
 
 <body>
@@ -100,7 +89,8 @@
 
         langStrings.nn["beta.first"] = "Dette er ein beta-versjon. Gi oss gjerne ";
         langStrings.nb["beta.first"] = "Dette er en beta-versjon. Gi oss gjerne";
-		langStrings.en["beta.first"] = "This is a beta version. Please, give feedback"
+		langStrings.en["beta.first"] = "This is a beta version. Please, give feedback";
+
 
         langStrings.nb["beta.last"] = "om hva du synes!";
         langStrings.nn["beta.last"] = "om kva du synast!";
@@ -229,15 +219,16 @@
 
 				langStrings.nb["page.search.gave"] = "treff"
 				langStrings.nn["page.search.gave"] = "treff"
-				langStrings.en["page.search.gave"] = "results"
+				langStrings.en["page.search.gave"] = "hits"
 
 				langStrings.nb["page.in"] = "i";
 				langStrings.nn["page.in"] = "i"
 				langStrings.en["page.in"] = "in"
 
+
 				langStrings.nb["page.results"] = "treff"
 				langStrings.nn["page.results"] = "treff"
-				langStrings.en["page.results"] = "treff"
+				langStrings.en["page.results"] = "hits"
 
 				langStrings.nb["page.nohits"] = "Ingen resultater funnet"
 				langStrings.nn["page.nohits"] = "Ingen resultater funnet"
@@ -275,9 +266,18 @@
         langStrings.nb["sort.by.title"] = "tittel";
         langStrings.nn["sort.by.title"] = "tittel";
 
+        langStrings.en["NoHits.Error"] = "An error occurred";
+        langStrings.nb["NoHits.Error"] = "En feil oppstod.";
+        langStrings.nn["NoHits.Error"] = "En feil oppstod.";
+
+        langStrings.en["NoHits.ResetSearch"] = "Reset search";
+        langStrings.nb["NoHits.ResetSearch"] = "Still tilbake søket";
+        langStrings.nn["NoHits.ResetSearch"] = "Nullstill søk";
+
+
 
 	</script>
 
-	<script src="http://localhost:3000/static/bundle.js" ></script>
+	<script src="dist/bundle.js"></script>
 </body>
 </html>
