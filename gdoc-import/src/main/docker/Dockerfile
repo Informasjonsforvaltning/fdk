@@ -5,7 +5,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install curl, soffice and jre8
 RUN apt-get update && apt-get -y install curl && \
-    apt-get -y install libreoffice-calc && apt-get -y install openjdk-8-jre
+    apt-get -y install openjdk-8-jre && apt-get -y install xsltproc && \
+    apt-get -y install unzip
 
 # Add a user for the service. Make sure it is in group root
 RUN adduser --disabled-password --gid 0 --gecos "GDOC" gdoc
@@ -32,7 +33,7 @@ COPY lib/*.jar dcat/lib/
 
 RUN ls -al dcat/lib
 
-COPY dcat.sh dcat/dcat.sh
+COPY dcat2.sh dcat/dcat.sh
 
 USER root
 RUN chown -R gdoc:root dcat
