@@ -97,13 +97,17 @@ public class PortalRestController {
                 "PREFIX foaf: <http://xmlns.com/foaf/0.1/>" +
                 "PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>" +
                 "PREFIX dcatno: <http://difi.no/dcatno#>" +
-                "PREFIX enhetsreg: <http://data.brreg.no/meta/>" +
-                "DESCRIBE ?dataset ?publisher ?contact ?distribution" +
+                "PREFIX er: <http://data.brreg.no/meta/>" +
+                "DESCRIBE ?dataset ?publisher ?contact ?distribution ?nace ?fadr ?padr ?sektor " +
                 "where {?dataset a dcat:Dataset. " +
                 " ?dataset dct:publisher ?publisher." +
+                        " OPTIONAL {?publisher er:naeringskode1 ?nace}" +
+                        " OPTIONAL {?publisher er:forretningsadresse ?fadr}" +
+                        " OPTIONAL {?publisher er:postadresse ?padr}" +
+                        " OPTIONAL {?publisher er:institusjonellSektorkode ?sektor}" +
                 " OPTIONAL {?dataset dcat:contactPoint ?contact} " +
                 " OPTIONAL {?dataset dcat:distribution ?distribution }" +
-                "FILTER (?dataset = <" + decodedUri + "> )" +
+                " FILTER (?dataset = <" + decodedUri + "> ) " +
                 "}";
 
         Query query = QueryFactory.create(queryString);

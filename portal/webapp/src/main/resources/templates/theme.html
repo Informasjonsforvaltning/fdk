@@ -27,10 +27,10 @@
 
     <div class="row">
         <section class="frontpage-themes">
-            <a th:each="t : ${themes}" th:href="${'/datasets?theme=' + {t.code}}"
-               th:attr="id=${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}">
+            <a th:each="t : ${themes}" th:href="${'/datasets?theme=' + t.code + '&amp;lang=' + lang}"
+               th:attr="id=${t.title.get(lang)}">
                     <span class="fdk-label fdk-label-default">
-                         <span th:text="${(lang == 'en' ? t.title.get('en') : t.title.get('nb'))}"/>
+                         <span th:text="${t.title.get(lang)}"/>
                         (<span name="hits" th:text="${t.numberOfHits}"/>)
                     </span>
             </a>
