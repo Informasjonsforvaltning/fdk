@@ -231,7 +231,7 @@ export class SearchPage extends React.Component {
 		}
   }
 	render(){
-		var href = window.location.href;
+		var href = window.location.href.replace('#','');
 	  let queryObj = qs.parse(window.location.search.substr(1));
 		var getLangUrl = (langCode) => {
 			if(langCode === 'nb') {
