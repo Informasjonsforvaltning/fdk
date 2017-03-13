@@ -185,7 +185,7 @@ const MovieHitsGridItem = (props)=> {
   return (
     <a href={url}  className="row list-group-item dataset">
         <div className="col-sm-12">
-            <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb}}></h2>
+            <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
 			<h4>
                 {source.publisher ? source.publisher.name : ''}
                 <small> • </small>
@@ -270,7 +270,7 @@ export class SearchPage extends React.Component {
 							</div>
 							<div className="dropdown fdk-container-dropdown-language">
 									<button className="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											<img className="fdk-dropdown-language-flag" src="{language === 'en' ? 'img/flag-england.png' : 'img/flag-norway.png'}"/>{language  === 'en' ? getText('lang.english-en') : ''}{language  === 'nn' ? getText('lang.norwegian-nn' : '') : ''}{language  === 'nb' ? getText('lang.norwegian-nb') : ''}
+											<img className="fdk-dropdown-language-flag" src={language === 'en' ? 'img/flag-england.png' : 'img/flag-norway.png'}/>{language  === 'en' ? getText('lang.english-en') : ''}{language  === 'nn' ? getText('lang.norwegian-nn' : '') : ''}{language  === 'nb' ? getText('lang.norwegian-nb') : ''}
 											<span className="caret"></span>
 									</button>
 									<ul className="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
