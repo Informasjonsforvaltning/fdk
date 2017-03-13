@@ -264,7 +264,7 @@ a.row.list-group-item.dataset {
   display: none;
 }
 .dataset h4 label::before {
-    content: ',';
+    content: '•';
     position: relative;
     top: 0px;
     left: -4px;
@@ -536,4 +536,7 @@ a:hover {
 }
 .container > .fdk-label {
   min-width: 89px;
+}
+.sk-no-hits__step-action {
+  display: none;
 }
