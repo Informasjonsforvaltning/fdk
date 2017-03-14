@@ -191,7 +191,7 @@ const MovieHitsGridItem = (props)=> {
                 <small> • </small>
 				<span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
 			</h4>
-			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description.nb}}></div>
+			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}></div>
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
 		</div>
     </a>
