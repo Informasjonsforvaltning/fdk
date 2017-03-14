@@ -267,7 +267,7 @@ a.row.list-group-item.dataset {
     content: '•';
     position: relative;
     top: 0px;
-    left: -4px;
+    left: -8px;
 }
 .publisher a {
     color: #000;
@@ -281,6 +281,7 @@ a.row.list-group-item.dataset {
 .dataset h4 label {
   font-weight: normal;
   display: inline;
+  margin: 0 7px;
 }
 
 .fdk-dropdown-menu:after {

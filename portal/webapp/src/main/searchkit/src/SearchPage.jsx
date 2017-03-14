@@ -131,6 +131,7 @@ const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props;
   let url =  'datasets?id=' + encodeURIComponent(result._id);
 	let queryObj = qs.parse(window.location.search.substr(1));
+	var language = queryObj.lang ? queryObj.lang : 'nb';
 	if(!queryObj.lang || queryObj.lang === 'nb') {
 		url += '&lang=nb';
 	} else if(queryObj.lang === 'nn'){
@@ -144,7 +145,7 @@ const MovieHitsGridItem = (props)=> {
 			source.theme.forEach((singleTheme, index)=> {
 				if(singleTheme.title) {
 					themeLabels += '<label>';
-					themeLabels += singleTheme.title.nb; // translate!
+					themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en;
 					themeLabels += ' </label>';
 				}
 			});
@@ -158,7 +159,7 @@ const MovieHitsGridItem = (props)=> {
 		source.distribution.forEach((dist) => {
 			if(dist.format) {
 				distributionLabels += '<span className="label label-info">';
-				distributionLabels += dist.format; // translate!
+				distributionLabels += dist.format;
 				distributionLabels += '</span>';
 			}
 		})
@@ -181,7 +182,6 @@ const MovieHitsGridItem = (props)=> {
 	if(source.theme && source.theme.title) {
 		themeTitle = source.theme.title.nb;
 	}
-	var language = queryObj.lang ? queryObj.lang : 'nb';
   return (
     <a href={url}  className="row list-group-item dataset">
         <div className="col-sm-12">
@@ -191,7 +191,7 @@ const MovieHitsGridItem = (props)=> {
                 <small> • </small>
 				<span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
 			</h4>
-			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description.nb}}></div>
+			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}></div>
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
 		</div>
     </a>
