@@ -479,12 +479,11 @@ a.white-link:hover {
     max-height: 30px;
 }
 .sk-toggle-option {
-    flex: 1;
     border: 1px solid #ccc;
     cursor: pointer;
     font-weight: 500;
     font-size: 14px;
-    padding: 5px 10px;
+    padding: 5px 7px;
     border-right: none;
     text-decoration: none;
     white-space: nowrap;
