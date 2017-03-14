@@ -237,7 +237,7 @@ export class SearchPage extends React.Component {
 			if(langCode === 'nb') {
 				return addOrReplaceParam(href, 'lang', '');
 			} else if(href.indexOf('lang=') === -1) {
-				return href + '&lang=' + langCode;
+				return href.indexOf('?') === -1 ? href + '?' + '&lang=' + langCode : href + '&lang=' + langCode;
 			} else if(langCode !== queryObj.lang) {
 				return addOrReplaceParam(href, 'lang', langCode);
 			} else {
