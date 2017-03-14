@@ -144,7 +144,7 @@ const MovieHitsGridItem = (props)=> {
 			source.theme.forEach((singleTheme, index)=> {
 				if(singleTheme.title) {
 					themeLabels += '<label>';
-					themeLabels += singleTheme.title.nb; // translate!
+					themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en; // translate!
 					themeLabels += ' </label>';
 				}
 			});
@@ -158,7 +158,7 @@ const MovieHitsGridItem = (props)=> {
 		source.distribution.forEach((dist) => {
 			if(dist.format) {
 				distributionLabels += '<span className="label label-info">';
-				distributionLabels += dist.format; // translate!
+				distributionLabels += dist.format;
 				distributionLabels += '</span>';
 			}
 		})
