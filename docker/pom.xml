@@ -16,58 +16,8 @@
 			<filter>${basedir}/git.properties</filter>
 		</filters>
 
-		<!-- only filter .env -->
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes><include>.env</include></includes>
-			</resource>
-		</resources>
-
 
 		<plugins>
-			<!-- generate .env file for tags in docker -->
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>get-the-git-infos</id>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<generateGitPropertiesFilename>${project.basedir}/git.properties</generateGitPropertiesFilename>
-				</configuration>
-			</plugin>
-
-			<!-- copy .env file (and resources) to base dir -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/target/classes</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<!-- prevent maven from compiling -->
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
