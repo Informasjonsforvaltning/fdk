@@ -1,7 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat;
 
 /**
- * Models the part of the DataTheme class called concepttheme.
+ * Models the part of the DataTheme class called conceptSchema.
  */
 public class ConceptSchema {
     private String id;

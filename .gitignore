@@ -17,5 +17,7 @@ logs/
 .DS_Store
 .hot-update.js
 **/node_modules/
+**/data/elasticsearch/nodes/
 /bddtest/data/
 /data/
+.DS_Store

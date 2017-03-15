@@ -90,6 +90,22 @@ services:
      - fuseki
      - harvester
 
+ # elasticsearch5:
+ #   image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
+ #   environment:
+ #     - xpack.security.enabled=false
+ #     - cluster.name=elasticsearch
+ #   ports:
+ #     - "920:9200"
+ #     - "9300:9300"
+ #   networks:
+ #     platform:
+ #       aliases:
+ #         - es
+ #     logging:
+ #       aliases:
+ #         - log_es
+
   elasticsearch:
     image: "fdk/elasticsearch:latest"
     ports:
@@ -112,6 +128,28 @@ services:
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
+    links:
+      - elasticsearch
+    networks:
+      platform:
+
+  registrering:
+    image: "fdk/registrering:${TAG}"
+    ports:
+      - "8099:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    links:
+      - elasticsearch
+    networks:
+      platform:
+
+  registrering-gui:
+    image: "fdk/registrering-gui:${TAG}"
+    ports:
+      - "4200:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
     links:
       - elasticsearch
     networks:
