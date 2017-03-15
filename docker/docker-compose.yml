@@ -134,7 +134,7 @@ services:
       platform:
 
   registrering:
-    image: "fdk/registrering:${TAG}"
+    image: "fdk/registrering:latest"
     ports:
       - "8099:8080"
     environment:
@@ -145,7 +145,7 @@ services:
       platform:
 
   registrering-gui:
-    image: "fdk/registrering-gui:${TAG}"
+    image: "fdk/registrering-gui:latest"
     ports:
       - "4200:8080"
     environment:
