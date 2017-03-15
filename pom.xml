@@ -393,7 +393,7 @@
 					</executions>
 					<configuration>
 						<imageName>
-							${docker.registry}${docker.image.prefix}/${project.artifactId}:${git.commit.id.abbrev}
+							${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
 						</imageName>
 						<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
 						<!--dockerDirectory>docker</dockerDirectory -->
