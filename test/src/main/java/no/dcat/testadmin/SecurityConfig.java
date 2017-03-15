@@ -16,15 +16,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .authorizeRequests()
-                    .antMatchers("/*").permitAll()
-                    .anyRequest().permitAll();
+            .authorizeRequests()
+               .antMatchers("/","/test").authenticated()
+               .anyRequest().authenticated()
+               .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+                .withUser("fdk-admin").password("aestgaa").roles("USER");
     }
 }

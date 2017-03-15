@@ -58,22 +58,6 @@ public class TestAdminController {
     }
 
 
-    /**
-     * Returns file with datasets from Google docs spreadsheet
-     *
-     * @param session
-     * @return
-     */
-    @RequestMapping({"/gdoc"})
-    String gdoc(HttpSession session) {
-
-        //session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceURL());
-
-        //session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
-
-        return "gdoc-2016-12-12.ttl"; // templates/home.html
-    }
-
 
     /**
      * Delete dcat index from Elasticsearch
