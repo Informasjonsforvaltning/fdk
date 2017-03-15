@@ -39,6 +39,8 @@ public class TestAdminController {
     @Value("${application.elasticsearchCluster}")
     private String elasticSearchCluster;
 
+    @Value("${application.fusekiHost}")
+    private String fusekiHost;
 
     /**
      * The resultSet page. Sets callback service and version identification and returns home.html page
@@ -57,6 +59,42 @@ public class TestAdminController {
         return "test"; // templates/home.html
     }
 
+    public ResponseEntity<String> deleteFusekiDataset() {
+        HttpURLConnection httpCon = null;
+        String datasetName = "/fuseki/$/datasets/dcat";
+
+        try {
+            URL url = new URL(fusekiHost + datasetName);
+
+            httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            httpCon.setRequestMethod("DELETE");
+
+            int responseCode = httpCon.getResponseCode();
+
+            if (responseCode == HttpStatus.OK.value()) {
+
+                logger.info("FUSEKI database dcat is deleted");
+
+                
+
+
+                return new ResponseEntity<String>("FUSEKI database dcat is deleted", HttpStatus.OK);
+            }
+
+            return new ResponseEntity<String>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Failed to delete", e);
+        } finally {
+            if (httpCon != null) {
+                httpCon.disconnect();
+            }
+        }
+
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+
+    }
+
 
 
     /**
@@ -67,19 +105,18 @@ public class TestAdminController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE, value = "esdata")
-    public ResponseEntity<String> deleteEsdata(HttpServletResponse response) {
+    public ResponseEntity<String> deleteCatalogIndexes(HttpServletResponse response) {
         HttpURLConnection httpCon = null;
 
         try {
 
-            URL url = new URL("http://" + elasticSearchHost + ":9200/dcat");
+            URL url = new URL("http://" + elasticSearchHost + ":9200/dcat,theme,codes");
 
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpCon.setRequestMethod("DELETE");
 
             logger.debug(httpCon.toString());
-            //httpCon.getOutputStream().write("dcat".getBytes());
 
             int responseCode = httpCon.getResponseCode();
 
