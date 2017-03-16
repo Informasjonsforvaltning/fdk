@@ -97,6 +97,7 @@ export class QueryTransport extends AxiosESTransport {
       themeFilter +
       (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
+      .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
       .then(this.getData)
   }
 
