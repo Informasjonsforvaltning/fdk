@@ -62,8 +62,7 @@
 		<module>admin-webapp</module>
 		<module>api-app</module>
 		<module>docker</module>
-		<module>test</module>
-		<module>gdoc-import</module>
+		<module>support</module>
 		<module>bddtest</module>
 		<module>registrering</module>
 		<module>registrering-gui</module>
