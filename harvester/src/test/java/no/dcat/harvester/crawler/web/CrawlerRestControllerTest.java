@@ -41,11 +41,16 @@ public class CrawlerRestControllerTest {
     }
 
 
-
+    /**
+     * Test if the load method works.
+     *
+     * @throws Throwable
+     */
     @Test
     public void loadOK() throws  Throwable {
         CrawlerRestController spy = spy(crawlerController);
         doReturn(new ArrayList<String>()).when(spy).doCrawl(any());
+        doNothing().when(spy).harvestAllCodes(anyBoolean());
 
         spy.load("testfile.ttl", "data:," +miniDatasetBase64);
 
