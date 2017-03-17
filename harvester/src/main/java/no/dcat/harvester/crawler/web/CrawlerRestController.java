@@ -59,20 +59,18 @@ public class CrawlerRestController {
 
 
     /**
-     * Load DCAT data file into fuseki and elastic
+     * Load DCAT data file into fuseki and elastic (to be used for testing)
      *
      * @param filename Name of file to be loaded. Must be Turlte, json-ld or RFD/XML format
      * @param base64 Base64 encoded DCAT data
-     * @param response
      * @return HTTP 200 OK if data was successfully loaded, HTTP 400 Bad request if loading did not succeed
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, value = "/api/admin/load")
     public ResponseEntity<String> load(@RequestParam(value = "filename") String filename,
-                                       @RequestParam(value = "data") String base64,
-                                       HttpServletResponse response) {
+                                       @RequestParam(value = "data") String base64) {
         try {
-            logger.info("Harvest load request: " +filename + " " + base64.length() + " " + response.getContentType());
+            logger.info("Harvest load request: " +filename + " " + base64.length() );
 
             byte[] txt = DatatypeConverter.parseBase64Binary(base64.split(",")[1]);
 
@@ -107,15 +105,8 @@ public class CrawlerRestController {
             List<String> resultMsgs = null;
             try {
 
-                CrawlerJob job = crawlerJobFactory.createCrawlerJob(dsource);
+                resultMsgs = doCrawl(dsource);
 
-                Thread crawlerThread = new Thread(job);
-                crawlerThread.start();
-
-                // wait for the job to finish
-                crawlerThread.join();
-
-                resultMsgs = job.getValidationResult();
             } catch (InterruptedException e) {
                 logger.error("Interrupted: {}",e.getMessage());
                 Thread.currentThread().interrupt();
@@ -155,6 +146,20 @@ public class CrawlerRestController {
         return new ResponseEntity<String>("Unable to load file " + filename, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    List<String> doCrawl(DcatSource dsource) throws InterruptedException {
+        List<String> resultMsgs;
+
+        CrawlerJob job = crawlerJobFactory.createCrawlerJob(dsource);
+
+        Thread crawlerThread = new Thread(job);
+        crawlerThread.start();
+
+        // wait for the job to finish
+        crawlerThread.join();
+
+        resultMsgs = job.getValidationResult();
+        return resultMsgs;
+    }
 
 
     @RequestMapping("/api/admin/harvest")
