@@ -28,11 +28,16 @@ $('#confirm-delete-es').on('click', '.btn-ok', function(e) {
       type: 'DELETE',
       success: function(result) {
           // Do something with the result
+          alert("Reset ELASTICSEARCH OK!");
           $modalDiv.modal('hide').removeClass('loading');
-          console.log("Deleted");
       },
-      error: function(request, status, error) {
-          alert(request.responseText);
+      error: function(response) {
+
+          if (response.status === 400) {
+              alert("ELASTICSEARCH is already reset!");
+          } else {
+              alert(response.status);
+          }
           $modalDiv.modal('hide').removeClass('loading');
       }
   });
@@ -57,11 +62,12 @@ $('#confirm-delete-fs').on('click', '.btn-ok', function(e) {
         type: 'DELETE',
         success: function(result) {
             // Do something with the result
+            alert("Reset FUSEKI OK!");
             $modalDiv.modal('hide').removeClass('loading');
-            console.log("Deleted");
+
         },
-        error: function(request, status, error) {
-            alert(request.responseText);
+        error: function(response) {
+            alert(response.status, response.responseText);
             $modalDiv.modal('hide').removeClass('loading');
         }
     });
@@ -117,7 +123,7 @@ $('form').on('submit', function (e) {
                 }
 
                 if (response.responseText) {
-                    alert(response.status);
+                    alert("upload status: " + response.status);
                     response.responseText.split("\n").forEach(function (element) {
                         var status;
                         if (element.indexOf("validation_warning") !== -1) status = "list-group-item-warning";
