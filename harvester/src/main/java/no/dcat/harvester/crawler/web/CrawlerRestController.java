@@ -90,9 +90,6 @@ public class CrawlerRestController {
             }
             logger.debug(tempFile.getAbsolutePath());
 
-            Loader loader = new Loader();
-
-            //loader.loadDatasetFromFile(url.toString());
             String url = tempFile.toURI().toURL().toString();
             logger.debug ("reading tempfile " + url);
 
@@ -104,6 +101,7 @@ public class CrawlerRestController {
 
             List<String> resultMsgs = null;
             try {
+                harvestAllCodes(false);
 
                 resultMsgs = doCrawl(dsource);
 
@@ -145,6 +143,7 @@ public class CrawlerRestController {
 
         return new ResponseEntity<String>("Unable to load file " + filename, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 
     List<String> doCrawl(DcatSource dsource) throws InterruptedException {
         List<String> resultMsgs;
@@ -212,6 +211,12 @@ public class CrawlerRestController {
         return adminDataStore.getDcatSources();
     }
 
+    /**
+     * Harvests list of codes.
+     *
+     * @param reload if true it forces download. If false and the codes exist it doesn't reload.
+     * @throws InterruptedException
+     */
     void harvestAllCodes(boolean reload) throws InterruptedException {
         for(Types type : Types.values()) {
             logger.debug("Loading type {}", type);

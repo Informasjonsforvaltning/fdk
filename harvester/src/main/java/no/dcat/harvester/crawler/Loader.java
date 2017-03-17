@@ -15,8 +15,12 @@ import java.util.List;
 
 /**
  * Created by nodavsko on 29.09.2016.
+ *
+ * 2017.03.17 - Denne har vært midlertidig og har gått utenom fuseki. Det bør den ikke gjøre.
+ * Se ny metode load på CrawlerRestController
  */
 
+@Deprecated
 public class Loader {
 
     private final String DEFAULT_ELASTICSEARCH_HOST = "localhost";
