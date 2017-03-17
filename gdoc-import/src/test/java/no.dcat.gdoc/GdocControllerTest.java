@@ -1,6 +1,5 @@
 package no.dcat.gdoc;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +25,6 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
