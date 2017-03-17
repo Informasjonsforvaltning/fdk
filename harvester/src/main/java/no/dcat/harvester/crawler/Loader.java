@@ -2,9 +2,9 @@ package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.HarvesterApplication;
+import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
-import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.concurrent.Future;
 
 /**
  * Created by nodavsko on 29.09.2016.
@@ -129,8 +128,8 @@ public class Loader {
            logger.error("URL not valid: {} ", filename,e);
         } catch (InterruptedException e) {
             logger.error("Interrupted: {}",e.getMessage());
-            Thread.currentThread().interrupt();
-        }
+        Thread.currentThread().interrupt();
+    }
 
         return null;
     }

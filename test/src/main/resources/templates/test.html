@@ -56,11 +56,16 @@
 
 
 <br/>
-<button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
-    Slett DCAT index
+<button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete-es">
+    Slett DCAT Catalog data i Elasticsearch
 </button>
 
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete-fs">
+    Slett DCAT Catalog i Fuseki (/dcat)
+</button>
+
+
+<div class="modal fade" id="confirm-delete-es" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -68,6 +73,23 @@
             </div>
             <div class="modal-body">
                 Dette sletter Elasticsearch-indeksene "dcat,theme,codes". Vil du fortsette?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                <a class="btn btn-danger btn-ok">Slett!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirm-delete-fs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Bekreft slett dcat-indeks</h4>
+            </div>
+            <div class="modal-body">
+                Dette slette alle data i og opprette Fuseki databasen "dcat" på nytt. Vil du fortsette?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>

@@ -17,6 +17,8 @@ application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
   elasticsearchCluster: elasticsearch
+  fusekiHost: http://localhost:3030
+  harvesterHost: http://localhost:8081
 server:
   port: 8074
 management:
