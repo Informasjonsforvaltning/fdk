@@ -1,6 +1,5 @@
 package no.dcat.testadmin;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
