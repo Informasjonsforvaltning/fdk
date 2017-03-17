@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>no.dcat</groupId>
-        <artifactId>fdk</artifactId>
+        <artifactId>support</artifactId>
         <version>0.2.4-SNAPSHOT</version>
     </parent>
 
