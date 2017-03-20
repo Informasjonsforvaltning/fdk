@@ -10,6 +10,8 @@ import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -33,6 +40,10 @@ public class PortalRestController {
     @Value("${application.fusekiService}")
     private String fusekiService;
 
+    protected String getFusekiService() {
+        return fusekiService;
+    }
+
     /**
      * API to find dataset based on id from .../dataset?id={id}
      * @param id of dataset to find
@@ -40,23 +51,81 @@ public class PortalRestController {
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
+    @RequestMapping(value = "/catalogs", method = GET,
+            consumes = MediaType.ALL_VALUE, produces= {"text/turtle", "application/ld+json", "application/rdf+xml"})
+    public ResponseEntity<String> getCatalogDcat(@RequestParam(value = "id") String id,
+                                                    @RequestParam(value = "format") String format,
+                                                    @RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
+
+        final String queryFile = "sparql/catalog.sparql";
+
+        try {
+            Resource resource  = new ClassPathResource(queryFile);
+            String query = read(resource.getInputStream());
+
+            String returnFormat = getReturnFormat(acceptHeader, format);
+            logger.info("Prepare export of {}", returnFormat);
+
+            String responseBody = findSubjectById(id, query, returnFormat);
+            logger.debug(responseBody);
+
+            return new ResponseEntity<>(responseBody, OK);
+
+        } catch (IOException e) {
+            logger.error("Unable to open sparql-file {}", queryFile, e);
+        } catch (NoSuchElementException nsee) {
+            logger.info("ID {} not found {}", id, nsee.getMessage(), nsee);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public static String read(InputStream input) throws IOException {
+        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
+            return buffer.lines().collect(Collectors.joining("\n"));
+        }
+    }
+
+            /**
+             * API to find dataset based on id from .../dataset?id={id}
+             * @param id of dataset to find
+             * @param acceptHeader accepted format
+             * @return Formatted response based on acceptHeader {@link SupportedFormat}
+             */
+    @CrossOrigin
     @RequestMapping(value = "/dataset", method = GET,
             consumes = MediaType.ALL_VALUE, produces= {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasourceDcat(
             @RequestParam(value = "id") String id, @RequestParam(value = "format") String format,
             @RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
+
+        final String queryFile = "sparql/dataset.sparql";
+
+        logger.info("Searching for {} ", id);
+
         try {
-            logger.info("Searching for {} ", id);
+
+            Resource resource  = new ClassPathResource(queryFile);
+            String query = read(resource.getInputStream());
+
             String returnFormat = getReturnFormat(acceptHeader, format);
             logger.info("Prepare export of {}", returnFormat);
 
-            String responseBody = findSubjectById(id, returnFormat);
+            String responseBody = findSubjectById(id, query, returnFormat);
             logger.info("Dataset found {} ", id);
+
             return new ResponseEntity<>(responseBody, OK);
+
+        } catch (IOException e) {
+            logger.error("Unable to open sparql-file {}", queryFile, e);
         } catch (NoSuchElementException nsee) {
             logger.info("ID {} not found {}", id,nsee.getMessage(),nsee);
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     private String getReturnFormat(String acceptFormat, String fileFormat) {
@@ -78,8 +147,8 @@ public class PortalRestController {
         return modelFormat;
     }
 
-    private String findSubjectById(String id, String format) {
-        DcatDataStore dcatDataStore = new DcatDataStore(new Fuseki(fusekiService + "/dcat"));
+    private String findSubjectById(String id, String queryString, String format) {
+        DcatDataStore dcatDataStore = new DcatDataStore(new Fuseki(getFusekiService() + "/dcat"));
         Model model = dcatDataStore.getAllDataCatalogues();
 
         String decodedUri = id;
@@ -89,28 +158,7 @@ public class PortalRestController {
             logger.error("URI syntax error ", id, e);
         }
 
-        String queryString =
-                "PREFIX dcat: <http://www.w3.org/ns/dcat#> " +
-                "PREFIX dct: <http://purl.org/dc/terms/> " +
-                "PREFIX owl: <http://www.w3.org/TR/owl-time/> " +
-                "PREFIX adms: <http://www.w3.org/ns/adms#>" +
-                "PREFIX foaf: <http://xmlns.com/foaf/0.1/>" +
-                "PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>" +
-                "PREFIX dcatno: <http://difi.no/dcatno#>" +
-                "PREFIX er: <http://data.brreg.no/meta/>" +
-                "DESCRIBE ?dataset ?publisher ?contact ?distribution ?nace ?fadr ?padr ?sektor " +
-                "where {?dataset a dcat:Dataset. " +
-                " ?dataset dct:publisher ?publisher." +
-                        " OPTIONAL {?publisher er:naeringskode1 ?nace}" +
-                        " OPTIONAL {?publisher er:forretningsadresse ?fadr}" +
-                        " OPTIONAL {?publisher er:postadresse ?padr}" +
-                        " OPTIONAL {?publisher er:institusjonellSektorkode ?sektor}" +
-                " OPTIONAL {?dataset dcat:contactPoint ?contact} " +
-                " OPTIONAL {?dataset dcat:distribution ?distribution }" +
-                " FILTER (?dataset = <" + decodedUri + "> ) " +
-                "}";
-
-        Query query = QueryFactory.create(queryString);
+        Query query = QueryFactory.create(String.format(queryString, id));
 
         try (QueryExecution qexec = QueryExecutionFactory.create(query, model)){
             Model submodel = qexec.execDescribe();
