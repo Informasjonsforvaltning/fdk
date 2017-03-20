@@ -43,7 +43,7 @@ public class DcatExportIntegrationTest {
         PortalRestController spy = spy(portal);
         doReturn("http://localhost:3030/fuseki").when(spy).getFusekiService();
 
-        ResponseEntity<String> actual = spy.getDatasourceDcat("http://data.brreg.no/datakatalog/dataset/974761076/63",
+        ResponseEntity<String> actual = spy.getDatasetDcat("http://data.brreg.no/datakatalog/dataset/974761076/63",
                 "ttl", "text/turtle");
 
         logger.debug(actual.getBody());

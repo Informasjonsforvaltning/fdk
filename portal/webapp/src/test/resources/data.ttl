@@ -1,0 +1,202 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix fo:    <http://www.w3.org/1999/XSL/Format#> .
+@prefix http:  <http://www.w3.org/2011/http#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix er:    <http://data.brreg.no/meta/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/59>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Detaljert informasjon om skattyters formue, inntekt, gjeld og fradrag"@nb ;
+        dct:identifier          "59" ;
+        dct:landingPage         <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Skattegrunnlag"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/21> ;
+        dcat:keyword            "formue"@nb , "gjeld og fradrag"@nb , "inntekt"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/63>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om innrapportert inntekt"@nb ;
+        dct:identifier          "63" ;
+        dct:landingPage         <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "Innrapportert inntekt"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/26> ;
+        dcat:keyword            "formue"@nb , "grunnlagsdata"@nb , "inntekt"@nb , "gjeld og fradrag"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/57>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "a-melding per innteksmottaker"@nb ;
+        dct:identifier          "57" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "A-melding per innteksmottaker"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/19> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/27>
+        a                dcat:Distribution ;
+        dct:description  "Beregningsgrunnlag Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/61>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om fordringer Skatteetaten har mot skattyter"@nb ;
+        dct:identifier          "61" ;
+        dct:landingPage         <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "Restanser"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/24> ;
+        dcat:keyword            "forfalt og ubetalt"@nb , "organisasjonsnummer"@nb , "renter og gebyrer"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/20>
+        a                dcat:Distribution ;
+        dct:description  "a-melding data per arbeidsgiver"@nb ;
+        dct:format       "text/json, text/xml" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/arbeidsgiver/version/organisasjonsnummer> .
+
+<http://data.brreg.no/datakatalog/distribusjon/19>
+        a                dcat:Distribution ;
+        dct:description  "a-melding per innteksmottaker"@nb ;
+        dct:format       "text/json, text/xml" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/inntektsmottaker/version/personidentifkator/inntekt> .
+
+<http://data.brreg.no/datakatalog/katalog/974761076/5>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Skatteetaten"@nb ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "Skatteetaten datakatalog"@nb ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/974761076/63> , <http://data.brreg.no/datakatalog/dataset/974761076/62> , <http://data.brreg.no/datakatalog/dataset/974761076/58> , <http://data.brreg.no/datakatalog/dataset/974761076/57> , <http://data.brreg.no/datakatalog/dataset/974761076/61> , <http://data.brreg.no/datakatalog/dataset/974761076/56> , <http://data.brreg.no/datakatalog/dataset/974761076/55> , <http://data.brreg.no/datakatalog/dataset/974761076/32> , <http://data.brreg.no/datakatalog/dataset/974761076/31> , <http://data.brreg.no/datakatalog/dataset/974761076/64> , <http://data.brreg.no/datakatalog/dataset/974761076/59> ;
+        foaf:homepage    <http://www.skatteetaten.no> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-12>
+        a       <http://www.w3.org/2006/vcard/ns#Organization> ;
+        <http://www.w3.org/2006/vcard/ns#organization-unit>
+                "Skatteetaten" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/64>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Overordnet informasjon om skattyters formue og inntekt. Ligger til grunn for selve skatteberegningen"@nb ;
+        dct:identifier          "64" ;
+        dct:landingPage         <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "Beregningsgrunnlag"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/27> ;
+        dcat:keyword            "skatteberegningsgrunnlag"@nb , "formue"@nb , "inntekt"@nb , "gjeld og fradrag"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/58>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "a-melding data per arbeidsgiver"@nb ;
+        dct:identifier          "58" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "A-melding data per arbeidsgiver"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/20> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974761076>
+        a                            foaf:Agent ;
+        er:antallAnsatte             "0" ;
+        er:forretningsadresse        <http://data.brreg.no/enhetsregisteret/enhet/974761076/forretningsadresse> ;
+        er:hjemmeside                "www.skatteetaten.no/" ;
+        er:institusjonellSektorkode  <http://data.brreg.no/enhetsregisteret/enhet/974761076/institusjonellSektorkode> ;
+        er:konkurs                   "N" ;
+        er:naeringskode1             <http://data.brreg.no/enhetsregisteret/enhet/974761076/naeringskode1> ;
+        er:organisasjonsform         "ORGL" ;
+        er:organisasjonsnummer       "974761076" ;
+        er:overordnetEnhet           "972417807" ;
+        er:postadresse               <http://data.brreg.no/enhetsregisteret/enhet/974761076/postadresse> ;
+        er:registreringsdatoEnhetsregisteret
+                "1995-08-09" ;
+        er:registrertIForetaksregisteret
+                "N" ;
+        er:registrertIFrivillighetsregisteret
+                "N" ;
+        er:registrertIMvaregisteret  "J" ;
+        er:registrertIStiftelsesregisteret
+                "N" ;
+        er:underAvvikling            "N" ;
+        er:underTvangsavviklingEllerTvangsopplosning
+                "N" ;
+        dct:identifier               "974761076" ;
+        foaf:name                    "SKATTEETATEN" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/62>
+        a                       dcat:Dataset ;
+        <http://difi.no/dcatno#accessRightsComment>
+                <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om skattyters overholdelse av oppgaveplikten"@nb ;
+        dct:identifier          "62" ;
+        dct:landingPage         <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "Oppgaveinnlevering"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/25> ;
+        dcat:keyword            "mva"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/21>
+        a                dcat:Distribution ;
+        dct:description  "Skattegrunnlag Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/skattemelding/skattegrunnlag> .
+
+<http://data.brreg.no/datakatalog/distribusjon/26>
+        a                dcat:Distribution ;
+        dct:description  "Innrapportert inntekt Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-13>
+        a       <http://www.w3.org/2006/vcard/ns#Organization> ;
+        <http://www.w3.org/2006/vcard/ns#hasEmail>
+                <mailto:brukerstotte.datasamarbeid@skatteetaten.no> ;
+        <http://www.w3.org/2006/vcard/ns#organization-unit>
+                "Skatteetaten, datasamarbeid" .
