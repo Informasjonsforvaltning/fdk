@@ -1,5 +1,5 @@
 
-var lang = navigator.language || navigator.userLanguage;
+var lang = "nb"; // force default to be nb, or as browser= navigator.language || navigator.userLanguage;
 if (lang === undefined) {
     lang = "nb";
 }
@@ -8,6 +8,9 @@ if (lang.indexOf("en") === 0 ) {
 }
 if (lang.indexOf("nb") === 0) {
     lang = "nb";
+}
+if (lang.indexOf("nn") === 0) {
+    lang = "nn";
 }
 
 
@@ -67,6 +70,7 @@ $("#chosenLanguage").html($(langElement).html() + ' <span class="caret"></span>'
 function searchController() {
     var search = document.getElementById("search");
     var dosearch = document.getElementById("dosearch");
+
 
     if (dosearch)
         dosearch.onclick = function (event) {

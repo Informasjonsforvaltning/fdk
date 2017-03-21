@@ -2,19 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.dcat</groupId>
+    <parent>
+        <groupId>no.dcat</groupId>
+        <artifactId>fdk</artifactId>
+        <version>0.2.4-SNAPSHOT</version>
+    </parent>
+
     <artifactId>portal</artifactId>
     <packaging>pom</packaging>
-    <version>0.2.2-SNAPSHOT</version>
+
 
     <name>Søkeportal for felles datakatalog</name>
     <description>En søkeportal for å søke etter datasettbeskrivelser og vise resultater</description>
 
-    <parent>
-        <groupId>no.dcat</groupId>
-        <artifactId>parent</artifactId>
-        <version>0.2.2-SNAPSHOT</version>
-    </parent>
+
 
     <modules>
         <module>query</module>

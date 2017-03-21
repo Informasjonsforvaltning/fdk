@@ -1,6 +1,18 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+.fdk-title-subtext {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+}
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    /* margin-left: auto; margin-right: auto; */
+}
 
 @media screen and (min-width: 768px) {
     .jumbotron .h1, .jumbotron h1 {
@@ -17,6 +29,28 @@
     color: #213B4C;
 }
 
+
+.overflow-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 130%; //1em;     /* fallback */
+    max-height: 400%; // 3em;      /* fallback */
+    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+div.col-sm-4.flex-move-first-item-to-bottom {
+    margin-top: 52px;
+}
+
+#datasets {
+    padding-right: 0;
+}
+
+.sk-search-box .glyphicon-search-frontpage{
+  top: 153px;
+}
 .frontpage-themes * {
     display: inline-block;
 }
@@ -25,9 +59,10 @@
     text-align: center;
 }
 
-.list-group-item > ul > a {
-    width: 100%;
+.sk-item-list-option a.list-group-item {
+  display: block;
 }
+
 
 .list-group-item .fdk-badge {
     float: right;
@@ -88,7 +123,7 @@ input.fdk-search {
     width: 100%;
     padding: 10px 15px 10px 15px;
     font-size: 28px;
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px 10px 0px;
 }
 
 ::-webkit-input-placeholder { /* PLACEHOLDER COLOR FOR: WebKit, Blink, Edge */
@@ -110,8 +145,10 @@ input.fdk-search {
 }
 
 /*  L A B E L S   &   B U T T O N S  */
-
-.fdk-label-default {
+.list-group-item.fdk-label-default {
+  min-width: 100%;
+}
+.list-group-item.fdk-label-default, .fdk-label-default, a.fdk-label-default:focus, .fdk-label-default:active {
     background-color: #fff;
     color: #5A6778;
     border: 1px solid #5A6778;
@@ -121,9 +158,8 @@ input.fdk-search {
     display: inline-block;
 }
 
-.fdk-label-default:hover {
-    background-color: #5A6778;
-    color: #fff;
+.list-group-item.fdk-label-default:hover, .fdk-label-default:hover {
+    background-color: #F2F3F7;
 }
 
 .fdk-label {
@@ -208,9 +244,10 @@ input.fdk-search {
 a.list-group-item:hover {
   background-color: #F2F3F7;
 }
-.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-    background-color: #5A6778;
-    border-color: #5A6778;
+.list-group-item.active, .list-group-item.is-active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #5A6778 !important;
+    border-color: #5A6778 !important;
+    color: #fff !important;
 }
 #resultPanel .fdk-dropdown-language {
   background-color: transparent;
@@ -219,7 +256,7 @@ a.row.list-group-item.dataset {
     border: 0;
     background-color: #F2F3F7;
     margin: 12px 0px;
-    padding: 20px 15px;
+    padding: 20px 0px;
 }
 .dataset .overflow-text {
     border-top: 1px solid #C8CDD4;
@@ -227,6 +264,15 @@ a.row.list-group-item.dataset {
 }
 .dataset h4 {
   margin-bottom:6px
+}
+.dataset h4 label:first-child::before {
+  display: none;
+}
+.dataset h4 label::before {
+    content: '•';
+    position: relative;
+    top: 0px;
+    left: -8px;
 }
 .publisher a {
     color: #000;
@@ -240,6 +286,7 @@ a.row.list-group-item.dataset {
 .dataset h4 label {
   font-weight: normal;
   display: inline;
+  margin: 0 7px;
 }
 
 .fdk-dropdown-menu:after {
@@ -318,7 +365,9 @@ h1.fdk-heading {
     text-align: center;
     font-weight: bold;
 }
-
+.fdk-heading a {
+  color:inherit;
+}
 h2 {
     font-size: 22px;
     line-height: 26px;
@@ -359,4 +408,140 @@ a.white-link {
 
 a.white-link:hover {
     color: #C8CDD4;
+}
+
+.sk-item-list__item * {
+    display: inline;
+}
+.sorting-control {
+  padding:0;
+}
+.sorting-control select {
+    border: 0;
+    background: none transparent;
+    height: 35px;
+    padding: 0;
+}
+.flex-move-first-item-to-bottom {
+    flex-direction: column-reverse;
+    display: flex;
+    border: 1px solid #ddd;
+}
+.sk-panel__header {
+  padding: 5px 0;
+}
+.filter--publisher .sk-panel__header{
+    border-top: 1px solid #ddd;
+    margin: 14px 0 0 0;
+    padding: 14px 0 8px 0;
+}
+.sk-results-list__action-bar * {
+
+}
+.sk-results-list__action-bar > *, .sk-action-bar-row > * {
+  margin:0 10px;
+  display: inline-block;
+}
+.sk-action-bar {
+  position: relative;
+  height: 40px;
+}
+
+.sk-hits-stats {
+    position: absolute;
+    left: 42%;
+    top: 8px;
+}
+
+.sk-hits-stats__info {
+    margin-top: 12px;
+}
+
+.sk-pagination-navigation .sk-toggle-option:first-child,
+.sk-pagination-navigation .sk-toggle-option:last-child {
+    flex: auto;
+}
+
+.sk-pagination-navigation {
+  width:300px;
+  margin:10px auto;
+}
+
+
+.sk-pagination-select {
+  margin: 10px auto;
+  text-align:center;
+}
+
+.sk-hits-grid, .sk-hits-list {
+  margin:0 0 6px 10px;
+}
+.sk-toggle {
+    display: flex;
+    align-content: center;
+    text-align: center;
+    border-radius: 3px;
+    max-height: 30px;
+}
+.sk-toggle-option {
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 5px 7px;
+    border-right: none;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.sk-toggle-option:hover {
+    background-color: #F2F3F7;
+    color: #000;
+    border-color: #ccc;
+}
+.sk-pagination-navigation .sk-toggle-option:first-child, .sk-pagination-navigation .sk-toggle-option:last-child {
+    flex: auto;
+}
+.sk-toggle-option.is-disabled {
+    cursor: initial;
+    color: #ddd;
+}
+.sk-toggle-option:first-child {
+    border-radius: 3px 0 0 3px;
+}
+.sk-toggle-option:last-child {
+    border-radius: 0 3px 3px 0;
+    border-right: 1px solid #ccc;
+}
+.sk-toggle-option.is-active {
+    background-color: #5A6778;
+    color: #fff;
+    border-color: #5A6778;
+}
+a {
+  color: #5A6778;
+}
+a:hover {
+  color: #000;
+}
+.fdk-label.pull-left .fdk-label.pull-left:focus {
+  min-width: initial !important;
+}
+.sk-results-list__action-bar .dropdown{
+  margin-right: 0;
+  right: 0;
+  position: absolute;
+}
+.sk-results-list__action-bar .dropdown:first-child{
+  right:auto;
+  left:0;
+}
+.sk-no-hits__info {
+  text-align: center;
+}
+.container > .fdk-label {
+  min-width: 89px;
+}
+.sk-no-hits__step-action {
+  display: none;
 }
