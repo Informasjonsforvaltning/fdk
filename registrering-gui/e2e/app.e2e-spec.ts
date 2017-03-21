@@ -43,22 +43,15 @@ describe('registrering-gui App', () => {
     let catalogLink = element(by.css("#datacatalogs td"));
     catalogLink.click();
 
-    var EC = protractor.ExpectedConditions;
-
     let datasetLink = element(by.css("#datasets td"));
     datasetLink.click();
 
     let datasetH1Input = element(by.css(".fdk-register-h1"));
     datasetH1Input.clear();
-    var oldValue = datasetH1Input.getText();
     datasetH1Input.sendKeys('New dataset name');
 
+    var EC = protractor.ExpectedConditions;
     var alertSuccess = element(by.css('.alert-success'));
-    browser.wait(EC.presenceOf(alertSuccess), 10000);
-
-    expect(page.getAlertText()).toContain('Sist lagret');
-
-
     browser.wait(EC.presenceOf(alertSuccess), 10000);
 
     browser.refresh();
