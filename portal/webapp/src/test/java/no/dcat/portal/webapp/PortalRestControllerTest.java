@@ -30,6 +30,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -46,6 +47,63 @@ public class PortalRestControllerTest {
     @Before
     public void setup() {
         portal = new PortalRestController();
+    }
+
+
+    @Test
+    public void getCatalogsOK() throws Throwable {
+        PortalRestController spy = spy(portal);
+
+        // Load testdatasett in model
+        Resource mResource = new ClassPathResource("data.ttl");
+        org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
+        Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+
+        // trick controller to set up query without talking to fuseki
+        Resource queryResource = new ClassPathResource("sparql/allcatalogs.sparql");
+        String queryString = read(queryResource.getInputStream());
+        QueryExecution qe = QueryExecutionFactory.create(QueryFactory.create(queryString), model);
+
+        doReturn(qe).when(spy).getQueryExecution(anyObject());
+
+        ResponseEntity<String> response = spy.getCatalogs("text/html");
+
+        assertThat(response.getBody().contains("/catalogs?id="), is(true));
+
+    }
+
+    @Test
+    public void getCatalogsFailsOnIOError() throws Throwable {
+        PortalRestController spy = spy(portal);
+
+        doThrow(new IOException("force exception")).when(spy).read(anyObject());
+
+        ResponseEntity<String> response = spy.getCatalogs("text/html");
+
+        assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+
+    }
+
+    @Test
+    public void getCatalogsFailsOnNoCatalogsFound() throws Throwable {
+        PortalRestController spy = spy(portal);
+
+        // read modelfile with no catalog in
+        Resource mResource = new ClassPathResource("data-no-catalog.ttl");
+        org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
+        Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+
+        // trick controller to use the query execution
+        Resource queryResource = new ClassPathResource("sparql/allcatalogs.sparql");
+        String queryString = read(queryResource.getInputStream());
+        QueryExecution qe = QueryExecutionFactory.create(QueryFactory.create(queryString), model);
+        doReturn(qe).when(spy).getQueryExecution(anyObject());
+
+        // do call
+        ResponseEntity<String> response = spy.getCatalogs("text/html");
+
+        assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
+
     }
 
 

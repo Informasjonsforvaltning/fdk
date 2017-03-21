@@ -37,7 +37,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class PortalRestController {
 
-    private final static Logger logger = LoggerFactory.getLogger(PortalRestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PortalRestController.class);
+    private static final String DATASET_QUERY_FILENAME = "sparql/dataset.sparql";
+    private static final String CATALOG_QUERY_FILENAME = "sparql/catalog.sparql";
+    private static final String GET_CATALOGS_QUERY_FILENAME = "sparql/allcatalogs.sparql";
 
     @Value("${application.fusekiService}")
     private String fusekiService;
@@ -54,7 +57,7 @@ public class PortalRestController {
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
-    @RequestMapping(value = "/catalogs", params={"id","format"},
+    @RequestMapping(value = "/catalogs", params = {"id", "format"},
             method = GET,
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
@@ -63,64 +66,72 @@ public class PortalRestController {
             @RequestParam(value = "format", required = false) String format,
             @RequestHeader(value = "Accept") String acceptHeader) {
 
-        final String queryFile = "sparql/catalog.sparql";
-
-        ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, queryFile);
+        ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, CATALOG_QUERY_FILENAME);
 
         if (responseBody != null) return responseBody;
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Lists catalogs in a simple html format
+     *
+     * @param acceptHeader
+     * @return html list of catalogs
+     */
     @CrossOrigin
     @RequestMapping(value = "/catalogs",
-        method = GET,
-        produces = "text/html")
-    public String getCatalogs(@RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
-        final String queryFile = "sparql/allcatalogs.sparql";
+            method = GET,
+            produces = "text/html")
+    public ResponseEntity<String> getCatalogs(@RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
+        String queryString;
 
+        // fail early
         try {
-            Resource resource = new ClassPathResource(queryFile);
-            String queryString = read(resource.getInputStream());
-
-            Query query = getQuery(queryString);
-
-            try (QueryExecution qe = getQueryExecution(query)) {
-                ResultSet resultset = qe.execSelect();
-
-                StringBuilder builder = new StringBuilder();
-
-                builder.append("<html>");
-                builder.append("<head>");
-                builder.append("<link rel='stylesheet' href='webjars/bootstrap/3.3.7/css/bootstrap.min.css' media='all'/>");
-                builder.append("<link rel='stylesheet' href='css/main.css' media='all'/>");
-                builder.append("</head>");
-                builder.append("<body>");
-                builder.append("<h1>Velg katalog for nedlasting</h1>");
-
-                while (resultset.hasNext()) {
-                    QuerySolution qs = resultset.next();
-                    String catalogName = qs.get("cname").asLiteral().getString();
-                    String catalogUri = qs.get("catalog").asResource().getURI();
-                    String publisherName = qs.get("pname").asLiteral().getString();
-                    String publisherUri = qs.get("publisher").asResource().getURI();
-
-                    builder.append("<a class='fdk-label fdk-label-default' href='"+ "/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n" );
-
-                }
-
-                builder.append("</body>");
-                builder.append("</html>");
-
-                return builder.toString();
-            }
-
-
+            Resource resource = new ClassPathResource(GET_CATALOGS_QUERY_FILENAME);
+            queryString = read(resource.getInputStream());
         } catch (IOException e) {
-
+            logger.error("List catalogs failed {}", e.getMessage(), e);
+            return new ResponseEntity<String>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return null;
+        Query query = getQuery(queryString);
+
+        try (QueryExecution qe = getQueryExecution(query)) {
+            ResultSet resultset = qe.execSelect();
+            int count = 0;
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.append("<html>");
+            builder.append("<head>");
+            builder.append("<link rel='stylesheet' href='webjars/bootstrap/3.3.7/css/bootstrap.min.css' media='all'/>");
+            builder.append("<link rel='stylesheet' href='css/main.css' media='all'/>");
+            builder.append("</head>");
+            builder.append("<body>");
+            builder.append("<h1>Velg katalog for nedlasting</h1>");
+
+            while (resultset.hasNext()) {
+                count++;
+                QuerySolution qs = resultset.next();
+                String catalogName = qs.get("cname").asLiteral().getString();
+                String catalogUri = qs.get("catalog").asResource().getURI();
+                String publisherName = qs.get("pname").asLiteral().getString();
+                String publisherUri = qs.get("publisher").asResource().getURI();
+
+                builder.append("<a class='fdk-label fdk-label-default' href='" + "/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n");
+            }
+
+            builder.append("</body>");
+            builder.append("</html>");
+
+            if (count > 0) {
+                return new ResponseEntity<String>(builder.toString(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>("No catalogs found.", HttpStatus.NOT_FOUND);
+            }
+        }
+
     }
 
     /**
@@ -140,9 +151,7 @@ public class PortalRestController {
             @RequestParam(value = "format", required = false) String format,
             @RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
 
-        final String queryFile = "sparql/dataset.sparql";
-
-        ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, queryFile);
+        ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, DATASET_QUERY_FILENAME);
 
         if (responseBody != null) return responseBody;
 
@@ -162,6 +171,7 @@ public class PortalRestController {
         try {
             logger.info("Export {}", id);
 
+            // read query file
             Resource resource = new ClassPathResource(queryFile);
             String query = read(resource.getInputStream());
 
@@ -174,6 +184,7 @@ public class PortalRestController {
 
             logger.info("Prepare export of {}", returnFormat);
 
+            // find the resource to export
             String responseBody = findResourceById(id, query, returnFormat);
             if (responseBody == null) {
                 return new ResponseEntity<>("Unable to find " + id, HttpStatus.NOT_FOUND);
@@ -201,7 +212,7 @@ public class PortalRestController {
      * @return the string
      * @throws IOException if anything is wrong
      */
-    private static String read(InputStream input) throws IOException {
+    String read(InputStream input) throws IOException {
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
             return buffer.lines().collect(Collectors.joining("\n"));
         }
@@ -249,8 +260,8 @@ public class PortalRestController {
      * @return RDF formated string according to DCAT and format, if null the query returned empty
      */
     String findResourceById(String id, String queryString, String format) {
-       //Model model = getModel();
 
+        // make sure the uri is not encoded
         try {
             id = URLDecoder.decode(id, "UTF-8");
 
@@ -262,9 +273,9 @@ public class PortalRestController {
 
         Query query = getQuery(String.format(queryString, id));
 
-        try ( QueryExecution qe = getQueryExecution(query))/*(QueryExecution qe = QueryExecutionFactory.create(query, model))*/ {
+        try (QueryExecution qe = getQueryExecution(query)) {
 
-            logger.debug(query.toString());
+            logger.trace(query.toString());
 
             Model submodel = qe.execDescribe();
 
@@ -274,11 +285,7 @@ public class PortalRestController {
             ModelFormatter modelFormatter = new ModelFormatter(submodel);
 
             return modelFormatter.format(format);
-        } catch (Exception e) {
-            logger.error("FusekiQuery error",e);
         }
-
-        return null;
     }
 
     /**
