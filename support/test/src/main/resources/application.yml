@@ -1,0 +1,25 @@
+logging:
+  level.: ERROR
+  level.no.brreg: DEBUG
+  level.org.springframework: ERROR
+---
+spring:
+  profiles: docker
+application:
+  elasticsearchHost: elasticsearch
+  elasticsearchPort: 9300
+  elasticsearchCluster: elasticsearch
+---
+#Utv-miljø lokalt på egen PC
+spring:
+  profiles: develop
+application:
+  elasticsearchHost: localhost
+  elasticsearchPort: 9300
+  elasticsearchCluster: elasticsearch
+  fusekiHost: http://localhost:3030
+  harvesterHost: http://localhost:8081
+server:
+  port: 8074
+management:
+  port: 8994

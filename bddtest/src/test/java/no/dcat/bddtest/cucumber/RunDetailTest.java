@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
  * Class for starting cucumbertest for Detail page.
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(format = { "pretty", "html:target/cucumber" },features = "classpath:feature/detailPage.feature"
+@CucumberOptions(format = { "pretty", "html:target/cucumber" },features = "classpath:feature/FDK-338-detailPage.feature"
 )
 public class RunDetailTest {
 }
