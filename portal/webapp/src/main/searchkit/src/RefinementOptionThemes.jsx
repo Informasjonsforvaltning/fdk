@@ -14,7 +14,6 @@ export class RefinementOptionThemes extends React.Component {
 		  const className = block()
 		    .state({ active, disabled })
 		    .mix(bemBlocks.container("item"))
-      console.log('props.selected is ', props.active);
 			return (
 						<a onClick={props.onClick} data="ENVI" href="#" className={props.bemBlocks.option().state({active:props.active}) + ' list-group-item fdk-label fdk-label-default'}>{themeLabel}
 						 <span className="fdk-badge">(<span className="fdk-count">{props.count}</span>)</span>

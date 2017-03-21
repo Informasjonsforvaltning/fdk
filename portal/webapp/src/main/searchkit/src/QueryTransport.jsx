@@ -2,6 +2,7 @@
 import {AxiosESTransport} from "searchkit";
 const defaults = require("lodash/defaults");
 import * as axios from "axios";
+const qs = require('qs');
 
 export class QueryTransport extends AxiosESTransport {
   constructor(host, options){
@@ -22,7 +23,6 @@ export class QueryTransport extends AxiosESTransport {
   }
 
   search(query){
-		console.log('query is ', query);
 		// http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
     const publisherKey = 'publisher.name.raw';
     const themeKey = 'theme.code.raw';
@@ -43,7 +43,6 @@ export class QueryTransport extends AxiosESTransport {
             publisherFilter += encodeURIComponent(filter.term[publisherKey]);
             multiplePublishers = true;
           } else if(filter.term[themeKey]) {
-            console.log('filter is ', filter, filter.term, filter.term[themeKey]);
             if(themeFilter.length === 0) {
               themeFilter += '&theme=';
             }
@@ -62,20 +61,27 @@ export class QueryTransport extends AxiosESTransport {
 
     let sortfield = "_score";
     let sortdirection = "asc";
-    if (query.sort) { // there is a sort code
-        if (query.sort.length > 0) {
-            let sort = query.sort[0]; // assume that only one sort field is possible
-            if (_.has(sort, '_score')) {
-                sortfield="_score";
-                sortdirection="asc";
-            } else if (_.has(sort, 'title')) {
-                sortfield= "title.nb";
-            } else if (_.has(sort, 'modified')) {
-                sortfield= "modified";
-                sortdirection = "desc";
-            } else if (_.has(sort,'publisher.name')) {
-                sortfield= "publisher.name";
-            }
+    let queryObj = qs.parse(window.location.search.substr(1));
+
+    if (queryObj['sort']) { // there is a sort code
+        var lastIndexOfUnderscore = queryObj['sort'].lastIndexOf('_'),
+            key = queryObj['sort'].slice(0,lastIndexOfUnderscore),
+            value = queryObj['sort'].substr(lastIndexOfUnderscore+1);
+        query.sort[0] = {};
+        query.sort[0][key] = value;
+        let sort = query.sort[0]; // assume that only one sort field is possible
+        if (_.has(sort, '_score')) {
+            sortfield="_score";
+            sortdirection="asc";
+        } else if (_.has(sort, 'title')) {
+            sortfield= "title.nb";
+        } else if (_.has(sort, 'modified')) {
+            sortfield= "modified";
+            sortdirection = "desc";
+        } else if (_.has(sort,'publisher.name')) {
+            sortfield= "publisher.name";
+        } else {
+          console.log('other! (should not happen)');
         }
     }
 
@@ -84,15 +90,17 @@ export class QueryTransport extends AxiosESTransport {
 			(query.query ? query.query.simple_query_string.query : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
-			'&size=' + query.size +
-            '&lang=nb' +
+			'&size=' +
+      query.size +
+      '&lang=nb' +
       publisherFilter +
-      themeFilter + (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
+      themeFilter +
+      (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
       .then(this.getData)
   }
 
-  getData(response){
+  getData(response) {
 		    // Check for the old property name to avoid a ReferenceError in strict mode.
 		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('publisherCount')) {
 		        response.data.aggregations['publisher.name.raw3'] = {'publisher.name.raw' : response.data.aggregations['publisherCount'], size: '5'};

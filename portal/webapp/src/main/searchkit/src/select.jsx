@@ -21,10 +21,11 @@ define(["require", "exports", "react", "lodash", "qs"], function (require, expor
         }
         Select.prototype.onClick = function (e) {
             e.preventDefault();
-            e.stopPropagation();
             var setItems = this.props.setItems;
             var key = e.target.getAttribute('data-value');
-            setItems([key]);
+            setItems(['aa']); // this might remove the item instead of adding it (searchkit bug in toggleItem here: /components/search/sorting-selector/src/SortingSelector.tsx)
+            setItems([key]); // whether added or removed in the previous step, we still add it, just to be sure
+            setItems([key]); // whether added or removed in the previous step, we still add it, just to be sure
         };
         Select.prototype.getSelectedValue = function () {
             var _a = this.props.selectedItems, selectedItems = _a === void 0 ? [] : _a;
@@ -46,7 +47,8 @@ define(["require", "exports", "react", "lodash", "qs"], function (require, expor
             } else {
               perPage = 'per page';
             }
-            let selectedValue = this.getSelectedValue();
+            if(!queryObj['sort']) queryObj['sort'] = '_score_asc';
+            let selectedValue = parseInt(this.getSelectedValue()) >= 0 ? this.getSelectedValue() : queryObj['sort'];
             let selectedLabel = '';
             this.props.items.forEach((item) => {
               if(item.key === selectedValue) {
