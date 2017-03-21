@@ -41,6 +41,7 @@ public class PortalRestControllerTest {
         portal = new PortalRestController();
     }
 
+
     @Test
     public void getCatalogDcatOk() throws Throwable {
         PortalRestController spy = spy(portal);

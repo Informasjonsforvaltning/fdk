@@ -6,6 +6,8 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +74,48 @@ public class PortalRestController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/catalogs",
+        method = GET,
+    produces = "text/html")
+    public String getCatalogs() {
+        final String queryFile = "sparql/allcatalogs.sparql";
+
+        try {
+            Resource resource = new ClassPathResource(queryFile);
+            String queryString = read(resource.getInputStream());
+
+
+            Query query = QueryFactory.create(queryString);
+            Model model = getModel();
+
+            try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
+                ResultSet resultset = qexec.execSelect();
+
+                StringBuilder builder = new StringBuilder();
+
+                while (resultset.hasNext()) {
+                    QuerySolution qs = resultset.next();
+                    String catalogName = qs.get("cname").asLiteral().getString();
+                    String catalogUri = qs.get("catalog").asResource().getURI();
+                    String publisherName = qs.get("pname").asLiteral().getString();
+                    String publisherUri = qs.get("publisher").asResource().getURI();
+
+                    builder.append("<a href='"+ "http://localhost:8080/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n" );
+
+                }
+
+                return builder.toString();
+            }
+
+
+        } catch (IOException e) {
+
+        }
+
+        return null;
+    }
+
     /**
      * API to find dataset based on id from .../dataset?id={id}
      *
@@ -117,7 +161,8 @@ public class PortalRestController {
             String returnFormat = getReturnFormat(acceptHeader, format);
 
             if (returnFormat == null) {
-                return new ResponseEntity<>("Unknown format " + format + "or Accept" + acceptHeader, HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<>("Unknown format " + format + " and/or Accept-header: " + acceptHeader,
+                        HttpStatus.NOT_ACCEPTABLE);
             }
 
             logger.info("Prepare export of {}", returnFormat);
@@ -175,7 +220,9 @@ public class PortalRestController {
             } else if (acceptFormat.contains("turtle")) {
                 modelFormat = "text/turtle";
             }
-        } else if (!"".equals(fileFormat)) {
+        }
+
+        if (modelFormat == null && fileFormat != null) {
             if (fileFormat.toLowerCase().contains("xml") || fileFormat.toLowerCase().contains("rdf")) {
                 modelFormat = "application/rdf+xml";
             } else if (fileFormat.toLowerCase().contains("json")) {
@@ -184,6 +231,7 @@ public class PortalRestController {
                 modelFormat = "text/turtle";
             }
         }
+
         return modelFormat;
     }
 
@@ -193,11 +241,10 @@ public class PortalRestController {
      * @param id          the ide of the resource to find
      * @param queryString the query which describe the result
      * @param format      the wanted format.
-     * @return RDF formated according to DCAT
+     * @return RDF formated string according to DCAT and format, if null the query returned empty
      */
     String findResourceById(String id, String queryString, String format) {
         Model model = getModel();
-
 
         try {
             id = URLDecoder.decode(id, "UTF-8");
@@ -214,7 +261,7 @@ public class PortalRestController {
             Model submodel = qexec.execDescribe();
             if (submodel.isEmpty()) {
                 return null;
-                //throw new NoSuchElementException("Empty result");
+
             }
             ModelFormatter modelFormatter = new ModelFormatter(submodel);
 
