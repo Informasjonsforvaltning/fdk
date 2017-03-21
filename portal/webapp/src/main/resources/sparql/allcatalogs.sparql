@@ -16,5 +16,6 @@ WHERE {
   dct:publisher ?publisher.
 
   ?publisher foaf:name ?pname.
-
 }
+ORDER BY ?cname
+

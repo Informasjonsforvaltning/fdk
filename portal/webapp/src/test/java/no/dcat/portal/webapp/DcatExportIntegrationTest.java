@@ -34,7 +34,7 @@ public class DcatExportIntegrationTest {
         PortalRestController spy = spy(portal);
         doReturn("http://localhost:3030/fuseki").when(spy).getFusekiService();
 
-        String result = spy.getCatalogs("x","text/html");
+        String result = spy.getCatalogs("text/html");
 
         logger.info(result);
     }
