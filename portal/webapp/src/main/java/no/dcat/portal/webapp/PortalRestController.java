@@ -9,6 +9,7 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,7 +62,7 @@ public class PortalRestController {
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getCatalogDcat(
-            @RequestParam(value = "id") String id,
+            @RequestParam(value = "id", required = true) String id,
             @RequestParam(value = "format", required = false) String format,
             @RequestHeader(value = "Accept") String acceptHeader) {
 
@@ -77,8 +78,8 @@ public class PortalRestController {
     @CrossOrigin
     @RequestMapping(value = "/catalogs",
         method = GET,
-    produces = "text/html")
-    public String getCatalogs() {
+        produces = "text/html")
+    public String getCatalogs(@RequestHeader(value = "Accept") String acceptHeader) {
         final String queryFile = "sparql/allcatalogs.sparql";
 
         try {
@@ -129,9 +130,9 @@ public class PortalRestController {
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetDcat(
-            @RequestParam(value = "id") String id,
+            @RequestParam(value = "id", required = true) String id,
             @RequestParam(value = "format", required = false) String format,
-            @RequestHeader(value = "Accept") String acceptHeader) {
+            @RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
 
         final String queryFile = "sparql/dataset.sparql";
 
@@ -172,7 +173,7 @@ public class PortalRestController {
                 return new ResponseEntity<>("Unable to find " + id, HttpStatus.NOT_FOUND);
             }
 
-            logger.debug(responseBody);
+
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", returnFormat + "; charset=UTF-8");
@@ -244,7 +245,7 @@ public class PortalRestController {
      * @return RDF formated string according to DCAT and format, if null the query returned empty
      */
     String findResourceById(String id, String queryString, String format) {
-        Model model = getModel();
+       Model model = getModel();
 
         try {
             id = URLDecoder.decode(id, "UTF-8");
@@ -257,8 +258,13 @@ public class PortalRestController {
 
         Query query = QueryFactory.create(String.format(queryString, id));
 
-        try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
-            Model submodel = qexec.execDescribe();
+
+        try (QueryExecution qe = QueryExecutionFactory.create(query, model)) {
+            logger.debug(query.toString());
+            //QueryEngineHTTP qe = new QueryEngineHTTP("http://localhost:3030/fuseki/dcat", query);
+
+            Model submodel = qe.execDescribe();
+
             if (submodel.isEmpty()) {
                 return null;
 
@@ -266,7 +272,11 @@ public class PortalRestController {
             ModelFormatter modelFormatter = new ModelFormatter(submodel);
 
             return modelFormatter.format(format);
+        } catch (Exception e) {
+            logger.error("FusekiQuery error",e);
         }
+
+        return null;
     }
 
     Model getModel() {
