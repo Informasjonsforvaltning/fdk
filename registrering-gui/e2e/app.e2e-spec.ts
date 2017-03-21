@@ -6,8 +6,6 @@ describe('registrering-gui App', () => {
   let page: RegistreringGuiPage;
 
   beforeEach(() => {
-  });
-  beforeAll(()=> {
     page = new RegistreringGuiPage();
       browser.get("/")
     let usernameInput = element(by.css("input[name=username]"));
@@ -19,6 +17,8 @@ describe('registrering-gui App', () => {
     var isLoggedInElement = element(by.css('.login-status'));
     var EC = protractor.ExpectedConditions;
     browser.wait(EC.presenceOf(isLoggedInElement), 10000);
+  });
+  beforeAll(()=> {
   })
 
   it('should display message saying app works', () => {
@@ -27,7 +27,6 @@ describe('registrering-gui App', () => {
   });
 
   it("Should be able to login", () => {
-    browser.get("/")
     let usernameInput = element(by.css("input[name=username]"));
     usernameInput.sendKeys("dask");
     let passwordInput = element(by.css("input[name=password]"));
@@ -38,8 +37,26 @@ describe('registrering-gui App', () => {
     expect(page.getLoginStatusText()).toEqual('Pålogget som dask');
   });
 
-  it("Should save field upon typing", () => {
-    //page.navigateTo();
+  it("Should save datacatalog fields upon typing", () => {
+    let catalogLink = element(by.css("#datacatalogs td"));
+    catalogLink.click();
+
+    let datasetH1Input = element(by.css(".fdk-register-h1"));
+    datasetH1Input.clear();
+    datasetH1Input.sendKeys('New datacatalog name');
+
+    var EC = protractor.ExpectedConditions;
+    var alertSuccess = element(by.css('.alert-success'));
+    browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+    browser.refresh();
+    datasetH1Input = element(by.css(".fdk-register-h1"));
+    browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'),1000).then(() => {
+      expect(page.getH1Value()).toEqual('New datacatalog name');
+    });
+  });
+
+  it("Should save dataset fields upon typing", () => {
     let catalogLink = element(by.css("#datacatalogs td"));
     catalogLink.click();
 

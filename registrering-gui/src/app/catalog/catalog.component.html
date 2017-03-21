@@ -1,23 +1,23 @@
 <alert type="success" *ngIf="saved">
-  <strong>Lagret!</strong> Katalogen har blitt lagret.
+  Sist lagret {{lastSaved}}
+</alert>
+<alert type="info" *ngIf="!saved">
+  Endringer lagres automatisk
 </alert>
 
 <div class="col-md-12" *ngIf="catalog">
   <div class="panel fdk-panel" *ngIf="catalog">
     <div class="fdk-panel-big-heading">
       <div class="form-group">
-        <input id="tittel-datakatalog" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
+        <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
       </div>
     </div>
     <div class="fdk-panel-big-body">
       <h2>{{catalog.id}}</h2>
-      <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
-      <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="save()">Lagre</button>
+      <textarea class="fdk-register-h3" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
     </div>
   </div>
 </div>
-
-
 
 <div class="col-md-12" *ngIf="catalog">
   <div class="panel fdk-panel">

@@ -54,7 +54,6 @@ export class CatalogService {
     const url = `${this.catalogsUrl}/${catalog.id}/`
 
     let authorization : string = localStorage.getItem("authorization");
-    console.log('authorization is ', authorization);
     this.headers.append("Authorization", "Basic " + authorization);
 
     return this.http

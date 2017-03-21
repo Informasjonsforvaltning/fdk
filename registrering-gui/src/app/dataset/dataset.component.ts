@@ -41,7 +41,7 @@ export class DatasetComponent implements OnInit {
     this.service.save(this.catId, this.dataset)
       .then(() => {
         this.saved = true;
-        var d = new Date(); // for now
+        var d = new Date();
         this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
       })
   }
