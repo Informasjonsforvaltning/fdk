@@ -12,8 +12,8 @@ SELECT ?catalog ?cname ?publisher ?pname
 WHERE {
 
   ?catalog a dcat:Catalog;
-   	dct:title ?cname;
-  	dct:publisher ?publisher.
+  dct:title ?cname;
+  dct:publisher ?publisher.
 
   ?publisher foaf:name ?pname.
 

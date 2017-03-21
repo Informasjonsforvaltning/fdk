@@ -1,10 +1,7 @@
 package no.dcat.portal.webapp;
 
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.Fuseki;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
@@ -57,7 +54,7 @@ public class PortalRestController {
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
-    @RequestMapping(value = "/catalogs",
+    @RequestMapping(value = "/catalogs", params={"id","format"},
             method = GET,
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
@@ -79,19 +76,18 @@ public class PortalRestController {
     @RequestMapping(value = "/catalogs",
         method = GET,
         produces = "text/html")
-    public String getCatalogs(@RequestHeader(value = "Accept") String acceptHeader) {
+    public String getCatalogs(@RequestParam(value= "x", defaultValue="x") String x,
+                              @RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
         final String queryFile = "sparql/allcatalogs.sparql";
 
         try {
             Resource resource = new ClassPathResource(queryFile);
             String queryString = read(resource.getInputStream());
 
+            Query query = getQuery(queryString);
 
-            Query query = QueryFactory.create(queryString);
-            Model model = getModel();
-
-            try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
-                ResultSet resultset = qexec.execSelect();
+            try (QueryExecution qe = getQueryExecution(query)) {
+                ResultSet resultset = qe.execSelect();
 
                 StringBuilder builder = new StringBuilder();
 
@@ -103,7 +99,6 @@ public class PortalRestController {
                     String publisherUri = qs.get("publisher").asResource().getURI();
 
                     builder.append("<a href='"+ "http://localhost:8080/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n" );
-
                 }
 
                 return builder.toString();
@@ -172,8 +167,6 @@ public class PortalRestController {
             if (responseBody == null) {
                 return new ResponseEntity<>("Unable to find " + id, HttpStatus.NOT_FOUND);
             }
-
-
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", returnFormat + "; charset=UTF-8");
@@ -245,7 +238,7 @@ public class PortalRestController {
      * @return RDF formated string according to DCAT and format, if null the query returned empty
      */
     String findResourceById(String id, String queryString, String format) {
-       Model model = getModel();
+       //Model model = getModel();
 
         try {
             id = URLDecoder.decode(id, "UTF-8");
@@ -256,18 +249,16 @@ public class PortalRestController {
             return null;
         }
 
-        Query query = QueryFactory.create(String.format(queryString, id));
+        Query query = getQuery(String.format(queryString, id));
 
+        try ( QueryExecution qe = getQueryExecution(query))/*(QueryExecution qe = QueryExecutionFactory.create(query, model))*/ {
 
-        try (QueryExecution qe = QueryExecutionFactory.create(query, model)) {
             logger.debug(query.toString());
-            //QueryEngineHTTP qe = new QueryEngineHTTP("http://localhost:3030/fuseki/dcat", query);
 
             Model submodel = qe.execDescribe();
 
             if (submodel.isEmpty()) {
                 return null;
-
             }
             ModelFormatter modelFormatter = new ModelFormatter(submodel);
 
@@ -279,10 +270,12 @@ public class PortalRestController {
         return null;
     }
 
-    Model getModel() {
-        // Datastore dependencies - TODO remove!?
-        DcatDataStore dcatDataStore = new DcatDataStore(new Fuseki(getFusekiService() + "/dcat"));
-        return dcatDataStore.getAllDataCatalogues();
+    Query getQuery(String query) {
+        return QueryFactory.create(query);
+    }
+
+    QueryExecution getQueryExecution(Query query) {
+        return new QueryEngineHTTP(getFusekiService() + "/dcat", query);
     }
 
 

@@ -11,7 +11,7 @@ PREFIX er: <http://data.brreg.no/meta/>
 DESCRIBE ?dataset ?publisher ?contact ?distribution ?nace ?fadr ?padr ?sektor
 WHERE {
     ?dataset a dcat:Dataset;
-        dct:publisher ?publisher.
+    dct:publisher ?publisher.
 
     OPTIONAL {?publisher er:naeringskode1 ?nace}
     OPTIONAL {?publisher er:forretningsadresse ?fadr}

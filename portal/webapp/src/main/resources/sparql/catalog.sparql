@@ -11,13 +11,12 @@ prefix er: <http://data.brreg.no/meta/>
 
 DESCRIBE ?publisher ?dataset ?distribution ?catalog ?contact
 WHERE {
-
   ?catalog a dcat:Catalog;
-   	dct:publisher ?publisher;
-  	dcat:dataset ?dataset.
+  dct:publisher ?publisher;
+  dcat:dataset ?dataset.
 
-  ?dataset dcat:distribution ?distribution;
-    dcat:contactPoint ?contact.
+  OPTIONAL {?dataset dcat:distribution ?distribution}
+  OPTIONAL {?dataset dcat:contactPoint ?contact}
 
   FILTER (?catalog = <%s>)
 

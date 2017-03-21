@@ -1,8 +1,14 @@
 package no.dcat.portal.webapp;
 
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.sparql.algebra.optimize.TransformOrderByDistinctApplication;
+import org.apache.jena.sparql.engine.QueryEngineFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -23,6 +29,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -125,29 +132,43 @@ public class PortalRestControllerTest {
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
 
-        //model.read(mResource.getInputStream(), "TURTLE");
-        doReturn(model).when(spy).getModel();
-
         Resource queryResource = new ClassPathResource("sparql/catalog.sparql");
         String queryString = read(queryResource.getInputStream());
 
-        String resultOK = spy.findResourceById("http://data.brreg.no/datakatalog/katalog/974761076/5",
+        //model.read(mResource.getInputStream(), "TURTLE");
+        String id ="http://data.brreg.no/datakatalog/katalog/974761076/5";
+        Query q = QueryFactory.create(String.format(queryString, id));
+        QueryExecution qe = QueryExecutionFactory.create(q, model);
+        doReturn(q).when(spy).getQuery(anyString());
+        doReturn(qe).when(spy).getQueryExecution(q);
+
+        String resultOK = spy.findResourceById( id,
                 queryString,
                 "text/turtle");
 
         assertThat(resultOK, not(nullValue()));
+    }
 
-        String urlEncodedIdResult = spy.findResourceById("http%3A%2F%2Fdata.brreg.no%2Fdatakatalog%2Fkatalog%2F974761076%2F5",
-                queryString, "text/turtle");
+    @Test
+    public void unknownIdReturnsNull() throws Throwable {
+        PortalRestController spy = spy(portal);
+        Resource mResource = new ClassPathResource("data.ttl");
+        org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
+        Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
 
-        assertThat(urlEncodedIdResult, not(nullValue()));
-        boolean eq = urlEncodedIdResult.equals(resultOK);
-        assertThat(true, is(eq));
+        Resource queryResource = new ClassPathResource("sparql/catalog.sparql");
+        String queryString = read(queryResource.getInputStream());
 
-        String resultNOTFOUND = spy.findResourceById("unknownid", queryString, "application/rdf+xml");
+        //model.read(mResource.getInputStream(), "TURTLE");
+        String id ="unknownid";
+        Query q = QueryFactory.create(String.format(queryString, id));
+        QueryExecution qe = QueryExecutionFactory.create(q, model);
+        doReturn(q).when(spy).getQuery(anyString());
+        doReturn(qe).when(spy).getQueryExecution(q);
+
+        String resultNOTFOUND = spy.findResourceById(id, queryString, "application/rdf+xml");
 
         assertThat(resultNOTFOUND, nullValue());
-
     }
 
     @Test
