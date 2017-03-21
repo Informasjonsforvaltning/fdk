@@ -270,10 +270,22 @@ public class PortalRestController {
         return null;
     }
 
+    /**
+     * Creates a query based on a sparql text query
+     *
+     * @param query the sparql query
+     * @return the query object
+     */
     Query getQuery(String query) {
         return QueryFactory.create(query);
     }
 
+    /**
+     * Do query fuseki service
+     *
+     * @param query sparql query
+     * @return the execution handler of the query
+     */
     QueryExecution getQueryExecution(Query query) {
         return new QueryEngineHTTP(getFusekiService() + "/dcat", query);
     }
