@@ -5,11 +5,12 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -H 0.0.0.0",
+    "start": "node server.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "main": "server.js",
   "private": true,
   "dependencies": {
     "@angular/common": "^2.4.0",
