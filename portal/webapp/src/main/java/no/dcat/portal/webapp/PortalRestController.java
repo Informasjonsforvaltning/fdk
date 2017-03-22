@@ -290,6 +290,9 @@ public class PortalRestController {
             ModelFormatter modelFormatter = new ModelFormatter(submodel);
 
             return modelFormatter.format(format);
+        } catch (Exception e) {
+            logger.error("No resource found {}", e.getClass().getName(), e);
+            return null;
         }
     }
 
@@ -309,7 +312,7 @@ public class PortalRestController {
      * @param query sparql query
      * @return the execution handler of the query
      */
-    QueryExecution getQueryExecution(Query query) {
+    QueryExecution getQueryExecution(Query query) throws Exception {
         return new QueryEngineHTTP(getFusekiService() + "/dcat", query);
     }
 

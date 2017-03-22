@@ -208,7 +208,7 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void unknownIdReturnsNull() throws Throwable {
+    public void findResourceWithunknownIdReturnsNull() throws Throwable {
         PortalRestController spy = spy(portal);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
@@ -252,13 +252,35 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void exportIOExceptionSparqlNotFound() throws Throwable {
+    public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() throws Throwable {
         PortalRestController spy = spy(portal);
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
                 null, "application/ld+json", "sparql/nofile.sparql");
 
         assertThat(response, nullValue());
+    }
+
+
+    @Test
+    public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() throws Throwable {
+        PortalRestController spy = spy(portal);
+        doThrow(new Exception("force exception")).when(spy).getQueryExecution(anyObject());
+
+        ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
+                null, "application/ld+json", "sparql/catalog.sparql");
+
+        assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() throws Throwable {
+        PortalRestController spy = spy(portal);
+        doThrow(new Exception("force exception")).when(spy).getQueryExecution(anyObject());
+
+        ResponseEntity<String> response = spy.getCatalogs("*/*");
+
+        assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 
     private static String read(InputStream input) throws IOException {
