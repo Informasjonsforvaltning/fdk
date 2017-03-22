@@ -45,8 +45,6 @@
           </ul>
         </div>
       </div>
-
-
     </div>
   </div>
 </section>
@@ -63,7 +61,7 @@
         <img src="//scf.brreg.no/bilder/brreg_logo.svg" alt="Brønnøysundregistrene logo" height="200" width="300" class="img-responsive" id="brreg-logo">
       </a>
     </div>
-    <div>
+    <div class="login-status" *ngIf="getUsername()">
       Pålogget som {{getUsername()}}
     </div>
   </footer>

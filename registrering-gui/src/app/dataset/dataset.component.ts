@@ -15,8 +15,10 @@ export class DatasetComponent implements OnInit {
   // title: string;
   description: string;
   language: string;
+  timer: number;
   saved: boolean;
   catId: string;
+  lastSaved: string;
 
 
   constructor(
@@ -28,6 +30,7 @@ export class DatasetComponent implements OnInit {
 
   ngOnInit() {
     this.language = 'nb';
+    this.timer = 0;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
     let datasetId = this.route.snapshot.params['dataset_id'];
@@ -36,8 +39,20 @@ export class DatasetComponent implements OnInit {
 
   save(): void {
     this.service.save(this.catId, this.dataset)
-      .then(() => this.saved = true)
+      .then(() => {
+        this.saved = true;
+        var d = new Date();
+        this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+      })
   }
+  valuechange(a,b,c): void {
+    var that = this;
+    this.delay(function() {that.save.call(that)}, 1000);
+  }
+  delay(callback, ms): void{
+      clearTimeout (this.timer);
+      this.timer = setTimeout(callback, ms);
+  };
 
   back(): void {
     this.router.navigate(['/catalogs', this.catId]);

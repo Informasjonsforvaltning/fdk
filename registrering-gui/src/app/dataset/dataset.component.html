@@ -1,14 +1,17 @@
 <alert type="success" *ngIf="saved">
-  <strong>Lagret!</strong> Datasettet har blitt lagret.
+  Sist lagret {{lastSaved}}
+</alert>
+<alert type="info" *ngIf="!saved">
+  Endringer lagres automatisk
 </alert>
 
-<div class="panel fdk-panel" *ngIf="dataset">
+<div class="panel fdk-panel" *ngIf="dataset" id="dataset">
   <div class="fdk-panel-big-heading">
-    <input  class="fdk-register-h1" id="tittel-datasett" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
+    <input  class="fdk-register-h1" id="tittel-datasett" (ngModelChange)="valuechange()" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
   <div class="fdk-panel-big-body">
     <h2>{{dataset.catalog}}</h2>
-    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
+    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange()" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
 
@@ -41,5 +44,4 @@
     </div>
   </div>
 </div>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="save()">Lagre</button>
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
