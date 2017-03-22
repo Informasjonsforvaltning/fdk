@@ -130,6 +130,10 @@ public class PortalRestController {
             } else {
                 return new ResponseEntity<String>("No catalogs found.", HttpStatus.NOT_FOUND);
             }
+        } catch (Exception e) {
+            logger.error("No catalogs found", e);
+            return new ResponseEntity<String>("No catalogs found: " + e.getClass().getName(),
+                    HttpStatus.NOT_FOUND);
         }
 
     }
@@ -189,6 +193,7 @@ public class PortalRestController {
             if (responseBody == null) {
                 return new ResponseEntity<>("Unable to find " + id, HttpStatus.NOT_FOUND);
             }
+
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", returnFormat + "; charset=UTF-8");
