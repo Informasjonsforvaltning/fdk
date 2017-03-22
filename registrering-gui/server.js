@@ -15,7 +15,7 @@ app.use(morgan('combined'))
 
 
 app.get('/', function (req, res) {
-  res.sendfile('./src/index.html');
+  res.sendFile(__dirname + '/src/index.html');
 });
 
 
