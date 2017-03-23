@@ -9,6 +9,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.algebra.optimize.TransformOrderByDistinctApplication;
 import org.apache.jena.sparql.engine.QueryEngineFactory;
+import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -265,7 +266,7 @@ public class PortalRestControllerTest {
     @Test
     public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() throws Throwable {
         PortalRestController spy = spy(portal);
-        doThrow(new Exception("force exception")).when(spy).getQueryExecution(anyObject());
+        doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(anyObject());
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
                 null, "application/ld+json", "sparql/catalog.sparql");
@@ -276,7 +277,7 @@ public class PortalRestControllerTest {
     @Test
     public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() throws Throwable {
         PortalRestController spy = spy(portal);
-        doThrow(new Exception("force exception")).when(spy).getQueryExecution(anyObject());
+        doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(anyObject());
 
         ResponseEntity<String> response = spy.getCatalogs("*/*");
 

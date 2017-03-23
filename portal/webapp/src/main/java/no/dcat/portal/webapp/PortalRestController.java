@@ -7,6 +7,7 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
+import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -312,7 +313,7 @@ public class PortalRestController {
      * @param query sparql query
      * @return the execution handler of the query
      */
-    QueryExecution getQueryExecution(Query query) throws Exception {
+    QueryExecution getQueryExecution(Query query) throws QueryExceptionHTTP {
         return new QueryEngineHTTP(getFusekiService() + "/dcat", query);
     }
 
