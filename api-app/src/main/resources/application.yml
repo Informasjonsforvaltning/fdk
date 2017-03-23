@@ -3,17 +3,17 @@ spring:
   mvc.view.prefix: /WEB-INF/jsp/
   mvc.view.suffix: .jsp
 fuseki:
-  dcatServiceUri: http://fuseki:3030/fuseki/dcat
-  adminServiceUri: http://fuseki:3030/fuseki/admin
+  dcatServiceUri: http://fuseki:3030/dcat
+  adminServiceUri: http://fuseki:3030/admin
 ---
 
 spring:
-  profiles: development
+  profiles: develop
   mvc.view.prefix: /WEB-INF/jsp/
   mvc.view.suffix: .jsp
 fuseki:
-  dcatServiceUri: http://localhost:3030/fuseki/dcat
-  adminServiceUri: http://localhost:3030/fuseki/admin
+  dcatServiceUri: http://localhost:3030/dcat
+  adminServiceUri: http://localhost:3030/admin
 application:
   harvesterUrl: http://localhost:8090
 server:

@@ -1,5 +1,7 @@
 package no.difi.dcat.datastore;
 
+import org.apache.jena.atlas.web.auth.HttpAuthenticator;
+import org.apache.jena.atlas.web.auth.SimpleAuthenticator;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.update.UpdateExecutionFactory;
@@ -17,6 +19,10 @@ public class Fuseki {
 	private String serviceUri;
 	private String updateServiceUri;
 	private final Logger logger = LoggerFactory.getLogger(Fuseki.class);
+
+
+	private final HttpAuthenticator autenticator = new SimpleAuthenticator("admin", "aestgaa".toCharArray());
+
 
 	String prefixes = String.join("\n",
 			"PREFIX foaf: <http://xmlns.com/foaf/0.1/>",
@@ -63,7 +69,7 @@ public class Fuseki {
 
 		logger.trace(query.toString());
 		
-		return QueryExecutionFactory.sparqlService(serviceUri, query).execSelect();
+		return QueryExecutionFactory.sparqlService(serviceUri, query, autenticator).execSelect();
 	}
 
 	public boolean ask(String query) {

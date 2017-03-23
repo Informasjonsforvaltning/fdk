@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<include resource="org/springframework/boot/logging/logback/base.xml" />
-	<logger name="org.springframework.web" level="DEBUG" />
-	<logger name="org.apache.http.wire" level="WARN" />
+	<logger name="org.springframework.web" level="INFO" />
+	<logger name="org.apache.http.wire" level="INFO" />
 	<logger name="org.apache.jena" level="ERROR" />
 
 	<timestamp key="datetime" datePattern="yyyy-MM-dd HH:mm:ss"/>
@@ -13,7 +13,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="no.difi.dcat">
+	<logger name="no.difi.dcat" level="TRACE">
 		<appender-ref ref="dcat-admin-logger" />
 	</logger>
 
