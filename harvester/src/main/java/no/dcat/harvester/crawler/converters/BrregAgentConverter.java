@@ -15,6 +15,7 @@ import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
+import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ public class BrregAgentConverter {
                 .setBaseNamespace("http://data.brreg.no/meta/", Builder.AppliesTo.bothElementsAndAttributes)
                 .convertComplexElementsWithOnlyAttributesAndSimpleTypeChildrenToPredicate(true)
                 .convertComplexElementsWithOnlyAttributesToPredicate(true)
+                //.uuidBasedIdInsteadOfBlankNodes("dcat://meta/") // generates uuid for blank nodes
                 .renameElement("http://data.brreg.no/meta/navn", FOAF.name.getURI())
                 .renameElement("http://data.brreg.no/meta/enhet", FOAF.Agent.getURI()).build();
         logger.debug("end ");
@@ -115,6 +117,7 @@ public class BrregAgentConverter {
 
                 logger.trace("[model_after_conversion] {}", incomingModel);
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
+                processBlankNodes(incomingModel, uri);
 
                 ResIterator subjects = incomingModel.listSubjectsWithProperty(EnhetsregisteretRDF.organisasjonsform);
 
@@ -129,7 +132,7 @@ public class BrregAgentConverter {
                         collectFromUri(String.format(publisherIdURI, overordnetEnhet.getObject().toString()), model);
                     }
                 }
-
+                logger.trace(incomingModel.toString());
                 model.add(incomingModel);
             } else {
                 logger.warn("Unable to look up publisher {} - cache is not initiatilized.", uri);
@@ -137,8 +140,43 @@ public class BrregAgentConverter {
 
 
         } catch (Exception e) {
-            logger.warn("Failed to look up publisher: {} reason {}", uri, e.getMessage());
+            logger.warn("Failed to look up publisher: {} reason {}", uri, e.getMessage(),e);
         }
+    }
+
+    /**
+     * find forretningsadresse, naeringskode1, postadresse og institusjonellSektorkode
+     * resources and change their blank nodes to a fixed uri
+     */
+    private void processBlankNodes(Model model, String resourceURI) {
+        final String namespace = "http://data.brreg.no/meta/";
+        final String[] properties = {
+                "forretningsadresse",
+                "postadresse",
+                "naeringskode1",
+                "institusjonellSektorkode"
+        };
+
+        if (resourceURI.endsWith(".xml")) {
+            resourceURI = resourceURI.substring(0,resourceURI.indexOf(".xml"));
+        }
+
+        for (String localName : properties ) {
+
+            Property property = model.getProperty(namespace, localName);
+            NodeIterator nodes = model.listObjectsOfProperty(property);
+            if (nodes.hasNext()) {
+                RDFNode blankNode = nodes.next();
+                if (blankNode.isResource() && blankNode.isAnon()) {
+                    Resource resource = blankNode.asResource();
+                    String newUri = resourceURI + "/" + localName;
+                    logger.debug("Renames {} blank node {} to {}",resourceURI, resource.getId(), newUri);
+                    ResourceUtils.renameResource(resource, newUri );
+                }
+            }
+
+        }
+
     }
 
     /**

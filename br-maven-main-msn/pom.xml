@@ -211,6 +211,7 @@
             <url>https://nexus.brreg.no/content/repositories/brJEE-release/</url>
             <layout>default</layout>
         </repository>
+
         <snapshotRepository>
             <uniqueVersion>true</uniqueVersion>
             <id>brJEE-snapshot</id>
@@ -219,6 +220,5 @@
             <layout>legacy</layout>
         </snapshotRepository>
     </distributionManagement>
-
 
 </project>
