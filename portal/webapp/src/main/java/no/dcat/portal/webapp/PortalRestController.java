@@ -313,7 +313,7 @@ public class PortalRestController {
      * @param query sparql query
      * @return the execution handler of the query
      */
-    QueryExecution getQueryExecution(Query query) throws QueryExceptionHTTP {
+    QueryExecution getQueryExecution(Query query) {
         return new QueryEngineHTTP(getFusekiService() + "/dcat", query);
     }
 
