@@ -97,7 +97,7 @@ public class PortalController {
         }
     }
 
-    private ModelAndView getDetailsView(@RequestParam(value = "id", defaultValue = "") String id) {
+    private ModelAndView getDetailsView(String id) {
         ModelAndView model = new ModelAndView("detail");
 
         try {
@@ -133,6 +133,7 @@ public class PortalController {
      * @return One Dataset attatched to a ModelAndView.
      */
     @RequestMapping(value = {"/detail"}, produces = "text/html")
+    @Deprecated
     public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
 
         return getDetailsView(id);
