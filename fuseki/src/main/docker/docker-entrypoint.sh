@@ -1,3 +1,4 @@
+#!/bin/bash
 #   Licensed to the Apache Software Foundation (ASF) under one or more
 #   contributor license agreements.  See the NOTICE file distributed with
 #   this work for additional information regarding copyright ownership.
@@ -13,40 +14,27 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-[main]
-# Development
-ssl.enabled = false
+set -e
 
-plainMatcher=org.apache.shiro.authc.credential.SimpleCredentialsMatcher
-#iniRealm=org.apache.shiro.realm.text.IniRealm
-iniRealm.credentialsMatcher = $plainMatcher
+if [ ! -f "$FUSEKI_BASE/shiro.ini" ] ; then
+  # First time
+  echo "###################################"
+  echo "Initializing Apache Jena Fuseki"
+  echo ""
+  cp "$FUSEKI_HOME/shiro.ini" "$FUSEKI_BASE/shiro.ini"
+  if [ -z "$ADMIN_PASSWORD" ] ; then
+    ADMIN_PASSWORD=$(pwgen -s 15)
+    echo "Randomly generated admin password:"
+    echo ""
+    echo "admin=$ADMIN_PASSWORD"
+  fi
+  echo ""
+  echo "###################################"
+fi
 
-#localhost=org.apache.jena.fuseki.authz.LocalhostFilter
+# $ADMIN_PASSWORD can always override
+if [ -n "$ADMIN_PASSWORD" ] ; then
+  sed -i "s/^admin=.*/admin=$ADMIN_PASSWORD/" "$FUSEKI_BASE/shiro.ini"
+fi
 
-[users]
-# Implicitly adds "iniRealm =  org.apache.shiro.realm.text.IniRealm"
-admin=pw
-
-[roles]
-
-[urls]
-## Control functions open to anyone
-/$/status = anon
-/$/ping   = anon
-
-## and the rest are restricted
-/$/** = authcBasic,user[admin]
-
-
-## If you want simple, basic authentication user/password
-## on the operations,
-##    1 - set a password in [users]
-##    2 - change the line above to:
-## /$/** = authcBasic,user[admin]
-## and set a better
-
-## or to allow any access.
-##/$/** = anon
-
-# Everything else
-/**=anon
+exec "$@"

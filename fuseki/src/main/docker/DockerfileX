@@ -1,0 +1,23 @@
+FROM stain/jena-fuseki
+
+# Add a user for the service. Make sure it is in group root
+#RUN adduser -D -G root -g "FUSEKI" 200
+# This is important. Must allow any user to make files in home directory
+#RUN mkdir -m 0777 /home/1000 && chown gdoc:root /home/1000
+
+#Force home for any user to be. Home is not set for openshift user.
+#ENV HOME=/jena-fuseki
+
+#USER root
+#WORKDIR /fuseki
+#RUN chown -R 200 /fuseki
+#RUN chmod -R 777 /fuseki
+
+RUN ls -l /
+RUN ls -l /fuseki/
+
+
+ADD dcat-config.ttl /fuseki/configuration/
+ADD admin-config.ttl /fuseki/configuration/
+
+
