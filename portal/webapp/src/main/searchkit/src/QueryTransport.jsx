@@ -85,10 +85,9 @@ export class QueryTransport extends AxiosESTransport {
         }
     }
 
-    query.query = encodeURIComponent(query.query);
     return this.axios.get(
 			window.fdkSettings.queryUrl + '/search?q=' +
-			(query.query ? query.query.simple_query_string.query : '') +
+			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +
