@@ -6,7 +6,6 @@ import {Catalog} from "./catalog";
 import {DatasetService} from "../dataset/dataset.service";
 import {Dataset} from "../dataset/dataset";
 
-
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',

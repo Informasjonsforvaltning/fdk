@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
+import {environment} from "../../environments/environment";
 
 const TEST_DATASETS: Dataset[] = [
   {
@@ -23,8 +24,7 @@ export class DatasetService {
   constructor(private http: Http) {
   }
 
-  //TODO don't hard code
-  private catalogsUrl = "http://localhost:8099/catalogs"
+  private catalogsUrl = environment.api + "/catalogs"
   private datasetPath = "/datasets/"
 
   private headers = new Headers({'Content-Type': 'application/json'});

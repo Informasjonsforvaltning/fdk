@@ -13,8 +13,64 @@
     <groupId>no.dcat</groupId>
     <artifactId>registrering-gui</artifactId>
 
+
+
   <build>
+    <!-- only filter dist -->
+    <resources>
+      <resource>
+        <directory>${basedir}</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>dist/</include>
+        </includes>
+        <excludes>
+          <exclude>node_modules/</exclude>
+          <exclude>docker/</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>${basedir}</directory>
+        <filtering>true</filtering>
+        <includes><include>src/</include></includes>
+        <excludes>
+          <exclude>node_modules/</exclude>
+          <exclude>docker/</exclude>
+        </excludes>
+      </resource>
+    </resources>
+
+
     <plugins>
+
+        <!-- prevent maven from compiling -->
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>default-jar</id>
+              <phase>none</phase>
+              <configuration>
+                <finalName>unwanted</finalName>
+                <classifier>unwanted</classifier>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- prevent maven from installing -->
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>default-install</id>
+              <phase>none</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+
+
+
       <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
@@ -24,5 +80,7 @@
       </plugin>
     </plugins>
   </build>
+
+
 
 </project>

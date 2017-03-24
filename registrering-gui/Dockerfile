@@ -1,5 +1,8 @@
 FROM node:6.10-alpine
 
+# to run localhost docker
+#FROM node:boron
+
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -9,7 +12,12 @@ COPY package.json /usr/src/app/
 RUN npm install
 
 # Bundle app source
-COPY . /usr/src/app
+RUN mkdir -p /usr/src/app/src
+COPY dist/* /usr/src/app/src/
+#COPY dist /usr/src/app -- denne burde være istedet for den over
+COPY .angular-cli.json /usr/src/app
+COPY karma.conf.js /usr/src/app
+COPY protractor.conf.js /usr/src/app
 
 EXPOSE 4200
 

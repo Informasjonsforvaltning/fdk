@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   envName: 'prod',
-  api: 'http://localhost:8099'
+  api: 'http://reg-api.tt1.brreg.no'
 };
