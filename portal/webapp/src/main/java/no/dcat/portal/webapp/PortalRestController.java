@@ -69,7 +69,9 @@ public class PortalRestController {
 
         ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, CATALOG_QUERY_FILENAME);
 
-        if (responseBody != null) return responseBody;
+        if (responseBody != null) {
+            return responseBody;
+        }
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -93,7 +95,7 @@ public class PortalRestController {
             queryString = read(resource.getInputStream());
         } catch (IOException e) {
             logger.error("List catalogs failed {}", e.getMessage(), e);
-            return new ResponseEntity<String>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         Query query = getQuery(queryString);
@@ -127,13 +129,13 @@ public class PortalRestController {
             builder.append("</html>");
 
             if (count > 0) {
-                return new ResponseEntity<String>(builder.toString(), HttpStatus.OK);
+                return new ResponseEntity<>(builder.toString(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<String>("No catalogs found.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No catalogs found.", HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             logger.error("No catalogs found", e);
-            return new ResponseEntity<String>("No catalogs found: " + e.getClass().getName(),
+            return new ResponseEntity<>("No catalogs found: " + e.getClass().getName(),
                     HttpStatus.NOT_FOUND);
         }
 
@@ -158,7 +160,9 @@ public class PortalRestController {
 
         ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, DATASET_QUERY_FILENAME);
 
-        if (responseBody != null) return responseBody;
+        if (responseBody != null) {
+            return responseBody;
+        }
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -266,18 +270,18 @@ public class PortalRestController {
      * @return RDF formated string according to DCAT and format, if null the query returned empty
      */
     String findResourceById(String id, String queryString, String format) {
-
+        String uri = id;
         // make sure the uri is not encoded
         try {
-            id = URLDecoder.decode(id, "UTF-8");
+            uri = URLDecoder.decode(id, "UTF-8");
 
         } catch (UnsupportedEncodingException e) {
             // Should in principle newer be thrown
-            logger.error("URI syntax error ", id, e);
+            logger.error("URI syntax error ", uri, e);
             return null;
         }
 
-        Query query = getQuery(String.format(queryString, id));
+        Query query = getQuery(String.format(queryString, uri));
 
         try (QueryExecution qe = getQueryExecution(query)) {
 
