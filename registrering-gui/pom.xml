@@ -13,5 +13,16 @@
     <groupId>no.dcat</groupId>
     <artifactId>registrering-gui</artifactId>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <configuration>
+          <dockerDirectory>${project.basedir}</dockerDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
