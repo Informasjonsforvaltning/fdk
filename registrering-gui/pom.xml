@@ -20,12 +20,15 @@
       <resource>
         <directory>${basedir}</directory>
         <filtering>false</filtering>
+        <includes>
+          <include>dist/</include>
+        </includes>
         <excludes>
           <exclude>node_modules/</exclude>
         </excludes>
       </resource>
       <!-- exclude node_modules -->
-      <resource>
+      <!-- <resource>
         <directory>${basedir}</directory>
         <filtering>true</filtering>
         <includes>
@@ -34,7 +37,7 @@
         <excludes>
           <exclude>node_modules/</exclude>
         </excludes>
-      </resource>
+      </resource> -->
 
       <!-- copy docker file to target -->
       <resource>
