@@ -11,6 +11,7 @@ RUN adduser -D -G root -g "FUSEKI" 2001
 #Force home for any user to be. Home is not set for openshift user.
 ENV HOME=/jena-fuseki
 
+
 # Update below according to https://jena.apache.org/download/
 ENV FUSEKI_SHA1 945ba476c5ffe946e3679352fc5b1edd3eb09334
 ENV FUSEKI_VERSION 2.5.0
@@ -34,43 +35,41 @@ RUN     wget -O fuseki.tar.gz $FUSEKI_MIRROR/jena/binaries/apache-jena-fuseki-$F
         cd $FUSEKI_HOME && rm -rf fuseki.war
 
 
+
 # As "localhost" is often inaccessible within Docker container,
 # we'll enable basic-auth with a random admin password
 # (which we'll generate on start-up)
 COPY shiro.ini /jena-fuseki/shiro.ini
 COPY docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
+RUN chmod 775 /docker-entrypoint.sh
 
 COPY load.sh /jena-fuseki/
 COPY tdbloader /jena-fuseki/
-RUN chmod 755 /jena-fuseki/load.sh /jena-fuseki/tdbloader
+RUN chmod 775 /jena-fuseki/load.sh /jena-fuseki/tdbloader
 #VOLUME /staging
 
 RUN chown -R 2001 /jena-fuseki/
 
-# Config and data
-RUN mkdir /fuseki && chown 2001 /fuseki
-RUN mkdir /fuseki/configuration && chown 2001 /fuseki/configuration
-RUN mkdir /fuseki/databases && chown -R 2001 /fuseki/databases && chmod 777 /fuseki/databases
-RUN mkdir /fuseki/backups && chown 2001 /fuseki/backups
-RUN mkdir /fuseki/templates && chown 2001 /fuseki/templates
 
+# Config and data
+RUN mkdir /fuseki && chown 2001 /fuseki && chmod 777 /fuseki
+#RUN mkdir /fuseki/configuration && chown 2001 /fuseki/configuration && chmod 775 /fuseki/configuration
+#RUN mkdir /fuseki/databases && chown -R 2001 /fuseki/databases && chmod 775 /fuseki/databases
+#RUN mkdir /fuseki/backups && chown 2001 /fuseki/backups && chmod 775 /fuseki/backups
+#RUN mkdir /fuseki/templates && chown 2001 /fuseki/templates && chmod 775 /fuseki/templates
 
 VOLUME /fuseki
 RUN ls -l /
 
-ADD dcat-config.ttl /fuseki/configuration/
-ADD admin-config.ttl /fuseki/configuration/
-
-RUN chown -R 2001 /fuseki/configuration/
-
-RUN ls -l /fuseki/databases
+COPY dcat-config.ttl /fuseki/configuration/
+COPY admin-config.ttl /fuseki/configuration/
 
 ENV FUSEKI_BASE /fuseki
-# Where we start our server from
 
 # Force other user than root
 USER 2001
+
+# Where we start our server from
 
 WORKDIR /jena-fuseki
 EXPOSE 3030
