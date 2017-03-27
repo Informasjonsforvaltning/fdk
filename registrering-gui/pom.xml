@@ -14,34 +14,61 @@
     <artifactId>registrering-gui</artifactId>
 
 
-
   <build>
     <!-- only filter dist -->
     <resources>
       <resource>
         <directory>${basedir}</directory>
         <filtering>false</filtering>
-        <includes>
-          <include>dist/</include>
-        </includes>
         <excludes>
           <exclude>node_modules/</exclude>
-          <exclude>docker/</exclude>
         </excludes>
       </resource>
+      <!-- exclude node_modules -->
       <resource>
         <directory>${basedir}</directory>
         <filtering>true</filtering>
-        <includes><include>src/</include></includes>
+        <includes>
+          <include>src/</include>
+        </includes>
         <excludes>
           <exclude>node_modules/</exclude>
-          <exclude>docker/</exclude>
         </excludes>
       </resource>
+
+      <!-- copy docker file to target -->
+      <resource>
+        <directory>${project.basedir}</directory>
+        <targetPath>${project.build.directory}/docker</targetPath>
+        <filtering>false</filtering>
+        <includes>
+          <include>**/Dockerfile</include>
+          <include>package.json</include>
+          <include>.angular-cli.json</include>
+          <include>src/</include>
+        </includes>
+        <excludes>
+          <exclude>e2e/</exclude>
+          <exclude>node_modules/</exclude>
+          <exclude>target/</exclude>
+        </excludes>
+      </resource>
+
     </resources>
 
 
     <plugins>
+
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <excludes>
+            <exclude>node_modules/</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
 
         <!-- prevent maven from compiling -->
         <plugin>
@@ -68,15 +95,23 @@
           </executions>
         </plugin>
 
+      <!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <configuration>
+          <attach>false</attach>
+        </configuration>
+      </plugin-->
 
-
+      <!-- make sure docker-maven-plugin does not run from basedir -->
 
       <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <configuration>
-          <dockerDirectory>${project.basedir}</dockerDirectory>
+          <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
         </configuration>
+
       </plugin>
     </plugins>
   </build>
