@@ -3,6 +3,7 @@ package no.dcat.configuration;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
@@ -62,5 +63,7 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
                     csrf().disable();
         }
     }
+
+
 
 }
