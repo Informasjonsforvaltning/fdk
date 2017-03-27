@@ -86,10 +86,7 @@ public class CatalogController {
 
         Catalog savedCatalog = catalogRepository.save(catalog);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccessControlAllowOrigin("*");
-
-        return new ResponseEntity<>(savedCatalog, headers, OK);
+        return new ResponseEntity<>(savedCatalog, OK);
     }
 
 
