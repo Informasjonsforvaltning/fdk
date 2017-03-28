@@ -11,11 +11,6 @@
 
 	<build>
 
-		<!-- generate tag for last git commit -->
-		<filters>
-			<filter>${basedir}/git.properties</filter>
-		</filters>
-
 
 		<plugins>
 			<!-- prevent maven from compiling -->
