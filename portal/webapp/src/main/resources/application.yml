@@ -3,21 +3,21 @@ spring:
 application:
   queryService: http://query:8080
   queryServiceExternal: http://localhost:8081
-  fusekiService: http://fuseki:8080/fuseki
+  fusekiService: http://fuseki:8080
 ---
 spring:
   profiles: test
 application:
   queryService: http://localhost:8071
   queryServiceExternal: http://localhost:8071
-  fusekiService: http://localhost:3030/fuseki
+  fusekiService: http://localhost:3030
 ---
 spring:
   profiles: develop
 application:
   queryService: http://localhost:8083
   queryServiceExternal: http://localhost:8083
-  fusekiService: http://localhost:3030/fuseki
+  fusekiService: http://localhost:3030
 server:
   port: 8080
 management:

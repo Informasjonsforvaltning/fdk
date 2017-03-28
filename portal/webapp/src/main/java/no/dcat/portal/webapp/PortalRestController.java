@@ -1,5 +1,7 @@
 package no.dcat.portal.webapp;
 
+import org.apache.jena.atlas.web.auth.HttpAuthenticator;
+import org.apache.jena.atlas.web.auth.SimpleAuthenticator;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
@@ -7,7 +9,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
-import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +43,8 @@ public class PortalRestController {
     private static final String DATASET_QUERY_FILENAME = "sparql/dataset.sparql";
     private static final String CATALOG_QUERY_FILENAME = "sparql/catalog.sparql";
     private static final String GET_CATALOGS_QUERY_FILENAME = "sparql/allcatalogs.sparql";
+
+    private final HttpAuthenticator autenticator = new SimpleAuthenticator("admin", "aestgaa".toCharArray());
 
     @Value("${application.fusekiService}")
     private String fusekiService;
@@ -318,7 +321,7 @@ public class PortalRestController {
      * @return the execution handler of the query
      */
     QueryExecution getQueryExecution(Query query) {
-        return new QueryEngineHTTP(getFusekiService() + "/dcat", query);
+        return new QueryEngineHTTP(getFusekiService() + "/dcat", query, autenticator);
     }
 
 
