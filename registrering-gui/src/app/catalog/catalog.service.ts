@@ -27,7 +27,7 @@ export class CatalogService {
   }
 
   //TODO don't hard code
-  private catalogsUrl = "http://localhost:8099/catalogs"
+  private catalogsUrl = "https://localhost:8099/api/catalogs"
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(): Promise<Catalog[]> {
