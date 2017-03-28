@@ -76,7 +76,7 @@ public class Fuseki {
 		logger.trace(query);
 
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
-				prefixes + query);
+				prefixes + query, autenticator);
 		return q.execAsk();
 	}
 	
@@ -92,13 +92,13 @@ public class Fuseki {
 		logger.trace(query.toString());
 		
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
-				query);
+				query, autenticator);
 		return q.execAsk();
 	}
 
 	public void update(String name, Model model) {
 		logger.info("Updating graph {} with data", name);
-		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceUri);
+		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceUri, autenticator);
 
 
 		accessor.putModel(name, model);
@@ -111,7 +111,7 @@ public class Fuseki {
 		UpdateRequest request = UpdateFactory.create();
 		request.add("DROP GRAPH <" + name + ">");
 
-		UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, updateServiceUri);
+		UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, updateServiceUri, autenticator);
 
 		processor.execute();
 	}
@@ -119,7 +119,7 @@ public class Fuseki {
 	public Model construct(String query) {
 		logger.trace(query);
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
-				prefixes + query);
+				prefixes + query, autenticator);
 		Model model = q.execConstruct();
 
 		return model;
@@ -129,7 +129,7 @@ public class Fuseki {
 		logger.trace(query);
 
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
-				prefixes + query);
+				prefixes + query, autenticator);
 		ResultSet results = q.execSelect();
 
 		return results;
@@ -158,12 +158,12 @@ public class Fuseki {
 
 		Query query = QueryFactory.create(p.toString());
 
-		return QueryExecutionFactory.sparqlService(serviceUri, query).execDescribe();
+		return QueryExecutionFactory.sparqlService(serviceUri, query, autenticator).execDescribe();
 	}
 
 	public Model graph(String graphName) {
 
-		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceUri);
+		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceUri, autenticator);
 
 		return accessor.getModel(graphName);
 

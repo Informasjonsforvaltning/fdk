@@ -52,9 +52,9 @@ RUN chown -R 2001 /jena-fuseki/
 
 
 # Config and data
-RUN mkdir /fuseki && chown 2001 /fuseki && chmod 777 /fuseki
-#RUN mkdir /fuseki/configuration && chown 2001 /fuseki/configuration && chmod 775 /fuseki/configuration
-#RUN mkdir /fuseki/databases && chown -R 2001 /fuseki/databases && chmod 775 /fuseki/databases
+RUN mkdir /fuseki && chown 2001 /fuseki && chmod 775 /fuseki
+RUN mkdir /fuseki/configuration && chown 2001 /fuseki/configuration && chmod 775 /fuseki/configuration
+RUN mkdir /fuseki/databases && chown -R 2001 /fuseki/databases && chmod 775 /fuseki/databases
 #RUN mkdir /fuseki/backups && chown 2001 /fuseki/backups && chmod 775 /fuseki/backups
 #RUN mkdir /fuseki/templates && chown 2001 /fuseki/templates && chmod 775 /fuseki/templates
 
