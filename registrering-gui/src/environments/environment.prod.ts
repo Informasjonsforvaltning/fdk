@@ -1,5 +1,6 @@
+ declare var process:any;
 export const environment = {
   production: true,
   envName: 'prod',
-  api: 'http://reg-api.tt1.brreg.no'
+  api: window.document.getElementsByTagName('body')[0].getAttribute('data-reg-api-url')
 };
