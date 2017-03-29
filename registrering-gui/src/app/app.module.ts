@@ -40,5 +40,3 @@ import {SelectModule} from 'angular2-select';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);
