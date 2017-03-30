@@ -68,8 +68,7 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
 
         //Get all datasets in catalog
         HttpHeaders headers = new HttpHeaders();
-        //headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-        headers.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON } ));
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         HttpEntity<String> getRequest = new HttpEntity<String>(headers);
 
         // this returns links content and page information
@@ -84,25 +83,21 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
         ResponseEntity<PagedResources<Dataset>> responseEntity = restTemplate
                 .exchange( "/catalogs/974760673/datasets",
                 HttpMethod.GET,
-                null,
+                getRequest,
                 new ParameterizedTypeReference<PagedResources<Dataset>>() {}
                 );
 
-       // PagedResources<Dataset> prd = responseEntity.getBody();
-       // Iterator<Dataset> actualDatasets = prd.iterator();
-
-        PagedResources<Dataset> prd = responseEntity.getBody();
-        List<Dataset> actualDatasets = new ArrayList<>(prd.getContent());
+         PagedResources<Dataset> prd = responseEntity.getBody();
+         Iterator<Dataset> actualDatasets = prd.iterator();
 
         */
 
-        int count = 0;
         //Check that content matches
-
         for(List<String> expectedDataset : expectedDatasets) {
             //title is first row
             String expectedTitle = expectedDataset.get(0);
             boolean found = false;
+            // there are more than two datasets in the embedded testbase
             for (int i = 0; i < datasets.size(); i++) {
                 Map<String,Object> o = (Map<String,Object>)datasets.get(i);
                 Map<String,Object> t = (Map<String,Object>)o.get("title");
@@ -120,15 +115,5 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
 
     }
 
-    private HttpMessageConverter<Object> halConverter() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.registerModule(new Jackson2HalModule());
-
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/json")); // hal+json
-        converter.setObjectMapper(mapper);
-        return converter;
-    }
 
 }

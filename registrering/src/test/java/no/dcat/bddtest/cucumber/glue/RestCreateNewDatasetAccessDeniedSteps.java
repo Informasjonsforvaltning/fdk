@@ -1,13 +1,12 @@
 package no.dcat.bddtest.cucumber.glue;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import no.dcat.model.Dataset;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -16,8 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.not;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -57,7 +54,7 @@ public class RestCreateNewDatasetAccessDeniedSteps extends AbstractSpringCucumbe
 
         try {
             response = restTemplate.exchange(datasetResUrl, HttpMethod.POST, request, Dataset.class);
-        } catch (RuntimeException e) {
+        } catch (ResourceAccessException e) {
             exceptions.add(e);
         }
     }
