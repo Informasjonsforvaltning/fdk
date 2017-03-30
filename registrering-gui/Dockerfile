@@ -13,9 +13,9 @@ COPY . /usr/src/app/
 RUN npm install
 
 # Bundle app source
-#COPY dist/* /usr/src/app/
+COPY dist/* /usr/src/app/
 #COPY dist /usr/src/app -- denne burde være istedet for den over
 
-EXPOSE 4200
+EXPOSE 8080
 
 CMD [ "npm", "start" ]
