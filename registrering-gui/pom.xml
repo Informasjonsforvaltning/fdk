@@ -17,27 +17,6 @@
   <build>
     <!-- only filter dist -->
     <resources>
-      <resource>
-        <directory>${basedir}</directory>
-        <filtering>false</filtering>
-        <includes>
-          <include>dist/</include>
-        </includes>
-        <excludes>
-          <exclude>node_modules/</exclude>
-        </excludes>
-      </resource>
-      <!-- exclude node_modules -->
-      <!-- <resource>
-        <directory>${basedir}</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>src/</include>
-        </includes>
-        <excludes>
-          <exclude>node_modules/</exclude>
-        </excludes>
-      </resource> -->
 
       <!-- copy docker file to target -->
       <resource>
@@ -115,13 +94,13 @@
         </configuration>
         <executions>
           <execution>
-            <id>npm run-script prod</id>
+            <id>npm ng build</id>
             <phase>prepare-package</phase>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run-script build-prod</arguments>
+              <arguments>run-script build</arguments>
             </configuration>
           </execution>
         </executions>

@@ -19,6 +19,6 @@ RUN npm init -y
 RUN npm install ejs express method-override body-parser compression
 RUN npm install pm2 -g
 
-EXPOSE 3000
+EXPOSE 4200
 
 CMD [ "pm2-docker", "start.js" ]
