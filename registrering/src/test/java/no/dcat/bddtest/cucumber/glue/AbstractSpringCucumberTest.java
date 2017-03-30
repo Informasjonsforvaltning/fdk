@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,6 +26,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(classes = RegisterApplication.class, webEnvironment = RANDOM_PORT)
 @ContextConfiguration
 @Ignore
+@ActiveProfiles(value = "unit-integration")
 public abstract class AbstractSpringCucumberTest {
 
     protected static ResponseEntity<String> response;
