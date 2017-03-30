@@ -1,26 +1,40 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import net.minidev.json.JSONArray;
 import no.dcat.model.Dataset;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
  * Created by bjg on 08.03.2017.
  */
+@ActiveProfiles(value = "unit-integration")
 public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
     @Given("^catalog contains the follwing datasets \\(title\\):$")
     public void catalog_contains_the_follwing_datasets_title(List<String> datasetTitles) throws Throwable {
@@ -40,6 +54,8 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
 
             Dataset result = restTemplate.withBasicAuth("bjg", "123")
                     .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
+
+            assertThat(result.getTitle().get("nb"), is(equalTo(title)));
         }
     }
 
@@ -52,27 +68,67 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
 
         //Get all datasets in catalog
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        //headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        headers.setAccept(Arrays.asList( new MediaType[] { MediaType.APPLICATION_JSON } ));
         HttpEntity<String> getRequest = new HttpEntity<String>(headers);
 
-        ResponseEntity<PagedResources<Dataset>> responseEntity = restTemplate.withBasicAuth("bjg","123")
-                .exchange("/catalogs/974760673/datasets",
+        // this returns links content and page information
+        ResponseEntity<String> re = restTemplate.getForEntity("/catalogs/974760673/datasets", String.class);
+        assertThat(re.getStatusCode(), is(HttpStatus.OK));
+
+        JSONArray datasets = JsonPath.read(re.getBody(), "$.content");
+        /*
+
+        // see https://izeye.blogspot.no/2015/01/consume-spring-data-rest-hateoas-hal.html
+        // TODO this does not return any content !!!
+        ResponseEntity<PagedResources<Dataset>> responseEntity = restTemplate
+                .exchange( "/catalogs/974760673/datasets",
                 HttpMethod.GET,
-                getRequest,
+                null,
                 new ParameterizedTypeReference<PagedResources<Dataset>>() {}
                 );
 
-        PagedResources<Dataset> prd = responseEntity.getBody();
-        Iterator<Dataset> actualDatasets = prd.iterator();
+       // PagedResources<Dataset> prd = responseEntity.getBody();
+       // Iterator<Dataset> actualDatasets = prd.iterator();
 
+        PagedResources<Dataset> prd = responseEntity.getBody();
+        List<Dataset> actualDatasets = new ArrayList<>(prd.getContent());
+
+        */
+
+        int count = 0;
         //Check that content matches
+
         for(List<String> expectedDataset : expectedDatasets) {
             //title is first row
             String expectedTitle = expectedDataset.get(0);
-            Dataset actualDataset = actualDatasets.next();
-            assertThat(actualDataset.getTitle().get("nb"), is(expectedTitle));
+            boolean found = false;
+            for (int i = 0; i < datasets.size(); i++) {
+                Map<String,Object> o = (Map<String,Object>)datasets.get(i);
+                Map<String,Object> t = (Map<String,Object>)o.get("title");
+
+                String acutalTitle = (String) t.get("nb");
+
+                if (expectedTitle.equals(acutalTitle)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            assertThat(found, is(true));
         }
 
+    }
+
+    private HttpMessageConverter<Object> halConverter() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(new Jackson2HalModule());
+
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/json")); // hal+json
+        converter.setObjectMapper(mapper);
+        return converter;
     }
 
 }

@@ -5,6 +5,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import no.dcat.model.Dataset;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by bjg on 08.03.2017.
  */
+@ActiveProfiles(value = "unit-integration")
 public class DeleteDatasetAccesDeniedSteps extends AbstractSpringCucumberTest{
 
     ResponseEntity<String> response;

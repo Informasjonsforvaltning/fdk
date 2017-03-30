@@ -34,6 +34,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 /**
  * Created by bjg on 06.03.2017.
  */
+@ActiveProfiles(value = "unit-integration")
 public class RestCreateNewDatasetSteps extends AbstractSpringCucumberTest{
 
     ResponseEntity<Dataset> response;
