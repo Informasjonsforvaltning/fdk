@@ -78,6 +78,7 @@ public class DatasetController {
         dataset.setCatalog(catalogId);
 
         //Store metainformation about editing
+        logger.debug("timestamp:" + Calendar.getInstance().getTime());
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
         Dataset savedDataset = datasetRepository.save(dataset);

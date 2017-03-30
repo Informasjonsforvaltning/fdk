@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.ToString;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.hateoas.core.Relation;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Document(indexName = "register", type = Dataset.ELASTIC_TYPE)

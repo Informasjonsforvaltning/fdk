@@ -31,7 +31,6 @@ export class StartComponent implements OnInit {
     this.router.navigate(['/catalogs', catalog.id])
   }
 
-
   login() {
     this.loading = true;
     this.authenticationService.login(this.model.username, this.model.password)

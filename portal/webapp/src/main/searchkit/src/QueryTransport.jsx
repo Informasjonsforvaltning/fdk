@@ -87,7 +87,7 @@ export class QueryTransport extends AxiosESTransport {
 
     return this.axios.get(
 			window.fdkSettings.queryUrl + '/search?q=' +
-			(query.query ? query.query.simple_query_string.query : '') +
+			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +
@@ -97,6 +97,7 @@ export class QueryTransport extends AxiosESTransport {
       themeFilter +
       (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
+      .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
       .then(this.getData)
   }
 

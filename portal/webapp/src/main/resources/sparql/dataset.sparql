@@ -1,0 +1,24 @@
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/TR/owl-time/>
+PREFIX adms: <http://www.w3.org/ns/adms#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX dcatno: <http://difi.no/dcatno#>
+prefix vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX er: <http://data.brreg.no/meta/>
+
+DESCRIBE ?dataset ?publisher ?contact ?distribution ?nace ?fadr ?padr ?sektor
+WHERE {
+    ?dataset a dcat:Dataset;
+    dct:publisher ?publisher.
+
+    OPTIONAL {?publisher er:naeringskode1 ?nace}
+    OPTIONAL {?publisher er:forretningsadresse ?fadr}
+    OPTIONAL {?publisher er:postadresse ?padr}
+    OPTIONAL {?publisher er:institusjonellSektorkode ?sektor}
+    OPTIONAL {?dataset dcat:contactPoint ?contact}
+    OPTIONAL {?dataset dcat:distribution ?distribution }
+
+    FILTER (?dataset = <%s> )
+}

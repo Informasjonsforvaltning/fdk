@@ -128,8 +128,12 @@ services:
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
+     - application.fusekiHost=http://fuseki:8080
+     - application.harvesterHost=http://harvester:8080
     links:
       - elasticsearch
+      - fuseki
+      - harvester
     networks:
       platform:
 
@@ -147,9 +151,10 @@ services:
   registrering-gui:
     image: "fdk/registrering-gui:latest"
     ports:
-      - "4200:8080"
+      - "4200:4200"
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - NODE_ENV=dev
+
     links:
       - elasticsearch
     networks:

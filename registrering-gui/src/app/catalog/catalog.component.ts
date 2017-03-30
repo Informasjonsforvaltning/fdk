@@ -6,7 +6,6 @@ import {Catalog} from "./catalog";
 import {DatasetService} from "../dataset/dataset.service";
 import {Dataset} from "../dataset/dataset";
 
-
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -18,7 +17,9 @@ export class CatalogComponent implements OnInit {
   datasets: Dataset[];
   description: string;
   language: string;
+  timer: number;
   saved: boolean;
+  lastSaved: string;
 
 
   constructor(
@@ -38,7 +39,11 @@ export class CatalogComponent implements OnInit {
 
   save(): void {
     this.service.save(this.catalog)
-      .then(() => this.saved = true)
+      .then(()=> {
+        this.saved = true
+        var d = new Date();
+        this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+      })
   }
 
   selectDataset(catalog, dataset) {
@@ -51,6 +56,14 @@ export class CatalogComponent implements OnInit {
     }
     return new Date(dateToFormat);
   }
+  valuechange(a,b,c): void {
+    var that = this;
+    this.delay(function() {that.save.call(that)}, 1000);
+  }
+  delay(callback, ms): void{
+      clearTimeout (this.timer);
+      this.timer = setTimeout(callback, ms);
+  };
 
   getTitle(dataset: Dataset): string {
     if (dataset.title == null) {

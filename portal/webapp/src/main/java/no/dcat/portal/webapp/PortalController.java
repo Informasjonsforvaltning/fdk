@@ -97,7 +97,7 @@ public class PortalController {
         }
     }
 
-    private ModelAndView getDetailsView(@RequestParam(value = "id", defaultValue = "") String id) {
+    private ModelAndView getDetailsView(String id) {
         ModelAndView model = new ModelAndView("detail");
 
         try {
@@ -133,6 +133,7 @@ public class PortalController {
      * @return One Dataset attatched to a ModelAndView.
      */
     @RequestMapping(value = {"/detail"}, produces = "text/html")
+    @Deprecated
     public ModelAndView detail(@RequestParam(value = "id", defaultValue = "") String id) {
 
         return getDetailsView(id);
@@ -195,8 +196,7 @@ public class PortalController {
 
         String json = httpGet(httpClient, uri);
 
-        Map<String, BigInteger> themeCounts = new ElasticSearchResponse().toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
-        return themeCounts;
+        return new ElasticSearchResponse().toMapOfObjects(json, "theme_count", "doc_count", BigInteger.class);
     }
 
     /**
@@ -244,7 +244,7 @@ public class PortalController {
 
             logger.trace(String.format("Found publishers: %s", json));
         } catch (Exception e) {
-            logger.error(String.format("An error occured: %s", e.getMessage()));
+            logger.error(String.format("An error occured: %s", e.getMessage()),e);
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
@@ -255,32 +255,6 @@ public class PortalController {
         return model;
     }
 
-    /**
-     * Returns a JSON structure that contains the code-lists that the portal webapp uses.
-     * The code-lists are fetched from the query service first time.
-     * <p> Code lists:
-     * - data-theme (EU Themes)
-     * <p> TODO - add necessary codelists
-     *
-     * @return a JSON of the code-lists. { "data-theme" : [ {"AGRI" : {"nb": "Jord og skogbruk"}}, ...], ...}
-     */
-    private String getCodeLists() {
-        if (codeLists == null) {
-            HttpClient httpClient = HttpClientBuilder.create().build();
-            try {
-                URI uri = new URIBuilder(buildMetadata.getThemeServiceUrl() + "?size=50").build();
-
-                String json = httpGet(httpClient, uri);
-
-                codeLists = "var codeList = { \"data-themes\":" + json + "};";
-
-            } catch (Exception e) {
-                logger.error(String.format("Could not load data-themes: %s", e.getMessage()));
-                codeLists = null;
-            }
-        }
-        return codeLists;
-    }
 
     protected String httpGet(HttpClient httpClient, URI uri) throws IOException {
         HttpEntity entity;

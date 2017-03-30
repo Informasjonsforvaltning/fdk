@@ -14,6 +14,14 @@
     text-align: center;
 }
 
+h2.fdk-page-not-found { /* 404 */
+  font-size: 160px;
+  line-height: 160px;
+/*  color: var(--color4); */
+  text-align: center;
+  margin: 0;
+}
+
 footer.fdk-footer {
     border-top: 1px solid #C8CDD4;
     background-color: #fff;
