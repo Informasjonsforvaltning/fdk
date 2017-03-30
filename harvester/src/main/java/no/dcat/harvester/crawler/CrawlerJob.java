@@ -9,11 +9,14 @@ import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
@@ -21,10 +24,8 @@ import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
-import org.elasticsearch.common.recycler.Recycler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Import;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -34,7 +35,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
@@ -235,13 +241,13 @@ public class CrawlerJob implements Runnable {
 
         final int[] errors ={0}, warnings ={0}, others ={0};
 
-        boolean validated = DcatValidation.validate(model, (error) -> {
+        DcatValidation.validate(model, (error) -> {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
             validationResult.add(msg);
             validationErrors.add(error);
 
             //add validation status per dataset for non-valid datasets
-            if(error.getClassName().equals("Dataset")) {
+            if("Dataset".equals(error.getClassName())) {
                 registerValidationStatusForDataset(error);
             }
 
@@ -443,25 +449,25 @@ public class CrawlerJob implements Runnable {
      * @return RDF Resource containing DifiMeta status (error, warning or ok)
      */
     private Resource createCrawlerStatusForAdmin(ValidationError.RuleSeverity[] status, boolean minimumCriteriaMet){
-       Resource rdfStatus;
+       Resource rdfStatusResult;
         switch (status[0]) {
             case error:
                 if (minimumCriteriaMet) {
                     //if at least one dataset is valid, set status to warning
                     //even if validation results contains errors for other datasets
-                    rdfStatus = DifiMeta.warning;
+                    rdfStatusResult = DifiMeta.warning;
                 } else {
-                    rdfStatus = DifiMeta.error;
+                    rdfStatusResult = DifiMeta.error;
                 }
                 break;
             case warning:
-                rdfStatus = DifiMeta.warning;
+                rdfStatusResult = DifiMeta.warning;
                 break;
             default:
-                rdfStatus = DifiMeta.ok;
+                rdfStatusResult = DifiMeta.ok;
                 break;
         }
-        return rdfStatus;
+        return rdfStatusResult;
     }
 
 }

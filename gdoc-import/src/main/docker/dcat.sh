@@ -4,31 +4,34 @@
 LIB=/app/dcat/lib
 
 CLASSPATH=lib/collection-0.6.jar:lib/httpcore-4.4.4.jar:lib/jena-iri-3.1.1.jar:lib/semex.jar:lib/commons-cli-1.3.jar:lib/jackson-annotations-2.7.0.jar:lib/jena-shaded-guava-3.1.1.jar:lib/simple-xml-2.3.6.jar:lib/commons-codec-1.10.jar:lib/jackson-core-2.7.4.jar:lib/jena-tdb-3.1.1.jar:lib/slf4j-api-1.7.21.jar:lib/commons-csv-1.3.jar:lib/jackson-databind-2.7.4.jar:lib/jsonld-java-0.7.0.jar:lib/slf4j-log4j12-1.7.21.jar:lib/commons-io-2.5.jar:lib/jcl-over-slf4j-1.7.21.jar:lib/jsonld-java-0.8.3.jar:lib/utilities.jar:lib/:lib/commons-lang3-3.4.jar:lib/jena-arq-3.1.1.jar:lib/junit-4.8.1.jar:lib/xercesImpl-2.11.0.jar:lib/expressionoasis-3.2.jar:lib/jena-base-3.1.1.jar:lib/jxl.jar:lib/xml-apis-1.4.01.jar:lib/httpclient-4.5.2.jar:lib/jena-cmds-3.1.1.jar:lib/libthrift-0.9.3.jar:lib/httpclient-cache-4.5.2.jar:lib/jena-core-3.1.1.jar:lib/log4j-1.2.17.jar:lib/semex.jar
-#CLASSPATH=lib/collection-0.6.jar:lib/httpcore-4.4.4.jar:lib/jena-iri-3.1.1.jar:lib/semex.jar:lib/commons-cli-1.3.jar:lib/jackson-annotations-2.7.0.jar:lib/jena-shaded-guava-3.1.1.jar:lib2/simple-xml-2.3.6.jar:lib/commons-codec-1.10.jar:lib/jackson-core-2.7.4.jar:lib/jena-tdb-3.1.1.jar:lib/slf4j-api-1.7.21.jar:lib/commons-csv-1.3.jar:lib/jackson-databind-2.7.4.jar:lib/jsonld-java-0.7.0.jar:lib/slf4j-log4j12-1.7.21.jar:lib/commons-io-2.5.jar:lib/jcl-over-slf4j-1.7.21.jar:lib/jsonld-java-0.8.3.jar:lib/utilities.jar:lib/:lib/commons-lang3-3.4.jar:lib/jena-arq-3.1.1.jar:lib/junit-4.8.1.jar:lib/xercesImpl-2.11.0.jar:lib2/expressionoasis-3.2.jar:lib/jena-base-3.1.1.jar:lib/jxl.jar:lib/xml-apis-1.4.01.jar:lib/httpclient-4.5.2.jar:lib/jena-cmds-3.1.1.jar:lib/libthrift-0.9.3.jar:lib/httpclient-cache-4.5.2.jar:lib/jena-core-3.1.1.jar:lib/log4j-1.2.17.jar:lib/semex.jar
 
 
 echo STARTING GDOC SCRIPT
 java -version
 
 # Download from google docs
-echo STEP 1 - Download from google
+echo STEP 1 - Cleaning up google docs
+rm in/*
+
+echo STEP 2 - Download from google
 curl -L "https://docs.google.com/spreadsheets/u/0/d/1sjZ0IC9yG94pPzB5CvsPJb2aSTlRkWAET44ZB99ny9s/export?format=xlsx&authuser=0" > ./in/datasett-from-gdocs.xlsx
-echo downloaded datasett-from-gdocs.xlsx
+curl -L "https://docs.google.com/spreadsheets/d/1hOVhpfUu9e-bB2rXcHkTYEDTlHEy3Sh_KOnx3UgUeZU/export?format=xlsx&authuser=0" > ./in/datasett-oslo-kommune.xlsx
+ 
 
 # Convert all XLSX to XLS
-echo STEP 2 - Convert XLSX to XLS
+echo STEP 3 - Convert XLSX to XLS
 for file in in/*.xlsx
 do
-    echo converting $file to xls...
-    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
-# soffice --headless --convert-to xls --outdir ./in $file
-    echo converted $file to xls
+    echo ...converting $file to xls...
+#    soffice --headless -env:UserInstallation=file:///home/1000 --convert-to xls --outdir ./in $file
+ soffice --headless --convert-to xls --outdir ./in $file
+    echo ...converted $file to xls
 done
-echo conversion done.
+
 
 
 # Syntactical translation from Excel to RDF
-echo STEP 3 - Syntactical translation from Excel to RDF
+echo STEP 4 - Syntactical translation from Excel to RDF
 for file in in/*.xls
 do 
     echo converting $file to ttl

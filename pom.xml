@@ -4,11 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>no.dcat</groupId>
-	<artifactId>parent</artifactId>
-	<version>0.2.3</version>
+	<artifactId>fdk</artifactId>
+	<version>0.2.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
 	<name>Felles Datakatalog</name>
 	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
+
+	<parent>
+		<groupId>no.brreg.felles</groupId>
+		<artifactId>br-maven-main-msn</artifactId>
+		<version>1.3.0</version>
+		<relativePath>br-maven-main-msn</relativePath>
+	</parent>
 
 	<repositories>
 		<repository>
@@ -33,15 +41,9 @@
 		<url>https://github.com/Altinn/fdk</url>
 		<connection>scm:git:git://github.com:MarcusGustafson74/Altinn/fdk.git</connection>
 		<developerConnection>scm:git:https://github.com/Altinn/fdk.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
-	<parent>
-		<groupId>no.brreg.felles</groupId>
-		<artifactId>br-maven-main-msn</artifactId>
-		<version>1.3.0</version>
-		<relativePath>br-maven-main-msn/pom.xml</relativePath>
-	</parent>
 
 
 	<organization>
@@ -63,10 +65,13 @@
 		<module>test</module>
 		<module>gdoc-import</module>
 		<module>bddtest</module>
+		<module>registrering</module>
+		<module>registrering-gui</module>
 		<module>br-maven-main-msn</module>
 	</modules>
 
 	<properties>
+        <fdk.version>0.2.4-SNAPSHOT</fdk.version>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>fdk</docker.image.prefix>
 		<docker.registry />
@@ -81,22 +86,22 @@
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>datastore</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>query</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>webapp</artifactId>
-				<version>0.2.2-SNAPSHOT</version>
+				<version>${fdk.version}</version>
 			</dependency>
 
 			<dependency>
@@ -293,36 +298,6 @@
 
 	<build>
 		<plugins>
-
-			<!--plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>analyze</id>
-						<goals>
-							<goal>analyze-only</goal>
-						</goals>
-						<configuration>
-							<failOnWarning>false</failOnWarning>
-							<ignoreNonCompile>true</ignoreNonCompile>
-							<verbose>false</verbose>
-						</configuration>
-					</execution>
-					<execution>
-						<id>analyze-pom</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>analyze-dep-mgt</goal>
-						</goals>
-						<configuration>
-							<failBuild>false</failBuild>
-							<ignoreDirect>false</ignoreDirect>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin-->
-
-
 		</plugins>
 
 		<pluginManagement>
@@ -389,7 +364,7 @@
 					</executions>
 					<configuration>
 						<imageName>
-							${docker.registry}${docker.image.prefix}/${project.artifactId}:${git.commit.id.abbrev}
+							${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
 						</imageName>
 						<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
 						<!--dockerDirectory>docker</dockerDirectory -->
