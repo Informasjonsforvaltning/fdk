@@ -1,2 +1,2 @@
-var server = require("./server/server")
+var server = require("./server/server.js")
 server.start();
