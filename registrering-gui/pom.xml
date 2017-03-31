@@ -86,11 +86,11 @@
         </configuration>
       </plugin-->
 
-      <!--plugin>
+      <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
         <configuration>
-          <installDirectory>C:\Program Files</installDirectory>
+          <installDirectory></installDirectory>
         </configuration>
         <executions>
           <execution>
@@ -104,7 +104,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin-->
+      </plugin>
 
       <!-- make sure docker-maven-plugin does not run from basedir -->
 
@@ -112,6 +112,9 @@
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <configuration>
+          <imageName>
+            dcat/reg-gui:latest
+          </imageName>
           <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
         </configuration>
 
