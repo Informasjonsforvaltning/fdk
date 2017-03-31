@@ -66,6 +66,19 @@ export class DatasetService {
       .catch(this.handleError)
   }
 
+  delete(catId: string, dataset: Dataset) : Promise<void> {
+    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
+
+    let authorization : string = localStorage.getItem("authorization");
+    this.headers.append("Authorization", "Basic " + authorization);
+
+    return this.http
+      .delete(datasetUrl, {headers: this.headers})
+      .toPromise()
+      .then(() => dataset)
+      .catch(this.handleError)
+  }
+
   create(catId: string) : Promise<Dataset> {
     var created: Dataset;
 
