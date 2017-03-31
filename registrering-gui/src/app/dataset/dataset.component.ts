@@ -7,6 +7,7 @@ import {Dataset} from "./dataset";
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import {NgModule} from '@angular/core';
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-dataset',
@@ -52,7 +53,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.terms = ['term1', 'term'];
       this.http
-          .get(`http://localhost:8083/themes`)
+          .get(environment.queryUrl + `/themes`)
           .map(data => data.json().hits.hits.map(item => {
             return {
               value: item._source.code,
@@ -71,7 +72,7 @@ export class DatasetComponent implements OnInit {
 
   save(): void {
     this.dataset.theme = this.form.getRawValue().selectMultiple.map((code)=>{return {code: code}});
-    console.log(this.dataset);
+
     this.service.save(this.catId, this.dataset)
       .then(() => {
         this.saved = true;
