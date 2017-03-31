@@ -58,4 +58,9 @@ export class DatasetComponent implements OnInit {
     this.router.navigate(['/catalogs', this.catId]);
   }
 
+  delete(): void {
+    this.service.delete(this.catId, this.dataset)
+      .then(() => {this.back()})
+  }
+
 }
