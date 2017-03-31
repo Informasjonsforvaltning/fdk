@@ -26,7 +26,7 @@ module.exports = {
     app.get(['/','/catalogs/*'], function(req, res) {
       res.render('../dist/index.html', {
         regApiUrl: process.env.REG_API_URL,
-        queryServiceUrl: process.en.QUERY_SERVICE_URL
+        queryServiceUrl: process.env.QUERY_SERVICE_URL
       });
     });
     app.use(express.static(path.join(__dirname, '/../dist')));
