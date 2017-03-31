@@ -13,8 +13,8 @@ export class StartComponent implements OnInit {
   catalogs: Catalog[] = [];
   selectedCatalog: Catalog;
   model: any = {};
-  loading = false;
-  error = '';
+
+
 
   constructor(private _catalogService: CatalogService,
               private router: Router,
@@ -24,26 +24,10 @@ export class StartComponent implements OnInit {
   ngOnInit() {
     this._catalogService.getAll()
       .then(catalogs => this.catalogs = catalogs);
-    this.authenticationService.logout();
   }
 
   selectCatalog(catalog) {
     this.router.navigate(['/catalogs', catalog.id])
-  }
-
-  login() {
-    this.loading = true;
-    this.authenticationService.login(this.model.username, this.model.password)
-      .subscribe(result => {
-        if (result === true) {
-          // login successful
-          this.router.navigate(['/']);
-        } else {
-          // login failed
-          this.error = 'Innlogging feilet';
-          this.loading = false;
-        }
-      });
   }
 
 }

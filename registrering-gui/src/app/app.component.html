@@ -10,6 +10,21 @@
 
       <!-- Left column / Empty -->
       <div class="col-sm-4 col-md-4">
+        <div class="alert-success" *ngIf="isAuthenticated()">
+          Pålogget som {{getUsername()}}
+          <button class="btn btn-primary" (click)="logout()">Logg ut</button>
+        </div>
+
+
+        <div class="col-md-6" *ngIf="!isAuthenticated()">
+
+
+          <div class="form-group">
+            <button (click)="login()" class="btn btn-primary">Logg inn som bjg</button>
+          </div>
+          <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+        </div>
       </div>
 
       <!-- Middle column / Heading -->
@@ -60,9 +75,6 @@
       <a href="http://www.brreg.no">
         <img src="//scf.brreg.no/bilder/brreg_logo.svg" alt="Brønnøysundregistrene logo" height="200" width="300" class="img-responsive" id="brreg-logo">
       </a>
-    </div>
-    <div class="login-status" *ngIf="getUsername()">
-      Pålogget som {{getUsername()}}
     </div>
   </footer>
 </section>
