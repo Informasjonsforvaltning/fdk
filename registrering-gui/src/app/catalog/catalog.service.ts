@@ -39,7 +39,7 @@ export class CatalogService {
   }
 
   private handleError(error: any): Promise<any>{
-    console.error('An error occured', error); //todo implement proper error handling and logging
+    console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
 

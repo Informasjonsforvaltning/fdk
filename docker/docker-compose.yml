@@ -148,13 +148,13 @@ services:
     networks:
       platform:
 
-  registrering-gui:
-    image: "fdk/registrering-gui:latest"
+  reg-gui:
+    image: "dcat/reg-gui:latest"
     ports:
       - "4200:4200"
     environment:
-     - NODE_ENV=dev
-
+     - REG_API_URL=http://localhost:8099
+     - POR_API_URL=http://query:8080
     links:
       - elasticsearch
     networks:

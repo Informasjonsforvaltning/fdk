@@ -5,14 +5,12 @@ export interface Dataset {
   };
   description: {
     [language: string]:string
-  };/*
+  };
   keywords: {
     [language: string]:string[]
   };
-  terms: {
-    [language: string]:string[]
-  };
-  themes: string[];*/
+  terms: string[];
+  theme: {code:string}[];
   catalog: string;
   _lastModified: string;
 }

@@ -7,18 +7,21 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
  * Created by bjg on 07.03.2017.
  */
+@ActiveProfiles(value = "unit-integration")
 public class CommonSteps extends AbstractSpringCucumberTest {
 
     @Given("^Elasticsearch is running$")
@@ -91,16 +94,5 @@ public class CommonSteps extends AbstractSpringCucumberTest {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
 
-    @Then("^status code HTTP (\\d+) Unauthorized is returned$")
-    public void status_code_HTTP_Unauthorized_is_returned(int arg1) throws Throwable {
 
-        //Either a HTTP unautoriszed is returned, or a ResourceAccessException is thrown
-        //TODO: Ikke en helt otimal løsning...
-
-        if (response != null) {
-            assertThat(response.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
-        } else {
-            assert(exceptions.get(0).getClass().equals(ResourceAccessException.class));
-        }
-    }
 }
