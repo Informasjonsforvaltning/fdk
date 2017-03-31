@@ -151,9 +151,10 @@ services:
   registrering-gui:
     image: "fdk/registrering-gui:latest"
     ports:
-      - "4200:8080"
+      - "4200:4200"
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - NODE_ENV=dev
+
     links:
       - elasticsearch
     networks:

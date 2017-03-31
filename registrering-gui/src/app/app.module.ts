@@ -35,5 +35,3 @@ import {AuthenticationService} from "./security/authentication.service";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);

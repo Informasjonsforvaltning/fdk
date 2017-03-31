@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +65,10 @@ public class CatalogController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}",
+            method = PUT,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> addCatalog(@PathVariable("id") String id, @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
 
@@ -81,6 +85,7 @@ public class CatalogController {
         catalog.setPublisher(publisher);
 
         Catalog savedCatalog = catalogRepository.save(catalog);
+
         return new ResponseEntity<>(savedCatalog, OK);
     }
 
