@@ -1,0 +1,9 @@
+{
+  "id" : "1001",
+  "title": {
+    "nb" : "Enhetsregisteret"
+  },
+  "description": {
+    "nb": "Simple test dataset 1"
+  }
+}

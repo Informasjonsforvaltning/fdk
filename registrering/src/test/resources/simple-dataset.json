@@ -1,0 +1,9 @@
+{
+  "id" : "1001",
+  "title": {
+    "nb" : "Enkelt testdatasett"
+  },
+  "description": {
+    "nb": "Datasett med få attributter"
+  }
+}

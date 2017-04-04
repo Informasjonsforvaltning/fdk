@@ -1,28 +1,36 @@
 # Felles datakatalog
 
-Dette er den første felleskomponenten som utvikles i regi av Skate (https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate). Felles datakatalog skal tilby en oversikt over hvilke datasett som offentlige virksomheter har. Det skal tilbys en søkeløsning (portal) som gjør det mulig å søke og finne relevante datasettbeskrivelser. Prosjektet går over 2 år med oppstart høsten 2016. Det er basert på en norsk profil DCAT-AP-NO 1.1 av en Europeisk og W3C standard for utveksling av datasettbeskrivelser. Det er basert på kode som ble utviklet i DIFIs pilotprosjekt: Nasjonal infrastruktur for felles datakatalog (våren 2016). 
+Dette er den første felleskomponenten som utvikles i regi av 
+Skate (https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate). 
+Felles datakatalog skal tilby en oversikt over hvilke datasett som offentlige
+virksomheter har. Det skal tilbys en søkeløsning (portal) som gjør det mulig å 
+søke og finne relevante datasettbeskrivelser. Prosjektet går over 2 år med 
+oppstart høsten 2016. Forventet ferdig ved utgangen av 2017. 
+
+Systemet er basert på en norsk profil DCAT-AP-NO 1.1 av en Europeisk og W3C standard
+for utveksling av datasettbeskrivelser, se https://doc.difi.no/dcat-ap-no/. 
+Systemet bygger videre på kode som ble utviklet i DIFIs pilotprosjekt: 
+Nasjonal infrastruktur for felles datakatalog (våren 2016). 
 
 ## Struktur
 
 Applikasjoner
 
-* portal
-* admin
-* harvester
-* datastore
-* api
+* catalog: søkeløsning 
+* harvester: høster lokale løsninger og legger inn i søkeløsningen
+* registration: lar virksomheter registrere egne datasettbeskrivelser
+* support: ulike hjelpeverktøy
 
 Komponenter
 
 * elasticsearch, kibana og logstash
 * fuseki
 
-## Kompilere og installere
+## Kompilere
 ### Compile:
-mvn clean install -DskipTests
-
-admin-webapp and harvester
-mvn package -DskipTests
+mvn clean install
+ 
+man kan bruke følgende parametre for å kun kompilere: -DskipTests -DskipDockerBuild 
 
 ### Docker:
 #### Start
@@ -35,25 +43,38 @@ docker-compose down
 
 ## Kjøre applikasjonene 
 
-Admin:
-http://localhost:8080/admin-webapp/admin
+Portal-webapp:
+http://localhost:8080
 
-test_user password
-test_admin password
+Harvester-service: 
+http://localhost:8081/
 
-Elasticsearch
+Harvester-admin:
+http://localhost:8082/
+(ta kontakt for passord)
+
+Portal-query:
+http://localhost:8083/search
+
+Gdoc-import:
+http://localhost:8084/versions/latest
+
+Test-admin:
+http://localhost:8085/
+(ta kontakt for passord)
+
+Fuseki:
+http://localhost:3030/fuseki/
+
+Elasticsearch:
 http://localhost:9200
 
-Kibana
+Kibana:
 http://localhost:5601/
-
-FUSEKI
-http://localhost:3030/fuseki/
 
 
 ## Common Problems
 
-ERROR: for elasticsearch  No such image: sha256:09e6a3991c52f2fd3466fdc1bc34eb7a5e0929ed3367cf964c4f7e58a1fc5231
 Solution: remove old containers
 bash: docker rm -f $(docker ps -aq)
 

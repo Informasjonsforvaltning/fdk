@@ -2,7 +2,7 @@ version: "2"
 
 services:
   portal:
-    image: "fdk/webapp:${TAG}"
+    image: "fdk/webapp:latest"
     ports:
       - "8080:8080"
     environment:
@@ -16,7 +16,7 @@ services:
       platform:
 
   query:
-    image: "fdk/query:${TAG}"
+    image: "fdk/query:latest"
     ports:
       - "8083:8080"
     environment:
@@ -29,7 +29,7 @@ services:
       platform:
 
   gdoc:
-    image: "fdk/gdoc-import:${TAG}"
+    image: "fdk/gdoc-import:latest"
     ports:
       - "8084:8080"
     environment:
@@ -39,7 +39,7 @@ services:
 
 
   fuseki:
-    image: "fdk/fuseki:${TAG}"
+    image: "fdk/fuseki:latest"
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
     ports:
@@ -48,7 +48,7 @@ services:
       platform:
 
   harvester:
-    image: "fdk/harvester:${TAG}"
+    image: "fdk/harvester:latest"
     ports:
      - "8081:8080"
     environment:
@@ -69,7 +69,7 @@ services:
      - elasticsearch:es
 
   admin:
-    image: "fdk/admin-webapp:${TAG}"
+    image: "fdk/admin-webapp:latest"
     ports:
      - "8082:8080"
     environment:
@@ -90,8 +90,24 @@ services:
      - fuseki
      - harvester
 
+ # elasticsearch5:
+ #   image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
+ #   environment:
+ #     - xpack.security.enabled=false
+ #     - cluster.name=elasticsearch
+ #   ports:
+ #     - "920:9200"
+ #     - "9300:9300"
+ #   networks:
+ #     platform:
+ #       aliases:
+ #         - es
+ #     logging:
+ #       aliases:
+ #         - log_es
+
   elasticsearch:
-    image: "fdk/elasticsearch:${TAG}"
+    image: "fdk/elasticsearch:latest"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -104,7 +120,7 @@ services:
           - log_es
 
   test:
-    image: "fdk/test:${TAG}"
+    image: "fdk/test:latest"
     ports:
       - "8085:8080"
     environment:
@@ -112,6 +128,33 @@ services:
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
+     - application.fusekiHost=http://fuseki:8080
+     - application.harvesterHost=http://harvester:8080
+    links:
+      - elasticsearch
+      - fuseki
+      - harvester
+    networks:
+      platform:
+
+  registrering:
+    image: "fdk/registrering:latest"
+    ports:
+      - "8099:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    links:
+      - elasticsearch
+    networks:
+      platform:
+
+  reg-gui:
+    image: "dcat/reg-gui:latest"
+    ports:
+      - "4200:4200"
+    environment:
+     - REG_API_URL=http://localhost:8099
+     - QUERY_SERVICE_URL=http://localhost:8083
     links:
       - elasticsearch
     networks:
@@ -128,7 +171,7 @@ services:
 #      logging:
 
   kibana:
-    image: "fdk/kibana:${TAG}"
+    image: "fdk/kibana:latest"
     ports:
       - "5601:5601"
     environment:

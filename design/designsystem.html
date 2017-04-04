@@ -1,0 +1,467 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/dataset.css">
+        <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        
+        <!-- HEADER BETA -->
+        <div class="fdk-header-beta">
+            Dette er en beta-versjon. Gi oss gjerne <a href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
+        </div>
+        
+        <!-- HEADER MENU-->
+        <div class="fdk-header">
+            <div class="container">
+                <div class="row">
+                    <!-- LEFT COLUMN -->
+                    <div class="col-md-4">
+                    </div>
+                    
+                    <!-- MIDDLE COLUMN -->
+                    <div class="col-md-4">
+                        <h1>Felles datakatalog</h1>
+                    </div>
+                
+                    <!-- Right column -->
+                    <div class="col-md-4">
+                        <!-- Dropdown menu -->
+                        <div class="dropdown fdk-container-dropdown-menu">
+                            <div class="dropdown fdk-dropdown-toggle-menu">
+                                <a data-toggle="dropdown" href="#"><i class="fa fdk-fa-menu fa-bars"></i></a>
+                                <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li><a href="#">Om Felles Datakatalog</li></a>
+                                    <li><a href="#">Spørsmål og svar</li></a>
+                                    <li><a href="#">DCAT-AP-NO 1.1-Standarden</li></a>
+                                    <li><a href="#">Status implementasjon</li></a>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Dropdown language -->
+                        <div class="dropdown fdk-container-dropdown-language">
+                            <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Bokmål
+                            <span class="caret fdk-caret"></span>
+                            </button>
+                            <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="img/flag-england.png"/>English</a></li>
+                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Bokmål</a></li>
+                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nynorsk</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTAINER FOR ELEMENTS -->
+        <div class="container">
+                
+            <!--  INPUT & LABELS/BUTTONS  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="fdk-search" type="text" placeholder="Søk etter datasett..." />
+                    <center>
+                        <a href="designsystem.html"><span class="fdk-label-default">Befolkning og samfunn (12)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Energi (20)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Forvaltning og offentlig sektor (107)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Helse (13)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Internasjonale temaer (0)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Jordbruk, fiskeri, skogbruk og mat (116)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Justis. rettssystem og allmenn sikkerhet (9)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Miljø (135)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Regioner og byer (85)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Transport (16)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Utdanning, kultur og sport (15)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Vitenskap og teknologi (0)</span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default">Økonomi og finans (6)</span></a>
+                    </center>
+                    <p class="fdk-text-center fdk-extra-margin-top"><a href="designsystem.html">Søk på viksomhet</a></p>
+                    <hr/>
+                </div>
+            </div>
+                    
+            <!-- COLORS -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="fdk-color-palette fdk-bg-color-1">Mørk blå<br>#213B4C</div>
+                    <div class="fdk-color-palette fdk-bg-color-2">Blå<br>#213B4C</div>
+                    <div class="fdk-color-palette fdk-bg-color-3 fdk-color-1">Medium blå<br>#213B4C</div>
+                    <div class="fdk-color-palette fdk-bg-color-4 fdk-color-1">Lys blå<br>#213B4C</div>
+                    <div class="fdk-color-palette fdk-bg-color-5 fdk-color-1">Ultralys blå<br>#213B4C</div>
+                </div>
+            </div>
+            <hr/>
+            
+            
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <!--  TYPOGRAPHY  -->
+                    <h2>Dette er h2<br>og den er bold by default</h1>
+                    <p class="ingress">Dette er p class=ingress, altså ingressen.
+                    Maecenas sed diam eget risus varius blandit sit amet non magna Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.
+                    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                    <p>Dette er p, første avsnitt.
+                    Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna Curabitur blandit tempus porttitor.
+                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Sed posuere consectetur est at lobortis.
+                    Vestibulum id ligula porta felis euismod semper.</p>
+                    <p>Dette er p, andre avsnitt.
+                    Maecenas sed diam eget risus varius blandit sit amet non magna Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.
+                    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                    <hr/>
+                    
+                    <h3>Dette er h3<br>og den er bold by default</h3>
+                    <p>Dette er p. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+                    <hr/>
+                    
+                    <h4>Dette er h4<br>og den er bold by default</h4>
+                    <p>Dette er p. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+                    <hr/>
+                    
+                    <h4 class="fdk-text-regular"><strong>Dette er h4 regular i strong</strong> • Og dette er påfølgende tekst som ikke er satt i strong</h4>
+                    <p>Dette er p. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                    Dette er p. Maecenas faucibus mollis interdum. Nullam quis risus eget urna mollis ornare vel eu leo. Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis.</p>
+                    <hr/>
+                    
+                    <p>Her er en <a href="designsystem.html">link</a> i et avsnitt.</p>
+                    <hr/>
+                </div>
+            </div>
+                    
+            <!-- 4 + 8 COLUMNS -->
+            <div class="row">
+            
+                <!-- FILTERING -->
+                <div class="col-md-4">
+                    <div class="fdk-container-search-left">
+                        <h5>Tema</h5>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Miljø<span class="fdk-count">(135)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Jordbruk, fiskeri, skogbruk og mat<span class="fdk-count">(116)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Forvaltning og offentlig sektor<span class="fdk-count">(107)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Regioner og byer<span class="fdk-count">(85)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Energi<span class="fdk-count">(20)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Transport<span class="fdk-count">(16)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Utdanning, kultur og sport<span class="fdk-count">(15)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Helse<span class="fdk-count">(13)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Befolkning og samfunn<span class="fdk-count">(12)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Justis. rettssystem og allmenn sikkerhet<span class="fdk-count">(9)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Økonomi og finans<span class="fdk-count">(6)</span></span></a>
+                        <h5 class="fdk-extra-margin-top">Virksomhet</h5>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Miljø<span class="fdk-count">(135)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Jordbruk, fiskeri, skogbruk og mat<span class="fdk-count">(116)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Forvaltning og offentlig sektor<span class="fdk-count">(107)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Regioner og byer<span class="fdk-count">(85)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Energi<span class="fdk-count">(20)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Transport<span class="fdk-count">(16)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Utdanning, kultur og sport<span class="fdk-count">(15)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Helse<span class="fdk-count">(13)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Befolkning og samfunn<span class="fdk-count">(12)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Justis. rettssystem og allmenn sikkerhet<span class="fdk-count">(9)</span></span></a>
+                        <a href="designsystem.html"><span class="fdk-label-default fdk-label-checkbox">Økonomi og finans<span class="fdk-count">(6)</span></span></a>
+                    </div>
+                </div>
+            
+                <!-- SEARCH RESULT -->
+                <div class="col-md-8">
+                    <div class="fdk-search-result-container">
+                        <h3 class="fdk-no-margin">Dette er h3 og tittel til datasettet</h3>
+                        <h4 class="regular fdk-text-border-bottom"><strong>Dette er h4 i strong</strong> • Og dette er tema, tema, tema</h4>
+                        <p>Vestibulum id ligula porta felis euismod semper. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod…</p>
+                    </div>
+                    <div class="fdk-search-result-container">
+                        <h3 class="fdk-no-margin">Dette er h3 og tittel til datasettet</h3>
+                        <h4 class="fdk-text-regular fdk-text-border-bottom"><strong>Dette er h4 regular i strong</strong> • Og dette er tema, og et tema til, og enda et tema</h4>
+                        <p>Vestibulum id ligula porta felis euismod semper. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod…</p>
+                    </div>
+                    <div class="fdk-search-result-container">
+                        <h3 class="fdk-no-margin">Dette er h3 og tittel til datasettet</h3>
+                        <h4 class="fdk-text-regular fdk-text-border-bottom"><strong>Dette er h4 i strong</strong> • Og dette er tema, tema, tema</h4>
+                        <p>Vestibulum id ligula porta felis euismod semper. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod…</p>
+                    </div>
+                    <div class="fdk-search-result-container">
+                        <h3 class="fdk-no-margin">Dette er h3 og tittel til datasettet</h3>
+                        <h4 class="fdk-text-regular fdk-text-border-bottom"><strong>Dette er h4 i strong</strong> • Og dette er tema, tema, tema</h4>
+                        <p>Vestibulum id ligula porta felis euismod semper. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod…</p>
+                    </div>
+                    <div class="fdk-search-result-container">
+                        <h3 class="fdk-no-margin">Dette er h3 og tittel til datasettet</h3>
+                        <h4 class="fdk-text-regular fdk-text-border-bottom"><strong>Dette er h4 i strong</strong> • Og dette er tema, tema, tema</h4>
+                        <p>Vestibulum id ligula porta felis euismod semper. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod…</p>
+                    </div>
+                </div>
+                
+            </div>
+            <hr/>
+            
+            <!-- DATASET DETAILS -->
+            <div class="row">
+                
+                <!-- INTRO -->
+                <div class="col-md-12">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading-big">
+                            <h2 class="fdk-panel fdk-no-margin">Foretaksregisteret</h2>
+                        </div>
+                        <div class="fdk-panel-body-big">
+                            <h3>Registerenheten i Brønnøysund</h3>
+                            <p class="ingress">Foretaksregisteret registrerer alle norske og utenlandske foretak i Norge, og skal sikre rettsvern og økonomisk oversikt.
+                            Enkeltpersonforetak som ikke driver handel med innkjøpte varer eller har mindre enn 5 ansatte i full stilling har ikke registreringsplikt,
+                            men har registreringsrett. Foretaksregisteret skal sikre rettsvern og økonomisk oversikt, og er en viktig kilde til informasjon om norsk næringsliv.</p>
+                        </div>
+                    </div>                
+                </div>
+                
+                <!-- LEFT CULUMN -->    
+                <div class="col-md-6">
+                    
+                    <!-- KONTAKTINFORMASJON -->
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Kontaktinformasjon</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Kontaktskjema:</td>
+                                    <td class="fdk-dataset fdk-details-column-input"><a href="designsystem.html">www.brreg/kontakt</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">E-post:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">navn@virksomhet.no</td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Telefon:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">90 90 90 90</td>
+                                </tr>                                
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Organisasjon:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Foretaksregisteret</td>
+                                </tr>    
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- DISTRIBUSJON -->
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Distribusjon</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Tema:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Forvaltning og offentlig sektor</td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Begrep:</td>
+                                    <td class="fdk-dataset fdk-details-column-input"><a href="designsystem.html">http://myurl.com http://tinyurl.com/br-Organisasjonsummer</a></td>
+                                </tr>                                
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Emneord:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Organisasjonsnummer, forretningsadresse, foretaksnavn</td>
+                                </tr>    
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- LAST NED D-CAT BESKRIVELSE -->
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Last ned D-CAT beskrivelse</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-fullwidth">
+                                        <a href="designsystem.html"><span class="fdk-label-default">Turtle<i class="fa fdk-fa-button fa-download fa-sm"></i></span></a>
+                                        <a href="designsystem.html"><span class="fdk-label-default">Jason-ld<i class="fa fdk-fa-button fa-download fa-sm"></i></span></a>
+                                        <a href="designsystem.html"><span class="fdk-label-default">RDF/XML<i class="fa fdk-fa-button fa-download fa-sm"></i></span></a>
+                                    </td>
+                                </tr>  
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- RIGHT COLUMN -->
+                <div class="col-md-6">
+                    
+                    <!-- OPPLYSNINGER -->
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Opplysninger</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Tema:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Forvaltning og offentlig sektor</td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Begrep:</td>
+                                    <td class="fdk-dataset fdk-details-column-label"><a href="designsystem.html">http://myurl.com http://tinyurl.com/br-Organisasjonsummer</a></td>
+                                </tr>                                
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Emneord:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Organisasjonsnummer, forretningsadresse, foretaksnavn</td>
+                                </tr>    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KONTAKTINFORMASJON -->
+                <div class="col-md-6">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Kvalitet</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Frekvens:</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Kontinuerlig</td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Konformitet</td>
+                                    <td class="fdk-dataset fdk-details-column-input"><a href="designsystem.html">/confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret /www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/foretaksregisteret/</a></td>
+                                </tr>                                
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Organisasjon</td>
+                                    <td class="fdk-dataset fdk-details-column-input">Virskomhetsnavn</td>
+                                </tr>    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KVALITET -->
+                <div class="col-md-6">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Kvalitet</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-fullwidth fdk-text-regular">Beskrivelse mangler</td>
+                                </tr> 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+                
+            <!-- REGISTRATION -->
+            <div class="row">
+            
+                <!-- 12 COLUMNS / Om datasettet -->
+                <div class="col-md-12">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading-big fdk-panel-heading-big-register">
+                            <input class="fdk-register-h2 h2 fdk-text-white"/>
+                        </div>
+                        <div class="fdk-panel-body-big">
+                            <h3>Registerenheten i Brønnøysund</h3>
+                            <textarea class="fdk-register-h3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                    
+                <!-- 6 COLUMNS -->
+                <!-- OPPLYSNINGER -->
+                <div class="col-md-6">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Kontaktinformasjon</h4>
+                            </h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Kontaktskjema:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">E-post:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-register fdk-details-column-label">Telefon:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-register fdk-details-column-label">Organisasjon:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr> 
+                             </table>
+                        </div>
+                    </div>
+                </div>
+                    
+                <!-- 6 COLUMNS -->
+                <!-- Opplysninger -->
+                <div class="col-md-6">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Opplysninger</h4>
+                            </h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Tema:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-details-column-label">Begrep:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-register fdk-details-column-label">Emneord:</td>
+                                    <td class="fdk-register fdk-details-column-input"><input class="fdk-register-p"/></td>
+                                </tr> 
+                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            
+        </div><!-- /container -->
+    
+        <footer class="fdk-footer">
+           <img class="fdk-footer-logo" src="img/logo-brreg.jpg">
+           <img class="fdk-footer-logo" src="img/logo-difi.jpg">
+        </footer>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

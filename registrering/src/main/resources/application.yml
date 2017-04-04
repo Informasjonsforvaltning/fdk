@@ -1,0 +1,49 @@
+spring:
+  profiles: develop
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
+server:
+  port: 8099
+management:
+  port: 8999
+---
+spring:
+  profiles: unit-integration
+  data:
+    elasticsearch:
+      properties:
+        http:
+          enabled: true
+---
+spring:
+  profiles: develop_embedded
+  data:
+    elasticsearch:
+      properties:
+        http:
+          enabled: true
+server:
+  port: 8099
+  tomcat:
+    accesslog:
+      enabled: true
+    basedir: /tmp/fdk
+management:
+  port: 8999
+
+
+---
+spring:
+  profiles: docker
+  data:
+    elasticsearch:
+      cluster-nodes: elasticsearch:9300
+server:
+  port: 8099
+management:
+  port: 8999
+---
+spring:
+  hateoas:
+    use-hal-as-default-json-media-type: false
