@@ -10,6 +10,8 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
@@ -21,8 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
@@ -275,6 +279,50 @@ public class SimpleQueryService {
         }
 
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value= "/codes/{type}", produces = "application/json")
+    public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        QueryBuilder search = QueryBuilders.matchAllQuery();
+
+        SearchRequestBuilder searchQuery = client.prepareSearch("codes").setTypes(type).setQuery(search);
+        SearchResponse response = searchQuery.execute().actionGet();
+        int totNrOfCodes = (int) response.getHits().getTotalHits();
+
+        logger.debug("Found {} codes for type {}", totNrOfCodes, type );
+
+        SearchResponse codes;
+        if(totNrOfCodes > 10) {
+            codes = searchQuery.setSize(totNrOfCodes).execute().actionGet();
+        } else {
+            codes = response;
+        }
+
+        String[] strings = new String[totNrOfCodes];
+        int i = 0;
+        for (SearchHit s : codes.getHits().getHits()) {
+
+            strings[i++] = s.getSourceAsString();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        boolean comma = false;
+        for (i = 0; i < totNrOfCodes; i++) {
+            if (comma) {
+                sb.append(",");
+            }
+            sb.append(strings[i]);
+            comma = true;
+        }
+        sb.append("]");
+
+        return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+
+        //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
