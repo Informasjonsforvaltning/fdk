@@ -1,10 +1,15 @@
 package no.dcat.portal.query;
 
 
+import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
+import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -25,12 +30,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -282,9 +289,53 @@ public class SimpleQueryService {
     }
 
 
-
+    /**
+     * Returns the types of codes that are stored by the system
+     *
+     * @return the list of code-types
+     */
     @CrossOrigin
-    @RequestMapping(value= "/codes/{type}", produces = "application/json")
+    @RequestMapping(value= "/codes", produces = "application/json")
+    public ResponseEntity<String> codeTypes() {
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        StringBuilder sb = new StringBuilder();
+        try {
+            sb.append("{ types: [");
+
+            ImmutableOpenMap<String, MappingMetaData> mapping = getObjectObjectCursors();
+            boolean comma = false;
+            for (ObjectObjectCursor<String, MappingMetaData> c : mapping) {
+                if (comma) {
+                    sb.append(", ");
+                }
+                sb.append("\"" +c.key + "\"" );
+                comma = true;
+            }
+            sb.append("]}");
+            return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+        } catch (InterruptedException e) {
+            logger.error("Elasticsearch call was interrupted", e);
+        } catch (ExecutionException e) {
+            logger.error("Elasticsearch call for types failed", e);
+        }
+
+        return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ImmutableOpenMap<String, MappingMetaData> getObjectObjectCursors() throws InterruptedException, ExecutionException {
+        GetMappingsResponse res = client.admin().indices().getMappings(new GetMappingsRequest().indices("codes")).get();
+        return res.mappings().get("codes");
+    }
+
+    /**
+     * Returns codes of a specific code type
+     *
+     * @param type the type which codes to return
+     * @return an object which contain the codes of the type
+     */
+    @CrossOrigin
+    @RequestMapping(value= "/codes/{type}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
@@ -296,6 +347,9 @@ public class SimpleQueryService {
 
         logger.debug("Found {} codes for type {}", totNrOfCodes, type );
 
+        if (totNrOfCodes == 0) {
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
         // do new call if more than 10 codes exist
         SearchResponse codes;
         if(totNrOfCodes > 10) {
@@ -312,7 +366,9 @@ public class SimpleQueryService {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("{codes: [");
+        sb.append("{");
+        sb.append(" type: \""+ type + "\",");
+        sb.append(" codes: [");
         boolean comma = false;
         for (i = 0; i < totNrOfCodes; i++) {
             if (comma) {
