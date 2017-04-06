@@ -32,9 +32,9 @@ public class RetrieveCodesTest {
         Map<String, Map<String, SkosCode>> allCodes = rc.getAllCodes();
 
         for(Types type: Types.values()) {
-            assertEquals("", "titel_en", allCodes.get(type.getType()).get("KEY").getTitle().get("en"));
-            assertEquals("", "titel_nb", allCodes.get(type.getType()).get("KEY").getTitle().get("nb"));
-            assertEquals("", "titel_nn", allCodes.get(type.getType()).get("KEY").getTitle().get("nn"));
+            assertEquals("", "titel_en", allCodes.get(type.getType()).get("KEY").getPrefLabel().get("en"));
+            assertEquals("", "titel_nb", allCodes.get(type.getType()).get("KEY").getPrefLabel().get("nb"));
+            assertEquals("", "titel_nn", allCodes.get(type.getType()).get("KEY").getPrefLabel().get("nn"));
         }
     }
 
@@ -58,8 +58,9 @@ public class RetrieveCodesTest {
         InternalSearchHit hit = mock(InternalSearchHit.class);
 
         when(hit.getSourceAsString()).thenReturn("{\n" +
-                "  \"code\": \"KEY\",\n" +
-                "  \"title\": {\n" +
+                "  \"uri\": \"KEY\",\n" +
+                "  \"authorityCode\": \"K\",\n" +
+                "  \"prefLabel\": {\n" +
                 "    \"nn\": \"titel_nn\",\n" +
                 "    \"nb\": \"titel_nb\",\n" +
                 "    \"en\": \"titel_en\"\n" +

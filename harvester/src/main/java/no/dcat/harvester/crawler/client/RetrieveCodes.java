@@ -55,7 +55,7 @@ public class RetrieveCodes {
                 if (sourceAsString != null) {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
                     SkosCode code = gson.fromJson(sourceAsString, SkosCode.class);
-                    codes.put(code.getCode(), code);
+                    codes.put(code.getUri(), code);
                 }
             }
             allCodes.put(type.getType(), codes);

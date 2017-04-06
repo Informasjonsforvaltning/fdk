@@ -63,10 +63,10 @@
 		<module>api-app</module>
 		<module>docker</module>
 		<module>support</module>
-		<module>bddtest</module>
 		<module>registrering</module>
 		<module>registrering-gui</module>
 		<module>br-maven-main-msn</module>
+		<module>bddtest</module>
 	</modules>
 
 	<properties>

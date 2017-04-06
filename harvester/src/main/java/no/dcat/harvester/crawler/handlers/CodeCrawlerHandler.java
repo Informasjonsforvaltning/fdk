@@ -69,10 +69,10 @@ public class CodeCrawlerHandler extends AbstractCrawlerHandler {
         logger.info("Number of codes {} for code source {}", codes.size());
         for (SkosCode code : codes) {
 
-            IndexRequest indexRequest = new IndexRequest(CODE_INDEX, indexType, code.getCode());
+            IndexRequest indexRequest = new IndexRequest(CODE_INDEX, indexType, code.getUri());
             indexRequest.source(gson.toJson(code));
 
-            logger.debug("Add code {} to bulk request", code.getCode());
+            logger.debug("Add code {} to bulk request", code.getUri());
             bulkRequest.add(indexRequest);
         }
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();

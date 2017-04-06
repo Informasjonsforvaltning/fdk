@@ -55,7 +55,7 @@ public class LoadLocations {
         while (locIter.hasNext()) {
             Resource resource = locIter.next();
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
-            SkosCode code = new SkosCode(locUri, new HashMap<>());
+            SkosCode code = new SkosCode(locUri, null, new HashMap<>());
             locations.put(locUri, code);
 
             logger.info("Extract location with URI {}", locUri);
@@ -87,7 +87,7 @@ public class LoadLocations {
             while (resIter.hasNext()) {
                 Map<String, String> titleMap = extractLocationTitle(resIter.next());
                 SkosCode code = (SkosCode) loc.getValue();
-                code.setTitle(titleMap);
+                code.setPrefLabel(titleMap);
             }
         }
 
@@ -143,11 +143,11 @@ public class LoadLocations {
             Map.Entry locEntry = (Map.Entry) locations.next();
             SkosCode location = (SkosCode) locEntry.getValue();
 
-            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getCode());
+            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getUri());
             indexRequest.source(gson.toJson(location));
             bulkRequest.add(indexRequest);
 
-            logger.debug("Add location {} to bulk request", location.getCode());
+            logger.debug("Add location {} to bulk request", location.getUri());
         }
 
         if(bulkRequest.numberOfActions() > 0){

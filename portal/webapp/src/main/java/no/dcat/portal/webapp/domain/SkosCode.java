@@ -1,4 +1,4 @@
-package no.difi.dcat.datastore.domain.dcat;
+package no.dcat.portal.webapp.domain;
 
 import java.util.Map;
 

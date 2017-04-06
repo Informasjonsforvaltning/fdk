@@ -281,6 +281,8 @@ public class SimpleQueryService {
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
+
+
     @CrossOrigin
     @RequestMapping(value= "/codes/{type}", produces = "application/json")
     public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
@@ -294,6 +296,7 @@ public class SimpleQueryService {
 
         logger.debug("Found {} codes for type {}", totNrOfCodes, type );
 
+        // do new call if more than 10 codes exist
         SearchResponse codes;
         if(totNrOfCodes > 10) {
             codes = searchQuery.setSize(totNrOfCodes).execute().actionGet();
@@ -309,7 +312,7 @@ public class SimpleQueryService {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append("{codes: [");
         boolean comma = false;
         for (i = 0; i < totNrOfCodes; i++) {
             if (comma) {
@@ -318,7 +321,7 @@ public class SimpleQueryService {
             sb.append(strings[i]);
             comma = true;
         }
-        sb.append("]");
+        sb.append("]}");
 
         return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
 

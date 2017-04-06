@@ -1,6 +1,6 @@
 package no.dcat.portal.webapp.utility;
 
-import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.portal.webapp.domain.Publisher;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;

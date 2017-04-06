@@ -32,8 +32,8 @@ public class ResponseManipulationTest {
 
         List<Distribution> ld = createDistrubution("en", "Dist.titel", "Dist.beskr");
 
-        SkosCode accrual = new SkosCode("testcode", new HashMap<String,String>());
-        accrual.getTitle().put("en", "very often");
+        SkosCode accrual = new SkosCode("testcode", "code", new HashMap<String,String>());
+        accrual.getPrefLabel().put("en", "very often");
 
         Dataset ds = new Dataset();
         ds.setTheme(ldt);
