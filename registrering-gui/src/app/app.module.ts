@@ -16,6 +16,9 @@ import {CatalogService} from "./catalog/catalog.service";
 import {DatasetService} from "./dataset/dataset.service";
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { ConfirmComponent } from './confirm/confirm.component';
+
 
 import {SelectModule} from 'angular2-select';
 
@@ -24,7 +27,8 @@ import {SelectModule} from 'angular2-select';
     AppComponent,
     CatalogComponent,
     DatasetComponent,
-    StartComponent
+    StartComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,11 @@ import {SelectModule} from 'angular2-select';
     HttpModule,
     NgbModule.forRoot(),
     AlertModule.forRoot(),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    BootstrapModalModule
+  ],
+  entryComponents: [
+    ConfirmComponent
   ],
   providers: [CatalogService, DatasetService, AuthGuard, AuthenticationService],
   bootstrap: [AppComponent]
