@@ -232,6 +232,13 @@
                 <artifactId>docker-maven-plugin</artifactId>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-noverify</argLine>
+                </configuration>
+            </plugin>
 
         </plugins>
 
