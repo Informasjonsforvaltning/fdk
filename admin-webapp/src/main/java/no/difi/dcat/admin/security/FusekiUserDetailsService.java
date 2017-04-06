@@ -1,9 +1,9 @@
 package no.difi.dcat.admin.security;
 
+import no.dcat.admin.store.AdminDataStore;
+import no.dcat.admin.store.Fuseki;
+import no.dcat.admin.store.UserNotFoundException;
 import no.difi.dcat.admin.settings.FusekiSettings;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class FusekiUserDetailsService implements UserDetailsService {
 
     private void createTestUser(String username, String password, String role) {
         try {
-            no.difi.dcat.datastore.domain.User user = new no.difi.dcat.datastore.domain.User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
+            no.dcat.admin.store.domain.User user = new no.dcat.admin.store.domain.User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
             adminDataStore.addUser(user);
         } catch (Exception e) {
             logger.warn(e.getMessage(),e);

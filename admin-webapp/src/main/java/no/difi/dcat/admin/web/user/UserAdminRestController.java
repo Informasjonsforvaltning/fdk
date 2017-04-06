@@ -1,15 +1,25 @@
 package no.difi.dcat.admin.web.user;
 
+import no.dcat.admin.store.AdminDataStore;
+import no.dcat.admin.store.AdminDcatDataService;
+import no.dcat.admin.store.DcatDataStore;
+import no.dcat.admin.store.Fuseki;
+import no.dcat.admin.store.UserAlreadyExistsException;
+import no.dcat.admin.store.UserNotFoundException;
+import no.dcat.admin.store.domain.User;
 import no.difi.dcat.admin.settings.FusekiSettings;
-import no.difi.dcat.datastore.*;
-import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
