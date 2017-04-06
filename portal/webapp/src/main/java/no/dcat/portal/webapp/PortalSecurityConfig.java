@@ -22,7 +22,7 @@ public class PortalSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .authorizeRequests()
-                .antMatchers("/", "/datasets").permitAll()
+                .antMatchers("/", "/datasets", "/publisher").permitAll()
                 //.anyRequest().authenticated()
                 .and()
             .formLogin()

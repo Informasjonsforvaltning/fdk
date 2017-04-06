@@ -148,12 +148,13 @@ services:
     networks:
       platform:
 
-  registrering-gui:
-    image: "fdk/registrering-gui:latest"
+  reg-gui:
+    image: "dcat/reg-gui:latest"
     ports:
-      - "4200:8080"
+      - "4200:4200"
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - REG_API_URL=http://localhost:8099
+     - QUERY_SERVICE_URL=http://localhost:8083
     links:
       - elasticsearch
     networks:

@@ -1,0 +1,167 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/dataset.css">
+        <link rel="stylesheet" href="css/registration.css">
+        <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        
+        <!-- HEADER BETA -->
+        <div class="fdk-header-beta">
+            Dette er en beta-versjon. Gi oss gjerne <a href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
+        </div>
+        
+        <!-- HEADER -->
+        <div class="fdk-header">
+            <div class="container">
+                <div class="row">
+                    <!-- LEFT COLUMN -->
+                    <div class="col-md-4">
+                        <a href="registration-datacatalogue.html"><span class="fdk-label-neutral"><i class="fa fa-arrow-left fdk-fa-arrow-left"></i>Tilbake</span></a>
+                    </div>
+                    
+                    <!-- MIDDLE COLUMN -->
+                    <div class="col-md-4">
+                        <h1>Datasett</h1>
+                    </div>
+                
+                    <!-- RIGHT COLUMN -->
+                    <div class="col-md-4">
+                        <!-- DROPDOWN MENU -->
+                        <div class="dropdown fdk-container-dropdown-menu">
+                            <div class="dropdown fdk-dropdown-toggle-menu">
+                                <a data-toggle="dropdown" href="#"><i class="fa fdk-fa-menu fa-bars"></i></a>
+                                <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li><a href="#">Om Felles Datakatalog</li></a>
+                                    <li><a href="#">Spørsmål og svar</li></a>
+                                    <li><a href="#">DCAT-AP-NO 1.1-Standarden</li></a>
+                                    <li><a href="#">Status implementasjon</li></a>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- DROPDOWN LANGUAGE -->
+                        <div class="dropdown fdk-container-dropdown-language">
+                            <button class="fdk-label-neutral" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Bokmål
+                            <span class="caret fdk-caret"></span>
+                            </button>
+                            <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="img/flag-england.png"/>English</a></li>
+                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Bokmål</a></li>
+                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="img/flag-norway.png"/>Nynorsk</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SAVE -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="fdk-autosave">Lagrer… / Endringene er lagret</p>
+                </div>
+            </div>
+            
+                
+            <!-- DATASET DETAILS -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading-big">
+                            <h2 class="fdk-no-margin"><input class="fdk-input-heading"/></h2>
+                        </div>
+                        <div class="fdk-panel-body-big" tabindex="2">
+                            <h3>Registerenheten i Brønnøysund</h3>
+                            <p class="fdk-ingress fdk-no-margin"><textarea class="fdk-textarea-ingress"></textarea></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KONTAKTINFORMASJON -->
+                <div class="col-md-8">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Kontaktinformasjon</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">Kontaktskjema:</td>
+                                    <td class="fdk-dataset fdk-dataset-input"><input class="fdk-input-p" tabindex="2"></td>
+                                    <td class="fdk dataset fdk-dataset-validation"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">E-post:</td>
+                                    <td class="fdk-dataset fdk-dataset-input"><input class="fdk-input-p"></td>
+                                    <td class="fdk dataset fdk-dataset-validation"><i class="fa fa-exclamation-triangle"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">Telefon:</td>
+                                    <td class="fdk-dataset fdk-dataset-input"><input class="fdk-input-p"></td>
+                                    <td class="fdk dataset fdk-dataset-validation"><i class="fa fa-flag"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">Organisasjon:</td>
+                                    <td class="fdk-dataset fdk-dataset-input"><input class="fdk-input-p"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OPPLYSNINGER -->
+                <div class="col-md-8">
+                    <div class="panel fdk-panel">
+                        <div class="fdk-panel-heading">
+                            <h4 class="fdk-text-white fdk-no-margin">Opplysninger</h4>
+                        </div>
+                        <div class="fdk-panel-body">
+                            <table class="fdk-dataset">
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">Tema:</td>
+                                    <td class="fdk-dataset fdk-dataset-description"><input class="fdk-input-p"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">Begrep:</td>
+                                    <td class="fdk-dataset fdk-dataset-description"><input class="fdk-input-p"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fdk-dataset fdk-dataset-label">Nøkkelord:</td>
+                                    <td class="fdk-dataset fdk-dataset-description"><input class="fdk-input-p"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <footer class="fdk-footer">
+           <img class="fdk-footer-logo" src="img/logo-brreg.jpg">
+           <img class="fdk-footer-logo" src="img/logo-difi.jpg">
+        </footer>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

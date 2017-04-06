@@ -2,16 +2,20 @@ import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
+import {environment} from "../../environments/environment";
 
 const TEST_DATASETS: Dataset[] = [
   {
-    "id" : "1001",
+    "id" : "1009",
     "title": {
       "nb" : "Enhetsregisteret testdatasett"
     },
     "description": {
       "nb": "Datasett med mange attributter"
     },
+    "keywords": {'nb':['keyword1','keyword1']},
+    "terms":["term1", "term2", "term3"],
+    "theme":[{"code":"GOVE"},{"code":"HEAL"}],
     "catalog": "974760673",
     "_lastModified": "2012-04-23"
   }
@@ -23,8 +27,7 @@ export class DatasetService {
   constructor(private http: Http) {
   }
 
-  //TODO don't hard code
-  private catalogsUrl = "http://localhost:8099/catalogs"
+  private catalogsUrl = environment.api + "/catalogs"
   private datasetPath = "/datasets/"
 
   private headers = new Headers({'Content-Type': 'application/json'});
@@ -43,11 +46,11 @@ export class DatasetService {
   }
 
   get(catId: string, datasetId: string): Promise<Dataset> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
-    return this.http.get(datasetUrl)
-      .toPromise()
-      .then(response => response.json() as Dataset)
-      .catch(this.handleError);
+      const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
+      return this.http.get(datasetUrl)
+        .toPromise()
+        .then(response => response.json() as Dataset)
+        .catch(this.handleError);
   }
 
   save(catId: string, dataset: Dataset) : Promise<Dataset> {
@@ -58,6 +61,19 @@ export class DatasetService {
 
     return this.http
       .put(datasetUrl, JSON.stringify(dataset), {headers: this.headers})
+      .toPromise()
+      .then(() => dataset)
+      .catch(this.handleError)
+  }
+
+  delete(catId: string, dataset: Dataset) : Promise<void> {
+    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
+
+    let authorization : string = localStorage.getItem("authorization");
+    this.headers.append("Authorization", "Basic " + authorization);
+
+    return this.http
+      .delete(datasetUrl, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)

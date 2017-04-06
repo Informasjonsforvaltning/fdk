@@ -1,6 +1,7 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from '@angular/forms'
 import {HttpModule} from "@angular/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AppComponent} from "./app.component";
@@ -16,6 +17,8 @@ import {DatasetService} from "./dataset/dataset.service";
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
 
+import {SelectModule} from 'angular2-select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +29,8 @@ import {AuthenticationService} from "./security/authentication.service";
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
+    SelectModule,
     HttpModule,
     NgbModule.forRoot(),
     AlertModule.forRoot(),
@@ -35,5 +40,3 @@ import {AuthenticationService} from "./security/authentication.service";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);

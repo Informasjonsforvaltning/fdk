@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by bjg on 08.03.2017.
  */
+@ActiveProfiles(value = "unit-integration")
 public class EditDatasetAccessDeniedSteps extends AbstractSpringCucumberTest {
 
     ResponseEntity<Dataset> response;

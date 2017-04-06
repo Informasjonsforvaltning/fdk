@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   envName: 'dev',
-  api: 'http://localhost:8099'
+  api: 'http://localhost:8099',
+  queryUrl: 'http://localhost:8083'
 };

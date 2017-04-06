@@ -4,6 +4,7 @@ import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {AuthenticationService} from "../security/authentication.service";
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 const TEST_CATALOGS: Catalog[] = [
   {
@@ -27,7 +28,7 @@ export class CatalogService {
   }
 
   //TODO don't hard code
-  private catalogsUrl = "https://localhost:8099/catalogs"
+  private catalogsUrl = environment.api + "/catalogs"
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(): Promise<Catalog[]> {
@@ -38,7 +39,7 @@ export class CatalogService {
   }
 
   private handleError(error: any): Promise<any>{
-    console.error('An error occured', error); //todo implement proper error handling and logging
+    console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
 
