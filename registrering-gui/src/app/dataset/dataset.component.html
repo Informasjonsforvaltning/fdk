@@ -39,7 +39,7 @@
         <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
         <form [formGroup]="form" class="col-md-11">
           <ng-select
-            (ngModelChange)="valuechange()"
+            (ngModelChange)="valuechange()" 
         		[options]="themes"
         		[multiple]="true"
         		placeholder="Velg Tema"
@@ -51,4 +51,4 @@
   </div>
 </div>
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett datasett</button>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="delete()">Slett datasett</button>
