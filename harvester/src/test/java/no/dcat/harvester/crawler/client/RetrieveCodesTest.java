@@ -1,8 +1,8 @@
 package no.dcat.harvester.crawler.client;
 
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.harvester.crawler.Types;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;

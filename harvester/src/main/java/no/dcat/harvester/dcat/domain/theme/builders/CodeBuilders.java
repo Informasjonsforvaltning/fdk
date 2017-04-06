@@ -1,10 +1,15 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
+import no.dcat.data.store.domain.dcat.SkosCode;
+import no.dcat.data.store.domain.dcat.builders.AbstractBuilder;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.FdkRDF;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.SkosRDF;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

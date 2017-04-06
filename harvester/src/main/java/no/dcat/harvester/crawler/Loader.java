@@ -1,11 +1,11 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
+import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.harvester.HarvesterApplication;
 import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
-import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

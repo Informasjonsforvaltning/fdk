@@ -2,8 +2,8 @@ package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.ListenableActionFuture;
@@ -19,8 +19,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Class for testing LoadLocations.

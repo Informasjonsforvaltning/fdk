@@ -2,11 +2,15 @@ package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.GeonamesRDF;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.DCTerms;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;

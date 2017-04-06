@@ -1,13 +1,8 @@
 package no.dcat.harvester.crawler.handlers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import no.dcat.admin.store.domain.DcatSource;
+import no.dcat.data.store.Elasticsearch;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
@@ -19,13 +14,16 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-import static org.apache.jena.mem.HashCommon.NotifyEmpty.ignore;
 import static org.junit.Assert.assertTrue;
 
 public class ElasticsearchResultHandlerTest {

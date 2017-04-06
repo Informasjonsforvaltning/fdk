@@ -2,9 +2,9 @@ package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.harvester.crawler.exception.DataThemesNotLoadedException;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
