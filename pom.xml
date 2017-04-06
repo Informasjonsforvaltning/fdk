@@ -57,7 +57,6 @@
 		<module>fuseki</module>
 		<module>kibana</module>
 		<module>logstash</module>
-		<module>datastore</module>
 		<module>harvester</module>
 		<module>admin-webapp</module>
 		<module>api-app</module>
