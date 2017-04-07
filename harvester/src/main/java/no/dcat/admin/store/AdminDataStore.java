@@ -43,8 +43,6 @@ public class AdminDataStore {
 		String query = String.join("\n", "describe ?a ?user where {", "	?user difiMeta:dcatSource ?a.", "}");
 		Model dcatModel = fuseki.describe(query, map);
 
-		System.out.println(DifiMeta.DcatSource);
-
 		List<DcatSource> ret = new ArrayList<>();
 
 		ResIterator resIterator = dcatModel.listResourcesWithProperty(RDF.type, DifiMeta.DcatSource);
@@ -52,7 +50,6 @@ public class AdminDataStore {
 		while (resIterator.hasNext()) {
 			String uri = resIterator.nextResource().getURI();
 			ret.add(new DcatSource(dcatModel, uri));
-
 		}
 
 		return ret;
@@ -105,20 +102,18 @@ public class AdminDataStore {
 				"	?user difiMeta:dcatSource ?a.", "}");
 		Model dcatModel = fuseki.describe(query, map);
 
-		System.out.println(DifiMeta.DcatSource);
-
 		if (!dcatModel.listResourcesWithProperty(RDF.type, DifiMeta.DcatSource).hasNext()) {
-			System.out.println("EMPTY");
+			logger.debug("EMPTY");
 			return Optional.empty();
 		}
 
-		System.out.println(new DcatSource(dcatModel, dcatSourceId));
+		logger.debug(new DcatSource(dcatModel, dcatSourceId).toString());
 
 		return Optional.of(new DcatSource(dcatModel, dcatSourceId));
 	}
 
 	/**
-	 * @param dcatSourceId
+	 * @param graphName
 	 * @return
 	 */
 	public Optional<DcatSource> getDcatSourceByGraph(String graphName) {

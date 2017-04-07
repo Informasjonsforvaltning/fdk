@@ -406,6 +406,32 @@ public class SimpleQueryService {
         return result;
     }
 
+    private List<Map<String,Object>> filterCodes(boolean filterLabels, String[] langs, List<String> codes) {
+        List<Map<String,Object>> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        for (String s : codes) {
+            try {
+                Map<String, Object> aCode = mapper.readValue(s, HashMap.class);
+                Map<String, String> label = (Map<String, String>) aCode.get("prefLabel");
+                // filter labels
+                if (filterLabels) {
+                    Map<String, String> filteredLabel = new HashMap<>();
+                    for (String lng : langs) {
+                        if (label.containsKey(lng)) {
+                            filteredLabel.put(lng, label.get(lng));
+                        }
+                    }
+                    aCode.put("prefLabel", filteredLabel);
+                }
+                result.add(aCode);
+            } catch (IOException e) {
+                logger.error("Unable to read codes ", e);
+            }
+        }
+
+        return result;
+    }
+
     private ResponseEntity<String> getCodes(String type, String lang) {
 
         ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
@@ -423,29 +449,11 @@ public class SimpleQueryService {
         if (langs.length == 1 && "".equals(lang)) {
             filterLabels = false;
         }
-        List<Map<String,Object>> codeList = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
-        for (String s : codes) {
-            try {
-                Map<String, Object> aCode = mapper.readValue(s, HashMap.class);
-                Map<String, String> label = (Map<String, String>) aCode.get("prefLabel");
-                // filter labels
-                if (filterLabels) {
-                    Map<String, String> filteredLabel = new HashMap<>();
-                    for (String lng : langs) {
-                        if (label.containsKey(lng)) {
-                            filteredLabel.put(lng, label.get(lng));
-                        }
-                    }
-                    aCode.put("prefLabel", filteredLabel);
-                }
-                codeList.add(aCode);
-            } catch (IOException e) {
-                logger.error("Unable to read codes ", e);
-            }
-        }
+        List<Map<String,Object>> codeList = filterCodes(filterLabels, langs, codes);
 
+        // Export filtered codes
         StringBuilder sb = new StringBuilder();
+        ObjectMapper mapper = new ObjectMapper();
         sb.append("{");
         sb.append(" \"type\": \"").append(type).append("\",");
         sb.append(" \"codes\": [");

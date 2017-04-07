@@ -67,7 +67,7 @@ public class BrregAgentConverter {
         Model extractedModel = ModelFactory.createDefaultModel();
         try {
 
-            ClassLoader classLoader = getClass().getClassLoader();
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader(); 
 
             extractedModel = postProcessing
                     .mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00001.qr"), new Object())
