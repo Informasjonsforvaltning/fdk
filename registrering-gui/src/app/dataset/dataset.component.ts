@@ -30,6 +30,7 @@ export class DatasetComponent implements OnInit {
 
   themes: string[];
   selection: Array<string>;
+  valueChangeEnabled: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,9 +46,9 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
-    let datasetId = this.route.snapshot.params['dataset_id'];
     this.form = new FormGroup({});
     this.form.addControl('selectMultiple', new FormControl([]));
+    let datasetId = this.route.snapshot.params['dataset_id'];
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
@@ -59,15 +60,12 @@ export class DatasetComponent implements OnInit {
               value: item._source.code,
               label: item._source.title[this.language]
             }
-          })).toPromise().then((data)=>{
+          })).toPromise().then((data) => {
               this.themes = data;
-              setTimeout(()=>this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})}),50)
-              this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})});
+              setTimeout(()=>this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})}),1); // wait for selectMultiple to init :(
+              this.valueChangeEnabled = true;
           });
-
     });
-
-
   }
 
   save(): void {
@@ -80,9 +78,8 @@ export class DatasetComponent implements OnInit {
         this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
       })
   }
-  valuechange(a,b,c): void {
-    var that = this;
-    this.delay(function() {that.save.call(that)}, 1000);
+  valuechange(value): void {
+    if(this.valueChangeEnabled) this.delay(()=>this.save.call(this), 1000);
   }
   delay(callback, ms): void {
       clearTimeout (this.timer);
