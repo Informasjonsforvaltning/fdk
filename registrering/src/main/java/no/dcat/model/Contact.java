@@ -29,4 +29,7 @@ public class Contact {
 
     @Field
     private String hasURL;
+
+    @Field
+    private String hasTelephone;
 }
