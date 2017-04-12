@@ -16,6 +16,9 @@ public class Contact {
     private String id;
 
     @Field
+    private String uri;
+
+    @Field
     private String fullname;
 
     @Field

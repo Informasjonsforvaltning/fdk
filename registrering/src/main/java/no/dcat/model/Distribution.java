@@ -15,6 +15,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Distribution {
     private String id;
+    private String uri;
     private Map<String,String> title;
     private Map<String,String> description;
     private List<String> accessURL;

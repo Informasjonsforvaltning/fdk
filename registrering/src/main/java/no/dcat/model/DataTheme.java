@@ -15,8 +15,13 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DataTheme {
     private String id;
+    private String uri;
     private String code;
     private String startUse;
     private Map<String, String> title;
     private ConceptSchema conceptSchema;
+
+    public DataTheme(String uri) {
+        this.uri = uri;
+    }
 }

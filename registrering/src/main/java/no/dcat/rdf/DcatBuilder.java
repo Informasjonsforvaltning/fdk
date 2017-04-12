@@ -2,9 +2,13 @@ package no.dcat.rdf;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Contact;
+import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
 import no.dcat.model.Distribution;
+import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
+import no.dcat.model.SkosCode;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -16,6 +20,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,36 +31,68 @@ import java.util.Map;
  */
 public class DcatBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DcatBuilder.class);
+    private static final SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private static final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 
     public final static Model mod = ModelFactory.createDefaultModel();
     public final static String DCAT = "http://www.w3.org/ns/dcat#";
-    public final static String DCT  = "http://purl.org/dc/terms/";
+    public final static String DCT = "http://purl.org/dc/terms/";
     public final static String FOAF = "http://xmlns.com/foaf/0.1/";
     public final static String VCARD = "http://www.w3.org/2006/vcard/ns#";
     public final static String DCATNO = "http://difi.no/dcatno#";
+    public final static String TIME = "http://www.w3.org/TR/owl-time/";
+    public final static String ADMS = "http://www.w3.org/ns/adms#";
+    public final static String XSD = "http://www.w3.org/2001/XMLSchema#";
 
-    public final static Property dct_identifier = mod.createProperty(DCT,"identifier");
-    public final static Property dct_publisher = mod.createProperty(DCT,"publisher");
+    public final static Property adms_identifier = mod.createProperty(ADMS, "identifier");
 
-    public final static Resource DCAT_CATALOG = mod.createResource(DCAT+"Catalog");
+    public final static Resource DCT_PERIODOFTIME = mod.createResource(DCT + "PeriodOfTime");
+
+    public final static Property dct_identifier = mod.createProperty(DCT, "identifier");
+    public final static Property dct_publisher = mod.createProperty(DCT, "publisher");
+    public final static Property dct_issued = mod.createProperty(DCT, "issued");
+    public final static Property dct_modified = mod.createProperty(DCT, "modified");
+    public final static Property dct_language = mod.createProperty(DCT, "language");
+    public final static Property dct_conformsTo = mod.createProperty(DCT, "conformsTo");
+    public final static Property dct_temporal = mod.createProperty(DCT, "temporal");
+    public final static Property dct_spatial = mod.createProperty(DCT, "spatial");
+    public final static Property dct_rights = mod.createProperty(DCT, "rights");
+    public final static Property dct_references = mod.createProperty(DCT, "references");
+    public final static Property dct_provenance = mod.createProperty(DCT, "provenance");
+    public final static Property dct_accrualPeriodicity = mod.createProperty(DCT, "accrualPeriodicity");
+    public final static Property dct_subject = mod.createProperty(DCT, "subject");
+    public final static Property dct_type = mod.createProperty(DCT, "type");
+
+
+    public final static Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
+    public final static Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
+    public final static Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
+    public final static Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
+
+    public final static Resource DCAT_CATALOG = mod.createResource(DCAT + "Catalog");
     public final static Property dcat_title = mod.createProperty(DCT, "title");
     public final static Property dcat_description = mod.createProperty(DCT, "description");
-    public final static Property dcat_dataset = mod.createProperty(DCAT,"dataset");
+    public final static Property dcat_dataset = mod.createProperty(DCAT, "dataset");
 
-    public final static Resource DCAT_DATASET = mod.createResource(DCAT+"Dataset");
+    public final static Resource DCAT_DATASET = mod.createResource(DCAT + "Dataset");
     public final static Property dcat_contactPoint = mod.createProperty(DCAT, "contactPoint");
     public final static Property dcat_distribution = mod.createProperty(DCAT, "distribution");
-    public final static Property dcat_keyword = mod.createProperty(DCAT,"keyword");
+    public final static Property dcat_keyword = mod.createProperty(DCAT, "keyword");
+    public final static Property dcat_landingPage = mod.createProperty(DCAT, "landingPage");
+    public final static Property dcat_theme = mod.createProperty(DCAT, "theme");
 
-    public final static Resource DCAT_DISTRIBUTION = mod.createResource(DCAT+"Distribution");
+    public final static Property dcatno_accessRightsComment = mod.createProperty(DCATNO, "accessRightsComment");
+
+    public final static Resource DCAT_DISTRIBUTION = mod.createResource(DCAT + "Distribution");
     public final static Property dcat_accessUrl = mod.createProperty(DCAT, "accessUrl");
     public final static Property dcat_format = mod.createProperty(DCAT, "format");
-    public final static Property dct_license = mod.createProperty(DCT,"license");
+    public final static Property dct_license = mod.createProperty(DCT, "license");
 
-    public final static Resource FOAF_AGENT = mod.createResource(FOAF+"Agent");
-    public final static Property foaf_name = mod.createProperty(FOAF,"name");
+    public final static Resource FOAF_AGENT = mod.createResource(FOAF + "Agent");
+    public final static Property foaf_name = mod.createProperty(FOAF, "name");
+    public final static Property foaf_page = mod.createProperty(FOAF, "page");
 
-    public final static Resource VCARD_ORG = mod.createResource(VCARD+"Organization");
+    public final static Resource VCARD_ORG = mod.createResource(VCARD + "Organization");
     public final static Property vcard_hasEmail = mod.createProperty(VCARD, "hasEmail");
     public final static Property vcard_fullName = mod.createProperty(VCARD, "fn");
     public final static Property vcard_OrganizationName = mod.createProperty(VCARD, "organization-name");
@@ -62,170 +102,259 @@ public class DcatBuilder {
 
     public static String catPrefix = "http://reg.brreg.no/catalogs/";
 
-    public static String transform(Catalog catalog, String outputFormat) {
+    private Model model;
+    private Map<Object, Resource> resourceMap = new HashMap<>();
 
-        StringBuilder b = new StringBuilder();
-        Model model = ModelFactory.createDefaultModel();
+    public DcatBuilder() {
+        model = ModelFactory.createDefaultModel();
         model.setNsPrefix("dct", DCT);
         model.setNsPrefix("dcat", DCAT);
         model.setNsPrefix("foaf", FOAF);
         model.setNsPrefix("vcard", VCARD);
+        model.setNsPrefix("time", TIME);
+        model.setNsPrefix("dcatno", DCATNO);
+        model.setNsPrefix("xsd", XSD);
+        model.setNsPrefix("adms", ADMS);
 
-        Resource cat = model.createResource(catPrefix + catalog.getId());
-        model.add(cat, RDF.type, DCAT_CATALOG);
+    }
 
-        addLiteral(dcat_title, catalog.getTitle(), model, cat);
-        addLiteral(dcat_description, catalog.getDescription(), model, cat);
 
-        if (catalog.getPublisher() != null) {
-            String pubUri = transform(catalog.getPublisher(), model);
-            cat.addProperty(dct_publisher, pubUri);
-        }
+    public static String transform(Catalog catalog, String outputFormat) {
 
-        if (catalog.getDataset() != null) {
-            for (Dataset d : catalog.getDataset()) {
-                String datasetUri = transform(d, model);
-                cat.addProperty(dcat_dataset, datasetUri);
-            }
-        }
+        DcatBuilder builder = new DcatBuilder();
+        builder.addCatalog(catalog);
 
         OutputStream out = new ByteArrayOutputStream();
-        model.write(out, outputFormat);
+        builder.model.write(out, outputFormat);
         return out.toString();
     }
 
-    private static String transform(Publisher publisher, Model m) {
-        Resource pub = m.createResource(publisher.getUri());
-        m.add(pub, RDF.type, FOAF_AGENT);
+    private DcatBuilder addCatalog(Catalog catalog) {
+        Resource catRes = createResource(catalog, catalog.getUri(), DCAT_CATALOG);
+        addLiterals(catRes, dcat_title, catalog.getTitle());
+        addLiterals(catRes, dcat_description, catalog.getDescription());
+        addPublisher(catRes, catalog.getPublisher());
+        addDatasets(catRes, catalog.getDataset());
 
-        if (publisher.getName() != null) {
-            pub.addProperty(foaf_name, publisher.getName());
-        }
-
-        if (publisher.getId() != null) {
-            pub.addProperty(dct_identifier, publisher.getId());
-        }
-
-        return publisher.getUri();
+        return this;
     }
 
-    private static String transform (Contact contact, Model m) {
-        String uri = contact.getId();
-        Resource con = m.createResource(uri);
-        m.add(con, RDF.type, VCARD_ORG);
+    public DcatBuilder addDatasets(Resource catRes, List<Dataset> datasets) {
 
-        if (contact.getEmail() != null) {
-            if (!contact.getEmail().startsWith("mailto:")) {
-                con.addProperty(vcard_hasEmail, "mailto:" + contact.getEmail());
-            } else {
-                con.addProperty(vcard_hasEmail, contact.getEmail());
-            }
-        }
+        for (Dataset dataset : datasets) {
+            addProperty(catRes, dcat_dataset, dataset.getUri());
 
-        if (contact.getFullname() != null) {
-            con.addProperty(vcard_fullName, contact.getFullname());
-        }
+            Resource datRes = createResource(dataset, dataset.getUri(), DCAT_DATASET);
 
-        if (contact.getHasURL() != null) {
-            con.addProperty(vcard_hasUrl, contact.getHasURL());
-        }
-
-        if (contact.getOrganizationName() != null) {
-            con.addProperty(vcard_OrganizationName, contact.getOrganizationName());
-        }
-
-        if (contact.getOrganizationUnit() != null) {
-            con.addProperty(vcard_organizationUnit, contact.getOrganizationUnit());
-        }
-
-        if (contact.getHasTelephone() != null) {
-            if (!contact.getHasTelephone().startsWith("tel:")) {
-                con.addProperty(vcard_hasTelephone, "tel:" + contact.getHasTelephone());
-            } else {
-                con.addProperty(vcard_hasTelephone, contact.getHasTelephone());
-            }
-        }
-
-        return uri;
-    }
-
-    /**
-     * Transform Dataset to RDF Model
-     *
-     * @param dataset the dataset to transform
-     * @param m the model
-     * @return the uri of the created dataset
-     */
-    private static String transform (Dataset dataset, Model m) {
-        String uri = catPrefix + dataset.getId();
-        Resource dat = m.createResource(uri);
-        m.add(dat, RDF.type, DCAT_DATASET);
-
-        addLiteral(dcat_title, dataset.getTitle(), m, dat);
-        addLiteral(dcat_description, dataset.getDescription(), m, dat);
-
-        if (dataset.getPublisher() != null) {
-            dat.addProperty(dct_publisher, dataset.getPublisher().getUri());
-        }
-
-        if (dataset.getContactPoint().size() > 0) {
-            for (Contact c : dataset.getContactPoint()) {
-                String cpUri = transform(c, m);
-
-                dat.addProperty(dcat_contactPoint, cpUri);
-            }
-        }
-
-        if (dataset.getKeyword() != null && dataset.getKeyword().size() > 0) {
+            addLiterals(datRes, dcat_title, dataset.getTitle());
+            addLiterals(datRes, dcat_description, dataset.getDescription());
+            addContactPoints(datRes, dataset.getContactPoint());
             for (Map<String, String> keyword : dataset.getKeyword()) {
-                addLiteral(dcat_keyword, keyword, m, dat);
+                addLiterals(datRes, dcat_keyword, keyword);
+            }
+            addProperty(datRes, dct_publisher, dataset.getPublisher().getUri());
+            addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
+            addDateLiteral(datRes, dct_modified, dataset.getModified());
+            addProperty(datRes, dct_language, dataset.getLanguage());
+            for (String landingPage : dataset.getLandingPage()) {
+                addProperty(datRes, dcat_landingPage, landingPage);
+            }
+
+            for (DataTheme theme : dataset.getTheme()) {
+                addProperty(datRes, dcat_theme, theme.getUri());
+            }
+            addDistributions(datRes, dataset.getDistribution());
+            if (dataset.getConformsTo() != null)
+            for (String conformsTo : dataset.getConformsTo()) {
+                addProperty(datRes, dct_conformsTo, conformsTo);
+            }
+            if (dataset.getTemporal() != null)
+            for (PeriodOfTime period : dataset.getTemporal()) {
+                addPeriodResourceAnnon(datRes, dct_temporal, period);
+            }
+            if (dataset.getSpatial() != null)
+            for (SkosCode spatial : dataset.getSpatial()) {
+                addProperty(datRes, dct_spatial, spatial);
+            }
+            addProperty(datRes, dct_rights, dataset.getAccessRights());
+            if (dataset.getAccessRightsComment() != null)
+            for (String commentUri : dataset.getAccessRightsComment()) {
+                addProperty(datRes, dcatno_accessRightsComment, commentUri);
+            }
+            if (dataset.getReferences() != null)
+            for (String reference : dataset.getReferences()) {
+                addProperty(datRes, dct_references, reference);
+            }
+            addProperty(datRes, dct_provenance, dataset.getProvenance());
+
+            if (dataset.getIdentifier() != null)
+            for (String identifier : dataset.getIdentifier()) {
+                addLiteral(datRes, dct_identifier, identifier);
+            }
+            if (dataset.getPage() != null)
+            for (String page : dataset.getPage()) {
+                addProperty(datRes, foaf_page, page);
+            }
+
+            addProperty(datRes, dct_accrualPeriodicity, dataset.getAccrualPeriodicity());
+            if (dataset.getSubject() != null)
+            for (String str : dataset.getSubject()) {
+                addProperty(datRes, dct_subject, str);
+            }
+            addProperty(datRes, dct_type, dataset.getType());
+            if (dataset.getAdmsIdentifier() != null)
+            for (String str : dataset.getAdmsIdentifier()) {
+                addProperty(datRes, adms_identifier, str);
             }
         }
 
-        if (dataset.getDistribution() != null && dataset.getDistribution().size() > 0) {
-            for (Distribution dist : dataset.getDistribution()) {
-                String distUri = transform(dist, uri, m);
-                dat.addProperty(dcat_distribution, distUri);
-            }
-        }
-
-        return uri;
+        return this;
     }
 
-    private static String transform (Distribution distribution, String datasetUriPrefix, Model m) {
-        String uri = datasetUriPrefix + "/" + distribution.getId();
-        Resource dist = m.createResource(uri);
-        m.add(dist, RDF.type, DCAT_DISTRIBUTION);
+    public DcatBuilder addPeriodResourceAnnon(Resource resource, Property property, PeriodOfTime period) {
 
-        addLiteral(dcat_title, distribution.getTitle(), m, dist);
-        addLiteral(dcat_description, distribution.getDescription(), m, dist);
+        Resource temporal = model.createResource();
+        model.add(temporal, RDF.type, DCT_PERIODOFTIME);
 
-        if (distribution.getAccessURL() != null && distribution.getAccessURL().size() > 0) {
+        resource.addProperty(property,temporal);
+
+        temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
+        temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+
+        return this;
+    }
+
+    public Resource createTimeInstantResource(Date date) {
+        Resource timeInstant = model.createResource();
+        model.add(timeInstant, RDF.type, TIME_INSTANT);
+        Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+        timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
+        return timeInstant;
+    }
+
+
+    public DcatBuilder addDateTimeLiteral(Resource resource, Property property, Date date) {
+
+        Literal literal = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+        model.addLiteral(resource, property, literal);
+        return this;
+    }
+
+    public DcatBuilder addDateLiteral(Resource resource, Property property, Date date) {
+
+        Literal literal = model.createTypedLiteral(sdfDate.format(date), XSDDatatype.XSDdate);
+        model.addLiteral(resource, property, literal);
+        return this;
+    }
+
+    public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
+        addProperty(resource, dct_publisher, publisher.getUri());
+
+        Resource pubRes = createResource(publisher, publisher.getUri(), FOAF_AGENT);
+        addLiteral(pubRes, foaf_name, publisher.getName());
+        addLiteral(pubRes, dct_identifier, publisher.getId());
+
+        return this;
+    }
+
+    public DcatBuilder addDistributions(Resource dataset, List<Distribution> distributions) {
+        for (Distribution distribution : distributions) {
+            addProperty(dataset, dcat_distribution, distribution.getUri());
+
+            Resource disRes = createResource(distribution, distribution.getUri(), DCAT_DISTRIBUTION);
+
+            addLiterals(disRes, dcat_title, distribution.getTitle());
+            addLiterals(disRes, dcat_description, distribution.getDescription());
+            addProperty(disRes, dct_license, distribution.getLicense());
+
             for (String accessUrl : distribution.getAccessURL()) {
-                dist.addProperty(dcat_accessUrl, accessUrl);
+                addProperty(disRes, dcat_accessUrl, accessUrl);
             }
-        }
 
-        if (distribution.getFormat() != null && distribution.getFormat().size() > 0) {
             for (String format : distribution.getFormat()) {
-                dist.addProperty(dcat_format, format);
+                addLiteral(disRes, dcat_format, format);
             }
         }
 
-        if (distribution.getLicense() != null ) {
-            dist.addProperty(dct_license, distribution.getLicense());
-        }
-
-        return uri;
+        return this;
     }
 
-    private static Resource addLiteral(Property property, Map<String,String> map, Model model, Resource resource) {
-        for (String l : map.keySet()) {
-            String v = map.get(l);
-            Literal literal = model.createLiteral(v,l);
-            resource.addProperty(property, literal);
+    public DcatBuilder addContactPoints(Resource datRes, List<Contact> contacts) {
+        for (Contact contact : contacts) {
+            addProperty(datRes, dcat_contactPoint, contact.getUri());
+
+            Resource contactRes = createResource(contact, contact.getUri(), VCARD_ORG);
+
+            addLiteral(contactRes, vcard_fullName, contact.getFullname());
+            addProperty(contactRes, vcard_hasUrl, contact.getHasURL());
+            addLiteral(contactRes, vcard_OrganizationName, contact.getOrganizationName());
+            addLiteral(contactRes, vcard_organizationUnit, contact.getOrganizationUnit());
+
+            if (contact.getEmail() != null) {
+                if (!contact.getEmail().startsWith("mailto:")) {
+                    addProperty(contactRes, vcard_hasEmail, "mailto:" + contact.getEmail());
+                } else {
+                    addProperty(contactRes, vcard_hasEmail, contact.getEmail());
+                }
+            }
+
+            if (contact.getHasTelephone() != null) {
+                if (!contact.getHasTelephone().startsWith("tel:")) {
+                    addProperty(contactRes, vcard_hasTelephone, "tel:" + contact.getHasTelephone());
+                } else {
+                    addProperty(contactRes, vcard_hasTelephone, contact.getHasTelephone());
+                }
+            }
         }
+
+        return this;
+    }
+
+    public Resource createResource(Object o, String uri, Resource resourceType) {
+        Resource resource = model.createResource(uri);
+        resourceMap.put(o, resource);
+        model.add(resource, RDF.type, resourceType);
 
         return resource;
+    }
+
+    public DcatBuilder addProperty(Resource resource, Property property, SkosCode code) {
+        if (code != null) {
+            Resource r = model.createResource(code.getUri());
+            resource.addProperty(property, r);
+        }
+
+        return this;
+    }
+
+
+    public DcatBuilder addProperty(Resource resource, Property property, String uri) {
+        if (uri != null) {
+            Resource r = model.createResource(uri);
+            resource.addProperty(property, r);
+        }
+
+        return this;
+    }
+
+    public DcatBuilder addLiterals(Resource resource, Property property, Map<String, String> map) {
+        if (map != null) {
+            for (String l : map.keySet()) {
+                String v = map.get(l);
+                if (v != null) {
+                    Literal literal = model.createLiteral(v, l);
+                    resource.addProperty(property, literal);
+                }
+            }
+        }
+        return this;
+    }
+
+    public DcatBuilder addLiteral(Resource resource, Property property, String value) {
+        if (value != null) {
+            Literal literal = model.createLiteral(value);
+            resource.addProperty(property, literal);
+        }
+        return this;
     }
 }

@@ -14,11 +14,14 @@ import java.util.Map;
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Catalog {
+    public static String catPrefix = "http://reg.brreg.no/catalogs/";
 
     public static final String ELASTIC_TYPE = "catalog";
 
     @Id
     private String id;
+
+    private String uri;
 
     // dct:title
     // Norwegian: Tittel
@@ -33,5 +36,12 @@ public class Catalog {
     private List<Dataset> dataset;
 
 
+    public String getUri() {
+        if (uri != null) {
+            return uri;
+        }
+
+        return catPrefix + id;
+    }
 
 }

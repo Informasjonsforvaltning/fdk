@@ -30,6 +30,9 @@ public class Dataset {
     @Id
     private String id;
 
+
+    private String uri;
+
     //Can't specify parent if no parent field has been configured
     @Field(type = FieldType.String, store = true)
     private String catalog;
@@ -77,7 +80,7 @@ public class Dataset {
     //dcat:landingPage
     //Norwegian: Landingsside
     @Field
-    private String landingPage;
+    private List<String> landingPage;
 
     //dcat:theme
     //Norwegian: Tema
