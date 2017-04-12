@@ -140,71 +140,76 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addDatasets(Resource catRes, List<Dataset> datasets) {
+        if (datasets != null) {
+            for (Dataset dataset : datasets) {
+                addProperty(catRes, dcat_dataset, dataset.getUri());
 
-        for (Dataset dataset : datasets) {
-            addProperty(catRes, dcat_dataset, dataset.getUri());
+                Resource datRes = createResource(dataset, dataset.getUri(), DCAT_DATASET);
 
-            Resource datRes = createResource(dataset, dataset.getUri(), DCAT_DATASET);
+                addLiterals(datRes, dcat_title, dataset.getTitle());
+                addLiterals(datRes, dcat_description, dataset.getDescription());
+                addContactPoints(datRes, dataset.getContactPoint());
 
-            addLiterals(datRes, dcat_title, dataset.getTitle());
-            addLiterals(datRes, dcat_description, dataset.getDescription());
-            addContactPoints(datRes, dataset.getContactPoint());
-            for (Map<String, String> keyword : dataset.getKeyword()) {
-                addLiterals(datRes, dcat_keyword, keyword);
-            }
-            addProperty(datRes, dct_publisher, dataset.getPublisher().getUri());
-            addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
-            addDateLiteral(datRes, dct_modified, dataset.getModified());
-            addProperty(datRes, dct_language, dataset.getLanguage());
-            for (String landingPage : dataset.getLandingPage()) {
-                addProperty(datRes, dcat_landingPage, landingPage);
-            }
+                if (dataset.getKeyword() != null)
+                    for (Map<String, String> keyword : dataset.getKeyword()) {
+                        addLiterals(datRes, dcat_keyword, keyword);
+                    }
+                if (dataset.getPublisher() != null)
+                    addProperty(datRes, dct_publisher, dataset.getPublisher().getUri());
+                addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
+                addDateLiteral(datRes, dct_modified, dataset.getModified());
+                addProperty(datRes, dct_language, dataset.getLanguage());
+                if (dataset.getLandingPage() != null)
+                    for (String landingPage : dataset.getLandingPage()) {
+                        addProperty(datRes, dcat_landingPage, landingPage);
+                    }
+                if (dataset.getTheme() != null)
+                    for (DataTheme theme : dataset.getTheme()) {
+                        addProperty(datRes, dcat_theme, theme.getUri());
+                    }
+                addDistributions(datRes, dataset.getDistribution());
+                if (dataset.getConformsTo() != null)
+                    for (String conformsTo : dataset.getConformsTo()) {
+                        addProperty(datRes, dct_conformsTo, conformsTo);
+                    }
+                if (dataset.getTemporal() != null)
+                    for (PeriodOfTime period : dataset.getTemporal()) {
+                        addPeriodResourceAnnon(datRes, dct_temporal, period);
+                    }
+                if (dataset.getSpatial() != null)
+                    for (SkosCode spatial : dataset.getSpatial()) {
+                        addProperty(datRes, dct_spatial, spatial);
+                    }
+                addProperty(datRes, dct_rights, dataset.getAccessRights());
+                if (dataset.getAccessRightsComment() != null)
+                    for (String commentUri : dataset.getAccessRightsComment()) {
+                        addProperty(datRes, dcatno_accessRightsComment, commentUri);
+                    }
+                if (dataset.getReferences() != null)
+                    for (String reference : dataset.getReferences()) {
+                        addProperty(datRes, dct_references, reference);
+                    }
+                addProperty(datRes, dct_provenance, dataset.getProvenance());
 
-            for (DataTheme theme : dataset.getTheme()) {
-                addProperty(datRes, dcat_theme, theme.getUri());
-            }
-            addDistributions(datRes, dataset.getDistribution());
-            if (dataset.getConformsTo() != null)
-            for (String conformsTo : dataset.getConformsTo()) {
-                addProperty(datRes, dct_conformsTo, conformsTo);
-            }
-            if (dataset.getTemporal() != null)
-            for (PeriodOfTime period : dataset.getTemporal()) {
-                addPeriodResourceAnnon(datRes, dct_temporal, period);
-            }
-            if (dataset.getSpatial() != null)
-            for (SkosCode spatial : dataset.getSpatial()) {
-                addProperty(datRes, dct_spatial, spatial);
-            }
-            addProperty(datRes, dct_rights, dataset.getAccessRights());
-            if (dataset.getAccessRightsComment() != null)
-            for (String commentUri : dataset.getAccessRightsComment()) {
-                addProperty(datRes, dcatno_accessRightsComment, commentUri);
-            }
-            if (dataset.getReferences() != null)
-            for (String reference : dataset.getReferences()) {
-                addProperty(datRes, dct_references, reference);
-            }
-            addProperty(datRes, dct_provenance, dataset.getProvenance());
+                if (dataset.getIdentifier() != null)
+                    for (String identifier : dataset.getIdentifier()) {
+                        addLiteral(datRes, dct_identifier, identifier);
+                    }
+                if (dataset.getPage() != null)
+                    for (String page : dataset.getPage()) {
+                        addProperty(datRes, foaf_page, page);
+                    }
 
-            if (dataset.getIdentifier() != null)
-            for (String identifier : dataset.getIdentifier()) {
-                addLiteral(datRes, dct_identifier, identifier);
-            }
-            if (dataset.getPage() != null)
-            for (String page : dataset.getPage()) {
-                addProperty(datRes, foaf_page, page);
-            }
-
-            addProperty(datRes, dct_accrualPeriodicity, dataset.getAccrualPeriodicity());
-            if (dataset.getSubject() != null)
-            for (String str : dataset.getSubject()) {
-                addProperty(datRes, dct_subject, str);
-            }
-            addProperty(datRes, dct_type, dataset.getType());
-            if (dataset.getAdmsIdentifier() != null)
-            for (String str : dataset.getAdmsIdentifier()) {
-                addProperty(datRes, adms_identifier, str);
+                addProperty(datRes, dct_accrualPeriodicity, dataset.getAccrualPeriodicity());
+                if (dataset.getSubject() != null)
+                    for (String str : dataset.getSubject()) {
+                        addProperty(datRes, dct_subject, str);
+                    }
+                addProperty(datRes, dct_type, dataset.getType());
+                if (dataset.getAdmsIdentifier() != null)
+                    for (String str : dataset.getAdmsIdentifier()) {
+                        addProperty(datRes, adms_identifier, str);
+                    }
             }
         }
 
@@ -234,45 +239,50 @@ public class DcatBuilder {
 
 
     public DcatBuilder addDateTimeLiteral(Resource resource, Property property, Date date) {
-
-        Literal literal = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
-        model.addLiteral(resource, property, literal);
+        if (date != null) {
+            Literal literal = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+            model.addLiteral(resource, property, literal);
+        }
         return this;
     }
 
     public DcatBuilder addDateLiteral(Resource resource, Property property, Date date) {
-
-        Literal literal = model.createTypedLiteral(sdfDate.format(date), XSDDatatype.XSDdate);
-        model.addLiteral(resource, property, literal);
+        if (date != null) {
+            Literal literal = model.createTypedLiteral(sdfDate.format(date), XSDDatatype.XSDdate);
+            model.addLiteral(resource, property, literal);
+        }
         return this;
     }
 
     public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
-        addProperty(resource, dct_publisher, publisher.getUri());
+        if (publisher != null) {
+            addProperty(resource, dct_publisher, publisher.getUri());
 
-        Resource pubRes = createResource(publisher, publisher.getUri(), FOAF_AGENT);
-        addLiteral(pubRes, foaf_name, publisher.getName());
-        addLiteral(pubRes, dct_identifier, publisher.getId());
-
+            Resource pubRes = createResource(publisher, publisher.getUri(), FOAF_AGENT);
+            addLiteral(pubRes, foaf_name, publisher.getName());
+            addLiteral(pubRes, dct_identifier, publisher.getId());
+        }
         return this;
     }
 
     public DcatBuilder addDistributions(Resource dataset, List<Distribution> distributions) {
-        for (Distribution distribution : distributions) {
-            addProperty(dataset, dcat_distribution, distribution.getUri());
+        if (distributions != null) {
+            for (Distribution distribution : distributions) {
+                addProperty(dataset, dcat_distribution, distribution.getUri());
 
-            Resource disRes = createResource(distribution, distribution.getUri(), DCAT_DISTRIBUTION);
+                Resource disRes = createResource(distribution, distribution.getUri(), DCAT_DISTRIBUTION);
 
-            addLiterals(disRes, dcat_title, distribution.getTitle());
-            addLiterals(disRes, dcat_description, distribution.getDescription());
-            addProperty(disRes, dct_license, distribution.getLicense());
+                addLiterals(disRes, dcat_title, distribution.getTitle());
+                addLiterals(disRes, dcat_description, distribution.getDescription());
+                addProperty(disRes, dct_license, distribution.getLicense());
 
-            for (String accessUrl : distribution.getAccessURL()) {
-                addProperty(disRes, dcat_accessUrl, accessUrl);
-            }
+                for (String accessUrl : distribution.getAccessURL()) {
+                    addProperty(disRes, dcat_accessUrl, accessUrl);
+                }
 
-            for (String format : distribution.getFormat()) {
-                addLiteral(disRes, dcat_format, format);
+                for (String format : distribution.getFormat()) {
+                    addLiteral(disRes, dcat_format, format);
+                }
             }
         }
 
@@ -280,33 +290,34 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addContactPoints(Resource datRes, List<Contact> contacts) {
-        for (Contact contact : contacts) {
-            addProperty(datRes, dcat_contactPoint, contact.getUri());
+        if (contacts != null) {
+            for (Contact contact : contacts) {
+                addProperty(datRes, dcat_contactPoint, contact.getUri());
 
-            Resource contactRes = createResource(contact, contact.getUri(), VCARD_ORG);
+                Resource contactRes = createResource(contact, contact.getUri(), VCARD_ORG);
 
-            addLiteral(contactRes, vcard_fullName, contact.getFullname());
-            addProperty(contactRes, vcard_hasUrl, contact.getHasURL());
-            addLiteral(contactRes, vcard_OrganizationName, contact.getOrganizationName());
-            addLiteral(contactRes, vcard_organizationUnit, contact.getOrganizationUnit());
+                addLiteral(contactRes, vcard_fullName, contact.getFullname());
+                addProperty(contactRes, vcard_hasUrl, contact.getHasURL());
+                addLiteral(contactRes, vcard_OrganizationName, contact.getOrganizationName());
+                addLiteral(contactRes, vcard_organizationUnit, contact.getOrganizationUnit());
 
-            if (contact.getEmail() != null) {
-                if (!contact.getEmail().startsWith("mailto:")) {
-                    addProperty(contactRes, vcard_hasEmail, "mailto:" + contact.getEmail());
-                } else {
-                    addProperty(contactRes, vcard_hasEmail, contact.getEmail());
+                if (contact.getEmail() != null) {
+                    if (!contact.getEmail().startsWith("mailto:")) {
+                        addProperty(contactRes, vcard_hasEmail, "mailto:" + contact.getEmail());
+                    } else {
+                        addProperty(contactRes, vcard_hasEmail, contact.getEmail());
+                    }
                 }
-            }
 
-            if (contact.getHasTelephone() != null) {
-                if (!contact.getHasTelephone().startsWith("tel:")) {
-                    addProperty(contactRes, vcard_hasTelephone, "tel:" + contact.getHasTelephone());
-                } else {
-                    addProperty(contactRes, vcard_hasTelephone, contact.getHasTelephone());
+                if (contact.getHasTelephone() != null) {
+                    if (!contact.getHasTelephone().startsWith("tel:")) {
+                        addProperty(contactRes, vcard_hasTelephone, "tel:" + contact.getHasTelephone());
+                    } else {
+                        addProperty(contactRes, vcard_hasTelephone, contact.getHasTelephone());
+                    }
                 }
             }
         }
-
         return this;
     }
 

@@ -30,12 +30,16 @@ import java.util.Map;
 public class DcatBuilderTest {
 
     DcatBuilder builder;
-    Catalog catalog;
+
 
     @Before
     public void setUp() {
 
-        catalog = new Catalog();
+
+    }
+
+    private Catalog createCompleteCatalog() {
+        Catalog catalog = new Catalog();
         catalog.setId("987654321");
         catalog.setTitle(map("nb", "Tittel"));
         catalog.setDescription(map("nb", "Beskrivelse"));
@@ -116,11 +120,25 @@ public class DcatBuilderTest {
         dataset.setSubject(subjects);
 
         dataset.setAdmsIdentifier(Collections.singletonList("http://adms.identifier.no/scheme/42"));
+
+        return catalog;
     }
 
     @Test
-    public void convertOK() throws Throwable {
+    public void convertCompleteCatalogOK() throws Throwable {
         builder = new DcatBuilder();
+        Catalog catalog = createCompleteCatalog();
+
+        String actual = builder.transform(catalog, "TURTLE");
+
+        assertThat(actual, is(notNullValue()));
+        System.out.println(actual);
+    }
+
+    @Test
+    public void convertMinimumCatalogOK() throws Throwable {
+        builder = new DcatBuilder();
+        Catalog catalog = new Catalog();
 
         String actual = builder.transform(catalog, "TURTLE");
 
