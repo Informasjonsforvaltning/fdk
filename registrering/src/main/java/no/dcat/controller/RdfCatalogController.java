@@ -44,7 +44,9 @@ public class RdfCatalogController {
     private DatasetRepository datasetRepository;
 
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.GET,
+            produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
 
         logger.debug ("get rdf catalog {} ",id);

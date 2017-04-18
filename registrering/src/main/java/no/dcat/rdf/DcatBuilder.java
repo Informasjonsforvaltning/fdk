@@ -2,7 +2,6 @@ package no.dcat.rdf;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Contact;
-import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
 import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -115,10 +115,16 @@ public class DcatBuilder {
         model.setNsPrefix("dcatno", DCATNO);
         model.setNsPrefix("xsd", XSD);
         model.setNsPrefix("adms", ADMS);
-
     }
 
 
+    /**
+     * Transforms a Catalog object to DCAT format.
+     *
+     * @param catalog object to transform
+     * @param outputFormat requested format(Jena/arq): TURTLE, RDF/XML, JSONLD
+     * @return a string containing the DCAT data in the wanted format
+     */
     public static String transform(Catalog catalog, String outputFormat) {
 
         DcatBuilder builder = new DcatBuilder();
@@ -133,7 +139,9 @@ public class DcatBuilder {
         Resource catRes = createResource(catalog, catalog.getUri(), DCAT_CATALOG);
         addLiterals(catRes, dcat_title, catalog.getTitle());
         addLiterals(catRes, dcat_description, catalog.getDescription());
+
         addPublisher(catRes, catalog.getPublisher());
+
         addDatasets(catRes, catalog.getDataset());
 
         return this;
@@ -148,68 +156,43 @@ public class DcatBuilder {
 
                 addLiterals(datRes, dcat_title, dataset.getTitle());
                 addLiterals(datRes, dcat_description, dataset.getDescription());
+
                 addContactPoints(datRes, dataset.getContactPoint());
 
                 if (dataset.getKeyword() != null)
                     for (Map<String, String> keyword : dataset.getKeyword()) {
                         addLiterals(datRes, dcat_keyword, keyword);
                     }
-                if (dataset.getPublisher() != null)
-                    addProperty(datRes, dct_publisher, dataset.getPublisher().getUri());
+
+                addUriProperty(datRes, dct_publisher, dataset.getPublisher());
+
                 addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
                 addDateLiteral(datRes, dct_modified, dataset.getModified());
                 addProperty(datRes, dct_language, dataset.getLanguage());
-                if (dataset.getLandingPage() != null)
-                    for (String landingPage : dataset.getLandingPage()) {
-                        addProperty(datRes, dcat_landingPage, landingPage);
-                    }
-                if (dataset.getTheme() != null)
-                    for (DataTheme theme : dataset.getTheme()) {
-                        addProperty(datRes, dcat_theme, theme.getUri());
-                    }
+                addProperties(datRes, dcat_landingPage, dataset.getLandingPage());
+                addUriProperties(datRes, dcat_theme, dataset.getTheme());
+
                 addDistributions(datRes, dataset.getDistribution());
-                if (dataset.getConformsTo() != null)
-                    for (String conformsTo : dataset.getConformsTo()) {
-                        addProperty(datRes, dct_conformsTo, conformsTo);
-                    }
+
+                addProperties(datRes, dct_conformsTo, dataset.getConformsTo());
+
                 if (dataset.getTemporal() != null)
                     for (PeriodOfTime period : dataset.getTemporal()) {
                         addPeriodResourceAnnon(datRes, dct_temporal, period);
                     }
-                if (dataset.getSpatial() != null)
-                    for (SkosCode spatial : dataset.getSpatial()) {
-                        addProperty(datRes, dct_spatial, spatial);
-                    }
+
+                addUriProperties(datRes, dct_spatial, dataset.getSpatial());
                 addProperty(datRes, dct_rights, dataset.getAccessRights());
-                if (dataset.getAccessRightsComment() != null)
-                    for (String commentUri : dataset.getAccessRightsComment()) {
-                        addProperty(datRes, dcatno_accessRightsComment, commentUri);
-                    }
-                if (dataset.getReferences() != null)
-                    for (String reference : dataset.getReferences()) {
-                        addProperty(datRes, dct_references, reference);
-                    }
+                addProperties(datRes, dcatno_accessRightsComment, dataset.getAccessRightsComment());
+                addProperties(datRes, dct_references, dataset.getReferences());
                 addProperty(datRes, dct_provenance, dataset.getProvenance());
-
-                if (dataset.getIdentifier() != null)
-                    for (String identifier : dataset.getIdentifier()) {
-                        addLiteral(datRes, dct_identifier, identifier);
-                    }
-                if (dataset.getPage() != null)
-                    for (String page : dataset.getPage()) {
-                        addProperty(datRes, foaf_page, page);
-                    }
-
+                addStringLiterals(datRes, dct_identifier, dataset.getIdentifier());
+                addProperties(datRes, foaf_page, dataset.getPage());
                 addProperty(datRes, dct_accrualPeriodicity, dataset.getAccrualPeriodicity());
-                if (dataset.getSubject() != null)
-                    for (String str : dataset.getSubject()) {
-                        addProperty(datRes, dct_subject, str);
-                    }
+                addProperties(datRes, dct_subject, dataset.getSubject());
                 addProperty(datRes, dct_type, dataset.getType());
-                if (dataset.getAdmsIdentifier() != null)
-                    for (String str : dataset.getAdmsIdentifier()) {
-                        addProperty(datRes, adms_identifier, str);
-                    }
+                addProperties(datRes, adms_identifier, dataset.getAdmsIdentifier());
+
             }
         }
 
@@ -232,8 +215,10 @@ public class DcatBuilder {
     public Resource createTimeInstantResource(Date date) {
         Resource timeInstant = model.createResource();
         model.add(timeInstant, RDF.type, TIME_INSTANT);
+
         Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
         timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
+
         return timeInstant;
     }
 
@@ -259,6 +244,7 @@ public class DcatBuilder {
             addProperty(resource, dct_publisher, publisher.getUri());
 
             Resource pubRes = createResource(publisher, publisher.getUri(), FOAF_AGENT);
+
             addLiteral(pubRes, foaf_name, publisher.getName());
             addLiteral(pubRes, dct_identifier, publisher.getId());
         }
@@ -276,13 +262,8 @@ public class DcatBuilder {
                 addLiterals(disRes, dcat_description, distribution.getDescription());
                 addProperty(disRes, dct_license, distribution.getLicense());
 
-                for (String accessUrl : distribution.getAccessURL()) {
-                    addProperty(disRes, dcat_accessUrl, accessUrl);
-                }
-
-                for (String format : distribution.getFormat()) {
-                    addLiteral(disRes, dcat_format, format);
-                }
+                addProperties(disRes, dcat_accessUrl, distribution.getAccessURL());
+                addLiterals(disRes, dcat_format, distribution.getFormat());
             }
         }
 
@@ -338,11 +319,65 @@ public class DcatBuilder {
         return this;
     }
 
+    public DcatBuilder addProperties(Resource resource, Property property, List<String> uris) {
+        if (uris != null) {
+            for (String uri : uris) {
+                addProperty(resource, dct_subject, uri);
+            }
+
+        }
+
+        return this;
+    }
+
+    public DcatBuilder addUriProperty(Resource resource, Property property, Object objectWithUri){
+        if (objectWithUri != null) {
+            try {
+                Method m = objectWithUri.getClass().getMethod("getUri");
+                String uri = (String) m.invoke(objectWithUri);
+                addProperty(resource, property, uri);
+            } catch (Exception e) {
+                logger.error("Unable to add URI to {}", property.getLocalName(), e);
+            }
+        }
+        return this;
+    }
+
+    public DcatBuilder addUriProperties(Resource resource, Property property, List<?> uris) {
+        if (uris != null) {
+            for (Object obj : uris) {
+                addUriProperty(resource, property, obj);
+            }
+        }
+
+        return this;
+    }
+
+    public DcatBuilder addStringLiterals(Resource resource, Property property, List<String> values) {
+        if (values != null) {
+            for (String value : values) {
+                addLiteral(resource, property, value);
+            }
+        }
+
+        return this;
+    }
 
     public DcatBuilder addProperty(Resource resource, Property property, String uri) {
         if (uri != null) {
             Resource r = model.createResource(uri);
             resource.addProperty(property, r);
+        }
+
+        return this;
+    }
+
+    public DcatBuilder addLiterals(Resource resource, Property property, List<String> values) {
+        if (values != null) {
+            for (String value : values) {
+                Literal literal = model.createLiteral(value);
+                resource.addProperty(property, literal);
+            }
         }
 
         return this;

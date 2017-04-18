@@ -2,7 +2,12 @@ package no.dcat.controller;
 
 import no.dcat.factory.DatasetFactory;
 import no.dcat.factory.DatasetIdGenerator;
+import no.dcat.factory.UriFactory;
+import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.model.exceptions.CatalogNotFoundException;
+import no.dcat.model.exceptions.ErrorResponse;
+import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +22,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -34,15 +44,14 @@ public class DatasetController {
     @Autowired
     private DatasetRepository datasetRepository;
 
+    @Autowired
+    private CatalogRepository catalogRepository;
 
     @Autowired
     private DatasetFactory datasetFactory;
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
-
-
-
 
     /**
      * Get complete dataset
@@ -69,11 +78,19 @@ public class DatasetController {
      */
     @CrossOrigin
     @RequestMapping(value = "/", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @RequestBody Dataset dataset) {
+    public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @RequestBody Dataset dataset) throws CatalogNotFoundException {
+
+        Catalog catalog = catalogRepository.findOne(catalogId);
+
+        if (catalog == null) {
+            throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog id {} not found", catalogId));
+        }
+
         DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
         logger.info("requestbody dataset: " + dataset.toString());
         if(dataset.getId() == null) {
             dataset.setId(datasetIdGenerator.createId());
+            dataset.setUri(UriFactory.createUri(dataset, catalog));
         }
         dataset.setCatalog(catalogId);
 
@@ -86,6 +103,15 @@ public class DatasetController {
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
 
+
+    @ExceptionHandler(CatalogNotFoundException.class)
+    public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
+        ErrorResponse error = new ErrorResponse();
+        error.setErrorCode(HttpStatus.PRECONDITION_FAILED.value());
+        error.setMessage(ex.getMessage());
+        
+        return new ResponseEntity<ErrorResponse>(error, HttpStatus.OK);
+    }
 
     /**
      * Modify dataset in catalog.
@@ -111,8 +137,8 @@ public class DatasetController {
      * Without parameters, the first 20 datasets are returned
      * The returned data contains paging hyperlinks.
      * <p>
-     * @param page number of pages. First page = 0
-     * @param size number of datasets returned
+     * @param catalogId the id of the catalog
+     * @param pageable number of datasets returned
      * @return List of data sets, with hyperlinks to other pages in search result
      */
     @CrossOrigin

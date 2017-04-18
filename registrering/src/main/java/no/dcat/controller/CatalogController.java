@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.factory.UriFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
@@ -60,6 +61,10 @@ public class CatalogController {
         publisher.setUri(uri);
         catalog.setPublisher(publisher);
 
+        if (catalog.getUri() == null) {
+            catalog.setUri(UriFactory.createUri(catalog));
+        }
+
         Catalog savedCatalog = catalogRepository.save(catalog);
         return new ResponseEntity<>(savedCatalog, OK);
     }
@@ -83,6 +88,10 @@ public class CatalogController {
         publisher.setName(enhet.getNavn());
         publisher.setUri(uri);
         catalog.setPublisher(publisher);
+
+        if (catalog.getUri() == null) {
+            catalog.setUri(UriFactory.createUri(catalog));
+        }
 
         Catalog savedCatalog = catalogRepository.save(catalog);
 

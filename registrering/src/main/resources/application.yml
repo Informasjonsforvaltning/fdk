@@ -3,6 +3,8 @@ spring:
   data:
     elasticsearch:
       cluster-nodes: localhost:9300
+  application:
+      catalogUriPrefix: http://localhost:8099
 server:
   port: 8099
 management:
@@ -23,6 +25,8 @@ spring:
       properties:
         http:
           enabled: true
+  application:
+    catalogUriPrefix: http://localhost:8099
 server:
   port: 8099
   tomcat:
@@ -39,6 +43,8 @@ spring:
   data:
     elasticsearch:
       cluster-nodes: elasticsearch:9300
+  application:
+    catalogUriPrefix: http://localhost:8099
 server:
   port: 8099
 management:
