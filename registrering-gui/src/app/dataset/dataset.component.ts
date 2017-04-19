@@ -4,6 +4,7 @@ import {FormGroup, FormControl} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
 import {CatalogService} from "../catalog/catalog.service";
 import {Dataset} from "./dataset";
+import {Catalog} from "../catalog/catalog"
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import {NgModule} from '@angular/core';
@@ -18,6 +19,7 @@ import {environment} from "../../environments/environment";
 export class DatasetComponent implements OnInit {
   title = 'Registrer datasett';
   dataset: Dataset;
+  catalog: Catalog;
   // title: string;
   description: string;
   language: string;
@@ -30,7 +32,7 @@ export class DatasetComponent implements OnInit {
 
   themes: string[];
   selection: Array<string>;
-  valueChangeEnabled: boolean = false;
+  valueChangeEnabled: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +55,19 @@ export class DatasetComponent implements OnInit {
       this.dataset = dataset;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.terms = ['term1', 'term'];
+
+      //set default publisher to be the same as catalog
+      if(this.dataset.publisher == null) {
+        //get catalog's publisher
+        let catalog = this.catalogService.get(this.catId);
+
+        this.dataset.publisher = {"uri" : this.catalog.publisher.uri, "id" : this.catalog.publisher.id, "name" : this.catalog.publisher.name};
+        this.dataset.description['nb'] = this.dataset.publisher.uri + " "
+          + this.dataset.publisher.id + " "
+          + this.dataset.publisher.name;
+
+      }
+
       this.http
           .get(environment.queryUrl + `/themes`)
           .map(data => data.json().hits.hits.map(item => {

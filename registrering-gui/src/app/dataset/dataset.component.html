@@ -10,7 +10,7 @@
     <input  class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
   <div class="fdk-panel-big-body">
-    <h2>{{dataset.catalog}}</h2>
+    <h2>{{dataset.catalog}} publisher.name: {{dataset.publisher.name}}</h2>
     <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
