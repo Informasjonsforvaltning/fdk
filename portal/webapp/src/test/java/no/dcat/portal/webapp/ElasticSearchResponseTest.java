@@ -1,13 +1,14 @@
 package no.dcat.portal.webapp;
 
-import no.difi.dcat.datastore.domain.dcat.Dataset;
+import no.dcat.portal.webapp.domain.Dataset;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Class for testing ElasticSearchResponse

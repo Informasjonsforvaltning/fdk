@@ -1,16 +1,16 @@
 package no.dcat.harvester.crawler.web;
 
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.admin.store.domain.DcatSource;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 /**
  * Created by dask on 03.03.2017.

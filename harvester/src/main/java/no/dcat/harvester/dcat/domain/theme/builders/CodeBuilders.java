@@ -1,10 +1,15 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
+import no.dcat.data.store.domain.dcat.SkosCode;
+import no.dcat.data.store.domain.dcat.builders.AbstractBuilder;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.FdkRDF;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.SkosRDF;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,22 +46,24 @@ public class CodeBuilders extends AbstractBuilder {
         StmtIterator codePropsIter = codeRdf.listProperties();
 
         SkosCode codeObj = new SkosCode();
-        codeObj.setTitle(new HashMap<String, String>());
+        codeObj.setPrefLabel(new HashMap<String, String>());
 
-        String code = codeRdf.getURI();
-        codeObj.setCode(code);
+        String uri = codeRdf.getURI();
+        codeObj.setUri(uri);
 
         while (codePropsIter.hasNext()) {
             Statement codeProp = codePropsIter.next();
             Property predicate = codeProp.getPredicate();
 
-            if(predicate.equals(SkosRDF.skosPreflabel)) {
+            if (predicate.equals(FdkRDF.atAuthorityName)) {
+                codeObj.setAuthorityCode(codeProp.getLiteral().getString());
+            } else if(predicate.equals(SkosRDF.skosPreflabel)) {
                 String lang  = codeProp.getLanguage();
-                String titel = codeProp.getObject().asLiteral().getString();
-                codeObj.getTitle().put(lang, titel);
+                String prefLabel = codeProp.getObject().asLiteral().getString();
+                codeObj.getPrefLabel().put(lang, prefLabel);
             }
         }
-        logger.trace(String.format("Created Java object of class Code, with code %s. ", codeObj.getCode()));
+        logger.trace(String.format("Created Java object of class Code, with code %s. ", codeObj.getUri()));
         codeObjs.add(codeObj);
     }
 }

@@ -1,9 +1,9 @@
 package no.dcat.portal.webapp.utility;
 
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
-import no.difi.dcat.datastore.domain.dcat.Distribution;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
+import no.dcat.portal.webapp.domain.DataTheme;
+import no.dcat.portal.webapp.domain.Dataset;
+import no.dcat.portal.webapp.domain.Distribution;
+import no.dcat.portal.webapp.domain.SkosCode;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -57,7 +57,7 @@ public final class ResponseManipulation {
             fillPropWithAlternativeValIfEmpty(dataset.getKeyword(), lang);
         }
         if (dataset.getAccrualPeriodicity() != null) {
-            fillPropWithAlternativeValIfEmpty(dataset.getAccrualPeriodicity().getTitle(), lang);
+            fillPropWithAlternativeValIfEmpty(dataset.getAccrualPeriodicity().getPrefLabel(), lang);
         }
 
         if (dataset.getDistribution() != null) {
@@ -69,7 +69,7 @@ public final class ResponseManipulation {
 
         if (dataset.getSpatial() != null) {
             for (SkosCode code : dataset.getSpatial()) {
-                fillPropWithAlternativeValIfEmpty(code.getTitle(), lang);
+                fillPropWithAlternativeValIfEmpty(code.getPrefLabel(), lang);
             }
         }
 

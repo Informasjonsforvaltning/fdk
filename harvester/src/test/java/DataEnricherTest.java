@@ -1,9 +1,16 @@
 package no.dcat.harvester;
 
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.admin.store.domain.DcatSource;
+import no.dcat.data.store.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Test;
