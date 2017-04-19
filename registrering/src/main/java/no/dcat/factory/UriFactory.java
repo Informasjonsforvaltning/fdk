@@ -21,25 +21,7 @@ public class UriFactory {
 
     private static String catalogUriPrefix ;
 
-    public static String createUri(Catalog catalog) {
-        return catalogUriPrefix + "/catalogs/" + catalog.getId();
-    }
 
-    public static String createUri(Dataset dataset, Catalog parentCatalog) {
-        return parentCatalog.getUri() + "/datasets/" + dataset.getUri();
-    }
-
-    public static String createUri(Contact contact, Catalog parentCatalog) {
-        return parentCatalog.getUri() + "/contact/" + contact.getId();
-    }
-
-    public static String createUri(Distribution distribution, Dataset parentDataset) {
-        return parentDataset.getUri() + "/distribution/" + distribution.getId();
-    }
-
-    public static String createUri(Publisher publisher, Catalog parentCatalog) {
-        return parentCatalog.getUri() + "/publisher/" + publisher.getId();
-    }
 
 
 }

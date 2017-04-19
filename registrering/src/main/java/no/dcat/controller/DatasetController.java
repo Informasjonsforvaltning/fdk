@@ -1,8 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.factory.DatasetFactory;
-import no.dcat.factory.DatasetIdGenerator;
-import no.dcat.factory.UriFactory;
+import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
@@ -48,9 +46,6 @@ public class DatasetController {
     private CatalogRepository catalogRepository;
 
     @Autowired
-    private DatasetFactory datasetFactory;
-
-    @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
 
     /**
@@ -73,29 +68,26 @@ public class DatasetController {
 
     /**
      * Create new dataset in catalog. ID for the dataset is created automatically.
-     * @param dataset
+     * @param copy
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @CrossOrigin
     @RequestMapping(value = "/", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @RequestBody Dataset dataset) throws CatalogNotFoundException {
+    public HttpEntity<Dataset> createDataset(@PathVariable("cat_id") String catalogId, @RequestBody Dataset copy) throws CatalogNotFoundException {
 
         Catalog catalog = catalogRepository.findOne(catalogId);
 
         if (catalog == null) {
-            throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog id {} not found", catalogId));
+            throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
-        DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
-        logger.info("requestbody dataset: " + dataset.toString());
-        if(dataset.getId() == null) {
-            dataset.setId(datasetIdGenerator.createId());
-            dataset.setUri(UriFactory.createUri(dataset, catalog));
-        }
-        dataset.setCatalog(catalogId);
+        // Create new dataset
+        Dataset dataset = RegistrationFactory.INSTANCE.createDataset(catalogId);
+
+        // TODO - copy (later story)
 
         //Store metainformation about editing
-        logger.debug("timestamp:" + Calendar.getInstance().getTime());
+        logger.debug("create dataset {} at timestamp {}", dataset.getId(), Calendar.getInstance().getTime());
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
         Dataset savedDataset = datasetRepository.save(dataset);
@@ -107,10 +99,10 @@ public class DatasetController {
     @ExceptionHandler(CatalogNotFoundException.class)
     public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
         ErrorResponse error = new ErrorResponse();
-        error.setErrorCode(HttpStatus.PRECONDITION_FAILED.value());
+        error.setErrorCode(HttpStatus.NOT_FOUND.value());
         error.setMessage(ex.getMessage());
-        
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.OK);
+
+        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -120,7 +112,7 @@ public class DatasetController {
      */
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> addDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
+    public HttpEntity<Dataset> createDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
         logger.info("requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
         dataset.setCatalog(catalogId);

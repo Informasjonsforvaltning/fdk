@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.factory.RegistrationFactory;
 import no.dcat.factory.UriFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
@@ -62,7 +63,7 @@ public class CatalogController {
         catalog.setPublisher(publisher);
 
         if (catalog.getUri() == null) {
-            catalog.setUri(UriFactory.createUri(catalog));
+            catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
         }
 
         Catalog savedCatalog = catalogRepository.save(catalog);
@@ -77,20 +78,25 @@ public class CatalogController {
     public HttpEntity<Catalog> addCatalog(@PathVariable("id") String id, @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
 
-        catalog.setId(id);
+        if (!catalog.getId().equals(id)) {
+            return new ResponseEntity<Catalog>(HttpStatus.BAD_REQUEST);
+        }
+        //catalog.setId(id);
 
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
-        Enhet enhet = restTemplate.getForObject(uri, Enhet.class);
+        if (catalog.getPublisher() == null) {
+            RestTemplate restTemplate = new RestTemplate();
+            String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
+            Enhet enhet = restTemplate.getForObject(uri, Enhet.class);
 
-        Publisher publisher = new Publisher();
-        publisher.setId(catalog.getId());
-        publisher.setName(enhet.getNavn());
-        publisher.setUri(uri);
-        catalog.setPublisher(publisher);
+            Publisher publisher = new Publisher();
+            publisher.setId(catalog.getId());
+            publisher.setName(enhet.getNavn());
+            publisher.setUri(uri);
+            catalog.setPublisher(publisher);
+        }
 
         if (catalog.getUri() == null) {
-            catalog.setUri(UriFactory.createUri(catalog));
+            catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
         }
 
         Catalog savedCatalog = catalogRepository.save(catalog);

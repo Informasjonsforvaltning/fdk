@@ -1,6 +1,8 @@
 package no.dcat.rdf;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import no.dcat.RegisterApplication;
+import no.dcat.factory.RegistrationFactory;
 import no.dcat.factory.UriFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Contact;
@@ -13,6 +15,8 @@ import no.dcat.model.SkosCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,19 +36,22 @@ import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 /**
  * Created by dask on 12.04.2017.
  */
 @ActiveProfiles(value = "develop")
 @RunWith(SpringRunner.class)
-@ContextConfiguration(loader= AnnotationConfigContextLoader.class, classes= {UriFactory.class})
+@SpringBootTest
 public class DcatBuilderTest {
 
     DcatBuilder builder;
 
     @Before
     public void setUp() {
+        builder = new DcatBuilder();
+
     }
 
     private Catalog createCompleteCatalog() {
@@ -52,7 +59,7 @@ public class DcatBuilderTest {
         catalog.setId("987654321");
         catalog.setTitle(map("nb", "Tittel"));
         catalog.setDescription(map("nb", "Beskrivelse"));
-        catalog.setUri(UriFactory.createUri(catalog));
+        catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
 
         Publisher publisher = new Publisher();
         publisher.setId("987654321");
@@ -61,17 +68,13 @@ public class DcatBuilderTest {
 
         catalog.setPublisher(publisher);
 
-
-        Dataset dataset = new Dataset();
+        Dataset dataset = RegistrationFactory.INSTANCE.createDataset(catalog.getId());
         catalog.setDataset(Collections.singletonList(dataset));
 
-        dataset.setId("XYZ32F5");
-        dataset.setUri(UriFactory.createUri(dataset, catalog));
         dataset.setTitle(map("nb", "Datasettittel"));
         dataset.setDescription(map("nb", "Datasettbeskrivelse"));
 
-        Contact contact = new Contact();
-        contact.setUri(UriFactory.createUri(contact,catalog)); //"http://testetaten.no/contacts/no1");
+        Contact contact = RegistrationFactory.INSTANCE.createContact(catalog.getId());
         contact.setFullname("Fullname");
         contact.setEmail("test@testetaten.no");
         contact.setHasURL("http://testetaten.no/url");
@@ -97,8 +100,7 @@ public class DcatBuilderTest {
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
         dataset.setTheme(Collections.singletonList(new DataTheme("http://publications.europa.eu/resource/authority/data-theme/GOVE")));
 
-        Distribution distribution = new Distribution();
-        distribution.setUri(UriFactory.createUri(distribution,dataset));
+        Distribution distribution = RegistrationFactory.INSTANCE.createDistribution(catalog.getId(), dataset.getId());
         distribution.setAccessURL(Collections.singletonList("http://testetaten.no/data/access"));
         distribution.setTitle(map("nb", "Standard data"));
         distribution.setDescription(map("nb", "Beskrivelsen er ikke tilgjengelig"));

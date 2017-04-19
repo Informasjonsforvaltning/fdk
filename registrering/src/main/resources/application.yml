@@ -17,6 +17,8 @@ spring:
       properties:
         http:
           enabled: true
+  application:
+      catalogUriPrefix: http://localhost:8099
 ---
 spring:
   profiles: develop_embedded
