@@ -212,3 +212,6 @@ ng-select {
 ng-select > div > div.multiple > div.option {
   background-color: #ccc;
 }
+.modal-footer .btn+.btn {
+	margin-bottom: 6px;
+}
