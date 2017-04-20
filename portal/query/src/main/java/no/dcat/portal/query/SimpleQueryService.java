@@ -1,15 +1,23 @@
 package no.dcat.portal.query;
 
 
+import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
@@ -21,12 +29,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -76,7 +93,10 @@ public class SimpleQueryService {
 
     @Value("${application.clusterName:elasticsearch}")
     private String clusterName;
-    public void setClusterName(String cn) { clusterName = cn; }
+
+    public void setClusterName(String cn) {
+        clusterName = cn;
+    }
 
 
     /**
@@ -119,7 +139,7 @@ public class SimpleQueryService {
         logger.debug(loggMsg.toString());
 
         String themeLanguage = "*";
-        String analyzerLang  = "norwegian";
+        String analyzerLang = "norwegian";
 
         if ("en".equals(lang)) {
             //themeLanguage="en";
@@ -150,7 +170,7 @@ public class SimpleQueryService {
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery =  addFilter(theme, publisher, search);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, search);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
@@ -158,7 +178,7 @@ public class SimpleQueryService {
                 .setQuery(boolQuery)
                 .setFrom(from)
                 .setSize(size)
-                .addAggregation(createAggregation(TERMS_THEME_COUNT,FIELD_THEME_CODE))
+                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME));
 
         addSort(sortfield, sortdirection, searchBuilder);
@@ -213,9 +233,8 @@ public class SimpleQueryService {
      * Adds theme filter to query. Multiple themes can be specified. It should return only those datasets that have
      * all themes. To get an exact match we ned to use Elasticsearch tag count trick.
      *
-     * @param theme comma separated list of theme codes
+     * @param theme  comma separated list of theme codes
      * @param search the search object
-     *
      * @return a new bool query with the added filter.
      */
     private BoolQueryBuilder addFilter(String theme, String publisher, QueryBuilder search) {
@@ -236,7 +255,7 @@ public class SimpleQueryService {
 
         if (!StringUtils.isEmpty(publisher)) {
             BoolQueryBuilder boolFilter2 = QueryBuilders.boolQuery();
-            boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw",publisher));
+            boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
 
             boolQuery.filter(boolFilter2);
         }
@@ -277,9 +296,188 @@ public class SimpleQueryService {
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
+
+    /**
+     * Returns the types of codes that are stored by the system
+     *
+     * @return the list of code-types
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/codes", produces = "application/json")
+    public ResponseEntity<String> codeTypes() {
+        ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
+
+        if (elasticError != null) {
+            return elasticError;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{ \"types\": [");
+
+        List<String> types = getTypes("codes");
+        if (types != null) {
+            boolean comma = false;
+            for (String c : types) {
+                if (comma) {
+                    sb.append(", ");
+                }
+                sb.append("\"" + c + "\"");
+                comma = true;
+            }
+            sb.append("]}");
+            return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    List<String> getTypes(String index) {
+
+        try {
+            GetMappingsResponse res = client.admin().indices().getMappings(new GetMappingsRequest().indices(index)).get();
+            Iterator<ObjectObjectCursor<String, MappingMetaData>> iterator = res.mappings().get(index).iterator();
+
+            List<String> result = new ArrayList<>();
+            while (iterator.hasNext()) {
+                String c = iterator.next().key;
+                result.add(c);
+            }
+
+            return result;
+
+        } catch (InterruptedException e) {
+            logger.error("Elasticsearch call was interrupted", e);
+        } catch (ExecutionException e) {
+            logger.error("Elasticsearch call for types failed", e);
+        }
+
+        return null;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/codes/{type}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
+        return getCodes(type, "");
+    }
+
+    /**
+     * Returns codes of a specific code type
+     *
+     * @param type the type which codes to return
+     * @param lang a list of two-letter language codes to filter out
+     * @return an object which contain the codes of the type
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/codes/{type}/{lang}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> codes(
+            @PathVariable(name = "type") String type,
+            @PathVariable(name = "lang") String lang) {
+        return getCodes(type, lang);
+    }
+
+    List<String> extractCodeStrings(String type) {
+        List<String> result = new ArrayList<>();
+
+        QueryBuilder search = QueryBuilders.matchAllQuery();
+
+        SearchRequestBuilder searchQuery = client.prepareSearch("codes").setTypes(type).setQuery(search);
+        SearchResponse response = searchQuery.execute().actionGet();
+        int totNrOfCodes = (int) response.getHits().getTotalHits();
+
+        logger.debug("Found {} codes for type {}", totNrOfCodes, type);
+
+        if (totNrOfCodes == 0) {
+            return null;
+        }
+
+        // do new call if more than 10 codes exist
+        SearchResponse codes;
+        if (totNrOfCodes > 10) {
+            codes = searchQuery.setSize(totNrOfCodes).execute().actionGet();
+        } else {
+            codes = response;
+        }
+
+        List<Map<String, Object>> codeList = new ArrayList<>();
+        for (SearchHit s : codes.getHits().getHits()) {
+            result.add(s.getSourceAsString());
+        }
+
+        return result;
+    }
+
+    private List<Map<String,Object>> filterCodes(boolean filterLabels, String[] langs, List<String> codes) {
+        List<Map<String,Object>> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        for (String s : codes) {
+            try {
+                Map<String, Object> aCode = mapper.readValue(s, HashMap.class);
+                Map<String, String> label = (Map<String, String>) aCode.get("prefLabel");
+                // filter labels
+                if (filterLabels) {
+                    Map<String, String> filteredLabel = new HashMap<>();
+                    for (String lng : langs) {
+                        if (label.containsKey(lng)) {
+                            filteredLabel.put(lng, label.get(lng));
+                        }
+                    }
+                    aCode.put("prefLabel", filteredLabel);
+                }
+                result.add(aCode);
+            } catch (IOException e) {
+                logger.error("Unable to read codes ", e);
+            }
+        }
+
+        return result;
+    }
+
+    private ResponseEntity<String> getCodes(String type, String lang) {
+
+        ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
+        if (elasticError != null) {
+            return elasticError;
+        }
+
+        List<String> codes = extractCodeStrings(type);
+        if (codes == null){
+            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
+
+        boolean filterLabels = true;
+        String[] langs = lang.split(",");
+        if (langs.length == 1 && "".equals(lang)) {
+            filterLabels = false;
+        }
+        List<Map<String,Object>> codeList = filterCodes(filterLabels, langs, codes);
+
+        // Export filtered codes
+        StringBuilder sb = new StringBuilder();
+        ObjectMapper mapper = new ObjectMapper();
+        sb.append("{");
+        sb.append(" \"type\": \"").append(type).append("\",");
+        sb.append(" \"codes\": [");
+        boolean comma = false;
+        for (Map<String, Object> code : codeList) {
+            if (comma) {
+                sb.append(",");
+            }
+            try {
+                sb.append(mapper.writeValueAsString(code));
+            } catch (JsonProcessingException e) {
+                logger.error("Unable to format JSON ", e);
+            }
+            comma = true;
+        }
+        sb.append("]}");
+
+        return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+    }
+
     /**
      * Finds all themes loaded into elasticsearch.
      * <p/>
+     *
      * @return The complete elasticsearch response on Json-fornat is returned..
      */
     @CrossOrigin
@@ -332,6 +530,7 @@ public class SimpleQueryService {
      * The returnlist will consist of the defined publisher or for all publishers, registered in
      * elastic search, if no publisher is defined.
      * <p/>
+     *
      * @param publisher optional parameter specifiying which publisher should be counted
      * @return json containing publishers and integer count of number of data sets
      */
@@ -344,6 +543,7 @@ public class SimpleQueryService {
     /**
      * Finds all publisher loaded into elasticsearch.
      * <p/>
+     *
      * @return The complete elasticsearch response on Json-fornat is returned..
      */
     @CrossOrigin
@@ -417,19 +617,20 @@ public class SimpleQueryService {
     /**
      * Create aggregation object that counts the number of
      * datasets for each value of the defined field.
-     *<p/>
+     * <p/>
+     *
      * @param field The field to be aggregated.
      * @return Aggregation builder object to be used in query
      */
     private AggregationBuilder createAggregation(String terms, String field) {
         return AggregationBuilders
-            .terms(terms)
-            .field(field)
-            .size(AGGREGATION_NUMBER_OF_COUNTS)
-            .order(Order.count(false));
+                .terms(terms)
+                .field(field)
+                .size(AGGREGATION_NUMBER_OF_COUNTS)
+                .order(Order.count(false));
     }
 
-    private final ResponseEntity<String> initializeElasticsearchTransportClient() {
+    ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
 
         logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
@@ -467,7 +668,7 @@ public class SimpleQueryService {
             logger.debug("Client returns! " + address.toString());
         } catch (UnknownHostException e) {
             // TODO: throw exception.
-            logger.error(e.toString(),e);
+            logger.error(e.toString(), e);
         }
 
         logger.debug("Transport client to elasticsearch created: " + client);

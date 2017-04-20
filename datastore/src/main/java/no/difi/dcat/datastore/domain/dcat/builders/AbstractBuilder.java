@@ -299,6 +299,6 @@ public abstract class AbstractBuilder {
             return null;
         }
 
-        return code.getTitle();
+        return code.getPrefLabel();
     }
 }

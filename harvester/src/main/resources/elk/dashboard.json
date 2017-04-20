@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "dashboard_template",
+    "_type": "dashboard",
+    "_source": {
+      "title": "dashboard_template",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"Crawler-Operations\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":12,\"size_y\":3,\"col\":1,\"row\":3},{\"id\":\"Crawler-Results\",\"type\":\"visualization\",\"panelIndex\":2,\"size_x\":3,\"size_y\":2,\"col\":1,\"row\":6},{\"id\":\"crawler_operations\",\"type\":\"search\",\"panelIndex\":3,\"size_x\":9,\"size_y\":2,\"col\":4,\"row\":6,\"columns\":[\"severity\",\"event\",\"cause\"],\"sort\":[\"timestamp\",\"desc\"]},{\"id\":\"Crawler-Metadata\",\"type\":\"visualization\",\"panelIndex\":4,\"size_x\":12,\"size_y\":2,\"col\":1,\"row\":1}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-12h",
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  }
+]

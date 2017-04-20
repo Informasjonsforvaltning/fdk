@@ -17,11 +17,14 @@ import com.rometools.rome.feed.CopyFrom;
 import com.rometools.rome.feed.module.ModuleImpl;
 
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DcatModule extends ModuleImpl {
 
 	public static final String URI = "http://data.norge.no";
 	private static final long serialVersionUID = -2270589093650785086L;
+	private static Logger logger = LoggerFactory.getLogger(DcatModule.class);
 
 	private Date modified;
 	private String publisher;
@@ -105,34 +108,13 @@ public class DcatModule extends ModuleImpl {
 		
 		dcatModule.setPublisher(PropertyExtractor.extractExactlyOneStringOrNull(dataset, DCTerms.publisher, FOAF.name));
 		
-		StmtIterator keywordIterator = dataset
-				.listProperties(DCAT.keyword);
-		while (keywordIterator.hasNext()) {
-			try {
-				dcatModule.getKeywords().add(keywordIterator.next().getString());
-			} catch (JenaException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		StmtIterator subjectIterator = dataset
-				.listProperties(DCAT.theme);
-		while (subjectIterator.hasNext()) {
-			try {
-				Statement next = subjectIterator.next();
-				String subject = null;
-				if (next.getObject().isLiteral()) {
-					subject = next.getString();
-				} else {
-					subject = next.getObject().asResource().getURI();
-				}
-				dcatModule.getSubjects().add(subject);
-			} catch (JenaException e) {
-				e.printStackTrace();
-			}
-		}
+		StmtIterator keywordIterator = dataset.listProperties(DCAT.keyword);
+        handleKeyword(dcatModule, keywordIterator);
 
-		String modified = PropertyExtractor.extractExactlyOneStringOrNull(dataset, DCTerms.modified);
+        StmtIterator subjectIterator = dataset.listProperties(DCAT.theme);
+        handleTheme(dcatModule, subjectIterator);
+
+        String modified = PropertyExtractor.extractExactlyOneStringOrNull(dataset, DCTerms.modified);
 		if (modified != null) {
 			dcatModule.setModified(DatatypeConverter.parseDate(modified).getTime());
 		}
@@ -140,22 +122,53 @@ public class DcatModule extends ModuleImpl {
 		// Distribution
 		
 		StmtIterator stmtIterator = dataset.listProperties(DCAT.distribution);
-		while (stmtIterator.hasNext()) {
-			Statement next = stmtIterator.next();
-			if (next.getObject().isResource()) {
-				String format = PropertyExtractor.extractExactlyOneStringOrNull(next.getResource(), DCTerms.format);
-				if (format != null) {
-					if (!dcatModule.getFormats().contains(format)) {
-						dcatModule.getFormats().add(format);
-					}
-				}
-			}
-		}
+        handleDistribution(dcatModule, stmtIterator);
 
-		return dcatModule;
+        return dcatModule;
 	}
 
-	@Override
+    private static void handleKeyword(DcatModule dcatModule, StmtIterator keywordIterator) {
+        while (keywordIterator.hasNext()) {
+            try {
+                dcatModule.getKeywords().add(keywordIterator.next().getString());
+            } catch (JenaException e) {
+                logger.error("Publisher error", e);
+            }
+        }
+    }
+
+    private static void handleDistribution(DcatModule dcatModule, StmtIterator stmtIterator) {
+        while (stmtIterator.hasNext()) {
+            Statement next = stmtIterator.next();
+            if (next.getObject().isResource()) {
+                String format = PropertyExtractor.extractExactlyOneStringOrNull(next.getResource(), DCTerms.format);
+                if (format != null) {
+                    if (!dcatModule.getFormats().contains(format)) {
+                        dcatModule.getFormats().add(format);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void handleTheme(DcatModule dcatModule, StmtIterator subjectIterator) {
+        while (subjectIterator.hasNext()) {
+            try {
+                Statement next = subjectIterator.next();
+                String subject = null;
+                if (next.getObject().isLiteral()) {
+                    subject = next.getString();
+                } else {
+                    subject = next.getObject().asResource().getURI();
+                }
+                dcatModule.getSubjects().add(subject);
+            } catch (JenaException e) {
+                logger.error("Subject iterator",e);
+            }
+        }
+    }
+
+    @Override
 	public Class<? extends CopyFrom> getInterface() {
 		return DcatModule.class;
 	}

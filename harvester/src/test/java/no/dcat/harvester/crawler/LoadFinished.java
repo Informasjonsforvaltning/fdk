@@ -1,9 +1,9 @@
 package no.dcat.harvester.crawler;
 
+import no.dcat.admin.store.AdminDataStore;
+import no.dcat.admin.store.DcatDataStore;
+import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
 import org.junit.Test;
 import org.mockito.Mockito;
 
