@@ -205,3 +205,13 @@ p.register {
 .fdk-vertical-align {
 	vertical-align: middle;
 }
+
+ng-select {
+  background-color: #fff;
+}
+ng-select > div > div.multiple > div.option {
+  background-color: #ccc;
+}
+.modal-footer .btn+.btn {
+	margin-bottom: 6px;
+}
