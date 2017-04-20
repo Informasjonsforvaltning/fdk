@@ -8,16 +8,18 @@ describe('registrering-gui App', () => {
   beforeEach(() => {
     page = new RegistreringGuiPage();
       browser.get("/")
-    let usernameInput = element(by.css("input[name=username]"));
-    usernameInput.sendKeys("dask");
-    let passwordInput = element(by.css("input[name=password]"));
-    passwordInput.sendKeys("123");
-    let submitButton = element(by.css("form[name=loginForm] button"));
-    submitButton.click();
-    var isLoggedInElement = element(by.css('.login-status'));
+    element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
+      if(isPresent) {
+        let submitButton = element(by.buttonText("Logg inn som bjg"));
+        submitButton.click();
+      }
+    });
+
+    var isLoggedInElement = element(by.css('.alert-success'));
     var EC = protractor.ExpectedConditions;
     browser.wait(EC.presenceOf(isLoggedInElement), 10000);
   });
+
   beforeAll(()=> {
   })
 
@@ -26,6 +28,8 @@ describe('registrering-gui App', () => {
     expect(page.getParagraphText()).toEqual('Datakataloger');
   });
 
+
+  /* bjg: not relevant with preliminary login, therefore disabled
   it("Should be able to login", () => {
     let usernameInput = element(by.css("input[name=username]"));
     usernameInput.sendKeys("dask");
@@ -36,6 +40,7 @@ describe('registrering-gui App', () => {
 
     expect(page.getLoginStatusText()).toEqual('Pålogget som dask');
   });
+  */
 
   it("Should save datacatalog fields upon typing", () => {
     let catalogLink = element(by.css("#datacatalogs td"));
@@ -76,5 +81,25 @@ describe('registrering-gui App', () => {
     browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New dataset name'),1000).then(() => {
       expect(page.getH1Value()).toEqual('New dataset name');
     });
+  });
+
+  it("Should copy publiser from catalog into new dataset", () => {
+    let catalogLink = element(by.css("#datacatalogs td"));
+    catalogLink.click();
+
+    let datasetLink = element(by.css("#datasets td"));
+    datasetLink.click();
+
+    let datasetH1Input = element(by.css(".fdk-register-h1"));
+    datasetH1Input.clear();
+    datasetH1Input.sendKeys('New dataset name');
+
+    var EC = protractor.ExpectedConditions;
+    var alertSuccess = element(by.css('.alert-success'));
+    browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+    browser.refresh();
+    let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
+    expect(datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
   });
 });
