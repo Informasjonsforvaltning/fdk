@@ -34,76 +34,74 @@ public class DcatBuilder {
     private static final SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     private static final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 
-    public final static Model mod = ModelFactory.createDefaultModel();
-    public final static String DCAT = "http://www.w3.org/ns/dcat#";
-    public final static String DCT = "http://purl.org/dc/terms/";
-    public final static String FOAF = "http://xmlns.com/foaf/0.1/";
-    public final static String VCARD = "http://www.w3.org/2006/vcard/ns#";
-    public final static String DCATNO = "http://difi.no/dcatno#";
-    public final static String TIME = "http://www.w3.org/TR/owl-time/";
-    public final static String ADMS = "http://www.w3.org/ns/adms#";
-    public final static String XSD = "http://www.w3.org/2001/XMLSchema#";
+    public static final Model mod = ModelFactory.createDefaultModel();
+    public static final String DCAT = "http://www.w3.org/ns/dcat#";
+    public static final String DCT = "http://purl.org/dc/terms/";
+    public static final String FOAF = "http://xmlns.com/foaf/0.1/";
+    public static final String VCARD = "http://www.w3.org/2006/vcard/ns#";
+    public static final String DCATNO = "http://difi.no/dcatno#";
+    public static final String TIME = "http://www.w3.org/TR/owl-time/";
+    public static final String ADMS = "http://www.w3.org/ns/adms#";
+    public static final String XSD = "http://www.w3.org/2001/XMLSchema#";
 
-    public final static Property adms_identifier = mod.createProperty(ADMS, "identifier");
+    public static final Property adms_identifier = mod.createProperty(ADMS, "identifier");
 
-    public final static Resource DCT_PERIODOFTIME = mod.createResource(DCT + "PeriodOfTime");
+    public static final Resource DCT_PERIODOFTIME = mod.createResource(DCT + "PeriodOfTime");
 
-    public final static Property dct_identifier = mod.createProperty(DCT, "identifier");
-    public final static Property dct_publisher = mod.createProperty(DCT, "publisher");
-    public final static Property dct_issued = mod.createProperty(DCT, "issued");
-    public final static Property dct_modified = mod.createProperty(DCT, "modified");
-    public final static Property dct_language = mod.createProperty(DCT, "language");
-    public final static Property dct_conformsTo = mod.createProperty(DCT, "conformsTo");
-    public final static Property dct_temporal = mod.createProperty(DCT, "temporal");
-    public final static Property dct_spatial = mod.createProperty(DCT, "spatial");
-    public final static Property dct_rights = mod.createProperty(DCT, "rights");
-    public final static Property dct_references = mod.createProperty(DCT, "references");
-    public final static Property dct_provenance = mod.createProperty(DCT, "provenance");
-    public final static Property dct_accrualPeriodicity = mod.createProperty(DCT, "accrualPeriodicity");
-    public final static Property dct_subject = mod.createProperty(DCT, "subject");
-    public final static Property dct_type = mod.createProperty(DCT, "type");
+    public static final Property dct_identifier = mod.createProperty(DCT, "identifier");
+    public static final Property dct_publisher = mod.createProperty(DCT, "publisher");
+    public static final Property dct_issued = mod.createProperty(DCT, "issued");
+    public static final Property dct_modified = mod.createProperty(DCT, "modified");
+    public static final Property dct_language = mod.createProperty(DCT, "language");
+    public static final Property dct_conformsTo = mod.createProperty(DCT, "conformsTo");
+    public static final Property dct_temporal = mod.createProperty(DCT, "temporal");
+    public static final Property dct_spatial = mod.createProperty(DCT, "spatial");
+    public static final Property dct_rights = mod.createProperty(DCT, "rights");
+    public static final Property dct_references = mod.createProperty(DCT, "references");
+    public static final Property dct_provenance = mod.createProperty(DCT, "provenance");
+    public static final Property dct_accrualPeriodicity = mod.createProperty(DCT, "accrualPeriodicity");
+    public static final Property dct_subject = mod.createProperty(DCT, "subject");
+    public static final Property dct_type = mod.createProperty(DCT, "type");
 
 
-    public final static Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
-    public final static Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
-    public final static Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
-    public final static Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
+    public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
+    public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
+    public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
+    public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
 
-    public final static Resource DCAT_CATALOG = mod.createResource(DCAT + "Catalog");
-    public final static Property dcat_title = mod.createProperty(DCT, "title");
-    public final static Property dcat_description = mod.createProperty(DCT, "description");
-    public final static Property dcat_dataset = mod.createProperty(DCAT, "dataset");
+    public static final Resource DCAT_CATALOG = mod.createResource(DCAT + "Catalog");
+    public static final Property dcat_title = mod.createProperty(DCT, "title");
+    public static final Property dcat_description = mod.createProperty(DCT, "description");
+    public static final Property dcat_dataset = mod.createProperty(DCAT, "dataset");
 
-    public final static Resource DCAT_DATASET = mod.createResource(DCAT + "Dataset");
-    public final static Property dcat_contactPoint = mod.createProperty(DCAT, "contactPoint");
-    public final static Property dcat_distribution = mod.createProperty(DCAT, "distribution");
-    public final static Property dcat_keyword = mod.createProperty(DCAT, "keyword");
-    public final static Property dcat_landingPage = mod.createProperty(DCAT, "landingPage");
-    public final static Property dcat_theme = mod.createProperty(DCAT, "theme");
+    public static final Resource DCAT_DATASET = mod.createResource(DCAT + "Dataset");
+    public static final Property dcat_contactPoint = mod.createProperty(DCAT, "contactPoint");
+    public static final Property dcat_distribution = mod.createProperty(DCAT, "distribution");
+    public static final Property dcat_keyword = mod.createProperty(DCAT, "keyword");
+    public static final Property dcat_landingPage = mod.createProperty(DCAT, "landingPage");
+    public static final Property dcat_theme = mod.createProperty(DCAT, "theme");
 
-    public final static Property dcatno_accessRightsComment = mod.createProperty(DCATNO, "accessRightsComment");
+    public static final Property dcatno_accessRightsComment = mod.createProperty(DCATNO, "accessRightsComment");
 
-    public final static Resource DCAT_DISTRIBUTION = mod.createResource(DCAT + "Distribution");
-    public final static Property dcat_accessUrl = mod.createProperty(DCAT, "accessUrl");
-    public final static Property dcat_format = mod.createProperty(DCAT, "format");
-    public final static Property dct_license = mod.createProperty(DCT, "license");
+    public static final Resource DCAT_DISTRIBUTION = mod.createResource(DCAT + "Distribution");
+    public static final Property dcat_accessUrl = mod.createProperty(DCAT, "accessUrl");
+    public static final Property dcat_format = mod.createProperty(DCAT, "format");
+    public static final Property dct_license = mod.createProperty(DCT, "license");
 
-    public final static Resource FOAF_AGENT = mod.createResource(FOAF + "Agent");
-    public final static Property foaf_name = mod.createProperty(FOAF, "name");
-    public final static Property foaf_page = mod.createProperty(FOAF, "page");
+    public static final Resource FOAF_AGENT = mod.createResource(FOAF + "Agent");
+    public static final Property foaf_name = mod.createProperty(FOAF, "name");
+    public static final Property foaf_page = mod.createProperty(FOAF, "page");
 
-    public final static Resource VCARD_ORG = mod.createResource(VCARD + "Organization");
-    public final static Property vcard_hasEmail = mod.createProperty(VCARD, "hasEmail");
-    public final static Property vcard_fullName = mod.createProperty(VCARD, "fn");
-    public final static Property vcard_OrganizationName = mod.createProperty(VCARD, "organization-name");
-    public final static Property vcard_organizationUnit = mod.createProperty(VCARD, "organization-unit");
-    public final static Property vcard_hasUrl = mod.createProperty(VCARD, "hasUrl");
-    public final static Property vcard_hasTelephone = mod.createProperty(VCARD, "hasTelephone");
+    public static final Resource VCARD_ORG = mod.createResource(VCARD + "Organization");
+    public static final Property vcard_hasEmail = mod.createProperty(VCARD, "hasEmail");
+    public static final Property vcard_fullName = mod.createProperty(VCARD, "fn");
+    public static final Property vcard_OrganizationName = mod.createProperty(VCARD, "organization-name");
+    public static final Property vcard_organizationUnit = mod.createProperty(VCARD, "organization-unit");
+    public static final Property vcard_hasUrl = mod.createProperty(VCARD, "hasUrl");
+    public static final Property vcard_hasTelephone = mod.createProperty(VCARD, "hasTelephone");
 
-    public static String catPrefix = "http://reg.brreg.no/catalogs/";
-
-    private Model model;
-    private Map<Object, Resource> resourceMap = new HashMap<>();
+    private final Model model;
+    private final Map<Object, Resource> resourceMap = new HashMap<>();
 
     public DcatBuilder() {
         model = ModelFactory.createDefaultModel();
@@ -159,11 +157,11 @@ public class DcatBuilder {
 
                 addContactPoints(datRes, dataset.getContactPoint());
 
-                if (dataset.getKeyword() != null)
+                if (dataset.getKeyword() != null) {
                     for (Map<String, String> keyword : dataset.getKeyword()) {
                         addLiterals(datRes, dcat_keyword, keyword);
                     }
-
+                }
                 addUriProperty(datRes, dct_publisher, dataset.getPublisher());
 
                 addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
@@ -176,10 +174,11 @@ public class DcatBuilder {
 
                 addProperties(datRes, dct_conformsTo, dataset.getConformsTo());
 
-                if (dataset.getTemporal() != null)
+                if (dataset.getTemporal() != null) {
                     for (PeriodOfTime period : dataset.getTemporal()) {
                         addPeriodResourceAnnon(datRes, dct_temporal, period);
                     }
+                }
 
                 addUriProperties(datRes, dct_spatial, dataset.getSpatial());
                 addProperty(datRes, dct_rights, dataset.getAccessRights());
@@ -273,33 +272,37 @@ public class DcatBuilder {
     public DcatBuilder addContactPoints(Resource datRes, List<Contact> contacts) {
         if (contacts != null) {
             for (Contact contact : contacts) {
-                addProperty(datRes, dcat_contactPoint, contact.getUri());
-
-                Resource contactRes = createResource(contact, contact.getUri(), VCARD_ORG);
-
-                addLiteral(contactRes, vcard_fullName, contact.getFullname());
-                addProperty(contactRes, vcard_hasUrl, contact.getHasURL());
-                addLiteral(contactRes, vcard_OrganizationName, contact.getOrganizationName());
-                addLiteral(contactRes, vcard_organizationUnit, contact.getOrganizationUnit());
-
-                if (contact.getEmail() != null) {
-                    if (!contact.getEmail().startsWith("mailto:")) {
-                        addProperty(contactRes, vcard_hasEmail, "mailto:" + contact.getEmail());
-                    } else {
-                        addProperty(contactRes, vcard_hasEmail, contact.getEmail());
-                    }
-                }
-
-                if (contact.getHasTelephone() != null) {
-                    if (!contact.getHasTelephone().startsWith("tel:")) {
-                        addProperty(contactRes, vcard_hasTelephone, "tel:" + contact.getHasTelephone());
-                    } else {
-                        addProperty(contactRes, vcard_hasTelephone, contact.getHasTelephone());
-                    }
-                }
+                createContactPoint(datRes, contact);
             }
         }
         return this;
+    }
+
+    private void createContactPoint(Resource datRes, Contact contact) {
+        addProperty(datRes, dcat_contactPoint, contact.getUri());
+
+        Resource contactRes = createResource(contact, contact.getUri(), VCARD_ORG);
+
+        addLiteral(contactRes, vcard_fullName, contact.getFullname());
+        addProperty(contactRes, vcard_hasUrl, contact.getHasURL());
+        addLiteral(contactRes, vcard_OrganizationName, contact.getOrganizationName());
+        addLiteral(contactRes, vcard_organizationUnit, contact.getOrganizationUnit());
+
+        if (contact.getEmail() != null) {
+            if (contact.getEmail().startsWith("mailto:")) {
+                addProperty(contactRes, vcard_hasEmail, contact.getEmail());
+            } else {
+                addProperty(contactRes, vcard_hasEmail, "mailto:" + contact.getEmail());
+            }
+        }
+
+        if (contact.getHasTelephone() != null) {
+            if (contact.getHasTelephone().startsWith("tel:")) {
+                addProperty(contactRes, vcard_hasTelephone, contact.getHasTelephone());
+            } else {
+                addProperty(contactRes, vcard_hasTelephone, "tel:" + contact.getHasTelephone());
+            }
+        }
     }
 
     public Resource createResource(Object o, String uri, Resource resourceType) {
@@ -322,7 +325,7 @@ public class DcatBuilder {
     public DcatBuilder addProperties(Resource resource, Property property, List<String> uris) {
         if (uris != null) {
             for (String uri : uris) {
-                addProperty(resource, dct_subject, uri);
+                addProperty(resource, property, uri);
             }
 
         }

@@ -3,23 +3,21 @@ package no.dcat.factory;
 import no.dcat.model.Contact;
 import no.dcat.model.Dataset;
 import no.dcat.model.Distribution;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationFactory {
+    private static String catalogUriPrefix;
 
+    public static RegistrationFactory INSTANCE = new RegistrationFactory();
 
-    private DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
+    private final DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
 
     @Value("${spring.application.catalogUriPrefix}")
     public void setCatalogUriPrefix(String uri) {
         catalogUriPrefix = uri;
     }
-
-    private static String catalogUriPrefix;
-    public static RegistrationFactory INSTANCE = new RegistrationFactory();
 
     public Dataset createDataset(String catalogId) {
         Dataset dataset = new Dataset();
