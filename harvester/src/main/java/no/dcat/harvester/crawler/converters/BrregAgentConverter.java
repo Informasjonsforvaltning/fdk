@@ -4,8 +4,8 @@ import com.google.common.cache.LoadingCache;
 import no.acando.xmltordf.Builder;
 import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
+import no.dcat.data.store.domain.dcat.Publisher;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.EnhetsregisteretRDF;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
@@ -67,7 +67,7 @@ public class BrregAgentConverter {
         Model extractedModel = ModelFactory.createDefaultModel();
         try {
 
-            ClassLoader classLoader = getClass().getClassLoader();
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader(); 
 
             extractedModel = postProcessing
                     .mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00001.qr"), new Object())

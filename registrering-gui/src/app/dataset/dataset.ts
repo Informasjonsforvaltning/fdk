@@ -12,5 +12,10 @@ export interface Dataset {
   terms: string[];
   theme: {code:string}[];
   catalog: string;
+  publisher?: {
+    uri: string;
+    id: string;
+    name: string;
+  };
   _lastModified: string;
 }

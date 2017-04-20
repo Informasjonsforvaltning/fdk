@@ -29,7 +29,7 @@
       <skos:prefLabel xml:lang="no">Norsk</skos:prefLabel>
       <skos:prefLabel xml:lang="nn">Norsk</skos:prefLabel>
       <skos:prefLabel xml:lang="nb">Norsk</skos:prefLabel>
-      <skos:prefLabel xml:lang="en">Norwegian Bokmål</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Norwegian</skos:prefLabel>
    </skos:Concept>
    <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NNO" at:deprecated="false" at:protocol.order="EU-08">
       <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
@@ -44,4 +44,16 @@
       <skos:prefLabel xml:lang="nb">Nynorsk</skos:prefLabel>
       <skos:prefLabel xml:lang="en">Norwegian Nynorsk</skos:prefLabel>
    </skos:Concept>
+   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NOB" at:deprecated="false">
+   		<skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
+   		<at:authority-code>NOB</at:authority-code>
+   		<at:op-code>NOB</at:op-code>
+   		<atold:op-code>NOB</atold:op-code>
+   		<dc:identifier>NOB</dc:identifier>
+   		<at:start.use>1950-05-09</at:start.use>
+   		<skos:prefLabel xml:lang="no">Norsk Bokmål</skos:prefLabel>
+   		<skos:prefLabel xml:lang="nn">Norsk Bokmål</skos:prefLabel>
+        <skos:prefLabel xml:lang="nb">Norsk Bokmål</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">Norwegian Bokmål</skos:prefLabel>
+   	</skos:Concept>
 </rdf:RDF>

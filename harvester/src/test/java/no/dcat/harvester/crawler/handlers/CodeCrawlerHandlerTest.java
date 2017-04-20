@@ -1,6 +1,6 @@
 package no.dcat.harvester.crawler.handlers;
 
-import no.difi.dcat.datastore.Elasticsearch;
+import no.dcat.data.store.Elasticsearch;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.elasticsearch.action.ListenableActionFuture;
@@ -12,7 +12,9 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Class for testing CodeCrawlerHandler.

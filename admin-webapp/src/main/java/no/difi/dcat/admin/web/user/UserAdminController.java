@@ -1,9 +1,9 @@
 package no.difi.dcat.admin.web.user;
 
+import no.dcat.admin.store.AdminDataStore;
+import no.dcat.admin.store.Fuseki;
+import no.dcat.admin.store.domain.User;
 import no.difi.dcat.admin.settings.FusekiSettings;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

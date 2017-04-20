@@ -1,6 +1,6 @@
 package no.dcat.portal.webapp.utility;
 
-import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.portal.webapp.domain.Publisher;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Class for testing TransformModel.

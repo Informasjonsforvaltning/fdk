@@ -2,11 +2,15 @@ package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.GeonamesRDF;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.DCTerms;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -55,7 +59,7 @@ public class LoadLocations {
         while (locIter.hasNext()) {
             Resource resource = locIter.next();
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
-            SkosCode code = new SkosCode(locUri, new HashMap<>());
+            SkosCode code = new SkosCode(locUri, null, new HashMap<>());
             locations.put(locUri, code);
 
             logger.info("Extract location with URI {}", locUri);
@@ -87,7 +91,7 @@ public class LoadLocations {
             while (resIter.hasNext()) {
                 Map<String, String> titleMap = extractLocationTitle(resIter.next());
                 SkosCode code = (SkosCode) loc.getValue();
-                code.setTitle(titleMap);
+                code.setPrefLabel(titleMap);
             }
         }
 
@@ -143,11 +147,11 @@ public class LoadLocations {
             Map.Entry locEntry = (Map.Entry) locations.next();
             SkosCode location = (SkosCode) locEntry.getValue();
 
-            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getCode());
+            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getUri());
             indexRequest.source(gson.toJson(location));
             bulkRequest.add(indexRequest);
 
-            logger.debug("Add location {} to bulk request", location.getCode());
+            logger.debug("Add location {} to bulk request", location.getUri());
         }
 
         if(bulkRequest.numberOfActions() > 0){

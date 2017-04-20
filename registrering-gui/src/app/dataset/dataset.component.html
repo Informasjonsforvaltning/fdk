@@ -7,11 +7,11 @@
 
 <div class="panel fdk-panel" *ngIf="dataset" id="dataset">
   <div class="fdk-panel-big-heading">
-    <input  class="fdk-register-h1" id="tittel-datasett" (ngModelChange)="valuechange()" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
+    <input  class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
   <div class="fdk-panel-big-body">
-    <h2>{{dataset.catalog}}</h2>
-    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange()" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
+    <h2 id="datasett-utgiver-navn">{{dataset.publisher.name}}</h2>
+    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
 
@@ -39,7 +39,7 @@
         <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
         <form [formGroup]="form" class="col-md-11">
           <ng-select
-            (ngModelChange)="valuechange()" 
+            (ngModelChange)="valuechange()"
         		[options]="themes"
         		[multiple]="true"
         		placeholder="Velg Tema"
@@ -51,4 +51,4 @@
   </div>
 </div>
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="delete()">Slett datasett</button>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett datasett</button>

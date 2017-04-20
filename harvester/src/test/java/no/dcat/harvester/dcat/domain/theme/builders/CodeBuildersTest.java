@@ -1,6 +1,6 @@
 package no.dcat.harvester.dcat.domain.theme.builders;
 
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Test;
@@ -21,15 +21,15 @@ public class CodeBuildersTest {
         Model model = createModel();
         List<SkosCode> codes = new CodeBuilders(model).build();
 
-        assertEquals("http://data.brreg.no/datakatalog/provinens/vedtak", codes.get(0).getCode());
-        assertEquals("Governmental decisions", codes.get(0).getTitle().get("en"));
-        assertEquals("Statlig vedtak", codes.get(0).getTitle().get("nb"));
-        assertEquals("Statlig vedtak", codes.get(0).getTitle().get("nn"));
+        assertEquals("http://data.brreg.no/datakatalog/provinens/vedtak", codes.get(0).getUri());
+        assertEquals("Governmental decisions", codes.get(0).getPrefLabel().get("en"));
+        assertEquals("Statlig vedtak", codes.get(0).getPrefLabel().get("nb"));
+        assertEquals("Statlig vedtak", codes.get(0).getPrefLabel().get("nn"));
 
-        assertEquals("http://data.brreg.no/datakatalog/provinens/bruker", codes.get(1).getCode());
-        assertEquals("User collection", codes.get(1).getTitle().get("en"));
-        assertEquals("Brukerinnsamling", codes.get(1).getTitle().get("nb"));
-        assertEquals("Brukerinnsamling", codes.get(1).getTitle().get("nn"));
+        assertEquals("http://data.brreg.no/datakatalog/provinens/bruker", codes.get(1).getUri());
+        assertEquals("User collection", codes.get(1).getPrefLabel().get("en"));
+        assertEquals("Brukerinnsamling", codes.get(1).getPrefLabel().get("nb"));
+        assertEquals("Brukerinnsamling", codes.get(1).getPrefLabel().get("nn"));
     }
 
     private Model createModel() throws IOException {

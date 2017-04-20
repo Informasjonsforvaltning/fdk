@@ -121,12 +121,12 @@
             <h3 th:text="#{detail.quality.title}">Kvalitet</h3>
             <dl class="dl-horizontal">
                 <dt th:if="${dataset.provenance}" th:text="#{detail.provenance}">Opphav</dt>
-                <dd th:if="${dataset.provenance}" th:text="${dataset.provenance.getTitle().get(pageLanguage)}"
+                <dd th:if="${dataset.provenance}" th:text="${dataset.provenance.getPrefLabel().get(pageLanguage)}"
                     id="provenanceText"></dd>
 
                 <dt th:if="${dataset.accrualPeriodicity}" th:text="#{detail.frequency}">Frekvens</dt>
                 <dd th:if="${dataset.accrualPeriodicity}"
-                    th:text="${dataset.accrualPeriodicity.getTitle().get(pageLanguage)}"
+                    th:text="${dataset.accrualPeriodicity.getPrefLabel().get(pageLanguage)}"
                     id="accrualPeriodicityText"></dd>
 
                 <dt th:if="${dataset.conformsTo.size() > 0}" th:text="#{detail.conformsTo}"></dt>
@@ -143,7 +143,7 @@
             <h3 th:text="#{detail.restrictions}">Restriksjoner</h3>
             <dl class="dl-horizontal">
                 <dt th:if="${dataset.accessRights}" th:text="#{detail.restriction}">Restriksjon</dt>
-                <dd th:if="${dataset.accessRights}" th:text="${dataset.accessRights.getTitle().get(pageLanguage)}"
+                <dd th:if="${dataset.accessRights}" th:text="${dataset.accessRights.getPrefLabel().get(pageLanguage)}"
                     id="accessRightText"></dd>
 
                 <dt th:if="${dataset.accessRightsComment.size() > 0 }" th:text="#{detail.comments}">Kommentar</dt>
@@ -180,7 +180,7 @@
                 <dd th:if="${dataset.modified}" th:text="${#dates.format(dataset.modified, 'yyyy-MM-dd')}"></dd>
 
                 <dt th:if="${dataset.language}" th:text="#{detail.language}">Språk</dt>
-                <dd th:if="${dataset.language}" th:text="${dataset.language.getTitle().get(pageLanguage)}"
+                <dd th:if="${dataset.language}" th:text="${dataset.language.getPrefLabel().get(pageLanguage)}"
                     id="languageText"></dd>
 
                 <dt th:if="${dataset.temporal.size() > 0}" th:text="#{detail.period}">Tidsperiode</dt>
@@ -194,8 +194,8 @@
 
                 <dt th:if="${dataset.spatial.size() > 0}" th:text="#{detail.spatial}">Dekningsområde</dt>
                 <dd th:if="${dataset.spatial.size() > 0}" id="locationsText">
-                    <a th:each="omrade : ${dataset.spatial}" th:href="${omrade.getCode()}"
-                       th:text="${omrade.getTitle().get(pageLanguage)}"></a>
+                    <a th:each="omrade : ${dataset.spatial}" th:href="${omrade.getUri()}"
+                       th:text="${omrade.getPrefLabel().get(pageLanguage)}"></a>
                 </dd>
 
                 <dt th:if="${dataset.identifier.size() > 0}" th:text="#{identifier}">Identifikator</dt>
