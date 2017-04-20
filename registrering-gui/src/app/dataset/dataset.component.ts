@@ -34,7 +34,6 @@ export class DatasetComponent implements OnInit {
 
   themes: string[];
   selection: Array<string>;
-  valueChangeEnabled: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,9 +64,7 @@ export class DatasetComponent implements OnInit {
         let catalog = this.catalogService.get(this.catId);
 
         this.dataset.publisher = {"uri" : this.catalog.publisher.uri, "id" : this.catalog.publisher.id, "name" : this.catalog.publisher.name};
-        this.dataset.description['nb'] = this.dataset.publisher.uri + " "
-          + this.dataset.publisher.id + " "
-          + this.dataset.publisher.name;
+        this.dataset.description['nb'] = 'testing';
 
       }
 
