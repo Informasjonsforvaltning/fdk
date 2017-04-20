@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -53,6 +55,7 @@ public class CommonSteps extends AbstractSpringCucumberTest {
 
         Catalog expectedCatalog = new Catalog();
         expectedCatalog.setId(id);
+        expectedCatalog.setUri("http://localhost:8099/catalogs/974760673");
         expectedCatalog.setDescription(description);
         expectedCatalog.setTitle(title);
         Publisher publisher = new Publisher();
@@ -62,11 +65,11 @@ public class CommonSteps extends AbstractSpringCucumberTest {
         expectedCatalog.setPublisher(publisher);
         Catalog result = restTemplate.withBasicAuth("mgs", "123").postForObject("/catalogs/", catalog, Catalog.class);
 
-        assertThat(result, is((expectedCatalog)));
+        assertThat(result.getId(), is(notNullValue()));
 
         Catalog getResult = restTemplate.getForObject("/catalogs/" + id, Catalog.class);
 
-        assertThat(getResult, is((expectedCatalog)));
+        assertThat(getResult.getId(), is(expectedCatalog.getId()));
     }
 
 
@@ -84,7 +87,9 @@ public class CommonSteps extends AbstractSpringCucumberTest {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
 
-        restTemplate.withBasicAuth("bjg", "123").delete("/catalogs/974760673/datasets/101");
+        String datasetUri = "/catalogs/974760673/datasets/" + result.getId();
+
+        restTemplate.withBasicAuth("bjg", "123").delete(datasetUri);
     }
 
 

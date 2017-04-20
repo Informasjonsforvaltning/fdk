@@ -28,6 +28,7 @@ import java.util.Map;
 import static gherkin.deps.com.google.gson.internal.$Gson$Types.arrayOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -71,7 +72,7 @@ public class RestCreateNewDatasetSteps extends AbstractSpringCucumberTest{
 
     @Then("^Json containing the dataset id is returned in http body$")
     public void json_containing_the_dataset_id_is_returned_in_http_body() throws Throwable {
-        assertThat(response.getBody().getId(), is("102"));
+        assertThat(response.getBody().getId(), is(notNullValue()));
     }
 
 }

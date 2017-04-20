@@ -1,9 +1,6 @@
 package no.dcat.rdf;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
-import no.dcat.RegisterApplication;
 import no.dcat.factory.RegistrationFactory;
-import no.dcat.factory.UriFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Contact;
 import no.dcat.model.DataTheme;
@@ -15,14 +12,9 @@ import no.dcat.model.SkosCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -36,7 +28,6 @@ import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 /**
  * Created by dask on 12.04.2017.

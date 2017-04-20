@@ -143,6 +143,7 @@ services:
       - "8099:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - spring.application.catalogUriPrefix=http://localhost:8099
     links:
       - elasticsearch
     networks:

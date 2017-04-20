@@ -85,6 +85,10 @@ public class DatasetController {
         Dataset dataset = RegistrationFactory.INSTANCE.createDataset(catalogId);
 
         // TODO - copy (later story)
+        dataset.setTitle(copy.getTitle());
+        dataset.setKeyword(copy.getKeyword());
+        dataset.setDescription(copy.getDescription());
+
 
         //Store metainformation about editing
         logger.debug("create dataset {} at timestamp {}", dataset.getId(), Calendar.getInstance().getTime());

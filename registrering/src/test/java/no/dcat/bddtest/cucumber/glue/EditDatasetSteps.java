@@ -38,9 +38,10 @@ public class EditDatasetSteps extends AbstractSpringCucumberTest {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
 
+        datasetResUrl = "/catalogs/974760673/datasets/" + result.getId();
 
         //Try to edit the dataset...
-        Dataset datasetToEdit = restTemplate.getForObject("/catalogs/974760673/datasets/101", Dataset.class);
+        Dataset datasetToEdit = restTemplate.getForObject(datasetResUrl, Dataset.class);
 
         Map descriptions = datasetToEdit.getDescription();
         descriptions.put("en", "English description");
@@ -48,15 +49,16 @@ public class EditDatasetSteps extends AbstractSpringCucumberTest {
 
         HttpHeaders headers = createHeaders("bjg","123");
         HttpEntity<Dataset> request = new HttpEntity<Dataset>(datasetToEdit, headers);
-        String datasetResUrl = "/catalogs/974760673/datasets/101";
+
         response = restTemplate.exchange(datasetResUrl, HttpMethod.PUT, request, String.class);
     }
 
+    String datasetResUrl;
 
     @Then("^the changed information is saved$")
     public void the_changed_information_is_saved() throws Throwable {
         //retrieve the dataset and chack that the english description was saved
-        Dataset savedDataset = restTemplate.getForObject("/catalogs/974760673/datasets/101", Dataset.class);
+        Dataset savedDataset = restTemplate.getForObject(datasetResUrl, Dataset.class);
         assertThat(savedDataset.getDescription().get("en"), is("English description"));
 
     }
