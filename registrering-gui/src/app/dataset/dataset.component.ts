@@ -51,7 +51,6 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
-    let datasetId = this.route.snapshot.params['dataset_id'];
     this.form = new FormGroup({});
     this.form.addControl('selectMultiple', new FormControl([]));
     let datasetId = this.route.snapshot.params['dataset_id'];
