@@ -53,6 +53,7 @@ export class DatasetComponent implements OnInit {
     this.form = new FormGroup({});
     this.form.addControl('selectMultiple', new FormControl([]));
     let datasetId = this.route.snapshot.params['dataset_id'];
+    this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
@@ -60,12 +61,8 @@ export class DatasetComponent implements OnInit {
 
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
-        //get catalog's publisher
-        let catalog = this.catalogService.get(this.catId);
-
-        this.dataset.publisher = {"uri" : this.catalog.publisher.uri, "id" : this.catalog.publisher.id, "name" : this.catalog.publisher.name};
-        this.dataset.description['nb'] = 'testing';
-
+        //will probably need to be modified later, when publisher is stored as separate object in db
+        this.dataset.publisher = this.catalog.publisher;
       }
 
       this.http
