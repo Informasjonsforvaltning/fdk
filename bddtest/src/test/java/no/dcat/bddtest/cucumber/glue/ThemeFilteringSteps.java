@@ -37,18 +37,17 @@ public class ThemeFilteringSteps extends CommonPage {
         WebElement themeElement = driver.findElement(By.id(theme));
         themeLink = themeElement.getAttribute("href");
         driver.get(themeLink);
-        if (openPageWaitRetry(themeLink, "theme-list", 1)) {
-            openPage(themeLink);
-        } else {
-            fail();
-        }
+
+        //openPageWaitRetry(themeLink, "theme-list", 3)
+
     }
 
     @Then("^the result list should show (\\d+) datasets$")
     public void the_result_list_should_show_datasets(int expectedNoOfDatasets) throws Throwable {
-        WebElement reportedNoOfHits = driver.findElement(By.id("total.hits"));
-        int foundNoOfDatasets = Integer.parseInt(reportedNoOfHits.getText());
-        assertThat(foundNoOfDatasets, is(expectedNoOfDatasets));
+        WebElement actualHits = driver.findElement(By.className("sk-hits-stats__info"));
+        String expected = String.format("Søket ga %d treff", expectedNoOfDatasets);
+
+        assertThat(actualHits.getText(), is(expected));
     }
 
 }

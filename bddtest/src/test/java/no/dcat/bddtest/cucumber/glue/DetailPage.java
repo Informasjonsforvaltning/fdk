@@ -177,7 +177,7 @@ public class DetailPage extends CommonPage {
                 logger.info("Checking field {} equals {}",htmlId,value);
 
                 String textActual = driver.findElement(By.id(htmlId)).getText();
-                assertTrue(String.format("The user %s shall have %s equal to %s", pageUrl, htmlId, value),
+                assertTrue(String.format("The dataset %s shall have %s equal to %s, actual is %s", pageUrl, htmlId, value, textActual),
                         value.equals(textActual));
 
             }

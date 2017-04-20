@@ -26,7 +26,7 @@ Feature: Detail page for presenting properties for a dataset.
       | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Ikke-offentlig | Norge |
     Given I change page-language to "English"
     Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-right, locations):
-      | http://data.brreg.no/datakatalog/dataset/1 | Governmental decisions  | continuous | Norwegian Bokmål | Public | Norway|
+      | http://data.brreg.no/datakatalog/dataset/1 | Governmental decisions  | continuous | Norwegian | Public | Norway|
       | http://data.brreg.no/datakatalog/dataset/26 | User collection | | | Restricted | Norway |
       | http://data.brreg.no/datakatalog/dataset/27 | User collection | | | Non-public | Norway |
 
