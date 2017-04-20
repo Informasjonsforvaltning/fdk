@@ -45,7 +45,7 @@ public class DcatBuilderTest {
 
     }
 
-    private Catalog createCompleteCatalog() {
+    public Catalog createCompleteCatalog() {
         Catalog catalog = new Catalog();
         catalog.setId("987654321");
         catalog.setTitle(map("nb", "Tittel"));

@@ -80,7 +80,11 @@ public class DatasetControllerIT {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
 
-        assertThat(result.getId(), is(expectedDataset.getId()));
+        datasetId = result.getId();
+
+        assertThat(result.getTitle(), is(dataset.getTitle()));
+        assertThat(result.getDescription(), is(dataset.getDescription()));
+        assertThat(result.getCatalog(), is(dataset.getCatalog()));
 
         Dataset getResult = restTemplate.getForObject("/catalogs/" + catalogId + "/datasets/" + datasetId, Dataset.class);
 
@@ -183,6 +187,8 @@ public class DatasetControllerIT {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
 
+        datasetId = result.getId();
+
         HttpHeaders headers = createHeaders("bjg","123");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -218,7 +224,7 @@ public class DatasetControllerIT {
     }
 
 
-    HttpHeaders createHeaders(String username, String password){
+    static HttpHeaders createHeaders(String username, String password){
         return new HttpHeaders() {{
             String auth = username + ":" + password;
             byte[] encodedAuth = Base64.encodeBase64(
