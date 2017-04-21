@@ -35,6 +35,14 @@ public class RdfCatalogController {
     @Autowired
     private DatasetRepository datasetRepository;
 
+    CatalogRepository getCatalogRepository() {
+        return catalogRepository;
+    }
+
+    DatasetRepository getDatasetRepository() {
+        return datasetRepository;
+    }
+
     @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
@@ -43,14 +51,16 @@ public class RdfCatalogController {
 
         logger.debug ("get rdf catalog {} ",id);
 
-        Catalog catalog = catalogRepository.findOne(id);
+        Catalog catalog = getCatalogRepository().findOne(id);
 
         if (catalog == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         // TODO fix limitation in more than 50 datasets
-        Page<Dataset> datasets = datasetRepository.findByCatalog(catalog.getId(), new PageRequest(0,50));
+        Page<Dataset> datasets = getDatasetRepository()
+                .findByCatalog(catalog.getId(), new PageRequest(0,50));
+
         catalog.setDataset(datasets.getContent());
 
         return new ResponseEntity<>(catalog, OK);
