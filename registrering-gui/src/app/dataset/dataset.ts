@@ -12,5 +12,6 @@ export interface Dataset {
   terms: string[];
   theme: {code:string}[];
   catalog: string;
+  landingPage : string[];
   _lastModified: string;
 }
