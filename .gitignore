@@ -21,3 +21,4 @@ logs/
 /bddtest/data/
 /data/
 .DS_Store
+data/
