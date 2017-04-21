@@ -89,7 +89,7 @@
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
         <configuration>
-          <installDirectory></installDirectory>
+          <installDirectory>C:\Program Files</installDirectory>
         </configuration>
         <executions>
           <execution>
@@ -116,6 +116,7 @@
             dcat/reg-gui:latest
           </imageName>
           <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
+          <serverId>docker-hub</serverId>
         </configuration>
 
       </plugin>

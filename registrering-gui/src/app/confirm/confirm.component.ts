@@ -15,9 +15,9 @@ export interface ConfirmModel {
                 <div class="modal-content">
                    <div class="modal-header">
                      <button type="button" class="close" (click)="close()" >&times;</button>
-                     <h4 class="modal-title">{{title || 'Bekreft'}}</h4>
+                     <h4 class="modal-title fdk-text-regular">{{title || 'Bekreft'}}</h4>
                    </div>
-                   <div class="modal-body">
+                   <div class="modal-body fdk-text-regular">
                      <p>{{message || 'Er du sikker?'}}</p>
                    </div>
                    <div class="modal-footer">
