@@ -4,6 +4,7 @@ import {FormGroup, FormControl} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
 import {CatalogService} from "../catalog/catalog.service";
 import {Dataset} from "./dataset";
+import {Catalog} from "../catalog/catalog"
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import {NgModule} from '@angular/core';
@@ -20,6 +21,7 @@ import { DialogService } from "ng2-bootstrap-modal";
 export class DatasetComponent implements OnInit {
   title = 'Registrer datasett';
   dataset: Dataset;
+  catalog: Catalog;
   // title: string;
   description: string;
   language: string;
@@ -48,13 +50,21 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
-    let datasetId = this.route.snapshot.params['dataset_id'];
     this.form = new FormGroup({});
     this.form.addControl('selectMultiple', new FormControl([]));
+    let datasetId = this.route.snapshot.params['dataset_id'];
+    this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.terms = ['term1', 'term'];
+
+      //set default publisher to be the same as catalog
+      if(this.dataset.publisher == null) {
+        //will probably need to be modified later, when publisher is stored as separate object in db
+        this.dataset.publisher = this.catalog.publisher;
+      }
+
       this.http
           .get(environment.queryUrl + `/themes`)
           .map(data => data.json().hits.hits.map(item => {
