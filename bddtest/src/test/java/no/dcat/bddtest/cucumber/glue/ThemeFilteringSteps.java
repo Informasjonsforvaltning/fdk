@@ -38,8 +38,6 @@ public class ThemeFilteringSteps extends CommonPage {
         themeLink = themeElement.getAttribute("href");
         driver.get(themeLink);
 
-        //openPageWaitRetry(themeLink, "theme-list", 3)
-
     }
 
     @Then("^the result list should show (\\d+) datasets$")
