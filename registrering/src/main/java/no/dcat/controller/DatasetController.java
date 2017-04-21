@@ -88,6 +88,8 @@ public class DatasetController {
         dataset.setTitle(copy.getTitle());
         dataset.setKeyword(copy.getKeyword());
         dataset.setDescription(copy.getDescription());
+        // force publisher
+        dataset.setPublisher(catalog.getPublisher());
 
 
         //Store metainformation about editing
