@@ -67,6 +67,7 @@ services:
     links:
      - fuseki
      - elasticsearch:es
+     - registrering
 
   admin:
     image: "fdk/admin-webapp:latest"
