@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +65,14 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
 
     protected void setupDriver() {
         PhantomJsDriverManager.getInstance().setup();
-        driver = new PhantomJSDriver();
+        DesiredCapabilities dcap = new DesiredCapabilities();
+        String[] phantomArgs = new  String[] {
+                "--webdriver-loglevel=NONE"
+        };
+        dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+
+        driver = new PhantomJSDriver(dcap);
+
     }
 
 

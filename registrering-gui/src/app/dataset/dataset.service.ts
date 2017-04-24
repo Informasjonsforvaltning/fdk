@@ -17,6 +17,7 @@ const TEST_DATASETS: Dataset[] = [
     "terms":["term1", "term2", "term3"],
     "theme":[{"code":"GOVE"},{"code":"HEAL"}],
     "catalog": "974760673",
+    "landingPage" : ["http://www.brreg.no", "http://www.difi.no"],
     "_lastModified": "2012-04-23"
   }
 ]

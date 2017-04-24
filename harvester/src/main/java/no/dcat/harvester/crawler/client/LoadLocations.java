@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.data.store.Elasticsearch;
 import no.dcat.data.store.domain.dcat.SkosCode;
-import no.dcat.harvester.dcat.domain.theme.builders.vocabulary.GeonamesRDF;
+import no.dcat.harvester.theme.builders.vocabulary.GeonamesRDF;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;

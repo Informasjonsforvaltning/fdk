@@ -47,6 +47,14 @@
         	</ng-select>
         </form>
       </div>
+
+      <div class="row form-group">
+        <label for="landingsside-datasett" class="col-md-1 control-label">Landingsside:</label>
+        <div class="col-md-11">
+          <input id="landingsside-datasett" (ngModelChange)="valuechange(this)" type="text" class="form-control"  [(ngModel)]='dataset.landingPage'  />
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

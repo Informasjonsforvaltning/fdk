@@ -14,11 +14,12 @@ import java.util.Map;
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Catalog {
-
     public static final String ELASTIC_TYPE = "catalog";
 
     @Id
     private String id;
+
+    private String uri;
 
     // dct:title
     // Norwegian: Tittel
@@ -31,7 +32,5 @@ public class Catalog {
     private Publisher publisher;
 
     private List<Dataset> dataset;
-
-
 
 }

@@ -41,9 +41,10 @@ public class EditDatasetAccessDeniedSteps extends AbstractSpringCucumberTest {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
 
+        String datasetResUrl = "/catalogs/974760673/datasets/" + result.getId();
 
         //Try to edit the dataset...
-        Dataset datasetToEdit = restTemplate.getForObject("/catalogs/974760673/datasets/101", Dataset.class);
+        Dataset datasetToEdit = restTemplate.getForObject(datasetResUrl, Dataset.class);
 
         Map descriptions = datasetToEdit.getDescription();
         descriptions.put("en", "English description");
@@ -51,7 +52,7 @@ public class EditDatasetAccessDeniedSteps extends AbstractSpringCucumberTest {
 
         //notice: no authentication
         HttpEntity<Dataset> request = new HttpEntity<Dataset>(dataset);
-        String datasetResUrl = "/catalogs/974760673/datasets/101";
+
         try {
             response = restTemplate.exchange(datasetResUrl, HttpMethod.PUT, request, Dataset.class);
         } catch (ResourceAccessException e) {

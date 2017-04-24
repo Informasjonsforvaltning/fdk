@@ -15,7 +15,7 @@ import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.dcat.harvester.crawler.client.RetrieveModel;
-import no.dcat.harvester.dcat.domain.theme.builders.DataThemeBuilders;
+import no.dcat.harvester.theme.builders.DataThemeBuilders;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;

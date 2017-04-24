@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.data.store.Elasticsearch;
 import no.dcat.data.store.domain.dcat.SkosCode;
-import no.dcat.harvester.dcat.domain.theme.builders.CodeBuilders;
+import no.dcat.harvester.theme.builders.CodeBuilders;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
