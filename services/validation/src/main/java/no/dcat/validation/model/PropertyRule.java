@@ -1,0 +1,20 @@
+package no.dcat.validation.model;
+
+import lombok.Data;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by dask on 24.04.2017.
+ */
+@Data
+public class PropertyRule {
+    String path;
+    Integer minCount;
+    Integer maxCount;
+    String nodeKind;
+    String severity;
+    String clazz;
+    List<Map<String,String>> or;
+}
