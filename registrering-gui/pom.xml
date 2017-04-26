@@ -89,7 +89,8 @@
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
         <configuration>
-          <installDirectory>C:\Program Files</installDirectory>
+          <installDirectory></installDirectory>
+          <!--installDirectory>C:\Program Files</installDirectory-->
         </configuration>
         <executions>
           <execution>

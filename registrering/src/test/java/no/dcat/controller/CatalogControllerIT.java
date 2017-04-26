@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.RegisterApplication;
 import no.dcat.model.Catalog;
 import no.dcat.model.Publisher;
 import org.junit.Test;
