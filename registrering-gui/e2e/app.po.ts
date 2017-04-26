@@ -18,6 +18,10 @@ export class RegistreringGuiPage {
   }
 
   getH1Value() {
-    return element(by.css('.fdk-register-h1')).getAttribute('value'); 
+    return element(by.css('.fdk-register-h1')).getAttribute('value');
   }
+
+  getValueFromElement(id) {
+    return element(by.id(id)).getAttribute('value');
+}
 }

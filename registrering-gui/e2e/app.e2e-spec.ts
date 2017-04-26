@@ -102,4 +102,46 @@ describe('registrering-gui App', () => {
     let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
     expect(datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
   });
+
+  it("Should handle Contact Point fields upon typing", () => {
+    let catalogLink = element(by.css("#datacatalogs td"));
+    catalogLink.click();
+
+    let datasetLink = element(by.css("#datasets td"));
+    datasetLink.click();
+
+    let datasetH1Input = element(by.css(".fdk-register-h1"));
+    datasetH1Input.clear();
+    datasetH1Input.sendKeys('CONTACTPOINT TEST');
+
+    let contactAvdeling = element(by.id('contact-avdeling'));
+    contactAvdeling.clear();
+    contactAvdeling.sendKeys('Avdelingsnavn');
+
+    let contactUrl = element(by.id('contact-url'));
+    contactUrl.clear();
+    contactUrl.sendKeys("http://test.no");
+
+    let contactEmail = element(by.id('contact-email'));
+    contactEmail.clear();
+    contactEmail.sendKeys('test@test.test');
+
+    let contactTelephone = element(by.id('contact-telephone'));
+    contactTelephone.clear();
+    contactTelephone.sendKeys("+47123456")
+
+    var EC = protractor.ExpectedConditions;
+    var alertSuccess = element(by.css('.alert-success'));
+    browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+    browser.refresh();
+    var avdeling = element(by.id('contact-avdeling'));
+
+    browser.wait(EC.textToBePresentInElementValue(avdeling, 'Avdelingsnavn'),1000).then(() => {
+      expect(page.getValueFromElement('contact-avdeling')).toEqual('Avdelingsnavn');
+      expect(page.getValueFromElement('contact-url')).toEqual('http://test.no');
+      expect(page.getValueFromElement('contact-email')).toEqual('test@test.test');
+      expect(page.getValueFromElement('contact-telephone')).toEqual('+47123456');
+    });
+  });
 });
