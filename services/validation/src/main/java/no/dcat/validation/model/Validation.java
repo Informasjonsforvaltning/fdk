@@ -14,8 +14,9 @@ public class Validation {
 
     long timeStamp;
 
-    int warnings;
-    int errors;
+    int warnings = 0;
+    int errors = 0;
+    int oks = 0;
 
     List<Property> propertyReport;
 

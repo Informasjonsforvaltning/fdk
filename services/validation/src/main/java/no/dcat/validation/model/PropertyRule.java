@@ -16,5 +16,6 @@ public class PropertyRule {
     String nodeKind;
     String severity;
     String clazz;
+    Condition conditional;
     List<Map<String,String>> or;
 }

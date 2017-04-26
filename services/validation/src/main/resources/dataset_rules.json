@@ -66,13 +66,13 @@
       "severity": "Violation"
     },
     {
-      "path": "dct:accruialPeriodicity",
+      "path": "dct:accrualPeriodicity",
       "maxCount": 1,
       "clazz": "dct:Frequency",
       "severity": "Violation"
     },
     {
-      "path": "adms:identifier",
+      "path": "adms:admsidentifier",
       "clazz": "adms:Identifier",
       "severity": "Violation"
     },
@@ -88,7 +88,6 @@
     },
     {
       "path": "dct:temporal",
-      "maxCount": 1,
       "clazz": "dct:PeriodOfTime",
       "severity": "Violation"
     },
@@ -102,6 +101,25 @@
       "path": "dct:accessRights",
       "maxCount": 1,
       "clazz": "dct:RightsStatement",
+      "severity": "Violation"
+    },
+    {
+      "path": "dcatno:accessRightsComment",
+      "clazz": "skos:Concept",
+      "conditional": {
+        "property": "dct:accessRights",
+        "values": ["restricted", "non-public"]
+      },
+      "severity": "Violation"
+    },
+    {
+      "path": "dct:references",
+      "clazz": "dct:Dataset",
+      "severity": "Violation"
+    },
+    {
+      "path": "dct:isReferencedBy",
+      "clazz": "dct:Dataset",
       "severity": "Violation"
     },
     {

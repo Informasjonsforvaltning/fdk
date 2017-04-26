@@ -323,7 +323,7 @@
                    ],
                    [
                            sh:class   dct:Frequency ;
-                           sh:path  dct:accurialPeriodicity ;
+                           sh:path  dct:accrualPeriodicity ;
                            sh:maxCount 1;
                            sh:severity   sh:Violation
                    ],

@@ -7,11 +7,25 @@ import lombok.Data;
  */
 @Data
 public class Property {
+    public static final String WARNING = "Warning";
+    public static final String VIOLATION = "Violation";
+    public static final String OK = "OK";
+
     String name;
-    int severity;
+    String rule;
+    String severity;
     String message;
 
-    public Property(String name) {
+    public Property(String name, String rule, String severity, String message) {
         this.name = name;
+        this.rule = rule;
+        this.severity = severity;
+        this.message = message;
+    }
+
+    public Property(String name, String rule) {
+        this.name = name;
+        this.rule = rule;
+        this.severity = OK;
     }
 }
