@@ -45,7 +45,7 @@
             [options]="themes"
             [multiple]="true"
             placeholder="Velg Tema"
-            formControlName="selectMultiple">
+            formControlName="themes">
           </ng-select>
         </form>
       </div>
@@ -61,7 +61,7 @@
     </div>
   </div>
 </div>
-<div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoint">
+<div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoint && dataset.contactPoint[0]">
   <div class="fdk-panel-heading">
     Kontaktinformasjon
   </div>
@@ -96,6 +96,22 @@
         </div>
       </div>
     </div>
+
+
+    <!--div class="panel fdk-panel" *ngIf="dataset && dataset.distribution">
+      <div class="fdk-panel-heading">
+        Distribusjon
+      </div>
+      <div class="fdk-panel-body">
+          <div *ngFor="let dist of distributions" id="distribution" class="fdk-row-padding" (click)="" >
+            <i class="fa fa-caret-right" aria-hidden="true"></i> {{getTitle(dist)}}
+          </div>
+
+        <div class="form-group fdk-row-padding" (click)="">
+          Legg til ny distribusjon <button type="button"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div-->
 
   </div>
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>

@@ -12,7 +12,7 @@ export interface Dataset {
     [language: string]:string[]
   };
   terms: string[];
-  theme: {code:string}[];
+  theme: {uri:string}[];
   catalog: string;
 
   landingPage : string[];

@@ -22,7 +22,4 @@ public class DataTheme {
     private Map<String, String> title;
     private ConceptSchema conceptSchema;
 
-    public DataTheme(String uri) {
-        this.uri = uri;
-    }
 }

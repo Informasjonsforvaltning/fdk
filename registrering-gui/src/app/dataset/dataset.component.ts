@@ -11,6 +11,7 @@ import {NgModule} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
+import {Distribution} from "../distribution/distribution";
 
 @Component({
   selector: 'app-dataset',
@@ -29,6 +30,7 @@ export class DatasetComponent implements OnInit {
   saved: boolean;
   catId: string;
   lastSaved: string;
+  distributions: Distribution[];
 
   form: FormGroup;
 
@@ -51,7 +53,7 @@ export class DatasetComponent implements OnInit {
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
     this.form = new FormGroup({});
-    this.form.addControl('selectMultiple', new FormControl([]));
+    this.form.addControl('themes', new FormControl([]));
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
@@ -69,13 +71,15 @@ export class DatasetComponent implements OnInit {
           .get(environment.queryUrl + `/themes`)
           .map(data => data.json().hits.hits.map(item => {
             return {
-              value: item._source.code,
-              label: item._source.title[this.language]
+              value: item._source.id,
+              label: item._source.title[this.language],
+              code: item._source.code,
+              uri: item._source.id
             }
           })).toPromise().then((data)=>{
               this.themes = data;
-              setTimeout(()=>this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})}),50)
-              this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})});
+              setTimeout(()=>this.form.setValue({'themes':this.dataset.theme.map((tema)=>{return tema.uri})}),1)
+
           });
 
     });
@@ -84,7 +88,13 @@ export class DatasetComponent implements OnInit {
   }
 
   save(): void {
-    this.dataset.theme = this.form.getRawValue().selectMultiple.map((code)=>{return {code: code}});
+
+    this.dataset.theme = this.form.getRawValue().themes.map((uri)=>{
+
+      return {
+        "uri": uri
+      }
+    });
     this.service.save(this.catId, this.dataset)
       .then(() => {
         this.saved = true;
@@ -126,5 +136,12 @@ export class DatasetComponent implements OnInit {
     setTimeout(()=>{
       disposable.unsubscribe();
     },10000);
+  }
+
+  getTitle(distribution: Distribution): string {
+    if (distribution.title == null) {
+      return '';
+    }
+    return distribution.title[this.language] + distribution.format;
   }
 }

@@ -89,7 +89,9 @@ public class DcatBuilderTest {
                         map("nb", "Norsk")));
 
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
-        dataset.setTheme(Collections.singletonList(new DataTheme("http://publications.europa.eu/resource/authority/data-theme/GOVE")));
+        DataTheme theme = new DataTheme();
+        theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        dataset.setTheme(Collections.singletonList(theme));
 
         Distribution distribution = RegistrationFactory.INSTANCE.createDistribution(catalog.getId(), dataset.getId());
         distribution.setAccessURL(Collections.singletonList("http://testetaten.no/data/access"));
