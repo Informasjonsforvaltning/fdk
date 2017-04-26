@@ -37,6 +37,14 @@ services:
     networks:
       platform:
 
+  validation:
+    image: "fdk/validation:latest"
+    ports:
+      - "8086:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    networks:
+      platform:
 
   fuseki:
     image: "fdk/fuseki:latest"

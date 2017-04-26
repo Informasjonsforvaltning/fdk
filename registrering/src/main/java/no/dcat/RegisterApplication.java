@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootApplication
 @EnableElasticsearchRepositories
-@EnableWebMvc
+//@EnableWebMvc
 public class RegisterApplication {
 
 
