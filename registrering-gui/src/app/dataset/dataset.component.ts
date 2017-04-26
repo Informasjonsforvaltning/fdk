@@ -58,7 +58,7 @@ export class DatasetComponent implements OnInit {
       this.dataset = dataset;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.terms = ['term1', 'term'];
-
+      //this.dataset.contactPoint = [{'email': 'ds@sd.org'}];
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
         //will probably need to be modified later, when publisher is stored as separate object in db

@@ -1,3 +1,5 @@
+import {Contact} from "./contact";
+import {Publisher} from "./publisher";
 export interface Dataset {
   id: string;
   title: {
@@ -15,11 +17,9 @@ export interface Dataset {
 
   landingPage : string[];
 
-  publisher?: {
-    uri: string;
-    id: string;
-    name: string;
-  };
+  publisher?: Publisher;
+
+  contactPoint?: Contact[];
 
   _lastModified: string;
 }
