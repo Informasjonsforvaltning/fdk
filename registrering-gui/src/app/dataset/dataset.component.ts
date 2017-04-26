@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormGroup, FormControl} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
+import {CodesService} from "./codes.service";
 import {CatalogService} from "../catalog/catalog.service";
 import {Dataset} from "./dataset";
 import {Catalog} from "../catalog/catalog"
@@ -33,12 +34,16 @@ export class DatasetComponent implements OnInit {
   form: FormGroup;
 
   themes: string[];
+  frequencies: any[];
+  provenanceStatements: any[];
+
   selection: Array<string>;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: DatasetService,
+    private codesService: CodesService,
     private catalogService: CatalogService,
     private http: Http,
     private dialogService: DialogService
@@ -51,7 +56,10 @@ export class DatasetComponent implements OnInit {
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
     this.form = new FormGroup({});
-    this.form.addControl('selectMultiple', new FormControl([]));
+    this.form.addControl('themes', new FormControl([])); //initialized with empty values
+    this.form.addControl('frequency', new FormControl([]));
+    this.form.addControl('provenancestatement', new FormControl([]));
+
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
@@ -66,25 +74,37 @@ export class DatasetComponent implements OnInit {
       }
 
       this.http
-          .get(environment.queryUrl + `/themes`)
-          .map(data => data.json().hits.hits.map(item => {
-            return {
-              value: item._source.code,
-              label: item._source.title[this.language]
+        .get(environment.queryUrl + `/themes`)
+        .map(data => data.json().hits.hits.map(item => {
+          return {
+            value: item._source.code,
+            label: item._source.title[this.language]
+          }
+        })).toPromise().then((data) => {
+          this.themes = data;
+          setTimeout(()=>this.form.setValue(
+            {
+              'themes':this.dataset.theme.map((tema)=>{return tema.code}),
+              'frequency':'',
+              'provenancestatement':''
             }
-          })).toPromise().then((data)=>{
-              this.themes = data;
-              setTimeout(()=>this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})}),50)
-              this.form.setValue({'selectMultiple':this.dataset.theme.map((tema)=>{return tema.code})});
-          });
-
+          ),1)
+        });
     });
+  }
 
-
+  focusReceived (codeId): void {
+    this.codesService.get(codeId).then(data=>{
+      this[codeId] = data;
+    }); 
+    setTimeout(()=>{
+      this.frequencies = [{value:'',label:'aaaa'},{value:'',label:'bbbb'}];
+      this.provenanceStatements = [{value:'',label:'ccccccc'},{value:'',label:'ddddd'}];
+    }, 100)
   }
 
   save(): void {
-    this.dataset.theme = this.form.getRawValue().selectMultiple.map((code)=>{return {code: code}});
+    this.dataset.theme = this.form.getRawValue().themes.map((code)=>{return {code: code}});
     this.service.save(this.catId, this.dataset)
       .then(() => {
         this.saved = true;
@@ -101,7 +121,7 @@ export class DatasetComponent implements OnInit {
   delay(callback, ms): void {
       clearTimeout (this.timer);
       this.timer = setTimeout(callback, ms);
-  };
+  }
 
   back(): void {
     this.router.navigate(['/catalogs', this.catId]);

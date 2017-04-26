@@ -19,7 +19,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
 
-import {SelectModule} from 'angular2-select';
+import {SelectModule} from 'ng-select';
 
 @NgModule({
   declarations: [

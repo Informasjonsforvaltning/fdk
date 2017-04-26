@@ -1,3 +1,4 @@
+//
 export interface Dataset {
   id: string;
   title: {
@@ -10,7 +11,7 @@ export interface Dataset {
     [language: string]:string[]
   };
   terms: string[];
-  theme: {code:string}[];
+  theme: {code:string}[]; // , title:string, uri:string, pickedDate:string
   catalog: string;
 
   landingPage : string[];

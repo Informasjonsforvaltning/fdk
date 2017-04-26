@@ -67,7 +67,7 @@ export class DatasetService {
       .catch(this.handleError)
   }
 
-  delete(catId: string, dataset: Dataset) : Promise<void> {
+  delete(catId: string, dataset: Dataset) : Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
     let authorization : string = localStorage.getItem("authorization");
@@ -87,8 +87,6 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
-    console.debug(datasetUrl);
-
     return this.http
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()
