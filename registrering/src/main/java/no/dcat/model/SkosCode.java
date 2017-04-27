@@ -18,13 +18,4 @@ public class SkosCode {
     private String code;
     private Map<String, String> prefLabel;
 
-    public SkosCode(String uri, String code, Map<String, String> prefLabel) {
-        this.uri = uri;
-        this.code = code;
-        this.prefLabel = prefLabel;
-    }
-
-    public SkosCode(String uri) {
-        this.uri = uri;
-    }
 }

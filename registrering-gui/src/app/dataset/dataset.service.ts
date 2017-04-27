@@ -14,8 +14,8 @@ const TEST_DATASETS: Dataset[] = [
       "nb": "Datasett med mange attributter"
     },
     "keywords": {'nb':['keyword1','keyword1']},
-    "terms":["term1", "term2", "term3"],
-    "theme":[{"uri":"GOVE"},{"uri":"HEAL"}],
+    "subject":["term1", "term2", "term3"],
+    "theme":[],
     "catalog": "974760673",
     "landingPage" : ["http://www.brreg.no", "http://www.difi.no"],
     "_lastModified": "2012-04-23"
@@ -87,8 +87,6 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
-    console.debug(datasetUrl);
-
     return this.http
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()

@@ -2,20 +2,22 @@ import {Contact} from "./contact";
 import {Publisher} from "./publisher";
 export interface Dataset {
   id: string;
-  title: {
+  title?: {
     [language: string]:string
   };
-  description: {
+  description?: {
     [language: string]:string
   };
-  keywords: {
+  keywords?: {
     [language: string]:string[]
   };
-  terms: string[];
-  theme: {uri:string}[];
+  subject?: string[];
+  theme?: {uri:string}[];
   catalog: string;
+  accrualPeriodicity?: {uri:string, prefLabel:string};
+  provenanceStatement?: {uri:string, prefLabel:string};
 
-  landingPage : string[];
+  landingPage?: string[];
 
   publisher?: Publisher;
 

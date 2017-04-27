@@ -7,13 +7,11 @@
 
 <div class="panel fdk-panel" *ngIf="dataset" id="dataset">
   <div class="fdk-panel-big-heading">
-    <input class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text" placeholder="Tittel"
-           [(ngModel)]="dataset.title[language]"/>
+    <input  class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
   <div class="fdk-panel-big-body">
     <h2 id="datasett-utgiver-navn">{{dataset.publisher.name}}</h2>
-    <textarea class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)"
-              placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
+    <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
 
@@ -29,11 +27,10 @@
           <input id="emneord-datasett" type="text" class="form-control" [(ngModel)]='dataset.keywords[language]'/>
         </div>
       </div>
-
       <div class="row form-group">
         <label for="begrep-datasett" class="col-md-1 control-label">Begrep:</label>
         <div class="col-md-11">
-          <input id="begrep-datasett" type="text" class="form-control" [(ngModel)]='dataset.terms'/>
+          <input id="begrep-datasett" type="text" class="form-control"  [(ngModel)]='dataset.terms'  />
         </div>
       </div>
 
@@ -42,25 +39,49 @@
         <form [formGroup]="form" class="col-md-11">
           <ng-select
             (ngModelChange)="valuechange()"
-            [options]="themes"
-            [multiple]="true"
-            placeholder="Velg Tema"
+        		[options]="themes"
+        		[multiple]="true"
+        		placeholder="Velg Tema"
             formControlName="themes">
-          </ng-select>
+        	</ng-select>
+        </form>
+      </div>
+      <div (click)="focusReceived('frequency')" class="row form-group">
+        <label for="tema-datasett" class="col-md-1 control-label">Datasettet oppdateres:</label>
+        <form [formGroup]="form" class="col-md-11">
+          <ng-select
+            (ngModelChange)="valuechange()"
+        		[options]="frequency"
+        		[multiple]="false"
+        		placeholder="Velg..."
+            formControlName="frequency">
+        	</ng-select>
+        </form>
+      </div>
+      <div (click)="focusReceived('provenancestatement')" class="row form-group">
+        <label for="tema-datasett" class="col-md-1 control-label">Årsak til at datasettet finnes (provenance statement)</label>
+        <form [formGroup]="form" class="col-md-11">
+          <ng-select
+            (ngModelChange)="valuechange()"
+        		[options]="provenancestatement"
+        		[multiple]="false"
+        		placeholder="Velg..."
+            formControlName="provenancestatement">
+        	</ng-select>
         </form>
       </div>
 
       <div class="row form-group">
         <label for="landingsside-datasett" class="col-md-1 control-label">Landingsside:</label>
         <div class="col-md-11">
-          <input id="landingsside-datasett" (ngModelChange)="valuechange(this)" type="text" class="form-control"
-                 [(ngModel)]='dataset.landingPage'/>
+          <input id="landingsside-datasett" (ngModelChange)="valuechange(this)" type="text" class="form-control"  [(ngModel)]='dataset.landingPage'  />
         </div>
       </div>
 
     </div>
   </div>
-</div>
+
+
 <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoint && dataset.contactPoint[0]">
   <div class="fdk-panel-heading">
     Kontaktinformasjon
@@ -96,6 +117,8 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
 
 
     <!--div class="panel fdk-panel" *ngIf="dataset && dataset.distribution">
@@ -112,8 +135,8 @@
         </div>
       </div>
     </div-->
+</div>
 
-  </div>
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett
     datasett
