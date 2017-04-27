@@ -35,8 +35,8 @@ export class DatasetComponent implements OnInit {
   form: FormGroup;
 
   themes: string[];
-  frequency: any;
-  provenancestatement: any;
+  frequency: any[];
+  provenancestatement: any[];
 
   selection: Array<string>;
 
@@ -58,8 +58,8 @@ export class DatasetComponent implements OnInit {
     this.catId = this.route.snapshot.params['cat_id'];
     this.form = new FormGroup({});
     this.form.addControl('themes', new FormControl([])); //initialized with empty values
-    this.form.addControl('frequency', new FormControl({}));
-    this.form.addControl('provenancestatement', new FormControl({}));
+    this.form.addControl('frequency', new FormControl(''));
+    this.form.addControl('provenancestatement', new FormControl(''));
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -84,31 +84,35 @@ export class DatasetComponent implements OnInit {
           }
         })).toPromise().then((data) => {
           this.themes = data;
-        this.frequency = [this.dataset.accrualPeriodicity];
-        this.provenancestatement= [this.dataset.provenanceStatement];
+        if(this.dataset.accrualPeriodicity) {
+          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel}];
+        }
+        if(this.dataset.provenanceStatement) {
+          this.provenancestatement = [{value:this.dataset.provenanceStatement.uri, label:this.dataset.provenanceStatement.prefLabel}];
+        }
           setTimeout(()=>this.form.setValue(
             {
               'themes': this.dataset.theme ? this.dataset.theme.map((tema)=>{return tema.uri}) : [],
-              'frequency': this.dataset.accrualPeriodicity || {},
-              'provenancestatement':this.dataset.provenanceStatement || {}
+              'frequency': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
+              'provenancestatement':this.dataset.provenanceStatement ? this.dataset.provenanceStatement.uri : ''
             }
           ),1)
         });
     });
   }
 
-  focusReceived (codeId): void {
+  fetchCodes (codeId): void {
     if (!this[codeId]) {
       this.codesService.get(codeId).then(data => {
         this[codeId] = data.map(code => {
           return {value: code.uri, label: code.prefLabel[this.language] || code.prefLabel['no']}
         });
-
       });
     }
   }
 
   save(): void {
+
 
     this.dataset.theme = this.form.getRawValue().themes.map((uri)=>{
 
@@ -116,16 +120,21 @@ export class DatasetComponent implements OnInit {
         "uri": uri
       }
     });
-    let frequencyLabel:string;
-    this.frequency.forEach(freqItem=>{
-      if(freqItem.uri===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
-    })
-    this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: frequencyLabel};
-    let provenancestatementLabel:string;
-    this.provenancestatement.forEach(provenancestatementItem=>{
-      if(provenancestatementItem.uri===this.form.getRawValue().provenancestatement) provenancestatementLabel = provenancestatementItem.label;
-    })
-    this.dataset.provenanceStatement =  {uri:this.form.getRawValue().provenancestatement, prefLabel: provenancestatementLabel};
+    if(this.frequency) {
+      let frequencyLabel:string;
+      this.frequency.forEach(freqItem=>{
+        if(freqItem.uri===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
+      });
+      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: frequencyLabel};
+    }
+    
+    if(this.provenancestatement) {
+      let provenancestatementLabel:string;
+      this.provenancestatement.forEach(provenancestatementItem=>{
+        if(provenancestatementItem.uri===this.form.getRawValue().provenancestatement) provenancestatementLabel = provenancestatementItem.label;
+      })
+      this.dataset.provenanceStatement =  {uri:this.form.getRawValue().provenancestatement, prefLabel: provenancestatementLabel};
+    }
 
 
 

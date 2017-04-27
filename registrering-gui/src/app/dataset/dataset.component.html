@@ -46,7 +46,7 @@
         	</ng-select>
         </form>
       </div>
-      <div (click)="focusReceived('frequency')" class="row form-group">
+      <div (click)="fetchCodes('frequency')" class="row form-group">
         <label for="tema-datasett" class="col-md-1 control-label">Datasettet oppdateres:</label>
         <form [formGroup]="form" class="col-md-11">
           <ng-select
@@ -58,7 +58,7 @@
         	</ng-select>
         </form>
       </div>
-      <div (click)="focusReceived('provenancestatement')" class="row form-group">
+      <div (click)="fetchCodes('provenancestatement')" class="row form-group">
         <label for="tema-datasett" class="col-md-1 control-label">Årsak til at datasettet finnes (provenance statement)</label>
         <form [formGroup]="form" class="col-md-11">
           <ng-select
