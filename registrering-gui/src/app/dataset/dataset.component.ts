@@ -14,6 +14,7 @@ import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
 import {Distribution} from "../distribution/distribution";
 
+
 @Component({
   selector: 'app-dataset',
   templateUrl: './dataset.component.html',
@@ -74,9 +75,9 @@ export class DatasetComponent implements OnInit {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
+
       this.dataset.contactPoint = this.dataset.contactPoint ;
       this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
-
 
       this.http
         .get(environment.queryUrl + `/themes`)
