@@ -37,6 +37,7 @@ export class DatasetComponent implements OnInit {
   themes: string[];
   frequency: any[];
   provenancestatement: any[];
+  fetchedCodeIds: string[] = [];
 
   selection: Array<string>;
 
@@ -60,6 +61,10 @@ export class DatasetComponent implements OnInit {
     this.form.addControl('themes', new FormControl([])); //initialized with empty values
     this.form.addControl('frequency', new FormControl(''));
     this.form.addControl('provenancestatement', new FormControl(''));
+    setInterval(()=>{
+      console.log ('this.provenancestatement is ', this.provenancestatement)
+        console.log ('this.frequency is ', this.frequency)
+    },3000)
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -85,10 +90,10 @@ export class DatasetComponent implements OnInit {
         })).toPromise().then((data) => {
           this.themes = data;
         if(this.dataset.accrualPeriodicity) {
-          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel}];
+          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel || this.dataset.accrualPeriodicity.uri}];
         }
         if(this.dataset.provenanceStatement) {
-          this.provenancestatement = [{value:this.dataset.provenanceStatement.uri, label:this.dataset.provenanceStatement.prefLabel}];
+          this.provenancestatement = [{value:this.dataset.provenanceStatement.uri, label:this.dataset.provenanceStatement.prefLabel || this.dataset.provenanceStatement.uri}];
         }
           setTimeout(()=>this.form.setValue(
             {
@@ -101,12 +106,16 @@ export class DatasetComponent implements OnInit {
     });
   }
 
-  fetchCodes (codeId): void {
-    if (!this[codeId]) {
+  fetchCodes (codeId:string): void {
+    console.log('codeId is ', codeId);
+    console.log('this.fetchedCodeIds', this.fetchedCodeIds);
+    if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
+      console.log('get!');
       this.codesService.get(codeId).then(data => {
         this[codeId] = data.map(code => {
           return {value: code.uri, label: code.prefLabel[this.language] || code.prefLabel['no']}
         });
+        this.fetchedCodeIds.push(codeId);
       });
     }
   }
@@ -127,13 +136,13 @@ export class DatasetComponent implements OnInit {
       });
       this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: frequencyLabel};
     }
-    
+
     if(this.provenancestatement) {
-      let provenancestatementLabel:string;
-      this.provenancestatement.forEach(provenancestatementItem=>{
-        if(provenancestatementItem.uri===this.form.getRawValue().provenancestatement) provenancestatementLabel = provenancestatementItem.label;
-      })
-      this.dataset.provenanceStatement =  {uri:this.form.getRawValue().provenancestatement, prefLabel: provenancestatementLabel};
+        let provenancestatementLabel:string;
+        this.provenancestatement.forEach(provenancestatementItem=>{
+          if(provenancestatementItem.uri===this.form.getRawValue().frequency) provenancestatementLabel = provenancestatementItem.label;
+        });
+        this.dataset.provenanceStatement =  {uri:this.form.getRawValue().provenancestatement, prefLabel: provenancestatementLabel};
     }
 
 
