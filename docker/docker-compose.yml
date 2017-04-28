@@ -37,8 +37,8 @@ services:
     networks:
       platform:
 
-  validation:
-    image: "fdk/validation:latest"
+  validator:
+    image: "fdk/validator:latest"
     ports:
       - "8086:8080"
     environment:
@@ -165,6 +165,7 @@ services:
     environment:
      - REG_API_URL=http://localhost:8099
      - QUERY_SERVICE_URL=http://localhost:8083
+     - VALIDATOR_URL=http://localhost:8086
     links:
       - elasticsearch
     networks:

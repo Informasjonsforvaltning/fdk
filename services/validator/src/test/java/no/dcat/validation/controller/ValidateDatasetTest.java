@@ -1,7 +1,6 @@
 package no.dcat.validation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gherkin.lexer.Th;
 import no.dcat.validation.model.PropertyRule;
 import no.dcat.validation.model.Validation;
 import org.junit.Before;
@@ -10,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -29,12 +27,12 @@ import static org.junit.Assert.assertThat;
 public class ValidateDatasetTest {
     private static final Logger logger = LoggerFactory.getLogger(ValidateDatasetTest.class);
 
-    private ValidationController controller;
+    private ValidatorController controller;
     private ObjectMapper mapper;
 
     @Before
     public void setup() {
-        controller = new ValidationController();
+        controller = new ValidatorController();
         mapper = new ObjectMapper();
     }
 

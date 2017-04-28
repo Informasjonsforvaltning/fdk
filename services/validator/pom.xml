@@ -10,7 +10,7 @@
         <version>0.2.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>validation</artifactId>
+    <artifactId>validator</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

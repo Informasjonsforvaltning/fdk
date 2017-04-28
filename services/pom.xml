@@ -16,7 +16,7 @@
     
 
     <modules>
-        <module>validation</module>
+        <module>validator</module>
     </modules>
 
 
