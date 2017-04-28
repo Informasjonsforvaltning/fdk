@@ -14,8 +14,8 @@ export interface Dataset {
   subject?: string[];
   theme?: {uri:string}[];
   catalog: string;
-  accrualPeriodicity?: {uri:string, prefLabel:string};
-  provenanceStatement?: {uri:string, prefLabel:string};
+  accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
+  provenance?: {uri:string, prefLabel:{"nb":string}};
 
   landingPage?: string[];
 

@@ -61,10 +61,6 @@ export class DatasetComponent implements OnInit {
     this.form.addControl('themes', new FormControl([])); //initialized with empty values
     this.form.addControl('frequency', new FormControl(''));
     this.form.addControl('provenancestatement', new FormControl(''));
-    setInterval(()=>{
-      console.log ('this.provenancestatement is ', this.provenancestatement)
-        console.log ('this.frequency is ', this.frequency)
-    },3000)
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -78,7 +74,9 @@ export class DatasetComponent implements OnInit {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
-      this.dataset.contactPoint = this.dataset.contactPoint || [{}];
+      this.dataset.contactPoint = this.dataset.contactPoint ;
+      this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
+
 
       this.http
         .get(environment.queryUrl + `/themes`)
@@ -90,16 +88,16 @@ export class DatasetComponent implements OnInit {
         })).toPromise().then((data) => {
           this.themes = data;
         if(this.dataset.accrualPeriodicity) {
-          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel || this.dataset.accrualPeriodicity.uri}];
+          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel["no"] || this.dataset.accrualPeriodicity.uri}];
         }
-        if(this.dataset.provenanceStatement) {
-          this.provenancestatement = [{value:this.dataset.provenanceStatement.uri, label:this.dataset.provenanceStatement.prefLabel || this.dataset.provenanceStatement.uri}];
+        if(this.dataset.provenance) {
+          this.provenancestatement = [{value:this.dataset.provenance.uri, label:this.dataset.provenance.prefLabel["nb"] || this.dataset.provenance.uri}];
         }
           setTimeout(()=>this.form.setValue(
             {
               'themes': this.dataset.theme ? this.dataset.theme.map((tema)=>{return tema.uri}) : [],
               'frequency': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
-              'provenancestatement':this.dataset.provenanceStatement ? this.dataset.provenanceStatement.uri : ''
+              'provenancestatement':this.dataset.provenance ? this.dataset.provenance.uri : ''
             }
           ),1)
         });
@@ -132,17 +130,21 @@ export class DatasetComponent implements OnInit {
     if(this.frequency) {
       let frequencyLabel:string;
       this.frequency.forEach(freqItem=>{
-        if(freqItem.uri===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
+        if(freqItem.value===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
+        console.log(freqItem,this.form.getRawValue().frequency)
       });
-      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: frequencyLabel};
+      console.log('frequencyLabel', frequencyLabel);
+      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: {"no": frequencyLabel}};
     }
 
     if(this.provenancestatement) {
         let provenancestatementLabel:string;
         this.provenancestatement.forEach(provenancestatementItem=>{
-          if(provenancestatementItem.uri===this.form.getRawValue().frequency) provenancestatementLabel = provenancestatementItem.label;
+          if(provenancestatementItem.value===this.form.getRawValue().provenancestatement)
+            provenancestatementLabel = provenancestatementItem.label;
         });
-        this.dataset.provenanceStatement =  {uri:this.form.getRawValue().provenancestatement, prefLabel: provenancestatementLabel};
+        console.log('provenancestatementLabel', provenancestatementLabel);
+        this.dataset.provenance =  {uri:this.form.getRawValue().provenancestatement, prefLabel: {"nb": provenancestatementLabel}};
     }
 
 
