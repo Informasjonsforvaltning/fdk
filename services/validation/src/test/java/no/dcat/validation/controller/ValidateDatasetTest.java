@@ -46,7 +46,7 @@ public class ValidateDatasetTest {
         dataset.put("title", map("nb", "Tittel"));
         dataset.put("description", map("nb", "Beskrivelse"));
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "title,description,issued");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "title,description,issued");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(0));
@@ -59,7 +59,7 @@ public class ValidateDatasetTest {
         // create simple dataset
         Map<String, Object> dataset = new HashMap<>();
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "title");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "title");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(2));
@@ -76,7 +76,7 @@ public class ValidateDatasetTest {
         Map<String, Object> dataset = new HashMap<>();
         dataset.put("issued", list);
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "issued");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "issued");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("oks", actualResponse.getBody().getOks(), is(0));
@@ -90,7 +90,7 @@ public class ValidateDatasetTest {
         Map<String, Object> dataset = new HashMap<>();
         dataset.put("title", new PropertyRule());
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "title");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "title");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(1));
@@ -105,7 +105,7 @@ public class ValidateDatasetTest {
         list.add(new PropertyRule());
          dataset.put("title", list);
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "title");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "title");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(1));
@@ -119,7 +119,7 @@ public class ValidateDatasetTest {
 
 
         Map<String, Object> dataset = objectMapper.readValue(p.getInputStream(), Map.class);
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("oks", actualResponse.getBody().getOks(), is(39));
@@ -133,7 +133,7 @@ public class ValidateDatasetTest {
 
         dataset.put("type", new PropertyRule());
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "type");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "type");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(1));
@@ -150,7 +150,7 @@ public class ValidateDatasetTest {
 
         dataset.put("type", list);
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "type");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "type");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(2));
@@ -169,7 +169,7 @@ public class ValidateDatasetTest {
 
         dataset.put("identifier", list);
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "identifier");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "identifier");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("errors", actualResponse.getBody().getErrors(), is(1));
@@ -182,7 +182,7 @@ public class ValidateDatasetTest {
 
         dataset.put("accessRights", map("code", "RESTRICTED"));
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "accessRightsComment");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "accessRightsComment");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("Oks", actualResponse.getBody().getOks(), is(1));
@@ -196,7 +196,7 @@ public class ValidateDatasetTest {
 
         dataset.put("accessRights", map("code", "public"));
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "accessRightsComment");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "accessRightsComment");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("Oks", actualResponse.getBody().getOks(), is(2));
@@ -215,13 +215,15 @@ public class ValidateDatasetTest {
 
         dataset.put("accessRightsComment", Collections.singletonList(comment));
 
-        ResponseEntity<Validation> actualResponse = controller.validateDataset(new HttpEntity<>(dataset), "accessRightsComment");
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "accessRightsComment");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("oks", actualResponse.getBody().getOks(), is(2));
         assertThat("errors", actualResponse.getBody().getErrors(), is(0));
         assertThat("warnings", actualResponse.getBody().getWarnings(), is(0));
     }
+
+
 
 
     Map<String, String> map(String lang, String title) {

@@ -1,4 +1,4 @@
-package no.dcat.validation.application;
+package no.dcat.validation;
 
 /**
  * Created by dask on 24.04.2017.

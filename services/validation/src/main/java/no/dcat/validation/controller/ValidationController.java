@@ -32,19 +32,36 @@ public class ValidationController {
     Validator validator = new Validator();
 
     @CrossOrigin
+    @RequestMapping(value = "/dataset",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Validation> validateCompleteDataset(
+            @RequestBody Map<String,Object> body) {
+
+        return doValidation(body, null);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/dataset/{fields}",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Validation> validateDataset(
-            @RequestBody HttpEntity<Map<String,Object>> raw,
-            @PathVariable(name="fields", required = false) String fields) throws Exception {
+            @RequestBody Map<String,Object> body,
+            @PathVariable(name="fields", value="") String fields) {
 
-        //ObjectMapper mapper = new ObjectMapper();
+        return doValidation(body, fields);
+    }
 
-        Map<String,Object> body = raw.getBody();
+    private ResponseEntity<Validation> doValidation(Map<String, Object> body,
+                                                    String fields) {
 
         logger.info("Validation request: check {} of {}", fields, body);
+
+        if (body == null) {
+            return new ResponseEntity<Validation>(HttpStatus.BAD_REQUEST);
+        }
 
         String[] field = null;
 
