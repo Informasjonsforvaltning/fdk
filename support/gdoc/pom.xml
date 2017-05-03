@@ -8,7 +8,7 @@
         <version>0.2.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gdoc-import</artifactId>
+    <artifactId>gdoc</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
