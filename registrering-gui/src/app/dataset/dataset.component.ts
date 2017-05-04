@@ -32,12 +32,16 @@ export class DatasetComponent implements OnInit {
   catId: string;
   lastSaved: string;
 
-  form: FormGroup;
+  themesForm: FormGroup;
+  accrualPeriodicityForm: FormGroup;
+  provenanceFormForm: FormGroup;
 
+  theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenancestatements: {value?:string, label?:string}[];
+  provenanceForms: {value?:string, label?:string}[];
   fetchedCodeIds: string[] = [];
+  codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
   selection: Array<string>;
 
@@ -51,16 +55,29 @@ export class DatasetComponent implements OnInit {
     private dialogService: DialogService
   ) {  }
 
+
   ngOnInit() {
     this.language = 'nb';
     this.timer = 0;
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
-    this.form = new FormGroup({});
-    this.form.addControl('themes', new FormControl([])); //initialized with empty values
-    this.form.addControl('accrualPeriodicityControl', new FormControl(''));
-    this.form.addControl('provenanceStatementControl', new FormControl(''));
+
+    this.themesForm = new FormGroup({});
+    this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
+    this.codePickers = [
+      {
+        pluralizedNameFromCodesService: 'provenancestatements',
+        nameFromDatasetModel: 'provenance',
+        languageCode: "nb"
+      },
+      {
+        pluralizedNameFromCodesService: 'frequencies',
+        nameFromDatasetModel: 'accrualPeriodicity',
+        languageCode: "no"
+      }
+      ]
+    this.initCustomSelectComponents();
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -74,8 +91,10 @@ export class DatasetComponent implements OnInit {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
-      this.dataset.contactPoint = this.dataset.contactPoint;
-      this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
+      this.dataset.contactPoints = this.dataset.contactPoints;
+      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {organizationName:"", organizationUnit:""};
+      this.setCustomSelectValues();
+      /* eof */
 
       this.http
         .get(environment.queryUrl + `/themes`)
@@ -86,26 +105,52 @@ export class DatasetComponent implements OnInit {
           }
         })).toPromise().then((data) => {
           this.themes = data;
-        if(this.dataset.accrualPeriodicity) {
-          this.frequencies = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel["no"]}];
-        }
-        if(this.dataset.provenance) {
-          this.provenancestatements = [{value:this.dataset.provenance.uri, label:this.dataset.provenance.prefLabel["nb"]}];
-        }
-          setTimeout(()=>this.form.setValue (
-            {
-              'themes': this.dataset.theme ? this.dataset.theme.map((tema)=>{return tema.uri}) : [],
-              'accrualPeriodicityControl': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
-              'provenanceStatementControl':this.dataset.provenance ? this.dataset.provenance.uri : ''
-            }
-          ),1)
+          setTimeout(()=>this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []}),1)
         });
     });
   }
 
+  initCustomSelectComponents() {
+    this.codePickers.forEach(codePicker=>{
+      const name = codePicker.nameFromDatasetModel;
+      const controlName = name + 'Control';
+      this[name + 'Form'] = new FormGroup({});
+      this[name + 'Form'].addControl(controlName, new FormControl(''));
+      var valueObject = {};
+      valueObject[controlName] = '';
+      this[name + 'Form'].setValue(valueObject);
+    })
+  }
+  setCustomSelectValues() {
+    this.codePickers.forEach(codePicker=>{
+      const name = codePicker.nameFromDatasetModel;
+      const controlName = name + 'Control';
+      const valueObject = {};
+      valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
+      this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
+      setTimeout(()=>this[name + 'Form'].setValue(valueObject), 1);
+    })
+  }
+  retrieveCustomSelectValues() {
+      this.codePickers.forEach(codePicker=>{
+        const name = codePicker.nameFromDatasetModel;
+        const controlName = name + 'Control';
+        const valueObject = {};
+        let label:string;
+        let uri: string;
+        this[codePicker.pluralizedNameFromCodesService].forEach((codeItem)=>{
+          if(codeItem.value===this[name + 'Form'].getRawValue()[controlName]) {
+            label = codeItem.label;
+            uri = codeItem.value;
+          };
+        })
+        const prefLabelObj = {};
+        prefLabelObj[codePicker.languageCode] = label;
+        this.dataset[name] =  {uri:uri, prefLabel: prefLabelObj};
+      })
+  }
   fetchCodes (codeId:string): void {
     if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
-      console.log('get!');
       this.codesService.get(codeId).then(data => {
         this[codeId] = data.map(code => {
           return {value: code.uri, label: code.prefLabel[this.language] || code.prefLabel['no']}
@@ -116,35 +161,12 @@ export class DatasetComponent implements OnInit {
   }
 
   save(): void {
-
-
-    this.dataset.theme = this.form.getRawValue().themes.map((uri)=>{
-
+    this.dataset.themes = this.themesForm.getRawValue().themes.map((uri)=>{
       return {
         "uri": uri
       }
     });
-    if(this.frequencies) {
-      let frequencyLabel:string;
-      this.frequencies.forEach(freqItem=>{
-        if(freqItem.value===this.form.getRawValue().accrualPeriodicityControl) frequencyLabel = freqItem.label;
-        console.log(freqItem,this.form.getRawValue().accrualPeriodicityControl)
-      });
-      console.log('frequencyLabel', frequencyLabel);
-      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().accrualPeriodicityControl, prefLabel: {"no": frequencyLabel}};
-    }
-
-    if(this.provenancestatements) {
-        let provenancestatementLabel:string;
-        this.provenancestatements.forEach(provenancestatementItem=>{
-          if(provenancestatementItem.value===this.form.getRawValue().provenanceStatementControl)
-            provenancestatementLabel = provenancestatementItem.label;
-        });
-        console.log('provenancestatementLabel', provenancestatementLabel);
-        this.dataset.provenance =  {uri:this.form.getRawValue().provenanceStatementControl, prefLabel: {"nb": provenancestatementLabel}};
-    }
-
-
+    this.retrieveCustomSelectValues();
 
     this.service.save(this.catId, this.dataset)
       .then(() => {

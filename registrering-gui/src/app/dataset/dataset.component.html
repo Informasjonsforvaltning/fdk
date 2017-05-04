@@ -36,7 +36,7 @@
 
       <div class="row form-group">
         <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
-        <form [formGroup]="form" class="col-md-11">
+        <form [formGroup]="themesForm" class="col-md-11">
           <ng-select
             (ngModelChange)="valuechange()"
         		[options]="themes"
@@ -48,7 +48,7 @@
       </div>
       <div (click)="fetchCodes('frequencies')" class="row form-group">
         <label for="tema-datasett" class="col-md-1 control-label">Datasettet oppdateres:</label>
-        <form [formGroup]="form" class="col-md-11">
+        <form [formGroup]="accrualPeriodicityForm" class="col-md-11">
           <ng-select
             (ngModelChange)="valuechange()"
         		[options]="frequencies"
@@ -60,13 +60,13 @@
       </div>
       <div (click)="fetchCodes('provenancestatements')" class="row form-group">
         <label for="tema-datasett" class="col-md-1 control-label">Årsak til at datasettet finnes (provenance statement)</label>
-        <form [formGroup]="form" class="col-md-11">
+        <form [formGroup]="provenanceForm" class="col-md-11">
           <ng-select
             (ngModelChange)="valuechange()"
         		[options]="provenancestatements"
         		[multiple]="false"
         		placeholder="Velg..."
-            formControlName="provenanceStatementControl">
+            formControlName="provenanceControl">
         	</ng-select>
         </form>
       </div>
