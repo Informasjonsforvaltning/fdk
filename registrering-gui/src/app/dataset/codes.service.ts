@@ -20,8 +20,12 @@ export class CodesService {
     return Promise.reject(error.message || error);
   }
 
+  makeSingular(codeType: string): string {
+    return codeType.indexOf('ies') === codeType.length-3 ? codeType.substr(0, codeType.length-3) + 'y' : codeType.substr(0, codeType.length-1);
+  }
+
   get(codeType: string): Promise<any> {
-      const datasetUrl = `${this.codesUrl}/${codeType}`;
+      const datasetUrl = `${this.codesUrl}/${this.makeSingular(codeType)}`;
       return this.http.get(datasetUrl)
         .toPromise()
         .then(response => response.json().codes)

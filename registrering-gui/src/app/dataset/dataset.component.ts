@@ -35,8 +35,8 @@ export class DatasetComponent implements OnInit {
   form: FormGroup;
 
   themes: string[];
-  frequency: any[];
-  provenancestatement: any[];
+  frequencies: {value?:string, label?:string}[];
+  provenancestatements: {value?:string, label?:string}[];
   fetchedCodeIds: string[] = [];
 
   selection: Array<string>;
@@ -59,8 +59,8 @@ export class DatasetComponent implements OnInit {
     this.catId = this.route.snapshot.params['cat_id'];
     this.form = new FormGroup({});
     this.form.addControl('themes', new FormControl([])); //initialized with empty values
-    this.form.addControl('frequency', new FormControl(''));
-    this.form.addControl('provenancestatement', new FormControl(''));
+    this.form.addControl('accrualPeriodicityControl', new FormControl(''));
+    this.form.addControl('provenanceStatementControl', new FormControl(''));
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -74,9 +74,8 @@ export class DatasetComponent implements OnInit {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
-      this.dataset.contactPoint = this.dataset.contactPoint ;
+      this.dataset.contactPoint = this.dataset.contactPoint;
       this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
-
 
       this.http
         .get(environment.queryUrl + `/themes`)
@@ -88,16 +87,16 @@ export class DatasetComponent implements OnInit {
         })).toPromise().then((data) => {
           this.themes = data;
         if(this.dataset.accrualPeriodicity) {
-          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel["no"] || this.dataset.accrualPeriodicity.uri}];
+          this.frequencies = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel["no"]}];
         }
         if(this.dataset.provenance) {
-          this.provenancestatement = [{value:this.dataset.provenance.uri, label:this.dataset.provenance.prefLabel["nb"] || this.dataset.provenance.uri}];
+          this.provenancestatements = [{value:this.dataset.provenance.uri, label:this.dataset.provenance.prefLabel["nb"]}];
         }
-          setTimeout(()=>this.form.setValue(
+          setTimeout(()=>this.form.setValue (
             {
               'themes': this.dataset.theme ? this.dataset.theme.map((tema)=>{return tema.uri}) : [],
-              'frequency': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
-              'provenancestatement':this.dataset.provenance ? this.dataset.provenance.uri : ''
+              'accrualPeriodicityControl': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
+              'provenanceStatementControl':this.dataset.provenance ? this.dataset.provenance.uri : ''
             }
           ),1)
         });
@@ -105,8 +104,6 @@ export class DatasetComponent implements OnInit {
   }
 
   fetchCodes (codeId:string): void {
-    console.log('codeId is ', codeId);
-    console.log('this.fetchedCodeIds', this.fetchedCodeIds);
     if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
       console.log('get!');
       this.codesService.get(codeId).then(data => {
@@ -127,24 +124,24 @@ export class DatasetComponent implements OnInit {
         "uri": uri
       }
     });
-    if(this.frequency) {
+    if(this.frequencies) {
       let frequencyLabel:string;
-      this.frequency.forEach(freqItem=>{
-        if(freqItem.value===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
-        console.log(freqItem,this.form.getRawValue().frequency)
+      this.frequencies.forEach(freqItem=>{
+        if(freqItem.value===this.form.getRawValue().accrualPeriodicityControl) frequencyLabel = freqItem.label;
+        console.log(freqItem,this.form.getRawValue().accrualPeriodicityControl)
       });
       console.log('frequencyLabel', frequencyLabel);
-      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: {"no": frequencyLabel}};
+      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().accrualPeriodicityControl, prefLabel: {"no": frequencyLabel}};
     }
 
-    if(this.provenancestatement) {
+    if(this.provenancestatements) {
         let provenancestatementLabel:string;
-        this.provenancestatement.forEach(provenancestatementItem=>{
-          if(provenancestatementItem.value===this.form.getRawValue().provenancestatement)
+        this.provenancestatements.forEach(provenancestatementItem=>{
+          if(provenancestatementItem.value===this.form.getRawValue().provenanceStatementControl)
             provenancestatementLabel = provenancestatementItem.label;
         });
         console.log('provenancestatementLabel', provenancestatementLabel);
-        this.dataset.provenance =  {uri:this.form.getRawValue().provenancestatement, prefLabel: {"nb": provenancestatementLabel}};
+        this.dataset.provenance =  {uri:this.form.getRawValue().provenanceStatementControl, prefLabel: {"nb": provenancestatementLabel}};
     }
 
 
