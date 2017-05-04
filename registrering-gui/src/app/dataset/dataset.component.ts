@@ -6,12 +6,12 @@ import {CodesService} from "./codes.service";
 import {CatalogService} from "../catalog/catalog.service";
 import {Dataset} from "./dataset";
 import {Catalog} from "../catalog/catalog"
-import {Observable} from 'rxjs';
-import {Http, Response} from '@angular/http';
+import { Observable } from 'rxjs';
+import { Http, Response } from '@angular/http';
 import {NgModule} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
-import {DialogService} from "ng2-bootstrap-modal";
+import { DialogService } from "ng2-bootstrap-modal";
 import {Distribution} from "../distribution/distribution";
 
 @Component({
@@ -41,14 +41,15 @@ export class DatasetComponent implements OnInit {
 
   selection: Array<string>;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private service: DatasetService,
-              private codesService: CodesService,
-              private catalogService: CatalogService,
-              private http: Http,
-              private dialogService: DialogService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: DatasetService,
+    private codesService: CodesService,
+    private catalogService: CatalogService,
+    private http: Http,
+    private dialogService: DialogService
+  ) {  }
 
   ngOnInit() {
     this.language = 'nb';
@@ -65,16 +66,16 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
-      this.dataset.keywords = {'nb': ['keyword1', 'keyword1']};
+      this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
 
       //set default publisher to be the same as catalog
-      if (this.dataset.publisher == null) {
+      if(this.dataset.publisher == null) {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
-      this.dataset.contactPoint = this.dataset.contactPoint;
-      this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName: "", organizationUnit: ""};
+      this.dataset.contactPoint = this.dataset.contactPoint ;
+      this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
 
 
       this.http
@@ -85,34 +86,25 @@ export class DatasetComponent implements OnInit {
             label: item._source.title[this.language]
           }
         })).toPromise().then((data) => {
-        this.themes = data;
-
-        if (this.dataset.accrualPeriodicity) {
-          this.frequency = [{
-            value: this.dataset.accrualPeriodicity.uri,
-            label: this.dataset.accrualPeriodicity.prefLabel["no"] || this.dataset.accrualPeriodicity.uri
-          }];
+          this.themes = data;
+        if(this.dataset.accrualPeriodicity) {
+          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel["no"] || this.dataset.accrualPeriodicity.uri}];
         }
-        if (this.dataset.provenance) {
-          this.provenancestatement = [{
-            value: this.dataset.provenance.uri,
-            label: this.dataset.provenance.prefLabel["nb"] || this.dataset.provenance.uri
-          }];
+        if(this.dataset.provenance) {
+          this.provenancestatement = [{value:this.dataset.provenance.uri, label:this.dataset.provenance.prefLabel["nb"] || this.dataset.provenance.uri}];
         }
-        setTimeout(() => this.form.setValue(
-          {
-            'themes': this.dataset.theme ? this.dataset.theme.map((tema) => {
-                return tema.uri
-              }) : [],
-            'frequency': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
-            'provenancestatement': this.dataset.provenance ? this.dataset.provenance.uri : ''
-          }
-        ), 1)
-      });
+          setTimeout(()=>this.form.setValue(
+            {
+              'themes': this.dataset.theme ? this.dataset.theme.map((tema)=>{return tema.uri}) : [],
+              'frequency': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
+              'provenancestatement':this.dataset.provenance ? this.dataset.provenance.uri : ''
+            }
+          ),1)
+        });
     });
   }
 
-  fetchCodes(codeId: string): void {
+  fetchCodes (codeId:string): void {
     console.log('codeId is ', codeId);
     console.log('this.fetchedCodeIds', this.fetchedCodeIds);
     if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
@@ -129,34 +121,32 @@ export class DatasetComponent implements OnInit {
   save(): void {
 
 
-    this.dataset.theme = this.form.getRawValue().themes.map((uri) => {
+    this.dataset.theme = this.form.getRawValue().themes.map((uri)=>{
 
       return {
         "uri": uri
       }
     });
-    if (this.frequency) {
-      let frequencyLabel: string;
-      this.frequency.forEach(freqItem => {
-        if (freqItem.value === this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
-        console.log(freqItem, this.form.getRawValue().frequency)
+    if(this.frequency) {
+      let frequencyLabel:string;
+      this.frequency.forEach(freqItem=>{
+        if(freqItem.value===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
+        console.log(freqItem,this.form.getRawValue().frequency)
       });
       console.log('frequencyLabel', frequencyLabel);
-      this.dataset.accrualPeriodicity = {uri: this.form.getRawValue().frequency, prefLabel: {"no": frequencyLabel}};
+      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: {"no": frequencyLabel}};
     }
 
-    if (this.provenancestatement) {
-      let provenancestatementLabel: string;
-      this.provenancestatement.forEach(provenancestatementItem => {
-        if (provenancestatementItem.value === this.form.getRawValue().provenancestatement)
-          provenancestatementLabel = provenancestatementItem.label;
-      });
-      console.log('provenancestatementLabel', provenancestatementLabel);
-      this.dataset.provenance = {
-        uri: this.form.getRawValue().provenancestatement,
-        prefLabel: {"nb": provenancestatementLabel}
-      };
+    if(this.provenancestatement) {
+        let provenancestatementLabel:string;
+        this.provenancestatement.forEach(provenancestatementItem=>{
+          if(provenancestatementItem.value===this.form.getRawValue().provenancestatement)
+            provenancestatementLabel = provenancestatementItem.label;
+        });
+        console.log('provenancestatementLabel', provenancestatementLabel);
+        this.dataset.provenance =  {uri:this.form.getRawValue().provenancestatement, prefLabel: {"nb": provenancestatementLabel}};
     }
+
 
 
     this.service.save(this.catId, this.dataset)
@@ -167,16 +157,14 @@ export class DatasetComponent implements OnInit {
       })
   }
 
-  valuechange(a, b, c): void {
+  valuechange(a,b,c): void {
     var that = this;
-    this.delay(function () {
-      that.save.call(that)
-    }, 1000);
+    this.delay(function() {that.save.call(that)}, 1000);
   }
 
   delay(callback, ms): void {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(callback, ms);
+      clearTimeout (this.timer);
+      this.timer = setTimeout(callback, ms);
   }
 
   back(): void {
@@ -185,25 +173,22 @@ export class DatasetComponent implements OnInit {
 
   delete(): void {
     this.service.delete(this.catId, this.dataset)
-      .then(() => {
-        this.back()
-      })
+      .then(() => {this.back()})
   }
 
   showConfirmDelete() {
     let disposable = this.dialogService.addDialog(ConfirmComponent, {
-      title: 'Slett datasett',
-      message: 'Vil du virkelig slette datasett ' + this.dataset.title[this.language] + '?'
-    })
-      .subscribe((isConfirmed) => {
+      title:'Slett datasett',
+      message:'Vil du virkelig slette datasett ' + this.dataset.title[this.language] + '?'})
+      .subscribe((isConfirmed)=>{
         //We get dialog result
-        if (isConfirmed) {
+        if(isConfirmed) {
           this.delete();
         }
       });
     //If dialog was not closed manually close it by timeout
-    setTimeout(() => {
+    setTimeout(()=>{
       disposable.unsubscribe();
-    }, 10000);
+    },10000);
   }
 }
