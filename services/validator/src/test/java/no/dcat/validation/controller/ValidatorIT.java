@@ -1,10 +1,14 @@
 package no.dcat.validation.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.validation.ValidatorApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,7 +43,7 @@ public class ValidatorIT {
     }
 
     @Test
-    public void validateDatasetSome() throws Exception {
+    public void validateDatasetASmallDataset() throws Exception {
 
         Map<String, Object> dataset = new HashMap<>();
         Map<String, String> description = new HashMap<>();
@@ -55,5 +59,18 @@ public class ValidatorIT {
         assertThat(actual.get("oks"), is(4));
         assertThat(actual.get("errors"), is(2));
 
+    }
+
+    @Test
+    public void validateCompleteDataset() throws Exception {
+        Resource p = new ClassPathResource("sample-dataset-complete.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> dataset = objectMapper.readValue(p.getInputStream(), Map.class);
+
+        Map<String,Object> actual =  restTemplate.postForObject("/dataset", dataset, Map.class);
+
+        assertThat(actual.get("oks"), is(41));
+        assertThat(actual.get("warnings"), is(1));
+        assertThat(actual.get("errors"), is(0));
     }
 }
