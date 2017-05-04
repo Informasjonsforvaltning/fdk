@@ -1,6 +1,7 @@
 package no.dcat.validation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.validation.logic.Validator;
 import no.dcat.validation.model.PropertyRule;
 import no.dcat.validation.model.Validation;
 import org.junit.Before;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -78,7 +81,7 @@ public class ValidateDatasetTest {
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
         assertThat("oks", actualResponse.getBody().getOks(), is(0));
-        assertThat("errors", actualResponse.getBody().getErrors(), is(1));
+        assertThat("errors", actualResponse.getBody().getErrors(), is(2));
         assertThat("warnings", actualResponse.getBody().getWarnings(), is(0));
     }
 
@@ -94,6 +97,7 @@ public class ValidateDatasetTest {
         assertThat("errors", actualResponse.getBody().getErrors(), is(1));
         assertThat("warnings", actualResponse.getBody().getWarnings(), is(0));
     }
+
 
     @Test
     public void testIllegalNodekindNotLiteralInCollectionDetected() throws Throwable {
@@ -111,6 +115,63 @@ public class ValidateDatasetTest {
     }
 
     @Test
+    public void testDateNotOK() throws Throwable {
+        // create simple dataset
+        Map<String, Object> dataset = new HashMap<>();
+        dataset.put("issued", "2017-15-33");
+        dataset.put("modified", "2017-12-30T26:90");
+
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "");
+
+        assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
+        assertThat("errors", actualResponse.getBody().getErrors(), is(2));
+    }
+
+    @Test
+    public void testDatesDefinitiveNotOK() throws Throwable {
+        // create simple dataset
+        Map<String, Object> dataset = new HashMap<>();
+        dataset.put("issued", "20/4/2016");
+        dataset.put("modified", "3 min over kl 3");
+
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "");
+
+        assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
+        assertThat("errors", actualResponse.getBody().getErrors(), is(2));
+    }
+
+    @Test
+    public void testDateDirectOK() throws Throwable {
+        Validator v = new Validator();
+        String isDate = v.checkDatatype("xsd:date", "2017-05-01T23:59:00");
+        String isDT = v.checkDatatype("xsd:dateTime", "2017-05-01");
+
+        assertThat(isDate, is(nullValue()));
+        assertThat(isDT, is(nullValue()));
+    }
+
+    @Test
+    public void testFolketellingDirect() throws Throwable {
+        Validator v = new Validator();
+        String isDate = v.checkDatatype("xsd:date", "1905");
+
+        assertThat(isDate, is(nullValue()));
+    }
+
+    @Test
+    public void testDateOK() throws Throwable {
+        // create simple dataset
+        Map<String, Object> dataset = new HashMap<>();
+        dataset.put("issued", "2017-12-31");
+        dataset.put("modified", "2017-12-31T14:22:00");
+
+        ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "");
+
+        assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
+        assertThat("errors", actualResponse.getBody().getErrors(), is(0));
+    }
+
+    @Test
     public void testAllFieldsOfCompleteDataset() throws Throwable {
         Resource p = new ClassPathResource("sample-dataset-complete.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -120,7 +181,7 @@ public class ValidateDatasetTest {
         ResponseEntity<Validation> actualResponse = controller.validateDataset(dataset, "");
 
         assertThat(actualResponse.getStatusCode(), is(HttpStatus.OK));
-        assertThat("oks", actualResponse.getBody().getOks(), is(39));
+        assertThat("oks", actualResponse.getBody().getOks(), is(41));
         assertThat("errors", actualResponse.getBody().getErrors(), is(0));
         assertThat("warnings", actualResponse.getBody().getWarnings(), is(1));
     }

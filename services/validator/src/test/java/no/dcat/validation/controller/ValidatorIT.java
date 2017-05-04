@@ -35,7 +35,7 @@ public class ValidatorIT {
 
     @Test
     public void webserviceIsRunning() throws Exception {
-        assertThat(restTemplate.getForObject("/", String.class), containsString("/catalogs{?page,size,sort}"));
+        assertThat(restTemplate.getForObject("/", String.class), containsString("_links"));
     }
 
     @Test

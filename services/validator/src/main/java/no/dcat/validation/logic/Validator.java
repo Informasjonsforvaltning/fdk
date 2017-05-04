@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +86,9 @@ public class Validator {
                     if (rule.getClazz() != null) {
                         validation.getPropertyReport().add(checkClazz(rule, value));
                     }
+                    if (rule.getOr() != null) {
+                        validation.getPropertyReport().add(checkOr(rule, value));
+                    }
 
                 }
             } else {
@@ -95,12 +101,14 @@ public class Validator {
         int oks = 0, errors = 0, warnings = 0;
 
         for (Property propertyReport : validation.getPropertyReport()) {
-            if (Property.VIOLATION.equals(propertyReport.getSeverity())) {
-                errors++;
-            } else if (Property.WARNING.equals(propertyReport.getSeverity())) {
-                warnings++;
-            } else {
-                oks++;
+            if (propertyReport != null) {
+                if (Property.VIOLATION.equals(propertyReport.getSeverity())) {
+                    errors++;
+                } else if (Property.WARNING.equals(propertyReport.getSeverity())) {
+                    warnings++;
+                } else {
+                    oks++;
+                }
             }
         }
         validation.setErrors(errors);
@@ -145,7 +153,7 @@ public class Validator {
                 return new Property(rule.getPath(),
                         ruleName,
                         rule.getSeverity(),
-                        String.format("Exceeding more than %s allowed properties", rule.getMinCount()));
+                        String.format("Exceeding more than %s allowed properties", rule.getMaxCount()));
             }
         }
 
@@ -243,6 +251,59 @@ public class Validator {
 
     }
 
+    public Property checkOr(PropertyRule rule, Object value) {
+        final String ruleName = String.format("Or: %s", rule.getOr());
+        String msg = "";
+        if (value != null) {
+            boolean ok = false;
+            for (Object r : rule.getOr()) {
+                if (r instanceof Map) {
+                    Map<String, String> orRule = (Map<String, String>) r;
+                    msg = checkDatatype(orRule.get("datatype"), value);
+                    if (msg == null) {
+                        ok = true;
+                        break;
+                    } else {
+                        msg = String.format("%s is not a %s", value, orRule.get("datatype"));
+                    }
+                }
+            }
+            if (ok) {
+                return new Property(rule.getPath(), ruleName);
+            } else {
+                return new Property(rule.getPath(),
+                        ruleName,
+                        rule.getSeverity(),
+                        String.format("Property is invalid: %s", msg));
+            }
+        }
+        return null;
+    }
+
+    public String checkDatatype(String datatype, Object value){
+        if (value instanceof String) {
+            if ("xsd:date".equals(datatype)) {
+                try {
+                    DatatypeConverter.parseDate((String) value);
+
+                } catch (IllegalArgumentException iae) {
+                    return iae.getMessage();
+                }
+            } else if ("xsd:dateTime".equals(datatype)) {
+                try {
+                    DatatypeConverter.parseDateTime((String) value);
+
+                } catch (IllegalArgumentException iae) {
+                    return iae.getMessage();
+                }
+            }
+            return null;
+        } else {
+            return "Value is not simple datatype";
+        }
+
+    }
+
     private boolean isCollectionOfLiterals(Object value) {
         if (value instanceof Collection) {
             boolean literal = true;
@@ -258,7 +319,9 @@ public class Validator {
         return false;
     }
 
-    private boolean isLiteral(Object value) {
+
+
+        private boolean isLiteral(Object value) {
         if ((value instanceof Map || value instanceof String || value instanceof Number)) {
             return true;
         }
