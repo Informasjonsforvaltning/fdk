@@ -4,7 +4,7 @@
     </div>
 
     <div id="dist-accordion" class="fdk-panel-body">
-        <div *ngFor="let dist of dataset.distribution" id="distribution" class="panel fkd-panel-body row fdk-row-padding">
+        <div *ngFor="let dist of dataset.distribution" class="panel fkd-panel-body row fdk-row-padding">
             <a data-toggle="collapse" data-parent="#dist-accordion" data-target="#{{dist.id}}">
                 <h3><i class="fa fa-caret-right" aria-hidden="true"></i> {{dist.format}}</h3>
             </a>
