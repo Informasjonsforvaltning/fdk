@@ -21,7 +21,10 @@ export class RegistreringGuiPage {
     return element(by.css('.fdk-register-h1')).getAttribute('value');
   }
 
-  getValueFromElement(id) {
-    return element(by.id(id)).getAttribute('value');
-}
+    getValueFromElement(id) {
+      return element(by.id(id)).getAttribute('value');
+    }
+    getTextFromCssElement(css) {
+      return element(by.css(css)).getText();
+    }
 }
