@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@SuppressWarnings({"jacoco.complexity","jacoco.method","jacoco.branch"})
 public class ValidatorApplication {
 
     public static void main(String... args) {

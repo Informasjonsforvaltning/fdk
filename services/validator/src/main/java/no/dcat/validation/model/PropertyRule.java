@@ -9,7 +9,6 @@ import java.util.Map;
  * Created by dask on 24.04.2017.
  */
 @Data
-@SuppressWarnings({"jacoco.complexity","jacoco.method","jacoco.branch"})
 public class PropertyRule {
     String path;
     Integer minCount;
