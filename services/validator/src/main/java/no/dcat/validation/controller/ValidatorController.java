@@ -60,21 +60,24 @@ public class ValidatorController {
 
         String[] field = null;
 
-        if (fields != null && !"".equals(fields)) {
-            // validate only properties from fields
-            field = fields.split(",");
-
-        } else {
+        if (fields == null || "".equals(fields)) {
             // attempt to validate all properties submitted in body
             field = body.keySet().toArray(new String[body.size()]);
+        } else {
+            // validate only properties from fields
+            field = fields.split(",");
         }
 
-        Validation validationResult = validator.validate(field, body);
+        Validation validationResult = validate(field, body);
 
         if (validationResult != null) {
             return new ResponseEntity<Validation>(validationResult, HttpStatus.OK);
         }
 
         return new ResponseEntity<Validation>(HttpStatus.BAD_REQUEST);
+    }
+
+    Validation validate(String[] field, Map<String,Object> body) {
+        return validator.validate(field, body);
     }
 }

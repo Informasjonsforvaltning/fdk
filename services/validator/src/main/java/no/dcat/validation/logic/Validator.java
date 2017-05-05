@@ -12,9 +12,7 @@ import org.springframework.core.io.Resource;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -25,18 +23,20 @@ import java.util.Map;
  */
 public class Validator {
     private static final Logger logger = LoggerFactory.getLogger(Validator.class);
-    private List<PropertyRule> datasetRules;
-    private Map<String, List<PropertyRule>> datasetRuleMap;
+
+    private final Map<String, List<PropertyRule>> datasetRuleMap;
 
     public Validator() {
+        List<PropertyRule> datasetRules;
         datasetRuleMap = new HashMap<>();
+
         Resource p = new ClassPathResource("dataset_rules.json");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Map<String, Object> rules = objectMapper.readValue(p.getInputStream(), Map.class);
             Object o = rules.get("property");
-            datasetRules = objectMapper.readValue(objectMapper.writeValueAsString(o), new TypeReference<List<PropertyRule>>() {
-            });
+            datasetRules = objectMapper.readValue(objectMapper.writeValueAsString(o),
+                    new TypeReference<List<PropertyRule>>() {});
 
             for (PropertyRule r : datasetRules) {
                 String shortName = getPostfixName(r.getPath());
@@ -61,39 +61,23 @@ public class Validator {
         return name.substring(name.indexOf(":") + 1);
     }
 
-    public Validation validate(String[] field, Map<String, Object> body) {
+    public Validation validate(String[] fields, Map<String, Object> body) {
         Validation validation = new Validation();
 
-         for (String f : field) {
+         for (String field : fields) {
 
-            List<PropertyRule> propertyRules = datasetRuleMap.get(f);
-            if (propertyRules != null && propertyRules.size() > 0) {
-                for (PropertyRule rule : propertyRules) {
-                    Object value = body.get(f);
-
-                    if (rule.getMinCount() != null) {
-                        validation.getPropertyReport().add(checkMinCount(rule, value));
-                    }
-                    if (rule.getMaxCount() != null) {
-                        validation.getPropertyReport().add(checkMaxCount(rule, value));
-                    }
-                    if (rule.getNodeKind() != null) {
-                        validation.getPropertyReport().add(checkNodeKind(rule, value));
-                    }
-                    if (rule.getConditional() != null) {
-                        validation.getPropertyReport().add(checkConditional(rule, body, value));
-                    }
-                    if (rule.getClazz() != null) {
-                        validation.getPropertyReport().add(checkClazz(rule, value));
-                    }
-                    if (rule.getOr() != null) {
-                        validation.getPropertyReport().add(checkOr(rule, value));
-                    }
-
-                }
+            List<PropertyRule> propertyRules = datasetRuleMap.get(field);
+            if (propertyRules == null || propertyRules.isEmpty()) {
+                logger.debug("Property {} has no validation rule: {}", field, Property.WARNING);
+                validation.getPropertyReport().add(
+                        new Property(field, null, Property.WARNING,
+                                String.format("Couldn't find validation rules for property %s", field)));
             } else {
-                logger.debug("Property {} has no validation rule: {}", f, Property.WARNING);
-                validation.getPropertyReport().add(new Property(f, null, Property.WARNING, String.format("Couldn't find validation rules for property %s", f)));
+                for (PropertyRule rule : propertyRules) {
+                    Object value = body.get(field);
+
+                    handleRule(body, validation, rule, value);
+                }
             }
         }
 
@@ -118,8 +102,29 @@ public class Validator {
         return validation;
     }
 
+    private void handleRule(Map<String, Object> body, Validation validation, PropertyRule rule, Object value) {
+        if (rule.getMinCount() != null) {
+            validation.getPropertyReport().add(checkMinCount(rule, value));
+        }
+        if (rule.getMaxCount() != null) {
+            validation.getPropertyReport().add(checkMaxCount(rule, value));
+        }
+        if (rule.getNodeKind() != null) {
+            validation.getPropertyReport().add(checkNodeKind(rule, value));
+        }
+        if (rule.getConditional() != null) {
+            validation.getPropertyReport().add(checkConditional(rule, body, value));
+        }
+        if (rule.getClazz() != null) {
+            validation.getPropertyReport().add(checkClazz(rule, value));
+        }
+        if (rule.getOr() != null) {
+            validation.getPropertyReport().add(checkOr(rule, value));
+        }
+    }
+
     public Property checkMinCount(PropertyRule rule, Object value) {
-        final String ruleName = "minCount";
+        String ruleName = "minCount";
         if (value instanceof Collection || value instanceof Map || value == null) {
             int size = 0;
             if (value instanceof Collection) {
@@ -129,7 +134,8 @@ public class Validator {
             }
 
             if (size < rule.getMinCount()) {
-                logger.debug("Property {} breaks rule {}={}. Count was {}: {}", rule.getPath(), ruleName, rule.getMinCount(), size, rule.getSeverity());
+                logger.debug("Property {} breaks rule {}={}. Count was {}: {}",
+                        rule.getPath(), ruleName, rule.getMinCount(), size, rule.getSeverity());
                 return new Property(rule.getPath(),
                         ruleName,
                         rule.getSeverity(),
@@ -141,7 +147,7 @@ public class Validator {
     }
 
     public Property checkMaxCount(PropertyRule rule, Object value) {
-        final String ruleName = "maxCount";
+        String ruleName = "maxCount";
         if (value instanceof Collection) {
             int size = 0;
             if (value instanceof Collection) {
@@ -149,7 +155,10 @@ public class Validator {
             }
 
             if (size > rule.getMaxCount()) {
-                logger.debug("Property {} breaks rule {}={}. Found {}: {}", rule.getPath(), ruleName, rule.getMaxCount(), size, rule.getSeverity());
+                logger.debug("Property {} breaks rule {}={}. Found {}: {}",
+                        rule.getPath(), ruleName, rule.getMaxCount(),
+                        size, rule.getSeverity());
+
                 return new Property(rule.getPath(),
                         ruleName,
                         rule.getSeverity(),
@@ -161,18 +170,16 @@ public class Validator {
     }
 
     public Property checkNodeKind(PropertyRule rule, Object value) {
-        final String ruleName = String.format("NodeKind: %s", rule.getNodeKind());
+        String ruleName = String.format("NodeKind: %s", rule.getNodeKind());
 
 
         if ("Literal".equals(rule.getNodeKind())) {
-            String message = "Property is not a %s";
             boolean literalOk = true;
 
             if (value instanceof Collection) {
                 literalOk = isCollectionOfLiterals(value);
             } else {
                 literalOk = isLiteral(value);
-
             }
 
             if (!literalOk) {
@@ -189,42 +196,55 @@ public class Validator {
 
     public Property checkClazz(PropertyRule rule, Object value) {
         String ruleName = String.format("Class is %s", rule.getClazz());
-        String foundClass = "Unknown";
-        boolean ok = true;
+        String propertyName = rule.getPath();
+        String foundClass = null;
 
         if (value instanceof Collection) {
             Collection list = (Collection) value;
             for (Object obj : list) {
-                if (!(obj instanceof String || obj instanceof Map)) {
-                    foundClass = obj.getClass().getSimpleName();
-                    ok = false;
+                foundClass = getClassName(value);
+                if (foundClass != null) {
                     break;
                 }
             }
-
         } else {
-            if (value != null && !(value instanceof String || value instanceof Map)) {
-                foundClass = value.getClass().getSimpleName();
-                ok = false;
-            }
+            foundClass = getClassName(value);
         }
 
-        if (ok) {
+        if (foundClass != null) {
             return new Property(rule.getPath(), ruleName);
         } else {
-            logger.debug("Property {} breaks rule {}. Found {} : {}", rule.getPath(), ruleName, foundClass, rule.getSeverity());
+            logger.debug("Property {} breaks rule {}. Found {} : {}",
+                    propertyName,
+                    ruleName, foundClass, rule.getSeverity());
 
             return new Property(rule.getPath(),
                     ruleName,
                     rule.getSeverity(),
-                    String.format("Property is not refering to a URI of class %s", rule.getClazz()));
+                    String.format("Property %s is not refering to class %s",
+                            propertyName, rule.getClazz()));
         }
+
+    }
+
+    private String getClassName(Object value) {
+        if (value != null) {
+            if (value instanceof Map) {
+                Map<?,?> map = (Map<?,?>) value;
+                if (map.get("uri") != null) {
+                    return "URI";
+                }
+            }
+            return value.getClass().getSimpleName();
+        }
+        return null;
     }
 
     public Property checkConditional(PropertyRule rule, Map<String, Object> data, Object value) {
-        final String ruleName = String.format("Conditional: %s", rule.getConditional());
+        String ruleName = String.format("Conditional: %s", rule.getConditional());
+        String propertyName = getPostfixName(rule.getConditional().getProperty());
 
-        Object required = data.get(getPostfixName(rule.getConditional().getProperty()));
+        Object required = data.get(propertyName);
         if (required instanceof Map) {
             Object requiredValue = ((Map) required).get("code");
             if (requiredValue instanceof String) {
@@ -237,11 +257,15 @@ public class Validator {
                     }
                 }
                 if (ok && (value == null || !isCollectionOfLiterals(value))) {
-                    logger.debug("Property {} breaks rule {} : {}", rule.getPath(), ruleName, rule.getSeverity());
+                    logger.debug("Property {} breaks rule {} : {}", rule.getPath(),
+                            ruleName, rule.getSeverity());
                     return new Property(rule.getPath(),
                             ruleName,
                             rule.getSeverity(),
-                            String.format("Property should be present when %s is", rule.getConditional()));
+                            String.format("Property %s should be present when %s is %s",
+                                    propertyName,
+                                    rule.getConditional().getProperty(),
+                                    rule.getConditional().getValues()));
                 }
             }
         }
@@ -259,7 +283,7 @@ public class Validator {
             for (Object r : rule.getOr()) {
                 if (r instanceof Map) {
                     Map<String, String> orRule = (Map<String, String>) r;
-                    msg = checkDatatype(orRule.get("datatype"), value);
+                    msg = checkSimpleDatatype(orRule.get("datatype"), value);
                     if (msg == null) {
                         ok = true;
                         break;
@@ -280,28 +304,30 @@ public class Validator {
         return null;
     }
 
-    public String checkDatatype(String datatype, Object value){
+    public String checkSimpleDatatype(String datatype, Object value){
+
         if (value instanceof String) {
+            String result = null;
+
             if ("xsd:date".equals(datatype)) {
                 try {
                     DatatypeConverter.parseDate((String) value);
 
                 } catch (IllegalArgumentException iae) {
-                    return iae.getMessage();
+                    result = iae.getMessage();
                 }
             } else if ("xsd:dateTime".equals(datatype)) {
                 try {
                     DatatypeConverter.parseDateTime((String) value);
 
                 } catch (IllegalArgumentException iae) {
-                    return iae.getMessage();
+                    result = iae.getMessage();
                 }
             }
-            return null;
-        } else {
-            return "Value is not simple datatype";
+            return result;
         }
 
+        return "Value is not simple datatype";
     }
 
     private boolean isCollectionOfLiterals(Object value) {
@@ -322,7 +348,7 @@ public class Validator {
 
 
         private boolean isLiteral(Object value) {
-        if ((value instanceof Map || value instanceof String || value instanceof Number)) {
+        if (value instanceof Map || value instanceof String || value instanceof Number) {
             return true;
         }
 
