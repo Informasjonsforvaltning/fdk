@@ -1,0 +1,20 @@
+spring:
+  profiles: develop
+server:
+  port: 8098
+management:
+  port: 8998
+---
+spring:
+  profiles: unit-integration
+---
+spring:
+  profiles: docker
+server:
+  port: 8098
+management:
+  port: 8998
+---
+spring:
+  hateoas:
+    use-hal-as-default-json-media-type: false

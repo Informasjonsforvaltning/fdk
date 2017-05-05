@@ -23,9 +23,42 @@ describe('registrering-gui App', () => {
   beforeAll(()=> {
   })
 
+    it("Should handle saving of codes in new dataset", () => {
+      let catalogLink = element(by.css("#datacatalogs td"));
+      catalogLink.click();
+
+      let newDatasetLink = element(by.css("#datasets td"));
+      newDatasetLink.click();
+
+      let datasetH1Input = element(by.css(".fdk-register-h1"));
+      datasetH1Input.clear();
+      datasetH1Input.sendKeys('Codes test');
+
+      let provenanceControl = element(by.css('[formcontrolname=provenanceControl]'));
+      provenanceControl.click();
+      let provenanceControlFirstValue = element(by.css('[formcontrolname=provenanceControl] li:first-child'));
+      provenanceControlFirstValue.click();
+
+      let accrualPeriodicityControl = element(by.css('[formcontrolname=accrualPeriodicityControl]'));
+      accrualPeriodicityControl.click();
+      let accrualPeriodicityControlFirstValue = element(by.css('[formcontrolname=accrualPeriodicityControl] li:first-child'));
+      accrualPeriodicityControlFirstValue.click();
+
+      var EC = protractor.ExpectedConditions;
+      var alertSuccess = element(by.css('.alert-success'));
+      browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+      browser.refresh();
+      let provenanceControlValueElement = element(by.css('[formcontrolname=provenanceControl] .value'));
+
+      browser.wait(EC.textToBePresentInElement(provenanceControlValueElement, 'Brukerinnsamlede data'),1000).then(() => {
+        expect(<any>page.getTextFromCssElement('[formcontrolname=provenanceControl] .value')).toEqual('Brukerinnsamlede data');
+        expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicityControl] .value')).toEqual('hver fjortende dag');
+      });
+    });
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect<any>(page.getParagraphText()).toEqual('Datakataloger');
+    expect(<any>page.getParagraphText()).toEqual('Datakataloger');
   });
 
 
@@ -57,7 +90,7 @@ describe('registrering-gui App', () => {
     browser.refresh();
     datasetH1Input = element(by.css(".fdk-register-h1"));
     browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'),1000).then(() => {
-      expect<any>(page.getH1Value()).toEqual('New datacatalog name');
+      expect(<any>page.getH1Value()).toEqual('New datacatalog name');
     });
   });
 
@@ -79,7 +112,7 @@ describe('registrering-gui App', () => {
     browser.refresh();
     datasetH1Input = element(by.css(".fdk-register-h1"));
     browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New dataset name'),1000).then(() => {
-      expect<any>(page.getH1Value()).toEqual('New dataset name');
+      expect(<any>page.getH1Value()).toEqual('New dataset name');
     });
   });
 
@@ -100,7 +133,7 @@ describe('registrering-gui App', () => {
 
     browser.refresh();
     let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
-    expect<any>(datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
+    expect(<any>datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
   });
 
   it("Should handle Contact Point fields upon typing", () => {
@@ -138,10 +171,11 @@ describe('registrering-gui App', () => {
     var avdeling = element(by.id('contact-avdeling'));
 
     browser.wait(EC.textToBePresentInElementValue(avdeling, 'Avdelingsnavn'),1000).then(() => {
-      expect<any>(page.getValueFromElement('contact-avdeling')).toEqual('Avdelingsnavn');
-      expect<any>(page.getValueFromElement('contact-url')).toEqual('http://test.no');
-      expect<any>(page.getValueFromElement('contact-email')).toEqual('test@test.test');
-      expect<any>(page.getValueFromElement('contact-telephone')).toEqual('+47123456');
+      expect(<any>page.getValueFromElement('contact-avdeling')).toEqual('Avdelingsnavn');
+      expect(<any>page.getValueFromElement('contact-url')).toEqual('http://test.no');
+      expect(<any>page.getValueFromElement('contact-email')).toEqual('test@test.test');
+      expect(<any>page.getValueFromElement('contact-telephone')).toEqual('+47123456');
     });
   });
+
 });
