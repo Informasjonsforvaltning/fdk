@@ -16,6 +16,9 @@ public class Contact {
     private String id;
 
     @Field
+    private String uri;
+
+    @Field
     private String fullname;
 
     @Field
@@ -29,4 +32,7 @@ public class Contact {
 
     @Field
     private String hasURL;
+
+    @Field
+    private String hasTelephone;
 }

@@ -1,9 +1,7 @@
 package no.dcat.controller;
 
-import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.model.Publisher;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,15 +11,15 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.ResourceAccessException;
 
-import javax.print.attribute.standard.Media;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -82,16 +80,20 @@ public class DatasetControllerIT {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
 
-        assertThat(result, is(expectedDataset));
+        datasetId = result.getId();
+
+        assertThat(result.getTitle(), is(dataset.getTitle()));
+        assertThat(result.getDescription(), is(dataset.getDescription()));
+        assertThat(result.getCatalog(), is(dataset.getCatalog()));
 
         Dataset getResult = restTemplate.getForObject("/catalogs/" + catalogId + "/datasets/" + datasetId, Dataset.class);
 
-        assertThat(getResult, is((expectedDataset)));
+        assertThat(getResult, is(result));
     }
 
 
 
-    @Test(expected = ResourceAccessException.class)
+    @Test
     public void createDatasetAccessDenied() throws Exception {
         Catalog catalog = new Catalog();
         String catalogId = "974760673";
@@ -120,7 +122,7 @@ public class DatasetControllerIT {
         HttpEntity<String> postRequest = new HttpEntity<String>(headers);
 
         ResponseEntity<Dataset> postResponse = restTemplate.exchange(datasetUrl, HttpMethod.POST, postRequest, Dataset.class);
-        assertThat(postResponse.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
+        assertThat(postResponse.getStatusCode().value(), is(HttpStatus.UNAUTHORIZED.value()));
     }
 
 
@@ -185,6 +187,8 @@ public class DatasetControllerIT {
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
 
+        datasetId = result.getId();
+
         HttpHeaders headers = createHeaders("bjg","123");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -200,8 +204,27 @@ public class DatasetControllerIT {
 
     }
 
+    @Test
+    public void createDatasetInUnknownCatalogFails() throws Throwable {
+        Dataset ds = new Dataset();
+        ds.setId("444");
+        HttpHeaders headers = createHeaders("bjg","123");
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        String url = "/catalogs/" + "XX" + "/datasets/";
 
-    HttpHeaders createHeaders(String username, String password){
+        HttpEntity<Dataset> request = new HttpEntity<>(ds, headers);
+        ResponseEntity<Dataset> result = restTemplate.exchange(url, HttpMethod.POST, request, Dataset.class);
+
+        Dataset actual = result.getBody();
+
+        assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(actual.getId(), is(nullValue()));
+
+    }
+
+
+    static HttpHeaders createHeaders(String username, String password){
         return new HttpHeaders() {{
             String auth = username + ":" + password;
             byte[] encodedAuth = Base64.encodeBase64(

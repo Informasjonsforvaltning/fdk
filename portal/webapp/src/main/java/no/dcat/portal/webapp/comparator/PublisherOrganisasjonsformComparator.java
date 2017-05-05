@@ -1,7 +1,6 @@
 package no.dcat.portal.webapp.comparator;
 
-import no.difi.dcat.datastore.domain.dcat.Publisher;
-import org.springframework.util.StringUtils;
+import no.dcat.portal.webapp.domain.Publisher;
 
 import java.io.Serializable;
 import java.util.Comparator;

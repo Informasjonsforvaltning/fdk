@@ -14,17 +14,21 @@ import {DatasetComponent} from "./dataset/dataset.component";
 import {StartComponent} from "./start/start.component";
 import {CatalogService} from "./catalog/catalog.service";
 import {DatasetService} from "./dataset/dataset.service";
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { ConfirmComponent } from './confirm/confirm.component';
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
 
-import {SelectModule} from 'angular2-select';
+import {SelectModule} from 'ng-select';
+import {CodesService} from "./dataset/codes.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     CatalogComponent,
     DatasetComponent,
-    StartComponent
+    StartComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +38,13 @@ import {SelectModule} from 'angular2-select';
     HttpModule,
     NgbModule.forRoot(),
     AlertModule.forRoot(),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    BootstrapModalModule
   ],
-  providers: [CatalogService, DatasetService, AuthGuard, AuthenticationService],
+  entryComponents: [
+     ConfirmComponent
+  ],
+  providers: [CatalogService, DatasetService, CodesService, AuthGuard, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

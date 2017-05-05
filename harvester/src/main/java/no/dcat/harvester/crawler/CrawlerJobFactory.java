@@ -1,16 +1,16 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
+import no.dcat.admin.store.AdminDataStore;
+import no.dcat.admin.store.DcatDataStore;
+import no.dcat.admin.store.Fuseki;
+import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.harvester.settings.ApplicationSettings;
 import no.dcat.harvester.settings.FusekiSettings;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

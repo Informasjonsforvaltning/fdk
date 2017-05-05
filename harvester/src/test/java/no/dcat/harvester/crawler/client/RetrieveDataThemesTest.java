@@ -1,8 +1,8 @@
 package no.dcat.harvester.crawler.client;
 
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.harvester.crawler.exception.DataThemesNotLoadedException;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;

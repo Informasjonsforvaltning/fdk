@@ -11,8 +11,6 @@ Feature: Forbedringer design
 		Given Elasticsearch kjører
 		And bruker datasett dataset-test.ttl
 		And man har åpnet Fellesdatakatalog i en nettleser
-			  
-		
 
 	#gitt jeg er på startsiden og jeg klikker på et tema og får opp resultat som er filtrert på temaet jeg trykket på
 	#@TEST_FDK_297 @TESTSETT_FDK_323
