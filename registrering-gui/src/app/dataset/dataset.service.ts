@@ -60,9 +60,10 @@ export class DatasetService {
 
     let authorization : string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
-
+    let datasetCopy = JSON.parse(JSON.stringify(dataset));
+    let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
     return this.http
-      .put(datasetUrl, JSON.stringify(singularizeObjectKeys(dataset)), {headers: this.headers})
+      .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)

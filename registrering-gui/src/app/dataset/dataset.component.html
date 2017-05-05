@@ -82,7 +82,7 @@
   </div>
 
 
-<div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoint">
+<div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
   <div class="fdk-panel-heading">
     Kontaktinformasjon
   </div>
@@ -92,28 +92,28 @@
         <label for="contact-avdeling" class="col-md-1 control-label">Avdeling:</label>
         <div class="col-md-11">
           <input id="contact-avdeling" type="text" (ngModelChange)="valuechange(this)" class="form-control"
-                 [(ngModel)]='dataset.contactPoint[0].organizationUnit'/>
+                 [(ngModel)]='dataset.contactPoints[0].organizationUnit'/>
         </div>
       </div>
       <div class="row form-group">
         <label for="contact-url" class="col-md-1 control-label">Kontaktskjema:</label>
         <div class="col-md-11">
           <input id="contact-url" type="text" (ngModelChange)="valuechange(this)" class="form-control"
-                 [(ngModel)]='dataset.contactPoint[0].hasURL'/>
+                 [(ngModel)]='dataset.contactPoints[0].hasURL'/>
         </div>
       </div>
       <div class="row form-group">
         <label for="contact-email" class="col-md-1 control-label">E-post:</label>
         <div class="col-md-11">
           <input id="contact-email" type="email" ng-model="email.text" (ngModelChange)="valuechange(this)"
-                 class="form-control" [(ngModel)]='dataset.contactPoint[0].email'/>
+                 class="form-control" [(ngModel)]='dataset.contactPoints[0].email'/>
         </div>
       </div>
       <div class="row form-group">
         <label for="contact-telephone" class="col-md-1 control-label">Telefon:</label>
         <div class="col-md-11">
           <input id="contact-telephone" type="text" (ngModelChange)="valuechange(this)" ng-pattern="[\+]?[0-9]+"
-                 title="Oppgi telefonnummer" class="form-control" [(ngModel)]='dataset.contactPoint[0].hasTelephone'/>
+                 title="Oppgi telefonnummer" class="form-control" [(ngModel)]='dataset.contactPoints[0].hasTelephone'/>
         </div>
       </div>
     </div>
