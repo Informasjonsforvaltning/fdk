@@ -119,6 +119,7 @@ export class DatasetComponent implements OnInit {
     this.codePickers.forEach(codePicker=>{
       const name = codePicker.nameFromDatasetModel;
       const controlName = name + 'Control';
+      this[codePicker.pluralizedNameFromCodesService] = [];
       this[name + 'Form'] = new FormGroup({});
       this[name + 'Form'].addControl(controlName, new FormControl(''));
       var valueObject = {};
@@ -141,7 +142,6 @@ export class DatasetComponent implements OnInit {
   retrieveCustomSelectValues() {
       this.codePickers.forEach(codePicker=>{
         const name = codePicker.nameFromDatasetModel;
-        if(this.dataset[name]) { // if the key doesn't exist, no label needs to be retrieved
           const controlName = name + 'Control';
           const valueObject = {};
           let label:string;
@@ -155,7 +155,7 @@ export class DatasetComponent implements OnInit {
           const prefLabelObj = {};
           prefLabelObj[codePicker.languageCode] = label;
           this.dataset[name] =  {uri:uri, prefLabel: prefLabelObj};
-        }
+
       })
   }
   fetchCodes (codeId:string): void {
