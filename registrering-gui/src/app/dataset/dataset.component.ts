@@ -43,7 +43,11 @@ export class DatasetComponent implements OnInit {
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
+  datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
+
   selection: Array<string>;
+
+  saveDelay:number = 1000;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,7 +66,6 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
-
     this.themesForm = new FormGroup({});
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
     this.codePickers = [
@@ -105,7 +108,10 @@ export class DatasetComponent implements OnInit {
           }
         })).toPromise().then((data) => {
           this.themes = data;
-          setTimeout(()=>this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []}),1)
+          setTimeout(()=>{
+            this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []});
+            setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
+          },1)
         });
     });
   }
@@ -178,7 +184,11 @@ export class DatasetComponent implements OnInit {
 
   valuechange(a,b,c): void {
     var that = this;
-    this.delay(function() {that.save.call(that)}, 1000);
+    this.delay(()=>{
+      if(this.datasetSavingEnabled){
+        that.save.call(that);
+      }
+    }, this.saveDelay);
   }
 
   delay(callback, ms): void {
