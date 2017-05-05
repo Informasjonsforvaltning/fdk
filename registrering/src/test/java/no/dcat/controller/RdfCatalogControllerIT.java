@@ -1,8 +1,8 @@
 package no.dcat.controller;
 
+import no.dcat.RegisterApplication;
 import no.dcat.model.Catalog;
-import no.dcat.rdf.DcatBuilderTest;
-import org.apache.tomcat.util.codec.binary.Base64;
+import no.dcat.service.CatalogRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  */
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = RegisterApplication.class)
 public class RdfCatalogControllerIT {
 
     @Autowired
