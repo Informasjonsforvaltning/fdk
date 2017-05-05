@@ -201,8 +201,8 @@ public class Validator {
 
         if (value instanceof Collection) {
             Collection list = (Collection) value;
-            for (Object obj : list) {
-                foundClass = getClassName(value);
+            for (Object object : list) {
+                foundClass = getClassName(object);
                 if (foundClass != null) {
                     break;
                 }
@@ -211,9 +211,7 @@ public class Validator {
             foundClass = getClassName(value);
         }
 
-        if (foundClass != null) {
-            return new Property(rule.getPath(), ruleName);
-        } else {
+        if (foundClass == null) {
             logger.debug("Property {} breaks rule {}. Found {} : {}",
                     propertyName,
                     ruleName, foundClass, rule.getSeverity());
@@ -223,6 +221,8 @@ public class Validator {
                     rule.getSeverity(),
                     String.format("Property %s is not refering to class %s",
                             propertyName, rule.getClazz()));
+        } else {
+            return new Property(rule.getPath(), ruleName);
         }
 
     }
@@ -314,6 +314,7 @@ public class Validator {
                     DatatypeConverter.parseDate((String) value);
 
                 } catch (IllegalArgumentException iae) {
+                    logger.trace("Illegal date {}", value);
                     result = iae.getMessage();
                 }
             } else if ("xsd:dateTime".equals(datatype)) {
@@ -321,6 +322,7 @@ public class Validator {
                     DatatypeConverter.parseDateTime((String) value);
 
                 } catch (IllegalArgumentException iae) {
+                    logger.trace("Illegal dateTime {}", value);
                     result = iae.getMessage();
                 }
             }

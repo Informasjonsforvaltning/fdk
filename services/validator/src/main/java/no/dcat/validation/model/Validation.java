@@ -17,11 +17,7 @@ import java.util.List;
 public class Validation {
 
     long timeStamp;
-
-    int warnings = 0;
-    int errors = 0;
-    int oks = 0;
-
+    int warnings, errors, oks;
     List<Property> propertyReport;
 
     public Validation() {
