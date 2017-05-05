@@ -14,7 +14,6 @@ import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
 import {Distribution} from "../distribution/distribution";
 
-
 @Component({
   selector: 'app-dataset',
   templateUrl: './dataset.component.html',
@@ -33,14 +32,22 @@ export class DatasetComponent implements OnInit {
   catId: string;
   lastSaved: string;
 
-  form: FormGroup;
+  themesForm: FormGroup;
+  accrualPeriodicityForm: FormGroup;
+  provenanceFormForm: FormGroup;
 
+  theme: string[];
   themes: string[];
-  frequency: any[];
-  provenancestatement: any[];
+  frequencies: {value?:string, label?:string}[];
+  provenanceForms: {value?:string, label?:string}[];
   fetchedCodeIds: string[] = [];
+  codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
+
+  datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
 
   selection: Array<string>;
+
+  saveDelay:number = 1000;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,21 +59,34 @@ export class DatasetComponent implements OnInit {
     private dialogService: DialogService
   ) {  }
 
+
   ngOnInit() {
     this.language = 'nb';
     this.timer = 0;
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
-    this.form = new FormGroup({});
-    this.form.addControl('themes', new FormControl([])); //initialized with empty values
-    this.form.addControl('frequency', new FormControl(''));
-    this.form.addControl('provenancestatement', new FormControl(''));
+    this.themesForm = new FormGroup({});
+    this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
+    this.codePickers = [
+      {
+        pluralizedNameFromCodesService: 'provenancestatements',
+        nameFromDatasetModel: 'provenance',
+        languageCode: "nb"
+      },
+      {
+        pluralizedNameFromCodesService: 'frequencies',
+        nameFromDatasetModel: 'accrualPeriodicity',
+        languageCode: "no"
+      }
+      ]
+    this.initCustomSelectComponents();
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
+      this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
 
@@ -75,11 +95,8 @@ export class DatasetComponent implements OnInit {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
-
-      this.dataset.contactPoint = this.dataset.contactPoint ;
-      this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
-
-      this.dataset.distribution = this.dataset.distribution || [];
+      this.setCustomSelectValues();
+      /* eof */
 
       this.http
         .get(environment.queryUrl + `/themes`)
@@ -90,28 +107,59 @@ export class DatasetComponent implements OnInit {
           }
         })).toPromise().then((data) => {
           this.themes = data;
-        if(this.dataset.accrualPeriodicity) {
-          this.frequency = [{value:this.dataset.accrualPeriodicity.uri, label:this.dataset.accrualPeriodicity.prefLabel["no"] || this.dataset.accrualPeriodicity.uri}];
-        }
-        if(this.dataset.provenance) {
-          this.provenancestatement = [{value:this.dataset.provenance.uri, label:this.dataset.provenance.prefLabel["nb"] || this.dataset.provenance.uri}];
-        }
-          setTimeout(()=>this.form.setValue(
-            {
-              'themes': this.dataset.theme ? this.dataset.theme.map((tema)=>{return tema.uri}) : [],
-              'frequency': this.dataset.accrualPeriodicity ? this.dataset.accrualPeriodicity.uri : '',
-              'provenancestatement':this.dataset.provenance ? this.dataset.provenance.uri : ''
-            }
-          ),1)
+          setTimeout(()=>{
+            this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []});
+            setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
+          },1)
         });
     });
   }
 
+  initCustomSelectComponents() {
+    this.codePickers.forEach(codePicker=>{
+      const name = codePicker.nameFromDatasetModel;
+      const controlName = name + 'Control';
+      this[codePicker.pluralizedNameFromCodesService] = [];
+      this[name + 'Form'] = new FormGroup({});
+      this[name + 'Form'].addControl(controlName, new FormControl(''));
+      var valueObject = {};
+      valueObject[controlName] = '';
+      this[name + 'Form'].setValue(valueObject);
+    })
+  }
+  setCustomSelectValues() {
+    this.codePickers.forEach(codePicker=>{
+      const name = codePicker.nameFromDatasetModel;
+      if(this.dataset[name]) { // if the key doesn't exist, no value need to be set
+        const controlName = name + 'Control';
+        const valueObject = {};
+        valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
+        this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
+        setTimeout(()=>this[name + 'Form'].setValue(valueObject), 1);
+      }
+    })
+  }
+  retrieveCustomSelectValues() {
+      this.codePickers.forEach(codePicker=>{
+        const name = codePicker.nameFromDatasetModel;
+          const controlName = name + 'Control';
+          const valueObject = {};
+          let label:string;
+          let uri: string;
+          this[codePicker.pluralizedNameFromCodesService].forEach((codeItem)=>{
+            if(codeItem.value===this[name + 'Form'].getRawValue()[controlName]) {
+              label = codeItem.label;
+              uri = codeItem.value;
+            };
+          })
+          const prefLabelObj = {};
+          prefLabelObj[codePicker.languageCode] = label;
+          this.dataset[name] =  {uri:uri, prefLabel: prefLabelObj};
+
+      })
+  }
   fetchCodes (codeId:string): void {
-    console.log('codeId is ', codeId);
-    console.log('this.fetchedCodeIds', this.fetchedCodeIds);
     if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
-      console.log('get!');
       this.codesService.get(codeId).then(data => {
         this[codeId] = data.map(code => {
           return {value: code.uri, label: code.prefLabel[this.language] || code.prefLabel['no']}
@@ -122,35 +170,12 @@ export class DatasetComponent implements OnInit {
   }
 
   save(): void {
-
-
-    this.dataset.theme = this.form.getRawValue().themes.map((uri)=>{
-
+    this.dataset.themes = this.themesForm.getRawValue().themes.map((uri)=>{
       return {
         "uri": uri
       }
     });
-    if(this.frequency) {
-      let frequencyLabel:string;
-      this.frequency.forEach(freqItem=>{
-        if(freqItem.value===this.form.getRawValue().frequency) frequencyLabel = freqItem.label;
-        console.log(freqItem,this.form.getRawValue().frequency)
-      });
-      console.log('frequencyLabel', frequencyLabel);
-      this.dataset.accrualPeriodicity =  {uri:this.form.getRawValue().frequency, prefLabel: {"no": frequencyLabel}};
-    }
-
-    if(this.provenancestatement) {
-        let provenancestatementLabel:string;
-        this.provenancestatement.forEach(provenancestatementItem=>{
-          if(provenancestatementItem.value===this.form.getRawValue().provenancestatement)
-            provenancestatementLabel = provenancestatementItem.label;
-        });
-        console.log('provenancestatementLabel', provenancestatementLabel);
-        this.dataset.provenance =  {uri:this.form.getRawValue().provenancestatement, prefLabel: {"nb": provenancestatementLabel}};
-    }
-
-
+    this.retrieveCustomSelectValues();
 
     this.service.save(this.catId, this.dataset)
       .then(() => {
@@ -162,7 +187,11 @@ export class DatasetComponent implements OnInit {
 
   valuechange(a,b,c): void {
     var that = this;
-    this.delay(function() {that.save.call(that)}, 1000);
+    this.delay(()=>{
+      if(this.datasetSavingEnabled){
+        that.save.call(that);
+      }
+    }, this.saveDelay);
   }
 
   delay(callback, ms): void {
@@ -194,5 +223,4 @@ export class DatasetComponent implements OnInit {
       disposable.unsubscribe();
     },10000);
   }
-
 }

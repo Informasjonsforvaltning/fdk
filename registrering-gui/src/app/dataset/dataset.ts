@@ -13,16 +13,16 @@ export interface Dataset {
     [language: string]:string[]
   };
   subject?: string[];
-  theme?: {uri:string}[];
+  themes?: {uri:string}[];
   catalog: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
   provenance?: {uri:string, prefLabel:{"nb":string}};
 
-  landingPage?: string[];
+  landingPages?: string[];
 
   publisher?: Publisher;
 
-  contactPoint?: Contact[];
+  contactPoints?: Contact[];
 
   distribution?: Distribution[];
 

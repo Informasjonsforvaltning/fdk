@@ -3,6 +3,7 @@ import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
 import {environment} from "../../environments/environment";
+import {pluralizeObjectKeys, singularizeObjectKeys} from "../../utilities/pluralizeOrSingularizeObjectKeys";
 
 const TEST_DATASETS: Dataset[] = [
   {
@@ -15,9 +16,9 @@ const TEST_DATASETS: Dataset[] = [
     },
     "keywords": {'nb':['keyword1','keyword1']},
     "subject":["term1", "term2", "term3"],
-    "theme":[],
+    "themes":[],
     "catalog": "974760673",
-    "landingPage" : ["http://www.brreg.no", "http://www.difi.no"],
+    "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
     "_lastModified": "2012-04-23"
   }
 ]
@@ -50,7 +51,7 @@ export class DatasetService {
       const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
       return this.http.get(datasetUrl)
         .toPromise()
-        .then(response => response.json() as Dataset)
+        .then(response => pluralizeObjectKeys(response.json()) as Dataset)
         .catch(this.handleError);
   }
 
@@ -59,9 +60,10 @@ export class DatasetService {
 
     let authorization : string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
-
+    let datasetCopy = JSON.parse(JSON.stringify(dataset));
+    let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
     return this.http
-      .put(datasetUrl, JSON.stringify(dataset), {headers: this.headers})
+      .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)
