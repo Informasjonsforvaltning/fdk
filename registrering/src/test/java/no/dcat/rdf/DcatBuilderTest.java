@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -83,13 +84,15 @@ public class DcatBuilderTest {
         dataset.setPublisher(publisher);
         dataset.setIssued(Date.from(LocalDateTime.of(2016,12,24,12,30).toInstant(ZoneOffset.UTC)));
         dataset.setModified(Date.from(LocalDateTime.of(2017,01,20,13,25,3).toInstant(ZoneOffset.UTC)));
-        dataset.setLanguage(new SkosCode(
+        dataset.setLanguage(skosCode(
                         "http://publications.europa.eu/resource/authority/language/NOR",
                         "NOR",
                         map("nb", "Norsk")));
 
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
-        dataset.setTheme(Collections.singletonList(new DataTheme("http://publications.europa.eu/resource/authority/data-theme/GOVE")));
+        DataTheme theme = new DataTheme();
+        theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        dataset.setTheme(Collections.singletonList(theme));
 
         Distribution distribution = RegistrationFactory.INSTANCE.createDistribution(catalog.getId(), dataset.getId());
         distribution.setAccessURL(Collections.singletonList("http://testetaten.no/data/access"));
@@ -106,14 +109,14 @@ public class DcatBuilderTest {
         pot.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
         dataset.setTemporal(Collections.singletonList(pot));
 
-        dataset.setSpatial(Collections.singletonList(new SkosCode("http://sws.geonames.org/3144096/", null, map("nb", "Norge"))));
-        dataset.setAccessRights(new SkosCode("http://publications.europa.eu/resource/authority/access-right/RESTRICTED"));
+        dataset.setSpatial(Collections.singletonList(skosCode("http://sws.geonames.org/3144096/", null, map("nb", "Norge"))));
+        dataset.setAccessRights(skosCode("http://publications.europa.eu/resource/authority/access-right/RESTRICTED"));
         dataset.setAccessRightsComment(Collections.singletonList("http://hjemmeldata.no/du-må-vente"));
         dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
-        dataset.setProvenance(new SkosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
+        dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
         dataset.setIdentifier(Collections.singletonList("42"));
         dataset.setPage(Collections.singletonList("http://uri1"));
-        dataset.setAccrualPeriodicity(new SkosCode("http://publications.europa.eu/resource/authority/frequency/CONT"));
+        dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/CONT"));
 
         List<String> subjects = new ArrayList<>();
         subjects.add("http://testetaten.no/begrep/4450");
@@ -135,6 +138,22 @@ public class DcatBuilderTest {
 
         assertThat(actual, is(notNullValue()));
         System.out.println(actual);
+    }
+
+    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
+        SkosCode result = new SkosCode();
+        result.setUri(uri);
+        result.setCode(code);
+        result.setPrefLabel(prefLabel);
+
+        return result;
+    }
+
+    SkosCode skosCode(String uri) {
+        SkosCode result = new SkosCode();
+        result.setUri(uri);
+
+        return result;
     }
 
     @Test

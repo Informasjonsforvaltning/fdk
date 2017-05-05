@@ -1,25 +1,27 @@
+import {Contact} from "./contact";
+import {Publisher} from "./publisher";
 export interface Dataset {
   id: string;
-  title: {
+  title?: {
     [language: string]:string
   };
-  description: {
+  description?: {
     [language: string]:string
   };
-  keywords: {
+  keywords?: {
     [language: string]:string[]
   };
-  terms: string[];
-  theme: {code:string}[];
+  subject?: string[];
+  theme?: {uri:string}[];
   catalog: string;
+  accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
+  provenance?: {uri:string, prefLabel:{"nb":string}};
 
-  landingPage : string[];
+  landingPage?: string[];
 
-  publisher?: {
-    uri: string;
-    id: string;
-    name: string;
-  };
+  publisher?: Publisher;
+
+  contactPoint?: Contact[];
 
   _lastModified: string;
 }
