@@ -21,8 +21,8 @@ import {AuthenticationService} from "./security/authentication.service";
 
 import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
-import {DistributionComponent} from "./distribution/distribution.component";
-import {DistributionService} from "./distribution/distribution.service";
+import {DistributionComponent} from "./dataset/distribution/distribution.component";
+import {DistributionService} from "./dataset/distribution/distribution.service";
 
 @NgModule({
   declarations: [

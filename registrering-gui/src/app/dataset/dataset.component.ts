@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormGroup, FormControl} from "@angular/forms";
+import {FormGroup, FormControl, FormBuilder, FormArray} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
 import {CodesService} from "./codes.service";
 import {CatalogService} from "../catalog/catalog.service";
@@ -12,8 +12,8 @@ import {NgModule} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
-import {Distribution} from "../distribution/distribution";
-import {DistributionService} from "../distribution/distribution.service";
+import {DistributionComponent} from "./distribution/distribution.component";
+import {DistributionService} from "./distribution/distribution.service";
 
 @Component({
   selector: 'app-dataset',
@@ -49,6 +49,8 @@ export class DatasetComponent implements OnInit {
   selection: Array<string>;
 
   saveDelay:number = 1000;
+  distributionsForm: FormGroup; // our form model
+
 
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +60,8 @@ export class DatasetComponent implements OnInit {
     private catalogService: CatalogService,
     private http: Http,
     private dialogService: DialogService,
-    private distributionService: DistributionService
+    private distributionService: DistributionService,
+    private formBuilder: FormBuilder
   ) {  }
 
 
@@ -98,6 +101,7 @@ export class DatasetComponent implements OnInit {
       if (!this.dataset.distributions[0]) this.dataset.distributions[0] = {format: ["text/turtle"]};
       if (!this.dataset.distributions[1]) this.dataset.distributions[1] = {format: ["application/json"]};
 
+
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
         //will probably need to be modified later, when publisher is stored as separate object in db
@@ -123,6 +127,28 @@ export class DatasetComponent implements OnInit {
     });
   }
 
+  initDistribution() {
+          // initialize our address
+          return this.formBuilder.group({
+              format: [''],
+              description: [''],
+              accessUrl: [''],
+              license: [''],
+              downloadUrl: ['']
+          });
+      }
+
+  addDistribution() {
+      // add address to the list
+      const control = <FormArray>this.distributionsForm.controls['distributions'];
+      control.push(this.initDistribution());
+  }
+
+  removeDistribution(i: number) {
+      // remove address from the list
+      const control = <FormArray>this.distributionsForm.controls['distributions'];
+      control.removeAt(i);
+  }
   initCustomSelectComponents() {
     this.codePickers.forEach(codePicker=>{
       const name = codePicker.nameFromDatasetModel;
