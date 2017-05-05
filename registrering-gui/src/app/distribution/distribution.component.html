@@ -1,59 +1,41 @@
-<div class="panel fdk-panel" *ngIf="dataset && dataset.distribution">
-    <div class="fdk-panel-heading">
-        Distribusjoner (xx)
+
+<div *ngIf="distribution" id="{{distribution.id}}" class="form-group">
+    <div class="row form-group">
+        <label for="dist-format" class="col-md-1 control-label">Format:</label>
+        <div class="col-md-11">
+            <input id="dist-format" type="text" (ngModelChange)="valuechange(this)"
+                   class="form-control"
+                   [(ngModel)]='distribution.format'/>
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="dist-description" class="col-md-1 control-label">Kommentar:</label>
+        <div class="col-md-11">
+            <input id="dist-description" type="text" (ngModelChange)="valuechange(this)"
+                   class="form-control"
+                   [(ngModel)]='distribution.description'/>
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="dist-accessUrl" class="col-md-1 control-label">TilgangsURL:</label>
+        <div class="col-md-11">
+            <input id="dist-accessUrl" type="email" (ngModelChange)="valuechange(this)"
+                   class="form-control" [(ngModel)]='distribution.accessUrl'/>
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="dist-lisence" class="col-md-1 control-label">Lisens:</label>
+        <div class="col-md-11">
+            <input id="dist-lisence" type="email" (ngModelChange)="valuechange(this)"
+                   class="form-control" [(ngModel)]='distribution.license'/>
+        </div>
     </div>
 
-    <div id="dist-accordion" class="fdk-panel-body">
-        <div *ngFor="let dist of dataset.distribution" class="panel fkd-panel-body row fdk-row-padding">
-            <a data-toggle="collapse" data-parent="#dist-accordion" data-target="#{{dist.id}}">
-                <h3><i class="fa fa-caret-right" aria-hidden="true"></i> {{dist.format}}</h3>
-            </a>
-            <div id="{{dist.id}}" class="form-group">
-                <div class="row form-group">
-                    <label for="dist-format" class="col-md-1 control-label">Format:</label>
-                    <div class="col-md-11">
-                        <input id="dist-format" type="text" (ngModelChange)="valuechange(this)"
-                               class="form-control"
-                               [(ngModel)]='dist.format'/>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label for="dist-description" class="col-md-1 control-label">Kommentar:</label>
-                    <div class="col-md-11">
-                        <input id="dist-description" type="text" (ngModelChange)="valuechange(this)"
-                               class="form-control"
-                               [(ngModel)]='dist.description'/>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label for="dist-accessUrl" class="col-md-1 control-label">TilgangsURL:</label>
-                    <div class="col-md-11">
-                        <input id="dist-accessUrl" type="email" (ngModelChange)="valuechange(this)"
-                               class="form-control" [(ngModel)]='dist.accessUrl'/>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label for="dist-lisence" class="col-md-1 control-label">Lisens:</label>
-                    <div class="col-md-11">
-                        <input id="dist-lisence" type="email" (ngModelChange)="valuechange(this)"
-                               class="form-control" [(ngModel)]='dist.license'/>
-                    </div>
-                </div>
-
-                <div class="row form-group">
-                    <label for="dist-downloadUrl" class="col-md-1 control-label">NedlastingsURL:</label>
-                    <div class="col-md-11">
-                        <input id="dist-downloadUrl" type="email" (ngModelChange)="valuechange(this)"
-                               class="form-control" [(ngModel)]='dist.downloadUrl'/>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="form-group fdk-row-padding">
-            Legg til ny distribusjon
-            <button type="button"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+    <div class="row form-group">
+        <label for="dist-downloadUrl" class="col-md-1 control-label">NedlastingsURL:</label>
+        <div class="col-md-11">
+            <input id="dist-downloadUrl" type="email" (ngModelChange)="valuechange(this)"
+                   class="form-control" [(ngModel)]='distribution.downloadUrl'/>
         </div>
     </div>
 </div>

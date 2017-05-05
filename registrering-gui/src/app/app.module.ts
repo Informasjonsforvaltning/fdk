@@ -21,6 +21,8 @@ import {AuthenticationService} from "./security/authentication.service";
 
 import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
+import {DistributionComponent} from "./distribution/distribution.component";
+import {DistributionService} from "./distribution/distribution.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {CodesService} from "./dataset/codes.service";
     CatalogComponent,
     DatasetComponent,
     StartComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    DistributionComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import {CodesService} from "./dataset/codes.service";
   entryComponents: [
      ConfirmComponent
   ],
-  providers: [CatalogService, DatasetService, CodesService, AuthGuard, AuthenticationService],
+  providers: [CatalogService, DatasetService, CodesService, AuthGuard, AuthenticationService, DistributionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

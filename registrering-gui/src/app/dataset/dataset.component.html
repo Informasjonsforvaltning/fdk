@@ -81,46 +81,107 @@
     </div>
   </div>
 
-    <div ng-include="'../distribution/distribution.component.html'"></div>
 
-
-<div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
-  <div class="fdk-panel-heading">
-    Kontaktinformasjon
-  </div>
-  <div class="fdk-panel-body">
-    <div class="form-group">
-      <div class="row form-group">
-        <label for="contact-avdeling" class="col-md-1 control-label">Avdeling:</label>
-        <div class="col-md-11">
-          <input id="contact-avdeling" type="text" (ngModelChange)="valuechange(this)" class="form-control"
-                 [(ngModel)]='dataset.contactPoints[0].organizationUnit'/>
+    <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+        <div class="fdk-panel-heading">
+            Kontaktinformasjon
         </div>
-      </div>
-      <div class="row form-group">
-        <label for="contact-url" class="col-md-1 control-label">Kontaktskjema:</label>
-        <div class="col-md-11">
-          <input id="contact-url" type="text" (ngModelChange)="valuechange(this)" class="form-control"
-                 [(ngModel)]='dataset.contactPoints[0].hasURL'/>
+        <div class="fdk-panel-body">
+            <div class="form-group">
+                <div class="row form-group">
+                    <label for="contact-avdeling" class="col-md-1 control-label">Avdeling:</label>
+                    <div class="col-md-11">
+                        <input id="contact-avdeling" type="text" (ngModelChange)="valuechange(this)"
+                               class="form-control"
+                               [(ngModel)]='dataset.contactPoints[0].organizationUnit'/>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="contact-url" class="col-md-1 control-label">Kontaktskjema:</label>
+                    <div class="col-md-11">
+                        <input id="contact-url" type="text" (ngModelChange)="valuechange(this)" class="form-control"
+                               [(ngModel)]='dataset.contactPoints[0].hasURL'/>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="contact-email" class="col-md-1 control-label">E-post:</label>
+                    <div class="col-md-11">
+                        <input id="contact-email" type="email" ng-model="email.text" (ngModelChange)="valuechange(this)"
+                               class="form-control" [(ngModel)]='dataset.contactPoints[0].email'/>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="contact-telephone" class="col-md-1 control-label">Telefon:</label>
+                    <div class="col-md-11">
+                        <input id="contact-telephone" type="text" (ngModelChange)="valuechange(this)"
+                               ng-pattern="[\+]?[0-9]+"
+                               title="Oppgi telefonnummer" class="form-control"
+                               [(ngModel)]='dataset.contactPoints[0].hasTelephone'/>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row form-group">
-        <label for="contact-email" class="col-md-1 control-label">E-post:</label>
-        <div class="col-md-11">
-          <input id="contact-email" type="email" ng-model="email.text" (ngModelChange)="valuechange(this)"
-                 class="form-control" [(ngModel)]='dataset.contactPoints[0].email'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="contact-telephone" class="col-md-1 control-label">Telefon:</label>
-        <div class="col-md-11">
-          <input id="contact-telephone" type="text" (ngModelChange)="valuechange(this)" ng-pattern="[\+]?[0-9]+"
-                 title="Oppgi telefonnummer" class="form-control" [(ngModel)]='dataset.contactPoints[0].hasTelephone'/>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
+
+    <div class="panel fdk-panel" *ngIf="dataset.distributions">
+        <div class="fdk-panel-heading">
+            Distribusjoner ({{dataset.distributions.length}})
+        </div>
+
+        <div id="dist-accordion" class="fdk-panel-body">
+            <div *ngFor="let distribution of dataset.distributions" class="panel fkd-panel-body row fdk-row-padding">
+                <a >
+                    <h4><i class="fa fa-caret-right" aria-hidden="true"></i> {{distribution.format}}</h4>
+                </a>
+
+                <div *ngIf="distribution" id="{{distribution.id}}" class="form-group">
+                    <div class="row form-group">
+                        <label for="dist-format" class="col-md-1 control-label">Format:</label>
+                        <div class="col-md-11">
+                            <input id="dist-format" type="text" (ngModelChange)="valuechange(this)"
+                                   class="form-control"
+                                   [(ngModel)]='distribution.format'/>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="dist-description" class="col-md-1 control-label">Kommentar:</label>
+                        <div class="col-md-11">
+                            <input id="dist-description" type="text" (ngModelChange)="valuechange(this)"
+                                   class="form-control"
+                                   [(ngModel)]='distribution.description[language]'/>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="dist-accessUrl" class="col-md-1 control-label">TilgangsURL:</label>
+                        <div class="col-md-11">
+                            <input id="dist-accessUrl" type="email" (ngModelChange)="valuechange(this)"
+                                   class="form-control" [(ngModel)]='distribution.accessUrl'/>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="dist-lisence" class="col-md-1 control-label">Lisens:</label>
+                        <div class="col-md-11">
+                            <input id="dist-lisence" type="email" (ngModelChange)="valuechange(this)"
+                                   class="form-control" [(ngModel)]='distribution.license'/>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label for="dist-downloadUrl" class="col-md-1 control-label">NedlastingsURL:</label>
+                        <div class="col-md-11">
+                            <input id="dist-downloadUrl" type="email" (ngModelChange)="valuechange(this)"
+                                   class="form-control" [(ngModel)]='distribution.downloadUrl'/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="fdk-panel-body">
+                Legg til ny distribusjon
+                <button class="btn pull-right" type="button" aria-label="Create new distribution"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
 
 
 

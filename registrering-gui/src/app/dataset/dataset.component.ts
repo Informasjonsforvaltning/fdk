@@ -13,6 +13,7 @@ import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
 import {Distribution} from "../distribution/distribution";
+import {DistributionService} from "../distribution/distribution.service";
 
 @Component({
   selector: 'app-dataset',
@@ -56,7 +57,8 @@ export class DatasetComponent implements OnInit {
     private codesService: CodesService,
     private catalogService: CatalogService,
     private http: Http,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private distributionService: DistributionService
   ) {  }
 
 
@@ -82,6 +84,8 @@ export class DatasetComponent implements OnInit {
       ]
     this.initCustomSelectComponents();
 
+
+
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
@@ -89,6 +93,10 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
+
+      this.dataset.distributions = this.dataset.distributions || [];
+      if (!this.dataset.distributions[0]) this.dataset.distributions[0] = {format: ["text/turtle"]};
+      if (!this.dataset.distributions[1]) this.dataset.distributions[1] = {format: ["application/json"]};
 
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
