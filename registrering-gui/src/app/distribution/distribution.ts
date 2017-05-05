@@ -10,5 +10,6 @@ export interface Distribution {
   accessUrl?: string[];
   license?: string;
   format: string[];
+  downloadUrl?: string[];
 }
 

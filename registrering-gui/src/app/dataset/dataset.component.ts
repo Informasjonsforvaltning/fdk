@@ -76,16 +76,10 @@ export class DatasetComponent implements OnInit {
         this.dataset.publisher = this.catalog.publisher;
       }
 
-<<<<<<< HEAD
       this.dataset.contactPoint = this.dataset.contactPoint ;
       this.dataset.contactPoint[0] = this.dataset.contactPoint[0] || {organizationName:"", organizationUnit:""};
-=======
-      this.dataset.distribution = this.dataset.distribution || [];
-      let d1 = {'format':["text/html"]};
-      this.dataset.distribution.push(d1);
 
-      this.dataset.theme = this.dataset.theme || [];
->>>>>>> Added distributino panel to dataset
+      this.dataset.distribution = this.dataset.distribution || [];
 
       this.http
         .get(environment.queryUrl + `/themes`)
@@ -200,8 +194,5 @@ export class DatasetComponent implements OnInit {
       disposable.unsubscribe();
     },10000);
   }
-<<<<<<< HEAD
-=======
 
->>>>>>> Added distributino panel to dataset
 }
