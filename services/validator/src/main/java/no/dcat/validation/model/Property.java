@@ -7,6 +7,7 @@ import lombok.Data;
  * Created by dask on 24.04.2017.
  */
 @Data
+@SuppressWarnings({"jacoco.complexity","jacoco.method","jacoco.branch"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Property {
     public static final String WARNING = "Warning";

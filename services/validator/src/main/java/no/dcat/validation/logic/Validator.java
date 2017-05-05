@@ -314,7 +314,7 @@ public class Validator {
                     DatatypeConverter.parseDate((String) value);
 
                 } catch (IllegalArgumentException iae) {
-                    logger.trace("Illegal date {}", value);
+                    logger.trace("Illegal date {}", value, iae);
                     result = iae.getMessage();
                 }
             } else if ("xsd:dateTime".equals(datatype)) {
@@ -322,7 +322,7 @@ public class Validator {
                     DatatypeConverter.parseDateTime((String) value);
 
                 } catch (IllegalArgumentException iae) {
-                    logger.trace("Illegal dateTime {}", value);
+                    logger.trace("Illegal dateTime {}", value, iae);
                     result = iae.getMessage();
                 }
             }

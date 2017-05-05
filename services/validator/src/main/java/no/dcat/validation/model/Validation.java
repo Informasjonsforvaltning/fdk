@@ -12,6 +12,7 @@ import java.util.List;
  * Created by dask on 24.04.2017.
  */
 @Data
+@SuppressWarnings({"jacoco.complexity","jacoco.method","jacoco.branch"})
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Validation {
