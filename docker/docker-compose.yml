@@ -1,22 +1,22 @@
 version: "2"
 
 services:
-  portal:
-    image: "dcatno/webapp:latest"
+  search:
+    image: "dcatno/search:${TAG}"
     ports:
       - "8080:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.queryService=http://query:8080
+     - application.queryService=http://search-api:8080
      - application.queryServiceExternal=http://localhost:8083
      - application.fusekiService=http://fuseki:8080/fuseki
     links:
-      - query
+      - search-api
     networks:
       platform:
 
-  query:
-    image: "dcatno/query:latest"
+  search-api:
+    image: "dcatno/search-api:${TAG}"
     ports:
       - "8083:8080"
     environment:
@@ -38,7 +38,7 @@ services:
       platform:
 
   validator:
-    image: "fdk/validator:latest"
+    image: "dcatno/validator:latest"
     ports:
       - "8086:8080"
     environment:
@@ -120,6 +120,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    volumes:
+      - ./data/esdata:/usr/share/elasticsearch/data
     networks:
       platform:
         aliases:
@@ -147,7 +149,7 @@ services:
       platform:
 
   registrering:
-    image: "dcatno/registrering:latest"
+    image: "dcatno/reg-api:latest"
     ports:
       - "8099:8080"
     environment:

@@ -230,6 +230,11 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <imageName>
+                        ${docker.registry}${docker.image.prefix}/search:latest
+                    </imageName>
+                </configuration>
             </plugin>
 
             <plugin>
