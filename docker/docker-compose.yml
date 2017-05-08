@@ -2,94 +2,47 @@ version: "2"
 
 services:
   search:
-    image: "dcatno/search:${TAG}"
-    ports:
-      - "8080:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.queryService=http://search-api:8080
-     - application.queryServiceExternal=http://localhost:8083
-     - application.fusekiService=http://fuseki:8080/fuseki
+    image: dcatno/search:latest
     links:
       - search-api
     networks:
       platform:
 
   search-api:
-    image: "dcatno/search-api:${TAG}"
-    ports:
-      - "8083:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
+    image: dcatno/search-api:latest
     links:
       - elasticsearch
     networks:
       platform:
 
   gdoc:
-    image: "dcatno/gdoc:latest"
-    ports:
-      - "8084:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    image: dcatno/gdoc:latest
     networks:
       platform:
 
   validator:
-    image: "dcatno/validator:latest"
-    ports:
-      - "8086:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    image: dcatno/validator:latest
     networks:
       platform:
 
   fuseki:
-    image: "dcatno/fuseki:latest"
-    volumes:
-      - ./data/fuseki:/etc/fuseki/databases/
-    ports:
-     - "3030:8080"
+    image: dcatno/fuseki:latest
     networks:
       platform:
 
   harvester:
-    image: "dcatno/harvester:latest"
-    ports:
-     - "8081:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=elasticsearch
-     - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
-    volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
+    image: dcatno/harvester:latest
     networks:
       platform:
       logging:
     links:
      - fuseki
-     - elasticsearch:es
+     - elasticsearch
+     - gdoc
      - registrering
 
   admin:
-    image: "dcatno/admin-webapp:latest"
-    ports:
-     - "8082:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.harvesterUrl=http://harvester:8080
-     - application.kibanaLinkFirstHalf="/app/kibana/#/dashboard/dashboard_template?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Crawler-Operations,panelIndex:1,row:3,size_x:9,size_y:3,type:visualization),(col:1,id:Crawler-Results,panelIndex:2,row:3,size_x:3,size_y:3,type:visualization),(col:1,id:Crawler-Metadata,panelIndex:4,row:1,size_x:12,size_y:2,type:visualization),(col:7,id:Validation-RuleId,panelIndex:6,row:6,size_x:6,size_y:4,type:visualization),(col:1,columns:!(ruleSeverity,event,cause,ruleId),id:validation_ruleId,panelIndex:7,row:6,size_x:6,size_y:4,sort:!(timestamp,desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:'%22"
-     - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
-    volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
+    image: dcatno/admin-webapp:latest
     networks:
       platform:
       logging:
@@ -116,31 +69,13 @@ services:
  #         - log_es
 
   elasticsearch:
-    image: "dcatno/elasticsearch:latest"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data
+    image: dcatno/elasticsearch:latest
     networks:
       platform:
-        aliases:
-          - es
       logging:
-        aliases:
-          - log_es
 
   test:
-    image: "dcatno/test:latest"
-    ports:
-      - "8085:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
-     - application.elasticsearchCluster=elasticsearch
-     - application.fusekiHost=http://fuseki:8080
-     - application.harvesterHost=http://harvester:8080
+    image: dcatno/test:latest
     links:
       - elasticsearch
       - fuseki
@@ -149,25 +84,14 @@ services:
       platform:
 
   registrering:
-    image: "dcatno/reg-api:latest"
-    ports:
-      - "8099:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - spring.application.catalogUriPrefix=http://localhost:8099
+    image: dcatno/reg-api:latest
     links:
       - elasticsearch
     networks:
       platform:
 
   reg-gui:
-    image: "dcatno/reg-gui:latest"
-    ports:
-      - "4200:4200"
-    environment:
-     - REG_API_URL=http://localhost:8099
-     - QUERY_SERVICE_URL=http://localhost:8083
-     - VALIDATOR_URL=http://localhost:8086
+    image: dcatno/reg-gui:latest
     links:
       - elasticsearch
     networks:
@@ -183,18 +107,12 @@ services:
 #    networks:
 #      logging:
 
-  kibana:
-    image: "dcatno/kibana:latest"
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    #volumes:
-    #      - ./data/kibana/config/:/opt/kibana/config/
-    depends_on:
-      - elasticsearch
-    networks:
-      logging:
+#  kibana:
+#    image: dcatno/kibana:latest
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
 
 networks:
   platform:
