@@ -44,6 +44,7 @@
      	<dependency>
 			<groupId>no.dcat</groupId>
 			<artifactId>datastore</artifactId>
+			<version>0.2.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.rometools</groupId>
