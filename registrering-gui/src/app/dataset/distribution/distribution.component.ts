@@ -1,13 +1,42 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Distribution } from './distribution';
 
 @Component({
-    moduleId: module.id,
     selector: 'distribution',
-    templateUrl: 'distribution.component.html'
-})
-export class DistributionComponent {
-    // we will pass in address from App component
-    @Input('group')
+    templateUrl: './distribution.component.html',
+    styleUrls: [ './distribution.component.css' ]
+  })
+
+export class DistributionFormComponent implements OnInit {
+    @Input('distributions')
+    public distributions: FormArray;
+
+    @Input('distribution')
+    public distribution: Distribution;
+
     public distributionForm: FormGroup;
+
+    constructor(private fb: FormBuilder) {}
+
+    ngOnInit() {
+        this.distributionForm = this.toFormGroup(this.distribution);
+        this.distributions.push(this.distributionForm);
+    }
+
+    private toFormGroup(data: Distribution) {
+        const formGroup = this.fb.group({
+            id: [ data.id ],
+            uri: [ data.uri || '', Validators.required ],
+            title: [ data.title || '', Validators.required ],
+            description: [ data.description ],
+            accessUrl: [ data.accessUrl ],
+            license: [ data.license ],
+            format: [ data.format ],
+            downloadUrl: [ data.downloadUrl ]
+        });
+
+        return formGroup;
+    }
 }

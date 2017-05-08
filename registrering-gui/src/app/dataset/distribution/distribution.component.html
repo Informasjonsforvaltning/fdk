@@ -1,39 +1,14 @@
-<div [formGroup]="distributionForm" class="form-group">
-    <div class="row form-group">
-        <label for="dist-format" class="col-md-1 control-label">Format:</label>
-        <div class="col-md-11">
-            <input id="dist-format" type="text" formControlName="format" (ngModelChange)="valuechange(this)"
-                   class="form-control"
-                   [(ngModel)]='distribution.format'/>
-        </div>
-    </div>
-    <div class="row form-group">
-        <label for="dist-description" class="col-md-1 control-label">Kommentar:</label>
-        <div class="col-md-11">
-            <input id="dist-description" type="text" formControlName="description" (ngModelChange)="valuechange(this)"
-                   class="form-control"/>
-        </div>
-    </div>
-    <div class="row form-group">
-        <label for="dist-accessUrl" class="col-md-1 control-label">TilgangsURL:</label>
-        <div class="col-md-11">
-            <input id="dist-accessUrl" type="text" formControlName="accessUrl" (ngModelChange)="valuechange(this)"
-                   class="form-control" />
-        </div>
-    </div>
-    <div class="row form-group">
-        <label for="dist-lisence" class="col-md-1 control-label">Lisens:</label>
-        <div class="col-md-11">
-            <input id="dist-lisence" type="text" formControlName="license" (ngModelChange)="valuechange(this)"
-                   class="form-control" />
-        </div>
+<div class="distribution-form"
+     [formGroup]="distributionForm">
+
+    <div>
+        <label for="distributionField1">License</label>
+        <input formControlName="license" />
     </div>
 
-    <div class="row form-group">
-        <label for="dist-downloadUrl" class="col-md-1 control-label">NedlastingsURL:</label>
-        <div class="col-md-11">
-            <input id="dist-downloadUrl" type="email" formControlName="downloadUrl" (ngModelChange)="valuechange(this)"
-                   class="form-control" />
-        </div>
+    <div>
+        <label for="distributionField1">URI</label>
+        <input formControlName="uri" />
     </div>
+
 </div>

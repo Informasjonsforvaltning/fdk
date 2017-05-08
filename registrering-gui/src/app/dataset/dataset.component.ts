@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormGroup, FormControl, FormBuilder, FormArray} from "@angular/forms";
+import {FormGroup, FormControl, FormBuilder, FormArray, Validators} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
 import {CodesService} from "./codes.service";
 import {CatalogService} from "../catalog/catalog.service";
@@ -12,8 +12,9 @@ import {NgModule} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
-import {DistributionComponent} from "./distribution/distribution.component";
+import {DistributionFormComponent} from "./distribution/distribution.component";
 import {DistributionService} from "./distribution/distribution.service";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-dataset',
@@ -35,12 +36,12 @@ export class DatasetComponent implements OnInit {
 
   themesForm: FormGroup;
   accrualPeriodicityForm: FormGroup;
-  provenanceFormForm: FormGroup;
+  provenanceForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceForms: {value?:string, label?:string}[];
+  provenanceControls: {value?:string, label?:string}[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
@@ -50,6 +51,7 @@ export class DatasetComponent implements OnInit {
 
   saveDelay:number = 1000;
   distributionsForm: FormGroup; // our form model
+  datasetForm: FormGroup = new FormGroup({});
 
 
   constructor(
@@ -73,6 +75,7 @@ export class DatasetComponent implements OnInit {
     this.catId = this.route.snapshot.params['cat_id'];
     this.themesForm = new FormGroup({});
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
+
     this.codePickers = [
       {
         pluralizedNameFromCodesService: 'provenancestatements',
@@ -84,22 +87,20 @@ export class DatasetComponent implements OnInit {
         nameFromDatasetModel: 'accrualPeriodicity',
         languageCode: "no"
       }
-      ]
+    ];
     this.initCustomSelectComponents();
-
-
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
+      console.log('datasete is ', dataset);
+      this.dataset.distributions = this.dataset.distributions || [];
+      this.datasetForm = this.toFormGroup(this.dataset);
       this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
 
-      this.dataset.distributions = this.dataset.distributions || [];
-      if (!this.dataset.distributions[0]) this.dataset.distributions[0] = {format: ["text/turtle"]};
-      if (!this.dataset.distributions[1]) this.dataset.distributions[1] = {format: ["application/json"]};
 
 
       //set default publisher to be the same as catalog
@@ -125,6 +126,13 @@ export class DatasetComponent implements OnInit {
           },1)
         });
     });
+
+    this.distributionsForm = this.formBuilder.group({
+            name: [''],
+            distributions: this.formBuilder.array([
+                this.initDistribution(),
+            ])
+        });
   }
 
   initDistribution() {
@@ -257,4 +265,69 @@ export class DatasetComponent implements OnInit {
       disposable.unsubscribe();
     },10000);
   }
+
+
+
+  private getDatasett(): Promise<Dataset> {
+      // Insert mock object here.  Likely provided via a resolver in a
+      // real world scenario
+      let datasetId = this.route.snapshot.params['dataset_id'];
+      return this.service.get(this.catId, datasetId);
+  }
+
+  private toFormGroup(data: Dataset): FormGroup {
+    console.log('data',data);
+    const formGroup = this.formBuilder.group({
+          title: [ data.title[this.language], Validators.required],
+          description: [ data.description],
+          keywords: [ data.keywords],
+          subject: [ data.subject],
+          themes: [ data.themes],
+          catalog: [ data.catalog],
+          accrualPeriodicity: [ data.accrualPeriodicity],
+          provenance: [ data.provenance],
+          landingPages: [ data.landingPages],
+          publisher: [ data.publisher],
+          contactPoints: [ data.contactPoints]
+        });
+
+      return formGroup;
+  }
+  // parent-form.component.ts
+  onSubmit() {
+      if (!this.datasetForm.valid) {
+          console.error('Parent Form invalid, preventing submission');
+          return false;
+      }
+
+      const updatedDatasett = _.mergeWith(this.dataset,
+                                            this.datasetForm.value,
+                                            this.mergeCustomizer);
+
+      return false;
+  }
+  ngAfterViewInit() {
+      this.datasetForm.valueChanges
+          .subscribe(value => {
+              const autosaveData = _.mergeWith(this.dataset,
+                                               value,
+                                               this.mergeCustomizer);
+              // ... send to the API as a new draft revision
+          });
+  }
+  private mergeCustomizer = (objValue, srcValue) => {
+      if (_.isArray(objValue)) {
+          if (_.isPlainObject(objValue[0]) || _.isPlainObject(srcValue[0])) {
+              // If we found an array of objects, take our form values, and
+              // attempt to merge them into existing values in the data model,
+              // defaulting back to new empty object if none found.
+              return srcValue.map(src => {
+                  const obj = _.find(objValue, { id: src.id });
+                  return _.mergeWith(obj || {}, src, this.mergeCustomizer);
+              });
+          }
+          return srcValue;
+      }
+  }
+
 }

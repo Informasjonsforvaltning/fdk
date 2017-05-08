@@ -1,0 +1,29 @@
+<h3>
+    Distributions
+</h3>
+
+<div class="distribution-list"
+     [formGroup]="datasetForm">
+
+    <div formArrayName="distributions">
+
+        <div *ngFor="let distribution of distributions; let idx=index ">
+
+            Distribution
+
+            (<a href="" (click)="removeDistribution(idx)">Remove</a>)
+
+            <distribution
+                [distributions]="datasetForm.controls.distributions"
+                [distribution]="distribution">
+            </distribution>
+
+        </div>
+
+        <a href="#" (click)="addDistribution()">
+            Legg til Distribution
+        </a>
+
+    </div>
+
+</div>

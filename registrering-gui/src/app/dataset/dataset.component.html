@@ -75,36 +75,18 @@
     </div>
   </div>
 
-      <div class="panel fdk-panel" [formGroup]="distributionsForm" >
-          <div class="fdk-panel-heading">
-              Distribusjoner ({{dataset.distributions.length}})
-          </div>
-
-          <div id="dist-accordion"   class="fdk-panel-body">
-              <div *ngFor="let distribution of dataset.distributions" class="panel fkd-panel-body row fdk-row-padding">
-                  <a >
-                      <h4><i class="fa fa-caret-right" aria-hidden="true"></i> {{distribution.format}}</h4>
-                  </a>
-
-                  <div *ngIf="distribution" id="{{distribution.id}}" class="form-group">
-                    <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
-                    <div [formGroupName]="i">
-                        <!--replace address implementation with our new address component-->
-                        <distribution [group]="distributionsForm.controls.distributions.controls[i]"></distribution>
-                    <div>
-                  </div>
-
-              </div>
-              <div class="fdk-panel-body">
-                  Legg til ny distribusjon
-                  <button (click)="addDistribution()" class="btn pull-right" type="button" aria-label="Create new distribution"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-              </div>
-          </div>
-      </div>
 
 
+  <!-- parent-form.component.html -->
+  <form [formGroup]="datasetForm">
+      <label for="title">title</label>
+      <input formControlName="title" />
 
-
+      <distributions
+          [datasetForm]="datasetForm"
+          [distributions]="dataset.distributions">
+      </distributions>
+  </form>
 
   </div>
 
@@ -147,9 +129,8 @@
                 </div>
             </div>
         </div>
+
     </div>
-
-
 
 
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>

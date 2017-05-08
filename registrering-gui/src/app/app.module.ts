@@ -21,7 +21,8 @@ import {AuthenticationService} from "./security/authentication.service";
 
 import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
-import {DistributionComponent} from "./dataset/distribution/distribution.component";
+import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
+import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
 import {DistributionService} from "./dataset/distribution/distribution.service";
 
 @NgModule({
@@ -31,7 +32,8 @@ import {DistributionService} from "./dataset/distribution/distribution.service";
     DatasetComponent,
     StartComponent,
     ConfirmComponent,
-    DistributionComponent
+    DistributionFormComponent,
+    DistributionListComponent
   ],
   imports: [
     BrowserModule,
