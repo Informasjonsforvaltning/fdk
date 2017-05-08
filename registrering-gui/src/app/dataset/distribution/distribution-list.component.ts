@@ -24,10 +24,10 @@ export class DistributionListComponent implements OnInit {
 
     addDistribution() {
         const distribution: Distribution = {
-            id: Math.floor(Math.random() * 100).toString(),
+            id: Math.floor(Math.random() * 1000000).toString(),
             uri: '',
-            title: {no:''},
-            description: {no:''},
+            title: {nb:''},
+            description: {nb:''},
             accessUrl: [],
             license: '',
             format: [],

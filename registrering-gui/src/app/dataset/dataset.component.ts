@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormGroup, FormControl, FormBuilder, FormArray, Validators} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
@@ -63,7 +63,8 @@ export class DatasetComponent implements OnInit {
     private http: Http,
     private dialogService: DialogService,
     private distributionService: DistributionService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {  }
 
 
@@ -96,7 +97,7 @@ export class DatasetComponent implements OnInit {
       this.dataset = dataset;
       console.log('datasete is ', dataset);
       this.dataset.distributions = this.dataset.distributions || [];
-      this.datasetForm = this.toFormGroup(this.dataset);
+
       this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
@@ -125,6 +126,19 @@ export class DatasetComponent implements OnInit {
             setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
           },1)
         });
+
+      this.datasetForm = this.toFormGroup(this.dataset);
+      this.datasetForm.valueChanges
+          .subscribe(value => {
+            console.log('value has changed: ', value);
+              const autosaveData = _.mergeWith(this.dataset,
+                                               value,
+                                               this.mergeCustomizer);
+             //this.cdr.detectChanges();
+             //this.save();
+          });
+        this.cdr.detectChanges();
+
     });
 
     this.distributionsForm = this.formBuilder.group({
@@ -231,7 +245,7 @@ export class DatasetComponent implements OnInit {
     var that = this;
     this.delay(()=>{
       if(this.datasetSavingEnabled){
-        that.save.call(that);
+        //that.save.call(that);
       }
     }, this.saveDelay);
   }
@@ -306,15 +320,7 @@ export class DatasetComponent implements OnInit {
 
       return false;
   }
-  ngAfterViewInit() {
-      this.datasetForm.valueChanges
-          .subscribe(value => {
-              const autosaveData = _.mergeWith(this.dataset,
-                                               value,
-                                               this.mergeCustomizer);
-              // ... send to the API as a new draft revision
-          });
-  }
+
   private mergeCustomizer = (objValue, srcValue) => {
       if (_.isArray(objValue)) {
           if (_.isPlainObject(objValue[0]) || _.isPlainObject(srcValue[0])) {

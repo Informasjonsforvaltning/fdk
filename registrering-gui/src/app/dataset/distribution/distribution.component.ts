@@ -10,6 +10,7 @@ import { Distribution } from './distribution';
   })
 
 export class DistributionFormComponent implements OnInit {
+    language:string = 'nb';
     @Input('distributions')
     public distributions: FormArray;
 
@@ -29,7 +30,7 @@ export class DistributionFormComponent implements OnInit {
         const formGroup = this.fb.group({
             id: [ data.id ],
             uri: [ data.uri || '', Validators.required ],
-            title: [ data.title || '', Validators.required ],
+            title: [ data.title[this.language] || '', Validators.required ],
             description: [ data.description ],
             accessUrl: [ data.accessUrl ],
             license: [ data.license ],
