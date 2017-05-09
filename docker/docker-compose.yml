@@ -39,7 +39,7 @@ services:
      - fuseki
      - elasticsearch
      - gdoc
-     - registrering
+     - registration-api
 
   admin:
     image: dcatno/admin-webapp:latest
@@ -83,17 +83,18 @@ services:
     networks:
       platform:
 
-  registrering:
-    image: dcatno/reg-api:latest
+  registration-api:
+    image: dcatno/registration-api:latest
     links:
       - elasticsearch
     networks:
       platform:
 
-  reg-gui:
-    image: dcatno/reg-gui:latest
+  registration:
+    image: dcatno/registration:latest
     links:
-      - elasticsearch
+      - registration-api
+      - validator
     networks:
       platform:
 

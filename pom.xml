@@ -59,7 +59,7 @@
 		<module>logstash</module>
 		<module>harvester</module>
 		<module>admin-webapp</module>
-		<!--module>api-app</module-->
+		<module>api-app</module>
 		<module>docker</module>
 		<module>support</module>
 		<module>services</module>
