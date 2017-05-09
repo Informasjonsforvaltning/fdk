@@ -70,6 +70,7 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-spring</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -80,9 +81,11 @@
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>
         </dependency>
+
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -91,6 +94,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <classifier>exec</classifier>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -98,11 +104,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
 
             <plugin>

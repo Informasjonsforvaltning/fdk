@@ -30,8 +30,8 @@ services:
     networks:
       platform:
 
-  harvester:
-    image: dcatno/harvester:latest
+  harvester-api:
+    image: dcatno/harvester-api:latest
     networks:
       platform:
       logging:
@@ -41,8 +41,8 @@ services:
      - gdoc
      - registration-api
 
-  admin:
-    image: dcatno/admin-webapp:latest
+  harvester:
+    image: dcatno/harvester:latest
     networks:
       platform:
       logging:
@@ -50,7 +50,7 @@ services:
      - elasticsearch
     links:
      - fuseki
-     - harvester
+     - harvester-api
 
  # elasticsearch5:
  #   image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
@@ -79,7 +79,7 @@ services:
     links:
       - elasticsearch
       - fuseki
-      - harvester
+      - harvester-api
     networks:
       platform:
 
@@ -87,6 +87,7 @@ services:
     image: dcatno/registration-api:latest
     links:
       - elasticsearch
+      - search-api
     networks:
       platform:
 

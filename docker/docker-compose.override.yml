@@ -5,7 +5,7 @@ services:
     ports:
       - 8080:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.queryService=http://search-api:8080
      - application.queryServiceExternal=http://localhost:8083
      - application.fusekiService=http://fuseki:8080/fuseki
@@ -14,7 +14,7 @@ services:
     ports:
       - 8083:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
 
@@ -22,13 +22,13 @@ services:
     ports:
       - 8084:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
 
   validator:
     ports:
       - 8086:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
 
   fuseki:
     volumes:
@@ -36,11 +36,11 @@ services:
     ports:
      - 3030:8080
 
-  harvester:
+  harvester-api:
     ports:
      - 8081:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
@@ -50,14 +50,14 @@ services:
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
-  admin:
+  harvester:
     ports:
      - 8082:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.harvesterUrl=http://harvester:8080
+     - application.harvesterUrl=http://harvester-api:8080
      - application.kibanaLinkFirstHalf="/app/kibana/#/dashboard/dashboard_template?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Crawler-Operations,panelIndex:1,row:3,size_x:9,size_y:3,type:visualization),(col:1,id:Crawler-Results,panelIndex:2,row:3,size_x:3,size_y:3,type:visualization),(col:1,id:Crawler-Metadata,panelIndex:4,row:1,size_x:12,size_y:2,type:visualization),(col:7,id:Validation-RuleId,panelIndex:6,row:6,size_x:6,size_y:4,type:visualization),(col:1,columns:!(ruleSeverity,event,cause,ruleId),id:validation_ruleId,panelIndex:7,row:6,size_x:6,size_y:4,sort:!(timestamp,desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:'%22"
      - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
     volumes:
@@ -91,25 +91,26 @@ services:
     ports:
       - 8085:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
      - application.fusekiHost=http://fuseki:8080
-     - application.harvesterHost=http://harvester:8080
+     - application.harvesterHost=http://harvester-api:8080
 
 
   registration-api:
     ports:
       - 8099:8080
     environment:
-     - spring.profiles.active=docker
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - spring.application.catalogUriPrefix=http://localhost:8099
 
   registration:
     ports:
       - 4200:4200
     environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
      - REG_API_URL=http://localhost:8099
      - QUERY_SERVICE_URL=http://localhost:8083
      - VALIDATOR_URL=http://localhost:8086
