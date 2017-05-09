@@ -27,6 +27,7 @@ export class DistributionFormComponent implements OnInit {
     }
 
     private toFormGroup(data: Distribution) {
+        console.log('data is ', data);
         const formGroup = this.fb.group({
             id: [ data.id ],
             uri: [ data.uri || '', Validators.required ],

@@ -6,10 +6,10 @@
 </alert>
 
 <div class="panel fdk-panel" *ngIf="dataset" id="dataset">
-  <div class="fdk-panel-big-heading">
+  <div class="fdk-panel-big-heading" *ngIf="dataset.title" >
     <input  class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
-  <div class="fdk-panel-big-body">
+  <div class="fdk-panel-big-body"  *ngIf="dataset.description">
     <h2 id="datasett-utgiver-navn">{{dataset.publisher.name}}</h2>
     <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
@@ -21,7 +21,7 @@
   </div>
   <div class="fdk-panel-body">
     <div class="form-group">
-      <div class="row form-group">
+      <div class="row form-group"   *ngIf="dataset.keywords" >
         <label for="emneord-datasett" class="col-md-1 control-label">Emneord:</label>
         <div class="col-md-11">
           <input id="emneord-datasett" type="text" class="form-control" [(ngModel)]='dataset.keywords[language]'/>

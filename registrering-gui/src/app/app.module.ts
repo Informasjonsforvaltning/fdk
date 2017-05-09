@@ -23,7 +23,6 @@ import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
-import {DistributionService} from "./dataset/distribution/distribution.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +48,7 @@ import {DistributionService} from "./dataset/distribution/distribution.service";
   entryComponents: [
      ConfirmComponent
   ],
-  providers: [CatalogService, DatasetService, CodesService, AuthGuard, AuthenticationService, DistributionService],
+  providers: [CatalogService, DatasetService, CodesService, AuthGuard, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

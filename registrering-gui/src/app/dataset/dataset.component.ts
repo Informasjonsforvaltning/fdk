@@ -13,7 +13,6 @@ import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
 import {DistributionFormComponent} from "./distribution/distribution.component";
-import {DistributionService} from "./distribution/distribution.service";
 import * as _ from 'lodash';
 
 @Component({
@@ -62,7 +61,6 @@ export class DatasetComponent implements OnInit {
     private catalogService: CatalogService,
     private http: Http,
     private dialogService: DialogService,
-    private distributionService: DistributionService,
     private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {  }
@@ -128,16 +126,19 @@ export class DatasetComponent implements OnInit {
         });
 
       this.datasetForm = this.toFormGroup(this.dataset);
-      this.datasetForm.valueChanges
+      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
           .subscribe(value => {
-            console.log('value has changed: ', value);
-              const autosaveData = _.mergeWith(this.dataset,
+              if(value.distributions) {
+                value.distributions.forEach((distribution)=>{
+                  distribution.title = {'nb':distribution.title.nb || distribution.title};
+                })
+              }
+              this.dataset = _.mergeWith(this.dataset,
                                                value,
                                                this.mergeCustomizer);
-             //this.cdr.detectChanges();
-             //this.save();
+                                             this.cdr.detectChanges();
+             this.save();
           });
-        this.cdr.detectChanges();
 
     });
 
@@ -147,6 +148,16 @@ export class DatasetComponent implements OnInit {
                 this.initDistribution(),
             ])
         });
+  }
+
+  fromFormGroup(formGroup:FormGroup) {
+    let dataset = this.dataset;
+    /*
+    dataset.title = formGroup.title[this.language];
+    dataset.description = formGroup.description[this.language];
+    dataset.keywords = formGroup.keywords ? formGroup.keywords.map(keyword=>keyword[this.language]) : [];
+    dataset.subject = formGroup.subject;*/
+    return dataset;
   }
 
   initDistribution() {
@@ -232,12 +243,13 @@ export class DatasetComponent implements OnInit {
       }
     });
     this.retrieveCustomSelectValues();
-
+    this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
       .then(() => {
         this.saved = true;
         var d = new Date();
         this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+        this.datasetSavingEnabled = true;
       })
   }
 
@@ -245,7 +257,8 @@ export class DatasetComponent implements OnInit {
     var that = this;
     this.delay(()=>{
       if(this.datasetSavingEnabled){
-        //that.save.call(that);
+        console.log('would have saved using delay');
+        that.save.call(that);
       }
     }, this.saveDelay);
   }
@@ -291,8 +304,11 @@ export class DatasetComponent implements OnInit {
 
   private toFormGroup(data: Dataset): FormGroup {
     console.log('data',data);
+    data
+    let title = {};
+    title[this.language] = [ data.title[this.language] ? this.dataset.title[this.language] : '', Validators.required];
     const formGroup = this.formBuilder.group({
-          title: [ data.title[this.language], Validators.required],
+          //title: title,
           description: [ data.description],
           keywords: [ data.keywords],
           subject: [ data.subject],
@@ -317,7 +333,6 @@ export class DatasetComponent implements OnInit {
       const updatedDatasett = _.mergeWith(this.dataset,
                                             this.datasetForm.value,
                                             this.mergeCustomizer);
-
       return false;
   }
 
