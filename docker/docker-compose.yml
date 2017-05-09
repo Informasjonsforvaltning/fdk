@@ -158,18 +158,18 @@ services:
     networks:
       platform:
 
-  reg-gui:
-    image: "dcatno/reg-gui:latest"
-    ports:
-      - "4200:4200"
-    environment:
-     - REG_API_URL=http://localhost:8099
-     - QUERY_SERVICE_URL=http://localhost:8083
-     - VALIDATOR_URL=http://localhost:8086
-    links:
-      - elasticsearch
-    networks:
-      platform:
+#  reg-gui:
+#    image: "dcatno/reg-gui:latest"
+#    ports:
+#      - "4200:4200"
+#    environment:
+#     - REG_API_URL=http://localhost:8099
+#     - QUERY_SERVICE_URL=http://localhost:8083
+#     - VALIDATOR_URL=http://localhost:8086
+#    links:
+#      - elasticsearch
+#    networks:
+#      platform:
 
 #  logstash:
 #    image: "dcatno/logstash:${TAG}"
