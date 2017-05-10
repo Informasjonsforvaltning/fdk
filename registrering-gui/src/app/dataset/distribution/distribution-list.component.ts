@@ -16,19 +16,12 @@ export class DistributionListComponent implements OnInit {
     @Input('distributions')
     public distributions: Distribution[];
 
-    @Input('dataset')
-    public dataset: Dataset[];
     distribution: Distribution;
 
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
-        console.log('Initializing child list', this.distributions);
-        setInterval(()=>{
-              console.log('Initializing child list', this.distributions);
-              console.log('dataset is ', this.dataset);
-        }, 5000);
-        this.datasetForm.addControl('distributions', new FormArray([]));
+      console.log('this.distributions', this.distributions);
     }
 
     addDistribution() {
@@ -49,7 +42,8 @@ export class DistributionListComponent implements OnInit {
     }
 
     removeDistribution(idx: number) {
-        if (this.distributions.length > 1) {
+      console.log('removeDistribution');
+        if (this.distributions.length > 0) {
             this.distributions.splice(idx, 1);
             (<FormArray>this.datasetForm.get('distributions')).removeAt(idx);
         }

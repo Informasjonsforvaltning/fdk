@@ -93,6 +93,7 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
+      this.dataset.distributions = this.dataset.distributions || [];
 
       this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
@@ -117,69 +118,30 @@ export class DatasetComponent implements OnInit {
           }
         })).toPromise().then((data) => {
           this.themes = data;
+          this.datasetSavingEnabled = false;
           setTimeout(()=>{
             this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []});
-            setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
           },1)
         });
 
       this.datasetForm = this.toFormGroup(this.dataset);
+      setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
+      setInterval(()=>console.log('this.datasetSavingEnabled is ', this.datasetSavingEnabled), 3000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
-          .subscribe(value => {
-              if(value.distributions) {
-                value.distributions.forEach((distribution)=>{
+          .subscribe(dataset => {
+              if(dataset.distributions) {
+                dataset.distributions.forEach((distribution)=>{
                   distribution.title = {'nb':distribution.title.nb || distribution.title};
                 })
               }
-              this.dataset = _.mergeWith(this.dataset,
-                                               value,
-                                               this.mergeCustomizer);
-                                             this.cdr.detectChanges();
-             this.save();
+              this.dataset = _.merge(this.dataset, dataset);
+              this.cdr.detectChanges();
+              if(this.datasetSavingEnabled) this.save();
           });
 
     });
-
-    this.distributionsForm = this.formBuilder.group({
-            name: [''],
-            distributions: this.formBuilder.array([
-                this.initDistribution(),
-            ])
-        });
   }
 
-  fromFormGroup(formGroup:FormGroup) {
-    let dataset = this.dataset;
-    /*
-    dataset.title = formGroup.title[this.language];
-    dataset.description = formGroup.description[this.language];
-    dataset.keywords = formGroup.keywords ? formGroup.keywords.map(keyword=>keyword[this.language]) : [];
-    dataset.subject = formGroup.subject;*/
-    return dataset;
-  }
-
-  initDistribution() {
-          // initialize our address
-          return this.formBuilder.group({
-              format: [''],
-              description: [''],
-              accessUrl: [''],
-              license: [''],
-              downloadUrl: ['']
-          });
-      }
-
-  addDistribution() {
-      // add address to the list
-      const control = <FormArray>this.distributionsForm.controls['distributions'];
-      control.push(this.initDistribution());
-  }
-
-  removeDistribution(i: number) {
-      // remove address from the list
-      const control = <FormArray>this.distributionsForm.controls['distributions'];
-      control.removeAt(i);
-  }
   initCustomSelectComponents() {
     this.codePickers.forEach(codePicker=>{
       const name = codePicker.nameFromDatasetModel;
@@ -252,6 +214,7 @@ export class DatasetComponent implements OnInit {
   }
 
   valuechange(): void {
+    /*
     var that = this;
     this.delay(()=>{
       if(this.datasetSavingEnabled){
@@ -259,6 +222,7 @@ export class DatasetComponent implements OnInit {
         that.save.call(that);
       }
     }, this.saveDelay);
+    */
   }
 
   delay(callback, ms): void {
@@ -301,10 +265,6 @@ export class DatasetComponent implements OnInit {
   }
 
   private toFormGroup(data: Dataset): FormGroup {
-    console.log('data',data);
-    data
-    let title = {};
-    title[this.language] = [ data.title[this.language] ? this.dataset.title[this.language] : '', Validators.required];
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
@@ -316,22 +276,11 @@ export class DatasetComponent implements OnInit {
           provenance: [ data.provenance],
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
-          contactPoints: [ data.contactPoints]
+          contactPoints: [ data.contactPoints],
+          distributions: this.formBuilder.array([])
         });
 
       return formGroup;
-  }
-  // parent-form.component.ts
-  onSubmit() {
-      if (!this.datasetForm.valid) {
-          console.error('Parent Form invalid, preventing submission');
-          return false;
-      }
-
-      const updatedDatasett = _.mergeWith(this.dataset,
-                                            this.datasetForm.value,
-                                            this.mergeCustomizer);
-      return false;
   }
 
   private mergeCustomizer = (objValue, srcValue) => {

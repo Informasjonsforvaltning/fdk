@@ -6,10 +6,10 @@
      [formGroup]="datasetForm">
 
     <div formArrayName="distributions">
-{{distributions.length}}
+{{distributions|json}}
         <div *ngFor="let distribution of distributions; let idx=index ">
 
-            Distribution
+            Distribution {{idx}}
 
             (<a href="" (click)="removeDistribution(idx)">Remove</a>)
 

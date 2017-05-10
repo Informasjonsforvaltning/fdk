@@ -16,7 +16,7 @@ export class DistributionFormComponent implements OnInit {
 
     @Input('distribution')
     public distribution: Distribution;
-    
+
     public distributionForm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -24,7 +24,7 @@ export class DistributionFormComponent implements OnInit {
     ngOnInit() {
         console.log('this.distribution (in distribution component) is ', this.distribution);
         this.distributionForm = this.toFormGroup(this.distribution);
-        this.distributions.push(this.distributionForm);
+        setTimeout(()=>this.distributions.push(this.distributionForm), 1);
     }
 
     private toFormGroup(distribution: Distribution) {
@@ -34,9 +34,9 @@ export class DistributionFormComponent implements OnInit {
             uri: [ distribution.uri || '', Validators.required ],
             title: [ distribution.title[this.language] || '', Validators.required ],
             description: [ distribution.description ],
-            accessUrl: [ distribution.accessUrl ],
+            accessUrl: [ distribution.accessUrl || []],
             license: [ distribution.license ],
-            format: [ distribution.format ],
+            format: [ distribution.format || [] ],
             downloadUrl: [ distribution.downloadUrl ]
         });
 
