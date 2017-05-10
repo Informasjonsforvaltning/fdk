@@ -6,7 +6,7 @@
      [formGroup]="datasetForm">
 
     <div formArrayName="distributions">
-
+{{distributions.length}}
         <div *ngFor="let distribution of distributions; let idx=index ">
 
             Distribution

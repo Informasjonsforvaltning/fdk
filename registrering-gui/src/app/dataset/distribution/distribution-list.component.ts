@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 import { Distribution } from './distribution';
+import { Dataset } from '../dataset';
+import {DistributionFormComponent} from './distribution.component';
 
 @Component({
     selector: 'distributions',
@@ -13,12 +15,19 @@ export class DistributionListComponent implements OnInit {
 
     @Input('distributions')
     public distributions: Distribution[];
+
+    @Input('dataset')
+    public dataset: Dataset[];
     distribution: Distribution;
 
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
         console.log('Initializing child list', this.distributions);
+        setInterval(()=>{
+              console.log('Initializing child list', this.distributions);
+              console.log('dataset is ', this.dataset);
+        }, 5000);
         this.datasetForm.addControl('distributions', new FormArray([]));
     }
 

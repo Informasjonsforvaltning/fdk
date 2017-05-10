@@ -16,15 +16,13 @@ export class DistributionFormComponent implements OnInit {
 
     @Input('distribution')
     public distribution: Distribution;
-
-    @Output()
-    modelChanged:EventEmitter<string> = new EventEmitter();
-
+    
     public distributionForm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
 
     ngOnInit() {
+        console.log('this.distribution (in distribution component) is ', this.distribution);
         this.distributionForm = this.toFormGroup(this.distribution);
         this.distributions.push(this.distributionForm);
     }

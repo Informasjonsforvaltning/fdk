@@ -93,8 +93,6 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
-      console.log('datasete is ', dataset);
-      this.dataset.distributions = this.dataset.distributions || [];
 
       this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
