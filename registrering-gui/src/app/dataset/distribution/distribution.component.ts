@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Distribution } from './distribution';
@@ -17,6 +17,9 @@ export class DistributionFormComponent implements OnInit {
     @Input('distribution')
     public distribution: Distribution;
 
+    @Output()
+    modelChanged:EventEmitter<string> = new EventEmitter();
+
     public distributionForm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -26,17 +29,17 @@ export class DistributionFormComponent implements OnInit {
         this.distributions.push(this.distributionForm);
     }
 
-    private toFormGroup(data: Distribution) {
-        console.log('data is ', data);
+    private toFormGroup(distribution: Distribution) {
+        console.log('distribution is ', distribution);
         const formGroup = this.fb.group({
-            id: [ data.id ],
-            uri: [ data.uri || '', Validators.required ],
-            title: [ data.title[this.language] || '', Validators.required ],
-            description: [ data.description ],
-            accessUrl: [ data.accessUrl ],
-            license: [ data.license ],
-            format: [ data.format ],
-            downloadUrl: [ data.downloadUrl ]
+            id: [ distribution.id ],
+            uri: [ distribution.uri || '', Validators.required ],
+            title: [ distribution.title[this.language] || '', Validators.required ],
+            description: [ distribution.description ],
+            accessUrl: [ distribution.accessUrl ],
+            license: [ distribution.license ],
+            format: [ distribution.format ],
+            downloadUrl: [ distribution.downloadUrl ]
         });
 
         return formGroup;
