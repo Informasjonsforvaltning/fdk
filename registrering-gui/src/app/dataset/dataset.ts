@@ -1,5 +1,6 @@
 import {Contact} from "./contact";
 import {Publisher} from "./publisher";
+import {Distribution} from "./distribution/distribution";
 export interface Dataset {
   id: string;
   title?: {
@@ -24,6 +25,8 @@ export interface Dataset {
   publisher?: Publisher;
 
   contactPoints?: Contact[];
+
+  distributions?: Distribution[];
 
   _lastModified: string;
 }

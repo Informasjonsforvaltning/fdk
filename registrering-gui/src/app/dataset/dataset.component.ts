@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormGroup, FormControl} from "@angular/forms";
+import {FormGroup, FormControl, FormBuilder, FormArray, Validators} from "@angular/forms";
 import {DatasetService} from "./dataset.service";
 import {CodesService} from "./codes.service";
 import {CatalogService} from "../catalog/catalog.service";
@@ -12,7 +12,8 @@ import {NgModule} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
-import {Distribution} from "../distribution/distribution";
+import {DistributionFormComponent} from "./distribution/distribution.component";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-dataset',
@@ -34,13 +35,13 @@ export class DatasetComponent implements OnInit {
 
   themesForm: FormGroup;
   accrualPeriodicityForm: FormGroup;
-  provenanceFormForm: FormGroup;
+  provenanceForm: FormGroup;
   identifiersForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceForms: {value?:string, label?:string}[];
+  provenanceControls: {value?:string, label?:string}[];
   identifiers: string[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
@@ -50,6 +51,9 @@ export class DatasetComponent implements OnInit {
   selection: Array<string>;
 
   saveDelay:number = 1000;
+  distributionsForm: FormGroup; // our form model
+  datasetForm: FormGroup = new FormGroup({});
+
 
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +62,9 @@ export class DatasetComponent implements OnInit {
     private codesService: CodesService,
     private catalogService: CatalogService,
     private http: Http,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {  }
 
 
@@ -76,6 +82,7 @@ export class DatasetComponent implements OnInit {
     this.identifiersForm.addControl("identifiers", new FormControl([]));
     this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
 
+
     this.codePickers = [
       {
         pluralizedNameFromCodesService: 'provenancestatements',
@@ -87,15 +94,15 @@ export class DatasetComponent implements OnInit {
         nameFromDatasetModel: 'accrualPeriodicity',
         languageCode: "no"
       }
-      ]
+    ];
     this.initCustomSelectComponents();
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
-        console.log("dataset from server: " + JSON.stringify(dataset));
       this.dataset = dataset;
-      this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;
+/*
+      this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;*/
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
 
@@ -116,13 +123,34 @@ export class DatasetComponent implements OnInit {
           }
         })).toPromise().then((data) => {
           this.themes = data;
+          this.datasetSavingEnabled = false;
           setTimeout(()=>{
             this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []});
-            setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
           },1)
         });
+
+      this.datasetForm = this.toFormGroup(this.dataset);
+      setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
+      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
+          .subscribe(dataset => {
+              if(dataset.distributions) {
+                dataset.distributions.forEach((distribution)=>{
+                  distribution.title = {'nb':distribution.title.nb || distribution.title};
+                })
+              }
+              this.dataset = _.merge(this.dataset, dataset);
+              this.cdr.detectChanges();
+              var that = this;
+              this.delay(()=>{
+                if(this.datasetSavingEnabled){
+                  that.save.call(that);
+                }
+              }, this.saveDelay);
+          });
+
     });
   }
+
 
   initCustomSelectComponents() {
     this.codePickers.forEach(codePicker=>{
@@ -132,8 +160,8 @@ export class DatasetComponent implements OnInit {
       this[name + 'Form'] = new FormGroup({});
       this[name + 'Form'].addControl(controlName, new FormControl(''));
       var valueObject = {};
-      valueObject[controlName] = '';
-      this[name + 'Form'].setValue(valueObject);
+      valueObject[controlName] = ' ';
+      this[name + 'Form'].patchValue(valueObject);
     })
   }
   setCustomSelectValues() {
@@ -144,7 +172,7 @@ export class DatasetComponent implements OnInit {
         const valueObject = {};
         valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
         this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
-        setTimeout(()=>this[name + 'Form'].setValue(valueObject), 1);
+        setTimeout(()=>this[name + 'Form'].patchValue(valueObject), 1);
       }
     })
   }
@@ -185,22 +213,24 @@ export class DatasetComponent implements OnInit {
       }
     });
     this.retrieveCustomSelectValues();
-
+    this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
       .then(() => {
         this.saved = true;
         var d = new Date();
         this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+        this.datasetSavingEnabled = true;
       })
   }
 
-  valuechange(a,b,c): void {
+  valuechange(): void {
     var that = this;
     this.delay(()=>{
       if(this.datasetSavingEnabled){
         that.save.call(that);
       }
     }, this.saveDelay);
+
   }
 
   delay(callback, ms): void {
@@ -232,4 +262,48 @@ export class DatasetComponent implements OnInit {
       disposable.unsubscribe();
     },10000);
   }
+
+
+
+  private getDatasett(): Promise<Dataset> {
+      // Insert mock object here.  Likely provided via a resolver in a
+      // real world scenario
+      let datasetId = this.route.snapshot.params['dataset_id'];
+      return this.service.get(this.catId, datasetId);
+  }
+
+  private toFormGroup(data: Dataset): FormGroup {
+    const formGroup = this.formBuilder.group({
+          //title: title,
+          description: [ data.description],
+          keywords: [ data.keywords],
+          subject: [ data.subject],
+          themes: [ data.themes],
+          catalog: [ data.catalog],
+          accrualPeriodicity: [ data.accrualPeriodicity],
+          provenance: [ data.provenance],
+          landingPages: [ data.landingPages],
+          publisher: [ data.publisher],
+          contactPoints: [ data.contactPoints],
+          distributions: this.formBuilder.array([])
+        });
+
+      return formGroup;
+  }
+
+  private mergeCustomizer = (objValue, srcValue) => {
+      if (_.isArray(objValue)) {
+          if (_.isPlainObject(objValue[0]) || _.isPlainObject(srcValue[0])) {
+              // If we found an array of objects, take our form values, and
+              // attempt to merge them into existing values in the data model,
+              // defaulting back to new empty object if none found.
+              return srcValue.map(src => {
+                  const obj = _.find(objValue, { id: src.id });
+                  return _.mergeWith(obj || {}, src, this.mergeCustomizer);
+              });
+          }
+          return srcValue;
+      }
+  }
+
 }

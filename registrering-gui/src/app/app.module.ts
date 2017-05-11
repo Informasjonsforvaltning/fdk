@@ -21,6 +21,8 @@ import {AuthenticationService} from "./security/authentication.service";
 
 import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
+import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
+import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import {CodesService} from "./dataset/codes.service";
     CatalogComponent,
     DatasetComponent,
     StartComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    DistributionFormComponent,
+    DistributionListComponent
   ],
   imports: [
     BrowserModule,
