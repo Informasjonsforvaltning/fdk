@@ -35,11 +35,13 @@ export class DatasetComponent implements OnInit {
   themesForm: FormGroup;
   accrualPeriodicityForm: FormGroup;
   provenanceFormForm: FormGroup;
+  identifiersForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
   provenanceForms: {value?:string, label?:string}[];
+  identifiers: string[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
@@ -66,8 +68,14 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
+
     this.themesForm = new FormGroup({});
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
+
+    this.identifiersForm = new FormGroup({});
+    this.identifiersForm.addControl("identifiers", new FormControl([]));
+    this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
+
     this.codePickers = [
       {
         pluralizedNameFromCodesService: 'provenancestatements',

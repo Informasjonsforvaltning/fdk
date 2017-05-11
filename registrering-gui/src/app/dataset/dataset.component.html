@@ -79,10 +79,16 @@
       </div>
 
       <div class="row form-group">
-          <label for="identifikator-datasett" class="col-md-1 control-label">Identifikatorer:</label>
-          <div class="col-md-11">
-              <input id="identifikator-datasett" (ngModelChange)="valuechange(this)" type="text" class="form-control"  [(ngModel)]='dataset.identifiers'  />
-          </div>
+          <label for="tema-datasett" class="col-md-1 control-label">Identifikatorer:</label>
+          <form [formGroup]="identifiersForm" class="col-md-11">
+              <ng-select
+                  (ngModelChange)="valuechange()"
+                  [options]="identifiers"
+                  [multiple]="true"
+                  placeholder="Identifikator, identifikator..."
+                  formControlName="identifiers">
+              </ng-select>
+          </form>
       </div>
 
     </div>

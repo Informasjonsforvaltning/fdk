@@ -19,7 +19,7 @@ const TEST_DATASETS: Dataset[] = [
     "themes":[],
     "catalog": "974760673",
     "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
-    "identifier" : ["http://brreg.no/identifier/1009"],
+    "identifiers" : ["http://brreg.no/identifier/1009"],
     "_lastModified": "2012-04-23"
   }
 ]
