@@ -41,7 +41,7 @@ export class DatasetComponent implements OnInit {
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceControls: {value?:string, label?:string}[];
+  provenanceControl: {value?:string, label?:string}[];
   identifiers: string[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
@@ -79,7 +79,7 @@ export class DatasetComponent implements OnInit {
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
 
     this.identifiersForm = new FormGroup({});
-    this.identifiersForm.addControl("identifiers", new FormControl([]));
+    this.identifiersForm.addControl("identifiersControl", new FormControl([]));
     //testing....
     //this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
 
