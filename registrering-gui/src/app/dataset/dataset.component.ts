@@ -97,6 +97,8 @@ export class DatasetComponent implements OnInit {
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
 
+      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
+
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
         //will probably need to be modified later, when publisher is stored as separate object in db

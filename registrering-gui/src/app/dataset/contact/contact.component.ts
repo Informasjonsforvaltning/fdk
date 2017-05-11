@@ -26,7 +26,6 @@ export class ContactComponent implements OnInit {
     }
 
     private toFormGroup(contact: Contact) {
-        console.log('contact is ', contact);
         const formGroup = this.fb.group({
             organizationUnit: [ contact.organizationUnit || '' ],
             hasURL: [ contact.hasURL || '' ],

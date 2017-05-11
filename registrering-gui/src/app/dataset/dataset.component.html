@@ -88,19 +88,20 @@
           [distributions]="dataset.distributions"
           >
       </distributions>
+
+      <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+          <div class="fdk-panel-heading">
+              Kontaktinformasjon
+          </div>
+          <contact [contactsController]="datasetForm.controls.contactPoints"
+                   [contact]="dataset.contactPoints[0]">
+          </contact>
+      </div>
   </form>
 
   </div>
 
-    <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
-        <div class="fdk-panel-heading">
-            Kontaktinformasjon
-        </div>
-        <contact [contactsController]="datasetForm.controls.contactPoints"
-                 [contact]="dataset.contactPoints[0]">
-        </contact>
 
-    </div>
 
 
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
