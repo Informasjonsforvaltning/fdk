@@ -133,11 +133,17 @@ export class DatasetComponent implements OnInit {
               }
               this.dataset = _.merge(this.dataset, dataset);
               this.cdr.detectChanges();
-              if(this.datasetSavingEnabled) this.save();
+              var that = this;
+              this.delay(()=>{
+                if(this.datasetSavingEnabled){
+                  that.save.call(that);
+                }
+              }, this.saveDelay);
           });
 
     });
   }
+
 
   initCustomSelectComponents() {
     this.codePickers.forEach(codePicker=>{
