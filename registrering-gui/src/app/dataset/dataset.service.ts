@@ -53,8 +53,7 @@ export class DatasetService {
         .toPromise()
         .then((response) => {
           const dataset = pluralizeObjectKeys(response.json());
-          console.log('dataset is ', dataset);
-          dataset.distributions = dataset.distributions || [];
+          dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
           return dataset as Dataset
         })
         .catch(this.handleError);

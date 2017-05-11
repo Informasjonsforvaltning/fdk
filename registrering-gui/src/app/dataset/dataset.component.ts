@@ -98,8 +98,6 @@ export class DatasetComponent implements OnInit {
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
 
-
-
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
         //will probably need to be modified later, when publisher is stored as separate object in db
@@ -125,7 +123,6 @@ export class DatasetComponent implements OnInit {
 
       this.datasetForm = this.toFormGroup(this.dataset);
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
-      setInterval(()=>console.log('this.datasetSavingEnabled is ', this.datasetSavingEnabled), 3000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
           .subscribe(dataset => {
               if(dataset.distributions) {
@@ -149,8 +146,8 @@ export class DatasetComponent implements OnInit {
       this[name + 'Form'] = new FormGroup({});
       this[name + 'Form'].addControl(controlName, new FormControl(''));
       var valueObject = {};
-      valueObject[controlName] = '';
-      this[name + 'Form'].setValue(valueObject);
+      valueObject[controlName] = ' ';
+      this[name + 'Form'].patchValue(valueObject);
     })
   }
   setCustomSelectValues() {
@@ -161,7 +158,7 @@ export class DatasetComponent implements OnInit {
         const valueObject = {};
         valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
         this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
-        setTimeout(()=>this[name + 'Form'].setValue(valueObject), 1);
+        setTimeout(()=>this[name + 'Form'].patchValue(valueObject), 1);
       }
     })
   }
@@ -213,15 +210,13 @@ export class DatasetComponent implements OnInit {
   }
 
   valuechange(): void {
-    /*
     var that = this;
     this.delay(()=>{
       if(this.datasetSavingEnabled){
-        console.log('would have saved using delay');
         that.save.call(that);
       }
     }, this.saveDelay);
-    */
+
   }
 
   delay(callback, ms): void {
