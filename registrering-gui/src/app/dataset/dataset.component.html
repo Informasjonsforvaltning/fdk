@@ -78,7 +78,13 @@
 
 
   <!-- parent-form.component.html -->
-  <form [formGroup]="datasetForm">
+  <form [formGroup]="datasetForm" class="form-group">
+
+        <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+            <div class="fdk-panel-heading">
+                Distribusjoner
+            </div>
+            <div class="fdk-panel-body">
     <!--
       <label for="title">title</label>
       <input formControlName="title" />-->
@@ -88,6 +94,8 @@
           [distributions]="dataset.distributions"
           >
       </distributions>
+    </div>
+  </div>
   </form>
 
   </div>
