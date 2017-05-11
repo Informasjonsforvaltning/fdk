@@ -77,7 +77,6 @@
           <form [formGroup]="identifiersForm" class="col-md-11">
               <ng-select
                   (ngModelChange)="valuechange()"
-                  [options]="identifiers"
                   [multiple]="true"
                   placeholder="Identifikator, identifikator..."
                   formControlName="identifiers">

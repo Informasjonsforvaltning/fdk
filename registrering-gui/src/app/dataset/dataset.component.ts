@@ -80,7 +80,8 @@ export class DatasetComponent implements OnInit {
 
     this.identifiersForm = new FormGroup({});
     this.identifiersForm.addControl("identifiers", new FormControl([]));
-    this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
+    //testing....
+    //this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
 
 
     this.codePickers = [
