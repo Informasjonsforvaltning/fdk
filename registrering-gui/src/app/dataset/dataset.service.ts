@@ -63,6 +63,7 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
+    console.log("dataset payload: " + payload);
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()

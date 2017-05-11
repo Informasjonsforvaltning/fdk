@@ -19,7 +19,7 @@ export interface Dataset {
 
   landingPages?: string[];
 
-  identifier: string[];
+  identifiers: string[];
 
   publisher?: Publisher;
 
