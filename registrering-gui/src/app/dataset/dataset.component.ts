@@ -213,7 +213,7 @@ export class DatasetComponent implements OnInit {
   }
 
   valuechange(): void {
-    /*
+
     var that = this;
     this.delay(()=>{
       if(this.datasetSavingEnabled){
@@ -221,7 +221,7 @@ export class DatasetComponent implements OnInit {
         that.save.call(that);
       }
     }, this.saveDelay);
-    */
+
   }
 
   delay(callback, ms): void {
