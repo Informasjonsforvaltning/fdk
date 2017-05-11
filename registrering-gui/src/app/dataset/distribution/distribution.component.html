@@ -1,14 +1,12 @@
-<div class="distribution-form"
-     [formGroup]="distributionForm">
-
-    <div>
-        <label for="distributionField1">Title</label>
-        <input formControlName="title"  />
+<div class="form-group">
+    <div class="row form-group" [formGroup]="distributionForm">
+        <label for="contact-avdeling" class="col-md-1 control-label">Title:</label>
+        <div class="col-md-11">
+            <input id="contact-avdeling" type="text"  formControlName="title" class="form-control"/>
+        </div>
+            <label for="uri" class="col-md-1 control-label">URI:</label>
+        <div class="col-md-11">
+            <input id="uri" type="text"  formControlName="uri" class="form-control"/>
+        </div>
     </div>
-
-    <div>
-        <label for="distributionField1">URI</label>
-        <input formControlName="uri" />
-    </div>
-
 </div>
