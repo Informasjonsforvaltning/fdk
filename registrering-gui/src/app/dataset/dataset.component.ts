@@ -93,10 +93,11 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
-/*
-      this.dataset.contactPoints = this.dataset.contactPoints.length === 0 ? [{organizationName:"", organizationUnit:""}] : this.dataset.contactPoints;*/
+
       this.dataset.keywords = {'nb':['keyword1','keyword1']};
       this.dataset.subject = ['term1', 'term'];
+
+      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
 
       //set default publisher to be the same as catalog
       if(this.dataset.publisher == null) {
@@ -276,7 +277,7 @@ export class DatasetComponent implements OnInit {
           provenance: [ data.provenance],
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
-          contactPoints: [ data.contactPoints],
+          contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([])
         });
 

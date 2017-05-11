@@ -1,4 +1,4 @@
-import {Contact} from "./contact";
+import {Contact} from "./contact/contact";
 import {Publisher} from "./publisher";
 import {Distribution} from "./distribution/distribution";
 export interface Dataset {
