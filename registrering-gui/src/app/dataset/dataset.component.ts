@@ -109,10 +109,15 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
 
       //set default publisher to be the same as catalog
-      if(this.dataset.publisher == null) {
+      if(this.dataset.publisher === null) {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
+
+      if(this.dataset.identifiers === undefined) {
+          this.dataset.identifiers = [];
+      }
+
       this.setCustomSelectValues();
       /* eof */
 

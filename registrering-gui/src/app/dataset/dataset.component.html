@@ -24,13 +24,13 @@
       <div class="row form-group"   *ngIf="dataset.keywords" >
         <label for="emneord-datasett" class="col-md-1 control-label">Emneord:</label>
         <div class="col-md-11">
-          <input id="emneord-datasett" type="text" class="form-control" [(ngModel)]='dataset.keywords[language]'/>
+          <rl-tag-input (ngModelChange)="valuechange()" [(ngModel)]="dataset.keywords[language]" placeholder="Emneord"></rl-tag-input>
         </div>
       </div>
       <div class="row form-group">
         <label for="begrep-datasett" class="col-md-1 control-label">Begrep:</label>
         <div class="col-md-11">
-          <input id="begrep-datasett" type="text" class="form-control"  [(ngModel)]='dataset.terms'  />
+            <rl-tag-input (ngModelChange)="valuechange()" [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
         </div>
       </div>
 
@@ -74,14 +74,8 @@
 
       <div class="row form-group">
           <label for="identifier-datasett" class="col-md-1 control-label">Identifikatorer:</label>
-          <form [formGroup]="identifiersForm" class="col-md-11">
-              <ng-select
-                  (ngModelChange)="valuechange()"
-                  [multiple]="true"
-                  placeholder="Identifikator, identifikator..."
-                  formControlName="identifiersControl">
-              </ng-select>
-          </form>
+          <!-- <input id="identifier-datasett" type="text" class="form-control" [(ngModel)]='dataset.identifiers'/> -->
+          <rl-tag-input (ngModelChange)="valuechange()" [(ngModel)]="dataset.identifiers" placeholder="identifikatorer"></rl-tag-input>
       </div>
 
     </div>

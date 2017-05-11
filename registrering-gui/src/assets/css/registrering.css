@@ -214,3 +214,17 @@ ng-select > div > div.multiple > div.option {
 .modal-footer .btn+.btn {
 	margin-bottom: 6px;
 }
+
+rl-tag-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0;
+}
+
+rl-tag-input-item[ng-reflect-selected] {
+    line-height: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    font-size: 14px;
+}
