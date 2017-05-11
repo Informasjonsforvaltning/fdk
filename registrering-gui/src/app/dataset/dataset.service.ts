@@ -51,7 +51,12 @@ export class DatasetService {
       const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
       return this.http.get(datasetUrl)
         .toPromise()
-        .then(response => pluralizeObjectKeys(response.json()) as Dataset)
+        .then((response) => {
+          const dataset = pluralizeObjectKeys(response.json());
+          console.log('dataset is ', dataset);
+          dataset.distributions = dataset.distributions || [];
+          return dataset as Dataset
+        })
         .catch(this.handleError);
   }
 
