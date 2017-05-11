@@ -22,13 +22,11 @@ export class DistributionFormComponent implements OnInit {
     constructor(private fb: FormBuilder) {}
 
     ngOnInit() {
-        console.log('this.distribution (in distribution component) is ', this.distribution);
         this.distributionForm = this.toFormGroup(this.distribution);
         setTimeout(()=>this.distributions.push(this.distributionForm), 1);
     }
 
     private toFormGroup(distribution: Distribution) {
-        console.log('distribution is ', distribution);
         const formGroup = this.fb.group({
             id: [ distribution.id ],
             uri: [ distribution.uri || '', Validators.required ],

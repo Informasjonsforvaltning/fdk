@@ -29,9 +29,9 @@ export class ContactComponent implements OnInit {
         console.log('contact is ', contact);
         const formGroup = this.fb.group({
             organizationUnit: [ contact.organizationUnit || '' ],
-            hasUrl: [ contact.hasURL || '', Validators.required ],
-            email: [ contact.email || '', [Validators.required, Validators.email] ],
-            telephone: [ contact.hasTelephone || ''],
+            hasURL: [ contact.hasURL || '' ],
+            email: [ contact.email || '', Validators.required ],
+            hasTelephone: [ contact.hasTelephone || '']
         });
 
         return formGroup;

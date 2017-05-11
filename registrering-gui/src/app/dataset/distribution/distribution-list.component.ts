@@ -21,7 +21,6 @@ export class DistributionListComponent implements OnInit {
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
-      console.log('this.distributions', this.distributions);
     }
 
     addDistribution() {
@@ -42,7 +41,6 @@ export class DistributionListComponent implements OnInit {
     }
 
     removeDistribution(idx: number) {
-      console.log('removeDistribution');
         if (this.distributions.length > 0) {
             this.distributions.splice(idx, 1);
             (<FormArray>this.datasetForm.get('distributions')).removeAt(idx);
