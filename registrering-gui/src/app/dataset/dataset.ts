@@ -12,7 +12,7 @@ export interface Dataset {
   keywords?: {
     [language: string]:string[]
   };
-  subjects?: string[];
+  subject?: string[];
   themes?: {uri:string}[];
   catalog: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
