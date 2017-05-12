@@ -76,19 +76,6 @@ export class DatasetComponent implements OnInit {
     this.themesForm = new FormGroup({});
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
 
-    this.codePickers = [
-      {
-        pluralizedNameFromCodesService: 'provenancestatements',
-        nameFromDatasetModel: 'provenance',
-        languageCode: "nb"
-      },
-      {
-        pluralizedNameFromCodesService: 'frequencies',
-        nameFromDatasetModel: 'accrualPeriodicity',
-        languageCode: "no"
-      }
-    ];
-    this.initCustomSelectComponents();
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -105,7 +92,7 @@ export class DatasetComponent implements OnInit {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
-      this.setCustomSelectValues();
+
       /* eof */
 
       this.http
@@ -146,49 +133,9 @@ export class DatasetComponent implements OnInit {
   }
 
 
-  initCustomSelectComponents() {
-    this.codePickers.forEach(codePicker=>{
-      const name = codePicker.nameFromDatasetModel;
-      const controlName = name + 'Control';
-      this[codePicker.pluralizedNameFromCodesService] = [];
-      this[name + 'Form'] = new FormGroup({});
-      this[name + 'Form'].addControl(controlName, new FormControl(''));
-      var valueObject = {};
-      valueObject[controlName] = ' ';
-      this[name + 'Form'].patchValue(valueObject);
-    })
-  }
-  setCustomSelectValues() {
-    this.codePickers.forEach(codePicker=>{
-      const name = codePicker.nameFromDatasetModel;
-      if(this.dataset[name]) { // if the key doesn't exist, no value need to be set
-        const controlName = name + 'Control';
-        const valueObject = {};
-        valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
-        this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
-          setTimeout(()=>this[name + 'Form'].patchValue(valueObject), 1);
-      }
-    })
-  }
-  retrieveCustomSelectValues() {
-      this.codePickers.forEach(codePicker=>{
-        const name = codePicker.nameFromDatasetModel;
-          const controlName = name + 'Control';
-          const valueObject = {};
-          let label:string;
-          let uri: string;
-          this[codePicker.pluralizedNameFromCodesService].forEach((codeItem)=>{
-            if(codeItem.value===this[name + 'Form'].getRawValue()[controlName]) {
-              label = codeItem.label;
-              uri = codeItem.value;
-            };
-          })
-          const prefLabelObj = {};
-          prefLabelObj[codePicker.languageCode] = label;
-          this.dataset[name] =  {uri:uri, prefLabel: prefLabelObj};
 
-      })
-  }
+
+
   public fetchCodes (codeId:string): void {
     if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
       this.codesService.get(codeId).then(data => {
@@ -200,13 +147,17 @@ export class DatasetComponent implements OnInit {
     }
   }
 
+  onSave(ok:boolean) {
+      this.save();
+  }
+
   save(): void {
     this.dataset.themes = this.themesForm.getRawValue().themes.map((uri)=>{
       return {
         "uri": uri
       }
     });
-    this.retrieveCustomSelectValues();
+
     this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
       .then(() => {

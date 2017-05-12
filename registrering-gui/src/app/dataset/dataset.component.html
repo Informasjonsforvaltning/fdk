@@ -63,7 +63,8 @@
           </div>
 
           <quality [datasetForm]="datasetForm"
-                   [dataset]="dataset">
+                   [dataset]="dataset"
+                   (onSave)="onSave($event)">
           </quality>
 
       </div>
