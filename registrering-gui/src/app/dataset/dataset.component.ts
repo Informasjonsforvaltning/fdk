@@ -129,6 +129,7 @@ export class DatasetComponent implements OnInit {
               if(dataset.distributions) {
                 dataset.distributions.forEach((distribution)=>{
                   distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+                  distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
                 })
               }
               this.dataset = _.merge(this.dataset, dataset);

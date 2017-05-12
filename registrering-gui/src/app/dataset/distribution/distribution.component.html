@@ -1,12 +1,32 @@
-<div class="form-group">
-    <div class="row form-group" [formGroup]="distributionForm">
-        <label for="contact-avdeling" class="col-md-1 control-label">Title:</label>
-        <div class="col-md-11">
-            <input id="contact-avdeling" type="text"  formControlName="title" class="form-control"/>
-        </div>
-            <label for="uri" class="col-md-1 control-label">URI:</label>
-        <div class="col-md-11">
-            <input id="uri" type="text"  formControlName="uri" class="form-control"/>
+<div class="form-group"  class="distribution-form sub-form-group" [formGroup]="distributionForm" >
+    <div class="row form-group">
+        <h4  (click)="toggleForm()">
+          <span *ngIf="showForm">▲</span>
+          <span *ngIf="!showForm">▼</span>
+          <span *ngFor="let singleFormat of distribution.format; let idx=index">
+            {{singleFormat}}{{distribution.format.length !== idx+1 ? ',' : '' }} </span>
+        </h4>
+        <div class="form" *ngIf="showForm">
+          <label for="format" class="col-md-1 control-label">format:</label>
+          <div class="col-md-11">
+              <rl-tag-input formControlName="format" placeholder=" "></rl-tag-input>
+          </div>
+          <label for="description" class="col-md-1 control-label">Kommentar:</label>
+          <div class="col-md-11">
+              <textarea id="description" type="text" formControlName="description" class="form-control"></textarea>
+          </div>
+          <label for="accessURL" class="col-md-1 control-label">Tilgangs-URL:</label>
+          <div class="col-md-11">
+              <rl-tag-input formControlName="accessURL" placeholder=" "></rl-tag-input>
+          </div>
+          <label for="downloadURL" class="col-md-1 control-label">Nedlastnings-URL:</label>
+          <div class="col-md-11">
+              <rl-tag-input formControlName="downloadURL" placeholder=" "></rl-tag-input>
+          </div>
+          <label for="license" class="col-md-1 control-label">Lisens:</label>
+          <div class="col-md-11">
+              <input id="license" type="text"  formControlName="license" class="form-control"/>
+          </div>
         </div>
     </div>
 </div>

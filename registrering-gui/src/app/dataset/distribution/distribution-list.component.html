@@ -8,8 +8,7 @@
     <div formArrayName="distributions">
         <div *ngFor="let distribution of distributions; let idx=index ">
         <br />
-            Distribusjon {{idx}}
-            (<a href="" (click)="removeDistribution(idx)">Fjern</a>)
+            (<a href=""  class="delete-distribution-button" (click)="removeDistribution(idx)">Slett distribusjon</a>)
             <distribution
                 [distributions]="datasetForm.controls.distributions"
                 [distribution]="distribution">

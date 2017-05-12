@@ -11,6 +11,7 @@ import { Distribution } from './distribution';
 
 export class DistributionFormComponent implements OnInit {
     language:string = 'nb';
+    showForm:boolean = false;
     @Input('distributions')
     public distributions: FormArray;
 
@@ -19,9 +20,11 @@ export class DistributionFormComponent implements OnInit {
 
     public distributionForm: FormGroup;
 
+
     constructor(private fb: FormBuilder) {}
 
     ngOnInit() {
+        if(this.distribution.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
         setTimeout(()=>this.distributions.push(this.distributionForm), 1);
     }
@@ -31,13 +34,15 @@ export class DistributionFormComponent implements OnInit {
             id: [ distribution.id ],
             uri: [ distribution.uri || '', Validators.required ],
             title: [ distribution.title[this.language] || '', Validators.required ],
-            description: [ distribution.description ],
-            accessUrl: [ distribution.accessUrl || []],
+            description: [ distribution.description[this.language] ],
+            accessURL: [ distribution.accessURL || []],
+            downloadURL: [ distribution.downloadURL || []],
             license: [ distribution.license ],
-            format: [ distribution.format || [] ],
-            downloadUrl: [ distribution.downloadUrl ]
+            format: [ distribution.format || '' ]
         });
-
         return formGroup;
+    }
+    toggleForm() {
+      this.showForm = !this.showForm;
     }
 }

@@ -7,9 +7,9 @@ export interface Distribution {
   description?: {
     [language: string]:string
   };
-  accessUrl?: string[];
+  accessURL?: string[];
+  downloadURL?: string[];
   license?: string;
-  format: string[];
-  downloadUrl?: string[];
+  format?: string[];
+  ui_visible?:boolean;
 }
-

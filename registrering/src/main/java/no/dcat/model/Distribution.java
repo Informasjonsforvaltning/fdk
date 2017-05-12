@@ -18,6 +18,7 @@ public class Distribution {
     private String uri;
     private Map<String,String> title;
     private Map<String,String> description;
+    private List<String> downloadURL;
     private List<String> accessURL;
     private String license;
     private List<String> format;

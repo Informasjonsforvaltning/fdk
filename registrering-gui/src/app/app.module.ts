@@ -24,6 +24,8 @@ import {CodesService} from "./dataset/codes.service";
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
+import {RlTagInputModule} from 'angular2-tag-input';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {ContactComponent} from "./dataset/contact/contact.component";
     NgbModule.forRoot(),
     AlertModule.forRoot(),
     RouterModule.forRoot(routes),
-    BootstrapModalModule
+    BootstrapModalModule,
+    RlTagInputModule
   ],
   entryComponents: [
      ConfirmComponent

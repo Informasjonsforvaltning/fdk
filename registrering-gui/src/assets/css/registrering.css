@@ -214,3 +214,40 @@ ng-select > div > div.multiple > div.option {
 .modal-footer .btn+.btn {
 	margin-bottom: 6px;
 }
+rl-tag-input[formcontrolname] {
+	background: #fff;
+	padding: 0 3px;
+	margin: 0 0 14px 0;
+}
+.ng2-tag-input-focus[formcontrolname] {
+	box-shadow: none;
+}
+rl-tag-input-item[ng-reflect-selected] {
+	border-radius: 6px;
+	height:24px;
+	line-height: 24px;
+	font-size:14px;
+}
+.sub-form-group h4 {
+	cursor: pointer;
+  background: #fff;
+  position: relative;
+  display: block;
+  top: -19px;
+  left: 15px;
+  padding: 12px 0;
+  margin: 0;
+}
+.sub-form-group h4 > :last-child {
+	padding-left:20px;
+}
+.distribution-list > div > div {
+	position:relative;
+	overflow: hidden;
+	padding-bottom:20px;
+}
+.delete-distribution-button {
+  position: absolute;
+  right: 0;
+  top: 344px;
+}
