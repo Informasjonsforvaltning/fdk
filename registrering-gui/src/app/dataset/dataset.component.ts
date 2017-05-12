@@ -42,6 +42,7 @@ export class DatasetComponent implements OnInit {
   frequencies: {value?:string, label?:string}[];
   provenanceControls: {value?:string, label?:string}[];
   fetchedCodeIds: string[] = [];
+
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
   datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
@@ -165,7 +166,7 @@ export class DatasetComponent implements OnInit {
         const valueObject = {};
         valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
         this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
-        setTimeout(()=>this[name + 'Form'].patchValue(valueObject), 1);
+          setTimeout(()=>this[name + 'Form'].patchValue(valueObject), 1);
       }
     })
   }
@@ -188,7 +189,7 @@ export class DatasetComponent implements OnInit {
 
       })
   }
-  fetchCodes (codeId:string): void {
+  public fetchCodes (codeId:string): void {
     if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
       this.codesService.get(codeId).then(data => {
         this[codeId] = data.map(code => {
@@ -273,10 +274,9 @@ export class DatasetComponent implements OnInit {
           subject: [ data.subject],
           themes: [ data.themes],
           catalog: [ data.catalog],
-          accrualPeriodicity: [ data.accrualPeriodicity],
-          provenance: [ data.provenance],
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
+          quality: this.formBuilder.group({}),
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([])
         });

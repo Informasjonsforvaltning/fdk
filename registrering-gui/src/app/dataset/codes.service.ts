@@ -13,6 +13,8 @@ export class CodesService {
   //private codesUrl = environment.api + "/codes";
   private codesUrl = environment.queryUrl + "/codes";
 
+  fetchedCodeIds: string[] = [];
+
   private headers = new Headers({'Content-Type': 'application/json'});
 
   private handleError(error: any): Promise<any>{
@@ -31,4 +33,17 @@ export class CodesService {
         .then(response => response.json().codes)
         .catch(this.handleError);
   }
+
+  fetchCodes (codeType:string, lang:string): Promise<any[]> {
+       // if (this.fetchedCodeIds.indexOf(codeType.trim()) === -1) {
+
+            return this.get(codeType).then(data => {
+                this.fetchedCodeIds.push(codeType);
+                return data.map(code => {
+                    return {value: code.uri, label: code.prefLabel[lang] }
+                });
+
+            });
+        }
+    //}
 }

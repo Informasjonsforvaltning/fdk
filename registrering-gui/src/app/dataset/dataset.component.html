@@ -46,54 +46,41 @@
         	</ng-select>
         </form>
       </div>
-      <div (click)="fetchCodes('frequencies')" class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Datasettet oppdateres:</label>
-        <form [formGroup]="accrualPeriodicityForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
-        		[options]="frequencies"
-        		[multiple]="false"
-        		placeholder="Velg..."
-            formControlName="accrualPeriodicityControl">
-        	</ng-select>
-        </form>
-      </div>
-      <div (click)="fetchCodes('provenancestatements')" class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Årsak til at datasettet finnes (provenance statement)</label>
-        <form [formGroup]="provenanceForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
-        		[options]="provenancestatements"
-        		[multiple]="false"
-        		placeholder="Velg..."
-            formControlName="provenanceControl">
-        	</ng-select>
-        </form>
-      </div>
+
 
 
     </div>
   </div>
-
+</div>
 
 
   <!-- parent-form.component.html -->
-  <form [formGroup]="datasetForm" class="form-group">
+  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
 
-        <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Kvalitet
+          </div>
+
+          <quality [datasetForm]="datasetForm"
+                   [dataset]="dataset">
+          </quality>
+
+      </div>
+
+        <div class="panel fdk-panel">
             <div class="fdk-panel-heading">
                 Distribusjoner
             </div>
             <div class="fdk-panel-body">
-    <!--
-      <label for="title">title</label>
-      <input formControlName="title" />-->
 
-      <distributions
-          [datasetForm]="datasetForm"
-          [distributions]="dataset.distributions"
-          >
-      </distributions>
+                  <distributions
+                      [datasetForm]="datasetForm"
+                      [distributions]="dataset.distributions"
+                      >
+                  </distributions>
+            </div>
+        </div>
 
       <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
           <div class="fdk-panel-heading">
@@ -103,11 +90,11 @@
                    [contact]="dataset.contactPoints[0]">
           </contact>
       </div>
-    </div>
-  </div>
+
+
   </form>
 
-  </div>
+
 
 
 

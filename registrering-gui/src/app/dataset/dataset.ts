@@ -24,6 +24,8 @@ export interface Dataset {
 
   contactPoints?: Contact[];
 
+  conformsTo?: string[];
+
   distributions?: Distribution[];
 
   _lastModified: string;

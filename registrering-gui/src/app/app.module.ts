@@ -24,6 +24,7 @@ import {CodesService} from "./dataset/codes.service";
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
+import {QualityComponent} from "./dataset/quality/quality.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {ContactComponent} from "./dataset/contact/contact.component";
     ConfirmComponent,
     DistributionFormComponent,
     DistributionListComponent,
-    ContactComponent
+    ContactComponent,
+    QualityComponent
   ],
   imports: [
     BrowserModule,
