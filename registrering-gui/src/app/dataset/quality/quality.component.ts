@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Dataset} from "../dataset";
 import {CodesService} from "../codes.service";
 
@@ -67,6 +67,10 @@ export class QualityComponent implements OnInit {
 
                 }
 
+                if (quality.conformsTo) {
+                    this.dataset.conformsTos = quality.conformsTo;
+                }
+
                 this.onSave.emit(true);
             }
         );
@@ -75,14 +79,11 @@ export class QualityComponent implements OnInit {
 
 
     private toFormGroup(data: Dataset) {
-
-        const formGroup = this.fb.group({
+        return this.fb.group({
             accrualPeriodicity: [ data.accrualPeriodicity.uri || '' ],
             provenance: [ data.provenance.uri ||''],
-            conformsTo: [ data.conformsTo || []]
+            conformsTo: [ data.conformsTos || []]
         });
-
-        return formGroup;
     }
 
     codifySkosCodes(code, lang) {

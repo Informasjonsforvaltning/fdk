@@ -34,14 +34,12 @@ export class DatasetComponent implements OnInit {
   lastSaved: string;
 
   themesForm: FormGroup;
-  accrualPeriodicityForm: FormGroup;
-  provenanceForm: FormGroup;
+
   identifiersForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceControl: {value?:string, label?:string}[];
   identifiers: string[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
@@ -144,19 +142,6 @@ export class DatasetComponent implements OnInit {
     });
   }
 
-
-
-  public fetchCodes (codeId:string): void {
-    if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
-      this.codesService.get(codeId).then(data => {
-        this[codeId] = data.map(code => {
-          return {value: code.uri, label: code.prefLabel[this.language] || code.prefLabel['no']}
-        });
-        this.fetchedCodeIds.push(codeId);
-      });
-    }
-  }
-
   onSave(ok:boolean) {
       this.save();
   }
@@ -217,7 +202,6 @@ export class DatasetComponent implements OnInit {
       disposable.unsubscribe();
     },10000);
   }
-
 
 
   private getDatasett(): Promise<Dataset> {
