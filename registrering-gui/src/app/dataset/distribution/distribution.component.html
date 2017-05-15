@@ -1,10 +1,12 @@
 <div class="form-group"  class="distribution-form sub-form-group" [formGroup]="distributionForm" >
     <div class="row form-group">
         <h4  (click)="toggleForm()">
-          <span *ngIf="showForm">▲</span>
-          <span *ngIf="!showForm">▼</span>
+          <span *ngIf="showForm">▼</span>
+          <span *ngIf="!showForm">▲</span>
           <span *ngFor="let singleFormat of distribution.format; let idx=index">
-            {{singleFormat}}{{distribution.format.length !== idx+1 ? ',' : '' }} </span>
+            {{singleFormat}}{{distribution.format.length !== idx+1 ? ',' : '' }}
+          </span>
+          <span *ngIf="distribution.format.length === 0">(Ingen format)</span>
         </h4>
         <div class="form" *ngIf="showForm">
           <label for="format" class="col-md-1 control-label">format:</label>
