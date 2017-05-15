@@ -3,22 +3,22 @@ import {browser, element, by, protractor} from "protractor";
 import {} from 'jasmine';
 declare function setTimeout(callback: Function, milliseconds: number): any
 describe('registrering-gui App', () => {
-  let page: RegistreringGuiPage;
+    let page: RegistreringGuiPage;
 
-  beforeEach(() => {
-    page = new RegistreringGuiPage();
-      browser.get("/")
-    element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
-      if(isPresent) {
-        let submitButton = element(by.buttonText("Logg inn som bjg"));
-        submitButton.click();
-      }
+    beforeEach(() => {
+        page = new RegistreringGuiPage();
+        browser.get("/")
+        element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
+            if (isPresent) {
+                let submitButton = element(by.buttonText("Logg inn som bjg"));
+                submitButton.click();
+            }
+        });
+
+        var isLoggedInElement = element(by.css('.alert-success'));
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.presenceOf(isLoggedInElement), 10000);
     });
-
-    var isLoggedInElement = element(by.css('.alert-success'));
-    var EC = protractor.ExpectedConditions;
-    browser.wait(EC.presenceOf(isLoggedInElement), 10000);
-  });
 
     beforeAll(() => {
     });
@@ -74,7 +74,7 @@ describe('registrering-gui App', () => {
         browser.refresh();
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
-      browser.wait(EC.presenceOf(provenanceControlValueElement),1000).then(() => {
+      browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
         expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Brukerinnsamlede data');
         expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
       });
