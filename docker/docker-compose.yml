@@ -171,15 +171,15 @@ services:
     networks:
       platform:
 
-#  logstash:
-#    image: "dcatno/logstash:${TAG}"
-#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-#    volumes:
-#      - ./logs:/usr/local/tomcat/logs:rw
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      logging:
+  logstash:
+    image: "dcatno/logstash:${TAG}"
+    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./logs:/usr/local/tomcat/logs:rw
+    depends_on:
+      - elasticsearch
+    networks:
+      logging:
 
   kibana:
     image: "dcatno/kibana:latest"

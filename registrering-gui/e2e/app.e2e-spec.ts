@@ -178,4 +178,21 @@ describe('registrering-gui App', () => {
     });
   });
 
+    it("should save labels for subject uris", () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        catalogLink.click();
+
+        let datasetLink = element(by.css("#datasets td"));
+        datasetLink.click();
+
+        let subjectInput = element(by.css("input[placeholder=Begrep]"));
+        subjectInput.clear();
+        subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
+
+        var EC = protractor.ExpectedConditions;
+        var alertSuccess = element(by.css('.alert-success'));
+        browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+    });
+
 });

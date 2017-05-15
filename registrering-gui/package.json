@@ -24,6 +24,7 @@
     "@angular/router": "^4.0.3",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.20",
     "angular2-jwt": "^0.2.2",
+    "angular2-tag-input": "^1.2.3",
     "bootstrap": "*3.3.7",
     "config": "1.25.1",
     "core-js": "^2.4.1",
