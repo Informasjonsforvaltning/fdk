@@ -3,22 +3,22 @@ import {browser, element, by, protractor} from "protractor";
 import {} from 'jasmine';
 declare function setTimeout(callback: Function, milliseconds: number): any
 describe('registrering-gui App', () => {
-    let page: RegistreringGuiPage;
+  let page: RegistreringGuiPage;
 
-    beforeEach(() => {
-        page = new RegistreringGuiPage();
-        browser.get("/")
-        element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
-            if (isPresent) {
-                let submitButton = element(by.buttonText("Logg inn som bjg"));
-                submitButton.click();
-            }
-        });
-
-        var isLoggedInElement = element(by.css('.alert-success'));
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.presenceOf(isLoggedInElement), 10000);
+  beforeEach(() => {
+    page = new RegistreringGuiPage();
+      browser.get("/")
+    element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
+      if(isPresent) {
+        let submitButton = element(by.buttonText("Logg inn som bjg"));
+        submitButton.click();
+      }
     });
+
+    var isLoggedInElement = element(by.css('.alert-success'));
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.presenceOf(isLoggedInElement), 10000);
+  });
 
     beforeAll(() => {
     });
@@ -47,11 +47,11 @@ describe('registrering-gui App', () => {
     });
 
     it("Should handle saving of codes in new dataset", () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+      let catalogLink = element(by.css("#datacatalogs td"));
+      catalogLink.click();
 
-        let newDatasetLink = element(by.css("#datasets td"));
-        newDatasetLink.click();
+      let newDatasetLink = element(by.css("#datasets td"));
+      newDatasetLink.click();
 
         let datasetH1Input = element(by.css(".fdk-register-h1"));
         datasetH1Input.clear();
@@ -74,10 +74,10 @@ describe('registrering-gui App', () => {
         browser.refresh();
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
-        browser.wait(EC.textToBePresentInElement(provenanceControlValueElement, 'Brukerinnsamlede data'), 1000).then(() => {
-            expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Brukerinnsamlede data');
-            expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
-        });
+      browser.wait(EC.presenceOf(provenanceControlValueElement),1000).then(() => {
+        expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Brukerinnsamlede data');
+        expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
+      });
     });
 
     it('should display message saying app works', () => {
@@ -218,7 +218,5 @@ describe('registrering-gui App', () => {
         browser.wait(EC.presenceOf(alertSuccess), 10000);
 
     });
-
-
 
 });

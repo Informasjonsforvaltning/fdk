@@ -29,10 +29,11 @@ export class DistributionListComponent implements OnInit {
             uri: '',
             title: {nb:''},
             description: {nb:''},
-            accessUrl: [],
+            accessURL: [],
+            downloadURL: [],
             license: '',
             format: [],
-            downloadUrl: []
+            ui_visible: true
         };
         //this.distributions = this.distributions || [];
         this.distributions.push(distribution);
