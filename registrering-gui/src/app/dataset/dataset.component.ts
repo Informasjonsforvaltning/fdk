@@ -36,11 +36,13 @@ export class DatasetComponent implements OnInit {
   themesForm: FormGroup;
   accrualPeriodicityForm: FormGroup;
   provenanceForm: FormGroup;
+  identifiersForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceControls: {value?:string, label?:string}[];
+  provenanceControl: {value?:string, label?:string}[];
+  identifiers: string[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
@@ -72,8 +74,15 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
+
     this.themesForm = new FormGroup({});
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
+
+    this.identifiersForm = new FormGroup({});
+    this.identifiersForm.addControl("identifiersControl", new FormControl([]));
+    //testing....
+    //this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
+
 
     this.codePickers = [
       {
@@ -100,10 +109,15 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
 
       //set default publisher to be the same as catalog
-      if(this.dataset.publisher == null) {
+      if(this.dataset.publisher === null) {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
       }
+
+      if(this.dataset.identifiers === undefined) {
+          this.dataset.identifiers = [];
+      }
+
       this.setCustomSelectValues();
       /* eof */
 

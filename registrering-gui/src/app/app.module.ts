@@ -18,13 +18,13 @@ import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { ConfirmComponent } from './confirm/confirm.component';
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
+import {RlTagInputModule} from 'angular2-tag-input';
 
 import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
-import {RlTagInputModule} from 'angular2-tag-input';
 
 
 @NgModule({

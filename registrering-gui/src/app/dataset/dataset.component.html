@@ -21,22 +21,18 @@
   </div>
   <div class="fdk-panel-body">
     <div class="form-group">
-      <div class="row form-group"   *ngIf="dataset.keywords" >
-        <label for="emneord-datasett" class="col-md-1 control-label">Emneord:</label>
-        <div class="col-md-11">
-          <input id="emneord-datasett" type="text" class="form-control" [(ngModel)]='dataset.keywords[language]'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="begrep-datasett" class="col-md-1 control-label">Begrep:</label>
-        <div class="col-md-11">
-          <input id="begrep-datasett" type="text" class="form-control"  [(ngModel)]='dataset.terms'  />
-        </div>
-      </div>
+        <label for="emneord-datasett" class="control-label">Emneord:</label>
+        <rl-tag-input id="emneord-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.keywords[language]" placeholder="Emneord"></rl-tag-input>
+    </div>
 
-      <div class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
-        <form [formGroup]="themesForm" class="col-md-11">
+    <div class="form-group">
+        <label for="begrep-datasett" class="control-label">Begrep:</label>
+        <rl-tag-input id="begrep-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
+    </div>
+
+      <div class="form-group">
+        <label for="tema-datasett" class="control-label">Tema:</label>
+        <form [formGroup]="themesForm">
           <ng-select
             (ngModelChange)="valuechange()"
         		[options]="themes"
@@ -46,21 +42,10 @@
         	</ng-select>
         </form>
       </div>
-      <div (click)="fetchCodes('frequencies')" class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Datasettet oppdateres:</label>
-        <form [formGroup]="accrualPeriodicityForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
-        		[options]="frequencies"
-        		[multiple]="false"
-        		placeholder="Velg..."
-            formControlName="accrualPeriodicityControl">
-        	</ng-select>
-        </form>
-      </div>
-      <div (click)="fetchCodes('provenancestatements')" class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Årsak til at datasettet finnes (provenance statement)</label>
-        <form [formGroup]="provenanceForm" class="col-md-11">
+
+      <div (click)="fetchCodes('provenancestatements')" class="form-group">
+        <label for="tema-datasett" class="control-label">Årsak til at datasettet finnes (provenance statement)</label>
+        <form [formGroup]="provenanceForm">
           <ng-select
             (ngModelChange)="valuechange()"
         		[options]="provenancestatements"
@@ -71,6 +56,24 @@
         </form>
       </div>
 
+      <div (click)="fetchCodes('frequencies')" class="form-group">
+          <label for="tema-datasett" class="control-label">Datasettet oppdateres:</label>
+          <form [formGroup]="accrualPeriodicityForm">
+              <ng-select
+                  (ngModelChange)="valuechange()"
+                  [options]="frequencies"
+                  [multiple]="false"
+                  placeholder="Velg..."
+                  formControlName="accrualPeriodicityControl">
+              </ng-select>
+          </form>
+      </div>
+
+      <!-- identifier hidden until it has ben decided whether it should be shown in GUI or not -->
+        <!-- <div class="row form-group">
+          <label for="identifier-datasett" class="col-md-1 control-label">Identifikatorer:</label>
+          <rl-tag-input (ngModelChange)="valuechange()" [(ngModel)]="dataset.identifiers" placeholder="identifikatorer"></rl-tag-input>
+      </div> -->
 
     </div>
   </div>
@@ -107,7 +110,6 @@
   </div>
   </form>
 
-  </div>
 
 
 

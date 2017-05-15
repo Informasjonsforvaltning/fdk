@@ -19,6 +19,7 @@ const TEST_DATASETS: Dataset[] = [
     "themes":[],
     "catalog": "974760673",
     "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
+    "identifiers" : ["http://brreg.no/identifier/1009"],
     "_lastModified": "2012-04-23"
   }
 ]
@@ -66,6 +67,7 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
+    console.log("dataset payload: " + payload);
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
