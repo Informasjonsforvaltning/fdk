@@ -12,6 +12,7 @@ services:
      - application.fusekiService=http://fuseki:8080/fuseki
     links:
       - query
+      - fuseki
     networks:
       platform:
 
@@ -38,7 +39,7 @@ services:
       platform:
 
   validator:
-    image: "fdk/validator:latest"
+    image: "dcatno/validator:latest"
     ports:
       - "8086:8080"
     environment:
@@ -171,15 +172,15 @@ services:
     networks:
       platform:
 
-  logstash:
-    image: "dcatno/logstash:${TAG}"
-    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./logs:/usr/local/tomcat/logs:rw
-    depends_on:
-      - elasticsearch
-    networks:
-      logging:
+  #logstash:
+  #  image: "dcatno/logstash:${TAG}"
+  #  entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+  #  volumes:
+  #    - ./logs:/usr/local/tomcat/logs:rw
+  #  depends_on:
+  #    - elasticsearch
+  #  networks:
+  #    logging:
 
   kibana:
     image: "dcatno/kibana:latest"

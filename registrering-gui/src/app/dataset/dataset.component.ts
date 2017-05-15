@@ -88,8 +88,8 @@ export class DatasetComponent implements OnInit {
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
 
-      this.dataset.keywords = {'nb':['keyword1','keyword1']};
-      this.dataset.subject = ['term1', 'term'];
+      this.dataset.keywords = {'nb':[]};
+      this.dataset.subject = [];
 
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
 
