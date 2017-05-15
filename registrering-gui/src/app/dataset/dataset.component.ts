@@ -36,13 +36,14 @@ export class DatasetComponent implements OnInit {
   themesForm: FormGroup;
   accrualPeriodicityForm: FormGroup;
   provenanceForm: FormGroup;
+  identifiersForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceControls: {value?:string, label?:string}[];
+  provenanceControl: {value?:string, label?:string}[];
+  identifiers: string[];
   fetchedCodeIds: string[] = [];
-
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
   datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
@@ -73,8 +74,15 @@ export class DatasetComponent implements OnInit {
     var that = this;
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
+
     this.themesForm = new FormGroup({});
     this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
+
+    this.identifiersForm = new FormGroup({});
+    this.identifiersForm.addControl("identifiersControl", new FormControl([]));
+    //testing....
+    //this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
+
 
 
     let datasetId = this.route.snapshot.params['dataset_id'];
@@ -88,9 +96,13 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
 
       //set default publisher to be the same as catalog
-      if(this.dataset.publisher == null) {
+      if(this.dataset.publisher === null) {
         //will probably need to be modified later, when publisher is stored as separate object in db
         this.dataset.publisher = this.catalog.publisher;
+      }
+
+      if(this.dataset.identifiers === undefined) {
+          this.dataset.identifiers = [];
       }
 
       /* eof */
@@ -131,8 +143,6 @@ export class DatasetComponent implements OnInit {
 
     });
   }
-
-
 
 
 
@@ -235,19 +245,5 @@ export class DatasetComponent implements OnInit {
       return formGroup;
   }
 
-  private mergeCustomizer = (objValue, srcValue) => {
-      if (_.isArray(objValue)) {
-          if (_.isPlainObject(objValue[0]) || _.isPlainObject(srcValue[0])) {
-              // If we found an array of objects, take our form values, and
-              // attempt to merge them into existing values in the data model,
-              // defaulting back to new empty object if none found.
-              return srcValue.map(src => {
-                  const obj = _.find(objValue, { id: src.id });
-                  return _.mergeWith(obj || {}, src, this.mergeCustomizer);
-              });
-          }
-          return srcValue;
-      }
-  }
 
 }

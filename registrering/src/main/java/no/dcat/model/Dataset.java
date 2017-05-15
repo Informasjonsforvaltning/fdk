@@ -26,8 +26,6 @@ public class Dataset {
 
     public static final String ELASTIC_TYPE = "dataset";
 
-    // dct:identifier
-    // Norwegian: Identifikator
     @NonNull
     @Id
     private String id;

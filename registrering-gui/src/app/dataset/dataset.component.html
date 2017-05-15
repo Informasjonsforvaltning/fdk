@@ -21,36 +21,29 @@
   </div>
   <div class="fdk-panel-body">
     <div class="form-group">
-      <div class="row form-group"   *ngIf="dataset.keywords" >
-        <label for="emneord-datasett" class="col-md-1 control-label">Emneord:</label>
-        <div class="col-md-11">
-          <input id="emneord-datasett" type="text" class="form-control" [(ngModel)]='dataset.keywords[language]'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="begrep-datasett" class="col-md-1 control-label">Begrep:</label>
-        <div class="col-md-11">
-          <input id="begrep-datasett" type="text" class="form-control"  [(ngModel)]='dataset.terms'  />
-        </div>
-      </div>
+        <label for="emneord-datasett" class="control-label">Emneord:</label>
+        <rl-tag-input id="emneord-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.keywords[language]" placeholder="Emneord"></rl-tag-input>
+    </div>
 
-      <div class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
-        <form [formGroup]="themesForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
+    <div class="form-group">
+        <label for="begrep-datasett" class="control-label">Begrep:</label>
+        <rl-tag-input id="begrep-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
+    </div>
+
+      <div class="form-group">
+        <label for="tema-datasett" class="control-label">Tema:</label>
+        <form [formGroup]="themesForm">
+          <ng-select id="tema-datasett"
+                (ngModelChange)="valuechange()"
         		[options]="themes"
         		[multiple]="true"
         		placeholder="Velg Tema"
-            formControlName="themes">
+                formControlName="themes">
         	</ng-select>
         </form>
       </div>
 
-
-
     </div>
-  </div>
 </div>
 
 
@@ -92,13 +85,7 @@
           </contact>
       </div>
 
-
   </form>
-
-
-
-
-
 
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett

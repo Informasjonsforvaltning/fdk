@@ -23,6 +23,39 @@ describe('registrering-gui App', () => {
   beforeAll(()=> {
   })
 
+    it("Should handle saving of codes in new dataset", () => {
+      let catalogLink = element(by.css("#datacatalogs td"));
+      catalogLink.click();
+
+      let newDatasetLink = element(by.css("#datasets td"));
+      newDatasetLink.click();
+
+      let datasetH1Input = element(by.css(".fdk-register-h1"));
+      datasetH1Input.clear();
+      datasetH1Input.sendKeys('Codes test');
+
+      let provenanceControl = element(by.css('[formcontrolname=provenanceControl]'));
+      provenanceControl.click();
+      let provenanceControlFirstValue = element(by.css('[formcontrolname=provenanceControl] li:first-child'));
+      provenanceControlFirstValue.click();
+
+      let accrualPeriodicityControl = element(by.css('[formcontrolname=accrualPeriodicityControl]'));
+      accrualPeriodicityControl.click();
+      let accrualPeriodicityControlFirstValue = element(by.css('[formcontrolname=accrualPeriodicityControl] li:first-child'));
+      accrualPeriodicityControlFirstValue.click();
+
+      var EC = protractor.ExpectedConditions;
+      var alertSuccess = element(by.css('.alert-success'));
+      browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+      browser.refresh();
+      let provenanceControlValueElement = element(by.css('[formcontrolname=provenanceControl] .value'));
+
+      browser.wait(EC.textToBePresentInElement(provenanceControlValueElement, 'Brukerinnsamlede data'),1000).then(() => {
+        expect(<any>page.getTextFromCssElement('[formcontrolname=provenanceControl] .value')).toEqual('Brukerinnsamlede data');
+        expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicityControl] .value')).toEqual('hver fjortende dag');
+      });
+    });
   it('should display message saying app works', () => {
     page.navigateTo();
     expect(<any>page.getParagraphText()).toEqual('Datakataloger');
@@ -144,4 +177,22 @@ describe('registrering-gui App', () => {
       expect(<any>page.getValueFromElement('contact-telephone')).toEqual('+47123456');
     });
   });
+
+    it("should save labels for subject uris", () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        catalogLink.click();
+
+        let datasetLink = element(by.css("#datasets td"));
+        datasetLink.click();
+
+        let subjectInput = element(by.css("input[placeholder=Begrep]"));
+        subjectInput.clear();
+        subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
+
+        var EC = protractor.ExpectedConditions;
+        var alertSuccess = element(by.css('.alert-success'));
+        browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+    });
+
 });
