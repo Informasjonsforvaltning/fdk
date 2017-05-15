@@ -34,14 +34,12 @@ export class DatasetComponent implements OnInit {
   lastSaved: string;
 
   themesForm: FormGroup;
-  accrualPeriodicityForm: FormGroup;
-  provenanceForm: FormGroup;
+
   identifiersForm: FormGroup;
 
   theme: string[];
   themes: string[];
   frequencies: {value?:string, label?:string}[];
-  provenanceControl: {value?:string, label?:string}[];
   identifiers: string[];
   fetchedCodeIds: string[] = [];
   codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
@@ -84,19 +82,6 @@ export class DatasetComponent implements OnInit {
     //this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
 
 
-    this.codePickers = [
-      {
-        pluralizedNameFromCodesService: 'provenancestatements',
-        nameFromDatasetModel: 'provenance',
-        languageCode: "nb"
-      },
-      {
-        pluralizedNameFromCodesService: 'frequencies',
-        nameFromDatasetModel: 'accrualPeriodicity',
-        languageCode: "no"
-      }
-    ];
-    this.initCustomSelectComponents();
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
@@ -118,7 +103,6 @@ export class DatasetComponent implements OnInit {
           this.dataset.identifiers = [];
       }
 
-      this.setCustomSelectValues();
       /* eof */
 
       this.http
@@ -158,59 +142,8 @@ export class DatasetComponent implements OnInit {
     });
   }
 
-
-  initCustomSelectComponents() {
-    this.codePickers.forEach(codePicker=>{
-      const name = codePicker.nameFromDatasetModel;
-      const controlName = name + 'Control';
-      this[codePicker.pluralizedNameFromCodesService] = [];
-      this[name + 'Form'] = new FormGroup({});
-      this[name + 'Form'].addControl(controlName, new FormControl(''));
-      var valueObject = {};
-      valueObject[controlName] = ' ';
-      this[name + 'Form'].patchValue(valueObject);
-    })
-  }
-  setCustomSelectValues() {
-    this.codePickers.forEach(codePicker=>{
-      const name = codePicker.nameFromDatasetModel;
-      if(this.dataset[name]) { // if the key doesn't exist, no value need to be set
-        const controlName = name + 'Control';
-        const valueObject = {};
-        valueObject[controlName] = this.dataset[name] ? this.dataset[name].uri : '';
-        this[codePicker.pluralizedNameFromCodesService] = [{value:this.dataset[name].uri, label:this.dataset[name].prefLabel[codePicker.languageCode]}];
-        setTimeout(()=>this[name + 'Form'].patchValue(valueObject), 1);
-      }
-    })
-  }
-  retrieveCustomSelectValues() {
-      this.codePickers.forEach(codePicker=>{
-        const name = codePicker.nameFromDatasetModel;
-          const controlName = name + 'Control';
-          const valueObject = {};
-          let label:string;
-          let uri: string;
-          this[codePicker.pluralizedNameFromCodesService].forEach((codeItem)=>{
-            if(codeItem.value===this[name + 'Form'].getRawValue()[controlName]) {
-              label = codeItem.label;
-              uri = codeItem.value;
-            };
-          })
-          const prefLabelObj = {};
-          prefLabelObj[codePicker.languageCode] = label;
-          this.dataset[name] =  {uri:uri, prefLabel: prefLabelObj};
-
-      })
-  }
-  fetchCodes (codeId:string): void {
-    if (this.fetchedCodeIds.indexOf(codeId.trim()) === -1) {
-      this.codesService.get(codeId).then(data => {
-        this[codeId] = data.map(code => {
-          return {value: code.uri, label: code.prefLabel[this.language] || code.prefLabel['no']}
-        });
-        this.fetchedCodeIds.push(codeId);
-      });
-    }
+  onSave(ok:boolean) {
+      this.save();
   }
 
   save(): void {
@@ -219,7 +152,7 @@ export class DatasetComponent implements OnInit {
         "uri": uri
       }
     });
-    this.retrieveCustomSelectValues();
+
     this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
       .then(() => {
@@ -271,7 +204,6 @@ export class DatasetComponent implements OnInit {
   }
 
 
-
   private getDatasett(): Promise<Dataset> {
       // Insert mock object here.  Likely provided via a resolver in a
       // real world scenario
@@ -287,10 +219,9 @@ export class DatasetComponent implements OnInit {
           subject: [ data.subject],
           themes: [ data.themes],
           catalog: [ data.catalog],
-          accrualPeriodicity: [ data.accrualPeriodicity],
-          provenance: [ data.provenance],
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
+          quality: this.formBuilder.group({}),
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([])
         });
@@ -298,19 +229,5 @@ export class DatasetComponent implements OnInit {
       return formGroup;
   }
 
-  private mergeCustomizer = (objValue, srcValue) => {
-      if (_.isArray(objValue)) {
-          if (_.isPlainObject(objValue[0]) || _.isPlainObject(srcValue[0])) {
-              // If we found an array of objects, take our form values, and
-              // attempt to merge them into existing values in the data model,
-              // defaulting back to new empty object if none found.
-              return srcValue.map(src => {
-                  const obj = _.find(objValue, { id: src.id });
-                  return _.mergeWith(obj || {}, src, this.mergeCustomizer);
-              });
-          }
-          return srcValue;
-      }
-  }
 
 }
