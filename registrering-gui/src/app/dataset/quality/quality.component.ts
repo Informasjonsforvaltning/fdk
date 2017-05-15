@@ -31,24 +31,25 @@ export class QualityComponent implements OnInit {
     ngOnInit() {
 
         if (this.dataset.accrualPeriodicity) {
-            console.log('this.dataset.accrualPeriodicity',this.dataset.accrualPeriodicity);
             let skosCode = this.dataset.accrualPeriodicity;
             this.frequencies.push(this.codifySkosCodes(skosCode,'no'));
+        } else {
+            this.dataset.accrualPeriodicity = { uri: '', prefLabel: {no: ''}};
         }
 
         if (this.dataset.provenance) {
             let skosCode = this.dataset.provenance;
             this.provenancestatements.push(this.codifySkosCodes(skosCode,'nb'));
+        } else {
+            this.dataset.provenance = { uri: '', prefLabel: {nb:''}};
         }
 
         this.qualityForm = this.toFormGroup(this.dataset);
-        console.log('qualityForm:', this.qualityForm);
+
         this.datasetForm.addControl('quality', this.qualityForm);
 
-        this.qualityForm.valueChanges.subscribe(
+        this.qualityForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
             quality => {
-
-                console.log('qualityForm change: ', quality);
 
                 if (quality.provenance) {
                     this.dataset.provenance = {
@@ -70,12 +71,11 @@ export class QualityComponent implements OnInit {
             }
         );
 
-
     }
+
 
     private toFormGroup(data: Dataset) {
 
-        
         const formGroup = this.fb.group({
             accrualPeriodicity: [ data.accrualPeriodicity.uri || '' ],
             provenance: [ data.provenance.uri ||''],

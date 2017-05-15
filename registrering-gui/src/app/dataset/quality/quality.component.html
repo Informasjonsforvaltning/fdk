@@ -22,5 +22,16 @@
             </ng-select>
 
         </div>
+
+        <div class="form-group">
+            <label for="quality-conformsto" class="control-label">I samsvar med:</label>
+            <ng-select *ngIf="conformsTo" id="quality-conformsto" type="url"
+                       [multiple]="true"
+                       placeholder="Velg..."
+                       formControlName="conformsTo">
+            </ng-select>
+
+        </div>
+
     </div>
 </div>
