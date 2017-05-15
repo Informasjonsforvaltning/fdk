@@ -17,7 +17,7 @@
 
     <modules>
         <module>test</module>
-        <module>gdoc-import</module>
+        <module>gdoc</module>
     </modules>
 
 

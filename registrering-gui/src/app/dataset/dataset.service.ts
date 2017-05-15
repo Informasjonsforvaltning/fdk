@@ -3,6 +3,7 @@ import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
 import {environment} from "../../environments/environment";
+import {pluralizeObjectKeys, singularizeObjectKeys} from "../../utilities/pluralizeOrSingularizeObjectKeys";
 
 const TEST_DATASETS: Dataset[] = [
   {
@@ -14,9 +15,11 @@ const TEST_DATASETS: Dataset[] = [
       "nb": "Datasett med mange attributter"
     },
     "keywords": {'nb':['keyword1','keyword1']},
-    "terms":["term1", "term2", "term3"],
-    "theme":[{"code":"GOVE"},{"code":"HEAL"}],
+    "subject":["term1", "term2", "term3"],
+    "themes":[],
     "catalog": "974760673",
+    "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
+    "identifiers" : ["http://brreg.no/identifier/1009"],
     "_lastModified": "2012-04-23"
   }
 ]
@@ -49,7 +52,11 @@ export class DatasetService {
       const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
       return this.http.get(datasetUrl)
         .toPromise()
-        .then(response => response.json() as Dataset)
+        .then((response) => {
+          const dataset = pluralizeObjectKeys(response.json());
+          dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
+          return dataset as Dataset
+        })
         .catch(this.handleError);
   }
 
@@ -58,15 +65,17 @@ export class DatasetService {
 
     let authorization : string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
-
+    let datasetCopy = JSON.parse(JSON.stringify(dataset));
+    let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
+    console.log("dataset payload: " + payload);
     return this.http
-      .put(datasetUrl, JSON.stringify(dataset), {headers: this.headers})
+      .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)
   }
 
-  delete(catId: string, dataset: Dataset) : Promise<void> {
+  delete(catId: string, dataset: Dataset) : Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
     let authorization : string = localStorage.getItem("authorization");
@@ -86,7 +95,6 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
-    console.debug(datasetUrl)
     return this.http
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()

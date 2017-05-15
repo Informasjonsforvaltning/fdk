@@ -2,8 +2,8 @@ package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.ListenableActionFuture;
@@ -19,8 +19,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Class for testing LoadLocations.
@@ -35,7 +35,7 @@ public class LoadLocationsTest {
         LoadLocations lc = new LoadLocations(elasticsearch).extractLocations(model);
 
         assertEquals("Number of locations", 3, lc.locations.size());
-        assertEquals("Norway", new HashMap<>(), lc.locations.get("http://sws.geonames.org/3144096/").getTitle());
+        assertEquals("Norway", new HashMap<>(), lc.locations.get("http://sws.geonames.org/3144096/").getPrefLabel());
     }
 
     @Test
@@ -44,16 +44,16 @@ public class LoadLocationsTest {
         LoadLocations lc = new LoadLocations(elasticsearch);
 
         Map<String, SkosCode> locations = new HashMap<>();
-        SkosCode code = new SkosCode("rdf/", new HashMap<>());
+        SkosCode code = new SkosCode("rdf/", null, new HashMap<>());
         locations.put("rdf/", code);
         lc.locations = locations;
 
         lc.retrieveLocTitle();
 
         SkosCode location = lc.locations.get("rdf/");
-        assertEquals("Title in english.", "Norway", location.getTitle().get("en"));
-        assertEquals("Title in norwegian bokmål.", "Norge", location.getTitle().get("nb"));
-        assertEquals("Title in norwegian nynorsk.", "Noreg", location.getTitle().get("nn"));
+        assertEquals("Title in english.", "Norway", location.getPrefLabel().get("en"));
+        assertEquals("Title in norwegian bokmål.", "Norge", location.getPrefLabel().get("nb"));
+        assertEquals("Title in norwegian nynorsk.", "Noreg", location.getPrefLabel().get("nn"));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class LoadLocationsTest {
 
         LoadLocations lc = new LoadLocations(elasticsearch);
         Map<String, SkosCode> locations = new HashMap<>();
-        SkosCode code = new SkosCode("rdf/", new HashMap<>());
+        SkosCode code = new SkosCode("rdf/", null, new HashMap<>());
         locations.put("rdf/", code);
         lc.locations = locations;
 
@@ -86,7 +86,7 @@ public class LoadLocationsTest {
         title.put("nn", "Noreg");
         title.put("nb", "Norge");
 
-        SkosCode codeExp = new SkosCode("rdf/", title);
+        SkosCode codeExp = new SkosCode("rdf/",null, title);
 
         IndexRequest indexRequest = new IndexRequest("codes", "locations", "rdf/");
         indexRequest.source(gson.toJson(codeExp));

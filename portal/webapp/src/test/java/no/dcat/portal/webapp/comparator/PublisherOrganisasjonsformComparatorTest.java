@@ -1,10 +1,9 @@
 package no.dcat.portal.webapp.comparator;
 
-import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.portal.webapp.domain.Publisher;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Class for testing  PublisherOrganisasjonsformComparator

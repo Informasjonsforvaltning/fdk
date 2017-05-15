@@ -27,12 +27,13 @@ public class DeleteDatasetSteps extends AbstractSpringCucumberTest {
 
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
+        String datasetUri = "/catalogs/974760673/datasets/" + result.getId();
 
         HttpHeaders headers = createHeaders("bjg","123");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         HttpEntity<String> deleteRequest = new HttpEntity<String>(headers);
 
-        String datasetResUrl = "/catalogs/974760673/datasets/101";
-        response = restTemplate.exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
+
+        response = restTemplate.exchange(datasetUri, HttpMethod.DELETE, deleteRequest, String.class);
     }
 }

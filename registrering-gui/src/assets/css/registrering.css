@@ -199,9 +199,44 @@ p.register {
 	padding: 0px;
 }
 
-
 /*  O T H E R  */
 
 .fdk-vertical-align {
 	vertical-align: middle;
+}
+
+ng-select {
+  background-color: #fff;
+}
+ng-select > div > div.multiple > div.option {
+  background-color: #ccc;
+}
+.modal-footer .btn+.btn {
+	margin-bottom: 6px;
+}
+
+rl-tag-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0;
+    padding-left: 10px;
+}
+
+rl-tag-input-item[ng-reflect-selected] {
+    line-height: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    background-color: #eee;
+    font-size: 14px;
+}
+
+body > app-root > section:nth-child(3) > div > app-dataset > div:nth-child(3) > div.fdk-panel-body  rl-tag-input-item > span {
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    font-size: 24px;
+    font-family: SansSerif;
+    background: #eee;
+    color: #aaa;
 }

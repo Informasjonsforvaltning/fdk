@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,9 +15,11 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Distribution {
     private String id;
+    private String uri;
     private Map<String,String> title;
     private Map<String,String> description;
-    private String accessURL;
+    private List<String> downloadURL;
+    private List<String> accessURL;
     private String license;
-    private String format;
+    private List<String> format;
 }

@@ -2,11 +2,11 @@ package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.dcat.data.store.Elasticsearch;
+import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.harvester.crawler.Types;
 import no.dcat.harvester.crawler.exception.CodesNotLoadedException;
 import no.dcat.harvester.crawler.exception.DataThemesNotLoadedException;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
@@ -55,7 +55,7 @@ public class RetrieveCodes {
                 if (sourceAsString != null) {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
                     SkosCode code = gson.fromJson(sourceAsString, SkosCode.class);
-                    codes.put(code.getCode(), code);
+                    codes.put(code.getUri(), code);
                 }
             }
             allCodes.put(type.getType(), codes);

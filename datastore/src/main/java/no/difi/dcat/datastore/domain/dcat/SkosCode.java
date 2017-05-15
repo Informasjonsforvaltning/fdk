@@ -6,31 +6,37 @@ import java.util.Map;
  * Model class codes:<type>.
  */
 public class SkosCode {
-    private String code;
+    private String uri;
+    private String authorityCode;
 
-    private Map<String, String> title;
+    private Map<String, String> prefLabel;
 
     public SkosCode() {
     }
 
-    public SkosCode(String code, Map<String, String> title) {
-        this.code = code;
-        this.title = title;
+    public SkosCode(String uri, String authorityCode, Map<String, String> prefLabel) {
+        this.uri = uri;
+        this.authorityCode = authorityCode;
+        this.prefLabel = prefLabel;
     }
 
-    public String getCode() {
-        return code;
+    public String getUri() {
+        return uri;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public String getAuthorityCode() { return authorityCode; }
+
+    public void setAuthorityCode(String authorityCode) { this.authorityCode = authorityCode; }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
-    public Map<String, String> getTitle() {
-        return title;
+    public Map<String, String> getPrefLabel() {
+        return prefLabel;
     }
 
-    public void setTitle(Map<String, String> title) {
-        this.title = title;
+    public void setPrefLabel(Map<String, String> prefLabel) {
+        this.prefLabel = prefLabel;
     }
 }
