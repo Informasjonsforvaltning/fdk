@@ -33,70 +33,48 @@
       <div class="form-group">
         <label for="tema-datasett" class="control-label">Tema:</label>
         <form [formGroup]="themesForm">
-          <ng-select
-            (ngModelChange)="valuechange()"
+          <ng-select id="tema-datasett"
+                (ngModelChange)="valuechange()"
         		[options]="themes"
         		[multiple]="true"
         		placeholder="Velg Tema"
-            formControlName="themes">
+                formControlName="themes">
         	</ng-select>
         </form>
       </div>
-
-      <div (click)="fetchCodes('provenancestatements')" class="form-group">
-        <label for="tema-datasett" class="control-label">Årsak til at datasettet finnes (provenance statement)</label>
-        <form [formGroup]="provenanceForm">
-          <ng-select
-            (ngModelChange)="valuechange()"
-        		[options]="provenancestatements"
-        		[multiple]="false"
-        		placeholder="Velg..."
-            formControlName="provenanceControl">
-        	</ng-select>
-        </form>
-      </div>
-
-      <div (click)="fetchCodes('frequencies')" class="form-group">
-          <label for="tema-datasett" class="control-label">Datasettet oppdateres:</label>
-          <form [formGroup]="accrualPeriodicityForm">
-              <ng-select
-                  (ngModelChange)="valuechange()"
-                  [options]="frequencies"
-                  [multiple]="false"
-                  placeholder="Velg..."
-                  formControlName="accrualPeriodicityControl">
-              </ng-select>
-          </form>
-      </div>
-
-      <!-- identifier hidden until it has ben decided whether it should be shown in GUI or not -->
-        <!-- <div class="row form-group">
-          <label for="identifier-datasett" class="col-md-1 control-label">Identifikatorer:</label>
-          <rl-tag-input (ngModelChange)="valuechange()" [(ngModel)]="dataset.identifiers" placeholder="identifikatorer"></rl-tag-input>
-      </div> -->
 
     </div>
-  </div>
-
+</div>
 
 
   <!-- parent-form.component.html -->
-  <form [formGroup]="datasetForm" class="form-group">
+  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
 
-        <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Kvalitet
+          </div>
+
+          <quality [datasetForm]="datasetForm"
+                   [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </quality>
+
+      </div>
+
+        <div class="panel fdk-panel">
             <div class="fdk-panel-heading">
                 Distribusjoner
             </div>
             <div class="fdk-panel-body">
-    <!--
-      <label for="title">title</label>
-      <input formControlName="title" />-->
 
-      <distributions
-          [datasetForm]="datasetForm"
-          [distributions]="dataset.distributions"
-          >
-      </distributions>
+                  <distributions
+                      [datasetForm]="datasetForm"
+                      [distributions]="dataset.distributions"
+                      >
+                  </distributions>
+            </div>
+        </div>
 
       <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
           <div class="fdk-panel-heading">
@@ -106,13 +84,8 @@
                    [contact]="dataset.contactPoints[0]">
           </contact>
       </div>
-    </div>
-  </div>
+
   </form>
-
-
-
-
 
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett
