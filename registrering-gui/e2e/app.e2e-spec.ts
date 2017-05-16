@@ -47,11 +47,11 @@ describe('registrering-gui App', () => {
     });
 
     it("Should handle saving of codes in new dataset", () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+      let catalogLink = element(by.css("#datacatalogs td"));
+      catalogLink.click();
 
-        let newDatasetLink = element(by.css("#datasets td"));
-        newDatasetLink.click();
+      let newDatasetLink = element(by.css("#datasets td"));
+      newDatasetLink.click();
 
         let datasetH1Input = element(by.css(".fdk-register-h1"));
         datasetH1Input.clear();
@@ -218,7 +218,5 @@ describe('registrering-gui App', () => {
         browser.wait(EC.presenceOf(alertSuccess), 10000);
 
     });
-
-
 
 });
