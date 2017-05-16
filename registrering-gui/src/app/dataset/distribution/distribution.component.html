@@ -8,27 +8,20 @@
           </span>
           <span *ngIf="distribution.format.length === 0">(Ingen format)</span>
         </h4>
-        <div class="form" *ngIf="showForm">
-          <label for="format" class="col-md-1 control-label">format:</label>
-          <div class="col-md-11">
-              <rl-tag-input formControlName="format" placeholder=" "></rl-tag-input>
-          </div>
-          <label for="description" class="col-md-1 control-label">Kommentar:</label>
-          <div class="col-md-11">
-              <textarea id="description" type="text" formControlName="description" class="form-control"></textarea>
-          </div>
-          <label for="accessURL" class="col-md-1 control-label">Tilgangs-URL:</label>
-          <div class="col-md-11">
-              <rl-tag-input formControlName="accessURL" placeholder=" "></rl-tag-input>
-          </div>
-          <label for="downloadURL" class="col-md-1 control-label">Nedlastnings-URL:</label>
-          <div class="col-md-11">
-              <rl-tag-input formControlName="downloadURL" placeholder=" "></rl-tag-input>
-          </div>
-          <label for="license" class="col-md-1 control-label">Lisens:</label>
-          <div class="col-md-11">
-              <input id="license" type="text"  formControlName="license" class="form-control"/>
-          </div>
+        <div class="form sub-form" *ngIf="showForm">
+          <label for="format" class="control-label">Format:</label>
+          <rl-tag-input formControlName="format" placeholder=" "></rl-tag-input>
+          <label for="description" class="control-label">Kommentar:</label>
+          <textarea id="description" type="text" formControlName="description" class="form-control"></textarea>
+          <label for="accessURL" class="control-label">Tilgangs-URL:</label>
+          <rl-tag-input formControlName="accessURL" placeholder=" "></rl-tag-input>
+          <label for="downloadURL" class="control-label">Nedlastnings-URL:</label>
+          <rl-tag-input formControlName="downloadURL" placeholder=" "></rl-tag-input>
+          <label for="license" class="control-label">Lisens:</label>
+          <input id="license" type="text"  formControlName="license" class="form-control"/>
+          <span class="delete-distribution-wrapper">
+            (<a href=""  class="delete-distribution-button" (click)="removeDistribution(distributionIndex)">Slett distribusjon</a>)
+          </span>
         </div>
     </div>
 </div>
