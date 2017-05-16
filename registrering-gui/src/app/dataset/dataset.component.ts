@@ -14,6 +14,7 @@ import {ConfirmComponent} from "../confirm/confirm.component";
 import { DialogService } from "ng2-bootstrap-modal";
 import {DistributionFormComponent} from "./distribution/distribution.component";
 import * as _ from 'lodash';
+import {ThemesService} from "./themes.service";
 
 @Component({
   selector: 'app-dataset',
@@ -53,11 +54,13 @@ export class DatasetComponent implements OnInit {
   datasetForm: FormGroup = new FormGroup({});
 
 
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: DatasetService,
     private codesService: CodesService,
+    private themesService: ThemesService,
     private catalogService: CatalogService,
     private http: Http,
     private dialogService: DialogService,
@@ -88,37 +91,15 @@ export class DatasetComponent implements OnInit {
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
 
-      this.dataset.keywords = {'nb':[]};
-      this.dataset.subject = [];
+      this.dataset.subject = this.dataset.subject || [];
 
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
+      this.dataset.identifiers = this.dataset.identifiers || [];
 
       //set default publisher to be the same as catalog
-      if(this.dataset.publisher === null) {
-        //will probably need to be modified later, when publisher is stored as separate object in db
-        this.dataset.publisher = this.catalog.publisher;
-      }
-
-      if(this.dataset.identifiers === undefined) {
-          this.dataset.identifiers = [];
-      }
+      this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
 
       /* eof */
-
-      this.http
-        .get(environment.queryUrl + `/themes`)
-        .map(data => data.json().hits.hits.map(item => {
-          return {
-            value: item._source.id,
-            label: item._source.title[this.language]
-          }
-        })).toPromise().then((data) => {
-          this.themes = data;
-          this.datasetSavingEnabled = false;
-          setTimeout(()=>{
-            this.themesForm.setValue ({'themes': this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : []});
-          },1)
-        });
 
       this.datasetForm = this.toFormGroup(this.dataset);
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
@@ -130,7 +111,9 @@ export class DatasetComponent implements OnInit {
                   distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
                 })
               }
+
               this.dataset = _.merge(this.dataset, dataset);
+
               this.cdr.detectChanges();
               var that = this;
               this.delay(()=>{
@@ -148,11 +131,6 @@ export class DatasetComponent implements OnInit {
   }
 
   save(): void {
-    this.dataset.themes = this.themesForm.getRawValue().themes.map((uri)=>{
-      return {
-        "uri": uri
-      }
-    });
 
     this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
@@ -216,12 +194,12 @@ export class DatasetComponent implements OnInit {
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
-          keywords: [ data.keywords],
           subject: [ data.subject],
           themes: [ data.themes],
           catalog: [ data.catalog],
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
+          information: this.formBuilder.group({}),
           quality: this.formBuilder.group({}),
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([])

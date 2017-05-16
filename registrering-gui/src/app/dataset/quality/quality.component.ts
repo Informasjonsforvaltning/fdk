@@ -45,12 +45,12 @@ export class QualityComponent implements OnInit {
         }
 
         this.qualityForm = this.toFormGroup(this.dataset);
-
         this.datasetForm.addControl('quality', this.qualityForm);
 
         this.qualityForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
             quality => {
 
+                console.log('quality:',quality);
                 if (quality.provenance) {
                     this.dataset.provenance = {
                         uri: quality.provenance,

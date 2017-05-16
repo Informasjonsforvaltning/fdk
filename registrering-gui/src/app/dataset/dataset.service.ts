@@ -14,7 +14,7 @@ const TEST_DATASETS: Dataset[] = [
     "description": {
       "nb": "Datasett med mange attributter"
     },
-    "keywords": {'nb':['keyword1','keyword1']},
+    "keywords": [{'nb':'keyword1'}],
     "subject":["term1", "term2", "term3"],
     "themes":[],
     "catalog": "974760673",

@@ -16,39 +16,28 @@
 </div>
 
 <div class="panel fdk-panel" *ngIf="dataset">
-  <div class="fdk-panel-heading">
-    Opplysninger
-  </div>
-  <div class="fdk-panel-body">
-    <div class="form-group">
-        <label for="emneord-datasett" class="control-label">Emneord:</label>
-        <rl-tag-input id="emneord-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.keywords[language]" placeholder="Emneord"></rl-tag-input>
-    </div>
 
     <div class="form-group">
         <label for="begrep-datasett" class="control-label">Begrep:</label>
-        <rl-tag-input id="begrep-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
+        <rl-tag-input id="begrep-datasett" class="form-control" (ngModelChange)="valuechange()"
+                      [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
     </div>
 
-      <div class="form-group">
-        <label for="tema-datasett" class="control-label">Tema:</label>
-        <form [formGroup]="themesForm">
-          <ng-select id="tema-datasett"
-                (ngModelChange)="valuechange()"
-        		[options]="themes"
-        		[multiple]="true"
-        		placeholder="Velg Tema"
-                formControlName="themes">
-        	</ng-select>
-        </form>
-      </div>
-
-    </div>
 </div>
 
 
   <!-- parent-form.component.html -->
-  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
+  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset && datasetForm">
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Opplysninger
+          </div>
+          <information [datasetForm]="datasetForm"
+                       [dataset]="dataset"
+                       (onSave)="onSave($event)">
+          </information>
+      </div>
 
       <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
@@ -76,11 +65,11 @@
             </div>
         </div>
 
-      <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+      <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
           <div class="fdk-panel-heading">
               Kontaktinformasjon
           </div>
-          <contact [contactsController]="datasetForm.controls.contactPoints"
+          <contact [contactsArray]="datasetForm.controls.contactPoints"
                    [contact]="dataset.contactPoints[0]">
           </contact>
       </div>

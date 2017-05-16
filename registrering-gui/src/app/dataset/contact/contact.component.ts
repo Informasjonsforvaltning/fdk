@@ -10,8 +10,8 @@ import {Contact} from "./contact";
 })
 
 export class ContactComponent implements OnInit {
-    @Input('contactsController')
-    public contactsController: FormArray;
+    @Input('contactsArray')
+    public contactsArray: FormArray;
 
     @Input('contact')
     public contact: Contact;
@@ -22,7 +22,7 @@ export class ContactComponent implements OnInit {
 
     ngOnInit() {
         this.contactForm = this.toFormGroup(this.contact);
-        this.contactsController.push(this.contactForm);
+        this.contactsArray.push(this.contactForm);
     }
 
     private toFormGroup(contact: Contact) {
