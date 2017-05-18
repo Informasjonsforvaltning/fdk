@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Catalog} from "./catalog";
-import {Http, Headers} from "@angular/http";
+import {Headers, Http} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {AuthenticationService} from "../security/authentication.service";
 import {Router} from "@angular/router";
@@ -32,10 +32,14 @@ export class CatalogService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(): Promise<Catalog[]> {
-    return this.http.get(this.catalogsUrl)
-      .toPromise()
-      .then(response => response.json().content as Catalog[])
-      .catch(this.handleError);
+      let authorization : string = localStorage.getItem("authorization");
+      this.headers.append("Authorization", "Basic " + authorization);
+
+    return this.http
+        .get(this.catalogsUrl, {headers: this.headers})
+        .toPromise()
+        .then(response => response.json().content as Catalog[])
+        .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any>{

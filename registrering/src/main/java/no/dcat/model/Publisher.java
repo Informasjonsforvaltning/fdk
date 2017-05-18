@@ -11,4 +11,12 @@ public class Publisher {
     private String uri;
     private String id;
     private String name;
+
+    public Publisher(String orgnr) {
+        this.id = orgnr;
+    }
+
+    public Publisher() {
+        // Default constructor needed for frameworks
+    }
 }

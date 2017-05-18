@@ -32,7 +32,7 @@ export class AppComponent {
       .subscribe(result => {
         if (result === true) {
           // login successful
-          // this.router.navigate(['/']);
+            window.location.reload(true);
         } else {
           // login failed
           this.error = 'Innlogging feilet';
