@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Distribution } from './distribution';
@@ -18,10 +18,16 @@ export class DistributionFormComponent implements OnInit {
     @Input('distribution')
     public distribution: Distribution;
 
+    @Input('distributionIndex')
+    public distributionIndex: number;
+
+    @Output()
+    deleteDistribution:EventEmitter<string> = new EventEmitter();
+
     public distributionForm: FormGroup;
 
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         if(this.distribution.ui_visible) this.showForm = true;
@@ -44,5 +50,11 @@ export class DistributionFormComponent implements OnInit {
     }
     toggleForm() {
       this.showForm = !this.showForm;
+    }
+
+    removeDistribution(idx: number) {
+      this.deleteDistribution.emit(idx.toString());
+      this.distributions.removeAt(idx);
+      return false;
     }
 }
