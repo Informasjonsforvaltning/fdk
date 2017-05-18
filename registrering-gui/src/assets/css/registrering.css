@@ -290,7 +290,7 @@ rl-tag-input-item[ng-reflect-selected] {
 	    font-size: 14px;
 	    padding: 5px 3px 19px 20px;
 	    margin: 3px;
-	    line-height: 1.4;
+	    line-height: 1.2;
 	    position: relative;
 	    color: #000;
 	    top: 0px;
@@ -323,4 +323,7 @@ rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]::after {
   position: absolute;
   left: -1px;
   top: -1px;
+}
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]:hover::after {
+	color:#000
 }
