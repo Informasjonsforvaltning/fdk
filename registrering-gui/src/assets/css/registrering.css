@@ -221,6 +221,9 @@ rl-tag-input[placeholder] {
     padding: 0;
     padding-left: 10px;
 }
+rl-tag-input[placeholder] form[ng-reflect-form] {
+	line-height: 1.6;
+}
 rl-tag-input[placeholder] form[ng-reflect-form] input[type] {
 	padding:0;
 }
