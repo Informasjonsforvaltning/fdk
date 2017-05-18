@@ -42,7 +42,7 @@ public class CommonSteps extends AbstractSpringCucumberTest {
     public void a_catalog_exists() throws Throwable {
 
         Catalog catalog = new Catalog();
-        String id = "974760673 ";
+        String id = "974760673";
         catalog.setId(id);
 
         Map<String, String> description = new HashMap<>();

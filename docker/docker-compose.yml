@@ -21,11 +21,6 @@ services:
     networks:
       platform:
 
-  validator:
-    image: dcatno/validator:latest
-    networks:
-      platform:
-
   fuseki:
     image: dcatno/fuseki:latest
     networks:
@@ -39,8 +34,6 @@ services:
     links:
      - fuseki
      - elasticsearch
-     - gdoc
-     - registration-api
 
   harvester:
     image: dcatno/harvester:latest
@@ -70,7 +63,7 @@ services:
  #         - log_es
 
   elasticsearch:
-    image: dcatno/elasticsearch:latest
+    image: elasticsearch:2.4.1
     networks:
       platform:
       logging:
@@ -100,8 +93,14 @@ services:
     networks:
       platform:
 
+  validator:
+    image: dcatno/validator:latest
+    networks:
+      platform:
+
+
 #  logstash:
-#    image: "dcatno/logstash:${TAG}"
+#    image: logstash:2.4.1
 #    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
 #    volumes:
 #      - ./logs:/usr/local/tomcat/logs:rw
@@ -111,7 +110,7 @@ services:
 #      logging:
 
 #  kibana:
-#    image: dcatno/kibana:latest
+#    image: kibana:2.4.1
 #    depends_on:
 #      - elasticsearch
 #    networks:
