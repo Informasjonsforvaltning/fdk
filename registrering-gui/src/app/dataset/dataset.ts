@@ -12,8 +12,8 @@ export interface Dataset {
   keywords?: {
       [language: string]: string
   }[];
-  subject?: string[];
-  themes?: {uri:string, prefLabel:{"nb":string}}[];
+  subjects?: string[];
+  themes?: {uri:string, title:{"nb":string}}[];
   catalog: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
   provenance?: {uri:string, prefLabel:{"nb":string}};

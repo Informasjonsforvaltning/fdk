@@ -15,16 +15,6 @@
   </div>
 </div>
 
-<div class="panel fdk-panel" *ngIf="dataset">
-
-    <div class="form-group">
-        <label for="begrep-datasett" class="control-label">Begrep:</label>
-        <rl-tag-input id="begrep-datasett" class="form-control" (ngModelChange)="valuechange()"
-                      [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
-    </div>
-
-</div>
-
 
   <!-- parent-form.component.html -->
   <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset && datasetForm">

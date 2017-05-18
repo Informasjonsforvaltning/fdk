@@ -34,26 +34,13 @@ export class DatasetComponent implements OnInit {
   catId: string;
   lastSaved: string;
 
-  themesForm: FormGroup;
-
   identifiersForm: FormGroup;
-
-  theme: string[];
-  themes: string[];
-  frequencies: {value?:string, label?:string}[];
-  identifiers: string[];
-  fetchedCodeIds: string[] = [];
-  codePickers: {pluralizedNameFromCodesService:string, nameFromDatasetModel:string, languageCode:string}[];
 
   datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
 
-  selection: Array<string>;
-
   saveDelay:number = 1000;
-  distributionsForm: FormGroup; // our form model
+
   datasetForm: FormGroup = new FormGroup({});
-
-
 
   constructor(
     private route: ActivatedRoute,
@@ -76,30 +63,20 @@ export class DatasetComponent implements OnInit {
     // snapshot alternative
     this.catId = this.route.snapshot.params['cat_id'];
 
-    this.themesForm = new FormGroup({});
-    this.themesForm.addControl('themes', new FormControl([])); //initialized with empty values
-
     this.identifiersForm = new FormGroup({});
     this.identifiersForm.addControl("identifiersControl", new FormControl([]));
-    //testing....
-    //this.identifiersForm.setValue({"identifikatorNøkkel" : "identifikatorVerdi"});
-
-
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
 
-      this.dataset.subject = this.dataset.subject || [];
-
+      // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.identifiers = this.dataset.identifiers || [];
 
       //set default publisher to be the same as catalog
       this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
-
-      /* eof */
 
       this.datasetForm = this.toFormGroup(this.dataset);
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
@@ -194,13 +171,9 @@ export class DatasetComponent implements OnInit {
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
-          subject: [ data.subject],
-          themes: [ data.themes],
           catalog: [ data.catalog],
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
-          information: this.formBuilder.group({}),
-          quality: this.formBuilder.group({}),
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([])
         });

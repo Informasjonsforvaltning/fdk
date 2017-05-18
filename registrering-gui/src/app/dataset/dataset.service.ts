@@ -15,7 +15,7 @@ const TEST_DATASETS: Dataset[] = [
       "nb": "Datasett med mange attributter"
     },
     "keywords": [{'nb':'keyword1'}],
-    "subject":["term1", "term2", "term3"],
+    "subjects":["term1", "term2", "term3"],
     "themes":[],
     "catalog": "974760673",
     "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],

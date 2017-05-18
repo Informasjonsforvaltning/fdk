@@ -3,7 +3,7 @@
         <div (click)="fetchFrequencies()" class="form-group">
             <label for="quality-frequency" class="control-label">Frekvens:</label>
 
-            <ng-select *ngIf="frequencies" id="quality-frequency"
+            <ng-select id="quality-frequency"
                        [options]="frequencies"
                        [multiple]="false"
                        placeholder="Velg..."
@@ -14,7 +14,7 @@
         <div (click)="fetchProvenances()" class="form-group">
             <label for="quality-provenance" class="control-label">Opphav:</label>
 
-            <ng-select *ngIf="provenancestatements" id="quality-provenance"
+            <ng-select id="quality-provenance"
                        [options]="provenancestatements"
                        [multiple]="false"
                        placeholder="Velg..."
@@ -23,12 +23,12 @@
 
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [formGroup]="qualityForm">
             <label for="quality-conformsto" class="control-label">I samsvar med standard:</label>
-            <rl-tag-input id="quality-conformsto" class="form-control"
-                  type="url"
-                  formControlName="conformsTo"
-                  placeholder="Velg standard">
+            <rl-tag-input id="quality-conformsto"
+                          class="form-control"
+                          placeholder="Legg til URL"
+                          formControlName="conformsTo">
             </rl-tag-input>
 
         </div>

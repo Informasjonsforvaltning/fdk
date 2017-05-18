@@ -1,14 +1,13 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Dataset} from "../dataset";
-import {CodesService} from "../codes.service";
 import {ThemesService} from "../themes.service";
 
 
 @Component({
     selector: 'information',
     templateUrl: './information.component.html',
-    styleUrls: [ './information.component.css' ]
+    styleUrls: ['./information.component.css']
 })
 
 export class InformationComponent implements OnInit {
@@ -25,28 +24,34 @@ export class InformationComponent implements OnInit {
 
     keywords: string[];
     allThemes: any[];
-    themes : any[];
+    themes: any[];
+    subjects: any[];
 
     constructor(private fb: FormBuilder,
-                private codesService: CodesService,
-                private themesService: ThemesService) {}
+                private themesService: ThemesService) {
+
+    }
 
     ngOnInit() {
-
+        console.log("datsetForm IC:", this.datasetForm);
         // initialize empty values
         this.keywords = [];
         if (this.dataset.keywords) {
-            this.keywords = this.dataset.keywords.map(keyword=>{return keyword['nb'];});
+            this.keywords = this.dataset.keywords.map(keyword => {
+                return keyword['nb'];
+            });
         }
 
-        this.themes = this.dataset.themes ? this.dataset.themes.map((tema)=>{return tema.uri}) : [];
-        this.allThemes = this.dataset.themes ? this.dataset.themes.map((thema)=>{return {value: thema.uri, label: thema.prefLabel['nb']}}) : [];
+        this.themes = this.dataset.themes ? this.dataset.themes.map((tema) => {
+                return tema.uri
+            }) : [];
+        this.allThemes = this.dataset.themes ? this.dataset.themes.map((thema) => {
+                return {value: thema.uri, label: thema.title['nb']}
+            }) : [];
 
-        console.log("theme service: ", this.allThemes);
-        console.log("theme get: ", this.themes);
+        this.subjects = this.dataset.subjects || [];
 
         this.informationForm = this.toFormGroup(this.dataset);
-        this.datasetForm.addControl('information', this.informationForm);
 
         this.informationForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
             information => {
@@ -54,36 +59,40 @@ export class InformationComponent implements OnInit {
                 if (information.keywords.length === 0) {
                     this.dataset.keywords = null;
                 } else {
-                    this.dataset.keywords = information.keywords.map(keyword =>{ return {nb: keyword}});
+                    this.dataset.keywords = information.keywords.map(keyword => {
+                        return {nb: keyword}
+                    });
                 }
 
                 if (information.themes.length === 0) {
                     this.dataset.themes = null;
                 } else {
-                    this.dataset.themes = information.themes.map(theme => { return {uri: theme, prefLabel: {nb: this.getLabel(theme)}}});
+                    this.dataset.themes = information.themes.map(theme => {
+                        return {uri: theme, title: {nb: this.getLabel(theme)}}
+                    });
                 }
 
-                console.log('this.dataset.themes:', this.dataset.themes);
+                if (information.subjects.length === 0) {
+                    this.dataset.subjects = null;
+                } else {
+                    this.dataset.subjects = information.subjects;
+                }
+
                 this.onSave.emit(true);
             }
         );
-
     }
 
 
     private toFormGroup(data: Dataset) {
         return this.fb.group({
-            themes:   [ this.themes ],
-            keywords: [ this.keywords ]
+            themes: [this.themes],
+            subjects: [this.subjects],
+            keywords: [this.keywords]
         });
     }
 
-    codifySkosCodes(code, lang) {
-        return {value: code['uri'], label: code['prefLabel'][lang]}
-    }
-
-
-    getLabel(forCode:string): string {
+    getLabel(forCode: string): string {
         let label = '';
         this.allThemes.forEach(code => {
             if (code.value === forCode) {
@@ -96,7 +105,7 @@ export class InformationComponent implements OnInit {
     }
 
     fetchThemes() {
-        this.themesService.fetchThemes('nb').then( themes =>
+        this.themesService.fetchThemes('nb').then(themes =>
             this.allThemes = themes);
     }
 }
