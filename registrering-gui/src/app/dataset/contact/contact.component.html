@@ -1,34 +1,18 @@
 
 <div class="fdk-panel-body">
     <div [formGroup]="contactForm" class="form-group">
-        <div class="row form-group">
-            <label for="contact-avdeling" class="col-md-1 control-label">Avdeling:</label>
-            <div class="col-md-11">
+            <label for="contact-avdeling" class="control-label">Avdeling:</label>
                 <input id="contact-avdeling" type="text" formControlName="organizationUnit" class="form-control"/>
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <label for="contact-url" class="col-md-1 control-label">Kontaktskjema:</label>
-            <div class="col-md-11">
+            <label for="contact-url" class="control-label">Kontaktskjema:</label>
                 <input id="contact-url" type="url" formControlName="hasURL" title="Angi url til kontaktskjema" class="form-control"/>
-            </div>
-        </div>
-        <div class="row form-group">
-            <label for="contact-email" class="col-md-1 control-label">E-post:</label>
-            <div class="col-md-11">
+            <label for="contact-email" class="control-label">E-post:</label>
                 <input id="contact-email" type="email" formControlName="email"
                        title="Angi epostadresse" class="form-control"/>
-            </div>
-        </div>
-        <div class="row form-group">
-            <label for="contact-telephone" class="col-md-1 control-label">Telefon:</label>
-            <div class="col-md-11">
+            <label for="contact-telephone" class="control-label">Telefon:</label>
                 <input id="contact-telephone" type="telephone" formControlName="hasTelephone"
                        title="Oppgi telefonnummer" class="form-control"
                 />
-            </div>
-        </div>
+
     </div>
 </div>
-
