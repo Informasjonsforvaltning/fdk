@@ -99,9 +99,9 @@ services:
       platform:
 
 
-#  logstash:
-#    image: logstash:2.4.1
-#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+# logstash:
+#   image: dcatno/logstash:latest
+#   entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
 #    volumes:
 #      - ./logs:/usr/local/tomcat/logs:rw
 #    depends_on:
