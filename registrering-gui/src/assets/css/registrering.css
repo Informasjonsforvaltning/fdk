@@ -268,10 +268,11 @@ distributions > div > div > div {
 	padding:0 15px;
 }
 rl-tag-input[formcontrolname], .sub-form textarea, .sub-form input[type="text"].form-control {
-		display: block;
-		float:none;
-		margin:0px 0px 9px 0;
-		height: 34px;
+	display: block;
+	float: none;
+	margin: 0px 0px 9px 0;
+	height: 34px;
+	box-shadow: none;
 }
 rl-tag-input[formcontrolname] .ng2-tag-input-form[ng-reflect-form] {
 	display: inline-block;
@@ -282,23 +283,40 @@ rl-tag-input[formcontrolname] textarea, rl-tag-input[formcontrolname] input {
 }
 
 rl-tag-input-item[ng-reflect-selected] {
-	height: 20px;
-  border-radius: 4px;
-  border: 1px solid #aaa;
-  background-color: #eee;
-  font-size: 16px;
-  padding: 0 8px 24px 4px;
-  margin: 3px;
-  line-height: 1.4;
+
+	    height: 19px;
+	    border-radius: 4px;
+	    border: 1px solid #aaa;
+	    background-color: #eee;
+	    font-size: 14px;
+	    padding: 5px 3px 19px 20px;
+	    margin: 3px;
+	    line-height: 1.4;
+	    position: relative;
+	    color: #000;
+	    top: 0px;
+			font-family: sans-serif;
 }
 rl-tag-input[formcontrolname] .ng2-tag-input-remove[class] {
-	height: 17px;
-	width: 17px;
-	vertical-align: top;
-	padding: 0px 0px 0px 0px;
-	margin: 3px 0px 5px 0px;
-	line-height: 1;
-	position: relative;
-	left: 5px;
-	font-size: 15px;
+  height: 17px;
+  width: 18px;
+  vertical-align: top;
+  padding: 0px 0px 0px 0px;
+  margin: 3px 0px 5px 0px;
+  line-height: 1;
+  left: 0;
+  color: transparent;
+  position: absolute;
+  background: none transparent;
+  top: 4px;
+}
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]::after {
+  content: '\2715';
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  color: #aaa;
+  position: absolute;
+  left: -1px;
+  top: -1px;
 }
