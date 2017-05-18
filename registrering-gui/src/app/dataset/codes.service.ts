@@ -13,6 +13,8 @@ export class CodesService {
   //private codesUrl = environment.api + "/codes";
   private codesUrl = environment.queryUrl + "/codes";
 
+  private cachedCodes: any = {};
+
   private headers = new Headers({'Content-Type': 'application/json'});
 
   private handleError(error: any): Promise<any>{
@@ -31,4 +33,25 @@ export class CodesService {
         .then(response => response.json().codes)
         .catch(this.handleError);
   }
+
+  fetchCodes (codeType:string, lang:string): Promise<any[]> {
+        if (this.cachedCodes[codeType]) {
+
+            return new Promise((resolve,reject) => {
+                resolve( this.cachedCodes[codeType] );
+            });
+
+        } else {
+
+            return this.get(codeType).then(data => {
+
+                this.cachedCodes[codeType] = data.map(code => {
+                    return {value: code.uri, label: code.prefLabel[lang] }
+                });
+
+                return this.cachedCodes[codeType];
+
+            });
+        }
+    }
 }

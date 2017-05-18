@@ -180,7 +180,6 @@ public class PortalController {
             model.setViewName("error");
         }
 
-        session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
         model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");

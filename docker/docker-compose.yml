@@ -5,6 +5,7 @@ services:
     image: dcatno/search:latest
     links:
       - search-api
+      - fuseki
     networks:
       platform:
 

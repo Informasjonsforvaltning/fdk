@@ -27,4 +27,5 @@ export class RegistreringGuiPage {
     getTextFromCssElement(css) {
       return element(by.css(css)).getText();
     }
+
 }

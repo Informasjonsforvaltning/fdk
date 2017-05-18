@@ -6,10 +6,10 @@
 </alert>
 
 <div class="panel fdk-panel" *ngIf="dataset" id="dataset">
-  <div class="fdk-panel-big-heading">
+  <div class="fdk-panel-big-heading" *ngIf="dataset.title" >
     <input  class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text" placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
   </div>
-  <div class="fdk-panel-big-body">
+  <div class="fdk-panel-big-body"  *ngIf="dataset.description">
     <h2 id="datasett-utgiver-navn">{{dataset.publisher.name}}</h2>
     <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
@@ -21,121 +21,71 @@
   </div>
   <div class="fdk-panel-body">
     <div class="form-group">
-      <div class="row form-group">
-        <label for="emneord-datasett" class="col-md-1 control-label">Emneord:</label>
-        <div class="col-md-11">
-          <input id="emneord-datasett" type="text" class="form-control" [(ngModel)]='dataset.keywords[language]'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="begrep-datasett" class="col-md-1 control-label">Begrep:</label>
-        <div class="col-md-11">
-          <input id="begrep-datasett" type="text" class="form-control"  [(ngModel)]='dataset.terms'  />
-        </div>
-      </div>
+        <label for="emneord-datasett" class="control-label">Emneord:</label>
+        <rl-tag-input id="emneord-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.keywords[language]" placeholder="Emneord"></rl-tag-input>
+    </div>
 
-      <div class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Tema:</label>
-        <form [formGroup]="themesForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
+    <div class="form-group">
+        <label for="begrep-datasett" class="control-label">Begrep:</label>
+        <rl-tag-input id="begrep-datasett" class="form-control" (ngModelChange)="valuechange()" [(ngModel)]="dataset.subjects" placeholder="Begrep"></rl-tag-input>
+    </div>
+
+      <div class="form-group">
+        <label for="tema-datasett" class="control-label">Tema:</label>
+        <form [formGroup]="themesForm">
+          <ng-select id="tema-datasett"
+                (ngModelChange)="valuechange()"
         		[options]="themes"
         		[multiple]="true"
         		placeholder="Velg Tema"
-            formControlName="themes">
+                formControlName="themes">
         	</ng-select>
         </form>
-      </div>
-      <div (click)="fetchCodes('frequencies')" class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Datasettet oppdateres:</label>
-        <form [formGroup]="accrualPeriodicityForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
-        		[options]="frequencies"
-        		[multiple]="false"
-        		placeholder="Velg..."
-            formControlName="accrualPeriodicityControl">
-        	</ng-select>
-        </form>
-      </div>
-      <div (click)="fetchCodes('provenancestatements')" class="row form-group">
-        <label for="tema-datasett" class="col-md-1 control-label">Årsak til at datasettet finnes (provenance statement)</label>
-        <form [formGroup]="provenanceForm" class="col-md-11">
-          <ng-select
-            (ngModelChange)="valuechange()"
-        		[options]="provenancestatements"
-        		[multiple]="false"
-        		placeholder="Velg..."
-            formControlName="provenanceControl">
-        	</ng-select>
-        </form>
-      </div>
-
-      <div class="row form-group">
-        <label for="landingsside-datasett" class="col-md-1 control-label">Landingsside:</label>
-        <div class="col-md-11">
-          <input id="landingsside-datasett" (ngModelChange)="valuechange(this)" type="text" class="form-control"  [(ngModel)]='dataset.landingPage'  />
-        </div>
       </div>
 
     </div>
-  </div>
-
-
-<div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
-  <div class="fdk-panel-heading">
-    Kontaktinformasjon
-  </div>
-  <div class="fdk-panel-body">
-    <div class="form-group">
-      <div class="row form-group">
-        <label for="contact-avdeling" class="col-md-1 control-label">Avdeling:</label>
-        <div class="col-md-11">
-          <input id="contact-avdeling" type="text" (ngModelChange)="valuechange(this)" class="form-control"
-                 [(ngModel)]='dataset.contactPoints[0].organizationUnit'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="contact-url" class="col-md-1 control-label">Kontaktskjema:</label>
-        <div class="col-md-11">
-          <input id="contact-url" type="text" (ngModelChange)="valuechange(this)" class="form-control"
-                 [(ngModel)]='dataset.contactPoints[0].hasURL'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="contact-email" class="col-md-1 control-label">E-post:</label>
-        <div class="col-md-11">
-          <input id="contact-email" type="email" ng-model="email.text" (ngModelChange)="valuechange(this)"
-                 class="form-control" [(ngModel)]='dataset.contactPoints[0].email'/>
-        </div>
-      </div>
-      <div class="row form-group">
-        <label for="contact-telephone" class="col-md-1 control-label">Telefon:</label>
-        <div class="col-md-11">
-          <input id="contact-telephone" type="text" (ngModelChange)="valuechange(this)" ng-pattern="[\+]?[0-9]+"
-                 title="Oppgi telefonnummer" class="form-control" [(ngModel)]='dataset.contactPoints[0].hasTelephone'/>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 
-    <!--div class="panel fdk-panel" *ngIf="dataset && dataset.distribution">
-      <div class="fdk-panel-heading">
-        Distribusjon
-      </div>
-      <div class="fdk-panel-body">
-          <div *ngFor="let dist of distributions" id="distribution" class="fdk-row-padding" (click)="" >
-            <i class="fa fa-caret-right" aria-hidden="true"></i> {{getTitle(dist)}}
+  <!-- parent-form.component.html -->
+  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Kvalitet
           </div>
 
-        <div class="form-group fdk-row-padding" (click)="">
-          Legg til ny distribusjon <button type="button"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-        </div>
+          <quality [datasetForm]="datasetForm"
+                   [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </quality>
+
       </div>
-    </div-->
-</div>
+
+        <div class="panel fdk-panel">
+            <div class="fdk-panel-heading">
+                Distribusjoner
+            </div>
+            <div class="fdk-panel-body">
+
+                  <distributions
+                      [datasetForm]="datasetForm"
+                      [distributions]="dataset.distributions"
+                      >
+                  </distributions>
+            </div>
+        </div>
+
+      <div class="panel fdk-panel" *ngIf="dataset && dataset.contactPoints">
+          <div class="fdk-panel-heading">
+              Kontaktinformasjon
+          </div>
+          <contact [contactsController]="datasetForm.controls.contactPoints"
+                   [contact]="dataset.contactPoints[0]">
+          </contact>
+      </div>
+
+  </form>
 
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett

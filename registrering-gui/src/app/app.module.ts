@@ -18,9 +18,15 @@ import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { ConfirmComponent } from './confirm/confirm.component';
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
+import {RlTagInputModule} from 'angular2-tag-input';
 
 import {SelectModule} from 'ng-select';
 import {CodesService} from "./dataset/codes.service";
+import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
+import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
+import {ContactComponent} from "./dataset/contact/contact.component";
+import {QualityComponent} from "./dataset/quality/quality.component";
+
 
 @NgModule({
   declarations: [
@@ -28,7 +34,11 @@ import {CodesService} from "./dataset/codes.service";
     CatalogComponent,
     DatasetComponent,
     StartComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    DistributionFormComponent,
+    DistributionListComponent,
+    ContactComponent,
+    QualityComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +49,8 @@ import {CodesService} from "./dataset/codes.service";
     NgbModule.forRoot(),
     AlertModule.forRoot(),
     RouterModule.forRoot(routes),
-    BootstrapModalModule
+    BootstrapModalModule,
+    RlTagInputModule
   ],
   entryComponents: [
      ConfirmComponent
