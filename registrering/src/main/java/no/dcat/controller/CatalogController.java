@@ -15,12 +15,8 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -125,38 +121,6 @@ public class CatalogController {
         Catalog savedCatalog = catalogRepository.save(catalog);
 
         return new ResponseEntity<>(savedCatalog, OK);
-    }
-
-    /**
-     * Login method (temporary solution until SAML)
-     *
-     * @return acknowledgment of success or failure
-     */
-    @CrossOrigin
-    @RequestMapping(value = "/login", method = POST)
-    public HttpEntity<String> authenticateAndCreateMissingCatalogs() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        //get logged in username
-        String username = auth.getName();
-
-        auth.getAuthorities()
-                .forEach(authority -> createCatalogIfNotExists(authority.getAuthority()));
-
-        logger.info("Authenticating user: ");
-        return new ResponseEntity<>(username, OK);
-    }
-
-    private Optional<Catalog> createCatalogIfNotExists(String orgnr) {
-        if (! orgnr.matches("\\d{9}")) {
-            return Optional.empty();
-        }
-
-        HttpEntity<Catalog> catalogResponse = getCatalog(orgnr);
-        if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
-            return Optional.of(createCatalog(new Catalog(orgnr)).getBody());
-        }
-        return Optional.empty();
     }
 
 

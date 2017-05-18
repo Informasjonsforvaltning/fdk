@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, Response} from "@angular/http";
+import {Headers, Http, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
 import {environment} from "../../environments/environment";
@@ -20,7 +20,7 @@ export class AuthenticationService {
     let headers = new Headers();
     let authorization : string = btoa(this.username + ":" + this.password);
     headers.append("Authorization", "Basic " + authorization);
-    return this.http.post(environment.api +'/catalogs/login', '', {headers: headers})
+    return this.http.post(environment.api +'/login', '', {headers: headers})
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         if (response.ok) {
