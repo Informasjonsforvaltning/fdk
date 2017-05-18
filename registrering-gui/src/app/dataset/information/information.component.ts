@@ -33,7 +33,7 @@ export class InformationComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log("datsetForm IC:", this.datasetForm);
+
         // initialize empty values
         this.keywords = [];
         if (this.dataset.keywords) {
