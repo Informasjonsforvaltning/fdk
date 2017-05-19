@@ -15,13 +15,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -51,6 +45,7 @@ public class CatalogController {
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
+
         Page<Catalog> catalogs = catalogRepository.findAll(pageable);
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
@@ -112,7 +107,7 @@ public class CatalogController {
         logger.info("Modify catalog: " + catalog.toString());
 
         if (!catalog.getId().equals(id)) {
-            return new ResponseEntity<Catalog>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         if (catalog.getPublisher() == null) {
@@ -128,22 +123,6 @@ public class CatalogController {
         return new ResponseEntity<>(savedCatalog, OK);
     }
 
-    /**
-     * Login method (temporary solution until SAML)
-     *
-     * @return acknowledgment of success or failure
-     */
-    @CrossOrigin
-    @RequestMapping(value = "/login", method = POST,
-            produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<String> authenticate() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        //get logged in username
-        String username = auth.getName();
-        logger.info("Authenticating user: ");
-        return new ResponseEntity<>(username, OK);
-    }
 
     /**
      * Deletes a catalog

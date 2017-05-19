@@ -211,6 +211,9 @@ ng-select {
 ng-select > div > div.multiple > div.option {
   background-color: #ccc;
 }
+ng-select > div > div.multiple {
+	padding: 0 10px 0 3px !important;
+}
 .modal-footer .btn+.btn {
 	margin-bottom: 6px;
 }
@@ -219,26 +222,20 @@ rl-tag-input[placeholder] {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 0;
-    padding-left: 10px;
+    padding-left: 0;
+}
+rl-tag-input[placeholder] form[ng-reflect-form] {
+	line-height: 1.6;
 }
 rl-tag-input[placeholder] form[ng-reflect-form] input[type] {
 	padding:0;
 }
 .ng2-tag-input-focus[placeholder] {
-	box-shadow: none;
+	box-shadow: none !important;
 }
 .ng2-tag-input-item-selected[ng-reflect-selected][ng-reflect-index] {
 	background-color: #999;
 	color:#000;
-}
-rl-tag-input-item[ng-reflect-selected] {
-    height: 20px;
-    border-radius: 4px;
-    border: 1px solid #aaa;
-    background-color: #eee;
-    font-size: 14px;
-		padding: 0 8px 24px 4px;
-		margin:3px;
 }
 
 body > app-root > section:nth-child(3) > div > app-dataset > div:nth-child(3) > div.fdk-panel-body  rl-tag-input-item > span {
@@ -265,24 +262,68 @@ distributions > div > div > div {
 .sub-form label {
 	display: block;
 	float:none;
-	margin: 0px 15px 9px 15px;
+	margin: 0px 15px 9px 0px;
+}
+.distribution-form .sub-form{
+	padding:0 15px;
 }
 rl-tag-input[formcontrolname], .sub-form textarea, .sub-form input[type="text"].form-control {
-		display: block;
-		float:none;
-		margin:0px 15px 9px 15px;
-		height: 34px;
-    width: 97%;
+	display: block;
+	float: none;
+	margin: 0px 0px 9px 0;
+	height: 34px;
+	box-shadow: none;
 }
 rl-tag-input[formcontrolname] .ng2-tag-input-form[ng-reflect-form] {
 	display: inline-block;
 	margin: 3px;
 }
+rl-tag-input[formcontrolname] textarea, rl-tag-input[formcontrolname] input {
+	width: auto !important;
+}
+
+rl-tag-input-item[ng-reflect-selected] {
+	    height: 19px;
+	    border-radius: 4px;
+	    border: 1px solid #aaa;
+	    background-color: #eee;
+	    font-size: 14px;
+	    padding: 5px 3px 19px 20px;
+	    margin: 3px;
+	    line-height: 1.2;
+	    position: relative;
+	    color: #000;
+	    top: 0px;
+			font-family: sans-serif;
+}
+rl-tag-input-item[ng-reflect-selected].ng2-tag-input-item-selected {
+	color: #000;
+	background-color: #eee;
+}
+
 rl-tag-input[formcontrolname] .ng2-tag-input-remove[class] {
-	    font-size: 11px;
-	    line-height: 14px;
-	    height: 15px;
-	    width: 16px;
-	    vertical-align: top;
-	    padding: 0px 0px 0px 1px;
+  height: 17px;
+  width: 18px;
+  vertical-align: top;
+  padding: 0px 0px 0px 0px;
+  margin: 3px 0px 5px 0px;
+  line-height: 1;
+  left: 0;
+  color: transparent;
+  position: absolute;
+  background: none transparent;
+  top: 4px;
+}
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]::after {
+  content: '\2715';
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  color: #aaa;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+}
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]:hover::after {
+	color:#000
 }

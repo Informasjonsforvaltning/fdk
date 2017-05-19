@@ -11,8 +11,6 @@ import {CodesService} from "../codes.service";
 })
 
 export class QualityComponent implements OnInit {
-    @Input('datasetForm')
-    public datasetForm: FormGroup;
 
     @Input('dataset')
     public dataset: Dataset;
@@ -26,7 +24,8 @@ export class QualityComponent implements OnInit {
     provenancestatements = [];
 
     constructor(private fb: FormBuilder,
-                private codesService: CodesService) {}
+                private codesService: CodesService)
+    { }
 
     ngOnInit() {
 
@@ -44,9 +43,9 @@ export class QualityComponent implements OnInit {
             this.dataset.provenance = { uri: '', prefLabel: {nb:''}};
         }
 
-        this.qualityForm = this.toFormGroup(this.dataset);
+        this.dataset.conformsTos = this.dataset.conformsTos || [];
 
-        this.datasetForm.addControl('quality', this.qualityForm);
+        this.qualityForm = this.toFormGroup(this.dataset);
 
         this.qualityForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
             quality => {
@@ -81,8 +80,8 @@ export class QualityComponent implements OnInit {
     private toFormGroup(data: Dataset) {
         return this.fb.group({
             accrualPeriodicity: [ data.accrualPeriodicity.uri || '' ],
-            provenance: [ data.provenance.uri ||''],
-            conformsTo: [ data.conformsTos || []]
+            provenance: [ data.provenance.uri || ''],
+            conformsTo: [ data.conformsTos ]
         });
     }
 

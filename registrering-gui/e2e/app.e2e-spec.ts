@@ -2,6 +2,7 @@ import {RegistreringGuiPage} from "./app.po";
 import {browser, element, by, protractor} from "protractor";
 import {} from 'jasmine';
 declare function setTimeout(callback: Function, milliseconds: number): any
+/* TO RUN WITH SUCCESS YOU MUST CREATE AN EMPTY DATASET IN THE CATALOG */
 describe('registrering-gui App', () => {
     let page: RegistreringGuiPage;
 
@@ -30,7 +31,7 @@ describe('registrering-gui App', () => {
         let datasetLink = element(by.css("#datasets td"));
         datasetLink.click();
 
-        let subjectInput = element(by.css("input[placeholder='Velg standard']"));
+        let subjectInput = element(by.css("input[placeholder='Standard']"));
         subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
         var EC = protractor.ExpectedConditions;
@@ -38,11 +39,36 @@ describe('registrering-gui App', () => {
         browser.wait(EC.presenceOf(alertSuccess), 10000);
 
         browser.refresh();
-        let actualConformsTo = element(by.css("input[placeholder='Velg standard']"));
+        let actualConformsTo = element(by.css("input[placeholder='Standard']"));
         browser.wait(EC.presenceOf(actualConformsTo), 1000).then(() => {
-            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Velg standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
-            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Velg standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
+            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
+            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
         });
+
+    });
+
+    it("should save labels for subject uris", () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        catalogLink.click();
+
+        let newDatasetLink = element(by.css("#datasets td"));
+        newDatasetLink.click();
+
+        let subjectInput = element(by.css("input[placeholder='Begrep']"));
+        subjectInput.clear();
+        subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
+
+        var EC = protractor.ExpectedConditions;
+        var alertSuccess = element(by.css('.alert-success'));
+        browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.refresh();
+        let actualSubjects = element(by.css("input[placeholder=Begrep]"));
+        browser.wait(EC.presenceOf(actualSubjects), 10000).then(() => {
+            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Begrep'] rl-tag-input-item:first-child")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
+
+        });
+
 
     });
 
@@ -75,7 +101,7 @@ describe('registrering-gui App', () => {
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
       browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
-        expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Brukerinnsamlede data');
+        expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
         expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
       });
     });
@@ -202,21 +228,6 @@ describe('registrering-gui App', () => {
         });
     });
 
-    it("should save labels for subject uris", () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
 
-        let datasetLink = element(by.css("#datasets td"));
-        datasetLink.click();
-
-        let subjectInput = element(by.css("input[placeholder=Begrep]"));
-        subjectInput.clear();
-        subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
-
-        var EC = protractor.ExpectedConditions;
-        var alertSuccess = element(by.css('.alert-success'));
-        browser.wait(EC.presenceOf(alertSuccess), 10000);
-
-    });
 
 });

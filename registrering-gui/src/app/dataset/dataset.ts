@@ -10,10 +10,10 @@ export interface Dataset {
     [language: string]:string
   };
   keywords?: {
-    [language: string]:string[]
-  };
-  subject?: string[];
-  themes?: {uri:string}[];
+      [language: string]: string
+  }[];
+  subjects?: string[];
+  themes?: {uri:string, title:{"nb":string}}[];
   catalog: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
   provenance?: {uri:string, prefLabel:{"nb":string}};
