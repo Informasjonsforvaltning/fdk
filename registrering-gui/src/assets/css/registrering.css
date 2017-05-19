@@ -274,15 +274,16 @@ rl-tag-input[formcontrolname], .sub-form textarea, .sub-form input[type="text"].
 	height: 34px;
 	box-shadow: none;
 }
-rl-tag-input[formcontrolname] .ng2-tag-input-form[ng-reflect-form] {
+rl-tag-input[formcontrolname] .ng2-tag-input-form {
 	display: inline-block;
 	margin: 3px;
 }
 rl-tag-input[formcontrolname] textarea, rl-tag-input[formcontrolname] input {
 	width: auto !important;
+	padding:0 !important;
 }
 
-rl-tag-input-item[ng-reflect-selected] {
+rl-tag-input-item[ng-reflect-selected], rl-tag-input-item[_nghost-c9] {
 	    height: 19px;
 	    border-radius: 4px;
 	    border: 1px solid #aaa;
@@ -296,12 +297,12 @@ rl-tag-input-item[ng-reflect-selected] {
 	    top: 0px;
 			font-family: sans-serif;
 }
-rl-tag-input-item[ng-reflect-selected].ng2-tag-input-item-selected {
-	color: #000;
-	background-color: #eee;
+rl-tag-input-item.ng2-tag-input-item-selected {
+	color: #000 !important;
+	background-color: #eee !important;
 }
 
-rl-tag-input[formcontrolname] .ng2-tag-input-remove[class] {
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class], rl-tag-input .ng2-tag-input-remove[class][_nghost-c9] {
   height: 17px;
   width: 18px;
   vertical-align: top;
