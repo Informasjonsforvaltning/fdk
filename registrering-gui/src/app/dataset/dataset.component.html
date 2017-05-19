@@ -23,8 +23,7 @@
           <div class="fdk-panel-heading">
               Opplysninger
           </div>
-          <information [datasetForm]="datasetForm"
-                       [dataset]="dataset"
+          <information [dataset]="dataset"
                        (onSave)="onSave($event)">
           </information>
       </div>
@@ -34,8 +33,7 @@
               Kvalitet
           </div>
 
-          <quality [datasetForm]="datasetForm"
-                   [dataset]="dataset"
+          <quality [dataset]="dataset"
                    (onSave)="onSave($event)">
           </quality>
 

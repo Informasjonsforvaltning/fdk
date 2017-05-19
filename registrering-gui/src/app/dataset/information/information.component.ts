@@ -11,8 +11,6 @@ import {ThemesService} from "../themes.service";
 })
 
 export class InformationComponent implements OnInit {
-    @Input('datasetForm')
-    public datasetForm: FormGroup;
 
     @Input('dataset')
     public dataset: Dataset;

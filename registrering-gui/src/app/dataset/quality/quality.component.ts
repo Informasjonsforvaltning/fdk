@@ -11,8 +11,6 @@ import {CodesService} from "../codes.service";
 })
 
 export class QualityComponent implements OnInit {
-    @Input('datasetForm')
-    public datasetForm: FormGroup;
 
     @Input('dataset')
     public dataset: Dataset;
