@@ -283,7 +283,6 @@ rl-tag-input[formcontrolname] textarea, rl-tag-input[formcontrolname] input {
 }
 
 rl-tag-input-item[ng-reflect-selected] {
-
 	    height: 19px;
 	    border-radius: 4px;
 	    border: 1px solid #aaa;
@@ -291,12 +290,17 @@ rl-tag-input-item[ng-reflect-selected] {
 	    font-size: 14px;
 	    padding: 5px 3px 19px 20px;
 	    margin: 3px;
-	    line-height: 1.4;
+	    line-height: 1.2;
 	    position: relative;
 	    color: #000;
 	    top: 0px;
 			font-family: sans-serif;
 }
+rl-tag-input-item[ng-reflect-selected].ng2-tag-input-item-selected {
+	color: #000;
+	background-color: #eee;
+}
+
 rl-tag-input[formcontrolname] .ng2-tag-input-remove[class] {
   height: 17px;
   width: 18px;
@@ -319,4 +323,7 @@ rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]::after {
   position: absolute;
   left: -1px;
   top: -1px;
+}
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]:hover::after {
+	color:#000
 }
