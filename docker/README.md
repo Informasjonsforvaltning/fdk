@@ -25,6 +25,12 @@ This starts the registration application with corresponding api services.
 The application can be accessed on [http://localhost:4200](http://localhost:4200)
 Currently you will be logged in as bjg ( a test user ).
 
+## Google doc DCAT import application
+>`docker-compose up -d gdoc`
+
+This starts the Google sheet translation service. It reads a predefined set of google 
+documents (sheets) and translates them to DCAT format. It runs the conversion each hour.
+
 ## Shut down all containers:
 >`docker-compose down`
 
