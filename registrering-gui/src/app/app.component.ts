@@ -18,7 +18,7 @@ export class AppComponent {
               private authenticationService: AuthenticationService) {
   }
 
-  isAuthenticated(): boolean{
+  isAuthenticated(): boolean {
     return localStorage.getItem('username') != null && localStorage.getItem('authorization') != null;
   }
 
@@ -45,5 +45,4 @@ export class AppComponent {
     this.authenticationService.logout();
     this.router.navigate(['/'])
   }
-
 }
