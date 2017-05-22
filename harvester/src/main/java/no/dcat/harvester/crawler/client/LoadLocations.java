@@ -85,9 +85,9 @@ public class LoadLocations {
             if (StringUtils.isEmpty(locUri)) {
                 continue;
             }
-            Model locModel = null;
+
             try {
-                locModel = retrieveTitleOfLocations(locUri);
+                Model locModel = retrieveTitleOfLocations(locUri);
 
                 ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
                 while (resIter.hasNext()) {
