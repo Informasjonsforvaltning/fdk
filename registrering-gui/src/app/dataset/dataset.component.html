@@ -15,7 +15,6 @@
   </div>
 </div>
 
-
   <!-- parent-form.component.html -->
   <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset && datasetForm">
 
@@ -36,22 +35,50 @@
           <quality [dataset]="dataset"
                    (onSave)="onSave($event)">
           </quality>
-
       </div>
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Distribusjoner
+          </div>
+          <div class="fdk-panel-body">
+                <distributions
+                    [datasetForm]="datasetForm"
+                    [distributions]="dataset.distributions"
+                    >
+                </distributions>
+          </div>
+      </div>
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Eksempeldata
+          </div>
+          <div class="fdk-panel-body">
 
-        <div class="panel fdk-panel">
-            <div class="fdk-panel-heading">
-                Distribusjoner
+            <div class="radio">
+              <label><input type="radio" name="language" value="NOR">Norsk</label>
             </div>
-            <div class="fdk-panel-body">
+            <div class="radio">
+              <label><input type="radio" name="language" value="SMI">Samisk</label>
+            </div>
+            <div class="radio">
+              <label><input type="radio" name="language" value="ENG">Engelsk</label>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
 
-                  <distributions
-                      [datasetForm]="datasetForm"
-                      [distributions]="dataset.distributions"
-                      >
-                  </distributions>
-            </div>
-        </div>
+                  <my-date-picker name="created" [options]="myDatePickerOptions" [locale]="no"
+                                formControlName="created"></my-date-picker>
+                  <my-date-picker name="modified" [options]="myDatePickerOptions" [locale]="no"
+                                formControlName="modified"></my-date-picker>
+              </div>
+              </div>
+            <distributions
+                [datasetForm]="datasetForm"
+                [distributions]="dataset.distributions"
+                >
+            </distributions>
+          </div>
+      </div>
 
       <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
           <div class="fdk-panel-heading">

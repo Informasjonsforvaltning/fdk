@@ -15,6 +15,7 @@ import { DialogService } from "ng2-bootstrap-modal";
 import {DistributionFormComponent} from "./distribution/distribution.component";
 import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
+import {IMyDpOptions} from 'mydatepicker';
 
 @Component({
   selector: 'app-dataset',
@@ -41,6 +42,14 @@ export class DatasetComponent implements OnInit {
   saveDelay:number = 1000;
 
   datasetForm: FormGroup = new FormGroup({});
+  myDatePickerOptions: IMyDpOptions = {    
+    dayLabels: {su: "Søn", mo: "Man", tu: "Tir", we: "Ons", th: "Tor", fr: "Fre", sa: "Lør"},
+    monthLabels: { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "Mai", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Okt", 11: "Nov", 12: "Des" },
+    dateFormat: "dd.mm.yyyy",
+    todayBtnTxt: "I dag",
+    firstDayOfWeek: "mo",
+    sunHighlight: false
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -175,7 +184,9 @@ export class DatasetComponent implements OnInit {
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
-          distributions: this.formBuilder.array([])
+          distributions: this.formBuilder.array([]),
+          created:null,
+          modified: null
         });
 
       return formGroup;

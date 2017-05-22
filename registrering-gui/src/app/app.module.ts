@@ -27,6 +27,8 @@ import {DistributionListComponent} from "./dataset/distribution/distribution-lis
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import { MyDatePickerModule } from 'mydatepicker';
+
 
 
 @NgModule({
@@ -52,7 +54,8 @@ import {InformationComponent} from "./dataset/information/information.component"
     AlertModule.forRoot(),
     RouterModule.forRoot(routes),
     BootstrapModalModule,
-    RlTagInputModule
+    RlTagInputModule,
+    MyDatePickerModule
   ],
   entryComponents: [
      ConfirmComponent
