@@ -5,7 +5,7 @@
 
 	<groupId>no.dcat</groupId>
 	<artifactId>fdk</artifactId>
-	<version>0.2.4-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>Felles Datakatalog</name>
@@ -39,7 +39,7 @@
 
 	<scm>
 		<url>https://github.com/Altinn/fdk</url>
-		<connection>scm:git:git://github.com:MarcusGustafson74/Altinn/fdk.git</connection>
+		<connection>scm:git:git://github.com:bgrova/Altinn/fdk.git</connection>
 		<developerConnection>scm:git:https://github.com/Altinn/fdk.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
@@ -69,7 +69,7 @@
 	</modules>
 
 	<properties>
-        <fdk.version>0.2.4-SNAPSHOT</fdk.version>
+        <fdk.version>1.0.0</fdk.version>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>dcatno</docker.image.prefix>
 		<docker.registry />

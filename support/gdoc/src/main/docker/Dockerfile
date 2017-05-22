@@ -42,7 +42,7 @@ RUN chmod +x dcat/dcat.sh
 
 RUN ls -al dcat
 
-ADD gdoc-?.?.?-SNAPSHOT.jar app.jar
+ADD gdoc-?.?.?.jar app.jar
 RUN chown gdoc:root app.jar
 RUN sh -c 'touch app.jar'
 
