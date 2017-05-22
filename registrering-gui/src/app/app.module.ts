@@ -30,7 +30,6 @@ import {InformationComponent} from "./dataset/information/information.component"
 import { MyDatePickerModule } from 'mydatepicker';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
