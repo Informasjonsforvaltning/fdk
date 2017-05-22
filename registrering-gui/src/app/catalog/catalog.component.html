@@ -41,7 +41,7 @@
         <tr *ngFor="let dataset of datasets" id="datasets" class="fdk-row-padding" (click)="selectDataset(catalog, dataset)" >
           <td class="fdk-register fdk-register-datacatalogue-1">{{getTitle(dataset)}}</td>
           <td class="fdk-register fdk-register-datacatalogue-2">
-            <div class="fdk-text-right" >{{formatDate(dataset._lastModified).toLocaleString()}}</div>
+            <div class="fdk-text-right">{{dataset._lastModified | date: 'short'}}</div>
           </td>
         </tr>
         </tbody>
