@@ -42,13 +42,8 @@ export class DatasetComponent implements OnInit {
   saveDelay:number = 1000;
 
   datasetForm: FormGroup = new FormGroup({});
-  myDatePickerOptions: IMyDpOptions = {    
-    dayLabels: {su: "Søn", mo: "Man", tu: "Tir", we: "Ons", th: "Tor", fr: "Fre", sa: "Lør"},
-    monthLabels: { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "Mai", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Okt", 11: "Nov", 12: "Des" },
-    dateFormat: "dd.mm.yyyy",
-    todayBtnTxt: "I dag",
-    firstDayOfWeek: "mo",
-    sunHighlight: false
+  myDatePickerOptions: IMyDpOptions = {
+    dateFormat: 'yyyy.mm.dd',
   };
 
   constructor(
@@ -79,7 +74,6 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
-
       // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.identifiers = this.dataset.identifiers || [];
@@ -96,6 +90,12 @@ export class DatasetComponent implements OnInit {
                   distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
                   distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
                 })
+              }
+              if(dataset.modified.formatted) {
+                dataset.modified = dataset.modified.formatted.replace(/\./g,"-");
+              }
+              if(dataset.issued.formatted) {
+                dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
               }
 
               this.dataset = _.merge(this.dataset, dataset);
@@ -176,6 +176,18 @@ export class DatasetComponent implements OnInit {
       return this.service.get(this.catId, datasetId);
   }
 
+private getDateObjectFromUnixTimestamp(timestamp:string) {
+  let date = new Date(timestamp);
+  return {
+    date: {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate()
+    },
+    formatted: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
+  }
+}
+
   private toFormGroup(data: Dataset): FormGroup {
     const formGroup = this.formBuilder.group({
           //title: title,
@@ -185,10 +197,11 @@ export class DatasetComponent implements OnInit {
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([]),
-          created:null,
-          modified: null
+          issued:this.getDateObjectFromUnixTimestamp(data.issued),
+          modified: this.getDateObjectFromUnixTimestamp(data.modified),
+          samples: this.formBuilder.array([]),
+          languages: this.formBuilder.array(data.languages)
         });
-
       return formGroup;
   }
 

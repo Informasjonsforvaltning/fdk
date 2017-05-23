@@ -30,5 +30,13 @@ export interface Dataset {
 
   distributions?: Distribution[];
 
+  samples?: Distribution[];
+
+  modified?:string;
+
+  issued?: string;
+
+  languages?: string[];
+
   _lastModified: string;
 }
