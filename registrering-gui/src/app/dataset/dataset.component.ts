@@ -176,19 +176,20 @@ export class DatasetComponent implements OnInit {
       return this.service.get(this.catId, datasetId);
   }
 
-private getDateObjectFromUnixTimestamp(timestamp:string) {
-  let date = new Date(timestamp);
-  return {
-    date: {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      day: date.getDate()
-    },
-    formatted: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
+  private getDateObjectFromUnixTimestamp(timestamp:string) {
+    let date = new Date(timestamp);
+    return {
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      },
+      formatted: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
+    }
   }
-}
 
   private toFormGroup(data: Dataset): FormGroup {
+    this.getDateObjectFromUnixTimestamp(data.issued)
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
@@ -197,13 +198,11 @@ private getDateObjectFromUnixTimestamp(timestamp:string) {
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([]),
-          issued:this.getDateObjectFromUnixTimestamp(data.issued),
-          modified: this.getDateObjectFromUnixTimestamp(data.modified),
+          issued:[this.getDateObjectFromUnixTimestamp(data.issued)],
+          modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
           samples: this.formBuilder.array([]),
           languages: this.formBuilder.array(data.languages)
         });
       return formGroup;
   }
-
-
 }
