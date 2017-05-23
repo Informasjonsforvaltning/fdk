@@ -11,13 +11,17 @@ import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.isNotNull;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -95,4 +99,24 @@ public class LoadLocationsTest {
         //verify(bulkRequest).add(indexRequest);
         verify(bulkRequest).add((IndexRequest) anyObject());
     }
+
+    @Test
+    public void retrieveLocationTitleDoesNotFailOnValidURL() throws Throwable {
+        final String url = "http://79.125.104.140/bym/rest/services/Temadata_Publikum/MapServer";
+
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        LoadLocations lc = new LoadLocations(elasticsearch);
+
+        Map<String, SkosCode> locations = new HashMap<>();
+        SkosCode code = new SkosCode(url, null, new HashMap<>());
+        locations.put(url, code);
+        lc.locations = locations;
+
+        LoadLocations actual = lc.retrieveLocTitle();
+
+        assertThat(actual.getLocations().get(url).getPrefLabel().isEmpty(), Matchers.is(true));
+
+    }
+
+
 }
