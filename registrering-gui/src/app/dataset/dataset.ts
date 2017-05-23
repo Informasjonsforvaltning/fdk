@@ -12,15 +12,16 @@ export interface Dataset {
   keywords?: {
       [language: string]: string
   }[];
-    comment?: {
+
+  accessRights?: string;
+  accessRightsComments?: string[];
+      /*
+  processing?: {
         [language: string]: string
     }[];
-    processing?: {
+  delivery?: {
         [language: string]: string
-    }[];
-    delivery?: {
-        [language: string]: string
-    }[];
+    }[]; */
   subjects?: string[];
   themes?: {uri:string, title:{"nb":string}}[];
   catalog: string;
