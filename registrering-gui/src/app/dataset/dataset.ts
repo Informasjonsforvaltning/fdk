@@ -12,6 +12,15 @@ export interface Dataset {
   keywords?: {
       [language: string]: string
   }[];
+    comment?: {
+        [language: string]: string
+    }[];
+    processing?: {
+        [language: string]: string
+    }[];
+    delivery?: {
+        [language: string]: string
+    }[];
   subjects?: string[];
   themes?: {uri:string, title:{"nb":string}}[];
   catalog: string;
