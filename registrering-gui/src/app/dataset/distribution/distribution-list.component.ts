@@ -16,6 +16,9 @@ export class DistributionListComponent implements OnInit {
     @Input('distributions')
     public distributions: Distribution[];
 
+    @Input('title')
+    public title: string;
+
     distribution: Distribution;
 
     constructor(private cd: ChangeDetectorRef) { }
