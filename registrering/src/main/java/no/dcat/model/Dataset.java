@@ -92,6 +92,11 @@ public class Dataset {
     @Field
     private List<Distribution> distribution;
 
+    //adms:sample
+    //Norwegian: Eksempeldata
+    @Field
+    private List<Distribution> sample;
+
     //dcat:conformsTo
     //Norwegian: I samsvar med
     @Field
