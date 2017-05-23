@@ -17,7 +17,6 @@
 
   <!-- parent-form.component.html -->
   <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset && datasetForm">
-
       <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
               Opplysninger
@@ -72,7 +71,7 @@
                 <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
                                 formControlName="modified"></my-date-picker>
               </div>
-              </div>
+            </div>
             <distributions
                 [datasetForm]="datasetForm"
                 [distributions]="dataset.samples"
