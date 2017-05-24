@@ -13,7 +13,7 @@ export interface Dataset {
       [language: string]: string
   }[];
 
-  accessRights?: string;
+  accessRights?: {uri:string};
   accessRightsComments?: string[];
       /*
   processing?: {

@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Dataset} from "../dataset";
-import {CodesService} from "../codes.service";
 
 
 @Component({
@@ -19,155 +18,71 @@ export class AccessRightsComponent implements OnInit {
     onSave = new EventEmitter<boolean>();
 
     public accessRightsForm: FormGroup;
-
-    comment: string[];
-    processing: string[];
-    delivery: string[];
-    // frequencies = [];
-    // provenancestatements = [];
-
-    accessRights_public: string = "http://publications.europa.eu/resource/authority/access-right/PUBLIC";
-    accessRights_restricted: string = "http://publications.europa.eu/resource/authority/access-right/RESTRICTED";
-    accessRights_nonpublic: string =  "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC";
+    accessRightsModel = [];
+    selectedAccessRightIdx = 1;
 
 
-    constructor(private fb: FormBuilder,
-                private codesService: CodesService)
-    { }
+    constructor(private fb: FormBuilder)
+    {
+        this.accessRightsModel = [
+            {
+                id: 1,
+                label: 'Offentlig',
+                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
+            },
+            {
+                id: 2,
+                label: 'Begrenset offentlighet',
+                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
+            },
+            {
+                id: 3,
+                label: 'Unntatt offentlighet',
+                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
+            }
+        ]
+    }
+
+    showAccessRightComments(): boolean {
+        return this.dataset.accessRights.uri !== this.accessRightsModel[0].uri
+    }
 
     ngOnInit() {
-        this.accessRightsForm = this.fb.group({
-            accessRightsModel: 'offentlig'
-        });
         this.accessRightsForm = this.toFormGroup(this.dataset);
+        if(!this.dataset.accessRights) {
+            this.dataset.accessRights = {uri: this.accessRightsModel[0].uri}
+        }
+        this.accessRightsModel
+            .filter(entry => entry.uri == this.dataset.accessRights.uri)
+            .forEach(entry => this.selectedAccessRightIdx = entry.id)
 
 
-        /*
-        this.processing = [];
-        if (this.dataset.processing) {
-            this.processing = this.dataset.processing.map(processing => {
-                return processing['nb'];
-            });
-        }
-        this.delivery = [];
-        if (this.dataset.delivery) {
-            this.delivery = this.dataset.delivery.map(delivery => {
-                return delivery['nb'];
-            });
-        }
-*/
         this.accessRightsForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
-            accessRights => {
-
-                console.log("accessRights changes", accessRights);
-
-                if (accessRights.accessRightsComment.length === 0) {
+            accessLevel => {
+                if (accessLevel.accessRightsComment.length === 0) {
                     this.dataset.accessRightsComments = null;
                 } else {
-                    this.dataset.accessRightsComments = accessRights.accessRightsComment;
+                    this.dataset.accessRightsComments = accessLevel.accessRightsComment;
                 }
-/*
-                if (accessRights.processing.length === 0) {
-                    this.dataset.processing = null;
-                } else {
-                    this.dataset.processing = accessRights.processing.map(processing => {
-                        return {nb: processing}
+                if (accessLevel.accessRights) {
+                    this.accessRightsModel.forEach(entry => {
+                        if (entry.id == accessLevel.accessRights) {
+                            this.dataset.accessRights = {uri: entry.uri}
+                        }
                     });
                 }
-
-                if (accessRights.delivery.length === 0) {
-                    this.dataset.delivery = null;
-                } else {
-                    this.dataset.delivery = accessRights.delivery.map(delivery => {
-                        return {nb: delivery}
-                    });
-                }
-*/
-
                 this.onSave.emit(true);
             }
         );
-        //
-        // if (this.dataset.accrualPeriodicity) {
-        //     let skosCode = this.dataset.accrualPeriodicity;
-        //     this.frequencies.push(this.codifySkosCodes(skosCode,'no'));
-        // } else {
-        //     this.dataset.accrualPeriodicity = { uri: '', prefLabel: {no: ''}};
-        // }
-        //
-        // if (this.dataset.provenance) {
-        //     let skosCode = this.dataset.provenance;
-        //     this.provenancestatements.push(this.codifySkosCodes(skosCode,'nb'));
-        // } else {
-        //     this.dataset.provenance = { uri: '', prefLabel: {nb:''}};
-        // }
-        //
-        // this.dataset.conformsTos = this.dataset.conformsTos || [];
-        //
-        // this.accessRightsForm = this.toFormGroup(this.dataset);
-        //
-        // this.accessRightsForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
-        //     quality => {
-        //
-        //         if (quality.provenance) {
-        //             this.dataset.provenance = {
-        //                 uri: quality.provenance,
-        //                 prefLabel: {'nb': this.getLabel(this.provenancestatements, quality.provenance)}
-        //             };
-        //         }
-        //
-        //         if (quality.accrualPeriodicity) {
-        //
-        //             this.dataset.accrualPeriodicity = {
-        //                 uri: quality.accrualPeriodicity,
-        //                 prefLabel: {'no': this.getLabel(this.frequencies, quality.accrualPeriodicity)}
-        //             };
-        //
-        //         }
-        //
-        //         if (quality.conformsTo) {
-        //             this.dataset.conformsTos = quality.conformsTo;
-        //         }
-        //
-        //         this.onSave.emit(true);
-        //     }
-        // );
-
     }
+
 
 
     private toFormGroup(data: Dataset) {
         return this.fb.group({
-            accessRights : [ data.accessRights || ''],
+            accessRights : [ data.accessRights || {}],
             accessRightsComment: [data.accessRightsComments ||[] ]
-  //          processing: [this.processing],
-    //        delivery: [this.delivery]
         });
     }
 
-    codifySkosCodes(code, lang) {
-        return {value: code['uri'], label: code['prefLabel'][lang]}
-    }
-
-    // fetchFrequencies() {
-    //     this.codesService.fetchCodes('frequencies', 'no').then( frequencies =>
-    //         this.frequencies = frequencies);
-    // }
-
-    // fetchProvenances() {
-    //     this.codesService.fetchCodes('provenancestatements', 'nb').then( provenances =>
-    //         this.provenancestatements = provenances);
-    // }
-
-    getLabel(codeList, forCode:string): string {
-        let label = '';
-        codeList.forEach(code => {
-            if (code.value === forCode) {
-                label = code.label;
-                return false;
-            }
-        });
-
-        return label;
-    }
 }

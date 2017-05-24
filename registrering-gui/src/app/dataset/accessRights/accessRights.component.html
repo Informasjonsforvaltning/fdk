@@ -1,22 +1,23 @@
 <div class="fdk-panel-body" *ngIf="accessRightsForm">
     <form [formGroup]="accessRightsForm" class="form-group">
 
-
         <label for="accessRightSelector" class="control-label">Tilgangsnivå:</label>
+
         <div id="accessRightSelector">
-            <div class="radio">
-                <label><input type="radio" name="optradio">Offentlig</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Begrenset offentlighet</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Unntatt offentlighet</label>
+            <div class="radio" *ngFor="let accessRight of accessRightsModel">
+                <label>
+                    <input
+                        type="radio"
+                        [checked]="accessRight.id === selectedAccessRightIdx"
+                        [value]="accessRight.id"
+                        formControlName="accessRights"
+                    >
+                    {{accessRight.label}}
+                </label>
             </div>
         </div>
 
-
-        <div class="form-group" >
+        <div class="form-group" *ngIf="showAccessRightComments()" >
             <label for="accessRightsComment" class="control-label">Skjermingshjemmel:</label>
             <rl-tag-input id="accessRightsComment"
                           class="form-control"
@@ -24,26 +25,5 @@
                           formControlName="accessRightsComment">
             </rl-tag-input>
         </div>
-
-        <!--
-        <div class="form-group" >
-            <label for="accessRightsProcessing" class="control-label">Behandlingsgrunnlag</label>
-            <rl-tag-input id="accessRightsProcessing"
-                          class="form-control"
-                          placeholder="Legg til url"
-                          formControlName="processing">
-            </rl-tag-input>
-        </div>
-
-        <div class="form-group" >
-            <label for="accessRightsDelivery" class="control-label">Behandlingsgrunnlag</label>
-            <rl-tag-input id="accessRightsDelivery"
-                          class="form-control"
-                          placeholder="Legg til url"
-                          formControlName="delivery">
-            </rl-tag-input>
-        </div>
-
-        -->
     </form>
 </div>
