@@ -5,8 +5,8 @@ import {Dataset} from "../dataset";
 
 @Component({
     selector: 'accessRights',
-    templateUrl: './spatial.component.html',
-    styleUrls: [ './spatial.component.css' ]
+    templateUrl: './accessRights.component.html',
+    styleUrls: [ './accessRights.component.css' ]
 })
 
 export class AccessRightsComponent implements OnInit {

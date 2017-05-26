@@ -1,19 +1,19 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {AccessRightsComponent} from "./spatial.component";
+import {SpatialComponent} from "./spatial.component";
 
-describe('AccessRightsComponent', () => {
-  let component: AccessRightsComponent;
-  let fixture: ComponentFixture<AccessRightsComponent>;
+describe('SpatialComponent', () => {
+  let component: SpatialComponent;
+  let fixture: ComponentFixture<SpatialComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccessRightsComponent ]
+      declarations: [ SpatialComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccessRightsComponent);
+    fixture = TestBed.createComponent(SpatialComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

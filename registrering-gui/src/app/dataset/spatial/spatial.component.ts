@@ -4,12 +4,12 @@ import {Dataset} from "../dataset";
 
 
 @Component({
-    selector: 'accessRights',
+    selector: 'spatial',
     templateUrl: './spatial.component.html',
     styleUrls: [ './spatial.component.css' ]
 })
 
-export class AccessRightsComponent implements OnInit {
+export class SpatialComponent implements OnInit {
 
     @Input('dataset')
     public dataset: Dataset;
@@ -17,60 +17,25 @@ export class AccessRightsComponent implements OnInit {
     @Output()
     onSave = new EventEmitter<boolean>();
 
-    public accessRightsForm: FormGroup;
-    accessRightsModel = [];
-    selectedAccessRightIdx = 1;
+    public spatialForm: FormGroup;
 
-
-    constructor(private fb: FormBuilder)
-    {
-        this.accessRightsModel = [
-            {
-                id: 1,
-                label: 'Offentlig',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
-            },
-            {
-                id: 2,
-                label: 'Begrenset offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
-            },
-            {
-                id: 3,
-                label: 'Unntatt offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
-            }
-        ]
+    constructor(private fb: FormBuilder) {
     }
 
-    showAccessRightComments(): boolean {
-        return this.dataset.accessRights.uri !== this.accessRightsModel[0].uri
-    }
 
     ngOnInit() {
-        this.accessRightsForm = this.toFormGroup(this.dataset);
-        if(!this.dataset.accessRights) {
-            this.dataset.accessRights = {uri: this.accessRightsModel[0].uri}
-        }
-        this.accessRightsModel
-            .filter(entry => entry.uri == this.dataset.accessRights.uri)
-            .forEach(entry => this.selectedAccessRightIdx = entry.id)
+        this.spatialForm = this.toFormGroup(this.dataset);
+        if(!this.dataset.spatial) {
+            this.dataset.spatial = []}
 
-
-        this.accessRightsForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
-            accessLevel => {
-                if (accessLevel.accessRightsComment.length === 0) {
-                    this.dataset.accessRightsComments = null;
+        this.spatialForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
+            geoCoverage => {
+                if (geoCoverage.spatial.length === 0) {
+                    this.dataset.spatial = null;
                 } else {
-                    this.dataset.accessRightsComments = accessLevel.accessRightsComment;
+                    this.dataset.spatial = geoCoverage.spatial;
                 }
-                if (accessLevel.accessRights) {
-                    this.accessRightsModel.forEach(entry => {
-                        if (entry.id == accessLevel.accessRights) {
-                            this.dataset.accessRights = {uri: entry.uri}
-                        }
-                    });
-                }
+
                 this.onSave.emit(true);
             }
         );
@@ -80,8 +45,7 @@ export class AccessRightsComponent implements OnInit {
 
     private toFormGroup(data: Dataset) {
         return this.fb.group({
-            accessRights : [ data.accessRights || {}],
-            accessRightsComment: [data.accessRightsComments ||[] ]
+            spatial : [ data.spatial || {}]
         });
     }
 

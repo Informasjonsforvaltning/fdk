@@ -1,28 +1,12 @@
-<div class="fdk-panel-body" *ngIf="accessRightsForm">
-    <form [formGroup]="accessRightsForm" class="form-group">
+<div class="fdk-panel-body">
+    <form [formGroup]="spatialForm" class="form-group">
 
-        <label for="accessRightSelector" class="control-label">Tilgangsnivå:</label>
-
-        <div id="accessRightSelector">
-            <div class="radio" *ngFor="let accessRight of accessRightsModel">
-                <label>
-                    <input
-                        type="radio"
-                        [checked]="accessRight.id === selectedAccessRightIdx"
-                        [value]="accessRight.id"
-                        formControlName="accessRights"
-                    >
-                    {{accessRight.label}}
-                </label>
-            </div>
-        </div>
-
-        <div class="form-group" *ngIf="showAccessRightComments()" >
-            <label for="accessRightsComment" class="control-label">Skjermingshjemmel:</label>
-            <rl-tag-input id="accessRightsComment"
+        <div class="form-group">
+            <label for="dekningsomrade-datasett" class="control-label">Dekningsområde:</label>
+            <rl-tag-input id="dekningsomrade-datasett"
                           class="form-control"
-                          placeholder="Legg til url"
-                          formControlName="accessRightsComment">
+                          formControlName="spatial"
+                          placeholder="Dekningsområde">
             </rl-tag-input>
         </div>
     </form>

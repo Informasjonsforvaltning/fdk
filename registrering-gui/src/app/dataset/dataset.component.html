@@ -37,6 +37,16 @@
           </accessRights>
       </div>
 
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Geografisk avgrensning
+          </div>
+          <spatial [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </spatial>
+      </div>
+
       <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
               Kvalitet
