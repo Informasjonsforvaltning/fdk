@@ -26,38 +26,40 @@ import {DistributionFormComponent} from "./dataset/distribution/distribution.com
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
+import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CatalogComponent,
-    DatasetComponent,
-    StartComponent,
-    ConfirmComponent,
-    DistributionFormComponent,
-    DistributionListComponent,
-    ContactComponent,
-    QualityComponent,
-    InformationComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SelectModule,
-    HttpModule,
-    NgbModule.forRoot(),
-    AlertModule.forRoot(),
-    RouterModule.forRoot(routes),
-    BootstrapModalModule,
-    RlTagInputModule
-  ],
-  entryComponents: [
-     ConfirmComponent
-  ],
-  providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CatalogComponent,
+        DatasetComponent,
+        StartComponent,
+        ConfirmComponent,
+        DistributionFormComponent,
+        DistributionListComponent,
+        ContactComponent,
+        QualityComponent,
+        AccessRightsComponent,
+        InformationComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SelectModule,
+        HttpModule,
+        NgbModule.forRoot(),
+        AlertModule.forRoot(),
+        RouterModule.forRoot(routes),
+        BootstrapModalModule,
+        RlTagInputModule
+    ],
+    entryComponents: [
+        ConfirmComponent
+    ],
+    providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
