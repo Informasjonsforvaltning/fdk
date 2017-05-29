@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
@@ -13,10 +14,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,21 +32,52 @@ public class CatalogController {
     @Autowired
     private CatalogRepository catalogRepository;
 
+    /**
+     * Lists all catalogs available
+     *
+     * @param pageable
+     * @param assembler
+     * @return
+     */
     @CrossOrigin
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable, PagedResourcesAssembler assembler) {
+    @RequestMapping(value = "",
+            method = GET,
+            produces = APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable,
+                                                            PagedResourcesAssembler assembler) {
+
         Page<Catalog> catalogs = catalogRepository.findAll(pageable);
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
 
+    /**
+     * Creates a catalog.
+     *
+     * @param catalog catalog skeleton to copy from
+     * @return new catalog object
+     */
     @CrossOrigin
-    @RequestMapping(value = "", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Catalog> addCatalog(@RequestBody Catalog catalog) {
+    @RequestMapping(value = "", method = POST,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
         logger.info("Add catalog: " + catalog.toString());
         if(catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        catalog.setPublisher(getPublisher(catalog));
+
+        if (catalog.getUri() == null) {
+            catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
+        }
+
+        Catalog savedCatalog = catalogRepository.save(catalog);
+        return new ResponseEntity<>(savedCatalog, OK);
+    }
+
+    private Publisher getPublisher(Catalog catalog) {
+
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
         Enhet enhet = restTemplate.getForObject(uri, Enhet.class);
@@ -57,31 +86,37 @@ public class CatalogController {
         publisher.setId(catalog.getId());
         publisher.setName(enhet.getNavn());
         publisher.setUri(uri);
-        catalog.setPublisher(publisher);
 
-        Catalog savedCatalog = catalogRepository.save(catalog);
-        return new ResponseEntity<>(savedCatalog, OK);
+        return publisher;
     }
 
+    /**
+     * Update existing catalog.
+     *
+     * @param id the of the catalog
+     * @param catalog the catalog object with fields to update
+     * @return the saved catalog
+     */
     @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = PUT,
             consumes = APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Catalog> addCatalog(@PathVariable("id") String id, @RequestBody Catalog catalog) {
+            produces = APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Catalog> updateCatalog(@PathVariable("id") String id,
+                                             @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
 
-        catalog.setId(id);
+        if (!catalog.getId().equals(id)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
-        Enhet enhet = restTemplate.getForObject(uri, Enhet.class);
+        if (catalog.getPublisher() == null) {
+            catalog.setPublisher(getPublisher(catalog));
+        }
 
-        Publisher publisher = new Publisher();
-        publisher.setId(catalog.getId());
-        publisher.setName(enhet.getNavn());
-        publisher.setUri(uri);
-        catalog.setPublisher(publisher);
+        if (catalog.getUri() == null) {
+            catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
+        }
 
         Catalog savedCatalog = catalogRepository.save(catalog);
 
@@ -89,25 +124,31 @@ public class CatalogController {
     }
 
 
+    /**
+     * Deletes a catalog
+     *
+     * @param id the catalog id to delet
+     * @return acknowledgement of success or failure
+     */
     @CrossOrigin
-    @RequestMapping(value = "/login", method = POST, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<String> authenticate() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName(); //get logged in username
-        logger.info("Authenticating user: ");
-        return new ResponseEntity<>(username, OK);
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/{id}", method = DELETE, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}", method = DELETE,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.delete(id);
         return new ResponseEntity<>(OK);
     }
 
+    /**
+     * Gets a catalog
+     *
+     * @param id of the catalog
+     * @return the catalog if it exist
+     */
     @CrossOrigin
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{id}", method = GET,
+            produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
         Catalog catalog = catalogRepository.findOne(id);
 

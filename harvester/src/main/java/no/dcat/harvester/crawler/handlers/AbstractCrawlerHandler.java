@@ -1,8 +1,8 @@
 package no.dcat.harvester.crawler.handlers;
 
+import no.dcat.admin.store.domain.DcatSource;
+import no.dcat.data.store.Elasticsearch;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.DcatSource;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

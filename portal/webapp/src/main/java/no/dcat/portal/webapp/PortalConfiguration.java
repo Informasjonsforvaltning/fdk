@@ -11,7 +11,6 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @PropertySource("classpath:project.properties") // for maven build properties
-@PropertySource("classpath:git.properties") // for git properties
 @ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
 
@@ -31,17 +30,6 @@ public class PortalConfiguration {
     @Value("${queryService:qs}")
     private String queryService;
 
-    @Value("${git.commit.id.abbrev:gitcid}")
-    private String commitAbbrev;
-
-    @Value("${version:ver}")
-    private String version;
-
-    @Value("${artifactId:aid}")
-    private String artifactId = "artifactId";
-
-    @Value("${build.date:1999-99-99}")
-    private String buildDate;
 
     public final String getQueryServiceExternal() {
 
@@ -94,32 +82,5 @@ public class PortalConfiguration {
         return getQueryService() + QUERY_THEME_COUNT;
     }
 
-    /**
-     * Provides a formated string that includes the version number of the current built application.
-     *
-     * @return the version information string
-     */
-    public String getVersionInformation() {
-        return artifactId + "-" + version + "/" + commitAbbrev +  "/" + buildDate + "/" + profile ;
-    }
-
-    public final String getVersion() {
-        return version;
-    }
-
-    public final String getArtifactId() {
-
-        return artifactId;
-    }
-
-    public final void setBuildDate(final String buildDateString) {
-
-        buildDate = buildDateString;
-    }
-
-    public final String getBuildDate() {
-
-        return buildDate;
-    }
 
 }

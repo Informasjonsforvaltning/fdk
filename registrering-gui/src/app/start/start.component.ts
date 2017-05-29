@@ -10,9 +10,10 @@ import {AuthenticationService} from "../security/authentication.service";
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-  catalogs: Catalog[] = [];
-  selectedCatalog: Catalog;
-  model: any = {};
+    catalogs: Catalog[] = [];
+    language: string;
+    selectedCatalog: Catalog;
+    model: any = {};
 
 
 
@@ -22,6 +23,7 @@ export class StartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.language = 'nb';
     this._catalogService.getAll()
       .then(catalogs => this.catalogs = catalogs);
   }

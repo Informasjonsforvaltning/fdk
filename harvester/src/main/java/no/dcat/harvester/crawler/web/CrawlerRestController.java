@@ -1,10 +1,14 @@
 package no.dcat.harvester.crawler.web;
 
-import no.dcat.harvester.crawler.*;
+import no.dcat.admin.store.AdminDataStore;
+import no.dcat.admin.store.Fuseki;
+import no.dcat.admin.store.domain.DcatSource;
+import no.dcat.harvester.crawler.Crawler;
+import no.dcat.harvester.crawler.CrawlerCodeJob;
+import no.dcat.harvester.crawler.CrawlerJob;
+import no.dcat.harvester.crawler.CrawlerJobFactory;
+import no.dcat.harvester.crawler.Types;
 import no.dcat.harvester.settings.FusekiSettings;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +30,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.Future;
 
 @RestController

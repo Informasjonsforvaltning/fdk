@@ -29,7 +29,7 @@
     "code" : "nb",
     "title" : {"nb" : "Norsk bokmål"}
   },
-  "landingPage": "http://www.brreg.no",
+  "landingPages": ["http://www.brreg.no"],
   "theme" : [
     { "id" : "T001",
       "code" : "GOVE",
@@ -58,9 +58,9 @@
     {"id" : "DIST001",
       "title" : {"no" : "Oppdaterte enheter"},
       "description" : {"no" : "CSV-fil med alle enheter oppdatert siste 3 måneder"},
-      "accessURL" : "http://brrreg.no/data/oppdaterteEnheter.csv",
+      "accessURL" : ["http://brrreg.no/data/oppdaterteEnheter.csv"],
       "license" : "Åpen",
-      "format" : "CSV"}
+      "format" : ["CSV"]}
   ],
   "conformsTo": ["http://www.brreg.no/enhetsregisteret/datamodell"],
   "temporal" : [

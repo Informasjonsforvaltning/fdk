@@ -2,12 +2,12 @@ package no.dcat.portal.webapp;
 
 import no.dcat.portal.webapp.comparator.PublisherOrganisasjonsformComparator;
 import no.dcat.portal.webapp.comparator.ThemeTitleComparator;
+import no.dcat.portal.webapp.domain.DataTheme;
+import no.dcat.portal.webapp.domain.Dataset;
+import no.dcat.portal.webapp.domain.Publisher;
 import no.dcat.portal.webapp.utility.DataitemQuery;
 import no.dcat.portal.webapp.utility.ResponseManipulation;
 import no.dcat.portal.webapp.utility.TransformModel;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -180,7 +180,6 @@ public class PortalController {
             model.setViewName("error");
         }
 
-        session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
         session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
         model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");

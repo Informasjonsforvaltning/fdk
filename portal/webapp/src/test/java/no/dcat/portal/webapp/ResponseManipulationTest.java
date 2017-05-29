@@ -1,10 +1,10 @@
 package no.dcat.portal.webapp;
 
+import no.dcat.portal.webapp.domain.DataTheme;
+import no.dcat.portal.webapp.domain.Dataset;
+import no.dcat.portal.webapp.domain.Distribution;
+import no.dcat.portal.webapp.domain.SkosCode;
 import no.dcat.portal.webapp.utility.ResponseManipulation;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
-import no.difi.dcat.datastore.domain.dcat.Distribution;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Class for testing ResponseManipulation.
@@ -32,8 +33,8 @@ public class ResponseManipulationTest {
 
         List<Distribution> ld = createDistrubution("en", "Dist.titel", "Dist.beskr");
 
-        SkosCode accrual = new SkosCode("testcode", new HashMap<String,String>());
-        accrual.getTitle().put("en", "very often");
+        SkosCode accrual = new SkosCode("testcode", "code", new HashMap<String,String>());
+        accrual.getPrefLabel().put("en", "very often");
 
         Dataset ds = new Dataset();
         ds.setTheme(ldt);

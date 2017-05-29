@@ -2,7 +2,7 @@ version: "2"
 
 services:
   portal:
-    image: "fdk/webapp:latest"
+    image: "dcatno/webapp:latest"
     ports:
       - "8080:8080"
     environment:
@@ -12,11 +12,12 @@ services:
      - application.fusekiService=http://fuseki:8080/fuseki
     links:
       - query
+      - fuseki
     networks:
       platform:
 
   query:
-    image: "fdk/query:latest"
+    image: "dcatno/query:latest"
     ports:
       - "8083:8080"
     environment:
@@ -29,7 +30,7 @@ services:
       platform:
 
   gdoc:
-    image: "fdk/gdoc-import:latest"
+    image: "dcatno/gdoc:latest"
     ports:
       - "8084:8080"
     environment:
@@ -37,9 +38,17 @@ services:
     networks:
       platform:
 
+  validator:
+    image: "dcatno/validator:latest"
+    ports:
+      - "8086:8080"
+    environment:
+     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    networks:
+      platform:
 
   fuseki:
-    image: "fdk/fuseki:latest"
+    image: "dcatno/fuseki:latest"
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
     ports:
@@ -48,7 +57,7 @@ services:
       platform:
 
   harvester:
-    image: "fdk/harvester:latest"
+    image: "dcatno/harvester:latest"
     ports:
      - "8081:8080"
     environment:
@@ -67,9 +76,10 @@ services:
     links:
      - fuseki
      - elasticsearch:es
+     - registrering
 
   admin:
-    image: "fdk/admin-webapp:latest"
+    image: "dcatno/admin-webapp:latest"
     ports:
      - "8082:8080"
     environment:
@@ -107,7 +117,7 @@ services:
  #         - log_es
 
   elasticsearch:
-    image: "fdk/elasticsearch:latest"
+    image: "dcatno/elasticsearch:latest"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -120,7 +130,7 @@ services:
           - log_es
 
   test:
-    image: "fdk/test:latest"
+    image: "dcatno/test:latest"
     ports:
       - "8085:8080"
     environment:
@@ -138,40 +148,42 @@ services:
       platform:
 
   registrering:
-    image: "fdk/registrering:latest"
+    image: "dcatno/registrering:latest"
     ports:
       - "8099:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - spring.application.catalogUriPrefix=http://localhost:8099
     links:
       - elasticsearch
     networks:
       platform:
 
   reg-gui:
-    image: "dcat/reg-gui:latest"
+    image: "dcatno/reg-gui:latest"
     ports:
       - "4200:4200"
     environment:
      - REG_API_URL=http://localhost:8099
      - QUERY_SERVICE_URL=http://localhost:8083
+     - VALIDATOR_URL=http://localhost:8086
     links:
       - elasticsearch
     networks:
       platform:
 
-#  logstash:
-#    image: "fdk/logstash:${TAG}"
-#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-#    volumes:
-#      - ./logs:/usr/local/tomcat/logs:rw
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      logging:
+  #logstash:
+  #  image: "dcatno/logstash:${TAG}"
+  #  entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+  #  volumes:
+  #    - ./logs:/usr/local/tomcat/logs:rw
+  #  depends_on:
+  #    - elasticsearch
+  #  networks:
+  #    logging:
 
   kibana:
-    image: "fdk/kibana:latest"
+    image: "dcatno/kibana:latest"
     ports:
       - "5601:5601"
     environment:
