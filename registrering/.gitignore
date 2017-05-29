@@ -10,4 +10,4 @@
 *.tar.gz
 *.rar
 hs_err_pid*
-src/main/resourcees/static
+src/main/resources/static/

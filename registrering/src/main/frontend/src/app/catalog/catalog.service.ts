@@ -32,13 +32,11 @@ export class CatalogService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(): Promise<Catalog[]> {
-      let authorization : string = localStorage.getItem("authorization");
-      this.headers.append("Authorization", "Basic " + authorization);
 
     return this.http
-        .get(this.catalogsUrl, {headers: this.headers})
+        .get(this.catalogsUrl)
         .toPromise()
-        .then(response => response.json().content as Catalog[])
+        .then(response => response.json()._embedded.catalogs as Catalog[])
         .catch(this.handleError);
   }
 

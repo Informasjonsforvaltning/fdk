@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
 import {environment} from "../../environments/environment";
 import {pluralizeObjectKeys, singularizeObjectKeys} from "../../utilities/pluralizeOrSingularizeObjectKeys";
+
 
 const TEST_DATASETS: Dataset[] = [
   {
@@ -37,9 +38,9 @@ export class DatasetService {
 
   getAll(catId: String): Promise<Dataset[]> {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}`;
-    return this.http.get(datasetUrl)
+    return this.http.get(datasetUrl, {headers: this.headers})
       .toPromise()
-      .then(response => response.json().content as Dataset[])
+      .then(response => {console.log(response); return response.json()._embedded.datasets as Dataset[]})
       .catch(this.handleError);
   }
 
@@ -50,7 +51,7 @@ export class DatasetService {
 
   get(catId: string, datasetId: string): Promise<Dataset> {
       const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
-      return this.http.get(datasetUrl)
+      return this.http.get(datasetUrl, {headers: this.headers})
         .toPromise()
         .then((response) => {
           const dataset = pluralizeObjectKeys(response.json());
@@ -63,13 +64,14 @@ export class DatasetService {
   save(catId: string, dataset: Dataset) : Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
 
-    let authorization : string = localStorage.getItem("authorization");
-    this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
 
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
     return this.http
-      .put(datasetUrl, payload, {headers: this.headers})
+      .put(datasetUrl, {payload}, options )
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)
@@ -78,8 +80,6 @@ export class DatasetService {
   delete(catId: string, dataset: Dataset) : Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
-    let authorization : string = localStorage.getItem("authorization");
-    this.headers.append("Authorization", "Basic " + authorization);
 
     return this.http
       .delete(datasetUrl, {headers: this.headers})
@@ -90,9 +90,6 @@ export class DatasetService {
 
   create(catId: string) : Promise<Dataset> {
     var created: Dataset;
-
-    let authorization : string = localStorage.getItem("authorization");
-    this.headers.append("Authorization", "Basic " + authorization);
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
     return this.http

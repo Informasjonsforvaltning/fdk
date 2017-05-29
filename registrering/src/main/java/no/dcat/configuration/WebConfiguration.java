@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Created by dask on 10.04.2017.
  */
-@Configuration
-@EnableWebMvc
+//@Configuration
+
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override

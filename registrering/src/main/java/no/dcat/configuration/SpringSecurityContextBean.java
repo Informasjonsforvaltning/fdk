@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * Spring bean to enable easier mocking of Spring Security static methods
  */
-@Component
+
 public class SpringSecurityContextBean {
 
 

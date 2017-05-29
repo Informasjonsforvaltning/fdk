@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-@RestController
+//@RestController
 public class LoginController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);

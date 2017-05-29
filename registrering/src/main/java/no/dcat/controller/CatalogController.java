@@ -24,7 +24,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 //@RepositoryRestController
-//@RequestMapping(value = "/catalogs")
+@RestController
+@RequestMapping(value = "/catalogs")
 public class CatalogController {
 
     private static Logger logger = LoggerFactory.getLogger(CatalogController.class);
