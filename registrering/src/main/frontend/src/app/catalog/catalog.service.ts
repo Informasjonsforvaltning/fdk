@@ -28,14 +28,18 @@ export class CatalogService {
   }
 
   //TODO don't hard code
-  private catalogsUrl = environment.api + "/api/catalogs/"
+  private catalogsUrl = environment.api + "/catalogs"
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(): Promise<Catalog[]> {
-    return this.http.get(this.catalogsUrl)
-      .toPromise()
-      .then(response => response.json()._embedded.catalogs as Catalog[])
-      .catch(this.handleError);
+      let authorization : string = localStorage.getItem("authorization");
+      this.headers.append("Authorization", "Basic " + authorization);
+
+    return this.http
+        .get(this.catalogsUrl, {headers: this.headers})
+        .toPromise()
+        .then(response => response.json().content as Catalog[])
+        .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any>{
@@ -54,6 +58,9 @@ export class CatalogService {
   save(catalog: Catalog) : Promise<Catalog> {
     const url = `${this.catalogsUrl}/${catalog.id}/`
 
+    let authorization : string = localStorage.getItem("authorization");
+    this.headers.append("Authorization", "Basic " + authorization);
+
     return this.http
       .put(url, JSON.stringify(catalog), {headers: this.headers})
       .toPromise()
@@ -61,17 +68,6 @@ export class CatalogService {
       .catch(this.handleError);
   }
 
-  create() : Promise<Catalog> {
-    const url = `${this.catalogsUrl}/`
-
-    var catalog = {id: 817818692 }
-
-    return this.http
-      .post(url, catalog)
-      .toPromise()
-      .then(() => catalog)
-      .catch(this.handleError);
-  }
 
   private clone(object: any) {
     return JSON.parse(JSON.stringify(object))
