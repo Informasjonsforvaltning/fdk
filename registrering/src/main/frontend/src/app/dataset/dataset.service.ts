@@ -65,13 +65,13 @@ export class DatasetService {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
 
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
-    let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
+    let payload = singularizeObjectKeys(datasetCopy);
 
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
     return this.http
-      .put(datasetUrl, {payload}, options )
+      .put(datasetUrl, payload, options )
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)
