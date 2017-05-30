@@ -26,4 +26,10 @@ public class HelloController {
 
         return "home";
     }
+
+    @RequestMapping("/loggetut")
+    String loggetut(Model model) {
+
+        return "loggetut";
+    }
 }

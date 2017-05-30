@@ -84,5 +84,8 @@ export class CatalogComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    logout(): void {
+      window.location.href = 'https://localhost:8099/saml/logout';
+    }
 
 }
