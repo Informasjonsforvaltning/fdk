@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
+
 /**
  * Maps all AngularJS routes to index so that they work with direct linking.
  * <p>
@@ -18,7 +20,8 @@ public class AngularController {
             "/catalogs",
             "/catalogs/{catid}",
             "/catalogs/{catid}/datasets",
-            "/catalogs/{catid}/datasets/{datid}"})
+            "/catalogs/{catid}/datasets/{datid}"},
+            produces = TEXT_HTML_VALUE)
     public String index() {
         return "forward:/index.html";
     }
