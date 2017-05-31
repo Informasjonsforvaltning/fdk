@@ -55,12 +55,9 @@ export class CatalogService {
 
   save(catalog: Catalog) : Promise<Catalog> {
     const url = `${this.catalogsUrl}/${catalog.id}/`
-
-    let authorization : string = localStorage.getItem("authorization");
-    this.headers.append("Authorization", "Basic " + authorization);
-
+    
     return this.http
-      .put(url, JSON.stringify(catalog), {headers: this.headers})
+      .put(url, catalog)
       .toPromise()
       .then(() => catalog)
       .catch(this.handleError);
