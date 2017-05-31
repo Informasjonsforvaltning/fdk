@@ -1,7 +1,11 @@
 package no.dcat.controller;
 
+import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
+import no.dcat.mock.service.AuthorisationService;
+import no.dcat.mock.service.FolkeregisteretService;
 import no.dcat.model.Catalog;
+import no.dcat.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-//@RestController
+@RestController
 public class LoginController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -30,6 +35,22 @@ public class LoginController {
     public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean) {
         this.catalogController = catalogController;
         this.springSecurityContextBean = springSecurityContextBean;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/innloggetBruker", method = GET)
+    HttpEntity<User> getLoggedInUser() {
+        Authentication authentication = springSecurityContextBean.getAuthentication();
+        SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
+        String ssn = userDetails.getAttribute("uid");
+
+        User user = new User();
+        user.setCatalog(AuthorisationService.getOrganisation(ssn));
+        user.setName(FolkeregisteretService.getName(ssn));
+
+        createCatalogIfNotExists(user.getCatalog());
+
+        return new ResponseEntity<>(user, OK);
     }
 
     /**

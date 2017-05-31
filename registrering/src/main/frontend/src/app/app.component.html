@@ -8,9 +8,13 @@
   <div class="fdk-header-menu-fullwidth">
     <div class="container">
 
-      <!-- Left column / Empty -->
-      <div class="col-sm-2 col-md-2">
-
+      <div class="col-sm-4 col-md-4" *ngIf="loggedInUser">
+        <div class="col-sm-8 col-md-8" >
+          Innlogget som {{getUsername()}} for {{getUserCatalog()}}
+        </div>
+        <div class="col-sm-4 col-md-4" >
+          <a class="btn btn-default fdk-label fdk-label-default" href="https://localhost:8099/saml/logout">Logg ut</a>
+        </div>
       </div>
 
       <!-- Middle column / Heading -->
@@ -18,10 +22,7 @@
         <h1 class="fdk-heading">Datakataloger</h1>
       </div>
 
-      <div class="col-sm-2 col-md-2">
-        <a href="https://localhost:8099/saml/logout">Logg ut</a>
 
-      </div>
       <!-- Right column -->
       <div class="col-sm-4 col-md-4">
         <!-- Dropdown menu -->

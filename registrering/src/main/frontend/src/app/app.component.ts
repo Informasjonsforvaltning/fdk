@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {AuthenticationService} from "./security/authentication.service";
 import {Router} from "@angular/router";
+import {User} from "./security/user";
 
 @Component({
   selector: 'app-root',
@@ -13,37 +14,22 @@ export class AppComponent {
   loading = false;
   error = '';
   title = 'Registrer datakatalog';
+  loggedInUser : User;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) {
   }
 
-  isAuthenticated(): boolean{
-    return localStorage.getItem('username') != null && localStorage.getItem('authorization') != null;
+  ngOnInit() {
+    this.authenticationService.user().subscribe(user => {this.loggedInUser = user});
   }
 
   getUsername(): string {
-    return localStorage.getItem('username');
+    return this.loggedInUser.name;
   }
 
-  login() {
-    this.loading = true;
-    this.authenticationService.login()
-      .subscribe(result => {
-        if (result === true) {
-          // login successful
-            window.location.reload(true);
-        } else {
-          // login failed
-          this.error = 'Innlogging feilet';
-          this.loading = false;
-        }
-      });
-  }
-
-  logout(): void {
-    this.authenticationService.logout();
-    this.router.navigate(['/'])
+  getUserCatalog(): string {
+    return this.loggedInUser.catalog;
   }
 
 }
