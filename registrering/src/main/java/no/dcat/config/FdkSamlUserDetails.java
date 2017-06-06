@@ -19,10 +19,11 @@ public class FdkSamlUserDetails extends SAMLUserDetails {
         this.samlCredential = samlCredential;
     }
 
+    /*
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         GrantedAuthority authority = new SimpleGrantedAuthority(AuthorisationService.getOrganisation(this.samlCredential.getAttributeAsString("uid")));
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), authority);
-    }
+    }*/
 
 }

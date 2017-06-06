@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,13 +51,18 @@ public class LoginController {
         SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
         String ssn = userDetails.getAttribute("uid");
 
-        List<GrantedAuthority> catalogGrants = new ArrayList<>();
-        for (String catalogId : AuthorisationService.getOrganisations(ssn)) {
-            logger.debug("Register catalogId {}",catalogId);
-            catalogGrants.add(new SimpleGrantedAuthority(catalogId));
-        }
+        List<GrantedAuthority> catalogGrants = new ArrayList<GrantedAuthority>(authentication.getAuthorities());
 
-        userDetails.getAuthorities().addAll(catalogGrants);
+        for (String catalogId : AuthorisationService.getOrganisations(ssn)) {
+            logger.debug("Register catalogId {}", catalogId);
+            SimpleGrantedAuthority catalogGrant = new SimpleGrantedAuthority(catalogId);
+            catalogGrants.add( catalogGrant );
+        }
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+                authentication.getCredentials(),
+                catalogGrants);
+
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
 
 
         User user = new User();

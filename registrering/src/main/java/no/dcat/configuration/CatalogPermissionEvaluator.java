@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +17,16 @@ import java.io.Serializable;
 public class CatalogPermissionEvaluator implements PermissionEvaluator {
     private static Logger logger = LoggerFactory.getLogger(CatalogPermissionEvaluator.class);
 
-
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
 
-        //return ((UserDetails) authentication.getPrincipal()).hasPermission(targetDomainObject, permission);
         logger.debug("hasPermission 1");
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (authority.getAuthority().equals(targetDomainObject)) {
+                logger.info("User {} hasPermission to {}", authentication.getName(), targetDomainObject);
+                return true;
+            }
+        }
+
         return false;
     }
 

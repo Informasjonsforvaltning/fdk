@@ -6,6 +6,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
 import no.dcat.service.CatalogRepository;
+import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -55,15 +63,24 @@ public class CatalogController {
 
         Authentication auth = springSecurityContextBean.getAuthentication();
 
-        //get logged in username
-        String username = auth.getName();
+        Set<String> validCatalogs = new HashSet<>();
+        boolean admin = false;
+        for (GrantedAuthority authority : auth.getAuthorities()) {
 
-        auth.getAuthorities()
-                .forEach(authority -> logger.debug(authority.getAuthority().toString() ));
-                        //createCatalogIfNotExists(authority.getAuthority())
+            if ("USER_ADMIN".equals(authority.getAuthority())) {
+                admin = true;
+            } else {
+                validCatalogs.add(authority.getAuthority());
+            }
+        }
 
+        Page<Catalog> catalogs = null;
+        if (admin) {
+            catalogs = catalogRepository.findAll(pageable);
+        } else {
+            catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
+        }
 
-        Page<Catalog> catalogs = catalogRepository.findAll(pageable);
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
 
@@ -73,13 +90,14 @@ public class CatalogController {
      * @param catalog catalog skeleton to copy from
      * @return new catalog object
      */
+    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
     @CrossOrigin
     @RequestMapping(value = "", method = POST,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
         logger.info("Add catalog: " + catalog.toString());
-        if(catalog.getId() == null) {
+        if (catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -110,10 +128,11 @@ public class CatalogController {
     /**
      * Update existing catalog.
      *
-     * @param id the of the catalog
+     * @param id      the of the catalog
      * @param catalog the catalog object with fields to update
      * @return the saved catalog
      */
+    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
     @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = PUT,
@@ -147,6 +166,7 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
+    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
             consumes = APPLICATION_JSON_VALUE,
@@ -163,6 +183,7 @@ public class CatalogController {
      * @param id of the catalog
      * @return the catalog if it exist
      */
+    @PreAuthorize("hasPermission(#id, 'read') or hasRole('USER_ADMIN')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
