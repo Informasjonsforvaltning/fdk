@@ -1,6 +1,7 @@
 package no.dcat.config;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,9 @@ public class MyServiceProviderConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    @Autowired
+    private FdkSamlUserDetailsService fdkSamlUserDetailsService;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -44,5 +48,7 @@ public class MyServiceProviderConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
         // @formatter:on
+
+        saml().serviceProvider().authenticationProvider().userDetailsService(fdkSamlUserDetailsService);
     }
 }

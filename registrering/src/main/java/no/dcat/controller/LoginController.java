@@ -51,22 +51,8 @@ public class LoginController {
         SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
         String ssn = userDetails.getAttribute("uid");
 
-        List<GrantedAuthority> catalogGrants = new ArrayList<GrantedAuthority>(authentication.getAuthorities());
-
-        for (String catalogId : AuthorisationService.getOrganisations(ssn)) {
-            logger.debug("Register catalogId {}", catalogId);
-            SimpleGrantedAuthority catalogGrant = new SimpleGrantedAuthority(catalogId);
-            catalogGrants.add( catalogGrant );
-        }
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
-                authentication.getCredentials(),
-                catalogGrants);
-
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-
-
         User user = new User();
-        user.setCatalogs(AuthorisationService.getOrganisations(ssn));
+        user.setCatalog(AuthorisationService.getOrganisations(ssn).toString());
         user.setName(FolkeregisteretService.getName(ssn));
 
         createCatalogsIfNeeded(user.getCatalogs());
@@ -88,11 +74,7 @@ public class LoginController {
         String username = auth.getName();
 
         auth.getAuthorities()
-                .forEach(authority -> {
-                            logger.debug("createCatalogIfNotExists {}", authority.getAuthority());
-                            createCatalogIfNotExists(authority.getAuthority());
-                        }
-                );
+                .forEach(authority -> createCatalogIfNotExists(authority.getAuthority()));
 
         logger.info("Authenticating user: ");
         return new ResponseEntity<>(username, OK);
@@ -105,14 +87,15 @@ public class LoginController {
         }
     }
 
-    private void createCatalogIfNotExists(String orgnr) {
-        if (!orgnr.matches("\\d{9}")) {
-            logger.warn("Organization number is not valid: {}", orgnr);
+    private Optional<Catalog> createCatalogIfNotExists(String orgnr) {
+        if (! orgnr.matches("\\d{9}")) {
+            return Optional.empty();
         }
 
         HttpEntity<Catalog> catalogResponse = catalogController.getCatalog(orgnr);
         if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
-            catalogController.createCatalog(new Catalog(orgnr)).getBody();
+            return Optional.of(catalogController.createCatalog(new Catalog(orgnr)).getBody());
         }
+        return Optional.empty();
     }
 }
