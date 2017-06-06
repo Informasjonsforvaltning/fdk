@@ -13,10 +13,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -44,11 +49,20 @@ public class LoginController {
         SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
         String ssn = userDetails.getAttribute("uid");
 
+        List<GrantedAuthority> catalogGrants = new ArrayList<>();
+        for (String catalogId : AuthorisationService.getOrganisations(ssn)) {
+            logger.debug("Register catalogId {}",catalogId);
+            catalogGrants.add(new SimpleGrantedAuthority(catalogId));
+        }
+
+        userDetails.getAuthorities().addAll(catalogGrants);
+
+
         User user = new User();
-        user.setCatalog(AuthorisationService.getOrganisation(ssn));
+        user.setCatalogs(AuthorisationService.getOrganisations(ssn));
         user.setName(FolkeregisteretService.getName(ssn));
 
-        createCatalogIfNotExists(user.getCatalog());
+        createCatalogsIfNeeded(user.getCatalogs());
 
         return new ResponseEntity<>(user, OK);
     }
@@ -67,21 +81,31 @@ public class LoginController {
         String username = auth.getName();
 
         auth.getAuthorities()
-                .forEach(authority -> createCatalogIfNotExists(authority.getAuthority()));
+                .forEach(authority -> {
+                            logger.debug("createCatalogIfNotExists {}", authority.getAuthority());
+                            createCatalogIfNotExists(authority.getAuthority());
+                        }
+                );
 
         logger.info("Authenticating user: ");
         return new ResponseEntity<>(username, OK);
     }
 
-    private Optional<Catalog> createCatalogIfNotExists(String orgnr) {
-        if (! orgnr.matches("\\d{9}")) {
-            return Optional.empty();
+    private void createCatalogsIfNeeded(String[] organizations) {
+        for (String orgnr : organizations) {
+
+            createCatalogIfNotExists(orgnr);
+        }
+    }
+
+    private void createCatalogIfNotExists(String orgnr) {
+        if (!orgnr.matches("\\d{9}")) {
+            logger.warn("Organization number is not valid: {}", orgnr);
         }
 
         HttpEntity<Catalog> catalogResponse = catalogController.getCatalog(orgnr);
         if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
-            return Optional.of(catalogController.createCatalog(new Catalog(orgnr)).getBody());
+            catalogController.createCatalog(new Catalog(orgnr)).getBody();
         }
-        return Optional.empty();
     }
 }

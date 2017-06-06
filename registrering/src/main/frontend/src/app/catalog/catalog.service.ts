@@ -55,7 +55,7 @@ export class CatalogService {
 
   save(catalog: Catalog) : Promise<Catalog> {
     const url = `${this.catalogsUrl}/${catalog.id}/`
-    
+
     return this.http
       .put(url, catalog)
       .toPromise()

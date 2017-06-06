@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
@@ -15,6 +16,8 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,6 +36,9 @@ public class CatalogController {
     @Autowired
     private CatalogRepository catalogRepository;
 
+    @Autowired
+    private SpringSecurityContextBean springSecurityContextBean;
+
     /**
      * Lists all catalogs available
      *
@@ -44,8 +50,18 @@ public class CatalogController {
     @RequestMapping(value = "",
             method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable,
+    public HttpEntity<PagedResources<Catalog>> listCatalogs(Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
+
+        Authentication auth = springSecurityContextBean.getAuthentication();
+
+        //get logged in username
+        String username = auth.getName();
+
+        auth.getAuthorities()
+                .forEach(authority -> logger.debug(authority.getAuthority().toString() ));
+                        //createCatalogIfNotExists(authority.getAuthority())
+
 
         Page<Catalog> catalogs = catalogRepository.findAll(pageable);
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
