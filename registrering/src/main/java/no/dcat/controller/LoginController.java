@@ -17,15 +17,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -33,6 +34,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 public class LoginController {
 
+    public static final String D_9 = "\\d{9}";
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     private CatalogController catalogController;
@@ -48,30 +50,56 @@ public class LoginController {
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> getLoggedInUser() {
         Authentication authentication = springSecurityContextBean.getAuthentication();
-        SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
-        String ssn = userDetails.getAttribute("uid");
+        String ssn = addUserAuthorization(authentication);
 
-        List<GrantedAuthority> catalogGrants = new ArrayList<GrantedAuthority>(authentication.getAuthorities());
+        if (ssn != null) {
+            User user = new User();
+            user.setCatalogs(AuthorisationService.getOrganisations(ssn));
+            user.setName(FolkeregisteretService.getName(ssn));
 
-        for (String catalogId : AuthorisationService.getOrganisations(ssn)) {
-            logger.debug("Register catalogId {}", catalogId);
-            SimpleGrantedAuthority catalogGrant = new SimpleGrantedAuthority(catalogId);
-            catalogGrants.add( catalogGrant );
+            createCatalogsIfNeeded(user.getCatalogs());
+
+            return new ResponseEntity<>(user, OK);
         }
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
-                authentication.getCredentials(),
-                catalogGrants);
 
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        return new ResponseEntity<>(FORBIDDEN);
 
+    }
 
-        User user = new User();
-        user.setCatalogs(AuthorisationService.getOrganisations(ssn));
-        user.setName(FolkeregisteretService.getName(ssn));
+    private String addUserAuthorization(Authentication authentication) {
+        String ssn = null;
 
-        createCatalogsIfNeeded(user.getCatalogs());
+        SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
+        if (userDetails != null) {
+            ssn = userDetails.getAttribute("uid");
 
-        return new ResponseEntity<>(user, OK);
+            logger.debug("Create authority grants for {}", ssn);
+
+            List<GrantedAuthority> newAuthorityGrants = new ArrayList<GrantedAuthority>(authentication.getAuthorities());
+
+            Map<String,GrantedAuthority> existingCatalogGrants = new HashMap<>();
+            for (GrantedAuthority authority : authentication.getAuthorities()) {
+                String grant = authority.getAuthority();
+                if (grant.matches(D_9)) {
+                    existingCatalogGrants.put(grant, authority);
+                }
+            }
+
+            for (String catalogId : AuthorisationService.getOrganisations(ssn)) {
+                logger.debug("Register catalogId {}", catalogId);
+                if (!existingCatalogGrants.containsKey(catalogId)) {
+                    SimpleGrantedAuthority catalogGrant = new SimpleGrantedAuthority(catalogId);
+                    newAuthorityGrants.add(catalogGrant);
+                }
+            }
+
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+                    authentication.getCredentials(),
+                    newAuthorityGrants);
+
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+        }
+        return ssn;
     }
 
     /**
@@ -83,19 +111,24 @@ public class LoginController {
     @RequestMapping(value = "/login", method = POST)
     public HttpEntity<String> authenticateAndCreateMissingCatalogs() {
         Authentication auth = springSecurityContextBean.getAuthentication();
+        String ssn = addUserAuthorization(auth);
 
-        //get logged in username
-        String username = auth.getName();
 
-        auth.getAuthorities()
-                .forEach(authority -> {
-                            logger.debug("createCatalogIfNotExists {}", authority.getAuthority());
-                            createCatalogIfNotExists(authority.getAuthority());
-                        }
-                );
+            //get logged in username
+            String username = auth.getName();
 
-        logger.info("Authenticating user: ");
-        return new ResponseEntity<>(username, OK);
+            auth.getAuthorities()
+                    .forEach(authority -> {
+                                logger.debug("createCatalogIfNotExists {}", authority.getAuthority());
+                                createCatalogIfNotExists(authority.getAuthority());
+                            }
+                    );
+
+            logger.info("Authenticating user: {}", username);
+            return new ResponseEntity<>(username, OK);
+
+
+    //    return new ResponseEntity<>(FORBIDDEN);
     }
 
     private void createCatalogsIfNeeded(String[] organizations) {
@@ -106,13 +139,13 @@ public class LoginController {
     }
 
     private void createCatalogIfNotExists(String orgnr) {
-        if (!orgnr.matches("\\d{9}")) {
-            logger.warn("Organization number is not valid: {}", orgnr);
-        }
-
-        HttpEntity<Catalog> catalogResponse = catalogController.getCatalog(orgnr);
-        if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
-            catalogController.createCatalog(new Catalog(orgnr)).getBody();
+        if (orgnr.matches(D_9)) {
+            HttpEntity<Catalog> catalogResponse = catalogController.getCatalog(orgnr);
+            if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
+                catalogController.createCatalog(new Catalog(orgnr)).getBody();
+            }
+        } else {
+            logger.warn("Cannot create catalog. Organization number not valid number: {}", orgnr);
         }
     }
 }

@@ -166,7 +166,12 @@ public class DcatBuilder {
 
                 addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
                 addDateLiteral(datRes, dct_modified, dataset.getModified());
-                addProperty(datRes, dct_language, dataset.getLanguage());
+
+                if (dataset.getLanguage() != null) {
+                    for (SkosCode code : dataset.getLanguage()) {
+                        addProperty(datRes, dct_language, code.getUri());
+                    }
+                }
                 addProperties(datRes, dcat_landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, dcat_theme, dataset.getTheme());
 

@@ -22,7 +22,6 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
 
         expressionHandler.setPermissionEvaluator(catalogPermissionEvaluator);
-       // expressionHandler.setParameterNameDiscoverer(new SimpleParameterDiscoverer());
 
         return expressionHandler;
     }
