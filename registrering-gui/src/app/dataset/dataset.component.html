@@ -52,18 +52,14 @@
               Eksempeldata
           </div>
           <div class="fdk-panel-body">
-
-            <div class="radio">
-              <label><input type="checkbox" name="language" value="NOR"> Norsk</label>
-            </div>
-            <div class="radio">
-              <label><input type="checkbox" name="language" value="SMI"> Samisk</label>
-            </div>
-            <div class="radio">
-              <label><input type="checkbox" name="language" value="ENG"> Engelsk</label>
+            <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+              <label><!-- 416 -->
+                <input type="checkbox" id="checkbox-1" [formControl]="control">
+                {{availableLanguages[i].prefLabel.nb}}
+              </label>
             </div>
             <div class="row">
-              <div class="col-md-3">
+              <div *ngIf="dataset.modified" class="col-md-3">
                 <label for="description" class="control-label">Opprettet dato:</label>
                 <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
                                 formControlName="issued" ></my-date-picker>
@@ -89,7 +85,6 @@
                    [contact]="dataset.contactPoints[0]">
           </contact>
       </div>
-
   </form>
 
   <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>

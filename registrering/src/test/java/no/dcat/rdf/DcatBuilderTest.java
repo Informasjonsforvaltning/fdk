@@ -84,10 +84,10 @@ public class DcatBuilderTest {
         dataset.setPublisher(publisher);
         dataset.setIssued(Date.from(LocalDateTime.of(2016,12,24,12,30).toInstant(ZoneOffset.UTC)));
         dataset.setModified(Date.from(LocalDateTime.of(2017,01,20,13,25,3).toInstant(ZoneOffset.UTC)));
-        dataset.setLanguage(skosCode(
+        dataset.setLanguage(Collections.singletonList(skosCode(
                         "http://publications.europa.eu/resource/authority/language/NOR",
                         "NOR",
-                        map("nb", "Norsk")));
+                        map("nb", "Norsk"))));
 
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
         DataTheme theme = new DataTheme();

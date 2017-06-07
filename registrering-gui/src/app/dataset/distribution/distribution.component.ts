@@ -30,6 +30,8 @@ export class DistributionFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
+      console.log('this.distributions.parent is', this.distributions.root);
+      console.log('distribution is ', this.distribution);
         if(this.distribution.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
         setTimeout(()=>this.distributions.push(this.distributionForm), 1);
@@ -39,8 +41,8 @@ export class DistributionFormComponent implements OnInit {
         const formGroup = this.fb.group({
             id: [ distribution.id ],
             uri: [ distribution.uri || '', Validators.required ],
-            title: [ distribution.title[this.language] || '', Validators.required ],
-            description: [ distribution.description[this.language] ],
+            title: [ distribution.title || '', Validators.required ],
+            description: [ distribution.description ],
             accessURL: [ distribution.accessURL || []],
             downloadURL: [ distribution.downloadURL || []],
             license: [ distribution.license ],
