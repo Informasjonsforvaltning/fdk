@@ -30,8 +30,8 @@ export class DistributionListComponent implements OnInit {
         const distribution: Distribution = {
             id: Math.floor(Math.random() * 1000000).toString(),
             uri: '',
-            title: {nb:''},
-            description: {nb:''},
+            title: null,
+            description: null,
             accessURL: [],
             downloadURL: [],
             license: '',

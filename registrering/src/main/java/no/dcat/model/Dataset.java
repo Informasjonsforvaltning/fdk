@@ -75,7 +75,7 @@ public class Dataset {
     //dct:language
     //Norwegian: Språk
     @Field
-    private SkosCode language;
+    private List<SkosCode> language;
 
     //dcat:landingPage
     //Norwegian: Landingsside
