@@ -1,18 +1,8 @@
 package no.dcat.rdf;
 
-import no.dcat.model.Catalog;
-import no.dcat.model.Contact;
-import no.dcat.model.Dataset;
-import no.dcat.model.Distribution;
-import no.dcat.model.PeriodOfTime;
-import no.dcat.model.Publisher;
-import no.dcat.model.SkosCode;
+import no.dcat.model.*;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,7 +156,7 @@ public class DcatBuilder {
 
                 addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
                 addDateLiteral(datRes, dct_modified, dataset.getModified());
-                addProperty(datRes, dct_language, dataset.getLanguage());
+                addSkosCodes(datRes, dct_language, dataset.getLanguage());
                 addProperties(datRes, dcat_landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, dcat_theme, dataset.getTheme());
 
@@ -322,14 +312,19 @@ public class DcatBuilder {
         return this;
     }
 
+    public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes) {
+        if (codes != null) {
+            codes.forEach(code -> this.addProperty(resource, property, code));
+        }
+        return this;
+    }
+
     public DcatBuilder addProperties(Resource resource, Property property, List<String> uris) {
         if (uris != null) {
             for (String uri : uris) {
                 addProperty(resource, property, uri);
             }
-
         }
-
         return this;
     }
 
