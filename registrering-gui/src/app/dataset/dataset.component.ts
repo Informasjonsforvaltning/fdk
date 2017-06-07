@@ -122,16 +122,14 @@ export class DatasetComponent implements OnInit {
           .subscribe(dataset => {
             dataset.issued = "2017-05-16T11:52:25+00:00";
             dataset.modified = "2017-05-16T11:52:25+00:00";
-            dataset.samples.forEach((sample)=> {
-              sample.title = undefined;
-              //sample.description = undefined;
-            });
+
             dataset.languages = [];
             this.availableLanguages.forEach((language, index)=>{
               dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
                 if((index === checkboxIndex) && checkbox) dataset.languages.push(language);
               });
             });
+
             if(dataset.distributions) {
               dataset.distributions.forEach((distribution) => {
                 distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
