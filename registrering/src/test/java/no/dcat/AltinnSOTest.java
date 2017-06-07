@@ -8,12 +8,14 @@ import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -42,22 +44,18 @@ public class AltinnSOTest {
 
     @Test
     public void redirect() throws Throwable {
-        return;
-        /*
+
 
         RestTemplate restTemplate = new RestTemplate(getRequestFactory1());
         HttpHeaders headers = new HttpHeaders();
         headers.set("ApiKey", apikey);
         headers.set("Accept", "application/hal+json");
 
-        X509Certificate certificate = null;
-
-        ResponseEntity<String> response = restTemplate.getForEntity("https://tt02.altinn.no/api/serviceowner/reportees?subject=01116100572&servicecode=3811&serviceedition=201501",
+        ResponseEntity<String> response = restTemplate.exchange("https://tt02.altinn.no/api/serviceowner/reportees?subject=01116100572&servicecode=3811&serviceedition=201501",
+                HttpMethod.GET,null,
                 String.class, headers);
 
         logger.info("Response {}", response.getStatusCodeValue());
-
-*/
 
     }
 
@@ -88,17 +86,31 @@ public class AltinnSOTest {
     ClientHttpRequestFactory getRequestFactory1() {
 
         try {
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keyStore.load(new FileInputStream(new File("D://altinn/keystore.jks")),
-                    "keystore".toCharArray());
+            KeyStore keyStore = KeyStore.getInstance("PKCS12"); //KeyStore.getDefaultType());
+            keyStore.load(new FileInputStream(new File("D://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12")),
+                    "xEPtHApswvpiNHTp".toCharArray());
 
+            SSLContext sslcontext = SSLContexts.custom()
+                    .loadKeyMaterial(keyStore,"xEPtHApswvpiNHTp".toCharArray() )
+                    .build();
+
+            /*
             SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
                     new SSLContextBuilder()
-                            .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                            .loadKeyMaterial(keyStore, "password".toCharArray()).build());
+                            //.loadTrustMaterial(null, new TrustSelfSignedStrategy())
+                            .loadKeyMaterial(keyStore, "xEPtHApswvpiNHTp".toCharArray()).build());
+
             HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
             ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
-                    httpClient);
+                    httpClient);*/
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext);
+
+            CloseableHttpClient httpclient = HttpClients.custom()
+                    .setSSLSocketFactory(sslsf). build();
+
+            ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
+                    httpclient);
+
             return requestFactory;
         } catch (Exception e) {
             logger.error("Exception ", e);
