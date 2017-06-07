@@ -3,10 +3,8 @@ package no.dcat.controller;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
-import no.dcat.model.Dataset;
 import no.dcat.model.Publisher;
 import no.dcat.service.CatalogRepository;
-import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,12 +42,9 @@ public class CatalogController {
 
     @Autowired
     private SpringSecurityContextBean springSecurityContextBean;
-
     /**
-     * Lists all catalogs available
+     * Lists all authorised catalogs
      *
-     * @param pageable
-     * @param assembler
      * @return
      */
     @CrossOrigin

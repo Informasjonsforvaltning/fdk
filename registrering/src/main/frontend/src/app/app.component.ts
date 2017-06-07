@@ -28,8 +28,4 @@ export class AppComponent {
     return this.loggedInUser.name;
   }
 
-  getUserCatalog(): string {
-    return this.loggedInUser.catalog;
-  }
-
 }

@@ -1,21 +1,22 @@
 package no.dcat.mock.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AuthorisationService {
 
-    private static Map<String, String[]> userOrganisations = new HashMap<>();
+    private static Map<String, List<String>> userOrganisaitions = new HashMap<>();
 
     static {
-        userOrganisations.put("16079411314", new String[]{"974760673"});
-        userOrganisations.put("16079411233", new String[]{"974761076", "974760673"});
-        userOrganisations.put("16079411152", new String[]{"889640782"});
+        userOrganisaitions.put("16079411314", Arrays.asList("974760673"));
+        userOrganisaitions.put("16079411233", Arrays.asList("974761076"));
+        userOrganisaitions.put("16079411152", Arrays.asList("889640782", "974761076"));
     }
 
-    public static String[] getOrganisations(String ssn) {
-        return userOrganisations.get(ssn);
+
+    public static List<String> getOrganisations(String ssn) {
+        return userOrganisaitions.get(ssn);
     }
 }

@@ -6,8 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.saml.SAMLCredential;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FdkSamlUserDetails extends SAMLUserDetails {
 
@@ -19,11 +20,15 @@ public class FdkSamlUserDetails extends SAMLUserDetails {
         this.samlCredential = samlCredential;
     }
 
-    /*
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority(AuthorisationService.getOrganisation(this.samlCredential.getAttributeAsString("uid")));
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), authority);
-    }*/
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        AuthorisationService.getOrganisations(this.samlCredential.getAttributeAsString("uid"))
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .forEach(authorities::add);
+        return authorities;
+    }
 
 }
