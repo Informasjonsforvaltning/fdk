@@ -28,7 +28,7 @@ export interface Dataset {
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
   provenance?: {uri:string, prefLabel:{"nb":string}};
 
-  spatial?: string[];
+  spatial?: {uri:string, prefLabel:{"nb":string}}[];
 
   landingPages?: string[];
 

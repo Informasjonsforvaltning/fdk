@@ -19,20 +19,23 @@ export class SpatialComponent implements OnInit {
 
     public spatialForm: FormGroup;
 
+
     constructor(private fb: FormBuilder) {
     }
 
 
     ngOnInit() {
+        if (this.dataset.spatial) {
+            //this.spatialForm.
+        } else {
+            this.dataset.spatial = [];
+        }
+
         this.spatialForm = this.toFormGroup(this.dataset);
-        if(!this.dataset.spatial) {
-            this.dataset.spatial = []}
 
         this.spatialForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
             geoCoverage => {
-                if (geoCoverage.spatial.length === 0) {
-                    this.dataset.spatial = null;
-                } else {
+                if (geoCoverage.spatial) {
                     this.dataset.spatial = geoCoverage.spatial;
                 }
 
@@ -48,5 +51,6 @@ export class SpatialComponent implements OnInit {
             spatial : [ data.spatial || {}]
         });
     }
+
 
 }
