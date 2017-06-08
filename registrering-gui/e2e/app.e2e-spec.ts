@@ -54,8 +54,6 @@ describe('registrering-gui App', () => {
         let newDatasetLink = element(by.css("#datasets td"));
         newDatasetLink.click();
 
-        //#accessRightSelector > div:nth-child(2) > label > input
-
         //click restricted access right to display accessrightsComment field
         let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
         accessRights.click()
