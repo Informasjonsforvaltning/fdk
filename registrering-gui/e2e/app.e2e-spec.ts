@@ -47,6 +47,31 @@ describe('registrering-gui App', () => {
 
     });
 
+
+    it("should save spatial uris", () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        catalogLink.click();
+
+        let datasetLink = element(by.css("#datasets td"));
+        datasetLink.click();
+
+        let subjectInput = element(by.css("input[placeholder='Dekningsområde']"));
+        subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
+
+        var EC = protractor.ExpectedConditions;
+        var alertSuccess = element(by.css('.alert-success'));
+        browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.refresh();
+        let actualConformsTo = element(by.css("input[placeholder='Dekningsområde']"));
+        browser.wait(EC.presenceOf(actualConformsTo), 1000).then(() => {
+            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
+            expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
+        });
+
+    });
+
+
     it("should display accessRightsComments field if RESTRICTED is chosen and content is saved ", () => {
         let catalogLink = element(by.css("#datacatalogs td"));
         catalogLink.click();
@@ -107,7 +132,9 @@ describe('registrering-gui App', () => {
 
         });
 
+
     });
+
 
 
 

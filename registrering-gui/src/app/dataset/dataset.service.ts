@@ -20,6 +20,7 @@ const TEST_DATASETS: Dataset[] = [
     "catalog": "974760673",
     "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
     "identifiers" : ["http://brreg.no/identifier/1009"],
+    "spatials" : [{'uri': 'http://sws.geonames.org/3144096/', 'prefLabel' : {'nb' : 'Norge'}}],
     "_lastModified": "2012-04-23"
   }
 ]

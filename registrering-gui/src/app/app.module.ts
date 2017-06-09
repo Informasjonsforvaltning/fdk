@@ -28,6 +28,7 @@ import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import {SpatialComponent} from "./dataset/spatial/spatial.component";
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {InformationComponent} from "./dataset/information/information.component"
         ContactComponent,
         QualityComponent,
         AccessRightsComponent,
-        InformationComponent
+        InformationComponent,
+        SpatialComponent
     ],
     imports: [
         BrowserModule,
