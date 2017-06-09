@@ -101,13 +101,16 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
-      this.availableLanguages.forEach((language, languageIndex, languageArray) => {
-        dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray)=> {
-          if(language.code === datasetLanguage.code) {
-            languageArray[languageIndex].selected = true;
-          }
+      if(dataset.languages) {
+        this.availableLanguages.forEach((language, languageIndex, languageArray) => {
+          dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray)=> {
+            if(language.code === datasetLanguage.code) {
+              languageArray[languageIndex].selected = true;
+            }
+          })
         })
-      })
+      }
+
       // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.identifiers = this.dataset.identifiers || [];
@@ -115,6 +118,9 @@ export class DatasetComponent implements OnInit {
       //set default publisher to be the same as catalog
       this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
       this.dataset.languages = [];
+
+      dataset.samples = dataset.samples || [];
+      dataset.languages = dataset.languages || [];
 
       this.datasetForm = this.toFormGroup(this.dataset);
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
