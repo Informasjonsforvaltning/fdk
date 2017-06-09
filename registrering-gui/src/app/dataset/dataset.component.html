@@ -51,7 +51,7 @@
           <div class="fdk-panel-heading">
               Eksempeldata
           </div>
-          <div class="fdk-panel-body">
+          <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
             <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
               <label><!-- 416 -->
                 <input type="checkbox" id="checkbox-1" [formControl]="control">
