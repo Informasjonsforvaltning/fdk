@@ -14,80 +14,63 @@
     <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
-
   <!-- parent-form.component.html -->
-  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset && datasetForm">
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Opplysninger
-          </div>
-          <information [dataset]="dataset"
-                       (onSave)="onSave($event)">
-          </information>
+<form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Opplysninger</div>
+    <information [dataset]="dataset" (onSave)="onSave($event)"></information>
+  </div>
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Kvalitet</div>
+    <quality [dataset]="dataset" (onSave)="onSave($event)"></quality>
+  </div>
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Distribusjoner</div>
+    <div class="fdk-panel-body">
+      <distributions [datasetForm]="datasetForm" [distributions]="dataset.distributions"></distributions>
+    </div>
+  </div>
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Øvrige felter</div>
+    <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
+      <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+        <label><input type="checkbox" id="checkbox-1" [formControl]="control">{{availableLanguages[i].prefLabel.nb}}</label>
       </div>
-
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Kvalitet
-          </div>
-
-          <quality [dataset]="dataset"
-                   (onSave)="onSave($event)">
-          </quality>
+      <div class="row">
+        <div *ngIf="dataset.modified" class="col-md-3">
+          <label for="description" class="control-label">Opprettet dato:</label>
+          <my-date-picker
+            placeholder="Opprettet dato"
+            name="issued"
+            [options]="myDatePickerOptions"
+            locale="no"
+            formControlName="issued" >
+          </my-date-picker>
+          <label for="description" class="control-label">Endret dato:</label>
+          <my-date-picker
+            placeholder="Endret dato"
+            name="modified"
+            [options]="myDatePickerOptions"
+            locale="no"
+            formControlName="modified">
+          </my-date-picker>
+        </div>
       </div>
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Distribusjoner
-          </div>
-          <div class="fdk-panel-body">
-                <distributions
-                    [datasetForm]="datasetForm"
-                    [distributions]="dataset.distributions"
-                    >
-                </distributions>
-          </div>
-      </div>
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Eksempeldata
-          </div>
-          <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
-            <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
-              <label><!-- 416 -->
-                <input type="checkbox" id="checkbox-1" [formControl]="control">
-                {{availableLanguages[i].prefLabel.nb}}
-              </label>
-            </div>
-            <div class="row">
-              <div *ngIf="dataset.modified" class="col-md-3">
-                <label for="description" class="control-label">Opprettet dato:</label>
-                <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-                                formControlName="issued" ></my-date-picker>
-                <label for="description" class="control-label">Endret dato:</label>
-                <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
-                                formControlName="modified"></my-date-picker>
-              </div>
-            </div>
-            <distributions
-                [datasetForm]="datasetForm"
-                [distributions]="dataset.samples"
-                title="Eksempeldata"
-                >
-            </distributions>
-          </div>
-      </div>
-
-      <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
-          <div class="fdk-panel-heading">
-              Kontaktinformasjon
-          </div>
-          <contact [contactsArray]="datasetForm.controls.contactPoints"
-                   [contact]="dataset.contactPoints[0]">
-          </contact>
-      </div>
-  </form>
-
-  <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
-  <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett
-    datasett
-  </button>
+      <distributions
+          [datasetForm]="datasetForm"
+          [distributions]="dataset.samples"
+          title="Eksempeldata"
+          >
+      </distributions>
+    </div>
+  </div>
+  <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
+    <div class="fdk-panel-heading">Kontaktinformasjon</div>
+    <contact
+      [contactsArray]="datasetForm.controls.contactPoints"
+      [contact]="dataset.contactPoints[0]">
+    </contact>
+  </div>
+</form>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett datasett</button>

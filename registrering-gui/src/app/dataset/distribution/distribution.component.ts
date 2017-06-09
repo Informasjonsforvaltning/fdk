@@ -33,17 +33,21 @@ export class DistributionFormComponent implements OnInit {
         if(this.distribution.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
         window['formRawValues'] = window['formRawValues'] || [];
-        var jsonRawValue = JSON.stringify(this.distributionForm.getRawValue());
-        if(window['formRawValues'].indexOf(jsonRawValue) === -1) {
+        var rawValue = this.distributionForm.getRawValue();
+        rawValue.id = Math.random().toString().substr(2);
+        this.distributionForm.setValue(rawValue);
+        var jsonRawValue = JSON.stringify(rawValue);
+        if(window['formRawValues'].indexOf(jsonRawValue) !== -1) {
+          console.log('hei da', jsonRawValue);
           this.distributions.push(this.distributionForm);
-          window['formRawValues'].push(jsonRawValue)
+          window['formRawValues'].push(jsonRawValue);
         }
         //setTimeout(()=>this.distributions.push(this.distributionForm), 1);
     }
 
     private toFormGroup(distribution: Distribution) {
         const formGroup = this.fb.group({
-            id: [ distribution.id ],
+            id: [ distribution.id || Math.random().toString().substr(2)],
             uri: [ distribution.uri || '', Validators.required ],
             title: [ distribution.title || '', Validators.required ],
             description: [ distribution.description ],

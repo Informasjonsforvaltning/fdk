@@ -110,7 +110,6 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-
       // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.identifiers = this.dataset.identifiers || [];
@@ -128,6 +127,12 @@ export class DatasetComponent implements OnInit {
           .subscribe(dataset => {
             dataset.issued = "2017-05-16T11:52:25+00:00";
             dataset.modified = "2017-05-16T11:52:25+00:00";
+              if(dataset.modified.formatted) {
+                dataset.modified = dataset.modified.formatted.replace(/\./g,"-");
+              }
+              if(dataset.issued.formatted) {
+                dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
+              }
 
             dataset.languages = [];
             this.availableLanguages.forEach((language, index)=>{

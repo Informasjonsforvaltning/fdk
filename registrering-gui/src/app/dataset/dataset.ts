@@ -31,13 +31,14 @@ export interface Dataset {
 
   distributions?: Distribution[];
 
-  samples?: Distribution[];
 
   modified?:string;
 
   issued?: string;
 
   languages?: Skoscode[];
+
+  samples?: Distribution[]; 
 
   _lastModified: string;
 }
