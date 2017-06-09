@@ -38,7 +38,7 @@ export class DistributionListComponent implements OnInit {
             format: [],
             ui_visible: true
         };
-        //this.distributions = this.distributions || [];
+        this.distributions = this.distributions || [];
         this.distributions.push(distribution);
         //this.cd.detectChanges();
         return false;
