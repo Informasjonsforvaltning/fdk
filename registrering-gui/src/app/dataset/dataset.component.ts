@@ -238,23 +238,20 @@ export class DatasetComponent implements OnInit {
       return this.service.get(this.catId, datasetId);
   }
 
-  private getDateObjectFromUnixTimestamp(timestamp:string) {
-    let date = new Date(timestamp);
-    return {
-      date: {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate()
-      },
-      formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
-    }
+(??)private getDateObjectFromUnixTimestamp(timestamp:string) {
+(??)  let date = new Date(timestamp);
+(??)  return {
+(??)    date: {
+(??)      year: date.getFullYear(),
+(??)      month: date.getMonth() + 1,
+(??)      day: date.getDate()
+(??)    },
+(??)    formatted: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
   }
-/*
-    get skills(): FormArray {
-      return this.form.get('skills') as FormArray;
-    };*/
+(??)}
 
   private toFormGroup(data: Dataset): FormGroup {
+    this.getDateObjectFromUnixTimestamp(data.issued)
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
@@ -263,8 +260,8 @@ export class DatasetComponent implements OnInit {
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([]),
-          issued:[this.getDateObjectFromUnixTimestamp(data.issued || (new Date()).toString())],
-          modified: [this.getDateObjectFromUnixTimestamp(data.modified || (new Date()).toString())],
+(??)          issued:this.getDateObjectFromUnixTimestamp(data.issued),
+(??)          modified: this.getDateObjectFromUnixTimestamp(data.modified),
           samples: this.formBuilder.array([]),
           checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)}))
         });
