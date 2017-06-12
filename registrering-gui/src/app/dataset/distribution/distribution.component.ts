@@ -30,6 +30,8 @@ export class DistributionFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
+      console.log('this.distributions.parent is', this.distributions.root);
+      console.log('distribution is ', this.distribution);
         if(this.distribution.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
         window['formRawValues'] = window['formRawValues'] || [];
