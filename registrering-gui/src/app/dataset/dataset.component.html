@@ -33,6 +33,7 @@
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Øvrige felter</div>
     <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
+      {{availableLanguages | json}}
       <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
         <label><input type="checkbox" id="checkbox-1" [formControl]="control">{{availableLanguages[i].prefLabel.nb}}</label>
       </div>
