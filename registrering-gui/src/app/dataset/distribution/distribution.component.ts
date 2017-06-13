@@ -12,8 +12,8 @@ import { Distribution } from './distribution';
 export class DistributionFormComponent implements OnInit {
     language:string = 'nb';
     showForm:boolean = false;
-    @Input('distributions')
-    public distributions: FormArray;
+    @Input('distributionsFormArray')
+    public distributionsFormArray: FormArray;
 
     @Input('distribution')
     public distribution: Distribution;
@@ -32,21 +32,14 @@ export class DistributionFormComponent implements OnInit {
     ngOnInit() {
         if(this.distribution.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
-        window['formRawValues'] = window['formRawValues'] || [];
-        var jsonRawValue = JSON.stringify(this.distributionForm.getRawValue());
-        if(window['formRawValues'].indexOf(jsonRawValue) === -1) {
-          this.distributions.push(this.distributionForm);
-          window['formRawValues'].push(jsonRawValue)
-        }
-        //setTimeout(()=>this.distributions.push(this.distributionForm), 1);
     }
 
     private toFormGroup(distribution: Distribution) {
         const formGroup = this.fb.group({
-            id: [ distribution.id ],
+            id: [ distribution.id || Math.random().toString().substr(2)],
             uri: [ distribution.uri || '', Validators.required ],
             title: [ distribution.title || '', Validators.required ],
-            description: [ distribution.description ],
+            description: [ distribution.description[this.language] ],
             accessURL: [ distribution.accessURL || []],
             downloadURL: [ distribution.downloadURL || []],
             license: [ distribution.license ],
@@ -60,7 +53,7 @@ export class DistributionFormComponent implements OnInit {
 
     removeDistribution(idx: number) {
       this.deleteDistribution.emit(idx.toString());
-      this.distributions.removeAt(idx);
+      this.distributionsFormArray.removeAt(idx);
       return false;
     }
 }

@@ -2,14 +2,14 @@
     {{title}}
 </h3>
 
-<div *ngIf="distributions.controls" class="distribution-list"
+<div class="distribution-list"
      [formGroup]="datasetForm">
 
     <div formArrayName="distributions">
         <div *ngFor="let distribution of distributions; let idx=index ">
         <br />
             <distribution
-                [distributions]="datasetForm.controls.samples"
+                [distributionsFormArray]="distributionsFormArray"
                 [distribution]="distribution"
                 (deleteDistribution)="removeDistribution($event)"
                 [distributionIndex]="idx">

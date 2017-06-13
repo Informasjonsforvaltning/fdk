@@ -248,6 +248,7 @@ export class DatasetComponent implements OnInit {
     };*/
 
   private toFormGroup(data: Dataset): FormGroup {
+    this.getDateObjectFromUnixTimestamp(data.issued)
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
