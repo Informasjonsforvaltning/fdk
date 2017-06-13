@@ -1,6 +1,11 @@
 # Docker module
 
-Used for starting containers locally with docker compose. You need docker installed.
+Used for starting containers locally with docker compose. You need docker installed 
+and allow it to share disk.
+
+# Download
+Download the docker-compose.yml and docker-compose.override.yml files to a empty directory. Create a catalog called data. 
+Then start the wanted application (se below) 
 
 # Usage
 
@@ -15,8 +20,12 @@ there is no data registered in the repositories (see the harvester application)
 >`docker-compose up -d harvester`
 
 This starts the harvester application with the corresponding harvester-api. 
-Log in to the administration application on [http://localhost:8082](http://localhost:8082).
-You will need a username and a password for the application. 
+  - Log in to the administration application on [http://localhost:8082](http://localhost:8082).
+      You will need a username and a password for the application (test_user, password). 
+  - Next you need to register a catalog to be harvested. Try to register the following url: 
+    [http://gdoc-fdk.tt1.brreg.no/versions/latest](http://gdoc-fdk.tt1.brreg.no/versions/latest)
+    Alternatively start the gdoc application and enter the following url 
+    [http://localhost:8084/versions/latest](http://localhost:8084/versions/latest)
 
 ## Registration application:
 >`docker-compose up -d registration`
