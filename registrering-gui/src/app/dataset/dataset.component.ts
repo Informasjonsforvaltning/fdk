@@ -136,7 +136,6 @@ export class DatasetComponent implements OnInit {
             }
 
             this.dataset.languages = [];
-
             dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
               this.availableLanguages.forEach((language, index)=>{
                 if((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);

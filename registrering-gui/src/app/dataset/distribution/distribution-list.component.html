@@ -9,7 +9,7 @@
         <div *ngFor="let distribution of distributions; let idx=index ">
         <br />
             <distribution
-                [distributions]="datasetForm.controls.samples"
+                [distributionsFormArray]="distributionsFormArray"
                 [distribution]="distribution"
                 (deleteDistribution)="removeDistribution($event)"
                 [distributionIndex]="idx">

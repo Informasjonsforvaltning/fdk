@@ -12,8 +12,8 @@ import { Distribution } from './distribution';
 export class DistributionFormComponent implements OnInit {
     language:string = 'nb';
     showForm:boolean = false;
-    @Input('distributions')
-    public distributions: FormArray;
+    @Input('distributionsFormArray')
+    public distributionsFormArray: FormArray;
 
     @Input('distribution')
     public distribution: Distribution;
@@ -30,21 +30,9 @@ export class DistributionFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
-      console.log('this.distributions.parent is', this.distributions.root);
-      console.log('distribution is ', this.distribution);
         if(this.distribution.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
-        window['formRawValues'] = window['formRawValues'] || [];
-        var rawValue = this.distributionForm.getRawValue();
-        rawValue.id = Math.random().toString().substr(2);
-        this.distributionForm.setValue(rawValue);
-        var jsonRawValue = JSON.stringify(rawValue);
-        if(window['formRawValues'].indexOf(jsonRawValue) !== -1) {
-          console.log('hei da', jsonRawValue);
-          this.distributions.push(this.distributionForm);
-          window['formRawValues'].push(jsonRawValue);
-        }
-        //setTimeout(()=>this.distributions.push(this.distributionForm), 1);
+        this.distributionsFormArray.push(this.distributionForm); // this is causing ngOnInit in distribution.component.ts to be called
     }
 
     private toFormGroup(distribution: Distribution) {
@@ -66,7 +54,7 @@ export class DistributionFormComponent implements OnInit {
 
     removeDistribution(idx: number) {
       this.deleteDistribution.emit(idx.toString());
-      this.distributions.removeAt(idx);
+      this.distributionsFormArray.removeAt(idx);
       return false;
     }
 }
