@@ -154,6 +154,8 @@ services:
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
      - spring.application.catalogUriPrefix=http://localhost:8099
+    volumes:
+     - /c/git/fdk-properties:/git/fdk-properties/:rw
     links:
       - elasticsearch
     networks:
