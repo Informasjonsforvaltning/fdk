@@ -39,6 +39,34 @@
       <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
         <label><input type="checkbox" id="checkbox-1" [formControl]="control">{{availableLanguages[i].prefLabel.nb}}</label>
       </div>
+
+        <div class="row">
+          <div *ngIf="dataset.modified" class="col-md-3">
+            <label for="description" class="control-label">Opprettet dato:</label>
+            <my-date-picker
+              placeholder="Opprettet dato"
+              name="issued"
+              [options]="myDatePickerOptions"
+              locale="no"
+              formControlName="issued" >
+            </my-date-picker>
+            <label for="description" class="control-label">Endret dato:</label>
+            <my-date-picker
+              placeholder="Endret dato"
+              name="modified"
+              [options]="myDatePickerOptions"
+              locale="no"
+              formControlName="modified">
+            </my-date-picker>
+          </div>
+        </div>
+        <distributions
+            [datasetForm]="datasetForm"
+            [distributionsFormArray]="datasetForm.controls.samples"
+            [distributions]="dataset.samples"
+            title="Eksempeldata"
+            >
+        </distributions>      
     </div>
   </div>
 
@@ -78,35 +106,6 @@
                    (onSave)="onSave($event)">
           </quality>
       </div>
-    <div class="panel fdk-panel">
-      <div class="row">
-        <div *ngIf="dataset.modified" class="col-md-3">
-          <label for="description" class="control-label">Opprettet dato:</label>
-          <my-date-picker
-            placeholder="Opprettet dato"
-            name="issued"
-            [options]="myDatePickerOptions"
-            locale="no"
-            formControlName="issued" >
-          </my-date-picker>
-          <label for="description" class="control-label">Endret dato:</label>
-          <my-date-picker
-            placeholder="Endret dato"
-            name="modified"
-            [options]="myDatePickerOptions"
-            locale="no"
-            formControlName="modified">
-          </my-date-picker>
-        </div>
-      </div>
-      <distributions
-          [datasetForm]="datasetForm"
-          [distributionsFormArray]="datasetForm.controls.samples"
-          [distributions]="dataset.samples"
-          title="Eksempeldata"
-          >
-      </distributions>
-    </div>
   <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
     <div class="fdk-panel-heading">Kontaktinformasjon</div>
     <contact
