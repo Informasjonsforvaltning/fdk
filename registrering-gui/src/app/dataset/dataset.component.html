@@ -27,13 +27,16 @@
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Distribusjoner</div>
     <div class="fdk-panel-body">
-      <distributions [datasetForm]="datasetForm" [distributions]="dataset.distributions"></distributions>
+      <distributions
+              [title]="Distribusjoner"
+              [datasetForm]="datasetForm"
+              [distributionsFormArray]="datasetForm.controls.distributions"
+              [distributions]="dataset.distributions"></distributions>
     </div>
   </div>
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Øvrige felter</div>
     <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
-      {{availableLanguages | json}}
       <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
         <label><input type="checkbox" id="checkbox-1" [formControl]="control">{{availableLanguages[i].prefLabel.nb}}</label>
       </div>
@@ -59,6 +62,7 @@
       </div>
       <distributions
           [datasetForm]="datasetForm"
+          [distributionsFormArray]="datasetForm.controls.samples"
           [distributions]="dataset.samples"
           title="Eksempeldata"
           >
