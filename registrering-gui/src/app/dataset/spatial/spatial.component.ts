@@ -65,7 +65,7 @@ export class SpatialComponent implements OnInit {
 
     private toFormGroup(data: Dataset) {
         return this.fb.group({
-            spatial : [this.spatialUris]
+            spatial : [this.spatialUris || []]
         });
     }
 
