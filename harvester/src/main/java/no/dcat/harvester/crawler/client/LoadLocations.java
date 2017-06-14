@@ -6,6 +6,7 @@ import no.dcat.data.store.Elasticsearch;
 import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.harvester.theme.builders.vocabulary.GeonamesRDF;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
@@ -85,14 +86,19 @@ public class LoadLocations {
                 continue;
             }
 
-            Model locModel = retrieveTitleOfLocations(locUri);
+            try {
+                Model locModel = retrieveTitleOfLocations(locUri);
 
-            ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
-            while (resIter.hasNext()) {
-                Map<String, String> titleMap = extractLocationTitle(resIter.next());
-                SkosCode code = (SkosCode) loc.getValue();
-                code.setPrefLabel(titleMap);
+                ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
+                while (resIter.hasNext()) {
+                    Map<String, String> titleMap = extractLocationTitle(resIter.next());
+                    SkosCode code = (SkosCode) loc.getValue();
+                    code.setPrefLabel(titleMap);
+                }
+            } catch (HttpException ex) {
+                logger.warn("No success looking up location title from uri {}",locUri, ex);
             }
+
         }
 
         return this;

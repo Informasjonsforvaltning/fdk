@@ -11,11 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.hateoas.core.Relation;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Document(indexName = "register", type = Dataset.ELASTIC_TYPE)
 @Data
@@ -119,7 +115,7 @@ public class Dataset {
 
     //dcatno:accessRightsComment
     //Norwegian: Skjermingshjemmel.
-    //Norwegian extension to the dcat standard. Recommended used with accesRights.
+    //Norwegian extension to the dcat standard. Recommended used with accessRights.
     @Field
     private List<String> accessRightsComment;
 

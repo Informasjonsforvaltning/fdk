@@ -14,7 +14,6 @@
     <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
-  <!-- parent-form.component.html -->
 <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Opplysninger</div>
@@ -40,6 +39,46 @@
       <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
         <label><input type="checkbox" id="checkbox-1" [formControl]="control">{{availableLanguages[i].prefLabel.nb}}</label>
       </div>
+    </div>
+  </div>
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Opplysninger
+          </div>
+          <information [dataset]="dataset"
+                       (onSave)="onSave($event)">
+          </information>
+      </div>
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Tilgangsnivå
+          </div>
+          <accessRights [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </accessRights>
+      </div>
+
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Geografisk avgrensning
+          </div>
+          <spatial [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </spatial>
+      </div>
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Kvalitet
+          </div>
+          <quality [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </quality>
+      </div>
+    <div class="panel fdk-panel">
       <div class="row">
         <div *ngIf="dataset.modified" class="col-md-3">
           <label for="description" class="control-label">Opprettet dato:</label>
@@ -68,7 +107,6 @@
           >
       </distributions>
     </div>
-  </div>
   <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
     <div class="fdk-panel-heading">Kontaktinformasjon</div>
     <contact
