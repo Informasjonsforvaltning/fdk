@@ -41,9 +41,9 @@ export class DistributionListComponent implements OnInit {
             format: [],
             ui_visible: true
         };
-        this.distributions.push(distribution);
-        this.cd.detectChanges();
-      return false;
+          this.distributions.push(distribution);
+          this.cd.detectChanges();
+          return false; 
     }
 
     removeDistribution(idx: number) {

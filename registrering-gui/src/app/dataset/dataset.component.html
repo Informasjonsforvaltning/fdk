@@ -14,43 +14,29 @@
     <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett" (ngModelChange)="valuechange(this)" placeholder="Beskrivelse" [(ngModel)]='dataset.description[language]'></textarea>
   </div>
 </div>
-
-  <!-- parent-form.component.html -->
-  <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset && datasetForm">
+<form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Opplysninger</div>
+    <information [dataset]="dataset" (onSave)="onSave($event)"></information>
+  </div>
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Kvalitet</div>
+    <quality [dataset]="dataset" (onSave)="onSave($event)"></quality>
+  </div>
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Distribusjoner</div>
+    <div class="fdk-panel-body">
+      <distributions
+              [title]="Distribusjoner"
+              [datasetForm]="datasetForm"
+              [distributionsFormArray]="datasetForm.controls.distributions"
+              [distributions]="dataset.distributions"></distributions>
+    </div>
+  </div>
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Øvrige felter</div>
+    <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body dataset-languages">
       <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Opplysninger
-          </div>
-          <information [dataset]="dataset"
-                       (onSave)="onSave($event)">
-          </information>
-      </div>
-
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Kvalitet
-          </div>
-
-          <quality [dataset]="dataset"
-                   (onSave)="onSave($event)">
-          </quality>
-      </div>
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Distribusjoner
-          </div>
-          <div class="fdk-panel-body">
-                <distributions
-                    [datasetForm]="datasetForm"
-                    [distributions]="dataset.distributions"
-                    >
-                </distributions>
-          </div>
-      </div>
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Eksempeldata
-          </div>
           <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
             <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
               <label><!-- 416 -->
@@ -70,24 +56,59 @@
             </div>
             <distributions
                 [datasetForm]="datasetForm"
+                [distributionsFormArray]="datasetForm.controls.samples"
                 [distributions]="dataset.samples"
                 title="Eksempeldata"
                 >
             </distributions>
           </div>
       </div>
+    </div>
+  </div>
 
-      <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
+      <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
-              Kontaktinformasjon
+              Opplysninger
           </div>
-          <contact [contactsArray]="datasetForm.controls.contactPoints"
-                   [contact]="dataset.contactPoints[0]">
-          </contact>
+          <information [dataset]="dataset"
+                       (onSave)="onSave($event)">
+          </information>
       </div>
-  </form>
 
-  <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
-  <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett
-    datasett
-  </button>
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Tilgangsnivå
+          </div>
+          <accessRights [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </accessRights>
+      </div>
+
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Geografisk avgrensning
+          </div>
+          <spatial [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </spatial>
+      </div>
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Kvalitet
+          </div>
+          <quality [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </quality>
+      </div>
+  <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
+    <div class="fdk-panel-heading">Kontaktinformasjon</div>
+    <contact
+      [contactsArray]="datasetForm.controls.contactPoints"
+      [contact]="dataset.contactPoints[0]">
+    </contact>
+  </div>
+</form>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett datasett</button>
