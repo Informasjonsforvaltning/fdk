@@ -47,7 +47,7 @@ public class AltinnSOTest {
         HttpHeaders headers = new HttpHeaders();
         headers.set("ApiKey", apikey);
         headers.set("Accept", "application/hal+json");
-        headers.set("Cookie", "BIGipServer~autoprov~aiport.ai-tt02-port.ai-test.osl.basefarm.net-85=rd1o00000000000000000000ffff0a2b991eo851; path=/");
+        //headers.set("Cookie", "BIGipServer~autoprov~aiport.ai-tt02-port.ai-test.osl.basefarm.net-85=rd1o00000000000000000000ffff0a2b991eo851; path=/");
 
 
 
