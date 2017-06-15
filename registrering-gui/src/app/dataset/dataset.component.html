@@ -30,13 +30,30 @@
 
       <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
+              Tilgangsnivå
+          </div>
+          <accessRights [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </accessRights>
+      </div>
+
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
+              Geografisk avgrensning
+          </div>
+          <spatial [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </spatial>
+      </div>
+
+      <div class="panel fdk-panel">
+          <div class="fdk-panel-heading">
               Kvalitet
           </div>
-
           <quality [dataset]="dataset"
                    (onSave)="onSave($event)">
           </quality>
-
       </div>
 
         <div class="panel fdk-panel">
