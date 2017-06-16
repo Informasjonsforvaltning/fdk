@@ -75,15 +75,15 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-            </plugin>
-
             <!-- skip this step by -DskipDockerBuild -->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <imageName>
+                        ${docker.registry}${docker.image.prefix}/search-api:latest
+                    </imageName>
+                </configuration>
             </plugin>
 
         </plugins>

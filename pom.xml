@@ -62,6 +62,7 @@
 		<module>api-app</module>
 		<module>docker</module>
 		<module>support</module>
+		<module>services</module>
 		<module>registrering</module>
 		<module>registrering-gui</module>
 		<module>br-maven-main-msn</module>
@@ -84,11 +85,6 @@
 			<dependency>
 				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
-				<version>${fdk.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>no.dcat</groupId>
-				<artifactId>datastore</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>

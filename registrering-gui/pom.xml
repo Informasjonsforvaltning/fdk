@@ -113,7 +113,7 @@
 
         <configuration>
           <imageName>
-            dcatno/reg-gui:latest
+            dcatno/registration:latest
           </imageName>
           <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
           <serverId>docker-hub</serverId>
