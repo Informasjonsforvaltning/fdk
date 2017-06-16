@@ -12,8 +12,8 @@ import { Distribution } from './distribution';
 export class DistributionFormComponent implements OnInit {
     language:string = 'nb';
     showForm:boolean = false;
-    @Input('distributions')
-    public distributions: FormArray;
+    @Input('distributionsFormArray')
+    public distributionsFormArray: FormArray;
 
     @Input('distribution')
     public distribution: Distribution;
@@ -30,17 +30,17 @@ export class DistributionFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
-        if(this.distribution.ui_visible) this.showForm = true;
-        this.distributionForm = this.toFormGroup(this.distribution);
-        setTimeout(()=>this.distributions.push(this.distributionForm), 1);
+       if(this.distribution.ui_visible) this.showForm = true;
+       this.distributionForm = this.toFormGroup(this.distribution);
+       this.distributionsFormArray.push(this.distributionForm);
     }
 
     private toFormGroup(distribution: Distribution) {
         const formGroup = this.fb.group({
-            id: [ distribution.id ],
+            id: [ distribution.id || Math.random().toString().substr(2)],
             uri: [ distribution.uri || '', Validators.required ],
-            title: [ distribution.title[this.language] || '', Validators.required ],
-            description: [ distribution.description[this.language] ],
+            title: [ distribution.title || '', Validators.required ],
+            description: [ distribution.description ? distribution.description[this.language] : '' ],
             accessURL: [ distribution.accessURL || []],
             downloadURL: [ distribution.downloadURL || []],
             license: [ distribution.license ],
@@ -54,7 +54,7 @@ export class DistributionFormComponent implements OnInit {
 
     removeDistribution(idx: number) {
       this.deleteDistribution.emit(idx.toString());
-      this.distributions.removeAt(idx);
+       this.distributionsFormArray.removeAt(idx);
       return false;
     }
 }

@@ -151,6 +151,7 @@ describe('registrering-gui App', () => {
 
         let provenanceControl = element(by.css('[formcontrolname=provenance]'));
         provenanceControl.click();
+
         let provenanceControlFirstValue = element(by.css('[formcontrolname=provenance] li:first-child'));
         provenanceControlFirstValue.click();
 
@@ -166,10 +167,10 @@ describe('registrering-gui App', () => {
         browser.refresh();
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
-      browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
-        expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
-        expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
-      });
+        browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
+          expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Brukerinnsamlede data');
+          expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
+        });
     });
 
     it('should display message saying app works', () => {
@@ -277,7 +278,7 @@ describe('registrering-gui App', () => {
 
         let contactTelephone = element(by.id('contact-telephone'));
         contactTelephone.clear();
-        contactTelephone.sendKeys("+47123456")
+        contactTelephone.sendKeys("+47123456");
 
         var EC = protractor.ExpectedConditions;
         var alertSuccess = element(by.css('.alert-success'));
@@ -294,6 +295,70 @@ describe('registrering-gui App', () => {
         });
     });
 
+    it("Should handle saving of checkboxes in new dataset", () => {
+      let catalogLink = element(by.css("#datacatalogs td"));
+      catalogLink.click();
 
+      let newDatasetLink = element(by.css("#datasets td"));
+      newDatasetLink.click();
 
+      let datasetH1Input = element(by.css(".fdk-register-h1"));
+      datasetH1Input.clear();
+      datasetH1Input.sendKeys('Test of checkboxes for languages');
+
+      let datasetLanguagesEngelsk = element(by.css('.dataset-languages input'));
+      datasetLanguagesEngelsk.click();
+
+      let datasetLanguagesSamisk = element(by.css('.dataset-languages input:last-child'));
+      datasetLanguagesSamisk.click();
+      //browser.pause();
+      var EC = protractor.ExpectedConditions;
+      var alertSuccess = element(by.css('.alert-success'));
+      browser.wait(EC.presenceOf(alertSuccess), 10000).then(()=>{
+        browser.refresh()
+        let datasetLanguagesEngelskElement = element(by.css('.dataset-languages input'));
+
+        browser.wait(EC.presenceOf(datasetLanguagesEngelskElement),10000).then(() => {
+          expect(datasetLanguagesEngelskElement.getAttribute('checked') ).toBeTruthy();
+          expect(element(by.css('.dataset-languages input:last-child')).getAttribute('checked') ).toBeTruthy();
+        });
+        let deleteDatasetButton = element(by.css('button:last-child'));
+        deleteDatasetButton.click();
+      });
+    });
+
+    it("Should handle saving of date in new dataset", () => {
+      let catalogLink = element(by.css("#datacatalogs td"));
+      catalogLink.click();
+
+      let newDatasetLink = element(by.css("#datasets td"));
+      newDatasetLink.click();
+
+      let datasetH1Input = element(by.css(".fdk-register-h1"));
+      datasetH1Input.clear();
+      datasetH1Input.sendKeys('Test of checkboxes for languages');
+
+      let calendarButton = element(by.css('.btnpicker.btnpickerenabled'));
+      calendarButton.click();
+
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.presenceOf(element(by.css('.daycell.currmont.tablesingleday'))),10000).then(() => {
+        let dayButton = element(by.css('.daycell.currmont.tablesingleday'));
+        dayButton.click();
+      });
+
+      //browser.pause();
+      var alertSuccess = element(by.css('.alert-success'));
+      browser.wait(EC.presenceOf(alertSuccess), 10000).then(()=>{
+        browser.refresh()
+        let datasetLanguagesEngelskElement = element(by.css('.dataset-languages input'));
+
+        browser.wait(EC.presenceOf(datasetLanguagesEngelskElement),10000).then(() => {
+          expect(datasetLanguagesEngelskElement.getAttribute('checked') ).toBeTruthy();
+          expect(element(by.css('.dataset-languages input:last-child')).getAttribute('checked') ).toBeTruthy();
+        });
+        let deleteDatasetButton = element(by.css('button:last-child'));
+        deleteDatasetButton.click();
+      });
+    });
 });
