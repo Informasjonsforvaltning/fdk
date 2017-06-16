@@ -68,15 +68,6 @@
 
       <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
-              Opplysninger
-          </div>
-          <information [dataset]="dataset"
-                       (onSave)="onSave($event)">
-          </information>
-      </div>
-
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
               Tilgangsnivå
           </div>
           <accessRights [dataset]="dataset"
@@ -94,14 +85,6 @@
           </spatial>
       </div>
 
-      <div class="panel fdk-panel">
-          <div class="fdk-panel-heading">
-              Kvalitet
-          </div>
-          <quality [dataset]="dataset"
-                   (onSave)="onSave($event)">
-          </quality>
-      </div>
   <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
     <div class="fdk-panel-heading">Kontaktinformasjon</div>
     <contact
