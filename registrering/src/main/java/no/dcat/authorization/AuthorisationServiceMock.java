@@ -1,11 +1,11 @@
-package no.dcat.mock.service;
+package no.dcat.authorization;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AuthorisationService {
+public class AuthorisationServiceMock {
 
     private static Map<String, List<String>> userOrganisaitions = new HashMap<>();
 

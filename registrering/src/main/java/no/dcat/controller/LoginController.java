@@ -1,8 +1,8 @@
 package no.dcat.controller;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
+import no.dcat.authorization.AuthorizationService;
 import no.dcat.configuration.SpringSecurityContextBean;
-import no.dcat.mock.service.FolkeregisteretService;
 import no.dcat.model.Catalog;
 import no.dcat.model.user.User;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class LoginController {
 
         User user = new User();
 
-        user.setName(FolkeregisteretService.getName(ssn));
+        user.setName(AuthorizationService.getName(ssn));
 
         List<String> catalogs= authentication.getAuthorities()
                 .stream()

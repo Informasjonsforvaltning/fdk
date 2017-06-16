@@ -1,7 +1,7 @@
 package no.dcat.config;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
-import no.dcat.mock.service.AuthorisationService;
+import no.dcat.authorization.AuthorisationServiceMock;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.saml.SAMLCredential;
@@ -24,7 +24,7 @@ public class FdkSamlUserDetails extends SAMLUserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        AuthorisationService.getOrganisations(this.samlCredential.getAttributeAsString("uid"))
+        AuthorisationServiceMock.getOrganisations(this.samlCredential.getAttributeAsString("uid"))
                 .stream()
                 .map(SimpleGrantedAuthority::new)
                 .forEach(authorities::add);
