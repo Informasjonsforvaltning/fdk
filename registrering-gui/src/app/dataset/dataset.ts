@@ -1,6 +1,7 @@
 import {Contact} from "./contact/contact";
 import {Publisher} from "./publisher";
 import {Distribution} from "./distribution/distribution";
+import {Skoscode} from './skoscode';
 export interface Dataset {
   id: string;
   title?: {
@@ -41,6 +42,14 @@ export interface Dataset {
   conformsTos?: string[];
 
   distributions?: Distribution[];
+
+  samples?: Distribution[];
+
+  modified?:string;
+
+  issued?: string;
+
+  languages?: Skoscode[];
 
   _lastModified: string;
 }

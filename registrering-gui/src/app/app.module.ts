@@ -28,7 +28,10 @@ import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
+
+
 
 
 @NgModule({
@@ -56,7 +59,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         AlertModule.forRoot(),
         RouterModule.forRoot(routes),
         BootstrapModalModule,
-        RlTagInputModule
+        RlTagInputModule,
+	MyDatePickerModule
     ],
     entryComponents: [
         ConfirmComponent

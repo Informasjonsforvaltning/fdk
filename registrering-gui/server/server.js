@@ -29,7 +29,7 @@ module.exports = {
         queryServiceUrl: process.env.QUERY_SERVICE_URL
       });
     });
-    app.use(express.static(path.join(__dirname, '/../dist')));
+    app.use(express.static(path.join(__dirname, '/../dist')),{maxage: '1m'});
 
     app.listen(port, function () {
       console.log('server running at ' + port + ', go refresh and see magic');

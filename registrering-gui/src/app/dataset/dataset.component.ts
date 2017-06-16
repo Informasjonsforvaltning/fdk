@@ -15,6 +15,7 @@ import { DialogService } from "ng2-bootstrap-modal";
 import {DistributionFormComponent} from "./distribution/distribution.component";
 import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
+import {IMyDpOptions} from 'mydatepicker';
 
 @Component({
   selector: 'app-dataset',
@@ -41,6 +42,10 @@ export class DatasetComponent implements OnInit {
   saveDelay:number = 1000;
 
   datasetForm: FormGroup = new FormGroup({});
+  myDatePickerOptions: IMyDpOptions = {
+    dateFormat: 'yyyy.mm.dd',
+  };
+  availableLanguages: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +63,32 @@ export class DatasetComponent implements OnInit {
 
   ngOnInit() {
     this.language = 'nb';
+    this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
+      {
+        uri: "http://publications.europa.eu/resource/authority/language/ENG",
+        code: 'ENG',
+        prefLabel: {
+          nb: 'Engelsk'
+        },
+        selected: false
+      },
+      {
+        uri: "http://publications.europa.eu/resource/authority/language/NOR",
+        code: 'NOR',
+        prefLabel: {
+          nb: 'Norsk'
+        },
+        selected: false
+      },
+      {
+        uri: "http://publications.europa.eu/resource/authority/language/SMI",
+        code: 'SMI',
+        prefLabel: {
+          nb: 'Samisk'
+        },
+        selected: false
+      }
+    ];
     this.timer = 0;
     var that = this;
     // snapshot alternative
@@ -70,6 +101,15 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       this.dataset = dataset;
+      if(dataset.languages) {
+        this.availableLanguages.forEach((language, languageIndex, languageArray) => {
+          dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray)=> {
+            if(language.code === datasetLanguage.code) {
+              languageArray[languageIndex].selected = true;
+            }
+          })
+        })
+      }
 
       // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
@@ -77,29 +117,53 @@ export class DatasetComponent implements OnInit {
 
       //set default publisher to be the same as catalog
       this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
+      this.dataset.languages = [];
+
+      dataset.samples = dataset.samples || [];
+      dataset.languages = dataset.languages || [];
 
       this.datasetForm = this.toFormGroup(this.dataset);
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
           .subscribe(dataset => {
-              if(dataset.distributions) {
-                dataset.distributions.forEach((distribution)=>{
-                  distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-                  distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-                })
+            dataset.issued = "2017-05-16T11:52:25+00:00";
+            dataset.modified = "2017-05-16T11:52:25+00:00";
+
+            dataset.languages = [];
+            this.availableLanguages.forEach((language, index)=>{
+              dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
+                if((index === checkboxIndex) && checkbox) dataset.languages.push(language);
+              });
+            });
+
+            if(dataset.distributions) {
+              dataset.distributions.forEach((distribution) => {
+                distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+                distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+              })
+            }
+            if(dataset.samples) {
+              dataset.samples.forEach((distribution) => {
+                distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+                distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+              })
+            }
+            if(dataset.modified && dataset.modified.formatted) {
+              dataset.modified = dataset.modified.formatted.replace(/\./g,"-");
+            }
+            if(dataset.issued && dataset.issued.formatted) {
+              dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
+            }
+            this.dataset = _.merge(this.dataset, dataset);
+            this.dataset.languages = dataset.languages;
+            this.cdr.detectChanges();
+            var that = this;
+            this.delay(()=>{
+              if(this.datasetSavingEnabled){
+                that.save.call(that);
               }
-
-              this.dataset = _.merge(this.dataset, dataset);
-
-              this.cdr.detectChanges();
-              var that = this;
-              this.delay(()=>{
-                if(this.datasetSavingEnabled){
-                  that.save.call(that);
-                }
-              }, this.saveDelay);
+            }, this.saveDelay);
           });
-
     });
   }
 
@@ -167,7 +231,24 @@ export class DatasetComponent implements OnInit {
       return this.service.get(this.catId, datasetId);
   }
 
+  private getDateObjectFromUnixTimestamp(timestamp:string) {
+    let date = new Date(timestamp);
+    return {
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      },
+      formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
+    }
+  }
+/*
+    get skills(): FormArray {
+      return this.form.get('skills') as FormArray;
+    };*/
+
   private toFormGroup(data: Dataset): FormGroup {
+    this.getDateObjectFromUnixTimestamp(data.issued)
     const formGroup = this.formBuilder.group({
           //title: title,
           description: [ data.description],
@@ -175,11 +256,12 @@ export class DatasetComponent implements OnInit {
           landingPages: [ data.landingPages],
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
-          distributions: this.formBuilder.array([])
+          distributions: this.formBuilder.array([]),
+          issued:[this.getDateObjectFromUnixTimestamp(data.issued || (new Date()).toString())],
+          modified: [this.getDateObjectFromUnixTimestamp(data.modified || (new Date()).toString())],
+          samples: this.formBuilder.array([]),
+          checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)}))
         });
-
       return formGroup;
   }
-
-
 }

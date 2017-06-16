@@ -10,11 +10,17 @@ import {DistributionFormComponent} from './distribution.component';
     templateUrl: './distribution-list.component.html'
 })
 export class DistributionListComponent implements OnInit {
+    @Input('distributionsFormArray')
+    public distributionsFormArray: FormArray;
+
     @Input('datasetForm')
     public datasetForm: FormGroup;
 
     @Input('distributions')
     public distributions: Distribution[];
+
+    @Input('title')
+    public title: string;
 
     distribution: Distribution;
 
@@ -27,24 +33,23 @@ export class DistributionListComponent implements OnInit {
         const distribution: Distribution = {
             id: Math.floor(Math.random() * 1000000).toString(),
             uri: '',
-            title: {nb:''},
-            description: {nb:''},
+            title: null,
+            description: null,
             accessURL: [],
             downloadURL: [],
             license: '',
             format: [],
             ui_visible: true
         };
-        //this.distributions = this.distributions || [];
-        this.distributions.push(distribution);
-        //this.cd.detectChanges();
-        return false;
+          this.distributions.push(distribution);
+          this.cd.detectChanges();
+          return false; 
     }
 
     removeDistribution(idx: number) {
         if (this.distributions.length > 0) {
             this.distributions.splice(idx, 1);
-            (<FormArray>this.datasetForm.get('distributions')).removeAt(idx);
+            this.distributionsFormArray.removeAt(idx);
         }
         return false;
     }
