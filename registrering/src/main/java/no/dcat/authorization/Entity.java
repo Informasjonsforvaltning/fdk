@@ -20,7 +20,7 @@ public class Entity {
     @JsonProperty("SocialSecurityNumber")
     private String socialSecurityNumber;
 
-    @JsonProperty("Active")
-    private String active;
+    @JsonProperty("Status")
+    private String status;
 }
 
