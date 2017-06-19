@@ -11,3 +11,4 @@
 *.rar
 hs_err_pid*
 src/main/resources/static/
+!/src/main/resources/data/

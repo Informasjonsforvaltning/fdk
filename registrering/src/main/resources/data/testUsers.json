@@ -1,0 +1,89 @@
+[
+  {
+    "user": 1,
+    "ssn": "01084902333",
+    "entities": [
+      {
+        "Name": "ORG 1 - BRREG",
+        "Type": "Business",
+        "OrganizationNumber": "974760673",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRUKER EN",
+        "Type": "Person",
+        "SocialSecurityNumber": "01084902333"
+      }
+    ]
+  },
+  {
+    "user": 2,
+    "ssn": "02084902333",
+    "entities": [
+      {
+        "Name": "ORG 1 - BRREG",
+        "Type": "Business",
+        "OrganizationNumber": "974760673",
+        "Status": "Active"
+      },
+      {
+        "Name": "ORG 2 - DIFI",
+        "Type": "Enterprise",
+        "OrganizationNumber": "991825827",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRUKER TO",
+        "Type": "Person",
+        "SocialSecurityNumber": "02084902333"
+      }
+    ]
+  },
+  {
+    "user": 3,
+    "ssn": "03084902333",
+    "entities": [
+      {
+        "Name": "BRUKER TRE",
+        "Type": "Person",
+        "SocialSecurityNumber": "03084902333"
+      },
+      {
+        "Name": "ORG 3 - SK",
+        "Type": "Business",
+        "OrganizationNumber": "971040238",
+        "Status": "Active"
+      }
+    ]
+  },
+  {
+    "user": 4,
+    "ssn": "04084902333",
+    "entities": []
+  },
+  {
+    "user": 5,
+    "ssn": "05084902333",
+    "entities": [
+      {
+        "Name": "ORG 3 - SK",
+        "Type": "Business",
+        "OrganizationNumber": "971040238",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRUKER FEM",
+        "Type": "Person",
+        "SocialSecurityNumber": "05084902333"
+      },
+      {
+        "Name": "ORG 2 - DIFI",
+        "Type": "Enterprise",
+        "OrganizationNumber": "991825827",
+        "Status": "Active"
+      }
+
+    ]
+  }
+
+]

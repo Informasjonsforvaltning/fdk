@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -44,7 +45,7 @@ public class AuthorizationServiceTest {
     }
 
     @Test
-    public void testGetAuthorizedEntities() throws Throwable {
+    public void testGetAuthorizedEntitiesOK() throws Throwable {
 
         List<Entity> actualEntities = authorizationService.getAuthorizedEntities("02084902333");
 
@@ -52,6 +53,11 @@ public class AuthorizationServiceTest {
         for (Entity entity : actualEntities) {
             logger.info("Entity {}", entity.toString());
         }
+    }
+
+    @Test
+    public void initializationErrorInGetRequestFactory() throws Throwable {
+
     }
 
 
