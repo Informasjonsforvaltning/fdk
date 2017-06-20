@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,10 +43,12 @@ public class LoginController {
     @CrossOrigin
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> getLoggedInUser() {
-        Authentication authentication = springSecurityContextBean.getAuthentication();
-        SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
-        String ssn = userDetails.getAttribute("uid");
+        String ssn;
 
+        Authentication authentication = springSecurityContextBean.getAuthentication();
+
+        SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
+        ssn = userDetails.getAttribute("uid");
 
         User user = new User();
 
