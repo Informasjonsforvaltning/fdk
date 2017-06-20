@@ -49,7 +49,7 @@ public class LoginController {
 
         User user = new User();
 
-        user.setName(AuthorizationService.getName(ssn));
+        user.setName(AuthorizationService.SINGLETON.getUserName(ssn));
 
         List<String> catalogs= authentication.getAuthorities()
                 .stream()

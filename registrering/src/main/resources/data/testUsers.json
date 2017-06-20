@@ -84,6 +84,63 @@
       }
 
     ]
+  },
+  {
+    "user": 6,
+    "ssn": "16079411314",
+    "entities": [
+      {
+        "Name": "ORG 1 - BRREG",
+        "Type": "Business",
+        "OrganizationNumber": "974760673",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRUKER SEKS",
+        "Type": "Person",
+        "SocialSecurityNumber": "16079411314"
+      }
+    ]
+  },
+  {
+    "user": 7,
+    "ssn": "16079411233",
+    "entities": [
+      {
+        "Name": "ORG 4 - SKATT",
+        "Type": "Business",
+        "OrganizationNumber": "974761076",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRUKER SJU",
+        "Type": "Person",
+        "SocialSecurityNumber": "16079411233"
+      }
+    ]
+  },
+  {
+    "user": 8,
+    "ssn": "16079411152",
+    "entities": [
+      {
+        "Name": "ORG 4 - SKATT",
+        "Type": "Business",
+        "OrganizationNumber": "974761076",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRUKER ÅTTE",
+        "Type": "Person",
+        "SocialSecurityNumber": "16079411152"
+      },
+      {
+        "Name": "ORG 5 - NAV",
+        "Type": "Business",
+        "OrganizationNumber": "889640782",
+        "Status": "Active"
+      }
+    ]
   }
 
 ]

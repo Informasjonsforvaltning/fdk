@@ -1,5 +1,7 @@
 package no.dcat.authorization;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -8,9 +10,11 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,10 +64,13 @@ public class AuthorizationService {
     String altinnServiceUrl;
 
     @Value("${application.altinnServiceCode}")
-    String altinnServiceCode ;
+    String altinnServiceCode;
 
     @Value("${application.altinnServiceEdition}")
     String altinnServiceEdition;
+
+    @Autowired
+    private Environment environment;
 
     final static String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
 
@@ -72,6 +80,7 @@ public class AuthorizationService {
     public static AuthorizationService SINGLETON = new AuthorizationService();
 
     private static ClientHttpRequestFactory requestFactory;
+
     static {
         try {
             requestFactory = getRequestFactory();
@@ -80,16 +89,49 @@ public class AuthorizationService {
         }
     }
 
+    protected AuthorizationService() {
 
+        /* Only to be run in test */
+        if (environment == null || Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> (env.equalsIgnoreCase("test")))) {
+            logger.info("Active profile: {}", "test");
 
+            try {
+                ClassPathResource testUsersResource = new ClassPathResource("data/testUsers.json");
+                ObjectMapper mapper = new ObjectMapper();
+                List<TestUser> users = mapper.readValue(testUsersResource.getInputStream(), new TypeReference<List<TestUser>>() {
+                });
 
+                users.forEach(user -> {
+                    logger.debug("TestUser {} ", user.getSsn());
+                    String ssn = (String) user.getSsn();
+                    userEntities.put(ssn, user.getEntities());
+                    user.getEntities().forEach(entity -> {
+                        if (entity.getSocialSecurityNumber() != null) {
+                            userNames.put(ssn, entity.getName());
+                            return;
+                        }
+                    });
+                });
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * returns the organizations that this user is allowed to register dataset on
+     *
+     * @param ssn
+     * @return list of organization numbers
+     */
     public List<String> getOrganisations(String ssn) {
         List<String> organizations = new ArrayList<>();
         if (!userEntities.containsKey(ssn)) {
             try {
                 cacheUser(ssn);
             } catch (AuthorizationServiceUnavailable asu) {
-                logger.error("Autorization service is unavailable, cannot authorize user",asu);
+                logger.error("Autorization service is unavailable, cannot authorize user", asu);
                 return null;
             }
         }
@@ -102,7 +144,7 @@ public class AuthorizationService {
         return organizations;
     }
 
-    public String getName(String ssn) {
+    public String getUserName(String ssn) {
         return userNames.get(ssn);
     }
 
@@ -114,8 +156,8 @@ public class AuthorizationService {
     protected void cacheUser(String ssn) throws AuthorizationServiceUnavailable {
         List<Entity> entries = getAuthorizedEntities(ssn);
         String name = "unknown";
-        entries.forEach( (entry) -> {
-            if (entry.getSocialSecurityNumber()!=null) {
+        entries.forEach((entry) -> {
+            if (entry.getSocialSecurityNumber() != null) {
                 userNames.put(ssn, entry.getName());
             }
         });

@@ -6,17 +6,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+//git @RunWith(MockitoJUnitRunner.class)
 public class LoginControllerTest {
 
-    @Mock
-    private CatalogController catalogController;
-
-    @Mock
-    private SpringSecurityContextBean springSecurityContextBean;
-
-    @InjectMocks
-    private LoginController loginController;
+//    @Mock
+//    private CatalogController catalogController;
+//
+//    @Mock
+//    private SpringSecurityContextBean springSecurityContextBean;
+//
+//    @InjectMocks
+//    private LoginController loginController;
 
 //    @Test
 //    public void authenticateAndCreateMissingCatalogs_authWithoutOrgnr_noCatalogCreated() throws Exception {
@@ -31,7 +31,7 @@ public class LoginControllerTest {
 //        String orgnr = "ROLE_USER";
 //        String username = "test";
 //        Authentication authentication = mock(Authentication.class);
-//        when(authentication.getName()).thenReturn(username);
+//        when(authentication.getUserName()).thenReturn(username);
 //        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(orgnr);
 //
 //        List<GrantedAuthority> authorities = Arrays.asList(grantedAuthority);
@@ -55,7 +55,7 @@ public class LoginControllerTest {
 //        String orgnr = "980123456";
 //        String username = "test";
 //        Authentication authentication = mock(Authentication.class);
-//        when(authentication.getName()).thenReturn(username);
+//        when(authentication.getUserName()).thenReturn(username);
 //        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(orgnr);
 //
 //        List<GrantedAuthority> authorities = Arrays.asList(grantedAuthority);
@@ -78,7 +78,7 @@ public class LoginControllerTest {
 //        String orgnr = "980123456";
 //        String username = "test";
 //        Authentication authentication = mock(Authentication.class);
-//        when(authentication.getName()).thenReturn(username);
+//        when(authentication.getUserName()).thenReturn(username);
 //        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(orgnr);
 //
 //        List<GrantedAuthority> authorities = Arrays.asList(grantedAuthority);

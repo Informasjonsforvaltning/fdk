@@ -9,10 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.io.IOException;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 
 /**
@@ -31,7 +32,7 @@ public class AuthorizationServiceTest {
 
     @Before
     public void setup () throws Throwable {
-        authorizationService = spy(new AuthorizationService());
+        authorizationService = spy(AuthorizationService.SINGLETON);
         ReflectionTestUtils.setField(authorizationService,"altinnServiceUrl", "https://tt02.altinn.no/");
         ReflectionTestUtils.setField(authorizationService,"altinnServiceCode", "4814");
         ReflectionTestUtils.setField(authorizationService,"altinnServiceEdition", "3");
