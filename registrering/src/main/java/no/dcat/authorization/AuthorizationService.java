@@ -8,7 +8,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -31,13 +30,16 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dask on 16.06.2017.
  */
 
-@Configurable
+
 public class AuthorizationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
@@ -62,8 +64,12 @@ public class AuthorizationService {
     @Value("${application.altinnServiceEdition}")
     String altinnServiceEdition;
 
+    final static String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
 
-    final String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
+    private static Map<String, List<Entity>> userEntities = new HashMap<>();
+    private static Map<String, String> userNames = new HashMap<>();
+
+    public static AuthorizationService SINGLETON = new AuthorizationService();
 
     private static ClientHttpRequestFactory requestFactory;
     static {
@@ -74,12 +80,46 @@ public class AuthorizationService {
         }
     }
 
+
+
+
+    public List<String> getOrganisations(String ssn) {
+        List<String> organizations = new ArrayList<>();
+        if (!userEntities.containsKey(ssn)) {
+            try {
+                cacheUser(ssn);
+            } catch (AuthorizationServiceUnavailable asu) {
+                logger.error("Autorization service is unavailable, cannot authorize user",asu);
+                return null;
+            }
+        }
+        userEntities.get(ssn).forEach(entity -> {
+            if (entity.getOrganizationNumber() != null) {
+                organizations.add(entity.getOrganizationNumber());
+            }
+        });
+
+        return organizations;
+    }
+
+    public String getName(String ssn) {
+        return userNames.get(ssn);
+    }
+
+
     String getReporteesUrl(String ssn) {
         return altinnServiceUrl + String.format(servicePath, ssn, altinnServiceCode, altinnServiceEdition);
     }
 
-    public static String getName(String ssn) {
-        return "Frode Datakatalog";
+    protected void cacheUser(String ssn) throws AuthorizationServiceUnavailable {
+        List<Entity> entries = getAuthorizedEntities(ssn);
+        String name = "unknown";
+        entries.forEach( (entry) -> {
+            if (entry.getSocialSecurityNumber()!=null) {
+                userNames.put(ssn, entry.getName());
+            }
+        });
+        userEntities.put(ssn, entries);
     }
 
 

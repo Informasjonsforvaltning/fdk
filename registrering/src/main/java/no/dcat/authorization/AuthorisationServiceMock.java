@@ -16,7 +16,7 @@ public class AuthorisationServiceMock {
     }
 
 
-    public static List<String> getOrganisations(String ssn) {
+    private static List<String> getOrganisations(String ssn) {
         return userOrganisaitions.get(ssn);
     }
 }
