@@ -43,13 +43,14 @@ public class LoginController {
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> getLoggedInUser() {
         Authentication authentication = springSecurityContextBean.getAuthentication();
-        SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();
-        String ssn = userDetails.getAttribute("uid");
-
+        //SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();  //denne gjør at brukernavn ikke vises
+        //String ssn = userDetails.getAttribute("uid");
+        String ssn = authentication.getName();
 
         User user = new User();
 
-        user.setName(AuthorizationService.getName(ssn));
+        //user.setName(AuthorizationService.getName(ssn));
+        user.setName("Frode Frekk");
 
         List<String> catalogs= authentication.getAuthorities()
                 .stream()
