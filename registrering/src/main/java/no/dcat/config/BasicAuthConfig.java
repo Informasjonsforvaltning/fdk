@@ -132,8 +132,13 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            String catalogsPath = "/catalogs/**";
             http
                     .authorizeRequests()
+                    .antMatchers(HttpMethod.DELETE, catalogsPath).authenticated()
+                    .antMatchers(HttpMethod.POST, catalogsPath).authenticated()
+                    .antMatchers(HttpMethod.PUT, catalogsPath).authenticated()
+                    .antMatchers(HttpMethod.PATCH, catalogsPath).authenticated()
                     .antMatchers("/*.js").permitAll()
                     .antMatchers("/*.woff2").permitAll()
                     .antMatchers("/*.woff").permitAll()
