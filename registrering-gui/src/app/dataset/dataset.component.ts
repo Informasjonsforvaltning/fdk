@@ -136,7 +136,7 @@ export class DatasetComponent implements OnInit {
                 if((index === checkboxIndex) && checkbox) dataset.languages.push(language);
               });
             });
-                        dataset.languages = null;
+                dataset.languages = null;
 
             if(dataset.distributions) {
               dataset.distributions.forEach((distribution) => {
@@ -157,18 +157,26 @@ export class DatasetComponent implements OnInit {
               dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
             }
             if(dataset.temporals) {
-              dataset.temporals.map((temporal)=> {
-                if(temporal.startDate) {
-                  return temporal.startDate.formatted.replace(/\./g,"-")
+              dataset.temporals.forEach(temporal => {
+                if(temporal.startDate && temporal.startDate.formatted) {
+                  console.log('temporal.startDate is ', temporal.startDate);
+                  var date = temporal.startDate.jsdate;
+                  //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) + '-' +  ("0" + date.getDay()).slice(-2);
+                  temporal.startDate = temporal.startDate.epoc;
                 } else if(temporal.startDate === null) {
-                  return '"01-01-1970"';
+                  delete temporal.startDate;
                 }
-                if(temporal.endDate) {
-                  return temporal.endDate.formatted.replace(/\./g,"-")
+                if(temporal.endDate && temporal.endDate.formatted) {
+                  var date = temporal.endDate.jsdate;
+                  //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) +  '-' + ("0" + date.getDay()).slice(-2);
+                  temporal.endDate = temporal.endDate.epoc;
                 } else if(temporal.endDate === null) {
-                  return '"01-01-1970"';
+                  delete temporal.endDate;
                 }
               });
+              if(dataset.temporals.length === 0) {
+                dataset.temporals = undefined;
+              }
             }
             this.dataset = _.merge(this.dataset, dataset);
             this.dataset.languages = dataset.languages;
