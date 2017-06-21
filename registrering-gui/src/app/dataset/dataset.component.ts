@@ -126,11 +126,8 @@ export class DatasetComponent implements OnInit {
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
           .subscribe(dataset => {
-            //dataset.issued = "2017-05-16T11:52:25+00:00";
-            //dataset.modified = "2017-05-16T11:52:25+00:00";
 
               this.dataset.languages = [];
-
               dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
                   this.availableLanguages.forEach((language, index)=>{
                       if((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
