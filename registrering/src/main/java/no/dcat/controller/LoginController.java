@@ -41,7 +41,6 @@ public class LoginController {
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> getLoggedInUser() {
         Authentication authentication = springSecurityContextBean.getAuthentication();
-        String ssn = authentication.getName();
 
         User user = new User();
         user.setName(authentication.getName());
