@@ -11,7 +11,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 
 /**
@@ -30,7 +32,7 @@ public class AuthorizationServiceTest {
 
     @Before
     public void setup () throws Throwable {
-        authorizationService = spy(new AuthorizationService());
+        authorizationService = spy(AuthorizationService.SINGLETON);
         ReflectionTestUtils.setField(authorizationService,"altinnServiceUrl", "https://tt02.altinn.no/");
         ReflectionTestUtils.setField(authorizationService,"altinnServiceCode", "4814");
         ReflectionTestUtils.setField(authorizationService,"altinnServiceEdition", "3");
@@ -44,7 +46,7 @@ public class AuthorizationServiceTest {
     }
 
     @Test
-    public void testGetAuthorizedEntities() throws Throwable {
+    public void testGetAuthorizedEntitiesOK() throws Throwable {
 
         List<Entity> actualEntities = authorizationService.getAuthorizedEntities("02084902333");
 
@@ -52,6 +54,11 @@ public class AuthorizationServiceTest {
         for (Entity entity : actualEntities) {
             logger.info("Entity {}", entity.toString());
         }
+    }
+
+    @Test
+    public void initializationErrorInGetRequestFactory() throws Throwable {
+
     }
 
 
