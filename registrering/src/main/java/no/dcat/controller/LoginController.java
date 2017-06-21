@@ -1,7 +1,5 @@
 package no.dcat.controller;
 
-import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
-import no.dcat.authorization.AuthorizationService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.Catalog;
 import no.dcat.model.user.User;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,14 +41,11 @@ public class LoginController {
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> getLoggedInUser() {
         Authentication authentication = springSecurityContextBean.getAuthentication();
-        //SAMLUserDetails userDetails = (SAMLUserDetails) authentication.getPrincipal();  //denne gjør at brukernavn ikke vises
-        //String ssn = userDetails.getAttribute("uid");
         String ssn = authentication.getName();
 
         User user = new User();
-
-        //user.setName(AuthorizationService.getName(ssn));
-        user.setName("Frode Frekk");
+        user.setName(authentication.getName());
+        logger.debug("User " + user.getName() + " authorisations: " + authentication.getAuthorities().toString());
 
         List<String> catalogs= authentication.getAuthorities()
                 .stream()

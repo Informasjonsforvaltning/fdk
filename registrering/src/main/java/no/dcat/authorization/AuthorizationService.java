@@ -89,6 +89,7 @@ public class AuthorizationService {
         }
     }
 
+    //todo: slettes
     protected AuthorizationService() {
 
         /* Only to be run in test */

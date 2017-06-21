@@ -1,11 +1,15 @@
 package no.dcat.config;
 
-import com.google.common.collect.Lists;
-import no.dcat.configuration.Access;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.authorization.AuthorizationService;
+import no.dcat.authorization.Entity;
+import no.dcat.authorization.TestUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,10 +17,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by bjg on 19.06.2017.
@@ -26,32 +32,98 @@ import java.util.List;
 @Configuration
 @Profile({"develop"})
 public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
+    private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
-    private List<Access> accesses = setupDummyUsers();
+    private static Map<String, List<Entity>> userEntities = new HashMap<>();
+    private static Map<String, String> userNames = new HashMap<>();
 
-    private List<Access> setupDummyUsers() {
-        return Lists.newArrayList(
-                Access.builder().username("mgs").password("123").orgnr("974761076").build(),
-                Access.builder().username("bjg").password("123").orgnr("974760673").build(),
-                Access.builder().username("dask").password("123").orgnr("889640782").build()
-        );
+
+
+    protected BasicAuthConfig() {
+        try {
+            ClassPathResource testUsersResource = new ClassPathResource("data/testUsers.json");
+            ObjectMapper mapper = new ObjectMapper();
+            List<TestUser> users = mapper.readValue(testUsersResource.getInputStream(), new TypeReference<List<TestUser>>() {
+            });
+
+            users.forEach(user -> {
+                logger.debug("TestUser {} ", user.getSsn());
+                String ssn = (String) user.getSsn();
+                userEntities.put(ssn, user.getEntities());
+                user.getEntities().forEach(entity -> {
+                    if (entity.getSocialSecurityNumber() != null) {
+                        userNames.put(ssn, entity.getName());
+                        return;
+                    }
+                });
+            });
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
+    /**
+     * returns the organizations that this user is allowed to register dataset on
+     *
+     * @param ssn
+     * @return list of organization numbers
+     */
+    public List<String> getOrganisations(String ssn) {
+        List<String> organizations = new ArrayList<>();
+
+        userEntities.get(ssn).forEach(entity -> {
+            if (entity.getOrganizationNumber() != null) {
+                organizations.add(entity.getOrganizationNumber());
+            }
+        });
+
+        return organizations;
+    }
+
+    public String getUserName(String ssn) {
+        return userNames.get(ssn);
+    }
+
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService);
     }
 
-    //Todo: her må det kobles til atuoritets-servicen som David har laget
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> accesses
-                .stream()
-                .filter(access -> access.getUsername().equals(username))
-                .map(access -> new User(access.getUsername(), access.getPassword(), AuthorityUtils.createAuthorityList(access.getOrgnr())))
-                .findAny()
-                .orElseThrow(() -> new UsernameNotFoundException("not found" + username));
-    }
+
+    //@Bean
+    UserDetailsService userDetailsService = new UserDetailsService() {
+        @Override
+        public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
+            //List of entities for ssn. One represents the user itself
+            //the other are organizations the user is authorized for
+            List<Entity> userAuthorizations = userEntities.get(ssn);
+            Entity userEntity = null;
+            List<String> authorizedOrganizations = new ArrayList<>();
+
+            //find the entry representing the user itself
+            for(Entity entry : userAuthorizations) {
+                if (entry.getSocialSecurityNumber() != null) {
+                    userEntity = entry;
+                }
+            }
+
+            //find the organizations the user can act on behalf of
+            userAuthorizations.forEach(entity -> {
+                if (entity.getOrganizationNumber() != null) {
+                    authorizedOrganizations.add(entity.getOrganizationNumber());
+                }
+            });
+
+            User user = new User(userEntity.getName(),
+                    "password",
+                    AuthorityUtils.createAuthorityList(authorizedOrganizations.toString()));
+            return user;
+        }
+    };
+
 
 
     @Configuration
@@ -77,11 +149,5 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                     .permitAll();
         }
 
-        //@Autowired
-        //public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        //    auth
-        //            .inMemoryAuthentication()
-        //            .withUser("bjg").password("123").roles("USER");
-        //}
     }
 }
