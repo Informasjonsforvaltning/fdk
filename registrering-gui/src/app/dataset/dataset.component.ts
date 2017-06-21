@@ -129,12 +129,13 @@ export class DatasetComponent implements OnInit {
             //dataset.issued = "2017-05-16T11:52:25+00:00";
             //dataset.modified = "2017-05-16T11:52:25+00:00";
 
-            dataset.languages = [];
-            this.availableLanguages.forEach((language, index)=>{
+              this.dataset.languages = [];
+
               dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
-                if((index === checkboxIndex) && checkbox) dataset.languages.push(language);
+                  this.availableLanguages.forEach((language, index)=>{
+                      if((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
+                  });
               });
-            });
 
             if(dataset.distributions) {
               dataset.distributions.forEach((distribution) => {
@@ -155,7 +156,7 @@ export class DatasetComponent implements OnInit {
               dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
             }
             this.dataset = _.merge(this.dataset, dataset);
-            this.dataset.languages = dataset.languages;
+
             this.cdr.detectChanges();
             var that = this;
             this.delay(()=>{
