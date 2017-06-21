@@ -16,6 +16,7 @@ import {DistributionFormComponent} from "./distribution/distribution.component";
 import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
 import {IMyDpOptions} from 'mydatepicker';
+import {TemporalListComponent} from "./temporal/temporal-list.component";
 
 @Component({
   selector: 'app-dataset',
@@ -130,11 +131,12 @@ export class DatasetComponent implements OnInit {
             dataset.modified = "2017-05-16T11:52:25+00:00";
 
             dataset.languages = [];
-            this.availableLanguages.forEach((language, index)=>{
-              dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
+            this.availableLanguages.forEach((language, index) => {
+              dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
                 if((index === checkboxIndex) && checkbox) dataset.languages.push(language);
               });
             });
+                        dataset.languages = null;
 
             if(dataset.distributions) {
               dataset.distributions.forEach((distribution) => {
@@ -153,6 +155,20 @@ export class DatasetComponent implements OnInit {
             }
             if(dataset.issued && dataset.issued.formatted) {
               dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
+            }
+            if(dataset.temporals) {
+              dataset.temporals.map((temporal)=> {
+                if(temporal.startDate) {
+                  return temporal.startDate.formatted.replace(/\./g,"-")
+                } else if(temporal.startDate === null) {
+                  return '"01-01-1970"';
+                }
+                if(temporal.endDate) {
+                  return temporal.endDate.formatted.replace(/\./g,"-")
+                } else if(temporal.endDate === null) {
+                  return '"01-01-1970"';
+                }
+              });
             }
             this.dataset = _.merge(this.dataset, dataset);
             this.dataset.languages = dataset.languages;
@@ -260,7 +276,8 @@ export class DatasetComponent implements OnInit {
           issued:[this.getDateObjectFromUnixTimestamp(data.issued || (new Date()).toString())],
           modified: [this.getDateObjectFromUnixTimestamp(data.modified || (new Date()).toString())],
           samples: this.formBuilder.array([]),
-          checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)}))
+          checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)})),
+          temporals:this.formBuilder.array([])
         });
       return formGroup;
   }

@@ -54,6 +54,14 @@
                                 formControlName="modified"></my-date-picker>
               </div>
             </div>
+            <div class="row">
+              <temporals
+                title="Tidsperioder"
+                [datasetForm]="datasetForm"
+                [temporalsFormArray]="datasetForm.controls.temporals"
+                [temporals]="dataset.temporals"
+              ></temporals>
+            </div>
             <distributions
                 [datasetForm]="datasetForm"
                 [distributionsFormArray]="datasetForm.controls.samples"
@@ -74,8 +82,6 @@
                    (onSave)="onSave($event)">
           </accessRights>
       </div>
-
-
       <div class="panel fdk-panel">
           <div class="fdk-panel-heading">
               Geografisk avgrensning

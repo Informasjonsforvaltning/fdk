@@ -24,6 +24,8 @@ import {SelectModule} from "ng-select";
 
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
+import {TemporalFormComponent} from "./dataset/temporal/temporal.component";
+import {TemporalListComponent} from "./dataset/temporal/temporal-list.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
@@ -43,6 +45,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         ConfirmComponent,
         DistributionFormComponent,
         DistributionListComponent,
+        TemporalFormComponent,
+        TemporalListComponent,
         ContactComponent,
         QualityComponent,
         AccessRightsComponent,
