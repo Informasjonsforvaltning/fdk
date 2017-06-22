@@ -94,7 +94,6 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     }
 
 
-    //@Bean
     UserDetailsService userDetailsService = new UserDetailsService() {
         @Override
         public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
@@ -118,11 +117,9 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                 }
             });
 
-            //heller bruke denne?
-            //AuthorityUtils.commaSeparatedStringToAuthorityList()
             User user = new User(userEntity.getName(),
                     "password",
-                    AuthorityUtils.createAuthorityList(authorizedOrganizations.toString()));
+                    AuthorityUtils.commaSeparatedStringToAuthorityList(String.join(",", authorizedOrganizations)));
             return user;
         }
     };
