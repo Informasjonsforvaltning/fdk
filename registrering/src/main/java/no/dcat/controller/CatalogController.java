@@ -108,7 +108,14 @@ public class CatalogController {
 
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
-        Enhet enhet = restTemplate.getForObject(uri, Enhet.class);
+        Enhet enhet = null;
+        try {
+            enhet = restTemplate.getForObject(uri, Enhet.class);
+        } catch (Exception e) {
+            logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
+            enhet = new Enhet();
+            enhet.setNavn("X-ENHET");
+        }
 
         Publisher publisher = new Publisher();
         publisher.setId(catalog.getId());

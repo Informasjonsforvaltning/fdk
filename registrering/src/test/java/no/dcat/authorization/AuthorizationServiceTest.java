@@ -20,10 +20,6 @@ import static org.mockito.Mockito.spy;
  * Created by dask on 07.06.2017.
  */
 
-// -Djavax.net.ssl.keyStore=D:/altinn/brreg.jks -Djavax.net.ssl.keyStorePassword=keystore
-// -Djavax.net.debug=ssl
-
-
 public class AuthorizationServiceTest {
 
     private static Logger logger = LoggerFactory.getLogger(AuthorizationServiceTest.class);
