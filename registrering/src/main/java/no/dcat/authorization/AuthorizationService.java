@@ -50,7 +50,9 @@ public class AuthorizationService {
 
     @Value("{apikey}")
     private static final String apikey = "7FB6140D-B194-4BF6-B3C8-257094FBF8C4"; // test key from Erlend
-    private static final String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel??
+    private static final String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel fra Altinn, men funker ikke
+
+    static String[] TLS_PROTOCOLS = {"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}; // Comment in TLSv1.2 to fail : bug in altinn or java that fails TLS handshake most of the time, but not always
 
     @Value("$keystoreLocation")
     public static final String keystoreLocation = "D://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12";
@@ -68,6 +70,7 @@ public class AuthorizationService {
 
     @Value("${application.altinnServiceEdition}")
     String altinnServiceEdition;
+
 
     @Autowired
     private Environment environment;
@@ -186,6 +189,17 @@ public class AuthorizationService {
         throw new AuthorizationServiceUnavailable(response.getStatusCode());
     }
 
+    /**
+     * Configures ClientHttpRequestFactory to accept two way https connections.
+     *
+     * @return the ClientHttpRequestFactory with configured SSLContext
+     * @throws KeyStoreException
+     * @throws IOException
+     * @throws UnrecoverableKeyException
+     * @throws NoSuchAlgorithmException
+     * @throws CertificateException
+     * @throws KeyManagementException
+     */
 
     static ClientHttpRequestFactory getRequestFactory() throws KeyStoreException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, KeyManagementException {
 
@@ -203,7 +217,7 @@ public class AuthorizationService {
 
         SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(
                 sslContext,
-                new String[]{"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}, // Comment in TLSv1.2 to fail
+                TLS_PROTOCOLS,
                 null, new DefaultHostnameVerifier());
 
         HttpClient httpClient = HttpClients.custom()
