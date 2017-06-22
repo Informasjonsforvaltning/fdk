@@ -89,36 +89,6 @@ public class AuthorizationService {
         }
     }
 
-    //todo: slettes
-    protected AuthorizationService() {
-
-        /* Only to be run in test */
-        if (environment == null || Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> (env.equalsIgnoreCase("test")))) {
-            logger.info("Active profile: {}", "test");
-
-            try {
-                ClassPathResource testUsersResource = new ClassPathResource("data/testUsers.json");
-                ObjectMapper mapper = new ObjectMapper();
-                List<TestUser> users = mapper.readValue(testUsersResource.getInputStream(), new TypeReference<List<TestUser>>() {
-                });
-
-                users.forEach(user -> {
-                    logger.debug("TestUser {} ", user.getSsn());
-                    String ssn = (String) user.getSsn();
-                    userEntities.put(ssn, user.getEntities());
-                    user.getEntities().forEach(entity -> {
-                        if (entity.getSocialSecurityNumber() != null) {
-                            userNames.put(ssn, entity.getName());
-                            return;
-                        }
-                    });
-                });
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     /**
      * returns the organizations that this user is allowed to register dataset on
