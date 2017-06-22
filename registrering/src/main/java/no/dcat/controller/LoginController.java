@@ -1,5 +1,8 @@
 package no.dcat.controller;
 
+import no.dcat.authorization.AuthorizationService;
+import no.dcat.authorization.NameEntityService;
+import no.dcat.config.FdkSamlUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.Catalog;
 import no.dcat.model.user.User;
@@ -7,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -37,13 +42,21 @@ public class LoginController {
         this.springSecurityContextBean = springSecurityContextBean;
     }
 
+
     @CrossOrigin
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> getLoggedInUser() {
         Authentication authentication = springSecurityContextBean.getAuthentication();
 
         User user = new User();
-        user.setName(authentication.getName());
+
+        if (authentication.getPrincipal() instanceof FdkSamlUserDetails) {
+            FdkSamlUserDetails userDetails = (FdkSamlUserDetails) authentication.getPrincipal();
+            user.setName(NameEntityService.SINGLETON.getUserName(userDetails.getUid()));
+        } else {
+            user.setName(authentication.getName());
+        }
+
         logger.debug("User " + user.getName() + " authorisations: " + authentication.getAuthorities().toString());
 
         List<String> catalogs= authentication.getAuthorities()
@@ -73,4 +86,6 @@ public class LoginController {
         }
         return Optional.empty();
     }
+
+
 }

@@ -1,5 +1,8 @@
 package no.dcat.controller;
 
+import no.dcat.authorization.AuthorizationService;
+import no.dcat.authorization.Entity;
+import no.dcat.authorization.NameEntityService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
@@ -21,6 +24,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -89,6 +93,7 @@ public class CatalogController {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
+
         logger.info("Add catalog: " + catalog.toString());
         if (catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -113,8 +118,11 @@ public class CatalogController {
             enhet = restTemplate.getForObject(uri, Enhet.class);
         } catch (Exception e) {
             logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
+
+            String organizationName = NameEntityService.SINGLETON.getOrganizationName(catalog.getId());
+
             enhet = new Enhet();
-            enhet.setNavn("X-ENHET");
+            enhet.setNavn(organizationName);
         }
 
         Publisher publisher = new Publisher();
