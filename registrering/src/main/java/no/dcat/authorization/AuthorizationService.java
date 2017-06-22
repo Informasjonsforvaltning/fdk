@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -53,6 +54,9 @@ public class AuthorizationService {
     private static final String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel fra Altinn, men funker ikke
 
     static String[] TLS_PROTOCOLS = {"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}; // Comment in TLSv1.2 to fail : bug in altinn or java that fails TLS handshake most of the time, but not always
+    static String[] TLS_PROTOCOLSx = {"TLSv1.2"};
+
+    static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
     @Value("$keystoreLocation")
     public static final String keystoreLocation = "D://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12";
@@ -63,13 +67,13 @@ public class AuthorizationService {
     private static final String GET_REQUEST_FDK = "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=02084902333&servicecode=4814&serviceedition=3";
 
     @Value("${application.altinnServiceUrl}")
-    String altinnServiceUrl;
+    String altinnServiceUrl = "https://tt02.altinn.no/";
 
     @Value("${application.altinnServiceCode}")
-    String altinnServiceCode;
+    String altinnServiceCode = "4814";
 
     @Value("${application.altinnServiceEdition}")
-    String altinnServiceEdition;
+    String altinnServiceEdition = "3";
 
 
     @Autowired
@@ -129,12 +133,19 @@ public class AuthorizationService {
 
     protected void cacheUser(String ssn) throws AuthorizationServiceUnavailable {
         List<Entity> entries = getAuthorizedEntities(ssn);
+        if (entries == null) {
+            entries = new ArrayList<>();
+        }
+
         String name = "unknown";
-        entries.forEach((entry) -> {
+        for (Entity entry : entries) {
             if (entry.getSocialSecurityNumber() != null) {
-                userNames.put(ssn, entry.getName());
+                name = entry.getName();
+                break;
             }
-        });
+        }
+
+        userNames.put(ssn, name);
         userEntities.put(ssn, entries);
     }
 
@@ -148,16 +159,23 @@ public class AuthorizationService {
         headers.set("Accept", "application/json");
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
+        try {
+            logger.info("Authorization request for {}", ssn);
 
-        ResponseEntity<List<Entity>> response = restTemplate.exchange(getReporteesUrl(ssn),
-                HttpMethod.GET, entity, new ParameterizedTypeReference<List<Entity>>() {
-                });
+            ResponseEntity<List<Entity>> response = restTemplate.exchange(getReporteesUrl(ssn),
+                    HttpMethod.GET, entity, new ParameterizedTypeReference<List<Entity>>() {});
 
-        if (response.getStatusCode() == HttpStatus.OK) {
-            return response.getBody();
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            }
+
+            throw new AuthorizationServiceUnavailable(response.getStatusCode());
+
+        } catch (HttpClientErrorException e) {
+            logger.warn("Authorization request for {} failed: {}", ssn, e.getLocalizedMessage(),e);
         }
 
-        throw new AuthorizationServiceUnavailable(response.getStatusCode());
+        return null;
     }
 
     /**
@@ -186,10 +204,11 @@ public class AuthorizationService {
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
 
+        logger.debug("TLS_PROTOCOLS=", Arrays.asList(TLS_PROTOCOLS).toString());
         SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(
                 sslContext,
                 TLS_PROTOCOLS,
-                null, new DefaultHostnameVerifier());
+                CIPHER_SUITES, new DefaultHostnameVerifier());
 
         HttpClient httpClient = HttpClients.custom()
                 .setSSLSocketFactory(f)
