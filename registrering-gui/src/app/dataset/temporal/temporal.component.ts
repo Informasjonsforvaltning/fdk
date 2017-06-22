@@ -36,12 +36,9 @@ export class TemporalFormComponent implements OnInit {
 
       private getDateObjectFromUnixTimestamp(timestamp:string) {
         if(!timestamp) return undefined;
-        console.log('timestamp is ', timestamp);
         var timestamp2 = parseInt(timestamp);
         if(timestamp2.toString().length === 10) timestamp2 = parseInt(timestamp.toString() + "000");
-        console.log('timestamp is ', timestamp2);
         let date = new Date(timestamp2);
-        console.log('date.getFullYear() is ', date.getFullYear());
         return {
           date: {
             year: date.getFullYear(),
@@ -52,7 +49,6 @@ export class TemporalFormComponent implements OnInit {
         }
       }
     private toFormGroup(temporal: PeriodOfTime) {
-      console.log('this.getDateObjectFromUnixTimestamp(temporal.startDate) , ',this.getDateObjectFromUnixTimestamp(temporal.startDate))
         const formGroup = this.fb.group({
             startDate: [this.getDateObjectFromUnixTimestamp(temporal.startDate)],
             endDate: [this.getDateObjectFromUnixTimestamp(temporal.endDate)]

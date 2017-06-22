@@ -122,7 +122,7 @@ export class DatasetComponent implements OnInit {
 
       dataset.samples = dataset.samples || [];
       dataset.languages = dataset.languages || [];
-
+      dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
@@ -159,7 +159,6 @@ export class DatasetComponent implements OnInit {
             if(dataset.temporals) {
               dataset.temporals.forEach(temporal => {
                 if(temporal.startDate && temporal.startDate.formatted) {
-                  console.log('temporal.startDate is ', temporal.startDate);
                   var date = temporal.startDate.jsdate;
                   //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) + '-' +  ("0" + date.getDay()).slice(-2);
                   temporal.startDate = temporal.startDate.epoc;
