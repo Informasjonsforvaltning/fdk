@@ -27,6 +27,7 @@ import {DistributionListComponent} from "./dataset/distribution/distribution-lis
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import {LogoutComponent} from "./logout/logout.component";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {InformationComponent} from "./dataset/information/information.component"
     DistributionListComponent,
     ContactComponent,
     QualityComponent,
-    InformationComponent
+    InformationComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
