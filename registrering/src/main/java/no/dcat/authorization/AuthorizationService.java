@@ -1,7 +1,5 @@
 package no.dcat.authorization;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -82,7 +79,7 @@ public class AuthorizationService {
     final static String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
 
     private static Map<String, List<Entity>> userEntities = new HashMap<>();
-    private static Map<String, String> userNames = new HashMap<>();
+    private static Map<String, Entity> organizationEntities = new HashMap<>();
 
     public static AuthorizationService SINGLETON = new AuthorizationService();
 
@@ -96,6 +93,10 @@ public class AuthorizationService {
         }
     }
 
+    public Entity getOrganization(String orgid) {
+        return organizationEntities.get(orgid);
+    }
+
 
     /**
      * returns the organizations that this user is allowed to register dataset on
@@ -107,7 +108,7 @@ public class AuthorizationService {
         List<String> organizations = new ArrayList<>();
         if (!userEntities.containsKey(ssn)) {
             try {
-                cacheUser(ssn);
+                cacheEntries(ssn);
             } catch (AuthorizationServiceUnavailable asu) {
                 logger.error("Autorization service is unavailable, cannot authorize user", asu);
                 return null;
@@ -122,16 +123,12 @@ public class AuthorizationService {
         return organizations;
     }
 
-    public String getUserName(String ssn) {
-        return userNames.get(ssn);
-    }
-
 
     String getReporteesUrl(String ssn) {
         return altinnServiceUrl + String.format(servicePath, ssn, altinnServiceCode, altinnServiceEdition);
     }
 
-    protected void cacheUser(String ssn) throws AuthorizationServiceUnavailable {
+    protected void cacheEntries(String ssn) throws AuthorizationServiceUnavailable {
         List<Entity> entries = getAuthorizedEntities(ssn);
         if (entries == null) {
             entries = new ArrayList<>();
@@ -139,14 +136,18 @@ public class AuthorizationService {
 
         String name = "unknown";
         for (Entity entry : entries) {
+
             if (entry.getSocialSecurityNumber() != null) {
                 name = entry.getName();
-                break;
+            } else {
+                organizationEntities.put(entry.getOrganizationNumber(),entry);
+                NameEntityService.SINGLETON.setOrganizationName(entry.getOrganizationNumber(), entry.getName());
             }
         }
 
-        userNames.put(ssn, name);
+        NameEntityService.SINGLETON.setUserName(ssn, name);
         userEntities.put(ssn, entries);
+
     }
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.Entity;
+import no.dcat.authorization.NameEntityService;
 import no.dcat.authorization.TestUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,9 +53,14 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                 String ssn = (String) user.getSsn();
                 userEntities.put(ssn, user.getEntities());
                 user.getEntities().forEach(entity -> {
+
                     if (entity.getSocialSecurityNumber() != null) {
+
+                        NameEntityService.SINGLETON.setUserName(ssn, entity.getName());
                         userNames.put(ssn, entity.getName());
-                        return;
+
+                    } else {
+                        NameEntityService.SINGLETON.setOrganizationName(entity.getOrganizationNumber(), entity.getName());
                     }
                 });
             });
@@ -77,6 +83,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         userEntities.get(ssn).forEach(entity -> {
             if (entity.getOrganizationNumber() != null) {
                 organizations.add(entity.getOrganizationNumber());
+                NameEntityService.SINGLETON.setOrganizationName(entity.getOrganizationNumber(),entity.getName());
             }
         });
 

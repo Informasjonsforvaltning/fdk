@@ -31,4 +31,8 @@ public class FdkSamlUserDetails extends SAMLUserDetails {
         return authorities;
     }
 
+    public String getUid() {
+        return this.samlCredential.getAttributeAsString("uid");
+    }
+
 }
