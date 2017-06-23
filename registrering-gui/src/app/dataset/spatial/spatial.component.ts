@@ -19,19 +19,16 @@ export class SpatialComponent implements OnInit {
 
     public spatialForm: FormGroup;
 
-    //model for spatial field: list of uris
+    //initial values for spatial uris
     //Note: spatial objects are saved as SKOS objects on server
     spatialUris: string[];
-
 
     constructor(private fb: FormBuilder) {
     }
 
-
     ngOnInit() {
-        if (!this.dataset.spatials) {
-            this.dataset.spatials = [];
-        } else {
+
+        if (this.dataset.spatials) {
             //convert incoming list of SKOS objects to list of uris to display in field
             this.spatialUris = this.dataset.spatials.map(entry => {
                 return entry.uri;
@@ -42,16 +39,12 @@ export class SpatialComponent implements OnInit {
 
         this.spatialForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
             geoCoverage => {
+
                 if (geoCoverage.spatial) {
-                    //check if spatial uri already is in list of spatial uris
-                    geoCoverage.spatial.forEach(entry =>{
-                        if(this.spatialUris.indexOf(entry) === -1) {
-                            this.spatialUris.push(entry);
-                        }
-                    })
+
                     //convert list of spatial uris into SKOS objects
                     //for now, only the uri is retained, handling of prefLabel to be decided
-                    this.dataset.spatials = this.spatialUris.map(spatialUri => {
+                    this.dataset.spatials = geoCoverage.spatial.map(spatialUri => {
                         return {uri: spatialUri, prefLabel: null}
                     })
                 }
