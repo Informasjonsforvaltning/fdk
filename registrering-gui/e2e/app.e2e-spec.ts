@@ -168,7 +168,7 @@ describe('registrering-gui App', () => {
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
         browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
-          expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Brukerinnsamlede data');
+          expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
           expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
         });
     });
