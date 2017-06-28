@@ -68,6 +68,7 @@ public class LoginController {
         //(There will be one authority with default role ROLE_USER)
         if(authentication.getAuthorities().size() <= 1) {
             //return new ResponseEntity<User>(user, FORBIDDEN);
+            //or throw UserNotAuthorisedException?
         }
 
         List<String> catalogs= authentication.getAuthorities()
@@ -96,6 +97,9 @@ public class LoginController {
         } else {
             user.setName(authentication.getName());
         }
+
+        //temporary code below, to check that correct information about non-authorisation can be detected
+        //(it can)
 
         StringBuilder userinfo = new StringBuilder();
 
