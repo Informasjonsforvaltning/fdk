@@ -80,3 +80,4 @@ bash: docker rm -f $(docker ps -aq)
 
 Remove old images
 bash: docker rmi -f $(docker images -q)
+
