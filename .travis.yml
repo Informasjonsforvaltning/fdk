@@ -1,0 +1,13 @@
+language: java
+services:
+  - docker
+jdk:
+  - oraclejdk8
+install:
+  - export DOCKER_HOST=unix:///var/run/docker.sock
+  - mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -V
+  - cd docker; docker-compose up -d; cd ..
+script:
+  - mvn test -B  org.jacoco:jacoco-maven-plugin:report
+after_success:
+  - mvn org.eluder.coveralls:coveralls-maven-plugin:report

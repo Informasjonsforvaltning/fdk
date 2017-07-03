@@ -3,6 +3,8 @@ version: "2"
 services:
   search:
     image: dcatno/search:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     links:
       - search-api
       - fuseki
@@ -11,6 +13,8 @@ services:
 
   search-api:
     image: dcatno/search-api:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     links:
       - elasticsearch
     networks:
@@ -18,6 +22,8 @@ services:
 
   gdoc:
     image: dcatno/gdoc:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     networks:
       platform:
 
@@ -28,6 +34,8 @@ services:
 
   harvester-api:
     image: dcatno/harvester-api:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     networks:
       platform:
       logging:
@@ -37,6 +45,8 @@ services:
 
   harvester:
     image: dcatno/harvester:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     networks:
       platform:
       logging:
@@ -70,6 +80,8 @@ services:
 
   test:
     image: dcatno/test:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     links:
       - elasticsearch
       - fuseki
@@ -79,6 +91,8 @@ services:
 
   registration-api:
     image: dcatno/registration-api:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     links:
       - elasticsearch
       - search-api
@@ -87,6 +101,8 @@ services:
 
   registration:
     image: dcatno/registration:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     links:
       - registration-api
       - validator
@@ -95,6 +111,8 @@ services:
 
   validator:
     image: dcatno/validator:latest
+    environment:
+         - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
     networks:
       platform:
 
