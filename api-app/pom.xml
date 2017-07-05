@@ -46,11 +46,7 @@
 			<artifactId>httpclient</artifactId>
 		</dependency>
 
-     	<dependency>
-			<groupId>no.dcat</groupId>
-			<artifactId>datastore</artifactId>
-			<version>0.2.2-SNAPSHOT</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome</artifactId>
@@ -62,6 +58,11 @@
 		<dependency>
 			<groupId>org.codehaus.castor</groupId>
 			<artifactId>castor-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>no.dcat</groupId>
+			<artifactId>datastore</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 	</dependencies>

@@ -18,24 +18,24 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<repositories>
-		<repository>
-			<id>Felles datakatalog snapshot</id>
-			<name>Felles datakatalog snapshot</name>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>
-		</repository>
-	</repositories>
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<id>Felles datakatalog snapshot</id>-->
+			<!--<name>Felles datakatalog snapshot</name>-->
+			<!--<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
-	<distributionManagement>
-		<repository>
-			<id>Felles datakatalog release</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-release/</url>
-		</repository>
-		<snapshotRepository>
-			<id>Felles datakatalog snapshot</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<!--<distributionManagement>-->
+		<!--<repository>-->
+			<!--<id>Felles datakatalog release</id>-->
+			<!--<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-release/</url>-->
+		<!--</repository>-->
+		<!--<snapshotRepository>-->
+			<!--<id>Felles datakatalog snapshot</id>-->
+			<!--<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>-->
+		<!--</snapshotRepository>-->
+	<!--</distributionManagement>-->
 
 	<scm>
 		<url>https://github.com/Altinn/fdk</url>
