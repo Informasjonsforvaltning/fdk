@@ -2,6 +2,7 @@ package no.dcat.controller;
 
 import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.NameEntityService;
+import no.dcat.authorization.UserNotAuthorizedException;
 import no.dcat.config.FdkSamlUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.Catalog;
@@ -84,7 +85,7 @@ public class LoginController {
 
     @CrossOrigin
     @RequestMapping(value = "/loginerror", method = GET)
-    String getLoginError() {
+    String getLoginError() throws UserNotAuthorizedException{
         logger.debug("login error");
 
         Authentication authentication = springSecurityContextBean.getAuthentication();
@@ -96,6 +97,7 @@ public class LoginController {
             user.setName(NameEntityService.SINGLETON.getUserName(userDetails.getUid()));
         } else {
             user.setName(authentication.getName());
+            throw new UserNotAuthorizedException("12345678");
         }
 
         //temporary code below, to check that correct information about non-authorisation can be detected

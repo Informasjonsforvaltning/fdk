@@ -56,7 +56,7 @@ public class AuthorizationService {
     static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
     @Value("$keystoreLocation")
-    public static final String keystoreLocation = "D://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12";
+    public static final String keystoreLocation = "C://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12";
 
     @Value("${keystorePassword}")
     private static final String keystorePassword = "xEPtHApswvpiNHTp";

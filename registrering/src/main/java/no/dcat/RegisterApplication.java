@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 @SpringBootApplication
 @EnableElasticsearchRepositories
-@EnableSAMLSSO
+//@EnableSAMLSSO
 public class RegisterApplication {
 
 
