@@ -6,4 +6,4 @@ npm install
 npm run-script ng e2e
 cd ..
 
-echo "YAYAYAYA";
+echo "Node e2e tests done";
