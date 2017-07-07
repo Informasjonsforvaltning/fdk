@@ -8,10 +8,10 @@ import org.junit.runner.RunWith;
  * Class for starting cucumbertest for Publisher page.
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(format = { "pretty", "html:target/cucumber" },
-        features = {"classpath:feature/HarvestDIFIData.feature",
-        "classpath:feature/onlyImportValidDatasets.feature"
-        }
+@CucumberOptions(
+        format = { "pretty", "html:target/cucumber" },
+        features = {"classpath:feature/HarvestDIFIData.feature", "classpath:feature/onlyImportValidDatasets.feature"},
+        tags = {"~@ignore"}
 )
 public class HarvestTests {
 }

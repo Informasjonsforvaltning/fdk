@@ -6,4 +6,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp
 ADD webapp-?.?.?-SNAPSHOT.jar app.jar
 RUN sh -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+CMD java -jar  $JAVA_OPTS  -Dspring.profiles.active=docker app.jar

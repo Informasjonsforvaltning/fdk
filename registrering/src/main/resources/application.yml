@@ -47,10 +47,6 @@ spring:
       cluster-nodes: elasticsearch:9300
   application:
     catalogUriPrefix: http://localhost:8099
-server:
-  port: 8099
-management:
-  port: 8999
 ---
 spring:
   hateoas:
