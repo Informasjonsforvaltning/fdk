@@ -5,7 +5,7 @@ services:
     ports:
       - 8080:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.queryService=http://search-api:8080
      - application.queryServiceExternal=http://localhost:8083
      - application.fusekiService=http://fuseki:8080/fuseki
@@ -14,7 +14,7 @@ services:
     ports:
       - 8083:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
 
@@ -22,13 +22,13 @@ services:
     ports:
       - 8084:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
 
   validator:
     ports:
       - 8086:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
 
   fuseki:
     volumes:
@@ -40,7 +40,7 @@ services:
     ports:
      - 8081:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
@@ -54,7 +54,7 @@ services:
     ports:
      - 8082:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.harvesterUrl=http://harvester-api:8080
@@ -91,7 +91,7 @@ services:
     ports:
       - 8085:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
@@ -103,14 +103,14 @@ services:
     ports:
       - 8099:8080
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - spring.application.catalogUriPrefix=http://localhost:8099
 
   registration:
     ports:
       - 4200:4200
     environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
      - REG_API_URL=http://localhost:8099
      - QUERY_SERVICE_URL=http://localhost:8083
      - VALIDATOR_URL=http://localhost:8086
