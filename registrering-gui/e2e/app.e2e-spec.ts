@@ -22,6 +22,26 @@ describe('registrering-gui App', () => {
     });
 
     beforeAll(() => {
+        //create test dataset
+        page = new RegistreringGuiPage();
+        browser.get("/")
+        element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
+            if (isPresent) {
+                let submitButton = element(by.buttonText("Logg inn som bjg"));
+                submitButton.click();
+            }
+        });
+
+        var isLoggedInElement = element(by.css('.alert-success'));
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.presenceOf(isLoggedInElement), 10000);
+
+        let catalogLink = element(by.css("#datacatalogs td"));
+        catalogLink.click();
+
+        let newDatasetLink = element(by.buttonText("Nytt datasett"));
+        newDatasetLink.click();
+
     });
 
     it("should save conformsTo uris", () => {
