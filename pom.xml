@@ -68,6 +68,7 @@
 		<module>br-maven-main-msn</module>
 		<module>bddtest</module>
 		<module>datastore</module>
+		<module>themes</module>
 	</modules>
 
 	<properties>
