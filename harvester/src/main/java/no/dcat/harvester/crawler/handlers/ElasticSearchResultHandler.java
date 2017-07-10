@@ -89,7 +89,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param model RDF model containing the data catalog
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
-    protected void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
+    void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
