@@ -1,8 +1,8 @@
 spring:
     profiles: docker
 fuseki:
-  dcatServiceUri: http://fuseki:3030/fuseki/dcat
-  adminServiceUri: http://fuseki:3030/fuseki/admin
+  dcatServiceUri: http://fuseki:8080/fuseki/dcat
+  adminServiceUri: http://fuseki:8080/fuseki/admin
 application:
   crawlerThreadPoolSize: 2
   elasticsearchHost: es
