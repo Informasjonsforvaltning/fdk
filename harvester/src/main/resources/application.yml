@@ -5,9 +5,9 @@ fuseki:
   adminServiceUri: http://fuseki:8080/fuseki/admin
 application:
   crawlerThreadPoolSize: 2
-  elasticsearchHost: es
-  elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
+  elasticSearchHost: elasticsearch
+  elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
 ---
 spring:
     profiles: develop
