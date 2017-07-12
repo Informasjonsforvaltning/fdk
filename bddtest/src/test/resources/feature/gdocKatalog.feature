@@ -8,7 +8,7 @@ Feature: Introduction team's test data written in google sheet is available as a
 ##############################################
 ### IGNORED BECAUSE TEST FAILS TODO fix test or system ###
 ##############################################
-  @ignore
+#  @ignore
   Scenario: The dataset from gdoc is available
     Then the following dataset detail pages shall exist:
       | http://data.brreg.no/datakatalog/dataset/2 |

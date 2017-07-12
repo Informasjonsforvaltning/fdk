@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
@@ -21,8 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class OnlyImportValidDatasetsSteps extends CommonPage {
     private static Logger logger = LoggerFactory.getLogger(GdocCatalogSteps.class);
 
-    public static String PORTAL_URL = "http://localhost:8080"; // = "http://fdk-por-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://portal-fdk.tt1.brreg.no";
-    public static String ADMIN_URL = "http://localhost:8082"; // = "http://fdk-adm-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://admin-fdk.tt1.brreg.no";
+    public static String ADMIN_URL = "http://localhost:8082/admin"; // = "http://fdk-adm-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://admin-fdk.tt1.brreg.no";
     private static String elasticsearch_host = "http://localhost"; // = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no/";
     private static int elasticsearch_port = 9200;
 
@@ -88,43 +88,44 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
 
         harvest.click();
 
-        sleep(2000); // to allow for harvest time
+        sleep(1000);
+        waitForHarvesterToComplete();
+
+
     }
 
 
     //TODO: Duplisert med Gdoc-steps, litt endret ordlyd for å gjøre den unik. Bør refaktoreres
     @Then("^the following dataset detail pages exists:$")
     public void datasetPageExists(DataTable datasets) throws Throwable {
-        try {
 
-            for (List<String> dataset : datasets.raw()) {
-                String dsId = dataset.get(0);
-                logger.info("Test dataset {}",dsId);
 
-                openPageWaitRetry("detail?id="+ dsId, "languageText", 5);
-                String contents = driver.getPageSource();
-                assertTrue("Detail page has title ", driver.getTitle() != null);
-            }
-        } catch (Exception e) {
-            logger.error("Could not check for deleted dataset: " + e.toString());
+        for (List<String> dataset : datasets.raw()) {
+            String dsId = dataset.get(0);
+            logger.info("Test dataset {}", dsId);
+
+            openPageWaitRetry(PORTAL_URL+"/detail?id=" + dsId, "languageText", 5);
+            String contents = driver.getPageSource();
+
+            assertTrue(contents, contents.contains("mbox:aas@brreg.no"));
         }
+
     }
 
     @Then("^the following dataset detail pages shall not exist:$")
     public void datasetPageNotExists(DataTable datasets) throws Throwable {
-        try {
 
-            for (List<String> dataset : datasets.raw()) {
-                String dsId = dataset.get(0);
-                logger.info("Test dataset {}",dsId);
 
-                openPageWaitRetry("detail?id="+ dsId, "languageText", 5);
+        for (List<String> dataset : datasets.raw()) {
+            String dsId = dataset.get(0);
+            logger.info("Test dataset {}", dsId);
 
-                assertTrue("Error page is returned ", driver.getTitle().contains("Error page"));
-            }
-        } finally {
-            driver.close();
+            openPage(PORTAL_URL + "/detail?id=" + URLEncoder.encode(dsId));
+            String contents = driver.getPageSource();
+
+            assertTrue(contents, contents.contains("404"));
         }
+
     }
 
 }

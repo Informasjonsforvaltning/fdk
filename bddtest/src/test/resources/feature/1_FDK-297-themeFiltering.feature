@@ -17,7 +17,7 @@ Feature: Forbedringer design
 ##############################################
 ### IGNORED BECAUSE TEST FAILS TODO fix test or system ###
 ##############################################
-	@ignore
+#	@ignore
 	Scenario: C-Test FDK: Forbedringer design - theme filtering
 		Given I am on the homepage of the National Data Catalog
 		When I click on theme "Energi"

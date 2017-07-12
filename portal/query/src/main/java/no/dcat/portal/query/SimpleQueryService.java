@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -89,10 +90,18 @@ public class SimpleQueryService {
     }
 
     @Value("${application.elasticsearchPort}")
-    private int elasticsearchPort = 9300;
+    private int elasticsearchPort;
 
-    @Value("${application.clusterName:elasticsearch}")
+    @Value("${application.clusterName}")
     private String clusterName;
+
+
+    @PostConstruct
+    void validate(){
+        assert elasticsearchHost != null;
+        assert elasticsearchPort > 0;
+        assert clusterName != null;
+    }
 
     public void setClusterName(String cn) {
         clusterName = cn;

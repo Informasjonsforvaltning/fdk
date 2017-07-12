@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 
 
 @Configuration
@@ -16,7 +17,14 @@ public class FusekiSettings {
 	private String dcatServiceUri;
 	@Value("fuseki.adminServiceUri")
 	private String adminServiceUri;
-	
+
+	@PostConstruct
+	void validate(){
+		assert dcatServiceUri != null;
+		assert adminServiceUri != null;
+
+	}
+
 	public String getDcatServiceUri() {
 		return dcatServiceUri;
 	}

@@ -2,19 +2,21 @@ version: "2"
 
 services:
   search:
+    restart: always
     ports:
       - 8080:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.queryService=http://search-api:8080
      - application.queryServiceExternal=http://localhost:8083
      - application.fusekiService=http://fuseki:8080/fuseki
 
   search-api:
+    restart: always
     ports:
       - 8083:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
 
@@ -22,25 +24,28 @@ services:
     ports:
       - 8084:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
 
   validator:
+    restart: always
     ports:
       - 8086:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
 
   fuseki:
+    restart: always
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
     ports:
      - 3030:8080
 
   harvester-api:
+    restart: always
     ports:
      - 8081:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
@@ -51,10 +56,11 @@ services:
      - ./logs:/usr/local/tomcat/logs:rw
 
   harvester:
+    restart: always
     ports:
      - 8082:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.harvesterUrl=http://harvester-api:8080
@@ -81,6 +87,7 @@ services:
  #         - log_es
 
   elasticsearch:
+    restart: always
     ports:
       - 9200:9200
       - 9300:9300
@@ -88,10 +95,11 @@ services:
       - ./data/esdata:/usr/share/elasticsearch/data
 
   test:
+    restart: always
     ports:
       - 8085:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
@@ -100,17 +108,19 @@ services:
 
 
   registration-api:
+    restart: always
     ports:
       - 8099:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - spring.application.catalogUriPrefix=http://localhost:8099
 
   registration:
+    restart: always
     ports:
       - 4200:4200
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - REG_API_URL=http://localhost:8099
      - QUERY_SERVICE_URL=http://localhost:8083
      - VALIDATOR_URL=http://localhost:8086

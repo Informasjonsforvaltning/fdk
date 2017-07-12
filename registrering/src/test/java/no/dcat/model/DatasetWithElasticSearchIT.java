@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,12 +21,20 @@ import static org.junit.Assert.assertThat;
 @ActiveProfiles("unit-integration")
 public class DatasetWithElasticSearchIT {
 
-    @Value("${spring.data.elasticsearch.cluster-nodes}")
+    @Value("${spring.data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
 
-    @Value("${spring.data.elasticsearch.cluster-name}")
+    @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
+
+    @PostConstruct
+    void validate(){
+        assert clusterNodes != null;
+        assert clusterName != null;
+
+    }
+
 
     @Autowired
     private DatasetRepository datasetRepository;

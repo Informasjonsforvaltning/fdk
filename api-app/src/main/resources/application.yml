@@ -5,6 +5,7 @@ spring:
 fuseki:
   dcatServiceUri: http://fuseki:8080/fuseki/dcat
   adminServiceUri: http://fuseki:8080/fuseki/admin
+
 ---
 
 spring:
@@ -14,8 +15,6 @@ spring:
 fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin
-application:
-  harvesterUrl: http://localhost:8090
 server:
   port: 8085
 management:
