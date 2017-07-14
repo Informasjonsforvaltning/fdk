@@ -21,7 +21,7 @@ Feature: Detail page for presenting properties for a dataset.
 ##############################################
 ### IGNORED BECAUSE TEST FAILS TODO fix test or system ###
 ##############################################
-  @ignore
+#  @ignore
   Scenario: I can change language on the page - jeg kan skifte språk mellom bokmål, nynorsk og engelsk
     Given I change page-language to "Bokmål"
     Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-right, locations):
@@ -63,7 +63,7 @@ Feature: Detail page for presenting properties for a dataset.
 ##############################################
 ### IGNORED BECAUSE TEST FAILS TODO fix test or system ###
 ##############################################
-  @ignore
+#  @ignore
   @TEST_FDK_314 @TESTSETT_FDK_313 @portal
   Scenario: C-Test FDK: gitt jeg kan se alle feltene i datesettet som har verdier
     Given I change page-language to "Bokmål"

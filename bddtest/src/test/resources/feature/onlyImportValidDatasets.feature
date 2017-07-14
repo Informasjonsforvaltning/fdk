@@ -11,10 +11,7 @@ Feature: Endre valideringsrutine til å godkjenne lovlige datasett
 	# med alvorlige feil så skal de datasettene som ikke inneholder
 	# alvorlige feil importeres
 
-##############################################
-### IGNORED BECAUSE TEST FAILS TODO fix test or system ###
-##############################################
-@ignore
+
 Scenario: Only the valid dataset from FDK-138 is available
 		Given I open the administration portal
 		When I select harvest FDK-138 catalog

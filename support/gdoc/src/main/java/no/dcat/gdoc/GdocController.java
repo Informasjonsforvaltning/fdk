@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,13 +46,22 @@ public class GdocController {
     @Value("${application.converterHomeDir:/home/1000/dcat/}")
     private String converterHomeDir;
 
+
+    @Value("${application.converterResultDir}")
+    private String converterResultDir;
+
+
+    @PostConstruct
+    void validate(){
+        assert converterHomeDir != null;
+        assert converterResultDir != null;
+
+    }
+
     public void setConverterHomeDir(final String converterHomeDir) {
 
         this.converterHomeDir = converterHomeDir;
     }
-
-    @Value("${application.converterResultDir:/home/1000/dcat/publish}")
-    private String converterResultDir;
 
     public void setConverterResultDir(final String converterResultDir) {
 

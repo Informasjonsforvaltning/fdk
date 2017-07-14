@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,7 +29,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Future;
 
@@ -233,5 +236,15 @@ public class CrawlerRestController {
             logger.info("Loading of type {} has not been completed yet.", indexType);
             Thread.sleep(SLEEP);
         }
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, value = "/api/admin/isIdle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Object> isIdle() {
+        Map<String, Boolean>  ret = new HashMap<>();
+        ret.put("idle", crawler.isIdle());
+        return ResponseEntity.ok(ret);
+
     }
 }

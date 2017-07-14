@@ -5,6 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import javax.annotation.PostConstruct;
+
 
 /**
  * Created by nodavsko on 17.10.2016.
@@ -21,14 +23,21 @@ public class PortalConfiguration {
     private static final String QUERY_THEME_COUNT = "/themecount";
     private static final String QUERY_SERVICE_PUBLISHER_COUNT = "/publishercount";
 
-    @Value("${spring.profiles.active:development}")
-    private String profile;
 
-    @Value("${queryServiceExternal:qse}")
+
+    @Value("${application.queryServiceExternal}")
     private String queryServiceExternal;
 
-    @Value("${queryService:qs}")
+    @Value("${application.queryService}")
     private String queryService;
+
+
+    @PostConstruct
+    void validate(){
+        assert queryServiceExternal != null;
+        assert queryService != null;
+
+    }
 
 
     public final String getQueryServiceExternal() {

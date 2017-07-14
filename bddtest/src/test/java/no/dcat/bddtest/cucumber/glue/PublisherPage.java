@@ -23,7 +23,7 @@ import static org.junit.Assert.fail;
  */
 public class PublisherPage extends CommonPage {
     private final Logger logger = LoggerFactory.getLogger(PublisherPage.class);
-    private final String page = "publisher";
+    private final String page = PORTAL_URL+"/publisher";
 
     @Before
     public void setup() {

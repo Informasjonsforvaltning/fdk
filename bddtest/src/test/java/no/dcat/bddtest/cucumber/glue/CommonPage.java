@@ -13,8 +13,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
 
-;
+;import java.util.Map;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Common class for glue-code for pagetesting.
@@ -23,11 +26,14 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
     private final Logger logger = LoggerFactory.getLogger(CommonPage.class);
     WebDriver driver = null;
 
-    public void openPage(String page) {
-        String hostname = "localhost";
-        int port = 8080;
+    public static final String PORTAL_URL = "http://localhost:8080"; // = "http://fdk-por-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://portal-fdk.tt1.brreg.no";
 
-        driver.get(String.format("http://%s:%d/%s", hostname, port, page));
+
+    public void openPage(String page) {
+
+        assertTrue("page should be an actual web page, was: "+page, page.startsWith("http://"));
+
+        driver.get(page);
     }
 
     public boolean openPageWaitRetry(String page, String idToFind, int waitTimes) {
@@ -36,11 +42,9 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
 
     public boolean openPageWaitRetry(String page, Predicate<WebDriver> waitCondition, int waitTimes) {
         logger.info(String.format("Waiting for page %s %d times", page, waitTimes));
-        try {
+
             openPage(page);
-        } catch (Throwable t) {
-            logger.error("Open page failed {}",t.getMessage());
-        }
+
         if (waitTimes <= 0) {
             return false;
         }
@@ -77,6 +81,12 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
 
 
     protected void stopDriver() {
+        try {
+            logger.info("Current URL: " + driver.getCurrentUrl());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         if (driver != null) {
             driver.quit();
         }
@@ -85,4 +95,42 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
     protected int getEnvInt(String env) {
         return Integer.valueOf(getEnv(env));
     }
+
+
+    void waitForHarvesterToComplete(){
+
+
+        int maxTries = 60;
+        while(true){
+            logger.info("Waiting for harvester to become idle.");
+            boolean harvesterIdle = harvesterIsIdle();
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // double check if harvester is idle
+            harvesterIdle = harvesterIdle && harvesterIsIdle();
+
+            if(harvesterIdle) return;
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(maxTries-- < 0){
+                throw new RuntimeException("Tried to wait for harvester to complete for 60 seconds without it completing.");
+            }
+        }
+
+    }
+
+    private boolean harvesterIsIdle() {
+        Map<String, Boolean> forObject = new RestTemplate().getForObject("http://localhost:8081/api/admin/isIdle", Map.class);
+        return forObject.get("idle");
+    }
+
 }

@@ -1,7 +1,6 @@
 logging:
-  level.: ERROR
+  level.: INFO
   level.no.brreg: DEBUG
-  level.org.springframework: ERROR
 ---
 spring:
   profiles: docker
@@ -9,6 +8,8 @@ application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
   elasticsearchCluster: elasticsearch
+  fusekiHost: http://fuseki:8080
+  harvesterHost: http://harvester-api:8080
 ---
 #Utv-miljø lokalt på egen PC
 spring:
