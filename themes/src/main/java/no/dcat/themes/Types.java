@@ -1,0 +1,34 @@
+package no.dcat.themes;
+
+public enum Types {
+
+    provenancestatement("rdf/provenance.rdf", "provenancestatement"),
+    rightsstatement("rdf/access-right-skos.rdf","rightsstatement"),
+    frequency("http://publications.europa.eu/mdr/resource/authority/frequency/skos/frequencies-skos.rdf","frequency"),
+   // To bigfile, contains over 7700 languages, 5 milllion lines og code.
+   //LINGUISTICSYSTEM("http://publications.europa.eu/mdr/resource/authority/language/skos/languages-skos.rdf", "linguisticsystem");
+   linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem");
+
+   private String sourceUrl;
+   private String type;
+
+   Types(String sourceUrl, String type) {
+       this.sourceUrl = sourceUrl;
+       this.type = type;
+   }
+   public String getType() {
+       return type;
+   }
+
+   public void setType(String type) {
+       this.type = type;
+   }
+
+   public String getSourceUrl() {
+       return sourceUrl;
+   }
+
+   public void setSourceUrl(String sourceUrl) {
+       this.sourceUrl = sourceUrl;
+   }
+}

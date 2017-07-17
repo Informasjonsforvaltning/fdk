@@ -1,52 +1,16 @@
 spring:
   profiles: develop
-  data:
-    elasticsearch:
-      cluster-nodes: localhost:9300
-  application:
-      catalogUriPrefix: http://localhost:8099
 server:
-  port: 8099
+  port: 8100
 management:
-  port: 8999
+  port: 8101
 ---
-spring:
-  profiles: unit-integration
-  data:
-    elasticsearch:
-      properties:
-        http:
-          enabled: true
-  application:
-      catalogUriPrefix: http://localhost:8099
----
-spring:
-  profiles: develop_embedded
-  data:
-    elasticsearch:
-      properties:
-        http:
-          enabled: true
-  application:
-    catalogUriPrefix: http://localhost:8099
-server:
-  port: 8099
-  tomcat:
-    accesslog:
-      enabled: true
-    basedir: /tmp/fdk
-management:
-  port: 8999
 
 
 ---
 spring:
   profiles: docker
-  data:
-    elasticsearch:
-      cluster-nodes: elasticsearch:9300
-  application:
-    catalogUriPrefix: http://localhost:8099
+
 ---
 spring:
   hateoas:
