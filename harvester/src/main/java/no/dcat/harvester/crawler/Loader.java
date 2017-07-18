@@ -3,7 +3,6 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.harvester.HarvesterApplication;
-import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import org.slf4j.Logger;
@@ -137,20 +136,7 @@ public class Loader {
 
         return null;
     }
-    public void harvestAllCodes(boolean reload) throws InterruptedException {
-        for(Types type:Types.values()) {
-            logger.debug("Loading type {}", type);
-            harvestCode(reload, type.getSourceUrl(), type.getType());
-        }
-    }
 
-    private void harvestCode(boolean reload, String sourceURL, String indexType) throws InterruptedException {
-        CrawlerResultHandler codeHandler = new CodeCrawlerHandler(this.hostname, this.port, this.elasticsearchCluster, indexType, reload);
-        CrawlerCodeJob jobCode = new CrawlerCodeJob(sourceURL, codeHandler);
 
-        Thread codeCrawlerThread = new Thread(jobCode);
-        codeCrawlerThread.start();
 
-        //jobCode.run();
-    }
 }

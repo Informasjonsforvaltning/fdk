@@ -106,8 +106,7 @@ public class BackgroundPage extends CommonPage {
 
         Loader loader = new Loader(hostname, port);
         try {
-            loader.harvestAllCodes(true);
-            sleep(1000);
+
             waitForHarvesterToComplete();
 
             Resource resource = new ClassPathResource(datasett);

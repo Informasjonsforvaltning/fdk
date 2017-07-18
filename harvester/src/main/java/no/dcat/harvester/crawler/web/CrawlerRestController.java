@@ -4,10 +4,8 @@ import no.dcat.admin.store.AdminDataStore;
 import no.dcat.admin.store.Fuseki;
 import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.harvester.crawler.Crawler;
-import no.dcat.harvester.crawler.CrawlerCodeJob;
 import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.harvester.crawler.CrawlerJobFactory;
-import no.dcat.harvester.crawler.Types;
 import no.dcat.harvester.settings.FusekiSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +103,6 @@ public class CrawlerRestController {
 
             List<String> resultMsgs = null;
             try {
-                harvestAllCodes(false);
 
                 resultMsgs = doCrawl(dsource);
 
@@ -169,10 +166,6 @@ public class CrawlerRestController {
     public void harvestDataSoure(@RequestParam(value = "id") String dcatSourceId) throws InterruptedException {
         logger.info("Received request to harvest {}", dcatSourceId);
 
-        logger.debug("Load Codes.");
-        boolean reload = false;
-        harvestAllCodes(reload);
-
         logger.debug("Harvest datasset.");
         Optional<DcatSource> dcatSource = adminDataStore.getDcatSourceById(dcatSourceId);
         if (dcatSource.isPresent()) {
@@ -199,10 +192,6 @@ public class CrawlerRestController {
     void harvestAllDcatSources() throws InterruptedException {
         logger.info("HARVEST ALL - " + Calendar.getInstance().getTime().toString());
 
-        logger.debug("Reload Codes.");
-
-        harvestAllCodes(true);
-
         logger.debug("Start Crawler Job for each dcat source");
         List<DcatSource> dcatSources = getDcatSources();
         for (DcatSource dcatSource : dcatSources) {
@@ -215,28 +204,8 @@ public class CrawlerRestController {
         return adminDataStore.getDcatSources();
     }
 
-    /**
-     * Harvests list of codes.
-     *
-     * @param reload if true it forces download. If false and the codes exist it doesn't reload.
-     * @throws InterruptedException
-     */
-    void harvestAllCodes(boolean reload) throws InterruptedException {
-        for(Types type : Types.values()) {
-            logger.debug("Loading type {}", type);
-            harvestCode(reload, type.getSourceUrl(), type.getType());
-        }
-    }
 
-    private void harvestCode(boolean reload, String sourceURL, String indexType) throws InterruptedException {
-        CrawlerCodeJob jobCode = crawlerJobFactory.createCrawlerCodeJob(sourceURL, indexType, reload);
-        Future future = crawler.execute(jobCode);
 
-        while (!future.isDone()) {
-            logger.info("Loading of type {} has not been completed yet.", indexType);
-            Thread.sleep(SLEEP);
-        }
-    }
 
 
     @CrossOrigin

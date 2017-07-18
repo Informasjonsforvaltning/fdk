@@ -15,7 +15,6 @@ import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.dcat.harvester.crawler.client.RetrieveModel;
-import no.dcat.harvester.theme.builders.DataThemeBuilders;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -95,7 +94,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
             logger.debug("Creating index: " + DCAT_INDEX);
             elasticsearch.createIndex(DCAT_INDEX);
-            indexThemeCodesWithElasticSearch(DATA_THEME_URL, elasticsearch);
         }else{
             logger.debug("Index exists: " + DCAT_INDEX);
 
@@ -139,37 +137,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         if (bulkResponse.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
         }
-    }
-
-
-    /**
-     * Index SKOS theme codes with elasticsearch
-     * @param elasticsearch elasticsearch cluster instance
-     */
-    private void indexThemeCodesWithElasticSearch(String skosUrl, Elasticsearch elasticsearch) {
-
-        Model model = RetrieveModel.remoteRDF(skosUrl);
-        DcatSource themeSource = new DcatSource("http//dcat.no/test", "Test", skosUrl, "admin_user", "123456789");
-        BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
-
-        List<DataTheme> dataThemes = new DataThemeBuilders(model).build();
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-
-        logger.info("Number of theme documents {} for dcat source {}", dataThemes.size(), themeSource.getId());
-        for (DataTheme dataTheme : dataThemes) {
-
-            IndexRequest indexRequest = new IndexRequest(THEME_INDEX, THEME_TYPE, dataTheme.getId());
-            indexRequest.source(gson.toJson(dataTheme));
-
-            logger.debug("Add datatheme document {} to bulk request", dataTheme.getId());
-            bulkRequest.add(indexRequest);
-        }
-        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-
-        if (bulkResponse.hasFailures()) {
-            //TODO: process failures by iterating through each bulk response item?
-        }
-        elasticsearch.getClient().admin().indices().refresh(new RefreshRequest(THEME_INDEX)).actionGet();
     }
 
 }

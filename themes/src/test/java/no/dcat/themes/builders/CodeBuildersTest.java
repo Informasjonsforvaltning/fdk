@@ -1,6 +1,5 @@
-package no.dcat.harvester.theme.builders;
+package no.dcat.themes.builders;
 
-import no.dcat.data.store.domain.dcat.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Test;

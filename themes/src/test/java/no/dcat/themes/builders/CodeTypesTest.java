@@ -1,6 +1,6 @@
-package no.dcat.harvester.theme.builders;
+package no.dcat.themes.builders;
 
-import no.dcat.harvester.crawler.Types;
+import no.dcat.themes.Types;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ public class CodeTypesTest {
 
     @Test
     public void getRights() {
-        String sourceUrl = Types.RIGHTSSTATEMENT.getSourceUrl();
+        String sourceUrl = Types.rightsstatement.getSourceUrl();
         logger.info(sourceUrl);
 
         Assert.assertNotNull(sourceUrl);
