@@ -306,39 +306,39 @@ public class SimpleQueryService {
     }
 
 
-    /**
-     * Returns the types of codes that are stored by the system
-     *
-     * @return the list of code-types
-     */
-    @CrossOrigin
-    @RequestMapping(value = "/codes", produces = "application/json")
-    public ResponseEntity<String> codeTypes() {
-        ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
-
-        if (elasticError != null) {
-            return elasticError;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("{ \"types\": [");
-
-        List<String> types = getTypes("codes");
-        if (types != null) {
-            boolean comma = false;
-            for (String c : types) {
-                if (comma) {
-                    sb.append(", ");
-                }
-                sb.append("\"" + c + "\"");
-                comma = true;
-            }
-            sb.append("]}");
-            return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    /**
+//     * Returns the types of codes that are stored by the system
+//     *
+//     * @return the list of code-types
+//     */
+//    @CrossOrigin
+//    @RequestMapping(value = "/codes", produces = "application/json")
+//    public ResponseEntity<String> codeTypes() {
+//        ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
+//
+//        if (elasticError != null) {
+//            return elasticError;
+//        }
+//
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("{ \"types\": [");
+//
+//        List<String> types = getTypes("codes");
+//        if (types != null) {
+//            boolean comma = false;
+//            for (String c : types) {
+//                if (comma) {
+//                    sb.append(", ");
+//                }
+//                sb.append("\"" + c + "\"");
+//                comma = true;
+//            }
+//            sb.append("]}");
+//            return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     List<String> getTypes(String index) {
 
@@ -363,26 +363,26 @@ public class SimpleQueryService {
         return null;
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/codes/{type}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
-        return getCodes(type, "");
-    }
+//    @CrossOrigin
+//    @RequestMapping(value = "/codes/{type}", method = RequestMethod.GET, produces = "application/json")
+//    public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
+//        return getCodes(type, "");
+//    }
 
-    /**
-     * Returns codes of a specific code type
-     *
-     * @param type the type which codes to return
-     * @param lang a list of two-letter language codes to filter out
-     * @return an object which contain the codes of the type
-     */
-    @CrossOrigin
-    @RequestMapping(value = "/codes/{type}/{lang}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> codes(
-            @PathVariable(name = "type") String type,
-            @PathVariable(name = "lang") String lang) {
-        return getCodes(type, lang);
-    }
+//    /**
+//     * Returns codes of a specific code type
+//     *
+//     * @param type the type which codes to return
+//     * @param lang a list of two-letter language codes to filter out
+//     * @return an object which contain the codes of the type
+//     */
+//    @CrossOrigin
+//    @RequestMapping(value = "/codes/{type}/{lang}", method = RequestMethod.GET, produces = "application/json")
+//    public ResponseEntity<String> codes(
+//            @PathVariable(name = "type") String type,
+//            @PathVariable(name = "lang") String lang) {
+//        return getCodes(type, lang);
+//    }
 
     List<String> extractCodeStrings(String type) {
         List<String> result = new ArrayList<>();
@@ -483,35 +483,35 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
     }
 
-    /**
-     * Finds all themes loaded into elasticsearch.
-     * <p/>
-     *
-     * @return The complete elasticsearch response on Json-fornat is returned..
-     */
-    @CrossOrigin
-    @RequestMapping(value = QUERY_THEMES, produces = "application/json")
-    public ResponseEntity<String> themes() {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-
-        QueryBuilder search = QueryBuilders.matchAllQuery();
-
-        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).setQuery(search);
-        SearchResponse responseSize = searchQuery.execute().actionGet();
-
-        int totNrOfThemes = (int) responseSize.getHits().getTotalHits();
-        logger.debug("Found total number of themes: {}", totNrOfThemes);
-
-        SearchResponse responseThemes = searchQuery.setSize(totNrOfThemes).execute().actionGet();
-        logger.debug("Found themes: {}", responseThemes);
-
-        if (jsonError != null) {
-            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
-            return jsonError;
-        }
-
-        return new ResponseEntity<String>(responseThemes.toString(), HttpStatus.OK);
-    }
+//    /**
+//     * Finds all themes loaded into elasticsearch.
+//     * <p/>
+//     *
+//     * @return The complete elasticsearch response on Json-fornat is returned..
+//     */
+//    @CrossOrigin
+//    @RequestMapping(value = QUERY_THEMES, produces = "application/json")
+//    public ResponseEntity<String> themes() {
+//        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+//
+//        QueryBuilder search = QueryBuilders.matchAllQuery();
+//
+//        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).setQuery(search);
+//        SearchResponse responseSize = searchQuery.execute().actionGet();
+//
+//        int totNrOfThemes = (int) responseSize.getHits().getTotalHits();
+//        logger.debug("Found total number of themes: {}", totNrOfThemes);
+//
+//        SearchResponse responseThemes = searchQuery.setSize(totNrOfThemes).execute().actionGet();
+//        logger.debug("Found themes: {}", responseThemes);
+//
+//        if (jsonError != null) {
+//            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
+//            return jsonError;
+//        }
+//
+//        return new ResponseEntity<String>(responseThemes.toString(), HttpStatus.OK);
+//    }
 
 
     /**
