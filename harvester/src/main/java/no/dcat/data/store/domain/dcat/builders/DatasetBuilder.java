@@ -3,11 +3,13 @@ package no.dcat.data.store.domain.dcat.builders;
 import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.data.store.domain.dcat.Dataset;
 import no.dcat.data.store.domain.dcat.Distribution;
-import no.dcat.data.store.domain.dcat.SkosCode;
-import no.dcat.data.store.domain.dcat.Types;
+
+
 import no.dcat.data.store.domain.dcat.vocabulary.ADMS;
 import no.dcat.data.store.domain.dcat.vocabulary.DCAT;
 import no.dcat.data.store.domain.dcat.vocabulary.DCATNO;
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.Types;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResIterator;
@@ -74,8 +76,7 @@ public class DatasetBuilder extends AbstractBuilder {
         return datasets;
     }
 
-    public static Dataset create(Resource dataset, Resource catalog, Map<String, SkosCode> locations,
-                                 Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
+    public static Dataset create(Resource dataset, Resource catalog, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         Dataset created = new Dataset();
 
         if (dataset != null) {
@@ -85,7 +86,7 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setDescription(extractLanguageLiteral(dataset, DCTerms.description));
             created.setIssued(extractDate(dataset, DCTerms.issued));
             created.setModified(extractDate(dataset, DCTerms.modified));
-            created.setLanguage(getCode(codes.get(Types.LINGUISTICSYSTEM.getType()), extractAsString(dataset, DCTerms.language)));
+            created.setLanguage(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(dataset, DCTerms.language)));
 
             created.setLandingPage(extractAsString(dataset, DCAT.landingPage));
             created.setKeyword(extractMultipleLanguageLiterals(dataset, DCAT.keyword));
@@ -94,15 +95,15 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setTheme(extractTheme(dataset, DCAT.theme, dataThemes));
 			created.setConformsTo(extractMultipleStrings(dataset, DCTerms.conformsTo));
             created.setPage(extractMultipleStrings(dataset, FOAF.page));
-            created.setAccrualPeriodicity(getCode(codes.get(Types.FREQUENCY.getType()), extractAsString(dataset, DCTerms.accrualPeriodicity)));
+            created.setAccrualPeriodicity(getCode(codes.get(Types.frequency.getType()), extractAsString(dataset, DCTerms.accrualPeriodicity)));
 
             created.setTemporal(extractPeriodOfTime(dataset));
 			created.setSpatial(getCodes(locations, extractMultipleStrings(dataset, DCTerms.spatial)));
-			created.setAccessRights(getCode(codes.get(Types.RIGHTSSTATEMENT.getType()), extractAsString(dataset, DCTerms.accessRights)));
+			created.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()), extractAsString(dataset, DCTerms.accessRights)));
 			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
             created.setSubject(extractMultipleStrings(dataset, DCTerms.subject));
 			created.setReferences(extractMultipleStrings(dataset, DCTerms.references));
-			created.setProvenance(getCode(codes.get(Types.PROVENANCESTATEMENT.getType()), extractAsString(dataset, DCTerms.provenance)));
+			created.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(dataset, DCTerms.provenance)));
             created.setADMSIdentifier(extractMultipleStrings(dataset, ADMS.identifier));
             created.setType(extractAsString(dataset, DCTerms.type));
 		}

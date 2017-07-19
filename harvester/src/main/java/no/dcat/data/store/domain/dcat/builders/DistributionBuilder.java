@@ -2,8 +2,8 @@ package no.dcat.data.store.domain.dcat.builders;
 
 import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.data.store.domain.dcat.Distribution;
-import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.data.store.domain.dcat.vocabulary.DCAT;
+import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
@@ -23,8 +23,7 @@ public class DistributionBuilder extends AbstractBuilder {
     protected final Map<String, Map<String, SkosCode>> codes;
     protected final Map<String, DataTheme> dataThemes;
 
-    public DistributionBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
-                               Map<String, DataTheme> dataThemes) {
+    public DistributionBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         this.model = model;
         this.locations = locations;
         this.codes = codes;
@@ -61,8 +60,7 @@ public class DistributionBuilder extends AbstractBuilder {
 
     }
 
-    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
-                                      Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
+    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         Distribution created = new Distribution();
 
         if (distribution != null) {

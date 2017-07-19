@@ -3,7 +3,7 @@ package no.dcat.harvester.crawler.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.data.store.Elasticsearch;
-import no.dcat.data.store.domain.dcat.SkosCode;
+import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.ListenableActionFuture;

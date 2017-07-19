@@ -1,12 +1,12 @@
 package no.dcat.themes;
 
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.Types;
 import no.dcat.themes.builders.CodeBuilders;
-import no.dcat.themes.builders.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Arrays;
 import java.util.List;

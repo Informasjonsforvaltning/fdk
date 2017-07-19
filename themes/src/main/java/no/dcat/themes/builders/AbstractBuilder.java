@@ -1,6 +1,7 @@
 package no.dcat.themes.builders;
 
 
+import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;

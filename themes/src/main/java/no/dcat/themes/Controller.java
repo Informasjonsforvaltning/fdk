@@ -1,7 +1,8 @@
 package no.dcat.themes;
 
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.Types;
 import no.dcat.themes.builders.DataTheme;
-import no.dcat.themes.builders.SkosCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;

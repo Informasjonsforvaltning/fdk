@@ -1,6 +1,7 @@
 package no.dcat.themes.builders;
 
 
+import no.dcat.shared.SkosCode;
 import no.dcat.themes.builders.vocabulary.FdkRDF;
 import no.dcat.themes.builders.vocabulary.SkosRDF;
 import org.apache.jena.rdf.model.Model;

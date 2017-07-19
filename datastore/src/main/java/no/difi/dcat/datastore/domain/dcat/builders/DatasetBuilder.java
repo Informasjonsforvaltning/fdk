@@ -1,5 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.*;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
@@ -10,6 +11,8 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import no.dcat.shared.Types;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +79,7 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setDescription(extractLanguageLiteral(dataset, DCTerms.description));
             created.setIssued(extractDate(dataset, DCTerms.issued));
             created.setModified(extractDate(dataset, DCTerms.modified));
-            created.setLanguage(getCode(codes.get(Types.LINGUISTICSYSTEM.getType()), extractAsString(dataset, DCTerms.language)));
+            created.setLanguage(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(dataset, DCTerms.language)));
 
             created.setLandingPage(extractAsString(dataset, DCAT.landingPage));
             created.setKeyword(extractMultipleLanguageLiterals(dataset, DCAT.keyword));
@@ -85,15 +88,15 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setTheme(extractTheme(dataset, DCAT.theme, dataThemes));
 			created.setConformsTo(extractMultipleStrings(dataset, DCTerms.conformsTo));
             created.setPage(extractMultipleStrings(dataset, FOAF.page));
-            created.setAccrualPeriodicity(getCode(codes.get(Types.FREQUENCY.getType()), extractAsString(dataset, DCTerms.accrualPeriodicity)));
+            created.setAccrualPeriodicity(getCode(codes.get(Types.frequency.getType()), extractAsString(dataset, DCTerms.accrualPeriodicity)));
 
             created.setTemporal(extractPeriodOfTime(dataset));
 			created.setSpatial(getCodes(locations, extractMultipleStrings(dataset, DCTerms.spatial)));
-			created.setAccessRights(getCode(codes.get(Types.RIGHTSSTATEMENT.getType()), extractAsString(dataset, DCTerms.accessRights)));
+			created.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()), extractAsString(dataset, DCTerms.accessRights)));
 			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
             created.setSubject(extractMultipleStrings(dataset, DCTerms.subject));
 			created.setReferences(extractMultipleStrings(dataset, DCTerms.references));
-			created.setProvenance(getCode(codes.get(Types.PROVENANCESTATEMENT.getType()), extractAsString(dataset, DCTerms.provenance)));
+			created.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(dataset, DCTerms.provenance)));
             created.setADMSIdentifier(extractMultipleStrings(dataset, ADMS.identifier));
             created.setType(extractAsString(dataset, DCTerms.type));
 		}

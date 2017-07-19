@@ -1,5 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat;
 
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.Types;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
@@ -47,10 +49,10 @@ public class DatasetTest {
         Map<String, Map<String, SkosCode>> codes = new HashMap<>();
         Map<String, SkosCode> locations = new HashMap<>();
 
-        codes.put(Types.PROVENANCESTATEMENT.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
-        codes.put(Types.LINGUISTICSYSTEM.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
-        codes.put(Types.RIGHTSSTATEMENT.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
-        codes.put(Types.FREQUENCY.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
+        codes.put(Types.provenancestatement.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
+        codes.put(Types.linguisticsystem.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
+        codes.put(Types.rightsstatement.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
+        codes.put(Types.frequency.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
         locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
 
         data = DatasetBuilder.create(datasetResource, catalogResource, locations, codes, new HashMap<>());

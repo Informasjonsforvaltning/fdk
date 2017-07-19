@@ -1,4 +1,4 @@
-package no.dcat.data.store.domain.dcat;
+package no.dcat.shared;
 
 import java.util.Map;
 

@@ -7,7 +7,6 @@ import no.dcat.data.store.Elasticsearch;
 import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.data.store.domain.dcat.Dataset;
 import no.dcat.data.store.domain.dcat.Distribution;
-import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.data.store.domain.dcat.builders.DatasetBuilder;
 import no.dcat.data.store.domain.dcat.builders.DistributionBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
@@ -15,6 +14,7 @@ import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.dcat.harvester.crawler.client.RetrieveModel;
+import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -105,8 +105,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         // Retrieve all codes from elasticsearch.
         Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
 
-        Map<String, SkosCode> locations = new LoadLocations(elasticsearch).extractLocations(model).retrieveLocTitle()
-                .indexLocationsWithElasticSearch().refresh().getLocations();
+        Map<String, SkosCode> locations = new LoadLocations(elasticsearch)
+                .extractLocations(model).retrieveLocTitle()
+                .indexLocationsWithElasticSearch()
+                .refresh()
+                .getLocations();
         Map<String,Map<String, SkosCode>> codes = new RetrieveCodes(elasticsearch).getAllCodes();
 
 

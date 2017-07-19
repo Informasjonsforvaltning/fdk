@@ -1,6 +1,6 @@
 package no.dcat.themes.builders;
 
-import no.dcat.themes.Types;
+import no.dcat.shared.Types;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

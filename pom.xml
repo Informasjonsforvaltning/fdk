@@ -69,7 +69,8 @@
 		<module>bddtest</module>
 		<module>datastore</module>
 		<module>themes</module>
-	</modules>
+        <module>shared</module>
+    </modules>
 
 	<properties>
         <fdk.version>0.2.4-SNAPSHOT</fdk.version>

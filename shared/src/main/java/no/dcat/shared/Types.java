@@ -1,4 +1,4 @@
-package no.dcat.themes;
+package no.dcat.shared;
 
 public enum Types {
 
