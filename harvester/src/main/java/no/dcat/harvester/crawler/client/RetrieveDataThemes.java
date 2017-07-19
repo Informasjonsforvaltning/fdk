@@ -13,13 +13,13 @@ import java.util.Map;
 
 public class RetrieveDataThemes {
 
-    public static Map<String, DataTheme> getAllDataThemes() throws DataThemesNotLoadedException {
+    public static Map<String, DataTheme> getAllDataThemes(String hostname) throws DataThemesNotLoadedException {
         Map<String, DataTheme> dataThemes = new HashMap<>();
 
 
         RestTemplate restTemplate = new RestTemplate();
 
-        List<DataTheme> body = restTemplate.exchange("http://themes:8080/themes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {
+        List<DataTheme> body = restTemplate.exchange(hostname+"/themes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {
         }).getBody();
 
         body.forEach(theme -> dataThemes.put(theme.getId(), theme));

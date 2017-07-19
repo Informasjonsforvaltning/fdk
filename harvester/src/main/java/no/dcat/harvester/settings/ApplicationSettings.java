@@ -14,7 +14,8 @@ public class ApplicationSettings {
 	private String elasticSearchHost;
 	private int elasticSearchPort;
 	private String elasticSearchCluster;
-	
+	private String themesHostname;
+
 	public String getElasticSearchHost() {
 		return elasticSearchHost;
 	}
@@ -43,4 +44,11 @@ public class ApplicationSettings {
 		this.crawlerThreadPoolSize = crawlerThreadPoolSize;
 	}
 
+	public String getThemesHostname() {
+		return themesHostname;
+	}
+
+	public void setThemesHostname(String themesHostname) {
+		this.themesHostname = themesHostname;
+	}
 }

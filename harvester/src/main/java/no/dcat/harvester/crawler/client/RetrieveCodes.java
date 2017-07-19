@@ -18,18 +18,18 @@ public class RetrieveCodes {
     private static final Logger logger = LoggerFactory.getLogger(RetrieveCodes.class);
 
 
-    public static Map<String, Map<String, SkosCode>> getAllCodes() throws DataThemesNotLoadedException {
+    public static Map<String, Map<String, SkosCode>> getAllCodes(String hostname) throws DataThemesNotLoadedException {
         Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
 
         RestTemplate restTemplate = new RestTemplate();
 
-        List<String> codeTypes = restTemplate.getForEntity("http://themes:8080/codes", List.class).getBody();
+        List<String> codeTypes = restTemplate.getForEntity(hostname+"/codes", List.class).getBody();
 
         for (String codeType : codeTypes) {
             Map<String, SkosCode> codes = new HashMap<>();
 
 
-            List<SkosCode> body = restTemplate.exchange("http://themes:8080/codes/" + codeType, HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {}).getBody();
+            List<SkosCode> body = restTemplate.exchange(hostname+"/codes/" + codeType, HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {}).getBody();
 
 
             body.forEach(code -> codes.put(code.getUri(), code));

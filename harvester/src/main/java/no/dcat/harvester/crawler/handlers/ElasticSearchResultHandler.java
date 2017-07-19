@@ -43,6 +43,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     String hostename;
     int port;
     String clustername;
+    private final String themesHostname;
 
 
     /**
@@ -53,10 +54,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param port port for connection to elasticserach cluster. Usually 9300
      * @param clustername Name of elasticsearch cluster
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
+        this.themesHostname = themesHostname;
 
         logger.debug("ES clustername: " + this.clustername);
     }
@@ -103,14 +105,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         // Retrieve all codes from elasticsearch.
-        Map<String, DataTheme> dataThemes =  RetrieveDataThemes.getAllDataThemes();
+        Map<String, DataTheme> dataThemes =  RetrieveDataThemes.getAllDataThemes(themesHostname);
 
         Map<String, SkosCode> locations = new LoadLocations(elasticsearch)
                 .extractLocations(model).retrieveLocTitle()
                 .indexLocationsWithElasticSearch()
                 .refresh()
                 .getLocations();
-        Map<String,Map<String, SkosCode>> codes = RetrieveCodes.getAllCodes();
+        Map<String,Map<String, SkosCode>> codes = RetrieveCodes.getAllCodes(themesHostname);
 
 
         List<Distribution> distributions = new DistributionBuilder(model, locations, codes, dataThemes).build();
