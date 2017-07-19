@@ -103,7 +103,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         // Retrieve all codes from elasticsearch.
-        Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+        Map<String, DataTheme> dataThemes =  RetrieveDataThemes.getAllDataThemes();
 
         Map<String, SkosCode> locations = new LoadLocations(elasticsearch)
                 .extractLocations(model).retrieveLocTitle()

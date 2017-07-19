@@ -116,8 +116,8 @@ public class ElasticsearchResultHandlerTest {
 	@Test
 	@Ignore
 	public void testCrawlingIndexesToElasticsearchIT() {
-		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
-		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);
+//		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
+//		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);
 
 		try {
 			Thread.sleep(1000);
