@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.data.store.Elasticsearch;
+import no.dcat.harvester.crawler.Crawler;
 import no.dcat.harvester.crawler.exception.CodesNotLoadedException;
 import no.dcat.harvester.crawler.exception.DataThemesNotLoadedException;
 import no.dcat.shared.SkosCode;
@@ -11,20 +12,27 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Class for retrieving codes from Elasticsearch.
  */
 public class RetrieveCodes {
-    public static final String INDEX_CODES = "codes";
-    public static final int THEME_SEARCH_SIZE = 50;
-    private final Client client;
 
-    public RetrieveCodes(Elasticsearch elasticsearch) {
-        client = elasticsearch.getClient();
+    private static final Logger logger = LoggerFactory.getLogger(RetrieveCodes.class);
+
+
+    public RetrieveCodes() {
     }
 
     /**
@@ -36,30 +44,31 @@ public class RetrieveCodes {
      * @return All codes defined in Elasticsearch.
      * @throws DataThemesNotLoadedException Is thrown if no codes in one type were not found.
      */
-    public Map<String, Map<String, SkosCode>> getAllCodes() throws DataThemesNotLoadedException {
+    public static Map<String, Map<String, SkosCode>> getAllCodes() throws DataThemesNotLoadedException {
         Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
 
-        for(Types type: Types.values()) {
-            Map<String, SkosCode> codes = new HashMap<String, SkosCode>();
+        RestTemplate restTemplate = new RestTemplate();
 
-            SearchResponse response = client.prepareSearch(INDEX_CODES).setTypes(type.getType()).setSize(THEME_SEARCH_SIZE).execute().actionGet();
-            SearchHits searchHits = response.getHits();
+        List<String> codeTypes = restTemplate.getForEntity("http://themes:8080/codes", List.class).getBody();
 
-            if (searchHits.getTotalHits() == 0) {
-                throw new CodesNotLoadedException(String.format("Code %s has not been loaded.", type));
-            }
+        for (String codeType : codeTypes) {
+            Map<String, SkosCode> codes = new HashMap<>();
 
-            SearchHit[] results = searchHits.getHits();
-            for (SearchHit hit : results) {
-                String sourceAsString = hit.getSourceAsString();
-                if (sourceAsString != null) {
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-                    SkosCode code = gson.fromJson(sourceAsString, SkosCode.class);
-                    codes.put(code.getUri(), code);
-                }
-            }
-            allCodes.put(type.getType(), codes);
+
+            List<SkosCode> body  = restTemplate.exchange("http://themes:8080/codes/" + codeType, HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {}).getBody();
+
+
+            body.forEach(code -> codes.put(code.getUri(), code));
+
+
+            allCodes.put(codeType, codes);
         }
+
+
+        String s = new Gson().toJson(allCodes);
+
+        logger.info(s);
+
         return allCodes;
     }
 }

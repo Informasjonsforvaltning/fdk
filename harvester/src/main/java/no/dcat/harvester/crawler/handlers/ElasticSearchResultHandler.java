@@ -110,7 +110,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 .indexLocationsWithElasticSearch()
                 .refresh()
                 .getLocations();
-        Map<String,Map<String, SkosCode>> codes = new RetrieveCodes(elasticsearch).getAllCodes();
+        Map<String,Map<String, SkosCode>> codes = RetrieveCodes.getAllCodes();
 
 
         List<Distribution> distributions = new DistributionBuilder(model, locations, codes, dataThemes).build();

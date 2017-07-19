@@ -27,9 +27,8 @@ public class RetrieveCodesTest {
     @Test
     public void test() {
         Elasticsearch elasticsearch = mockElasticsearchQuery(100);
-        RetrieveCodes rc = new RetrieveCodes(elasticsearch);
 
-        Map<String, Map<String, SkosCode>> allCodes = rc.getAllCodes();
+        Map<String, Map<String, SkosCode>> allCodes = RetrieveCodes.getAllCodes();
 
         for(Types type: Types.values()) {
             assertEquals("", "titel_en", allCodes.get(type.getType()).get("KEY").getPrefLabel().get("en"));
