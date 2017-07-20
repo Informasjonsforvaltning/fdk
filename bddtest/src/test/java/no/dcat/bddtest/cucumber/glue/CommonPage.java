@@ -3,6 +3,7 @@ package no.dcat.bddtest.cucumber.glue;
 import com.google.common.base.Predicate;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
+import no.dcat.data.store.Elasticsearch;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -131,6 +132,15 @@ public abstract class CommonPage extends SpringIntegrationTestConfig {
     private boolean harvesterIsIdle() {
         Map<String, Boolean> forObject = new RestTemplate().getForObject("http://localhost:8081/api/admin/isIdle", Map.class);
         return forObject.get("idle");
+    }
+
+
+    void refreshElasticsearch(String hostname, int port, String clustername){
+        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
+
+            elasticsearch.getClient().admin().indices().prepareRefresh().get();
+
+        }
     }
 
 }
