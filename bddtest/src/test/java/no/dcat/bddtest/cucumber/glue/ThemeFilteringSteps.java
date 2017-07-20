@@ -36,6 +36,7 @@ public class ThemeFilteringSteps extends CommonPage {
         WebElement themeElement = driver.findElement(By.id(theme));
         themeLink = themeElement.getAttribute("href");
         driver.get(themeLink);
+        Thread.sleep(1000);
 
     }
 

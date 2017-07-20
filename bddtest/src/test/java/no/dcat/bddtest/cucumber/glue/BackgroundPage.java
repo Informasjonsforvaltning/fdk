@@ -113,13 +113,7 @@ public class BackgroundPage extends CommonPage {
         waitForHarvesterToComplete();
 
         refreshElasticsearch(hostname, port, "elasticsearch");
-
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        
 
     }
 
