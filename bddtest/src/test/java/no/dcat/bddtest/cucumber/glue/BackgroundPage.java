@@ -115,6 +115,12 @@ public class BackgroundPage extends CommonPage {
         refreshElasticsearch(hostname, port, "elasticsearch");
 
 
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Given("^man har åpnet Fellesdatakatalog i en nettleser")
