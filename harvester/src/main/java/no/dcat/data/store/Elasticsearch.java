@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.ActionRequestValidationException;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -174,17 +175,18 @@ public class Elasticsearch implements AutoCloseable {
                 String mappingJson = IOUtils.toString(is, "UTF-8");
 
 
-                logger.debug("[createIndex] mappingJson prepared: " + mappingJson);
+                logger.warn("[createIndex] mappingJson prepared: " + mappingJson);
 
                 client.admin().indices().prepareCreate(index).execute().actionGet();
-                logger.debug("[createIndex] before preparePutMapping");
-                client.admin().indices().preparePutMapping(index).setType("dataset").setSource(mappingJson).execute().actionGet();
-                logger.debug("[createIndex] after preparePutMapping");
+                logger.warn("[createIndex] before preparePutMapping");
+                PutMappingResponse dataset = client.admin().indices().preparePutMapping(index).setType("dataset").setSource(mappingJson).execute().actionGet();
+                logger.warn("Put mapping: "+dataset.isAcknowledged());
+                logger.warn("[createIndex] after preparePutMapping");
                 client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-                logger.debug("[createIndex] after prepareHealth");
+                logger.warn("[createIndex] after prepareHealth");
             }
         } catch (IOException e) {
-            logger.error("Unable to create index for Elasticsearch " + e.getMessage());
+            throw new RuntimeException("Unable to create index for Elasticsearch "+e.getMessage());
         }
     }
 

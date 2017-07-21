@@ -130,7 +130,7 @@ public class ElasticsearchResultHandlerTest {
 		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("npolar.jsonld").getFile(), "tester",
 				"123456789");
 
-		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch", "http://localhost:8100");
+		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch", "http://localhost:8100", "user", "password");
 		handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client));
 
 		//prevent race condition where elasticsearch is still indexing!!!

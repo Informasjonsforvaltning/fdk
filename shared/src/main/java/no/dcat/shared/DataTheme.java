@@ -1,11 +1,12 @@
-package no.dcat.themes.builders;
+package no.dcat.shared;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Model class themes:data-theme.
  */
-public class DataTheme {
+public class DataTheme implements Serializable {
     private String id;
     private String code;
     private String startUse;

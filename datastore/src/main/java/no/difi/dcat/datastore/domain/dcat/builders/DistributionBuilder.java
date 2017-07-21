@@ -1,7 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.DataTheme;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.*;

@@ -1,7 +1,6 @@
 package no.dcat.harvester.crawler.client;
 
 import com.google.gson.Gson;
-import no.dcat.harvester.crawler.exception.DataThemesNotLoadedException;
 import no.dcat.shared.SkosCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ public class RetrieveCodes {
     private static final Logger logger = LoggerFactory.getLogger(RetrieveCodes.class);
 
 
-    public static Map<String, Map<String, SkosCode>> getAllCodes(String hostname) throws DataThemesNotLoadedException {
+    public static Map<String, Map<String, SkosCode>> getAllCodes(String hostname) {
         Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
 
         RestTemplate restTemplate = new RestTemplate();

@@ -1,6 +1,5 @@
 package no.dcat.data.store.domain.dcat.builders;
 
-import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.data.store.domain.dcat.Dataset;
 import no.dcat.data.store.domain.dcat.Distribution;
 
@@ -8,6 +7,8 @@ import no.dcat.data.store.domain.dcat.Distribution;
 import no.dcat.data.store.domain.dcat.vocabulary.ADMS;
 import no.dcat.data.store.domain.dcat.vocabulary.DCAT;
 import no.dcat.data.store.domain.dcat.vocabulary.DCATNO;
+import no.dcat.harvester.crawler.client.LoadLocations;
+import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import org.apache.jena.rdf.model.Model;
@@ -30,11 +31,11 @@ public class DatasetBuilder extends AbstractBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DatasetBuilder.class);
 
     protected final Model model;
-    protected final Map<String, SkosCode> locations;
+    protected final LoadLocations locations;
     protected final Map<String, Map<String, SkosCode>> codes;
     protected final Map<String, DataTheme> dataThemes;
 
-    public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
+    public DatasetBuilder(Model model, LoadLocations locations, Map<String, Map<String, SkosCode>> codes,
                           Map<String, DataTheme> dataThemes) {
         this.model = model;
         this.locations = locations;
@@ -76,7 +77,7 @@ public class DatasetBuilder extends AbstractBuilder {
         return datasets;
     }
 
-    public static Dataset create(Resource dataset, Resource catalog, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
+    public static Dataset create(Resource dataset, Resource catalog, LoadLocations locations, Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         Dataset created = new Dataset();
 
         if (dataset != null) {
@@ -98,7 +99,7 @@ public class DatasetBuilder extends AbstractBuilder {
             created.setAccrualPeriodicity(getCode(codes.get(Types.frequency.getType()), extractAsString(dataset, DCTerms.accrualPeriodicity)));
 
             created.setTemporal(extractPeriodOfTime(dataset));
-			created.setSpatial(getCodes(locations, extractMultipleStrings(dataset, DCTerms.spatial)));
+			created.setSpatial(locations.getLocations(extractMultipleStrings(dataset, DCTerms.spatial)));
 			created.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()), extractAsString(dataset, DCTerms.accessRights)));
 			created.setAccessRightsComment(extractMultipleStrings(dataset, DCATNO.accessRightsComment));
             created.setSubject(extractMultipleStrings(dataset, DCTerms.subject));

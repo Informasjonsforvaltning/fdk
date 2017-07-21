@@ -1,5 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat;
 
+import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
 
 import java.util.Date;

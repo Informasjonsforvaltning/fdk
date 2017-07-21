@@ -29,14 +29,18 @@ public class Loader {
     private final String elasticsearchCluster;
     private final String themesHostname;
 
+    String httpUsername;
+    String httpPassword;
 
 
   
-    public Loader(String hostname, int port, String cluster , String themesHostname) {
+    public Loader(String hostname, int port, String cluster , String themesHostname, String httpUsername, String httpPassword) {
         this.hostname = hostname;
         this.port = port;
         this.elasticsearchCluster = cluster;
         this.themesHostname = themesHostname;
+        this.httpUsername = httpUsername;
+        this.httpPassword = httpPassword;
     }
 
 
@@ -63,7 +67,7 @@ public class Loader {
             //harvestAllCodes(true);
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(hostname, port, elasticsearchCluster, themesHostname);
+            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(hostname, port, elasticsearchCluster, themesHostname, httpUsername, httpPassword);
             CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(hostname,port, elasticsearchCluster);
 
             LoadingCache<URL, String> brregCach = HarvesterApplication.getBrregCache();

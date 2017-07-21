@@ -1,11 +1,14 @@
 package no.dcat.themes.builders;
 
-import no.dcat.shared.SkosCode;
-import no.dcat.themes.ThemesService;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import no.dcat.shared.DataTheme;
+import no.dcat.themes.service.ThemesService;
+import no.dcat.themes.database.TDBConnection;
+import no.dcat.themes.database.TDBService;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -15,14 +18,22 @@ import static org.junit.Assert.assertEquals;
  */
 public class DataThemeBuildersTest {
 
-    public static final int NR_OF_THEMES = 13;
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
 
     @Test
-    public void testDataThemeBuilders() {
-        List<DataTheme> dataThemes = new ThemesService().getThemes();
+    public void testDataThemeBuilders() throws IOException {
+        TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
+        tdbService.postConstruct();
+
+        TDBConnection tdbConnection = new TDBConnection(tdbService);
 
 
-        assertEquals("13 records shall have been created.", NR_OF_THEMES, dataThemes.size());
+        List<DataTheme> dataThemes = new ThemesService(tdbConnection).getThemes();
+
+
+        assertEquals("13 records shall have been created.", 13, dataThemes.size());
 
         DataTheme transport = dataThemes.stream().filter(theme -> theme.getId().equals("http://publications.europa.eu/resource/authority/data-theme/TRAN")).findAny().get();
 
@@ -31,7 +42,7 @@ public class DataThemeBuildersTest {
         assertEquals("Check norwegian titel", "Transport", transport.getTitle().get("nb"));
         assertEquals("Check english titel", "Transport", transport.getTitle().get("en"));
         assertEquals("Check conceptschema id", "http://publications.europa.eu/resource/authority/data-theme", transport.getConceptSchema().getId());
-        assertEquals("Check conceptschema titel", "Dataset types Named Authority List", transport.getConceptSchema().getTitle());
+        assertEquals("Check conceptschema titel", "Dataset types Named Authority List", transport.getConceptSchema().getTitle().get("en"));
         assertEquals("Check conceptschema versioninfo", "20160921-0", transport.getConceptSchema().getVersioninfo());
         assertEquals("Check conceptschema versionnumber", "20160921-0", transport.getConceptSchema().getVersionnumber());
     }

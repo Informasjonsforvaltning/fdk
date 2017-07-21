@@ -1,3 +1,17 @@
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/ld+json
+    tomcat:
+        compression: on
+
+
+application:
+  httpUsername: ${themesHttpUsername:user}
+  httpPassword: ${themesHttpPassword:password}
+
+---
+
 spring:
   profiles: develop
 server:
@@ -11,7 +25,3 @@ management:
 spring:
   profiles: docker
 
----
-spring:
-  hateoas:
-    use-hal-as-default-json-media-type: false

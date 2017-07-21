@@ -103,7 +103,7 @@ public class BackgroundPage extends CommonPage {
         new DeleteIndex(hostname, port).deleteIndex(index);
 
 
-        Loader loader = new Loader(hostname, port, "elasticsearch", "http://localhost:8100");
+        Loader loader = new Loader(hostname, port, "elasticsearch", "http://localhost:8100", "user", "password");
 
         waitForHarvesterToComplete();
 

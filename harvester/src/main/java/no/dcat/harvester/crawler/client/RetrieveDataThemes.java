@@ -1,7 +1,6 @@
 package no.dcat.harvester.crawler.client;
 
-import no.dcat.data.store.domain.dcat.DataTheme;
-import no.dcat.harvester.crawler.exception.DataThemesNotLoadedException;
+import no.dcat.shared.DataTheme;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +12,7 @@ import java.util.Map;
 
 public class RetrieveDataThemes {
 
-    public static Map<String, DataTheme> getAllDataThemes(String hostname) throws DataThemesNotLoadedException {
+    public static Map<String, DataTheme> getAllDataThemes(String hostname) {
         Map<String, DataTheme> dataThemes = new HashMap<>();
 
 

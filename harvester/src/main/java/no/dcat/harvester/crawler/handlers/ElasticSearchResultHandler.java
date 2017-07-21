@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.data.store.Elasticsearch;
-import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.data.store.domain.dcat.Dataset;
 import no.dcat.data.store.domain.dcat.Distribution;
 import no.dcat.data.store.domain.dcat.builders.DatasetBuilder;
@@ -13,10 +12,9 @@ import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
-import no.dcat.harvester.crawler.client.RetrieveModel;
+import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Model;
-import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -44,6 +42,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     int port;
     String clustername;
     private final String themesHostname;
+    String httpUsername;
+    String httpPassword;
 
 
     /**
@@ -54,11 +54,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param port port for connection to elasticserach cluster. Usually 9300
      * @param clustername Name of elasticsearch cluster
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
         this.themesHostname = themesHostname;
+        this.httpUsername = httpUsername;
+        this.httpPassword = httpPassword;
 
         logger.debug("ES clustername: " + this.clustername);
     }
@@ -94,7 +96,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
-            logger.debug("Creating index: " + DCAT_INDEX);
+            logger.warn("Creating index: " + DCAT_INDEX);
             elasticsearch.createIndex(DCAT_INDEX);
         }else{
             logger.debug("Index exists: " + DCAT_INDEX);
@@ -107,15 +109,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         // Retrieve all codes from elasticsearch.
         Map<String, DataTheme> dataThemes =  RetrieveDataThemes.getAllDataThemes(themesHostname);
 
-        Map<String, SkosCode> locations = new LoadLocations(elasticsearch)
-                .extractLocations(model).retrieveLocTitle()
-                .indexLocationsWithElasticSearch()
-                .refresh()
-                .getLocations();
+        LoadLocations loadLocations = new LoadLocations(themesHostname, httpUsername, httpPassword);
+        loadLocations.addLocationsToThemes(model);
+
         Map<String,Map<String, SkosCode>> codes = RetrieveCodes.getAllCodes(themesHostname);
 
 
-        List<Distribution> distributions = new DistributionBuilder(model, locations, codes, dataThemes).build();
+        List<Distribution> distributions = new DistributionBuilder(model, loadLocations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
         for (Distribution distribution : distributions) {
 
@@ -127,7 +127,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
 
-        List<Dataset> datasets = new DatasetBuilder(model, locations, codes, dataThemes).build();
+        List<Dataset> datasets = new DatasetBuilder(model, loadLocations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
 

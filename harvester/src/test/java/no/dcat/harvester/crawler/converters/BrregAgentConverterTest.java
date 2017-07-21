@@ -43,7 +43,7 @@ public class BrregAgentConverterTest {
 	public void testConvertBrregFileBlankNode() throws Exception {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 
-		Model model = FileManager.get().loadModel("src/test/resources/brreg/blankNodeTest.xml");
+		Model model = FileManager.get().loadModel(BrregAgentConverterTest.class.getClassLoader().getResource("brreg/blankNodeTest.xml").getFile());
 
 		converter.collectFromModel(model);
 

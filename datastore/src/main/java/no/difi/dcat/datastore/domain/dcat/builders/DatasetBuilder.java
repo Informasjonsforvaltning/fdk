@@ -1,5 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.*;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;

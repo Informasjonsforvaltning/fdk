@@ -63,7 +63,9 @@
               },
               "conceptSchema": {
                 "id": "http://publications.europa.eu/resource/authority/data-theme",
-                "title": "Dataset types Named Authority List",
+                  "title": {
+                      "nb": "Dataset types Named Authority List"
+                  },
                 "versioninfo": "20160921-0",
                 "versionnumber": "20160921-0"
               }
@@ -78,7 +80,9 @@
               },
               "conceptSchema": {
                 "id": "http://publications.europa.eu/resource/authority/data-theme",
-                "title": "Dataset types Named Authority List",
+                  "title": {
+                      "nb": "Dataset types Named Authority List"
+                  },
                 "versioninfo": "20160921-0",
                 "versionnumber": "20160921-0"
               }

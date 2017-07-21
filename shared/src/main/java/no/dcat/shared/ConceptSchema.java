@@ -1,11 +1,14 @@
-package no.dcat.data.store.domain.dcat;
+package no.dcat.shared;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Models the part of the DataTheme class called conceptSchema.
  */
-public class ConceptSchema {
+public class ConceptSchema implements Serializable {
     private String id;
-    private String title;
+    private Map<String, String> title;
     private String versioninfo;
     private String versionnumber;
 
@@ -17,11 +20,11 @@ public class ConceptSchema {
         this.id = id;
     }
 
-    public String getTitle() {
+    public Map<String, String> getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(Map<String, String> title) {
         this.title = title;
     }
 
