@@ -88,7 +88,8 @@ public class PortalController {
             ModelAndView model = new ModelAndView("searchkit");
             model.addObject("fdkparameters",
                     "var fdkSettings = fdkSettings || {\n" +
-                            "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "'\n" +
+                            "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "' , \n" +
+                            "'themeUrl': '" + buildMetadata.getThemeServiceExternalUrl() + "'\n" +
                             "};"
 
             );

@@ -113,7 +113,7 @@ public class BackgroundPage extends CommonPage {
         waitForHarvesterToComplete();
 
         refreshElasticsearch(hostname, port, "elasticsearch");
-        
+
 
     }
 
