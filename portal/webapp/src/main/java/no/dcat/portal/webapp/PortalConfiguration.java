@@ -31,6 +31,7 @@ public class PortalConfiguration {
     @Value("${application.queryService}")
     private String queryService;
     private String themeServiceExternalUrl;
+    private String themeServiceUrl;
 
 
     @PostConstruct
@@ -72,9 +73,7 @@ public class PortalConfiguration {
         return getQueryService() + QUERY_SERVICE_SEARCH;
     }
 
-    public final String getThemeServiceUrl() {
-        return getQueryService() + QUERY_SERVICE_THEMES;
-    }
+
 
     public final String getPublisherServiceUrl() {
         return getQueryService() + QUERY_SERVICE_PUBLISHER;
@@ -99,5 +98,13 @@ public class PortalConfiguration {
 
     public void setThemeServiceExternalUrl(String themeServiceExternalUrl) {
         this.themeServiceExternalUrl = themeServiceExternalUrl;
+    }
+
+    public String getThemeServiceUrl() {
+        return themeServiceUrl;
+    }
+
+    public void setThemeServiceUrl(String themeServiceUrl) {
+        this.themeServiceUrl = themeServiceUrl;
     }
 }

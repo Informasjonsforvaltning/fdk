@@ -163,7 +163,7 @@ public class PortalController {
 
             RestTemplate restTemplate = new RestTemplate();
 
-            List<DataTheme> dataThemes = restTemplate.exchange("http://themes:8080/themes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {}).getBody();
+            List<DataTheme> dataThemes = restTemplate.exchange(buildMetadata.getThemeServiceUrl()+"/themes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {}).getBody();
 
 
             Map<String, BigInteger> themeCounts = getNumberOfElementsForThemes();
