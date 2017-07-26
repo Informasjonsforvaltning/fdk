@@ -43,6 +43,10 @@ public class LoadLocations {
 
     public LoadLocations(Elasticsearch elasticsearch) {
         client = elasticsearch.getClient();
+
+        if(!client.admin().indices().prepareExists(CODES_INDEX).get().isExists()){
+          client.admin().indices().prepareCreate(CODES_INDEX).get();
+        }
     }
 
     /**
