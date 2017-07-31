@@ -2,16 +2,12 @@ package no.dcat.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.dcat.authorization.AuthorizationService;
-import no.dcat.authorization.Entity;
-import no.dcat.authorization.NameEntityService;
-import no.dcat.authorization.TestUser;
+import no.dcat.authorization.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import no.dcat.authorization.UserNotAuthorizedException;
 
 import java.io.IOException;
 import java.util.*;
@@ -110,19 +107,29 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
             Entity userEntity = null;
             List<String> authorizedOrganizations = new ArrayList<>();
 
-            //find the entry representing the user itself
-            for(Entity entry : userAuthorizations) {
-                if (entry.getSocialSecurityNumber() != null) {
-                    userEntity = entry;
+            //if(userAuthorizations.size() == 0) {
+            //    throw new UserNotAuthorizedException(ssn);
+            //}
+            logger.debug("userAutorizations.size: " + userAuthorizations.size());
+
+            if(userAuthorizations.size() > 0) {
+                //find the entry representing the user itself
+                for(Entity entry : userAuthorizations) {
+                    if (entry.getSocialSecurityNumber() != null) {
+                        userEntity = entry;
+                    }
                 }
+
+                //find the organizations the user can act on behalf of
+                userAuthorizations.forEach(entity -> {
+                    if (entity.getOrganizationNumber() != null) {
+                        authorizedOrganizations.add(entity.getOrganizationNumber());
+                    }
+                });
+            } else {
+                throw new UsernameNotFoundException("Username not found for user with id: " + ssn);
             }
 
-            //find the organizations the user can act on behalf of
-            userAuthorizations.forEach(entity -> {
-                if (entity.getOrganizationNumber() != null) {
-                    authorizedOrganizations.add(entity.getOrganizationNumber());
-                }
-            });
 
             User user = new User(userEntity.getName(),
                     "password",
@@ -142,19 +149,23 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
             http
                     .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/*.js").permitAll()
-                    .antMatchers("/*.woff2").permitAll()
-                    .antMatchers("/*.woff").permitAll()
-                    .antMatchers("/*.ttf").permitAll()
-                    .antMatchers("/assets/**").permitAll()
-                    .antMatchers("/loggetut").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
+                        .antMatchers("/*.js").permitAll()
+                        .antMatchers("/*.woff2").permitAll()
+                        .antMatchers("/*.woff").permitAll()
+                        .antMatchers("/*.ttf").permitAll()
+                        .antMatchers("/assets/**").permitAll()
+                        .antMatchers("/loginerror").permitAll()
+                        .anyRequest().authenticated()
+                        .and()
                     .formLogin()
-                    .permitAll()
-                    .and()
+                        .permitAll()
+                        .failureUrl("/loginerror")
+                        .and()
                     .logout()
-                    .permitAll();
+                        .logoutUrl("/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll();
         }
 
     }

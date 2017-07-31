@@ -36,22 +36,26 @@ public class MyServiceProviderConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .anonymous()
-            .and()
+                .and()
                 .apply(saml())
-            .and()
-                .authorizeRequests()
+                .and()
+            .authorizeRequests()
                 .antMatchers("/*.js").permitAll()
                 .antMatchers("/*.woff2").permitAll()
                 .antMatchers("/*.woff").permitAll()
                 .antMatchers("/*.ttf").permitAll()
                 .antMatchers("/assets/**").permitAll()
                 .antMatchers("/loggetut").permitAll()
+                .antMatchers("/loginerror").permitAll()
                 .requestMatchers(saml().endpointsMatcher())
                 .permitAll()
-            .and()
-                .authorizeRequests()
+                .and()
+            .authorizeRequests()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+            .exceptionHandling()
+                .accessDeniedPage("/loginerror");
         // @formatter:on
 
         saml().serviceProvider().authenticationProvider().userDetailsService(fdkSamlUserDetailsService);
