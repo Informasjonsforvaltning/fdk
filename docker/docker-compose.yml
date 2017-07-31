@@ -75,8 +75,8 @@ services:
       logging:
     links:
      - fuseki
-     - elasticsearch:es
-     - registrering
+     - elasticsearch
+     - reg-api
 
   admin:
     image: "dcatno/admin-webapp:latest"
@@ -150,10 +150,10 @@ services:
   reg-api:
     image: "dcatno/registrering:latest"
     ports:
-      - "8089:8080"
+      - "8089:8099"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - spring.application.catalogUriPrefix=http://localhost:8099/api
+     - spring.application.catalogUriPrefix=http://localhost:8089/api
     volumes:
      - ../../fdk-properties:/git/fdk-properties/:rw
     links:
