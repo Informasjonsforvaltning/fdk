@@ -36,6 +36,8 @@ public class AltinnAuthorizationIT {
 
         List<Entity> actualEntities = authorizationService.getAuthorizedEntities("02084902333");
 
+        Assert.assertNotNull(actualEntities);
+
         logger.info("# of entities {}", actualEntities.size());
         for (Entity entity : actualEntities) {
             logger.info("Entity {}", entity.toString());

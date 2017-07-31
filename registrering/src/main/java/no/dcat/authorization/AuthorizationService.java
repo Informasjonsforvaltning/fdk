@@ -49,6 +49,7 @@ public class AuthorizationService {
     @Value("{apikey}")
     private static final String apikey = "7FB6140D-B194-4BF6-B3C8-257094FBF8C4"; // test key from Erlend
     private static final String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel fra Altinn, men funker ikke
+    private static final String apikey3 = "948E57B8-8F44-43E6-921F-F512F67A7F76"; // 28.06.2017 fra Torkel Buarøy
 
     static String[] TLS_PROTOCOLS = {"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}; // Comment in TLSv1.2 to fail : bug in altinn or java that fails TLS handshake most of the time, but not always
     static String[] TLS_PROTOCOLSx = {"TLSv1.2"};
@@ -56,10 +57,10 @@ public class AuthorizationService {
     static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
     @Value("$keystoreLocation")
-    public static final String keystoreLocation = "D://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12";
+    public static final String keystoreLocation = "/git/fdk-properties/ssldevelop.p12";
 
     @Value("${keystorePassword}")
-    private static final String keystorePassword = "xEPtHApswvpiNHTp";
+    private static final String keystorePassword = "changeit";
 
     private static final String GET_REQUEST_FDK = "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=02084902333&servicecode=4814&serviceedition=3";
 
@@ -205,7 +206,8 @@ public class AuthorizationService {
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
 
-        logger.debug("TLS_PROTOCOLS=", Arrays.asList(TLS_PROTOCOLS).toString());
+        logger.debug("TLS_PROTOCOLS = {}", Arrays.toString(TLS_PROTOCOLS));
+
         SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(
                 sslContext,
                 TLS_PROTOCOLS,
