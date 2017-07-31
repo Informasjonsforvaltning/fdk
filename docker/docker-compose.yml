@@ -147,13 +147,13 @@ services:
     networks:
       platform:
 
-  registrering:
+  reg-api:
     image: "dcatno/registrering:latest"
     ports:
-      - "8099:8080"
+      - "8089:8080"
     environment:
      - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - spring.application.catalogUriPrefix=http://localhost:8099
+     - spring.application.catalogUriPrefix=http://localhost:8099/api
     volumes:
      - ../../fdk-properties:/git/fdk-properties/:rw
     links:
@@ -166,7 +166,7 @@ services:
     ports:
       - "4200:4200"
     environment:
-     - REG_API_URL=http://localhost:8099
+     - REG_API_URL=http://localhost:8099/api
      - QUERY_SERVICE_URL=http://localhost:8083
      - VALIDATOR_URL=http://localhost:8086
     links:
