@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Altinn/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) [![Coverage Status](https://coveralls.io/repos/github/Altinn/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
+
 # Felles datakatalog
 
 Dette er den første felleskomponenten som utvikles i regi av 

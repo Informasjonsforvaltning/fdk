@@ -10,10 +10,6 @@ spring:
 ---
 spring:
   profiles: docker
-server:
-  port: 8098
-management:
-  port: 8998
 ---
 spring:
   hateoas:

@@ -1,8 +1,18 @@
 package no.dcat.rdf;
 
-import no.dcat.model.*;
+import no.dcat.model.Catalog;
+import no.dcat.model.Contact;
+import no.dcat.model.Dataset;
+import no.dcat.model.Distribution;
+import no.dcat.model.PeriodOfTime;
+import no.dcat.model.Publisher;
+import no.dcat.model.SkosCode;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,7 +166,11 @@ public class DcatBuilder {
 
                 addDateTimeLiteral(datRes, dct_issued, dataset.getIssued());
                 addDateLiteral(datRes, dct_modified, dataset.getModified());
-                addSkosCodes(datRes, dct_language, dataset.getLanguage());
+                if (dataset.getLanguage() != null) {
+                  for (SkosCode code : dataset.getLanguage()) {
+                    addProperty(datRes, dct_language, code.getUri());
+                  }
+                }
                 addProperties(datRes, dcat_landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, dcat_theme, dataset.getTheme());
 

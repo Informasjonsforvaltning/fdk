@@ -1,5 +1,5 @@
 {
-  "template" : "difi-*",
+  "template" : "dcat-*",
   "settings" : {
     "index.refresh_interval" : "5s"
   },

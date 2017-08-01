@@ -11,7 +11,9 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertTrue;
@@ -77,47 +79,67 @@ public class GdocCatalogSteps extends CommonPage {
 
         WebElement saveButton = driver.findElement(By.xpath("/html/body/div/div[3]/div[1]/button"));
         saveButton.click();
+
+    }
+
+    static class CatalogForCucumberTest{
+        String descriptionInput;
+        String urlInput;
+        String orgnummer;
+
+        CatalogForCucumberTest(String descriptionInput, String urlInput, String orgnummer) {
+            this.descriptionInput = descriptionInput;
+            this.urlInput = urlInput;
+            this.orgnummer = orgnummer;
+        }
+    }
+
+    private static Map<String, CatalogForCucumberTest> catalogsToHarvest = new HashMap<>();
+
+    static {
+        catalogsToHarvest.put("gdoc", new CatalogForCucumberTest("Innføringsteamets gdoc data", "http://gdoc:8080/versions/latest", "91919191"));
+        catalogsToHarvest.put("difi", new CatalogForCucumberTest("difi katalog", "http://data.norge.no/api/dcat2/991825827/data.jsonld", "991825827"));
     }
 
     @Given("^I select harvest \"([^\"]*)\" catalog$")
     public void doHarvestGdoc(String query) throws Throwable {
-        // find gdoc import
-        WebElement row;
-        boolean catalogExists = driver.findElements(By.xpath("//tr[td[contains(text(),"+query+")]]")).size() > 0;
 
-        if (!catalogExists) {
-            if ("gdoc".equals(query)) {
-                registerCatalog("Innføringsteamets gdoc data", "http://gdoc:8080/versions/latest", "91919191");
-            } else if ("difi".equals(query)) {
-                registerCatalog("difi katalog", "http://data.norge.no/api/dcat2/991825827/data.jsonld", "991825827");
-            }
-            sleep(1000);
+        CatalogForCucumberTest catalog = catalogsToHarvest.get(query);
+        if(catalog == null){
+            throw new IllegalStateException("Query should be either gdoc or difi, was: "+query);
         }
 
-        row = driver.findElement(By.xpath("//tr[td[contains(text(),'gdoc')]]"));
+        By xpath = By.xpath("//tr[td[contains(text(),'" + catalog.urlInput + "')]]");
+        if (driver.findElements(xpath).size() == 0) {
+            registerCatalog(catalog.descriptionInput, catalog.urlInput, catalog.orgnummer);
+        }
+
+        sleep(1000);
+
+        WebElement row = driver.findElement(xpath);
         WebElement harvest = row.findElement(By.xpath("td/a[contains(@href,'admin/harvestDcatSource?')]"));
         logger.info("harvest-url " + harvest.getAttribute("href"));
 
         harvest.click();
 
-        sleep(2000); // to allow for harvest time
+        sleep(1000);
+        waitForHarvesterToComplete();
+
     }
 
     @Then("^the following dataset detail pages shall exist:$")
     public void norwegianProperties(DataTable datasets) throws Throwable {
-        try {
 
-            for (List<String> dataset : datasets.raw()) {
-                String dsId = dataset.get(0);
-                logger.info("Test dataset {}",dsId);
 
-                openPage("detail?id="+ dsId);
+        for (List<String> dataset : datasets.raw()) {
+            String dsId = dataset.get(0);
+            logger.info("Test dataset {}", dsId);
 
-                assertTrue("Detail page has title ", driver.getTitle() != null);
-            }
-        } finally {
-            driver.close();
+            openPage(PORTAL_URL + "/detail?id=" + dsId);
+
+            assertTrue("Detail page has title ", driver.getTitle() != null);
         }
+
     }
 
     @When("^brukeren åpner portalen$")
@@ -125,7 +147,6 @@ public class GdocCatalogSteps extends CommonPage {
         driver.get(PORTAL_URL);
 
     }
-
 
 
 }

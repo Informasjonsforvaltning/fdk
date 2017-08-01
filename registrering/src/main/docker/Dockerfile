@@ -10,4 +10,5 @@ RUN chmod 755 -R /git/fdk-properties/
 VOLUME /tmp
 ADD registrering-?.?.?-SNAPSHOT-exec.jar app.jar
 RUN sh -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dspring.config.location=/git/fdk-properties/", "-jar","/app.jar"]
+CMD java -jar  $JAVA_OPTS  -Dspring.profiles.active=docker -Dspring.config.location=/git/fdk-properties/ app.jar
+

@@ -2,7 +2,7 @@ spring:
   profiles: develop
   data:
     elasticsearch:
-      cluster-nodes: localhost:9300
+      clusterNodes: localhost:9300
   application:
     catalogUriPrefix: http://localhost:8099
     altinnServiceUrl: https://tt02.altinn.no/
@@ -47,13 +47,9 @@ spring:
   profiles: docker
   data:
     elasticsearch:
-      cluster-nodes: elasticsearch:9300
+      clusterNodes: elasticsearch:9300
   application:
     catalogUriPrefix: http://localhost:8099
-server:
-  port: 8099
-management:
-  port: 8999
 ---
 spring:
   hateoas:

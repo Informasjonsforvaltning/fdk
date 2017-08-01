@@ -6,6 +6,8 @@ import no.dcat.model.Distribution;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class RegistrationFactory {
     private static String catalogUriPrefix;
@@ -17,6 +19,11 @@ public class RegistrationFactory {
     @Value("${spring.application.catalogUriPrefix}")
     public void setCatalogUriPrefix(String uri) {
         catalogUriPrefix = uri;
+    }
+
+    @PostConstruct
+    void validate(){
+        assert catalogUriPrefix != null;
     }
 
     public Dataset createDataset(String catalogId) {
