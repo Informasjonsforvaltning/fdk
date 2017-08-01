@@ -1,23 +1,15 @@
 package no.dcat.portal.query;
 
 
-import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
@@ -29,22 +21,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -54,10 +37,8 @@ import java.util.concurrent.ExecutionException;
  */
 @RestController
 public class SimpleQueryService {
-    public static final String INDEX_THEME = "theme";
     public static final String INDEX_DCAT = "dcat";
 
-    public static final String TYPE_DATA_THEME = "data-theme";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String TYPE_DATASET = "dataset";
 
@@ -69,14 +50,12 @@ public class SimpleQueryService {
 
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     protected Client client = null;
-    private static final String DEFAULT_QUERY_LANGUAGE = "nb";
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     /* api names */
     public static final String QUERY_SEARCH = "/search";
     public static final String QUERY_DETAIL = "/detail";
-    public static final String QUERY_THEMES = "/themes";
     public static final String QUERY_THEME_COUNT = "/themecount";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
@@ -304,214 +283,6 @@ public class SimpleQueryService {
 
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
-
-
-//    /**
-//     * Returns the types of codes that are stored by the system
-//     *
-//     * @return the list of code-types
-//     */
-//    @CrossOrigin
-//    @RequestMapping(value = "/codes", produces = "application/json")
-//    public ResponseEntity<String> codeTypes() {
-//        ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
-//
-//        if (elasticError != null) {
-//            return elasticError;
-//        }
-//
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("{ \"types\": [");
-//
-//        List<String> types = getTypes("codes");
-//        if (types != null) {
-//            boolean comma = false;
-//            for (String c : types) {
-//                if (comma) {
-//                    sb.append(", ");
-//                }
-//                sb.append("\"" + c + "\"");
-//                comma = true;
-//            }
-//            sb.append("]}");
-//            return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-    List<String> getTypes(String index) {
-
-        try {
-            GetMappingsResponse res = client.admin().indices().getMappings(new GetMappingsRequest().indices(index)).get();
-            Iterator<ObjectObjectCursor<String, MappingMetaData>> iterator = res.mappings().get(index).iterator();
-
-            List<String> result = new ArrayList<>();
-            while (iterator.hasNext()) {
-                String c = iterator.next().key;
-                result.add(c);
-            }
-
-            return result;
-
-        } catch (InterruptedException e) {
-            logger.error("Elasticsearch call was interrupted", e);
-        } catch (ExecutionException e) {
-            logger.error("Elasticsearch call for types failed", e);
-        }
-
-        return null;
-    }
-
-//    @CrossOrigin
-//    @RequestMapping(value = "/codes/{type}", method = RequestMethod.GET, produces = "application/json")
-//    public ResponseEntity<String> codes(@PathVariable(name = "type") String type) {
-//        return getCodes(type, "");
-//    }
-
-//    /**
-//     * Returns codes of a specific code type
-//     *
-//     * @param type the type which codes to return
-//     * @param lang a list of two-letter language codes to filter out
-//     * @return an object which contain the codes of the type
-//     */
-//    @CrossOrigin
-//    @RequestMapping(value = "/codes/{type}/{lang}", method = RequestMethod.GET, produces = "application/json")
-//    public ResponseEntity<String> codes(
-//            @PathVariable(name = "type") String type,
-//            @PathVariable(name = "lang") String lang) {
-//        return getCodes(type, lang);
-//    }
-
-    List<String> extractCodeStrings(String type) {
-        List<String> result = new ArrayList<>();
-
-        QueryBuilder search = QueryBuilders.matchAllQuery();
-
-        SearchRequestBuilder searchQuery = client.prepareSearch("codes").setTypes(type).setQuery(search);
-        SearchResponse response = searchQuery.execute().actionGet();
-        int totNrOfCodes = (int) response.getHits().getTotalHits();
-
-        logger.debug("Found {} codes for type {}", totNrOfCodes, type);
-
-        if (totNrOfCodes == 0) {
-            return null;
-        }
-
-        // do new call if more than 10 codes exist
-        SearchResponse codes;
-        if (totNrOfCodes > 10) {
-            codes = searchQuery.setSize(totNrOfCodes).execute().actionGet();
-        } else {
-            codes = response;
-        }
-
-        List<Map<String, Object>> codeList = new ArrayList<>();
-        for (SearchHit s : codes.getHits().getHits()) {
-            result.add(s.getSourceAsString());
-        }
-
-        return result;
-    }
-
-    private List<Map<String,Object>> filterCodes(boolean filterLabels, String[] langs, List<String> codes) {
-        List<Map<String,Object>> result = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
-        for (String s : codes) {
-            try {
-                Map<String, Object> aCode = mapper.readValue(s, HashMap.class);
-                Map<String, String> label = (Map<String, String>) aCode.get("prefLabel");
-                // filter labels
-                if (filterLabels) {
-                    Map<String, String> filteredLabel = new HashMap<>();
-                    for (String lng : langs) {
-                        if (label.containsKey(lng)) {
-                            filteredLabel.put(lng, label.get(lng));
-                        }
-                    }
-                    aCode.put("prefLabel", filteredLabel);
-                }
-                result.add(aCode);
-            } catch (IOException e) {
-                logger.error("Unable to read codes ", e);
-            }
-        }
-
-        return result;
-    }
-
-    private ResponseEntity<String> getCodes(String type, String lang) {
-
-        ResponseEntity<String> elasticError = initializeElasticsearchTransportClient();
-        if (elasticError != null) {
-            return elasticError;
-        }
-
-        List<String> codes = extractCodeStrings(type);
-        if (codes == null){
-            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-        }
-
-        boolean filterLabels = true;
-        String[] langs = lang.split(",");
-        if (langs.length == 1 && "".equals(lang)) {
-            filterLabels = false;
-        }
-        List<Map<String,Object>> codeList = filterCodes(filterLabels, langs, codes);
-
-        // Export filtered codes
-        StringBuilder sb = new StringBuilder();
-        ObjectMapper mapper = new ObjectMapper();
-        sb.append("{");
-        sb.append(" \"type\": \"").append(type).append("\",");
-        sb.append(" \"codes\": [");
-        boolean comma = false;
-        for (Map<String, Object> code : codeList) {
-            if (comma) {
-                sb.append(",");
-            }
-            try {
-                sb.append(mapper.writeValueAsString(code));
-            } catch (JsonProcessingException e) {
-                logger.error("Unable to format JSON ", e);
-            }
-            comma = true;
-        }
-        sb.append("]}");
-
-        return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
-    }
-
-//    /**
-//     * Finds all themes loaded into elasticsearch.
-//     * <p/>
-//     *
-//     * @return The complete elasticsearch response on Json-fornat is returned..
-//     */
-//    @CrossOrigin
-//    @RequestMapping(value = QUERY_THEMES, produces = "application/json")
-//    public ResponseEntity<String> themes() {
-//        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-//
-//        QueryBuilder search = QueryBuilders.matchAllQuery();
-//
-//        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_THEME).setTypes(TYPE_DATA_THEME).setQuery(search);
-//        SearchResponse responseSize = searchQuery.execute().actionGet();
-//
-//        int totNrOfThemes = (int) responseSize.getHits().getTotalHits();
-//        logger.debug("Found total number of themes: {}", totNrOfThemes);
-//
-//        SearchResponse responseThemes = searchQuery.setSize(totNrOfThemes).execute().actionGet();
-//        logger.debug("Found themes: {}", responseThemes);
-//
-//        if (jsonError != null) {
-//            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
-//            return jsonError;
-//        }
-//
-//        return new ResponseEntity<String>(responseThemes.toString(), HttpStatus.OK);
-//    }
 
 
     /**
