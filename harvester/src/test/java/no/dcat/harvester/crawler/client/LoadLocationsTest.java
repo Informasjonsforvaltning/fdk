@@ -7,12 +7,14 @@ import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.ListenableActionFuture;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +24,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Matchers.notNull;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,9 +33,17 @@ import static org.mockito.Mockito.when;
  * Class for testing LoadLocations.
  */
 public class LoadLocationsTest {
+
+    Elasticsearch elasticsearch = mock(Elasticsearch.class, RETURNS_DEEP_STUBS);
+    IndicesExistsResponse mock = mock(IndicesExistsResponse.class, RETURNS_DEEP_STUBS);
+
+    {
+        when(elasticsearch.getClient().admin().indices().prepareExists(Mockito.anyString()).get()).thenReturn(mock);
+    }
+
     @Test
     public void loadLocationTest() {
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+
 
         Model model = FileManager.get().loadModel("rdf/dataset-w-distribution.ttl");
 
@@ -44,7 +55,7 @@ public class LoadLocationsTest {
 
     @Test
     public void retrieveLocNameTest() {
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+
         LoadLocations lc = new LoadLocations(elasticsearch);
 
         Map<String, SkosCode> locations = new HashMap<>();
@@ -62,16 +73,16 @@ public class LoadLocationsTest {
 
     @Test
     public void indexTest() {
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
-        Client client = mock(Client.class);
+
         BulkRequestBuilder bulkRequest = mock(BulkRequestBuilder.class);
         ListenableActionFuture af = mock(ListenableActionFuture.class);
         BulkResponse bulkResponse = mock(BulkResponse.class);
 
-        when(elasticsearch.getClient()).thenReturn(client);
-        when(client.prepareBulk()).thenReturn(bulkRequest);
-        when(bulkRequest.execute()).thenReturn(af);
+
         when(af.actionGet()).thenReturn(bulkResponse);
+
+        when(elasticsearch.getClient().prepareBulk()).thenReturn(bulkRequest);
+        when(elasticsearch.getClient().prepareBulk().execute()).thenReturn(af);
 
         LoadLocations lc = new LoadLocations(elasticsearch);
         Map<String, SkosCode> locations = new HashMap<>();
@@ -104,7 +115,8 @@ public class LoadLocationsTest {
     public void retrieveLocationTitleDoesNotFailOnValidURL() throws Throwable {
         final String url = "http://79.125.104.140/bym/rest/services/Temadata_Publikum/MapServer";
 
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+
+//        when(elasticsearch.getClient().admin().indices().prepareExists(Mockito.anyString()).get().isExists()).thenReturn(true);
         LoadLocations lc = new LoadLocations(elasticsearch);
 
         Map<String, SkosCode> locations = new HashMap<>();

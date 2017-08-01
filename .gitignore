@@ -21,3 +21,5 @@ logs/
 /bddtest/data/
 /data/
 .DS_Store
+tdb
+catalog-v001.xml
