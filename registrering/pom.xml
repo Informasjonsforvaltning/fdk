@@ -125,10 +125,7 @@
                 </executions>
             </plugin>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> develop
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
