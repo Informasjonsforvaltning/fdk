@@ -26,9 +26,6 @@ public class AltinnAuthorizationIT {
     @Before
     public void setup () {
         authorizationService = new AuthorizationService();
-        ReflectionTestUtils.setField(authorizationService,"altinnServiceUrl", "https://tt02.altinn.no/");
-        ReflectionTestUtils.setField(authorizationService,"altinnServiceCode", "4814");
-        ReflectionTestUtils.setField(authorizationService,"altinnServiceEdition", "3");
     }
 
     @Test

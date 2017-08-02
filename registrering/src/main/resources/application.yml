@@ -1,17 +1,22 @@
-spring:
-  profiles: develop
-  data:
-    elasticsearch:
-      clusterNodes: localhost:9300
-  application:
-    catalogUriPrefix: http://localhost:8099
-    altinnServiceUrl: https://tt02.altinn.no/
-    altinnServiceCode: 4814
-    altinnServiceEdition: 3
+data:
+  elasticsearch:
+    clusterNodes: localhost:9300
+application:
+  catalogUriPrefix: http://localhost:8099
+  altinnServiceUrl: https://tt02.altinn.no/
+  altinnServiceCode: 4814
+  altinnServiceEdition: 3
+  clientSSLCertificateKeystoreLocation: ${clientSSLCertificateKeystoreLocation:dummy-client-SSL-cert.p12}
+  clientSSLCertificateKeystorePassword: ${clientSSLCertificateKeystorePassword:password}
 server:
   port: 8099
 management:
   port: 8999
+
+---
+spring:
+  profiles: develop
+
 ---
 spring:
   profiles: unit-integration

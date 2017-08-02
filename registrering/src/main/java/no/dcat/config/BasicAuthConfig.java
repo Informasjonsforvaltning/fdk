@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import no.dcat.authorization.UserNotAuthorizedException;
 
 import java.io.IOException;
 import java.util.*;
@@ -33,63 +32,6 @@ import java.util.*;
 public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
-    private static Map<String, List<Entity>> userEntities = new HashMap<>();
-    private static Map<String, String> userNames = new HashMap<>();
-
-
-
-    protected BasicAuthConfig() {
-        try {
-            ClassPathResource testUsersResource = new ClassPathResource("data/testUsers.json");
-            ObjectMapper mapper = new ObjectMapper();
-            List<TestUser> users = mapper.readValue(testUsersResource.getInputStream(), new TypeReference<List<TestUser>>() {
-            });
-
-            users.forEach(user -> {
-                logger.debug("TestUser {} ", user.getSsn());
-                String ssn = (String) user.getSsn();
-                userEntities.put(ssn, user.getEntities());
-                user.getEntities().forEach(entity -> {
-
-                    if (entity.getSocialSecurityNumber() != null) {
-
-                        NameEntityService.SINGLETON.setUserName(ssn, entity.getName());
-                        userNames.put(ssn, entity.getName());
-
-                    } else {
-                        NameEntityService.SINGLETON.setOrganizationName(entity.getOrganizationNumber(), entity.getName());
-                    }
-                });
-            });
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /**
-     * returns the organizations that this user is allowed to register dataset on
-     *
-     * @param ssn
-     * @return list of organization numbers
-     */
-    public List<String> getOrganisations(String ssn) {
-        List<String> organizations = new ArrayList<>();
-
-        userEntities.get(ssn).forEach(entity -> {
-            if (entity.getOrganizationNumber() != null) {
-                organizations.add(entity.getOrganizationNumber());
-                NameEntityService.SINGLETON.setOrganizationName(entity.getOrganizationNumber(),entity.getName());
-            }
-        });
-
-        return organizations;
-    }
-
-    public String getUserName(String ssn) {
-        return userNames.get(ssn);
-    }
 
 
     @Override
@@ -103,7 +45,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
             //List of entities for ssn. One represents the user itself
             //the other are organizations the user is authorized for
-            List<Entity> userAuthorizations = userEntities.get(ssn);
+            List<Entity> userAuthorizations = null; //userEntities.get(ssn);
             Entity userEntity = null;
             List<String> authorizedOrganizations = new ArrayList<>();
 

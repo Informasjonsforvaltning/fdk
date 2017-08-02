@@ -13,21 +13,18 @@ import java.util.Set;
 public class FdkSamlUserDetails extends SAMLUserDetails {
 
     private SAMLCredential samlCredential;
+    private Set<GrantedAuthority> authorities;
 
-    public FdkSamlUserDetails(SAMLCredential samlCredential) {
+    public FdkSamlUserDetails(SAMLCredential samlCredential, Set<GrantedAuthority> authorities) {
 
         super(samlCredential);
+        this.authorities = authorities;
         this.samlCredential = samlCredential;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        AuthorizationService.SINGLETON.getOrganisations(this.samlCredential.getAttributeAsString("uid"))
-                .stream()
-                .map(SimpleGrantedAuthority::new)
-                .forEach(authorities::add);
+
         return authorities;
     }
 

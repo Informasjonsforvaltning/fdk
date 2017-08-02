@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
@@ -19,9 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +45,8 @@ import java.util.Map;
  * Created by dask on 16.06.2017.
  */
 
-
+@Service
+@ConfigurationProperties(prefix = "application")
 public class AuthorizationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
@@ -56,37 +60,41 @@ public class AuthorizationService {
 
     static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
-    @Value("$keystoreLocation")
-    public static final String keystoreLocation = "/git/fdk-properties/ssldevelop.p12";
+    @Value("$clientSSLCertificateKeystoreLocation")
+    private String clientSSLCertificateKeystoreLocation = "dummy-client-SSL-cert.p12";
 
-    @Value("${keystorePassword}")
-    private static final String keystorePassword = "changeit";
+    @Value("${clientSSLCertificateKeystorePassword}")
+    private String clientSSLCertificateKeystorePassword = "password";
 
-    private static final String GET_REQUEST_FDK = "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=02084902333&servicecode=4814&serviceedition=3";
-
-    @Value("${application.altinnServiceUrl}")
+    @Value("${altinnServiceUrl}")
     String altinnServiceUrl = "https://tt02.altinn.no/";
 
-    @Value("${application.altinnServiceCode}")
+    @Value("${altinnServiceCode}")
     String altinnServiceCode = "4814";
 
-    @Value("${application.altinnServiceEdition}")
+    @Value("${altinnServiceEdition}")
     String altinnServiceEdition = "3";
-
 
     @Autowired
     private Environment environment;
+
+    // example of request url "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=02084902333&servicecode=4814&serviceedition=3";
 
     final static String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
 
     private static Map<String, List<Entity>> userEntities = new HashMap<>();
     private static Map<String, Entity> organizationEntities = new HashMap<>();
 
-    public static AuthorizationService SINGLETON = new AuthorizationService();
 
     private static ClientHttpRequestFactory requestFactory;
 
-    static {
+    @PostConstruct
+    public void constructor() {
+        assert clientSSLCertificateKeystoreLocation != null;
+        assert clientSSLCertificateKeystorePassword != null;
+    }
+
+    public AuthorizationService() {
         try {
             requestFactory = getRequestFactory();
         } catch (KeyStoreException | IOException | UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyManagementException e) {
@@ -97,7 +105,6 @@ public class AuthorizationService {
     public Entity getOrganization(String orgid) {
         return organizationEntities.get(orgid);
     }
-
 
     /**
      * returns the organizations that this user is allowed to register dataset on
@@ -192,17 +199,17 @@ public class AuthorizationService {
      * @throws KeyManagementException
      */
 
-    static ClientHttpRequestFactory getRequestFactory() throws KeyStoreException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, KeyManagementException {
+    ClientHttpRequestFactory getRequestFactory() throws KeyStoreException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, KeyManagementException {
 
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
 
-        keyStore.load(new FileInputStream(new File(keystoreLocation)),
-                keystorePassword.toCharArray());
+        keyStore.load(new FileInputStream(new File(clientSSLCertificateKeystoreLocation)),
+                clientSSLCertificateKeystorePassword.toCharArray());
 
         TrustStrategy acceptingTrustStrategy = (chain, authType) -> true;
 
         SSLContext sslContext = SSLContexts.custom()
-                .loadKeyMaterial(keyStore, keystorePassword.toCharArray())
+                .loadKeyMaterial(keyStore, clientSSLCertificateKeystorePassword.toCharArray())
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
 

@@ -1,7 +1,5 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.AuthorizationService;
-import no.dcat.authorization.Entity;
 import no.dcat.authorization.NameEntityService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
@@ -21,10 +19,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +33,10 @@ import java.util.Set;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 //@RepositoryRestController
 @RestController

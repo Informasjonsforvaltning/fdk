@@ -28,10 +28,7 @@ public class AuthorizationServiceTest {
 
     @Before
     public void setup () throws Throwable {
-        authorizationService = spy(AuthorizationService.SINGLETON);
-        ReflectionTestUtils.setField(authorizationService,"altinnServiceUrl", "https://tt02.altinn.no/");
-        ReflectionTestUtils.setField(authorizationService,"altinnServiceCode", "4814");
-        ReflectionTestUtils.setField(authorizationService,"altinnServiceEdition", "3");
+        authorizationService = spy(new AuthorizationService());
 
         ClassPathResource example = new ClassPathResource("data/exampleAuthorizationEntities.json");
         ObjectMapper mapper = new ObjectMapper();
