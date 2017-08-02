@@ -1,4 +1,4 @@
-package no.dcat.authorization;
+package no.dcat.altinn;
 
 import lombok.Data;
 
