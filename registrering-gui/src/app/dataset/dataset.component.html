@@ -41,7 +41,7 @@
         <div class="fdk-panel-body">
 
             <div class="row form-group">
-                <div *ngIf="datasetForm.controls['checkboxArray']" class="col-md-3">
+                <div *ngIf="datasetForm.controls['checkboxArray']" class="col-md-3 dataset-languages">
                     <label for="languages" class="control-label">Datasettets språk:</label>
                     <div id="languages"
                          *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index">
@@ -103,6 +103,6 @@
         </contact>
     </div>
 </form>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()">Tilbake</button>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()">Slett datasett
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake</button>
+<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
 </button>
