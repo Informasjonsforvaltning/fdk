@@ -55,6 +55,7 @@ describe('registrering-gui App', () => {
 
             var EC = protractor.ExpectedConditions;
             var alertSuccess = element(by.css('.alert-success'));
+
             browser.wait(EC.presenceOf(alertSuccess), 10000).then( () => {
 
                     browser.refresh();
@@ -64,11 +65,12 @@ describe('registrering-gui App', () => {
                         expect(<any>page.getH1Value()).toEqual('New datacatalog name');
                     });
                 }
-            );
+            ).catch(() => {
+                browser.pause();
+            });
 
 
         });
-
 
     it("Should handle saving of checkboxes in new dataset", (done) => {
       let catalogLink = element(by.css("#datacatalogs td"));
@@ -81,7 +83,7 @@ describe('registrering-gui App', () => {
           //browser.pause();
           var EC = protractor.ExpectedConditions;
           var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000).then(()=>{
+          browser.wait(EC.presenceOf(alertSuccess), 15000).then(()=>{
             browser.refresh()
             let datasetLanguagesEngelskElement = element(by.css('.dataset-languages input'));
 
@@ -112,7 +114,7 @@ describe('registrering-gui App', () => {
             let backButton = element(by.css("#button_back_to_catalog"));
             return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
               backButton.click();
-              if(x<2) {
+              if(x<21) {
                 createDataset(x+1);
                 return false;
               } else {
@@ -125,7 +127,7 @@ describe('registrering-gui App', () => {
 
       createDataset(0).then((returnVal)=> { // create the first dataset, which will recurse to 21
         if(returnVal === true) {
-          expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(1);
+          expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(20);
           //cleanup:
         }
       });
