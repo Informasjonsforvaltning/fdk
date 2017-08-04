@@ -46,33 +46,33 @@ import java.util.Map;
  */
 
 @Service
-@ConfigurationProperties(prefix = "application")
 public class AuthorizationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
-    @Value("{apikey}")
-    private static final String apikey = "7FB6140D-B194-4BF6-B3C8-257094FBF8C4"; // test key from Erlend
-    private static final String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel fra Altinn, men funker ikke
-    private static final String apikey3 = "948E57B8-8F44-43E6-921F-F512F67A7F76"; // 28.06.2017 fra Torkel Buarøy
+    @Value("${application.apikey}")
+    private String apikey = "7FB6140D-B194-4BF6-B3C8-257094FBF8C4"; // test key from Erlend
+
+    private String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel fra Altinn, men funker ikke
+    private  String apikey3 = "948E57B8-8F44-43E6-921F-F512F67A7F76"; // 28.06.2017 fra Torkel Buarøy
 
     static String[] TLS_PROTOCOLS = {"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}; // Comment in TLSv1.2 to fail : bug in altinn or java that fails TLS handshake most of the time, but not always
     static String[] TLS_PROTOCOLSx = {"TLSv1.2"};
 
     static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
-    @Value("$clientSSLCertificateKeystoreLocation")
-    private String clientSSLCertificateKeystoreLocation = "dummy-client-SSL-cert.p12";
+    @Value("${application.clientSSLCertificateKeystoreLocation}")
+    private String clientSSLCertificateKeystoreLocation;
 
-    @Value("${clientSSLCertificateKeystorePassword}")
+    @Value("${application.clientSSLCertificateKeystorePassword}")
     private String clientSSLCertificateKeystorePassword = "password";
 
-    @Value("${altinnServiceUrl}")
+    @Value("${application.altinnServiceUrl}")
     String altinnServiceUrl = "https://tt02.altinn.no/";
 
-    @Value("${altinnServiceCode}")
+    @Value("${application.altinnServiceCode}")
     String altinnServiceCode = "4814";
 
-    @Value("${altinnServiceEdition}")
+    @Value("${application.altinnServiceEdition}")
     String altinnServiceEdition = "3";
 
     @Autowired
@@ -92,14 +92,15 @@ public class AuthorizationService {
     public void constructor() {
         assert clientSSLCertificateKeystoreLocation != null;
         assert clientSSLCertificateKeystorePassword != null;
-    }
-
-    public AuthorizationService() {
         try {
             requestFactory = getRequestFactory();
         } catch (KeyStoreException | IOException | UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyManagementException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public AuthorizationService() {
+
     }
 
     public Entity getOrganization(String orgid) {
@@ -202,6 +203,7 @@ public class AuthorizationService {
     ClientHttpRequestFactory getRequestFactory() throws KeyStoreException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, KeyManagementException {
 
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        logger.debug("open ssl sertificate file {}", clientSSLCertificateKeystoreLocation);
 
         keyStore.load(new FileInputStream(new File(clientSSLCertificateKeystoreLocation)),
                 clientSSLCertificateKeystorePassword.toCharArray());
