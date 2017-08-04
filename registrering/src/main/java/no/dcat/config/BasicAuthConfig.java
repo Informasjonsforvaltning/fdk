@@ -81,16 +81,22 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         @Override
         public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
             Set<GrantedAuthority> authorities = new HashSet<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
             authorizationService.getOrganisations(ssn)
                     .stream()
                     .map(SimpleGrantedAuthority::new)
                     .forEach(authorities::add);
 
-            User user = new User(ssn,
-                    "password",
-                    authorities);
-            return user;
+            if (authorities.size() > 0 ) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+                User user = new User(ssn,
+                        "password",
+                        authorities);
+                return user;
+            } else {
+                throw new UsernameNotFoundException("Unable to find user with username provided!");
+            }
         }
     };
 
@@ -101,40 +107,37 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     @Profile({"develop"})
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .csrf().disable()
-                    .authorizeRequests()
-                        .antMatchers("/*.js").permitAll()
-                        .antMatchers("/*.woff2").permitAll()
-                        .antMatchers("/*.woff").permitAll()
-                        .antMatchers("/*.ttf").permitAll()
-                        .antMatchers("/assets/**").permitAll()
-                        .antMatchers("/loginerror").permitAll()
+                .csrf().disable()
+                .authorizeRequests()
+                    .antMatchers("/*.js").permitAll()
+                    .antMatchers("/*.woff2").permitAll()
+                    .antMatchers("/*.woff").permitAll()
+                    .antMatchers("/*.ttf").permitAll()
+                    .antMatchers("/assets/**").permitAll()
+                    .antMatchers("/loginerror").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
 
-                        .anyRequest().authenticated()
-                .and()
+                .formLogin()
+                   // .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/innloggetBruker")
+                    .failureUrl("/loginerror")
+                    .and()
 
-                    .formLogin()
-                        .permitAll()
-                        .failureUrl("/loginerror")
-                .and()
-                    .logout()
-                        .logoutUrl("/logout")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                        .permitAll();
+                .logout()
+                    .logoutUrl("/logout")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll();
 
         }
-/*
-        @Override
-        protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
-            authManagerBuilder.inMemoryAuthentication()
-                    .withUser("user").password("password").roles("USER").authorities("974760673").and()
-            .withUser("23076102252").password("password").roles("ROLE_USER").authorities("97476073");
-        }
-*/
+
     }
 
 }

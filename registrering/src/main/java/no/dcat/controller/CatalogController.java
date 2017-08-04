@@ -65,22 +65,12 @@ public class CatalogController {
         Authentication auth = springSecurityContextBean.getAuthentication();
 
         Set<String> validCatalogs = new HashSet<>();
-        boolean admin = false;
+
         for (GrantedAuthority authority : auth.getAuthorities()) {
-
-            if ("USER_ADMIN".equals(authority.getAuthority())) {
-                admin = true;
-            } else {
                 validCatalogs.add(authority.getAuthority());
-            }
         }
 
-        Page<Catalog> catalogs = null;
-        if (admin) {
-            catalogs = catalogRepository.findAll(pageable);
-        } else {
-            catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
-        }
+        Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
@@ -91,7 +81,7 @@ public class CatalogController {
      * @param catalog catalog skeleton to copy from
      * @return new catalog object
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = POST,
             consumes = APPLICATION_JSON_VALUE,
@@ -144,7 +134,7 @@ public class CatalogController {
      * @param catalog the catalog object with fields to update
      * @return the saved catalog
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = PUT,
@@ -178,7 +168,7 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
             consumes = APPLICATION_JSON_VALUE,
@@ -195,7 +185,7 @@ public class CatalogController {
      * @param id of the catalog
      * @return the catalog if it exist
      */
-    @PreAuthorize("hasPermission(#id, 'read') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'read')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
