@@ -11,8 +11,8 @@ apt:
 
 before_install:
   - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  - sudo apt-get install -y nodejs | /dev/null
-  - sudo apt-get install -y build-essential | /dev/null
+  - sudo apt-get install -y nodejs > /dev/null
+  - sudo apt-get install -y build-essential > /dev/null
 install:
   - export DOCKER_HOST=unix:///var/run/docker.sock
   - export CHROME_BIN=chromium-browser
