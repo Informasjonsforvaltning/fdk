@@ -21,7 +21,7 @@ install:
   - mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -V -T 1C
   - cd docker ; docker-compose up -d ; ./waitForDocker.sh ; cd ..
 script:
-#  - mvn test -B  org.jacoco:jacoco-maven-plugin:report && ./runNodeTests.sh
-  - mvn test -B  org.jacoco:jacoco-maven-plugin:report && mvn -B  failsafe:integration-test org.jacoco:jacoco-maven-plugin:report
+#  - mvn test -B  org.jacoco:jacoco-maven-plugin:report
+  - mvn test -B  org.jacoco:jacoco-maven-plugin:report && mvn -B  failsafe:integration-test org.jacoco:jacoco-maven-plugin:report  && ./runNodeTests.sh
 after_success:
   - mvn org.eluder.coveralls:coveralls-maven-plugin:report

@@ -55,13 +55,18 @@ describe('registrering-gui App', () => {
 
             var EC = protractor.ExpectedConditions;
             var alertSuccess = element(by.css('.alert-success'));
-            browser.wait(EC.presenceOf(alertSuccess), 10000);
+            browser.wait(EC.presenceOf(alertSuccess), 10000).then( () => {
 
-            browser.refresh();
-            datasetH1Input = element(by.css(".fdk-register-h1"));
-            browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'), 1000).then(() => {
-                expect(<any>page.getH1Value()).toEqual('New datacatalog name');
-            });
+                    browser.refresh();
+
+                    datasetH1Input = element(by.css(".fdk-register-h1"));
+                    browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'), 1000).then(() => {
+                        expect(<any>page.getH1Value()).toEqual('New datacatalog name');
+                    });
+                }
+            );
+
+
         });
 
 
