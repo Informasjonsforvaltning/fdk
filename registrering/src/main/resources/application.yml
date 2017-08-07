@@ -26,7 +26,7 @@ server:
     basedir: /tmp/fdk
   ssl:
     key-store: file:conf/idporten/ssldevelop.p12
-    key-store-password: ${ssl-key-password}
+    key-store-password: ${reg-ssl-key-password:changeit}
     key-store-type: PKCS12
     key-alias: tomcat
 saml:
@@ -44,19 +44,24 @@ saml:
     key-manager:
       public-key-pem-location: file:conf/idporten/difi.brreg.datakatalog.registrering.dev.xml
       store-location: file:conf/idporten/difi.brreg.datakatalog.registrering.dev.jks
-      store-pass: ${ip-store-password}
+      store-pass: ${reg-ip-store-password}
       default-key: difi.brreg.datakatalog.registrering.dev
       key-passwords:
-        difi.brreg.datakatalog.registrering.dev: ${ip-key-password}
+        difi.brreg.datakatalog.registrering.dev: ${reg-ip-key-password}
     sso-processing-url: registrering/saml/SSO
 
 ---
 spring:
   profiles: develop
-  server:
-    port: 8099
-  management:
-    port: 8999
+server:
+  port: 8099
+  ssl:
+    key-store: file:conf/idporten/ssldevelop.p12
+    key-store-password: ${reg-ssl-key-password:changeit}
+    key-store-type: PKCS12
+    key-alias: tomcat
+management:
+  port: 8999
 application:
   altinnServiceUrl: http://localhost:8077
 
