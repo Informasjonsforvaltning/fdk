@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *  fdk.hostname            localhost
  *  fdk.port                8081
  */
-public class SpringIntegrationTestConfig {
+public class SpringIntegrationTestConfigIT {
 
     @Test
     public void nothing(){

@@ -45,32 +45,32 @@ describe('registrering-gui App', () => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
 
-        it("Should save datacatalog fields upon typing", () => {
-            let catalogLink = element(by.css("#datacatalogs td"));
-            catalogLink.click();
-
-            let datasetH1Input = element(by.css(".fdk-register-h1"));
-            datasetH1Input.clear();
-            datasetH1Input.sendKeys('New datacatalog name');
-
-            var EC = protractor.ExpectedConditions;
-            var alertSuccess = element(by.css('.alert-success'));
-
-            browser.wait(EC.presenceOf(alertSuccess), 10000).then( () => {
-
-                    browser.refresh();
-
-                    datasetH1Input = element(by.css(".fdk-register-h1"));
-                    browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'), 1000).then(() => {
-                        expect(<any>page.getH1Value()).toEqual('New datacatalog name');
-                    });
-                }
-            ).catch(() => {
-                browser.pause();
-            });
-
-
-        });
+        // it("Should save datacatalog fields upon typing", () => {
+        //     let catalogLink = element(by.css("#datacatalogs td"));
+        //     catalogLink.click();
+        //
+        //     let datasetH1Input = element(by.css(".fdk-register-h1"));
+        //     datasetH1Input.clear();
+        //     datasetH1Input.sendKeys('New datacatalog name');
+        //
+        //     var EC = protractor.ExpectedConditions;
+        //     var alertSuccess = element(by.css('.alert-success'));
+        //
+        //     browser.wait(EC.presenceOf(alertSuccess), 10000).then( () => {
+        //
+        //             browser.refresh();
+        //
+        //             datasetH1Input = element(by.css(".fdk-register-h1"));
+        //             browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'), 1000).then(() => {
+        //                 expect(<any>page.getH1Value()).toEqual('New datacatalog name');
+        //             });
+        //         }
+        //     ).catch(() => {
+        //         browser.pause();
+        //     });
+        //
+        //
+        // });
 
     it("Should handle saving of checkboxes in new dataset", (done) => {
       let catalogLink = element(by.css("#datacatalogs td"));
@@ -266,40 +266,40 @@ describe('registrering-gui App', () => {
 
 
 
-    it("Should handle saving of codes in new dataset", (done) => {
-      let catalogLink = element(by.css("#datacatalogs td"));
-      catalogLink.click();
-
-      page.createDataset('saving of codes').then(() => {
-        let provenanceControl = element(by.css('[formcontrolname=provenance]'));
-        provenanceControl.click();
-
-        let provenanceControlFirstValue = element(by.css('[formcontrolname=provenance] li:first-child'));
-        provenanceControlFirstValue.click();
-
-        let accrualPeriodicityControl = element(by.css('[formcontrolname=accrualPeriodicity]'));
-        accrualPeriodicityControl.click();
-        let accrualPeriodicityControlFirstValue = element(by.css('[formcontrolname=accrualPeriodicity] li:first-child'));
-        accrualPeriodicityControlFirstValue.click();
-
-        var EC = protractor.ExpectedConditions;
-        var alertSuccess = element(by.css('.alert-success'));
-        browser.wait(EC.presenceOf(alertSuccess), 10000);
-
-        browser.refresh();
-        let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
-
-        browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
-          expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
-          expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
-          let backButton = element(by.css("#button_back_to_catalog"));
-          return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-            backButton.click();
-            done();
-          });
-        });
-      });
-    });
+    // it("Should handle saving of codes in new dataset", (done) => {
+    //   let catalogLink = element(by.css("#datacatalogs td"));
+    //   catalogLink.click();
+    //
+    //   page.createDataset('saving of codes').then(() => {
+    //     let provenanceControl = element(by.css('[formcontrolname=provenance]'));
+    //     provenanceControl.click();
+    //
+    //     let provenanceControlFirstValue = element(by.css('[formcontrolname=provenance] li:first-child'));
+    //     provenanceControlFirstValue.click();
+    //
+    //     let accrualPeriodicityControl = element(by.css('[formcontrolname=accrualPeriodicity]'));
+    //     accrualPeriodicityControl.click();
+    //     let accrualPeriodicityControlFirstValue = element(by.css('[formcontrolname=accrualPeriodicity] li:first-child'));
+    //     accrualPeriodicityControlFirstValue.click();
+    //
+    //     var EC = protractor.ExpectedConditions;
+    //     var alertSuccess = element(by.css('.alert-success'));
+    //     browser.wait(EC.presenceOf(alertSuccess), 10000);
+    //
+    //     browser.refresh();
+    //     let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
+    //
+    //     browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
+    //       expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
+    //       expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
+    //       let backButton = element(by.css("#button_back_to_catalog"));
+    //       return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
+    //         backButton.click();
+    //         done();
+    //       });
+    //     });
+    //   });
+    // });
 
 
     it("Should save dataset fields upon typing", (done) => {
