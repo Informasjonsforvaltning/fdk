@@ -1,10 +1,18 @@
 package no.dcat.authorization;
 
+import no.dcat.RegisterApplication;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -17,16 +25,15 @@ import java.util.List;
 // -Djavax.net.ssl.keyStore=D:/altinn/brreg.jks -Djavax.net.ssl.keyStorePassword=keystore
 // -Djavax.net.debug=ssl
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+//@ContextConfiguration(classes = {RegisterApplication.class})
 public class AltinnAuthorizationIT {
 
     private static Logger logger = LoggerFactory.getLogger(AltinnAuthorizationIT.class);
 
+    @Autowired
     private AuthorizationService authorizationService;
-
-    @Before
-    public void setup () {
-        authorizationService = new AuthorizationService();
-    }
 
     @Test
     public void testGetAuthorizedEntities() throws Throwable {
@@ -45,8 +52,8 @@ public class AltinnAuthorizationIT {
     public void testGetAuthorizedEntitiesInvalidUser() throws Throwable {
 
         try {
-            List<Entity> actualEntities = authorizationService.getAuthorizedEntities("16079411314");
-        } catch (HttpClientErrorException e) {
+            List<String> actualEntities = authorizationService.getOrganisations("16079411314");
+        } catch (AuthorizationServiceException e) {
             logger.info("Client error: {}", e.getMessage());
             Assert.assertTrue(true);
         }

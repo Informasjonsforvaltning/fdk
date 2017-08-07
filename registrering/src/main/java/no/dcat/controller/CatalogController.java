@@ -1,6 +1,7 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.NameEntityService;
+import no.dcat.authorization.Entity;
+import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
@@ -50,6 +51,11 @@ public class CatalogController {
 
     @Autowired
     private SpringSecurityContextBean springSecurityContextBean;
+
+    @Autowired
+    private EntityNameService entityNameService;
+
+
     /**
      * Lists all authorised catalogs
      *
@@ -113,7 +119,7 @@ public class CatalogController {
         } catch (Exception e) {
             logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
 
-            String organizationName = NameEntityService.SINGLETON.getOrganizationName(catalog.getId());
+            String organizationName = entityNameService.getOrganizationName(catalog.getId());
 
             enhet = new Enhet();
             enhet.setNavn(organizationName);

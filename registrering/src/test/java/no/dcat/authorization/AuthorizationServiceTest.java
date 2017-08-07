@@ -28,7 +28,9 @@ public class AuthorizationServiceTest {
 
     @Before
     public void setup () throws Throwable {
-        authorizationService = spy(new AuthorizationService());
+        AuthorizationService aService = new AuthorizationService();
+        aService.entityNameService = new EntityNameService();
+        authorizationService = spy(aService);
 
         ClassPathResource example = new ClassPathResource("data/exampleAuthorizationEntities.json");
         ObjectMapper mapper = new ObjectMapper();
@@ -50,8 +52,12 @@ public class AuthorizationServiceTest {
     }
 
     @Test
-    public void initializationErrorInGetRequestFactory() throws Throwable {
+    public void testOrganisationsOK() throws Throwable {
+        List<String> organizations = authorizationService.getOrganisations("02084902333");
 
+        for (String org : organizations) {
+            logger.info("org: {}",org);
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package no.dcat.config;
 
 import no.dcat.authorization.AuthorizationService;
+import no.dcat.authorization.AuthorizationServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,13 +24,22 @@ public class FdkSamlUserDetailsService implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        authorizationService.getOrganisations(credential.getAttributeAsString("uid"))
-                .stream()
-                .map(SimpleGrantedAuthority::new)
-                .forEach(authorities::add);
+        try {
 
-        return  new FdkSamlUserDetails(credential, authorities);
+            authorizationService.getOrganisations(credential.getAttributeAsString("uid"))
+                    .stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .forEach(authorities::add);
 
+            if (authorities.size() > 0 ) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                return new FdkSamlUserDetails(credential, authorities);
+            } else {
+                throw new UsernameNotFoundException("User not authorized to use this service");
+            }
+
+        } catch (AuthorizationServiceException e) {
+            throw new UsernameNotFoundException(e.getLocalizedMessage(),e);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.NameEntityService;
+import no.dcat.authorization.EntityNameService;
 import no.dcat.config.FdkSamlUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.Catalog;
@@ -8,7 +8,6 @@ import no.dcat.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +34,9 @@ public class LoginController {
     private SpringSecurityContextBean springSecurityContextBean;
 
     @Autowired
+    EntityNameService entityNameService;
+
+    @Autowired
     public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean) {
         this.catalogController = catalogController;
         this.springSecurityContextBean = springSecurityContextBean;
@@ -50,7 +52,7 @@ public class LoginController {
 
         if (authentication.getPrincipal() instanceof FdkSamlUserDetails) {
             FdkSamlUserDetails userDetails = (FdkSamlUserDetails) authentication.getPrincipal();
-            user.setName(NameEntityService.SINGLETON.getUserName(userDetails.getUid()));
+            user.setName(entityNameService.getUserName(userDetails.getUid()));
         } else {
             user.setName(authentication.getName());
         }
@@ -87,7 +89,7 @@ public class LoginController {
 
         if (authentication.getPrincipal() instanceof FdkSamlUserDetails) {
             FdkSamlUserDetails userDetails = (FdkSamlUserDetails) authentication.getPrincipal();
-            user.setName(NameEntityService.SINGLETON.getUserName(userDetails.getUid()));
+            user.setName(entityNameService.getUserName(userDetails.getUid()));
         } else {
             user.setName(authentication.getName());
         }

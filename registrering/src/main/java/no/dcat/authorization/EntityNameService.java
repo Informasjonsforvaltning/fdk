@@ -1,16 +1,17 @@
 package no.dcat.authorization;
 
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by dask on 22.06.2017.
  */
-public class NameEntityService {
-    private static Map<String, String> userNames = new HashMap<>();
-    private static Map<String, String> organizationNames = new HashMap<>();
-
-    public static NameEntityService SINGLETON = new NameEntityService();
+@Service
+public class EntityNameService {
+    private Map<String, String> userNames = new HashMap<>();
+    private Map<String, String> organizationNames = new HashMap<>();
 
     public String getOrganizationName(String organizationId) {
         return organizationNames.get(organizationId);

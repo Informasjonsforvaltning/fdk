@@ -3,12 +3,12 @@ data:
     clusterNodes: localhost:9300
 application:
   catalogUriPrefix: http://localhost:8099
-  apikey: 7FB6140D-B194-4BF6-B3C8-257094FBF8C4
-  altinnServiceUrl: https://tt02.altinn.no/
-  altinnServiceCode: 4814
-  altinnServiceEdition: 3
-  clientSSLCertificateKeystoreLocation: registrering/dummy-client-SSL-cert.p12
-  clientSSLCertificateKeystorePassword: password
+  apikey: ${reg-apikey:12345-ABCDE-67890-FGHIJ}
+  altinnServiceUrl: ${reg-altinnServiceUrl:http://localhost:8077}
+  altinnServiceCode: ${reg-altinnServiceCode:4814}
+  altinnServiceEdition: ${reg-altinnServiceEdition:3}
+  clientSSLCertificateKeystoreLocation: ${reg-clientSSLCertificateKeystoreLocation:registrering/dummy-client-SSL-cert.p12}
+  clientSSLCertificateKeystorePassword: ${reg-clientSSLCertificateKeystorePassword:password}
 spring:
   hateoas:
     use-hal-as-default-json-media-type: false

@@ -1,29 +1,24 @@
 package no.dcat.config;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.dcat.authorization.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.saml.SAMLCredential;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -42,10 +37,13 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     @Autowired
     AuthorizationService authorizationService;
 
-    protected BasicAuthConfig() {
-        userNames.put("23076102252", "GULLIKSEN MAUD");
-        NameEntityService.SINGLETON.setUserName("23076102252", "GULLIKSEN MAUD");
+    @Autowired
+    EntityNameService entityNameService;
 
+    @PostConstruct
+    public void constructor() {
+        userNames.put("23076102252", "GULLIKSEN MAUD");
+        entityNameService.setUserName("23076102252", "GULLIKSEN MAUD");
     }
 
     /**
@@ -60,7 +58,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         userEntities.get(ssn).forEach(entity -> {
             if (entity.getOrganizationNumber() != null) {
                 organizations.add(entity.getOrganizationNumber());
-                NameEntityService.SINGLETON.setOrganizationName(entity.getOrganizationNumber(),entity.getName());
+                entityNameService.setOrganizationName(entity.getOrganizationNumber(),entity.getName());
             }
         });
 
@@ -81,21 +79,24 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         @Override
         public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
             Set<GrantedAuthority> authorities = new HashSet<>();
+            try {
+                authorizationService.getOrganisations(ssn)
+                        .stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .forEach(authorities::add);
 
-            authorizationService.getOrganisations(ssn)
-                    .stream()
-                    .map(SimpleGrantedAuthority::new)
-                    .forEach(authorities::add);
+                if (authorities.size() > 0) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-            if (authorities.size() > 0 ) {
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-                User user = new User(ssn,
-                        "password",
-                        authorities);
-                return user;
-            } else {
-                throw new UsernameNotFoundException("Unable to find user with username provided!");
+                    User user = new User(ssn,
+                            "password",
+                            authorities);
+                    return user;
+                } else {
+                    throw new UsernameNotFoundException("Unable to find user with username provided!");
+                }
+            } catch (AuthorizationServiceException e) {
+                throw new UsernameNotFoundException(e.getLocalizedMessage(),e);
             }
         }
     };
@@ -104,7 +105,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
 
     @Configuration
     @EnableWebSecurity
-    @Profile({"develop"})
+    @Profile({"develop", "docker"})
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
