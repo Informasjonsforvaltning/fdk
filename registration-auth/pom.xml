@@ -11,7 +11,7 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>registration-authorization</artifactId>
+    <artifactId>registration-auth</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -91,7 +91,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
                     <imageName>
-                        ${docker.registry}${docker.image.prefix}/registration-authorization:latest
+                        ${docker.registry}${docker.image.prefix}/registration-auth:latest
                     </imageName>
                 </configuration>
             </plugin>
