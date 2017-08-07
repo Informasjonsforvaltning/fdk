@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -54,18 +55,10 @@ public class LoginController {
             FdkSamlUserDetails userDetails = (FdkSamlUserDetails) authentication.getPrincipal();
             user.setName(entityNameService.getUserName(userDetails.getUid()));
         } else {
-            user.setName(authentication.getName());
+            user.setName(entityNameService.getUserName(authentication.getName()));
         }
 
-        logger.debug("User " + user.getName() + " authorisations: " + authentication.getAuthorities().toString());
-
-        //if authorities list contains 1 or less autorities
-        //then user has not been authorized for any catalogs
-        //(There will be one authority with default role ROLE_USER)
-        if(authentication.getAuthorities().size() <= 1) {
-            //return new ResponseEntity<User>(user, FORBIDDEN);
-            //or throw UserNotAuthorisedException?
-        }
+        logger.info("User {} logged in with authorizations: {}", user.getName(), authentication.getAuthorities().toString());
 
         List<String> catalogs= authentication.getAuthorities()
                 .stream()
@@ -73,9 +66,14 @@ public class LoginController {
                 .filter(catalog -> catalog.matches("\\d{9}"))
                 .collect(toList());
 
-        createCatalogsIfNeeded(catalogs);
+        if (catalogs.size() > 0) {
 
-        return new ResponseEntity<>(user, OK);
+            createCatalogsIfNeeded(catalogs);
+
+            return new ResponseEntity<>(user, OK);
+        } else {
+            return new ResponseEntity<User>(user, FORBIDDEN);
+        }
     }
 
     @CrossOrigin
@@ -123,10 +121,14 @@ public class LoginController {
 
         HttpEntity<Catalog> catalogResponse = catalogController.getCatalog(orgnr);
         if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
-            return Optional.of(catalogController.createCatalog(new Catalog(orgnr)).getBody());
+            logger.info("Create catalog for {} ", orgnr);
+            Catalog catalog = new Catalog(orgnr);
+            if (entityNameService.getOrganizationName(orgnr) != null) {
+                catalog.getTitle().put("no", "Datakatalog for " + entityNameService.getOrganizationName(orgnr));
+            }
+            return Optional.of(catalogController.createCatalog(catalog).getBody());
         }
         return Optional.empty();
     }
-
 
 }

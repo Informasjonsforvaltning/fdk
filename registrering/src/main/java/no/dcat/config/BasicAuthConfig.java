@@ -27,7 +27,7 @@ import java.util.*;
  * Configures basic auth for use in develop profile
  */
 @Configuration
-@Profile({"develop"})
+@Profile({"develop", "docker"})
 public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
@@ -39,35 +39,6 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
 
     @Autowired
     EntityNameService entityNameService;
-
-    @PostConstruct
-    public void constructor() {
-        userNames.put("23076102252", "GULLIKSEN MAUD");
-        entityNameService.setUserName("23076102252", "GULLIKSEN MAUD");
-    }
-
-    /**
-     * returns the organizations that this user is allowed to register dataset on
-     *
-     * @param ssn
-     * @return list of organization numbers
-     */
-    public List<String> getOrganisations(String ssn) {
-        List<String> organizations = new ArrayList<>();
-
-        userEntities.get(ssn).forEach(entity -> {
-            if (entity.getOrganizationNumber() != null) {
-                organizations.add(entity.getOrganizationNumber());
-                entityNameService.setOrganizationName(entity.getOrganizationNumber(),entity.getName());
-            }
-        });
-
-        return organizations;
-    }
-
-    public String getUserName(String ssn) {
-        return userNames.get(ssn);
-    }
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
@@ -108,8 +79,6 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     @Profile({"develop", "docker"})
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -130,7 +99,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                 .formLogin()
                    // .loginPage("/login")
                     .permitAll()
-                    .defaultSuccessUrl("/innloggetBruker")
+                    .defaultSuccessUrl("/index.html")
                     .failureUrl("/loginerror")
                     .and()
 
