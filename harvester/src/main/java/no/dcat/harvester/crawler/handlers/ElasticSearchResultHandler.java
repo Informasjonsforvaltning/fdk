@@ -92,10 +92,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     protected void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
-        logger.debug("Creating index: " + DCAT_INDEX);
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
+            logger.debug("Creating index: " + DCAT_INDEX);
             elasticsearch.createIndex(DCAT_INDEX);
             indexThemeCodesWithElasticSearch(DATA_THEME_URL, elasticsearch);
+        }else{
+            logger.debug("Index exists: " + DCAT_INDEX);
+
         }
 
         logger.debug("Preparing bulkRequest");

@@ -1,8 +1,7 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.Entity;
-import no.dcat.authorization.NameEntityService;
+import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
@@ -21,10 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +34,10 @@ import java.util.Set;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 //@RepositoryRestController
 @RestController
@@ -46,6 +51,11 @@ public class CatalogController {
 
     @Autowired
     private SpringSecurityContextBean springSecurityContextBean;
+
+    @Autowired
+    private EntityNameService entityNameService;
+
+
     /**
      * Lists all authorised catalogs
      *
@@ -61,22 +71,12 @@ public class CatalogController {
         Authentication auth = springSecurityContextBean.getAuthentication();
 
         Set<String> validCatalogs = new HashSet<>();
-        boolean admin = false;
+
         for (GrantedAuthority authority : auth.getAuthorities()) {
-
-            if ("USER_ADMIN".equals(authority.getAuthority())) {
-                admin = true;
-            } else {
                 validCatalogs.add(authority.getAuthority());
-            }
         }
 
-        Page<Catalog> catalogs = null;
-        if (admin) {
-            catalogs = catalogRepository.findAll(pageable);
-        } else {
-            catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
-        }
+        Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
@@ -87,7 +87,7 @@ public class CatalogController {
      * @param catalog catalog skeleton to copy from
      * @return new catalog object
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = POST,
             consumes = APPLICATION_JSON_VALUE,
@@ -119,7 +119,7 @@ public class CatalogController {
         } catch (Exception e) {
             logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
 
-            String organizationName = NameEntityService.SINGLETON.getOrganizationName(catalog.getId());
+            String organizationName = entityNameService.getOrganizationName(catalog.getId());
 
             enhet = new Enhet();
             enhet.setNavn(organizationName);
@@ -140,7 +140,7 @@ public class CatalogController {
      * @param catalog the catalog object with fields to update
      * @return the saved catalog
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = PUT,
@@ -174,7 +174,7 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
             consumes = APPLICATION_JSON_VALUE,
@@ -191,7 +191,7 @@ public class CatalogController {
      * @param id of the catalog
      * @return the catalog if it exist
      */
-    @PreAuthorize("hasPermission(#id, 'read') or hasRole('USER_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'read')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)

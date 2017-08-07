@@ -6,17 +6,17 @@
           <span *ngFor="let singleFormat of distribution.format; let idx=index">
             {{singleFormat}}{{distribution.format.length !== idx+1 ? ',' : '' }}
           </span>
-          <span *ngIf="distribution.format.length === 0">(Ingen format)</span>
+          <span *ngIf="distribution.format && distribution.format.length === 0">(Ingen format)</span>
         </h4>
         <div class="form sub-form" *ngIf="showForm">
           <label for="format" class="control-label">Format:</label>
-          <rl-tag-input formControlName="format" placeholder=" "></rl-tag-input>
+          <rl-tag-input id="format" formControlName="format" placeholder=" "></rl-tag-input>
           <label for="description" class="control-label">Kommentar:</label>
           <textarea id="description" type="text" formControlName="description" class="form-control"></textarea>
           <label for="accessURL" class="control-label">Tilgangs-URL:</label>
-          <rl-tag-input formControlName="accessURL" placeholder=" "></rl-tag-input>
+          <rl-tag-input id="accessURL" formControlName="accessURL" placeholder=" "></rl-tag-input>
           <label for="downloadURL" class="control-label">Nedlastnings-URL:</label>
-          <rl-tag-input formControlName="downloadURL" placeholder=" "></rl-tag-input>
+          <rl-tag-input id="downloadURL" formControlName="downloadURL" placeholder=" "></rl-tag-input>
           <label for="license" class="control-label">Lisens:</label>
           <input id="license" type="text"  formControlName="license" class="form-control"/>
           <span class="delete-distribution-wrapper">

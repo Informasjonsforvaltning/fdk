@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
+import static java.lang.Thread.sleep;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.not;
@@ -66,9 +67,29 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^bruker datasett (.*).ttl")
     public void setupTestData(String datasett) throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
-        deleteLoadAndWait(datasett + ".ttl", () -> restTemplate.getForObject("http://localhost:8083/themecount", ThemeCountSmall.class).getHits().getTotal() == 92);
+
+        logger.info("setupTestData(datasett: '{}')", datasett);
+
+        Callable<Boolean> waitFor = () -> {
+            int total = getThemeCount();
+            logger.info("total: {}", total);
+            return total == 92;
+
+        };
+
+        deleteLoadAndWait(datasett+".ttl", waitFor);
+
     }
+
+    private int getThemeCount() {
+        RestTemplate restTemplate1 = new RestTemplate();
+        try {
+            return restTemplate1.getForObject("http://localhost:8083/themecount", ThemeCountSmall.class).getHits().getTotal();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 
     private void deleteLoadAndWait(String dataset, Callable<Boolean> waitFor) throws IOException {
         deleteAndLoad(dataset);
@@ -76,19 +97,25 @@ public class BackgroundPage extends CommonPage {
     }
 
     private void deleteAndLoad(String datasett) throws IOException {
+
         String hostname = "localhost"; //getEnv("elasticsearch.hostname");
         int port = 9300; //getEnvInt("elasticsearch.port");
 
         new DeleteIndex(hostname, port).deleteIndex(index);
+
+
         Loader loader = new Loader(hostname, port);
         try {
             loader.harvestAllCodes(true);
-
-            Thread.sleep(3000);
+            sleep(1000);
+            waitForHarvesterToComplete();
 
             Resource resource = new ClassPathResource(datasett);
 
             loader.loadDatasetFromFile(resource.getURL().toString());
+            sleep(1000);
+            waitForHarvesterToComplete();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -96,7 +123,7 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^man har åpnet Fellesdatakatalog i en nettleser")
     public void openBrowserToHomepage() {
-        driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        driver.get("http://" + portalHostname + ":" + portalPort + "/");
     }
 
 

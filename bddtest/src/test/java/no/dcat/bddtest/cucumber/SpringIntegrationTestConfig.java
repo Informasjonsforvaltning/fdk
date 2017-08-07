@@ -1,5 +1,6 @@
 package no.dcat.bddtest.cucumber;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,4 +18,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *  fdk.port                8081
  */
 public class SpringIntegrationTestConfig {
+
+    @Test
+    public void nothing(){
+
+    }
+
 }

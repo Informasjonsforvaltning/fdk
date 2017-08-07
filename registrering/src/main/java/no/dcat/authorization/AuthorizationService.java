@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,9 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,58 +35,65 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dask on 16.06.2017.
  */
 
-
+@Service
 public class AuthorizationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
-    @Value("{apikey}")
-    private static final String apikey = "7FB6140D-B194-4BF6-B3C8-257094FBF8C4"; // test key from Erlend
-    private static final String apikey2 = "99A0EC51-095B-4ADC-9795-342FFB5B1564"; // WEB nøkkel fra Altinn, men funker ikke
-
     static String[] TLS_PROTOCOLS = {"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}; // Comment in TLSv1.2 to fail : bug in altinn or java that fails TLS handshake most of the time, but not always
     static String[] TLS_PROTOCOLSx = {"TLSv1.2"};
-
     static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
-    @Value("$keystoreLocation")
-    public static final String keystoreLocation = "C://altinn/Buypass ID-REGISTERENHETEN I BRØNNØYSUND-serienummer4659019343921797777264492-2014-06-06.p12";
+    @Value("${application.apikey}")
+    private String apikey;
 
-    @Value("${keystorePassword}")
-    private static final String keystorePassword = "xEPtHApswvpiNHTp";
+    @Value("${application.clientSSLCertificateKeystoreLocation}")
+    private String clientSSLCertificateKeystoreLocation;
 
-    private static final String GET_REQUEST_FDK = "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=02084902333&servicecode=4814&serviceedition=3";
+    @Value("${application.clientSSLCertificateKeystorePassword}")
+    private String clientSSLCertificateKeystorePassword;
 
     @Value("${application.altinnServiceUrl}")
-    String altinnServiceUrl = "https://tt02.altinn.no/";
+    String altinnServiceUrl;
 
     @Value("${application.altinnServiceCode}")
-    String altinnServiceCode = "4814";
+    String altinnServiceCode;
 
     @Value("${application.altinnServiceEdition}")
-    String altinnServiceEdition = "3";
-
+    String altinnServiceEdition;
 
     @Autowired
-    private Environment environment;
+    EntityNameService entityNameService;
 
     final static String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
 
-    private static Map<String, List<Entity>> userEntities = new HashMap<>();
-    private static Map<String, Entity> organizationEntities = new HashMap<>();
+    private ClientHttpRequestFactory requestFactory;
 
-    public static AuthorizationService SINGLETON = new AuthorizationService();
+    @PostConstruct
+    public void constructor() {
+        assert altinnServiceUrl != null;
+        logger.info("Altinn service url: {}", altinnServiceUrl );
 
-    private static ClientHttpRequestFactory requestFactory;
+        assert altinnServiceCode != null;
+        logger.info("Altinn service code: {}", altinnServiceCode );
 
-    static {
+        assert altinnServiceEdition != null;
+        logger.info("Altinn service edition: {}", altinnServiceEdition );
+
+        assert apikey != null;
+        logger.info("Altinn apikey: {}", apikey);
+
+        assert clientSSLCertificateKeystoreLocation != null;
+        logger.info("Altinn client certificate keystore location: {}", clientSSLCertificateKeystoreLocation);
+
+        assert clientSSLCertificateKeystorePassword != null;
+        logger.info("Altinn client certificate keystore password: {}", clientSSLCertificateKeystorePassword);
+
         try {
             requestFactory = getRequestFactory();
         } catch (KeyStoreException | IOException | UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException | KeyManagementException e) {
@@ -93,65 +101,63 @@ public class AuthorizationService {
         }
     }
 
-    public Entity getOrganization(String orgid) {
-        return organizationEntities.get(orgid);
-    }
-
-
     /**
-     * returns the organizations that this user is allowed to register dataset on
+     * returns the organizations that this user is allowed to register datasets on
      *
-     * @param ssn
+     * @param ssn the user identifier
      * @return list of organization numbers
      */
-    public List<String> getOrganisations(String ssn) {
+    public List<String> getOrganisations(String ssn) throws AuthorizationServiceException {
         List<String> organizations = new ArrayList<>();
-        if (!userEntities.containsKey(ssn)) {
-            try {
-                cacheEntries(ssn);
-            } catch (AuthorizationServiceUnavailable asu) {
-                logger.error("Autorization service is unavailable, cannot authorize user", asu);
-                return null;
-            }
-        }
-        userEntities.get(ssn).forEach(entity -> {
-            if (entity.getOrganizationNumber() != null) {
-                organizations.add(entity.getOrganizationNumber());
-            }
-        });
+
+        organizations =  getAuthorizedOrganisations(ssn);
 
         return organizations;
     }
-
 
     String getReporteesUrl(String ssn) {
         return altinnServiceUrl + String.format(servicePath, ssn, altinnServiceCode, altinnServiceEdition);
     }
 
-    protected void cacheEntries(String ssn) throws AuthorizationServiceUnavailable {
+    /**
+     * Processes the entities returned by the authorization service and registers user and organization names in the
+     * entity name service.
+     *
+     * @param ssn the user identification
+     * @return a list of organisation numbers that the user is allowed to
+     * @throws AuthorizationServiceException
+     */
+    protected List<String> getAuthorizedOrganisations(String ssn) throws AuthorizationServiceException {
+        List<String> organisations = new ArrayList<>();
+
         List<Entity> entries = getAuthorizedEntities(ssn);
-        if (entries == null) {
-            entries = new ArrayList<>();
-        }
 
         String name = "unknown";
         for (Entity entry : entries) {
 
             if (entry.getSocialSecurityNumber() != null) {
-                name = entry.getName();
+                if (entry.getSocialSecurityNumber().equals(ssn)) {
+                    name = entry.getName();
+                }
             } else {
-                organizationEntities.put(entry.getOrganizationNumber(),entry);
-                NameEntityService.SINGLETON.setOrganizationName(entry.getOrganizationNumber(), entry.getName());
+                organisations.add(entry.getOrganizationNumber());
+                entityNameService.setOrganizationName(entry.getOrganizationNumber(), entry.getName());
             }
         }
 
-        NameEntityService.SINGLETON.setUserName(ssn, name);
-        userEntities.put(ssn, entries);
+        entityNameService.setUserName(ssn, name);
 
+        return organisations;
     }
 
-
-    public List<Entity> getAuthorizedEntities(String ssn) throws AuthorizationServiceUnavailable {
+    /**
+     * Calls the authorization service.
+     *
+     * @param ssn the user identifier
+     * @return The response from the authorization service. A set of entities where each entity represents an organization or a person.
+     * @throws AuthorizationServiceException
+     */
+    public List<Entity> getAuthorizedEntities(String ssn) throws AuthorizationServiceException {
 
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
@@ -170,17 +176,17 @@ public class AuthorizationService {
                 return response.getBody();
             }
 
-            throw new AuthorizationServiceUnavailable(response.getStatusCode());
+            throw new AuthorizationServiceException(response.getStatusCode());
 
         } catch (HttpClientErrorException e) {
-            logger.warn("Authorization request for {} failed: {}", ssn, e.getLocalizedMessage(),e);
+            String message = String.format("Authorization request failed: %s", e.getLocalizedMessage());
+            logger.warn(message, e);
+            throw new AuthorizationServiceException(message);
         }
-
-        return null;
     }
 
     /**
-     * Configures ClientHttpRequestFactory to accept two way https connections.
+     * Configures ClientHttpRequestFactory to provide client certificate for two way https connection.
      *
      * @return the ClientHttpRequestFactory with configured SSLContext
      * @throws KeyStoreException
@@ -191,21 +197,23 @@ public class AuthorizationService {
      * @throws KeyManagementException
      */
 
-    static ClientHttpRequestFactory getRequestFactory() throws KeyStoreException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, KeyManagementException {
+    ClientHttpRequestFactory getRequestFactory() throws KeyStoreException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, KeyManagementException {
 
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        logger.debug("open ssl certificate file {}", clientSSLCertificateKeystoreLocation);
 
-        keyStore.load(new FileInputStream(new File(keystoreLocation)),
-                keystorePassword.toCharArray());
+        keyStore.load(new FileInputStream(new File(clientSSLCertificateKeystoreLocation)),
+                clientSSLCertificateKeystorePassword.toCharArray());
 
         TrustStrategy acceptingTrustStrategy = (chain, authType) -> true;
 
         SSLContext sslContext = SSLContexts.custom()
-                .loadKeyMaterial(keyStore, keystorePassword.toCharArray())
+                .loadKeyMaterial(keyStore, clientSSLCertificateKeystorePassword.toCharArray())
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
 
-        logger.debug("TLS_PROTOCOLS=", Arrays.asList(TLS_PROTOCOLS).toString());
+        logger.debug("TLS_PROTOCOLS = {}", Arrays.toString(TLS_PROTOCOLS));
+
         SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(
                 sslContext,
                 TLS_PROTOCOLS,

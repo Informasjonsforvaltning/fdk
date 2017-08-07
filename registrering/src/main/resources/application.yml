@@ -1,17 +1,65 @@
+data:
+  elasticsearch:
+    clusterNodes: localhost:9300
+application:
+  catalogUriPrefix: http://localhost:8099
+  apikey: ${reg-apikey:12345-ABCDE-67890-FGHIJ}
+  altinnServiceUrl: ${reg-altinnServiceUrl:http://localhost:8077}
+  altinnServiceCode: ${reg-altinnServiceCode:4814}
+  altinnServiceEdition: ${reg-altinnServiceEdition:3}
+  clientSSLCertificateKeystoreLocation: ${reg-clientSSLCertificateKeystoreLocation:registrering/dummy-client-SSL-cert.p12}
+  clientSSLCertificateKeystorePassword: ${reg-clientSSLCertificateKeystorePassword:password}
 spring:
-  profiles: develop
-  data:
-    elasticsearch:
-      cluster-nodes: localhost:9300
-  application:
-    catalogUriPrefix: http://localhost:8099
-    altinnServiceUrl: https://tt02.altinn.no/
-    altinnServiceCode: 4814
-    altinnServiceEdition: 3
+  hateoas:
+    use-hal-as-default-json-media-type: false
+
+---
+spring:
+  profiles: prod
+application:
+  altinnServiceUrl: http://localhost:8077
 server:
   port: 8099
-management:
-  port: 8999
+  tomcat:
+    accesslog:
+      enabled: true
+    basedir: /tmp/fdk
+  ssl:
+    key-store: file:conf/idporten/ssldevelop.p12
+    key-store-password: ${ssl-key-password}
+    key-store-type: PKCS12
+    key-alias: tomcat
+saml:
+  sso:
+    default-success-url: /home
+    metadata-generator:
+      entity-id: difi.brreg.datakatalog.registrering.dev
+    logout:
+      default-target-url: /
+      single-logout-url: registrering/saml/SingleLogout
+    idp:
+      metadata-location: file:conf/idporten/idporten-ver2.difi.no-v3_signed_meta.xml
+    metadata-manager:
+      refresh-check-interval: -1
+    key-manager:
+      public-key-pem-location: file:conf/idporten/difi.brreg.datakatalog.registrering.dev.xml
+      store-location: file:conf/idporten/difi.brreg.datakatalog.registrering.dev.jks
+      store-pass: ${ip-store-password}
+      default-key: difi.brreg.datakatalog.registrering.dev
+      key-passwords:
+        difi.brreg.datakatalog.registrering.dev: ${ip-key-password}
+    sso-processing-url: registrering/saml/SSO
+
+---
+spring:
+  profiles: develop
+  server:
+    port: 8099
+  management:
+    port: 8999
+application:
+  altinnServiceUrl: http://localhost:8077
+
 ---
 spring:
   profiles: unit-integration
@@ -20,8 +68,7 @@ spring:
       properties:
         http:
           enabled: true
-  application:
-      catalogUriPrefix: http://localhost:8099
+
 ---
 spring:
   profiles: develop_embedded
@@ -47,14 +94,5 @@ spring:
   profiles: docker
   data:
     elasticsearch:
-      cluster-nodes: elasticsearch:9300
-  application:
-    catalogUriPrefix: http://localhost:8099
-server:
-  port: 8099
-management:
-  port: 8999
----
-spring:
-  hateoas:
-    use-hal-as-default-json-media-type: false
+      clusterNodes: elasticsearch:9300
+

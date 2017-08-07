@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.HttpURLConnection;
@@ -42,11 +43,23 @@ public class TestAdminController {
     @Value("${application.elasticsearchCluster}")
     private String elasticSearchCluster;
 
-    @Value("${application.fusekiHost:http://localhost:3030}")
-    private String fusekiHost = "http://localhost:3030";
+    @Value("${application.fusekiHost}")
+    private String fusekiHost;
 
-    @Value("${application.harvesterHost:http://localhost:8081}")
-    private String harvesterHost = "http://localhost:8081";
+    @Value("${application.harvesterHost}")
+    private String harvesterHost;
+
+
+    @PostConstruct
+    void validate(){
+        assert elasticSearchHost != null;
+        assert elasticSearchPort > 0;
+        assert elasticSearchCluster != null;
+        assert fusekiHost != null;
+        assert harvesterHost != null;
+
+    }
+
 
 
     /**

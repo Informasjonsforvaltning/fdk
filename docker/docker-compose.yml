@@ -1,96 +1,43 @@
 version: "2"
 
 services:
-  portal:
-    image: "dcatno/webapp:latest"
-    ports:
-      - "8080:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.queryService=http://query:8080
-     - application.queryServiceExternal=http://localhost:8083
-     - application.fusekiService=http://fuseki:8080/fuseki
+  search:
+    image: dcatno/search:latest
     links:
-      - query
+      - search-api
       - fuseki
     networks:
       platform:
 
-  query:
-    image: "dcatno/query:latest"
-    ports:
-      - "8083:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
+  search-api:
+    image: dcatno/search-api:latest
     links:
       - elasticsearch
     networks:
       platform:
 
   gdoc:
-    image: "dcatno/gdoc:latest"
-    ports:
-      - "8084:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-    networks:
-      platform:
-
-  validator:
-    image: "dcatno/validator:latest"
-    ports:
-      - "8086:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
+    image: dcatno/gdoc:latest
     networks:
       platform:
 
   fuseki:
-    image: "dcatno/fuseki:latest"
-    volumes:
-      - ./data/fuseki:/etc/fuseki/databases/
-    ports:
-     - "3030:8080"
+    image: dcatno/fuseki:latest
     networks:
       platform:
 
-  harvester:
-    image: "dcatno/harvester:latest"
-    ports:
-     - "8081:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=elasticsearch
-     - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
-    volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
+  harvester-api:
+    image: dcatno/harvester-api:latest
     networks:
       platform:
       logging:
     links:
      - fuseki
-     - elasticsearch:es
-     - registrering
+     - elasticsearch
+     - registration-api
 
-  admin:
-    image: "dcatno/admin-webapp:latest"
-    ports:
-     - "8082:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.harvesterUrl=http://harvester:8080
-     - application.kibanaLinkFirstHalf="/app/kibana/#/dashboard/dashboard_template?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Crawler-Operations,panelIndex:1,row:3,size_x:9,size_y:3,type:visualization),(col:1,id:Crawler-Results,panelIndex:2,row:3,size_x:3,size_y:3,type:visualization),(col:1,id:Crawler-Metadata,panelIndex:4,row:1,size_x:12,size_y:2,type:visualization),(col:7,id:Validation-RuleId,panelIndex:6,row:6,size_x:6,size_y:4,type:visualization),(col:1,columns:!(ruleSeverity,event,cause,ruleId),id:validation_ruleId,panelIndex:7,row:6,size_x:6,size_y:4,sort:!(timestamp,desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:'%22"
-     - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
-    volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
+  harvester:
+    image: dcatno/harvester:latest
     networks:
       platform:
       logging:
@@ -98,7 +45,7 @@ services:
      - elasticsearch
     links:
      - fuseki
-     - harvester
+     - harvester-api
 
  # elasticsearch5:
  #   image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
@@ -117,85 +64,58 @@ services:
  #         - log_es
 
   elasticsearch:
-    image: "dcatno/elasticsearch:latest"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+    image: elasticsearch:2.4.1
     networks:
       platform:
-        aliases:
-          - es
       logging:
-        aliases:
-          - log_es
 
   test:
-    image: "dcatno/test:latest"
-    ports:
-      - "8085:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
-     - application.elasticsearchCluster=elasticsearch
-     - application.fusekiHost=http://fuseki:8080
-     - application.harvesterHost=http://harvester:8080
+    image: dcatno/test:latest
     links:
       - elasticsearch
       - fuseki
-      - harvester
+      - harvester-api
     networks:
       platform:
 
-  registrering:
-    image: "dcatno/registrering:latest"
-    ports:
-      - "8099:8080"
-    environment:
-     - JAVA_OPTS="-Dspring.profiles.active=docker"
-     - spring.application.catalogUriPrefix=http://localhost:8099
-    volumes:
-     - ../../fdk-properties:/git/fdk-properties/:rw
+  registration-api:
+    image: dcatno/registration-api:latest
     links:
       - elasticsearch
+      - search-api
     networks:
       platform:
 
-  reg-gui:
-    image: "dcatno/reg-gui:latest"
-    ports:
-      - "4200:4200"
-    environment:
-     - REG_API_URL=http://localhost:8099
-     - QUERY_SERVICE_URL=http://localhost:8083
-     - VALIDATOR_URL=http://localhost:8086
+  registration:
+    image: dcatno/registration:latest
     links:
-      - elasticsearch
+      - registration-api
+      - validator
     networks:
       platform:
 
-  #logstash:
-  #  image: "dcatno/logstash:${TAG}"
-  #  entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-  #  volumes:
-  #    - ./logs:/usr/local/tomcat/logs:rw
-  #  depends_on:
-  #    - elasticsearch
-  #  networks:
-  #    logging:
-
-  kibana:
-    image: "dcatno/kibana:latest"
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    #volumes:
-    #      - ./data/kibana/config/:/opt/kibana/config/
-    depends_on:
-      - elasticsearch
+  validator:
+    image: dcatno/validator:latest
     networks:
-      logging:
+      platform:
+
+
+# logstash:
+#   image: dcatno/logstash:latest
+#   entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
+
+#  kibana:
+#    image: kibana:2.4.1
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
 
 networks:
   platform:

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +46,11 @@ public class PortalRestController {
 
     @Value("${application.fusekiService}")
     private String fusekiService;
+
+    @PostConstruct
+    void validate(){
+        assert fusekiService != null;
+    }
 
     protected String getFusekiService() {
         return fusekiService;

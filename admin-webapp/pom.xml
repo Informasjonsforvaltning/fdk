@@ -112,15 +112,16 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-			</plugin>
 
 			<!-- Use -DskipDockerBuild to skip this rule -->
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<imageName>
+						${docker.registry}${docker.image.prefix}/harvester:latest
+					</imageName>
+				</configuration>
 			</plugin>
 
 			<plugin>

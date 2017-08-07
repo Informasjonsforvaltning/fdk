@@ -1,8 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.AuthorizationService;
-import no.dcat.authorization.NameEntityService;
-import no.dcat.authorization.UserNotAuthorizedException;
+import no.dcat.authorization.EntityNameService;
 import no.dcat.config.FdkSamlUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.Catalog;
@@ -11,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,17 +17,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
@@ -40,6 +32,9 @@ public class LoginController {
 
     private CatalogController catalogController;
     private SpringSecurityContextBean springSecurityContextBean;
+
+    @Autowired
+    EntityNameService entityNameService;
 
     @Autowired
     public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean) {
@@ -57,7 +52,7 @@ public class LoginController {
 
         if (authentication.getPrincipal() instanceof FdkSamlUserDetails) {
             FdkSamlUserDetails userDetails = (FdkSamlUserDetails) authentication.getPrincipal();
-            user.setName(NameEntityService.SINGLETON.getUserName(userDetails.getUid()));
+            user.setName(entityNameService.getUserName(userDetails.getUid()));
         } else {
             user.setName(authentication.getName());
         }
@@ -85,7 +80,7 @@ public class LoginController {
 
     @CrossOrigin
     @RequestMapping(value = "/loginerror", method = GET)
-    String getLoginError() throws UserNotAuthorizedException{
+    String getLoginError() {
         logger.debug("login error");
 
         Authentication authentication = springSecurityContextBean.getAuthentication();
@@ -94,10 +89,9 @@ public class LoginController {
 
         if (authentication.getPrincipal() instanceof FdkSamlUserDetails) {
             FdkSamlUserDetails userDetails = (FdkSamlUserDetails) authentication.getPrincipal();
-            user.setName(NameEntityService.SINGLETON.getUserName(userDetails.getUid()));
+            user.setName(entityNameService.getUserName(userDetails.getUid()));
         } else {
             user.setName(authentication.getName());
-            throw new UserNotAuthorizedException("12345678");
         }
 
         //temporary code below, to check that correct information about non-authorisation can be detected

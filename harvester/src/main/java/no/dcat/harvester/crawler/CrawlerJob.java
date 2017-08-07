@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
-
+    
     private List<CrawlerResultHandler> handlers;
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;

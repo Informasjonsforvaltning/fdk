@@ -59,12 +59,6 @@
 
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>datastore</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>no.dcat</groupId>
             <artifactId>harvester</artifactId>
             <scope>test</scope>
         </dependency>
