@@ -120,10 +120,13 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                     .antMatchers("/*.woff").permitAll()
                     .antMatchers("/*.ttf").permitAll()
                     .antMatchers("/assets/**").permitAll()
+                    .antMatchers("/loggetut").permitAll()
                     .antMatchers("/loginerror").permitAll()
                     .anyRequest().authenticated()
                     .and()
-
+                .authorizeRequests()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
                    // .loginPage("/login")
                     .permitAll()
@@ -135,8 +138,10 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                     .logoutUrl("/logout")
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
-                    .permitAll();
-
+                    .permitAll()
+                    .and()
+                .exceptionHandling()
+                    .accessDeniedPage("/loginerror");
         }
 
     }
