@@ -29,7 +29,7 @@ public class CommonSteps extends AbstractSpringCucumberTest {
 
     @And("^webservice is running$")
     public void webservice_is_running() throws Throwable {
-        assertThat(restTemplate.getForObject("/", String.class), containsString("/catalogs{?page,size,sort}"));
+        assertThat(restTemplate.getForObject("/catalogs", String.class), containsString("/catalogs"));
     }
 
 
@@ -37,7 +37,9 @@ public class CommonSteps extends AbstractSpringCucumberTest {
     public void a_catalog_exists() throws Throwable {
 
         Catalog catalog = new Catalog();
-        String id = "974760673";
+
+        String id=getCatalogId();
+
         catalog.setId(id);
 
         Map<String, String> description = new HashMap<>();
@@ -50,7 +52,7 @@ public class CommonSteps extends AbstractSpringCucumberTest {
 
         Catalog expectedCatalog = new Catalog();
         expectedCatalog.setId(id);
-        expectedCatalog.setUri("http://localhost:8099/catalogs/974760673");
+        expectedCatalog.setUri("http://localhost:8099/catalogs/910244132");
         expectedCatalog.setDescription(description);
         expectedCatalog.setTitle(title);
         Publisher publisher = new Publisher();
@@ -58,7 +60,7 @@ public class CommonSteps extends AbstractSpringCucumberTest {
         publisher.setUri("http://data.brreg.no/enhetsregisteret/enhet/" + id + ".json");
         publisher.setName("REGISTERENHETEN I BRØNNØYSUND");
         expectedCatalog.setPublisher(publisher);
-        Catalog result = restTemplate.withBasicAuth("mgs", "123").postForObject("/catalogs/", catalog, Catalog.class);
+        Catalog result = restTemplate.postForObject("/catalogs/", catalog, Catalog.class);
 
         assertThat(result.getId(), is(notNullValue()));
 
@@ -77,14 +79,14 @@ public class CommonSteps extends AbstractSpringCucumberTest {
         Map languageTitle = new HashMap();
         languageTitle.put("nb","Test-tittel");
         dataset.setTitle(languageTitle);
-        dataset.setCatalog("974760673");
+        dataset.setCatalog(getCatalogId());
 
-        Dataset result = restTemplate.withBasicAuth("bjg", "123")
-                .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
+        Dataset result = restTemplate
+                .postForObject("/catalogs/"+getCatalogId()+"/datasets/", dataset, Dataset.class);
 
-        String datasetUri = "/catalogs/974760673/datasets/" + result.getId();
+        String datasetUri = "/catalogs/"+getCatalogId()+"/datasets/" + result.getId();
 
-        restTemplate.withBasicAuth("bjg", "123").delete(datasetUri);
+        restTemplate.delete(datasetUri);
     }
 
 

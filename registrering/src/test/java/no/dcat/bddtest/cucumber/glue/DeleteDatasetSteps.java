@@ -23,7 +23,7 @@ public class DeleteDatasetSteps extends AbstractSpringCucumberTest {
         Map languageTitle = new HashMap();
         languageTitle.put("nb","Test-tittel");
         dataset.setTitle(languageTitle);
-        dataset.setCatalog("974760673");
+        dataset.setCatalog(getCatalogId());
 
         Dataset result = restTemplate.withBasicAuth("bjg", "123")
                 .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);

@@ -11,6 +11,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import net.minidev.json.JSONArray;
 import no.dcat.model.Dataset;
+import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
@@ -36,10 +39,12 @@ import static org.junit.Assert.assertThat;
  */
 @ActiveProfiles(value = "unit-integration")
 public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
+
+
     @Given("^catalog contains the follwing datasets \\(title\\):$")
     public void catalog_contains_the_follwing_datasets_title(List<String> datasetTitles) throws Throwable {
 
-        String catalogId = "974760673";
+        String catalogId = getCatalogId();
         int did = 1;
 
         for(String title : datasetTitles) {
@@ -52,7 +57,7 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
 
             did++;
 
-            Dataset result = restTemplate.withBasicAuth("bjg", "123")
+            Dataset result = restTemplate
                     .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
 
             assertThat(result.getTitle().get("nb"), is(equalTo(title)));
@@ -72,7 +77,7 @@ public class ListOfDatasetsSteps extends AbstractSpringCucumberTest {
         HttpEntity<String> getRequest = new HttpEntity<String>(headers);
 
         // this returns links content and page information
-        ResponseEntity<String> re = restTemplate.getForEntity("/catalogs/974760673/datasets", String.class);
+        ResponseEntity<String> re = restTemplate.getForEntity("/catalogs/" + getCatalogId() + "/datasets", String.class);
         assertThat(re.getStatusCode(), is(HttpStatus.OK));
 
         JSONArray datasets = JsonPath.read(re.getBody(), "$.content");
