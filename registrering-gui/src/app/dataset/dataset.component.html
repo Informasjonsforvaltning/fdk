@@ -33,8 +33,7 @@
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Øvrige felter</div>
     <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body dataset-languages">
-      <div class="panel fdk-panel">
-          <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
+          <div *ngIf="datasetForm.controls['checkboxArray']">
             <label for="languages" class="control-label">Datasettets språk:</label>
             <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
               <label><!-- 416 -->
@@ -54,6 +53,7 @@
             </div>
 <br /> <br />
             <div class="row">
+              <div class="col-md-6">
               <temporals
                 title="Tidsperioder"
                 [datasetForm]="datasetForm"
@@ -61,8 +61,10 @@
                 [temporals]="dataset.temporals"
               ></temporals>
             </div>
+            </div>
 <br /><br />
             <div class="row">
+              <div class="col-md-6">
               <distributions
                   [datasetForm]="datasetForm"
                   [distributionsFormArray]="datasetForm.controls.samples"
@@ -71,10 +73,10 @@
               >
               </distributions>
             </div>
+            </div>
 
         </div>
     </div>
-  </div>
 
     <div class="panel fdk-panel">
         <div class="fdk-panel-heading">
