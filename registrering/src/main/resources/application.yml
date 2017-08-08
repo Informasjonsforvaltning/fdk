@@ -71,7 +71,8 @@ spring:
       properties:
         http:
           enabled: true
-
+application:
+  altinnServiceUrl: http://localhost:8077
 ---
 spring:
   profiles: develop_embedded
