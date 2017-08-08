@@ -17,6 +17,6 @@ while : ; do
 
     # Else sleep and loop
     echo "Waiting for docker"
-    sleep 1
+    sleep 5
 
 done

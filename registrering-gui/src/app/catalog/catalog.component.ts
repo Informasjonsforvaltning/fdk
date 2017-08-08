@@ -32,10 +32,26 @@ export class CatalogComponent implements OnInit {
         this.language = 'nb';
         // snapshot alternative
         let id = this.route.snapshot.params['cat_id'];
-        this.service.get(id).then((catalog: Catalog) => {this.catalog = catalog});
-        this.datasetService.getAll(id).then((datasets: Dataset[]) => this.datasets = datasets);
+        this.service.get(id).then((catalog: Catalog) => {
+          if(!catalog.description || !catalog.description.nb) {
+            catalog.description = {nb: ""}
+          }
+          if(!catalog.title || !catalog.title.nb) {
+            catalog.title = {nb: ""}
+          }
+          if(!catalog.publisher) {
+            catalog.publisher = {name: "", uri: "", id: ""}
+          }
+          this.catalog = catalog
+        });
+        this.getAllDatasets();
     }
-
+    getAllDatasets() {
+      let id = this.route.snapshot.params['cat_id'];
+      this.datasetService.getAll(id).then((datasets: Dataset[]) => {
+        this.datasets = datasets.sort(function(a,b) {return (a.title['nb'] > b.title['nb']) ? 1 : ((b.title['nb'] > a.title['nb']) ? -1 : 0);} );
+      });
+    }
     save(): void {
         this.service.save(this.catalog)
             .then(() => {
@@ -47,6 +63,14 @@ export class CatalogComponent implements OnInit {
 
     selectDataset(catalog, dataset) {
         this.router.navigate(['/catalogs', catalog.id, 'datasets', dataset.id]);
+    }
+
+    deleteDataset(catalog, dataset): void {
+        this.datasetService.delete(catalog.id, dataset)
+          .then(() => {
+            this.getAllDatasets();
+            console.log('deleted!');
+          })
     }
 
     formatDate(dateToFormat: Date): Date {

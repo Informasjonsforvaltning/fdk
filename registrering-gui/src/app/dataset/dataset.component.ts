@@ -124,7 +124,8 @@ export class DatasetComponent implements OnInit {
       dataset.languages = dataset.languages || [];
       dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);
-      setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
+      this.datasetSavingEnabled = false;
+      setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay+2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
           .subscribe(dataset => {
 

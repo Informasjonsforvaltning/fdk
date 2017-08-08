@@ -36,7 +36,7 @@ export class CatalogService {
       this.headers.append("Authorization", "Basic " + authorization);
 
     return this.http
-        .get(this.catalogsUrl, {headers: this.headers})
+        .get(this.catalogsUrl + '?page=0&size=1000', {headers: this.headers})
         .toPromise()
         .then(response => response.json().content as Catalog[])
         .catch(this.handleError);

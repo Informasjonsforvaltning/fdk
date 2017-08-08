@@ -2,7 +2,7 @@
 set -e
 
 cd registrering-gui
-npm install
+npm install --no-progress
 npm run-script ng e2e
 cd ..
 

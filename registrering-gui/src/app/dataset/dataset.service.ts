@@ -37,7 +37,7 @@ export class DatasetService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(catId: String): Promise<Dataset[]> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}`;
+    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
     return this.http.get(datasetUrl)
       .toPromise()
       .then(response => response.json().content as Dataset[])
