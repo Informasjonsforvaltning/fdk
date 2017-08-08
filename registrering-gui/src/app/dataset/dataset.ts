@@ -1,6 +1,7 @@
 import {Contact} from "./contact/contact";
 import {Publisher} from "./publisher";
 import {Distribution} from "./distribution/distribution";
+import {PeriodOfTime} from "./temporal/periodoftime";
 import {Skoscode} from './skoscode';
 export interface Dataset {
   id: string;
@@ -50,6 +51,8 @@ export interface Dataset {
   issued?: string;
 
   languages?: Skoscode[];
+
+  temporals?: PeriodOfTime[];
 
   _lastModified: string;
 }

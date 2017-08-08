@@ -329,4 +329,23 @@ rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]::after {
 rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]:hover::after {
     color:#000
 }
-
+.temporal-form my-date-picker {
+	display: block;
+	float:left;
+	width:150px;
+}
+label[for="endDate"], label[for="startDate"] {
+	padding: 6px 0 0 15px;
+	width: 75px;
+	float:left;
+}
+.delete-temporal-wrapper {
+	padding: 6px 10px;
+	display: inline-block;
+}
+.delete-temporal-wrapper a {
+	color:red;
+}
+.delete-temporal-wrapper a:hover {
+	text-decoration: none;
+}

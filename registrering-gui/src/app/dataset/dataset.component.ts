@@ -16,6 +16,7 @@ import {DistributionFormComponent} from "./distribution/distribution.component";
 import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
 import {IMyDpOptions} from 'mydatepicker';
+import {TemporalListComponent} from "./temporal/temporal-list.component";
 
 @Component({
   selector: 'app-dataset',
@@ -121,7 +122,7 @@ export class DatasetComponent implements OnInit {
 
       dataset.samples = dataset.samples || [];
       dataset.languages = dataset.languages || [];
-
+      dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);
       this.datasetSavingEnabled = false;
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay+2000);
@@ -134,6 +135,7 @@ export class DatasetComponent implements OnInit {
                       if((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
                   });
               });
+                dataset.languages = null;
 
             if(dataset.distributions) {
               dataset.distributions.forEach((distribution) => {
@@ -152,6 +154,29 @@ export class DatasetComponent implements OnInit {
             }
             if(dataset.issued && dataset.issued.formatted) {
               dataset.issued = dataset.issued.formatted.replace(/\./g,"-");
+            }
+            if(dataset.temporals) {
+              dataset.temporals.forEach(temporal => {
+                if(temporal.startDate && temporal.startDate.formatted) {
+                  var date = temporal.startDate.jsdate;
+                  //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) + '-' +  ("0" + date.getDay()).slice(-2);
+                  temporal.startDate = temporal.startDate.epoc;
+                } else if(temporal.startDate === null) {
+                  delete temporal.startDate;
+                }
+                if(temporal.endDate && temporal.endDate.formatted) {
+                  var date = temporal.endDate.jsdate;
+                  //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) +  '-' + ("0" + date.getDay()).slice(-2);
+                  temporal.endDate = temporal.endDate.epoc;
+                } else if(temporal.endDate === null) {
+                  delete temporal.endDate;
+                }
+              });
+              if(dataset.temporals.length === 0) {
+                dataset.temporals = undefined;
+              }
+            } else {
+              dataset.temporals = [];
             }
             this.dataset = _.merge(this.dataset, dataset);
 
@@ -259,6 +284,7 @@ export class DatasetComponent implements OnInit {
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([]),
+          temporals: this.formBuilder.array([]),
           issued:[this.getDateObjectFromUnixTimestamp(data.issued)],
           modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
           samples: this.formBuilder.array([]),
