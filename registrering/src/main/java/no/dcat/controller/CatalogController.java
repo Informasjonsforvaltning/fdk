@@ -1,6 +1,5 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.Entity;
 import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
@@ -39,7 +38,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-//@RepositoryRestController
 @RestController
 @RequestMapping(value = "/catalogs")
 public class CatalogController {

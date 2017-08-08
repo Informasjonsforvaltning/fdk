@@ -94,6 +94,11 @@ services:
     networks:
       platform:
 
+  registration-auth:
+    image: dcatno/registration-auth:latest
+    networks:
+      platform:
+
   validator:
     image: dcatno/validator:latest
     networks:

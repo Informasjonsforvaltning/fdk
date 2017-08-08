@@ -18,16 +18,22 @@ public class CatalogPermissionEvaluator implements PermissionEvaluator {
     private static Logger logger = LoggerFactory.getLogger(CatalogPermissionEvaluator.class);
 
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
+        boolean authorized = false;
 
-        logger.debug("hasPermission 1");
         for (GrantedAuthority authority : authentication.getAuthorities()) {
             if (authority.getAuthority().equals(targetDomainObject)) {
-                logger.info("User {} hasPermission to {}", authentication.getName(), targetDomainObject);
-                return true;
+                authorized = true;
+                break;
             }
         }
 
-        return false;
+        if (authorized) {
+            logger.info("User {} hasPermission to {}", authentication.getName(), targetDomainObject);
+            return true;
+        } else {
+            logger.info("User {} has NOT permission to {}", authentication.getName(), targetDomainObject);
+            return false;
+        }
     }
 
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
