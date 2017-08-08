@@ -24,16 +24,14 @@ import {SelectModule} from "ng-select";
 
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
-import {TemporalFormComponent} from "./dataset/temporal/temporal.component";
 import {TemporalListComponent} from "./dataset/temporal/temporal-list.component";
+import {TemporalFormComponent} from "./dataset/temporal/temporal.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
-
-
 
 
 @NgModule({
@@ -43,8 +41,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         DatasetComponent,
         StartComponent,
         ConfirmComponent,
-        DistributionFormComponent,
         DistributionListComponent,
+        DistributionFormComponent,
         TemporalFormComponent,
         TemporalListComponent,
         ContactComponent,
@@ -64,7 +62,7 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         RouterModule.forRoot(routes),
         BootstrapModalModule,
         RlTagInputModule,
-	MyDatePickerModule
+	       MyDatePickerModule
     ],
     entryComponents: [
         ConfirmComponent

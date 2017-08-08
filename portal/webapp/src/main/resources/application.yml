@@ -1,8 +1,8 @@
 spring:
   profiles: docker
 application:
-  queryService: http://query:8080
-  queryServiceExternal: http://localhost:8081
+  queryService: http://search-api:8080
+  queryServiceExternal: http://localhost:8083
   fusekiService: http://fuseki:8080/fuseki
 ---
 spring:

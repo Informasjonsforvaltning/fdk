@@ -12,30 +12,30 @@
 	<description>Felles datakatalog skal gi samlet oversikt over data som offentlige virksomheter besitter</description>
 
 	<parent>
-		<groupId>no.brreg.felles</groupId>
-		<artifactId>br-maven-main-msn</artifactId>
-		<version>1.3.0</version>
-		<relativePath>br-maven-main-msn</relativePath>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<repositories>
-		<repository>
-			<id>Felles datakatalog snapshot</id>
-			<name>Felles datakatalog snapshot</name>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>
-		</repository>
-	</repositories>
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<id>Felles datakatalog snapshot</id>-->
+			<!--<name>Felles datakatalog snapshot</name>-->
+			<!--<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
-	<distributionManagement>
-		<repository>
-			<id>Felles datakatalog release</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-release/</url>
-		</repository>
-		<snapshotRepository>
-			<id>Felles datakatalog snapshot</id>
-			<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<!--<distributionManagement>-->
+		<!--<repository>-->
+			<!--<id>Felles datakatalog release</id>-->
+			<!--<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-release/</url>-->
+		<!--</repository>-->
+		<!--<snapshotRepository>-->
+			<!--<id>Felles datakatalog snapshot</id>-->
+			<!--<url>https://nexus.brreg.no/content/repositories/Felles_datakatalog-snapshot/</url>-->
+		<!--</snapshotRepository>-->
+	<!--</distributionManagement>-->
 
 	<scm>
 		<url>https://github.com/Altinn/fdk</url>
@@ -67,6 +67,7 @@
 		<module>registrering-gui</module>
 		<module>br-maven-main-msn</module>
 		<module>bddtest</module>
+		<module>datastore</module>
 	</modules>
 
 	<properties>
@@ -77,6 +78,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
 		<elasticsearch.version>2.4.1</elasticsearch.version>
+		<exclude.cucumber.tests>nothing-to-exclude</exclude.cucumber.tests>
 	</properties>
 
 	<dependencyManagement>
@@ -327,6 +329,33 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>${exclude.cucumber.tests}</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.3.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.6.201602180812</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 
 		<pluginManagement>
@@ -444,6 +473,15 @@
 				</testResources>
 			</build>
 		</profile>
+		<profile>
+			<id>exclude-cucumber</id>
+			<properties>
+				<exclude.cucumber.tests>**/bddtest/**</exclude.cucumber.tests>
+			</properties>
+		</profile>
 	</profiles>
+
+
+
 
 </project>

@@ -16,8 +16,7 @@ import static org.junit.Assert.fail;
  * Created by bjg on 14.02.2017.
  */
 public class ThemeFilteringSteps extends CommonPage {
-    private final String portalHostname = "localhost"; // getEnv("fdk.hostname");
-    private int portalPort = 8080; //getEnvInt("fdk.port");
+
     private String themeLink;
 
     @Before
@@ -33,7 +32,7 @@ public class ThemeFilteringSteps extends CommonPage {
 
     @When("^I click on theme \"([^\"]*)\"$")
     public void i_click_on_theme(String theme) throws Throwable {
-        driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        driver.get(PORTAL_URL);
         WebElement themeElement = driver.findElement(By.id(theme));
         themeLink = themeElement.getAttribute("href");
         driver.get(themeLink);

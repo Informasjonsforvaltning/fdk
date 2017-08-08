@@ -13,116 +13,269 @@
     <groupId>no.dcat</groupId>
     <artifactId>registrering-gui</artifactId>
 
+    <profiles>
 
-  <build>
-    <!-- only filter dist -->
-    <resources>
-        <!-- copy docker file to target -->
-        <resource>
-          <directory>${project.basedir}</directory>
-          <targetPath>${project.build.directory}/docker</targetPath>
-          <filtering>false</filtering>
-          <includes>
-            <include>Dockerfile</include>
-            <include>start.js</include>
-            <include>dist/</include>
-            <include>server/</include>
-          </includes>
-          <excludes>
-            <exclude>e2e/</exclude>
-            <exclude>node_modules/</exclude>
-            <exclude>target/</exclude>
-            <exclude>src/</exclude>
-          </excludes>
-        </resource>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>Mac</family>
+                </os>
+            </activation>
+            <properties>
+                <platform>macos</platform>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>npm install (initialize)</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>install</argument>
+                                        <argument>--no-progress</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Required: The following will ensure `npm install` is called
+                                 before anything else during the 'Clean Lifecycle' -->
+                            <execution>
+                                <id>npm install (clean)</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>pre-clean</phase>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>install</argument>
+                                        <argument>--no-progress</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
 
-    </resources>
+
+                            <execution>
+                                <id>prepare-dist-npm-runtime-dependency</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <workingDirectory>target/</workingDirectory>
+                                    <arguments>
+                                        <arguments>run-script</arguments>
+                                        <arguments>build</arguments>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <platform>windows</platform>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <installDirectory>c:\program files</installDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>npm ng build</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run-script build</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>Linux</family>
+                </os>
+            </activation>
+            <properties>
+                <platform>linux</platform>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <!-- Required: The following will ensure `npm install` is called
+                before anything else during the 'Default Lifecycle' -->
+                            <execution>
+                                <id>npm install (initialize)</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Required: The following will ensure `npm install` is called
+                                 before anything else during the 'Clean Lifecycle' -->
+                            <execution>
+                                <id>npm install (clean)</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>pre-clean</phase>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
 
 
-    <plugins>
+                            <execution>
+                                <id>prepare-dist-npm-runtime-dependency</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <workingDirectory>target/</workingDirectory>
+                                    <arguments>
+                                        <arguments>run-script</arguments>
+                                        <arguments>build</arguments>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-      <!--plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <excludes>
-            <exclude>node_modules/</exclude>
-          </excludes>
-        </configuration>
-      </plugin-->
+    </profiles>
 
-        <!-- prevent maven from compiling -->
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>default-jar</id>
-              <phase>none</phase>
+    <build>
+        <!-- only filter dist -->
+        <resources>
+            <!-- copy docker file to target -->
+            <resource>
+                <directory>${project.basedir}</directory>
+                <targetPath>${project.build.directory}/docker</targetPath>
+                <filtering>false</filtering>
+                <includes>
+                    <include>Dockerfile</include>
+                    <include>start.js</include>
+                    <include>dist/</include>
+                    <include>server/</include>
+                </includes>
+                <excludes>
+                    <exclude>e2e/</exclude>
+                    <exclude>node_modules/</exclude>
+                    <exclude>target/</exclude>
+                    <exclude>src/</exclude>
+                </excludes>
+            </resource>
+
+        </resources>
+
+
+        <plugins>
+
+            <!--plugin>
+              <artifactId>maven-compiler-plugin</artifactId>
               <configuration>
-                <finalName>unwanted</finalName>
-                <classifier>unwanted</classifier>
+                <source>1.8</source>
+                <target>1.8</target>
+                <excludes>
+                  <exclude>node_modules/</exclude>
+                </excludes>
               </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <!-- prevent maven from installing -->
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>default-install</id>
-              <phase>none</phase>
-            </execution>
-          </executions>
-        </plugin>
+            </plugin-->
 
-      <!--plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <configuration>
-          <attach>false</attach>
-        </configuration>
-      </plugin-->
+            <!-- prevent maven from compiling -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>none</phase>
+                        <configuration>
+                            <finalName>unwanted</finalName>
+                            <classifier>unwanted</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- prevent maven from installing -->
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-install</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
 
-      <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <configuration>
-          <installDirectory>c:\program files</installDirectory>
-        </configuration>
-        <executions>
-          <execution>
-            <id>npm ng build</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <arguments>run-script build</arguments>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+            <!--plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <configuration>
+                <attach>false</attach>
+              </configuration>
+            </plugin-->
 
-      <!-- make sure docker-maven-plugin does not run from basedir -->
+            <!-- make sure docker-maven-plugin does not run from basedir -->
 
-      <plugin>
-        <groupId>com.spotify</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
 
-        <configuration>
-          <imageName>
-            dcatno/registration:latest
-          </imageName>
-          <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
-          <serverId>docker-hub</serverId>
-        </configuration>
+                <configuration>
+                    <imageName>
+                        dcatno/registration:latest
+                    </imageName>
+                    <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
+                    <serverId>docker-hub</serverId>
+                </configuration>
 
-      </plugin>
-    </plugins>
-  </build>
-
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

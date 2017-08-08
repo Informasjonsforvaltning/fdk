@@ -23,7 +23,7 @@ public class DeleteIndex {
 
     public void deleteIndex(String index) {
         try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
-            logger.trace("Deleting indexing {}", index);
+            logger.info("Deleting indexing {}", index);
             deleteIndexInElasticsearch(elasticsearch, index);
         } catch (Exception e) {
             logger.error("Exception occurred while deleting index: {}", e.getMessage());
@@ -35,7 +35,7 @@ public class DeleteIndex {
         try {
             elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
         } catch (IndexNotFoundException e) {
-            logger.info("Index not found.");
+            logger.info("Index not found: {}", index);
         }
     }
 }

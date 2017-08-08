@@ -127,15 +127,13 @@ export class DatasetComponent implements OnInit {
       setTimeout(()=>this.datasetSavingEnabled = true, this.saveDelay);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
           .subscribe(dataset => {
-            dataset.issued = "2017-05-16T11:52:25+00:00";
-            dataset.modified = "2017-05-16T11:52:25+00:00";
 
-            dataset.languages = [];
-            this.availableLanguages.forEach((language, index) => {
-              dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
-                if((index === checkboxIndex) && checkbox) dataset.languages.push(language);
+              this.dataset.languages = [];
+              dataset.checkboxArray.forEach((checkbox, checkboxIndex)=>{
+                  this.availableLanguages.forEach((language, index)=>{
+                      if((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
+                  });
               });
-            });
                 dataset.languages = null;
 
             if(dataset.distributions) {
@@ -176,9 +174,11 @@ export class DatasetComponent implements OnInit {
               if(dataset.temporals.length === 0) {
                 dataset.temporals = undefined;
               }
+            } else {
+              dataset.temporals = [];
             }
             this.dataset = _.merge(this.dataset, dataset);
-            this.dataset.languages = dataset.languages;
+
             this.cdr.detectChanges();
             var that = this;
             this.delay(()=>{
@@ -255,6 +255,9 @@ export class DatasetComponent implements OnInit {
   }
 
   private getDateObjectFromUnixTimestamp(timestamp:string) {
+    if (!timestamp) {
+        return null;
+    }
     let date = new Date(timestamp);
     return {
       date: {
@@ -280,11 +283,11 @@ export class DatasetComponent implements OnInit {
           publisher: [ data.publisher],
           contactPoints: this.formBuilder.array([]),
           distributions: this.formBuilder.array([]),
-          issued:[this.getDateObjectFromUnixTimestamp(data.issued || (new Date()).toString())],
-          modified: [this.getDateObjectFromUnixTimestamp(data.modified || (new Date()).toString())],
+          temporals: this.formBuilder.array([]),
+          issued:[this.getDateObjectFromUnixTimestamp(data.issued)],
+          modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
           samples: this.formBuilder.array([]),
-          checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)})),
-          temporals:this.formBuilder.array([])
+          checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)}))
         });
       return formGroup;
   }
