@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class AuthorizationServiceTest {
         aService.entityNameService = new EntityNameService();
         authorizationService = spy(aService);
 
-        ClassPathResource example = new ClassPathResource("data/exampleAuthorizationEntities.json");
+        ClassPathResource example = new ClassPathResource("exampleAuthorizationEntities.json");
         ObjectMapper mapper = new ObjectMapper();
         List<Entity> response = mapper.readValue(example.getInputStream(), new TypeReference<List<Entity>>(){});
 

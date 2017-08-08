@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +55,7 @@ public class AuthorizationController {
 
     public AuthorizationController() {
         try {
-            ClassPathResource testUsersResource = new ClassPathResource("data/testUsers.json");
+            ClassPathResource testUsersResource = new ClassPathResource("testUsers.json");
             ObjectMapper mapper = new ObjectMapper();
             List<TestUser> users = mapper.readValue(testUsersResource.getInputStream(), new TypeReference<List<TestUser>>() {
             });
