@@ -60,8 +60,6 @@ server:
     key-store-password: ${reg-ssl-key-password:changeit}
     key-store-type: PKCS12
     key-alias: tomcat
-management:
-  port: 8999
 application:
   altinnServiceUrl: http://localhost:8077
 

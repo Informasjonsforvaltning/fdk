@@ -50,7 +50,9 @@ public class CatalogControllerIT {
 
     @Test
     public void webserviceIsRunning() throws Exception {
-        assertThat(restTemplate.getForObject("/", String.class), containsString("/catalogs{?page,size,sort}"));
+        assertThat(restTemplate
+                .withBasicAuth("03096000854", "password")
+                .getForObject("/", String.class), containsString("/catalogs{?page,size,sort}"));
     }
 
     @Test
@@ -86,7 +88,7 @@ public class CatalogControllerIT {
         expectedCatalog.setPublisher(publisher);
 
         ResponseEntity<Catalog> response = restTemplate
-                .withBasicAuth("user", "password")
+                .withBasicAuth("03096000854", "password")
                 .exchange("/catalogs/", HttpMethod.POST, new HttpEntity<Catalog>(catalog), Catalog.class);
 
         assertThat(response, is(notNullValue()));
