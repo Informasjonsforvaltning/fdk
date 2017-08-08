@@ -19,9 +19,6 @@ install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-cache:
-  directories:
-  - $HOME/.m2
 
 jobs:
   include:
@@ -34,5 +31,5 @@ jobs:
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
     - stage: Tests
-      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
 
