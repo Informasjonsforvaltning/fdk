@@ -4,6 +4,7 @@ import no.dcat.model.Contact;
 import no.dcat.model.Dataset;
 import no.dcat.model.Distribution;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +17,7 @@ public class RegistrationFactory {
 
     private final DatasetIdGenerator datasetIdGenerator = new DatasetIdGenerator();
 
-    @Value("${spring.application.catalogUriPrefix}")
+    @Value("${application.catalogUriPrefix}")
     public void setCatalogUriPrefix(String uri) {
         catalogUriPrefix = uri;
     }

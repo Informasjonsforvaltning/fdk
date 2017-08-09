@@ -34,6 +34,7 @@ services:
     links:
      - fuseki
      - elasticsearch
+     - registration-api
 
   harvester:
     image: dcatno/harvester:latest
@@ -90,6 +91,11 @@ services:
     links:
       - registration-api
       - validator
+    networks:
+      platform:
+
+  registration-auth:
+    image: dcatno/registration-auth:latest
     networks:
       platform:
 
