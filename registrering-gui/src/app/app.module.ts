@@ -32,6 +32,7 @@ import {AccessRightsComponent} from "./dataset/accessRights/accessRights.compone
 import {InformationComponent} from "./dataset/information/information.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
+import {LogoutComponent} from "./logout/logout.component";
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         QualityComponent,
         AccessRightsComponent,
         InformationComponent,
+        LogoutComponent,
         SpatialComponent
     ],
     imports: [

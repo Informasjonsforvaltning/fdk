@@ -9,22 +9,12 @@
   <div class="fdk-header-menu-fullwidth">
     <div class="container">
 
-      <!-- Left column / Empty -->
-      <div class="col-sm-4 col-md-4">
-        <div class="alert-success" *ngIf="isAuthenticated()">
-          Pålogget som {{getUsername()}}
-          <button class="btn btn-primary" (click)="logout()">Logg ut</button>
+      <div class="col-sm-4 col-md-4" *ngIf="loggedInUser">
+        <div class="col-sm-8 col-md-8" >
+          Innlogget som {{getUsername()}}
         </div>
-
-
-        <div class="col-md-6" *ngIf="!isAuthenticated()">
-
-
-          <div class="form-group">
-            <button (click)="login()" class="btn btn-primary">Logg inn som bjg</button>
-          </div>
-          <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-
+        <div class="col-sm-4 col-md-4" >
+          <a class="btn btn-default fdk-label fdk-label-default" href="/logout">Logg ut</a>
         </div>
       </div>
 
