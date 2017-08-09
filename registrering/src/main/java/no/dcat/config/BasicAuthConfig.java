@@ -105,6 +105,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
 
                 .logout()
                     .logoutUrl("/logout")
+                    .logoutSuccessUrl("/loggetut")
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
                     .permitAll()
