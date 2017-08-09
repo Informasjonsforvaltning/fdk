@@ -31,19 +31,19 @@ public class DeleteDatasetAccesDeniedSteps extends AbstractSpringCucumberTest{
         Map languageTitle = new HashMap();
         languageTitle.put("nb","Test-tittel");
         dataset.setTitle(languageTitle);
-        dataset.setCatalog("974760673");
+        dataset.setCatalog(getCatalogId());
 
-        Dataset result = restTemplate.withBasicAuth("bjg", "123")
-                .postForObject("/catalogs/974760673/datasets/", dataset, Dataset.class);
-
+        String callUrl = "/catalogs/"+getCatalogId()+"/datasets/";
+        Dataset result = restTemplate
+                .postForObject(callUrl, dataset, Dataset.class);
 
         //Notice: no authorisation
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         HttpEntity<String> deleteRequest = new HttpEntity<String>(headers);
 
-        String datasetResUrl = "/catalogs/974760673/datasets/101";
-        response = restTemplate.exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
+        String datasetResUrl = callUrl + result.getId();
+        response = restTemplate.withBasicAuth("bjg", "123").exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
 
     }
 

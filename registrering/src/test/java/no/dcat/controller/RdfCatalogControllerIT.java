@@ -3,6 +3,7 @@ package no.dcat.controller;
 import no.dcat.RegisterApplication;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -30,17 +32,30 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  */
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = RegisterApplication.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class RdfCatalogControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
+    private TestRestTemplate unathorizedRestTemplate = new TestRestTemplate();
+
+    private HttpHeaders headers = new HttpHeaders();
+
+    @Before
+    public void setup() {
+        BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password");
+        restTemplate.getRestTemplate().getInterceptors().add(bai);
+
+        headers.add("Accept", "application/json");
+        headers.add("Content-Type", "application/json");
+    }
+
     @Test
     public void catalogExportsOK() throws Exception {
         //
         Catalog catalog = new Catalog();
-        String id = "974760673 ";
+        String id = "910244132";
         catalog.setId(id);
 
         Map<String, String> description = new HashMap<>();
@@ -51,17 +66,17 @@ public class RdfCatalogControllerIT {
         title.put("no", "test");
         catalog.setTitle(title);
 
-        Catalog result = restTemplate.withBasicAuth("mgs", "123").postForObject("/catalogs/", catalog, Catalog.class);
+        Catalog result = restTemplate.postForObject("/catalogs/", catalog, Catalog.class);
 
         if (result.getId() == null) {
             fail();
         }
 
-        Catalog resultget = restTemplate.withBasicAuth("mgs", "123").getForObject("/catalogs/" + catalog.getId(), Catalog.class);
+        Catalog resultget = restTemplate.getForObject("/catalogs/" + catalog.getId(), Catalog.class);
 
         String catalogUrl = "/catalogs/" + resultget.getId();
 
-        HttpHeaders headers = DatasetControllerIT.createHeaders("bjg","123");
+        HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", "text/turtle");
         HttpEntity<String> request2 = new HttpEntity<String>(headers);
 

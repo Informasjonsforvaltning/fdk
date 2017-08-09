@@ -1,5 +1,6 @@
 package no.dcat.bddtest.cucumber.glue;
 
+import cucumber.api.java.Before;
 import no.dcat.RegisterApplication;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.Ignore;
@@ -9,10 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.PostConstruct;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,20 @@ public abstract class AbstractSpringCucumberTest {
 
     @Autowired
     protected TestRestTemplate restTemplate;
+
+    protected HttpHeaders headers = new HttpHeaders();
+
+    @PostConstruct
+    public void setup() {
+        BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("01066800187", "password");
+        restTemplate.getRestTemplate().getInterceptors().add(bai);
+
+        headers.add("Accept", "application/json");
+    }
+
+    public String getCatalogId() {
+        return "910244132";
+    }
 
     /**
      * Helper method to set up http headers
