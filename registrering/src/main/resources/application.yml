@@ -1,6 +1,7 @@
 data:
   elasticsearch:
     clusterNodes: localhost:9300
+    clusterName: elasticsearch
 application:
   catalogUriPrefix: http://localhost:8099
   apikey: ${reg-apikey:12345-ABCDE-67890-FGHIJ}

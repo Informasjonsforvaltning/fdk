@@ -2,28 +2,30 @@ package no.dcat.controller;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.http.client.ClientProtocolException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -46,6 +48,8 @@ public class DatasetControllerIT {
     public void setup() {
         BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password");
         authorizedRestTemplate.getRestTemplate().getInterceptors().add(bai);
+
+        unathorizedRestTemplate.getRestTemplate().setUriTemplateHandler(authorizedRestTemplate.getRestTemplate().getUriTemplateHandler());
 
         headers.add("Accept", "application/json");
         headers.add("Content-Type", "application/json");
@@ -135,8 +139,16 @@ public class DatasetControllerIT {
         //Notice: no authorisation
         HttpEntity<Dataset> postRequest = new HttpEntity<>(dataset, headers);
 
-        ResponseEntity<Dataset> postResponse = unathorizedRestTemplate.exchange(datasetUrl, HttpMethod.POST, postRequest, Dataset.class);
-        assertThat(postResponse.getStatusCode().value(), is(HttpStatus.UNAUTHORIZED.value()));
+            ResponseEntity<Dataset> postResponse = unathorizedRestTemplate
+                    .withBasicAuth("auser", "apassword")
+                    .exchange(datasetUrl, HttpMethod.POST, postRequest, Dataset.class);
+
+            assertThat(postResponse.getStatusCode().value(), is(HttpStatus.UNAUTHORIZED.value()));
+
+
+
+
+
     }
 
 
@@ -171,16 +183,10 @@ public class DatasetControllerIT {
         HttpEntity<String> deleteRequest = new HttpEntity<String>(headers);
 
         String datasetResUrl = "/catalogs/" + catalogId + "/datasets/" + result.getId();
-        try {
-            ResponseEntity<String> deleteResponse = unathorizedRestTemplate.exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
 
-            fail();
-        } catch (ResourceAccessException e) {
+        ResponseEntity<String> deleteResponse = unathorizedRestTemplate.exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
 
-        } catch (HttpClientErrorException e) {
-            assertThat(e.getStatusCode(), is(HttpStatus.FORBIDDEN));
-        }
-
+        assertThat(deleteResponse.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
     }
 
 

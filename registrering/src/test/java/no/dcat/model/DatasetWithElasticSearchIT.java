@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -16,25 +17,23 @@ import java.util.Map;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("unit-integration")
 public class DatasetWithElasticSearchIT {
 
-    @Value("${spring.data.elasticsearch.clusterNodes}")
+    @Value("${data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
 
-    @Value("${spring.data.elasticsearch.clusterName}")
+    @Value("${data.elasticsearch.clusterName}")
     private String clusterName;
 
     @PostConstruct
     void validate(){
         assert clusterNodes != null;
         assert clusterName != null;
-
     }
-
 
     @Autowired
     private DatasetRepository datasetRepository;
@@ -45,7 +44,7 @@ public class DatasetWithElasticSearchIT {
         assertThat(clusterName, is("elasticsearch"));
 
         Dataset dataset = new Dataset("1");
-        Map languangeDescription = new HashMap();
+        Map<String,String> languangeDescription = new HashMap<>();
         languangeDescription.put("no","test");
         dataset.setDescription(languangeDescription);
 
