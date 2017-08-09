@@ -1,5 +1,5 @@
 
-<div class="fdk-panel-body">
+<div class="fdk-panel-body" *ngIf="contactForm">
     <div [formGroup]="contactForm" class="form-group">
             <label for="contact-avdeling" class="control-label">Avdeling:</label>
                 <input id="contact-avdeling" type="text" formControlName="organizationUnit" class="form-control"/>

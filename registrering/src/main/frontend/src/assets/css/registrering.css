@@ -267,64 +267,85 @@ distributions > div > div > div {
 .distribution-form .sub-form{
 	padding:0 15px;
 }
+
 rl-tag-input[formcontrolname], .sub-form textarea, .sub-form input[type="text"].form-control {
-	display: block;
-	float: none;
-	margin: 0px 0px 9px 0;
-	height: 34px;
-	box-shadow: none;
+    display: block;
+    float: none;
+    margin: 0px 0px 9px 0;
+    height: 34px;
+    box-shadow: none;
 }
 rl-tag-input[formcontrolname] .ng2-tag-input-form {
-	display: inline-block;
-	margin: 3px;
+    display: inline-block;
+    margin: 3px;
 }
 rl-tag-input[formcontrolname] textarea, rl-tag-input[formcontrolname] input {
-	width: auto !important;
-	padding:0 !important;
+    width: auto !important;
+    padding:0 !important;
 }
 
-rl-tag-input-item[ng-reflect-selected], rl-tag-input-item[_nghost-c9] {
-	    height: 19px;
-	    border-radius: 4px;
-	    border: 1px solid #aaa;
-	    background-color: #eee;
-	    font-size: 14px;
-	    padding: 5px 3px 19px 20px;
-	    margin: 3px;
-	    line-height: 1.2;
-	    position: relative;
-	    color: #000;
-	    top: 0px;
-			font-family: sans-serif;
+rl-tag-input-item[ng-reflect-selected], rl-tag-input-item {
+    height: 19px !important;
+    border-radius: 4px !important;
+    border: 1px solid #aaa  !important;
+    background-color: #eee !important;
+    font-size: 14px !important;
+    padding: 5px 3px 19px 20px !important;
+    margin: 3px !important;
+    line-height: 1.2 !important;
+    position: relative !important;
+    color: #000 !important;
+    top: 0px !important;
+    font-family: sans-serif !important;
 }
 rl-tag-input-item.ng2-tag-input-item-selected {
-	color: #000 !important;
-	background-color: #eee !important;
+    color: #000 !important;
+    background-color: #eee !important;
 }
 
-rl-tag-input[formcontrolname] .ng2-tag-input-remove[class], rl-tag-input .ng2-tag-input-remove[class][_nghost-c9] {
-  height: 17px;
-  width: 18px;
-  vertical-align: top;
-  padding: 0px 0px 0px 0px;
-  margin: 3px 0px 5px 0px;
-  line-height: 1;
-  left: 0;
-  color: transparent;
-  position: absolute;
-  background: none transparent;
-  top: 4px;
+rl-tag-input[formcontrolname] .ng2-tag-input-remove[class], rl-tag-input .ng2-tag-input-remove[class] {
+    height: 17px  !important;
+    width: 18px !important;
+    vertical-align: top !important;
+    padding: 0px 0px 0px 0px !important;
+    margin: 3px 0px 5px 0px !important;
+    line-height: 1 !important;
+    left: 0 !important;
+    color: transparent !important;
+    position: absolute !important;
+    background: none transparent !important;
+    top: 4px !important;
 }
 rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]::after {
-  content: '\2715';
-  font-size: 14px;
-  width: 20px;
-  height: 20px;
-  color: #aaa;
-  position: absolute;
-  left: -1px;
-  top: -1px;
+    content: '\2715';
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    color: #aaa;
+    position: absolute;
+    left: -1px;
+    top: -1px;
 }
 rl-tag-input[formcontrolname] .ng2-tag-input-remove[class]:hover::after {
-	color:#000
+    color:#000
+}
+.temporal-form my-date-picker {
+	display: block;
+	float:left;
+	width:150px;
+}
+label[for="endDate"], label[for="startDate"] {
+	padding: 6px 0 0 15px;
+	width: 75px;
+	float:left;
+}
+.delete-temporal-wrapper {
+	padding: 6px 10px;
+	display: inline-block;
+}
+.delete-temporal-wrapper a {
+	color:red;
+}
+.delete-temporal-wrapper a:hover {
+	text-decoration: none;
 }

@@ -34,7 +34,7 @@ export class CatalogService {
   getAll(): Promise<Catalog[]> {
 
     return this.http
-        .get(this.catalogsUrl)
+        .get(this.catalogsUrl + '?page=0&size=1000')
         .toPromise()
         .then(response => response.json()._embedded.catalogs as Catalog[])
         .catch(this.handleError);
@@ -56,8 +56,10 @@ export class CatalogService {
   save(catalog: Catalog) : Promise<Catalog> {
     const url = `${this.catalogsUrl}/${catalog.id}/`
 
+
+
     return this.http
-      .put(url, catalog)
+      .put(url, JSON.stringify(catalog), {headers: this.headers})
       .toPromise()
       .then(() => catalog)
       .catch(this.handleError);

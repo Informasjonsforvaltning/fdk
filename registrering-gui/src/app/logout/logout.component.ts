@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Catalog} from "../../../../../../tmp/frontend/src/app/catalog/catalog";
+import {Catalog} from "./catalog";
 import {Router} from "@angular/router";
 
 @Component({

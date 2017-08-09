@@ -24,42 +24,52 @@ import {SelectModule} from "ng-select";
 
 import {DistributionFormComponent} from "./dataset/distribution/distribution.component";
 import {DistributionListComponent} from "./dataset/distribution/distribution-list.component";
+import {TemporalListComponent} from "./dataset/temporal/temporal-list.component";
+import {TemporalFormComponent} from "./dataset/temporal/temporal.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
+import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import { MyDatePickerModule } from 'mydatepicker';
+import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {LogoutComponent} from "./logout/logout.component";
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CatalogComponent,
-    DatasetComponent,
-    StartComponent,
-    ConfirmComponent,
-    DistributionFormComponent,
-    DistributionListComponent,
-    ContactComponent,
-    QualityComponent,
-    InformationComponent,
-    LogoutComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SelectModule,
-    HttpModule,
-    NgbModule.forRoot(),
-    AlertModule.forRoot(),
-    RouterModule.forRoot(routes),
-    BootstrapModalModule,
-    RlTagInputModule
-  ],
-  entryComponents: [
-     ConfirmComponent
-  ],
-  providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CatalogComponent,
+        DatasetComponent,
+        StartComponent,
+        ConfirmComponent,
+        DistributionListComponent,
+        DistributionFormComponent,
+        TemporalFormComponent,
+        TemporalListComponent,
+        ContactComponent,
+        QualityComponent,
+        AccessRightsComponent,
+        InformationComponent,
+        LogoutComponent,
+        SpatialComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SelectModule,
+        HttpModule,
+        NgbModule.forRoot(),
+        AlertModule.forRoot(),
+        RouterModule.forRoot(routes),
+        BootstrapModalModule,
+        RlTagInputModule,
+	       MyDatePickerModule
+    ],
+    entryComponents: [
+        ConfirmComponent
+    ],
+    providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

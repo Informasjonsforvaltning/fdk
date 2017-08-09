@@ -9,8 +9,6 @@ import {User} from "./user";
 export class AuthenticationService {
   public authorization : string;
 
-  public username: string = 'bjg';
-  public password: string = '123';
 
   constructor(private http: Http) {
     // var authorization: string;

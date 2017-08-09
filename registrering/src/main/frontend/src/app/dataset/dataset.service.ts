@@ -1,10 +1,9 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
 import {environment} from "../../environments/environment";
 import {pluralizeObjectKeys, singularizeObjectKeys} from "../../utilities/pluralizeOrSingularizeObjectKeys";
-
 
 const TEST_DATASETS: Dataset[] = [
   {
@@ -21,6 +20,7 @@ const TEST_DATASETS: Dataset[] = [
     "catalog": "974760673",
     "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
     "identifiers" : ["http://brreg.no/identifier/1009"],
+    "spatials" : [{'uri': 'http://sws.geonames.org/3144096/', 'prefLabel' : {'nb' : 'Norge'}}],
     "_lastModified": "2012-04-23"
   }
 ]
@@ -37,10 +37,10 @@ export class DatasetService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   getAll(catId: String): Promise<Dataset[]> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}`;
-    return this.http.get(datasetUrl, {headers: this.headers})
+    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
+    return this.http.get(datasetUrl)
       .toPromise()
-      .then(response => {console.log(response); return response.json()._embedded.datasets as Dataset[]})
+      .then(response => response.json()._embedded.datasets as Dataset[])
       .catch(this.handleError);
   }
 
@@ -51,7 +51,7 @@ export class DatasetService {
 
   get(catId: string, datasetId: string): Promise<Dataset> {
       const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
-      return this.http.get(datasetUrl, {headers: this.headers})
+      return this.http.get(datasetUrl)
         .toPromise()
         .then((response) => {
           const dataset = pluralizeObjectKeys(response.json());
@@ -64,14 +64,12 @@ export class DatasetService {
   save(catId: string, dataset: Dataset) : Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
 
+
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = singularizeObjectKeys(datasetCopy);
 
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
     return this.http
-      .put(datasetUrl, payload, options )
+      .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)
@@ -80,9 +78,8 @@ export class DatasetService {
   delete(catId: string, dataset: Dataset) : Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
-
     return this.http
-      .delete(datasetUrl, {headers: this.headers})
+      .delete(datasetUrl)
       .toPromise()
       .then(() => dataset)
       .catch(this.handleError)
@@ -90,6 +87,7 @@ export class DatasetService {
 
   create(catId: string) : Promise<Dataset> {
     var created: Dataset;
+
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
     return this.http
