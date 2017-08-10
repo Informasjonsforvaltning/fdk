@@ -137,6 +137,7 @@
                         <resource>
                             <targetPath>/</targetPath>
                             <directory>${project.basedir}/..</directory>
+                            <filtering>false</filtering>
                             <include>conf/**/*</include>
                         </resource>
                         <resource>
