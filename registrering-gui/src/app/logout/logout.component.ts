@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Catalog} from "./catalog";
+import {Catalog} from "../catalog/catalog";
 import {Router} from "@angular/router";
 
 @Component({

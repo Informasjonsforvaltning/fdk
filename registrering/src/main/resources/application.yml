@@ -8,7 +8,7 @@ application:
   altinnServiceUrl: ${reg-altinnServiceUrl:http://localhost:8077}
   altinnServiceCode: ${reg-altinnServiceCode:4814}
   altinnServiceEdition: ${reg-altinnServiceEdition:3}
-  clientSSLCertificateKeystoreLocation: ${reg-clientSSLCertificateKeystoreLocation:registrering/dummy-client-SSL-cert.p12}
+  clientSSLCertificateKeystoreLocation: ${reg-clientSSLCertificateKeystoreLocation:conf/dummy-client-SSL-cert.p12}
   clientSSLCertificateKeystorePassword: ${reg-clientSSLCertificateKeystorePassword:password}
 spring:
   hateoas:
@@ -97,7 +97,11 @@ management:
 ---
 spring:
   profiles: docker
-  data:
-    elasticsearch:
-      clusterNodes: elasticsearch:9300
+server:
+  ssl:
+    key-store: file:conf/idporten/ssldevelop.p12
+    key-store-password: ${reg-ssl-key-password:changeit}
+    key-store-type: PKCS12
+    key-alias: tomcat
+
 

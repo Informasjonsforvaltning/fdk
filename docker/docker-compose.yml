@@ -83,6 +83,7 @@ services:
     links:
       - elasticsearch
       - search-api
+      - registration-auth
     networks:
       platform:
 

@@ -30,53 +30,67 @@
                  (onSave)="onSave($event)">
         </quality>
     </div>
+
+  <div class="panel fdk-panel">
+    <div class="fdk-panel-heading">Distribusjoner</div>
+    <div class="fdk-panel-body">
+      <distributions
+        [title]="Distribusjoner"
+        [datasetForm]="datasetForm"
+        [distributionsFormArray]="datasetForm.controls.distributions"
+        [distributions]="dataset.distributions"></distributions>
+    </div>
+  </div>
+
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Øvrige felter</div>
-    <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body dataset-languages">
+    <div class="fdk-panel-body dataset-languages">
           <div *ngIf="datasetForm.controls['checkboxArray']">
             <label for="languages" class="control-label">Datasettets språk:</label>
-            <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+            <div id="languages" *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
               <label><!-- 416 -->
                 <input type="checkbox" id="checkbox-1" [formControl]="control" />
                 {{availableLanguages[i].prefLabel.nb}}
               </label>
             </div>
-            <div class="row">
-              <div *ngIf="dataset.modified" class="col-md-3">
-                <label for="description" class="control-label">Opprettet dato:</label>
-                <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-                                formControlName="issued" ></my-date-picker>
-                <label for="description" class="control-label">Endret dato:</label>
-                <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
-                                formControlName="modified"></my-date-picker>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="issued" class="control-label">Opprettet dato:</label>
+              <my-date-picker placeholder="Opprettet dato" id="issued" name="issued" [options]="myDatePickerOptions" locale="no"
+                              formControlName="issued" ></my-date-picker>
+              <label for="modified" class="control-label">Endret dato:</label>
+              <my-date-picker placeholder="Endret dato" id="modified" name="modified" [options]="myDatePickerOptions" locale="no"
+                              formControlName="modified"></my-date-picker>
             </div>
+          </div>
 <br /> <br />
             <div class="row">
               <div class="col-md-6">
-              <temporals
-                title="Tidsperioder"
-                [datasetForm]="datasetForm"
-                [temporalsFormArray]="datasetForm.controls.temporals"
-                [temporals]="dataset.temporals"
-              ></temporals>
-            </div>
+                <temporals
+                  title="Tidsperioder"
+                  [datasetForm]="datasetForm"
+                  [temporalsFormArray]="datasetForm.controls.temporals"
+                  [temporals]="dataset.temporals">
+                </temporals>
+              </div>
             </div>
 <br /><br />
             <div class="row">
               <div class="col-md-6">
-              <distributions
-                  [datasetForm]="datasetForm"
-                  [distributionsFormArray]="datasetForm.controls.samples"
-                  [distributions]="dataset.samples"
-                  title="Eksempeldata"
-              >
-              </distributions>
-            </div>
+                <distributions
+                    [datasetForm]="datasetForm"
+                    [distributionsFormArray]="datasetForm.controls.samples"
+                    [distributions]="dataset.samples"
+                    title="Eksempeldata"
+                >
+                </distributions>
+              </div>
             </div>
 
         </div>
-    </div>
+  </div>
+
 
     <div class="panel fdk-panel">
         <div class="fdk-panel-heading">
@@ -102,7 +116,7 @@
             [contact]="dataset.contactPoints[0]">
         </contact>
     </div>
-</div>
+
 
 </form>
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake</button>
