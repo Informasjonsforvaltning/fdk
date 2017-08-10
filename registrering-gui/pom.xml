@@ -189,28 +189,7 @@
     </profiles>
 
     <build>
-        <!-- only filter dist -->
-        <resources>
-            <!-- copy docker file to target -->
-            <resource>
-                <directory>${project.basedir}</directory>
-                <targetPath>${project.build.directory}/docker</targetPath>
-                <filtering>false</filtering>
-                <includes>
-                    <include>Dockerfile</include>
-                    <include>start.js</include>
-                    <include>dist/</include>
-                    <include>server/</include>
-                </includes>
-                <excludes>
-                    <exclude>e2e/</exclude>
-                    <exclude>node_modules/</exclude>
-                    <exclude>target/</exclude>
-                    <exclude>src/</exclude>
-                </excludes>
-            </resource>
 
-        </resources>
 
 
         <plugins>
@@ -271,6 +250,26 @@
                     </imageName>
                     <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
                     <serverId>docker-hub</serverId>
+                    <resources>
+                        <resource>
+                            <directory>${project.basedir}</directory>
+                            <targetPath>/</targetPath>
+                            <filtering>false</filtering>
+                            <includes>
+                                <include>Dockerfile</include>
+                                <include>start.js</include>
+                                <include>dist/</include>
+                                <include>server/</include>
+                            </includes>
+                            <excludes>
+                                <exclude>e2e/</exclude>
+                                <exclude>node_modules/</exclude>
+                                <exclude>target/</exclude>
+                                <exclude>src/</exclude>
+                            </excludes>
+                        </resource>
+
+                    </resources>
                 </configuration>
 
             </plugin>
