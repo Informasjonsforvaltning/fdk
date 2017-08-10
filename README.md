@@ -90,6 +90,9 @@ bash: docker rmi -f $(docker images -q)
 Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
 run and test the code.
 
+ - Travis: https://travis-ci.org/Altinn/fdk
+ - Coveralls: https://coveralls.io/github/Altinn/fdk
+
 The travis config file has two main sections.
 
 ```$yml
@@ -127,7 +130,8 @@ all the output to `/dev/null`. The maven builds in the test stages build in para
 `-T 2C` which means: use 2 threads per core. 
 
 Coveralls is enabled by having the `org.eluder.coveralls` plugin for maven in the root `pom.xml`. 
-Travis automatically injects the api key for Coveralls. 
+Travis automatically injects the api key for Coveralls. Coveralls will comment on a pull request with the 
+coverage % for every successful build in Travis. 
 
 Bjørn is the user who has admin access to Travis and to Coveralls since he has admin access to the git 
 repo in Github.
