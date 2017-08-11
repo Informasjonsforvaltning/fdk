@@ -25,11 +25,10 @@ jobs:
     - stage: Build
       script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm -B
     - stage: Tests
-      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && mvn test -B
+      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q  && mvn test -B
     - stage: Tests
       script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
     - stage: Tests
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
-
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker && docker-compose up -d && ./waitForDocker.sh && cd .. && ./runNodeTests.sh
