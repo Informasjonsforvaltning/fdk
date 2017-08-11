@@ -73,13 +73,21 @@
 
 	<properties>
         <fdk.version>0.2.4-SNAPSHOT</fdk.version>
+		<java.encoding>UTF-8</java.encoding>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>dcatno</docker.image.prefix>
 		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
 		<elasticsearch.version>2.4.1</elasticsearch.version>
-		<exclude.cucumber.tests>nothing-to-exclude</exclude.cucumber.tests>
+		<build.profile.id>dev</build.profile.id>
+
+		<!-- Used for spesifying tests as integration tests. Override in child pom if different -->
+		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
+
+		<!-- Tells weather we should skipIntegrationTests. Note: If this is overwritten
+            in child pom it will also override setting in profiles -->
+		<skipIntegrationTests>true</skipIntegrationTests>
 	</properties>
 
 	<dependencyManagement>
@@ -333,11 +341,33 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
 				<configuration>
 					<excludes>
-						<exclude>${exclude.cucumber.tests}</exclude>
+						<exclude>${integration.test.pattern}</exclude>
 					</excludes>
+					<argLine> -Dfile.encoding=${java.encoding}</argLine>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<includes>
+						<include>${integration.test.pattern}</include>
+					</includes>
+					<skipTests>${skipIntegrationTests}</skipTests>
+					<encoding>${java.encoding}</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
@@ -450,38 +480,28 @@
 
 	<profiles>
 		<profile>
-			<id>cucumber-acceptance-tests</id>
+			<id>all-tests</id>
 			<properties>
-				<!-- All Integration tests are run. -->
+				<build.profile.id>all-tests</build.profile.id>
+				<!-- All tests are run. -->
 				<skipIntegrationTests>false</skipIntegrationTests>
-				<!-- block unit tests execution-->
-				<skipTests>true</skipTests>
+				<skipTests>false</skipTests>
 			</properties>
-			<build>
-				<testResources>
-					<testResource>
-						<filtering>true</filtering>
-						<directory>src/test/resources</directory>
-					</testResource>
-					<testResource>
-						<filtering>true</filtering>
-						<directory>src/test-local/resources/</directory>
-						<includes>
-							<include>properties/*.*</include>
-							<include>application.yml</include>
-						</includes>
-					</testResource>
-				</testResources>
-			</build>
 		</profile>
 		<profile>
-			<id>exclude-cucumber</id>
+			<id>dev</id>
+		</profile>
+		<profile>
+			<id>integration-test</id>
 			<properties>
-				<exclude.cucumber.tests>**/bddtest/**</exclude.cucumber.tests>
+				<!-- Used to locate the profile specific configuration file. -->
+				<build.profile.id>integration-test</build.profile.id>
+				<!-- Only integration tests are run. -->
+				<skipIntegrationTests>false</skipIntegrationTests>
+				<skipTests>true</skipTests>
 			</properties>
 		</profile>
 	</profiles>
-
 
 
 

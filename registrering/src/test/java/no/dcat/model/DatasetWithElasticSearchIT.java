@@ -40,8 +40,6 @@ public class DatasetWithElasticSearchIT {
 
     @Test
     public void elasticsearchCanStoreData_usingTemplate() throws Exception {
-        assertThat(clusterNodes, is("localhost:9300"));
-        assertThat(clusterName, is("elasticsearch"));
 
         Dataset dataset = new Dataset("1");
         Map<String,String> languangeDescription = new HashMap<>();

@@ -135,7 +135,6 @@ export class DatasetComponent implements OnInit {
                       if((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
                   });
               });
-                dataset.languages = null;
 
             if(dataset.distributions) {
               dataset.distributions.forEach((distribution) => {

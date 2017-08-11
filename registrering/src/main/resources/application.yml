@@ -69,6 +69,8 @@ spring:
   profiles: unit-integration
   data:
     elasticsearch:
+      clusterNodes: localhost:9300
+      clusterName: elasticsearch
       properties:
         http:
           enabled: true

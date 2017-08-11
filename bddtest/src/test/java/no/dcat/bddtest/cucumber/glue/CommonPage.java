@@ -2,7 +2,7 @@ package no.dcat.bddtest.cucumber.glue;
 
 import com.google.common.base.Predicate;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
-import no.dcat.bddtest.cucumber.SpringIntegrationTestConfig;
+import no.dcat.bddtest.cucumber.SpringIntegrationTestConfigIT;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Common class for glue-code for pagetesting.
  */
-public abstract class CommonPage extends SpringIntegrationTestConfig {
+public abstract class CommonPage extends SpringIntegrationTestConfigIT {
     private final Logger logger = LoggerFactory.getLogger(CommonPage.class);
     WebDriver driver = null;
 
