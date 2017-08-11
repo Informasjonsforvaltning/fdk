@@ -10,7 +10,7 @@
     "build": "ng build --prod --aot=false",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e --progress false"
   },
   "private": true,
   "dependencies": {

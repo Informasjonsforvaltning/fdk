@@ -13,5 +13,5 @@ import org.junit.runner.RunWith;
         features = {"classpath:feature/HarvestDIFIData.feature", "classpath:feature/onlyImportValidDatasets.feature"},
         tags = {"~@ignore"}
 )
-public class HarvestTests {
+public class HarvestTestsIT {
 }
