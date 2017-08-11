@@ -38,11 +38,6 @@ public class RetrieveCodes {
             allCodes.put(codeType, codes);
         }
 
-
-        String s = new Gson().toJson(allCodes);
-
-        logger.info(s);
-
         return allCodes;
     }
 }
