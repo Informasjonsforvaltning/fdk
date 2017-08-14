@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,7 +28,6 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@ContextConfiguration(classes = {RegisterApplication.class})
 public class AltinnAuthorizationIT {
 
     private static Logger logger = LoggerFactory.getLogger(AltinnAuthorizationIT.class);

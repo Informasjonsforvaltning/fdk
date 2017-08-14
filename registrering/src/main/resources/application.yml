@@ -8,7 +8,7 @@ application:
   altinnServiceUrl: ${reg_altinnServiceUrl:http://localhost:8077}
   altinnServiceCode: ${reg_altinnServiceCode:4814}
   altinnServiceEdition: ${reg_altinnServiceEdition:3}
-  clientSSLCertificateKeystoreLocation: ${reg_clientSSLCertificateKeystoreLocation:conf/dummy-client-SSL-cert.p12}
+  clientSSLCertificateKeystoreLocation: ${reg_clientSSLCertificateKeystoreLocation:../conf/dummy-client-SSL-cert.p12}
   clientSSLCertificateKeystorePassword: ${reg_clientSSLCertificateKeystorePassword:password}
 spring:
   hateoas:
@@ -20,7 +20,6 @@ spring:
 application:
   altinnServiceUrl: http://localhost:8077
 server:
-  port: 8099
   tomcat:
     accesslog:
       enabled: true

@@ -31,8 +31,9 @@ This starts the harvester application with the corresponding harvester-api.
 >`docker-compose up -d registration`
 
 This starts the registration application with corresponding api services. 
-The application can be accessed on [http://localhost:4200](http://localhost:4200)
-Currently you will be logged in as bjg ( a test user ).
+The application can be accessed on [http://localhost:8099](http://localhost:8099)
+The regstration application requires authentication. The following test-user identifiers 
+can be used: (03096000854, 01066800187, 23076102252)
 
 ## Google doc DCAT import application
 >`docker-compose up -d gdoc`
