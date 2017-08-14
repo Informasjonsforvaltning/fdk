@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/Altinn/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) [![Coverage Status](https://coveralls.io/repos/github/Altinn/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
+[![Build Status](https://travis-ci.org/Altinn/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
+[![Coverage Status](https://coveralls.io/repos/github/Altinn/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
 
 # Felles datakatalog
 
@@ -82,3 +83,60 @@ bash: docker rm -f $(docker ps -aq)
 
 Remove old images
 bash: docker rmi -f $(docker images -q)
+
+
+## Travis and Coveralls
+
+Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
+run and test the code.
+
+ - Travis: https://travis-ci.org/Altinn/fdk
+ - Coveralls: https://coveralls.io/github/Altinn/fdk
+
+The travis config file has two main sections.
+
+```$yml
+ -- SECTION 1 --
+language: java
+...
+install:
+ ...
+
+ -- SECTION 2 --
+jobs:
+  include:
+    - stage: Build
+      script: mvn install ...
+   ...
+
+```
+
+Section 1 covers setup and configuration of travis, while section 2 covers the 
+instructions for how to build and test the system. Each section has multiple phases. We use 
+`before_install` and `install` in section 1, and `jobs` in section 2. Take a look at the `.travis.yml` file, 
+it has inline comments for what is done in each stage.
+
+Our Travis is set up to use Java as the main language. To support javascript we install nodejs 
+version 6 in the before_install phase. Travis also supports running up docker containers and running
+Chrome for automated e2e tests.
+
+Section 2, covering how to build and test is a bit fiddly. In Jobs -> include ; there 
+are many stages. Each stage runs after the previous stage, but on a clean VM. So no files are shared
+between stages. Many of the stages have the same name, this makes Travis run them in parallel.
+Since there is no shared data between the stages, building must happen for each stage. The reason 
+for not having building in the install phase in section 1 is that maven produces a lot of useful output,
+but too much output. The build stage outputs all info from maven, while all the test stages forward 
+all the output to `/dev/null`. The maven builds in the test stages build in parallel with the arguments
+`-T 2C` which means: use 2 threads per core. 
+
+Coveralls is enabled by having the `org.eluder.coveralls` plugin for maven in the root `pom.xml`. 
+Travis automatically injects the api key for Coveralls. Coveralls will comment on a pull request with the 
+coverage % for every successful build in Travis. 
+
+Bjørn is the user who has admin access to Travis and to Coveralls since he has admin access to the git 
+repo in Github.
+
+There is no other configuration of Travis or Coveralls besides what has been mentioned here.
+
+
+ 
