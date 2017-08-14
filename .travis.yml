@@ -1,34 +1,45 @@
 language: java
 services:
-  - docker
+  - docker # enable docker support in travis
 jdk:
-  - oraclejdk8
+  - oraclejdk8 # Oracle Java 8
 apt:
   sources:
-    - google-chrome
+    - google-chrome # we need to install chrome for running the Angular e2e tests
   packages:
     - google-chrome-stable
 
 before_install:
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - # we need nodejs for building the Angular code
   - sudo apt-get install -y nodejs > /dev/null
   - sudo apt-get install -y build-essential > /dev/null
 install:
-  - export DOCKER_HOST=unix:///var/run/docker.sock
-  - export CHROME_BIN=chromium-browser
+  - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
+  - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
 
 jobs:
   include:
-    - stage: Build
-      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm -B
-    - stage: Tests
+    - stage: Build # First build the project to look for syntax/build problems
+      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm
+      env:
+        - comment=First build the project to look for syntax/build problems
+
+    - stage: Tests # Run regular unit tests
       script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && mvn test -B
-    - stage: Tests
+      env:
+        - comment=Run regular unit tests
+
+    - stage: Tests # Run unit and intergation tests + generate test coverage report
       script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
-    - stage: Tests
+      env:
+        - comment=Run unit and intergation tests + generate test coverage report
+
+    - stage: Tests # Run Angular e2e tests
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker && docker-compose up -d && ./waitForDocker.sh && cd .. && ./runNodeTests.sh
+      env:
+        - comment=Run Angular e2e tests
