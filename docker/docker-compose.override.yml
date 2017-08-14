@@ -106,15 +106,10 @@ services:
      - application.fusekiHost=http://fuseki:8080
      - application.harvesterHost=http://harvester-api:8080
 
-  nginx:
-    restart: always
-    ports:
-      - 8099:80
-
   registration-api:
     restart: always
     ports:
-      - 8079:8099
+      - 8099:8099
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - spring.application.catalogUriPrefix=http://localhost:8099

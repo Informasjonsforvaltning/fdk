@@ -78,14 +78,6 @@ services:
     networks:
       platform:
 
-  nginx:
-    image: dcatno/nginx:latest
-    links:
-      - registration
-      - registration-api
-    networks:
-      platform:
-
   registration-api:
     image: dcatno/registration-api:latest
     links:
