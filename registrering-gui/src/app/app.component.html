@@ -1,66 +1,63 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <section>
-  <div class="fdk-header-beta">
-    Dette er en beta-versjon. Gi oss gjerne <a class="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
+  <div class="container">
+    <div class="row">
+      <div class="fdk-header-beta col-md-12">
+        Dette er en beta-versjon. Gi oss gjerne <a class="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
+      </div>
+    </div>
   </div>
 </section>
 <!-- HEADER MENU-->
-<section>
+<section class="header">
   <div class="fdk-header-menu-fullwidth">
     <div class="container">
 
       <!-- Left column / Empty -->
-      <div class="col-sm-4 col-md-4">
-        <div class="alert-success" *ngIf="isAuthenticated()">
-          Pålogget som {{getUsername()}}
-          <button class="btn btn-primary" (click)="logout()">Logg ut</button>
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Datasettregistret</h1>
         </div>
-
-
-        <div class="col-md-6" *ngIf="!isAuthenticated()">
-
-
-          <div class="form-group">
-            <button (click)="login()" class="btn btn-primary">Logg inn som bjg</button>
+        <div class="col-md-4 right-column">
+          <div  *ngIf="!isAuthenticated()">
+            <div class="form-group">
+              <button (click)="login()" class="btn btn-primary">Logg inn som bjg</button>
+            </div>
+            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
           </div>
-          <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+          <span  *ngIf="isAuthenticated()">
+             <i class="fa fa-user"></i> {{getUsername()}}
+            <a class="login-logout-button" href="#" (click)="logout()">Logg ut</a>
+          </span>
 
-        </div>
-      </div>
+          <!-- Dropdown menu -->
+          <div class="dropdown fdk-container-dropdown-menu">
+            <div dropdown class="dropdown fdk-dropdown-toggle-menu">
+              <a dropdownToggle href="#"><i class="fa fdk-fa-menu fa-bars"></i> <span>Meny</span></a>
+              <ul *dropdownMenu class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href="#">Om Felles Datakatalog</a></li>
+                <li><a href="#">Spørsmål og svar</a></li>
+                <li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
+                <li><a href="#">Status implementasjon</a></li>
+              </ul>
+            </div>
 
-      <!-- Middle column / Heading -->
-      <div class="col-sm-4 col-md-4">
-        <h1 class="fdk-heading">Datakataloger</h1>
-      </div>
-
-      <!-- Right column -->
-      <div class="col-sm-4 col-md-4">
-        <!-- Dropdown menu -->
-        <div class="dropdown fdk-container-dropdown-menu">
-          <div class="dropdown fdk-dropdown-toggle-menu">
-            <a data-toggle="dropdown" href="#"><i class="fa fdk-fa-menu fa-bars"></i></a>
-            <ul class="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <li><a href="#">Om Felles Datakatalog</a></li>
-              <li><a href="#">Spørsmål og svar</a></li>
-              <li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
-              <li><a href="#">Status implementasjon</a></li>
-            </ul>
+            <!-- Dropdown language
+            <div class="dropdown fdk-container-dropdown-language">
+              <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+                <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-england.png"/>English</a></li>
+                <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål</a></li>
+                <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Nynorsk</a></li>
+              </ul>
+            </div>-->
           </div>
         </div>
-
-        <!-- Dropdown language -->
-        <div class="dropdown fdk-container-dropdown-language">
-          <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-            <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-england.png"/>English</a></li>
-            <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål</a></li>
-            <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Nynorsk</a></li>
-          </ul>
-        </div>
       </div>
+
     </div>
   </div>
 </section>

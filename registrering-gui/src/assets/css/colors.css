@@ -1,0 +1,58 @@
+:root {
+    --color0: #ffffff; /* hvit */
+    --color1: #2D3741; /* mørkest blågrå – heading */
+    --color2: #4B555F; /* mørk blågrå – tekst */
+    --color3: #646E78; /* medium blågrå – lysere tekst */
+    --color4: #c2c8ce; /* mellomlys blågrå –  */
+    --color5: #D7DDE3; /* ultralys blågrå – inputfelter */
+    --color6: #EEF0F2; /* lys blågrå – bakgrunner */
+    --color7: #F6F8FA; /* ultralys blågrå – inputfelter */
+    --color-cta: #00B4E6; /*64CDEB*;*/ /* blå themefarge – call to actions mmog "krydder" */
+    --color-cta2: #9BE1FF; /* blå themefarge hover */
+    --color-cta3: #1096D4; /* blå themefarge mot hvit */
+    --color-green: #00DCA0; /* grønn */
+    --color-red: #FF3C64; /* rød */
+}
+
+.fdk-color0 {
+    color: var(--color0);
+}
+
+.fdk-color1 {
+    color: var(--color1);
+}
+
+.fdk-color2 {
+    color: var(--color2);
+}
+
+.fdk-color3 {
+    color: var(--color3);
+}
+.fdk-color4 {
+    color: var(--color4);
+}
+
+.fdk-color5 {
+    color: var(--color5);
+}
+
+.fdk-color6 {
+    color: var(--color6);
+}
+
+.fdk-color-cta {
+    color: var(--color-cta);
+}
+
+.fdk-color-cta2 {
+    color: var(--color-cta2);
+}
+
+.fdk-color-green {
+    color: var(--color-green);
+}
+
+.fdk-color-red {
+    color: var(--color-red);
+}

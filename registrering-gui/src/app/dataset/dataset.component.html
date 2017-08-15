@@ -1,107 +1,229 @@
 <alert type="success" *ngIf="saved">
-    Sist lagret {{lastSaved}}
+  Sist lagret {{lastSaved}}
 </alert>
 <alert type="info" *ngIf="!saved">
-    Endringer lagres automatisk
+  Endringer lagres automatisk
 </alert>
-
-<div class="panel fdk-panel" *ngIf="dataset" id="dataset">
-    <div class="fdk-panel-big-heading" *ngIf="dataset.title">
-        <input class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text"
-               placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
+<style>
+.caret-right {
+    border-bottom: 7px solid transparent;
+    border-top: 7px solid transparent;
+    border-left: 7px solid #D7DDE3;
+    display: inline-block;
+    height: 0;
+    opacity: 1;
+    vertical-align: top;
+    width: 0;
+    position: absolute;
+    right:-7px;
+    top:13px;
+}
+.section-title {
+  cursor: pointer;
+  color:#2D3741;
+  background-color:#D7DDE3;
+  padding: 10px;
+  text-align:center;
+  font-weight:bold;
+  position:relative;
+  margin: 0 0 11px 0;
+}
+.expanded-content {
+  display:none;
+  background: #fff;
+}
+.expand-checkbox {
+  position: absolute;
+  left:-9999px;
+}
+.expand-label {
+  cursor: pointer;
+  text-decoration: none;
+}
+.expand-checkbox:checked ~ .expanded-content  {
+  display: block;
+}
+.expand-checkbox:checked ~ .collapsed-content  {
+  display: none;
+}
+.collapsed-content {
+      background: #fff;
+      padding: 5px;
+      line-height: 1.7;
+      display: block;
+}
+</style>
+<div class="row justify-content-md-center" *ngIf="dataset">
+  <label for="title-and-description-toggle" class="col-md-push-2 col-md-2 section-title">
+    Tittel og beskrivelse<b class="caret-right"></b>
+  </label>
+  <div class="col-md-push-2 col-md-6 collapsed">
+    <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" />
+    <label for="title-and-description-toggle" class="collapsed-content expand-label">{{dataset.title[language]}}</label>
+    <div class="expanded-content">
+      <div class="" id="dataset">
+        <div class="" *ngIf="dataset.title">
+          <input class="fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text"
+          placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
+        </div>
+        <div class="" *ngIf="dataset.description">
+          <div id="datasett-utgiver-navn">{{dataset.publisher.name}}</div>
+          <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett"
+          (ngModelChange)="valuechange(this)" placeholder="Beskrivelse"
+          [(ngModel)]='dataset.description[language]'></textarea>
+        </div>
+      </div>
     </div>
-    <div class="fdk-panel-big-body" *ngIf="dataset.description">
-        <h2 id="datasett-utgiver-navn">{{dataset.publisher.name}}</h2>
-        <textarea autofocus class="fdk-register-h3" rows="5" id="beskrivelse-datasett"
-                  (ngModelChange)="valuechange(this)" placeholder="Beskrivelse"
-                  [(ngModel)]='dataset.description[language]'></textarea>
-    </div>
+  </div>
 </div>
+
 <form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
-    <div class="panel fdk-panel">
-        <div class="fdk-panel-heading">Opplysninger</div>
+
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <div class="col-md-push-2 col-md-2 section-title">
+      Opplysninger<b class="caret-right"></b>
+    </div>
+    <div class="col-md-push-2 col-md-6 collapsed">
+      <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" />
+      <label for="title-and-description-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
         <information [dataset]="dataset" (onSave)="onSave($event)"></information>
+      </div>
     </div>
-    <div class="panel fdk-panel">
-        <div class="fdk-panel-heading">
-            Kvalitet
-        </div>
-        <quality [dataset]="dataset"
-                 (onSave)="onSave($event)">
-        </quality>
-    </div>
-  <div class="panel fdk-panel">
-    <div class="fdk-panel-heading">Øvrige felter</div>
-    <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body dataset-languages">
-          <div *ngIf="datasetForm.controls['checkboxArray']">
-            <label for="languages" class="control-label">Datasettets språk:</label>
-            <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
-              <label><!-- 416 -->
-                <input type="checkbox" id="checkbox-1" [formControl]="control" />
-                {{availableLanguages[i].prefLabel.nb}}
-              </label>
-            </div>
-            <div class="row">
-              <div *ngIf="dataset.modified" class="col-md-3">
-                <label for="description" class="control-label">Opprettet dato:</label>
-                <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-                                formControlName="issued" ></my-date-picker>
-                <label for="description" class="control-label">Endret dato:</label>
-                <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
-                                formControlName="modified"></my-date-picker>
-              </div>
-            </div>
-<br /> <br />
-            <div class="row">
-              <div class="col-md-6">
-              <temporals
-                title="Tidsperioder"
-                [datasetForm]="datasetForm"
-                [temporalsFormArray]="datasetForm.controls.temporals"
-                [temporals]="dataset.temporals"
-              ></temporals>
-            </div>
-            </div>
-<br /><br />
-            <div class="row">
-              <div class="col-md-6">
-              <distributions
-                  [datasetForm]="datasetForm"
-                  [distributionsFormArray]="datasetForm.controls.samples"
-                  [distributions]="dataset.samples"
-                  title="Eksempeldata"
-              >
-              </distributions>
-            </div>
-            </div>
+  </div>
 
-        </div>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <div class="col-md-push-2 col-md-2 section-title">
+      Kvalitet<b class="caret-right"></b>
     </div>
-
-    <div class="panel fdk-panel">
-        <div class="fdk-panel-heading">
-            Tilgangsnivå
-        </div>
+    <div class="col-md-push-2 col-md-6 collapsed">
+      <input type="checkbox" id="quality-toggle" class="expand-checkbox" />
+      <label for="quality-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+              <quality [dataset]="dataset"
+                       (onSave)="onSave($event)">
+              </quality>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <div class="col-md-push-2 col-md-2 section-title">
+      Tilgangsnivå<b class="caret-right"></b>
+    </div>
+    <div class="col-md-push-2 col-md-6 collapsed">
+      <input type="checkbox" id="access-rights-toggle" class="expand-checkbox" />
+      <label for="access-rights-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
         <accessRights [dataset]="dataset"
-                      (onSave)="onSave($event)">
+        (onSave)="onSave($event)">
         </accessRights>
+      </div>
     </div>
-    <div class="panel fdk-panel">
-        <div class="fdk-panel-heading">
-            Geografisk avgrensning
-        </div>
-        <spatial [dataset]="dataset"
-                 (onSave)="onSave($event)">
-        </spatial>
+  </div>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <div class="col-md-push-2 col-md-2 section-title">
+      Geografisk avgrensning<b class="caret-right"></b>
+    </div>
+    <div class="col-md-push-2 col-md-6 collapsed">
+      <input type="checkbox" id="spatial-toggle" class="expand-checkbox" />
+      <label for="spatial-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+
+
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <div class="col-md-push-2 col-md-2 section-title">
+      Opplysninger<b class="caret-right"></b>
+    </div>
+    <div class="col-md-push-2 col-md-6 collapsed">
+      <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" />
+      <label for="title-and-description-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+
+
+      </div>
+    </div>
+  </div>
+
+    <div class="fdk-panel-heading">
+      Tilgangsnivå
     </div>
 
-    <div class="panel fdk-panel" *ngIf="dataset.contactPoints">
-        <div class="fdk-panel-heading">Kontaktinformasjon</div>
-        <contact
-            [contactsArray]="datasetForm.controls.contactPoints"
-            [contact]="dataset.contactPoints[0]">
-        </contact>
+
+<div class="panel fdk-panel">
+  <div class="fdk-panel-heading">Øvrige felter</div>
+  <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body dataset-languages">
+    <div *ngIf="datasetForm.controls['checkboxArray']">
+      <label for="languages" class="control-label">Datasettets språk:</label>
+      <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+        <label><!-- 416 -->
+          <input type="checkbox" id="checkbox-1" [formControl]="control" />
+          {{availableLanguages[i].prefLabel.nb}}
+        </label>
+      </div>
+      <div class="row">
+        <div *ngIf="dataset.modified" class="col-md-3">
+          <label for="description" class="control-label">Opprettet dato:</label>
+          <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
+          formControlName="issued" ></my-date-picker>
+          <label for="description" class="control-label">Endret dato:</label>
+          <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
+          formControlName="modified"></my-date-picker>
+        </div>
+      </div>
+      <br /> <br />
+      <div class="row">
+        <div class="col-md-6">
+          <temporals
+          title="Tidsperioder"
+          [datasetForm]="datasetForm"
+          [temporalsFormArray]="datasetForm.controls.temporals"
+          [temporals]="dataset.temporals"
+          ></temporals>
+        </div>
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-md-6">
+          <distributions
+          [datasetForm]="datasetForm"
+          [distributionsFormArray]="datasetForm.controls.samples"
+          [distributions]="dataset.samples"
+          title="Eksempeldata"
+          >
+        </distributions>
+      </div>
     </div>
+
+  </div>
+</div>
+
+<div class="panel fdk-panel">
+  <div class="fdk-panel-heading">
+    Tilgangsnivå
+  </div>
+  <accessRights [dataset]="dataset"
+  (onSave)="onSave($event)">
+</accessRights>
+</div>
+<div class="panel fdk-panel">
+  <div class="fdk-panel-heading">
+    Geografisk avgrensning
+  </div>
+  <spatial [dataset]="dataset"
+  (onSave)="onSave($event)">
+</spatial>
+</div>
+
+<div *ngIf="dataset.contactPoints">
+  <h4>Kontaktinformasjon</h4>
+    <contact
+    [contactsArray]="datasetForm.controls.contactPoints"
+    [contact]="dataset.contactPoints[0]">
+  </contact>
+</div>
 </div>
 
 </form>

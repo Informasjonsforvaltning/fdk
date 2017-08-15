@@ -1,12 +1,11 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {AuthenticationService} from "./security/authentication.service";
 import {Router} from "@angular/router";
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css', '../assets/css/designsystem.css',
-    '../assets/css/registrering.css', '../assets/css/font-awesome.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
