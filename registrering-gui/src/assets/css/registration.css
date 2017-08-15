@@ -120,6 +120,16 @@ p.fdk-input-helptext {
 		margin: 0px;
 }
 
+
+p.fdk-input-informationtext {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    color: var(--color3);
+    padding: 10px;
+    margin: 10px;
+    text-align:center;
+}
+
 p.fdk-input-helptext > a {
     color: var(--color3);
 }
