@@ -149,51 +149,13 @@
       <label for="title-and-description-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
       <div class="expanded-content">
 
-
-      </div>
-    </div>
-  </div>
-
-    <div class="fdk-panel-heading">
-      Tilgangsnivå
-    </div>
-
-
-<div class="panel fdk-panel">
-  <div class="fdk-panel-heading">Øvrige felter</div>
-  <div *ngIf="datasetForm.controls['checkboxArray']" class=" dataset-languages">
-    <div *ngIf="datasetForm.controls['checkboxArray']">
-      <label for="languages" class="control-label">Datasettets språk:</label>
-      <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
-        <label><!-- 416 -->
-          <input type="checkbox" id="checkbox-1" [formControl]="control" />
-          {{availableLanguages[i].prefLabel.nb}}
-        </label>
-      </div>
-      <div class="row">
-        <div *ngIf="dataset.modified" class="col-md-3">
-          <label for="description" class="control-label">Opprettet dato:</label>
-          <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-          formControlName="issued" ></my-date-picker>
-          <label for="description" class="control-label">Endret dato:</label>
-          <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
-          formControlName="modified"></my-date-picker>
-        </div>
-      </div>
-      <br /> <br />
-      <div class="row">
-        <div class="col-md-6">
           <temporals
           title="Tidsperioder"
           [datasetForm]="datasetForm"
           [temporalsFormArray]="datasetForm.controls.temporals"
           [temporals]="dataset.temporals"
           ></temporals>
-        </div>
-      </div>
-      <br /><br />
-      <div class="row">
-        <div class="col-md-6">
+
           <distributions
           [datasetForm]="datasetForm"
           [distributionsFormArray]="datasetForm.controls.samples"
@@ -201,48 +163,39 @@
           title="Eksempeldata"
           >
         </distributions>
+
+        <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+          <label><!-- 416 -->
+            <input type="checkbox" id="checkbox-1" [formControl]="control" />
+            {{availableLanguages[i].prefLabel.nb}}
+          </label>
+        </div>
+        <div class="row">
+          <div *ngIf="dataset.modified" class="col-md-3">
+            <label for="description" class="control-label">Opprettet dato:</label>
+            <my-date-picker placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
+            formControlName="issued" ></my-date-picker>
+            <label for="description" class="control-label">Endret dato:</label>
+            <my-date-picker placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
+            formControlName="modified"></my-date-picker>
+          </div>
+        </div>
+
+        <spatial [dataset]="dataset"
+        (onSave)="onSave($event)">
+        </spatial>
+
+          <contact
+          [contactsArray]="datasetForm.controls.contactPoints"
+          [contact]="dataset.contactPoints[0]">
+        </contact>
       </div>
     </div>
-
   </div>
-</div>
 
-<div class="panel fdk-panel">
-  <div class="fdk-panel-heading">
-    Tilgangsnivå
-  </div>
-  <accessRights [dataset]="dataset"
-  (onSave)="onSave($event)">
-</accessRights>
-</div>
-<div class="panel fdk-panel">
-  <div class="fdk-panel-heading">
-    Geografisk avgrensning
-  </div>
-  <spatial [dataset]="dataset"
-  (onSave)="onSave($event)">
-</spatial>
-</div>
 
-<div *ngIf="dataset.contactPoints">
-  <h4>Kontaktinformasjon</h4>
-    <contact
-    [contactsArray]="datasetForm.controls.contactPoints"
-    [contact]="dataset.contactPoints[0]">
-  </contact>
-</div>
-</div>
 
 </form>
-
-<div class="row">
-    <div class="col-md-push-2 col-md-6" *ngIf="saved">
-        <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
-    </div>
-    <div class="col-md-push-2 col-md-6" *ngIf="!saved">
-        <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
-    </div>
-</div>
 
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett

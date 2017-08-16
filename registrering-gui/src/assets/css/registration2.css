@@ -2,15 +2,15 @@
 
 
 .fdk-panel-list {
-	background-color: var(--color5);
+	background-color: #D7DDE3;
 	padding: 8px 15px;
 	margin-bottom: 2px;
-	border-top: 1px solid var(--color5);
+	border-top: 1px solid #D7DDE3;
 }
 
 .fdk-panel-list:hover {
-	background-color: var(--color4);
-	border-top: 1px solid var(--color4);
+	background-color: #C2C8CE;
+	border-top: 1px solid #C2C8CE;
 }
 
 .fdk-panel-list-last {
@@ -19,7 +19,7 @@
 }
 
 .fdk-panel-input {
-    background-color: var(--color1);
+    background-color: #2D3741;
     padding: 10px;
 }
 
@@ -28,8 +28,8 @@
 /*  C O N T A I N E R S  */
 
 .fdk-container-reg {
-    background-color: var(--color0);
-    border: 1px solid var(--color0);
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
     width: 100%;
     padding: 15px 30px;
     margin: 0px 0px 10px 0px;
@@ -37,12 +37,12 @@
 }
 
 .fdk-container-reg:hover {
-    border: 1px solid var(--color-cta);
+    border: 1px solid #3CBEF0;
 }
 
 .fdk-container-reg-expanded {
-    border: 1px solid var(--color-cta);
-    background-color: var(--color0);
+    border: 1px solid #3CBEF0;
+    background-color: #FFFFFF;
     width: 100%;
     padding: 28px 30px 30px 0px;
     margin: 0px 0px 10px 0px;
@@ -66,32 +66,32 @@ a {
 /*  I N P U T  */
 
 .fdk-container-input {
-    border-left: 6px solid var(--color0);
+    border-left: 6px solid #FFFFFF;
     padding: 0px 0px 0px 24px;
     margin: 0px;
 }
 
 .fdk-container-input:hover {
-    border-left: 6px solid var(--color-cta);
+    border-left: 6px solid #3CBEF0;
 }
 
 .fdk-input {
-    background-color: var(--color7);
-    border: 1px solid var(--color5);
+    background-color: #F6F8FA;
+    border: 1px solid #D7DDE3;
     border-radius: 3px;
     padding: 10px;
 		margin: 6px 0px 0px 0px;
     width: 100%;
     font-size: 2rem;
-    color: var(--color1);
+    color: #2D3741;
 }
 
 .fdk-input:hover {
-    border-color: var(--color2);
+    border-color: #4B555F;
 }
 
 .fdk-input:focus {
-    border-color: var(--color2);
+    border-color: #4B555F;
 }
 
 .fdk-input-last {
@@ -120,7 +120,7 @@ p.fdk-input-label {
 p.fdk-input-helptext {
     font-size: 1.4rem;
     line-height: 1.8rem;
-    color: var(--color3);
+    color: #646E78;
     padding: 0px;
 		margin: 0px;
 }
@@ -129,24 +129,24 @@ p.fdk-input-helptext {
 p.fdk-input-informationtext {
     font-size: 1.4rem;
     line-height: 1.8rem;
-    color: var(--color3);
+    color: #646E78;
     padding: 10px;
     margin: 10px;
     text-align:center;
 }
 
 p.fdk-input-helptext > a {
-    color: var(--color3);
+    color: #646E78;
 }
 
 .fdk-p-input {
 	font-size: 2rem;
 	line-height: 2rem;
-	color: var(--color1);
+	color: #2D3741;
 }
 
 .fdk-autosave {
-	color: var(--color3);
+	color: #646E78;
 	margin: -50px 0 30px 0;
 	text-align: center;
 }
