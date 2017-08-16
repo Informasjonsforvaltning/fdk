@@ -9,7 +9,7 @@ import {Dataset} from "../dataset/dataset";
 @Component({
     selector: 'app-catalog',
     templateUrl: './catalog.component.html',
-    styleUrls: ['./catalog.component.css', '../../assets/css/designsystem.css', '../../assets/css/registration.css']
+    styleUrls: ['./catalog.component.css', '../../assets/css/designsystem.css', '../../assets/css/registrering.css', '../../assets/css/registration.css']
 })
 export class CatalogComponent implements OnInit {
     title = 'Registrer katalog';
