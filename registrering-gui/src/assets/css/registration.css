@@ -56,7 +56,12 @@
 	padding-left: 30px;
 }
 
+/*  L I N K S  */
 
+a {
+    color: #646E78;
+    text-decoration: underline;
+}
 
 /*  I N P U T  */
 
