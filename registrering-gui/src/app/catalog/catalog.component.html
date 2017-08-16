@@ -1,32 +1,44 @@
-<alert type="success" *ngIf="saved">
-  Sist lagret {{lastSaved}}
-</alert>
-<alert type="info" *ngIf="!saved">
-  Endringer lagres automatisk
-</alert>
 
 <div class="col-md-12" *ngIf="catalog">
   <div class="panel fdk-panel" *ngIf="catalog">
     <div class="fdk-panel-big-heading">
       <div class="form-group">
-        <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
+          <h1>
+            <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]" />
+          </h1>
       </div>
     </div>
+    <div>
+      <h4>Eies av {{catalog.publisher.name}}</h4>
+    </div>
     <div class="fdk-panel-big-body">
-      <h2>{{catalog.publisher.name}}</h2>
       <textarea class="fdk-register-h3" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6" *ngIf="saved">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
+        </div>
+        <div class="col-md-6" *ngIf="!saved">
+            <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
+        </div>
     </div>
   </div>
 </div>
 
+
 <div class="col-md-12" *ngIf="catalog">
   <div class="panel fdk-panel">
+      <button type="button" class="fdk-button fdk-button-cta" (click)="newDataset()" id="button_new_dataset">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i> Legg til ny datasettbeskrivelse
+      </button>
+      <button type="button" class="fdk-button fdk-button-default" (click)="back()">Tilbake</button>
     <div class="fdk-panel-heading">
       <table class="fdk-register">
         <tbody>
           <tr>
             <td class="fdk-register fdk-register-datacatalogue-1">
-              <h4 class="fdk-text-white fdk-no-margin">Datasett</h4>
+              <h4 class="fdk-text-white fdk-no-margin">Tittel på datasett</h4>
             </td>
             <td class="fdk-register fdk-register-datacatalogue-2 fdk-text-right">
               <h4 class="fdk-text-white fdk-text-right fdk-no-margin">Sist endret</h4>
@@ -54,6 +66,6 @@
       </table>
     </div>
   </div>
-  <button type="button" class="fdk-button fdk-button-cta" (click)="newDataset()" id="button_new_dataset">Nytt datasett</button>
-  <button type="button" class="fdk-button fdk-button-default" (click)="back()">Tilbake</button>
+
+
 </div>

@@ -56,7 +56,12 @@
 	padding-left: 30px;
 }
 
+/*  L I N K S  */
 
+a {
+    color: #646E78;
+    text-decoration: underline;
+}
 
 /*  I N P U T  */
 
@@ -118,6 +123,16 @@ p.fdk-input-helptext {
     color: var(--color3);
     padding: 0px;
 		margin: 0px;
+}
+
+
+p.fdk-input-informationtext {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    color: var(--color3);
+    padding: 10px;
+    margin: 10px;
+    text-align:center;
 }
 
 p.fdk-input-helptext > a {
