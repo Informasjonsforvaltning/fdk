@@ -17,6 +17,7 @@ import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
 import {IMyDpOptions} from 'mydatepicker';
 import {TemporalListComponent} from "./temporal/temporal-list.component";
+import {HelpText} from "./helptext/helptext.component";
 
 @Component({
   selector: 'app-dataset',

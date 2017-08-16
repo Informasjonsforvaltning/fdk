@@ -2,7 +2,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {Contact} from "./contact";
-import {HelpText} from "./helptext.component";
+import {HelpText} from "../helptext/helptext.component";
 
 @Component({
     selector: 'contact',

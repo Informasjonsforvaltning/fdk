@@ -19,8 +19,17 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "assets/css/bootstrap-theme.min.css",
+        "assets/css/common.css",
+        "assets/css/portal.css",
+        "assets/css/dataset.css",
+        "assets/css/registration.css",
+        "assets/fonts/font-awesome/css/font-awesome.min.css",
+        "assets/css/frederic.css",
+        "assets/css/david.css",
+        "assets/css/bjorn.css",
+        "assets/css/designsystem2.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

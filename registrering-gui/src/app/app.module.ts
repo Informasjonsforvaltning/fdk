@@ -32,7 +32,7 @@ import {AccessRightsComponent} from "./dataset/accessRights/accessRights.compone
 import {InformationComponent} from "./dataset/information/information.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
-import {HelpText} from "./dataset/contact/helptext.component";
+import {HelpText} from "./dataset/helptext/helptext.component";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
