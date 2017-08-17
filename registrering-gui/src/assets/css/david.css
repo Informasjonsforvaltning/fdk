@@ -34,5 +34,6 @@ textarea.fdk-register-h3-2 {
 .toggle-help-button {
     cursor: pointer;
     text-decoration: underline;
+    color: #646E78;
     font-weight: normal;
 }
