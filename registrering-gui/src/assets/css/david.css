@@ -1,0 +1,32 @@
+
+.fdk-input-container {
+    margin-top: 7px;
+    padding-top: 15px;
+    margin-bottom: 7px;
+}
+
+textarea.fdk-register-h3-2 {
+    height: 130px;
+}
+
+.white-link {
+    color: #FFFFFF;
+}
+
+.white-link:hover {
+    color: #FFFFFF;
+}
+
+.fdk-input {
+    border: 1px solid #D7DDE3;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 6px 0 0 0;
+    width: 100%;
+    font-size: 1.4rem;
+    color: #2D3741;
+}
+
+.fdk-input-label {
+    color: #646E78;
+}

@@ -115,11 +115,16 @@ export class DatasetComponent implements OnInit {
 
       // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
+
+      this.dataset.landingPages = this.dataset.landingPages || [];
+      //this.dataset.landingPages[0] = this.dataset.landingPages[0] || "testpagelanding";
+
       this.dataset.identifiers = this.dataset.identifiers || [];
 
       //set default publisher to be the same as catalog
       this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
       this.dataset.languages = [];
+
 
       dataset.samples = dataset.samples || [];
       dataset.languages = dataset.languages || [];
