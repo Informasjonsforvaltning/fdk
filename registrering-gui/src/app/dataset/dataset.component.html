@@ -65,7 +65,7 @@
     <div class="expanded-content">
       <div class="" id="dataset">
         <div class="" *ngIf="dataset.title">
-            <label for="contact-avdeling" class="input-label">Tittel</label>
+            <label for="tittel-datasett" class="input-label">Tittel</label>
             <helptext
               text="Dette er en hjelpetekst som beskriver hvordan feltene bør fylles ut."
               moretext="Dette er en annen en hjelpetekst som beskriver hvordan feltene bør fylles ut."
@@ -84,7 +84,7 @@
   </div>
 </div>
 
-<form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
+
 
   <div class="row justify-content-md-center" *ngIf="dataset">
     <div class="col-md-push-1 col-md-2 section-title">
@@ -195,7 +195,14 @@
 
 
 
-</form>
+<div class="row">
+    <div class="col-md-push-2 col-md-6" *ngIf="saved">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
+    </div>
+    <div class="col-md-push-2 col-md-6" *ngIf="!saved">
+        <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
+    </div>
+</div>
 
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
 <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
