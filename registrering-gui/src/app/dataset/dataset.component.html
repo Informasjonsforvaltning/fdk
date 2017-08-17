@@ -213,7 +213,7 @@
             formControlName="modified"></my-date-picker>
           </div>
         </div>
-          
+
           <contact
           [contactsArray]="datasetForm.controls.contactPoints"
           [contact]="dataset.contactPoints[0]">
@@ -223,16 +223,20 @@
   </div>
 
 
+<div class="row justify-content-md-center">
 
-<div class="row">
-    <div class="col-md-push-2 col-md-6" *ngIf="saved">
-        <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
+    <div class="row">
+        <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="saved">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
+        </div>
+        <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="!saved">
+            <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
+        </div>
     </div>
-    <div class="col-md-push-2 col-md-6" *ngIf="!saved">
-        <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
+    <div class="col-md-push-3 col-md-8 fdk-buttons">
+
+    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
+    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
+    </button>
     </div>
 </div>
-
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
-</button>

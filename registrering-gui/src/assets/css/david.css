@@ -37,3 +37,11 @@ textarea.fdk-register-h3-2 {
     color: #646E78;
     font-weight: normal;
 }
+
+.fdk-changes-bar {
+    padding-left: 30px;
+}
+
+.fdk-buttons {
+    padding-top: 15px;
+}
