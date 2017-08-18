@@ -54,7 +54,7 @@
 }
 </style>
 <div *ngIf="dataset && catalog">
-    <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong>{{dataset.publisher.name}}</strong></p>
+    <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
 <div class="row justify-content-md-center" *ngIf="dataset">
   <label for="title-and-description-toggle" class="col-md-push-1 col-md-2 section-title">
@@ -66,12 +66,12 @@
     <div class="expanded-content">
 
         <div class="fdk-input-container" *ngIf="dataset.title">
-            <label for="tittel-datasett" class="fdk-input-label">Tittel</label>
+            <label for="dataset-title" class="fdk-input-label">Tittel</label>
             <helptext
               text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
               moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
               name="datasett-tittel"></helptext>
-          <input class="fdk-input" id="tittel-datasett" (keyup)="valuechange($event)" type="text"
+          <input class="fdk-input" id="dataset-title" (keyup)="valuechange($event)" type="text"
           [(ngModel)]="dataset.title[language]"/>
         </div>
 
@@ -226,7 +226,7 @@
 <div class="row justify-content-md-center">
 
     <div class="row">
-        <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="saved">
+        <div class="col-md-push-3 col-md-8 fdk-changes-bar fdk-saved" *ngIf="saved">
             <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
         </div>
         <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="!saved">

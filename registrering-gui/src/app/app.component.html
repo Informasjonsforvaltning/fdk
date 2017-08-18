@@ -18,15 +18,13 @@
           <h1>Datasettregistret</h1>
         </div>
         <div class="col-md-6 right-column">
-          <div  *ngIf="!isAuthenticated()">
-            <div class="form-group">
-              <button (click)="login()" class="btn btn-primary">Logg inn som bjg</button>
-            </div>
-            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-          </div>
+          <span  *ngIf="!isAuthenticated()">
+             <button (click)="login()" class="btn btn-primary">Logg inn</button>
+             <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+          </span>
           <span  *ngIf="isAuthenticated()">
-             <i class="fa fa-user"></i> {{getUsername()}}
-            <a class="login-logout-button" href="#" (click)="logout()">Logg ut</a>
+              <i class="fa fa-user"></i> {{getUsername()}}
+              <a class="login-logout-button" href="#" (click)="logout()">Logg ut</a>
           </span>
 
           <!-- Dropdown menu -->

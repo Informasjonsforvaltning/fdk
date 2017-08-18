@@ -24,6 +24,10 @@ export class RegistreringGuiPage {
         return element(by.css('.fdk-register-h1')).getAttribute('value');
     }
 
+    getDatasetTitle() {
+        return element(by.css('#dataset-title')).getAttribute('value')
+    }
+
     getValueFromElement(id) {
         return element(by.id(id)).getAttribute('value');
     }
@@ -36,9 +40,13 @@ export class RegistreringGuiPage {
         console.log(`createDataset(name: ${name})`);
         let newDatasetButton = element(by.id("button_new_dataset"));
         await newDatasetButton.click();
-        let datasetH1Input = element(by.css(".fdk-register-h1"));
-        await browser.wait(this.EC.presenceOf(datasetH1Input), 10000, "Could not find input field for dataset name");
-        await datasetH1Input.clear();
-        await datasetH1Input.sendKeys(name);
+
+        let section = element(by.cssContainingText(".section-title","Tittel og beskrivelse"));
+        await section.click();
+
+        let datasetTitle = element(by.id("dataset-title"));
+        await browser.wait(this.EC.presenceOf(datasetTitle), 10000, "Could not find input field for dataset title");
+        await datasetTitle.clear();
+        await datasetTitle.sendKeys(name);
     }
 }
