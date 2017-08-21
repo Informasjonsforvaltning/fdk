@@ -10,9 +10,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         format = {"pretty", "html:target/cucumber"},
-        features = "classpath:feature/publisherPage.feature",
+        features = {"classpath:feature/1_FDK-241-themeLabels.feature", "classpath:feature/1_FDK-297-themeFiltering.feature", "classpath:feature/theme.feature"},
         tags = {"~@ignore"}
 
 )
-public class PublisherTestRunner {
+public class ThemeTestsIT {
 }

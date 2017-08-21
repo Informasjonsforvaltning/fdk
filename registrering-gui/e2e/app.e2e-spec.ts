@@ -1,388 +1,420 @@
 import {RegistreringGuiPage} from "./app.po";
 import {browser, element, by, protractor} from "protractor";
 import {} from 'jasmine';
+
 declare function setTimeout(callback: Function, milliseconds: number): any
+
+const EC = protractor.ExpectedConditions;
+
+
 /* TO RUN WITH SUCCESS YOU MUST CREATE AN EMPTY DATASET IN THE CATALOG */
 describe('registrering-gui App', () => {
+
+
     let page: RegistreringGuiPage;
 
-    beforeEach(() => {
-        page = new RegistreringGuiPage();
-        browser.get("/")
-        element(by.buttonText("Logg inn som bjg")).isPresent().then(function (isPresent) {
-            if (isPresent) {
-                let submitButton = element(by.buttonText("Logg inn som bjg"));
-                submitButton.click();
-            }
-        });
+    beforeEach(async () => {
 
-        var isLoggedInElement = element(by.css('.alert-success'));
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.presenceOf(isLoggedInElement), 10000);
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+        console.log("beforeEach()");
+        page = new RegistreringGuiPage();
+        console.log("waiting for browser get");
+        await browser.get("/");
+
+        console.log("Looking for Logg inn");
+        let isPresent = await element(by.buttonText("Logg inn")).isPresent()
+        if (isPresent) {
+            let submitButton = element(by.buttonText("Logg inn"));
+            console.log("Clicking for Logg");
+
+            await submitButton.click();
+        }
+
+        browser.sleep(2000);
+
+
+        console.log("Waiting to be logged in");
+        let isLoggedInElement = element(by.css('.login-logout-button'));
+
+        await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find .fdk-saved in beforeEach");
+
+        console.log("Logged in");
+
     });
 
-    afterEach(()=>{
-      var clickDeleteDataset = () => {
-        var EC = protractor.ExpectedConditions;
-        let delete_button = element(by.id('button_delete_dataset_in_list'));
-        return browser.wait(EC.presenceOf(delete_button), 10000).then(()=>{
-          element(by.css("#button_delete_dataset_in_list")).click().then(()=>{
-            element.all(by.css("#datasets_table tr")).count().then((count) => {
-              if(count !== 0) {
-                clickDeleteDataset();
-              } else {
+    afterEach(async () => {
+        console.log("afterEach()");
+        let clickDeleteDataset = async () => {
 
-              }
-            });
-          });
-        });
-      }
-      clickDeleteDataset();
-    })
+            console.log("afterEach2");
+
+            let delete_button = element(by.id('button_delete_dataset_in_list'));
+            console.log("afterEach3");
+
+            browser.sleep(1000);
+
+
+            let present = await delete_button.isPresent();
+            if (!present) {
+                return;
+            }
+
+            console.log("afterEach4");
+
+            await element(by.css("#button_delete_dataset_in_list")).click();
+
+            console.log("afterEach5");
+
+            let count = await element.all(by.css("#datasets_table tr")).count();
+
+            console.log("afterEach6");
+
+            if (count !== 0) {
+                await clickDeleteDataset();
+            }
+
+
+        };
+        await clickDeleteDataset();
+
+
+    });
 
     beforeAll(() => {
+        console.log("beforeAll");
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
 
-        it("Should save datacatalog fields upon typing", () => {
-            let catalogLink = element(by.css("#datacatalogs td"));
-            catalogLink.click();
+    it("Should save datacatalog fields upon typing", async () => {
 
-            let datasetH1Input = element(by.css(".fdk-register-h1"));
-            datasetH1Input.clear();
-            datasetH1Input.sendKeys('New datacatalog name');
+        let catalogLink = element(by.css("#datacatalogs td"));
 
-            var EC = protractor.ExpectedConditions;
-            var alertSuccess = element(by.css('.alert-success'));
+        await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find catalogLink");
 
-            browser.wait(EC.presenceOf(alertSuccess), 10000).then( () => {
+        await  catalogLink.click();
 
-                    browser.refresh();
+        let datasetH1Input = element(by.css(".fdk-register-h1"));
+        await browser.wait(EC.presenceOf(datasetH1Input), 10000, "Could not find catalog title element");
 
-                    datasetH1Input = element(by.css(".fdk-register-h1"));
-                    browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'), 1000).then(() => {
-                        expect(<any>page.getH1Value()).toEqual('New datacatalog name');
-                    });
-                }
-            ).catch(() => {
-                browser.pause();
-            });
+        await datasetH1Input.clear();
+        await datasetH1Input.sendKeys('New datacatalog name');
 
 
-        });
+        let alertSuccess = element(by.css('.fdk-saved'));
 
-    it("Should handle saving of checkboxes in new dataset", (done) => {
-      let catalogLink = element(by.css("#datacatalogs td"));
-      catalogLink.click();
+        await browser.wait(EC.presenceOf(alertSuccess), 10000, "Could not find saved element");
 
-      page.createDataset('Should handle saving of checkboxes in new dataset').then(() => {
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+
+
+        datasetH1Input = element(by.css(".fdk-register-h1"));
+
+        await browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'New datacatalog name'), 10000, "Could not find 'New datacatalog name'");
+
+        expect(<any>page.getH1Value()).toEqual('New datacatalog name');
+
+
+    });
+
+
+    it("Should save dataset title after typing", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
+
+        let title = 'Should save dataset title after typing';
+        await page.createDataset(title);
+
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); //  check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+
+        let section = element(by.cssContainingText(".section-title","Tittel og beskrivelse"));
+        await section.click();
+
+        let datasetTitle = element(by.css("#dataset-title"));
+        await browser.wait(EC.textToBePresentInElementValue(datasetTitle, title), 1000);
+        expect(<any>page.getDatasetTitle()).toEqual(title);
+
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+
+    });
+
+
+    it("Should copy publiser from catalog into new dataset", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
+        await page.createDataset('Should copy publiser from catalog into new dataset');
+
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+        let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
+        expect(<any>datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+
+    });
+
+
+    it("should display at least 21 datasets", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
+
+
+        for (let x = 0; x < 21; x++) {
+
+            await page.createDataset('Dataset' + x);
+            let alertSuccess = element(by.css('.fdk-saved'));
+            await browser.wait(EC.presenceOf(alertSuccess), 10000);
+            let backButton = element(by.css("#button_back_to_catalog"));
+            await browser.wait(EC.presenceOf(backButton), 10000);
+            await backButton.click();
+
+        }
+
+        expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(20);
+
+    });
+
+    it("Should handle saving of languages (checkboxes) in new dataset", async () => {
+
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
+        await catalogLink.click();
+
+        await page.createDataset('Should handle saving of checkboxes in new dataset');
+
 
         let datasetLanguagesEngelskElement = element(by.css('.dataset-languages input'));
-        datasetLanguagesEngelskElement.click().then(()=>{
-          //browser.pause();
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 15000).then(()=>{
-            browser.refresh()
-            let datasetLanguagesEngelskElement = element(by.css('.dataset-languages input'));
+        await browser.wait(EC.presenceOf(datasetLanguagesEngelskElement), 10000, "Could not find .dataset-languages input");
+        await datasetLanguagesEngelskElement.click();
 
-            browser.wait(EC.presenceOf(datasetLanguagesEngelskElement),10000).then(() => {
-              expect(datasetLanguagesEngelskElement.getAttribute('checked') ).toBeTruthy();
-              expect(element(by.css('.dataset-languages input:last-child')).getAttribute('checked') ).toBeTruthy();
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
-            });
-          });
-        });
-      });
-    });
+        let alertSuccess = element(by.css('.fdk-saved'));
 
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
+        await browser.refresh();
 
-    it("should display at least 21 datasets", () => {
-      let catalogLink = element(by.css("#datacatalogs td"));
-      catalogLink.click();
-      var EC = protractor.ExpectedConditions;
+        let datasetLanguagesEngelskElement2 = element(by.css('.dataset-languages input'));
 
-      const createDataset = (x) => {
-        return page.createDataset('Dataset' + x).then(()=>{
-          let alertSuccess = element(by.css('.alert-success'));
-          return browser.wait(EC.presenceOf(alertSuccess), 10000).then(()=>{
-            let backButton = element(by.css("#button_back_to_catalog"));
-            return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-              backButton.click();
-              if(x<21) {
-                createDataset(x+1);
-                return false;
-              } else {
-                return true;
-              }
-            });
-          });
-        });
-      }
+        browser.sleep(5000);
 
-      createDataset(0).then((returnVal)=> { // create the first dataset, which will recurse to 21
-        if(returnVal === true) {
-          expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(20);
-          //cleanup:
+        try {
+            expect(datasetLanguagesEngelskElement2.getAttribute('checked')).toBeTruthy("datasetLanguagesEngelskElement2 should be checked");
+            expect(element(by.css('.dataset-languages input:last-child')).getAttribute('checked')).toBeTruthy(".dataset-languages input:last-child should be checked");
+        }catch(err){
+            console.log(await browser.getPageSource());
+            throw err;
+
         }
-      });
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+        // console.log("here7");
+        // browser.pause();
     });
 
-    it("should save conformsTo uris", (done) => {
+
+    it("should save conformsTo uris", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+        await catalogLink.click();
 
         //let datasetLink = element(by.css("#datasets td")); // create one instead
         //datasetLink.click();
-        page.createDataset('should save conformsTo uris').then(() => {
-          let subjectInput = element(by.css("input[placeholder='Standard']"));
-          subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
+        await page.createDataset('should save conformsTo uris');
+        let subjectInput = element(by.css("input[placeholder='Standard']"));
+        await subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
-          var alertSuccess = element(by.css('.alert-success'));
-          var EC = protractor.ExpectedConditions;
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
+        let alertSuccess = element(by.css('.fdk-saved'));
 
-          browser.refresh();
-          let actualConformsTo = element(by.css("input[placeholder='Standard']"));
-          return browser.wait(EC.presenceOf(actualConformsTo), 10000).then(() => {
-            console.log('aaaaa');
-              expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
-              expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
-              console.log('aaaaab');
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
-          });
-        });
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+        let actualConformsTo = element(by.css("input[placeholder='Standard']"));
+        await browser.wait(EC.presenceOf(actualConformsTo), 10000);
+        console.log('aaaaa');
+        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
+        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
+        console.log('aaaaab');
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+
+
     });
 
 
-    it("should save spatial uris", (done) => {
+    it("should save spatial uris", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+        await catalogLink.click();
 
+        await page.createDataset('should save spatial uris')
 
-        page.createDataset('should save spatial uris').then(() => {
+        let subjectInput = element(by.css("input[placeholder='Dekningsområde']"));
+        await subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
-          let subjectInput = element(by.css("input[placeholder='Dekningsområde']"));
-          subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+        let actualConformsTo = element(by.css("input[placeholder='Dekningsområde']"));
+        await browser.wait(EC.presenceOf(actualConformsTo), 10000);
+        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
+        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
 
-          browser.refresh();
-          let actualConformsTo = element(by.css("input[placeholder='Dekningsområde']"));
-          browser.wait(EC.presenceOf(actualConformsTo), 1000).then(() => {
-              expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
-              expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
-          });
-        });
 
     });
 
 
-    it("should display accessRightsComments field if RESTRICTED is chosen and content is saved ", (done) => {
+    it("should display accessRightsComments field if RESTRICTED is chosen and content is saved ", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+        await catalogLink.click();
 
-        page.createDataset('hould display accessRightsComments field if RESTRICTED is chosen').then(() => {
-          //click restricted access right to display accessrightsComment field
-          let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
-          accessRights.click()
+        await page.createDataset('hould display accessRightsComments field if RESTRICTED is chosen');
+        //click restricted access right to display accessrightsComment field
+        let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
+        await accessRights.click();
 
 
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-          //write something into the accesrightscomment field
-          let accessRightsComment = element(by.css("input[placeholder='Legg til url']"));
-          accessRightsComment.clear();
-          accessRightsComment.sendKeys('http://lovdata,'); //comma finishes entry
+        //write something into the accesrightscomment field
+        let accessRightsComment = element(by.css("input[placeholder='Legg til url']"));
+        await accessRightsComment.clear();
+        await accessRightsComment.sendKeys('http://lovdata,'); //comma finishes entry
 
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-          //check that accessrightscomment was saved
-          browser.refresh();
-          let actualAccessRightsComment = element(by.css("input[placeholder='Legg til url']"));
-          // #accessRightsComment
-          browser.wait(EC.presenceOf(actualAccessRightsComment), 10000).then(() => {
-              expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Legg til url'] rl-tag-input-item:first-child")).toMatch(/http:\/\/lovdata.*/);
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
 
-          });
-        });
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server//check that accessrightscomment was saved
+        await browser.refresh();
+        let actualAccessRightsComment = element(by.css("input[placeholder='Legg til url']"));
+        // #accessRightsComment
+        await browser.wait(EC.presenceOf(actualAccessRightsComment), 10000)
+        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Legg til url'] rl-tag-input-item:first-child")).toMatch(/http:\/\/lovdata.*/);
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000)
+        await backButton.click();
 
 
     });
 
 
-    it("should save labels for subject uris", (done) => {
+    it("should save labels for subject uris", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+        await catalogLink.click();
 
-        page.createDataset('should save labels for subject uris').then(() => {
-          let subjectInput = element(by.css("input[placeholder='Begrep']"));
-          subjectInput.clear();
-          subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
+        await page.createDataset('should save labels for subject uris');
 
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
+        let subjectInput = element(by.css("input[placeholder='Begrep']"));
+        await subjectInput.clear();
+        await subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
 
-          browser.refresh();
-          let actualSubjects = element(by.css("input[placeholder=Begrep]"));
-          browser.wait(EC.presenceOf(actualSubjects), 10000).then(() => {
-              expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Begrep'] rl-tag-input-item:first-child")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
 
-          });
-        });
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await  browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+        let actualSubjects = element(by.css("input[placeholder=Begrep]"));
+        await browser.wait(EC.presenceOf(actualSubjects), 10000);
+        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Begrep'] rl-tag-input-item:first-child")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+
     });
 
 
+    it("Should handle saving of codes in new dataset", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
 
-
-    it("Should handle saving of codes in new dataset", (done) => {
-      let catalogLink = element(by.css("#datacatalogs td"));
-      catalogLink.click();
-
-      page.createDataset('saving of codes').then(() => {
+        await page.createDataset('saving of codes');
         let provenanceControl = element(by.css('[formcontrolname=provenance]'));
-        provenanceControl.click();
+        await provenanceControl.click();
 
         let provenanceControlFirstValue = element(by.css('[formcontrolname=provenance] li:first-child'));
-        provenanceControlFirstValue.click();
+        await provenanceControlFirstValue.click();
 
         let accrualPeriodicityControl = element(by.css('[formcontrolname=accrualPeriodicity]'));
-        accrualPeriodicityControl.click();
+        await accrualPeriodicityControl.click();
         let accrualPeriodicityControlFirstValue = element(by.css('[formcontrolname=accrualPeriodicity] li:first-child'));
-        accrualPeriodicityControlFirstValue.click();
+        await accrualPeriodicityControlFirstValue.click();
 
-        var EC = protractor.ExpectedConditions;
-        var alertSuccess = element(by.css('.alert-success'));
-        browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-        browser.refresh();
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); // check above should check if things have been stored in the background, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
-        browser.wait(EC.presenceOf(provenanceControlValueElement),10000).then(() => {
-          expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
-          expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
-          let backButton = element(by.css("#button_back_to_catalog"));
-          return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-            backButton.click();
-            done();
-          });
-        });
-      });
+        await browser.wait(EC.presenceOf(provenanceControlValueElement), 10000);
+        expect(<any>page.getTextFromCssElement('[formcontrolname=provenance] .value')).toEqual('Tredjepart');
+        expect(<any>page.getTextFromCssElement('[formcontrolname=accrualPeriodicity] .value')).toEqual('hver fjortende dag');
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await   backButton.click();
+
     });
 
 
-    it("Should save dataset fields upon typing", (done) => {
+
+
+
+    it("Should handle Contact Point fields upon typing", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
+        await catalogLink.click();
 
-        page.createDataset('Should save dataset fields upon typing').then(() => {
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
+        await page.createDataset('Should handle Contact Point fields upon typing');
+        let contactAvdeling = element(by.id('contact-avdeling'));
+        await contactAvdeling.clear();
+        await contactAvdeling.sendKeys('Avdelingsnavn');
 
-          browser.refresh();
-          let datasetH1Input = element(by.css(".fdk-register-h1"));
-          browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'Should save dataset fields upon typing'), 1000).then(() => {
-              expect(<any>page.getH1Value()).toEqual('Should save dataset fields upon typing');
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
-          });
-        });
+        let contactUrl = element(by.id('contact-url'));
+        await contactUrl.clear();
+        await contactUrl.sendKeys("http://test.no");
+
+        let contactEmail = element(by.id('contact-email'));
+        await contactEmail.clear();
+        await contactEmail.sendKeys('test@test.test');
+
+        let contactTelephone = element(by.id('contact-telephone'));
+        await contactTelephone.clear();
+        await contactTelephone.sendKeys("+47123456");
+
+
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+        let avdeling = element(by.id('contact-avdeling'));
+
+        await browser.wait(EC.textToBePresentInElementValue(avdeling, 'Avdelingsnavn'), 1000);
+        expect(<any>page.getValueFromElement('contact-avdeling')).toEqual('Avdelingsnavn');
+        expect(<any>page.getValueFromElement('contact-url')).toEqual('http://test.no');
+        expect(<any>page.getValueFromElement('contact-email')).toEqual('test@test.test');
+        expect(<any>page.getValueFromElement('contact-telephone')).toEqual('+47123456');
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
 
     });
 
-    it("Should copy publiser from catalog into new dataset", (done) => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
-        page.createDataset('Should copy publiser from catalog into new dataset').then(() => {
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-          browser.refresh();
-          let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
-          expect(<any>datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
-          let backButton = element(by.css("#button_back_to_catalog"));
-          return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-            backButton.click();
-            done();
-          });
-        });
-    });
-
-    it("Should handle Contact Point fields upon typing", (done) => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        catalogLink.click();
-
-        page.createDataset('Should handle Contact Point fields upon typing').then(() => {
-          let contactAvdeling = element(by.id('contact-avdeling'));
-          contactAvdeling.clear();
-          contactAvdeling.sendKeys('Avdelingsnavn');
-
-          let contactUrl = element(by.id('contact-url'));
-          contactUrl.clear();
-          contactUrl.sendKeys("http://test.no");
-
-          let contactEmail = element(by.id('contact-email'));
-          contactEmail.clear();
-          contactEmail.sendKeys('test@test.test');
-
-          let contactTelephone = element(by.id('contact-telephone'));
-          contactTelephone.clear();
-          contactTelephone.sendKeys("+47123456");
-
-          var EC = protractor.ExpectedConditions;
-          var alertSuccess = element(by.css('.alert-success'));
-          browser.wait(EC.presenceOf(alertSuccess), 10000);
-
-          browser.refresh();
-          var avdeling = element(by.id('contact-avdeling'));
-
-          browser.wait(EC.textToBePresentInElementValue(avdeling, 'Avdelingsnavn'), 1000).then(() => {
-              expect(<any>page.getValueFromElement('contact-avdeling')).toEqual('Avdelingsnavn');
-              expect(<any>page.getValueFromElement('contact-url')).toEqual('http://test.no');
-              expect(<any>page.getValueFromElement('contact-email')).toEqual('test@test.test');
-              expect(<any>page.getValueFromElement('contact-telephone')).toEqual('+47123456');
-              let backButton = element(by.css("#button_back_to_catalog"));
-              return browser.wait(EC.presenceOf(backButton), 10000).then(()=>{
-                backButton.click();
-                done();
-              });
-          });
-        });
-    });
-});
+})
+;

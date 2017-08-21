@@ -25,11 +25,11 @@
 .expanded-content {
   display:none;
   background: #fff;
-  padding:25px;
+  padding: 5px 30px 25px 30px;
   margin-bottom:30px;
 }
 .expanded-content label {
-  color:#2B88B5;
+
 }
 .expand-checkbox {
   position: absolute;
@@ -45,6 +45,7 @@
 .expand-checkbox:checked ~ .collapsed-content  {
   display: none;
 }
+
 .collapsed-content {
       background: #fff;
       padding: 5px;
@@ -53,7 +54,7 @@
 }
 </style>
 <div *ngIf="dataset && catalog">
-    <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong>{{dataset.publisher.name}}</strong></p>
+    <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
 <div class="row justify-content-md-center" *ngIf="dataset">
   <label for="title-and-description-toggle" class="col-md-push-1 col-md-2 section-title">
@@ -63,33 +64,180 @@
     <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" />
     <label for="title-and-description-toggle" class="collapsed-content expand-label">{{dataset.title[language] || 'Klikk for å fylle ut'}}</label>
     <div class="expanded-content">
-      <div class="" id="dataset">
-        <div class="" *ngIf="dataset.title">
-            <label for="contact-avdeling" class="input-label">Tittel</label>
+
+        <div class="fdk-input-container" *ngIf="dataset.title">
+            <label for="dataset-title" class="fdk-input-label">Tittel</label>
             <helptext
-              text="Dette er en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-              moretext="Dette er en annen en hjelpetekst som beskriver hvordan feltene bør fylles ut."
+              text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+              moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
               name="datasett-tittel"></helptext>
-          <input class="fdk-input fdk-register-h1" id="tittel-datasett" (keyup)="valuechange($event)" type="text"
-          placeholder="Tittel" [(ngModel)]="dataset.title[language]"/>
+          <input class="fdk-input" id="dataset-title" (keyup)="valuechange($event)" type="text"
+          [(ngModel)]="dataset.title[language]"/>
         </div>
-        <div class="" *ngIf="dataset.description">
-          <div id="datasett-utgiver-navn">{{dataset.publisher.name}}</div>
-          <textarea autofocus class="fdk-register-h3-2" rows="5" id="beskrivelse-datasett"
-          (ngModelChange)="valuechange(this)" placeholder="Beskrivelse"
+
+        <div class="fdk-input-container" *ngIf="dataset.description">
+            <label for="beskrivelse-datasett" class="fdk-input-label">Beskrivelse av datasettet</label>
+            <helptext
+                text="En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder."
+                moretext="Beskrivelsen skal være kortfattet slik at lister over datasett forståes ved å lese de første linjene. Hensikten med datasettet bør komme fram (f.eks. “Løsøreregisteret inneholder tinglyste flyttbare eiendeler”). For datasett som er omfattet av Personopplysningsloven, skal behandlingsformålet beskrives. Hvilke opplysninger som utgjør kjernen i datasettet bør angis. Feltinnhold skal ikke listes, men listes i emneord eller begreper. Beskrivelsen er ikke en gjentakelse av tittel Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk) Beskriv hva datasettet inneholder Beskriv avgrensninger, hva det ikke inneholder, dersom dette kan misforstås ut fra tittelen. Begrens lenker og markup (formatering) i teksten. Skal man angi språk må teksten formelt sett være fri for lenker og formatering (HTML)."
+                name="dataset-description"></helptext>
+          <textarea autofocus class="fdk-input fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
+          (ngModelChange)="valuechange(this)"
           [(ngModel)]='dataset.description[language]'></textarea>
         </div>
-      </div>
+
+        <div class="fdk-input-container">
+            <label for="dataset-objective" class="fdk-input-label">Formålet med datasettet</label>
+            <helptext
+                text="En setnings-beskrivelse av formålet til datasettet."
+                moretext="Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet. I søkeløsningen vil feltet vises samlet med beskrivelsen. Dersom datasettet inneholder personopplysninger skal behandlingsformålet for personopplysninger etter Personopplysningsloven beskrives her."
+                name="datasett-objective"></helptext>
+            <textarea autofocus class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
+                      (ngModelChange)="valuechange(this)"
+                      [(ngModel)]='dataset.objective'></textarea>
+        </div>
+
+        <div class="fdk-input-container" *ngIf="dataset.landingPages">
+            <label for="dataset-landingpage" class="fdk-input-label">Lenke til mer informasjon om datasettet</label>
+            <helptext
+                text="Egenskap ved datasett som refererer til en nettside som gir tilgang til datasettet, distribusjoner og annen informasjon."
+                moretext="Skal peke til en side hos den originale tilbyderen av data: kan benyttes for å peke til en samleside om et datasett og dets distribusjoner, bør peke til en side hos den originale tilbyderen av data."
+                name="dataset-landingPage"></helptext>
+            <input class="fdk-input" id="dataset-landingpage" (keyup)="valuechange($event)" type="url"
+                   [(ngModel)]="dataset.landingPages[0]"/>
+
+        </div>
     </div>
   </div>
 </div>
 
-<form [formGroup]="datasetForm" class="form-group" *ngIf="dataset">
 
+
+      <information [dataset]="dataset" (onSave)="onSave($event)"></information>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <label for="access-level-toggle" class="col-md-push-1 col-md-2 section-title">
+      Tilgangsnivå<b class="caret-right"></b>
+    </label>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="access-level-toggle" class="expand-checkbox" />
+      <label for="access-level-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
         <information [dataset]="dataset" (onSave)="onSave($event)"></information>
+      </div>
+    </div>
+  </div>
 
-</form>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <label for="quality-toggle" class="col-md-push-1 col-md-2 section-title">
+      Kvalitet<b class="caret-right"></b>
+    </label>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="quality-toggle" class="expand-checkbox" />
+      <label for="quality-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+              <quality [dataset]="dataset"
+                       (onSave)="onSave($event)">
+              </quality>
+      </div>
+    </div>
+  </div>
 
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
-<button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
-</button>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <label for="access-rights-toggle" class="col-md-push-1 col-md-2 section-title">
+      Tilgangsnivå<b class="caret-right"></b>
+    </label>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="access-rights-toggle" class="expand-checkbox" />
+      <label for="access-rights-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+        <accessRights [dataset]="dataset"
+        (onSave)="onSave($event)">
+        </accessRights>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <label for="spatial-toggle" class="col-md-push-1 col-md-2 section-title">
+      Geografisk avgrensning<b class="caret-right"></b>
+    </label>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="spatial-toggle" class="expand-checkbox" />
+      <label for="spatial-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+
+          <spatial [dataset]="dataset"
+                   (onSave)="onSave($event)">
+          </spatial>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <label for="information-toggle" class="col-md-push-1 col-md-2 section-title">
+      Opplysninger<b class="caret-right"></b>
+    </label>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="information-toggle" class="expand-checkbox" />
+      <label for="information-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+
+          <temporals
+          title="Tidsperioder"
+          [datasetForm]="datasetForm"
+          [temporalsFormArray]="datasetForm.controls.temporals"
+          [temporals]="dataset.temporals"
+          ></temporals>
+
+          <distributions
+          [datasetForm]="datasetForm"
+          [distributionsFormArray]="datasetForm.controls.samples"
+          [distributions]="dataset.samples"
+          title="Eksempeldata"
+          >
+        </distributions>
+
+        <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+          <label><!-- 416 -->
+            <input type="checkbox" id="checkbox-1" [formControl]="control" />
+            {{availableLanguages[i].prefLabel.nb}}
+          </label>
+        </div>
+        <div class="row">
+          <div *ngIf="dataset.modified" class="col-md-3">
+            <label for="issued" class="control-label">Opprettet dato:</label>
+            <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
+            formControlName="issued" ></my-date-picker>
+            <label for="modified" class="control-label">Endret dato:</label>
+            <my-date-picker id="modified" placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
+            formControlName="modified"></my-date-picker>
+          </div>
+        </div>
+
+          <contact
+          [contactsArray]="datasetForm.controls.contactPoints"
+          [contact]="dataset.contactPoints[0]">
+        </contact>
+      </div>
+    </div>
+  </div>
+
+
+<div class="row justify-content-md-center">
+
+    <div class="row">
+        <div class="col-md-push-3 col-md-8 fdk-changes-bar fdk-saved" *ngIf="saved">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
+        </div>
+        <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="!saved">
+            <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
+        </div>
+    </div>
+    <div class="col-md-push-3 col-md-8 fdk-buttons">
+
+    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
+    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
+    </button>
+    </div>
+</div>

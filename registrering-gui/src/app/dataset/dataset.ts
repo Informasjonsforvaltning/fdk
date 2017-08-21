@@ -25,6 +25,7 @@ export interface Dataset {
         [language: string]: string
     }[]; */
   subjects?: string[];
+  objective?: string;
   themes?: {uri:string, title:{"nb":string}}[];
   catalog: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};

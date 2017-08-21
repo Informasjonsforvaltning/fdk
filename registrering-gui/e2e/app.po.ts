@@ -1,40 +1,52 @@
 import {browser, element, by, protractor} from "protractor";
 
 export class RegistreringGuiPage {
-  navigateTo() {
-    return browser.get('/');
-  }
+     EC = protractor.ExpectedConditions;
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
-  }
 
-  getLoginStatusText() {
-    return element(by.css('.login-status')).getText();
-  }
+    async navigateTo() {
+        await browser.get('/');
+    }
 
-  getAlertText() {
-    return element(by.css('.alert')).getText();
-  }
+    getParagraphText() {
+        return element(by.css('app-root h1')).getText();
+    }
 
-  getH1Value() {
-    return element(by.css('.fdk-register-h1')).getAttribute('value');
-  }
+    getLoginStatusText() {
+        return element(by.css('.login-status')).getText();
+    }
+
+    getAlertText() {
+        return element(by.css('.alert')).getText();
+    }
+
+    getH1Value() {
+        return element(by.css('.fdk-register-h1')).getAttribute('value');
+    }
+
+    getDatasetTitle() {
+        return element(by.css('#dataset-title')).getAttribute('value')
+    }
 
     getValueFromElement(id) {
-      return element(by.id(id)).getAttribute('value');
+        return element(by.id(id)).getAttribute('value');
     }
+
     getTextFromCssElement(css) {
-      return element(by.css(css)).getText();
+        return element(by.css(css)).getText();
     }
-    createDataset(name) {
-      let newDatasetButton = element(by.id("button_new_dataset"));
-      newDatasetButton.click();
-      let datasetH1Input = element(by.css(".fdk-register-h1"));
-      var EC = protractor.ExpectedConditions;
-      return browser.wait(EC.presenceOf(datasetH1Input), 10000).then(() => {
-        datasetH1Input.clear();
-        datasetH1Input.sendKeys(name);
-      });
+
+    async createDataset(name) {
+        console.log(`createDataset(name: ${name})`);
+        let newDatasetButton = element(by.id("button_new_dataset"));
+        await newDatasetButton.click();
+
+        let section = element(by.cssContainingText(".section-title","Tittel og beskrivelse"));
+        await section.click();
+
+        let datasetTitle = element(by.id("dataset-title"));
+        await browser.wait(this.EC.presenceOf(datasetTitle), 10000, "Could not find input field for dataset title");
+        await datasetTitle.clear();
+        await datasetTitle.sendKeys(name);
     }
 }

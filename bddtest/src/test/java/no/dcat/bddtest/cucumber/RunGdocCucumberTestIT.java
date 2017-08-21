@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
         tags = {"~@ignore"}
 )
 
-public class RunGdocCucumberTest {
+public class RunGdocCucumberTestIT {
 }
 
 
