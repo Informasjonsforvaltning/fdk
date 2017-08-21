@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {Contact} from "./contact";
+import {HelpText} from "../helptext/helptext.component";
 
 @Component({
     selector: 'contact',
@@ -24,7 +25,7 @@ export class ContactComponent implements OnInit {
       if(this.contact) {
 
           this.contactForm = this.toFormGroup(this.contact);
-          this.contactsArray.push(this.contactForm);        
+          this.contactsArray.push(this.contactForm);
       }
     }
 

@@ -32,7 +32,8 @@ import {AccessRightsComponent} from "./dataset/accessRights/accessRights.compone
 import {InformationComponent} from "./dataset/information/information.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
-
+import {HelpText} from "./dataset/helptext/helptext.component";
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         QualityComponent,
         AccessRightsComponent,
         InformationComponent,
-        SpatialComponent
+        SpatialComponent,
+        HelpText
     ],
     imports: [
         BrowserModule,
@@ -62,7 +64,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
         RouterModule.forRoot(routes),
         BootstrapModalModule,
         RlTagInputModule,
-	       MyDatePickerModule
+	       MyDatePickerModule,
+         BsDropdownModule.forRoot()
     ],
     entryComponents: [
         ConfirmComponent

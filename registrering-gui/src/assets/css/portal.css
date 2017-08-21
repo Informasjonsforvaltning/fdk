@@ -1,0 +1,92 @@
+/*  C O N T A I N E R  */
+
+.fdk-column-search-left {
+	height: auto;
+	border: 1px solid var(--color4);
+	border-radius: 2px;
+	margin: 0;
+	padding: 15px 15px 20px 15px;
+}
+
+
+/*  I N P U T  */
+
+
+.fdk-search {
+    color: var(--color1);
+    border: 1px solid var(--color1);
+    border-radius: 5px;
+    font-size: 3rem;
+    line-height: 3rem;
+    width: 100%;
+    padding: 12px 16px;
+    margin: 0 0 60px 0px;
+}
+
+::-webkit-input-placeholder { /* PLACEHOLDER COLOR FOR: WebKit, Blink, Edge */
+    color: var(--color3);
+}
+
+:-moz-placeholder { /* PLACEHOLDER COLOR FOR: Mozilla Firefox 4 to 18 */
+   color: var(--color3);
+   opacity: 1;
+}
+
+::-moz-placeholder { /* PLACEHOLDER COLOR FOR: Mozilla Firefox 19+ */
+   color: var(--color3);
+   opacity: 1;
+}
+
+:-ms-input-placeholder { /* PLACEHOLDER COLOR FOR: Internet Explorer 10-11 */
+   color: var(--color3);
+}
+
+
+/*  S E A R C H   R E S U L T  */
+
+
+.fdk-container-search-hit {
+  background-color: var(--color0);
+	border: 1px solid var(--color6);
+  margin: 0 0 10px 0;
+  padding: 10px 30px 35px 30px;
+  border-radius: 5px;
+}
+
+.fdk-container-search-hit:hover {
+	border: 1px solid var(--color1);
+}
+
+.fdk-container-distributions {
+	width: 100%;
+	border-left: 10px solid var(--color1);
+	padding-left: 10px;
+}
+
+.fdk-distributions-green {
+	border-left: 10px solid var(--color-green);
+}
+
+.fdk-distributions-red {
+	border-left: 10px solid var(--color-red);
+}
+
+.fdk-count {
+    float: right;
+}
+
+/* FONTS */
+
+.fdk-p-search-hit {
+	margin-top: 20px;
+}
+
+
+/*  T Y P O G R A P H Y  */
+
+.fdk-search-subheading {
+    font-weight: 400;
+    border-bottom: 1px solid var(--color3);
+    padding: 0.4rem 0 0.8rem 0;
+    margin-bottom: 0.6rem;    
+}
