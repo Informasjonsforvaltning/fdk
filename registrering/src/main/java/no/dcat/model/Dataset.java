@@ -22,6 +22,9 @@ public class Dataset {
 
     public static final String ELASTIC_TYPE = "dataset";
 
+    public static final String REGISTRATION_STATUS_DRAFT = "DRAFT";
+    public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
+
     @NonNull
     @Id
     private String id;
@@ -168,6 +171,10 @@ public class Dataset {
     @Field
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
+
+
+    @Field
+    private String registrationStatus;
 
 
     public Dataset() {

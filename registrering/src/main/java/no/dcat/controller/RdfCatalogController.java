@@ -57,11 +57,13 @@ public class RdfCatalogController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // TODO fix limitation in more than 50 datasets
+        // TODO fix limitation in more than 1000 datasets
         Page<Dataset> datasets = getDatasetRepository()
-                .findByCatalog(catalog.getId(), new PageRequest(0,50));
+                .findByCatalogAndRegistrationStatus(catalog.getId(), Dataset.REGISTRATION_STATUS_PUBLISH, new PageRequest(0,1000));
 
-        catalog.setDataset(datasets.getContent());
+        if (datasets != null) {
+            catalog.setDataset(datasets.getContent());
+        }
 
         return new ResponseEntity<>(catalog, OK);
     }
