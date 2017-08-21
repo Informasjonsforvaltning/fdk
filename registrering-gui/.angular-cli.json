@@ -24,11 +24,17 @@
         "assets/css/common.css",
         "assets/css/portal.css",
         "assets/css/dataset.css",
-        "assets/css/registration2.css",
+        "assets/css/register.css",
         "assets/fonts/font-awesome/css/font-awesome.min.css",
         "assets/css/frederic.css",
         "assets/css/david.css",
-        "assets/css/bjorn.css"
+        "assets/css/bjorn.css",
+        "assets/css/colors.css",
+          "assets/css/designsystem.css",
+          "assets/css/typo.css",
+          "assets/css/custom.css"
+
+
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

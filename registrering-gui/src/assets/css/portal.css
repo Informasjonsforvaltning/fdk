@@ -1,11 +1,11 @@
 /*  C O N T A I N E R  */
 
-.fdk-column-search-left {
-	height: auto;
-	border: 1px solid var(--color4);
-	border-radius: 2px;
-	margin: 0;
-	padding: 15px 15px 20px 15px;
+.fd-column-search-left {
+    height: auto;
+    border: 1px solid var(--color4);
+    border-radius: 2px;
+    margin: 0;
+    padding: 15px 15px 20px 15px;
 }
 
 
@@ -28,17 +28,17 @@
 }
 
 :-moz-placeholder { /* PLACEHOLDER COLOR FOR: Mozilla Firefox 4 to 18 */
-   color: var(--color3);
-   opacity: 1;
+    color: var(--color3);
+    opacity: 1;
 }
 
 ::-moz-placeholder { /* PLACEHOLDER COLOR FOR: Mozilla Firefox 19+ */
-   color: var(--color3);
-   opacity: 1;
+    color: var(--color3);
+    opacity: 1;
 }
 
 :-ms-input-placeholder { /* PLACEHOLDER COLOR FOR: Internet Explorer 10-11 */
-   color: var(--color3);
+    color: var(--color3);
 }
 
 
@@ -46,29 +46,26 @@
 
 
 .fdk-container-search-hit {
-  background-color: var(--color0);
-	border: 1px solid var(--color6);
-  margin: 0 0 10px 0;
-  padding: 10px 30px 35px 30px;
-  border-radius: 5px;
+    background-color: var(--color0);
+    border: 1px solid var(--color6);
+    margin: 0 0 10px 0;
+    padding: 10px 30px 35px 30px;
+    border-radius: 5px;
 }
 
-.fdk-container-search-hit:hover {
-	border: 1px solid var(--color1);
-}
 
 .fdk-container-distributions {
-	width: 100%;
-	border-left: 10px solid var(--color1);
-	padding-left: 10px;
+    width: 100%;
+    border-left: 10px solid var(--color1);
+    padding-left: 10px;
 }
 
 .fdk-distributions-green {
-	border-left: 10px solid var(--color-green);
+    border-left: 10px solid var(--color-green);
 }
 
 .fdk-distributions-red {
-	border-left: 10px solid var(--color-red);
+    border-left: 10px solid var(--color-red);
 }
 
 .fdk-count {
@@ -78,7 +75,7 @@
 /* FONTS */
 
 .fdk-p-search-hit {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 
@@ -88,5 +85,5 @@
     font-weight: 400;
     border-bottom: 1px solid var(--color3);
     padding: 0.4rem 0 0.8rem 0;
-    margin-bottom: 0.6rem;    
+    margin-bottom: 0.6rem;
 }

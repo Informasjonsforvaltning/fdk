@@ -22,7 +22,7 @@ import {HelpText} from "./helptext/helptext.component";
 @Component({
   selector: 'app-dataset',
   templateUrl: './dataset.component.html',
-  styleUrls: ['./dataset.component.css', '../../assets/css/designsystem.css', '../../assets/css/registrering.css']
+  styleUrls: ['./dataset.component.css']
 })// class Select
 
 export class DatasetComponent implements OnInit {
