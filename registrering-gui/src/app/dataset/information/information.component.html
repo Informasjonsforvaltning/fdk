@@ -2,28 +2,6 @@
     <div [formGroup]="informationForm" class="form-group">
 
         <div class="form-group">
-<style>
-.checkbox-replacement {
-  height: 21px;
-  width:21px;
-  background-size: 23px 21px;
-  background-image:url('/assets/img/unchecked.png');
-}
-input:checked ~ .checkbox-replacement{
-  background-image:url('/assets/img/checked.png');
-}
-.checkbox input {
-  position: absolute;
-  left:-9999px;
-}
-</style>
-            <div *ngFor="let control of informationForm.controls['themesArray'].controls; let i=index" class="checkbox">
-              <label><!-- 416 -->
-                <input type="checkbox" id="checkbox-1{{i}}" [formControl]="control" />
-                <label class="checkbox-replacement" for="checkbox-1{{i}}"></label>
-                {{allThemes[i].label}}
-              </label>
-            </div>
         </div>
 
         <div class="form-group">

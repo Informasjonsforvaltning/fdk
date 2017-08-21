@@ -52,6 +52,18 @@
       line-height: 1.7;
       display: block;
 }
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+.truncate span::after {
+    content: '−';
+}
+.truncate span:last-child::after {
+  content:'';
+}
 </style>
 <div *ngIf="dataset && catalog">
     <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
@@ -113,7 +125,6 @@
 
 
 
-      <information [dataset]="dataset" (onSave)="onSave($event)"></information>
   <div class="row justify-content-md-center" *ngIf="dataset">
     <label for="access-level-toggle" class="col-md-push-1 col-md-2 section-title">
       Tilgangsnivå<b class="caret-right"></b>
@@ -126,6 +137,27 @@
       </div>
     </div>
   </div>
+
+
+    <div class="row justify-content-md-center" *ngIf="dataset">
+      <label for="tema-toggle" class="col-md-push-1 col-md-2 section-title">
+        Tema<b class="caret-right"></b>
+      </label>
+      <div class="col-md-push-1 col-md-8 collapsed">
+        <input type="checkbox" id="tema-toggle" class="expand-checkbox" />
+        <label for="tema-toggle" class="collapsed-content expand-label">
+          <div class="truncate">
+            <span class="" *ngFor="let tema of dataset.themes; let i=index" >
+              {{tema.title.nb}}
+            </span>
+          </div>
+          <div *ngIf="dataset.themes.length === 0">Klikk for å fylle ut</div>
+        </label>
+        <div class="expanded-content">
+          <tema [dataset]="dataset" (onSave)="onSave($event)"></tema>
+        </div>
+      </div>
+    </div>
 
   <div class="row justify-content-md-center" *ngIf="dataset">
     <label for="quality-toggle" class="col-md-push-1 col-md-2 section-title">
@@ -182,39 +214,36 @@
       <input type="checkbox" id="information-toggle" class="expand-checkbox" />
       <label for="information-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
       <div class="expanded-content">
+            <temporals
+            title="Tidsperioder"
+            [datasetForm]="datasetForm"
+            [temporalsFormArray]="datasetForm.controls.temporals"
+            [temporals]="dataset.temporals"
+            ></temporals>
 
-          <temporals
-          title="Tidsperioder"
-          [datasetForm]="datasetForm"
-          [temporalsFormArray]="datasetForm.controls.temporals"
-          [temporals]="dataset.temporals"
-          ></temporals>
-
-          <distributions
-          [datasetForm]="datasetForm"
-          [distributionsFormArray]="datasetForm.controls.samples"
-          [distributions]="dataset.samples"
-          title="Eksempeldata"
-          >
-        </distributions>
-
-        <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
-          <label><!-- 416 -->
-            <input type="checkbox" id="checkbox-1" [formControl]="control" />
-            {{availableLanguages[i].prefLabel.nb}}
-          </label>
-        </div>
-        <div class="row">
-          <div *ngIf="dataset.modified" class="col-md-3">
-            <label for="issued" class="control-label">Opprettet dato:</label>
-            <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-            formControlName="issued" ></my-date-picker>
-            <label for="modified" class="control-label">Endret dato:</label>
-            <my-date-picker id="modified" placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
-            formControlName="modified"></my-date-picker>
+            <distributions
+            [datasetForm]="datasetForm"
+            [distributionsFormArray]="datasetForm.controls.samples"
+            [distributions]="dataset.samples"
+            title="Eksempeldata"
+            >
+          </distributions>
+          <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+            <label><!-- 416 -->
+              <input type="checkbox" id="checkbox-1" [formControl]="control" />
+              {{availableLanguages[i].prefLabel.nb}}
+            </label>
           </div>
-        </div>
-
+          <div class="row">
+            <div *ngIf="dataset.modified" class="col-md-3">
+              <label for="issued" class="control-label">Opprettet dato:</label>
+              <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
+              formControlName="issued" ></my-date-picker>
+              <label for="modified" class="control-label">Endret dato:</label>
+              <my-date-picker id="modified" placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
+              formControlName="modified"></my-date-picker>
+            </div>
+          </div>
           <contact
           [contactsArray]="datasetForm.controls.contactPoints"
           [contact]="dataset.contactPoints[0]">
