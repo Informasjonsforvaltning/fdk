@@ -1,4 +1,4 @@
-<div class="fdk-panel-body" *ngIf="qualityForm">
+<div class="  " *ngIf="qualityForm">
     <div [formGroup]="qualityForm" class="form-group">
         <div (click)="fetchFrequencies()" class="form-group">
             <label for="quality-frequency" class="control-label">Frekvens:</label>
@@ -26,7 +26,7 @@
         <div class="form-group" [formGroup]="qualityForm">
             <label for="quality-conformsto" class="control-label">I samsvar med standard:</label>
             <rl-tag-input id="quality-conformsto"
-                          class="form-control"
+                          class="fdk-input"
                           placeholder="Standard"
                           formControlName="conformsTo">
             </rl-tag-input>

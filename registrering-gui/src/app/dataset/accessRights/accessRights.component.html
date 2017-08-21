@@ -1,8 +1,6 @@
-<div class="fdk-panel-body" *ngIf="accessRightsForm">
+<div class="" *ngIf="accessRightsForm">
     <form [formGroup]="accessRightsForm" class="form-group">
-
         <label for="accessRightSelector" class="control-label">Tilgangsnivå:</label>
-
         <div id="accessRightSelector">
             <div class="radio" *ngFor="let accessRight of accessRightsModel">
                 <label>
@@ -16,11 +14,10 @@
                 </label>
             </div>
         </div>
-
         <div class="form-group" *ngIf="showAccessRightComments()" >
             <label for="accessRightsComment" class="control-label">Skjermingshjemmel:</label>
             <rl-tag-input id="accessRightsComment"
-                          class="form-control"
+                          class="fdk-input"
                           placeholder="Legg til url"
                           formControlName="accessRightsComment">
             </rl-tag-input>

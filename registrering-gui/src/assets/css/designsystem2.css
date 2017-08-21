@@ -1,0 +1,149 @@
+/*  D I V I D E R S   &   B O X E S  */
+
+.designsystem-divider {
+    height: 80px;
+    width: 100%;
+    border-bottom: 1px solid var(--color4);
+    margin-bottom: 80px;
+}
+
+hr {
+    border-color: var(--color5);
+    width: 100%;
+    margin: 20px 00px;
+}
+
+.designsystem-infobox {
+    width: 100%;
+    padding: 10px;
+    margin: 0px;
+    background-color: #ffffff;
+    border: 1px solid var(--color-green);
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.designsystem-iconbox {
+    width: 160px;
+    height: auto;
+    vertical-align: middle;
+    margin: 0px 10px 20px 0px;
+    padding: 0px;
+    float: left;
+}
+
+.designsystem-space-above {
+    margin: 20px 0px 0px 0px;
+}
+
+.designsystem-space-below {
+    margin: 0px 0px 20px 0px;
+}
+
+
+
+/*  H E A D I N G S  */
+
+.designsystem-number {
+    font-family: "heebo";
+    font-weight: 600;
+    padding: 10px 5px 9px 5px;
+    margin-right: 10px;
+    background-color: var(--color-cta);
+    color: var(--color1);
+    width: 40px;
+    height: auto;
+    border-radius: 2px;
+    text-align: center;
+    float: left;
+}
+
+.designsystem-h1 {
+    font-family: "heebo";
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: --var(color1);
+    padding: 10px 3px 9px 3px;
+    margin: 0px 0px 50px 0px;
+    height: auto;
+}
+
+
+
+/*  C O L O R   P A L E T T E  */
+
+.designsystem-color-palette {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+    padding: 35px 5px 5px 5px;
+    text-align: center;
+    float: left;
+    border-radius: 60px;
+}
+
+.designsystem-color-1 {
+    background-color: var(--color1);
+    color: #fff;
+    font-weight: 300;
+}
+
+.designsystem-color-2 {
+    background-color: var(--color2);
+    color: #fff;
+    font-weight: 300;
+}
+
+.designsystem-color-3 {
+    background-color: var(--color3);
+    color: #fff;
+    font-weight: 300;
+}
+
+.designsystem-color-4 {
+    background-color: var(--color4);
+    color: var(--color1);
+}
+
+.designsystem-color-5 {
+    background-color: var(--color5);
+    color: var(--color1);
+}
+
+.designsystem-color-6 {
+    background-color: var(--color6);
+    color: var(--color1);
+    border: 1px solid var(--color4);
+}
+
+.designsystem-color-7 {
+    background-color: var(--color7);
+    color: var(--color1);
+}
+
+.designsystem-color-cta {
+    background-color: var(--color-cta);
+    color: var(--color1);
+}
+
+.designsystem-color-cta2 {
+    background-color: var(--color-cta2);
+    color: var(--color1);
+}
+
+.designsystem-color-green {
+    background-color: var(--color-green);
+    color: var(--color-);
+}
+
+.designsystem-color-red {
+    background-color: var(--color-red);
+    color: var(--color1);
+}
+
+.designsystem-color-white {
+    background-color: #ffffff;
+    color: var(--color1);
+}
+/* aaabbb */

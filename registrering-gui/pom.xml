@@ -189,6 +189,7 @@
     </profiles>
 
     <build>
+        <!-- only filter dist -->
 
 
 
@@ -251,6 +252,7 @@
                     <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
                     <serverId>docker-hub</serverId>
                     <resources>
+                        <!-- copy docker file to target -->
                         <resource>
                             <directory>${project.basedir}</directory>
                             <targetPath>/</targetPath>

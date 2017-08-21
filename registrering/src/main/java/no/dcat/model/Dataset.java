@@ -43,6 +43,11 @@ public class Dataset {
     @Field
     private Map<String,String> description = new HashMap<>();
 
+    //dcatno:objective
+    //Norwegian: Formål
+    @Field
+    private String objective;
+
     //dcat:contactPoint
     //Norwegian: Kontaktpunkt
     @Field

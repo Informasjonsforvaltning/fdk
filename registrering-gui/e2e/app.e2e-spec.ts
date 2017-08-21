@@ -20,11 +20,11 @@ describe('registrering-gui App', () => {
         console.log("waiting for browser get");
         await browser.get("/");
 
-        console.log("Looking for Logg inn som bjg");
-        let isPresent = await element(by.buttonText("Logg inn som bjg")).isPresent()
+        console.log("Looking for Logg inn");
+        let isPresent = await element(by.buttonText("Logg inn")).isPresent()
         if (isPresent) {
-            let submitButton = element(by.buttonText("Logg inn som bjg"));
-            console.log("Clicking for Logg inn som bjg");
+            let submitButton = element(by.buttonText("Logg inn"));
+            console.log("Clicking for Logg");
 
             await submitButton.click();
         }
@@ -33,9 +33,9 @@ describe('registrering-gui App', () => {
 
 
         console.log("Waiting to be logged in");
-        let isLoggedInElement = element(by.css('.alert-success'));
+        let isLoggedInElement = element(by.css('.login-logout-button'));
 
-        await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find .alert-success in beforeEach");
+        await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find .fdk-saved in beforeEach");
 
         console.log("Logged in");
 
@@ -93,17 +93,17 @@ describe('registrering-gui App', () => {
         await  catalogLink.click();
 
         let datasetH1Input = element(by.css(".fdk-register-h1"));
-        await browser.wait(EC.presenceOf(datasetH1Input), 10000, "Could not find datasetH1Input");
+        await browser.wait(EC.presenceOf(datasetH1Input), 10000, "Could not find catalog title element");
 
         await datasetH1Input.clear();
         await datasetH1Input.sendKeys('New datacatalog name');
 
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
 
-        await browser.wait(EC.presenceOf(alertSuccess), 10000, "Could not find alertSuccess");
+        await browser.wait(EC.presenceOf(alertSuccess), 10000, "Could not find saved element");
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
 
 
@@ -117,7 +117,73 @@ describe('registrering-gui App', () => {
     });
 
 
-    it("Should handle saving of checkboxes in new dataset", async () => {
+    it("Should save dataset title after typing", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
+
+        let title = 'Should save dataset title after typing';
+        await page.createDataset(title);
+
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); //  check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+
+        let section = element(by.cssContainingText(".section-title","Tittel og beskrivelse"));
+        await section.click();
+
+        let datasetTitle = element(by.css("#dataset-title"));
+        await browser.wait(EC.textToBePresentInElementValue(datasetTitle, title), 1000);
+        expect(<any>page.getDatasetTitle()).toEqual(title);
+
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+
+    });
+
+
+    it("Should copy publiser from catalog into new dataset", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
+        await page.createDataset('Should copy publiser from catalog into new dataset');
+
+        let alertSuccess = element(by.css('.fdk-saved'));
+        await browser.wait(EC.presenceOf(alertSuccess), 10000);
+
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        await browser.refresh();
+        let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
+        expect(<any>datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
+
+    });
+
+
+    it("should display at least 21 datasets", async () => {
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await catalogLink.click();
+
+
+        for (let x = 0; x < 21; x++) {
+
+            await page.createDataset('Dataset' + x);
+            let alertSuccess = element(by.css('.fdk-saved'));
+            await browser.wait(EC.presenceOf(alertSuccess), 10000);
+            let backButton = element(by.css("#button_back_to_catalog"));
+            await browser.wait(EC.presenceOf(backButton), 10000);
+            await backButton.click();
+
+        }
+
+        expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(20);
+
+    });
+
+    it("Should handle saving of languages (checkboxes) in new dataset", async () => {
 
         let catalogLink = element(by.css("#datacatalogs td"));
         await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
@@ -130,12 +196,10 @@ describe('registrering-gui App', () => {
         await browser.wait(EC.presenceOf(datasetLanguagesEngelskElement), 10000, "Could not find .dataset-languages input");
         await datasetLanguagesEngelskElement.click();
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
         await browser.refresh();
-
-
 
         let datasetLanguagesEngelskElement2 = element(by.css('.dataset-languages input'));
 
@@ -157,27 +221,6 @@ describe('registrering-gui App', () => {
     });
 
 
-    it("should display at least 21 datasets", async () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        await catalogLink.click();
-
-
-        for (let x = 0; x < 21; x++) {
-
-            await page.createDataset('Dataset' + x);
-            let alertSuccess = element(by.css('.alert-success'));
-            await browser.wait(EC.presenceOf(alertSuccess), 10000);
-            let backButton = element(by.css("#button_back_to_catalog"));
-            await browser.wait(EC.presenceOf(backButton), 10000);
-            await backButton.click();
-
-        }
-
-        expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(20);
-
-    });
-
-
     it("should save conformsTo uris", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
         await catalogLink.click();
@@ -188,11 +231,11 @@ describe('registrering-gui App', () => {
         let subjectInput = element(by.css("input[placeholder='Standard']"));
         await subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
 
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let actualConformsTo = element(by.css("input[placeholder='Standard']"));
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
@@ -217,10 +260,10 @@ describe('registrering-gui App', () => {
         let subjectInput = element(by.css("input[placeholder='Dekningsområde']"));
         await subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let actualConformsTo = element(by.css("input[placeholder='Dekningsområde']"));
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
@@ -244,7 +287,7 @@ describe('registrering-gui App', () => {
         await accessRights.click();
 
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
         //write something into the accesrightscomment field
@@ -255,7 +298,7 @@ describe('registrering-gui App', () => {
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server//check that accessrightscomment was saved
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server//check that accessrightscomment was saved
         await browser.refresh();
         let actualAccessRightsComment = element(by.css("input[placeholder='Legg til url']"));
         // #accessRightsComment
@@ -280,10 +323,10 @@ describe('registrering-gui App', () => {
         await subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
 
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
         await  browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let actualSubjects = element(by.css("input[placeholder=Begrep]"));
         await browser.wait(EC.presenceOf(actualSubjects), 10000);
@@ -312,10 +355,10 @@ describe('registrering-gui App', () => {
         await accrualPeriodicityControlFirstValue.click();
 
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        browser.sleep(2000); // check above should check if things have been stored in the background, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
@@ -329,45 +372,7 @@ describe('registrering-gui App', () => {
     });
 
 
-    it("Should save dataset fields upon typing", async () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        await catalogLink.click();
 
-        await page.createDataset('Should save dataset fields upon typing');
-
-        let alertSuccess = element(by.css('.alert-success'));
-        await browser.wait(EC.presenceOf(alertSuccess), 10000);
-
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
-        await browser.refresh();
-        let datasetH1Input = element(by.css(".fdk-register-h1"));
-        await browser.wait(EC.textToBePresentInElementValue(datasetH1Input, 'Should save dataset fields upon typing'), 1000);
-        expect(<any>page.getH1Value()).toEqual('Should save dataset fields upon typing');
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
-
-
-    });
-
-
-    it("Should copy publiser from catalog into new dataset", async () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        await catalogLink.click();
-        await page.createDataset('Should copy publiser from catalog into new dataset');
-
-        let alertSuccess = element(by.css('.alert-success'));
-        await browser.wait(EC.presenceOf(alertSuccess), 10000);
-
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
-        await browser.refresh();
-        let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
-        expect(<any>datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
-
-    });
 
 
     it("Should handle Contact Point fields upon typing", async () => {
@@ -392,10 +397,10 @@ describe('registrering-gui App', () => {
         await contactTelephone.sendKeys("+47123456");
 
 
-        let alertSuccess = element(by.css('.alert-success'));
+        let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
-        browser.sleep(2000); // .alert-success check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let avdeling = element(by.id('contact-avdeling'));
 

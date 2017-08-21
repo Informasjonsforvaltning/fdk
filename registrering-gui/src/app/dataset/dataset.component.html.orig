@@ -37,7 +37,7 @@
   </div>
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Distribusjoner</div>
-    <div class="fdk-panel-body">
+    <div class="">
       <distributions
               [title]="Distribusjoner"
               [datasetForm]="datasetForm"
@@ -47,7 +47,7 @@
   </div>
   <div class="panel fdk-panel">
     <div class="fdk-panel-heading">Øvrige felter</div>
-    <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body dataset-languages">
+    <div *ngIf="datasetForm.controls['checkboxArray']" class=" dataset-languages">
       <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
         <label><input type="checkbox" id="checkbox-1" [formControl]="control">{{availableLanguages[i].prefLabel.nb}}</label>
 >>>>>>> origin/feature/FDK-428
@@ -67,7 +67,7 @@
           <div class="fdk-panel-heading">
               Distribusjoner
           </div>
-          <div class="fdk-panel-body">
+          <div class="">
                 <distributions
                     [datasetForm]="datasetForm"
                     [distributions]="dataset.distributions"
@@ -79,7 +79,7 @@
           <div class="fdk-panel-heading">
               Eksempeldata
           </div>
-          <div *ngIf="datasetForm.controls['checkboxArray']" class="fdk-panel-body">
+          <div *ngIf="datasetForm.controls['checkboxArray']" class="">
             <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
               <label><!-- 416 -->
                 <input type="checkbox" id="checkbox-1" [formControl]="control">
