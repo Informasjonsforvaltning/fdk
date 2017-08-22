@@ -1,20 +1,4 @@
 <div class="" *ngIf="temaForm">
-
-  <style>
-  .checkbox-replacement {
-  height: 21px;
-  width:21px;
-  background-size: 23px 21px;
-  background-image:url('/assets/img/unchecked.png');
-  }
-  input:checked ~ .checkbox-replacement{
-  background-image:url('/assets/img/checked.png');
-  }
-  .checkbox input {
-  position: absolute;
-  left:-9999px;
-  }
-  </style>
     <div [formGroup]="temaForm" class="form-group">
         <div class="form-group dataset-tema">
             <div *ngFor="let control of temaForm.controls['themesArray'].controls; let i=index" class="checkbox">

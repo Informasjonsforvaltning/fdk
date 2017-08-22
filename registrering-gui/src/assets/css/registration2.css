@@ -212,3 +212,17 @@ p.fdk-input-helptext > a {
 .dropdown-menu > li > a {
 	color:#fff;
 }
+
+.checkbox-replacement {
+height: 21px;
+width:21px;
+background-size: 23px 21px;
+background-image:url('/assets/img/unchecked.png');
+}
+input:checked ~ .checkbox-replacement{
+background-image:url('/assets/img/checked.png');
+}
+.checkbox input {
+position: absolute;
+left:-9999px;
+}
