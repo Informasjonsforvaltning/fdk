@@ -174,7 +174,7 @@ public class Dataset {
 
 
     @Field
-    private String registrationStatus;
+    private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
 
 
     public Dataset() {
