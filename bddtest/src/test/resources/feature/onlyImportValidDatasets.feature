@@ -17,5 +17,6 @@ Scenario: Only the valid dataset from FDK-138 is available
 		When I select harvest FDK-138 catalog
 		Then the following dataset detail pages exists:
 			|http://data.brreg.no/datakatalog/dataset/2|
+		And contains geonames name for Norway
 		And the following dataset detail pages shall not exist:
 			|http://data.brreg.no/datakatalog/dataset/1|

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.Map;
+
 /**
  * Created by bjg on 24.02.2017.
  * Models the part of the DataTheme class called conceptSchema.
@@ -13,7 +15,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConceptSchema {
     private String id;
-    private String title;
+    private Map<String, String> title;
     private String versioninfo;
     private String versionnumber;
 }

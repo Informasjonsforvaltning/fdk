@@ -61,7 +61,7 @@ public class ElasticSearchResponseTest {
             "          },\n" +
             "          \"conceptSchema\" : {\n" +
             "            \"id\" : \"http://publications.europa.eu/resource/authority/data-theme\",\n" +
-            "            \"title\" : \"Dataset types Named Authority List\",\n" +
+            "            \"title\" : {\"nb\" : \"Dataset types Named Authority List\"},\n" +
             "            \"versioninfo\" : \"20160921-0\",\n" +
             "            \"versionnumber\" : \"20160921-0\"\n" +
             "          }\n" +

@@ -65,11 +65,7 @@
 			<groupId>no.dcat</groupId>
 			<artifactId>datastore</artifactId>
 		</dependency -->
-		<dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>jena-fuseki-core</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-base</artifactId>
@@ -84,6 +80,7 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<!-- Nødvendig for å brukes på openshift-->

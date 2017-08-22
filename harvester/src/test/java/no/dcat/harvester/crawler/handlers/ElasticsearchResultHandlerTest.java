@@ -116,8 +116,8 @@ public class ElasticsearchResultHandlerTest {
 	@Test
 	@Ignore
 	public void testCrawlingIndexesToElasticsearchIT() {
-		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
-		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);
+//		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
+//		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);
 
 		try {
 			Thread.sleep(1000);
@@ -130,7 +130,7 @@ public class ElasticsearchResultHandlerTest {
 		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("npolar.jsonld").getFile(), "tester",
 				"123456789");
 
-		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch");
+		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch", "http://localhost:8100", "user", "password");
 		handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client));
 
 		//prevent race condition where elasticsearch is still indexing!!!

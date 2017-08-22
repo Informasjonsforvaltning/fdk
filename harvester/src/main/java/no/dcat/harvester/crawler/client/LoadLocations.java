@@ -3,11 +3,13 @@ package no.dcat.harvester.crawler.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.data.store.Elasticsearch;
-import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.harvester.theme.builders.vocabulary.GeonamesRDF;
+import no.dcat.shared.LocationUri;
+import no.dcat.shared.SkosCode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -20,30 +22,53 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class for loading and retrieving locations from/into elasticsearch.
  */
 public class LoadLocations {
-    public static final String CODES_INDEX = "codes";
-    public static final String LOCATION_TYPE = "locations";
     public static final String[] LANGUAGES = new String[]{"en", "no", "nn", "nb"};
 
-    private final Client client;
+    private final String themesHostname;
+    private final String httpUsername;
+    private final String httpPassword;
 
-    // Map where key is uri to location and code is the corresponding object as it is represented in elasticsearch.
-    protected Map<String, SkosCode> locations = new HashMap<>();
+    Map<String, SkosCode> locations = new HashMap<>();
+
+    public LoadLocations(String themesHostname, String httpUsername, String httpPassword) {
+        this.themesHostname = themesHostname;
+        this.httpUsername = httpUsername;
+        this.httpPassword = httpPassword;
+    }
+
+
 
     private final Logger logger = LoggerFactory.getLogger(LoadLocations.class);
 
-    public LoadLocations(Elasticsearch elasticsearch) {
-        client = elasticsearch.getClient();
+    // for testing
+    public LoadLocations(Map<String, SkosCode> locations) {
+        this.locations = locations;
+        themesHostname = null;
+        httpPassword = null;
+        httpUsername = null;
     }
+
 
     /**
      * Extracts all location-uris from the model and adds it to the map of locations.
@@ -54,124 +79,26 @@ public class LoadLocations {
      * @param model
      * @return
      */
-    public LoadLocations extractLocations(Model model) {
+    public void addLocationsToThemes(Model model) {
 
-        ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
-        while (locIter.hasNext()) {
-            Resource resource = locIter.next();
-            String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
-            SkosCode code = new SkosCode(locUri, null, new HashMap<>());
-            locations.put(locUri, code);
+        BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
-            logger.info("Extract location with URI {}", locUri);
-        }
-        return this;
+        NodeIterator nodeIterator = model.listObjectsOfProperty(DCTerms.spatial);
+        nodeIterator.forEachRemaining(node -> {
+
+            SkosCode skosCode = template.postForObject(themesHostname + "/locations/", new LocationUri(node.asResource().getURI()), SkosCode.class);
+            locations.put(skosCode.getUri(), skosCode);
+
+        });
+
     }
 
-    /**
-     * Looops over the list of locations and retrieves the title for each of them.
-     * The titel is first lookup in elastic-search, and if not found look up through the provided uri.
-     *
-     * @return LoadLocations
-     */
-    public LoadLocations retrieveLocTitle() {
-        Iterator locIter = locations.entrySet().iterator();
 
-        while (locIter.hasNext()) {
-            Map.Entry loc = (Map.Entry) locIter.next();
-            String locUri = (String) loc.getKey();
+    public  List<SkosCode> getLocations(List<String> strings) {
+        return strings.stream()
+                .map(locations::get)
+                .distinct()
+                .collect(Collectors.toList());
 
-            logger.info("Retrieve location title with URI {}", locUri);
-            if (StringUtils.isEmpty(locUri)) {
-                continue;
-            }
-
-            try {
-                Model locModel = retrieveTitleOfLocations(locUri);
-
-                ResIterator resIter = locModel.listResourcesWithProperty(GeonamesRDF.gnOfficialName);
-                while (resIter.hasNext()) {
-                    Map<String, String> titleMap = extractLocationTitle(resIter.next());
-                    SkosCode code = (SkosCode) loc.getValue();
-                    code.setPrefLabel(titleMap);
-                }
-            } catch (HttpException ex) {
-                logger.warn("No success looking up location title from uri {}",locUri, ex);
-            }
-
-        }
-
-        return this;
-    }
-
-    private Map<String, String> extractLocationTitle(Resource resource) {
-        Map<String, String> titleMap = new HashMap();
-
-        StmtIterator stmIter = resource.listProperties(GeonamesRDF.gnOfficialName);
-        extractProperty(titleMap, stmIter);
-
-        stmIter = resource.listProperties(GeonamesRDF.gnShortName);
-        extractProperty(titleMap, stmIter);
-
-        return titleMap;
-    }
-
-    private void extractProperty(Map<String, String> titleMap, StmtIterator stmIter) {
-        while (stmIter.hasNext()) {
-            Statement stmt = stmIter.nextStatement();
-            String lang = stmt.getLanguage();
-            String title = stmt.getString();
-
-            if (Arrays.stream(LANGUAGES).parallel().anyMatch(lang::contains)) {
-                titleMap.put(lang, title);
-            }
-
-            logger.trace("Retrieve title {} for lang {}", title, lang);
-        }
-    }
-
-    private Model retrieveTitleOfLocations(String locUri) {
-        logger.debug("Retrieve name of location with URI {}", locUri);
-
-        String locUriAbout = String.format("%sabout.rdf", locUri);
-        Model locModel = RetrieveModel.remoteRDF(locUriAbout);
-        locModel.listSubjectsWithProperty(GeonamesRDF.gnOfficialName);
-        return locModel;
-    }
-
-    public Map<String, SkosCode> getLocations() {
-        return locations;
-    }
-
-    public LoadLocations indexLocationsWithElasticSearch() {
-        BulkRequestBuilder bulkRequest = client.prepareBulk();
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-
-        Iterator locations = this.locations.entrySet().iterator();
-        while (locations.hasNext()) {
-            Map.Entry locEntry = (Map.Entry) locations.next();
-            SkosCode location = (SkosCode) locEntry.getValue();
-
-            IndexRequest indexRequest = new IndexRequest(CODES_INDEX, LOCATION_TYPE, location.getUri());
-            indexRequest.source(gson.toJson(location));
-            bulkRequest.add(indexRequest);
-
-            logger.debug("Add location {} to bulk request", location.getUri());
-        }
-
-        if(bulkRequest.numberOfActions() > 0){
-            BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-            if (bulkResponse.hasFailures()) {
-                throw new RuntimeException(
-                        String.format("Load of locations to elasticsearch has error: %s", bulkResponse.buildFailureMessage()));
-            }
-        }
-        return this;
-    }
-
-    public LoadLocations refresh() {
-        client.admin().indices().refresh(new RefreshRequest(CODES_INDEX)).actionGet();
-        return this;
     }
 }

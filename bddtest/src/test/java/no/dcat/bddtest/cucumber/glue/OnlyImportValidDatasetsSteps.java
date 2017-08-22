@@ -3,6 +3,7 @@ package no.dcat.bddtest.cucumber.glue;
 import cucumber.api.DataTable;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
@@ -110,6 +111,11 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
             assertTrue(contents, contents.contains("mbox:aas@brreg.no"));
         }
 
+    }
+
+    @And("^contains geonames name for Norway$")
+    public void containsGeonamesNameForNorway() throws Throwable {
+        assertTrue("Page should contain '<a href=\"http://sws.geonames.org/3144096/\">Norge</a>'", driver.getPageSource().contains("<a href=\"http://sws.geonames.org/3144096/\">Norge</a>"));
     }
 
     @Then("^the following dataset detail pages shall not exist:$")

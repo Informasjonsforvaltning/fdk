@@ -1,3 +1,9 @@
+application:
+  httpUsername: ${themesHttpUsername:user}
+  httpPassword: ${themesHttpPassword:password}
+
+---
+
 spring:
     profiles: docker
 fuseki:
@@ -8,6 +14,7 @@ application:
   elasticSearchHost: elasticsearch
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
+  themesHostname: http://themes:8080
 ---
 spring:
     profiles: develop
@@ -19,6 +26,7 @@ application:
   elasticSearchHost: localhost
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
+  themesHostname: http://localhost:8100
 server:
   port: 8081
 management:

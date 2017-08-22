@@ -4,20 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.data.store.Elasticsearch;
-import no.dcat.data.store.domain.dcat.DataTheme;
 import no.dcat.data.store.domain.dcat.Dataset;
 import no.dcat.data.store.domain.dcat.Distribution;
-import no.dcat.data.store.domain.dcat.SkosCode;
 import no.dcat.data.store.domain.dcat.builders.DatasetBuilder;
 import no.dcat.data.store.domain.dcat.builders.DistributionBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
-import no.dcat.harvester.crawler.client.RetrieveModel;
-import no.dcat.harvester.theme.builders.DataThemeBuilders;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.SkosCode;
 import org.apache.jena.rdf.model.Model;
-import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -44,6 +41,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     String hostename;
     int port;
     String clustername;
+    private final String themesHostname;
+    String httpUsername;
+    String httpPassword;
 
 
     /**
@@ -54,10 +54,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param port port for connection to elasticserach cluster. Usually 9300
      * @param clustername Name of elasticsearch cluster
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
+        this.themesHostname = themesHostname;
+        this.httpUsername = httpUsername;
+        this.httpPassword = httpPassword;
 
         logger.debug("ES clustername: " + this.clustername);
     }
@@ -89,13 +92,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param model RDF model containing the data catalog
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
-    protected void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
+    void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
-            logger.debug("Creating index: " + DCAT_INDEX);
+            logger.warn("Creating index: " + DCAT_INDEX);
             elasticsearch.createIndex(DCAT_INDEX);
-            indexThemeCodesWithElasticSearch(DATA_THEME_URL, elasticsearch);
         }else{
             logger.debug("Index exists: " + DCAT_INDEX);
 
@@ -105,14 +107,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         // Retrieve all codes from elasticsearch.
-        Map<String, DataTheme> dataThemes = new RetrieveDataThemes(elasticsearch).getAllDataThemes();
+        Map<String, DataTheme> dataThemes =  RetrieveDataThemes.getAllDataThemes(themesHostname);
 
-        Map<String, SkosCode> locations = new LoadLocations(elasticsearch).extractLocations(model).retrieveLocTitle()
-                .indexLocationsWithElasticSearch().refresh().getLocations();
-        Map<String,Map<String, SkosCode>> codes = new RetrieveCodes(elasticsearch).getAllCodes();
+        LoadLocations loadLocations = new LoadLocations(themesHostname, httpUsername, httpPassword);
+        loadLocations.addLocationsToThemes(model);
+
+        Map<String,Map<String, SkosCode>> codes = RetrieveCodes.getAllCodes(themesHostname);
 
 
-        List<Distribution> distributions = new DistributionBuilder(model, locations, codes, dataThemes).build();
+        List<Distribution> distributions = new DistributionBuilder(model, loadLocations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
         for (Distribution distribution : distributions) {
 
@@ -124,7 +127,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
 
-        List<Dataset> datasets = new DatasetBuilder(model, locations, codes, dataThemes).build();
+        List<Dataset> datasets = new DatasetBuilder(model, loadLocations, codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
 
@@ -139,37 +142,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         if (bulkResponse.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
         }
-    }
-
-
-    /**
-     * Index SKOS theme codes with elasticsearch
-     * @param elasticsearch elasticsearch cluster instance
-     */
-    private void indexThemeCodesWithElasticSearch(String skosUrl, Elasticsearch elasticsearch) {
-
-        Model model = RetrieveModel.remoteRDF(skosUrl);
-        DcatSource themeSource = new DcatSource("http//dcat.no/test", "Test", skosUrl, "admin_user", "123456789");
-        BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
-
-        List<DataTheme> dataThemes = new DataThemeBuilders(model).build();
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-
-        logger.info("Number of theme documents {} for dcat source {}", dataThemes.size(), themeSource.getId());
-        for (DataTheme dataTheme : dataThemes) {
-
-            IndexRequest indexRequest = new IndexRequest(THEME_INDEX, THEME_TYPE, dataTheme.getId());
-            indexRequest.source(gson.toJson(dataTheme));
-
-            logger.debug("Add datatheme document {} to bulk request", dataTheme.getId());
-            bulkRequest.add(indexRequest);
-        }
-        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-
-        if (bulkResponse.hasFailures()) {
-            //TODO: process failures by iterating through each bulk response item?
-        }
-        elasticsearch.getClient().admin().indices().refresh(new RefreshRequest(THEME_INDEX)).actionGet();
     }
 
 }

@@ -93,6 +93,11 @@ services:
     networks:
       platform:
 
+  themes:
+    image: dcatno/themes:latest
+    networks:
+      platform:
+
   validator:
     image: dcatno/validator:latest
     networks:

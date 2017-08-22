@@ -126,6 +126,12 @@ services:
      - VALIDATOR_URL=http://localhost:8086
 
 
+  themes:
+    ports:
+      - 8100:8080
+    environment:
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+
 #  logstash:
 #    image: "dcatno/logstash:${TAG}"
 #    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf

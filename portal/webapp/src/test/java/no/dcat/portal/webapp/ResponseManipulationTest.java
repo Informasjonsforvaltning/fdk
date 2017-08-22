@@ -1,10 +1,10 @@
 package no.dcat.portal.webapp;
 
-import no.dcat.portal.webapp.domain.DataTheme;
 import no.dcat.portal.webapp.domain.Dataset;
 import no.dcat.portal.webapp.domain.Distribution;
-import no.dcat.portal.webapp.domain.SkosCode;
 import no.dcat.portal.webapp.utility.ResponseManipulation;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.SkosCode;
 import org.junit.Test;
 
 import java.util.ArrayList;

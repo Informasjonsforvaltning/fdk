@@ -11,7 +11,7 @@ export class CodesService {
   }
 
   //private codesUrl = environment.api + "/codes";
-  private codesUrl = environment.queryUrl + "/codes";
+  private codesUrl = "http://localhost:8100" + "/codes";
 
   private cachedCodes: any = {};
 
@@ -30,7 +30,7 @@ export class CodesService {
       const datasetUrl = `${this.codesUrl}/${this.makeSingular(codeType)}`;
       return this.http.get(datasetUrl)
         .toPromise()
-        .then(response => response.json().codes)
+        .then(response => response.json())
         .catch(this.handleError);
   }
 

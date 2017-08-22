@@ -1,10 +1,10 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.Contact;
 import no.difi.dcat.datastore.domain.dcat.PeriodOfTime;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import no.difi.dcat.datastore.domain.dcat.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.Property;

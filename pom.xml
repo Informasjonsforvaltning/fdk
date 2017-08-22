@@ -68,7 +68,9 @@
 		<module>br-maven-main-msn</module>
 		<module>bddtest</module>
 		<module>datastore</module>
-	</modules>
+		<module>themes</module>
+        <module>shared</module>
+    </modules>
 
 	<properties>
         <fdk.version>0.2.4-SNAPSHOT</fdk.version>
@@ -136,17 +138,24 @@
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
-				<version>4.4.1</version>
+				<version>4.5.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpcore</artifactId>
-				<version>4.4.5</version>
+				<version>4.4.6</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-tdb</artifactId>
+				<version>3.3.0</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-fuseki-core</artifactId>
-				<version>2.3.1</version>
+				<version>2.6.0</version>
 				<exclusions>
 					<!--
 					<exclusion>
@@ -163,7 +172,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-base</artifactId>
-				<version>3.0.1</version>
+				<version>3.3.0</version>
 				<type>pom</type>
 				<exclusions>
 					<exclusion>
@@ -179,7 +188,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>apache-jena-libs</artifactId>
-				<version>3.0.1</version>
+				<version>3.3.0</version>
 				<type>pom</type>
 				<exclusions>
 					<exclusion>
@@ -195,7 +204,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-arq</artifactId>
-				<version>3.0.1</version>
+				<version>3.3.0</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>log4j</artifactId>
@@ -210,7 +219,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-core</artifactId>
-				<version>3.0.1</version>
+				<version>3.3.0</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>log4j</artifactId>
@@ -225,7 +234,7 @@
 			<dependency>
 				<groupId>no.acando</groupId>
 				<artifactId>xmltordf</artifactId>
-				<version>1.6.0</version>
+				<version>1.8.0</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>log4j</artifactId>
@@ -235,6 +244,27 @@
 						<artifactId>slf4j-log4j12</artifactId>
 						<groupId>org.slf4j</groupId>
 					</exclusion>
+
+
+
+
+					<exclusion>
+						<groupId>org.apache.jena</groupId>
+						<artifactId>jena-arq</artifactId>
+					</exclusion>
+
+					<exclusion>
+						<groupId>org.apache.jena</groupId>
+						<artifactId>jena-core</artifactId>
+					</exclusion>
+
+					<exclusion>
+						<groupId>org.apache.jena</groupId>
+						<artifactId>jena-tdb</artifactId>
+					</exclusion>
+
+
+
 				</exclusions>
 			</dependency>
 			<dependency>

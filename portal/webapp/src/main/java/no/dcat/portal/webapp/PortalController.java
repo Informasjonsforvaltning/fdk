@@ -2,12 +2,12 @@ package no.dcat.portal.webapp;
 
 import no.dcat.portal.webapp.comparator.PublisherOrganisasjonsformComparator;
 import no.dcat.portal.webapp.comparator.ThemeTitleComparator;
-import no.dcat.portal.webapp.domain.DataTheme;
 import no.dcat.portal.webapp.domain.Dataset;
 import no.dcat.portal.webapp.domain.Publisher;
 import no.dcat.portal.webapp.utility.DataitemQuery;
 import no.dcat.portal.webapp.utility.ResponseManipulation;
 import no.dcat.portal.webapp.utility.TransformModel;
+import no.dcat.shared.DataTheme;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -21,10 +21,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -85,7 +88,8 @@ public class PortalController {
             ModelAndView model = new ModelAndView("searchkit");
             model.addObject("fdkparameters",
                     "var fdkSettings = fdkSettings || {\n" +
-                            "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "'\n" +
+                            "'queryUrl': '" + buildMetadata.getQueryServiceExternal() + "' , \n" +
+                            "'themeUrl': '" + buildMetadata.getThemeServiceExternalUrl() + "'\n" +
                             "};"
 
             );
@@ -151,17 +155,16 @@ public class PortalController {
     @RequestMapping(value = {"/"}, produces = "text/html")
     public ModelAndView themes(final HttpSession session) {
         ModelAndView model = new ModelAndView(MODEL_THEME);
-        List<DataTheme> dataThemes = new ArrayList<>();
         Locale locale = LocaleContextHolder.getLocale();
         logger.debug(locale.getLanguage());
 
         try {
-            HttpClient httpClient = HttpClientBuilder.create().build();
-            URI uri = new URIBuilder(buildMetadata.getThemeServiceUrl()).build();
-            logger.debug("Query for all themes at URL: " + uri.toString());
 
-            String json = httpGet(httpClient, uri);
-            dataThemes = new ElasticSearchResponse().toListOfObjects(json, DataTheme.class);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            List<DataTheme> dataThemes = restTemplate.exchange(buildMetadata.getThemeServiceUrl()+"/themes/", HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {}).getBody();
+
 
             Map<String, BigInteger> themeCounts = getNumberOfElementsForThemes();
             dataThemes.forEach(dataTheme -> dataTheme.setNumberOfHits(themeCounts.getOrDefault(dataTheme.getCode(), BigInteger.ZERO).intValue()));
@@ -171,20 +174,21 @@ public class PortalController {
                 }
             });
 
-            Collections.sort(dataThemes, new ThemeTitleComparator(locale.getLanguage() == "en" ? "en" : "nb"));
+            dataThemes.sort(new ThemeTitleComparator(locale.getLanguage().equals( "en") ? "en" : "nb"));
 
-            logger.trace(String.format("Found datathemes: %s", json));
+            session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
+
+            model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");
+            model.addObject("themes", dataThemes);
+            model.addObject("dataitemquery", new DataitemQuery());
+
         } catch (IOException | URISyntaxException e) {
             logger.error(String.format("An error occured: %s", e.getMessage()), e);
             model.addObject("exceptionmessage", e.getMessage());
             model.setViewName("error");
         }
 
-        session.setAttribute("dcatQueryService", buildMetadata.getQueryServiceExternal());
 
-        model.addObject("lang", locale.getLanguage().equals("en") ? "en" : "nb");
-        model.addObject("themes", dataThemes);
-        model.addObject("dataitemquery", new DataitemQuery());
         return model;
     }
 
@@ -263,7 +267,7 @@ public class PortalController {
             HttpGet getRequest = new HttpGet(uri);
             response = httpClient.execute(getRequest);
 
-            checkStatusCode(response);
+            checkStatusCode(response, uri);
 
             entity = response.getEntity();
 
@@ -280,11 +284,11 @@ public class PortalController {
         return json;
     }
 
-    private void checkStatusCode(final HttpResponse response) {
+    private void checkStatusCode(final HttpResponse response, URI uri) {
         StatusLine statusLine = response.getStatusLine();
         if (statusLine.getStatusCode() != HttpStatus.OK.value()) {
             logger.error(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
-            throw new RuntimeException(String.format("Query failed, http-code: %s, reason: %s", statusLine.getStatusCode(), statusLine.getReasonPhrase()));
+            throw new RuntimeException(String.format("Http call '%s' failed, http-code: %s, reason: %s", uri, statusLine.getStatusCode(), statusLine.getReasonPhrase()));
         }
     }
 }
