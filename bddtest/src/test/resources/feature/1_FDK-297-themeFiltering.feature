@@ -14,11 +14,13 @@ Feature: Forbedringer design
 
 	#gitt jeg er på startsiden og jeg klikker på et tema og får opp resultat som er filtrert på temaet jeg trykket på
 	#@TEST_FDK_297 @TESTSETT_FDK_323
-##############################################
-### IGNORED BECAUSE TEST FAILS TODO fix test or system ###
-##############################################
-#	@ignore
 	Scenario: C-Test FDK: Forbedringer design - theme filtering
 		Given I am on the homepage of the National Data Catalog
 		When I click on theme "Energi"
 		Then the result list should show 3 datasets
+
+
+	Scenario: C-Test FDK: Themes should be visible when filtering
+		Given I am on the homepage of the National Data Catalog
+		When I click on theme "Energi"
+		Then all the themes should be visible in the theme pane

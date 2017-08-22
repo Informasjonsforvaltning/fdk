@@ -10,7 +10,7 @@ export class ThemesService {
     constructor(private http: Http) {
     }
 
-    private serviceUrl = environment.queryUrl + "/themes";
+    private serviceUrl = "http://localhost:8100" + "/themes";
     private cachedThemes: any = {};
     private themeType = 'data-theme';
 
@@ -27,10 +27,10 @@ export class ThemesService {
 
     private get(language: string): Promise<any> {
         return this.http.get(this.serviceUrl)
-            .map(data => data.json().hits.hits.map(item => {
+            .map(data => data.json().map(item => {
                 return {
-                    value: item._source.id,
-                    label: item._source.title[language]
+                    value: item.id,
+                    label: item.title[language]
                 }
             })).toPromise()
             .then(response => response)

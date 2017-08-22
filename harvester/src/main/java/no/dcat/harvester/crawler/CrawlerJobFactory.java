@@ -5,7 +5,6 @@ import no.dcat.admin.store.AdminDataStore;
 import no.dcat.admin.store.DcatDataStore;
 import no.dcat.admin.store.Fuseki;
 import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.harvester.crawler.handlers.CodeCrawlerHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
@@ -56,17 +55,8 @@ public class CrawlerJobFactory {
 
 
 		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHost(),applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
-		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
+		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster(), applicationSettings.getThemesHostname(), applicationSettings.getHttpUsername(), applicationSettings.getHttpPassword());
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}
 
-	public CrawlerCodeJob createCrawlerCodeJob(String sourceUrl, String indexType, Boolean reload) {
-
-		logger.debug("applicationsettings.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
-		logger.debug("applicationsettings.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
-		logger.debug("applicationsettings.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
-
-		codeHandler = new CodeCrawlerHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster(), indexType, reload);
-		return new CrawlerCodeJob(sourceUrl, codeHandler);
-	}
 }

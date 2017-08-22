@@ -205,21 +205,21 @@ export class SearchPage extends React.Component {
 		if(!window.themes) {
 			window.themes = [];
 
-			sa.get(window.fdkSettings.queryUrl + '/themes')
+			sa.get(window.fdkSettings.themeUrl + '/themes')
 				.end(function(err, res) {
 						if(!err && res) {
-							res.body.hits.hits.forEach(function (hit) {
+							res.body.forEach(function (hit) {
 						  	let queryObj = qs.parse(window.location.search.substr(1));
 								if(queryObj.lang === 'en') {
-									if(hit._source.title.en) {
+									if(hit.title.en) {
 										let obj = {};
-										obj[hit._source.code] = hit._source.title.en;
+										obj[hit.code] = hit.title.en;
 										themes.push(obj);
 									}
 								} else {
-									if(hit._source.title.nb) {
+									if(hit.title.nb) {
 										let obj = {};
-										obj[hit._source.code] = hit._source.title.nb;
+										obj[hit.code] = hit.title.nb;
 										themes.push(obj);
 									}
 								}

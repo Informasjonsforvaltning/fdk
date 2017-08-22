@@ -1,6 +1,7 @@
 package no.dcat.portal.webapp.comparator;
 
-import no.dcat.portal.webapp.domain.DataTheme;
+
+import no.dcat.shared.DataTheme;
 
 import java.io.Serializable;
 import java.util.Comparator;

@@ -1,5 +1,8 @@
 package no.dcat.portal.webapp.domain;
 
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.SkosCode;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

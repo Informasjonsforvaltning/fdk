@@ -14,7 +14,27 @@ public class ApplicationSettings {
 	private String elasticSearchHost;
 	private int elasticSearchPort;
 	private String elasticSearchCluster;
-	
+	private String themesHostname;
+
+	private String httpUsername;
+	private String httpPassword;
+
+	public String getHttpUsername() {
+		return httpUsername;
+	}
+
+	public void setHttpUsername(String httpUsername) {
+		this.httpUsername = httpUsername;
+	}
+
+	public String getHttpPassword() {
+		return httpPassword;
+	}
+
+	public void setHttpPassword(String httpPassword) {
+		this.httpPassword = httpPassword;
+	}
+
 	public String getElasticSearchHost() {
 		return elasticSearchHost;
 	}
@@ -43,4 +63,11 @@ public class ApplicationSettings {
 		this.crawlerThreadPoolSize = crawlerThreadPoolSize;
 	}
 
+	public String getThemesHostname() {
+		return themesHostname;
+	}
+
+	public void setThemesHostname(String themesHostname) {
+		this.themesHostname = themesHostname;
+	}
 }

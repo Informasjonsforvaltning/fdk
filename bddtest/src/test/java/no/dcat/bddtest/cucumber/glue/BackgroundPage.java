@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-import static java.lang.Thread.sleep;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.not;
@@ -77,7 +76,7 @@ public class BackgroundPage extends CommonPage {
 
         };
 
-        deleteLoadAndWait(datasett+".ttl", waitFor);
+        deleteLoadAndWait(datasett + ".ttl", waitFor);
 
     }
 
@@ -104,21 +103,18 @@ public class BackgroundPage extends CommonPage {
         new DeleteIndex(hostname, port).deleteIndex(index);
 
 
-        Loader loader = new Loader(hostname, port);
-        try {
-            loader.harvestAllCodes(true);
-            sleep(1000);
-            waitForHarvesterToComplete();
+        Loader loader = new Loader(hostname, port, "elasticsearch", "http://localhost:8100", "user", "password");
 
-            Resource resource = new ClassPathResource(datasett);
+        waitForHarvesterToComplete();
 
-            loader.loadDatasetFromFile(resource.getURL().toString());
-            sleep(1000);
-            waitForHarvesterToComplete();
+        Resource resource = new ClassPathResource(datasett);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        loader.loadDatasetFromFile(resource.getURL().toString());
+        waitForHarvesterToComplete();
+
+        refreshElasticsearch(hostname, port, "elasticsearch");
+
+
     }
 
     @Given("^man har åpnet Fellesdatakatalog i en nettleser")

@@ -1,6 +1,6 @@
 package no.dcat.portal.webapp.comparator;
 
-import no.dcat.portal.webapp.domain.DataTheme;
+import no.dcat.shared.DataTheme;
 import org.junit.Test;
 
 import java.util.HashMap;

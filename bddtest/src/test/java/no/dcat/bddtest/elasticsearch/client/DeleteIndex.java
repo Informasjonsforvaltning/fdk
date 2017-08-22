@@ -34,6 +34,8 @@ public class DeleteIndex {
     private void deleteIndexInElasticsearch(Elasticsearch elasticsearch, String index) {
         try {
             elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
+            elasticsearch.getClient().admin().indices().prepareRefresh().get();
+
         } catch (IndexNotFoundException e) {
             logger.info("Index not found: {}", index);
         }

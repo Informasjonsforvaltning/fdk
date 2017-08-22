@@ -23,7 +23,7 @@
         <dct:publisher rdf:resource="https://register.geonorge.no/register/organisasjoner/kartverket/kartverket"/>
         <dcat:themes rdf:resource="http://www.geonorge.no/geonetworkbeta/thesaurus/external.place.regions"/>
         <dct:language>eng</dct:language>
-        <dcat:dataset rdf:resource="http://www.geonorge.no/geonetworkbeta/resource/Friluftruter - nasjonal base"/>
+        <dcat:dataset rdf:resource="http://www.geonorge.no/geonetworkbeta/resource/Friluftruter-nasjonalbase"/>
     </dcat:Catalog>
     <foaf:Organization rdf:about="http://www.geonorge.no/geonetworkbeta/organization/0">
         <foaf:name>Kartverket</foaf:name>
@@ -32,7 +32,7 @@
         <dct:title>Region</dct:title>
         <dct:uri>http://www.geonorge.no/geonetworkbeta/srv/eng/thesaurus.download?ref=external.place.regions</dct:uri>
     </skos:ConceptScheme>
-    <dcat:Dataset rdf:about="http://www.geonorge.no/geonetworkbeta/resource/Friluftruter - nasjonal base">
+    <dcat:Dataset rdf:about="http://www.geonorge.no/geonetworkbeta/resource/Friluftruter-nasjonalbase">
         <dct:title xml:lang="">Friluftruter - nasjonal base</dct:title>
         <dct:description xml:lang="">Sammendrag: Landsdekkende datasett over tur- og friluftsruter i Norge. Datasettet inneholder fotruter, skiløyper, sykkelruter, andre ruter og tilretteleggingstiltak i friluftslivsområder. Dataene kan brukes i prosesser etter plan- og bygningsloven (kommuneplanlegging og saksbehandlingsom for eksempel byggesak) i kommunene, til analyser, rapportering, oppslag og visualisering av ruter til turplanlegging.</dct:description>
         <dct:accrualPeriodicity rdf:resource="http://publications.europa.eu/resource/authority/frequency/WEEKLY"/>
