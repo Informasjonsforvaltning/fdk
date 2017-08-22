@@ -2,7 +2,9 @@ package no.dcat.controller;
 
 import no.dcat.RegisterApplication;
 import no.dcat.model.Catalog;
+import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.DatasetRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -28,13 +31,22 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 /**
  * Created by dask on 20.04.2017.
  */
-@ActiveProfiles(value = "unit-integration")
+@ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = RegisterApplication.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class RdfCatalogControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private DatasetRepository datasetRepository;
+
+    @Autowired
+    private CatalogRepository catalogRepository;
+
+    @Autowired
+    private RdfCatalogController rdfCatalogController;
 
     @Test
     public void catalogExportsOK() throws Exception {
@@ -68,6 +80,44 @@ public class RdfCatalogControllerIT {
         ResponseEntity<String> actualDcat = restTemplate.exchange(catalogUrl, HttpMethod.GET, request2, String.class);
 
         assertThat(actualDcat.getBody(), is(containsString("@prefix dcat:  <http://www.w3.org/ns/dcat#>")));
+    }
+
+    @Test
+    public void catalogExportsOnlyPublishedDatsets() throws Exception {
+        String catId = "123454678";
+        Dataset ds1 = new Dataset("ds1");
+        ds1.setCatalog(catId);
+        ds1.setRegistrationStatus(Dataset.REGISTRATION_STATUS_PUBLISH);
+        datasetRepository.save(ds1);
+
+        Dataset ds2 = new Dataset("ds2");
+        ds2.setCatalog(catId);
+        ds2.setRegistrationStatus(Dataset.REGISTRATION_STATUS_PUBLISH);
+        datasetRepository.save(ds2);
+
+        Dataset ds3 = new Dataset("ds3");
+        ds3.setCatalog(catId);
+        ds3.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
+        datasetRepository.save(ds3);
+
+        Dataset ds4 = new Dataset("ds4");
+        ds4.setCatalog(catId);
+        ds4.setRegistrationStatus(Dataset.REGISTRATION_STATUS_PUBLISH);
+        datasetRepository.save(ds4);
+
+        Catalog catalog = new Catalog(catId);
+
+        catalogRepository.save(catalog);
+
+        // Do tast
+
+        HttpEntity<Catalog> actual = rdfCatalogController.getCatalog(catId);
+
+
+        assertThat(actual.getBody().getDataset().size(), is(3));
+
+        assertThat(actual.getBody().getDataset().get(0).getId(), is(containsString("ds1")));
+
     }
 
 
