@@ -151,7 +151,7 @@
               {{tema.title.nb}}
             </span>
           </div>
-          <div *ngIf="dataset.themes.length === 0">Klikk for å fylle ut</div>
+          <div *ngIf="dataset.themes && dataset.themes.length === 0">Klikk for å fylle ut</div>
         </label>
         <div class="expanded-content">
           <tema [dataset]="dataset" (onSave)="onSave($event)"></tema>

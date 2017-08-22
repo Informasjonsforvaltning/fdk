@@ -16,8 +16,7 @@
   }
   </style>
     <div [formGroup]="temaForm" class="form-group">
-
-        <div class="form-group">
+        <div class="form-group dataset-tema">
             <div *ngFor="let control of temaForm.controls['themesArray'].controls; let i=index" class="checkbox">
               <label><!-- 416 -->
                 <input type="checkbox" id="checkbox-1{{i}}" [formControl]="control" />
