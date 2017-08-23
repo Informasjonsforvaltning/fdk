@@ -172,7 +172,7 @@ public class Dataset {
     private Date _lastModified;
 
     @Field
-    private String registrationStatus;
+    private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
 
 
     public Dataset() {
