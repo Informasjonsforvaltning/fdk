@@ -1,65 +1,71 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "project": {
-    "version": "0.2.4-SNAPSHOT",
-    "name": "registrering-gui"
-  },
-  "apps": [
-    {
-      "root": "src",
-      "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico"
-      ],
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.json",
-      "prefix": "app",
-      "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "assets/css/bootstrap-theme.min.css",
-        "assets/css/common.css",
-        "assets/css/portal.css",
-        "assets/css/dataset.css",
-        "assets/css/registration2.css",
-        "assets/fonts/font-awesome/css/font-awesome.min.css",
-        "assets/css/frederic.css",
-        "assets/css/david.css",
-        "assets/css/bjorn.css"
-      ],
-      "scripts": [],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
-      }
-    }
-  ],
-  "e2e": {
-    "protractor": {
-      "config": "./protractor.conf.js"
-    }
-  },
-  "lint": [
-    {
-      "files": "src/**/*.ts",
-      "project": "src/tsconfig.json"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "project": {
+        "version": "0.2.4-SNAPSHOT",
+        "name": "registrering-gui"
     },
-    {
-      "files": "e2e/**/*.ts",
-      "project": "e2e/tsconfig.json"
+    "apps": [
+        {
+            "root": "src",
+            "outDir": "dist",
+            "assets": [
+                "assets",
+                "favicon.ico"
+            ],
+            "index": "index.html",
+            "main": "main.ts",
+            "polyfills": "polyfills.ts",
+            "test": "test.ts",
+            "tsconfig": "tsconfig.json",
+            "prefix": "app",
+            "styles": [
+                "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "assets/css/bootstrap-theme.min.css",
+                "assets/css/common.css",
+                "assets/css/portal.css",
+                "assets/css/dataset.css",
+                "assets/css/register.css",
+                "assets/fonts/font-awesome/css/font-awesome.min.css",
+                "assets/css/frederic.css",
+                "assets/css/david.css",
+                "assets/css/bjorn.css",
+                "assets/css/colors.css",
+                "assets/css/designsystem.css",
+                "assets/css/typo.css",
+                "assets/css/custom.css"
+
+
+            ],
+            "scripts": [],
+            "environmentSource": "environments/environment.ts",
+            "environments": {
+                "dev": "environments/environment.ts",
+                "prod": "environments/environment.prod.ts"
+            }
+        }
+    ],
+    "e2e": {
+        "protractor": {
+            "config": "./protractor.conf.js"
+        }
+    },
+    "lint": [
+        {
+            "files": "src/**/*.ts",
+            "project": "src/tsconfig.json"
+        },
+        {
+            "files": "e2e/**/*.ts",
+            "project": "e2e/tsconfig.json"
+        }
+    ],
+    "test": {
+        "karma": {
+            "config": "./karma.conf.js"
+        }
+    },
+    "defaults": {
+        "styleExt": "css",
+        "component": {}
     }
-  ],
-  "test": {
-    "karma": {
-      "config": "./karma.conf.js"
-    }
-  },
-  "defaults": {
-    "styleExt": "css",
-    "component": {}
-  }
 }
