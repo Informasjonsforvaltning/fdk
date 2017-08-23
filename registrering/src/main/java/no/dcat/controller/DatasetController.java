@@ -87,8 +87,8 @@ public class DatasetController {
     @RequestMapping(value = "/", method = POST,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> createDataset(@PathVariable("cat_id") String catalogId,
-                                             @RequestBody Dataset copy) throws CatalogNotFoundException {
+    public HttpEntity<Dataset> saveDataset(@PathVariable("cat_id") String catalogId,
+                                           @RequestBody Dataset copy) throws CatalogNotFoundException {
 
         Catalog catalog = getCatalogRepository().findOne(catalogId);
 
@@ -96,25 +96,53 @@ public class DatasetController {
             throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
+        Dataset savedDataset = saveDataset(catalogId, copy, catalog);
+
+
+        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+    }
+
+    protected Dataset saveDataset(String catalogId, Dataset copy, Catalog catalog) {
+
         // Create new dataset
         Dataset dataset = RegistrationFactory.INSTANCE.createDataset(catalogId);
 
-        // TODO - more copy functionality (later story)
         dataset.setTitle(copy.getTitle());
-        dataset.setKeyword(copy.getKeyword());
         dataset.setDescription(copy.getDescription());
-        dataset.setIdentifier(copy.getIdentifier());
+        dataset.setObjective(copy.getObjective());
+        dataset.setContactPoint(copy.getContactPoint());
+
+        dataset.setKeyword(copy.getKeyword());
         // force publisher
         dataset.setPublisher(catalog.getPublisher());
 
+        dataset.setIssued(copy.getIssued());
+        dataset.setModified(copy.getModified());
+        dataset.setLanguage(copy.getLanguage());
+        dataset.setLandingPage(copy.getLandingPage());
+        dataset.setTheme(copy.getTheme());
+        dataset.setDistribution(copy.getDistribution());
+        dataset.setSample(copy.getSample());
+        dataset.setConformsTo(copy.getConformsTo());
+        dataset.setTemporal(copy.getTemporal());
+        dataset.setSpatial(copy.getSpatial());
+
+        dataset.setAccessRights(copy.getAccessRights());
+        dataset.setReferences(copy.getReferences());
+        dataset.setProvenance(copy.getProvenance());
+        dataset.setIdentifier(copy.getIdentifier());
+        dataset.setPage(copy.getPage());
+        dataset.setAccrualPeriodicity(copy.getAccrualPeriodicity());
+        dataset.setSubject(copy.getSubject());
+        dataset.setType(copy.getType());
+        dataset.setAdmsIdentifier(copy.getAdmsIdentifier());
+        dataset.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
 
         //Store metainformation about editing
         logger.debug("create dataset {} at timestamp {}", dataset.getId(), Calendar.getInstance().getTime());
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
-        Dataset savedDataset = getDatasetRepository().save(dataset);
-
-        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+        return getDatasetRepository().save(dataset);
     }
 
 
@@ -136,7 +164,7 @@ public class DatasetController {
     @RequestMapping(value = "/{id}", method = PUT,
             consumes = APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> createDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
+    public HttpEntity<Dataset> saveDataset(@PathVariable("cat_id") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
         logger.info("requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
         dataset.setCatalog(catalogId);

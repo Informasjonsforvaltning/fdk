@@ -29,7 +29,6 @@ public class Dataset {
     @Id
     private String id;
 
-
     private String uri;
 
     //Can't specify parent if no parent field has been configured
@@ -171,7 +170,6 @@ public class Dataset {
     @Field
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
-
 
     @Field
     private String registrationStatus;
