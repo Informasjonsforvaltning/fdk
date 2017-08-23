@@ -1,29 +1,28 @@
 /*  D I V I D E R S   &   B O X E S  */
 
-.designsystem-divider {
-    height: 80px;
-    width: 100%;
-    border-bottom: 1px solid var(--color4);
-    margin-bottom: 80px;
-}
-
-hr {
+.designsystemDivider {
     border-color: var(--color5);
     width: 100%;
-    margin: 20px 00px;
+    margin: 20px 0px;
 }
 
-.designsystem-infobox {
+.designsystemDividerSection {
+    width: 100%;
+    border-top: 2px solid var(--color5);
+    margin: 80px 0px 80px 0px;
+}
+
+.designsystemInfobox {
     width: 100%;
     padding: 10px;
     margin: 0px;
-    background-color: #ffffff;
-    border: 1px solid var(--color-green);
+    background-color: var(--color6);
+    border: 1px dashed var(--color1);
     border-radius: 2px;
     display: inline-block;
 }
 
-.designsystem-iconbox {
+.designsystemIconbox {
     width: 160px;
     height: auto;
     vertical-align: middle;
@@ -32,19 +31,25 @@ hr {
     float: left;
 }
 
-.designsystem-space-above {
+.designsystemSpaceAbove {
     margin: 20px 0px 0px 0px;
 }
 
-.designsystem-space-below {
+.designsystemSpaceBelow {
     margin: 0px 0px 20px 0px;
+}
+
+.fdk-footer {
+    border-top: 1px solid var(--color5);
+    padding: 20px 0px;
+    margin: 60px 0px 0px 0px;
 }
 
 
 
 /*  H E A D I N G S  */
 
-.designsystem-number {
+.designsystemNumber {
     font-family: "heebo";
     font-weight: 600;
     padding: 10px 5px 9px 5px;
@@ -58,12 +63,12 @@ hr {
     float: left;
 }
 
-.designsystem-h1 {
+.designsystemH1 {
     font-family: "heebo";
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: --var(color1);
+    color: var(--color1);
     padding: 10px 3px 9px 3px;
     margin: 0px 0px 50px 0px;
     height: auto;
@@ -73,7 +78,7 @@ hr {
 
 /*  C O L O R   P A L E T T E  */
 
-.designsystem-color-palette {
+.designsystemColorPalette {
     width: 120px;
     height: 120px;
     margin: 10px;
@@ -83,66 +88,83 @@ hr {
     border-radius: 60px;
 }
 
-.designsystem-color-1 {
+.designsystemColor1 {
     background-color: var(--color1);
     color: #fff;
     font-weight: 300;
 }
 
-.designsystem-color-2 {
+.designsystemColor2 {
     background-color: var(--color2);
     color: #fff;
     font-weight: 300;
 }
 
-.designsystem-color-3 {
+.designsystemColor3 {
     background-color: var(--color3);
     color: #fff;
     font-weight: 300;
 }
 
-.designsystem-color-4 {
+.designsystemColor4 {
     background-color: var(--color4);
     color: var(--color1);
 }
 
-.designsystem-color-5 {
+.designsystemColor5 {
     background-color: var(--color5);
     color: var(--color1);
 }
 
-.designsystem-color-6 {
+.designsystemColor6 {
     background-color: var(--color6);
     color: var(--color1);
     border: 1px solid var(--color4);
 }
 
-.designsystem-color-7 {
+.designsystemColor7 {
     background-color: var(--color7);
     color: var(--color1);
 }
 
-.designsystem-color-cta {
+.designsystemColorCta {
     background-color: var(--color-cta);
     color: var(--color1);
 }
 
-.designsystem-color-cta2 {
+.designsystemColorCta2 {
     background-color: var(--color-cta2);
     color: var(--color1);
 }
 
-.designsystem-color-green {
-    background-color: var(--color-green);
-    color: var(--color-);
+.designsystemColorCta3 {
+    background-color: var(--color-cta3);
+    color: var(--color1);
 }
 
-.designsystem-color-red {
+.designsystemColorGreen {
+    background-color: var(--color-green);
+    color: var(--color1);
+}
+
+.designsystemColorRed {
     background-color: var(--color-red);
     color: var(--color1);
 }
 
-.designsystem-color-white {
+.designsystemColorWhite {
     background-color: #ffffff;
     color: var(--color1);
+}
+
+
+
+/* F O N T S */
+
+.designsystemLinks {
+    color: var(--color0);
+}
+
+.designsystemLinks:hover {
+    color: var(--color-cta);
 }
