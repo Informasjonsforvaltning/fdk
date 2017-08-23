@@ -67,3 +67,13 @@ thead > tr > td {
 textarea {
     width: 100%;
 }
+
+
+.fdk-container-collapsed > span {
+    display:inline-block;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+
+}
