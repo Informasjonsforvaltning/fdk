@@ -1,70 +1,4 @@
-<style>
-.caret-right {
-    border-bottom: 7px solid transparent;
-    border-top: 7px solid transparent;
-    border-left: 7px solid #D7DDE3;
-    display: inline-block;
-    height: 0;
-    opacity: 1;
-    vertical-align: top;
-    width: 0;
-    position: absolute;
-    right:-7px;
-    top:13px;
-}
-.section-title {
-  cursor: pointer;
-  color:#2D3741;
-  background-color:#D7DDE3;
-  padding: 10px;
-  text-align:center;
-  font-weight:bold;
-  position:relative;
-  margin: 0 0 11px 0;
-}
-.expanded-content {
-  display:none;
-  background: #fff;
-  padding: 5px 30px 25px 30px;
-  margin-bottom:30px;
-}
-.expanded-content label {
 
-}
-.expand-checkbox {
-  position: absolute;
-  left:-9999px;
-}
-.expand-label {
-  cursor: pointer;
-  text-decoration: none;
-}
-.expand-checkbox:checked ~ .expanded-content  {
-  display: block;
-}
-.expand-checkbox:checked ~ .collapsed-content  {
-  display: none;
-}
-
-.collapsed-content {
-      background: #fff;
-      padding: 5px;
-      line-height: 1.7;
-      display: block;
-}
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: normal;
-}
-.truncate span::after {
-    content: '−';
-}
-.truncate span:last-child::after {
-  content:'';
-}
-</style>
 <div *ngIf="dataset && catalog">
     <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
@@ -76,7 +10,6 @@
     <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" />
     <label for="title-and-description-toggle" class="collapsed-content expand-label">{{dataset.title[language] || 'Klikk for å fylle ut'}}</label>
     <div class="expanded-content">
-
         <div class="fdk-input-container" *ngIf="dataset.title">
             <label for="dataset-title" class="fdk-input-label">Tittel</label>
             <helptext
