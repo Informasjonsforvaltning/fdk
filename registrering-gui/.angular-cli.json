@@ -20,20 +20,16 @@
             "prefix": "app",
             "styles": [
                 "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "assets/css/bootstrap-theme.min.css",
-                "assets/css/common.css",
-                "assets/css/portal.css",
-                "assets/css/dataset.css",
-                "assets/css/register.css",
+                "../node_modules/bootstrap/dist/css/bootstrap-theme.css",
                 "assets/fonts/font-awesome/css/font-awesome.min.css",
-                "assets/css/frederic.css",
-                "assets/css/david.css",
                 "assets/css/bjorn.css",
                 "assets/css/colors.css",
-                "assets/css/typo.css",
-                "assets/css/custom.css"
-
-
+                "assets/css/common.css",
+                "assets/css/dataset.css",
+                "assets/css/david.css",
+                "assets/css/frederic.css",
+                "assets/css/register.css",
+                "assets/css/typo.css"
             ],
             "scripts": [],
             "environmentSource": "environments/environment.ts",
