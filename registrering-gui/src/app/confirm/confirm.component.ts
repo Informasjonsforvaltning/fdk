@@ -10,7 +10,7 @@ export interface ConfirmModel {
 }
 @Component({
   selector: 'confirm',
-  styleUrls: ['./confirm.component.css'],
+  styleUrls: [],
   template: `<div class="modal-dialog">
                 <div class="modal-content">
                    <div class="modal-header">

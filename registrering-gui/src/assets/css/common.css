@@ -14,12 +14,25 @@ body {
 
 .fdk-container {
     background-color: var(--color0);
-    border-radius: 4px;
+    border: 1px solid var(--color6);
+    border-radius: 5px;
     margin: 0px 0px 10px 0px;
 }
 
 .fdk-container:hover {
     box-shadow: 0px 3px 12px var(--color4);
+}
+
+.fdk-container-expanded {
+    padding: 40px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 12px var(--color4);
+}
+
+.fdk-container-collapsed {
+    padding: 15px 20px;
+    font-size: 1.5rem;
+    color: var(--color1);
 }
 
 .fdk-header-beta {
