@@ -60,7 +60,6 @@ p {
 
 a {
     color: var(--color1);
-    font-weight: 500;
     text-decoration: underline;
 }
 
@@ -69,12 +68,26 @@ a:hover {
     color: var(--color1);
 }
 
+.fdk-p-header {
+    font-size: 3rem;
+    line-height: 3rem;
+    padding-bottom: 8px;
+    margin: 0px;
+}
+
+.fdk-p-header-sub {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    padding: 0px;
+    margin: 0px;
+}
+
 .fdk-header-beta > a {
     color: #fff;
 }
 
-.fdk-text-regular {
-	font-weight: 400;
+.fdk-textregular {
+    font-weight: 400;
 }
 
 .fdk-text-white {
@@ -82,57 +95,44 @@ a:hover {
 }
 
 .fdk-text-right {
-	text-align: right;
+    text-align: right;
 }
 
 .fdk-text-center {
-	text-align: center;
+    text-align: center;
 }
 
 .fdk-text-regular {
-	font-weight: 400;
+    font-weight: 400;
 }
+
 
 
 /*  F O N T   A W E S O M E  */
 
-.fdk-fa-dark {
-    color: var(--color1);
-}
-
 .fdk-fa-right {
-	margin-left: 5px;
-	color: var(--color1);
+    margin-left: 5px;
 }
 
 .fdk-fa-left {
-	margin-right: 5px;
-	color: var(--color1);
+    margin-right: 5px;
 }
 
 .fdk-fa-big {
-    font-size: 2rem !important;
-    line-height: 1rem !important;
+    font-size: 1.875rem !important;
+    line-height: 1.875rem !important;
     position: relative;
     top: 2px;
 }
 
-.fdk-label-neutral:active > .fdk-fa-arrow-left {
-	color: #fff;
+.fdk-lLabel-neutral:active > .fdk-fa-arrow-left {
+    color: #fff;
 }
 
 .fdk-label-default:hover > .fdk-fa-button { /* Hovering for labels with font awesome icons */
-	color: var(--color1);
+    color: var(--color1);
 }
 
 .fdk-label-default:active > .fdk-fa-button { /* Hovering for labels with font awesome icons */
-	color: #fff;
-}
-
-i.fdk-color-green {
-    color: var(--color-green);
-}
-
-i.fdk-color-red {
-    color: var(--color-red);
+    color: #fff;
 }
