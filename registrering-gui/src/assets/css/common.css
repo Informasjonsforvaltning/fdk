@@ -16,6 +16,7 @@ body {
     background-color: var(--color0);
     border: 1px solid var(--color6);
     border-radius: 5px;
+    margin: 0px 0px 10px 0px;
 }
 
 .fdk-container:hover {
@@ -23,9 +24,7 @@ body {
 }
 
 .fdk-container-expanded {
-    background-color: var(--color0);
     padding: 40px;
-    margin: 0px 0px 10px 0px;
     border-radius: 4px;
     box-shadow: 0px 3px 12px var(--color4);
 }
