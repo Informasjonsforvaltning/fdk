@@ -1,14 +1,7 @@
 <div class="" *ngIf="informationForm">
     <div [formGroup]="informationForm" class="form-group">
 
-        <div (click)="fetchThemes()" class="form-group">
-            <label for="tema-datasett" class="control-label">Tema:</label>
-            <ng-select id="tema-datasett"
-                       [options]="allThemes"
-                       [multiple]="true"
-                       placeholder="Velg Tema"
-                       formControlName="themes">
-            </ng-select>
+        <div class="form-group">
         </div>
 
         <div class="form-group">
@@ -27,8 +20,5 @@
                           placeholder="Emneord">
             </rl-tag-input>
         </div>
-
-
     </div>
-
 </div>

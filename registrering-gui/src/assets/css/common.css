@@ -285,3 +285,18 @@ a > .fdk-label {
 .btn-default {
     text-shadow: none;
 }
+
+
+hr {
+    border-color: var(--color5);
+    width: 100%;
+    margin: 20px 0px;
+}
+
+
+.fdk-footer {
+    border-top: 1px solid var(--color5);
+    padding: 20px 0px;
+    margin: 60px 0px 0px 0px;
+}
+

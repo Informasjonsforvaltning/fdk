@@ -19,6 +19,8 @@ import {ConfirmComponent} from "./confirm/confirm.component";
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
 import {RlTagInputModule} from "angular2-tag-input";
+import { TooltipModule } from 'ngx-bootstrap';
+
 
 import {SelectModule} from "ng-select";
 
@@ -30,6 +32,7 @@ import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import {TemaComponent} from "./dataset/tema/tema.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
@@ -51,6 +54,7 @@ import {ModalComponent} from "./modal/modal.component";
         QualityComponent,
         AccessRightsComponent,
         InformationComponent,
+        TemaComponent,
         SpatialComponent,
         HelpText,
         ModalComponent
@@ -67,7 +71,8 @@ import {ModalComponent} from "./modal/modal.component";
         BootstrapModalModule,
         RlTagInputModule,
 	       MyDatePickerModule,
-         BsDropdownModule.forRoot()
+         BsDropdownModule.forRoot(),
+        TooltipModule.forRoot()
     ],
     entryComponents: [
         ConfirmComponent
