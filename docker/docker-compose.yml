@@ -6,6 +6,7 @@ services:
     links:
       - search-api
       - fuseki
+      - themes
     networks:
       platform:
 
@@ -34,6 +35,7 @@ services:
     links:
      - fuseki
      - elasticsearch
+     - themes
 
   harvester:
     image: dcatno/harvester:latest
@@ -90,6 +92,7 @@ services:
     links:
       - registration-api
       - validator
+      - themes
     networks:
       platform:
 
