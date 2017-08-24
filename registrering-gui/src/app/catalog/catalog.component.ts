@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CatalogService} from "./catalog.service";
 import "rxjs/add/operator/switchMap";
@@ -22,7 +22,8 @@ export class CatalogComponent implements OnInit {
     saved: boolean;
     lastSaved: string;
     datasetImportUrl: string;
-
+    importLoading: boolean = false;
+    importErrorMessage: string;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -110,9 +111,24 @@ export class CatalogComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
-    datasetImport(modal): Promise<Catalog> {
-        console.log("modal", modal);
-        return this.service.import(this.catalog, this.datasetImportUrl).then(modal.hide)
+    datasetImport(modal): void {
+        this.importErrorMessage = null;
+
+        if (this.datasetImportUrl && this.datasetImportUrl != "") {
+            this.importLoading = true;
+            this.service.import(this.catalog, this.datasetImportUrl).then(() => {
+                modal.hide();
+                this.importLoading = false;
+            }).catch((error) => {
+                this.importLoading = false;
+                this.importErrorMessage = JSON.parse(error._body).message;
+            });
+        } else {
+            this.importErrorMessage = "URL kan ikke være tom";
+        }
+
     }
+
+
 
 }

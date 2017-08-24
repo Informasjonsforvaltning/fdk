@@ -77,8 +77,8 @@ export class CatalogService {
       return this.http
           .post(postUrl, url, {headers: this.headers})
           .toPromise()
-          .then(() => catalog)
-          .catch(this.handleError);
+          .then(() => catalog);
+
   }
 
   private clone(object: any) {
