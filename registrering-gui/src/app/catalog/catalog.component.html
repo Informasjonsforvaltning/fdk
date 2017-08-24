@@ -1,76 +1,76 @@
 <div class="row">
-    <div class="col-md-12" *ngIf="catalog">
-        <div class="" *ngIf="catalog">
-            <div class="">
-                <div class="form-group">
-                    <h1>
-                        <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]"/>
-                    </h1>
-                </div>
-            </div>
-            <div>
-                <h4>Eies av {{catalog.publisher.name}}</h4>
-            </div>
-            <div class="fdk-container fdk-container-collapsed" style="margin-top:20px" (click)="descriptionExpanded = !descriptionExpanded; " [hidden]="descriptionExpanded">
-                <span>{{catalog.description[language]}}</span>
-            </div>
-            <div class="fdk-container fdk-container-expanded" style="margin-top:20px" [hidden]="!descriptionExpanded">
-                <label class="fdk-input-label">Beskrivelse <span class="fdk-obligatorisk">Obligatorisk</span></label>
-                <p class="fdk-input-helptext">Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte. Flere anbefalinger.</p>
-                <textarea class="" (blur)="descriptionExpanded = !descriptionExpanded" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
-            </div>
-
+  <div class="col-md-12" *ngIf="catalog">
+    <div class="" *ngIf="catalog">
+      <div class="">
+        <div class="form-group">
+          <h1>
+            <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]"/>
+          </h1>
         </div>
+      </div>
+      <div>
+        <h4>Eies av {{catalog.publisher.name}}</h4>
+      </div>
+      <div class="fdk-container fdk-container-collapsed" style="margin-top:20px" (click)="descriptionExpanded = !descriptionExpanded; " [hidden]="descriptionExpanded">
+        <span>{{catalog.description[language]}}</span>
+      </div>
+      <div class="fdk-container fdk-container-expanded" style="margin-top:20px" [hidden]="!descriptionExpanded">
+        <label class="fdk-input-label">Beskrivelse <span class="fdk-obligatorisk">Obligatorisk</span></label>
+        <p class="fdk-input-helptext">Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte. Flere anbefalinger.</p>
+        <textarea class="" (blur)="descriptionExpanded = !descriptionExpanded" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
+      </div>
+
     </div>
+  </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <hr/>
-    </div>
+  <div class="col-md-12">
+    <hr/>
+  </div>
 </div>
 <div class="row">
 
-    <div class="col-md-12" *ngIf="catalog" style="margin-bottom:20px">
-        <a (click)="newDataset()" href="#" id="button_new_dataset">
-            <i class="fa fa-plus fdk-color-icon-cta" aria-hidden="true" style="padding-right:0.2em"></i>Legg til ny datasettbeskrivelse
-        </a>
-    </div>
+  <div class="col-md-12" *ngIf="catalog" style="margin-bottom:20px">
+    <a (click)="newDataset()" href="#" id="button_new_dataset">
+      <i class="fa fa-plus fdk-color-icon-cta" aria-hidden="true" style="padding-right:0.2em"></i>Legg til ny datasettbeskrivelse
+    </a>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12" *ngIf="catalog">
+  <div class="col-md-12" *ngIf="catalog">
 
 
-        <table class="fdk-dataset" style="table-layout: fixed">
-            <thead>
-            <tr>
-                <td>Tittel på datasett <i class="fa fa-sort-down" aria-hidden="true"></i></td>
-                <td style="width: 150px">Status <i class="fa fa-info-circle fdk-color-cta" aria-hidden="true" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></i> <i class="fa fa-sort" aria-hidden="true"></i></td>
-            </tr>
-            </thead>
+    <table class="fdk-dataset" style="table-layout: fixed">
+      <thead>
+      <tr>
+        <td>Tittel på datasett <i class="fa fa-sort-down" aria-hidden="true"></i></td>
+        <td style="width: 150px">Status <i class="fa fa-info-circle fdk-color-cta" aria-hidden="true" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></i> <i class="fa fa-sort" aria-hidden="true"></i></td>
+      </tr>
+      </thead>
 
-            <tbody>
-            <tr *ngIf="datasets.length === 0">
-                <td (click)="newDataset()" colspan="3" class="fdk-input-helptext">Ingen datasettbeskrivelse registrert. <a href="#">Klikk for å legge til.</a></td>
-            </tr>
-            <tr *ngFor="let dataset of datasets" id="datasets" class="fdk-row-padding">
-                <td (click)="selectDataset(catalog, dataset)" class="fdk-register fdk-register-datacatalogue-1">
-                    <div *ngIf="getTitle(dataset);then showTitle else emptyTitle"></div>
-                    <ng-template #showTitle>{{getTitle(dataset)}}</ng-template>
-                    <ng-template #emptyTitle><span class="fdk-input-helptext">Mangler tittel</span></ng-template>
-                </td>
-                <td class="fdk-register fdk-register-datacatalogue-2">
+      <tbody>
+      <tr *ngIf="datasets.length === 0">
+        <td (click)="newDataset()" colspan="3" class="fdk-input-helptext">Ingen datasettbeskrivelse registrert. <a href="#">Klikk for å legge til.</a></td>
+      </tr>
+      <tr *ngFor="let dataset of datasets" id="datasets" class="fdk-row-padding">
+        <td (click)="selectDataset(catalog, dataset)" class="fdk-register fdk-register-datacatalogue-1">
+          <div *ngIf="getTitle(dataset);then showTitle else emptyTitle"></div>
+          <ng-template #showTitle>{{getTitle(dataset)}}</ng-template>
+          <ng-template #emptyTitle><span class="fdk-input-helptext">Mangler tittel</span></ng-template>
+        </td>
+        <td class="fdk-register fdk-register-datacatalogue-2">
                 <span *ngIf="dataset.registrationStatus">
                 <svg width="18" height="18" style="margin-right:8px; vertical-align: top">
                     <circle [attr.fill]="getColorForRegistrationStatus(dataset.registrationStatus)" r="9" cy="9" cx="9"/>
                 </svg>
                 <span>{{getTextForRegistrationStatus(dataset.registrationStatus)}}</span>
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
 
-    </div>
+  </div>
 </div>

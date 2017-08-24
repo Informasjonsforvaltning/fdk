@@ -1,108 +1,108 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <section>
 
-    <div class="fdk-header-beta">
-        Dette er en betaversjon. Gi oss gjerne <a href="designsystem.html" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes.
-    </div>
+  <div class="fdk-header-beta">
+    Dette er en betaversjon. Gi oss gjerne <a href="designsystem.html" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes.
+  </div>
 </section>
 
 
 <section class="fdk-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="fdk-header-padding pull-left">
-                    <span class="fdk-p-header">Registrering i Felles datakatalog</span>
-                </div>
-                <div class="pull-right" style="margin-left:10px">
-
-
-                    <a href="#" class="pull-right">
-
-                        <div class="dropdown fdk-container-dropdown-menu">
-                            <div dropdown class="dropdown fdk-dropdown-toggle-menu">
-                                <div dropdownToggle href="#" class="fdk-button fdk-button-default fdk-button-on-white fdk-float-right"><i class="fa fa-bars fdk-fa-dark fdk-fa-left"></i> <span>Meny</span></div>
-                                <ul *dropdownMenu class="dropdown-menu fdk-dropdown-menu" style="margin-top: 40px; right:5px; left:auto" role="menu" aria-labelledby="dLabel">
-                                    <li><a href="#">Om Felles Datakatalog</a></li>
-                                    <li><a href="#">Spørsmål og svar</a></li>
-                                    <li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
-                                    <li><a href="#">Status implementasjon</a></li>
-                                </ul>
-                            </div>
-
-                            <!-- Dropdown language
-                            <div class="dropdown fdk-container-dropdown-language">
-                              <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål
-                                <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-england.png"/>English</a></li>
-                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål</a></li>
-                                <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Nynorsk</a></li>
-                              </ul>
-                            </div>-->
-                        </div>
-
-                    </a>
-                    <div class="fdk-header-padding pull-right">
-                        <div *ngIf="!isAuthenticated()" class="fdk-float-right fdk-margin-right-double"><a (click)="login()" href="#">Logg inn</a></div>
-                        <div *ngIf="isAuthenticated()">
-                            <div class="fdk-float-right fdk-margin-right-double"><a (click)="logout()" href="#">Logg ut</a></div>
-                            <div class="fdk-float-right fdk-margin-right-double"><i class="fa fa-user fdk-fa-left fdk-color-icon-cta"></i>{{getUsername()}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="fdk-header-padding pull-left">
+          <span class="fdk-p-header">Registrering i Felles datakatalog</span>
         </div>
+        <div class="pull-right" style="margin-left:10px">
+
+
+          <a href="#" class="pull-right">
+
+            <div class="dropdown fdk-container-dropdown-menu">
+              <div dropdown class="dropdown fdk-dropdown-toggle-menu">
+                <div dropdownToggle href="#" class="fdk-button fdk-button-default fdk-button-on-white fdk-float-right"><i class="fa fa-bars fdk-fa-dark fdk-fa-left"></i> <span>Meny</span></div>
+                <ul *dropdownMenu class="dropdown-menu fdk-dropdown-menu" style="margin-top: 40px; right:5px; left:auto" role="menu" aria-labelledby="dLabel">
+                  <li><a href="#">Om Felles Datakatalog</a></li>
+                  <li><a href="#">Spørsmål og svar</a></li>
+                  <li><a href="#">DCAT-AP-NO 1.1-Standarden</a></li>
+                  <li><a href="#">Status implementasjon</a></li>
+                </ul>
+              </div>
+
+              <!-- Dropdown language
+              <div class="dropdown fdk-container-dropdown-language">
+                <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
+                  <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-england.png"/>English</a></li>
+                  <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål</a></li>
+                  <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Nynorsk</a></li>
+                </ul>
+              </div>-->
+            </div>
+
+          </a>
+          <div class="fdk-header-padding pull-right">
+            <div *ngIf="!isAuthenticated()" class="fdk-float-right fdk-margin-right-double"><a (click)="login()" href="#">Logg inn</a></div>
+            <div *ngIf="isAuthenticated()">
+              <div class="fdk-float-right fdk-margin-right-double"><a (click)="logout()" href="#">Logg ut</a></div>
+              <div class="fdk-float-right fdk-margin-right-double"><i class="fa fa-user fdk-fa-left fdk-color-icon-cta"></i>{{getUsername()}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
 
 <section>
-    <div class="container">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </section>
 <section>
-    <div class="container">
+  <div class="container">
 
-        <footer class="fdk-footer  hidden-sm hidden-xs">
-            <div class="row">
-                <div class="col-md-3" style="text-align: left">
-                    <a href="https://www.brreg.no/personvernerklaering/">Informasjonskapsler</a>
-                </div>
-                <div class="col-md-6">
+    <footer class="fdk-footer  hidden-sm hidden-xs">
+      <div class="row">
+        <div class="col-md-3" style="text-align: left">
+          <a href="https://www.brreg.no/personvernerklaering/">Informasjonskapsler</a>
+        </div>
+        <div class="col-md-6">
                 <span>
                     Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene og Difi og øvrige SKATE-etater.
                 </span>
-                </div>
-                <div class="col-md-3" style="text-align:right">
-                    <a href="mailto:fellesdatakatalog@brreg.no">fellesdatakatalog@brreg.no</a>
-                </div>
-            </div>
-        </footer>
+        </div>
+        <div class="col-md-3" style="text-align:right">
+          <a href="mailto:fellesdatakatalog@brreg.no">fellesdatakatalog@brreg.no</a>
+        </div>
+      </div>
+    </footer>
 
-        <footer class="fdk-footer hidden-md hidden-lg ">
-            <div class="row">
-                <div class="col-md-12" style="text-align: center">
-                    <a style="text-align: center" href="https://www.brreg.no/personvernerklaering/">Informasjonskapsler</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12" style="text-align: center">
+    <footer class="fdk-footer hidden-md hidden-lg ">
+      <div class="row">
+        <div class="col-md-12" style="text-align: center">
+          <a style="text-align: center" href="https://www.brreg.no/personvernerklaering/">Informasjonskapsler</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="text-align: center">
                 <span class="center-block">
                     Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene og Difi og øvrige SKATE-etater.
                 </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12" style="text-align: center">
-                    <a class="" href="mailto:fellesdatakatalog@brreg.no">fellesdatakatalog@brreg.no</a>
-                </div>
-            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="text-align: center">
+          <a class="" href="mailto:fellesdatakatalog@brreg.no">fellesdatakatalog@brreg.no</a>
+        </div>
+      </div>
 
-        </footer>
-    </div>
+    </footer>
+  </div>
 
 </section>
