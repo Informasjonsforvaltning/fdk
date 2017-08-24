@@ -19,6 +19,7 @@ input{
 input:hover,input:focus{
     outline: none;
     border:solid;
+    border-color: var(--color-cta);
     border-width: 2px;
     margin-left:-12px;
     margin-top:0px;
@@ -34,6 +35,7 @@ td {
     border-style: solid none;
     padding: 11px 12px 10px 12px;
     font-size: 1.5rem;
+    vertical-align: text-top;
 }
 td:first-child {
     border-left-style: solid;
@@ -66,6 +68,12 @@ thead > tr > td {
 
 textarea {
     width: 100%;
+    outline: none;
+    border:solid;
+    border-color: var(--color-cta);
+    border-width: 2px;
+    border-radius: 3px;
+    padding: 10px 15px;
 }
 
 

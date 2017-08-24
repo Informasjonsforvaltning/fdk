@@ -94,7 +94,7 @@
 
 /*  F O N T S  */
 
-p.fdk-input-label {
+.fdk-input-label {
     line-height: 1.7rem;
     font-size: 1.7rem;
     font-weight: 500;
@@ -103,7 +103,7 @@ p.fdk-input-label {
     padding: 0px;
 }
 
-p.fdk-input-helptext {
+.fdk-input-helptext {
     font-size: 1.4rem;
     line-height: 1.7rem;
     font-weight: 300;
@@ -112,13 +112,13 @@ p.fdk-input-helptext {
     margin: 0px 0px 8px 0px;
 }
 
-p.fdk-input-helptext > a {
+.fdk-input-helptext > a {
     color: var(--color3);
     text-decoration: underline;
     font-weight: 300;
 }
 
-p.fdk-input-helptext > a:hover {
+.fdk-input-helptext > a:hover {
     color: var(--color3);
     text-decoration: none;
 }

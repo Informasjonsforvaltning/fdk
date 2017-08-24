@@ -5,6 +5,8 @@ import "rxjs/add/operator/switchMap";
 import {Catalog} from "./catalog";
 import {DatasetService} from "../dataset/dataset.service";
 import {Dataset} from "../dataset/dataset";
+import {TooltipModule} from 'ngx-bootstrap';
+
 
 @Component({
     selector: 'app-catalog',
@@ -20,6 +22,8 @@ export class CatalogComponent implements OnInit {
     timer: number;
     saved: boolean;
     lastSaved: string;
+    sortDatasetOn: any = "title";
+    sortDatasetOrderAscending: boolean = true;
 
 
     constructor(private route: ActivatedRoute,
@@ -50,9 +54,21 @@ export class CatalogComponent implements OnInit {
     getAllDatasets() {
         let id = this.route.snapshot.params['cat_id'];
         this.datasetService.getAll(id).then((datasets: Dataset[]) => {
-            this.datasets = datasets.sort(function (a, b) {
-                return (a.title['nb'] > b.title['nb']) ? 1 : ((b.title['nb'] > a.title['nb']) ? -1 : 0);
-            });
+            console.log("HERE")
+            this.datasets = datasets
+                .sort(function (a, b) {
+
+                    let aText = (a[this.sortDatasetOn][this.language] || "").toLocaleLowerCase(); //  is just a utf-8 character that is very high
+                    let bText = (b[this.sortDatasetOn][this.language] || "").toLocaleLowerCase();
+
+                    if (this.sortDatasetOrderAscending) {
+                        return aText.localeCompare(bText);
+                    }
+                    else {
+                        return bText.localeCompare(aText);
+                    }
+
+                }.bind(this));
         });
     }
 
@@ -104,12 +120,12 @@ export class CatalogComponent implements OnInit {
     }
 
     newDataset(): boolean {
-        this.datasets.unshift(<Dataset>{
+        this.datasets.push(<Dataset>{
             id: "",
             _lastModified: "",
             title: {nb: "Laster ..."},
-            catalog:"",
-            "identifiers":[""]
+            catalog: "",
+            "identifiers": [""]
         });
         this.datasetService.create(this.catalog.id)
             .then(dataset => this.selectDataset(this.catalog, dataset));
@@ -121,5 +137,23 @@ export class CatalogComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    registrationStatus: { [key: string]: { [key: string]: string } } = {
+        "DRAFT": {
+            nb: "Utkast",
+            color: "var(--color4)"
+        },
+        "PUBLISH": {
+            nb: "Publisert",
+            color: "var(--color-green)"
+        }
+    };
+
+    getColorForRegistrationStatus(status: any): String {
+        return this.registrationStatus[status].color;
+    }
+
+    getTextForRegistrationStatus(status: any): String {
+        return this.registrationStatus[status][this.language];
+    }
 
 }
