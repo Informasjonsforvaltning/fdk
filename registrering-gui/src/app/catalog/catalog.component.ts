@@ -22,9 +22,8 @@ export class CatalogComponent implements OnInit {
     timer: number;
     saved: boolean;
     lastSaved: string;
-  datasetImportUrl: string;
-  importLoading: boolean = false;
-  importErrorMessage: string;
+    import: any = {};
+
   sortDatasetOn: any = "title";
   sortDatasetOrderAscending: boolean = true;
 
@@ -36,6 +35,7 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.language = 'nb';
     // snapshot alternative
     let id = this.route.snapshot.params['cat_id'];
@@ -140,20 +140,30 @@ export class CatalogComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-    datasetImport(modal): void {
-        this.importErrorMessage = null;
 
-        if (this.datasetImportUrl && this.datasetImportUrl != "") {
-            this.importLoading = true;
-            this.service.import(this.catalog, this.datasetImportUrl).then(() => {
+    modalAbort(modal) : void {
+      modal.hide();
+      this.import = {};
+    }
+
+    datasetImport(modal): void {
+
+        if (this.import.datasetImportUrl && this.import.datasetImportUrl != "") {
+            this.import.importLoading = true;
+            this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
                 modal.hide();
-                this.importLoading = false;
+                this.import.importLoading = false;
             }).catch((error) => {
-                this.importLoading = false;
-                this.importErrorMessage = JSON.parse(error._body).message;
+                this.import.importLoading = false;
+                this.import.importErrorMessage = "Ukjent feil";
+                try {
+                  this.import.importErrorMessage = JSON.parse(error._body).message;
+                } catch (error) {
+                  console.error(error);
+                }
             });
         } else {
-            this.importErrorMessage = "URL kan ikke være tom";
+            this.import.importErrorMessage = "URL kan ikke være tom";
         }
 
     }

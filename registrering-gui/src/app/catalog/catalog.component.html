@@ -43,14 +43,14 @@
       <div class="app-modal-body">
         <p>DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert.</p>
         Angi url til DCAT ressurs:
-        <input id="dataset-import-url" class="fdk-input" type="url" [(ngModel)]='datasetImportUrl'>
+        <input id="dataset-import-url" class="fdk-input" type="url" [(ngModel)]='import.datasetImportUrl'>
 
-        <div *ngIf="importErrorMessage" class="alert alert-danger">{{importErrorMessage}}</div>
+        <div *ngIf="import.importErrorMessage" class="alert alert-danger">{{import.importErrorMessage}}</div>
       </div>
       <div class="app-modal-footer">
-        <button type="button" class="btn btn-default" (click)="modalimport.hide()">Avbryt</button>
-        <button *ngIf="!importLoading" type="button" class="btn btn-primary" (click)="datasetImport(modalimport)">Importer!</button>
-        <button *ngIf="importLoading" type="button" class="btn btn-primary" disabled><i class="fa fa-spinner fa-spin"></i> Importerer</button>
+        <button type="button" class="btn btn-default" (click)="modalAbort(modalimport)">Avbryt</button>
+        <button *ngIf="!import.importLoading" type="button" class="btn btn-primary" (click)="datasetImport(modalimport)">Importer!</button>
+        <button *ngIf="import.importLoading" type="button" class="btn btn-primary" disabled><i class="fa fa-spinner fa-spin"></i> Importerer</button>
       </div>
     </app-modal>
   </div>
