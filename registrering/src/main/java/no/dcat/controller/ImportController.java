@@ -31,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +45,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping(value = "/import")
+@RequestMapping(value = "/catalogs/{id}/import")
 public class ImportController {
 
     private static Logger logger = LoggerFactory.getLogger(ImportController.class);
@@ -60,12 +61,13 @@ public class ImportController {
 
 
     @CrossOrigin
-    @RequestMapping(value = "catalogs/{id}/import",
+    @RequestMapping(value = "",
             method = POST,
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> importCatalog(
             @PathVariable(value = "id") String catalogId,
-            @RequestParam(value = "url") String url) throws DatasetNotFoundException, CatalogNotFoundException, IOException {
+            @RequestBody String url) throws DatasetNotFoundException, CatalogNotFoundException, IOException {
+        logger.info("import requested for {}", url);
         Catalog catalog;
 
         catalog = importDatasets(catalogId, url);

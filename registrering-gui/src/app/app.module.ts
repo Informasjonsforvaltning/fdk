@@ -34,6 +34,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {ModalComponent} from "./modal/modal.component";
 
 @NgModule({
     declarations: [
@@ -51,7 +52,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         AccessRightsComponent,
         InformationComponent,
         SpatialComponent,
-        HelpText
+        HelpText,
+        ModalComponent
     ],
     imports: [
         BrowserModule,

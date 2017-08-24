@@ -33,6 +33,22 @@
           <i class="fa fa-plus-circle" aria-hidden="true"></i> Legg til ny datasettbeskrivelse
       </button>
       <button type="button" class="fdk-button fdk-button-default" (click)="back()">Tilbake</button>
+      <button type="button" class="fdk-button fdk-button-default" (click)="modalimport.show()">Importer dataset</button>
+
+      <app-modal #modalimport>
+          <div class="app-modal-header">
+              Importer datasett fra DCAT RDF ressurs
+          </div>
+          <div class="app-modal-body">
+              Angi url:
+              <input id="dataset-import-url" class="fdk-input" type="url" [(ngModel)]='datasetImportUrl'>
+          </div>
+          <div class="app-modal-footer">
+              <button type="button" class="btn btn-default" (click)="modalimport.hide()">Avbryt</button>
+              <button type="button" class="btn btn-primary" (click)="datasetImport(modalimport)">Importer!</button>
+          </div>
+      </app-modal>
+
     <div class="fdk-panel-heading">
       <table class="fdk-register">
         <tbody>

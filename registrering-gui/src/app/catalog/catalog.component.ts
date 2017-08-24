@@ -5,6 +5,7 @@ import "rxjs/add/operator/switchMap";
 import {Catalog} from "./catalog";
 import {DatasetService} from "../dataset/dataset.service";
 import {Dataset} from "../dataset/dataset";
+import {ModalComponent} from "../modal/modal.component";
 
 @Component({
     selector: 'app-catalog',
@@ -20,6 +21,7 @@ export class CatalogComponent implements OnInit {
     timer: number;
     saved: boolean;
     lastSaved: string;
+    datasetImportUrl: string;
 
 
     constructor(private route: ActivatedRoute,
@@ -108,5 +110,9 @@ export class CatalogComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    datasetImport(modal): Promise<Catalog> {
+        console.log("modal", modal);
+        return this.service.import(this.catalog, this.datasetImportUrl).then(modal.hide)
+    }
 
 }
