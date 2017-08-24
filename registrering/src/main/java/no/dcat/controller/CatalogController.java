@@ -71,7 +71,7 @@ public class CatalogController {
         return new ResponseEntity<>(savedCatalog, OK);
     }
 
-    protected Catalog saveCatalog(@RequestBody Catalog catalog) {
+    protected Catalog saveCatalog(Catalog catalog) {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
