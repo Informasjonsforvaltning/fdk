@@ -19,6 +19,8 @@ import {ConfirmComponent} from "./confirm/confirm.component";
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
 import {RlTagInputModule} from "angular2-tag-input";
+import { TooltipModule } from 'ngx-bootstrap';
+
 
 import {SelectModule} from "ng-select";
 
@@ -67,7 +69,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         BootstrapModalModule,
         RlTagInputModule,
 	       MyDatePickerModule,
-         BsDropdownModule.forRoot()
+         BsDropdownModule.forRoot(),
+        TooltipModule.forRoot()
     ],
     entryComponents: [
         ConfirmComponent

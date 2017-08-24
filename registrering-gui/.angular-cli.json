@@ -29,7 +29,8 @@
         "assets/css/david.css",
         "assets/css/frederic.css",
         "assets/css/register.css",
-        "assets/css/typo.css"
+        "assets/css/typo.css",
+        "assets/css/custom.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

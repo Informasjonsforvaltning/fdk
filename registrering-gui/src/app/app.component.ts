@@ -5,6 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @Component({
   selector: 'app-root',
+  styleUrls:["./app.component.css"],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None
 })
@@ -25,7 +26,7 @@ export class AppComponent {
     return localStorage.getItem('username');
   }
 
-  login() {
+  login() : boolean{
     this.loading = true;
     this.authenticationService.login()
       .subscribe(result => {
@@ -38,10 +39,12 @@ export class AppComponent {
           this.loading = false;
         }
       });
+    return false;
   }
 
-  logout(): void {
+  logout() : boolean {
     this.authenticationService.logout();
-    this.router.navigate(['/'])
+    this.router.navigate(['/']).then(()=>{window.location.reload(true)});
+    return false;
   }
 }
