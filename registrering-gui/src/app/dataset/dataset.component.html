@@ -1,58 +1,4 @@
-<style>
-.caret-right {
-    border-bottom: 7px solid transparent;
-    border-top: 7px solid transparent;
-    border-left: 7px solid #D7DDE3;
-    display: inline-block;
-    height: 0;
-    opacity: 1;
-    vertical-align: top;
-    width: 0;
-    position: absolute;
-    right:-7px;
-    top:13px;
-}
-.section-title {
-  cursor: pointer;
-  color:#2D3741;
-  background-color:#D7DDE3;
-  padding: 10px;
-  text-align:center;
-  font-weight:bold;
-  position:relative;
-  margin: 0 0 11px 0;
-}
-.expanded-content {
-  display:none;
-  background: #fff;
-  padding: 5px 30px 25px 30px;
-  margin-bottom:30px;
-}
-.expanded-content label {
 
-}
-.expand-checkbox {
-  position: absolute;
-  left:-9999px;
-}
-.expand-label {
-  cursor: pointer;
-  text-decoration: none;
-}
-.expand-checkbox:checked ~ .expanded-content  {
-  display: block;
-}
-.expand-checkbox:checked ~ .collapsed-content  {
-  display: none;
-}
-
-.collapsed-content {
-      background: #fff;
-      padding: 5px;
-      line-height: 1.7;
-      display: block;
-}
-</style>
 <div *ngIf="dataset && catalog">
     <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
@@ -64,7 +10,6 @@
     <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" />
     <label for="title-and-description-toggle" class="collapsed-content expand-label">{{dataset.title[language] || 'Klikk for å fylle ut'}}</label>
     <div class="expanded-content">
-
         <div class="fdk-input-container" *ngIf="dataset.title">
             <label for="dataset-title" class="fdk-input-label">Tittel</label>
             <helptext
@@ -126,6 +71,27 @@
     </div>
   </div>
 
+
+    <div class="row justify-content-md-center" *ngIf="dataset">
+      <label for="tema-toggle" class="col-md-push-1 col-md-2 section-title">
+        Tema<b class="caret-right"></b>
+      </label>
+      <div class="col-md-push-1 col-md-8 collapsed">
+        <input type="checkbox" id="tema-toggle" class="expand-checkbox" />
+        <label for="tema-toggle" class="collapsed-content expand-label">
+          <div class="truncate">
+            <span class="" *ngFor="let tema of dataset.themes; let i=index" >
+              {{tema.title.nb}}
+            </span>
+          </div>
+          <div *ngIf="dataset.themes && dataset.themes.length === 0">Klikk for å fylle ut</div>
+        </label>
+        <div class="expanded-content">
+          <tema [dataset]="dataset" (onSave)="onSave($event)"></tema>
+        </div>
+      </div>
+    </div>
+
   <div class="row justify-content-md-center" *ngIf="dataset">
     <label for="quality-toggle" class="col-md-push-1 col-md-2 section-title">
       Kvalitet<b class="caret-right"></b>
@@ -181,39 +147,36 @@
       <input type="checkbox" id="information-toggle" class="expand-checkbox" />
       <label for="information-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
       <div class="expanded-content">
+            <temporals
+            title="Tidsperioder"
+            [datasetForm]="datasetForm"
+            [temporalsFormArray]="datasetForm.controls.temporals"
+            [temporals]="dataset.temporals"
+            ></temporals>
 
-          <temporals
-          title="Tidsperioder"
-          [datasetForm]="datasetForm"
-          [temporalsFormArray]="datasetForm.controls.temporals"
-          [temporals]="dataset.temporals"
-          ></temporals>
-
-          <distributions
-          [datasetForm]="datasetForm"
-          [distributionsFormArray]="datasetForm.controls.samples"
-          [distributions]="dataset.samples"
-          title="Eksempeldata"
-          >
-        </distributions>
-
-        <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
-          <label><!-- 416 -->
-            <input type="checkbox" id="checkbox-1" [formControl]="control" />
-            {{availableLanguages[i].prefLabel.nb}}
-          </label>
-        </div>
-        <div class="row">
-          <div *ngIf="dataset.modified" class="col-md-3">
-            <label for="issued" class="control-label">Opprettet dato:</label>
-            <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-            formControlName="issued" ></my-date-picker>
-            <label for="modified" class="control-label">Endret dato:</label>
-            <my-date-picker id="modified" placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
-            formControlName="modified"></my-date-picker>
+            <distributions
+            [datasetForm]="datasetForm"
+            [distributionsFormArray]="datasetForm.controls.samples"
+            [distributions]="dataset.samples"
+            title="Eksempeldata"
+            >
+          </distributions>
+          <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
+            <label><!-- 416 -->
+              <input type="checkbox" id="checkbox-1" [formControl]="control" />
+              {{availableLanguages[i].prefLabel.nb}}
+            </label>
           </div>
-        </div>
-
+          <div class="row">
+            <div *ngIf="dataset.modified" class="col-md-3">
+              <label for="issued" class="control-label">Opprettet dato:</label>
+              <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
+              formControlName="issued" ></my-date-picker>
+              <label for="modified" class="control-label">Endret dato:</label>
+              <my-date-picker id="modified" placeholder="Endret dato" name="modified" [options]="myDatePickerOptions" locale="no"
+              formControlName="modified"></my-date-picker>
+            </div>
+          </div>
           <contact
           [contactsArray]="datasetForm.controls.contactPoints"
           [contact]="dataset.contactPoints[0]">

@@ -84,6 +84,50 @@ describe('registrering-gui App', () => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
 
+
+        it("Should handle saving of themes (checkboxes) in new dataset", async () => {
+            let catalogLink = element(by.css("#datacatalogs td"));
+            await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
+            await catalogLink.click();
+
+            await page.createDataset('Should handle saving of themes checkboxes in new dataset');
+
+            // first the checkboxes must be expanded
+
+            let datasetThemesElement2 = element(by.css('label[for="tema-toggle"]'));
+            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find .dataset-tema input");
+            await datasetThemesElement2.click();
+
+            let datasetThemesElement = element(by.css('.dataset-tema label'));
+            await browser.wait(EC.presenceOf(datasetThemesElement), 10000, "Could not find .dataset-tema input");
+            await datasetThemesElement.click();
+
+            let alertSuccess = element(by.css('.fdk-saved'));
+
+            browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
+            await browser.refresh();
+
+            let datasetThemesElement21 = element(by.css('.dataset-tema input'));
+
+            browser.sleep(5000);
+
+
+            datasetThemesElement2 = element(by.css('label[for="tema-toggle"]'));
+            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find .dataset-tema input");
+            await datasetThemesElement2.click();
+            try {
+                expect(datasetThemesElement21.getAttribute('checked')).toBeTruthy("datasetThemesElement2 should be checked");
+                expect(element(by.css('.dataset-tema input')).getAttribute('checked')).toBeTruthy(".dataset-tema input should be checked");
+            }catch(err){
+                console.log(await browser.getPageSource());
+                throw err;
+
+            }
+            let backButton = element(by.css("#button_back_to_catalog"));
+            await browser.wait(EC.presenceOf(backButton), 10000);
+            await backButton.click();
+        });
+
     it("Should save datacatalog fields upon typing", async () => {
 
         let catalogLink = element(by.css("#datacatalogs td"));

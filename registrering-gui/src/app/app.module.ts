@@ -32,6 +32,7 @@ import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
+import {TemaComponent} from "./dataset/tema/tema.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
@@ -52,6 +53,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
         QualityComponent,
         AccessRightsComponent,
         InformationComponent,
+        TemaComponent,
         SpatialComponent,
         HelpText
     ],
