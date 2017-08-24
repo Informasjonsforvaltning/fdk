@@ -41,7 +41,7 @@ export class RegistreringGuiPage {
         let newDatasetButton = element(by.id("button_new_dataset"));
         await newDatasetButton.click();
 
-        let section = element(by.cssContainingText(".section-title","Tittel og beskrivelse"));
+        let section = element(by.css(".section-title"));
         await section.click();
 
         let datasetTitle = element(by.id("dataset-title"));
