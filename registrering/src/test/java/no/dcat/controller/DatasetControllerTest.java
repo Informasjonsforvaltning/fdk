@@ -61,7 +61,7 @@ public class DatasetControllerTest {
 
         when(mockDR.save((Dataset)anyObject())).thenReturn(copy);
 
-        HttpEntity<Dataset> actualEntity = spy.createDataset(catalogId, copy);
+        HttpEntity<Dataset> actualEntity = spy.saveDataset(catalogId, copy);
 
         Dataset actual = actualEntity.getBody();
         assertThat(actual.getCatalog(), is(catalogId));

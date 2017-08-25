@@ -1,0 +1,9 @@
+Process for deploying reg-gui through docker hub
+
+docker images | grep registration
+
+docker tag 23581b49da0f dcat/reg-gui:latest
+
+docker push dcat/reg-gui:latest
+
+oc import-image dcat/reg-gui:latest

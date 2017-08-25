@@ -34,6 +34,25 @@
     <a (click)="newDataset()" href="#" id="button_new_dataset">
       <i class="fa fa-plus fdk-color-icon-cta" aria-hidden="true" style="padding-right:0.2em"></i>Legg til ny datasettbeskrivelse
     </a>
+    <button type="button" class="fdk-button fdk-button-default" (click)="modalimport.show()">Importer dataset</button>
+
+    <app-modal #modalimport>
+      <div class="app-modal-header">
+        Importer datasett fra DCAT RDF ressurs.
+      </div>
+      <div class="app-modal-body">
+        <p>DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert.</p>
+        Angi url til DCAT ressurs:
+        <input id="dataset-import-url" class="fdk-input" type="url" [(ngModel)]='import.datasetImportUrl'>
+
+        <div *ngIf="import.importErrorMessage" class="alert alert-danger">{{import.importErrorMessage}}</div>
+      </div>
+      <div class="app-modal-footer">
+        <button type="button" class="btn btn-default" (click)="modalAbort(modalimport)">Avbryt</button>
+        <button *ngIf="!import.importLoading" type="button" class="btn btn-primary" (click)="datasetImport(modalimport)">Importer!</button>
+        <button *ngIf="import.importLoading" type="button" class="btn btn-primary" disabled><i class="fa fa-spinner fa-spin"></i> Importerer</button>
+      </div>
+    </app-modal>
   </div>
 </div>
 

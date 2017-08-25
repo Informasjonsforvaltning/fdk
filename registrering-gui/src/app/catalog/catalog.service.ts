@@ -68,6 +68,18 @@ export class CatalogService {
       .catch(this.handleError);
   }
 
+  import(catalog: Catalog, url: string) : Promise<Catalog> {
+      const postUrl = `${this.catalogsUrl}/${catalog.id}/import`;
+
+      let authorization : string = localStorage.getItem("authorization");
+      this.headers.append("Authorization", "Basic " + authorization);
+
+      return this.http
+          .post(postUrl, url, {headers: this.headers})
+          .toPromise()
+          .then(() => catalog);
+
+  }
 
   private clone(object: any) {
     return JSON.parse(JSON.stringify(object))
