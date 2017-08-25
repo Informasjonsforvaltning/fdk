@@ -102,40 +102,19 @@ public class DatasetController {
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
 
-    protected Dataset saveDataset(String catalogId, Dataset copy, Catalog catalog) {
+    protected Dataset saveDataset(String catalogId, Dataset dataset, Catalog catalog) {
 
         // Create new dataset
-        Dataset dataset = RegistrationFactory.INSTANCE.createDataset(catalogId);
+        Dataset datasetWithNewId = RegistrationFactory.INSTANCE.createDataset(catalogId);
 
-        dataset.setTitle(copy.getTitle());
-        dataset.setDescription(copy.getDescription());
-        dataset.setObjective(copy.getObjective());
-        dataset.setContactPoint(copy.getContactPoint());
+        // force new id, uri and catalog, to ensure saving
+        dataset.setId(datasetWithNewId.getId());
+        dataset.setUri(datasetWithNewId.getUri());
+        dataset.setCatalog(datasetWithNewId.getCatalog());
 
-        dataset.setKeyword(copy.getKeyword());
         // force publisher
         dataset.setPublisher(catalog.getPublisher());
 
-        dataset.setIssued(copy.getIssued());
-        dataset.setModified(copy.getModified());
-        dataset.setLanguage(copy.getLanguage());
-        dataset.setLandingPage(copy.getLandingPage());
-        dataset.setTheme(copy.getTheme());
-        dataset.setDistribution(copy.getDistribution());
-        dataset.setSample(copy.getSample());
-        dataset.setConformsTo(copy.getConformsTo());
-        dataset.setTemporal(copy.getTemporal());
-        dataset.setSpatial(copy.getSpatial());
-
-        dataset.setAccessRights(copy.getAccessRights());
-        dataset.setReferences(copy.getReferences());
-        dataset.setProvenance(copy.getProvenance());
-        dataset.setIdentifier(copy.getIdentifier());
-        dataset.setPage(copy.getPage());
-        dataset.setAccrualPeriodicity(copy.getAccrualPeriodicity());
-        dataset.setSubject(copy.getSubject());
-        dataset.setType(copy.getType());
-        dataset.setAdmsIdentifier(copy.getAdmsIdentifier());
         dataset.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
 
         //Store metainformation about editing

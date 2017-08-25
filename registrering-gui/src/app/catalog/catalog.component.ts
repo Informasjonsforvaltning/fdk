@@ -153,6 +153,8 @@ export class CatalogComponent implements OnInit {
             this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
                 modal.hide();
                 this.import.importLoading = false;
+                this.getAllDatasets();
+
             }).catch((error) => {
                 this.import.importLoading = false;
                 this.import.importErrorMessage = "Ukjent feil";

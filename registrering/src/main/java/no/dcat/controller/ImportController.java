@@ -2,6 +2,9 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
@@ -33,7 +36,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -59,6 +61,7 @@ public class ImportController {
     @Autowired
     protected CatalogRepository catalogRepository;
 
+    private final static Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
 
     @CrossOrigin
     @RequestMapping(value = "",
@@ -102,10 +105,6 @@ public class ImportController {
             throw new IOException(String.format("Cannot open import url %s",url));
         }
 
-        if (model == null) {
-            throw new IOException(String.format("Cannot open import url %s",url));
-        }
-
         Catalog existingCatalog = catalogRepository.findOne(catalogId);
 
         if (existingCatalog == null) {
@@ -114,30 +113,24 @@ public class ImportController {
 
 
         List<Catalog> catalogs = parseCatalogs(model);
-        Catalog catalogToImport = null;
 
-        for (Catalog cat : catalogs) {
-            logger.debug("Found catalog {} in external data", cat.toString());
-            if (cat.getUri().contains(catalogId)) {
-                catalogToImport = cat;
-                break;
-            }
-        }
-
-        if (catalogToImport == null) {
-            throw new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId));
-        }
+        Catalog catalogToImportTo = catalogs
+                .stream()
+                .filter(cat -> cat.getUri().contains(catalogId))
+                .peek(cat -> logger.debug("Found catalog {} in external data", cat.toString()))
+                .findFirst()
+                .orElseThrow(() -> new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
 
         // Ignore imported catalog attributes, i.e. copy over stored values to result
-        catalogToImport.setId(existingCatalog.getId());
-        catalogToImport.setTitle(existingCatalog.getTitle());
-        catalogToImport.setDescription(existingCatalog.getDescription());
+        catalogToImportTo.setId(existingCatalog.getId());
+        catalogToImportTo.setTitle(existingCatalog.getTitle());
+        catalogToImportTo.setDescription(existingCatalog.getDescription());
 
         List<Dataset> datasets = parseDatasets(model);
         List<Dataset> importedDatasets = new ArrayList<>();
         for (Dataset ds : datasets) {
             if (ds.getCatalog() != null && ds.getCatalog().contains(catalogId)) {
-                Dataset newDataset = datasetController.saveDataset(catalogId, ds, catalogToImport);
+                Dataset newDataset = datasetController.saveDataset(catalogId, ds, catalogToImportTo);
                 importedDatasets.add(ds);
                 logger.debug("ds: {}", newDataset);
             }
@@ -147,16 +140,15 @@ public class ImportController {
             throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId ));
         }
 
-        catalogToImport.setDataset(importedDatasets);
+        catalogToImportTo.setDataset(importedDatasets);
 
-        return catalogToImport;
+        return catalogToImportTo;
     }
 
 
     protected List<Catalog> parseCatalogs(Model model) throws IOException {
 
-        org.apache.jena.query.Dataset jenaDataset = DatasetFactory.create(model);
-        String json = frame(jenaDataset, IOUtils.toString(new ClassPathResource("frames/catalog.json").getInputStream(), "UTF-8"));
+        String json = frame(DatasetFactory.create(model), IOUtils.toString(new ClassPathResource("frames/catalog.json").getInputStream(), "UTF-8"));
 
         List<Catalog> result = new Gson().fromJson(json, FramedCatalog.class).getGraph();
 
@@ -165,19 +157,51 @@ public class ImportController {
 
     protected List<Dataset> parseDatasets(Model model) throws IOException {
 
-        // using owl to get inverse relations from dataset to catalog
-        Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
+        // using owl ontology to get inverse relations from dataset to catalog
         InfModel modelWithInverseCatalogRelations = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), owlSchema, model);
 
-        org.apache.jena.query.Dataset jenaDataset = DatasetFactory.create(modelWithInverseCatalogRelations);
+        String json = frame(DatasetFactory.create(modelWithInverseCatalogRelations),
+                IOUtils.toString(new ClassPathResource("frames/dataset.json").getInputStream(), "UTF-8"));
 
-        String json = frame(jenaDataset, IOUtils.toString(new ClassPathResource("frames/dataset.json").getInputStream(), "UTF-8"));
+        logger.debug("json after frame: {}",json);
 
-        List<Dataset> result = new Gson().fromJson(json, FramedDataset.class).getGraph();
 
-        // Postprosess keywords
 
+        List<Dataset> result = new Gson().fromJson(preProcessDatasetAttributes(json), FramedDataset.class).getGraph();
+
+        postprosessDatasetAttributes(result);
+
+        logger.trace("Result frame transformation: {}", new GsonBuilder().setPrettyPrinting().create().toJson(result));
+        logger.info("parsed {} datasets from RDF import", result.size());
+
+        return result;
+    }
+
+    private String preProcessDatasetAttributes(String json) {
+        Gson gson = new GsonBuilder().create();
+
+        JsonObject model = gson.fromJson(json, JsonObject.class);
+        JsonArray datasets = model.getAsJsonArray("@graph");
+
+        datasets.forEach( (JsonElement d) -> {
+            // preprocess temporals because framing cannot convert object structure
+            JsonArray temporals = d.getAsJsonObject().getAsJsonArray("temporal");
+            if (temporals != null) {
+                temporals.forEach((JsonElement t) -> {
+                    JsonElement hasBeginning = t.getAsJsonObject().getAsJsonObject("owt:hasBeginning").getAsJsonObject("owt:inXSDDateTime").getAsJsonPrimitive("@value");
+                    JsonElement hasEnd = t.getAsJsonObject().getAsJsonObject("owt:hasEnd").getAsJsonObject("owt:inXSDDateTime").getAsJsonPrimitive("@value");
+                    t.getAsJsonObject().add("startDate", hasBeginning);
+                    t.getAsJsonObject().add("endDate", hasEnd);
+                });
+            }
+        });
+        
+        return gson.toJson(model);
+    }
+
+    private void postprosessDatasetAttributes(List<Dataset> result) {
         result.forEach(d -> {
+            // Postprocess keywords
             if (d.getKeyword() != null) {
                 d.getKeyword().forEach(k -> {
                     String lang = k.get("@language");
@@ -186,12 +210,10 @@ public class ImportController {
                     k.put(lang, value);
                 });
             }
+
         });
 
-        logger.trace("Result frame transformation: {}", new GsonBuilder().setPrettyPrinting().create().toJson(result));
-        logger.info("parsed {} datasets from RDF import", result.size());
 
-        return result;
     }
 
     String frame(org.apache.jena.query.Dataset dataset, String frame) {

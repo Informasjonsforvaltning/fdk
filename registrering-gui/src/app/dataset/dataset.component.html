@@ -81,7 +81,7 @@
         <label for="tema-toggle" class="collapsed-content expand-label">
           <div class="truncate">
             <span class="" *ngFor="let tema of dataset.themes; let i=index" >
-              {{tema.title.nb}}
+              <span *ngIf="tema.title">{{tema.title.nb}}</span>
             </span>
           </div>
           <div *ngIf="dataset.themes && dataset.themes.length === 0">Klikk for å fylle ut</div>
