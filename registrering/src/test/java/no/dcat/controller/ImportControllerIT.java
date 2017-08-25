@@ -79,19 +79,11 @@ public class ImportControllerIT {
      *
      * @throws Throwable
      */
-    @Test
+    @Test(expected = CatalogNotFoundException.class)
     public void importCatalogThrowsCatalogNotFoundException() throws Throwable {
         String catalogId = "123456780";
 
-        try {
-            HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");
-        } catch (CatalogNotFoundException e) {
-            logger.info("Exception: {}",e.getMessage());
-            return;
-        }
-
-        fail();
-
+        HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");
     }
 
     /**
@@ -99,55 +91,33 @@ public class ImportControllerIT {
      *
      * @throws Throwable
      */
-    @Test
+    @Test(expected = CatalogNotFoundException.class)
     public void importCatalogThrowsCatalogNotFoundException2() throws Throwable {
         String catalogId = "974760673";
 
-        try {
-            HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");
-        } catch (CatalogNotFoundException e) {
-            logger.info("Exception: {}",e.getMessage());
-            return;
-        }
-
-        fail();
+        HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");
     }
 
     /**
      * Catalog found in import file, but has no dataset in the file.
      * @throws Throwable
      */
-    @Test
+    @Test(expected = DatasetNotFoundException.class)
     public void importCatalogThrowsDatasetNotFoundException() throws Throwable {
         String catalogId = "958935420";
 
-        try {
-            HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");
-        } catch (DatasetNotFoundException e) {
-            logger.info("Exception: {}",e.getMessage());
-            return;
-        }
-
-        fail();
-
+        HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");
     }
 
     /**
      * Import data file not found
      * @throws Throwable
      */
-    @Test
+    @Test(expected = IOException.class)
     public void importCatalogThrowsIOExceptionOnIllegalUrl() throws Throwable {
         String catalogId = "958935420";
 
-        try {
-            HttpEntity<Catalog> result = importController.importCatalog(catalogId, "missing-import-file.ttl");
-        } catch (IOException e) {
-            logger.info("Exception: {}",e.getMessage());
-            return;
-        }
-
-        fail();
+        HttpEntity<Catalog> result = importController.importCatalog(catalogId, "missing-import-file.ttl");
 
     }
 
