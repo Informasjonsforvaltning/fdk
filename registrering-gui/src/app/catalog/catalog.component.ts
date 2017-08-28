@@ -57,7 +57,7 @@ export class CatalogComponent implements OnInit {
   getAllDatasets() {
     let id = this.route.snapshot.params['cat_id'];
     this.datasetService.getAll(id).then((datasets: Dataset[]) => {
-      console.log("HERE")
+
       this.datasets = datasets
         .sort(function (a, b) {
 

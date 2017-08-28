@@ -1,8 +1,8 @@
 
-<div *ngIf="dataset && catalog">
+<div *ngIf="dataset && catalog && dataset.publisher">
     <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
-<div class="row justify-content-md-center" *ngIf="dataset">
+<div class="row justify-content-md-center" *ngIf="datasetForm &&dataset">
   <label for="title-and-description-toggle" class="col-md-push-1 col-md-2 section-title">
     Tittel og beskrivelse<b class="caret-right"></b>
   </label>
@@ -161,6 +161,8 @@
             title="Eksempeldata"
             >
           </distributions>
+
+          <label class="control-label">Språk:</label>
           <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="checkbox">
             <label><!-- 416 -->
               <input type="checkbox" id="checkbox-1" [formControl]="control" />
@@ -168,7 +170,7 @@
             </label>
           </div>
           <div class="row">
-            <div *ngIf="dataset.modified" class="col-md-3">
+            <div  class="col-md-3" [formGroup]="datasetForm">
               <label for="issued" class="control-label">Opprettet dato:</label>
               <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
               formControlName="issued" ></my-date-picker>

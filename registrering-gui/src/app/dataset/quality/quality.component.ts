@@ -28,9 +28,12 @@ export class QualityComponent implements OnInit {
     { }
 
     ngOnInit() {
+        this.fetchFrequencies();
+        this.fetchProvenances();
 
         if (this.dataset.accrualPeriodicity) {
             let skosCode = this.dataset.accrualPeriodicity;
+            skosCode.prefLabel = skosCode.prefLabel || { 'no': this.getLabel(this.frequencies, skosCode.uri)};
             this.frequencies.push(this.codifySkosCodes(skosCode,'no'));
         } else {
             this.dataset.accrualPeriodicity = { uri: '', prefLabel: {no: ''}};
@@ -87,6 +90,7 @@ export class QualityComponent implements OnInit {
 
     codifySkosCodes(code, lang) {
         return {value: code['uri'], label: code['prefLabel'][lang]}
+
     }
 
     fetchFrequencies() {
