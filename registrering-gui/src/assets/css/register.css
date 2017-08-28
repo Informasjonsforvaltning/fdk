@@ -4,8 +4,6 @@
     margin-top: 10px;
 }
 
-
-
 /*  T A B L E  */
 
 .fdk-table-reg {
@@ -90,8 +88,6 @@
     color: var(--color0);
 }
 
-
-
 /*  F O N T S  */
 
 .fdk-input-label {
@@ -123,6 +119,17 @@
     text-decoration: none;
 }
 
+.more-help-checkbox:checked ~ .flere-anbefalinger {
+	display: inline;
+}
+.flere-anbefalinger, .more-help-checkbox:checked ~ .toggle-help-button {
+	display: none;
+}
+
+.more-help-checkbox {
+   position: absolute;
+   left: -9999px;
+}
 p.fdk-input-heading {
     line-height: 1.6rem;
     font-size: 1.6rem;
@@ -213,4 +220,58 @@ input:checked ~ .checkbox-replacement::after{
 .checkbox input {
   position: absolute;
   left:-9999px;
+}
+
+.caret-right {
+    border-bottom: 7px solid transparent;
+    border-top: 7px solid transparent;
+    border-left: 7px solid #D7DDE3;
+    display: inline-block;
+    height: 0;
+    opacity: 1;
+    vertical-align: top;
+    width: 0;
+    position: absolute;
+    right:-7px;
+    top:13px;
+}
+.section-title {
+  cursor: pointer;
+  color:#2D3741;
+  background-color:#D7DDE3;
+  padding: 10px;
+  text-align:center;
+  position:relative;
+  margin: 0 0 11px 0;
+}
+.expanded-content {
+  display:none;
+  background: #fff;
+  padding: 5px 30px 25px 30px;
+  margin-bottom:30px;
+}
+.expanded-content label {
+
+}
+.expand-checkbox {
+  position: absolute;
+  left:-9999px;
+}
+.expand-label {
+  cursor: pointer;
+  text-decoration: none;
+}
+.expand-checkbox:checked ~ .expanded-content  {
+  display: block;
+}
+.expand-checkbox:checked ~ .collapsed-content  {
+  display: none;
+}
+
+.collapsed-content {
+      background: #fff;
+      padding: 5px;
+      line-height: 1.7;
+      display: block;
+      font-weight: normal;
 }
