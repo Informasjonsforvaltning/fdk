@@ -106,7 +106,7 @@ export class DatasetComponent implements OnInit {
       if(dataset.languages) {
         this.availableLanguages.forEach((language, languageIndex, languageArray) => {
           dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray)=> {
-            if(language.code === datasetLanguage.code) {
+            if(language.uri === datasetLanguage.uri) {
               languageArray[languageIndex].selected = true;
             }
           })
@@ -295,6 +295,7 @@ export class DatasetComponent implements OnInit {
           samples: this.formBuilder.array([]),
           checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)}))
         });
+    console.log("availablelang: " , this.availableLanguages)
       return formGroup;
   }
 }
