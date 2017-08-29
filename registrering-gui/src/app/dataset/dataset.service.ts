@@ -40,7 +40,7 @@ export class DatasetService {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
     return this.http.get(datasetUrl)
       .toPromise()
-      .then(response => response.json().content as Dataset[])
+      .then(response => response.json()._embedded.datasets as Dataset[])
       .catch(this.handleError);
   }
 

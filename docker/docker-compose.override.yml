@@ -114,7 +114,7 @@ services:
   registration-api:
     restart: always
     ports:
-      - 8079:8079
+      - 8079:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - spring.application.catalogUriPrefix=http://localhost:8099
