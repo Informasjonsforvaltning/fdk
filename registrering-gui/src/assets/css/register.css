@@ -207,12 +207,15 @@ p.fdk-input-heading {
     border: 1px solid #2D3741;
     border-radius: 3px;
 }
+.checkbox label {
+  padding-left:0;
+}
 input:checked ~ .checkbox-replacement::after{
     position: absolute;
     width: 12px;
     height: 12px;
     background: #2D3741;
-    left: 25px;
+    left: 3px;
     top: 4px;
     border-radius: 3px;
 		content:'';

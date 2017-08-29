@@ -2,6 +2,8 @@ import { Component, Input, Output, OnInit, EventEmitter, ChangeDetectorRef } fro
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { PeriodOfTime } from './periodoftime';
+import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
+
 
 @Component({
     selector: 'temporal',
@@ -26,6 +28,10 @@ export class TemporalFormComponent implements OnInit {
 
     public temporalForm: FormGroup;
 
+        private myDatePickerOptions: IMyDpOptions = {
+            // other options...
+            showClearDateBtn: false
+        };
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
