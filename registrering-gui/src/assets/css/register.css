@@ -217,7 +217,7 @@ input:checked ~ .checkbox-replacement::after{
     border-radius: 3px;
 		content:'';
 }
-.checkbox .expand-checkbox {
+.checkbox .expand-checkbox, .dataset-tema input[type="checkbox"] {
   position: absolute;
   left:-9999px;
 }
