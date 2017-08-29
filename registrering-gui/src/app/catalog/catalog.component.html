@@ -64,13 +64,13 @@
       <thead>
       <tr>
         <td>Tittel på datasett <i class="fa fa-sort-down" aria-hidden="true"></i></td>
-        <td style="width: 150px">Status <i class="fa fa-info-circle fdk-color-cta" aria-hidden="true" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."></i> <i class="fa fa-sort" aria-hidden="true"></i></td>
+        <td style="width: 150px">Status  <i class="fa fa-sort" aria-hidden="true"></i></td>
       </tr>
       </thead>
 
       <tbody>
       <tr *ngIf="datasets.length === 0">
-        <td (click)="newDataset()" colspan="3" class="fdk-input-helptext">Ingen datasettbeskrivelse registrert. <a href="#">Klikk for å legge til.</a></td>
+        <td (click)="newDataset()" colspan="2" class="fdk-input-helptext">Ingen datasettbeskrivelse registrert. <a href="#">Klikk for å legge til.</a></td>
       </tr>
       <tr *ngFor="let dataset of datasets" id="datasets" class="fdk-row-padding">
         <td (click)="selectDataset(catalog, dataset)" class="fdk-register fdk-register-datacatalogue-1">
