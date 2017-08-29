@@ -38,6 +38,7 @@
     "ng2-bootstrap-modal": "1.0.1",
     "ng2-select": "1.2.0",
     "ngx-bootstrap": "1.8.1",
+    "ngx-webstorage": "^1.8.0",
     "pluralize": "4.0.0",
     "remove": "0.1.5",
     "rxjs": "^5.1.0",
