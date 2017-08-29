@@ -21,21 +21,21 @@ describe('registrering-gui App', () => {
         await browser.get("/");
 
         console.log("Looking for Logg inn");
-        let isPresent = await element(by.buttonText("Logg inn")).isPresent()
+        let isPresent = await element(by.linkText("Logg inn")).isPresent()
         if (isPresent) {
-            let submitButton = element(by.buttonText("Logg inn"));
+            let submitButton = element(by.linkText("Logg inn"));
             console.log("Clicking for Logg");
 
             await submitButton.click();
         }
 
-        browser.sleep(2000);
+        browser.sleep(500);
 
 
         console.log("Waiting to be logged in");
-        let isLoggedInElement = element(by.css('.login-logout-button'));
+        let isLoggedInElement = element(by.linkText("Logg ut"));
 
-        await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find .fdk-saved in beforeEach");
+        await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find log out link in beforeEach");
 
         console.log("Logged in");
 
