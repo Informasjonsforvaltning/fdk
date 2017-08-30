@@ -44,9 +44,11 @@ jobs:
       env:
         - comment=Run Angular e2e tests
 
-
-deploy:
-  provider: script
-  script: registrering-gui/dockerPush.sh
-  on:
-    branch: develop
+    - stage: deploy
+      script: skip     # usually you do not want to rerun any tests
+      deploy:
+        provider: script
+        script:
+          - registrering-gui/dockerPush.sh
+        on:
+          branch: develop
