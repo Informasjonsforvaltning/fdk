@@ -10,7 +10,7 @@ export class ThemesService {
     constructor(private http: Http) {
     }
 
-    private serviceUrl = "http://localhost:8100" + "/themes";
+    private serviceUrl = environment.themesAndCodesUrl + "/themes";
     private cachedThemes: any = {};
     private themeType = 'data-theme';
 
