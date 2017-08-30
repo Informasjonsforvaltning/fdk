@@ -1,25 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-echo "here 2"
 
-BRANCH=`git branch | grep "*" | awk '{gsub ( "[* ]","" ) ; print $0 }'`
+echo "Preparing to push 'registrering-gui' to docker"
 
-echo "$BRANCH";
+docker login --username ${dockerUsername} --password ${dockerPassword}
 
+docker tag dcatno/registration:latest dcat/reg-gui:latest
 
-if [ "${BRANCH}" = "develop" ] ; then
+docker push dcat/reg-gui:latest
 
-  echo "Preparing to push 'registrering-gui' to docker"
+# tag with commit ID and push so that we can easily roll back if needed
+docker tag dcatno/registration:latest dcat/reg-gui:GIT_${TRAVIS_COMMIT}
+docker push dcat/reg-gui:GIT_${TRAVIS_COMMIT}
 
-  docker login --username ${dockerUsername} --password ${dockerPassword}
-
-  docker tag dcatno/registration:latest dcat/reg-gui:latest
-
-  docker push dcat/reg-gui:latest
-
-  # tag with commit ID and push so that we can easily roll back if needed
-  docker tag dcatno/registration:latest dcat/reg-gui:GIT_${TRAVIS_COMMIT}
-  docker push dcat/reg-gui:GIT_${TRAVIS_COMMIT}
-
-fi

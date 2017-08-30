@@ -45,4 +45,11 @@ jobs:
         - comment=Run Angular e2e tests
 
     - stage: deploy
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C; cd registrering-gui; ./dockerPush.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C;
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - registrering-gui/dockerPush.sh
+        on:
+          branch: develop
