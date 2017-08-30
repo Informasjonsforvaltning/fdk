@@ -41,6 +41,9 @@ export class CatalogComponent implements OnInit {
     if (!this.sortDatasetOn) {
       this.sortDatasetOn = "title";
     }
+    if (this.sortDatasetOrderAscending == null) {
+      this.sortDatasetOrderAscending = true;
+    }
 
 
     this.language = 'nb';
