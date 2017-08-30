@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+echo "here 2"
+
 BRANCH=`git branch | grep "*" | awk '{gsub ( "[* ]","" ) ; print $0 }'`
 
 echo "$BRANCH";

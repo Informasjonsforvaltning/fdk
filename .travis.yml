@@ -48,7 +48,9 @@ jobs:
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C
       deploy:
         provider: script
+        skip_cleanup: true
         script:
+          - echo "here1"
           - cd registrering-gui; ./dockerPush.sh
         on:
           branch: develop
