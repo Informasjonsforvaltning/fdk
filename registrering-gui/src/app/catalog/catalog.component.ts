@@ -5,8 +5,10 @@ import "rxjs/add/operator/switchMap";
 import {Catalog} from "./catalog";
 import {DatasetService} from "../dataset/dataset.service";
 import {Dataset} from "../dataset/dataset";
-import {TooltipModule} from 'ngx-bootstrap';
 import {ModalComponent} from "../modal/modal.component";
+import * as _ from "lodash";
+import {LocalStorage, LocalStorageService} from 'ngx-webstorage';
+
 
 @Component({
   selector: 'app-catalog',
@@ -14,18 +16,19 @@ import {ModalComponent} from "../modal/modal.component";
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-    title = 'Registrer katalog';
-    catalog: Catalog;
-    datasets: Dataset[] = [];
-    description: string;
-    language: string;
-    timer: number;
-    saved: boolean;
-    lastSaved: string;
-    import: any = {};
+  title = 'Registrer katalog';
+  catalog: Catalog;
+  datasets: Dataset[] = [];
+  description: string;
+  language: string;
+  timer: number;
+  saved: boolean;
+  lastSaved: string;
+  import: any = {};
 
-  sortDatasetOn: any = "title";
-  sortDatasetOrderAscending: boolean = true;
+  @LocalStorage() sortDatasetOn: string;
+  @LocalStorage() sortDatasetOrderAscending: boolean;
+  neverSorted: boolean = true;
 
 
   constructor(private route: ActivatedRoute,
@@ -35,6 +38,13 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.sortDatasetOn) {
+      this.sortDatasetOn = "title";
+    }
+    if (this.sortDatasetOrderAscending == null) {
+      this.sortDatasetOrderAscending = true;
+    }
+
 
     this.language = 'nb';
     // snapshot alternative
@@ -58,20 +68,9 @@ export class CatalogComponent implements OnInit {
     let id = this.route.snapshot.params['cat_id'];
     this.datasetService.getAll(id).then((datasets: Dataset[]) => {
 
-      this.datasets = datasets
-        .sort(function (a, b) {
+      this.datasets = datasets;
+      this.sortDatasets();
 
-          let aText = (a[this.sortDatasetOn][this.language] || "").toLocaleLowerCase(); //  is just a utf-8 character that is very high
-          let bText = (b[this.sortDatasetOn][this.language] || "").toLocaleLowerCase();
-
-          if (this.sortDatasetOrderAscending) {
-            return aText.localeCompare(bText);
-          }
-          else {
-            return bText.localeCompare(aText);
-          }
-
-        }.bind(this));
     });
   }
 
@@ -141,34 +140,34 @@ export class CatalogComponent implements OnInit {
   }
 
 
-    modalAbort(modal) : void {
-      modal.hide();
-      this.import = {};
-    }
+  modalAbort(modal): void {
+    modal.hide();
+    this.import = {};
+  }
 
-    datasetImport(modal): void {
+  datasetImport(modal): void {
 
-        if (this.import.datasetImportUrl && this.import.datasetImportUrl != "") {
-            this.import.importLoading = true;
-            this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
-                modal.hide();
-                this.import.importLoading = false;
-                this.getAllDatasets();
+    if (this.import.datasetImportUrl && this.import.datasetImportUrl != "") {
+      this.import.importLoading = true;
+      this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
+        modal.hide();
+        this.import.importLoading = false;
+        this.getAllDatasets();
 
-            }).catch((error) => {
-                this.import.importLoading = false;
-                this.import.importErrorMessage = "Ukjent feil";
-                try {
-                  this.import.importErrorMessage = JSON.parse(error._body).message;
-                } catch (error) {
-                  console.error(error);
-                }
-            });
-        } else {
-            this.import.importErrorMessage = "URL kan ikke være tom";
+      }).catch((error) => {
+        this.import.importLoading = false;
+        this.import.importErrorMessage = "Ukjent feil";
+        try {
+          this.import.importErrorMessage = JSON.parse(error._body).message;
+        } catch (error) {
+          console.error(error);
         }
-
+      });
+    } else {
+      this.import.importErrorMessage = "URL kan ikke være tom";
     }
+
+  }
 
 
   registrationStatus: { [key: string]: { [key: string]: string } } = {
@@ -189,5 +188,35 @@ export class CatalogComponent implements OnInit {
   getTextForRegistrationStatus(status: any): String {
     return this.registrationStatus[status][this.language];
   }
+
+  sortDatasetsOn(field: any): void {
+    if (field !== this.sortDatasetOn) {
+      this.sortDatasetOn = field;
+      this.sortDatasetOrderAscending = true;
+    } else {
+      this.sortDatasetOrderAscending = !this.sortDatasetOrderAscending;
+    }
+
+    this.sortDatasets();
+  }
+
+  private sortDatasets() {
+
+    if (this.sortDatasetOn === "title") {
+      this.datasets = _.sortBy(this.datasets, [a => this.getTextForRegistrationStatus(a.registrationStatus)]);
+      this.datasets = _.sortBy(this.datasets, [a => a.title.nb]);
+    }
+
+    else if (this.sortDatasetOn === "registrationStatus") {
+      this.datasets = _.sortBy(this.datasets, [a => a.title.nb]);
+      this.datasets = _.sortBy(this.datasets, [a => this.getTextForRegistrationStatus(a.registrationStatus)]);
+    }
+
+    if (!this.sortDatasetOrderAscending) {
+      this.datasets = this.datasets.reverse()
+    }
+
+  }
+
 
 }
