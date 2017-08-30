@@ -23,19 +23,19 @@ install:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: cho "temp" #mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm
+      script: echo "temp" #mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm
       env:
         - comment=First build the project to look for syntax/build problems
 
     - stage: Tests # Run regular unit tests
-      script:   cho "temp" #mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && mvn test -B
+      script:   echo "temp" #mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && mvn test -B
       env:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
       script:   echo "temp" #mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
-        - cho "temp" #mvn org.eluder.coveralls:coveralls-maven-plugin:report
+        - echo "temp" #mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
