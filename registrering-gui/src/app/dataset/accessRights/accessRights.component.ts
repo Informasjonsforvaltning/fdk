@@ -21,24 +21,26 @@ export class AccessRightsComponent implements OnInit {
     accessRightsModel = [];
     selectedAccessRightIdx = 1;
 
-
     constructor(private fb: FormBuilder)
     {
         this.accessRightsModel = [
             {
                 id: 1,
                 label: 'Offentlig',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
+                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC',
+                requiresReason: false
             },
             {
                 id: 2,
                 label: 'Begrenset offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
+                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED',
+                requiresReason: true
             },
             {
                 id: 3,
                 label: 'Unntatt offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
+                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC',
+                requiresReason: true
             }
         ]
     }
@@ -56,8 +58,7 @@ export class AccessRightsComponent implements OnInit {
             .filter(entry => entry.uri == this.dataset.accessRights.uri)
             .forEach(entry => this.selectedAccessRightIdx = entry.id)
 
-
-        this.accessRightsForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
+        this.accessRightsForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             accessLevel => {
                 if (accessLevel.accessRightsComment.length === 0) {
                     this.dataset.accessRightsComments = null;
