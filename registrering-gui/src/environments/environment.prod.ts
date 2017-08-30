@@ -6,6 +6,5 @@ export const environment = {
   production: true,
   envName: 'prod',
   api: regApiUrl.indexOf('<') === 0 ? 'http://localhost:8099' : regApiUrl,
-  themesAndCodesUrl: themesAndCodesUrl.indexOf('<') === 0 ? 'http://localhost:8099' : themesAndCodesUrl,
   queryUrl: queryUrl.indexOf('<') === 0 ? 'http://localhost:8083' : queryUrl
 };
