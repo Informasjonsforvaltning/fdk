@@ -19,7 +19,8 @@ import {ConfirmComponent} from "./confirm/confirm.component";
 import {AuthGuard} from "./security/auth.guard";
 import {AuthenticationService} from "./security/authentication.service";
 import {RlTagInputModule} from "angular2-tag-input";
-import { TooltipModule } from 'ngx-bootstrap';
+import {TooltipModule} from 'ngx-bootstrap';
+import {Ng2Webstorage} from 'ngx-webstorage';
 
 
 import {SelectModule} from "ng-select";
@@ -33,51 +34,53 @@ import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
 import {InformationComponent} from "./dataset/information/information.component";
 import {TemaComponent} from "./dataset/tema/tema.component";
-import { MyDatePickerModule } from 'mydatepicker';
+import {MyDatePickerModule} from 'mydatepicker';
 import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        CatalogComponent,
-        DatasetComponent,
-        StartComponent,
-        ConfirmComponent,
-        DistributionListComponent,
-        DistributionFormComponent,
-        TemporalFormComponent,
-        TemporalListComponent,
-        ContactComponent,
-        QualityComponent,
-        AccessRightsComponent,
-        InformationComponent,
-        TemaComponent,
-        SpatialComponent,
-        HelpText,
-        ModalComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SelectModule,
-        HttpModule,
-        NgbModule.forRoot(),
-        AlertModule.forRoot(),
-        RouterModule.forRoot(routes),
-        BootstrapModalModule,
-        RlTagInputModule,
-	       MyDatePickerModule,
-         BsDropdownModule.forRoot(),
-        TooltipModule.forRoot()
-    ],
-    entryComponents: [
-        ConfirmComponent
-    ],
-    providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    CatalogComponent,
+    DatasetComponent,
+    StartComponent,
+    ConfirmComponent,
+    DistributionListComponent,
+    DistributionFormComponent,
+    TemporalFormComponent,
+    TemporalListComponent,
+    ContactComponent,
+    QualityComponent,
+    AccessRightsComponent,
+    InformationComponent,
+    TemaComponent,
+    SpatialComponent,
+    HelpText,
+    ModalComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SelectModule,
+    HttpModule,
+    NgbModule.forRoot(),
+    AlertModule.forRoot(),
+    RouterModule.forRoot(routes),
+    BootstrapModalModule,
+    RlTagInputModule,
+    MyDatePickerModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    Ng2Webstorage.forRoot({prefix: 'dcat-registration-gui', separator: '.', caseSensitive: true})
+  ],
+  entryComponents: [
+    ConfirmComponent
+  ],
+  providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

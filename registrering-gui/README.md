@@ -7,3 +7,9 @@ Source: [Dockerfile](https://raw.githubusercontent.com/Altinn/fdk/develop/regist
 The registration application provides functionality for end users to create, update, store
 and publish Data Catalog descriptions.
 
+
+# Run up the frontend
+
+```
+npm run-script ng serve
+```
