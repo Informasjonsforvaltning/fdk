@@ -122,7 +122,7 @@ export class CatalogComponent implements OnInit {
   }
 
   newDataset(): boolean {
-    this.datasets.push(<Dataset>{
+    this.datasets.unshift(<Dataset>{
       id: "",
       _lastModified: "",
       title: {nb: "Laster ..."},
@@ -204,11 +204,11 @@ export class CatalogComponent implements OnInit {
 
     if (this.sortDatasetOn === "title") {
       this.datasets = _.sortBy(this.datasets, [a => this.getTextForRegistrationStatus(a.registrationStatus)]);
-      this.datasets = _.sortBy(this.datasets, [a => a.title.nb]);
+      this.datasets = _.sortBy(this.datasets, [a => a.title.nb || ""]);
     }
 
     else if (this.sortDatasetOn === "registrationStatus") {
-      this.datasets = _.sortBy(this.datasets, [a => a.title.nb]);
+      this.datasets = _.sortBy(this.datasets, [a => a.title.nb || ""]);
       this.datasets = _.sortBy(this.datasets, [a => this.getTextForRegistrationStatus(a.registrationStatus)]);
     }
 
