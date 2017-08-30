@@ -36,6 +36,7 @@ jobs:
       script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
+        - cd registrering-gui; ./dockerPush.sh
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
