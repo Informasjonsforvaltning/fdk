@@ -23,7 +23,7 @@ install:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm
+      script: cho "temp" #mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dskip.npm
       env:
         - comment=First build the project to look for syntax/build problems
 
@@ -33,7 +33,7 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script:   echo "temp" #mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C -q > /dev/null && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
@@ -45,10 +45,10 @@ jobs:
         - comment=Run Angular e2e tests
 
     - stage: deploy
-      script: skip     # usually you do not want to rerun any tests
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -T 2C
       deploy:
         provider: script
         script:
-          - registrering-gui/dockerPush.sh
+          - cd registrering-gui; ./dockerPush.sh
         on:
           branch: develop
