@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.model.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
@@ -27,8 +28,10 @@ import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,11 +40,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -166,7 +171,6 @@ public class ImportController {
         logger.debug("json after frame: {}",json);
 
 
-
         List<Dataset> result = new Gson().fromJson(preProcessDatasetAttributes(json), FramedDataset.class).getGraph();
 
         postprosessDatasetAttributes(result);
@@ -211,9 +215,51 @@ public class ImportController {
                 });
             }
 
+            // accrualPeriodicity
+            if (d.getAccrualPeriodicity() != null) {
+                String code = d.getAccrualPeriodicity().getUri();
+                try {
+                    d.getAccrualPeriodicity().setPrefLabel(getLabelForCode(code));
+                } catch (Exception e) {
+                    logger.error("error", e);
+                }
+
+            }
         });
+    }
 
+    private void fetchCodes()  {
+        RestTemplate restTemplate = new RestTemplate();
 
+        ResponseEntity<List<String>> codeTypes = restTemplate.exchange("http://localhost:8100/codes",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {});
+
+        for (String type : codeTypes) {
+            logger.debug("fetching {}", type);
+            ResponseEntity<List<SkosCode>> responseEntity = restTemplate.exchange("http://localhost:8100/codes/frequency",
+                    HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {});
+            logger.debug("found {} Skos")
+        }
+
+    }
+
+    private Map<String,String> getLabelForCode(String code) {
+
+        ResponseEntity<List<SkosCode>> responseEntity = restTemplate.exchange("http://localhost:8100/codes/frequency",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {});
+        List<SkosCode> codes = responseEntity.getBody();
+        Map<String,String> prefLabel = null;
+
+        for (SkosCode c : codes) {
+            // only import no?
+            if (c.getUri().equals(code)) {
+                prefLabel = c.getPrefLabel();
+                break;
+            }
+
+        }
+
+        return prefLabel;
     }
 
     String frame(org.apache.jena.query.Dataset dataset, String frame) {

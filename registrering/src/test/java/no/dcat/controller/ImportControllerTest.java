@@ -40,6 +40,31 @@ public class ImportControllerTest {
         assertThat(ds.size(), is(1));
     }
 
+    /**
+     * SkosCodes:
+     * language*
+     * spatial*
+     * accessRights
+     * provenance [
+     * accrualPeriodicity[frequency]
+     *
+     * @throws Throwable
+     */
+    @Test
+    public void frameDatasetAddsLabels() throws Throwable {
+        Model model = FileManager.get().loadModel("dataset-single.ttl");
+
+        ImportController imp = new ImportController();
+
+        List<Dataset> ds = imp.parseDatasets(model);
+
+        assertThat(ds.size(), is(1));
+
+        Dataset d = ds.get(0);
+
+        assertThat(d.getAccrualPeriodicity().getPrefLabel().get("no"), is("kontinuerlig"));
+
+    }
 
 
 
