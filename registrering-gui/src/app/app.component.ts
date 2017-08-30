@@ -2,6 +2,7 @@ import {Component, ViewEncapsulation} from "@angular/core";
 import {AuthenticationService} from "./security/authentication.service";
 import {Router} from "@angular/router";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {ModalComponent} from "./modal/modal.component";
 
 @Component({
   selector: 'app-root',

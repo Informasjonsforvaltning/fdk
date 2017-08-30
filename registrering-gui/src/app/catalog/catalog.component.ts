@@ -6,7 +6,7 @@ import {Catalog} from "./catalog";
 import {DatasetService} from "../dataset/dataset.service";
 import {Dataset} from "../dataset/dataset";
 import {TooltipModule} from 'ngx-bootstrap';
-
+import {ModalComponent} from "../modal/modal.component";
 
 @Component({
   selector: 'app-catalog',
@@ -14,14 +14,16 @@ import {TooltipModule} from 'ngx-bootstrap';
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-  title = 'Registrer katalog';
-  catalog: Catalog;
-  datasets: Dataset[] = [];
-  description: string;
-  language: string;
-  timer: number;
-  saved: boolean;
-  lastSaved: string;
+    title = 'Registrer katalog';
+    catalog: Catalog;
+    datasets: Dataset[] = [];
+    description: string;
+    language: string;
+    timer: number;
+    saved: boolean;
+    lastSaved: string;
+    import: any = {};
+
   sortDatasetOn: any = "title";
   sortDatasetOrderAscending: boolean = true;
 
@@ -33,6 +35,7 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.language = 'nb';
     // snapshot alternative
     let id = this.route.snapshot.params['cat_id'];
@@ -54,7 +57,7 @@ export class CatalogComponent implements OnInit {
   getAllDatasets() {
     let id = this.route.snapshot.params['cat_id'];
     this.datasetService.getAll(id).then((datasets: Dataset[]) => {
-      console.log("HERE")
+
       this.datasets = datasets
         .sort(function (a, b) {
 
@@ -136,6 +139,37 @@ export class CatalogComponent implements OnInit {
   back(): void {
     this.router.navigate(['/']);
   }
+
+
+    modalAbort(modal) : void {
+      modal.hide();
+      this.import = {};
+    }
+
+    datasetImport(modal): void {
+
+        if (this.import.datasetImportUrl && this.import.datasetImportUrl != "") {
+            this.import.importLoading = true;
+            this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
+                modal.hide();
+                this.import.importLoading = false;
+                this.getAllDatasets();
+
+            }).catch((error) => {
+                this.import.importLoading = false;
+                this.import.importErrorMessage = "Ukjent feil";
+                try {
+                  this.import.importErrorMessage = JSON.parse(error._body).message;
+                } catch (error) {
+                  console.error(error);
+                }
+            });
+        } else {
+            this.import.importErrorMessage = "URL kan ikke være tom";
+        }
+
+    }
+
 
   registrationStatus: { [key: string]: { [key: string]: string } } = {
     "DRAFT": {

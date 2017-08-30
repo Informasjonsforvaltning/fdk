@@ -5,9 +5,9 @@
     <logger name="org.apache.http.wire" level="WARN"/>
     <logger name="org.apache.jena" level="ERROR"/>
 	<logger name="org.elasticsearch" level ="WARN"/>
-	<logger name="no.difi.dcat" level ="TRACE"/>
+	<logger name="no.difi.dcat" level ="WARN"/>
 
-	<logger name="no.dcat" level="TRACE"/>
+	<logger name="no.dcat" level="WARN"/>
 
 
 </configuration>

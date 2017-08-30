@@ -66,14 +66,19 @@ public class CatalogController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        Catalog savedCatalog = saveCatalog(catalog);
+
+        return new ResponseEntity<>(savedCatalog, OK);
+    }
+
+    protected Catalog saveCatalog(Catalog catalog) {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
             catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
         }
 
-        Catalog savedCatalog = catalogRepository.save(catalog);
-        return new ResponseEntity<>(savedCatalog, OK);
+        return catalogRepository.save(catalog);
     }
 
     private Publisher getPublisher(Catalog catalog) {
