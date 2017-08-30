@@ -217,7 +217,7 @@ input:checked ~ .checkbox-replacement::after{
     border-radius: 3px;
 		content:'';
 }
-.checkbox input {
+.checkbox .expand-checkbox {
   position: absolute;
   left:-9999px;
 }
