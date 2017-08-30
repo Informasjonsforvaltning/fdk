@@ -27,20 +27,17 @@ export class AccessRightsComponent implements OnInit {
             {
                 id: 1,
                 label: 'Offentlig',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC',
-                requiresReason: false
+                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
             },
             {
                 id: 2,
                 label: 'Begrenset offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED',
-                requiresReason: true
+                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
             },
             {
                 id: 3,
                 label: 'Unntatt offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC',
-                requiresReason: true
+                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
             }
         ]
     }
