@@ -178,12 +178,11 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write')")
+    @PreAuthorize("hasPermission(#id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
-            consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Catalog> removeCatalog(@PathVariable("id") String id) {
+    public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.delete(id);
         return new ResponseEntity<>(OK);

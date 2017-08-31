@@ -10,12 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
@@ -127,19 +122,21 @@ public class CatalogControllerIT {
 
     @Test
     public void listCatalogs() throws Throwable {
-        HttpEntity<PagedResources<Catalog>> catalogs =
-                catalogController.listCatalogs(new PageRequest(0, 10), pagedResourcesAssembler);
 
-       //List<Catalog> catalogs = restTemplate.exchange("/catalogs/", HttpMethod.GET, new ParameterizedTypeReference<List<Catalog>>() {}, null);
+       ResponseEntity<PagedResources<Catalog>> catalogPage = restTemplate.exchange("/catalogs", HttpMethod.GET, null, new ParameterizedTypeReference<PagedResources<Catalog>>() {}, headers);
+
+       assertThat(catalogPage.getStatusCode(), is(HttpStatus.OK));
+       assertThat(catalogPage.getBody().getContent().size(), is(1));
     }
 
     @Test
     public void createCatalogWithNoIdFails() {
         Catalog catalog = new Catalog();
         catalog.setId(null);
-        ResponseEntity<Catalog> actual = (ResponseEntity<Catalog>) catalogController.createCatalog(catalog);
 
-        assertThat(actual.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+        ResponseEntity<Catalog> actual = restTemplate.exchange("/catalogs", HttpMethod.POST, new HttpEntity<>(catalog), Catalog.class, headers);
+
+        assertThat(actual.getStatusCode(), is(HttpStatus.FORBIDDEN));
     }
 
     @Test
@@ -152,15 +149,15 @@ public class CatalogControllerIT {
         catalog.setId(catalogId);
         catalog.setTitle(title);
 
-        ResponseEntity<Catalog> createdCatalogResponse = (ResponseEntity<Catalog>) catalogController.createCatalog(catalog);
-
-        Catalog createdCatalog = createdCatalogResponse.getBody();
+        Catalog createdCatalog = restTemplate.postForObject("/catalogs", catalog, Catalog.class, headers);
 
         Map<String, String> title2 = new HashMap<>();
         title2.put("en", "aTest");
         createdCatalog.setTitle(title2);
 
-        ResponseEntity<Catalog> updatedCatalogResponse = (ResponseEntity<Catalog>) catalogController.updateCatalog(catalogId, catalog);
+        //restTemplate.put("/catalogs/" + catalogId, createdCatalog);
+
+        ResponseEntity<Catalog> updatedCatalogResponse = restTemplate.exchange("/catalogs/"+catalogId, HttpMethod.PUT, new HttpEntity<Catalog>(createdCatalog), Catalog.class, headers);
 
         assertThat(updatedCatalogResponse.getStatusCode(), is(HttpStatus.OK));
 
@@ -184,7 +181,7 @@ public class CatalogControllerIT {
 
         Catalog createdCatalog = restTemplate.postForObject("/catalogs", catalog, Catalog.class, headers);
 
-        ResponseEntity<Catalog> deletedCatalogResponse = restTemplate.exchange("/catalogs" + catalogId, HttpMethod.DELETE, null, Catalog.class);
+        ResponseEntity<Catalog> deletedCatalogResponse = restTemplate.exchange("/catalogs/" + catalogId, HttpMethod.DELETE, null, Catalog.class);
 
         assertThat(deletedCatalogResponse.getStatusCode(), is(HttpStatus.OK));
 

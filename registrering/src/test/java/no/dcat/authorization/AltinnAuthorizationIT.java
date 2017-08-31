@@ -26,6 +26,7 @@ import java.util.List;
 // -Djavax.net.ssl.keyStore=D:/altinn/brreg.jks -Djavax.net.ssl.keyStorePassword=keystore
 // -Djavax.net.debug=ssl
 
+@ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AltinnAuthorizationIT {

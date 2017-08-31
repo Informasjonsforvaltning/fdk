@@ -73,6 +73,9 @@ spring:
       properties:
         http:
           enabled: true
+application:
+  clientSSLCertificateKeystoreLocation: ../conf/dummy-client-SSL-cert.p12
+  clientSSLCertificateKeystorePassword: password
 ---
 spring:
   profiles: develop_embedded
