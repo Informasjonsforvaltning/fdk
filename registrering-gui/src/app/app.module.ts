@@ -32,6 +32,7 @@ import {TemporalFormComponent} from "./dataset/temporal/temporal.component";
 import {ContactComponent} from "./dataset/contact/contact.component";
 import {QualityComponent} from "./dataset/quality/quality.component";
 import {AccessRightsComponent} from "./dataset/accessRights/accessRights.component";
+import {TypeComponent} from "./dataset/type/type.component";
 import {InformationComponent} from "./dataset/information/information.component";
 import {TemaComponent} from "./dataset/tema/tema.component";
 import {MyDatePickerModule} from 'mydatepicker';
@@ -54,6 +55,7 @@ import {ModalComponent} from "./modal/modal.component";
     ContactComponent,
     QualityComponent,
     AccessRightsComponent,
+    TypeComponent,
     InformationComponent,
     TemaComponent,
     SpatialComponent,

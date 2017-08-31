@@ -55,5 +55,7 @@ export interface Dataset {
 
   temporals?: PeriodOfTime[];
 
+  type?: string;
+
   _lastModified: string;
 }

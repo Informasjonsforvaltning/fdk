@@ -103,7 +103,10 @@
     <input type="checkbox" id="type-toggle" class="expand-checkbox" />
     <label for="type-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
     <div class="expanded-content">
-      type (empty for now)
+
+      <type [dataset]="dataset"
+      (onSave)="onSave($event)">
+    </type>
     </div>
   </div>
 </div>

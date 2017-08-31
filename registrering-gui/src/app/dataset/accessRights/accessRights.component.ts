@@ -21,7 +21,6 @@ export class AccessRightsComponent implements OnInit {
     accessRightsModel = [];
     selectedAccessRightIdx = 1;
 
-
     constructor(private fb: FormBuilder)
     {
         this.accessRightsModel = [
@@ -56,8 +55,7 @@ export class AccessRightsComponent implements OnInit {
             .filter(entry => entry.uri == this.dataset.accessRights.uri)
             .forEach(entry => this.selectedAccessRightIdx = entry.id)
 
-
-        this.accessRightsForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
+        this.accessRightsForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             accessLevel => {
                 if (accessLevel.accessRightsComment.length === 0) {
                     this.dataset.accessRightsComments = null;
