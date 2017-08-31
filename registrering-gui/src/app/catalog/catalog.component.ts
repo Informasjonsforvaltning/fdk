@@ -173,7 +173,7 @@ export class CatalogComponent implements OnInit {
   registrationStatus: { [key: string]: { [key: string]: string } } = {
     "DRAFT": {
       nb: "Utkast",
-      color: "var(--color4)"
+      color: "var(--color3)"
     },
     "PUBLISH": {
       nb: "Publisert",

@@ -298,4 +298,8 @@ export class DatasetComponent implements OnInit {
     console.log("availablelang: " , this.availableLanguages)
       return formGroup;
   }
+
+  setRegistrationStatus(event:any): void{
+    console.log(event);
+  }
 }
