@@ -10,13 +10,13 @@
         </h4>
         <div class="form sub-form" *ngIf="showForm">
           <label for="format" class="control-label">Format:</label>
-          <rl-tag-input id="format" formControlName="format" placeholder=" "></rl-tag-input>
+          <rl-tag-input  (click)="focus($event)" id="format" formControlName="format" placeholder=" "></rl-tag-input>
           <label for="description" class="control-label">Kommentar:</label>
           <textarea id="description" type="text" formControlName="description" class="fdk-input"></textarea>
           <label for="accessURL" class="control-label">Tilgangs-URL:</label>
-          <rl-tag-input id="accessURL" formControlName="accessURL" placeholder=" "></rl-tag-input>
+          <rl-tag-input  (click)="focus($event)" id="accessURL" formControlName="accessURL" placeholder=" "></rl-tag-input>
           <label for="downloadURL" class="control-label">Nedlastnings-URL:</label>
-          <rl-tag-input id="downloadURL" formControlName="downloadURL" placeholder=" "></rl-tag-input>
+          <rl-tag-input  (click)="focus($event)" id="downloadURL" formControlName="downloadURL" placeholder=" "></rl-tag-input>
           <label for="license" class="control-label">Lisens:</label>
           <input id="license" type="text"  formControlName="license" class="fdk-input"/>
           <span class="delete-distribution-wrapper">

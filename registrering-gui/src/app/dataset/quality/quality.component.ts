@@ -114,4 +114,12 @@ export class QualityComponent implements OnInit {
 
         return label;
     }
+
+    focus(e) {
+      e.target.childNodes.forEach(node=>{
+        if(node.className && node.className.match(/\bng2-tag-input-form\b/)) {
+          node.childNodes[1].focus();
+        }
+      })
+    }    
 }

@@ -57,4 +57,12 @@ export class DistributionFormComponent implements OnInit {
        this.distributionsFormArray.removeAt(idx);
       return false;
     }
+
+    focus(e) {
+      e.target.childNodes.forEach(node=>{
+        if(node.className && node.className.match(/\bng2-tag-input-form\b/)) {
+          node.childNodes[1].focus();
+        }
+      })
+    }
 }
