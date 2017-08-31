@@ -210,11 +210,15 @@ public class ImportController {
             }
 
             JsonObject publisher = d.getAsJsonObject().getAsJsonObject("publisher");
-            JsonElement publisherName = publisher.get("name");
-            if (publisherName instanceof JsonArray) {
-                logger.warn("Publisher has multiple names: {}", publisherName.toString());
-                JsonArray nameArray = (JsonArray) publisherName;
-                publisher.add("name", nameArray.get(0));
+            if (publisher != null) {
+                JsonElement publisherName = publisher.get("name");
+                if (publisherName != null && publisherName instanceof JsonArray) {
+                    logger.warn("Publisher has multiple names: {}", publisherName.toString());
+                    JsonArray nameArray = (JsonArray) publisherName;
+                    if (nameArray.size() >= 1) {
+                        publisher.add("name", nameArray.get(0));
+                    }
+                }
             }
 
 
