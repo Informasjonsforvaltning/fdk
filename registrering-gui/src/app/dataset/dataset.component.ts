@@ -299,7 +299,4 @@ export class DatasetComponent implements OnInit {
       return formGroup;
   }
 
-  setRegistrationStatus(event:any): void{
-    console.log(event);
-  }
 }
