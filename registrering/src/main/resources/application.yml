@@ -5,6 +5,7 @@ spring:
       clusterNodes: localhost:9300
   application:
       catalogUriPrefix: http://localhost:8099
+      themesServiceUrl: http://localhost:8100
 server:
   port: 8099
 management:
@@ -21,6 +22,7 @@ spring:
           enabled: true
   application:
       catalogUriPrefix: http://localhost:8099
+      themesServiceUrl: http://localhost:8100
 ---
 spring:
   profiles: develop_embedded

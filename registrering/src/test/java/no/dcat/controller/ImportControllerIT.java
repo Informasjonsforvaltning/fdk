@@ -1,8 +1,11 @@
 package no.dcat.controller;
 
 import no.dcat.model.Catalog;
+import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.util.FileManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -120,5 +124,36 @@ public class ImportControllerIT {
         HttpEntity<Catalog> result = importController.importCatalog(catalogId, "missing-import-file.ttl");
 
     }
+
+    /**
+     * SkosCodes:
+     * language*
+     * spatial*
+     * accessRights
+     * provenance [
+     * accrualPeriodicity[frequency]
+     *
+     * @throws Throwable
+     */
+    @Test
+    public void frameDatasetAddsLabels() throws Throwable {
+        String catalogId = "974760673";
+
+
+        HttpEntity<Catalog> result = importController.importCatalog(catalogId, "dataset-single.ttl");
+        List<Dataset> ds = result.getBody().getDataset();
+
+        assertThat(ds.size(), is(1));
+
+        Dataset d = ds.get(0);
+
+        assertThat(d.getAccrualPeriodicity().getPrefLabel().get("no"), is("kontinuerlig"));
+        assertThat(d.getLanguage().get(0).getPrefLabel().get("nb"), is("Norsk"));
+        assertThat(d.getAccessRights().getPrefLabel().get("nb"), is("Offentlig"));
+        assertThat(d.getProvenance().getPrefLabel().get("nb"), is("Tredjepart"));
+
+
+    }
+
 
 }
