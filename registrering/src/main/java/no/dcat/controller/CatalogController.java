@@ -43,7 +43,7 @@ public class CatalogController {
     @RequestMapping(value = "",
             method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Dataset>> listCatalogs(Pageable pageable,
+    public HttpEntity<PagedResources<Catalog>> listCatalogs(Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
 
         Page<Catalog> catalogs = catalogRepository.findAll(pageable);

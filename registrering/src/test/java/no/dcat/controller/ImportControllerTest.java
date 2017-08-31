@@ -13,10 +13,15 @@ import org.mockito.Mockito;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 
 public class ImportControllerTest {
 
@@ -29,9 +34,7 @@ public class ImportControllerTest {
 
         ImportController imp = new ImportController();
         importController = Mockito.spy(imp);
-
     }
-
 
 
     @Test
@@ -55,7 +58,6 @@ public class ImportControllerTest {
         Mockito.doThrow(new CodesImportException("test")).when(importController).fetchCodes();
 
         importController.fetchCodes();
-
     }
 
 
@@ -63,22 +65,26 @@ public class ImportControllerTest {
     public void fetchOfCodesFailsURLNotValid() throws Throwable {
 
         importController.fetchCodes();
-
     }
 
-    /*
-    @Test(expected = IllegalStateException.class)
-    public void troubledInFraming() throws Throwable {
+
+    @Test
+    public void publisherContainsMultipleNamesWhenOnlyOneIsExpected() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
-        ImportController imp = new ImportController();
-        importController = Mockito.spy(imp);
+        ImportController impController = new ImportController();
+        ImportController iController = Mockito.spy(impController);
+        Map<String,String> prefLabel = new HashMap<>();
+        prefLabel.put("no", "test");
 
-        List<Dataset> ds = importController.parseDatasets(model);
+        doNothing().when(iController).fetchCodes();
+        doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
+
+        List<Dataset> ds = iController.parseDatasets(model);
 
         assertThat(ds.size(), is(27));
     }
-    */
+
 
 
 }

@@ -179,8 +179,7 @@ public class ImportController {
         String json = frame(DatasetFactory.create(modelWithInverseCatalogRelations),
                 IOUtils.toString(new ClassPathResource("frames/dataset.json").getInputStream(), "UTF-8"));
 
-        logger.debug("json after frame: {}",json);
-
+        logger.trace("json after frame: {}",json);
 
         List<Dataset> result = new Gson().fromJson(preProcessDatasetAttributes(json), FramedDataset.class).getGraph();
 
@@ -209,6 +208,16 @@ public class ImportController {
                     t.getAsJsonObject().add("endDate", hasEnd);
                 });
             }
+
+            JsonObject publisher = d.getAsJsonObject().getAsJsonObject("publisher");
+            JsonElement publisherName = publisher.get("name");
+            if (publisherName instanceof JsonArray) {
+                logger.warn("Publisher has multiple names: {}", publisherName.toString());
+                JsonArray nameArray = (JsonArray) publisherName;
+                publisher.add("name", nameArray.get(0));
+            }
+
+
         });
         
         return gson.toJson(model);
@@ -300,7 +309,7 @@ public class ImportController {
 
     }
 
-    private Map<String,String> getLabelForCode(String codeType, String code) {
+    protected Map<String,String> getLabelForCode(String codeType, String code) {
         SkosCode skosCode = allCodes.get(codeType).get(code);
 
         if (skosCode != null) {
