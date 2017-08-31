@@ -19,7 +19,6 @@ spring:
 spring:
   profiles: prod
 application:
-  altinnServiceUrl: http://localhost:8077
 server:
   tomcat:
     accesslog:

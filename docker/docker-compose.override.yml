@@ -117,8 +117,7 @@ services:
       - 8079:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
-     - application.catalogUriPrefix=http://localhost:8099
-     - application.altinnServiceUrl=http://registration-auth:8080
+     - reg_altinnServiceUrl=http://registration-auth:8080
      - reg_apikey=${reg_apikey}
      - reg_clientSSLCertificateKeystoreLocation=${reg_clientSSLCertificateKeystoreLocation}
      - reg_clientSSLCertificateKeystorePassword=${reg_clientSSLCertificateKeystorePassword}
