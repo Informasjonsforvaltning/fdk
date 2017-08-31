@@ -11,7 +11,7 @@ export class CodesService {
   }
 
   //private codesUrl = environment.api + "/codes";
-  private codesUrl = "http://localhost:8100" + "/codes";
+  private codesUrl = environment.queryUrl + "/codes";
 
   private cachedCodes: any = {};
 

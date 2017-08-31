@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  * Class for loading and retrieving locations from/into elasticsearch.
  */
 public class LoadLocations {
-    public static final String[] LANGUAGES = new String[]{"en", "no", "nn", "nb"};
+    public static final String[] LANGUAGES = new String[] {"en", "no", "nn", "nb"};
 
     private final String themesHostname;
     private final String httpUsername;
@@ -56,7 +56,6 @@ public class LoadLocations {
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
     }
-
 
 
     private final Logger logger = LoggerFactory.getLogger(LoadLocations.class);
@@ -81,20 +80,26 @@ public class LoadLocations {
      */
     public void addLocationsToThemes(Model model) {
 
+
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
         NodeIterator nodeIterator = model.listObjectsOfProperty(DCTerms.spatial);
         nodeIterator.forEachRemaining(node -> {
+            LocationUri locationUri = new LocationUri(node.asResource().getURI());
 
-            SkosCode skosCode = template.postForObject(themesHostname + "/locations/", new LocationUri(node.asResource().getURI()), SkosCode.class);
-            locations.put(skosCode.getUri(), skosCode);
-
+            try {
+                SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
+                locations.put(skosCode.getUri(), skosCode);
+            } catch (Exception e) {
+                logger.error("Error posting location {} to themes", locationUri.getUri(), e);
+            }
         });
+
 
     }
 
 
-    public  List<SkosCode> getLocations(List<String> strings) {
+    public List<SkosCode> getLocations(List<String> strings) {
         return strings.stream()
                 .map(locations::get)
                 .distinct()

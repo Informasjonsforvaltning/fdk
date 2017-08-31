@@ -63,8 +63,16 @@
     <table class="fdk-dataset" style="table-layout: fixed">
       <thead>
       <tr>
-        <td>Tittel på datasett <i class="fa fa-sort-down" aria-hidden="true"></i></td>
-        <td style="width: 150px">Status  <i class="fa fa-sort" aria-hidden="true"></i></td>
+        <td>Tittel på datasett <i class="fa" [ngClass]="{
+          'fa-sort': sortDatasetOn !== 'title' ,
+          'fa-sort-down': sortDatasetOrderAscending && sortDatasetOn === 'title' ,
+          'fa-sort-up': !sortDatasetOrderAscending && sortDatasetOn === 'title'
+        }" aria-hidden="true" (click)="sortDatasetsOn('title')"></i></td>
+        <td style="width: 150px">Status <i class="fa" [ngClass]="{
+          'fa-sort': sortDatasetOn !== 'registrationStatus' ,
+          'fa-sort-down': sortDatasetOrderAscending && sortDatasetOn === 'registrationStatus' ,
+          'fa-sort-up': !sortDatasetOrderAscending && sortDatasetOn === 'registrationStatus'
+        }" aria-hidden="true" (click)="sortDatasetsOn('registrationStatus')"></i></td>
       </tr>
       </thead>
 
