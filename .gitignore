@@ -23,3 +23,9 @@ logs/
 .DS_Store
 tdb
 catalog-v001.xml
+
+data/
+/conf/idporten/
+/conf/altinn/
+!/conf/dummy-client-SSL-cert.p12
+/conf/environments/

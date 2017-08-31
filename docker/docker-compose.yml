@@ -79,11 +79,20 @@ services:
     networks:
       platform:
 
+  nginx:
+    image: dcatno/nginx:latest
+    links:
+      - registration
+      - registration-api
+    networks:
+      platform:
+
   registration-api:
     image: dcatno/registration-api:latest
     links:
       - elasticsearch
       - search-api
+      - registration-auth
     networks:
       platform:
 
@@ -98,6 +107,11 @@ services:
 
   themes:
     image: dcatno/themes:latest
+    networks:
+      platform:
+
+  registration-auth:
+    image: dcatno/registration-auth:latest
     networks:
       platform:
 

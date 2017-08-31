@@ -38,7 +38,7 @@ export class CatalogService {
     return this.http
         .get(this.catalogsUrl + '?page=0&size=1000', {headers: this.headers})
         .toPromise()
-        .then(response => response.json().content as Catalog[])
+        .then(response => response.json()._embedded.catalogs as Catalog[])
         .catch(this.handleError);
   }
 

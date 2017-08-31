@@ -8,15 +8,26 @@
         <groupId>no.dcat</groupId>
         <artifactId>fdk</artifactId>
         <version>0.2.4-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>registrering</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <frontend-plugin.version>1.4</frontend-plugin.version>
+        <node.version>v6.10.2</node.version>
+        <npm.version>4.3.0</npm.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <!-- Nødvendig for å bruke configserver på openshift -->
         <dependency>
@@ -36,9 +47,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>spring-boot-security-saml</artifactId>
+            <version>1.10</version>
         </dependency>
 
         <dependency>
@@ -85,7 +101,6 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -95,6 +110,7 @@
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -107,9 +123,13 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
 
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -118,6 +138,26 @@
                     <imageName>
                         ${docker.registry}${docker.image.prefix}/registration-api:latest
                     </imageName>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.basedir}/..</directory>
+                            <filtering>false</filtering>
+                            <include>conf/**/*</include>
+                        </resource>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                            <include>${project.build.finalName}-exec.jar</include>
+                            <include>${project.build.finalName}.war</include>
+                            <excludes>
+                                <exclude>target/**/*</exclude>
+                                <exclude>pom.xml</exclude>
+                                <exclude>*.iml</exclude>
+                            </excludes>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
 

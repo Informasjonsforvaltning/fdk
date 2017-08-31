@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {AuthenticationService} from "./security/authentication.service";
 import {Router} from "@angular/router";
+import {User} from "./security/user";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
 
@@ -11,41 +12,39 @@ import {ModalComponent} from "./modal/modal.component";
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  loading = false;
+
   error = '';
   title = 'Registrer datakatalog';
+  loggedInUser : User;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) {
   }
 
+  ngOnInit() {
+    this.authenticationService.user().subscribe(user => {this.loggedInUser = user});
+  }
+
   isAuthenticated(): boolean {
-    return localStorage.getItem('username') != null && localStorage.getItem('authorization') != null;
+    return this.loggedInUser != null;
   }
 
   getUsername(): string {
-    return localStorage.getItem('username');
+    return this.loggedInUser.name;
   }
 
   login() : boolean{
-    this.loading = true;
-    this.authenticationService.login()
-      .subscribe(result => {
-        if (result === true) {
-          // login successful
-            window.location.reload(true);
-        } else {
-          // login failed
-          this.error = 'Innlogging feilet';
-          this.loading = false;
-        }
-      });
+
+    //this.router.navigate(['/login']).then(()=>{window.location.reload(true)});
+    window.location.href = window.location.origin + "/login";
+
     return false;
   }
 
   logout() : boolean {
-    this.authenticationService.logout();
-    this.router.navigate(['/']).then(()=>{window.location.reload(true)});
+//    this.router.navigate(['/logout']).then(()=>{window.location.reload(true)});
+    window.location.href = window.location.origin + "/logout";
+
     return false;
   }
 }

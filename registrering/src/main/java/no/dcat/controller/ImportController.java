@@ -71,7 +71,7 @@ public class ImportController {
     @Autowired
     protected CatalogRepository catalogRepository;
 
-    @Value("${spring.application.themesServiceUrl}")
+    @Value("${application.themesServiceUrl}")
     private String  THEMES_SERVICE_URL = "http://error.themes.service.url.not.set";
 
     private final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();

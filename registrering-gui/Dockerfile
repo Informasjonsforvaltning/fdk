@@ -12,7 +12,8 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app/
 
 
-ENV REG_API_URL http://localhost:8099
+ENV REG_API_URL https://localhost:8099
+ENV QUERY_SERVICE_URL https://localhost:8100
 
 #COPY dist /usr/src/app -- denne burde være istedet for den over
 RUN npm init -y

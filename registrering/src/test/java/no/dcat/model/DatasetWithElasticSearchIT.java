@@ -24,20 +24,18 @@ import static org.junit.Assert.assertThat;
 @ActiveProfiles("unit-integration")
 public class DatasetWithElasticSearchIT {
 
-    @Value("${spring.data.elasticsearch.clusterNodes}")
+    @Value("${data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
 
-    @Value("${spring.data.elasticsearch.clusterName}")
+    @Value("${data.elasticsearch.clusterName}")
     private String clusterName;
 
     @PostConstruct
     void validate(){
         assert clusterNodes != null;
         assert clusterName != null;
-
     }
-
 
     @Autowired
     private DatasetRepository datasetRepository;
@@ -46,7 +44,7 @@ public class DatasetWithElasticSearchIT {
     public void elasticsearchCanStoreData_usingTemplate() throws Exception {
 
         Dataset dataset = new Dataset("1");
-        Map<String, String> languangeDescription = new HashMap<>();
+        Map<String,String> languangeDescription = new HashMap<>();
         languangeDescription.put("no","test");
         dataset.setDescription(languangeDescription);
 

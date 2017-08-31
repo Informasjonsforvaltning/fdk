@@ -106,25 +106,42 @@ services:
      - application.fusekiHost=http://fuseki:8080
      - application.harvesterHost=http://harvester-api:8080
 
+  nginx:
+    restart: always
+    ports:
+      - 8099:8099
 
   registration-api:
     restart: always
     ports:
-      - 8099:8080
+      - 8079:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
-     - spring.application.catalogUriPrefix=http://localhost:8099
+     - application.catalogUriPrefix=http://localhost:8099
+     - application.altinnServiceUrl=http://registration-auth:8080
+     - reg_apikey=${reg_apikey}
+     - reg_clientSSLCertificateKeystoreLocation=${reg_clientSSLCertificateKeystoreLocation}
+     - reg_clientSSLCertificateKeystorePassword=${reg_clientSSLCertificateKeystorePassword}
+     - reg_sslKeyPassword=${reg_sslKeyPassword}
+     - reg_ipKeyPassword=${reg_ipKeyPassword}
+     - reg_ipStorePassword=${reg_ipStorePassword}
+
 
   registration:
     restart: always
     ports:
       - 4200:4200
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
-     - REG_API_URL=http://localhost:8099
-     - QUERY_SERVICE_URL=http://localhost:8083
+     - REG_API_URL=https://localhost:8099
+     - QUERY_SERVICE_URL=/themes
      - VALIDATOR_URL=http://localhost:8086
 
+  registration-auth:
+      restart: always
+      ports:
+        - 8077:8080
+      environment:
+        - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
 
   themes:
     ports:

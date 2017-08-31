@@ -40,6 +40,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
+import {LogoutComponent} from "./logout/logout.component";
+
 
 @NgModule({
   declarations: [
@@ -84,5 +86,4 @@ import {ModalComponent} from "./modal/modal.component";
   providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

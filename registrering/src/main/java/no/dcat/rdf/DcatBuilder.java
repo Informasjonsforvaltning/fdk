@@ -326,14 +326,19 @@ public class DcatBuilder {
         return this;
     }
 
+    public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes) {
+        if (codes != null) {
+            codes.forEach(code -> this.addProperty(resource, property, code));
+        }
+        return this;
+    }
+
     public DcatBuilder addProperties(Resource resource, Property property, List<String> uris) {
         if (uris != null) {
             for (String uri : uris) {
                 addProperty(resource, property, uri);
             }
-
         }
-
         return this;
     }
 

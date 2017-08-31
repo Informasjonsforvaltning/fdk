@@ -34,8 +34,6 @@ import static org.junit.Assert.assertThat;
  * Created by dask on 12.04.2017.
  */
 @ActiveProfiles(value = "develop")
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class DcatBuilderTest {
 
     DcatBuilder builder;

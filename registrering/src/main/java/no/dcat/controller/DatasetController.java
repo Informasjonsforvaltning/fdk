@@ -19,6 +19,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,6 +66,7 @@ public class DatasetController {
      * @return complete dataset. HTTP status 200 OK is returned if dataset is found.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
@@ -83,6 +85,7 @@ public class DatasetController {
      * @param copy
      * @return HTTP 200 OK if dataset could be could be created.
      */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/", method = POST,
             consumes = APPLICATION_JSON_VALUE,
@@ -139,6 +142,7 @@ public class DatasetController {
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = PUT,
             consumes = APPLICATION_JSON_VALUE,
@@ -164,6 +168,7 @@ public class DatasetController {
      * @param pageable number of datasets returned
      * @return List of data sets, with hyperlinks to other pages in search result
      */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
@@ -182,6 +187,7 @@ public class DatasetController {
      * @return HTTP status 200 OK is returned if dataset was successfully deleted. Body empty.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = DELETE,

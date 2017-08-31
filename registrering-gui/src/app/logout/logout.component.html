@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Logget ut</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body data-reg-api-url="https://localhost:8099" data-query-service-url="https://localhost:8083">
+<body>
+<div class="alert-success" *ngIf="isAuthenticated()">
+  Pålogget som {{getUsername()}}
+  <button class="btn btn-primary" (click)="logout()">Logg ut</button>
+</div>
+
+Logget ut
+
+Logg inn igjen: <a href="index.html">Logg inn igjen!!!</a>
+
+</body>
+
+
+</body>
+</html>
