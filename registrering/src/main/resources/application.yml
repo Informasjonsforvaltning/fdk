@@ -31,7 +31,7 @@ server:
     key-alias: tomcat
 saml:
   sso:
-    default-success-url: /home
+    default-success-url: /index.html
     metadata-generator:
       entity-id: difi.brreg.datakatalog.registrering.dev
     logout:
