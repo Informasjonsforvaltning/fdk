@@ -9,6 +9,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
+import no.dcat.model.exceptions.CodesImportException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
@@ -28,6 +29,7 @@ import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
@@ -45,8 +47,11 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -65,6 +70,12 @@ public class ImportController {
 
     @Autowired
     protected CatalogRepository catalogRepository;
+
+    @Value("${spring.application.themesServiceUrl}")
+    private String  THEMES_SERVICE_URL = "http://error.themes.service.url.not.set";
+
+    private final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
+    private String[] languages = {"no", "nb", "nn", "en"};
 
     private final static Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
 
@@ -101,7 +112,7 @@ public class ImportController {
         return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
     }
 
-    private Catalog importDatasets(String catalogId, String url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
+    protected Catalog importDatasets(String catalogId, String url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
         Model model = null;
 
         try {
@@ -203,7 +214,13 @@ public class ImportController {
         return gson.toJson(model);
     }
 
-    private void postprosessDatasetAttributes(List<Dataset> result) {
+    protected void postprosessDatasetAttributes(List<Dataset> result) {
+        try {
+            fetchCodes();
+        } catch (CodesImportException e) {
+            logger.error("Fetch codes failed: {}", e.getLocalizedMessage(), e);
+        }
+
         result.forEach(d -> {
             // Postprocess keywords
             if (d.getKeyword() != null) {
@@ -218,48 +235,79 @@ public class ImportController {
             // accrualPeriodicity
             if (d.getAccrualPeriodicity() != null) {
                 String code = d.getAccrualPeriodicity().getUri();
-                try {
-                    d.getAccrualPeriodicity().setPrefLabel(getLabelForCode(code));
-                } catch (Exception e) {
-                    logger.error("error", e);
-                }
-
+                d.getAccrualPeriodicity().setPrefLabel(getLabelForCode("frequency", code));
+            }
+            if (d.getLanguage() != null) {
+                d.getLanguage().forEach(lang -> {
+                    lang.setPrefLabel(getLabelForCode("linguisticsystem", lang.getUri()));
+                });
+            }
+            if (d.getProvenance() != null) {
+                d.getProvenance().setPrefLabel(getLabelForCode("provenancestatement", d.getProvenance().getUri()));
+            }
+            if (d.getAccessRights() != null) {
+                d.getAccessRights().setPrefLabel(getLabelForCode("rightsstatement", d.getAccessRights().getUri()));
             }
         });
     }
 
-    private void fetchCodes()  {
+
+    protected void fetchCodes() throws CodesImportException {
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<List<String>> codeTypes = restTemplate.exchange("http://localhost:8100/codes",
+        ResponseEntity<List<String>> codeTypesResponse = restTemplate.exchange(THEMES_SERVICE_URL + "codes",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {});
 
-        for (String type : codeTypes) {
+        if (codeTypesResponse.getStatusCode() != HttpStatus.OK) {
+            throw new CodesImportException(String.format("Cannot access themes service for code types. Error %d",codeTypesResponse.getStatusCodeValue()));
+        }
+
+        for (String type : codeTypesResponse.getBody()) {
             logger.debug("fetching {}", type);
-            ResponseEntity<List<SkosCode>> responseEntity = restTemplate.exchange("http://localhost:8100/codes/frequency",
+            ResponseEntity<List<SkosCode>> responseEntity = restTemplate.exchange(THEMES_SERVICE_URL + "codes/" + type,
                     HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {});
-            logger.debug("found {} Skos")
+            logger.debug("found {} SkosCode", responseEntity.getBody());
+
+            if (responseEntity.getStatusCode() != HttpStatus.OK) {
+                throw new CodesImportException(String.format("Cannot access themes service for code type %s. Error %d",type, responseEntity.getStatusCodeValue()));
+            }
+
+            List<SkosCode> codelist = responseEntity.getBody();
+            List<SkosCode> prunedCodelist = codelist.stream().map(skosCode -> {
+                List<String> labelsToRemove = new ArrayList<>();
+                skosCode.getPrefLabel().keySet().forEach(k -> {
+                    if (!Arrays.asList(languages).contains(k)) {
+                        labelsToRemove.add(k);
+
+                    }
+                });
+                labelsToRemove.forEach(label -> {
+                    skosCode.getPrefLabel().remove(label);
+                });
+
+                return skosCode;
+            }).collect(Collectors.toList());
+
+            logger.debug("pruned codes {}",prunedCodelist);
+
+            Map<String, SkosCode> codeMap = new HashMap<>();
+            prunedCodelist.forEach(skosCode -> {
+                codeMap.put(skosCode.getUri(), skosCode);
+            });
+
+            allCodes.put(type,codeMap);
         }
 
     }
 
-    private Map<String,String> getLabelForCode(String code) {
+    private Map<String,String> getLabelForCode(String codeType, String code) {
+        SkosCode skosCode = allCodes.get(codeType).get(code);
 
-        ResponseEntity<List<SkosCode>> responseEntity = restTemplate.exchange("http://localhost:8100/codes/frequency",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {});
-        List<SkosCode> codes = responseEntity.getBody();
-        Map<String,String> prefLabel = null;
-
-        for (SkosCode c : codes) {
-            // only import no?
-            if (c.getUri().equals(code)) {
-                prefLabel = c.getPrefLabel();
-                break;
-            }
-
+        if (skosCode != null) {
+            return skosCode.getPrefLabel();
         }
 
-        return prefLabel;
+        return null;
     }
 
     String frame(org.apache.jena.query.Dataset dataset, String frame) {
