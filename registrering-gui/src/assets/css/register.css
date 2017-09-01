@@ -17,9 +17,6 @@
 .fdk-table-reg-header {
     background-color: var(--color1);
 }
-
-
-
 /*  D I V I D E R  */
 
 
@@ -277,4 +274,22 @@ input:checked ~ .checkbox-replacement::after{
       line-height: 1.7;
       display: block;
       font-weight: normal;
+}
+rl-tag-input {
+  padding: 0px 0px 2px 8px !important;
+  display: block !important;
+  box-shadow: none !important;
+}
+rl-tag-input-item {
+    font-size: 13px !important;
+    height: 28px !important;
+    line-height: 29px !important;
+    background: #2D3741 !important;
+    padding: 0 8px !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+}
+.ng2-tag-input-remove {
+  background: transparent !important;
+  margin-left:0 !important;
 }

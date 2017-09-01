@@ -29,13 +29,18 @@ export class InformationComponent implements OnInit {
     ngOnInit() {
       // initialize empty values
       this.keywords = [];
+      this.subjects = [];
       if (this.dataset.keywords) {
         this.keywords = this.dataset.keywords.map(keyword => {
           return keyword['nb'];
         });
       }
+      if (this.dataset.subjects) {
+        this.subjects = this.dataset.subjects.map(subject => {
+          return subject;
+        });
+      }
       this.informationForm = this.toFormGroup(this.dataset);
-
 
       this.informationForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
         (information) => {
@@ -48,18 +53,21 @@ export class InformationComponent implements OnInit {
           }
 
           information.languages = null;
-
-          if (information.subjects.length === 0) {
-            this.dataset.subjects = null;
-          } else {
-            this.dataset.subjects = information.subjects;
-          }
+          information.subjects = information.subjects || [];
+          this.dataset.subjects = information.subjects;
 
           this.onSave.emit(true);
         }
       );
       this.subjects = this.dataset.subjects || [];
 
+    }
+    focus(e) {
+      e.target.childNodes.forEach(node=>{
+        if(node.className && node.className.match(/\bng2-tag-input-form\b/)) { 
+          node.childNodes[1].focus();
+        }
+      })
     }
 
     private toFormGroup(data: Dataset) {
