@@ -1,11 +1,8 @@
 target/
-docker/.env
-docker/git.properties
 **/*.iml
 .idea/
+data/
 logs/
-**/.env
-*/git.properties
 /phantomjsdriver.log
 /test/*.zip
 /test/elasticsearch-2.4.1/data/
@@ -17,14 +14,10 @@ logs/
 .DS_Store
 .hot-update.js
 **/node_modules/
-**/data/elasticsearch/nodes/
-/bddtest/data/
-/data/
-.DS_Store
 tdb
 catalog-v001.xml
 
-data/
+
 /conf/idporten/
 /conf/altinn/
 !/conf/dummy-client-SSL-cert.p12

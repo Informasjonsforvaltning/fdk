@@ -12,5 +12,29 @@
     <artifactId>applications</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>fuseki</module>
+        <module>kibana</module>
+        <module>logstash</module>
+
+        <module>nginx</module>
+
+        <module>reference-data</module>
+
+        <module>search-api</module>
+        <module>search</module>
+
+        <module>registration-api</module>
+        <module>registration</module>
+        <module>registration-auth</module>
+
+        <module>harvester-api</module>
+        <module>harvester</module>
+
+        <module>dev-management</module>
+        <module>gdoc</module>
+        <module>end2end-test</module>
+    </modules>
+
 
 </project>

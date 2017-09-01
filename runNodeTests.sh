@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cd registrering-gui
+cd registration
 npm install --no-progress
 npm run-script ng e2e
 cd ..

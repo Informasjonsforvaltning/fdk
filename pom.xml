@@ -52,25 +52,8 @@
 	</organization>
 
 	<modules>
-		<module>search</module>
-		<module>search-api</module>
-		<module>elasticsearch</module>
-		<module>fuseki</module>
-		<module>kibana</module>
-		<module>logstash</module>
-		<module>harvester-api</module>
-		<module>harvester</module>
-		<module>nginx</module>
-		<module>docker</module>
-		<module>gdoc</module>
-		<module>registration-api</module>
-		<module>registration</module>
-		<module>registration-auth</module>
-		<module>bddtest</module>
-		<module>dev-management</module>
-		<module>reference-data</module>
-		<module>libraries</module>
 		<module>applications</module>
+		<module>libraries</module>
 	</modules>
 
 	<properties>
@@ -97,17 +80,17 @@
 			<!--Warn! Do not put spring boot dependencies in dependency Management, since it overrides version management from parent-->
 			<dependency>
 				<groupId>no.dcat</groupId>
-				<artifactId>harvester</artifactId>
+				<artifactId>harvester-api</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
-				<artifactId>query</artifactId>
+				<artifactId>search-api</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
-				<artifactId>webapp</artifactId>
+				<artifactId>search</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
 
@@ -246,9 +229,6 @@
 						<groupId>org.slf4j</groupId>
 					</exclusion>
 
-
-
-
 					<exclusion>
 						<groupId>org.apache.jena</groupId>
 						<artifactId>jena-arq</artifactId>
@@ -263,8 +243,6 @@
 						<groupId>org.apache.jena</groupId>
 						<artifactId>jena-tdb</artifactId>
 					</exclusion>
-
-
 
 				</exclusions>
 			</dependency>
