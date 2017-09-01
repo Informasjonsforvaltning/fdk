@@ -65,7 +65,7 @@
 		<module>support</module>
 		<module>services</module>
 		<module>registration-api</module>
-		<module>registrering-gui</module>
+		<module>registration</module>
 		<module>br-maven-main-msn</module>
 		<module>registration-auth</module>
 		<module>bddtest</module>
