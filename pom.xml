@@ -52,7 +52,8 @@
 	</organization>
 
 	<modules>
-		<module>portal</module>
+		<module>search</module>
+		<module>search-api</module>
 		<module>elasticsearch</module>
 		<module>fuseki</module>
 		<module>kibana</module>
@@ -66,7 +67,6 @@
 		<module>services</module>
 		<module>registration-api</module>
 		<module>registration</module>
-		<module>br-maven-main-msn</module>
 		<module>registration-auth</module>
 		<module>bddtest</module>
 		<module>datastore</module>

@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>no.dcat</groupId>
-    <artifactId>registrering-gui</artifactId>
+    <artifactId>registration</artifactId>
 
     <profiles>
 
