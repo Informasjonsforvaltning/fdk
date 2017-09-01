@@ -4,7 +4,6 @@
 
 <div class="temporal-list"
      [formGroup]="datasetForm">
-
     <div formArrayName="temporals">
         <div *ngFor="let temporal of temporals; let idx=index ">
             <temporal
@@ -14,7 +13,6 @@
                 [temporalIndex]="idx">
             </temporal>
         </div>
-
         <a href="#" (click)="addTemporal()">
             <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
         </a>

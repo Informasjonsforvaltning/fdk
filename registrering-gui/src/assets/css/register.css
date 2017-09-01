@@ -207,7 +207,7 @@ p.fdk-input-heading {
 .checkbox label {
   padding-left:0;
 }
-input:checked ~ .checkbox-replacement::after{
+input:checked ~ .checkbox-replacement::after {
     position: absolute;
     width: 12px;
     height: 12px;
@@ -217,7 +217,9 @@ input:checked ~ .checkbox-replacement::after{
     border-radius: 3px;
 		content:'';
 }
-.checkbox .expand-checkbox, .dataset-tema input[type="checkbox"] {
+.checkbox .expand-checkbox,
+.dataset-tema input[type="checkbox"],
+.language-checkbox input {
   position: absolute;
   left:-9999px;
 }
@@ -252,6 +254,9 @@ input:checked ~ .checkbox-replacement::after{
 }
 .expanded-content label {
 
+}
+.expanded-content > .row {
+  margin-bottom:20px;
 }
 .expand-checkbox {
   position: absolute;
@@ -292,4 +297,24 @@ rl-tag-input-item {
 .ng2-tag-input-remove {
   background: transparent !important;
   margin-left:0 !important;
+}
+.temporal-list {
+  margin-bottom:20px;
+}
+.delete-temporal-button {
+  line-height: 2;
+  color: #f00;
+  text-decoration: none;
+}
+.language-checkbox {
+  margin-left:5px;
+}
+.language-checkbox .checkbox-replacement {
+  position:relative;
+  left:-5px;
+  top:8px;
+}
+.language-checkbox input:checked ~ .checkbox-replacement::after {
+  top:2px;
+  left:2px;
 }
