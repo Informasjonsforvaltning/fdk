@@ -16,26 +16,32 @@
 #################################################################
 
 ###  http://publications.europa.eu/ontology/authority/authority-code
-at:authority-code rdf:type owl:ObjectProperty .
+at:authority-code rdf:type owl:DatatypeProperty .
 
 
 ###  http://publications.europa.eu/ontology/authority/prefLabel
-at:prefLabel rdf:type owl:ObjectProperty ;
+at:prefLabel rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf skos:prefLabel .
 
 
 ###  http://www.geonames.org/ontology#countryCode
-gn:countryCode rdf:type owl:ObjectProperty ;
+gn:countryCode rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf at:authority-code .
 
 
 ###  http://www.geonames.org/ontology#officialName
-gn:officialName rdf:type owl:ObjectProperty ;
+gn:officialName rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf skos:prefLabel .
 
 
+###  http://www.geonames.org/ontology#shortName
+gn:shortName rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf skos:prefLabel .
+
+
 ###  http://www.w3.org/2004/02/skos/core#prefLabel
-skos:prefLabel rdf:type owl:ObjectProperty .
+skos:prefLabel rdf:type owl:DatatypeProperty .
+
 
 
 #################################################################

@@ -145,6 +145,7 @@
                                     <executable>npm</executable>
                                     <arguments>
                                         <argument>install</argument>
+                                      <argument>--no-progress</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -160,6 +161,7 @@
                                     <executable>npm</executable>
                                     <arguments>
                                         <argument>install</argument>
+                                      <argument>--no-progress</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
