@@ -39,6 +39,7 @@
                                 <phase>initialize</phase>
                                 <configuration>
                                     <executable>npm</executable>
+                                   <skip>${maven.exec.skip}</skip>
                                     <arguments>
                                         <argument>install</argument>
                                         <argument>--no-progress</argument>
@@ -55,6 +56,7 @@
                                 <phase>pre-clean</phase>
                                 <configuration>
                                     <executable>npm</executable>
+                                   <skip>${maven.exec.skip}</skip>
                                     <arguments>
                                         <argument>install</argument>
                                         <argument>--no-progress</argument>
@@ -71,6 +73,7 @@
                                 </goals>
                                 <configuration>
                                     <executable>npm</executable>
+                                   <skip>${maven.exec.skip}</skip>
                                     <workingDirectory>target/</workingDirectory>
                                     <arguments>
                                         <arguments>run-script</arguments>
@@ -143,6 +146,7 @@
                                 <phase>initialize</phase>
                                 <configuration>
                                     <executable>npm</executable>
+                                   <skip>${maven.exec.skip}</skip>
                                     <arguments>
                                         <argument>install</argument>
                                       <argument>--no-progress</argument>
@@ -159,6 +163,7 @@
                                 <phase>pre-clean</phase>
                                 <configuration>
                                     <executable>npm</executable>
+                                   <skip>${maven.exec.skip}</skip>
                                     <arguments>
                                         <argument>install</argument>
                                       <argument>--no-progress</argument>
@@ -175,6 +180,7 @@
                                 </goals>
                                 <configuration>
                                     <executable>npm</executable>
+                                   <skip>${maven.exec.skip}</skip>
                                     <workingDirectory>target/</workingDirectory>
                                     <arguments>
                                         <arguments>run-script</arguments>

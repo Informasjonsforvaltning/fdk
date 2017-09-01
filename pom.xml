@@ -73,6 +73,7 @@
 		<!-- Tells weather we should skipIntegrationTests. Note: If this is overwritten
             in child pom it will also override setting in profiles -->
 		<skipIntegrationTests>true</skipIntegrationTests>
+		<maven.exec.skip>false</maven.exec.skip> <!-- default -->
 	</properties>
 
 	<dependencyManagement>
