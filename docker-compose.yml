@@ -6,7 +6,7 @@ services:
     links:
       - search-api
       - fuseki
-      - themes
+      - reference-data
     networks:
       platform:
 
@@ -35,7 +35,7 @@ services:
     links:
      - fuseki
      - elasticsearch
-     - themes
+     - reference-data
 
   harvester:
     image: dcatno/harvester:latest
@@ -70,7 +70,7 @@ services:
       platform:
       logging:
 
-  test:
+  dev-management:
     image: dcatno/test:latest
     links:
       - elasticsearch
@@ -100,13 +100,13 @@ services:
     image: dcatno/registration:latest
     links:
       - registration-api
-      - validator
-      - themes
+      - registration-validator
+      - reference-data
     networks:
       platform:
 
-  themes:
-    image: dcatno/themes:latest
+  reference-data:
+    image: dcatno/reference-data:latest
     networks:
       platform:
 
@@ -115,8 +115,8 @@ services:
     networks:
       platform:
 
-  validator:
-    image: dcatno/validator:latest
+  registration-validator:
+    image: dcatno/registration-validator:latest
     networks:
       platform:
 

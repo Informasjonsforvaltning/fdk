@@ -26,7 +26,7 @@ services:
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
 
-  validator:
+  registration-validator:
     restart: always
     ports:
       - 8086:8080
@@ -94,7 +94,7 @@ services:
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
 
-  test:
+  dev-management:
     restart: always
     ports:
       - 8085:8080
@@ -142,7 +142,7 @@ services:
       environment:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
 
-  themes:
+  reference-data:
     ports:
       - 8100:8080
     environment:
