@@ -73,7 +73,7 @@ spring:
         http:
           enabled: true
 application:
-  clientSSLCertificateKeystoreLocation: ../conf/dummy-client-SSL-cert.p12
+  clientSSLCertificateKeystoreLocation: ../../conf/dummy-client-SSL-cert.p12
   clientSSLCertificateKeystorePassword: password
 ---
 spring:

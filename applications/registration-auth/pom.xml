@@ -77,17 +77,10 @@
                 </executions>
             </plugin>
 
-
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <imageName>
-                        ${docker.registry}${docker.image.prefix}/registration-auth:latest
-                    </imageName>
-                </configuration>
             </plugin>
-
 
 
         </plugins>

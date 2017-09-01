@@ -114,11 +114,6 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<configuration>
-					<imageName>
-						${docker.registry}${docker.image.prefix}/harvester:latest
-					</imageName>
-				</configuration>
 			</plugin>
 
 			<plugin>

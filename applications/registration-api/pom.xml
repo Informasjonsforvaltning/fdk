@@ -135,9 +135,6 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
-                    <imageName>
-                        ${docker.registry}${docker.image.prefix}/registration-api:latest
-                    </imageName>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

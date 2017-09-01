@@ -23,18 +23,12 @@
     </dependencies>
 
     <build>
-
         <plugins>
-
 
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <imageName>
-                        ${docker.registry}${docker.image.prefix}/nginx:latest
-                    </imageName>
-                </configuration>
+
             </plugin>
 
 
