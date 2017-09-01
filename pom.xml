@@ -64,7 +64,7 @@
 		<module>docker</module>
 		<module>support</module>
 		<module>services</module>
-		<module>registrering</module>
+		<module>registration</module>
 		<module>registrering-gui</module>
 		<module>br-maven-main-msn</module>
 		<module>registration-auth</module>
