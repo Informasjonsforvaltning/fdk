@@ -59,10 +59,10 @@
 		<module>kibana</module>
 		<module>logstash</module>
 		<module>harvester-api</module>
-		<module>admin-webapp</module>
+		<module>harvester</module>
 		<module>nginx</module>
 		<module>docker</module>
-		<module>support</module>
+		<module>gdoc</module>
 		<module>registration-api</module>
 		<module>registration</module>
 		<module>registration-auth</module>
