@@ -10,7 +10,7 @@
         <version>0.2.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>themes</artifactId>
+    <artifactId>reference-data</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
