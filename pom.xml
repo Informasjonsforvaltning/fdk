@@ -69,10 +69,11 @@
 		<module>registration</module>
 		<module>registration-auth</module>
 		<module>bddtest</module>
-		<module>datastore</module>
+		<module>dev-management</module>
 		<module>themes</module>
-        <module>shared</module>
-    </modules>
+		<module>libraries</module>
+		<module>applications</module>
+	</modules>
 
 	<properties>
         <fdk.version>0.2.4-SNAPSHOT</fdk.version>

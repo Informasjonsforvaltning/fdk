@@ -16,7 +16,6 @@
 
 
     <modules>
-        <module>test</module>
         <module>gdoc</module>
     </modules>
 
