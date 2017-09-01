@@ -5,7 +5,7 @@ application:
   queryServiceExternal: http://localhost:8083
   fusekiService: http://fuseki:8080/fuseki
   themeServiceExternalUrl: http://localhost:8100
-  themeServiceUrl: http://themes:8080
+  themeServiceUrl: http://reference-data:8080
 ---
 spring:
   profiles: test
@@ -14,7 +14,7 @@ application:
   queryServiceExternal: http://localhost:8071
   fusekiService: http://localhost:3030/fuseki
   themeServiceExternalUrl: http://localhost:8100
-  themeServiceUrl: http://themes:8080
+  themeServiceUrl: http://reference-data:8080
 
 ---
 spring:
@@ -24,7 +24,7 @@ application:
   queryServiceExternal: http://localhost:8083
   fusekiService: http://localhost:3030/fuseki
   themeServiceExternalUrl: http://localhost:8100
-  themeServiceUrl: http://themes:8080
+  themeServiceUrl: http://reference-data:8080
 server:
   port: 8080
 management:

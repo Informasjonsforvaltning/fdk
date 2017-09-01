@@ -14,7 +14,7 @@ application:
   elasticSearchHost: elasticsearch
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
-  themesHostname: http://themes:8080
+  themesHostname: http://reference-data:8080
 ---
 spring:
     profiles: develop

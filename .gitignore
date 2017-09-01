@@ -1,7 +1,6 @@
 target/
 **/*.iml
 .idea/
-data/
 logs/
 /phantomjsdriver.log
 /test/*.zip
@@ -22,3 +21,5 @@ catalog-v001.xml
 /conf/altinn/
 !/conf/dummy-client-SSL-cert.p12
 /conf/environments/
+applications/end2end-test/data/
+applications/registration-api/data/

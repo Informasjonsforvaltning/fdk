@@ -132,7 +132,7 @@ services:
       - 4200:4200
     environment:
      - REG_API_URL=https://localhost:8099
-     - QUERY_SERVICE_URL=/themes
+     - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
 
   registration-auth:
