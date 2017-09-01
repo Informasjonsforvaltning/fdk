@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -36,6 +38,7 @@ public class ImportControllerIT {
 
     @Autowired
     CatalogController catalogController;
+
 
     @Test
     public void importCatalogOK() throws Throwable {
@@ -139,6 +142,9 @@ public class ImportControllerIT {
     public void frameDatasetAddsLabels() throws Throwable {
         String catalogId = "974760673";
 
+        // make sure catalog exist in database
+        Catalog cat = new Catalog(catalogId);
+        catalogController.saveCatalog(cat);
 
         HttpEntity<Catalog> result = importController.importCatalog(catalogId, "dataset-single.ttl");
         List<Dataset> ds = result.getBody().getDataset();
