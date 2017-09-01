@@ -2,6 +2,7 @@ package no.dcat.admin.store;
 
 import no.dcat.admin.store.domain.DcatSource;
 import no.dcat.admin.store.domain.User;
+import no.dcat.data.store.Elasticsearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ public class AdminDcatDataService {
 
 	private final AdminDataStore adminDataStore;
 	private final DcatDataStore dcatDataStore;
+	private Elasticsearch elasticsearch;
 
 
 	private final Logger logger = LoggerFactory.getLogger(AdminDcatDataService.class);
