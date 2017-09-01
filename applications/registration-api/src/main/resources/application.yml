@@ -15,6 +15,7 @@ spring:
   hateoas:
     use-hal-as-default-json-media-type: false
 
+
 ---
 spring:
   profiles: prod
@@ -56,11 +57,10 @@ spring:
 server:
   port: 8099
   ssl:
-    key-store: ${reg_sslKeystorePassword:conf/idporten/ssldevelop.p12}
+    key-store: ${reg_sslKeystoreLocation:conf/idporten/ssldevelop.p12}
     key-store-password: ${reg_sslKeyPassword:changeit}
     key-store-type: PKCS12
     key-alias: tomcat
-
 
 ---
 spring:
@@ -96,11 +96,7 @@ management:
 ---
 spring:
   profiles: docker
-server:
-  ssl:
-    key-store: ${reg_sslKeystorePassword:conf/idporten/ssldevelop.p12}
-    key-store-password: ${reg_sslKeyPassword:changeit}
-    key-store-type: PKCS12
-    key-alias: tomcat
+
+
 
 

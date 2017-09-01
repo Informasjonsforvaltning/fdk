@@ -3,7 +3,7 @@ version: "2"
 services:
   search:
     image: dcatno/search:latest
-    links:
+    depends_on:
       - search-api
       - fuseki
       - reference-data
@@ -12,7 +12,7 @@ services:
 
   search-api:
     image: dcatno/search-api:latest
-    links:
+    depends_on:
       - elasticsearch
     networks:
       platform:
@@ -32,7 +32,7 @@ services:
     networks:
       platform:
       logging:
-    links:
+    depends_on:
      - fuseki
      - elasticsearch
      - reference-data
@@ -44,7 +44,7 @@ services:
       logging:
     depends_on:
      - elasticsearch
-    links:
+    depends_on:
      - fuseki
      - harvester-api
 
@@ -72,7 +72,7 @@ services:
 
   dev-management:
     image: dcatno/test:latest
-    links:
+    depends_on:
       - elasticsearch
       - fuseki
       - harvester-api
@@ -81,15 +81,15 @@ services:
 
   nginx:
     image: dcatno/nginx:latest
-    links:
-      - registration
+    depends_on:
       - registration-api
+      - reference-data
     networks:
       platform:
 
   registration-api:
     image: dcatno/registration-api:latest
-    links:
+    depends_on:
       - elasticsearch
       - search-api
       - registration-auth
@@ -98,10 +98,8 @@ services:
 
   registration:
     image: dcatno/registration:latest
-    links:
-      - registration-api
-      - registration-validator
-      - reference-data
+    depends_on:
+      - nginx
     networks:
       platform:
 
