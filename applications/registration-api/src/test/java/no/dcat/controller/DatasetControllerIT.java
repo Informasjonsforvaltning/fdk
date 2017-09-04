@@ -46,7 +46,7 @@ public class DatasetControllerIT {
 
     @Before
     public void setup() {
-        BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password");
+        BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password01");
         authorizedRestTemplate.getRestTemplate().getInterceptors().add(bai);
 
         unathorizedRestTemplate.getRestTemplate().setUriTemplateHandler(authorizedRestTemplate.getRestTemplate().getUriTemplateHandler());
