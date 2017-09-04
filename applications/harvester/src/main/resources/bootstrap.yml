@@ -5,4 +5,4 @@ spring:
       username: ${CONFIG_USER:propadmin}
       password: ${CONFIG_PASSWORD:Pbp|`@e0;E,obYY&OplUc^E=P`tk=/}
   application:
-    name: fellesdatakatalog-admin
+    name: fellesdatakatalog-harvester
