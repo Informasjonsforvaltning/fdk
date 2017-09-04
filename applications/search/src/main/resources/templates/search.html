@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.springframework.org/schema/security">
+<head>
+</head>
+<body>
+
+<div class="row" th:fragment="search">
+
+    <div class="col-md-12">
+        <a href="/"><h1 class="fdk-heading" th:text="#{app.title}">Felles Datakatalog</h1></a>
+        <p class="text-center fdk-title-subtext" th:text="#{app.subtext}">En samlet oversikt over hvilke data de ulike offentlige virksomheter har og hva de betyr.</p>
+
+        <span id="dosearch" class="glyphicon-search-frontpage glyphicon glyphicon-search"></span>
+        <input id="search" class="fdk-search" type="search" th:attr="placeholder=#{query.intro}" autofocus="true"/>
+    </div>
+
+</div>
+
+</body>
+</html>

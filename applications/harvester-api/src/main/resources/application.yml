@@ -1,0 +1,33 @@
+application:
+  httpUsername: ${themesHttpUsername:user}
+  httpPassword: ${themesHttpPassword:password}
+
+---
+
+spring:
+    profiles: docker
+fuseki:
+  dcatServiceUri: http://fuseki:8080/fuseki/dcat
+  adminServiceUri: http://fuseki:8080/fuseki/admin
+application:
+  crawlerThreadPoolSize: 2
+  elasticSearchHost: elasticsearch
+  elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
+  themesHostname: http://reference-data:8080
+---
+spring:
+    profiles: develop
+fuseki:
+  dcatServiceUri: http://localhost:3030/fuseki/dcat
+  adminServiceUri: http://localhost:3030/fuseki/admin
+application:
+  crawlerThreadPoolSize: 2
+  elasticSearchHost: localhost
+  elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
+  themesHostname: http://localhost:8100
+server:
+  port: 8081
+management:
+  port: 8991

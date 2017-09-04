@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error page</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" href="css/main.css" media="all"/>
+</head>
+<body>
+<h1>An error occured</h1>
+<p th:text="${exceptionmessage}" />
+</body>
+</html>
