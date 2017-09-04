@@ -28,10 +28,10 @@ export class TemporalFormComponent implements OnInit {
 
     public temporalForm: FormGroup;
 
-        private myDatePickerOptions: IMyDpOptions = {
-            // other options...
-            showClearDateBtn: false
-        };
+    private myDatePickerOptions: IMyDpOptions = {
+        // other options...
+        showClearDateBtn: false
+    };
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 

@@ -22,10 +22,33 @@ export class QualityComponent implements OnInit {
 
     frequencies = [];
     provenancestatements = [];
+    provenancesModel:any[];
+    public typeForm: FormGroup;
+    typeModel = [];
+    selectedProvenanceIdx = 1;
+
 
     constructor(private fb: FormBuilder,
                 private codesService: CodesService)
-    { }
+    {
+      this.provenancesModel = [
+          {
+              id: 1,
+              label: 'Offentlig',
+              uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
+          },
+          {
+              id: 2,
+              label: 'Begrenset offentlighet',
+              uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
+          },
+          {
+              id: 3,
+              label: 'Unntatt offentlighet',
+              uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
+          }
+      ]
+    }
 
     ngOnInit() {
         this.fetchFrequencies();
@@ -74,8 +97,32 @@ export class QualityComponent implements OnInit {
                 }
 
                 this.onSave.emit(true);
+
+                    if (quality.accessRightsComment.length === 0) {
+                        this.dataset.accessRightsComments = null;
+                    } else {
+                        this.dataset.accessRightsComments = quality.accessRightsComment;
+                    }
+                    if (quality.accessRights) {
+                        this.provenancesModel.forEach(entry => {
+                            if (entry.id == quality.provenance) {
+                                this.dataset.accessRights = {uri: entry.uri}
+                            }
+                        });
+                    }
+                    this.onSave.emit(true);
+
             }
         );
+
+
+            if(!this.dataset.accessRights) {
+                this.dataset.accessRights = {uri: this.provenancesModel[0].uri}
+            }
+            this.provenancesModel
+                .filter(entry => entry.uri == this.dataset.accessRights.uri)
+                .forEach(entry => this.selectedProvenanceIdx = entry.id)
+
 
     }
 
@@ -84,6 +131,7 @@ export class QualityComponent implements OnInit {
         return this.fb.group({
             accrualPeriodicity: [ data.accrualPeriodicity.uri || '' ],
             provenance: [ data.provenance.uri || ''],
+            accessRights : [ data.accessRights || {}],
             conformsTo: [ data.conformsTos ]
         });
     }
@@ -121,5 +169,5 @@ export class QualityComponent implements OnInit {
           node.childNodes[1].focus();
         }
       })
-    }    
+    }
 }
