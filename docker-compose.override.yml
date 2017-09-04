@@ -116,7 +116,7 @@ services:
     ports:
       - 8079:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.active.profiles=docker
      - reg_altinnServiceUrl=http://registration-auth:8080
      - reg_apikey=${reg_apikey}
      - reg_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
@@ -150,7 +150,8 @@ services:
     ports:
       - 8100:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.active.profiles=docker
+
 
 #  logstash:
 #    image: "dcatno/logstash:${TAG}"
