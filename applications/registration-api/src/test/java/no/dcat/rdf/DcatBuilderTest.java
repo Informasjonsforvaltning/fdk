@@ -9,6 +9,7 @@ import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.SkosCode;
+import no.dcat.model.SkosConceptWithHomepage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -109,7 +110,7 @@ public class DcatBuilderTest {
 
         dataset.setSpatial(Collections.singletonList(skosCode("http://sws.geonames.org/3144096/", null, map("nb", "Norge"))));
         dataset.setAccessRights(skosCode("http://publications.europa.eu/resource/authority/access-right/RESTRICTED"));
-        dataset.setAccessRightsComment(Collections.singletonList("http://hjemmeldata.no/du-må-vente"));
+        dataset.setRestricedPursuantToLegalBasis(Collections.singletonList(SkosConceptWithHomepage.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
         dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
         dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
         dataset.setIdentifier(Collections.singletonList("42"));
