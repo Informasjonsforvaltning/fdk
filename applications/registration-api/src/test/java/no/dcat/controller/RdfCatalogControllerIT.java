@@ -56,7 +56,7 @@ public class RdfCatalogControllerIT {
 
     @Before
     public void setup() {
-        BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password");
+        BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password01");
         restTemplate.getRestTemplate().getInterceptors().add(bai);
 
         headers.add("Accept", "application/json");
