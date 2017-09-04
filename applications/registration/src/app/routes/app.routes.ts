@@ -1,7 +1,6 @@
 import {CatalogComponent} from "../catalog/catalog.component";
 import {DatasetComponent} from "../dataset/dataset.component";
 import {StartComponent} from "../start/start.component";
-import {LogoutComponent} from "../logout/logout.component";
 
 export const routes = [
   { path: '', component: StartComponent, pathMatch: 'full' },

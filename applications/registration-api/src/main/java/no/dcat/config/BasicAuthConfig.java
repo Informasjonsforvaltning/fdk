@@ -4,6 +4,7 @@ import no.dcat.authorization.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
@@ -18,8 +19,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -34,6 +44,32 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
 
     private Map<String, List<Entity>> userEntities = new HashMap<>();
     private Map<String, String> userNames = new HashMap<>();
+
+    @Bean
+    public AuthenticationSuccessHandler loginSuccessHandler() {
+        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
+        handler.setRedirectStrategy((request, response, url) -> {
+            String referer = request.getHeaders("referer").nextElement();
+            URL url1 = new URL(referer);
+            referer = url1.getProtocol()+"://"+url1.getHost()+":"+url1.getPort()+"/index.html";
+            response.sendRedirect(referer);
+        });
+        return handler;
+    }
+
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+
+        SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
+        handler.setRedirectStrategy((request, response, url) -> {
+            String referer = request.getHeaders("referer").nextElement();
+            URL url1 = new URL(referer);
+            referer = url1.getProtocol()+"://"+url1.getHost()+":"+url1.getPort()+"/index.html";
+            response.sendRedirect(referer);
+        });
+        return handler;
+    }
 
     @Autowired
     AuthorizationService authorizationService;
@@ -60,9 +96,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                 if (authorities.size() > 0) {
                     authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-                    User user = new User(ssn,
-                            "password",
-                            authorities);
+                    User user = new User(ssn, "password01", authorities);
                     return user;
                 } else {
                     throw new UsernameNotFoundException("Unable to find user with username provided!");
@@ -102,13 +136,13 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                 .formLogin()
                    // .loginPage("/login")
                     .permitAll()
-                    .defaultSuccessUrl("/index.html")
+                    .successHandler(loginSuccessHandler())
                     .failureUrl("/loginerror")
                     .and()
 
                 .logout()
                     .logoutUrl("/logout")
-                    .logoutSuccessUrl("/loggetut")
+                    .logoutSuccessHandler(logoutSuccessHandler())
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
                     .permitAll()
