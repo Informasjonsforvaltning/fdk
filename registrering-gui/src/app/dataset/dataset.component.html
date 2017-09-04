@@ -150,7 +150,7 @@
           [temporals]="dataset.temporals"
         ></temporals>
       </div>
-      <div class="row">
+      <div class="row"  *ngIf="dataset.title" >
         <div class="col-md-4">
           <p class="fdk-input-label">Utgivelsesdato</p>
           <helptext
