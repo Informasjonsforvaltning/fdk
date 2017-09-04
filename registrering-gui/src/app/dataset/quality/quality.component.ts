@@ -98,7 +98,7 @@ export class QualityComponent implements OnInit {
 
                 this.onSave.emit(true);
 
-                    if (quality.accessRightsComment.length === 0) {
+                    if (quality.accessRightsComment && quality.accessRightsComment.length === 0) {
                         this.dataset.accessRightsComments = null;
                     } else {
                         this.dataset.accessRightsComments = quality.accessRightsComment;
