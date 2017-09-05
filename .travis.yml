@@ -33,14 +33,14 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -B  && cd docker  && docker-compose up -d  && ./waitForDocker.sh  && cd .. && mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -B    && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: echo "Angular e2e tests are broken so disabled for the time being" #mvn install -DskipTests -Dmaven.javadoc.skip=true -B  && cd docker ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
+      script: echo "Angular e2e tests are broken so disabled for the time being" #mvn install -DskipTests -Dmaven.javadoc.skip=true -B   ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 
