@@ -294,9 +294,7 @@ export class DatasetComponent implements OnInit {
           modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
           samples: this.formBuilder.array([]),
           checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {return this.formBuilder.control(s.selected)}))
-        });
-    console.log("availablelang: " , this.availableLanguages)
-      return formGroup;
+    });
+    return formGroup;
   }
-
 }

@@ -34,17 +34,17 @@ export class QualityComponent implements OnInit {
       this.provenancesModel = [
           {
               id: 1,
-              label: 'Offentlig',
+              label: 'Brukerinnsamlede data',
               uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
           },
           {
               id: 2,
-              label: 'Begrenset offentlighet',
+              label: 'Tredjepart',
               uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
           },
           {
               id: 3,
-              label: 'Unntatt offentlighet',
+              label: 'Statlig vedtak',
               uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
           }
       ]
