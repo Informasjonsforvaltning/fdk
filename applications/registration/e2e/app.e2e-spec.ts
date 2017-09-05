@@ -24,34 +24,38 @@ describe('registrering-gui App', () => {
         let isPresent = await element(by.linkText("Logg inn")).isPresent()
         if (isPresent) {
             let submitButton = element(by.linkText("Logg inn"));
-            console.log("Clicking for Logg");
+            console.log("Clicking on Logg inn");
 
             await submitButton.click();
+
+            browser.sleep(500);
+            browser.executeScript('document.getElementsByName("username")[0].value = "03096000854"')
+            browser.executeScript('document.getElementsByName("password")[0].value = "password01"')
+            browser.executeScript('document.getElementsByName("submit")[0].click()')
+
+            browser.sleep(500);
         }
 
         browser.sleep(500);
-
 
         console.log("Waiting to be logged in");
         let isLoggedInElement = element(by.linkText("Logg ut"));
 
         await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find log out link in beforeEach");
 
-        console.log("Logged in");
-
+        console.log("Logged in!");
     });
 
     afterEach(async () => {
         console.log("afterEach()");
         let clickDeleteDataset = async () => {
 
-            console.log("afterEach2");
+            console.log("Cleaning up after test");
 
             let delete_button = element(by.id('button_delete_dataset_in_list'));
             console.log("afterEach3");
 
             browser.sleep(1000);
-
 
             let present = await delete_button.isPresent();
             if (!present) {
@@ -95,36 +99,32 @@ describe('registrering-gui App', () => {
             // first the checkboxes must be expanded
 
             let datasetThemesElement2 = element(by.css('label[for="tema-toggle"]'));
-            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find .dataset-tema input");
+            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find Tema-toggle");
             await datasetThemesElement2.click();
 
-            let datasetThemesElement = element(by.css('.dataset-tema label'));
-            await browser.wait(EC.presenceOf(datasetThemesElement), 10000, "Could not find .dataset-tema input");
+            let datasetThemesElement = element(by.css('.dataset-tema .checkbox-replacement'));
+            await browser.wait(EC.presenceOf(datasetThemesElement), 10000, "Could not find checkboxes");
             await datasetThemesElement.click();
 
-            let alertSuccess = element(by.css('.fdk-saved'));
+            //let alertSuccess = element(by.css('.fdk-saved'));
 
             browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
             await browser.refresh();
 
-            let datasetThemesElement21 = element(by.css('.dataset-tema input'));
-
-            browser.sleep(5000);
-
 
             datasetThemesElement2 = element(by.css('label[for="tema-toggle"]'));
-            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find .dataset-tema input");
+            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find Tema toggle");
             await datasetThemesElement2.click();
-            try {
-                expect(datasetThemesElement21.getAttribute('checked')).toBeTruthy("datasetThemesElement2 should be checked");
-                expect(element(by.css('.dataset-tema input')).getAttribute('checked')).toBeTruthy(".dataset-tema input should be checked");
-            }catch(err){
-                console.log(await browser.getPageSource());
-                throw err;
 
-            }
+            let datasetThemesElement21 = element(by.css('.dataset-tema .checkbox-replacement'));
+
+            await browser.wait(EC.presenceOf(datasetThemesElement21), 10000, "Could not find Tema 1");
+
+            expect(datasetThemesElement21.getAttribute('checked')).toBeTruthy("Thema 1 should be checked");
+
             let backButton = element(by.css("#button_back_to_catalog"));
             await browser.wait(EC.presenceOf(backButton), 10000);
+            browser.pause();
             await backButton.click();
         });
 

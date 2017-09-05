@@ -64,6 +64,17 @@ export class CatalogComponent implements OnInit {
     this.getAllDatasets();
   }
 
+  cleanup() {
+    this.datasets.forEach( d => {
+        console.log("dataset2: ", d)
+      this.datasetService.delete(d.catalog, d)
+
+    }).then(() => {
+      this.getAllDatasets();
+      console.log('deleted!');
+    });
+  }
+
   getAllDatasets() {
     let id = this.route.snapshot.params['cat_id'];
     this.datasetService.getAll(id).then((datasets: Dataset[]) => {
