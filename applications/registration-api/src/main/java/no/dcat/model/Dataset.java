@@ -120,11 +120,23 @@ public class Dataset {
     @Field
     private SkosCode accessRights;
 
-    //dcatno:accessRightsComment
-    //Norwegian: Skjermingshjemmel.
-    //Norwegian extension to the dcat standard. Recommended used with accessRights.
+
+
+    // dcatno:restricedPursuantToLegalBasis
+    //Norwegian: skjermingshjemmel
     @Field
-    private List<String> accessRightsComment;
+    private List<SkosConceptWithHomepage> restricedPursuantToLegalBasis = Collections.emptyList();
+
+    // dcatno:basisForProcessing
+    //Norwegian: behanlingsgrunnlag
+    @Field
+    private List<SkosConceptWithHomepage> basisForProcessing = Collections.emptyList();
+
+    // dcatno:legalBasisForAccess
+    //Norwegian: utleveringshjemmel
+    @Field
+    private List<SkosConceptWithHomepage> legalBasisForAccess = Collections.emptyList();
+
 
     //dct:references
     //Norwegian: Refererer til.

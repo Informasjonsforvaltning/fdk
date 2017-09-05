@@ -26,6 +26,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -80,9 +81,7 @@ public class RdfCatalogControllerIT {
 
         Catalog result = restTemplate.postForObject("/catalogs/", catalog, Catalog.class);
 
-        if (result.getId() == null) {
-            fail();
-        }
+        assertNotNull(result.getId());
 
         Catalog resultget = restTemplate.getForObject("/catalogs/" + catalog.getId(), Catalog.class);
 

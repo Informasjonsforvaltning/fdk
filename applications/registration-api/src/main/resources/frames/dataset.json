@@ -120,11 +120,6 @@
     "accessRights": {
       "@id": "dct:accessRights"
     },
-    "accessRightsComment": {
-      "@id": "dcatno:accessRightsComment",
-      "@container": "@set",
-      "@type": "@id"
-    },
     "references": {
       "@id": "dct:references",
       "@container": "@set",
