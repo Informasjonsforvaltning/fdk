@@ -41,6 +41,8 @@ import {HelpText} from "./dataset/helptext/helptext.component";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
 
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import {ModalComponent} from "./modal/modal.component";
     MyDatePickerModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    Ng2Webstorage.forRoot({prefix: 'dcat-registration-gui', separator: '.', caseSensitive: true})
+    Ng2Webstorage.forRoot({prefix: 'dcat-registration-gui', separator: '.', caseSensitive: true}),
+    TagInputModule,
+    BrowserAnimationsModule
   ],
   entryComponents: [
     ConfirmComponent

@@ -1,0 +1,22 @@
+<h3>
+    {{title}}
+</h3>
+
+<div class="basisForProcessing-list"
+     [formGroup]="datasetForm">
+
+    <div formArrayName="basisForProcessings">
+        <div *ngFor="let basisForProcessing of basisForProcessings; let idx=index ">
+        <br />
+            <basisForProcessing
+                [basisForProcessingsFormArray]="basisForProcessingsFormArray"
+                [basisForProcessing]="basisForProcessing"
+                (deleteBasisForProcessing)="removeBasisForProcessing($event)"
+                [basisForProcessingIndex]="idx">
+            </basisForProcessing>
+        </div>
+        <a href="#" (click)="addBasisForProcessing()">
+              <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
+        </a>
+    </div>
+</div>

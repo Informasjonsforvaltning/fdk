@@ -1,0 +1,35 @@
+<div class="form-group"  class="legalBasisForAccess-form sub-form-group" [formGroup]="legalBasisForAccessForm" >
+    <div class="row form-group">
+        <h4  (click)="toggleForm()">
+          <span *ngIf="showForm">▼</span>
+          <span *ngIf="!showForm">▲</span>
+          <span *ngFor="let singleFormat of legalBasisForAccess.format; let idx=index">
+            {{singleFormat}}{{legalBasisForAccess.format.length !== idx+1 ? ',' : '' }}
+          </span>
+          <span *ngIf="legalBasisForAccess.format && legalBasisForAccess.format.length === 0">(Ingen format)</span>
+        </h4>
+        <div class="form sub-form" *ngIf="showForm">
+
+          <div class="row">
+            <div class="col-md-4">
+              <p class="fdk-input-label">Tittel på skjermingshjemmel</p>
+              <tag-input formControlName="accessRightsComment"
+              maxItems="1"
+              placeholder="ww"
+                         [onlyFromAutocomplete]="false">
+                  <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                      [autocompleteItems]="['Hjemmel1', 'En annen hjemmel', 'Enda en annen hjemmel']">
+                  </tag-input-dropdown>
+              </tag-input>
+            </div>
+            <div class="col-md-4">
+              <p class="fdk-input-label">Lenke til skjermingshjemmel</p>
+              <input class="fdk-input ng-touched" type="text" />
+            </div>
+          </div>
+          <span class="delete-legalBasisForAccess-wrapper">
+            (<a href=""  class="delete-legalBasisForAccess-button" (click)="removeBasisForProcessing(legalBasisForAccessIndex)">Slett distribusjon</a>)
+          </span>
+        </div>
+    </div>
+</div>
