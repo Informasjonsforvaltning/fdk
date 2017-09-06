@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "serve": "ng serve --host=0.0.0.0",
+    "serve": "ng serve --host=0.0.0.0 --live-reload-client https://localhost:8099",
     "start": "node start.js",
     "build": "ng build --prod --aot=false",
     "test": "ng test",
@@ -42,6 +42,7 @@
     "pluralize": "4.0.0",
     "remove": "0.1.5",
     "rxjs": "^5.1.0",
+    "stacktrace-js": "^2.0.0",
     "zone.js": "^0.8.9"
   },
   "devDependencies": {

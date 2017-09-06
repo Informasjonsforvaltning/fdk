@@ -46,7 +46,7 @@ public class LoginController {
 
     @CrossOrigin
     @RequestMapping(value = "/innloggetBruker", method = GET)
-    HttpEntity<User> getLoggedInUser() {
+    HttpEntity<User> innloggetBruker() {
         Authentication authentication = springSecurityContextBean.getAuthentication();
 
         User user = new User();

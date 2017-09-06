@@ -7,20 +7,20 @@ import {pluralizeObjectKeys, singularizeObjectKeys} from "../../utilities/plural
 
 const TEST_DATASETS: Dataset[] = [
   {
-    "id" : "1009",
+    "id": "1009",
     "title": {
-      "nb" : "Enhetsregisteret testdatasett"
+      "nb": "Enhetsregisteret testdatasett"
     },
     "description": {
       "nb": "Datasett med mange attributter"
     },
-    "keywords": [{'nb':'keyword1'}],
-    "subjects":["term1", "term2", "term3"],
-    "themes":[],
+    "keywords": [{'nb': 'keyword1'}],
+    "subjects": ["term1", "term2", "term3"],
+    "themes": [],
     "catalog": "974760673",
-    "landingPages" : ["http://www.brreg.no", "http://www.difi.no"],
-    "identifiers" : ["http://brreg.no/identifier/1009"],
-    "spatials" : [{'uri': 'http://sws.geonames.org/3144096/', 'prefLabel' : {'nb' : 'Norge'}}],
+    "landingPages": ["http://www.brreg.no", "http://www.difi.no"],
+    "identifiers": ["http://brreg.no/identifier/1009"],
+    "spatials": [{'uri': 'http://sws.geonames.org/3144096/', 'prefLabel': {'nb': 'Norge'}}],
     "_lastModified": "2012-04-23"
   }
 ]
@@ -40,31 +40,37 @@ export class DatasetService {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
     return this.http.get(datasetUrl)
       .toPromise()
-      .then(response => response.json()._embedded.datasets as Dataset[])
+      .then(response => {
+        if (response.json()._embedded) {
+          return response.json()._embedded.datasets as Dataset[]
+        }else{
+          return [] as Dataset[];
+        }
+      })
       .catch(this.handleError);
   }
 
-  private handleError(error: any): Promise<any>{
+  private handleError(error: any): Promise<any> {
     console.error('An error occured', error); //todo implement proper error handling and logging
     return Promise.reject(error.message || error);
   }
 
   get(catId: string, datasetId: string): Promise<Dataset> {
-      const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
-      return this.http.get(datasetUrl)
-        .toPromise()
-        .then((response) => {
-          const dataset = pluralizeObjectKeys(response.json());
-          dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
-          return dataset as Dataset
-        })
-        .catch(this.handleError);
+    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
+    return this.http.get(datasetUrl)
+      .toPromise()
+      .then((response) => {
+        const dataset = pluralizeObjectKeys(response.json());
+        dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
+        return dataset as Dataset
+      })
+      .catch(this.handleError);
   }
 
-  save(catId: string, dataset: Dataset) : Promise<Dataset> {
+  save(catId: string, dataset: Dataset): Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
 
-    let authorization : string = localStorage.getItem("authorization");
+    let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
@@ -76,10 +82,10 @@ export class DatasetService {
       .catch(this.handleError)
   }
 
-  delete(catId: string, dataset: Dataset) : Promise<Dataset> {
+  delete(catId: string, dataset: Dataset): Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
-    let authorization : string = localStorage.getItem("authorization");
+    let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
 
     return this.http
@@ -89,10 +95,10 @@ export class DatasetService {
       .catch(this.handleError)
   }
 
-  create(catId: string) : Promise<Dataset> {
+  create(catId: string): Promise<Dataset> {
     var created: Dataset;
 
-    let authorization : string = localStorage.getItem("authorization");
+    let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
 
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
