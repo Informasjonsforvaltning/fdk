@@ -38,7 +38,7 @@ import java.util.*;
  * Configures basic auth for use in develop profile
  */
 @Configuration
-@Profile({"develop", "unit-integration", "docker"})
+@Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1"})
 public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
@@ -51,7 +51,9 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         handler.setRedirectStrategy((request, response, url) -> {
             String referer = request.getHeaders("referer").nextElement();
             URL url1 = new URL(referer);
-            referer = url1.getProtocol()+"://"+url1.getHost()+":"+url1.getPort()+"/index.html";
+            String port = url1.getPort() != -1 ? ":" + url1.getPort() : "";
+            referer = url1.getProtocol()+"://"+url1.getHost()+port+"/index.html";
+            logger.debug("loginSuccessRedirect: {}",referer);
             response.sendRedirect(referer);
         });
         return handler;
@@ -65,7 +67,9 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         handler.setRedirectStrategy((request, response, url) -> {
             String referer = request.getHeaders("referer").nextElement();
             URL url1 = new URL(referer);
-            referer = url1.getProtocol()+"://"+url1.getHost()+":"+url1.getPort()+"/index.html";
+            String port = url1.getPort() != -1 ? ":" + url1.getPort() : "";
+            referer = url1.getProtocol()+"://"+url1.getHost()+port+"/index.html";
+            logger.debug("logoutSuccessRedirect: {}",referer);
             response.sendRedirect(referer);
         });
         return handler;
@@ -107,15 +111,13 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
         }
     };
 
-
-
     @Configuration
     @EnableWebSecurity
-    @Profile({"develop", "docker"})
+    @Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1"})
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            logger.debug("basicAuth WebsecurityConfig Starting");
             http
               //  .httpBasic()
               //      .and()
