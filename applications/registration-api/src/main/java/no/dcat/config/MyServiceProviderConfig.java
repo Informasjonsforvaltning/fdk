@@ -9,12 +9,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
-@Profile({"prod"})
+@Profile( {"prod"})
 public class MyServiceProviderConfig extends WebSecurityConfigurerAdapter {
     @Bean
     SAMLConfigurerBean saml() {
