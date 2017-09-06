@@ -106,8 +106,8 @@ describe('registrering-gui App', () => {
 
             // first the checkboxes must be expanded
             await openSection("tema");
-            browser.pause();
-          let datasetThemesElement = element.all(by.css('.dataset-tema .checkbox-replacement'));
+
+            let datasetThemesElement = element.all(by.css('.dataset-tema .checkbox-replacement'));
             await browser.wait(EC.presenceOf(datasetThemesElement.get(5)), 10000, "Could not find checkboxes");
             await datasetThemesElement.get(0).click();
             await datasetThemesElement.get(2).click();
@@ -122,11 +122,13 @@ describe('registrering-gui App', () => {
 
             let datasetThemesElement21 = element.all(by.css('.dataset-tema .checkbox-replacement'));
 
+            //let datasetThemesCheckboxes = element.all(by.xpath('label/input[class=".dataset-tema .checkbox-replacement"]/..'));
+
             await browser.wait(EC.presenceOf(datasetThemesElement21.get(5)), 10000, "Could not find Tema 5");
-            browser.pause();
-            expect(datasetThemesElement21.get(0).getAttribute('checked')).toBeTruthy("Thema 1 should be checked");
-            expect(datasetThemesElement21.get(2).getAttribute('checked')).toBeTruthy("Thema 3 should be checked");
-            expect(datasetThemesElement21.get(3).getAttribute('checked')).toBeTruthy("Thema 4 should be checked");
+
+            expect(datasetThemesElement21.get(0).previousElement.getAttribute('checked')).toBeTruthy("Thema 1 should be checked");
+            expect(datasetThemesElement21.get(2).previousElement.getAttribute('checked')).toBeTruthy("Thema 3 should be checked");
+            expect(datasetThemesElement21.get(3).previousElement.getAttribute('checked')).toBeTruthy("Thema 4 should be checked");
 
             console.log("uncheck element 3");
 
@@ -136,6 +138,8 @@ describe('registrering-gui App', () => {
             await browser.wait(EC.presenceOf(backButton), 10000);
 
             await backButton.click();
+
+
 
 
 
