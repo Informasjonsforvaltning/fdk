@@ -128,6 +128,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                     .antMatchers("/assets/**").permitAll()
                     .antMatchers("/loggetut").permitAll()
                     .antMatchers("/loginerror").permitAll()
+                    .antMatchers("/innloggetBruker").permitAll()
                     .and()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()

@@ -1,5 +1,5 @@
 import {BrowserModule} from "@angular/platform-browser";
-import {LOCALE_ID, NgModule} from "@angular/core";
+import {LOCALE_ID, NgModule, ErrorHandler} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -40,6 +40,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
+
+import {GlobalErrorHandler} from './GlobalErrorHandler';
 
 
 @NgModule({
@@ -82,7 +84,23 @@ import {ModalComponent} from "./modal/modal.component";
   entryComponents: [
     ConfirmComponent
   ],
-  providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
+  providers: [
+    CatalogService,
+    DatasetService,
+    CodesService,
+    ThemesService,
+    AuthGuard,
+    AuthenticationService,
+    {
+      provide: LOCALE_ID,
+      useValue: "no-NO"
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
