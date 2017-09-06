@@ -65,14 +65,19 @@ export class CatalogComponent implements OnInit {
   }
 
   cleanup() {
+/*
+    let promises = [];
     this.datasets.forEach( d => {
         console.log("dataset2: ", d)
-      this.datasetService.delete(d.catalog, d)
+      promises.push(this.datasetService.delete(d.catalog, d));
 
-    }).then(() => {
-      this.getAllDatasets();
-      console.log('deleted!');
-    });
+    })
+      $q.all(promises).then(() => {
+        this.getAllDatasets();
+        console.log('deleted!');
+      })
+*/
+
   }
 
   getAllDatasets() {

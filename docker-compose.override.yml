@@ -144,7 +144,7 @@ services:
       ports:
         - 8077:8080
       environment:
-        - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
+        - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
 
   reference-data:
     ports:

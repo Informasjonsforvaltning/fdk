@@ -7,6 +7,13 @@ declare function setTimeout(callback: Function, milliseconds: number): any
 const EC = protractor.ExpectedConditions;
 
 
+async function openSection(label) {
+  let sectionElement = element(by.css(`label[for="${label}-toggle"]`));
+  await browser.wait(EC.presenceOf(sectionElement), 10000, `Could not find ${label}-toggle`);
+  await sectionElement.click();
+  return sectionElement;
+}
+
 /* TO RUN WITH SUCCESS YOU MUST CREATE AN EMPTY DATASET IN THE CATALOG */
 describe('registrering-gui App', () => {
 
@@ -50,8 +57,9 @@ describe('registrering-gui App', () => {
         console.log("afterEach()");
         let clickDeleteDataset = async () => {
 
-            console.log("Cleaning up after test");
+            console.log("Cleaning up after test. NOT WORKING YET!");
 
+/*
             let delete_button = element(by.id('button_delete_dataset_in_list'));
             console.log("afterEach3");
 
@@ -76,7 +84,7 @@ describe('registrering-gui App', () => {
                 await clickDeleteDataset();
             }
 
-
+*/
         };
         await clickDeleteDataset();
 
@@ -97,35 +105,40 @@ describe('registrering-gui App', () => {
             await page.createDataset('Should handle saving of themes checkboxes in new dataset');
 
             // first the checkboxes must be expanded
-
-            let datasetThemesElement2 = element(by.css('label[for="tema-toggle"]'));
-            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find Tema-toggle");
-            await datasetThemesElement2.click();
-
-            let datasetThemesElement = element(by.css('.dataset-tema .checkbox-replacement'));
-            await browser.wait(EC.presenceOf(datasetThemesElement), 10000, "Could not find checkboxes");
-            await datasetThemesElement.click();
+            await openSection("tema");
+            browser.pause();
+          let datasetThemesElement = element.all(by.css('.dataset-tema .checkbox-replacement'));
+            await browser.wait(EC.presenceOf(datasetThemesElement.get(5)), 10000, "Could not find checkboxes");
+            await datasetThemesElement.get(0).click();
+            await datasetThemesElement.get(2).click();
+            await datasetThemesElement.get(3).click();
 
             //let alertSuccess = element(by.css('.fdk-saved'));
 
             browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
             await browser.refresh();
 
+            await openSection("tema");
 
-            datasetThemesElement2 = element(by.css('label[for="tema-toggle"]'));
-            await browser.wait(EC.presenceOf(datasetThemesElement2), 10000, "Could not find Tema toggle");
-            await datasetThemesElement2.click();
+            let datasetThemesElement21 = element.all(by.css('.dataset-tema .checkbox-replacement'));
 
-            let datasetThemesElement21 = element(by.css('.dataset-tema .checkbox-replacement'));
+            await browser.wait(EC.presenceOf(datasetThemesElement21.get(5)), 10000, "Could not find Tema 5");
+            browser.pause();
+            expect(datasetThemesElement21.get(0).getAttribute('checked')).toBeTruthy("Thema 1 should be checked");
+            expect(datasetThemesElement21.get(2).getAttribute('checked')).toBeTruthy("Thema 3 should be checked");
+            expect(datasetThemesElement21.get(3).getAttribute('checked')).toBeTruthy("Thema 4 should be checked");
 
-            await browser.wait(EC.presenceOf(datasetThemesElement21), 10000, "Could not find Tema 1");
+            console.log("uncheck element 3");
 
-            expect(datasetThemesElement21.getAttribute('checked')).toBeTruthy("Thema 1 should be checked");
+            await datasetThemesElement21.get(2).click();
 
             let backButton = element(by.css("#button_back_to_catalog"));
             await browser.wait(EC.presenceOf(backButton), 10000);
-            browser.pause();
+
             await backButton.click();
+
+
+
         });
 
     it("Should save datacatalog fields upon typing", async () => {
