@@ -21,6 +21,9 @@ done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no/reference-data PORT=4200 NODE_ENV=st2
 
+#mount persistent storage volumes
+oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
+
 #expose external routes to services
 externalservices="gdoc harvester harvester-api search search-api"
 for i in $externalservices
@@ -31,5 +34,3 @@ done
 ##special route for registration gui
 oc expose svc/nginx --hostname=reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no
 
-#mount persistent storage volum
-oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
