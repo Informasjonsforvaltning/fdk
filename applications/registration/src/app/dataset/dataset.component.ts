@@ -295,6 +295,7 @@ export class DatasetComponent implements OnInit {
   private toFormGroup(data: Dataset): FormGroup {
     this.getDateObjectFromUnixTimestamp(data.issued)
     const formGroup = this.formBuilder.group({
+
       //title: title,
       description: [data.description],
       catalog: [data.catalog],
@@ -311,8 +312,7 @@ export class DatasetComponent implements OnInit {
       })),
       published: data.registrationStatus == "PUBLISH"
     });
-    console.log("availablelang: ", this.availableLanguages)
+   
     return formGroup;
   }
-
 }
