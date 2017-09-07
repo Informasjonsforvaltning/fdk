@@ -8,11 +8,10 @@
         name="begrep">
       </helptext>
       <div class="form-group">
-          <label for="begrep-datasett" class="control-label">Begrep:</label>
-          <rl-tag-input (click)="focus($event)" id="begrep-datasett" class="fdk-input"
-                        formControlName="subjects"
-                        placeholder="Begrep">
-          </rl-tag-input>
+        <rl-tag-input (click)="focus($event)" id="begrep-datasett" class="fdk-input"
+                      formControlName="subjects"
+                      placeholder="Begrep">
+        </rl-tag-input>
       </div>
       <p class="fdk-input-label">Søkeord</p>
       <helptext
@@ -21,7 +20,6 @@
         name="sokeord">
       </helptext>
       <div class="form-group">
-          <label for="emneord-datasett" class="control-label">Emneord:</label>
           <rl-tag-input (click)="focus($event)" id="emneord-datasett"
                         class="fdk-input"
                         formControlName="keywords"

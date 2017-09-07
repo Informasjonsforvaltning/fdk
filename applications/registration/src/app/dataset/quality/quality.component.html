@@ -1,14 +1,14 @@
-<div class="  " *ngIf="qualityForm">
+<div class="" *ngIf="qualityForm">aaaaaa
     <div [formGroup]="qualityForm" class="form-group">
-
-        <p class="fdk-input-label">Type <span class="fdk-obligatorisk">Obligatorisk</span></p>
+      <div class="fdk-input-container" *ngIf="dataset.title">
+        <p class="fdk-input-label">Opphav</p>
         <helptext
           text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
           moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-          name="access-rights">
+          name="opphav">
         </helptext>
         <div id="provenanceSelector">
-            <div class="radio" *ngFor="let provenance of provenanceModel">
+            <div class="radio" *ngFor="let provenance of provenancesModel">
                 <label>
                     <input
                         type="radio"
@@ -20,38 +20,44 @@
                 </label>
             </div>
         </div>
+      </div><br />
+      <div (click)="fetchFrequencies()" class="form-group">
+          <p class="fdk-input-label">Oppdateringsfrekvens</p>
+          <helptext
+            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+            name="frekvens">
+          </helptext>
+          <ng-select id="quality-frequency"
+                     [options]="frequencies"
+                     [multiple]="false"
+                     placeholder="Velg..."
+                     formControlName="accrualPeriodicity">
+          </ng-select>
 
-        <div (click)="fetchFrequencies()" class="form-group">
-            <label for="quality-frequency" class="control-label">Oppdateringsfrekvens:</label>
+      </div><br />
 
-            <ng-select id="quality-frequency"
-                       [options]="frequencies"
-                       [multiple]="false"
-                       placeholder="Velg..."
-                       formControlName="accrualPeriodicity">
-            </ng-select>
+          <p class="fdk-input-label">Sist oppdatert</p>
+          <helptext
+            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+            name="frekvens">
+          </helptext>
 
-        </div>
-        <div (click)="fetchProvenances()" class="form-group">
-            <label for="quality-provenance" class="control-label">Opphav:</label>
 
-            <ng-select id="quality-provenance"
-                       [options]="provenancestatements"
-                       [multiple]="false"
-                       placeholder="Velg..."
-                       formControlName="provenance">
-            </ng-select>
-        </div>
+      <div class="form-group" [formGroup]="qualityForm">
+          <p class="fdk-input-label">I samsvar med standard</p>
+          <helptext
+            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+            name="frekvens">
+          </helptext>
+          <rl-tag-input  (click)="focus($event)" id="quality-conformsto"
+                        class="fdk-input"
+                        placeholder="Standard"
+                        formControlName="conformsTo">
+          </rl-tag-input>
 
-        <div class="form-group" [formGroup]="qualityForm">
-            <label for="quality-conformsto" class="control-label">I samsvar med standard:</label>
-            <rl-tag-input  (click)="focus($event)" id="quality-conformsto"
-                          class="fdk-input"
-                          placeholder="Standard"
-                          formControlName="conformsTo">
-            </rl-tag-input>
-
-        </div>
-
+      </div>
     </div>
 </div>
