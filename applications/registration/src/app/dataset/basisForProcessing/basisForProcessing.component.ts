@@ -40,14 +40,9 @@ export class BasisForProcessingFormComponent implements OnInit {
 
     private toFormGroup(basisForProcessing: BasisForProcessing) {
         const formGroup = this.fb.group({
-            id: [ basisForProcessing.id || Math.random().toString().substr(2)],
             uri: [ basisForProcessing.uri || '', Validators.required ],
-            title: [ basisForProcessing.title || '', Validators.required ],
-            description: [ basisForProcessing.description ? basisForProcessing.description[this.language] : '' ],
-            accessURL: [ basisForProcessing.accessURL || []],
-            downloadURL: [ basisForProcessing.downloadURL || []],
-            license: [ basisForProcessing.license ],
-            format: [ basisForProcessing.format || '' ]
+            foafHomepage: [ basisForProcessing.foafHomepage || '' ],
+            prefLabel:[ basisForProcessing.prefLabel ? basisForProcessing.prefLabel[this.language] : '' ]
         });
         return formGroup;
     }

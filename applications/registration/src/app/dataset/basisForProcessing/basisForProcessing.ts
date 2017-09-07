@@ -4,4 +4,5 @@ export interface BasisForProcessing {
   prefLabel?:{
     [language: string]:string
   };
+  ui_visible?: boolean;
 }

@@ -4,4 +4,6 @@ export interface RestricedPursuantToLegalBasis {
   prefLabel?:{
     [language: string]:string
   };
+  ui_visible?:boolean;
 }
+ 

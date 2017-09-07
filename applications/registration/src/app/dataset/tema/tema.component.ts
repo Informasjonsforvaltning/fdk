@@ -70,7 +70,7 @@ export class TemaComponent implements OnInit {
       return this.fb.group({
         themesArray: this.formBuilder.array(this.allThemes.map(s => {return this.formBuilder.control(s.selected)}))
       });
-    }
+    } 
 
     toggleCheckbox(checkbox, i) {
       var checkboxValue = !!checkbox.temaForm.controls.themesArray.controls[i].value;

@@ -36,18 +36,14 @@ export class RestricedPursuantToLegalBasisFormComponent implements OnInit {
        if(this.restricedPursuantToLegalBasis.ui_visible) this.showForm = true;
        this.restricedPursuantToLegalBasisForm = this.toFormGroup(this.restricedPursuantToLegalBasis);
        this.restricedPursuantToLegalBasissFormArray.push(this.restricedPursuantToLegalBasisForm);
+       
     }
 
     private toFormGroup(restricedPursuantToLegalBasis: RestricedPursuantToLegalBasis) {
         const formGroup = this.fb.group({
-            id: [ restricedPursuantToLegalBasis.id || Math.random().toString().substr(2)],
             uri: [ restricedPursuantToLegalBasis.uri || '', Validators.required ],
-            title: [ restricedPursuantToLegalBasis.title || '', Validators.required ],
-            description: [ restricedPursuantToLegalBasis.description ? restricedPursuantToLegalBasis.description[this.language] : '' ],
-            accessURL: [ restricedPursuantToLegalBasis.accessURL || []],
-            downloadURL: [ restricedPursuantToLegalBasis.downloadURL || []],
-            license: [ restricedPursuantToLegalBasis.license ],
-            format: [ restricedPursuantToLegalBasis.format || '' ]
+            foafHomepage: [ restricedPursuantToLegalBasis.foafHomepage || '' ],
+            prefLabel:[ restricedPursuantToLegalBasis.prefLabel ? restricedPursuantToLegalBasis.prefLabel[this.language] : '' ]
         });
         return formGroup;
     }

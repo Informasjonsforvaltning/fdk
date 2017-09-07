@@ -4,4 +4,5 @@ export interface LegalBasisForAccess {
   prefLabel?:{
     [language: string]:string
   };
+  ui_visible?:boolean;
 }

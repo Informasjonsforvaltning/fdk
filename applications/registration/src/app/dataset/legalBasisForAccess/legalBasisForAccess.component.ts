@@ -40,14 +40,9 @@ export class LegalBasisForAccessFormComponent implements OnInit {
 
     private toFormGroup(legalBasisForAccess: LegalBasisForAccess) {
         const formGroup = this.fb.group({
-            id: [ legalBasisForAccess.id || Math.random().toString().substr(2)],
             uri: [ legalBasisForAccess.uri || '', Validators.required ],
-            title: [ legalBasisForAccess.title || '', Validators.required ],
-            description: [ legalBasisForAccess.description ? legalBasisForAccess.description[this.language] : '' ],
-            accessURL: [ legalBasisForAccess.accessURL || []],
-            downloadURL: [ legalBasisForAccess.downloadURL || []],
-            license: [ legalBasisForAccess.license ],
-            format: [ legalBasisForAccess.format || '' ]
+            foafHomepage: [ legalBasisForAccess.foafHomepage || '' ],
+            prefLabel:[ legalBasisForAccess.prefLabel ? legalBasisForAccess.prefLabel[this.language] : '' ]
         });
         return formGroup;
     }
