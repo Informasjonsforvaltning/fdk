@@ -25,21 +25,13 @@ server:
     accesslog:
       enabled: true
     basedir: /tmp/fdk
-  ssl:
-    key-store: ${reg_sslKeystoreLocation:conf/idporten/ssldevelop.p12}
-    key-store-password: ${reg_sslKeyPassword:changeit}
-    key-store-type: PKCS12
-    key-alias: tomcat
 saml:
   sso:
-    default-success-url: /index.html
     metadata-generator:
       entity-id: difi.brreg.datakatalog.registrering.dev
-    logout:
-      default-target-url: /loggetut
-      single-logout-url: registrering/saml/SingleLogout
     idp:
       metadata-location: file:conf/idporten/idporten-ver2.difi.no-v3_signed_meta.xml
+      localMetadataLocation: file:conf/idporten/difi.brreg.datakatalog.registrering.dev.xml
     metadata-manager:
       refresh-check-interval: -1
     key-manager:
@@ -49,8 +41,13 @@ saml:
       default-key: difi.brreg.datakatalog.registrering.dev
       key-passwords:
         difi.brreg.datakatalog.registrering.dev: ${reg_ipKeyPassword}
-    sso-processing-url: registrering/saml/SSO
-
+    context-provider:
+      lb:
+        context-path: /
+        include-server-port-in-request-url: true
+        scheme: https
+        server-name: localhost
+        server-port: 8099
 ---
 spring:
   profiles: develop

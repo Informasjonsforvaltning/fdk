@@ -54,7 +54,7 @@
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>spring-boot-security-saml</artifactId>
-            <version>1.10</version>
+            <version>1.12</version>
         </dependency>
 
         <dependency>
