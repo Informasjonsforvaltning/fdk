@@ -4,11 +4,13 @@
 # oc login
 # oc projects xxxx
 
+#todo: flytt environment ogtag til kommandolinjeparametre
+
 environment=st2
 profile=fellesdatakatalog-$environment
 tag=latest
 
-services="registration registration-auth registration-api registration-validator reference-data nginx gdoc harvester harvester-api search search-api"
+services="registration registration-auth registration-api registration-validator reference-data gdoc harvester harvester-api search search-api nginx"
 
 for i in $services
 do
@@ -19,9 +21,15 @@ done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no/reference-data PORT=4200 NODE_ENV=st2
 
-#expose routes for external services
-externalservices="gdoc harvester harvester-api search search-api nginx"
+#expose external routes to services
+externalservices="gdoc harvester harvester-api search search-api"
 for i in $externalservices
 do
     oc expose svc/$i
 done
+
+##special route for registration gui
+oc expose svc/nginx --hostname=reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no
+
+#mount persistent storage volum
+oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
