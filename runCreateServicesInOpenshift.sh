@@ -18,3 +18,10 @@ do
 done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no/reference-data PORT=4200 NODE_ENV=st2
+
+#expose routes for external services
+externalservices="gdoc harvester harvester-api search search-api nginx"
+for i in $externalservices
+do
+    oc expose svc/$i
+done
