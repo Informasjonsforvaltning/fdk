@@ -58,4 +58,6 @@ export interface Dataset {
   type?: string;
 
   _lastModified: string;
+
+  registrationStatus? : string;
 }
