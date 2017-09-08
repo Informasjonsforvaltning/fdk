@@ -50,10 +50,7 @@ public class AltinnAuthorizationIT {
 
     @Test(expected = AuthorizationServiceException.class)
     public void testGetAuthorizedEntitiesInvalidUser() throws Throwable {
-
             List<String> actualEntities = authorizationService.getOrganisations("16079411314");
-
-
     }
 
 

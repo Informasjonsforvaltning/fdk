@@ -17,6 +17,7 @@ install:
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
   - export DISPLAY=:99.0
+  - export reg_altinnServiceUrl=http://registration:8080
   - sh -e /etc/init.d/xvfb start
 
 
