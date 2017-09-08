@@ -6,6 +6,7 @@
 #
 # Parameters:
 # runCreateServicesInOpenshift <environment> <date-tag>
+#
 # example:
 # runCreateServicesInOpenshift st2 st2_2017-02-18
 
@@ -15,13 +16,14 @@ environment=$1
 dateTag=$2
 environmentTag=$1_latest
 profile=fellesdatakatalog-$environment
-tag=latest
+tag=latest #todo: må justeres slik at det passer med Håvards script
 
 #midlertidig kommentert ut reference-data
 services="registration registration-auth registration-api registration-validator gdoc harvester harvester-api search search-api nginx"
 
 oc project $profile
 
+#todo må vi sette container port?
 for i in $services
 do
     oc new-app dcatno/$i:$tag
@@ -35,8 +37,7 @@ done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
 
-#mount persistent storage volumes - midlertidig kommenterrt ut for reference-data
-
+#mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
 # oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
 
 #expose external routes to services
@@ -49,7 +50,6 @@ do
 done
 
 ##special route for registration gui
-#TODO gjør om til https
-oc expose svc/nginx --hostname=reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no
+oc create route edge --service=nginx --hostname=reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no
 oc label route nginx environmentTag=$environmentTag --overwrite=true
 oc label route nginx environmentDate=$dateTag --overwrite=true
