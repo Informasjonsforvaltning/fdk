@@ -3,6 +3,7 @@ set -e
 
  mvn clean install -T 2C -pl applications/$1 -am -DskipTests
 
+ docker-compose stop $1 || true
  docker-compose up -d $1
 
 docker-compose restart nginx
