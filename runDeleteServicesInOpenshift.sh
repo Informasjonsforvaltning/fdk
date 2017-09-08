@@ -8,7 +8,9 @@ environment=st2
 profile=fellesdatakatalog-$environment
 tag=latest
 
-services="registration registration-auth registration-api registration-validator reference-data nginx gdoc harvester harvester-api search search-api"
+#midlertidig kommentert ut reference-data
+
+services="registration registration-auth registration-api registration-validator nginx gdoc harvester harvester-api search search-api"
 
 for i in $services
 do
