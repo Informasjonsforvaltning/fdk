@@ -38,7 +38,7 @@ import java.util.*;
  * Configures basic auth for use in develop profile
  */
 @Configuration
-@Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1"})
+@Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1", "fellesdatakatalog-st2"})
 public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
@@ -113,7 +113,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
 
     @Configuration
     @EnableWebSecurity
-    @Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1"})
+    @Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1", "fellesdatakatalog-st2"})
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
