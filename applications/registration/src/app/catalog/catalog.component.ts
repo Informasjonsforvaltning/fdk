@@ -177,7 +177,7 @@ export class CatalogComponent implements OnInit {
     },
     "PUBLISH": {
       nb: "Publisert",
-      color: "var(--color-green)"
+      color: "var(--color-cta)"
     }
   };
 
