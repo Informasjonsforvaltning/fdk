@@ -14,6 +14,14 @@ async function openSection(label) {
   return sectionElement;
 }
 
+function waitForCount (elementArrayFinder, expectedCount) {
+  return function () {
+    return elementArrayFinder.count().then(function (actualCount) {
+      return expectedCount === actualCount;  // or <= instead of ===, depending on the use case
+    });
+  };
+};
+
 /* TO RUN WITH SUCCESS YOU MUST CREATE AN EMPTY DATASET IN THE CATALOG */
 describe('registrering-gui App', () => {
 
@@ -109,7 +117,7 @@ describe('registrering-gui App', () => {
             await openSection("tema");
 
             let datasetThemesElement = element.all(by.css('.dataset-tema .checkbox-replacement'));
-            await browser.wait(EC.presenceOf(datasetThemesElement.get(5)), 10000, "Could not find checkboxes");
+            await browser.wait(waitForCount(datasetThemesElement,13), 10000, "Could not find checkboxes");
             await datasetThemesElement.get(0).click();
             await datasetThemesElement.get(2).click();
             await datasetThemesElement.get(3).click();
@@ -126,7 +134,7 @@ describe('registrering-gui App', () => {
 
             let datasetThemesCheckboxes = element.all(by.css('input[id^="theme-checkbox"]'));
 
-            await browser.wait(EC.presenceOf(datasetThemesElement21.get(5)), 10000, "Could not find Tema 5");
+            await browser.wait(waitForCount(datasetThemesElement21,13), 10000, "Could not find Tema 5");
 
             expect(datasetThemesCheckboxes.get(0).getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
             expect(datasetThemesCheckboxes.get(2).getAttribute('checked')).toBeTruthy("Theme 3 should be checked");
@@ -255,17 +263,16 @@ describe('registrering-gui App', () => {
         await openSection("geotime");
 
         let datasetLanguages = element.all(by.css('.language-checkbox'));
-        await browser.wait(EC.presenceOf(datasetLanguages.get(2)), 10000, "Could not find language-checkbox");
+        browser.wait(waitForCount(datasetLanguages,3), 10000, "Could not find language-checkbox");
         await datasetLanguages.get(0).click();
         await datasetLanguages.get(2).click();
 
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
         await browser.refresh();
-
-        // first the checkboxes must be expanded
         await openSection("geotime");
+
         let datasetLanguageInputs = element.all(by.css('.language-checkbox input'));
-        await browser.wait(EC.presenceOf(datasetLanguageInputs.get(2)), 10000, "Could not find language-checkbox input");
+        await browser.wait(waitForCount(datasetLanguageInputs,3), 10000, "Could not find language-checkbox input");
 
         expect(datasetLanguageInputs.get(0).getAttribute('checked')).toBeTruthy("Language element 1 should be checked");
         expect(datasetLanguageInputs.get(1).getAttribute('checked')).toBeFalsy("Language element 2 should be UNCHECKED");
@@ -352,10 +359,9 @@ describe('registrering-gui App', () => {
 
         //write something into the accesrightscomment field
         let accessRightsComment = element(by.css("input[placeholder='Legg til url']"));
+        await browser.wait(EC.presenceOf(accessRightsComment), 10000);
         await accessRightsComment.clear();
         await accessRightsComment.sendKeys('http://lovdata,'); //comma finishes entry
-
-        await browser.wait(EC.presenceOf(alertSuccess), 10000);
 
 
         browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server//check that accessrightscomment was saved
@@ -364,10 +370,10 @@ describe('registrering-gui App', () => {
 
         let actualAccessRightsComment = element(by.css("input[placeholder='Legg til url']"));
         // #accessRightsComment
-        await browser.wait(EC.presenceOf(actualAccessRightsComment), 10000)
+        await browser.wait(EC.presenceOf(actualAccessRightsComment), 10000);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Legg til url'] rl-tag-input-item:first-child")).toMatch(/http:\/\/lovdata.*/);
         let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000)
+        await  browser.wait(EC.presenceOf(backButton), 10000);
         await backButton.click();
 
     });
@@ -383,7 +389,6 @@ describe('registrering-gui App', () => {
         let subjectInput = element(by.css("input[placeholder='Begrep']"));
         await subjectInput.clear();
         await subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
-
 
         let alertSuccess = element(by.css('.fdk-saved'));
         await  browser.wait(EC.presenceOf(alertSuccess), 10000);
