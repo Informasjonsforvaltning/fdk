@@ -233,7 +233,7 @@ describe('registrering-gui App', () => {
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
-        expect(<any>datasetPublisherName.getText()).toEqual("RAMSUND OG ROGNAN REVISJO");
+        expect(<any>datasetPublisherName.getText()).toEqual("RAMSUND OG ROGNAN REVISJON");
         let backButton = element(by.css("#button_back_to_catalog"));
         await  browser.wait(EC.presenceOf(backButton), 10000);
         await backButton.click();
@@ -396,8 +396,7 @@ describe('registrering-gui App', () => {
         await catalogLink.click();
 
         await page.createDataset('should save labels for subject uris');
-
-
+        await openSection("terms");
 
         let subjectInput = element(by.css("input[placeholder='Begrep']"));
         await subjectInput.clear();
@@ -409,6 +408,8 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
+        await openSection("access-level");
+
         let actualSubjects = element(by.css("input[placeholder=Begrep]"));
         await browser.wait(EC.presenceOf(actualSubjects), 10000);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Begrep'] rl-tag-input-item:first-child")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
@@ -424,7 +425,10 @@ describe('registrering-gui App', () => {
         await catalogLink.click();
 
         await page.createDataset('saving of codes');
-        let provenanceControl = element(by.css('[formcontrolname=provenance]'));
+        await openSection("quality");
+
+
+      let provenanceControl = element(by.css('[formcontrolname=provenance]'));
         await provenanceControl.click();
 
         let provenanceControlFirstValue = element(by.css('[formcontrolname=provenance] li:first-child'));
