@@ -80,8 +80,8 @@
       <tr *ngIf="datasets.length === 0">
         <td (click)="newDataset()" colspan="2" class="fdk-input-helptext">Ingen datasettbeskrivelse registrert. <a href="#">Klikk for å legge til.</a></td>
       </tr>
-      <tr *ngFor="let dataset of datasets" id="datasets" class="fdk-row-padding">
-        <td (click)="selectDataset(catalog, dataset)" class="fdk-register fdk-register-datacatalogue-1">
+      <tr *ngFor="let dataset of datasets; let i=index" id="{{dataset.id}}" class="fdk-row-padding" (click)="selectDataset(catalog, dataset)">
+        <td  class="fdk-register fdk-register-datacatalogue-1">
           <div *ngIf="getTitle(dataset);then showTitle else emptyTitle"></div>
           <ng-template #showTitle>{{getTitle(dataset)}}</ng-template>
           <ng-template #emptyTitle><span class="fdk-input-helptext">Mangler tittel</span></ng-template>
@@ -97,8 +97,6 @@
       </tr>
       </tbody>
     </table>
-
-    <button id="cleanup" class="button display=none" (click)="cleanup()">CLEAN UP</button>
 
 
   </div>

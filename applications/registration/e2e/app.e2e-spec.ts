@@ -98,6 +98,7 @@ describe('registrering-gui App', () => {
 
 
         it("Should handle saving of themes (checkboxes) in new dataset", async () => {
+
             let catalogLink = element(by.css("#datacatalogs td"));
             await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
             await catalogLink.click();
@@ -122,25 +123,41 @@ describe('registrering-gui App', () => {
 
             let datasetThemesElement21 = element.all(by.css('.dataset-tema .checkbox-replacement'));
 
-            //let datasetThemesCheckboxes = element.all(by.xpath('label/input[class=".dataset-tema .checkbox-replacement"]/..'));
+            let datasetThemesCheckboxes = element.all(by.css('input[id^="theme-checkbox"]'));
 
             await browser.wait(EC.presenceOf(datasetThemesElement21.get(5)), 10000, "Could not find Tema 5");
 
-            expect(datasetThemesElement21.get(0).previousElement.getAttribute('checked')).toBeTruthy("Thema 1 should be checked");
-            expect(datasetThemesElement21.get(2).previousElement.getAttribute('checked')).toBeTruthy("Thema 3 should be checked");
-            expect(datasetThemesElement21.get(3).previousElement.getAttribute('checked')).toBeTruthy("Thema 4 should be checked");
+            expect(datasetThemesCheckboxes.get(0).getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
+            expect(datasetThemesCheckboxes.get(2).getAttribute('checked')).toBeTruthy("Theme 3 should be checked");
+            expect(datasetThemesCheckboxes.get(3).getAttribute('checked')).toBeTruthy("Theme 4 should be checked");
 
             console.log("uncheck element 3");
 
+            // uncheck theme 3
             await datasetThemesElement21.get(2).click();
+
+            let datasetid = element(by.css(".nv-dataset")).getAttribute('id');
+
 
             let backButton = element(by.css("#button_back_to_catalog"));
             await browser.wait(EC.presenceOf(backButton), 10000);
 
             await backButton.click();
 
+            // Open dataset and make sure the un-clicked theme is off
+            let datasetRow = element(by.css('#'+datasetid));
 
+            await datasetRow.click();
 
+            await openSection("tema");
+
+            console.log("reopen themes");
+
+            let datasetReopenedThemeCheckboxes = element.all(by.css('input[id^=theme-checkbox]'));
+
+            expect(datasetReopenedThemeCheckboxes.get(0).getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
+            expect(datasetReopenedThemeCheckboxes.get(2).getAttribute('checked')).toBeFalsy("Theme 3 should be UNCHECKED");
+            expect(datasetReopenedThemeCheckboxes.get(3).getAttribute('checked')).toBeTruthy("Theme 4 should be checked");
 
 
         });

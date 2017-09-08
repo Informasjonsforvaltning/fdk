@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cd registration
+cd applications/registration
 npm install --no-progress
 npm install -g protractor
 webdriver-manager update

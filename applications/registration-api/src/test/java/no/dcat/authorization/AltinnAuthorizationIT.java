@@ -1,6 +1,8 @@
 package no.dcat.authorization;
 
 import no.dcat.RegisterApplication;
+import org.assertj.core.api.Assertions;
+import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +18,11 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.HttpClientErrorException;
+import sun.nio.cs.Surrogate;
 
 import java.util.List;
+
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 /**
  * Created by dask on 22.06.2017.
@@ -28,7 +33,7 @@ import java.util.List;
 
 @ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class AltinnAuthorizationIT {
 
     private static Logger logger = LoggerFactory.getLogger(AltinnAuthorizationIT.class);
@@ -42,22 +47,21 @@ public class AltinnAuthorizationIT {
         List<Entity> actualEntities = authorizationService.getAuthorizedEntities("02084902333");
 
         Assert.assertNotNull(actualEntities);
+        //Assertions.assertThat(actualEntities.size(), Is.is(2) );
 
         logger.info("# of entities {}", actualEntities.size());
         for (Entity entity : actualEntities) {
             logger.info("Entity {}", entity.toString());
         }
+
+
     }
 
-    @Test
+    @Test(expected = AuthorizationServiceException.class)
     public void testGetAuthorizedEntitiesInvalidUser() throws Throwable {
 
-        try {
             List<String> actualEntities = authorizationService.getOrganisations("16079411314");
-        } catch (AuthorizationServiceException e) {
-            logger.info("Client error: {}", e.getMessage());
-            Assert.assertTrue(true);
-        }
+
 
     }
 
