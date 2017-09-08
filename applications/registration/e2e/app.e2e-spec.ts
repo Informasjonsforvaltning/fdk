@@ -118,6 +118,7 @@ describe('registrering-gui App', () => {
 
             browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
             await browser.refresh();
+            let datasetElement = element(by.css(".nv-dataset"));
 
             await openSection("tema");
 
@@ -135,8 +136,12 @@ describe('registrering-gui App', () => {
 
             // uncheck theme 3
             await datasetThemesElement21.get(2).click();
-
-            let datasetid = element(by.css(".nv-dataset")).getAttribute('id');
+            let datasetid = "dataset-id-not-found";
+            await browser.wait(EC.presenceOf(datasetElement), 10000, "Could not find datasetid");
+            datasetElement.getAttribute('id').then(function (value) {
+              datasetid = value;
+              console.log("dataset: ", datasetid);
+            });
 
 
             let backButton = element(by.css("#button_back_to_catalog"));
@@ -145,8 +150,8 @@ describe('registrering-gui App', () => {
             await backButton.click();
 
             // Open dataset and make sure the un-clicked theme is off
-            let datasetRow = element(by.css('#'+datasetid));
-
+            let datasetRow = element(by.css('tr[id="'+datasetid+'"]'));
+            await browser.wait(EC.presenceOf(datasetRow), 1000, "Could not find dataset id");
             await datasetRow.click();
 
             await openSection("tema");
@@ -154,6 +159,7 @@ describe('registrering-gui App', () => {
             console.log("reopen themes");
 
             let datasetReopenedThemeCheckboxes = element.all(by.css('input[id^=theme-checkbox]'));
+            await browser.wait(EC.presenceOf(datasetReopenedThemeCheckboxes.get(5)),5000);
 
             expect(datasetReopenedThemeCheckboxes.get(0).getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
             expect(datasetReopenedThemeCheckboxes.get(2).getAttribute('checked')).toBeFalsy("Theme 3 should be UNCHECKED");
@@ -176,14 +182,8 @@ describe('registrering-gui App', () => {
         await datasetH1Input.clear();
         await datasetH1Input.sendKeys('New datacatalog name');
 
-
-        let alertSuccess = element(by.css('.fdk-saved'));
-
-        await browser.wait(EC.presenceOf(alertSuccess), 10000, "Could not find saved element");
-
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
-
 
         datasetH1Input = element(by.css(".fdk-register-h1"));
 
@@ -233,7 +233,7 @@ describe('registrering-gui App', () => {
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
         let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
-        expect(<any>datasetPublisherName.getText()).toEqual("REGISTERENHETEN I BRØNNØYSUND");
+        expect(<any>datasetPublisherName.getText()).toEqual("RAMSUND OG ROGNAN REVISJO");
         let backButton = element(by.css("#button_back_to_catalog"));
         await  browser.wait(EC.presenceOf(backButton), 10000);
         await backButton.click();
@@ -257,7 +257,7 @@ describe('registrering-gui App', () => {
 
         }
 
-        expect(element.all(by.css("#datasets_table tr")).count()).toBeGreaterThan(20);
+        expect(element.all(by.css("#datasets-list tr")).count()).toBeGreaterThan(20);
 
     });
 
@@ -269,43 +269,36 @@ describe('registrering-gui App', () => {
 
         await page.createDataset('Should handle saving of checkboxes in new dataset');
 
+        // first the checkboxes must be expanded
+        await openSection("geotime");
 
-        let datasetLanguagesEngelskElement = element(by.css('.dataset-languages input'));
-        await browser.wait(EC.presenceOf(datasetLanguagesEngelskElement), 10000, "Could not find .dataset-languages input");
-        await datasetLanguagesEngelskElement.click();
-
-        let alertSuccess = element(by.css('.fdk-saved'));
+        let datasetLanguages = element.all(by.css('.language-checkbox'));
+        await browser.wait(EC.presenceOf(datasetLanguages.get(3)), 10000, "Could not find language-checkbox");
+        await datasetLanguages.get(0).click();
+        await datasetLanguages.get(2).click();
 
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
         await browser.refresh();
 
-        let datasetLanguagesEngelskElement2 = element(by.css('.dataset-languages input'));
+        // first the checkboxes must be expanded
+        await openSection("geotime");
+        let datasetLanguageInputs = element.all(by.css('.language-checkbox input'));
+        await browser.wait(EC.presenceOf(datasetLanguageInputs.get(3)), 10000, "Could not find language-checkbox input");
 
-        browser.sleep(5000);
+        expect(datasetLanguageInputs.get(0).getAttribute('checked')).toBeTruthy("Language element 1 should be checked");
+        expect(datasetLanguageInputs.get(1).getAttribute('checked')).toBeFalsy("Language element 2 should be UNCHECKED");
+        expect(datasetLanguageInputs.get(2).getAttribute('checked')).toBeTruthy("Language element 3 should be checked");
 
-        try {
-            expect(datasetLanguagesEngelskElement2.getAttribute('checked')).toBeTruthy("datasetLanguagesEngelskElement2 should be checked");
-            expect(element(by.css('.dataset-languages input:last-child')).getAttribute('checked')).toBeTruthy(".dataset-languages input:last-child should be checked");
-        }catch(err){
-            console.log(await browser.getPageSource());
-            throw err;
-
-        }
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
-        // console.log("here7");
-        // browser.pause();
     });
 
 
     it("should save conformsTo uris", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
         await catalogLink.click();
-
-        //let datasetLink = element(by.css("#datasets td")); // create one instead
-        //datasetLink.click();
         await page.createDataset('should save conformsTo uris');
+
+        await openSection("quality");
+
         let subjectInput = element(by.css("input[placeholder='Standard']"));
         await subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
@@ -315,6 +308,8 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
+        await openSection("quality");
+
         let actualConformsTo = element(by.css("input[placeholder='Standard']"));
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
         console.log('aaaaa');
@@ -325,7 +320,6 @@ describe('registrering-gui App', () => {
         await browser.wait(EC.presenceOf(backButton), 10000);
         await backButton.click();
 
-
     });
 
 
@@ -335,6 +329,8 @@ describe('registrering-gui App', () => {
 
         await page.createDataset('should save spatial uris')
 
+        await openSection("geotime");
+
         let subjectInput = element(by.css("input[placeholder='Dekningsområde']"));
         await subjectInput.sendKeys('http://url1,http://url2,'); //comma finishes entry
 
@@ -343,6 +339,8 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
+        await openSection("geotime");
+
         let actualConformsTo = element(by.css("input[placeholder='Dekningsområde']"));
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
@@ -361,9 +359,11 @@ describe('registrering-gui App', () => {
 
         await page.createDataset('hould display accessRightsComments field if RESTRICTED is chosen');
         //click restricted access right to display accessrightsComment field
-        let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
-        await accessRights.click();
 
+        await openSection("access-level");
+
+      let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
+        await accessRights.click();
 
         let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
@@ -378,6 +378,8 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server//check that accessrightscomment was saved
         await browser.refresh();
+        await openSection("access-level");
+
         let actualAccessRightsComment = element(by.css("input[placeholder='Legg til url']"));
         // #accessRightsComment
         await browser.wait(EC.presenceOf(actualAccessRightsComment), 10000)
@@ -385,7 +387,6 @@ describe('registrering-gui App', () => {
         let backButton = element(by.css("#button_back_to_catalog"));
         await  browser.wait(EC.presenceOf(backButton), 10000)
         await backButton.click();
-
 
     });
 
@@ -395,6 +396,8 @@ describe('registrering-gui App', () => {
         await catalogLink.click();
 
         await page.createDataset('should save labels for subject uris');
+
+
 
         let subjectInput = element(by.css("input[placeholder='Begrep']"));
         await subjectInput.clear();
