@@ -241,25 +241,7 @@ describe('registrering-gui App', () => {
     });
 
 
-    it("should display at least 21 datasets", async () => {
-        let catalogLink = element(by.css("#datacatalogs td"));
-        await catalogLink.click();
 
-
-        for (let x = 0; x < 21; x++) {
-
-            await page.createDataset('Dataset' + x);
-            let alertSuccess = element(by.css('.fdk-saved'));
-            await browser.wait(EC.presenceOf(alertSuccess), 10000);
-            let backButton = element(by.css("#button_back_to_catalog"));
-            await browser.wait(EC.presenceOf(backButton), 10000);
-            await backButton.click();
-
-        }
-
-        expect(element.all(by.css("#datasets-list tr")).count()).toBeGreaterThan(20);
-
-    });
 
     it("Should handle saving of languages (checkboxes) in new dataset", async () => {
 
@@ -273,7 +255,7 @@ describe('registrering-gui App', () => {
         await openSection("geotime");
 
         let datasetLanguages = element.all(by.css('.language-checkbox'));
-        await browser.wait(EC.presenceOf(datasetLanguages.get(3)), 10000, "Could not find language-checkbox");
+        await browser.wait(EC.presenceOf(datasetLanguages.get(2)), 10000, "Could not find language-checkbox");
         await datasetLanguages.get(0).click();
         await datasetLanguages.get(2).click();
 
@@ -283,7 +265,7 @@ describe('registrering-gui App', () => {
         // first the checkboxes must be expanded
         await openSection("geotime");
         let datasetLanguageInputs = element.all(by.css('.language-checkbox input'));
-        await browser.wait(EC.presenceOf(datasetLanguageInputs.get(3)), 10000, "Could not find language-checkbox input");
+        await browser.wait(EC.presenceOf(datasetLanguageInputs.get(2)), 10000, "Could not find language-checkbox input");
 
         expect(datasetLanguageInputs.get(0).getAttribute('checked')).toBeTruthy("Language element 1 should be checked");
         expect(datasetLanguageInputs.get(1).getAttribute('checked')).toBeFalsy("Language element 2 should be UNCHECKED");
@@ -362,7 +344,7 @@ describe('registrering-gui App', () => {
 
         await openSection("access-level");
 
-      let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
+        let accessRights = element(by.css("#accessRightSelector > div:nth-child(2) > label > input"));
         await accessRights.click();
 
         let alertSuccess = element(by.css('.fdk-saved'));
@@ -408,7 +390,7 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // .fdk-saved check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
-        await openSection("access-level");
+        await openSection("terms");
 
         let actualSubjects = element(by.css("input[placeholder=Begrep]"));
         await browser.wait(EC.presenceOf(actualSubjects), 10000);
@@ -445,6 +427,8 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // check above should check if things have been stored in the background, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
+        await openSection("quality");
+
         let provenanceControlValueElement = element(by.css('[formcontrolname=provenance] .value'));
 
         await browser.wait(EC.presenceOf(provenanceControlValueElement), 10000);
@@ -465,7 +449,9 @@ describe('registrering-gui App', () => {
         await catalogLink.click();
 
         await page.createDataset('Should handle Contact Point fields upon typing');
-        let contactAvdeling = element(by.id('contact-avdeling'));
+        await openSection("contact");
+
+      let contactAvdeling = element(by.id('contact-avdeling'));
         await contactAvdeling.clear();
         await contactAvdeling.sendKeys('Avdelingsnavn');
 
@@ -487,6 +473,9 @@ describe('registrering-gui App', () => {
 
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
+        await openSection("contact");
+
+
         let avdeling = element(by.id('contact-avdeling'));
 
         await browser.wait(EC.textToBePresentInElementValue(avdeling, 'Avdelingsnavn'), 1000);
@@ -500,6 +489,25 @@ describe('registrering-gui App', () => {
 
     });
 
+  it("should display at least 21 datasets", async () => {
+    let catalogLink = element(by.css("#datacatalogs td"));
+    await catalogLink.click();
+
+
+    for (let x = 0; x < 21; x++) {
+
+      await page.createDataset('Dataset' + x);
+      let alertSuccess = element(by.css('.fdk-saved'));
+      await browser.wait(EC.presenceOf(alertSuccess), 10000);
+      let backButton = element(by.css("#button_back_to_catalog"));
+      await browser.wait(EC.presenceOf(backButton), 10000);
+      await backButton.click();
+
+    }
+
+    expect(element.all(by.css("#datasets-list tr")).count()).toBeGreaterThan(20);
+
+  });
 
 })
 ;

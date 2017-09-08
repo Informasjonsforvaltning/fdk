@@ -1,6 +1,7 @@
 package no.dcat.authorization;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -32,6 +33,11 @@ public class AltinnAuthorizationIT {
 
     @Autowired
     private AuthorizationService authorizationService;
+
+    @Before
+    public void setup() {
+      //  authorizationService.constructor();
+    }
 
     @Test
     public void testGetAuthorizedEntities() throws Throwable {
