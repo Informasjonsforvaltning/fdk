@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "serve": "ng serve --host=0.0.0.0 --live-reload-client https://localhost:8099",
+    "serve": "ng serve --host=0.0.0.0 --live-reload-client https://localhost:8099 --disable-host-check=true",
     "start": "node start.js",
     "build": "ng build --prod --aot=false",
     "test": "ng test",
