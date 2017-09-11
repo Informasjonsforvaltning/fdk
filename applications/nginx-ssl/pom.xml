@@ -11,7 +11,7 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>nginx</artifactId>
+    <artifactId>nginx-ssl</artifactId>
 
 
     <build>
