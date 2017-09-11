@@ -13,14 +13,6 @@
 
     <artifactId>nginx-ssl</artifactId>
 
-    <properties>
-        <frontend-plugin.version>1.4</frontend-plugin.version>
-        <node.version>v6.10.2</node.version>
-        <npm.version>4.3.0</npm.version>
-    </properties>
-
-    <dependencies>
-    </dependencies>
 
     <build>
         <plugins>
