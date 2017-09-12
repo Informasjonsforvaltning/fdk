@@ -2,7 +2,6 @@ import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, FormArray, Validators} from "@angular/forms";
 import {Dataset} from "../dataset";
 import {ThemesService} from "../themes.service";
-import {any} from "codelyzer/util/function";
 
 @Component({
   selector: 'tema',
