@@ -91,7 +91,7 @@ services:
     image: dcatno/registration-api:latest
     depends_on:
       - elasticsearch
-      - search-api
+      - reference-data
       - registration-auth
     networks:
       platform:

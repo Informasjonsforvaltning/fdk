@@ -17,6 +17,7 @@ install:
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
   - export DISPLAY=:99.0
+  - export reg_altinnServiceUrl=http://localhost:8077
   - sh -e /etc/init.d/xvfb start
 
 
@@ -33,14 +34,14 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -B    && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -B    && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: echo "Angular e2e tests are broken so disabled for the time being" #mvn install -DskipTests -Dmaven.javadoc.skip=true -B   ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B   ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 
@@ -50,6 +51,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - registrering-gui/dockerPush.sh
+          - application/registration/dockerPush.sh
         on:
           branch: develop

@@ -39,7 +39,8 @@ import java.util.*;
  */
 @Configuration
 @Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1", "fellesdatakatalog-st2"})
-public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
+@EnableWebSecurity
+public class BasicAuthConfig extends WebSecurityConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
     private Map<String, List<Entity>> userEntities = new HashMap<>();
@@ -81,18 +82,21 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
     @Autowired
     EntityNameService entityNameService;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @Override
-    public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+    protected UserDetailsService userDetailsService() {
+        return userDetailsService;
     }
 
-    UserDetailsService userDetailsService = new UserDetailsService() {
 
-        @Override
-        public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
+    @Bean
+    UserDetailsService getUserDetailsService(){
+        return personnummer -> {
             Set<GrantedAuthority> authorities = new HashSet<>();
             try {
-                authorizationService.getOrganisations(ssn)
+                authorizationService.getOrganisations(personnummer)
                         .stream()
                         .map(SimpleGrantedAuthority::new)
                         .forEach(authorities::add);
@@ -100,7 +104,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
                 if (authorities.size() > 0) {
                     authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-                    User user = new User(ssn, "password01", authorities);
+                    User user = new User(personnummer, "password01", authorities);
                     return user;
                 } else {
                     throw new UsernameNotFoundException("Unable to find user with username provided!");
@@ -108,52 +112,51 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
             } catch (AuthorizationServiceException e) {
                 throw new UsernameNotFoundException(e.getLocalizedMessage(),e);
             }
-        }
-    };
+        };
+    }
 
-    @Configuration
-    @EnableWebSecurity
-    @Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1", "fellesdatakatalog-st2"})
-    public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            logger.debug("basicAuth WebsecurityConfig Starting");
-            http
-              //  .httpBasic()
-              //      .and()
+
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                //  .httpBasic()
+                //      .and()
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/*.js").permitAll()
-                    .antMatchers("/*.woff2").permitAll()
-                    .antMatchers("/*.woff").permitAll()
-                    .antMatchers("/*.ttf").permitAll()
-                    .antMatchers("/assets/**").permitAll()
-                    .antMatchers("/loggetut").permitAll()
-                    .antMatchers("/loginerror").permitAll()
-                    .antMatchers("/innloggetBruker").permitAll()
-                    .and()
+                .antMatchers("/*.js").permitAll()
+                .antMatchers("/*.woff2").permitAll()
+                .antMatchers("/*.woff").permitAll()
+                .antMatchers("/*.ttf").permitAll()
+                .antMatchers("/assets/**").permitAll()
+                .antMatchers("/loggetut").permitAll()
+                .antMatchers("/loginerror").permitAll()
+                .antMatchers("/innloggetBruker").permitAll()
+                .and()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
+                .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
-                   // .loginPage("/login")
-                    .permitAll()
-                    .successHandler(loginSuccessHandler())
-                    .failureUrl("/loginerror")
-                    .and()
+                // .loginPage("/login")
+                .permitAll()
+                .successHandler(loginSuccessHandler())
+                .failureUrl("/loginerror")
+                .and()
 
                 .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessHandler(logoutSuccessHandler())
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .permitAll()
-                    .and()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+                .and()
                 .exceptionHandling()
-                    .accessDeniedPage("/loginerror");
-        }
-
+                .accessDeniedPage("/loginerror");
     }
+
+
+
 
 }

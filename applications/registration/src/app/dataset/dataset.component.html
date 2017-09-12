@@ -2,7 +2,7 @@
 <div *ngIf="dataset && catalog && dataset.publisher">
   <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
-<div class="row justify-content-md-center" *ngIf="datasetForm &&dataset">
+<div class="row justify-content-md-center nv-dataset" *ngIf="datasetForm && dataset" id="{{dataset.id}}">
   <label for="title-and-description-toggle" class="col-md-push-1 col-md-2 section-title">
     Tittel og beskrivelse<b class="caret-right"></b>
   </label>
@@ -172,8 +172,8 @@
           </helptext>
           <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="language-checkbox">
             <label><!-- 416 -->
-              <input type="checkbox" id="checkbox-1" [formControl]="control" />
-              <label class="checkbox-replacement" for="checkbox-10"></label>
+              <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
+              <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
               <span>{{availableLanguages[i].prefLabel.nb}}</span>
             </label>
           </div>
