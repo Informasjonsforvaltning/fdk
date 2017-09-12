@@ -41,7 +41,7 @@ jobs:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: echo "Angular e2e tests are broken so disabled for the time being" #mvn install -DskipTests -Dmaven.javadoc.skip=true -B   ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B   ; docker-compose up -d ; ./waitForDocker.sh ; cd ..; ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 
@@ -51,6 +51,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - registrering-gui/dockerPush.sh
+          - application/registration/dockerPush.sh
         on:
           branch: develop
