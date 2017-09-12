@@ -72,6 +72,7 @@ spring:
 application:
   clientSSLCertificateKeystoreLocation: ../../conf/dummy-client-SSL-cert.p12
   clientSSLCertificateKeystorePassword: password
+  altinnServiceUrl: http://localhost:8077
   altinnServiceCode: 1234
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij

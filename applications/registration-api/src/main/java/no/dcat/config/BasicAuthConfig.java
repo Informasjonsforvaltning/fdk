@@ -111,7 +111,7 @@ public class BasicAuthConfig extends GlobalAuthenticationConfigurerAdapter{
 
     @Configuration
     @EnableWebSecurity
-    @Profile({"develop", "docker"})
+    @Profile({"develop", "docker", "unit-integration"})
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
