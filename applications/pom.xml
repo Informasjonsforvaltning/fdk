@@ -18,6 +18,7 @@
         <module>logstash</module>
 
         <module>nginx</module>
+        <module>nginx-ssl</module>
 
         <module>reference-data</module>
 

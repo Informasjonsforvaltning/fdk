@@ -97,7 +97,7 @@ services:
   dev-management:
     restart: always
     ports:
-      - 8085:8080
+      - 127.0.0.1:8085:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M
      - application.elasticsearchHost=elasticsearch
@@ -108,13 +108,22 @@ services:
 
   nginx:
     restart: always
+
+  nginx-ssl:
+    image: dcatno/nginx-ssl:latest
+    restart: always
+    depends_on:
+      - nginx
     ports:
-      - 8099:8099
+      - 127.0.0.1:8099:443
+    networks:
+      platform:
+
 
   registration-api:
     restart: always
     ports:
-      - 8079:8080
+      - 127.0.0.1:8079:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
      - reg_altinnServiceUrl=http://registration-auth:8080

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
@@ -48,9 +47,6 @@ public class DatasetController {
 
     @Autowired
     private CatalogRepository catalogRepository;
-
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
 
     DatasetRepository getDatasetRepository() {
         return datasetRepository;
