@@ -12,6 +12,20 @@
 
 #todo: må environment-tag også være en parameter? Trenger vi den egentlig her?
 
+# some input validation
+if [ -z "$1" ]
+then
+    echo environment must be specified: ut1, st1, st2, tt1 ppe or prd
+    exit 1
+fi
+
+if [ -z "$2" ]
+then
+    echo Environment date tag must be supplied. Example: ST1_2017-09-13
+    exit 1
+fi
+
+
 environment=$1
 dateTag=$2
 environmentTag=$1_latest
@@ -24,18 +38,18 @@ if [$environment == 'ppe'] || [$environment == 'prd']
 then
     #run on prod cluster
     cluster=ose-pc
+
+    #point to Altinn prod environment
+    altinnServiceCode=4814
+    altinnServiceEdition=1
+    altinnServiceUrl=https://tt02.altinn.no/ #todo: denne blir ny
+    altinnApiKey=F1136D29-73EF-4A1B-AE08-BC4D537507BA
+    sslKeystoreLocation=conf/idporten/ssldevelop.p12
 else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1
     cluster=ose-npc
-fi
 
-
-#configuration that differs between prod and all other (non-prod) environments
-if [$environment == 'prd']
-then
-    #special config for prod environment
-else
-    #special config for non-prod environments, including preprod: ut1, st1, st2, tt1, ppe
+    #point to Altinn test environnment
     altinnServiceCode=4814
     altinnServiceEdition=3
     altinnServiceUrl=https://tt02.altinn.no/
