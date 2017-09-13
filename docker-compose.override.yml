@@ -69,23 +69,6 @@ services:
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
-
- # elasticsearch5:
- #   image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
- #   environment:
- #     - xpack.security.enabled=false
- #     - cluster.name=elasticsearch
- #   ports:
- #     - "920:9200"
- #     - "9300:9300"
- #   networks:
- #     platform:
- #       aliases:
- #         - es
- #     logging:
- #       aliases:
- #         - log_es
-
   elasticsearch:
     restart: always
     ports:
@@ -93,6 +76,9 @@ services:
       - 9300:9300
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=fellesdatakatalog
+
 
   dev-management:
     restart: always
@@ -126,14 +112,13 @@ services:
       - 127.0.0.1:8079:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
-     - reg_altinnServiceUrl=http://registration-auth:8080
-     - reg_apikey=${reg_apikey}
-     - reg_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
-     - reg_clientSSLCertificateKeystorePassword=password
-     - reg_sslKeyPassword=${reg_sslKeyPassword}
-     - reg_ipKeyPassword=${reg_ipKeyPassword}
-     - reg_ipStorePassword=${reg_ipStorePassword}
-     - reg_sslKeystorePassword
+     - registrationAPI_clusterName=elasticsearch
+     - registrationApi_altinnServiceUrl=http://registration-auth:8080
+     - registrationApi_apikey=${registrationApi_apikey}
+     - registrationApi_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
+     - registrationApi_clientSSLCertificateKeystorePassword=password
+     - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
+     - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
 
 
   registration:
@@ -144,7 +129,7 @@ services:
     volumes:
       -   ./applications/registration:/usr/src/app/:rw
     environment:
-     - REG_API_URL=https://localhost:8099
+     - registrationApi_API_URL=https://localhost:8099
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
 

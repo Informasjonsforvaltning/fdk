@@ -35,7 +35,6 @@ do
     oc label dc $i environmentDate=$dateTag --overwrite=true
 done
 oc expose dc/registration --port=4200
-oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
 
 #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
 # oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb

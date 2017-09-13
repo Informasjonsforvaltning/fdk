@@ -2,6 +2,8 @@ package no.dcat.controller;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Publisher;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.ssl.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,12 +18,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.ResourceAccessException;
 
+import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +58,16 @@ public class CatalogControllerIT {
         BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password01");
         restTemplate.getRestTemplate().getInterceptors().add(bai);
 
-        headers.add("Accept", "application/json");
+/*
+        String auth = "03096000854:password01";
+        byte[] encodedAuth = Base64.encodeBase64(
+                auth.getBytes(Charsets.UTF_8) );
+        String authHeader = "Basic " + new String( encodedAuth );
+
+*/
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON_UTF8));
+        headers.add("Content-Type", "application/json");
+  //      headers.add( "Authorization", authHeader );
     }
 
     @Test
@@ -179,7 +193,9 @@ public class CatalogControllerIT {
         catalog.setId(catalogId);
         catalog.setTitle(title);
 
-        Catalog createdCatalog = restTemplate.postForObject("/catalogs", catalog, Catalog.class, headers);
+        ResponseEntity<Catalog> createdCatalog = restTemplate.exchange("/catalogs", HttpMethod.POST, new HttpEntity<Catalog>(catalog, headers), Catalog.class);
+
+        assertThat(createdCatalog.getStatusCode(), is(HttpStatus.OK));
 
         ResponseEntity<Catalog> deletedCatalogResponse = restTemplate.exchange("/catalogs/" + catalogId, HttpMethod.DELETE, null, Catalog.class);
 

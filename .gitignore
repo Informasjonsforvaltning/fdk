@@ -18,7 +18,7 @@ catalog-v001.xml
 
 
 /conf/idporten/
-/conf/altinn/
+/conf-secret/
 !/conf/dummy-client-SSL-cert.p12
 /conf/environments/
 applications/end2end-test/data/

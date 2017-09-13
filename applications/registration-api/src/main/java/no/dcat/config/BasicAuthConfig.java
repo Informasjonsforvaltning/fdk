@@ -38,7 +38,7 @@ import java.util.*;
  * Configures basic auth for use in develop profile
  */
 @Configuration
-@Profile({"develop", "unit-integration", "docker", "fellesdatakatalog-ut1", "fellesdatakatalog-st2"})
+@Profile("!prod")
 @EnableWebSecurity
 public class BasicAuthConfig extends WebSecurityConfigurerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
@@ -133,9 +133,11 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/loggetut").permitAll()
                 .antMatchers("/loginerror").permitAll()
                 .antMatchers("/innloggetBruker").permitAll()
+                .antMatchers("/login").permitAll()
+
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
+                //.antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

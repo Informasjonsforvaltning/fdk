@@ -25,11 +25,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles("unit-integration")
 public class DatasetWithElasticSearchIT {
 
-    @Value("${data.elasticsearch.clusterNodes}")
+    @Value("${spring.data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
 
-    @Value("${data.elasticsearch.clusterName}")
+    @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
 
     @PostConstruct
