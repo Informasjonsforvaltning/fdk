@@ -2,15 +2,19 @@
 
 # Script for deleting services in openshift
 # oc login
-# oc projects xxxx
+#
+# runDeleteServicesInOpenshift environment
+# example:
+# runDeleteServicesInOpenshift st1
 
-environment=st2
+environment=$1
 profile=fellesdatakatalog-$environment
 tag=latest
 
 #midlertidig kommentert ut reference-data
-
 services="registration registration-auth registration-api registration-validator nginx gdoc harvester harvester-api search search-api"
+
+oc project $profile
 
 for i in $services
 do
