@@ -1,9 +1,10 @@
 package no.dcat.harvester;
 
-import no.dcat.admin.store.AdminDataStore;
-import no.dcat.admin.store.Fuseki;
+
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.harvester.settings.FusekiSettings;
+import no.difi.dcat.datastore.AdminDataStore;
+import no.difi.dcat.datastore.Fuseki;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

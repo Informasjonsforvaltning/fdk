@@ -1,7 +1,6 @@
 package no.dcat.data.store;
 
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.admin.store.domain.DcatSource.Harvest;
+import no.difi.dcat.datastore.domain.DcatSource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.Test;
 
@@ -17,14 +16,14 @@ public class HarvestTest {
 	public void testHarvestComparator() {
 
 		
-		Harvest h1 = new DcatSource().new Harvest(ResourceFactory.createResource("http://dcat.difi.no/dcatSource_h1"), "2014-01-01T12:00:00.000+00:00", "h1");
-		Harvest h2 = new DcatSource().new Harvest(ResourceFactory.createResource("http://dcat.difi.no/dcatSource_h2"), "2015-01-01T12:00:00.000+00:00", "h2");
-		Harvest h3 = new DcatSource().new Harvest(ResourceFactory.createResource("http://dcat.difi.no/dcatSource_h3"), "2016-01-01T12:00:00.000+00:00", "h3");
+		DcatSource.Harvest h1 = new DcatSource().new Harvest(ResourceFactory.createResource("http://dcat.difi.no/dcatSource_h1"), "2014-01-01T12:00:00.000+00:00", "h1");
+		DcatSource.Harvest h2 = new DcatSource().new Harvest(ResourceFactory.createResource("http://dcat.difi.no/dcatSource_h2"), "2015-01-01T12:00:00.000+00:00", "h2");
+		DcatSource.Harvest h3 = new DcatSource().new Harvest(ResourceFactory.createResource("http://dcat.difi.no/dcatSource_h3"), "2016-01-01T12:00:00.000+00:00", "h3");
 
 		DcatSource dcatSource = new DcatSource();
 		dcatSource.getHarvested().addAll(Arrays.asList(h1, h3, h2));
 
-		Optional<Harvest> harvest = dcatSource.getLastHarvest();
+		Optional<DcatSource.Harvest> harvest = dcatSource.getLastHarvest();
 
 		assertTrue("Expected harvest to be present", harvest.isPresent());
 		assertEquals("Expected \"h3\" to be the latest harvest", h3, harvest.get());

@@ -1,12 +1,14 @@
 package no.dcat.data.store.domain.dcat;
 
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.data.store.domain.dcat.builders.DatasetBuilder;
-import no.dcat.data.store.domain.dcat.vocabulary.DCAT;
 import no.dcat.harvester.crawler.client.LoadLocations;
-
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.dcat.Contact;
+import no.difi.dcat.datastore.domain.dcat.Dataset;
+import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
@@ -61,7 +63,7 @@ public class DatasetTest {
         Map<String, SkosCode> locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
 
 
-        data = DatasetBuilder.create(datasetResource, catalogResource, new LoadLocations(locations), codes, new HashMap<>());
+        data = DatasetBuilder.create(datasetResource, catalogResource, new LoadLocations(locations).getLocations(), codes, new HashMap<>());
     }
 
     @Test

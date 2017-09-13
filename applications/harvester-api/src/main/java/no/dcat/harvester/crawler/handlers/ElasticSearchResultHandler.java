@@ -2,18 +2,18 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.data.store.Elasticsearch;
-import no.dcat.data.store.domain.dcat.Dataset;
-import no.dcat.data.store.domain.dcat.Distribution;
-import no.dcat.data.store.domain.dcat.builders.DatasetBuilder;
-import no.dcat.data.store.domain.dcat.builders.DistributionBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.client.LoadLocations;
 import no.dcat.harvester.crawler.client.RetrieveCodes;
 import no.dcat.harvester.crawler.client.RetrieveDataThemes;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
+import no.difi.dcat.datastore.Elasticsearch;
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.dcat.Dataset;
+import no.difi.dcat.datastore.domain.dcat.Distribution;
+import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.difi.dcat.datastore.domain.dcat.builders.DistributionBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -107,6 +107,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         // Retrieve all codes from elasticsearch.
+        logger.debug("reading themes from: {}",themesHostname);
         Map<String, DataTheme> dataThemes =  RetrieveDataThemes.getAllDataThemes(themesHostname);
 
         LoadLocations loadLocations = new LoadLocations(themesHostname, httpUsername, httpPassword);
@@ -115,7 +116,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         Map<String,Map<String, SkosCode>> codes = RetrieveCodes.getAllCodes(themesHostname);
 
 
-        List<Distribution> distributions = new DistributionBuilder(model, loadLocations, codes, dataThemes).build();
+        List<Distribution> distributions = new DistributionBuilder(model, loadLocations.getLocations(), codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
         for (Distribution distribution : distributions) {
 
@@ -127,7 +128,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
 
-        List<Dataset> datasets = new DatasetBuilder(model, loadLocations, codes, dataThemes).build();
+        List<Dataset> datasets = new DatasetBuilder(model, loadLocations.getLocations(), codes, dataThemes).build();
         logger.info("Number of distribution documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
 

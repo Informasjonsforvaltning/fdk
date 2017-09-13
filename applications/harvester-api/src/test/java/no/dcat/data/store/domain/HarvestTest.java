@@ -1,6 +1,7 @@
 package no.dcat.data.store.domain;
 
-import no.dcat.admin.store.domain.DcatSource;
+
+import no.difi.dcat.datastore.domain.DcatSource;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

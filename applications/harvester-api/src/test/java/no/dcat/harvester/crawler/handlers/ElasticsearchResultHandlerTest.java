@@ -1,8 +1,7 @@
 package no.dcat.harvester.crawler.handlers;
 
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.data.store.Elasticsearch;
-import no.dcat.harvester.crawler.client.RetrieveDataThemes;
+import no.difi.dcat.datastore.Elasticsearch;
+import no.difi.dcat.datastore.domain.DcatSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;

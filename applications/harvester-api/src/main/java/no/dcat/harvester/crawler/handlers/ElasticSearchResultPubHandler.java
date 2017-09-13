@@ -2,11 +2,11 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.data.store.Elasticsearch;
-import no.dcat.data.store.domain.dcat.Publisher;
-import no.dcat.data.store.domain.dcat.builders.PublisherBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
+import no.difi.dcat.datastore.Elasticsearch;
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
