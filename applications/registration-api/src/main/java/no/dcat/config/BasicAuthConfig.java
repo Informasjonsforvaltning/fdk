@@ -121,8 +121,8 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //  .httpBasic()
-                //      .and()
+                .httpBasic()
+                     .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/*.js").permitAll()
