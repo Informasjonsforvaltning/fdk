@@ -42,7 +42,7 @@ then
     #point to Altinn prod environment
     altinnServiceCode=4814
     altinnServiceEdition=1
-    altinnServiceUrl=https://tt02.altinn.no/ #todo: denne blir ny
+    altinnServiceUrl=https://tt02.altinn.no/ #todo: denne blir ny. Oppdater når vi får riktig verdi
     altinnApiKey=F1136D29-73EF-4A1B-AE08-BC4D537507BA
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
 else
@@ -55,6 +55,20 @@ else
     altinnServiceUrl=https://tt02.altinn.no/
     altinnApiKey=948E57B8-8F44-43E6-921F-F512F67A7F76
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
+fi
+
+#configuration that differs between prod and other environments
+if [$environment == 'prd']
+then
+    #configuration for prod environment
+
+    #prod cetificate
+    clientCertificateKeystoreLocation="conf/altinn/todo"
+else
+    #configuration for all other environments including preprod: ut1, st1, st2, tt1, ppe
+
+    #test cetificate
+    clientCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN I BROENNOEYSUND-serienummer1544700822686643554309384-2017-05-31.p12"
 fi
 
 
@@ -90,7 +104,7 @@ oc env dc/registration-api registrationApi_altinnServiceCode=$altinnServiceCode
 oc env dc/registration-api registrationApi_altinnServiceEdition=$altinnServiceEdition
 oc env dc/registration-api registrationApi_altinnServiceUrl=$altinnServiceUrl
 oc env dc/registration-api registrationApi_apikey=$altinnApiKey
-oc env dc/registration-api registrationApi_clientSSLCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN I BROENNOEYSUND-serienummer1544700822686643554309384-2017-05-31.p12"
+oc env dc/registration-api registrationApi_clientSSLCertificateKeystoreLocation=$clientCertificateKeystoreLocation
 oc env dc/registration-api registrationApi_clientSSLCertificateKeystorePassword=changeit
 oc env dc/registration-api registrationApi_ipKeyPassword=changeit
 oc env dc/registration-api registrationApi_ipStorePassword=changeit
