@@ -1,22 +1,22 @@
 <h3>
     {{title}}
 </h3>
-
-<div class="restricedPursuantToLegalBasis-list"
-     [formGroup]="datasetForm">
-
-    <div formArrayName="restricedPursuantToLegalBasiss">
-        <div *ngFor="let restricedPursuantToLegalBasis of restricedPursuantToLegalBasiss; let idx=index ">
-        <br />
-            <restricedPursuantToLegalBasis
-                [restricedPursuantToLegalBasissFormArray]="restricedPursuantToLegalBasissFormArray"
-                [restricedPursuantToLegalBasis]="restricedPursuantToLegalBasis"
-                (deleteRestricedPursuantToLegalBasis)="removeRestricedPursuantToLegalBasis($event)"
-                [restricedPursuantToLegalBasisIndex]="idx">
-            </restricedPursuantToLegalBasis>
-        </div>
-        <a href="#" (click)="addRestricedPursuantToLegalBasis()">
-              <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
-        </a>
-    </div>
+<div>
+  <div class="restricedPursuantToLegalBasis-list"
+       [formGroup]="datasetForm">
+      <div formArrayName="restricedPursuantToLegalBasisList">
+          <div *ngFor="let restricedPursuantToLegalBasis of restricedPursuantToLegalBasisList; let idx=index ">
+          <br />
+              <restriction-legal-basis
+                  [formArray]="restricedPursuantToLegalBasisListFormArray"
+                  [restricedPursuantToLegalBasis]="restricedPursuantToLegalBasis"
+                  (deleteRestricedPursuantToLegalBasis)="removeRestricedPursuantToLegalBasis($event)"
+                  [restricedPursuantToLegalBasisIndex]="idx">
+              </restriction-legal-basis>
+          </div>
+          <a href="#" (click)="addRestricedPursuantToLegalBasis()">
+                <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
+          </a>
+      </div>
+  </div>
 </div>

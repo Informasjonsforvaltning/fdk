@@ -6,18 +6,18 @@ import { Dataset } from '../dataset';
 import {RestricedPursuantToLegalBasisFormComponent} from './restricedPursuantToLegalBasis.component';
 
 @Component({
-    selector: 'restriction-legal-basiss',
-    templateUrl: './restriction-legal-basiss.component.html'
+    selector: 'restriction-legal-basis-list',
+    templateUrl: './restricedPursuantToLegalBasis-list.html'
 })
 export class RestricedPursuantToLegalBasisListComponent implements OnInit {
-    @Input('restricedPursuantToLegalBasissFormArray')
-    public restricedPursuantToLegalBasissFormArray: FormArray;
+    @Input('restricedPursuantToLegalBasisListFormArray')
+    public restricedPursuantToLegalBasisListFormArray: FormArray;
 
     @Input('datasetForm')
     public datasetForm: FormGroup;
 
-    @Input('restricedPursuantToLegalBasiss')
-    public restricedPursuantToLegalBasiss: RestricedPursuantToLegalBasis[];
+    @Input('restricedPursuantToLegalBasisList')
+    public restricedPursuantToLegalBasisList: RestricedPursuantToLegalBasis[];
 
     @Input('title')
     public title: string;
@@ -27,6 +27,8 @@ export class RestricedPursuantToLegalBasisListComponent implements OnInit {
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
+      this.restricedPursuantToLegalBasisList = this.restricedPursuantToLegalBasisList || [];
+      console.log('datasetForm is ', this.datasetForm);
     }
 
     addRestricedPursuantToLegalBasis() {
@@ -36,15 +38,15 @@ export class RestricedPursuantToLegalBasisListComponent implements OnInit {
                   nb:""
                 }
             };
-          this.restricedPursuantToLegalBasiss.push(restricedPursuantToLegalBasis);
+          this.restricedPursuantToLegalBasisList.push(restricedPursuantToLegalBasis);
           this.cd.detectChanges();
           return false;
     }
 
     removeRestricedPursuantToLegalBasis(idx: number) {
-        if (this.restricedPursuantToLegalBasiss.length > 0) {
-            this.restricedPursuantToLegalBasiss.splice(idx, 1);
-            this.restricedPursuantToLegalBasissFormArray.removeAt(idx);
+        if (this.restricedPursuantToLegalBasisList.length > 0) {
+            this.restricedPursuantToLegalBasisList.splice(idx, 1);
+            this.restricedPursuantToLegalBasisListFormArray.removeAt(idx);
         }
         return false;
     }

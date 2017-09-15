@@ -57,5 +57,7 @@ export interface Dataset {
 
   type?: string;
 
+  restricedPursuantToLegalBasisList?:any[];
+
   _lastModified: string;
 }

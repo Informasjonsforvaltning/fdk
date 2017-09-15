@@ -8,16 +8,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 @Component({
     selector: 'restriction-legal-basis',
-    templateUrl: './restriction-legal-basis.component.html',
-    styleUrls: [ './restriction-legal-basis.component.css' ]
+    templateUrl: './RestricedPursuantToLegalBasis.component.html',
+    styleUrls: [ './restricedPursuantToLegalBasis.component.css' ]
   })
 
 export class RestricedPursuantToLegalBasisFormComponent implements OnInit {
     language:string = 'nb';
     showForm:boolean = false;
-    @Input('restricedPursuantToLegalBasissFormArray')
-    public restricedPursuantToLegalBasissFormArray: FormArray;
-
+    @Input('formArray')
+    public restricedPursuantToLegalBasisListFormArray: FormArray;
+    
     @Input('restricedPursuantToLegalBasis')
     public restricedPursuantToLegalBasis: RestricedPursuantToLegalBasis;
 
@@ -29,14 +29,15 @@ export class RestricedPursuantToLegalBasisFormComponent implements OnInit {
 
     public restricedPursuantToLegalBasisForm: FormGroup;
 
-
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
        if(this.restricedPursuantToLegalBasis.ui_visible) this.showForm = true;
        this.restricedPursuantToLegalBasisForm = this.toFormGroup(this.restricedPursuantToLegalBasis);
-       this.restricedPursuantToLegalBasissFormArray.push(this.restricedPursuantToLegalBasisForm);
-       
+       console.log('aaa');
+       console.log('restricedPursuantToLegalBasisForm is ', this.restricedPursuantToLegalBasisForm.controls['prefLabel']);
+       this.restricedPursuantToLegalBasisListFormArray.push(this.restricedPursuantToLegalBasisForm);
+       console.log('bb');
     }
 
     private toFormGroup(restricedPursuantToLegalBasis: RestricedPursuantToLegalBasis) {
@@ -53,7 +54,7 @@ export class RestricedPursuantToLegalBasisFormComponent implements OnInit {
 
     removeRestricedPursuantToLegalBasis(idx: number) {
       this.deleteRestricedPursuantToLegalBasis.emit(idx.toString());
-       this.restricedPursuantToLegalBasissFormArray.removeAt(idx);
+       this.restricedPursuantToLegalBasisListFormArray.removeAt(idx);
       return false;
     }
 

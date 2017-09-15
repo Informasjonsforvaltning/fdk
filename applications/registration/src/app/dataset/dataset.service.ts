@@ -36,11 +36,12 @@ export class DatasetService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  getAll(catId: String): Promise<Dataset[]> {
+  getAll(catId: String): Promise<any> {
+    console.log('aa');
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
     return this.http.get(datasetUrl)
       .toPromise()
-      .then(response => response.json()._embedded.datasets as Dataset[])
+      .then(response => {console.log('bbb');response.json()._embedded.datasets as Dataset[];console.log('ccc')})
       .catch(this.handleError);
   }
 

@@ -57,7 +57,7 @@ export class AccessRightsComponent implements OnInit {
 
         this.accessRightsForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             accessLevel => {
-                if (accessLevel.accessRightsComment.length === 0) {
+                if (accessLevel.accessRightsComment && accessLevel.accessRightsComment.length === 0) {
                     this.dataset.accessRightsComments = null;
                 } else {
                     this.dataset.accessRightsComments = accessLevel.accessRightsComment;
@@ -79,7 +79,7 @@ export class AccessRightsComponent implements OnInit {
     private toFormGroup(data: Dataset) {
         return this.fb.group({
             accessRights : [ data.accessRights || {}],
-            accessRightsComment: [data.accessRightsComments ||[] ]
+            restricedPursuantToLegalBasisList: this.fb.array([])
         });
     }
 

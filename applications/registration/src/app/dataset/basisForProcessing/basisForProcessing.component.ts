@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     styleUrls: [ './restriction-legal-basis.component.css' ]
   })
 
+
 export class BasisForProcessingFormComponent implements OnInit {
     language:string = 'nb';
     showForm:boolean = false;
@@ -28,7 +29,6 @@ export class BasisForProcessingFormComponent implements OnInit {
     deleteBasisForProcessing:EventEmitter<string> = new EventEmitter();
 
     public basisForProcessingForm: FormGroup;
-
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 

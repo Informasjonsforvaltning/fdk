@@ -36,6 +36,7 @@ export class DatasetComponent implements OnInit {
   saved: boolean;
   catId: string;
   lastSaved: string;
+  restricedPursuantToLegalBasisList: any[] = [];
 
   identifiersForm: FormGroup;
 
@@ -127,6 +128,7 @@ export class DatasetComponent implements OnInit {
 
 
       dataset.samples = dataset.samples || [];
+      dataset.restricedPursuantToLegalBasisList = dataset.restricedPursuantToLegalBasisList || [];
       dataset.languages = dataset.languages || [];
       dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);

@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
-import { LegalBasisForAccess } from './legal-basis-for-access';
+import { LegalBasisForAccess } from './legalBasisForAccess';
 import { Dataset } from '../dataset';
 import {LegalBasisForAccessFormComponent} from './legalBasisForAccess.component';
 
 @Component({
-    selector: 'restriction-legal-basiss',
-    templateUrl: './restriction-legal-basiss.component.html'
+    selector: 'legal-basis-for-access-list',
+    templateUrl: './restrictionLegalBasisList.component.html'
 })
 export class LegalBasisForAccessListComponent implements OnInit {
     @Input('legalBasisForAccesssFormArray')
