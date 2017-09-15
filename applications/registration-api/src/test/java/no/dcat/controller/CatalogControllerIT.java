@@ -53,6 +53,11 @@ public class CatalogControllerIT {
 
     private HttpHeaders headers = new HttpHeaders();
 
+    @Test
+    public void jfwrfkjewkjfwe(){
+        
+    }
+
     @Before
     public void setup() {
         BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("03096000854", "password01");
