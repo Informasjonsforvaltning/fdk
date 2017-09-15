@@ -1,15 +1,26 @@
 logging:
-  level.: INFO
+  level.: ERROR
   level.no.brreg: DEBUG
----
-spring:
-  profiles: docker
+  level.no.difi: ERROR
+  level.no.dcat: INFO
+  level.org.springframework: ERROR
+server:
+  port: 8080
+management:
+  port: 8181
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
   elasticsearchCluster: elasticsearch
   fusekiHost: http://fuseki:8080
   harvesterHost: http://harvester-api:8080
+
+---
+spring:
+  profiles: prod
+application:
+  elasticsearchCluster: fellesdatakatalog
+
 ---
 #Utv-miljø lokalt på egen PC
 spring:

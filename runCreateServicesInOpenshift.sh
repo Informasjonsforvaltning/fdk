@@ -42,7 +42,11 @@ done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$host QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$host/reference-data PORT=4200 NODE_ENV=$environment
 oc env dc/search search_referenceDataExternalUrl=https://reference-data-fdk.$host search_queryServiceExternal=https://search-api-fdk.$host
+
+# todo generate password for reference-data
+oc env dc/reference-data themesHttpUsername=themeUser themesHttpPassword=themePassword
 oc env dc/harvester-api themesHttpUsername=themeUser themesHttpPassword=themePassword
+
 
 
 #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash

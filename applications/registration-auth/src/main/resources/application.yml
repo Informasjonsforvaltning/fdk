@@ -8,22 +8,10 @@ server:
   port: 8080
 management:
   port: 8181
-health:
-  config:
-    enabled: false
-spring:
-  hateoas:
-    use-hal-as-default-json-media-type: false
----
 
+---
 spring:
   profiles: develop
 server:
-  port: 8098
-management:
-  port: 8998
-
----
-
-spring:
-  profiles: unit-integration
+  port:8077
+  
