@@ -14,6 +14,7 @@ export class StartComponent implements OnInit {
     language: string;
     selectedCatalog: Catalog;
     model: any = {};
+    errorGettingCatalogs: boolean = false;
 
 
 
@@ -25,7 +26,8 @@ export class StartComponent implements OnInit {
   ngOnInit() {
     this.language = 'nb';
     this._catalogService.getAll()
-      .then(catalogs => this.catalogs = catalogs);
+      .then(catalogs => this.catalogs = catalogs)
+      .catch(err => {this.errorGettingCatalogs = true})
   }
 
   selectCatalog(catalog) {

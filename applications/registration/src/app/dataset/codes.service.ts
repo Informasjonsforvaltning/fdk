@@ -17,10 +17,7 @@ export class CodesService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  private handleError(error: any): Promise<any>{
-    console.error('An error occured', error); //todo implement proper error handling and logging
-    return Promise.reject(error.message || error);
-  }
+
 
   makeSingular(codeType: string): string {
     return codeType.indexOf('ies') === codeType.length-3 ? codeType.substr(0, codeType.length-3) + 'y' : codeType.substr(0, codeType.length-1);
@@ -31,7 +28,7 @@ export class CodesService {
       return this.http.get(datasetUrl)
         .toPromise()
         .then(response => response.json())
-        .catch(this.handleError);
+        ;
   }
 
   fetchCodes (codeType:string, lang:string): Promise<any[]> {
