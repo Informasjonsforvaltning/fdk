@@ -1,6 +1,5 @@
 
 application:
-  catalogUriPrefix: http://localhost:8099
   themesServiceUrl: http://localhost:8100
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
   altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://registration-auth:8080}

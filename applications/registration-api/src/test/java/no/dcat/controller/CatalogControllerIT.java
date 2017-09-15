@@ -34,8 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class CatalogControllerIT {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,11 +41,6 @@ public class CatalogControllerIT {
 
     @Autowired
     private CatalogRepository catalogRepository;
-
-
-    @Mock
-    private PagedResourcesAssembler pagedResourcesAssembler;
-
 
     @Before
     public void before() {
@@ -218,13 +211,8 @@ public class CatalogControllerIT {
 
     }
 
-    public static String asJsonString(final Object obj) {
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public static String asJsonString( Object obj) {
+        return new Gson().toJson(obj);
+
     }
 }
