@@ -266,7 +266,7 @@ public class CrawlerJob implements Runnable {
             } else {
                 others[0]++;
                 status[0] = error.getRuleSeverity();
-                logger.warn(msg);
+                logger.debug(msg);
             }
 
         });
