@@ -61,7 +61,7 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
         WebElement description = driver.findElement(By.id("inputDescription"));
         description.sendKeys("FDK-138");
         WebElement url = driver.findElement(By.id("inputUrl"));
-        url.sendKeys("http://test:8080/html/dataset-FDK-138-validering.ttl");
+        url.sendKeys("http://dev-management:8080/html/dataset-FDK-138-validering.ttl");
         WebElement orgnumber = driver.findElement(By.id("inputOrgnumber"));
         orgnumber.sendKeys("987654");
 
