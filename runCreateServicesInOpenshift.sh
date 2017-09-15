@@ -24,7 +24,6 @@ then
   host=ppe.brreg.no
 fi
 
-#midlertidig kommentert ut reference-data
 services="registration registration-auth registration-api registration-validator reference-data gdoc harvester harvester-api search search-api nginx"
 
 oc project $profile
@@ -43,6 +42,8 @@ done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$host QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$host/reference-data PORT=4200 NODE_ENV=$environment
 oc env dc/search search_referenceDataExternalUrl=https://reference-data-fdk.$host search_queryServiceExternal=https://search-api-fdk.$host
+oc env dc/harvester-api themesHttpUsername=themeUser themesHttpPassword=themePassword
+
 
 #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
 # oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
