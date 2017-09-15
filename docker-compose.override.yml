@@ -6,7 +6,7 @@ services:
     ports:
       - 8080:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
      - application.queryService=http://search-api:8080
      - application.queryServiceExternal=http://localhost:8083
      - application.fusekiService=http://fuseki:8080/fuseki
@@ -16,7 +16,7 @@ services:
     ports:
       - 8083:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
 
@@ -24,14 +24,14 @@ services:
     ports:
       - 8084:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
 
   registration-validator:
     restart: always
     ports:
       - 8086:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
 
   fuseki:
     restart: always
@@ -45,7 +45,7 @@ services:
     ports:
      - 8081:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
@@ -60,7 +60,7 @@ services:
     ports:
      - 8082:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.harvesterUrl=http://harvester-api:8080
@@ -85,7 +85,7 @@ services:
     ports:
       - 127.0.0.1:8085:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
      - application.elasticsearchCluster=elasticsearch
@@ -111,7 +111,7 @@ services:
     ports:
       - 127.0.0.1:8079:8080
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
      - registrationAPI_clusterName=elasticsearch
      - registrationApi_altinnServiceUrl=http://registration-auth:8080
      - registrationApi_apikey=${registrationApi_apikey}
@@ -138,13 +138,13 @@ services:
       ports:
         - 8077:8080
       environment:
-        - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+        - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
 
   reference-data:
     ports:
       - 8100:8080
     environment:
-     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx400M -Dspring.profiles.active=docker
 
 
 #  logstash:
