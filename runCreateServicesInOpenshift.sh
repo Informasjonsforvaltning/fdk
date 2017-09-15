@@ -19,7 +19,7 @@ profile=fellesdatakatalog-$environment
 tag=latest #todo: må justeres slik at det passer med Håvards script
 
 #midlertidig kommentert ut reference-data
-services="registration registration-auth registration-api registration-validator gdoc harvester harvester-api search search-api nginx"
+services="registration registration-auth registration-api registration-validator reference-data gdoc harvester harvester-api search search-api nginx"
 
 oc project $profile
 
