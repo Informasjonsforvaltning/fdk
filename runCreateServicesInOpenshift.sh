@@ -15,8 +15,14 @@
 environment=$1
 dateTag=$2
 environmentTag=$1_latest
-profile=fellesdatakatalog-$environment
+profile=prod
 tag=latest #todo: må justeres slik at det passer med Håvards script
+host=$environment.ose-npc.brreg.no
+
+if [ $environment = ppe ]
+then
+  host=ppe.brreg.no
+fi
 
 #midlertidig kommentert ut reference-data
 services="registration registration-auth registration-api registration-validator reference-data gdoc harvester harvester-api search search-api nginx"
@@ -35,8 +41,9 @@ do
     oc label dc $i environmentDate=$dateTag --overwrite=true
 done
 oc expose dc/registration --port=4200
-oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
-oc env dc/search-api APPLICATION_QUERYSERVICEEXTERNAL=http://search-api-fellesdatakatalog-$environment.ose-npc.brreg.no
+oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$host QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$host/reference-data PORT=4200 NODE_ENV=$environment
+oc env dc/search search_referenceDataExternalUrl=https://reference-data-fdk.$host search_queryServiceExternal=https://search-api-fdk.$host
+
 #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
 # oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
 
@@ -53,3 +60,5 @@ done
 oc create route edge --service=nginx --hostname=reg-gui-fellesdatakatalog-$environment.ose-npc.brreg.no
 oc label route nginx environmentTag=$environmentTag --overwrite=true
 oc label route nginx environmentDate=$dateTag --overwrite=true
+
+
