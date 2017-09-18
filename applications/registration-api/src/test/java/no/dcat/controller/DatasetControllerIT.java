@@ -1,43 +1,34 @@
 package no.dcat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
-import org.apache.http.client.ClientProtocolException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,12 +58,12 @@ public class DatasetControllerIT {
     @Before
     public void before() {
         catalogRepository.deleteAll();
-        datasetRepository.deleteAll();;
+        datasetRepository.deleteAll();
     }
 
     @Test
     @WithUserDetails("03096000854")
-    public void datasetAddedBecomesAvailable() throws Exception {
+    public void postCatalogAndDatasetFollowedByGetRequestShouldWork() throws Exception {
         Catalog catalog = new Catalog();
         String catalogId = "910244132";
         catalog.setId(catalogId);
@@ -89,13 +80,13 @@ public class DatasetControllerIT {
         Dataset dataset = new Dataset();
 
         Map<String, String> languageTitle = new HashMap<>();
-        languageTitle.put("nb",  "Test-tittel");
+        languageTitle.put("nb", "Test-tittel");
         dataset.setTitle(languageTitle);
 
         Map<String, String> languangeDescription = new HashMap<>();
-        languangeDescription.put("nb","test");
+        languangeDescription.put("nb", "test");
         dataset.setDescription(languangeDescription);
-        
+
 
         String datasetResponseJson = mockMvc
                 .perform(
@@ -114,89 +105,64 @@ public class DatasetControllerIT {
                 .andExpect(status().isOk());
 
 
+    }
+
+
+    @Test
+    public void unauthorizedPostOfDatasetShouldRedirectToLoginPage() throws Exception {
+
+
+        Dataset dataset = new Dataset("101");
+
+        Map<String, String> languageTitle = new HashMap<>();
+        languageTitle.put("nb", "Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map<String, String> languangeDescription = new HashMap<>();
+        languangeDescription.put("nb", "test");
+        dataset.setDescription(languangeDescription);
+
+        dataset.setCatalog("910244132");
+
+
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs/" + dataset.getCatalog() + "/datasets/")
+                                .content(asJsonString(dataset))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
 
     }
 
-//
-//
-//    @Test
-//    @WithUserDetails("03096000854")
-//    public void createDatasetAccessDenied() throws Exception {
-//        Catalog catalog = new Catalog();
-//        String catalogId = "910244132";
-//        catalog.setId(catalogId);
-//        Catalog catResult = authorizedRestTemplate
-//                .postForObject("/catalogs/", catalog, Catalog.class, headers);
-//
-//        String datasetId = "101";
-//        Dataset dataset = new Dataset(datasetId);
-//
-//        Map languageTitle = new HashMap();
-//        languageTitle.put("nb","Test-tittel");
-//        dataset.setTitle(languageTitle);
-//
-//        Map languangeDescription = new HashMap();
-//        languangeDescription.put("nb","test");
-//        dataset.setDescription(languangeDescription);
-//
-//        dataset.setCatalog(catalogId);
-//
-//        String datasetUrl = "/catalogs/" + catalogId + "/datasets/";
-//
-//        //Notice: no authorisation
-//        HttpEntity<Dataset> postRequest = new HttpEntity<>(dataset, headers);
-//
-//            ResponseEntity<Dataset> postResponse = unathorizedRestTemplate
-//                    .withBasicAuth("auser", "apassword")
-//                    .exchange(datasetUrl, HttpMethod.POST, postRequest, Dataset.class);
-//
-//            assertThat(postResponse.getStatusCode().value(), is(HttpStatus.UNAUTHORIZED.value()));
-//
-//
-//
-//
-//
-//    }
-//
-//
-//    @Test
-//    @WithUserDetails("03096000854")
-//    public void deleteDatasetAccessDenied() throws Exception {
-//        Catalog catalog = new Catalog();
-//        String catalogId = "910244132";
-//        catalog.setId(catalogId);
-//        Catalog catResult = authorizedRestTemplate
-//                .postForObject("/catalogs/", catalog, Catalog.class);
-//
-//        String datasetId = "101";
-//        Dataset dataset = new Dataset(datasetId);
-//
-//        Map languageTitle = new HashMap();
-//        languageTitle.put("nb","Test-tittel");
-//        dataset.setTitle(languageTitle);
-//
-//        Map languangeDescription = new HashMap();
-//        languangeDescription.put("nb","test");
-//        dataset.setDescription(languangeDescription);
-//
-//        dataset.setCatalog(catalogId);
-//
-//        Dataset result = authorizedRestTemplate
-//                .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
-//
-//
-//        //Notice: no authorisation
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-//        HttpEntity<String> deleteRequest = new HttpEntity<String>(headers);
-//
-//        String datasetResUrl = "/catalogs/" + catalogId + "/datasets/" + result.getId();
-//
-//        ResponseEntity<String> deleteResponse = unathorizedRestTemplate.exchange(datasetResUrl, HttpMethod.DELETE, deleteRequest, String.class);
-//
-//        assertThat(deleteResponse.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
-//    }
-//
+
+    @Test
+    @WithUserDetails("03096000854")
+    public void deleteUnknownDatasetShouldResultIn404() throws Exception {
+
+        mockMvc
+                .perform(MockMvcRequestBuilders.delete("/catalogs/910244132/datasets/123"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+
+    }
+
+    @Test
+    public void deleteDatasetWithoutUserShouldGiveRedirectToLogin() throws Exception {
+        mockMvc
+                .perform(MockMvcRequestBuilders.delete("/catalogs/910244132/datasets/123"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+    }
+
+
+//  @Test
+//  public void createADatasetAndTryToDeleteItWithAnotherUser(){
+//        //@TODO
+//  }
+
 //
 //    @Test
 //    @WithUserDetails("03096000854")
@@ -210,11 +176,11 @@ public class DatasetControllerIT {
 //        String datasetId = "101";
 //        Dataset dataset = new Dataset(datasetId);
 //
-//        Map languageTitle = new HashMap();
+//        Map<String, String> languageTitle = new HashMap<>();
 //        languageTitle.put("nb","Test-tittel");
 //        dataset.setTitle(languageTitle);
 //
-//        Map languangeDescription = new HashMap();
+//        Map<String, String> languangeDescription = new HashMap<>();
 //        languangeDescription.put("nb","test");
 //        dataset.setDescription(languangeDescription);
 //
@@ -252,7 +218,7 @@ public class DatasetControllerIT {
 //        assertThat(result.getStatusCode(), is(HttpStatus.FORBIDDEN));
 //    }
 
-    public static String asJsonString( Object obj) {
+    public static String asJsonString(Object obj) {
 
         return new Gson().toJson(obj);
 
