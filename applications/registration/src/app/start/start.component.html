@@ -6,6 +6,11 @@
 <div class="col-md-12">
   <h2>Kataloger</h2>
 
+  <div class="alert alert-danger" role="alert" *ngIf="errorGettingCatalogs">
+    Det var en feil ved henting av katalogene! Er du logget inn?
+  </div>
+
+
   <table class="table table-striped table-hover" id="datacatalogs">
     <thead>
     <tr>

@@ -4,8 +4,8 @@
     <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.apache.http" level="WARN"/>
     <logger name="org.apache.jena" level="ERROR"/>
-	<logger name="no.difi.dcat" level="TRACE" />
-    <logger name="no.dcat" level="DEBUG" />
+	<logger name="no.difi.dcat" level="INFO" />
+    <logger name="no.dcat" level="INFO" />
     <logger name="org.openqa.phantomjs" level="WARN" />
     <logger name="org.openqa" level="WARN" />
     <logger name="org.elasticsearch" level="WARN"/>

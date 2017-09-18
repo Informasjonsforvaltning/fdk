@@ -47,13 +47,10 @@ export class DatasetService {
           return [] as Dataset[];
         }
       })
-      .catch(this.handleError);
+      ;
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occured', error); //todo implement proper error handling and logging
-    return Promise.reject(error.message || error);
-  }
+
 
   get(catId: string, datasetId: string): Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
@@ -64,7 +61,7 @@ export class DatasetService {
         dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
         return dataset as Dataset
       })
-      .catch(this.handleError);
+      ;
   }
 
   save(catId: string, dataset: Dataset): Promise<Dataset> {
@@ -79,7 +76,7 @@ export class DatasetService {
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
-      .catch(this.handleError)
+      ;
   }
 
   delete(catId: string, dataset: Dataset): Promise<Dataset> {
@@ -92,7 +89,7 @@ export class DatasetService {
       .delete(datasetUrl, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
-      .catch(this.handleError)
+      ;
   }
 
   create(catId: string): Promise<Dataset> {
@@ -106,7 +103,7 @@ export class DatasetService {
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()
       .then(res => res.json())
-      .catch(this.handleError)
+      ;
   }
 
   private clone(object: any) {

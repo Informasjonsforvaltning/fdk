@@ -89,7 +89,11 @@
             <artifactId>shared</artifactId>
             <version>0.2.4-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore</artifactId>
+            <version>0.2.4-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

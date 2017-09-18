@@ -1,14 +1,14 @@
 package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
-import no.dcat.admin.store.AdminDataStore;
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.admin.store.domain.DifiMeta;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
 import no.dcat.harvester.validation.ValidationError;
+import no.difi.dcat.datastore.AdminDataStore;
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.DifiMeta;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
@@ -266,7 +266,7 @@ public class CrawlerJob implements Runnable {
             } else {
                 others[0]++;
                 status[0] = error.getRuleSeverity();
-                logger.warn(msg);
+                logger.debug(msg);
             }
 
         });

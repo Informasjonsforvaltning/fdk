@@ -1,11 +1,11 @@
 package no.dcat.admin.web.dcat;
 
-import no.dcat.admin.store.AdminDataStore;
-import no.dcat.admin.store.Fuseki;
-import no.dcat.admin.store.domain.DcatSource;
-import no.dcat.admin.store.domain.User;
 import no.dcat.admin.settings.ApplicationSettings;
 import no.dcat.admin.settings.FusekiSettings;
+import no.difi.dcat.datastore.AdminDataStore;
+import no.difi.dcat.datastore.Fuseki;
+import no.difi.dcat.datastore.domain.DcatSource;
+import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

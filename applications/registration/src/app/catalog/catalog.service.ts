@@ -45,21 +45,16 @@ export class CatalogService {
             return [] as Catalog[];
           }
 
-        })
-        .catch(this.handleError);
+        });
   }
 
-  private handleError(error: any): Promise<any>{
-    console.error('An error occured', error);
-    return Promise.reject(error.message || error);
-  }
+
 
   get(id: string): Promise<Catalog> {
     const url = `${this.catalogsUrl}/${id}/`
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json() as Catalog)
-      .catch(this.handleError);
+      .then(response => response.json() as Catalog);
   }
 
   save(catalog: Catalog) : Promise<Catalog> {
@@ -71,8 +66,7 @@ export class CatalogService {
     return this.http
       .put(url, JSON.stringify(catalog), {headers: this.headers})
       .toPromise()
-      .then(() => catalog)
-      .catch(this.handleError);
+      .then(() => catalog);
   }
 
   import(catalog: Catalog, url: string) : Promise<Catalog> {
