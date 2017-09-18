@@ -58,6 +58,9 @@ describe('registrering-gui App', () => {
 
         await browser.wait(EC.presenceOf(isLoggedInElement), 10000, "Could not find log out link in beforeEach");
 
+        browser.refresh();
+        browser.sleep(1000);
+
         console.log("Logged in!");
     });
 
