@@ -30,16 +30,8 @@ environment=$1
 dateTag=$2
 environmentTag=$1_latest
 profile=prod
+openshiftProject=fellesdatakatalog-$environment
 tag=latest #todo: må justeres slik at det passer med Håvards script
-host=$environment.ose-npc.brreg.no
-
-if [ $environment = ppe ]
-then
-  host=ppe.brreg.no
-fi
-
-#midlertidig kommentert ut reference-data
-services="registration registration-auth registration-api registration-validator reference-data gdoc harvester harvester-api search search-api nginx"
 
 #configuration that differs between nonprod and prod clusters
 if [$environment == 'ppe'] || [$environment == 'prd']
@@ -50,7 +42,7 @@ then
     #point to Altinn prod environment
     altinnServiceCode=4814
     altinnServiceEdition=1
-    altinnServiceUrl=https://tt02.altinn.no/ #todo: denne blir ny. Oppdater når vi får riktig verdi
+    altinnServiceUrl=https://altinn.no/ #todo: denne blir ny. Oppdater når vi får riktig verdi
     altinnApiKey=F1136D29-73EF-4A1B-AE08-BC4D537507BA
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
 else
@@ -63,6 +55,14 @@ else
     altinnServiceUrl=https://tt02.altinn.no/
     altinnApiKey=948E57B8-8F44-43E6-921F-F512F67A7F76
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
+fi
+
+host=$environment.$cluster.brreg.no
+
+# configuration that is specific for preprod environment
+if [ $environment = ppe ]
+then
+  host=ppe.brreg.no
 fi
 
 #configuration that differs between prod and other environments
@@ -83,7 +83,7 @@ fi
 #midlertidig kommentert ut reference-data
 services="registration registration-auth registration-api registration-validator gdoc harvester harvester-api search search-api nginx"
 
-oc project $profile
+oc project $openshiftProject
 
 #todo må vi sette container port?
 for i in $services
@@ -102,16 +102,16 @@ done
 oc expose dc/registration --port=4200
 oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
 
-# RYDD OPP
-oc env dc/search search_referenceDataExternalUrl=https://reference-data-fdk.$host search_queryServiceExternal=https://search-api-fdk.$host
-
+# special configuration for reference-data
 # todo generate password for reference-data
 oc env dc/reference-data themesHttpUsername=themeUser themesHttpPassword=themePassword
+
+#special configuration for harvester-api
 oc env dc/harvester-api themesHttpUsername=themeUser themesHttpPassword=themePassword
 
 
 # special configuration for registration-api service
-oc env dc/registration-api SPRING_PROFILES_ACTIVE=prod
+oc env dc/registration-api SPRING_PROFILES_ACTIVE=$profile
 oc env dc/registration-api registrationApi_IncludeServerPortInRequestUrl=false
 oc env dc/registration-api registrationApi_OpenshiftEnvironment=$environment
 oc env dc/registration-api registrationApi_ServerName=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
@@ -128,7 +128,7 @@ oc env dc/registration-api registrationApi_sslKeystoreLocation=$sslKeystoreLocat
 
 
 # special configuration for search service
-oc env dc/search APPLICATION_QUERYSERVICEEXTERNAL=https://search-api-fellesdatakatalog-$environment.$cluster.brreg.no
+oc env dc/search search_referenceDataExternalUrl=https://reference-data-fdk.$host search_queryServiceExternal=https://search-api-fdk.$host
 
 #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
 # oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
