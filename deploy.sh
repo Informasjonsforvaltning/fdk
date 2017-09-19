@@ -60,8 +60,17 @@ function gitTag {
   # push all tags to github
   git push origin --tags
 
-
 }
+
+function openshiftDeploy {
+    osEnvironment=$1
+    dateTag=$2
+
+    #Delete old services from openshift, and deploy new ones
+    sh runDeleteServicesInOpenshift.sh $osEnvironment
+    sh runCreateAllServicesInOpenshift.sh $osEnvironment $dateTag
+}
+
 
 if [ "$1" == "st1" ] ; then
 
@@ -71,6 +80,8 @@ if [ "$1" == "st1" ] ; then
   done
 
   gitTag ut1 st1
+
+  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
 
 
@@ -83,7 +94,7 @@ elif [ "$1" == "tt1" ] ; then
 
   gitTag st1 tt1
 
-
+  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
 
 
 elif [ "$1" == "ppe" ] ; then
@@ -93,6 +104,8 @@ elif [ "$1" == "ppe" ] ; then
   done
 
   gitTag tt1 ppe
+
+  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
 
 
 
@@ -104,6 +117,9 @@ elif [ "$1" == "prod" ] ; then
   done
 
   gitTag ppe prod
+
+  #todo: sjekk om prod-navnet er prd eller prod
+  openshiftDeploy prod ${toEnvironment}_${DATETIME}
 
 else
 
