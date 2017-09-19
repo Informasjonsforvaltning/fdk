@@ -154,6 +154,13 @@ then
     oc env dc/registration-api registrationApi_sslKeyPassword=changeit
     oc env dc/registration-api registrationApi_sslKeystoreLocation=$sslKeystoreLocation
 
+    echo "Registration-api: Keystore password environment variables must be set manually"
+    echo "Registration-api: Remember to mound /conf volume"
+
+    # kommando for å mounte conf-katalog. Bør automatiseres etter hvert...
+    # oc rsync conf/ registration-api-5-z2pq7:/conf
+
+
 elif [ $service = search ]
 then
     createOpenshiftService search
