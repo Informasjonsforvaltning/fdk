@@ -15,13 +15,15 @@
 # some input validation
 if [ -z "$1" ]
 then
-    echo environment must be specified: ut1, st1, st2, tt1 ppe or prd
+    echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
+    echo "correct usage: runCreateAllServicesInOpenshift.sh <environment> <date-tag>"
     exit 1
 fi
 
 if [ -z "$2" ]
 then
-    echo Environment date tag must be supplied. Example: ST1_2017-09-13
+    echo "Environment date tag must be supplied. Example: ST1_2017-09-13"
+    echo "correct usage: runCreateAllServicesInOpenshift.sh <environment> <date-tag>"
     exit 1
 fi
 
