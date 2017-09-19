@@ -36,7 +36,7 @@ export class DatasetComponent implements OnInit {
   saved: boolean;
   catId: string;
   lastSaved: string;
-  restricedPursuantToLegalBasisList: any[] = [];
+  restricedPursuantToLegalBasis: any[];
 
   identifiersForm: FormGroup;
 
@@ -128,7 +128,7 @@ export class DatasetComponent implements OnInit {
 
 
       dataset.samples = dataset.samples || [];
-      dataset.restricedPursuantToLegalBasisList = dataset.restricedPursuantToLegalBasisList || [];
+      dataset.restricedPursuantToLegalBasis = dataset.restricedPursuantToLegalBasis || [];
       dataset.languages = dataset.languages || [];
       dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);
@@ -185,8 +185,8 @@ export class DatasetComponent implements OnInit {
             } else {
               dataset.temporals = [];
             }
-            this.dataset = _.merge(this.dataset, dataset);
 
+            this.dataset = _.merge(this.dataset, dataset);
             this.cdr.detectChanges();
             var that = this;
             this.delay(()=>{

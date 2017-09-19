@@ -99,7 +99,7 @@
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="type-toggle" class="expand-checkbox" />
-    <label for="type-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+    <label for="type-toggle" class="collapsed-content expand-label">{{dataset.type || 'Klikk for å fylle ut'}}</label>
     <div class="expanded-content">
 
       <type [dataset]="dataset"

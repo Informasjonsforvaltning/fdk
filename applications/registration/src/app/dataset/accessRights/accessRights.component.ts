@@ -57,6 +57,7 @@ export class AccessRightsComponent implements OnInit {
 
         this.accessRightsForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             accessLevel => {
+                console.log(' accessLevel is ', accessLevel);
                 if (accessLevel.accessRightsComment && accessLevel.accessRightsComment.length === 0) {
                     this.dataset.accessRightsComments = null;
                 } else {
@@ -69,6 +70,7 @@ export class AccessRightsComponent implements OnInit {
                         }
                     });
                 }
+                accessLevel.restricedPursuantToLegalBasis = accessLevel.restricedPursuantToLegalBasisList;
                 this.onSave.emit(true);
             }
         );
