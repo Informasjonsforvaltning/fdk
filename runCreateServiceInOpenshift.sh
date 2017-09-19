@@ -12,6 +12,27 @@
 
 #todo: må environment-tag også være en parameter? Trenger vi den egentlig her?
 
+function createOpenshiftService {
+    osService=$1
+    #todo må vi sette container port?
+    oc new-app dcatno/$osService:$tag
+    oc expose dc/$osService --port=8080
+    oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
+    oc label service $osService environmentTag=$environmentTag --overwrite=true
+    oc label dc $osService environmentTag=$environmentTag --overwrite=true
+    oc label service $osService environmentDate=$dateTag --overwrite=true
+    oc label dc $osService environmentDate=$dateTag --overwrite=true
+
+}
+
+function exposeService {
+    serviceName=$1
+    oc expose svc/$serviceName
+    oc label route $serviceName environmentTag=$environmentTag --overwrite=true
+    oc label route $serviceName environmentDate=$dateTag --overwrite=true
+}
+
+
 # some input validation
 if [ -z "$1" ]
 then
@@ -75,7 +96,7 @@ then
 fi
 
 
-#configuration that differs between prod and other environments
+#configuration is specific for prod environment
 if [ $environment = prd ]
 then
     #configuration for prod environment
@@ -101,12 +122,12 @@ then
     # todo
     echo Elasticsearch deploy not implemented yet
 
-if [ $service = fuseki ]
+elif [ $service = fuseki ]
 then
     # todo
     echo Fuseki deploy not implemented yet
 
-if [ $service = registration ]
+elif [ $service = registration ]
 then
     createOpenshiftService registration
     oc expose dc/registration --port=4200
@@ -114,6 +135,7 @@ then
 
 elif [ $service = reference-data ]
 then
+    echo "Reference-data: Midlertidig deaktivert"
     # todo midlertidig kommentert ut pga at oppretting av volum ikke virker
     #createOpenshiftService reference-data
     # todo generate password for reference-data
@@ -155,10 +177,10 @@ then
     oc env dc/registration-api registrationApi_sslKeystoreLocation=$sslKeystoreLocation
 
     echo "Registration-api: Keystore password environment variables must be set manually"
-    echo "Registration-api: Remember to mound /conf volume"
+    echo "Registration-api: Remember to mount /conf volume"
 
-    # kommando for å mounte conf-katalog. Bør automatiseres etter hvert...
-    # oc rsync conf/ registration-api-5-z2pq7:/conf
+    # todo: kommando for å mounte conf-katalog må inn. Samme problem som for reference-data.
+    # Hvis innhold på conf skal frornyes: (stå i katalog conf) oc rsync . registration-api-5-z2pq7:/conf
 
 
 elif [ $service = search ]
@@ -190,27 +212,10 @@ then
     oc create route edge --service=nginx --hostname=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
     oc label route nginx environmentTag=$environmentTag --overwrite=true
     oc label route nginx environmentDate=$dateTag --overwrite=true
+
+else
+    echo "Error: unknown service name: $service"
 fi
 
 echo "Done"
 
-
-function createOpenshiftService {
-    osService=$1
-    #todo må vi sette container port?
-    oc new-app dcatno/$osService:$tag
-    oc expose dc/$osService --port=8080
-    oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
-    oc label service $osService environmentTag=$environmentTag --overwrite=true
-    oc label dc $osService environmentTag=$environmentTag --overwrite=true
-    oc label service $osService environmentDate=$dateTag --overwrite=true
-    oc label dc $osService environmentDate=$dateTag --overwrite=true
-
-}
-
-function exposeService {
-    serviceName=$1
-    oc expose svc/$serviceName
-    oc label route $serviceName environmentTag=$environmentTag --overwrite=true
-    oc label route $serviceName environmentDate=$dateTag --overwrite=true
-}
