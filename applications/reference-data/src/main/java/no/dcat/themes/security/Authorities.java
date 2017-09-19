@@ -2,6 +2,6 @@ package no.dcat.themes.security;
 
 public class Authorities {
 
-    public final static String LOCATIONS_PUT = "LOCATIONS_PUT";
+    public final static String INTERNAL_CALL = "INTERNAL_CALL";
 
 }

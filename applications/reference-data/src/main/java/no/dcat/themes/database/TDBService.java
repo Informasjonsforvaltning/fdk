@@ -33,7 +33,8 @@ public class TDBService {
 
     private final Dataset dataset;
 
-    private static Model schema;
+
+    private Model schema = FileManager.get().loadModel("ontology.ttl");
 
     public TDBService() {
         this("./tdb");
@@ -46,9 +47,7 @@ public class TDBService {
 
 
 
-    static {
-        schema = FileManager.get().loadModel("ontology.ttl");
-    }
+
 
     Dataset getDataset() {
         return dataset;

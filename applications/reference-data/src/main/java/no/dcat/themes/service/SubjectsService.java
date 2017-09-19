@@ -9,7 +9,11 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.riot.RDFLanguages;
+import org.apache.jena.riot.RiotException;
 import org.apache.jena.util.FileManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,13 +21,11 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class CodesService extends BaseServiceWithFraming {
+public class SubjectsService extends BaseServiceWithFraming {
 
+    static private final Logger logger = LoggerFactory.getLogger(SubjectsService.class);
 
     private static final String frame;
 
@@ -36,49 +38,34 @@ public class CodesService extends BaseServiceWithFraming {
     }
 
     @Autowired
-    public CodesService(TDBConnection tdbConnection) {
+    public SubjectsService(TDBConnection tdbConnection) {
         super(tdbConnection);
     }
 
-    public List<String> listCodes() {
-        return Arrays
-                .stream(Types.values())
-                .map(Types::getType)
-                .collect(Collectors.toList());
 
-    }
+    @Cacheable("subjects")
+    public SkosCode addSubject(String uri) throws MalformedURLException {
 
+        try {
+            return getSubject(uri);
+        } catch (Throwable e) {
+            Model model = getRemoteModel(new URL(uri));
 
-    @Cacheable("codes")
-    public List<SkosCode> getCodes(Types type) {
+            tdbConnection.inTransaction(ReadWrite.WRITE, connection -> {
+                connection.addModelToGraph(model, Types.subject.toString());
+                return null;
+            });
 
-        return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
-            Dataset dataset = DatasetFactory.create(connection.getModelWithInference(type.toString()));
-
-            String json = frame(dataset, frame);
-            dataset.close();
-
-            return new Gson().fromJson(json, FramedSkosCode.class).getGraph();
-        });
-
-    }
-
-
-    public SkosCode addLocation(String locationUri) throws MalformedURLException {
-
-        Model model = getRemoteModel(new URL(locationUri));
-
-        tdbConnection.inTransaction(ReadWrite.WRITE, connection -> {
-            connection.addModelToGraph(model, Types.location.toString());
-            return null;
-        });
-
-        return getCode(locationUri);
+            return getSubject(uri);
+        }
 
 
     }
 
-    public SkosCode getCode(String uri){
+
+
+
+    public SkosCode getSubject(String uri) {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Dataset dataset = DatasetFactory.create(connection.describeWithInference(uri));
             String json = frame(dataset, frame);
