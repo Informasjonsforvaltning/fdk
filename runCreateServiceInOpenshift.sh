@@ -211,8 +211,10 @@ elif [ $service = nginx ]
 then
     createOpenshiftService nginx
 
+    #todo legge til ekstra port på svc/nginx 8080
+
     #create secure route for registration gui
-    oc create route edge --service=nginx --hostname=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+    oc create route edge --service=nginx --hostname=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no --port=8080
     oc label route nginx environmentTag=$environmentTag --overwrite=true
     oc label route nginx environmentDate=$dateTag --overwrite=true
 
