@@ -107,7 +107,7 @@ public class CatalogController {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
-            catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
+            catalog.setUri(RegistrationFactory.getCatalogUri(catalog.getId()));
         }
 
         return catalogRepository.save(catalog);
@@ -163,7 +163,7 @@ public class CatalogController {
         }
 
         if (catalog.getUri() == null) {
-            catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
+            catalog.setUri(RegistrationFactory.getCatalogUri(catalog.getId()));
         }
 
         Catalog savedCatalog = catalogRepository.save(catalog);

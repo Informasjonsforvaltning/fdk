@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -25,30 +24,26 @@ import static org.mockito.Mockito.when;
 
 public class DatasetControllerTest {
 
-    DatasetController controller, spy;
+    private DatasetController detasetController;
 
     @Mock
-    DatasetRepository mockDR;
+    private DatasetRepository mockDatasetRepository;
 
     @Mock
-    CatalogRepository mockCR;
+    private CatalogRepository mockCatalogRepository;
 
     @Before
     public void setup () {
-        controller = new DatasetController();
+        mockDatasetRepository = mock(DatasetRepository.class);
+        mockCatalogRepository = mock(CatalogRepository.class);
 
         String catalogId = "1234";
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
+        when(mockCatalogRepository.findOne(anyString())).thenReturn(catalog);
 
-        mockDR = mock(DatasetRepository.class);
-        mockCR = mock(CatalogRepository.class);
-        when(mockCR.findOne(anyString())).thenReturn(catalog);
 
-        spy = spy(controller);
-        //when(controller.getCatalogRepository()).thenReturn(mockCR);
-        doReturn(mockCR).when(spy).getCatalogRepository();
-        doReturn(mockDR).when(spy).getDatasetRepository();
+        detasetController = spy(new DatasetController(mockDatasetRepository, mockCatalogRepository));
 
     }
 
@@ -56,12 +51,12 @@ public class DatasetControllerTest {
     public void createDatasetOK() throws Throwable {
         String catalogId = "1234";
 
-        Dataset copy = RegistrationFactory.INSTANCE.createDataset(catalogId);
+        Dataset copy = RegistrationFactory.createDataset(catalogId);
         copy.getTitle().put("nb","test");
 
-        when(mockDR.save((Dataset)anyObject())).thenReturn(copy);
+        when(mockDatasetRepository.save((Dataset)anyObject())).thenReturn(copy);
 
-        HttpEntity<Dataset> actualEntity = spy.saveDataset(catalogId, copy);
+        HttpEntity<Dataset> actualEntity = detasetController.saveDataset(catalogId, copy);
 
         Dataset actual = actualEntity.getBody();
         assertThat(actual.getCatalog(), is(catalogId));
