@@ -1,6 +1,7 @@
 package no.dcat.bddtest.elasticsearch.client;
 
-import no.dcat.data.store.Elasticsearch;
+
+import no.difi.dcat.datastore.Elasticsearch;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.index.IndexNotFoundException;
 import org.slf4j.Logger;

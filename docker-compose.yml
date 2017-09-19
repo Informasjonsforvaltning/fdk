@@ -71,7 +71,7 @@ services:
       logging:
 
   dev-management:
-    image: dcatno/test:latest
+    image: dcatno/dev-management:latest
     depends_on:
       - elasticsearch
       - fuseki
@@ -91,7 +91,7 @@ services:
     image: dcatno/registration-api:latest
     depends_on:
       - elasticsearch
-      - search-api
+      - reference-data
       - registration-auth
     networks:
       platform:

@@ -1,42 +1,16 @@
 package no.dcat.harvester.crawler.client;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import no.dcat.data.store.Elasticsearch;
-import no.dcat.harvester.theme.builders.vocabulary.GeonamesRDF;
 import no.dcat.shared.LocationUri;
 import no.dcat.shared.SkosCode;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.DCTerms;
-import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -57,6 +31,9 @@ public class LoadLocations {
         this.httpPassword = httpPassword;
     }
 
+    public Map<String,SkosCode> getLocations() {
+        return this.locations;
+    }
 
     private final Logger logger = LoggerFactory.getLogger(LoadLocations.class);
 

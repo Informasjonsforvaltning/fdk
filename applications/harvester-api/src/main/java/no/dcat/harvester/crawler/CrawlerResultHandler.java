@@ -1,6 +1,6 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.admin.store.domain.DcatSource;
+import no.difi.dcat.datastore.domain.DcatSource;
 import org.apache.jena.rdf.model.Model;
 
 public interface CrawlerResultHandler {

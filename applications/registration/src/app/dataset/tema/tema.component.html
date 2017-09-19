@@ -9,8 +9,8 @@
                 name="datasett-tittel"></helptext>
                 <div *ngFor="let control of temaForm.controls['themesArray'].controls; let i=index" class="checkbox">
                   <label><!-- 416 -->
-                    <input type="checkbox" id="checkbox-1{{i}}" [formControl]="control" />
-                    <label class="checkbox-replacement" for="checkbox-1{{i}}"></label>
+                    <input type="checkbox" id="theme-checkbox-1{{i}}" [formControl]="control" />
+                    <label class="checkbox-replacement" for="theme-checkbox-1{{i}}"></label>
                     {{allThemes[i].label}}
                   </label>
                 </div>

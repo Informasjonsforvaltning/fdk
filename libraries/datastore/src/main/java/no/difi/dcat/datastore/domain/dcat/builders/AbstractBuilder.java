@@ -258,6 +258,9 @@ public abstract class AbstractBuilder {
     }
 
     protected static SkosCode getCode(Map<String, SkosCode> codes, String locUri) {
+        if(locUri == null || locUri.trim().equals("")){
+            return null;
+        }
 
         SkosCode result = codes.get(locUri);
 
@@ -272,6 +275,9 @@ public abstract class AbstractBuilder {
         List<SkosCode> result = new ArrayList();
 
         for (String locUri : locsUri) {
+            if(locUri == null || locUri.trim().equals("")){
+                continue;
+            }
             SkosCode locCode = locations.get(locUri);
 
             if (locCode == null) {

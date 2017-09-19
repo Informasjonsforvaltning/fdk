@@ -18,17 +18,18 @@ import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("unit-integration")
 public class DatasetWithElasticSearchIT {
 
-    @Value("${data.elasticsearch.clusterNodes}")
+    @Value("${spring.data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
 
-    @Value("${data.elasticsearch.clusterName}")
+    @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
 
     @PostConstruct

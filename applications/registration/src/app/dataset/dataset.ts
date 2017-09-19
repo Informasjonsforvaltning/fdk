@@ -59,4 +59,6 @@ export interface Dataset {
   restricedPursuantToLegalBasis?:any[];
 
   _lastModified: string;
+
+  registrationStatus? : string;
 }

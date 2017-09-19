@@ -1,6 +1,7 @@
 package no.dcat.harvester;
 
-import no.dcat.data.store.domain.dcat.vocabulary.DCAT;
+
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;

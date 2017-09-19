@@ -1,14 +1,14 @@
 package no.dcat.admin.security;
 
 import no.dcat.admin.settings.FusekiSettings;
-import no.dcat.admin.store.AdminDataStore;
-import no.dcat.admin.store.Fuseki;
-import no.dcat.admin.store.UserNotFoundException;
+import no.difi.dcat.datastore.AdminDataStore;
+import no.difi.dcat.datastore.Fuseki;
+import no.difi.dcat.datastore.UserNotFoundException;
+import no.difi.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,12 +51,12 @@ public class FusekiUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(e.getMessage());
         }
 
-        return new User(username, userMap.get("password"), Arrays.asList(new SimpleGrantedAuthority(userMap.get("role"))));
+        return new org.springframework.security.core.userdetails.User(username, userMap.get("password"), Arrays.asList(new SimpleGrantedAuthority(userMap.get("role"))));
     }
 
     private void createTestUser(String username, String password, String role) {
         try {
-            no.dcat.admin.store.domain.User user = new no.dcat.admin.store.domain.User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
+            User user = new User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
             adminDataStore.addUser(user);
         } catch (Exception e) {
             logger.warn(e.getMessage(),e);

@@ -55,4 +55,4 @@ VOLUME /home/1000/dcat/in
 VOLUME /home/1000/dcat/temp
 VOLUME /home/1000/dcat/publish
 
-CMD java -jar  $JAVA_OPTS  -Dspring.profiles.active=docker app.jar
+CMD java -jar  $JAVA_OPTS app.jar

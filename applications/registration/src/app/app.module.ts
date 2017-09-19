@@ -1,5 +1,5 @@
 import {BrowserModule} from "@angular/platform-browser";
-import {LOCALE_ID, NgModule} from "@angular/core";
+import {LOCALE_ID, NgModule, ErrorHandler} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -40,16 +40,14 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
-import {RestricedPursuantToLegalBasisListComponent} from "./dataset/restricedPursuantToLegalBasis/restricedPursuantToLegalBasis-list.component"
-import {RestricedPursuantToLegalBasisFormComponent} from "./dataset/restricedPursuantToLegalBasis/restricedPursuantToLegalBasis.component"
-
-import {LegalBasisForAccessListComponent} from "./dataset/legalBasisForAccess/legalBasisForAccess-list.component";
-import {LegalBasisForAccessFormComponent} from "./dataset/legalBasisForAccess/legalBasisForAccess.component";
-
-import {BasisForProcessingListComponent} from "./dataset/basisForProcessing/basisForProcessing-list.component"
-import {BasisForProcessingFormComponent} from "./dataset/basisForProcessing/basisForProcessing.component"
+import {RestricedPursuantToLegalBasisListComponent} from "./dataset/restricedPursuantToLegalBasis/restricedPursuantToLegalBasis-list.component";
+import {RestricedPursuantToLegalBasisFormComponent} from "./dataset/restricedPursuantToLegalBasis/restricedPursuantToLegalBasis.component";
+import {BasisForProcessingListComponent} from "./dataset/basisForProcessing/basisForProcessing-list.component";
+import {BasisForProcessingFormComponent} from "./dataset/basisForProcessing/basisForProcessing.component";
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+
+import {GlobalErrorHandler} from './GlobalErrorHandler';
 
 @NgModule({
   declarations: [
@@ -95,7 +93,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
   entryComponents: [
     ConfirmComponent
   ],
-  providers: [CatalogService, DatasetService, CodesService, ThemesService, AuthGuard, AuthenticationService, {provide: LOCALE_ID, useValue: "no-NO"}],
+  providers: [
+    CatalogService,
+    DatasetService,
+    CodesService,
+    ThemesService,
+    AuthGuard,
+    AuthenticationService,
+    {
+      provide: LOCALE_ID,
+      useValue: "no-NO"
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

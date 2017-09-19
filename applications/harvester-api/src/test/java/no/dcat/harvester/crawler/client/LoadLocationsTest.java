@@ -1,15 +1,10 @@
 package no.dcat.harvester.crawler.client;
 
-import no.dcat.data.store.Elasticsearch;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.util.FileManager;
+
+import no.difi.dcat.datastore.Elasticsearch;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.HashMap;
-
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

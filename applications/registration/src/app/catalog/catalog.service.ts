@@ -38,21 +38,23 @@ export class CatalogService {
     return this.http
         .get(this.catalogsUrl + '?page=0&size=1000', {headers: this.headers})
         .toPromise()
-        .then(response => response.json()._embedded.catalogs as Catalog[])
-        .catch(this.handleError);
+        .then(response => {
+          if(response.json()._embedded){
+            return response.json()._embedded.catalogs as Catalog[]
+          }else {
+            return [] as Catalog[];
+          }
+
+        });
   }
 
-  private handleError(error: any): Promise<any>{
-    console.error('An error occured', error);
-    return Promise.reject(error.message || error);
-  }
+
 
   get(id: string): Promise<Catalog> {
     const url = `${this.catalogsUrl}/${id}/`
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json() as Catalog)
-      .catch(this.handleError);
+      .then(response => response.json() as Catalog);
   }
 
   save(catalog: Catalog) : Promise<Catalog> {
@@ -64,8 +66,7 @@ export class CatalogService {
     return this.http
       .put(url, JSON.stringify(catalog), {headers: this.headers})
       .toPromise()
-      .then(() => catalog)
-      .catch(this.handleError);
+      .then(() => catalog);
   }
 
   import(catalog: Catalog, url: string) : Promise<Catalog> {
