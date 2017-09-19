@@ -35,7 +35,7 @@ tag=latest #todo: må justeres slik at det passer med Håvards script
 
 
 #midlertidig kommentert ut reference-data
-services="elasticsarch fuseki registration registration-auth registration-api registration-validator gdoc harvester harvester-api search search-api nginx"
+services="elasticsearch fuseki registration registration-auth registration-api registration-validator gdoc harvester harvester-api search search-api nginx"
 
 for i in $services
 do
