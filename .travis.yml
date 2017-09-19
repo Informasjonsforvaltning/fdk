@@ -50,6 +50,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - application/registration/dockerPush.sh
+          - ./travisPushToDockerHub.sh
         on:
           branch: develop
