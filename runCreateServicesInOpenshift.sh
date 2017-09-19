@@ -34,7 +34,7 @@ openshiftProject=fellesdatakatalog-$environment
 tag=latest #todo: må justeres slik at det passer med Håvards script
 
 #configuration that differs between nonprod and prod clusters
-if [$environment == 'ppe'] || [$environment == 'prd']
+if [ $environment = ppe ] || [ $environment = prd ]
 then
     #run on prod cluster
     cluster=ose-pc
@@ -66,7 +66,7 @@ then
 fi
 
 #configuration that differs between prod and other environments
-if [$environment == 'prd']
+if [ $environment = prd ]
 then
     #configuration for prod environment
 
@@ -119,7 +119,7 @@ oc env dc/registration-api registrationApi_altinnServiceCode=$altinnServiceCode
 oc env dc/registration-api registrationApi_altinnServiceEdition=$altinnServiceEdition
 oc env dc/registration-api registrationApi_altinnServiceUrl=$altinnServiceUrl
 oc env dc/registration-api registrationApi_apikey=$altinnApiKey
-oc env dc/registration-api registrationApi_clientSSLCertificateKeystoreLocation=$clientCertificateKeystoreLocation
+oc env dc/registration-api registrationApi_clientSSLCertificateKeystoreLocation="$clientCertificateKeystoreLocation"
 oc env dc/registration-api registrationApi_clientSSLCertificateKeystorePassword=changeit
 oc env dc/registration-api registrationApi_ipKeyPassword=changeit
 oc env dc/registration-api registrationApi_ipStorePassword=changeit
