@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+# todo sørge for at den ikke deployer på nytt når dden tagger i commiten i git
+# https://github.com/travis-ci/travis-ci/issues/2378
+
 components="fuseki harvester harvester-api nginx reference-data registration registration-api registration-auth registration-validator search search-api"
 toEnvironment=ut1
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
