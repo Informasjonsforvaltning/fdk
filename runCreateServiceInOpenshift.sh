@@ -145,19 +145,19 @@ then
 elif [ $service = reference-data ]
 then
     echo "Reference-data: Midlertidig deaktivert"
-    # profile=prod
+    profile=prod
     # todo midlertidig kommentert ut pga at oppretting av volum ikke virker
-    #createOpenshiftService reference-data
+    createOpenshiftService reference-data
     # todo generate password for reference-data
-    #oc env dc/reference-data themesHttpUsername=themeUser themesHttpPassword=themePassword
+    oc env dc/reference-data themesHttpUsername=themeUser themesHttpPassword=themePassword
 
     #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
     # oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
 
     #create secure route for reference-data
-    #oc create route edge --service=reference-data --hostname=reference-data-fellesdatakatalog-$environment.$cluster.brreg.no
-    #oc label route reference-data environmentTag=$environmentTag --overwrite=true
-    #oc label route reference-data environmentDate=$dateTag --overwrite=true
+    oc create route edge --service=reference-data --hostname=reference-data-fellesdatakatalog-$environment.$cluster.brreg.no
+    oc label route reference-data environmentTag=$environmentTag --overwrite=true
+    oc label route reference-data environmentDate=$dateTag --overwrite=true
 
 elif [ $service = registration-auth ]
 then

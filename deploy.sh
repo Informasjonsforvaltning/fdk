@@ -81,6 +81,7 @@ if [ "$1" == "st1" ] ; then
 
   gitTag ut1 st1
 
+  #todo dobbeltsjekk at dockertag blir riktig
   openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
 
