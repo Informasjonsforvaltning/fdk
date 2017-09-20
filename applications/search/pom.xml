@@ -232,9 +232,6 @@
                 <artifactId>docker-maven-plugin</artifactId>
 
                 <configuration>
-                    <imageName>
-                        dcatno/registration:latest
-                    </imageName>
                     <dockerDirectory>${project.build.directory}/docker</dockerDirectory>
                     <serverId>docker-hub</serverId>
                     <resources>
