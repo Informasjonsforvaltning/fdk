@@ -4,7 +4,7 @@ services:
   search:
     restart: always
     ports:
-      - 8080:8080
+      - 8080:3000
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.queryService=http://search-api:8080

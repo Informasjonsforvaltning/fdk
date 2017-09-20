@@ -49,11 +49,8 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
-        query: {
-          presets: [
-            require.resolve('babel-preset-es2015'),
-            require.resolve('babel-preset-react')
-          ]
+        query: { 
+          presets: ['es2015', 'react'] 
         }
       },
       {
