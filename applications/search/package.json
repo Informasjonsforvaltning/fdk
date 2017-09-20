@@ -1,10 +1,16 @@
 {
-  "name": "webpack-searchkit-es6-boilerplate",
-  "version": "0.1.1",
-  "description": "Example searchkit project using webpack & es6",
+  "name": "search",
+  "version": "0.2.4-SNAPSHOT",
+  "description": "Search",
   "scripts": {
     "start": "node start.js",
-    "build": "rm -rf dist; webpack --config webpack.prod.config.js -p"
+    "build": "webpack --config webpack.prod.config.js -p",
+    "buildx": "ng build --prod --aot=false",
+    "ng": "ng",
+    "servexxx": "ng serve --host=0.0.0.0 --live-reload-client http://localhost:3000 --disable-host-check=true",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e --progress false"
   },
   "authors": [
     {
@@ -28,7 +34,7 @@
     "react-bootstrap": "0.30.7",
     "react-dom": "^15.0.0",
     "react-hot-loader": "^1.3.0",
-    "searchkit": "fheitmann/searchkit#a57fd5a",
+    "searchkit": "^2",
     "searchkit-express": "0.2.1",
     "superagent": "3.4.1"
   },

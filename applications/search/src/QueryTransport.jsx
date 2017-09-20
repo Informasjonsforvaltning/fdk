@@ -9,7 +9,9 @@ export class QueryTransport extends AxiosESTransport {
     super()
     this.options = defaults(options, {
       headers:{},
-      searchUrlPath:window.fdkSettings.queryUrl + "/search"
+      //searchUrlPath: window.fdkSettings.queryUrl + "/search"
+        // TODO MAKE THIS GENERIC
+        searchUrlPath: "http://localhost:8083/search"
     })
     if(this.options.basicAuth){
       this.options.headers["Authorization"] = (
