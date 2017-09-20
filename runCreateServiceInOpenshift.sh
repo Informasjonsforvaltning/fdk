@@ -86,6 +86,8 @@ else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1
     cluster=ose-npc
 
+    registrationGuiExternalAddress=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+
     #point to Altinn test environnment
     altinnServiceCode=4814
     altinnServiceEdition=3
@@ -101,6 +103,7 @@ host=$environment.$cluster.brreg.no
 if [ $environment = ppe ]
 then
   host=ppe.brreg.no
+  registrationGuiExternalAddress=registrering-fdk.$host
 fi
 
 
@@ -194,7 +197,7 @@ then
     oc env dc/registration-api SPRING_PROFILES_ACTIVE=$profile
     oc env dc/registration-api registrationApi_IncludeServerPortInRequestUrl=false
     oc env dc/registration-api registrationApi_OpenshiftEnvironment=$environment
-    oc env dc/registration-api registrationApi_ServerName=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+    oc env dc/registration-api registrationApi_ServerName=$registrationGuiExternalAddress
     oc env dc/registration-api registrationApi_altinnServiceCode=$altinnServiceCode
     oc env dc/registration-api registrationApi_altinnServiceEdition=$altinnServiceEdition
     oc env dc/registration-api registrationApi_altinnServiceUrl=$altinnServiceUrl
@@ -250,7 +253,7 @@ then
     #todo legge til ekstra port på svc/nginx 8080
 
     #create secure route for registration gui
-    oc create route edge --service=nginx --hostname=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no --port=8080
+    oc create route edge --service=nginx --hostname=$registrationGuiExternalAddress --port=8080
     oc label route nginx environmentTag=$environmentTag --overwrite=true
     oc label route nginx environmentDate=$dateTag --overwrite=true
 
