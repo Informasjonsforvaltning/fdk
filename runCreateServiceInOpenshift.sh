@@ -5,10 +5,10 @@
 # oc login
 #
 # Parameters:
-# runCreateServiceInOpenshift <service> <environment> <date-tag>
+# runCreateServiceInOpenshift <service> <environment> <dockertag> <date-tag>
 #
 # example:
-# runCreateServiceInOpenshift registration-api st2 st2_2017-02-18
+# runCreateServiceInOpenshift registration-api st2 latest st2_2017-02-18
 
 #todo: må environment-tag også være en parameter? Trenger vi den egentlig her?
 
@@ -37,33 +37,38 @@ function exposeService {
 if [ -z "$1" ]
 then
     echo "service must be specified: search, registration, search-api etc..."
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
     exit 1
 fi
 
 if [ -z "$2" ]
 then
     echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    exit 1
+fi
+
+if [ -z "$3" ]
+then
+    echo "docker  tag must be supplied. Example: latest"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
     exit 1
 fi
 
 if [ -z "$3" ]
 then
     echo "Environment date tag must be supplied. Example: ST1_2017-09-13"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag>  <date-tag>"
     exit 1
 fi
 
 
 service=$1
 environment=$2
-dateTag=$3
+tag=$3
+dateTag=$4
 environmentTag=$2_latest
-profile=prod
 openshiftProject=fellesdatakatalog-$environment
-tag=latest #todo: må justeres slik at det passer med Håvards script
-
 
 #configuration that differs between nonprod and prod clusters
 if [ $environment = ppe ] || [ $environment = prd ]
@@ -132,6 +137,7 @@ then
 
 elif [ $service = registration ]
 then
+    profile=prod
     createOpenshiftService registration
     oc expose dc/registration --port=4200
     oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
@@ -139,6 +145,7 @@ then
 elif [ $service = reference-data ]
 then
     echo "Reference-data: Midlertidig deaktivert"
+    # profile=prod
     # todo midlertidig kommentert ut pga at oppretting av volum ikke virker
     #createOpenshiftService reference-data
     # todo generate password for reference-data
@@ -154,20 +161,35 @@ then
 
 elif [ $service = registration-auth ]
 then
+    profile=prod
     createOpenshiftService registration-auth
 
 elif [ $service = registration-validator ]
 then
+    profile=prod
     createOpenshiftService registration-validator
 
 elif [ $service = harvester-api ]
 then
+    profile=prod
     createOpenshiftService harvester-api
     oc env dc/harvester-api themesHttpUsername=themeUser themesHttpPassword=themePassword
     exposeService harvester-api
 
 elif [ $service = registration-api ]
 then
+
+    # spring boot profiles:
+    # prod if authenticating with idporten
+    # prod-localauth if using local authentication and authorization
+    if [ $environment = ut1 ] || [ $environment = st2 ] || [ $environment = tt1 ]
+    then
+        profile=prod-localauth
+        altinnServiceUrl=http://registration-auth:8080/
+    else
+        profile=prod
+    fi
+
     createOpenshiftService registration-api
     oc env dc/registration-api SPRING_PROFILES_ACTIVE=$profile
     oc env dc/registration-api registrationApi_IncludeServerPortInRequestUrl=false
@@ -193,22 +215,26 @@ then
 
 elif [ $service = search ]
 then
+    profile=prod
     createOpenshiftService search
     oc env dc/search search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
     exposeService search
 
 elif [ $service = gdoc ]
 then
+    profile=prod
     createOpenshiftService gdoc
     exposeService gdoc
 
 elif [ $service = harvester ]
 then
+    profile=prod
     createOpenshiftService gdoc
     exposeService harvester
 
 elif [ $service = search-api ]
 then
+    profile=prod
     createOpenshiftService search-api
 
     #create secure route for search api
@@ -218,6 +244,7 @@ then
 
 elif [ $service = nginx ]
 then
+    profile=prod
     createOpenshiftService nginx
 
     #todo legge til ekstra port på svc/nginx 8080

@@ -86,7 +86,7 @@ server:
 
 ---
 spring:
-  profiles: develop-openshift
+  profiles: prod-localauth
   data:
     elasticsearch:
       clusterNodes: elasticsearch:9300
