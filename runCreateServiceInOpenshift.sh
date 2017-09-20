@@ -10,7 +10,6 @@
 # example:
 # runCreateServiceInOpenshift registration-api st2 latest st2_2017-02-18
 
-#todo: må environment-tag også være en parameter? Trenger vi den egentlig her?
 
 function createOpenshiftService {
     osService=$1
