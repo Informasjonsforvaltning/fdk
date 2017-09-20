@@ -68,7 +68,7 @@ function openshiftDeploy {
 
     #Delete old services from openshift, and deploy new ones
     sh runDeleteServicesInOpenshift.sh $osEnvironment
-    sh runCreateAllServicesInOpenshift.sh $osEnvironment $dateTag
+    sh runCreateAllServicesInOpenshift.sh $osEnvironment $datetag $dateTag
 }
 
 
