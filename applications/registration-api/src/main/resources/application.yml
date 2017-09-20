@@ -86,6 +86,21 @@ server:
 
 ---
 spring:
+  profiles: develop-openshift
+  data:
+    elasticsearch:
+      clusterNodes: elasticsearch:9300
+      clusterName: fellesdatakatalog
+server:
+  port: 8099
+  ssl:
+    key-store: conf/idporten/ssldevelop.p12
+    key-store-password: changeit
+    key-store-type: PKCS12
+    key-alias: tomcat
+
+---
+spring:
   profiles: unit-integration
   data:
     elasticsearch:
