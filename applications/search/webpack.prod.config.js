@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.DedupePlugin(),
+    //new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new ExtractTextPlugin("styles.css"),
     new webpack.optimize.UglifyJsPlugin({
@@ -37,17 +37,18 @@ module.exports = {
     alias: {
       react: path.resolve('./node_modules/react')
     },
-    extensions:[".js", ".jsx", ".webpack.js", ".web.js",""]
+    extensions:['.js', '.jsx', '.webpack.js', '.web.js']
   },
   resolveLoader: {
-    root: path.join(__dirname, "node_modules")
+    //root: path.join(__dirname, "node_modules")
+    modules: [__dirname, 'node_modules']
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           presets: [
             require.resolve('babel-preset-es2015'),
@@ -57,7 +58,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        //loader: ExtractTextPlugin.extract('css!sass')
+        use: ExtractTextPlugin.extract({ 
+          fallback: 'style-loader', 
+          use: ['css-loader', 'sass-loader'] 
+        })
       },
       {
         test: /\.(jpg|png|svg)$/,
