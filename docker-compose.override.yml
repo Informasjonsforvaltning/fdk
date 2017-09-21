@@ -20,6 +20,19 @@ services:
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
 
+  search-old:
+    restart: always
+    ports:
+      - 8070:3000
+    environment:
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - application.elasticsearchHost=elasticsearch
+     - application.elasticsearchPort=9300
+     - application.queryService=http://search-api:8080
+     - application.queryServiceExternal=http://localhost:8083
+     - application.fusekiService=http://fuseki:8080/fuseki
+
+
   gdoc:
     ports:
       - 8084:8080

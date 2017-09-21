@@ -8,8 +8,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>search</artifactId>
-    <description>Search</description>
+    <artifactId>search-old</artifactId>
+    <description>Old search code Spring Boot Themeleaf services</description>
     <packaging>jar</packaging>
 
     <dependencies>
