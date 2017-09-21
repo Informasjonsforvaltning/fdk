@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e --progress false",
-    "installAndRun":"npm rebuild node-sass --force; npm install; node start.js"
+    "installAndRun": "npm rebuild node-sass --force; npm install; node start.js"
   },
   "authors": [
     {
@@ -33,6 +33,7 @@
     "ejs": "^2.3.4",
     "express": "4.15.4",
     "history": "^3",
+    "lodash": "^4.17.4",
     "method-override": "2.3.9",
     "qs": "^6.3.0",
     "react": "15.6.1",
