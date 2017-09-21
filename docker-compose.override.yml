@@ -4,7 +4,7 @@ services:
   search:
     restart: always
     ports:
-      - 8080:3000
+      - 127.0.0.1:3000:3000
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.queryService=http://search-api:8080
@@ -14,7 +14,7 @@ services:
   search-api:
     restart: always
     ports:
-      - 8083:8080
+      - 127.0.0.1:8083:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
@@ -23,7 +23,7 @@ services:
   search-old:
     restart: always
     ports:
-      - 8070:3000
+      - 127.0.0.1:3001:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
@@ -32,6 +32,15 @@ services:
      - application.queryServiceExternal=http://localhost:8083
      - application.fusekiService=http://fuseki:8080/fuseki
 
+  nginx-search:
+    image: dcatno/nginx-search:latest
+    restart: always
+    depends_on:
+      - search
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      platform:
 
   gdoc:
     ports:
