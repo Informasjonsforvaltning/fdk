@@ -73,7 +73,8 @@ public class Controller {
     public SkosCode putLocation(@RequestBody LocationUri resource) throws MalformedURLException {
         logger.debug(resource.getUri());
         try {
-            return subjectsService.addSubject(resource.getUri());
+
+            return codesService.addLocation(resource.getUri());
         }catch (Exception e){
             logger.error("URI was: "+resource.getUri());
             throw e;
@@ -86,7 +87,7 @@ public class Controller {
     public SkosCode getRemoteResourceForSubject(@RequestParam String uri) throws MalformedURLException {
         logger.debug(uri);
         try {
-            return codesService.addLocation(uri);
+            return subjectsService.addSubject(uri);
         }catch (Exception e){
             logger.error("URI was: "+uri);
             throw e;

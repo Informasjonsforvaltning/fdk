@@ -59,4 +59,13 @@ public class SkosCode implements Serializable{
     public int hashCode() {
         return getUri() != null ? getUri().hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "SkosCode{" +
+                "uri='" + uri + '\'' +
+                ", authorityCode='" + authorityCode + '\'' +
+                ", prefLabel=" + prefLabel +
+                '}';
+    }
 }
