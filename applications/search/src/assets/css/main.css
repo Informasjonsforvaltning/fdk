@@ -34,8 +34,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    line-height: 130%; //1em;     /* fallback */
-    max-height: 400%; // 3em;      /* fallback */
+    line-height: 130%;    /* fallback */
+    max-height: 400%;       /* fallback */
     -webkit-line-clamp: 4; /* number of lines to show */
     -webkit-box-orient: vertical;
 }

@@ -14,6 +14,7 @@ import {
   PureRender, AxiosESTransport
 } from "searchkit";
 
+import './index.scss';
 import {RefinementOptionThemes} from './RefinementOptionThemes.jsx';
 import {RefinementOptionPublishers} from './RefinementOptionPublishers.jsx';
 
@@ -22,8 +23,6 @@ import {SearchBox} from './SearchBox.jsx';
 import {Select2} from './select.jsx';
 import {QueryTransport} from './QueryTransport.jsx';
 const defaults = require("lodash/defaults");
-
-
 import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
@@ -144,9 +143,9 @@ const MovieHitsGridItem = (props)=> {
 	if(source.theme) {
 			source.theme.forEach((singleTheme, index)=> {
 				if(singleTheme.title) {
-					themeLabels += '<label>';
+					themeLabels += '<div class="fdk-label fdk-label-on-white">';
 					themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en;
-					themeLabels += ' </label>';
+					themeLabels += ' </div>';
 				}
 			});
 	}
@@ -183,7 +182,7 @@ const MovieHitsGridItem = (props)=> {
 		themeTitle = source.theme.title.nb;
 	}
   return (
-    <a href={url}  className="row list-group-item dataset">
+    <a href={url}  className="fdk-container fdk-container-search-hit">
         <div className="col-sm-12">
             <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
 			<h4>
