@@ -41,7 +41,7 @@ tag=$2
 dateTag=$3
 
 
-#midlertidig kommentert ut reference-data
+#midlertidig tatt ut reference-data pga at mounting av volum ikke virker
 services="elasticsearch fuseki registration registration-auth registration-api registration-validator gdoc harvester harvester-api search search-api nginx"
 
 for i in $services
