@@ -142,7 +142,13 @@ then
     profile=prod
     createOpenshiftService registration
     oc expose dc/registration --port=4200
-    oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
+
+    if [ $environment = ppe ]
+    then
+        oc env dc/registration REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4200 NODE_ENV=$environment
+    else
+        oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
+    fi
 
 elif [ $service = reference-data ]
 then
