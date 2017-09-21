@@ -51,6 +51,10 @@ public class ImportControllerIT {
     public void before() {
         catalogRepository.deleteAll();
     }
+
+    @Test
+    public void dummyTest(){}
+
 //    @Test
 //    public void importCatalogOK() throws Throwable {
 //        String catalogId = "958935420";
