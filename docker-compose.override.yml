@@ -3,8 +3,11 @@ version: "2"
 services:
   search:
     restart: always
+    command: npm run-script installAndRun
     ports:
       - 127.0.0.1:3000:3000
+    volumes:
+      -   ./applications/search:/usr/src/app/:rw
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.queryService=http://search-api:8080

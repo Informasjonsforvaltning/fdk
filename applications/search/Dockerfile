@@ -15,7 +15,6 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY . /usr/src/app/
 
-RUN cd /usr/src/app && npm install
 
 
 #COPY dist /usr/src/app -- denne burde være istedet for den over
