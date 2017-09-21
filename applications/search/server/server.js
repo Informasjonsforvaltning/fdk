@@ -3,7 +3,7 @@ var express = require("express");
 var bodyParser = require("body-parser")
 var methodOverride = require("method-override")
 var compression = require("compression")
-var _ = require("lodash")
+//var _ = require("lodash")
 
 module.exports = {
   start: function(prodMode) {

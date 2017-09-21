@@ -15,13 +15,12 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY . /usr/src/app/
 
+RUN cd /usr/src/app && npm install
 
-ENV REG_API_URL https://localhost:8099
-ENV QUERY_SERVICE_URL /reference-data
 
 #COPY dist /usr/src/app -- denne burde være istedet for den over
 
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD [ "pm2-docker", "start.js" ]
