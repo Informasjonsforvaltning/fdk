@@ -246,7 +246,6 @@
                                 <include>start.js</include>
                                 <include>dist/</include>
                                 <include>server/</include>
-                                <include>src/</include>
                                 <include>package.json/</include>
                                 <include>webpack.*</include>
                             </includes>
@@ -254,6 +253,7 @@
                                 <exclude>e2e/</exclude>
                                 <exclude>node_modules/</exclude>
                                 <exclude>target/</exclude>
+                                <exclued>src/</exclued>
                             </excludes>
                         </resource>
 
