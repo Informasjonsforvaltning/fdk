@@ -182,9 +182,10 @@ const MovieHitsGridItem = (props)=> {
 		themeTitle = source.theme.title.nb;
 	}
   return (
-    <a href={url}  className="fdk-container fdk-container-search-hit">
-        <div className="col-sm-12">
-            <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
+    <div className="fdk-container fdk-container-search-hit">
+			<h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
+      {getText('beta.first')}
+
 			<h4>
                 {source.publisher ? source.publisher.name : ''}
                 <small> • </small>
@@ -192,8 +193,8 @@ const MovieHitsGridItem = (props)=> {
 			</h4>
 			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}></div>
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
-		</div>
-    </a>
+
+    </div>
   )
 }
 
