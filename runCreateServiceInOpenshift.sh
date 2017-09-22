@@ -78,9 +78,11 @@ then
     #point to Altinn prod environment
     altinnServiceCode=4814
     altinnServiceEdition=1
-    altinnServiceUrl=https://altinn.no/ #todo: denne blir ny. Oppdater når vi får riktig verdi
+    altinnServiceUrl=https://altinn.no/
     altinnApiKey=F1136D29-73EF-4A1B-AE08-BC4D537507BA
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
+    clientCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN-I-BRONNOYSUND-serienummer13439118435479952733750626-2017-05-10.p12"
+    registrationApiIdportenMetadatafile="conf/idporten/idporten.difi.no-v3-prod-meta_sign.xml"
 else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1
     cluster=ose-npc
@@ -93,6 +95,8 @@ else
     altinnServiceUrl=https://tt02.altinn.no/
     altinnApiKey=948E57B8-8F44-43E6-921F-F512F67A7F76
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
+    clientCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN I BROENNOEYSUND-serienummer1544700822686643554309384-2017-05-31.p12"
+    registrationApiIdportenMetadatafile="conf/idporten/idporten-ver2.difi.no-v3_signed_meta.xml"
 fi
 
 host=$environment.$cluster.brreg.no
@@ -105,24 +109,17 @@ then
   registrationGuiExternalAddress=registrering-fdk.$host
 fi
 
-
-#configuration is specific for prod environment
-if [ $environment = prd ]
+# configuration that is specific for externally accessible test environment
+if [ $environment = tt1 ]
 then
-    #configuration for prod environment
-
-    #prod cetificate
-    clientCertificateKeystoreLocation="conf/altinn/todo"
-else
-    #configuration for all other environments including preprod: ut1, st1, st2, tt1, ppe
-
-    #test cetificate
-    clientCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN I BROENNOEYSUND-serienummer1544700822686643554309384-2017-05-31.p12"
+  host=tt1.brreg.no
+  registrationGuiExternalAddress=registrering-fdk.$host
 fi
 
 
 #Deploy to correct environment
 oc project $openshiftProject
+
 
 
 # create the actual services
@@ -146,6 +143,10 @@ then
     if [ $environment = ppe ]
     then
         oc env dc/registration REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4200 NODE_ENV=$environment
+    elif [ $environment = tt1 ]
+    then
+        oc env dc/registration REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4200 NODE_ENV=$environment
+
     else
         oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
     fi
@@ -160,7 +161,7 @@ then
     oc env dc/reference-data themesHttpUsername=themeUser themesHttpPassword=themePassword
 
     #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
-    oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
+    #oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
 
     #create secure route for reference-data
     oc create route edge --service=reference-data --hostname=reference-data-fellesdatakatalog-$environment.$cluster.brreg.no
@@ -213,6 +214,7 @@ then
     oc env dc/registration-api registrationApi_ipStorePassword=changeit
     oc env dc/registration-api registrationApi_sslKeyPassword=changeit
     oc env dc/registration-api registrationApi_sslKeystoreLocation=$sslKeystoreLocation
+    oc env dc/registration-api registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile
 
     echo "Registration-api: Keystore password environment variables must be set manually"
     echo "Registration-api: Remember to mount /conf volume"
@@ -254,8 +256,6 @@ elif [ $service = nginx ]
 then
     profile=prod
     createOpenshiftService nginx
-
-    #todo legge til ekstra port på svc/nginx 8080
 
     #create secure route for registration gui
     oc create route edge --service=nginx --hostname=$registrationGuiExternalAddress --port=8080
