@@ -93,7 +93,7 @@ public class CatalogControllerIT {
                         MockMvcRequestBuilders
                                 .get("/catalogs")
                 )
-                .andExpect(content().string("{\n" +
+                .andExpect(content().json("{\n" +
                         "  \"_embedded\" : {\n" +
                         "    \"catalogs\" : [ {\n" +
                         "      \"id\" : \"910244132\",\n" +
