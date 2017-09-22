@@ -12,8 +12,6 @@ import javax.annotation.PostConstruct;
  * Created by nodavsko on 17.10.2016.
  */
 @Configuration
-@PropertySource("classpath:project.properties") // for maven build properties
-@ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
 
     private static final String QUERY_SERVICE_SEARCH = "/search";
