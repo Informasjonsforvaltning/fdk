@@ -32,7 +32,7 @@ const searchkit = new SearchkitManager(
 	host,
 	{
 		transport: new QueryTransport(),
-		createHistoryFunc: useQueries(createHistoryFn)({ // TODO append lang string if it's not present
+		createHistory: useQueries(createHistoryFn)({ // TODO append lang string if it's not present
       stringifyQuery(ob) {
 				Object.keys(ob).map((e) => {
 						if(typeof ob[e] === 'object') { // is array
