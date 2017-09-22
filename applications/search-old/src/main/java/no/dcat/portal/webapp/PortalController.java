@@ -152,7 +152,7 @@ public class PortalController {
      *
      * @return A list of DataTheme attached to a ModelAndView.
      */
-    @RequestMapping(value = {"/"}, produces = "text/html")
+    @RequestMapping(value = {"/theme"}, produces = "text/html")
     public ModelAndView themes(final HttpSession session) {
         ModelAndView model = new ModelAndView(MODEL_THEME);
         Locale locale = LocaleContextHolder.getLocale();

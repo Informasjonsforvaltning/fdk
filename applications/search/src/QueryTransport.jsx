@@ -88,7 +88,7 @@ export class QueryTransport extends AxiosESTransport {
     }
 
     return this.axios.get(
-			'/api/search?q=' +
+			'/search?q=' +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
