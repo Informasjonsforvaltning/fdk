@@ -27,12 +27,14 @@ import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
 import {addOrReplaceParam} from './addOrReplaceUrlParam.js';
+import localization from './components/localization';
+
 const host = "/dcat";
 const searchkit = new SearchkitManager(
 	host,
 	{
 		transport: new QueryTransport(),
-		createHistory: useQueries(createHistoryFn)({ // TODO append lang string if it's not present
+		createHistoryFunc: useQueries(createHistoryFn)({ // TODO append lang string if it's not present
       stringifyQuery(ob) {
 				Object.keys(ob).map((e) => {
 						if(typeof ob[e] === 'object') { // is array
@@ -184,14 +186,25 @@ const MovieHitsGridItem = (props)=> {
   return (
     <div className="fdk-container fdk-container-search-hit">
 			<h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
-      {getText('beta.first')}
 
-			<h4>
-                {source.publisher ? source.publisher.name : ''}
-                <small> • </small>
-				<span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
-			</h4>
-			<div className="overflow-text" dangerouslySetInnerHTML={{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}></div>
+			<div>
+				{localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
+				<a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
+			</div>
+
+
+			<p
+				className="fdk-p-search-hit"
+				dangerouslySetInnerHTML={
+					{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
+			>
+
+			</p>
+
+			<div className="fdk-container-distributions fdk-distributions-red">
+				<strong>Unntatt offentligheten</strong>
+			</div>
+
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
 
     </div>
@@ -251,36 +264,7 @@ export class SearchPage extends React.Component {
 			<SearchkitProvider searchkit={searchkit}>
 
 <div>
-			<div className="fdk-header-beta">
-					{getText('beta.first')} <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">{getText('beta.second')}</a> {getText('beta.last')}
-			</div>
-
 			<div className="container">
-					<div className="fdk-header-menu">
-							<div className="dropdown fdk-container-dropdown-menu">
-									<div className="dropdown fdk-dropdown-toggle-menu">
-											<a data-toggle="dropdown" href="#">&#9776;</a>
-											<ul className="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
-													<li><a href="#">{getText('about.title')}</a></li>
-													<li><a href="#">{getText('faq')}</a></li>
-													<li><a href="https://doc.difi.no/dcat-ap-no/">{getText('about.standard')}</a></li>
-													<li><a href="http://portal-fdk.tt1.brreg.no/coverage.html">{getText('about.status')}</a></li>
-											</ul>
-									</div>
-							</div>
-							<div className="dropdown fdk-container-dropdown-language">
-									<button className="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											<img className="fdk-dropdown-language-flag" src={language === 'en' ? 'img/flag-england.png' : 'img/flag-norway.png'}/>{language  === 'en' ? getText('lang.english-en') : ''}{language  === 'nn' ? getText('lang.norwegian-nn' : '') : ''}{language  === 'nb' ? getText('lang.norwegian-nb') : ''}
-											<span className="caret"></span>
-									</button>
-									<ul className="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-											<li><a href={getLangUrl('en')}><img className="fdk-dropdown-language-flag" src="img/flag-england.png"/>{getText('lang.english-en')}</a></li>
-											<li><a href={getLangUrl('nb')}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nb')}</a></li>
-											<li><a href={getLangUrl('nn')}><img className="fdk-dropdown-language-flag" src="img/flag-norway.png"/>{getText('lang.norwegian-nn')}</a></li>
-									</ul>
-							</div>
-					</div>
-						<h1 className="fdk-heading"><a href={queryObj.lang === 'nb' || !queryObj.lang ? '/' : '/?lang=' + queryObj.lang}>{getText('app.title')}</a></h1>
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}

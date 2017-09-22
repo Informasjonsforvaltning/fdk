@@ -1,41 +1,74 @@
 {
-  "app.title": "Felles datakatalog",
-  "app.publisher": "Virksomhet",
-  "lang.choose": "Velg språk",
-  "lang.chosenLanguage": "Norsk (bokmål)",
-  "lang.norwegian-nb": "Norsk (bokmål)",
-  "lang.norwegian-nn": "Norsk (nynorsk)",
-  "lang.english-en": "Engelsk",
-  "feedback.title": "Tilbakemelding",
-  "query.intro": "Søk etter innhold",
-  "query.do": "Utfør søk",
-  "login.title": "Logg inn",
-  "about": "Om",
-  "about.title": "Om applikasjonen",
-  "about.help": "Hjelp",
-  "about.status":"Status implementasjon",
-  "about.standard":"DCAT-AP-NO 1.1 standarden",
-  "about.guide":"Veileder",
-  "about.fordataowners": "For dataeiere",
-  "about.fordatausers": "For databrukere",
-  "about.technical": "Teknisk",
-  "page.navigation": "Sidenavigering",
-  "page.next": "Neste side",
-  "page.prev": "Forrige side",
-  "page.result.summary": "Treff:",
-  "facet.organisation":"Virksomhet",
-  "facet.theme":"Tema",
-  "facet.concept":"Begrep",
-  "facet.legal":"Hjemmel",
-  "facet.spatial":"Geografi",
-  "facet.temporal":"Tidsperiode",
-  "facet.standard":"Standard",
-  "result.waiting":"Henter data ...",
-  "footer.organisation.number": "Organisasjonsnummer:",
-  "footer.information": "Informasjonskapsler - personvern",
-  "sort.by": "Sorter på:",
-  "sort.by.relevance": "Relevans",
-  "sort.by.title": "Tittel",
-  "sort.by.publisher": "Utgiver",
-  "sort.by.modified": "Sist endret"
+  "app": {
+    "title": "Felles datakatalog",
+    "publisher": "Virksomhet"
+  },
+  "beta": {
+    "first": "Dette er en beta-versjon. Gi oss gjerne",
+    "second": "tilbakemeldinger",
+    "last": "om hva du synes!"
+  },
+  "lang": {
+    "choose": "Velg språk",
+    "chosenLanguage": "Norsk (bokmål)",
+    "norwegian-nb": "Norsk (bokmål)",
+    "norwegian-nn": "Norsk (nynorsk)",
+    "english-en": "Engelsk"
+  },
+  "feedback": {
+    "title": "Tilbakemelding"
+  },
+  "query": {
+    "intro": "Søk etter innhold",
+    "do": "Utfør søk"
+  },
+  "login": {
+    "title": "Logg inn"
+  },
+  "about": {
+    "about": "Om",
+    "title": "Om applikasjonen",
+    "help": "Hjelp",
+    "status":"Status implementasjon",
+    "standard":"DCAT-AP-NO 1.1 standarden",
+    "guide":"Veileder",
+    "fordataowners": "For dataeiere",
+    "fordatausers": "For databrukere",
+    "technical": "Teknisk"
+  },
+  "page": {
+    "navigation": "Sidenavigering",
+    "next": "Neste side",
+    "prev": "Forrige side",
+    "result.summary": "Treff:"
+
+  },
+  "facet": {
+    "organisation":"Virksomhet",
+    "theme":"Tema",
+    "concept":"Begrep",
+    "legal":"Hjemmel",
+    "spatial":"Geografi",
+    "temporal":"Tidsperiode",
+    "standard":"Standard"
+  },
+  "result": {
+    "waiting":"Henter data ..."
+  },
+  "footer": {
+    "organisation.number": "Organisasjonsnummer:",
+    "information": "Informasjonskapsler",
+    "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
+    "mail": "fellesdatakatalog@brreg.no"
+  },
+  "sort": {
+    "by": "Sorter på:",
+    "by.relevance": "Relevans",
+    "by.title": "Tittel",
+    "by.publisher": "Utgiver",
+    "by.modified": "Sist endret"
+  },
+  "search_hit": {
+    "owned": "Eies av"
+  }
 }
