@@ -19,7 +19,7 @@ export class TypeComponent implements OnInit {
 
     public typeForm: FormGroup;
     typeModel = [];
-    selectedTypeIdx = 1;
+    selectedTypeIdx = 0;
 
     constructor(private fb: FormBuilder)
     {
