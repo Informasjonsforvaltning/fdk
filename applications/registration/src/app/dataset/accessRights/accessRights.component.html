@@ -20,7 +20,7 @@
                 </label>
             </div>
         </div>
-        <div class="form-group" *ngIf="showAccessRightComments()" >
+       <div class="form-group" *ngIf="showAccessRightComments()" >
             <label for="accessRightsComment" class="control-label">Skjermingshjemmel:</label>
             <helptext
               text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
@@ -29,12 +29,11 @@
             </helptext>
 
             <restriction-legal-basis-list
-              [restricedPursuantToLegalBasisList]="dataset.restricedPursuantToLegalBasisList"
-              [restricedPursuantToLegalBasisListFormArray]="accessRightsForm.controls.restricedPursuantToLegalBasisList"
-              title="Hjemmel"
+              [restricedPursuantToLegalBasisList]="dataset.restrictedPursuantToLegalBasis"
+              [restricedPursuantToLegalBasisListFormArray]="accessRightsForm.controls.restrictedPursuantToLegalBasis"
+              [legalBasisType]="'skjermingshjemmel'"
               [datasetForm]="accessRightsForm">
             </restriction-legal-basis-list>
-
         </div>
       </div>
     </form>

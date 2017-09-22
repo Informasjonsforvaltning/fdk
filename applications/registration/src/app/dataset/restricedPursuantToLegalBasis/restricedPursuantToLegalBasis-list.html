@@ -1,17 +1,15 @@
-<h3>
-    {{title}}
-</h3>
 <div>
   <div class="restricedPursuantToLegalBasis-list"
        [formGroup]="datasetForm">
-      <div formArrayName="restricedPursuantToLegalBasisList">
+      <div formArrayName="restrictedPursuantToLegalBasis">
           <div *ngFor="let restricedPursuantToLegalBasis of restricedPursuantToLegalBasisList; let idx=index ">
           <br />
               <restriction-legal-basis
                   [formArray]="restricedPursuantToLegalBasisListFormArray"
                   [restricedPursuantToLegalBasis]="restricedPursuantToLegalBasis"
                   (deleteRestricedPursuantToLegalBasis)="removeRestricedPursuantToLegalBasis($event)"
-                  [restricedPursuantToLegalBasisIndex]="idx">
+                  [restricedPursuantToLegalBasisIndex]="idx"
+                  [legalBasisType]="legalBasisType">
               </restriction-legal-basis>
           </div>
           <a href="#" (click)="addRestricedPursuantToLegalBasis()">

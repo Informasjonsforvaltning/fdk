@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Dataset} from "../dataset";
-
+import {ChangeDetectorRef} from "@angular/core";
+import * as _ from 'lodash';
 
 @Component({
     selector: 'accessRights',
@@ -21,7 +22,7 @@ export class AccessRightsComponent implements OnInit {
     accessRightsModel = [];
     selectedAccessRightIdx = 1;
 
-    constructor(private fb: FormBuilder)
+    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef)
     {
         this.accessRightsModel = [
             {
@@ -48,6 +49,7 @@ export class AccessRightsComponent implements OnInit {
 
     ngOnInit() {
         this.accessRightsForm = this.toFormGroup(this.dataset);
+        
         if(!this.dataset.accessRights) {
             this.dataset.accessRights = {uri: this.accessRightsModel[0].uri}
         }
@@ -70,7 +72,8 @@ export class AccessRightsComponent implements OnInit {
                         }
                     });
                 }
-                accessLevel.restricedPursuantToLegalBasis = accessLevel.restricedPursuantToLegalBasisList;
+                this.dataset.restrictedPursuantToLegalBasis = _.merge(this.dataset.restrictedPursuantToLegalBasis, accessLevel.restrictedPursuantToLegalBasis);
+                this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
         );
@@ -81,7 +84,8 @@ export class AccessRightsComponent implements OnInit {
     private toFormGroup(data: Dataset) {
         return this.fb.group({
             accessRights : [ data.accessRights || {}],
-            restricedPursuantToLegalBasisList: this.fb.array([])
+            restrictedPursuantToLegalBasis: this.fb.array([])
+            
         });
     }
 

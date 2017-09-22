@@ -23,6 +23,9 @@ export class RestricedPursuantToLegalBasisFormComponent implements OnInit {
 
     @Input('restricedPursuantToLegalBasisIndex')
     public restricedPursuantToLegalBasisIndex: number;
+    
+    @Input('legalBasisType')
+    public legalBasisType: string;
 
     @Output()
     deleteRestricedPursuantToLegalBasis:EventEmitter<string> = new EventEmitter();

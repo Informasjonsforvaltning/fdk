@@ -18,9 +18,9 @@ export class RestricedPursuantToLegalBasisListComponent implements OnInit {
 
     @Input('restricedPursuantToLegalBasisList')
     public restricedPursuantToLegalBasisList: RestricedPursuantToLegalBasis[];
-
-    @Input('title')
-    public title: string;
+    
+    @Input('legalBasisType')
+    public legalBasisType: string;
 
     restricedPursuantToLegalBasis: RestricedPursuantToLegalBasis;
 
@@ -29,6 +29,7 @@ export class RestricedPursuantToLegalBasisListComponent implements OnInit {
     ngOnInit() {
       this.restricedPursuantToLegalBasisList = this.restricedPursuantToLegalBasisList || [];
       console.log('datasetForm is ', this.datasetForm);
+      console.log(this.restricedPursuantToLegalBasisListFormArray)
     }
 
     addRestricedPursuantToLegalBasis() {

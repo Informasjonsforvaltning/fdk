@@ -56,7 +56,7 @@ export interface Dataset {
   temporals?: PeriodOfTime[];
 
   type?: string;
-  restricedPursuantToLegalBasis?:any[];
+  restrictedPursuantToLegalBasis?:any[];
 
   _lastModified: string;
 

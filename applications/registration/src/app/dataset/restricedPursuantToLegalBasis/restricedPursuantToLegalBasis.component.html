@@ -10,7 +10,7 @@
           <div class="form sub-form" >
             <div class="row">
               <div *ngIf="restricedPursuantToLegalBasisForm.controls.prefLabel" class="col-md-4">
-                <p class="fdk-input-label">Tittel på skjermingshjemmel</p>
+                <p class="fdk-input-label">Tittel på {{legalBasisType}}</p>
                 <tag-input formControlName="prefLabel"
                 maxItems="1"
                 placeholder="ww"
@@ -21,10 +21,21 @@
                 </tag-input>
               </div>
               <div class="col-md-4">
-                <p class="fdk-input-label">Lenke til skjermingshjemmel</p>
+                <p class="fdk-input-label">Lenke til {{legalBasisType}}</p>
                 <input class="fdk-input ng-touched" type="text" />
+              </div>-
+              <!--<div *ngIf="restrictedPursuantToLegalBasisForm.controls.url" class="col-md-4">
+                <p class="fdk-input-label">Lenke til {{legalBasisType}}</p>
+                <tag-input formControlName="url"
+                           maxItems="1"
+                           placeholder="ww"
+                           [onlyFromAutocomplete]="false">
+                  <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                      [autocompleteItems]="['www.hjemmel1.no', 'www.enannenhjemmel.no', 'www.endaenannenhjemmel.com']">
+                  </tag-input-dropdown>
+                </tag-input>
               </div>
-            </div>
+            </div>-->
             <span class="delete-restricedPursuantToLegalBasis-wrapper">
               (<a href=""  class="delete-restricedPursuantToLegalBasis-button" (click)="removeRestricedPursuantToLegalBasis(restricedPursuantToLegalBasisIndex)">Slett hjemmel</a>)
             </span>
