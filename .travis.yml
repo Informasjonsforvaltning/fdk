@@ -11,8 +11,8 @@ apt:
 
 before_install:
   - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - # we need nodejs for building the Angular code
-  - sudo apt-get install -y nodejs
-  - sudo apt-get install -y build-essential
+  - sudo apt-get install -y nodejs > /dev/null
+  - sudo apt-get install -y build-essential > /dev/null
 install:
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
@@ -27,7 +27,7 @@ jobs:
         - comment=First build the project to look for syntax/build problems
 
     - stage: Tests # Run regular unit tests
-      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B && mvn test -B
+      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
       env:
         - comment=Run regular unit tests
 
@@ -39,7 +39,7 @@ jobs:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d && ./waitForDocker.sh &&  ./runNodeTests.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 
