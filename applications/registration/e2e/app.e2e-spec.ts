@@ -107,7 +107,7 @@ describe('registrering-gui App', () => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
 
-
+/*
         it("Should handle saving of themes (checkboxes) in new dataset", async () => {
 
 
@@ -190,6 +190,8 @@ describe('registrering-gui App', () => {
             //expect(datasetReopenedThemeCheckboxes.get(3).getAttribute('checked')).toBeTruthy("Theme 4 should be checked");
 
         });
+
+*/
 
     it("Should save datacatalog fields upon typing", async () => {
 
