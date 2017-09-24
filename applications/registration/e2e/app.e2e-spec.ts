@@ -106,8 +106,8 @@ describe('registrering-gui App', () => {
         console.log("beforeAll");
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
-
-  it("Should save datacatalog fields upon typing", async () => {
+/*
+  it("Should save data catalog title upon typing", async () => {
 
         let catalogLink = element(by.css("#datacatalogs td"));
 
@@ -132,7 +132,7 @@ describe('registrering-gui App', () => {
 
   });
 
-
+*/
 
     it("Should handle saving of themes (checkboxes) in new dataset", async () => {
 
