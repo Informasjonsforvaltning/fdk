@@ -106,14 +106,12 @@ describe('registrering-gui App', () => {
         console.log("beforeAll");
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
-/*
+
   it("Should save data catalog title upon typing", async () => {
 
         let catalogLink = element(by.css("#datacatalogs td"));
-
         await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find catalogLink");
-
-        await  catalogLink.click();
+        await catalogLink.click();
 
         let datasetH1Input = element(by.css(".fdk-register-h1"));
         await browser.wait(EC.presenceOf(datasetH1Input), 10000, "Could not find catalog title element");
@@ -132,7 +130,7 @@ describe('registrering-gui App', () => {
 
   });
 
-*/
+
 
     it("Should handle saving of themes (checkboxes) in new dataset", async () => {
 
@@ -151,18 +149,12 @@ describe('registrering-gui App', () => {
         await datasetThemesElement.get(2).click();
         await datasetThemesElement.get(3).click();
 
-        //let alertSuccess = element(by.css('.fdk-saved'));
-
         browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
         await browser.refresh();
-        let datasetElement = element(by.css(".nv-dataset"));
 
         await openSection("tema");
 
-        let datasetThemesElement21 = element.all(by.css('.dataset-tema .checkbox-replacement'));
-
         let datasetThemesCheckboxes = element.all(by.css('input[id^="theme-checkbox"]'));
-
         await browser.wait(waitForCount(datasetThemesCheckboxes,13), 10000, "Could not find Theme Checkboxes");
 
         await datasetThemesCheckboxes.then(function(items) {
@@ -176,18 +168,17 @@ describe('registrering-gui App', () => {
         console.log("uncheck element 3");
 
         // uncheck theme 3
-        await datasetThemesElement21.get(2).click();
+        await datasetThemesElement.get(2).click();
         let datasetid = "dataset-id-not-found";
+        let datasetElement = element(by.css(".nv-dataset"));
         await browser.wait(EC.presenceOf(datasetElement), 10000, "Could not find datasetid");
         await datasetElement.getAttribute('id').then(function (value) {
           datasetid = value;
           console.log("dataset: ", datasetid);
         });
 
-
         let backButton = element(by.css("#button_back_to_catalog"));
         await browser.wait(EC.presenceOf(backButton), 10000);
-
         await backButton.click();
 
         // Open dataset and make sure the un-clicked theme is off
@@ -210,13 +201,7 @@ describe('registrering-gui App', () => {
           expect(items[3].getAttribute('checked')).toBeTruthy();
         });
 
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
-
     });
-
-
-
 
     it("Should save dataset title after typing", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
@@ -237,16 +222,13 @@ describe('registrering-gui App', () => {
         await browser.wait(EC.textToBePresentInElementValue(datasetTitle, title), 1000);
         expect(<any>page.getDatasetTitle()).toEqual(title);
 
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
-
     });
 
 
     it("Should copy publiser from catalog into new dataset", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
         await catalogLink.click();
+
         await page.createDataset('Should copy publiser from catalog into new dataset');
 
         let alertSuccess = element(by.css('.fdk-saved'));
@@ -256,9 +238,6 @@ describe('registrering-gui App', () => {
         await browser.refresh();
         let datasetPublisherName = element(by.id('datasett-utgiver-navn'));
         expect(<any>datasetPublisherName.getText()).toEqual("RAMSUND OG ROGNAN REVISJON");
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
 
     });
 
@@ -316,13 +295,9 @@ describe('registrering-gui App', () => {
 
         let actualConformsTo = element(by.css("input[placeholder='Standard']"));
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
-        console.log('aaaaa');
+
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
-        console.log('aaaaab');
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
 
     });
 
@@ -349,11 +324,6 @@ describe('registrering-gui App', () => {
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Dekningsområde'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
-
-
     });
 
 
@@ -394,9 +364,6 @@ describe('registrering-gui App', () => {
         await expect(lovdataElement.getText()).toMatch(/http:\/\/lovdata.*);
 
         */
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
 
     });
 
@@ -422,9 +389,6 @@ describe('registrering-gui App', () => {
         let actualSubjects = element(by.css("input[placeholder=Begrep]"));
         await browser.wait(EC.presenceOf(actualSubjects), 10000);
         expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Begrep'] rl-tag-input-item:first-child")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
 
     });
 
@@ -465,10 +429,6 @@ describe('registrering-gui App', () => {
 
         await browser.wait(EC.presenceOf(accrualPeriodicityControl));
         await expect(accrualPeriodicityControl.getText()).toMatch(/årlig.*/);
-
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await   backButton.click();
 
     });
 
@@ -512,9 +472,6 @@ describe('registrering-gui App', () => {
         expect(<any>page.getValueFromElement('contact-url')).toEqual('http://test.no');
         expect(<any>page.getValueFromElement('contact-email')).toEqual('test@test.test');
         expect(<any>page.getValueFromElement('contact-telephone')).toEqual('+47123456');
-        let backButton = element(by.css("#button_back_to_catalog"));
-        await  browser.wait(EC.presenceOf(backButton), 10000);
-        await backButton.click();
 
     });
 
