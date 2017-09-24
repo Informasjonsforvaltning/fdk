@@ -109,7 +109,6 @@ describe('registrering-gui App', () => {
 
 
         it("Should handle saving of themes (checkboxes) in new dataset", async () => {
-            browser.refresh();
 
 
             let catalogLink = element(by.css("#datacatalogs td"));
@@ -118,7 +117,6 @@ describe('registrering-gui App', () => {
 
             await page.createDataset('Should handle saving of themes checkboxes in new dataset');
 
-            browser.sleep(2000);
             // first the checkboxes must be expanded
             await openSection("tema");
 
@@ -233,8 +231,7 @@ describe('registrering-gui App', () => {
         browser.sleep(2000); //  check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the server
         await browser.refresh();
 
-        let section = element(by.cssContainingText(".section-title","Tittel og beskrivelse"));
-        await section.click();
+        await openSection("title-and-description");
 
         let datasetTitle = element(by.css("#dataset-title"));
         await browser.wait(EC.textToBePresentInElementValue(datasetTitle, title), 1000);
