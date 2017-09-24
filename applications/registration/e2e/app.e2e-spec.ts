@@ -109,6 +109,8 @@ describe('registrering-gui App', () => {
 
 
         it("Should handle saving of themes (checkboxes) in new dataset", async () => {
+            browser.refresh();
+            browser.sleep(2000);
 
             let catalogLink = element(by.css("#datacatalogs td"));
             await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
