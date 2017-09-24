@@ -107,93 +107,7 @@ describe('registrering-gui App', () => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
 
-/*
-        it("Should handle saving of themes (checkboxes) in new dataset", async () => {
-
-
-            let catalogLink = element(by.css("#datacatalogs td"));
-            await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
-            await catalogLink.click();
-
-            await page.createDataset('Should handle saving of themes checkboxes in new dataset');
-
-            // first the checkboxes must be expanded
-            await openSection("tema");
-
-            let datasetThemesElement = element.all(by.css('.dataset-tema .checkbox-replacement'));
-            await browser.wait(waitForCount(datasetThemesElement,13), 10000, "Could not find checkboxes");
-            await datasetThemesElement.get(0).click();
-            await datasetThemesElement.get(2).click();
-            await datasetThemesElement.get(3).click();
-
-            //let alertSuccess = element(by.css('.fdk-saved'));
-
-            browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
-            await browser.refresh();
-            let datasetElement = element(by.css(".nv-dataset"));
-
-            await openSection("tema");
-
-            let datasetThemesElement21 = element.all(by.css('.dataset-tema .checkbox-replacement'));
-
-            let datasetThemesCheckboxes = element.all(by.css('input[id^="theme-checkbox"]'));
-
-            await browser.wait(waitForCount(datasetThemesCheckboxes,13), 10000, "Could not find Theme Checkboxes");
-
-            await datasetThemesCheckboxes.then(function(items) {
-                expect(items.length).toBe(13);
-                expect(items[0].getAttribute('checked')).toBeTruthy();
-                expect(items[1].getAttribute('checked')).toBeNull();
-                expect(items[2].getAttribute('checked')).toBeTruthy();
-                expect(items[3].getAttribute('checked')).toBeTruthy();
-            });
-
-            console.log("uncheck element 3");
-
-            // uncheck theme 3
-            await datasetThemesElement21.get(2).click();
-            let datasetid = "dataset-id-not-found";
-            await browser.wait(EC.presenceOf(datasetElement), 10000, "Could not find datasetid");
-            await datasetElement.getAttribute('id').then(function (value) {
-              datasetid = value;
-              console.log("dataset: ", datasetid);
-            });
-
-
-            let backButton = element(by.css("#button_back_to_catalog"));
-            await browser.wait(EC.presenceOf(backButton), 10000);
-
-            await backButton.click();
-
-            // Open dataset and make sure the un-clicked theme is off
-            let datasetRow = element(by.css('tr[id="'+datasetid+'"]'));
-            await browser.wait(EC.presenceOf(datasetRow), 1000, "Could not find dataset id");
-            await datasetRow.click();
-
-            await openSection("tema");
-
-            console.log("reopen themes");
-
-            let datasetReopenedThemeCheckboxes = element.all(by.css('input[id^=theme-checkbox]'));
-            await browser.wait(EC.presenceOf(datasetReopenedThemeCheckboxes.get(5)),5000);
-
-            await datasetReopenedThemeCheckboxes.then((items) => {
-              expect(items.length).toBe(13);
-              expect(items[0].getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
-              expect(items[1].getAttribute('checked')).toBeNull();
-              expect(items[2].getAttribute('checked')).toBeNull("Theme 3 should be UNCHECKED");
-              expect(items[3].getAttribute('checked')).toBeTruthy();
-            });
-
-            //expect(datasetReopenedThemeCheckboxes.get(0).getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
-            //expect(datasetReopenedThemeCheckboxes.get(2).getAttribute('checked')).toBeFalsy("Theme 3 should be UNCHECKED");
-            //expect(datasetReopenedThemeCheckboxes.get(3).getAttribute('checked')).toBeTruthy("Theme 4 should be checked");
-
-        });
-
-*/
-
-    it("Should save datacatalog fields upon typing", async () => {
+  it("Should save datacatalog fields upon typing", async () => {
 
         let catalogLink = element(by.css("#datacatalogs td"));
 
@@ -216,8 +130,92 @@ describe('registrering-gui App', () => {
 
         expect(<any>page.getH1Value()).toEqual('New datacatalog name');
 
+  });
+
+
+
+    it("Should handle saving of themes (checkboxes) in new dataset", async () => {
+
+        let catalogLink = element(by.css("#datacatalogs td"));
+        await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find #datacatalogs td");
+        await catalogLink.click();
+
+        await page.createDataset('Should handle saving of themes checkboxes in new dataset');
+
+        // first the checkboxes must be expanded
+        await openSection("tema");
+
+        let datasetThemesElement = element.all(by.css('.dataset-tema .checkbox-replacement'));
+        await browser.wait(waitForCount(datasetThemesElement,13), 10000, "Could not find checkboxes");
+        await datasetThemesElement.get(0).click();
+        await datasetThemesElement.get(2).click();
+        await datasetThemesElement.get(3).click();
+
+        //let alertSuccess = element(by.css('.fdk-saved'));
+
+        browser.sleep(2000); // check above should check if things have been stored in the backgroun, but doesn't actually work so we sleep as well to give the frontend time to post to the serverwait browser.wait(EC.presenceOf(alertSuccess), 15000);
+        await browser.refresh();
+        let datasetElement = element(by.css(".nv-dataset"));
+
+        await openSection("tema");
+
+        let datasetThemesElement21 = element.all(by.css('.dataset-tema .checkbox-replacement'));
+
+        let datasetThemesCheckboxes = element.all(by.css('input[id^="theme-checkbox"]'));
+
+        await browser.wait(waitForCount(datasetThemesCheckboxes,13), 10000, "Could not find Theme Checkboxes");
+
+        await datasetThemesCheckboxes.then(function(items) {
+            expect(items.length).toBe(13);
+            expect(items[0].getAttribute('checked')).toBeTruthy();
+            expect(items[1].getAttribute('checked')).toBeNull();
+            expect(items[2].getAttribute('checked')).toBeTruthy();
+            expect(items[3].getAttribute('checked')).toBeTruthy();
+        });
+
+        console.log("uncheck element 3");
+
+        // uncheck theme 3
+        await datasetThemesElement21.get(2).click();
+        let datasetid = "dataset-id-not-found";
+        await browser.wait(EC.presenceOf(datasetElement), 10000, "Could not find datasetid");
+        await datasetElement.getAttribute('id').then(function (value) {
+          datasetid = value;
+          console.log("dataset: ", datasetid);
+        });
+
+
+        let backButton = element(by.css("#button_back_to_catalog"));
+        await browser.wait(EC.presenceOf(backButton), 10000);
+
+        await backButton.click();
+
+        // Open dataset and make sure the un-clicked theme is off
+        let datasetRow = element(by.css('tr[id="'+datasetid+'"]'));
+        await browser.wait(EC.presenceOf(datasetRow), 1000, "Could not find dataset id");
+        await datasetRow.click();
+
+        await openSection("tema");
+
+        console.log("reopen themes");
+
+        let datasetReopenedThemeCheckboxes = element.all(by.css('input[id^=theme-checkbox]'));
+        await browser.wait(EC.presenceOf(datasetReopenedThemeCheckboxes.get(5)),5000);
+
+        await datasetReopenedThemeCheckboxes.then((items) => {
+          expect(items.length).toBe(13);
+          expect(items[0].getAttribute('checked')).toBeTruthy("Theme 1 should be checked");
+          expect(items[1].getAttribute('checked')).toBeNull();
+          expect(items[2].getAttribute('checked')).toBeNull("Theme 3 should be UNCHECKED");
+          expect(items[3].getAttribute('checked')).toBeTruthy();
+        });
+
+        await  browser.wait(EC.presenceOf(backButton), 10000);
+        await backButton.click();
 
     });
+
+
 
 
     it("Should save dataset title after typing", async () => {
