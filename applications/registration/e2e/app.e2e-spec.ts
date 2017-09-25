@@ -140,6 +140,7 @@ describe('registrering-gui App', () => {
 
         await page.createDataset('Should handle saving of themes checkboxes in new dataset');
 
+/*
         // first the checkboxes must be expanded
         await openSection("tema");
 
@@ -201,6 +202,7 @@ describe('registrering-gui App', () => {
           expect(items[3].getAttribute('checked')).toBeTruthy();
         });
 
+*/
     });
 
     it("Should save dataset title after typing", async () => {
