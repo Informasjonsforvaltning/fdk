@@ -51,4 +51,5 @@ jobs:
         script:
           - ./travisPushToDockerHub.sh
         on:
+          condition: $TRAVIS_TAG = ''
           branch: develop
