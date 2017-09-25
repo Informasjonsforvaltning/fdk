@@ -38,10 +38,10 @@ jobs:
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
-    - stage: Tests # Run Angular e2e tests
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
-      env:
-        - comment=Run Angular e2e tests
+#    - stage: Tests # Run Angular e2e tests
+#      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
+#      env:
+#        - comment=Run Angular e2e tests
 
     - stage: deploy
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
