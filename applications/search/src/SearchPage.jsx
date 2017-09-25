@@ -295,7 +295,7 @@ export class SearchPage extends React.Component {
 											itemComponent={RefinementOptionThemes}
 											/>
 									</div>
-									<div id="datasets" className="col-sm-8 list-group">
+									<div id="datasets" className="col-sm-8">
 									<ActionBar>
 										<ActionBarRow>
 											<SortingSelector listComponent={Select2} options={[
