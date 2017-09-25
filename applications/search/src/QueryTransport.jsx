@@ -32,32 +32,32 @@ export class QueryTransport extends AxiosESTransport {
     let themeFilter = '';
     let multiplePublishers = false;
     let multipleThemes = false;
-    if(query.filter) { // there is an aggregation filter
-      if(query.filter.bool) { // array of filters
-        query.filter.bool.must.forEach((filter) => {
-          if(filter.term[publisherKey]) {
+    if(query.post_filter) { // there is an aggregation post_filter
+      if(query.post_filter.bool) { // array of post_filters
+        query.post_filter.bool.must.forEach((post_filter) => {
+          if(post_filter.term[publisherKey]) {
             if(publisherFilter.length === 0) {
               publisherFilter += '&publisher=';
             }
             if (multiplePublishers) {
                 publisherFilter += ',';
             }
-            publisherFilter += encodeURIComponent(filter.term[publisherKey]);
+            publisherFilter += encodeURIComponent(post_filter.term[publisherKey]);
             multiplePublishers = true;
-          } else if(filter.term[themeKey]) {
+          } else if(post_filter.term[themeKey]) {
             if(themeFilter.length === 0) {
               themeFilter += '&theme=';
             }
             if (multipleThemes) {
                 themeFilter += ",";
             }
-            themeFilter += filter.term[themeKey];
+            themeFilter += post_filter.term[themeKey];
             multipleThemes = true;
           }
         })
-      } else if(query.filter.term) { // single filter
-        publisherFilter = (query.filter.term[publisherKey] ? '&publisher=' + encodeURIComponent(query.filter.term[publisherKey]) : '');
-  			themeFilter = ((query.filter.term[themeKey]) ? '&theme=' + query.filter.term[themeKey] : '');
+      } else if(query.post_filter.term) { // single post_filter
+        publisherFilter = (query.post_filter.term[publisherKey] ? '&publisher=' + encodeURIComponent(query.post_filter.term[publisherKey]) : '');
+  			themeFilter = ((query.post_filter.term[themeKey]) ? '&theme=' + query.post_filter.term[themeKey] : '');
       }
     }
 
@@ -86,7 +86,6 @@ export class QueryTransport extends AxiosESTransport {
           console.log('other! (should not happen)');
         }
     }
-
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +

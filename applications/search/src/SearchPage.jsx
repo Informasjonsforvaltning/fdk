@@ -298,14 +298,14 @@ export class SearchPage extends React.Component {
 									<div id="datasets" className="col-sm-8">
 									<ActionBar>
 										<ActionBarRow>
-											<SortingSelector listComponent={Select2} options={[
+											<SortingSelector options={[
 												{label:getText('sort.by') + ' ' + getText('sort.by.relevance'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
                         {label:getText('sort.by') + ' ' + getText('sort.by.title'), field:"title", order:"asc"},
 												{label:getText('sort.by') + ' ' + getText('sort.by.modified'), field:"modified", order:"desc"},
 												{label:getText('sort.by') + ' ' + getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
 											]}/>
 											<HitsStats/>
-											<PageSizeSelector listComponent={Select2} options={[5,10,25,30,40,50]}/>
+											<PageSizeSelector  options={[5,10,25,30,40,50]}/>
 										</ActionBarRow>
 										<ActionBarRow>
 											{/*<ResetFilters/> */}
