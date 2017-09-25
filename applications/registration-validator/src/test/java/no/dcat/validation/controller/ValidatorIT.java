@@ -33,11 +33,6 @@ public class ValidatorIT {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void actuatorIsRunning() throws Exception {
-        assertThat(restTemplate.getForObject("/health", String.class), containsString("UP"));
-    }
-
-    @Test
     public void webserviceIsRunning() throws Exception {
         assertThat(restTemplate.getForObject("/", String.class), containsString("_links"));
     }

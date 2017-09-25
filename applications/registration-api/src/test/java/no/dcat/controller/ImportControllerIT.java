@@ -4,13 +4,16 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
+import no.dcat.service.CatalogRepository;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -31,6 +34,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@AutoConfigureMockMvc
 public class ImportControllerIT {
     private static Logger logger = LoggerFactory.getLogger(ImportControllerIT.class);
 
@@ -40,7 +44,13 @@ public class ImportControllerIT {
     @Autowired
     CatalogController catalogController;
 
+    @Autowired
+    private CatalogRepository catalogRepository;
 
+    @Before
+    public void before() {
+        catalogRepository.deleteAll();
+    }
     @Test
     public void importCatalogOK() throws Throwable {
         String catalogId = "958935420";
@@ -110,8 +120,8 @@ public class ImportControllerIT {
      * Catalog found in import file, but has no dataset in the file.
      * @throws Throwable
      */
-    @Test(expected = DatasetNotFoundException.class)
-    public void importCatalogThrowsDatasetNotFoundException() throws Throwable {
+    @Test(expected = CatalogNotFoundException.class)
+    public void importCatalogThrowsException() throws Throwable {
         String catalogId = "958935420";
 
         HttpEntity<Catalog> result = importController.importCatalog(catalogId, "export-w-error.ttl");

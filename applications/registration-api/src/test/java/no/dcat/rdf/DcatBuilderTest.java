@@ -50,7 +50,7 @@ public class DcatBuilderTest {
         catalog.setId("987654321");
         catalog.setTitle(map("nb", "Tittel"));
         catalog.setDescription(map("nb", "Beskrivelse"));
-        catalog.setUri(RegistrationFactory.INSTANCE.getCatalogUri(catalog.getId()));
+        catalog.setUri(RegistrationFactory.getCatalogUri(catalog.getId()));
 
         Publisher publisher = new Publisher();
         publisher.setId("987654321");
@@ -59,13 +59,13 @@ public class DcatBuilderTest {
 
         catalog.setPublisher(publisher);
 
-        Dataset dataset = RegistrationFactory.INSTANCE.createDataset(catalog.getId());
+        Dataset dataset = RegistrationFactory.createDataset(catalog.getId());
         catalog.setDataset(Collections.singletonList(dataset));
 
         dataset.setTitle(map("nb", "Datasettittel"));
         dataset.setDescription(map("nb", "Datasettbeskrivelse"));
 
-        Contact contact = RegistrationFactory.INSTANCE.createContact(catalog.getId());
+        Contact contact = RegistrationFactory.createContact(catalog.getId());
         contact.setFullname("Fullname");
         contact.setEmail("test@testetaten.no");
         contact.setHasURL("http://testetaten.no/url");
@@ -93,7 +93,7 @@ public class DcatBuilderTest {
         theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
         dataset.setTheme(Collections.singletonList(theme));
 
-        Distribution distribution = RegistrationFactory.INSTANCE.createDistribution(catalog.getId(), dataset.getId());
+        Distribution distribution = RegistrationFactory.createDistribution(catalog.getId(), dataset.getId());
         distribution.setAccessURL(Collections.singletonList("http://testetaten.no/data/access"));
         distribution.setTitle(map("nb", "Standard data"));
         distribution.setDescription(map("nb", "Beskrivelsen er ikke tilgjengelig"));

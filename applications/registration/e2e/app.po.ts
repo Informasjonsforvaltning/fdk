@@ -41,7 +41,7 @@ export class RegistreringGuiPage {
         let newDatasetButton = element(by.id("button_new_dataset"));
         await newDatasetButton.click();
 
-        let section = element(by.css(".section-title"));
+        let section = element(by.css("label[for='title-and-description-toggle']"));
         await section.click();
 
         let datasetTitle = element(by.id("dataset-title"));

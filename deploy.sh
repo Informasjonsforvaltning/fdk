@@ -9,55 +9,132 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-git fetch --all --tags --prune
+components="fuseki harvester harvester-api nginx reference-data registration registration-api registration-auth registration-validator search search-api"
 
-  DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
+
+# remove all local tags
+git tag -d $(git tag -l)
+# fetch all tags from github
+git fetch --tags
+
+DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
+
+docker login --username ${dockerUsername} --password ${dockerPassword}
+
+function dockerTag {
+  component=$1
+  fromEnvironment=$2
+  toEnvironment=$3
+
+  # pull image from docker hub (overwrites local image if it exists)
+  docker pull dcatno/${component}:${fromEnvironment}_latest
+
+  # tag and push latest eg. registration_latest
+  docker tag dcatno/${component}:${fromEnvironment}_latest dcatno/${component}:${toEnvironment}_latest
+  docker push dcatno/${component}:${toEnvironment}_latest
+
+  # tag and push with date eg. registration_2017-01-01T23_59_01
+  docker tag dcatno/${component}:${fromEnvironment}_latest dcatno/${component}:${toEnvironment}_${DATETIME}
+  docker push dcatno/${component}:${toEnvironment}_${DATETIME}
+}
+
+function gitTag {
+  fromEnvironment=$1
+  toEnvironment=$2
+
+
+  # checkout commit for tag that we are using as the base to tag on top of
+  git checkout tags/${fromEnvironment}_latest
+
+  # remove ***_latest tag from github and locally
+  git push --delete origin ${toEnvironment}_latest || true
+  git tag --delete ${toEnvironment}_latest || true
+
+   # tag checked-out commit with ***_latest tag
+   git tag ${toEnvironment}_latest
+   git tag ${toEnvironment}_${DATETIME}
+
+  # don't forget to checkout develop again, don't want any surprises later
+  git checkout develop
+
+  # push all tags to github
+  git push origin --tags
+
+}
+
+function openshiftDeploy {
+    osEnvironment=$1
+    dateTag=$2
+
+    #Delete old services from openshift, and deploy new ones
+    sh runDeleteServicesInOpenshift.sh $osEnvironment
+    sh runCreateAllServicesInOpenshift.sh $osEnvironment $datetag $dateTag
+}
 
 
 if [ "$1" == "st1" ] ; then
 
- docker login --username ${dockerUsername} --password ${dockerPassword}
+  for i in $components
+  do
+    dockerTag ${i} ut1 st1
+  done
 
- docker pull dcatno/registration:latest
- docker tag dcatno/registration:latest dcatno/registration:st1_latest
- docker push dcatno/registration:st1_latest
- docker tag dcatno/registration:latest dcatno/registration:st1_${DATETIME}
- docker push dcatno/registration:st1_${DATETIME}
+  gitTag ut1 st1
 
-  git push --delete origin st1_latest || true
-  git tag --delete st1_latest || true
+  #todo dobbeltsjekk at dockertag blir riktig
+  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
-   git tag st1_latest
-   git tag st1_${DATETIME}
 
-  git push origin --tags
 
-  echo "here"
+elif [ "$1" == "tt1" ] ; then
 
+  for i in $components
+  do
+    dockerTag registration st1 tt1
+  done
+
+  gitTag st1 tt1
+
+  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
+
+
+elif [ "$1" == "ppe" ] ; then
+  for i in $components
+  do
+    dockerTag registration tt1 ppe
+  done
+
+  gitTag tt1 ppe
+
+  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
+
+
+
+elif [ "$1" == "prod" ] ; then
+
+  for i in $components
+  do
+    dockerTag registration ppe prod
+  done
+
+  gitTag ppe prod
+
+  #todo: sjekk om prod-navnet er prd eller prod
+  openshiftDeploy prod ${toEnvironment}_${DATETIME}
+
+else
+
+  echo "####################################"
+  echo "####################################"
+  echo ""
+  echo "First argument expect to be the name of an environment"
+  echo "Eg. ./deploy.sh st1"
+  echo ""
+  echo "####################################"
+  echo "####################################"
 fi
 
-if [ "$1" == "tt1" ] ; then
 
- docker login --username ${dockerUsername} --password ${dockerPassword}
-
- docker pull dcatno/registration:st1_latest
- docker tag dcatno/registration:st1_latest dcatno/registration:tt1_latest
- docker push dcatno/registration:tt1_latest
- docker tag dcatno/registration:st1_latest dcatno/registration:tt1_${DATETIME}
- docker push dcatno/registration:tt1_${DATETIME}
+echo "Done"
 
 
-  git push --delete origin tt1_latest || true
-  git tag --delete tt1_latest || true
-
-  git checkout tags/st1_latest
-
-   git tag tt1_latest
-   git tag tt1_${DATETIME}
-
-  git checkout develop
-  git push origin --tags
-
-  echo "here"
-
-fi

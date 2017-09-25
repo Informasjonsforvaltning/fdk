@@ -50,6 +50,7 @@ export class DatasetComponent implements OnInit {
     dateFormat: 'yyyy.mm.dd',
   };
   availableLanguages: any;
+  summaries:any = {};
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -105,6 +106,7 @@ export class DatasetComponent implements OnInit {
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
+      console.log('dataset is ', dataset);
       this.dataset = dataset;
       if (dataset.languages) {
         this.availableLanguages.forEach((language, languageIndex, languageArray) => {
@@ -115,6 +117,7 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
+      this.buildSummaries(dataset);
 
       // Only allows one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
@@ -128,7 +131,6 @@ export class DatasetComponent implements OnInit {
       this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
       this.dataset.languages = [];
 
-
       dataset.samples = dataset.samples || [];
       dataset.restrictedPursuantToLegalBasis = dataset.restrictedPursuantToLegalBasis || [];
       dataset.languages = dataset.languages || [];
@@ -138,7 +140,7 @@ export class DatasetComponent implements OnInit {
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-
+          console.log('dataset is ', dataset);
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
             this.availableLanguages.forEach((language, index) => {
@@ -206,13 +208,22 @@ export class DatasetComponent implements OnInit {
 
     });
   }
-
+  buildSummaries(dataset) {
+    this.summaries.geotime = "";
+    if(dataset.spatials && dataset.spatials.length > 0) {
+      this.summaries.geotime += dataset.spatials.map(spatial=>{return spatial.uri}).join(', ');
+    }
+    if(dataset.languages && dataset.languages.length > 0) {
+      this.summaries.geotime += ' ' + dataset.languages.map(language=>{return language.prefLabel['nb']}).join(', ');
+    }
+    this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
+  }
   onSave(ok: boolean) {
     this.save();
   }
 
   save(): void {
-
+    this.buildSummaries(this.dataset);
     this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
       .then(() => {
@@ -314,7 +325,7 @@ export class DatasetComponent implements OnInit {
       })),
       published: data.registrationStatus == "PUBLISH"
     });
-   
+
     return formGroup;
   }
 }

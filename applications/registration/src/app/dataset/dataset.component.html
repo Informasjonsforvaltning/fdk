@@ -108,14 +108,30 @@
   </div>
 </div>
 
-
 <div class="row justify-content-md-center" *ngIf="dataset">
   <label for="terms-toggle" class="col-md-push-1 col-md-2 section-title">
     Begrep og søkeord<b class="caret-right"></b>
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="terms-toggle" class="expand-checkbox" />
-    <label for="terms-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+    <label for="tema-toggle" class="collapsed-content expand-label">
+      <div class="truncate">
+        <span *ngIf="(dataset.subjects && dataset.subjects.length !== 0)">
+          Begrep:
+          <span class="" *ngFor="let subject of dataset.subjects; let i=index" >
+            <span>{{subject}}</span>
+          </span>
+        </span>
+        <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">
+          Søkeord:
+          <span class="" *ngFor="let keyword of dataset.keywords; let i=index" >
+            <span *ngIf="keyword.nb">{{keyword.nb}}</span>
+          </span>
+        </span>
+      </div>
+      <div *ngIf="(dataset.subjects && dataset.subjects.length === 0) || (dataset.keywords && dataset.keywords.length === 0)">Klikk for å fylle ut</div>
+    </label>
+    <label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label>
     <div class="expanded-content">
       <information [dataset]="dataset" (onSave)="onSave($event)"></information>
     </div>
@@ -128,7 +144,9 @@
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="geotime-toggle" class="expand-checkbox" />
-    <label for="geotime-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+    <label for="tema-toggle" class="collapsed-content expand-label">
+      {{summaries.geotime}}
+    </label>
     <div class="expanded-content">
       <div class="fdk-input-container" *ngIf="dataset.title">
         <p class="fdk-input-label">Geografisk avgrensning</p>
@@ -252,9 +270,7 @@
   </div>
 </div>
 
-
 <div class="row justify-content-md-center">
-
   <div class="row">
     <div class="col-md-push-3 col-md-8 fdk-changes-bar fdk-saved" *ngIf="saved">
       <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
@@ -284,6 +300,4 @@
     </label>
     <div class="verticalAlignCenter" style="padding-left:4px" [style.fontWeight]="dataset.registrationStatus == 'PUBLISH' ? 'bold':''">Publisert</div>
   </div>
-
-
 </div>
