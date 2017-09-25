@@ -27,7 +27,7 @@ import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
 import {addOrReplaceParam} from './addOrReplaceUrlParam.js';
-import localization from './components/localization';
+import localization from './components/localization'
 
 const host = "/dcat";
 const searchkit = new SearchkitManager(
@@ -280,7 +280,7 @@ export class SearchPage extends React.Component {
 									<div className="col-sm-4 flex-move-first-item-to-bottom">
 										<RefinementListFilter
 											id="publisher"
-											title={getText('facet.organisation')}
+											title={localization.facet.organisation}
 											field="publisher.name.raw"
 											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
@@ -288,7 +288,7 @@ export class SearchPage extends React.Component {
 											/>
 										<RefinementListFilter
 											id="theme"
-											title={getText('facet.theme')}
+											title={localization.facet.theme}
 											field="theme.code.raw"
 											operator="AND"
 											size={5/* NOT IN USE!!! see QueryTransport.jsx */}
@@ -298,12 +298,14 @@ export class SearchPage extends React.Component {
 									<div id="datasets" className="col-sm-8">
 									<ActionBar>
 										<ActionBarRow>
-											<SortingSelector options={[
-												{label:getText('sort.by') + ' ' + getText('sort.by.relevance'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
-                        {label:getText('sort.by') + ' ' + getText('sort.by.title'), field:"title", order:"asc"},
-												{label:getText('sort.by') + ' ' + getText('sort.by.modified'), field:"modified", order:"desc"},
-												{label:getText('sort.by') + ' ' + getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
-											]}/>
+											<SortingSelector
+												options={[
+													{label:getText('sort.by') + ' ' + getText('sort.by.relevance'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
+                        	{label:getText('sort.by') + ' ' + getText('sort.by.title'), field:"title", order:"asc"},
+													{label:getText('sort.by') + ' ' + getText('sort.by.modified'), field:"modified", order:"desc"},
+													{label:getText('sort.by') + ' ' + getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
+												]}
+											/>
 											<HitsStats/>
 											<PageSizeSelector  options={[5,10,25,30,40,50]}/>
 										</ActionBarRow>

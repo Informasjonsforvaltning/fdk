@@ -11,17 +11,31 @@ export class RefinementOptionPublishers extends React.Component {
 		  const className = block()
 		    .state({ active, disabled })
 		    .mix(bemBlocks.container("item"))
+			/*
+			 <a
+			 data="ENVI"
+			 href="#"
+			 onClick={props.onClick}
+			 className=
+			 {props.bemBlocks.option().state({active:props.active}).mix(props.bemBlocks.container("item")) +
+			 ' list-group-item fdk-label fdk-label-default'}
+			 >{props.label}
+			 <span className="fdk-badge">(<span className="fdk-count">{props.count}</span>)</span>
+			 </a>
+			 */
 			return (
-						<a
-              data="ENVI"
-              href="#"
-              onClick={props.onClick}
-              className=
+				<div className="checkbox">
+					<label>
+						<input
+							type="checkbox"
+							onClick={props.onClick}
+							className=
                 {props.bemBlocks.option().state({active:props.active}).mix(props.bemBlocks.container("item")) +
                 ' list-group-item fdk-label fdk-label-default'}
-            >{props.label}
-						 <span className="fdk-badge">(<span className="fdk-count">{props.count}</span>)</span>
-						 </a>
+						/>
+            {props.label} ({props.count})
+					</label>
+				</div>
 			);
 		}
 }
