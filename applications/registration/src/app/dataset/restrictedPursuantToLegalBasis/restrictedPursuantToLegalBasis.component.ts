@@ -30,6 +30,9 @@ export class restrictedPursuantToLegalBasisFormComponent implements OnInit {
     @Output()
     deleterestrictedPursuantToLegalBasis:EventEmitter<string> = new EventEmitter();
 
+    @Output()
+    onSave = new EventEmitter<boolean>();
+
     public restrictedPursuantToLegalBasisForm: FormGroup;
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
@@ -41,13 +44,36 @@ export class restrictedPursuantToLegalBasisFormComponent implements OnInit {
        console.log('restrictedPursuantToLegalBasisForm is ', this.restrictedPursuantToLegalBasisForm.controls['prefLabel']);
        this.restrictedPursuantToLegalBasisListFormArray.push(this.restrictedPursuantToLegalBasisForm);
        console.log('bb');
+
+
+       this.restrictedPursuantToLegalBasisForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
+        restrictedPursuantToLegalBasis => {
+            console.log(' restrictedPursuantToLegalBasis is ', restrictedPursuantToLegalBasis);
+            /*if (accessLevel.accessRightsComment && accessLevel.accessRightsComment.length === 0) {
+                this.dataset.accessRightsComments = null;
+            } else {
+                this.dataset.accessRightsComments = accessLevel.accessRightsComment;
+            }
+            if (accessLevel.accessRights) {
+                this.accessRightsModel.forEach(entry => {
+                    if (entry.id == accessLevel.accessRights) {
+                        this.dataset.accessRights = {uri: entry.uri}
+                    }
+                });
+            } */
+            //console.log("accessRights.save: ", this.dataset.legalBasisForRestriction);
+            //this.dataset.legalBasisForRestriction = _.merge(this.dataset.legalBasisForRestriction, accessLevel.legalBasisForRestriction);
+            this.cdr.detectChanges();
+            this.onSave.emit(true);
+        }
+    );
     }
 
     private toFormGroup(restrictedPursuantToLegalBasis: restrictedPursuantToLegalBasis) {
         const formGroup = this.fb.group({
-            uri: [ restrictedPursuantToLegalBasis.uri || 'uri1', Validators.required ],
-            foafHomepage: [ restrictedPursuantToLegalBasis.foafHomepage || 'url1' ],
-            prefLabel:[ restrictedPursuantToLegalBasis.prefLabel ? restrictedPursuantToLegalBasis.prefLabel[this.language] : 'label1' ]
+            uri: [ restrictedPursuantToLegalBasis.uri || '', Validators.required ],
+            foafHomepage: [ restrictedPursuantToLegalBasis.foafHomepage || '' ],
+            prefLabel:[ restrictedPursuantToLegalBasis.prefLabel ? restrictedPursuantToLegalBasis.prefLabel[this.language] : '' ]
         });
         return formGroup;
     }

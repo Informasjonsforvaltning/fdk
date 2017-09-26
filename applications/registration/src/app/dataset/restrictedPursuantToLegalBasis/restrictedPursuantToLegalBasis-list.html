@@ -9,7 +9,8 @@
                   [restrictedPursuantToLegalBasis]="restrictedPursuantToLegalBasis"
                   (deleterestrictedPursuantToLegalBasis)="removerestrictedPursuantToLegalBasis($event)"
                   [restrictedPursuantToLegalBasisIndex]="idx"
-                  [legalBasisType]="legalBasisType">
+                  [legalBasisType]="legalBasisType"
+                  (onSave)="onSave($event)">                  
               </restriction-legal-basis>
           </div>
           <a href="#" (click)="addrestrictedPursuantToLegalBasis()">

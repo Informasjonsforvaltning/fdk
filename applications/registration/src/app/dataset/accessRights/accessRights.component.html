@@ -32,7 +32,8 @@
               [restrictedPursuantToLegalBasisList]="dataset.legalBasisForRestriction"
               [restrictedPursuantToLegalBasisListFormArray]="accessRightsForm.controls.restrictedPursuantToLegalBasis"
               [legalBasisType]="'skjermingshjemmel'"
-              [datasetForm]="accessRightsForm">
+              [datasetForm]="accessRightsForm"
+              (onSave)="onSave($event)">
             </restriction-legal-basis-list>
         </div>
       </div>

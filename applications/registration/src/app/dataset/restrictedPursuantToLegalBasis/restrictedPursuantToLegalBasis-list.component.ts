@@ -44,6 +44,10 @@ export class restrictedPursuantToLegalBasisListComponent implements OnInit {
           return false;
     }
 
+    onSave(ok: boolean) {
+        console.log("SAVED");
+    }
+
     removerestrictedPursuantToLegalBasis(idx: number) {
         if (this.restrictedPursuantToLegalBasisList.length > 0) {
             this.restrictedPursuantToLegalBasisList.splice(idx, 1);

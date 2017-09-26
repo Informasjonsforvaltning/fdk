@@ -72,14 +72,18 @@ export class AccessRightsComponent implements OnInit {
                         }
                     });
                 }
+                this.dataset.legalBasisForRestriction = [];
+                accessLevel.restrictedPursuantToLegalBasis.array.forEach(restrictedPursuantToLegalBasis => {
+                    this.dataset.legalBasisForRestriction.push(restrictedPursuantToLegalBasis);
+                });
+                //this.dataset.legalBasisForRestriction = _.merge(this.dataset.legalBasisForRestriction, accessLevel.legalBasisForRestriction);
+                
                 console.log("accessRights.save: ", this.dataset.legalBasisForRestriction);
-                this.dataset.legalBasisForRestriction = _.merge(this.dataset.legalBasisForRestriction, accessLevel.legalBasisForRestriction);
                 this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
         );
     }
-
 
 
     private toFormGroup(data: Dataset) {
