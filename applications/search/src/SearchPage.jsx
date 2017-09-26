@@ -29,7 +29,7 @@ const qs = require('qs');
 import {getText} from './getText.js';
 import {addOrReplaceParam} from './addOrReplaceUrlParam.js';
 import localization from './components/localization';
-import SearchHitItem from './components/search-hit-item';
+import {SearchHitItem} from './components/search-hit-item/index.jsx';
 
 const host = "/dcat";
 const searchkit = new SearchkitManager(

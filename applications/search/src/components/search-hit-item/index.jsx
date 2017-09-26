@@ -1,29 +1,63 @@
-import React from 'react';
+import * as React from "react";
 import PropTypes from 'prop-types';
 import * as _ from "lodash";
 import cx from 'classnames';
 const qs = require('qs');
 const defaults = require("lodash/defaults");
 
+import localization from '../../components/localization';
 
-export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
+export class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
     };
+    this.extractDomain = this.extractDomain.bind(this);
   }
 
-  componentDidMount() {
+  extractDomain(url) {
+    var domain;
+    //find & remove protocol (http, ftp, etc.) and get domain
+    if (url.indexOf("://") > -1) {
+      domain = url.split('/')[2];
+    }
+    else {
+      domain = url.split('/')[0];
+    }
+    //find & remove port number
+    domain = domain.split(':')[0];
+    return domain;
+  }
 
+  _renderFormats(source) {
+    let distribution = source.distribution;
+    let formatRet;
+    if(source.distribution) {
+      formatRet = Object.keys(distribution).map(key => {
+        if(distribution[key].format) {
+          let formatArray = distribution[key].format.trim().split(',');
+          let ret = '';
+          formatArray.forEach((format) => {
+            if (format !== null) {
+              ret += '<div class="fdk-button-format fdk-button-format-inactive">';
+              ret += '<i class="fa fa-download fdk-fa-left"></i>';
+              ret += format;
+              ret += '</div>';
+            }
+          });
+          return ret;
+        } return null;
+      });
+    }
+    return formatRet;
   }
 
   render() {
-    /*
-    const {bemBlocks, result} = props;
+    let props = this.props;
+    const {result} = props;
     let url =  'datasets?id=' + encodeURIComponent(result._id);
     let queryObj = qs.parse(window.location.search.substr(1));
-    var language = queryObj.lang ? queryObj.lang : 'nb';
+    let language = queryObj.lang ? queryObj.lang : 'nb';
     if(!queryObj.lang || queryObj.lang === 'nb') {
       url += '&lang=nb';
     } else if(queryObj.lang === 'nn'){
@@ -31,7 +65,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     } else {
       url += '&lang=en';
     }
-    const source:any = _.extend({}, result._source, result.highlight)
+    const source:any = _.extend({}, result._source, result.highlight);
+
     let themeLabels = '';
     if(source.theme) {
       source.theme.forEach((singleTheme, index)=> {
@@ -42,42 +77,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         }
       });
     }
-    let landingPage = '';
-    if (source.landingPage) {
-      landingPage += '<a href="' + source.landingPage + '" target="_blank"><span class=\"glyphicon glyphicon-home\"></span></a>'
-    }
-    let distributionLabels = '';
-    if(source.distribution) {
-      source.distribution.forEach((dist) => {
-        if(dist.format) {
-          distributionLabels += '<span className="label label-info">';
-          distributionLabels += dist.format;
-          distributionLabels += '</span>';
-        }
-      })
-    }
-    let commaSeparatedKeywords = '';
-    if(source.keyword && source.keyword.nb) {
-      source.keyword.nb.forEach(function(keyword, index) {
-        commaSeparatedKeywords += '<span className="label label-default">';
-        commaSeparatedKeywords += keyword; // translate!
-        commaSeparatedKeywords += '</span>';
-      });
-    }
-    let logoHTML = '';
-    if(source.contactPoint && source.contactPoint.email) {
-      const publisherRootDomain = extractDomain(source.contactPoint.email).replace('www.','');
-      const logoUrl = 'https://logo.clearbit.com/' + publisherRootDomain;
-      logoHTML = '<img src="' + logoUrl + '" alt="Logo for ' + publisherRootDomain +'" />';
-    }
-    let themeTitle = ""; // https://logo.clearbit.com/brreg.no
-    if(source.theme && source.theme.title) {
-      themeTitle = source.theme.title.nb;
-    }
 
     let distribution_restricted = false;
     let distribution_public = false;
-
 
     if (source.accessRights.authorityCode === 'RESTRICTED') {
       distribution_restricted = true;
@@ -93,54 +95,26 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       }
     );
 
-    let distributionFormats = '';
-    if(source.distribution) {
-      source.distribution.forEach((dist) => {
-        if(dist.format) {
-          distributionFormats += '<div class="fdk-button-format fdk-button-format-inactive"><i class="fa fa-download fdk-fa-left"></i>';
-          distributionFormats += dist.format;
-          distributionFormats += '</div>';
-        }
-      })
-    }
-    */
-
-    /*
-     <div className="fdk-container fdk-container-search-hit">
-     <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
-
-     <div>
-     {localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
-     <a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
-     </div>
-
-
-     <p
-     className="fdk-p-search-hit"
-     dangerouslySetInnerHTML={
-     {__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
-     >
-
-     </p>
-
-
-
-     <div className={distributionClass}>
-     <strong>{source.accessRights.prefLabel[language]}</strong>
-     <br />
-     {distributionFormats}
-     </div>
-
-     {source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
-
-     </div>
-     */
-
     return (
-      <div>tester</div>
-    )
+      <div className="fdk-container fdk-container-search-hit">
+        <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
+        <div>
+          {localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
+          <a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
+        </div>
+        <p
+          className="fdk-p-search-hit"
+          dangerouslySetInnerHTML={
+            {__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
+        >
+        </p>
+        <div className={distributionClass}>
+          <strong>{source.accessRights.prefLabel[language]}</strong>
+          <br />
+          <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
+        </div>
+        {source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
+      </div>
+    );
   }
-
 }
-
-
