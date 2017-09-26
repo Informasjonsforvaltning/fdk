@@ -42,8 +42,8 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
 import {restrictedPursuantToLegalBasisListComponent} from "./dataset/restrictedPursuantToLegalBasis/restrictedPursuantToLegalBasis-list.component";
 import {restrictedPursuantToLegalBasisFormComponent} from "./dataset/restrictedPursuantToLegalBasis/restrictedPursuantToLegalBasis.component";
-import {BasisForProcessingListComponent} from "./dataset/basisForProcessing/basisForProcessing-list.component";
-import {BasisForProcessingFormComponent} from "./dataset/basisForProcessing/basisForProcessing.component";
+import {BasisForProcessingListComponent} from "./dataset/legalBasisForProcessing/legalBasisForProcessing-list.component";
+import {BasisForProcessingFormComponent} from "./dataset/legalBasisForProcessing/legalBasisForProcessing.component";
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 

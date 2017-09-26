@@ -132,7 +132,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.languages = [];
 
       dataset.samples = dataset.samples || [];
-      dataset.restrictedPursuantToLegalBasis = dataset.restrictedPursuantToLegalBasis || [];
+      dataset.legalBasisForRestriction = dataset.legalBasisForRestriction || [];
       dataset.languages = dataset.languages || [];
       dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);

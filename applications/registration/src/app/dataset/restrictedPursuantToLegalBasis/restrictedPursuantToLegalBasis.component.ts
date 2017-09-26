@@ -17,13 +17,13 @@ export class restrictedPursuantToLegalBasisFormComponent implements OnInit {
     showForm:boolean = false;
     @Input('formArray')
     public restrictedPursuantToLegalBasisListFormArray: FormArray;
-    
+
     @Input('restrictedPursuantToLegalBasis')
     public restrictedPursuantToLegalBasis: restrictedPursuantToLegalBasis;
 
     @Input('restrictedPursuantToLegalBasisIndex')
     public restrictedPursuantToLegalBasisIndex: number;
-    
+
     @Input('legalBasisType')
     public legalBasisType: string;
 
@@ -45,9 +45,9 @@ export class restrictedPursuantToLegalBasisFormComponent implements OnInit {
 
     private toFormGroup(restrictedPursuantToLegalBasis: restrictedPursuantToLegalBasis) {
         const formGroup = this.fb.group({
-            uri: [ restrictedPursuantToLegalBasis.uri || '', Validators.required ],
-            foafHomepage: [ restrictedPursuantToLegalBasis.foafHomepage || '' ],
-            prefLabel:[ restrictedPursuantToLegalBasis.prefLabel ? restrictedPursuantToLegalBasis.prefLabel[this.language] : '' ]
+            uri: [ restrictedPursuantToLegalBasis.uri || 'uri1', Validators.required ],
+            foafHomepage: [ restrictedPursuantToLegalBasis.foafHomepage || 'url1' ],
+            prefLabel:[ restrictedPursuantToLegalBasis.prefLabel ? restrictedPursuantToLegalBasis.prefLabel[this.language] : 'label1' ]
         });
         return formGroup;
     }

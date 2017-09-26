@@ -49,7 +49,7 @@ export class AccessRightsComponent implements OnInit {
 
     ngOnInit() {
         this.accessRightsForm = this.toFormGroup(this.dataset);
-        
+
         if(!this.dataset.accessRights) {
             this.dataset.accessRights = {uri: this.accessRightsModel[0].uri}
         }
@@ -72,7 +72,8 @@ export class AccessRightsComponent implements OnInit {
                         }
                     });
                 }
-                this.dataset.restrictedPursuantToLegalBasis = _.merge(this.dataset.restrictedPursuantToLegalBasis, accessLevel.restrictedPursuantToLegalBasis);
+                console.log("accessRights.save: ", this.dataset.legalBasisForRestriction);
+                this.dataset.legalBasisForRestriction = _.merge(this.dataset.legalBasisForRestriction, accessLevel.legalBasisForRestriction);
                 this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
@@ -85,7 +86,7 @@ export class AccessRightsComponent implements OnInit {
         return this.fb.group({
             accessRights : [ data.accessRights || {}],
             restrictedPursuantToLegalBasis: this.fb.array([])
-            
+
         });
     }
 
