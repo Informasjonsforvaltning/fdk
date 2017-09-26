@@ -40,8 +40,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
-import {RestricedPursuantToLegalBasisListComponent} from "./dataset/restricedPursuantToLegalBasis/restricedPursuantToLegalBasis-list.component";
-import {RestricedPursuantToLegalBasisFormComponent} from "./dataset/restricedPursuantToLegalBasis/restricedPursuantToLegalBasis.component";
+import {restrictedPursuantToLegalBasisListComponent} from "./dataset/restrictedPursuantToLegalBasis/restrictedPursuantToLegalBasis-list.component";
+import {restrictedPursuantToLegalBasisFormComponent} from "./dataset/restrictedPursuantToLegalBasis/restrictedPursuantToLegalBasis.component";
 import {BasisForProcessingListComponent} from "./dataset/basisForProcessing/basisForProcessing-list.component";
 import {BasisForProcessingFormComponent} from "./dataset/basisForProcessing/basisForProcessing.component";
 import { TagInputModule } from 'ngx-chips';
@@ -69,8 +69,8 @@ import {GlobalErrorHandler} from './GlobalErrorHandler';
     SpatialComponent,
     HelpText,
     ModalComponent,
-    RestricedPursuantToLegalBasisListComponent,
-    RestricedPursuantToLegalBasisFormComponent
+    restrictedPursuantToLegalBasisListComponent,
+    restrictedPursuantToLegalBasisFormComponent
   ],
   imports: [
     BrowserModule,

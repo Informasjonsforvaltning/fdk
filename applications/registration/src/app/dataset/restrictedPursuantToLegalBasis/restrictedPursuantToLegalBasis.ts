@@ -1,4 +1,4 @@
-export interface RestricedPursuantToLegalBasis {
+export interface restrictedPursuantToLegalBasis {
   foafHomepage?: string;
   uri?: string;
   prefLabel?:{
