@@ -67,13 +67,14 @@ function gitTag {
 
 }
 
-function openshiftDeploy {
-    osEnvironment=$1
-    dateTag=$2
+#function openshiftDeploy {
+#    osEnvironment=$1
+#    dateTag=$2
+#
+#    #Deply new images on openshift - assuming all services are correctly set up
+#    # sh runCreateAllServicesInOpenshift.sh $osEnvironment $datetag $dateTag onlyDeployImages
+#}
 
-    #Deply new images on openshift - assuming all services are correctly set up
-    sh runCreateAllServicesInOpenshift.sh $osEnvironment $datetag $dateTag onlyDeployImages
-}
 
 
 if [ "$1" == "st1" ] ; then
@@ -86,9 +87,9 @@ if [ "$1" == "st1" ] ; then
   gitTag ut1 st1
 
   #todo dobbeltsjekk at dockertag blir riktig
-  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
+#  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
-if [ "$1" == "st2" ] ; then
+elif [ "$1" == "st2" ] ; then
 
   for i in $components
   do
@@ -98,7 +99,7 @@ if [ "$1" == "st2" ] ; then
   gitTag ut1 st2
 
   #todo dobbeltsjekk at dockertag blir riktig
-  openshiftDeploy st2 ${toEnvironment}_${DATETIME}
+#  openshiftDeploy st2 ${toEnvironment}_${DATETIME}
 
 
 elif [ "$1" == "tt1" ] ; then
@@ -110,7 +111,7 @@ elif [ "$1" == "tt1" ] ; then
 
   gitTag st2 tt1
 
-  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
+#  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
 
 
 elif [ "$1" == "ppe" ] ; then
@@ -121,7 +122,7 @@ elif [ "$1" == "ppe" ] ; then
 
   gitTag st1 ppe
 
-  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
+#  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
 
 
 
@@ -135,7 +136,7 @@ elif [ "$1" == "prod" ] ; then
   gitTag ppe prod
 
   #todo: sjekk om prod-navnet er prd eller prod
-  openshiftDeploy prod ${toEnvironment}_${DATETIME}
+#  openshiftDeploy prod ${toEnvironment}_${DATETIME}
 
 else
 
@@ -150,6 +151,4 @@ else
 fi
 
 
-echo "Done"
-
-
+echo "Done";
