@@ -1,6 +1,6 @@
 
 application:
-  themesServiceUrl: http://localhost:8100
+  themesServiceUrl: http://reference-data:8080
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
   altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://registration-auth:8080}
   altinnServiceCode: ${registrationApi_altinnServiceCode:4814}

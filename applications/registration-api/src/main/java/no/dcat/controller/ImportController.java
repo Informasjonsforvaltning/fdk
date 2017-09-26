@@ -86,11 +86,12 @@ public class ImportController {
     public HttpEntity<Catalog> importCatalog(
             @PathVariable(value = "id") String catalogId,
             @RequestBody String url) throws DatasetNotFoundException, CatalogNotFoundException, IOException {
-        logger.info("import requested for {}", url);
+        logger.info("import requested for {} starts", url);
         Catalog catalog;
 
         catalog = importDatasets(catalogId, url);
 
+        logger.info("import request for {} finished", url);
         return new ResponseEntity<>(catalog, HttpStatus.OK);
     }
 
