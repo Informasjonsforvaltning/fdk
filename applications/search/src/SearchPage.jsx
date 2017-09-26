@@ -80,14 +80,14 @@ const sa = require('superagent');
 
 searchkit.translateFunction = (key) => {
   let translations = {
-    "pagination.previous":getText('page.prev'),
-    "pagination.next":getText('page.next'),
-    "facets.view_more":getText('page.viewmore'),
-    "facets.view_all": getText('page.seeall'),
-    "facets.view_less": getText('page.seefewer'),
-		"reset.clear_all": getText('page.resetfilters'),
-		"hitstats.results_found": getText("page.result.summary") + ' ' + " {hitCount}"  + ' ' + getText('page.result.hits'),
-		"NoHits.Error": getText('NoHits.Error'),
+    "pagination.previous":localization.page.prev,
+    "pagination.next":localization.page.next,
+    "facets.view_more":localization.page.viewmore,
+    "facets.view_all": localization.page.seeall,
+    "facets.view_less": localization.page.seefewer,
+		"reset.clear_all": localization.page.resetfilters,
+		"hitstats.results_found": localization.page["result.summary"] + ' ' + " {hitCount}"  + ' ' + localization.page['dataset'],
+		"NoHits.Error": localization.noHits.error,
 		"NoHits.ResetSearch": '.'
   }
   return translations[key]
@@ -218,21 +218,16 @@ const MovieHitsGridItem = (props)=> {
   return (
     <div className="fdk-container fdk-container-search-hit">
 			<h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
-
 			<div>
 				{localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
 				<a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
 			</div>
-
-
 			<p
 				className="fdk-p-search-hit"
 				dangerouslySetInnerHTML={
 					{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
 			>
-
 			</p>
-
 
 
 			<div className={distributionClass}>
@@ -240,9 +235,7 @@ const MovieHitsGridItem = (props)=> {
 				<br />
 				{distributionFormats}
 			</div>
-
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
-
     </div>
   )
 }
@@ -305,7 +298,7 @@ export class SearchPage extends React.Component {
 		        <SearchBox
 		          autofocus={true}
 		          searchOnChange={false}
-							placeholder={getText('query.intro')}
+							placeholder={localization.query.intro}
 							/>
 		      </TopBar>
 			    <section id="resultPanel">
@@ -336,10 +329,10 @@ export class SearchPage extends React.Component {
 										<ActionBarRow>
 											<SortingSelector
 												options={[
-													{label:getText('sort.by') + ' ' + getText('sort.by.relevance'), className:"aaa", field:"_score", order:"asc", defaultOption:true},
-                        	{label:getText('sort.by') + ' ' + getText('sort.by.title'), field:"title", order:"asc"},
-													{label:getText('sort.by') + ' ' + getText('sort.by.modified'), field:"modified", order:"desc"},
-													{label:getText('sort.by') + ' ' + getText('sort.by.publisher'), field:"publisher.name", order:"asc"},
+													{label:localization.sort.by + ' ' + localization.sort['by.relevance'], className:"aaa", field:"_score", order:"asc", defaultOption:true},
+                        	{label:localization.sort.by + ' ' + localization.sort['by.title'], field:"title", order:"asc"},
+													{label:localization.sort.by + ' ' + localization.sort['by.modified'], field:"modified", order:"desc"},
+													{label:localization.sort.by + ' ' + localization.sort['by.publisher'], field:"publisher.name", order:"asc"},
 												]}
 											/>
 											<HitsStats/>
@@ -352,7 +345,7 @@ export class SearchPage extends React.Component {
 									<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={SearchHitItem}
 										sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
 									<NoHits translations={{
-        "NoHits.NoResultsFound":getText('page.nohits')
+        "NoHits.NoResultsFound":localization.page.nohits
       }} />
 									<Pagination showNumbers={true}/>
 									</div>

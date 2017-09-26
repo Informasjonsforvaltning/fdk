@@ -40,7 +40,8 @@
     "navigation": "Sidenavigering",
     "next": "Neste side",
     "prev": "Forrige side",
-    "result.summary": "Treff:"
+    "result.summary": "Treff:",
+    "dataset":"datasett"
 
   },
   "facet": {
@@ -54,6 +55,9 @@
   },
   "result": {
     "waiting":"Henter data ..."
+  },
+  "noHits": {
+    "error": "Ingen datasett funnet"
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
