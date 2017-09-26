@@ -33,7 +33,7 @@ export class RefinementOptionPublishers extends React.Component {
                 {props.bemBlocks.option().state({active:props.active}).mix(props.bemBlocks.container("item")) +
                 ' list-group-item fdk-label fdk-label-default'}
 						/>
-            {props.label} ({props.count})
+            {props.label.charAt(0)}{props.label.substring(1).toLowerCase()} ({props.count})
 					</label>
 				</div>
 			);

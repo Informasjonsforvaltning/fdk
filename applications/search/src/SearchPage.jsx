@@ -186,27 +186,20 @@ const MovieHitsGridItem = (props)=> {
   return (
     <div className="fdk-container fdk-container-search-hit">
 			<h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
-
 			<div>
 				{localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
 				<a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
 			</div>
-
-
 			<p
 				className="fdk-p-search-hit"
 				dangerouslySetInnerHTML={
 					{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
 			>
-
 			</p>
-
 			<div className="fdk-container-distributions fdk-distributions-red">
 				<strong>Unntatt offentligheten</strong>
 			</div>
-
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
-
     </div>
   )
 }
