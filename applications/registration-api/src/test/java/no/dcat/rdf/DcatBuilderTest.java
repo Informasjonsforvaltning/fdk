@@ -12,10 +12,7 @@ import no.dcat.model.SkosCode;
 import no.dcat.model.SkosConceptWithHomepage;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -110,7 +107,7 @@ public class DcatBuilderTest {
 
         dataset.setSpatial(Collections.singletonList(skosCode("http://sws.geonames.org/3144096/", null, map("nb", "Norge"))));
         dataset.setAccessRights(skosCode("http://publications.europa.eu/resource/authority/access-right/RESTRICTED"));
-        dataset.setRestricedPursuantToLegalBasis(Collections.singletonList(SkosConceptWithHomepage.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithHomepage.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
         dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
         dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
         dataset.setIdentifier(Collections.singletonList("42"));
