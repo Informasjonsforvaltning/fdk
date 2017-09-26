@@ -81,9 +81,9 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     let distribution_restricted = false;
     let distribution_public = false;
 
-    if (source.accessRights.authorityCode === 'RESTRICTED') {
+    if (source.accessRights && source.accessRights.authorityCode === 'RESTRICTED') {
       distribution_restricted = true;
-    } else if (source.accessRights.authorityCode === 'PUBLIC') {
+    } else if (source.accessRights && source.accessRights.authorityCode === 'PUBLIC') {
       distribution_public = true;
     }
 
@@ -109,7 +109,7 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
         >
         </p>
         <div className={distributionClass}>
-          <strong>{source.accessRights.prefLabel[language]}</strong>
+          <strong>{source.accessRights ? source.accessRights.prefLabel[language] : ''}</strong>
           <br />
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
