@@ -13,6 +13,7 @@ import {
   ReactComponentType,
   PureRender, AxiosESTransport
 } from "searchkit";
+import cx from 'classnames';
 
 import './index.scss';
 import {RefinementOptionThemes} from './RefinementOptionThemes.jsx';
@@ -27,7 +28,8 @@ import { createHistory as createHistoryFn, useQueries } from 'history';
 const qs = require('qs');
 import {getText} from './getText.js';
 import {addOrReplaceParam} from './addOrReplaceUrlParam.js';
-import localization from './components/localization'
+import localization from './components/localization';
+import SearchHitItem from './components/search-hit-item';
 
 const host = "/dcat";
 const searchkit = new SearchkitManager(
@@ -183,6 +185,36 @@ const MovieHitsGridItem = (props)=> {
 	if(source.theme && source.theme.title) {
 		themeTitle = source.theme.title.nb;
 	}
+
+	let distribution_restricted = false;
+	let distribution_public = false;
+
+
+	if (source.accessRights.authorityCode === 'RESTRICTED') {
+    distribution_restricted = true;
+	} else if (source.accessRights.authorityCode === 'PUBLIC') {
+    distribution_public = true;
+	}
+
+  const distributionClass = cx(
+    'fdk-container-distributions',
+    {
+      'fdk-distributions-red': distribution_restricted,
+			'fdk-distributions-green': distribution_public
+    }
+  );
+
+  let distributionFormats = '';
+  if(source.distribution) {
+    source.distribution.forEach((dist) => {
+      if(dist.format) {
+        distributionFormats += '<div class="fdk-button-format fdk-button-format-inactive"><i class="fa fa-download fdk-fa-left"></i>';
+        distributionFormats += dist.format;
+        distributionFormats += '</div>';
+      }
+    })
+  }
+
   return (
     <div className="fdk-container fdk-container-search-hit">
 			<h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
@@ -196,8 +228,12 @@ const MovieHitsGridItem = (props)=> {
 					{__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
 			>
 			</p>
-			<div className="fdk-container-distributions fdk-distributions-red">
-				<strong>Unntatt offentligheten</strong>
+
+
+			<div className={distributionClass}>
+				<strong>{source.accessRights.prefLabel[language]}</strong>
+				<br />
+				{distributionFormats}
 			</div>
 			{source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
     </div>
@@ -306,7 +342,7 @@ export class SearchPage extends React.Component {
 											{/*<ResetFilters/> */}
 										</ActionBarRow>
 									</ActionBar>
-									<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={MovieHitsGridItem}
+									<Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={SearchHitItem}
 										sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
 									<NoHits translations={{
         "NoHits.NoResultsFound":getText('page.nohits')
