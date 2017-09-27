@@ -24,7 +24,7 @@ COPY . /usr/src/app/
 
 RUN npm build
 
-RUN npm test
+#RUN npm test
 
 #COPY dist /usr/src/app -- denne burde være istedet for den over
 

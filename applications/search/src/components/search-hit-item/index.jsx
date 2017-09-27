@@ -7,7 +7,7 @@ const defaults = require("lodash/defaults");
 
 import localization from '../../components/localization';
 
-export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
