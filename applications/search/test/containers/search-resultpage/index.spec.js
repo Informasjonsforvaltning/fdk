@@ -8,7 +8,6 @@ describe('a passing test', () => {
   });
 });
 
-
 describe('SearchHitItem', () => {
   const wrapper = shallow(<SearchHitItem />);
 

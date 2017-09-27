@@ -7,7 +7,7 @@ const defaults = require("lodash/defaults");
 
 import localization from '../../components/localization';
 
-export class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
@@ -64,6 +64,7 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     //let props = this.props;
     //const {result} = props;
     const result = this.state.result;
+    //console.log(JSON.stringify(result));
     let url =  'datasets?id=' + encodeURIComponent(result._id);
     let queryObj = qs.parse(window.location.search.substr(1));
     let language = queryObj.lang ? queryObj.lang : 'nb';

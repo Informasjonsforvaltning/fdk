@@ -25,11 +25,11 @@ import {
 import {RefinementOptionThemes} from '../../components/search-refinementoption-themes';
 import {RefinementOptionPublishers} from "../../components/search-refinementoption-publishers";
 import {SearchBox} from "../../SearchBox.jsx";
-import {Select2} from "../../select.jsx";
+//import {Select2} from "../../select.jsx";
 import {QueryTransport} from "../../QueryTransport.jsx";
 import {addOrReplaceParam} from "../../addOrReplaceUrlParam.js";
 import localization from "../../components/localization";
-import {SearchHitItem} from "../../components/search-hit-item/index.jsx";
+import SearchHitItem from "../../components/search-hit-item/index.jsx";
 import {Select} from '../../components/search-searchkit-selector-dropdown';
 import './index.scss';
 
