@@ -21,10 +21,11 @@ function createOpenshiftService {
     oc new-app dcatno/$osService:$tag
     oc expose dc/$osService --port=8080
     oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
-    oc label service $osService environmentTag=$environmentTag --overwrite=true
-    oc label dc $osService environmentTag=$environmentTag --overwrite=true
-    oc label service $osService environmentDate=$dateTag --overwrite=true
-    oc label dc $osService environmentDate=$dateTag --overwrite=true
+    oc label service --overwrite=true $osService \
+        environmentTag=$environmentTag \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag \
+        environmentDate=$dateTag
 
 }
 
@@ -33,18 +34,20 @@ function deployNewDockerImage {
 
     oc import-image dcatno/$osService:$tag
 
-    oc label service $osService environmentTag=$environmentTag --overwrite=true
-    oc label dc $osService environmentTag=$environmentTag --overwrite=true
-    oc label service $osService environmentDate=$dateTag --overwrite=true
-    oc label dc $osService environmentDate=$dateTag --overwrite=true
+    oc label service $osService --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag \
+        environmentDate=$dateTag
 
 }
 
 function exposeService {
     serviceName=$1
     oc expose svc/$serviceName
-    oc label route $serviceName environmentTag=$environmentTag --overwrite=true
-    oc label route $serviceName environmentDate=$dateTag --overwrite=true
+    oc label route $serviceName --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag
 }
 
 
@@ -199,8 +202,9 @@ then
 
         #create secure route for reference-data
         oc create route edge --service=reference-data --hostname=reference-data-fellesdatakatalog-$environment.$cluster.brreg.no
-        oc label route reference-data environmentTag=$environmentTag --overwrite=true
-        oc label route reference-data environmentDate=$dateTag --overwrite=true
+        oc label route reference-data --overwrite=true \
+            environmentTag=$environmentTag \
+            environmentDate=$dateTag
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage reference-data
@@ -258,21 +262,22 @@ then
         fi
 
         createOpenshiftService registration-api
-        oc env dc/registration-api SPRING_PROFILES_ACTIVE=$profile
-        oc env dc/registration-api registrationApi_IncludeServerPortInRequestUrl=false
-        oc env dc/registration-api registrationApi_OpenshiftEnvironment=$environment
-        oc env dc/registration-api registrationApi_ServerName=$registrationGuiExternalAddress
-        oc env dc/registration-api registrationApi_altinnServiceCode=$altinnServiceCode
-        oc env dc/registration-api registrationApi_altinnServiceEdition=$altinnServiceEdition
-        oc env dc/registration-api registrationApi_altinnServiceUrl=$altinnServiceUrl
-        oc env dc/registration-api registrationApi_apikey=$altinnApiKey
-        oc env dc/registration-api registrationApi_clientSSLCertificateKeystoreLocation="$clientCertificateKeystoreLocation"
-        oc env dc/registration-api registrationApi_clientSSLCertificateKeystorePassword=changeit
-        oc env dc/registration-api registrationApi_ipKeyPassword=changeit
-        oc env dc/registration-api registrationApi_ipStorePassword=changeit
-        oc env dc/registration-api registrationApi_sslKeyPassword=changeit
-        oc env dc/registration-api registrationApi_sslKeystoreLocation=$sslKeystoreLocation
-        oc env dc/registration-api registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile
+        oc env dc/registration-api \
+            SPRING_PROFILES_ACTIVE=$profile \
+            registrationApi_IncludeServerPortInRequestUrl=false \
+            registrationApi_OpenshiftEnvironment=$environment \
+            registrationApi_ServerName=$registrationGuiExternalAddress \
+            registrationApi_altinnServiceCode=$altinnServiceCode \
+            registrationApi_altinnServiceEdition=$altinnServiceEdition \
+            registrationApi_altinnServiceUrl=$altinnServiceUrl \
+            registrationApi_apikey=$altinnApiKey \
+            registrationApi_clientSSLCertificateKeystoreLocation="$clientCertificateKeystoreLocation" \
+            registrationApi_clientSSLCertificateKeystorePassword=changeit \
+            registrationApi_ipKeyPassword=changeit \
+            registrationApi_ipStorePassword=changeit \
+            registrationApi_sslKeyPassword=changeit \
+            registrationApi_sslKeystoreLocation=$sslKeystoreLocation \
+            registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile
 
         echo "Registration-api: Keystore password environment variables must be set manually"
         echo "Registration-api: Remember to mount /conf volume"
@@ -330,8 +335,9 @@ then
 
         #create secure route for search api
         oc create route edge --service=search-api --hostname=search-api-fellesdatakatalog-$environment.$cluster.brreg.no
-        oc label route search-api environmentTag=$environmentTag --overwrite=true
-        oc label route search-api environmentDate=$dateTag --overwrite=true
+        oc label route search-api --overwrite=true \
+            environmentTag=$environmentTag \
+            environmentDate=$dateTag
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage search-api
@@ -346,8 +352,9 @@ then
 
         #create secure route for registration gui
         oc create route edge --service=nginx --hostname=$registrationGuiExternalAddress --port=8080
-        oc label route nginx environmentTag=$environmentTag --overwrite=true
-        oc label route nginx environmentDate=$dateTag --overwrite=true
+        oc label route nginx --overwrite=true \
+            environmentTag=$environmentTag \
+            nginx environmentDate=$dateTag
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx
