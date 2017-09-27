@@ -61,12 +61,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   }
 
   render() {
-    //let props = this.props;
-    //const {result} = props;
     const result = this.state.result;
-    //console.log(JSON.stringify(result));
     let url =  'datasets?id=' + encodeURIComponent(result._id);
-    let queryObj = qs.parse(window.location.search.substr(1));
+    //let queryObj = qs.parse(window.location.search.substr(1));
+    let queryObj = qs.parse(window.location.search);
     let language = queryObj.lang ? queryObj.lang : 'nb';
     if(!queryObj.lang || queryObj.lang === 'nb') {
       url += '&lang=nb';
@@ -75,7 +73,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     } else {
       url += '&lang=en';
     }
-    const source:any = _.extend({}, result._source, result.highlight);
+    const source = _.extend({}, result._source, result.highlight);
+
+    let title = source.title[language] ? source.title[language] : '';
 
     let themeLabels = '';
     if(source.theme) {
@@ -111,9 +111,13 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       }
     );
 
+    /*
+     <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
+     */
+
     return (
       <div className="fdk-container fdk-container-search-hit">
-        <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
+        <h2>{title}</h2>
         <div>
           {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>
           <span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
