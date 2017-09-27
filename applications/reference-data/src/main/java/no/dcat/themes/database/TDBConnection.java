@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TDBConnection {
 
-    TDBService tdbService;
+    private TDBInferenceService tdbService;
 
     @Autowired
-    public TDBConnection(TDBService tdbService) {
+    public TDBConnection(TDBInferenceService tdbService) {
         this.tdbService = tdbService;
     }
 
