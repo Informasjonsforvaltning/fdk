@@ -14,9 +14,7 @@ tag=latest
 #midlertidig kommentert ut reference-data
 services="registration registration-auth registration-api registration-validator nginx gdoc harvester harvester-api search search-api"
 
-oc project $profile
-
 for i in $services
 do
-    oc delete all -l app=$i
+    oc delete all -l app=$i -n $profile
 done
