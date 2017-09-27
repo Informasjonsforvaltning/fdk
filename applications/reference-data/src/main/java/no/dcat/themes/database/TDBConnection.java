@@ -3,9 +3,11 @@ package no.dcat.themes.database;
 
 import org.apache.jena.query.ReadWrite;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("thread")
 public class TDBConnection {
 
     private TDBInferenceService tdbService;
