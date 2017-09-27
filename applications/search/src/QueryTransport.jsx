@@ -63,9 +63,12 @@ export class QueryTransport extends AxiosESTransport {
 
     let sortfield = "_score";
     let sortdirection = "asc";
-    let queryObj = qs.parse(window.location.search.substr(1));
 
+    /* ois - MÅ GJØRES OM FOR Å STØTTE CUSTOM DROPDOWN PÅ SORTERING, queryObj får ikke med seg siste valg
+    let queryObj = qs.parse(window.location.search.substr(1));
+    console.log(JSON.stringify("qyery her: " + JSON.stringify(query.sort)));
     if (queryObj['sort']) { // there is a sort code
+      console.log("sort");
         var lastIndexOfUnderscore = queryObj['sort'].lastIndexOf('_'),
             key = queryObj['sort'].slice(0,lastIndexOfUnderscore),
             value = queryObj['sort'].substr(lastIndexOfUnderscore+1);
@@ -86,6 +89,25 @@ export class QueryTransport extends AxiosESTransport {
           console.log('other! (should not happen)');
         }
     }
+    */
+
+    let querySortObj = query.sort[0]; // assume that only one sort field is possible
+    if (querySortObj) { // there is a sort code
+      if (_.has(querySortObj, '_score')) {
+        sortfield = "_score";
+        sortdirection = "asc";
+      } else if (_.has(querySortObj, 'title')) {
+        sortfield= "title.nb";
+      } else if (_.has(querySortObj, 'modified')) {
+        sortfield= "modified";
+        sortdirection = "desc";
+      } else if (_.has(querySortObj,'publisher.name')) {
+        sortfield= "publisher.name";
+      } else {
+        console.log('other! (should not happen)');
+      }
+    }
+
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +

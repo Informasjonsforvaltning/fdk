@@ -11,8 +11,16 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
   constructor(props) {
     super(props);
     this.state = {
+      result: props.result
     };
     this.extractDomain = this.extractDomain.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.log("search-hit-item componentDidUpdate");
+    this.state = {
+      result: this.props.result
+    };
   }
 
   extractDomain(url) {
@@ -53,8 +61,9 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
   }
 
   render() {
-    let props = this.props;
-    const {result} = props;
+    //let props = this.props;
+    //const {result} = props;
+    const result = this.state.result;
     let url =  'datasets?id=' + encodeURIComponent(result._id);
     let queryObj = qs.parse(window.location.search.substr(1));
     let language = queryObj.lang ? queryObj.lang : 'nb';
@@ -79,11 +88,16 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     }
 
     let distribution_restricted = false;
+    let distribution_non_public = false;
     let distribution_public = false;
 
     if (source.accessRights && source.accessRights.authorityCode === 'RESTRICTED') {
       distribution_restricted = true;
     } else if (source.accessRights && source.accessRights.authorityCode === 'PUBLIC') {
+      distribution_public = true;
+    } else if (source.accessRights && source.accessRights.authorityCode === 'NON_PUBLIC') {
+      distribution_non_public = true;
+    } else if (!source.accessRights) { // antar public hvis authoritycode mangler
       distribution_public = true;
     }
 
@@ -91,6 +105,7 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
       'fdk-container-distributions',
       {
         'fdk-distributions-red': distribution_restricted,
+        'fdk-distributions-yellow': distribution_non_public,
         'fdk-distributions-green': distribution_public
       }
     );
@@ -99,8 +114,8 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
       <div className="fdk-container fdk-container-search-hit">
         <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
         <div>
-          {localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
-          <a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
+          {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>
+          <span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
         </div>
         <p
           className="fdk-p-search-hit"
@@ -109,7 +124,7 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
         >
         </p>
         <div className={distributionClass}>
-          <strong>{source.accessRights ? source.accessRights.prefLabel[language] : ''}</strong>
+          <strong>{source.accessRights ? source.accessRights.prefLabel[language] : 'Offentlig'}</strong>
           <br />
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>

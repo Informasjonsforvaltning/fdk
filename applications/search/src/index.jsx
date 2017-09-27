@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {SearchPage} from "./SearchPage";
+import {SearchPage} from "./containers/search-resultpage/SearchPage";
 import {App} from "./AppPage";
 import { Router, Link, Route, browserHistory, IndexRoute } from 'react-router'
 

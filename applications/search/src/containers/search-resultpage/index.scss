@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/*
+.glyphicon-search-frontpage {
+  position: absolute;
+  right: 96px;
+  top: 92px;
+  font-size: 32px;
+  z-index: 1;
+  color: #213B4C;
+}
+
+.sk-search-box .glyphicon-search-frontpage{
+  top: 197px;
+}
+*/
+
+/*  SEARCHPAGE PAGINATION  */
+
+.sk-pagination-navigation .sk-toggle-option:first-child,
+.sk-pagination-navigation .sk-toggle-option:last-child {
+  flex: auto;
+}
+
+.sk-pagination-navigation {
+  width:300px;
+  margin:10px auto;
+}
+
+.sk-pagination-select {
+  margin: 10px auto;
+  text-align:center;
+}
+
+.sk-toggle {
+  display: flex;
+}
+.sk-toggle-option {
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  border-radius: 6px;
+  border: 3px solid var(--color6);
+  padding: 11px 12px 10px 12px;
+  margin: 0px 2px 6px 0px;
+  display: inline-block;
+  background-image: none;
+  text-shadow: none;
+  text-align: center;
+  box-shadow: none;
+  background-color: var(--color5);
+  border-color: var(--color6);
+  &:hover {
+    border-radius: 3px;
+    border: 3px solid var(--color5);
+    background-color: var(--color5);
+  }
+}
+
+.sk-toggle-option.sk-toggle__item.is-disabled {
+  border: 1px dashed var(--color4);
+  color: var(--color4);
+  border-radius: 4px;
+  margin: 0px 6px 6px 0px;
+}
+
+
+.sk-toggle-option__text {
+  &:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.sk-pagination-navigation .sk-toggle-option:first-child, .sk-pagination-navigation .sk-toggle-option:last-child {
+  flex: auto;
+}
+.sk-toggle-option.is-disabled {
+  cursor: initial;
+  color: #ddd;
+}
+.sk-toggle-option:first-child {
+  border-radius: 3px 0 0 3px;
+}
+.sk-toggle-option:last-child {
+  border-radius: 0 3px 3px 0;
+  border-right: 1px solid #ccc;
+}
+.sk-toggle-option.is-active {
+  background-color: #5A6778;
+  color: #fff;
+  &:hover {
+    border-color: #5A6778;
+  }
+}
+
+/*  SEARCHPAGE SORTING DROPDOWN  */
+
+.btn-group {
+  .dropdown-toggle {
+    &:focus, &:active {
+      background-color: var(--color5) !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.open>.dropdown-toggle.btn-default {
+  background-color: var(--color5) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
