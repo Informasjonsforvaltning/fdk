@@ -44,9 +44,11 @@ public class SimpleQueryService {
 
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
+    public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.authorityCode.raw";
 
     public static final String TERMS_THEME_COUNT = "theme_count";
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
+    public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightCount";
 
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     protected Client client = null;
@@ -95,6 +97,8 @@ public class SimpleQueryService {
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
      * @param theme         Narrows the search to the specified theme. ex. GOVE
+     * @param publisher     Narrows the search to the specified publisher. ex. UTDANNINGSDIREKTORATET
+     * @param accessright   Narrows the search to the specified theme. ex. RESTRICTED
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
@@ -107,6 +111,7 @@ public class SimpleQueryService {
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
                                          @RequestParam(value = "theme", defaultValue = "") String theme,
                                          @RequestParam(value = "publisher", defaultValue = "") String publisher,
+                                         @RequestParam(value = "accessright", defaultValue = "") String accessRight,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -122,7 +127,8 @@ public class SimpleQueryService {
                 .append(" sortfield:").append(sortfield)
                 .append(" sortdirection:").append(sortdirection)
                 .append(" theme:").append(theme)
-                .append(" publisher:").append(publisher);
+                .append(" publisher:").append(publisher)
+                .append(" accessRights:").append(accessRight);
 
         logger.debug(loggMsg.toString());
 
@@ -152,13 +158,14 @@ public class SimpleQueryService {
                     .field("keyword" + "." + lang)
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
-                    .field("publisher.name");
+                    .field("publisher.name")
+                    .field("accessRights.authorityCode");
         }
 
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, search);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRight, search);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
@@ -166,6 +173,7 @@ public class SimpleQueryService {
                 .setQuery(boolQuery)
                 .setFrom(from)
                 .setSize(size)
+                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME));
 
@@ -225,7 +233,7 @@ public class SimpleQueryService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, QueryBuilder search) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRight, QueryBuilder search) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -246,6 +254,13 @@ public class SimpleQueryService {
             boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
 
             boolQuery.filter(boolFilter2);
+        }
+
+        if (!StringUtils.isEmpty(accessRight)) {
+            BoolQueryBuilder boolFilter3 = QueryBuilders.boolQuery();
+            boolFilter3.must(QueryBuilders.termQuery("accessRights.authorityCode.raw", accessRight));
+
+            boolQuery.filter(boolFilter3);
         }
 
         return boolQuery;
