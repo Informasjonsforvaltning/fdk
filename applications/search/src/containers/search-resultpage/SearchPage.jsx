@@ -31,7 +31,6 @@ import {addOrReplaceParam} from "../../addOrReplaceUrlParam.js";
 import localization from "../../components/localization";
 import {SearchHitItem} from "../../components/search-hit-item/index.jsx";
 import {Select} from '../../components/search-searchkit-selector-dropdown';
-//import "../../index.scss";
 import './index.scss';
 
 
@@ -236,7 +235,10 @@ export class SearchPage extends React.Component {
                     <NoHits translations={{
                       "NoHits.NoResultsFound": localization.page.nohits
                     }}/>
-                    <Pagination showNumbers={true}/>
+                    <Pagination
+                      showNumbers={true}
+                      listComponent={Toggle}
+                    />
                   </div>
                 </div>
               </div>
