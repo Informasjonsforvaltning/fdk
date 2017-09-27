@@ -36,7 +36,7 @@ export class DatasetComponent implements OnInit {
   saved: boolean;
   catId: string;
   lastSaved: string;
-  restrictedPursuantToLegalBasis: any[];
+  legalBasis: any[];
 
 
   identifiersForm: FormGroup;

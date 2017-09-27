@@ -81,7 +81,7 @@ export class AccessRightsComponent implements OnInit {
     private toFormGroup(data: Dataset) {
         return this.fb.group({
             accessRights : [ data.accessRights || {}],
-            restrictedPursuantToLegalBasis: this.fb.array(this.dataset.legalBasisForRestrictions)
+            legalBasis: this.fb.array(this.dataset.legalBasisForRestrictions)
         });
     }
 

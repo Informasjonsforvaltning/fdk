@@ -40,8 +40,8 @@ import {SpatialComponent} from "./dataset/spatial/spatial.component";
 import {HelpText} from "./dataset/helptext/helptext.component";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
-import {restrictedPursuantToLegalBasisListComponent} from "./dataset/restrictedPursuantToLegalBasis/restrictedPursuantToLegalBasis-list.component";
-import {restrictedPursuantToLegalBasisFormComponent} from "./dataset/restrictedPursuantToLegalBasis/restrictedPursuantToLegalBasis.component";
+import {legalBasisListComponent} from "./dataset/legalBasis/legalBasis-list.component";
+import {legalBasisFormComponent} from "./dataset/legalBasis/legalBasis.component";
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 
@@ -67,8 +67,8 @@ import {GlobalErrorHandler} from './GlobalErrorHandler';
     SpatialComponent,
     HelpText,
     ModalComponent,
-    restrictedPursuantToLegalBasisListComponent,
-    restrictedPursuantToLegalBasisFormComponent
+    legalBasisListComponent,
+    legalBasisFormComponent
   ],
   imports: [
     BrowserModule,

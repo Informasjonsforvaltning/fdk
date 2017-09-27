@@ -1,0 +1,20 @@
+<div>
+  <div class="legalBasis-list"
+       [formGroup]="datasetForm">
+      <div formArrayName="legalBasis">
+          <div *ngFor="let legalBasis of legalBasisList; let idx=index ">
+          <br />
+              <legal-basis
+                  [formArray]="legalBasisListFormArray"
+                  [legalBasis]="legalBasis"
+                  (deleteLegalBasis)="removeLegalBasis($event)"
+                  [legalBasisIndex]="idx"
+                  [legalBasisType]="legalBasisType">                  
+              </legal-basis>
+          </div>
+          <a href="#" (click)="addLegalBasis()">
+                <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
+          </a>
+      </div>
+  </div>
+</div>

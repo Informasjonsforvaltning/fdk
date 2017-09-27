@@ -28,13 +28,13 @@
               name="access-rights">
             </helptext>
 
-            <restriction-legal-basis-list
-              [restrictedPursuantToLegalBasisList]="dataset.legalBasisForRestrictions"
-              [restrictedPursuantToLegalBasisListFormArray]="accessRightsForm.controls.restrictedPursuantToLegalBasis"
+            <legal-basis-list
+              [legalBasisList]="dataset.legalBasisForRestrictions"
+              [legalBasisListFormArray]="accessRightsForm.controls.legalBasis"
               [legalBasisType]="'skjermingshjemmel'"
               [datasetForm]="accessRightsForm"
               (onSave)="onSave($event)">
-            </restriction-legal-basis-list>
+            </legal-basis-list>
         </div>
       </div>
     </form>
