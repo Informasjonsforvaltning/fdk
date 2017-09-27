@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchHitItem from '../../../src/components/search-hit-item/index';
 
 
 describe('a passing test', () => {
@@ -6,3 +7,11 @@ describe('a passing test', () => {
     expect(true).to.be.true;
   });
 });
+
+/*
+describe('SearchHitItem', () => {
+  const wrapper = shallow(<SearchHitItem />);
+
+
+});
+  */
