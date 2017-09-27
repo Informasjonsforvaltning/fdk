@@ -11,24 +11,35 @@ import {
   PageSizeSelector,
   TopBar,
   ActionBar,
-  ActionBarRow
-} from "searchkit";
-import {createHistory as createHistoryFn, useQueries} from "history";
+  ActionBarRow,
+  Tabs,
+  Toggle,
+  ItemList
+} from 'searchkit';
+import {
+  createHistory as createHistoryFn,
+  useQueries
+} from 'history';
+
+
+import {RefinementOptionThemes} from '../../components/search-refinementoption-themes';
+import {RefinementOptionPublishers} from "../../components/search-refinementoption-publishers";
+import {SearchBox} from "../../SearchBox.jsx";
+import {Select2} from "../../select.jsx";
+import {QueryTransport} from "../../QueryTransport.jsx";
+import {addOrReplaceParam} from "../../addOrReplaceUrlParam.js";
+import localization from "../../components/localization";
+import {SearchHitItem} from "../../components/search-hit-item/index.jsx";
+import {Select} from '../../components/search-searchkit-selector-dropdown';
+//import "../../index.scss";
+import './index.scss';
+
+
 const defaults = require("lodash/defaults");
-
-import {RefinementOptionThemes} from "./components/search-refinementoption-themes";
-import {RefinementOptionPublishers} from "./components/search-refinementoption-publishers";
-import {SearchBox} from "./SearchBox.jsx";
-import {Select2} from "./select.jsx";
-import {QueryTransport} from "./QueryTransport.jsx";
-import {addOrReplaceParam} from "./addOrReplaceUrlParam.js";
-import localization from "./components/localization";
-import {SearchHitItem} from "./components/search-hit-item/index.jsx";
-import "./index.scss";
-
 const qs = require('qs');
 const sa = require('superagent');
 const host = "/dcat";
+
 const searchkit = new SearchkitManager(
   host,
   {
@@ -68,6 +79,7 @@ const searchkit = new SearchkitManager(
     })
   }
 );
+
 //const searchkit = new SearchkitManager(host);
 
 searchkit.translateFunction = (key) => {
@@ -172,6 +184,7 @@ export class SearchPage extends React.Component {
                 searchOnChange={false}
                 placeholder={localization.query.intro}
               />
+              <HitsStats/>
             </TopBar>
             <section id="resultPanel">
               <div className="container-fluid">
@@ -197,8 +210,9 @@ export class SearchPage extends React.Component {
                     />
                   </div>
                   <div id="datasets" className="col-sm-8">
-                    <ActionBar>
-                      <ActionBarRow>
+                    <div className="row">
+                      <div className="col-md-4 col-md-offset-8">
+                        <div className="pull-right">
                         <SortingSelector
                           options={[
                             {
@@ -212,15 +226,12 @@ export class SearchPage extends React.Component {
                             {label: localization.sort.by + ' ' + localization.sort['by.modified'], field: "modified", order: "desc"},
                             {label: localization.sort.by + ' ' + localization.sort['by.publisher'], field: "publisher.name", order: "asc"},
                           ]}
+                          listComponent={Select}
                         />
-                        <HitsStats/>
-                        <PageSizeSelector options={[5, 10, 25, 30, 40, 50]}/>
-                      </ActionBarRow>
-                      <ActionBarRow>
-                        {/*<ResetFilters/> */}
-                      </ActionBarRow>
-                    </ActionBar>
-                    <Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={SearchHitItem}
+                        </div>
+                      </div>
+                    </div>
+                    <Hits mod="sk-hits-grid" hitsPerPage={50} itemComponent={SearchHitItem}
                           sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
                     <NoHits translations={{
                       "NoHits.NoResultsFound": localization.page.nohits

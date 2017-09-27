@@ -11,8 +11,16 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
   constructor(props) {
     super(props);
     this.state = {
+      result: props.result
     };
     this.extractDomain = this.extractDomain.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.log("search-hit-item componentDidUpdate");
+    this.state = {
+      result: this.props.result
+    };
   }
 
   extractDomain(url) {
@@ -53,8 +61,9 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
   }
 
   render() {
-    let props = this.props;
-    const {result} = props;
+    //let props = this.props;
+    //const {result} = props;
+    const result = this.state.result;
     let url =  'datasets?id=' + encodeURIComponent(result._id);
     let queryObj = qs.parse(window.location.search.substr(1));
     let language = queryObj.lang ? queryObj.lang : 'nb';
