@@ -88,11 +88,16 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     }
 
     let distribution_restricted = false;
+    let distribution_non_public = false;
     let distribution_public = false;
 
     if (source.accessRights && source.accessRights.authorityCode === 'RESTRICTED') {
       distribution_restricted = true;
     } else if (source.accessRights && source.accessRights.authorityCode === 'PUBLIC') {
+      distribution_public = true;
+    } else if (source.accessRights && source.accessRights.authorityCode === 'NON_PUBLIC') {
+      distribution_non_public = true;
+    } else if (!source.accessRights) { // antar public hvis authoritycode mangler
       distribution_public = true;
     }
 
@@ -100,6 +105,7 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
       'fdk-container-distributions',
       {
         'fdk-distributions-red': distribution_restricted,
+        'fdk-distributions-yellow': distribution_non_public,
         'fdk-distributions-green': distribution_public
       }
     );
@@ -118,7 +124,7 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
         >
         </p>
         <div className={distributionClass}>
-          <strong>{source.accessRights ? source.accessRights.prefLabel[language] : ''}</strong>
+          <strong>{source.accessRights ? source.accessRights.prefLabel[language] : 'Offentlig'}</strong>
           <br />
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
