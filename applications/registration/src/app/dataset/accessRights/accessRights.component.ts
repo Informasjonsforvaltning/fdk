@@ -59,7 +59,6 @@ export class AccessRightsComponent implements OnInit {
 
         this.accessRightsForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             accessLevel => {
-                console.log(' accessLevel is ', accessLevel);
                 if (accessLevel.accessRightsComment && accessLevel.accessRightsComment.length === 0) {
                     this.dataset.accessRightsComments = null;
                 } else {
@@ -72,13 +71,6 @@ export class AccessRightsComponent implements OnInit {
                         }
                     });
                 }
-                this.dataset.legalBasisForRestriction = [];
-                accessLevel.restrictedPursuantToLegalBasis.array.forEach(restrictedPursuantToLegalBasis => {
-                    this.dataset.legalBasisForRestriction.push(restrictedPursuantToLegalBasis);
-                });
-                //this.dataset.legalBasisForRestriction = _.merge(this.dataset.legalBasisForRestriction, accessLevel.legalBasisForRestriction);
-                
-                console.log("accessRights.save: ", this.dataset.legalBasisForRestriction);
                 this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
@@ -89,8 +81,7 @@ export class AccessRightsComponent implements OnInit {
     private toFormGroup(data: Dataset) {
         return this.fb.group({
             accessRights : [ data.accessRights || {}],
-            restrictedPursuantToLegalBasis: this.fb.array([])
-
+            restrictedPursuantToLegalBasis: this.fb.array(this.dataset.legalBasisForRestrictions)
         });
     }
 

@@ -11,31 +11,12 @@
             <div class="row">
               <div *ngIf="restrictedPursuantToLegalBasisForm.controls.prefLabel" class="col-md-4">
                 <p class="fdk-input-label">Tittel på {{legalBasisType}}</p>
-                <tag-input formControlName="prefLabel"
-                maxItems="1"
-                placeholder="ww"
-                           [onlyFromAutocomplete]="false">
-               <!--     <tag-input-dropdown [showDropdownIfEmpty]="true"
-                                        [autocompleteItems]="['Hjemmel1', 'En annen hjemmel', 'Enda en annen hjemmel']">
-                    </tag-input-dropdown>-->
-                </tag-input>
+                <input formControlName="prefLabel" class="fdk-input ng-touched" type="text"/>
               </div>
               <div class="col-md-4">
                 <p class="fdk-input-label">Lenke til {{legalBasisType}}</p>
-                <input class="fdk-input ng-touched" type="text" />
-              </div>-
-              <!--<div *ngIf="restrictedPursuantToLegalBasisForm.controls.url" class="col-md-4">
-                <p class="fdk-input-label">Lenke til {{legalBasisType}}</p>
-                <tag-input formControlName="url"
-                           maxItems="1"
-                           placeholder="ww"
-                           [onlyFromAutocomplete]="false">
-                  <tag-input-dropdown [showDropdownIfEmpty]="true"
-                                      [autocompleteItems]="['www.hjemmel1.no', 'www.enannenhjemmel.no', 'www.endaenannenhjemmel.com']">
-                  </tag-input-dropdown>
-                </tag-input>
+                <input formControlName="uri" class="fdk-input ng-touched" type="text" />
               </div>
-            </div>-->
             <span class="delete-restrictedPursuantToLegalBasis-wrapper">
               (<a href=""  class="delete-restrictedPursuantToLegalBasis-button" (click)="removerestrictedPursuantToLegalBasis(restrictedPursuantToLegalBasisIndex)">Slett hjemmel</a>)
             </span>

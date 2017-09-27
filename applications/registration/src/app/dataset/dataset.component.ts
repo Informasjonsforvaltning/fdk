@@ -132,7 +132,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.languages = [];
 
       dataset.samples = dataset.samples || [];
-      dataset.legalBasisForRestriction = dataset.legalBasisForRestriction || [];
+      dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
       dataset.languages = dataset.languages || [];
       dataset.temporals = dataset.temporals || [];
       this.datasetForm = this.toFormGroup(this.dataset);
@@ -170,14 +170,12 @@ export class DatasetComponent implements OnInit {
             dataset.temporals.forEach(temporal => {
               if (temporal.startDate && temporal.startDate.formatted) {
                 var date = temporal.startDate.jsdate;
-                //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) + '-' +  ("0" + date.getDay()).slice(-2);
                 temporal.startDate = temporal.startDate.epoc;
               } else if (temporal.startDate === null) {
                 delete temporal.startDate;
               }
               if (temporal.endDate && temporal.endDate.formatted) {
                 var date = temporal.endDate.jsdate;
-                //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) +  '-' + ("0" + date.getDay()).slice(-2);
                 temporal.endDate = temporal.endDate.epoc;
               } else if (temporal.endDate === null) {
                 delete temporal.endDate;
@@ -230,7 +228,7 @@ export class DatasetComponent implements OnInit {
         this.saved = true;
         var d = new Date();
         this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
-        this.datasetSavingEnabled = true;
+        this.datasetSavingEnabled = true;        
       })
   }
 
