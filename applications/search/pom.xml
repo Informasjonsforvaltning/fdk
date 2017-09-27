@@ -66,12 +66,14 @@
                                 <include>server/</include>
                                 <include>package.json/</include>
                                 <include>webpack.*</include>
+                                <include>src/</include>
+                                <include>test/</include>
+                                <include>.babelrc</include>
                             </includes>
                             <excludes>
                                 <exclude>e2e/</exclude>
                                 <exclude>node_modules/</exclude>
                                 <exclude>target/</exclude>
-                                <exclued>src/</exclued>
                             </excludes>
                         </resource>
 

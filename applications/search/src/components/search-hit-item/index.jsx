@@ -133,3 +133,11 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     );
   }
 }
+
+SearchHitItem.defaultProps = {
+  result: null
+};
+
+SearchHitItem.propTypes = {
+  result: PropTypes.object
+};

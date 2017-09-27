@@ -1,6 +1,9 @@
 import { expect } from 'chai';
 import { sinon, spy } from 'sinon';
-import { mount, render, shallow } from 'enzyme';
+import { configure, mount, render, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
+
+configure({ adapter: new Adapter() });
 
 global.expect = expect;
 global.sinon = sinon;
