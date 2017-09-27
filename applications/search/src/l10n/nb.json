@@ -47,6 +47,7 @@
   "facet": {
     "organisation":"Virksomhet",
     "theme":"Tema",
+    "accessRight":"Tilgang",
     "concept":"Begrep",
     "legal":"Hjemmel",
     "spatial":"Geografi",

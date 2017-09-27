@@ -207,6 +207,13 @@ export class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionThemes}
                     />
+                    <RefinementListFilter
+                      id="accessRight"
+                      title={localization.facet.accessRight}
+                      field="accessRights.authorityCode.raw"
+                      operator="AND"
+                      size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                    />
                   </div>
                   <div id="datasets" className="col-sm-8">
                     <div className="row">
