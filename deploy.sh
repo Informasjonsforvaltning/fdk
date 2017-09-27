@@ -2,8 +2,8 @@
 set -e
 
 # Deployment pipeline (environment order)
-# UT1 -> ST2 -> TT1 (mocket autorisasjon)
-# UT1 -> ST1 -> PPE (autentisering i idporten)
+# UT1 -> ST2 -> TT1 (mocked authorisation)
+# UT1 -> ST1 -> PPE (idporten authorisation)
 
 
 git fetch
