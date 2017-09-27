@@ -114,8 +114,8 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
       <div className="fdk-container fdk-container-search-hit">
         <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
         <div>
-          {localization.search_hit.owned} <a href="#">{source.publisher ? source.publisher.name : ''}</a>
-          <a dangerouslySetInnerHTML={{__html:themeLabels}}></a>
+          {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>
+          <span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
         </div>
         <p
           className="fdk-p-search-hit"
