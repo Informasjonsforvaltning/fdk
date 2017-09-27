@@ -25,12 +25,16 @@ export class QueryTransport extends AxiosESTransport {
   }
 
   search(query){
+    console.log('query is ', query);
 		// http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
     const publisherKey = 'publisher.name.raw';
     const themeKey = 'theme.code.raw';
+    const accessRightKey = 'accessRights.authorityCode.raw';
     let publisherFilter = '';
     let themeFilter = '';
+    let accessRightFilter = '';
     let multiplePublishers = false;
+    let multipleAccessRights = false;
     let multipleThemes = false;
     if(query.post_filter) { // there is an aggregation post_filter
       if(query.post_filter.bool) { // array of post_filters
@@ -53,10 +57,20 @@ export class QueryTransport extends AxiosESTransport {
             }
             themeFilter += post_filter.term[themeKey];
             multipleThemes = true;
-          }
+        } else if(post_filter.term[accessRightKey]) {
+            if(accessRightFilter.length === 0) {
+              accessRightFilter += '&accessright=';
+            }
+            if (multipleAccessRights) {
+                accessRightFilter += ',';
+            }
+            accessRightFilter += encodeURIComponent(post_filter.term[accessRightKey]);
+            multipleAccessRights = true;
+        }
         })
       } else if(query.post_filter.term) { // single post_filter
         publisherFilter = (query.post_filter.term[publisherKey] ? '&publisher=' + encodeURIComponent(query.post_filter.term[publisherKey]) : '');
+        accessRightFilter = (query.post_filter.term[accessRightKey] ? '&accessright=' + encodeURIComponent(query.post_filter.term[accessRightKey]) : '');
   			themeFilter = ((query.post_filter.term[themeKey]) ? '&theme=' + query.post_filter.term[themeKey] : '');
       }
     }
@@ -118,6 +132,7 @@ export class QueryTransport extends AxiosESTransport {
       '&lang=nb' +
       publisherFilter +
       themeFilter +
+      accessRightFilter +
       (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
       .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
@@ -136,6 +151,12 @@ export class QueryTransport extends AxiosESTransport {
 		        response.data.aggregations['theme.code.raw4'] = {'theme.code.raw' : response.data.aggregations['theme_count'], size: '5'};
 						response.data.aggregations['theme.code.raw4']['theme.code.raw'].buckets = response.data.aggregations['theme.code.raw4']['theme.code.raw'].buckets.slice(0,100);
 		        delete response.data.aggregations['theme_count'];
+		    }
+		    // Check for the old property name to avoid a ReferenceError in strict mode.
+		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('accessRightCount')) {
+		        response.data.aggregations['accessRights.authorityCode.raw5'] = {'accessRights.authorityCode.raw' : response.data.aggregations['accessRightCount'], size: '5'};
+						response.data.aggregations['accessRights.authorityCode.raw5']['accessRights.authorityCode.raw'].buckets = response.data.aggregations['accessRights.authorityCode.raw5']['accessRights.authorityCode.raw'].buckets.slice(0,100);
+		        delete response.data.aggregations['accessRightCount'];
 		    }
     return response.data
   }

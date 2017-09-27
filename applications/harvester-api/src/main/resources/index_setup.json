@@ -358,8 +358,21 @@
                         }
                     }
                 }
+            },
+            "accessRights": {
+                "properties": {
+                    "authorityCode": {
+                        "type": "string",
+                        "analyzer": "norwegian",
+                        "fields": {
+                            "raw": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
-
