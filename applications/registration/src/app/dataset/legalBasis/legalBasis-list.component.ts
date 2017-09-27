@@ -1,25 +1,29 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
-import { legalBasis } from './legalBasis';
+import { LegalBasis } from './legalBasis';
 import { Dataset } from '../dataset';
-import {legalBasisFormComponent} from './legalBasis.component';
+import { LegalBasisFormComponent } from './legalBasis.component';
 
 @Component({
     selector: 'legal-basis-list',
     templateUrl: './legalBasis-list.html'
 })
-export class legalBasisListComponent implements OnInit {
+export class LegalBasisListComponent implements OnInit {
+
     @Input('legalBasisListFormArray')
     public legalBasisListFormArray: FormArray;
 
+    @Input('datasetForm')
+    public datasetForm: FormGroup;
+
     @Input('legalBasisList')
-    public legalBasisList: legalBasis[];
+    public legalBasisList: LegalBasis[];
     
     @Input('legalBasisType')
     public legalBasisType: string;
 
-    legalBasis: legalBasis;
+    legalBasis: LegalBasis;
 
     constructor(private cd: ChangeDetectorRef) { }
 
@@ -28,15 +32,15 @@ export class legalBasisListComponent implements OnInit {
     }
 
     addLegalBasis() {
-        const legalBasis: legalBasis = {
-                foafHomepage: null,
-                prefLabel: {
-                  nb:""
-                }
-            };
-          this.legalBasisList.push(legalBasis);
-          this.cd.detectChanges();
-          return false;
+        const legalBasis: LegalBasis = {
+            foafHomepage: null,
+            prefLabel: {
+                nb:""
+            }
+        };
+        this.legalBasisList.push(legalBasis);
+        this.cd.detectChanges();
+        return false;
     }
     
     removeLegalBasis(idx: number) {

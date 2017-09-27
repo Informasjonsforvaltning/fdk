@@ -1,13 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Dataset} from "../dataset";
-import {ChangeDetectorRef} from "@angular/core";
-import * as _ from 'lodash';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Dataset } from "../dataset";
+import { ChangeDetectorRef } from "@angular/core";
 
 @Component({
     selector: 'accessRights',
     templateUrl: './accessRights.component.html',
-    styleUrls: [ './accessRights.component.css' ]
+    styleUrls: ['./accessRights.component.css']
 })
 
 export class AccessRightsComponent implements OnInit {
@@ -22,8 +21,7 @@ export class AccessRightsComponent implements OnInit {
     accessRightsModel = [];
     selectedAccessRightIdx = 1;
 
-    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef)
-    {
+    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
         this.accessRightsModel = [
             {
                 id: 1,
@@ -50,8 +48,8 @@ export class AccessRightsComponent implements OnInit {
     ngOnInit() {
         this.accessRightsForm = this.toFormGroup(this.dataset);
 
-        if(!this.dataset.accessRights) {
-            this.dataset.accessRights = {uri: this.accessRightsModel[0].uri}
+        if (!this.dataset.accessRights) {
+            this.dataset.accessRights = { uri: this.accessRightsModel[0].uri }
         }
         this.accessRightsModel
             .filter(entry => entry.uri == this.dataset.accessRights.uri)
@@ -67,7 +65,7 @@ export class AccessRightsComponent implements OnInit {
                 if (accessLevel.accessRights) {
                     this.accessRightsModel.forEach(entry => {
                         if (entry.id == accessLevel.accessRights) {
-                            this.dataset.accessRights = {uri: entry.uri}
+                            this.dataset.accessRights = { uri: entry.uri }
                         }
                     });
                 }
@@ -77,12 +75,10 @@ export class AccessRightsComponent implements OnInit {
         );
     }
 
-
     private toFormGroup(data: Dataset) {
         return this.fb.group({
-            accessRights : [ data.accessRights || {}],
+            accessRights: [data.accessRights || {}],
             legalBasis: this.fb.array(this.dataset.legalBasisForRestrictions)
         });
     }
-
 }

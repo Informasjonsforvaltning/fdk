@@ -1,5 +1,5 @@
-import { legalBasis} from './legalBasis'
+import { LegalBasis} from './legalBasis'
 
-export const DISTRIBUTIONS: legalBasis[] = [
+export const DISTRIBUTIONS: LegalBasis[] = [
   {foafHomepage:"", uri:"", prefLabel:{nb:""}}
 ];

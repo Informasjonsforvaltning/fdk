@@ -1,7 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { legalBasis } from './legalBasis';
+import { LegalBasis } from './legalBasis';
 
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
@@ -12,14 +12,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     styleUrls: ['./legalBasis.component.css']
 })
 
-export class legalBasisFormComponent implements OnInit {
+export class LegalBasisFormComponent implements OnInit {
     language: string = 'nb';
     showForm: boolean = false;
     @Input('formArray')
     public legalBasisListFormArray: FormArray;
 
     @Input('legalBasis')
-    public legalBasis: legalBasis;
+    public legalBasis: LegalBasis;
 
     @Input('legalBasisIndex')
     public legalBasisIndex: number;
@@ -44,14 +44,14 @@ export class legalBasisFormComponent implements OnInit {
 
         this.legalBasisForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             legalBasisFormElement => {
-                this.legalBasis.prefLabel = { 'nb' : legalBasisFormElement.prefLabel };
+                this.legalBasis.prefLabel = { 'nb': legalBasisFormElement.prefLabel };
                 this.legalBasis.uri = legalBasisFormElement.uri;
                 this.cdr.detectChanges();
             }
         );
     }
 
-    private toFormGroup(legalBasis: legalBasis) {
+    private toFormGroup(legalBasis: LegalBasis) {
         const formGroup = this.fb.group({
             uri: [legalBasis.uri || '', Validators.required],
             foafHomepage: [legalBasis.foafHomepage || ''],
