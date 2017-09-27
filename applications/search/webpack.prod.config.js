@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   context:path.join(__dirname),
@@ -31,6 +32,11 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       }
+    }),
+    new CopyWebpackPlugin([
+      { from: './src/assets/css/bootstrap*', to: './', flatten: true },
+    ], {
+      copyUnmodified: true
     })
   ],
   resolve: {
