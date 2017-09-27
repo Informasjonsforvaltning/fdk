@@ -21,7 +21,7 @@ function createOpenshiftService {
     oc new-app dcatno/$osService:$tag
     oc expose dc/$osService --port=8080
     oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
-    oc label service --overwrite=true $osService \
+    oc label service $osService --overwrite=true \
         environmentTag=$environmentTag \
         environmentTag=$environmentTag \
         environmentDate=$dateTag \
