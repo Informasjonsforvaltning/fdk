@@ -2,10 +2,32 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import localization from '../../components/localization';
 import qs from 'qs';
+import {DropdownButton, MenuItem} from 'react-bootstrap';
 
 import "./index.scss";
 
 export class App extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedLanguage: ''
+    }
+    this.onChangeLanguage = this.onChangeLanguage.bind(this)
+  }
+
+  onChangeLanguage(e){
+    //const { setItems } = this.props
+    /*
+    const key = e.key;
+    console.log("dropdown key: " + key);
+    this.state.setItems([key]);
+    let text = this.props.translate(e.label || e.title || e.key)
+    this.setState({
+      selectedLanguage: `${text}`
+    })
+    */
+  }
 
   render() {
     /*
@@ -28,6 +50,19 @@ export class App extends React.Component {
      </ul>
      </div>
      */
+
+    /*
+     <DropdownButton
+     id="search-result-dropdown-1"
+     bsStyle="default"
+     className="dropdown-toggle fdk-button-language"
+     title="Språk"
+     onSelect={this.onChangeLanguage}
+     >
+     <MenuItem key="1" eventKey="en">test</MenuItem>
+     </DropdownButton>
+     */
+
     let queryObj = qs.parse(window.location.search.substr(1));
     let language = queryObj.lang ? queryObj.lang : 'nb';
     return (
@@ -55,9 +90,7 @@ export class App extends React.Component {
                 </a>
                 <div className="fdk-header-padding">
                   <div className="fdk-float-right fdk-margin-right-double">
-                    <a href="#">
-                      Språk her
-                    </a>
+
                   </div>
                 </div>
               </div>
