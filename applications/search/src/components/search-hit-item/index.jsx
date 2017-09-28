@@ -138,7 +138,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           <br />
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
-        {source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
+        {source.landingPage ? <div dangerouslySetInnerHTML={{__html:  source.landingPage}}/> : ''}
         </div>
       </a>
     );
