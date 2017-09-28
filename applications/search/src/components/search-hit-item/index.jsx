@@ -78,6 +78,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const hit_id = encodeURIComponent(source.id);
     const hit_element_id = `search-hit-${hit_id}`;
     const title = source.title[language] ? source.title[language] : '';
+    const link = `/datasets?id=${hit_id}`;
 
     let themeLabels = '';
     if(source.theme) {
@@ -118,7 +119,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         id={hit_element_id}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        href={hit_id}
+        href={link}
         rel="noopener noreferrer"
       >
         <div className="fdk-container fdk-container-search-hit">
