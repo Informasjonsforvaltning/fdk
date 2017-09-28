@@ -13,8 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 })
 
 export class LegalBasisFormComponent implements OnInit {
+
     language: string = 'nb';
     showForm: boolean = false;
+    showError: boolean = false;
+
     @Input('formArray')
     public legalBasisListFormArray: FormArray;
 
@@ -51,7 +54,7 @@ export class LegalBasisFormComponent implements OnInit {
         );
     }
 
-    private toFormGroup(legalBasis: LegalBasis) {
+    private toFormGroup(legalBasis: LegalBasis) : FormGroup {
         const formGroup = this.fb.group({
             uri: [legalBasis.uri || '', Validators.required],
             foafHomepage: [legalBasis.foafHomepage || ''],
@@ -59,17 +62,30 @@ export class LegalBasisFormComponent implements OnInit {
         });
         return formGroup;
     }
-    toggleForm() {
+    toggleForm() : void {
         this.showForm = !this.showForm;
     }
 
-    removeLegalBasis(idx: number) {
+    private showErrorMessage() : void {
+        this.showError = true;
+    }
+
+    private hideErrorMessage() : void {
+        this.showError = false;
+    }
+
+    public validate() : void {
+        console.log('show error or something');
+        this.showErrorMessage();
+    }
+
+    removeLegalBasis(idx: number) : boolean {
         this.deleteLegalBasis.emit(idx.toString());
         this.legalBasisListFormArray.removeAt(idx);
         return false;
     }
 
-    focus(e) {
+    focus(e) : void {
         e.target.childNodes.forEach(node => {
             if (node.className && node.className.match(/\bng2-tag-input-form\b/)) {
                 node.childNodes[1].focus();

@@ -31,7 +31,7 @@ export class LegalBasisListComponent implements OnInit {
       this.legalBasisList = this.legalBasisList || [];
     }
 
-    addLegalBasis() {
+    addLegalBasis() : boolean {
         const legalBasis: LegalBasis = {
             foafHomepage: null,
             prefLabel: {
@@ -41,9 +41,10 @@ export class LegalBasisListComponent implements OnInit {
         this.legalBasisList.push(legalBasis);
         this.cd.detectChanges();
         return false;
+
     }
     
-    removeLegalBasis(idx: number) {
+    removeLegalBasis(idx: number) : boolean {
         if (this.legalBasisList.length > 0) {
             this.legalBasisList.splice(idx, 1);
             this.legalBasisListFormArray.removeAt(idx);

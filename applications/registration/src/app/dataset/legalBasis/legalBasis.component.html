@@ -16,13 +16,13 @@
                         <p class="fdk-input-label">
                             Tittel på {{legalBasisType}}
                         </p>
-                        <input formControlName="prefLabel" class="fdk-input ng-touched" type="text" />
+                        <input formControlName="prefLabel" class="fdk-input ng-touched" type="text" (blur)="validate()" />
                     </div>
                     <div class="col-md-4">
                         <p class="fdk-input-label">
                             Lenke til {{legalBasisType}}
                         </p>
-                        <input formControlName="uri" class="fdk-input ng-touched" type="text" />
+                        <input formControlName="uri" class="fdk-input ng-touched" type="text" (blur)="validate()" />
                     </div>
                     <span class="delete-legalBasis-wrapper">
                         (
@@ -32,6 +32,9 @@
                         </a>
                         )
                     </span>
+                </div>
+                <div class="row">
+                    <span class="label label-danger" *ngIf="showError"
                 </div>
             </div>
         </div>
