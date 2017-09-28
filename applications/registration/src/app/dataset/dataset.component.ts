@@ -105,7 +105,7 @@ export class DatasetComponent implements OnInit {
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
 
-      console.log('dataset is ', dataset);
+      console.log('dataset from api: ', dataset);
       this.dataset = dataset;
 
       if (this.dataset.languages) {
@@ -145,6 +145,8 @@ export class DatasetComponent implements OnInit {
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
           console.log('saving dataset:', dataset);
+
+          // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
             this.availableLanguages.forEach((language, index) => {

@@ -25,7 +25,6 @@ export class DistributionListComponent implements OnInit {
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
-      console.log("distributions: ", this.distributions);
     }
 
     addDistribution() {

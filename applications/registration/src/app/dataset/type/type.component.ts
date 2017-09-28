@@ -63,7 +63,6 @@ export class TypeComponent implements OnInit {
         this.typeForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             accessLevel => {
                 if (accessLevel) {
-                  console.log('accessLevel is ', accessLevel)
                     this.typeModel.forEach(entry => {
                         if (entry.id == accessLevel.type) {
                             this.dataset.type = entry.label;
