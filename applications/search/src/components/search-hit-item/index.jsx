@@ -6,8 +6,9 @@ const qs = require('qs');
 const defaults = require("lodash/defaults");
 
 import localization from '../../components/localization';
+import './index.scss';
 
-export class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
@@ -61,11 +62,10 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
   }
 
   render() {
-    //let props = this.props;
-    //const {result} = props;
     const result = this.state.result;
     let url =  'datasets?id=' + encodeURIComponent(result._id);
-    let queryObj = qs.parse(window.location.search.substr(1));
+    //let queryObj = qs.parse(window.location.search.substr(1));
+    let queryObj = qs.parse(window.location.search);
     let language = queryObj.lang ? queryObj.lang : 'nb';
     if(!queryObj.lang || queryObj.lang === 'nb') {
       url += '&lang=nb';
@@ -74,7 +74,10 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     } else {
       url += '&lang=en';
     }
-    const source:any = _.extend({}, result._source, result.highlight);
+    const source = _.extend({}, result._source, result.highlight);
+    const hit_id = encodeURIComponent(source.id);
+    const hit_element_id = `search-hit-${hit_id}`;
+    const title = source.title[language] ? source.title[language] : '';
 
     let themeLabels = '';
     if(source.theme) {
@@ -111,8 +114,15 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
     );
 
     return (
-      <div className="fdk-container fdk-container-search-hit">
-        <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
+      <a
+        id={hit_element_id}
+        className="fdk-a-search-hit"
+        title={`${localization.result.dataset}: ${title}`}
+        href={hit_id}
+        rel="noopener noreferrer"
+      >
+        <div className="fdk-container fdk-container-search-hit">
+        <h2>{title}</h2>
         <div>
           {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>
           <span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
@@ -129,7 +139,8 @@ export class SearchHitItem extends React.Component { // eslint-disable-line reac
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
         {source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
-      </div>
+        </div>
+      </a>
     );
   }
 }

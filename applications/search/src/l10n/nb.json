@@ -55,6 +55,7 @@
     "standard":"Standard"
   },
   "result": {
+    "dataset":"Datasett",
     "waiting":"Henter data ..."
   },
   "noHits": {
