@@ -91,7 +91,6 @@ export class QueryTransport extends AxiosESTransport {
     }
 
     let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters
-    console.log('filtersUrlFragment is ', filtersUrlFragment);
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
