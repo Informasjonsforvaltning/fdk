@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "Felles datakatalog",
+    "titleSub": "Oversikt over datasett fra virksomheter i Norge",
     "publisher": "Virksomhet"
   },
   "beta": {
