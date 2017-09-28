@@ -10,10 +10,28 @@ services:
     networks:
       platform:
 
+  search-old:
+    image: dcatno/search-old:latest
+    depends_on:
+      - search-api
+      - fuseki
+      - reference-data
+    networks:
+      platform:
+
   search-api:
     image: dcatno/search-api:latest
     depends_on:
       - elasticsearch
+    networks:
+      platform:
+
+  nginx-search:
+    image: dcatno/nginx-search:latest
+    depends_on:
+      - search
+      - search-api
+      - search-old
     networks:
       platform:
 
