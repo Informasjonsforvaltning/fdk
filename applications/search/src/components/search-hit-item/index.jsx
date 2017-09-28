@@ -125,7 +125,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <div className="fdk-container fdk-container-search-hit">
         <h2>{title}</h2>
         <div>
-          {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>
+          {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}</span>
           <span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
         </div>
         <p
@@ -139,7 +139,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           <br />
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
-        {source.landingPage ? <div dangerouslySetInnerHTML={{__html:  source.landingPage}}/> : ''}
+        {source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
         </div>
       </a>
     );
