@@ -113,18 +113,21 @@ describe('SearchHitItem', () => {
     }
   }
 
-  const wrapper = shallow(<SearchHitItem result={props} />);
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallow(<SearchHitItem result={props} />);
+  });
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
   });
 
-  /*
-   it ('render table', () => {
-   const table = shallow(<OppslagTable oppslagItems={props} />);
-   expect(table.find('.table-item').length).to.be.equal(4);
-   });
+  it ('render card', () => {
+    expect(wrapper.find('.fdk-container-search-hit').length).to.be.equal(1);
+  });
 
+  /*
    it ('sorting table by title', () => {
    let table = shallow(<OppslagTable oppslagItems={props} />)
    table.setState({sortField: 'title', sortType: 'asc'});

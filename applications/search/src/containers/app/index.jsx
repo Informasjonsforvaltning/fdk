@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import localization from './components/localization';
+import localization from '../../components/localization';
 import qs from 'qs';
 
 import "./index.scss";
