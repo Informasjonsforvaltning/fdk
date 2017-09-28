@@ -1,8 +1,8 @@
-
 application:
   themesServiceUrl: http://reference-data:8080
+  catalogUriPrefix: http://localhost:8099
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
-  altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://registration-auth:8080}
+  altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://localhost:8077}
   altinnServiceCode: ${registrationApi_altinnServiceCode:4814}
   altinnServiceEdition: ${registrationApi_altinnServiceEdition:3}
   clientSSLCertificateKeystoreLocation: ${registrationApi_clientSSLCertificateKeystoreLocation:conf/dummy-client-SSL-cert.p12}
@@ -107,10 +107,6 @@ server:
     key-store-password: changeit
     key-store-type: PKCS12
     key-alias: tomcat
-application:
-  altinnServiceUrl: http://localhost:8077
-
-
 
 ---
 spring:
@@ -130,11 +126,3 @@ application:
   altinnServiceCode: 1234
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij
-
-
-
-
-
-
-
-
