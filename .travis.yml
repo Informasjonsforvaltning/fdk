@@ -19,7 +19,6 @@ install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
@@ -28,19 +27,19 @@ jobs:
         - comment=First build the project to look for syntax/build problems
 
     - stage: Tests # Run regular unit tests
-      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B  && mvn test -B
+      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
       env:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script:   mvn install -DskipTests -Dmaven.javadoc.skip=true -B    && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B    && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B   ; docker-compose up -d ; ./waitForDocker.sh ;  ./runNodeTests.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 
@@ -50,6 +49,7 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - applications/registration/dockerPush.sh
+          - ./travisPushToDockerHub.sh
         on:
           branch: develop
+          condition: $TRAVIS_TAG = ''

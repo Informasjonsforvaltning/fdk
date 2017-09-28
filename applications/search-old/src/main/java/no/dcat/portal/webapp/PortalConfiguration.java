@@ -1,5 +1,6 @@
 package no.dcat.portal.webapp;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +13,8 @@ import javax.annotation.PostConstruct;
  * Created by nodavsko on 17.10.2016.
  */
 @Configuration
-@PropertySource("classpath:project.properties") // for maven build properties
-@ConfigurationProperties(prefix = "application") // for application.yml
 public class PortalConfiguration {
+    private static Logger logger = LoggerFactory.getLogger(PortalConfiguration.class);
 
     private static final String QUERY_SERVICE_SEARCH = "/search";
     private static final String QUERY_SERVICE_DETAIL = "/detail";
@@ -30,7 +30,11 @@ public class PortalConfiguration {
 
     @Value("${application.queryService}")
     private String queryService;
+
+    @Value("${application.themeServiceExternalUrl}")
     private String themeServiceExternalUrl;
+
+    @Value("${application.themeServiceUrl}")
     private String themeServiceUrl;
 
 
@@ -38,6 +42,13 @@ public class PortalConfiguration {
     void validate(){
         assert queryServiceExternal != null;
         assert queryService != null;
+        assert themeServiceUrl != null;
+        assert themeServiceExternalUrl != null;
+
+        logger.info("queryServiceExternal: {}",queryServiceExternal);
+        logger.info("queryService        : {}",queryService);
+        logger.info("themeService        : {}",themeServiceUrl);
+        logger.info("themeServiceExternal: {}",themeServiceExternalUrl);
 
     }
 

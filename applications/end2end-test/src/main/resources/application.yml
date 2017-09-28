@@ -1,5 +1,6 @@
 logging:
-  level.: DEBUG
-  level.no.brreg: INFO
-  level.org.springframework: INFO
+  level.: ERROR
+  level.no.brreg: ERROR
+  level.no.dcat: WARN
+  level.org.springframework: ERROR
 
