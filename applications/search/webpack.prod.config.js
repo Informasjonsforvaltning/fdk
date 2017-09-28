@@ -34,7 +34,8 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: './src/assets/css/bootstrap*', to: './', flatten: true }
+      { from: './src/assets/css/bootstrap*', to: './', flatten: true },
+      { from: './src/assets/img/*', to: './img', flatten: true }
     ], {
       copyUnmodified: true
     })
