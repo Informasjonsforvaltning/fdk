@@ -41,7 +41,7 @@ export class TemporalFormComponent implements OnInit {
     }
 
       private getDateObjectFromUnixTimestamp(timestamp:string) {
-        if(!timestamp) return undefined;
+        if(!timestamp) return {};
         var timestamp2 = parseInt(timestamp);
         if(timestamp2.toString().length === 10) timestamp2 = parseInt(timestamp.toString() + "000");
         let date = new Date(timestamp2);

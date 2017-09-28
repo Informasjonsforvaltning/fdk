@@ -1,6 +1,6 @@
 application:
+  themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
-  themesServiceUrl: http://localhost:8100
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
   altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://localhost:8077}
   altinnServiceCode: ${registrationApi_altinnServiceCode:4814}
@@ -119,6 +119,7 @@ spring:
         http:
           enabled: true
 application:
+  themesServiceUrl: http://localhost:8100
   clientSSLCertificateKeystoreLocation: ../../conf/dummy-client-SSL-cert.p12
   clientSSLCertificateKeystorePassword: password
   altinnServiceUrl: http://localhost:8077
