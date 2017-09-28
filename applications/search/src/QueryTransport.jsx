@@ -22,88 +22,56 @@ export class QueryTransport extends AxiosESTransport {
       timeout:AxiosESTransport.timeout,
       headers:this.options.headers
     })
+    this.filters = [
+      {
+        key: 'publisher.name.raw',
+        paramName: 'publisher',
+        name: 'publisherCount',
+        rawName: 'publisher.name.raw3'
+      },
+      {
+        key: 'theme.code.raw',
+        paramName: 'theme',
+        rawName: 'theme.code.raw4',
+        name: 'theme_count'
+      },
+      {
+        key: 'accessRights.authorityCode.raw',
+        paramName: 'accessright',
+        rawName: 'accessRights.authorityCode.raw5',
+        name: 'accessRightCount'
+      },
+    ];
   }
 
   search(query){
-    console.log('query is ', query);
-		// http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
-    const publisherKey = 'publisher.name.raw';
-    const themeKey = 'theme.code.raw';
-    const accessRightKey = 'accessRights.authorityCode.raw';
-    let publisherFilter = '';
-    let themeFilter = '';
-    let accessRightFilter = '';
-    let multiplePublishers = false;
-    let multipleAccessRights = false;
-    let multipleThemes = false;
-    if(query.post_filter) { // there is an aggregation post_filter
-      if(query.post_filter.bool) { // array of post_filters
-        query.post_filter.bool.must.forEach((post_filter) => {
-          if(post_filter.term[publisherKey]) {
-            if(publisherFilter.length === 0) {
-              publisherFilter += '&publisher=';
+    this.filters.forEach((filter)=> {
+      // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
+      filter.query = '';
+      let multiple = false;
+      if(query.post_filter) { // there is an aggregation post_filter
+        if(query.post_filter.bool) { // array of post_filters
+          query.post_filter.bool.must.forEach((post_filter) => {
+            if(post_filter.term[filter.key]) {
+              if(filter.query.length === 0) {
+                filter.query += '&' + filter.paramName +'=';
+              }
+              if (multiple) {
+                  filter.query += ',';
+              }
+              filter.query += encodeURIComponent(post_filter.term[filter.key]);
+              multiple = true;
             }
-            if (multiplePublishers) {
-                publisherFilter += ',';
-            }
-            publisherFilter += encodeURIComponent(post_filter.term[publisherKey]);
-            multiplePublishers = true;
-          } else if(post_filter.term[themeKey]) {
-            if(themeFilter.length === 0) {
-              themeFilter += '&theme=';
-            }
-            if (multipleThemes) {
-                themeFilter += ",";
-            }
-            themeFilter += post_filter.term[themeKey];
-            multipleThemes = true;
-        } else if(post_filter.term[accessRightKey]) {
-            if(accessRightFilter.length === 0) {
-              accessRightFilter += '&accessright=';
-            }
-            if (multipleAccessRights) {
-                accessRightFilter += ',';
-            }
-            accessRightFilter += encodeURIComponent(post_filter.term[accessRightKey]);
-            multipleAccessRights = true;
+          })
+        } else if(query.post_filter.term) { // single post_filter
+          filter.query = (query.post_filter.term[filter.key] ? '&' + filter.paramName +'=' + encodeURIComponent(query.post_filter.term[filter.key]) : '');
         }
-        })
-      } else if(query.post_filter.term) { // single post_filter
-        publisherFilter = (query.post_filter.term[publisherKey] ? '&publisher=' + encodeURIComponent(query.post_filter.term[publisherKey]) : '');
-        accessRightFilter = (query.post_filter.term[accessRightKey] ? '&accessright=' + encodeURIComponent(query.post_filter.term[accessRightKey]) : '');
-  			themeFilter = ((query.post_filter.term[themeKey]) ? '&theme=' + query.post_filter.term[themeKey] : '');
       }
-    }
+      filter.query = filter.query.replace(/,\s*$/, "");
+    })
 
     let sortfield = "_score";
     let sortdirection = "asc";
-
-    /* ois - MÅ GJØRES OM FOR Å STØTTE CUSTOM DROPDOWN PÅ SORTERING, queryObj får ikke med seg siste valg
-    let queryObj = qs.parse(window.location.search.substr(1));
-    console.log(JSON.stringify("qyery her: " + JSON.stringify(query.sort)));
-    if (queryObj['sort']) { // there is a sort code
-      console.log("sort");
-        var lastIndexOfUnderscore = queryObj['sort'].lastIndexOf('_'),
-            key = queryObj['sort'].slice(0,lastIndexOfUnderscore),
-            value = queryObj['sort'].substr(lastIndexOfUnderscore+1);
-        query.sort[0] = {};
-        query.sort[0][key] = value;
-        let sort = query.sort[0]; // assume that only one sort field is possible
-        if (_.has(sort, '_score')) {
-            sortfield="_score";
-            sortdirection="asc";
-        } else if (_.has(sort, 'title')) {
-            sortfield= "title.nb";
-        } else if (_.has(sort, 'modified')) {
-            sortfield= "modified";
-            sortdirection = "desc";
-        } else if (_.has(sort,'publisher.name')) {
-            sortfield= "publisher.name";
-        } else {
-          console.log('other! (should not happen)');
-        }
-    }
-    */
 
     let querySortObj = query.sort[0]; // assume that only one sort field is possible
     if (querySortObj) { // there is a sort code
@@ -122,6 +90,7 @@ export class QueryTransport extends AxiosESTransport {
       }
     }
 
+    let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
@@ -130,36 +99,19 @@ export class QueryTransport extends AxiosESTransport {
 			'&size=' +
       query.size +
       '&lang=nb' +
-      publisherFilter +
-      themeFilter +
-      accessRightFilter +
+      filtersUrlFragment +
       (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
 		)
       .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
-      .then(this.getData)
+      .then((response)=>this.getData.call(this, response))
   }
 
 
   getData(response) {
     let aggregations = response.data.aggregations;
-    let aggregationsArray = [
-        {
-          rawName: 'publisher.name.raw3',
-          name: 'publisherCount'
-        },
-        {
-          rawName: 'theme.code.raw4',
-          name: 'theme_count'
-        },
-        {
-          rawName: 'accessRights.authorityCode.raw5',
-          name: 'accessRightCount'
-        },
-      ];
-
-      aggregationsArray.forEach((aggregation)=>{
-        let rawName = aggregation.rawName;
-        let name = aggregation.name;
+      this.filters.forEach((filter)=>{
+        let rawName = filter.rawName;
+        let name = filter.name;
         let rawNameShort = rawName.substr(0, rawName.length-1);
         if (aggregations && aggregations.hasOwnProperty(name)) {
             aggregations[rawName] = {};
