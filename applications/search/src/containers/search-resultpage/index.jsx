@@ -96,34 +96,6 @@ searchkit.translateFunction = (key) => {
   return translations[key]
 }
 
-/*
-class RefinementOption extends React.Component {
-  render() {
-    let props = this.props;
-    let themeLabel = '';
-    const {
-      bemBlocks, onClick, active, disabled, style, itemKey,
-      label, count, showCount, showCheckbox
-    } = props;
-    if (window.themes.length > 0) {
-      themeLabel = _.find(window.themes, props.label.substr(-4))[props.label.substr(-4)];
-    }
-    const block = bemBlocks.option;
-    const className = block()
-      .state({active, disabled})
-      .mix(bemBlocks.container("item"))
-    return (
-      <div className={props.bemBlocks.option().state({selected: props.selected}).mix(props.bemBlocks.container("item"))}
-           onClick={props.onClick}>
-        <input type="checkbox" data-qa="checkbox" checked={active} readOnly className={block("checkbox").state({active}) }></input>
-        <div className={props.bemBlocks.option("text")}>{themeLabel}</div>
-        <div className={props.bemBlocks.option("count")}>{props.count}</div>
-      </div>
-    );
-  }
-}
-*/
-
 export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
@@ -177,14 +149,20 @@ export class SearchPage extends React.Component {
       <SearchkitProvider searchkit={searchkit}>
         <div>
           <div className="container">
-            <TopBar>
-              <SearchBox
-                autofocus={true}
-                searchOnChange={false}
-                placeholder={localization.query.intro}
-              />
-              <HitsStats/>
-            </TopBar>
+            <div className="row mb-60">
+              <div className="col-md-12">
+                <TopBar>
+                  <SearchBox
+                    autofocus={true}
+                    searchOnChange={false}
+                    placeholder={localization.query.intro}
+                  />
+                </TopBar>
+              </div>
+              <div className="col-md-12 text-center">
+                <HitsStats/>
+              </div>
+            </div>
             <section id="resultPanel">
               <div className="container-fluid">
                 <div className="row">

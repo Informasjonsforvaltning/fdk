@@ -40,7 +40,10 @@ export class App extends React.Component {
             <div className="row">
               <div className="col-md-5">
                 <p className="fdk-p-header">
-                    {localization.app.title}
+                  {localization.app.title}
+                </p>
+                <p className="fdk-p-header-sub">
+                  {localization.app.titleSub}
                 </p>
               </div>
               <div className="col-md-7 fdk-header-right">
