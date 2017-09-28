@@ -18,5 +18,5 @@ Feature: Forbedringer design
   Scenario: C-Test FDK: Forbedringer design - betaversjon
     Given I am on the homepage of the National Data Catalog
     Then "beta-versjon" shall appear in a topline
-    And there should exist a link "tilbakemeldinger" for email input
+  #  And there should exist a link "tilbakemeldinger" for email input
 
