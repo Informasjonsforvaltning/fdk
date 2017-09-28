@@ -139,25 +139,36 @@ export class QueryTransport extends AxiosESTransport {
       .then(this.getData)
   }
 
+
   getData(response) {
-		    // Check for the old property name to avoid a ReferenceError in strict mode.
-		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('publisherCount')) {
-		        response.data.aggregations['publisher.name.raw3'] = {'publisher.name.raw' : response.data.aggregations['publisherCount'], size: '5'};
-						response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets = response.data.aggregations['publisher.name.raw3']['publisher.name.raw'].buckets.slice(0,100);
-		        delete response.data.aggregations['publisherCount'];
-		    }
-		    // Check for the old property name to avoid a ReferenceError in strict mode.
-		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('theme_count')) {
-		        response.data.aggregations['theme.code.raw4'] = {'theme.code.raw' : response.data.aggregations['theme_count'], size: '5'};
-						response.data.aggregations['theme.code.raw4']['theme.code.raw'].buckets = response.data.aggregations['theme.code.raw4']['theme.code.raw'].buckets.slice(0,100);
-		        delete response.data.aggregations['theme_count'];
-		    }
-		    // Check for the old property name to avoid a ReferenceError in strict mode.
-		    if (response.data.aggregations && response.data.aggregations.hasOwnProperty('accessRightCount')) {
-		        response.data.aggregations['accessRights.authorityCode.raw5'] = {'accessRights.authorityCode.raw' : response.data.aggregations['accessRightCount'], size: '5'};
-						response.data.aggregations['accessRights.authorityCode.raw5']['accessRights.authorityCode.raw'].buckets = response.data.aggregations['accessRights.authorityCode.raw5']['accessRights.authorityCode.raw'].buckets.slice(0,100);
-		        delete response.data.aggregations['accessRightCount'];
-		    }
+    let aggregations = response.data.aggregations;
+    let aggregationsArray = [
+        {
+          rawName: 'publisher.name.raw3',
+          name: 'publisherCount'
+        },
+        {
+          rawName: 'theme.code.raw4',
+          name: 'theme_count'
+        },
+        {
+          rawName: 'accessRights.authorityCode.raw5',
+          name: 'accessRightCount'
+        },
+      ];
+
+      aggregationsArray.forEach((aggregation)=>{
+        let rawName = aggregation.rawName;
+        let name = aggregation.name;
+        let rawNameShort = rawName.substr(0, rawName.length-1);
+        if (aggregations && aggregations.hasOwnProperty(name)) {
+            aggregations[rawName] = {};
+            aggregations[rawName].size = '5';
+            aggregations[rawName][rawNameShort] = aggregations[name];
+            aggregations[rawName][rawNameShort].buckets = aggregations[rawName][rawNameShort].buckets.slice(0,100);
+            delete aggregations[name];
+        }
+      })
     return response.data
   }
 
