@@ -37,7 +37,8 @@ public class ThemeLabelsSteps extends CommonPage{
 
     @Given("^I am on the homepage of the National Data Catalog$")
     public void i_am_on_the_homepage_of_the_National_Data_Catalog() throws Throwable {
-        driver.get("http://" + portalHostname + ":" + portalPort +"/");
+        openPageWaitRetry("http://" + portalHostname + ":" + portalPort +"/",
+                d -> driver.findElement(By.xpath("//div[@class='fdk-header-beta']")).isDisplayed(), 5);
     }
 
 
