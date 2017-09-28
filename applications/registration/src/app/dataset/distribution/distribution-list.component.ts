@@ -22,11 +22,10 @@ export class DistributionListComponent implements OnInit {
     @Input('title')
     public title: string;
 
-    distribution: Distribution;
-
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
+      console.log("distributions: ", this.distributions);
     }
 
     addDistribution() {
@@ -43,7 +42,7 @@ export class DistributionListComponent implements OnInit {
         };
           this.distributions.push(distribution);
           this.cd.detectChanges();
-          return false; 
+          return false;
     }
 
     removeDistribution(idx: number) {

@@ -5,8 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import no.dcat.model.Catalog;
+import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
+import no.dcat.model.Distribution;
 import no.dcat.model.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.CodesImportException;
@@ -74,7 +77,9 @@ public class ImportController {
     @Value("${application.themesServiceUrl}")
     private String  THEMES_SERVICE_URL = "http://error.themes.service.url.not.set";
 
-    private final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
+    final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
+    final Map<String,DataTheme> allThemes = new HashMap<>();
+
     private String[] languages = {"no", "nb", "nn", "en"};
 
     private final static Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
@@ -198,9 +203,9 @@ public class ImportController {
         JsonObject model = gson.fromJson(json, JsonObject.class);
         JsonArray datasets = model.getAsJsonArray("@graph");
 
-        datasets.forEach( (JsonElement d) -> {
+        datasets.forEach( (JsonElement dataset) -> {
             // preprocess temporals because framing cannot convert object structure
-            JsonArray temporals = d.getAsJsonObject().getAsJsonArray("temporal");
+            JsonArray temporals = dataset.getAsJsonObject().getAsJsonArray("temporal");
             if (temporals != null) {
                 temporals.forEach((JsonElement t) -> {
                     JsonElement hasBeginning = t.getAsJsonObject().getAsJsonObject("owt:hasBeginning").getAsJsonObject("owt:inXSDDateTime").getAsJsonPrimitive("@value");
@@ -210,7 +215,7 @@ public class ImportController {
                 });
             }
 
-            JsonObject publisher = d.getAsJsonObject().getAsJsonObject("publisher");
+            JsonObject publisher = dataset.getAsJsonObject().getAsJsonObject("publisher");
             if (publisher != null) {
                 JsonElement publisherName = publisher.get("name");
                 if (publisherName != null && publisherName instanceof JsonArray) {
@@ -220,6 +225,21 @@ public class ImportController {
                         publisher.add("name", nameArray.get(0));
                     }
                 }
+            }
+
+            // handle extension to DCAT-AP-NO 1.1 - multiple formats
+            JsonArray distributions = dataset.getAsJsonObject().getAsJsonArray("distribution");
+            if (distributions != null) {
+                distributions.forEach(distribution -> {
+                    try {
+                        JsonPrimitive format = distribution.getAsJsonObject().getAsJsonPrimitive("dct:format");
+                        JsonArray array = new JsonArray();
+                        array.add(format);
+                        distribution.getAsJsonObject().add("format", array);
+                    } catch (ClassCastException cce) {
+                        // do nothing. Format is either missing or is an array already
+                    }
+                });
             }
 
 
@@ -244,6 +264,18 @@ public class ImportController {
                     k.clear();
                     k.put(lang, value);
                 });
+            }
+
+            // themes
+            if (d.getTheme() != null) {
+                for (DataTheme theme : d.getTheme()) {
+                    DataTheme themeWithLabel = allThemes.get(theme.getUri());
+
+                    if (themeWithLabel != null) {
+                        theme.setTitle(themeWithLabel.getTitle());
+                        theme.setCode(themeWithLabel.getCode());
+                    }
+                }
             }
 
             // accrualPeriodicity
@@ -310,6 +342,18 @@ public class ImportController {
             });
 
             allCodes.put(type,codeMap);
+        }
+
+        // fetch themes
+        ResponseEntity<List<DataTheme>> themesResponseEntity = restTemplate.exchange(THEMES_SERVICE_URL + "/themes",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {});
+
+        if (themesResponseEntity.getStatusCode() != HttpStatus.OK) {
+            throw new CodesImportException(String.format("Cannot access themes service for code types. Error %d", codeTypesResponse.getStatusCodeValue()));
+        }
+
+        for (DataTheme theme: themesResponseEntity.getBody()) {
+            allThemes.put(theme.getId(), theme);
         }
 
     }

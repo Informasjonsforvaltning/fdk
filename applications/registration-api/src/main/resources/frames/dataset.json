@@ -93,7 +93,7 @@
       "@type": "@id"
     },
     "conformsTo": {
-      "@id": "dcat:conformsTo",
+      "@id": "dct:conformsTo",
       "@container": "@set",
       "@type": "@id"
     },

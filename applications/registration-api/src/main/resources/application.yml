@@ -123,6 +123,7 @@ spring:
         http:
           enabled: true
 application:
+  themesServiceUrl: http://localhost:8100
   clientSSLCertificateKeystoreLocation: ../../conf/dummy-client-SSL-cert.p12
   clientSSLCertificateKeystorePassword: password
   altinnServiceUrl: http://localhost:8077

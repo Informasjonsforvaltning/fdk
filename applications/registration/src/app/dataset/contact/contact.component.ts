@@ -23,7 +23,6 @@ export class ContactComponent implements OnInit {
 
     ngOnInit() {
       if(this.contact) {
-
           this.contactForm = this.toFormGroup(this.contact);
           this.contactsArray.push(this.contactForm);
       }
