@@ -191,6 +191,7 @@ export class SearchPage extends React.Component {
                       field="accessRights.authorityCode.raw"
                       operator="AND"
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                      itemComponent={RefinementOptionPublishers}
                     />
                   </div>
                   <div id="datasets" className="col-sm-8">
