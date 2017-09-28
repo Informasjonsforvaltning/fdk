@@ -116,24 +116,22 @@
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="terms-toggle" class="expand-checkbox" />
-    <label for="tema-toggle" class="collapsed-content expand-label">
-      <div class="truncate">
+    <label for="terms-toggle" class="collapsed-content expand-label">
+      <div *ngIf="!((dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0))" class="truncate">
         <span *ngIf="(dataset.subjects && dataset.subjects.length !== 0)">
-          Begrep:
           <span class="" *ngFor="let subject of dataset.subjects; let i=index" >
             <span>{{subject}}</span>
           </span>
         </span>
         <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">
-          Søkeord:
           <span class="" *ngFor="let keyword of dataset.keywords; let i=index" >
             <span *ngIf="keyword.nb">{{keyword.nb}}</span>
           </span>
         </span>
       </div>
-      <div *ngIf="(dataset.subjects && dataset.subjects.length === 0) || (dataset.keywords && dataset.keywords.length === 0)">Klikk for å fylle ut</div>
+      <div *ngIf="(dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0)"><span><span class="">Klikk for å fylle ut</span></span></div>
     </label>
-    <label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label>
+    <!--label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label-->
     <div class="expanded-content">
       <information [dataset]="dataset" (onSave)="onSave($event)"></information>
     </div>
@@ -177,7 +175,7 @@
             moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
             name="utgivelse">
           </helptext>
-          <my-date-picker *ngIf="dataset.issued" id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
+          <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
         formControlName="issued" ></my-date-picker>
         </div>
       </div>
