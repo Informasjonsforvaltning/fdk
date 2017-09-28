@@ -6,6 +6,7 @@ const qs = require('qs');
 const defaults = require("lodash/defaults");
 
 import localization from '../../components/localization';
+import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -113,7 +114,14 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     );
 
     return (
-      <div id={hit_element_id} className="fdk-container fdk-container-search-hit">
+      <a
+        id={hit_element_id}
+        className="fdk-a-search-hit"
+        title={`${localization.result.dataset}: ${title}`}
+        href={hit_id}
+        rel="noopener noreferrer"
+      >
+        <div className="fdk-container fdk-container-search-hit">
         <h2>{title}</h2>
         <div>
           {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>
@@ -131,7 +139,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
         {source.landingPage ? <div dangerouslySetInnerHTML={{__html:landingPage}}/> : ''}
-      </div>
+        </div>
+      </a>
     );
   }
 }
