@@ -16,11 +16,11 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         format = {"pretty", "html:target/cucumber"},
-        features = "classpath:feature/gdocKatalog.feature",
+        features = "classpath:feature/GdocCatalog.feature",
         tags = {"~@ignore"}
 )
 
-public class RunGdocCucumberTestIT {
+public class RunGdocIT {
 }
 
 

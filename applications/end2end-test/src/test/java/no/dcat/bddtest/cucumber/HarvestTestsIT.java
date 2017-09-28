@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         format = { "pretty", "html:target/cucumber" },
-        features = {"classpath:feature/HarvestDIFIData.feature", "classpath:feature/onlyImportValidDatasets.feature"},
+        features = {"classpath:feature/HarvestDIFIData.feature", "classpath:feature/HarvestOnlyValidDatasets.feature"},
         tags = {"~@ignore"}
 )
 public class HarvestTestsIT {
