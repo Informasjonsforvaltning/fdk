@@ -16,7 +16,7 @@ const Home = () => {
 const routes =
   (
     <Route patch="/" component={App}>
-    <Route path="/datasets" component={SearchPage}>
+    <Route path="/" component={SearchPage}>
       <Route path="*" component={SearchPage}/>
       <IndexRoute component={SearchPage}/>
     </Route>

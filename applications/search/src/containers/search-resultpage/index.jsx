@@ -24,14 +24,14 @@ import {
 
 import {RefinementOptionThemes} from '../../components/search-refinementoption-themes';
 import {RefinementOptionPublishers} from "../../components/search-refinementoption-publishers";
-import {SearchBox} from "../../SearchBox.jsx";
-//import {Select2} from "../../select.jsx";
+import {SearchBox} from "../../components/search-searchbox/SearchBox.jsx";
 import {QueryTransport} from "../../QueryTransport.jsx";
 import {addOrReplaceParam} from "../../addOrReplaceUrlParam.js";
 import localization from "../../components/localization";
 import SearchHitItem from "../../components/search-hit-item/index.jsx";
 import SelectDropdown from '../../components/search-searchkit-selector-dropdown';
 import './index.scss';
+import '../../components/search-searchbox/index.scss';
 
 
 const defaults = require("lodash/defaults");
