@@ -16,7 +16,7 @@ import {DropdownButton, MenuItem} from 'react-bootstrap';
 import localization from '../localization';
 
 
-export class Select extends React.Component {
+export default class Select extends React.Component {
 
   constructor(props){
     super(props);
@@ -59,10 +59,10 @@ export class Select extends React.Component {
     const {bemBlocks} = props;
     return (
         <DropdownButton
+          id="search-result-dropdown-1"
           bsStyle="default"
           className="btn btn-default dropdown-toggle fdk-button fdk-button-default"
           title={this.state.selectedValue}
-          key="1" id="1"
           onSelect={this.onChange}
         >
           {map(items, (item, idx) => {

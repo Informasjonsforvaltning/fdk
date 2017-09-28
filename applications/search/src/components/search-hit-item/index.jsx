@@ -74,8 +74,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       url += '&lang=en';
     }
     const source = _.extend({}, result._source, result.highlight);
-
-    let title = source.title[language] ? source.title[language] : '';
+    const hit_id = encodeURIComponent(source.id);
+    const hit_element_id = `search-hit-${hit_id}`;
+    const title = source.title[language] ? source.title[language] : '';
 
     let themeLabels = '';
     if(source.theme) {
@@ -111,12 +112,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       }
     );
 
-    /*
-     <h2 dangerouslySetInnerHTML={{__html:source.title[language] || source.title.nb || source.title.nn || source.title.en}}></h2>
-     */
-
     return (
-      <div className="fdk-container fdk-container-search-hit">
+      <div id={hit_element_id} className="fdk-container fdk-container-search-hit">
         <h2>{title}</h2>
         <div>
           {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name : ''}</span>

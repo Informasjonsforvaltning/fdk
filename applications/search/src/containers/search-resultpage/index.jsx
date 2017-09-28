@@ -30,7 +30,7 @@ import {QueryTransport} from "../../QueryTransport.jsx";
 import {addOrReplaceParam} from "../../addOrReplaceUrlParam.js";
 import localization from "../../components/localization";
 import SearchHitItem from "../../components/search-hit-item/index.jsx";
-import {Select} from '../../components/search-searchkit-selector-dropdown';
+import SelectDropdown from '../../components/search-searchkit-selector-dropdown';
 import './index.scss';
 
 
@@ -232,7 +232,7 @@ export class SearchPage extends React.Component {
                             {label: localization.sort.by + ' ' + localization.sort['by.modified'], field: "modified", order: "desc"},
                             {label: localization.sort.by + ' ' + localization.sort['by.publisher'], field: "publisher.name", order: "asc"},
                           ]}
-                          listComponent={Select}
+                          listComponent={SelectDropdown}
                         />
                         </div>
                       </div>
