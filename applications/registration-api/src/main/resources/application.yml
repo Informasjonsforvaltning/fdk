@@ -34,6 +34,7 @@ saml:
         difi.brreg.datakatalog.registrering.tt1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.ut1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.st2: ${registrationApi_ipKeyPassword}
+        difi.brreg.datakatalog.registrering.dev: ${registrationApi_ipKeyPassword}
     context-provider:
       lb:
         context-path: /
