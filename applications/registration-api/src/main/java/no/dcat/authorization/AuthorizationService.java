@@ -11,11 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -27,15 +23,12 @@ import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by dask on 16.06.2017.
@@ -69,6 +62,9 @@ public class AuthorizationService {
 
     @Autowired
     EntityNameService entityNameService;
+
+    @Autowired
+    AuthorizedOrgformService authorizedOrgformService;
 
     final static String servicePath = "api/serviceowner/reportees?ForceEIAuthentication&subject=%s&servicecode=%s&serviceedition=%s";
 
@@ -108,11 +104,7 @@ public class AuthorizationService {
      * @return list of organization numbers
      */
     public List<String> getOrganisations(String ssn) throws AuthorizationServiceException {
-        List<String> organizations = new ArrayList<>();
-
-        organizations =  getAuthorizedOrganisations(ssn);
-
-        return organizations;
+        return getAuthorizedOrganisations(ssn);
     }
 
     String getReporteesUrl(String ssn) {
@@ -130,7 +122,7 @@ public class AuthorizationService {
     protected List<String> getAuthorizedOrganisations(String ssn) throws AuthorizationServiceException {
         List<String> organisations = new ArrayList<>();
 
-        List<Entity> entries = getAuthorizedEntities(ssn);
+        List<Entity> entries = getAuthorizedEntities(ssn).stream().filter(entry -> "Enterprise".equals(entry.getType())).filter(authorizedOrgformService::isIncluded).collect(Collectors.toList());
 
         String name = "unknown";
         for (Entity entry : entries) {
@@ -227,5 +219,9 @@ public class AuthorizationService {
         requestFactory.setHttpClient(httpClient);
 
         return requestFactory;
+    }
+
+    void setAuthorizedOrgformService(AuthorizedOrgformService authorizedOrgformService) {
+        this.authorizedOrgformService = authorizedOrgformService;
     }
 }
