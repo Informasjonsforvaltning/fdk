@@ -132,8 +132,6 @@ export class App extends React.Component {
             </div>
             </div>
         </div>
-
-
         {childWithProp}
         <div className="fdk-footer">
           <div className="container">

@@ -2,10 +2,11 @@ import * as React from "react";
 import PropTypes from 'prop-types';
 import * as _ from "lodash";
 import cx from 'classnames';
-const qs = require('qs');
-const defaults = require("lodash/defaults");
+import qs from 'qs';
+import defaults from 'lodash/defaults';
 
 import localization from '../../components/localization';
+import SearchHitFormat from '../search-hit-item-format';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -40,6 +41,32 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   _renderFormats(source) {
     let distribution = source.distribution;
+    let formatNodes;
+    if(distribution) {
+      formatNodes = Object.keys(distribution).map(key => {
+        if(distribution[key].format) {
+          let formatArray = distribution[key].format.trim().split(',');
+          let nodes;
+          nodes = Object.keys(formatArray).map(key => {
+            if (formatArray[key] !== null) {
+              return (
+                <SearchHitFormat
+                  text={formatArray[key]}
+                />
+              );
+            }
+          });
+          return nodes;
+        }
+        return null;
+      });
+    }
+    return formatNodes;
+  }
+
+  /*
+  _renderFormats(source) {
+    let distribution = source.distribution;
     let formatRet;
     if(source.distribution) {
       formatRet = Object.keys(distribution).map(key => {
@@ -60,6 +87,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     }
     return formatRet;
   }
+  */
 
   render() {
     const result = this.state.result;
@@ -127,7 +155,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <h2>{title}</h2>
         <div>
           {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}</span>
-          <span dangerouslySetInnerHTML={{__html:themeLabels}}></span>
+          <span dangerouslySetInnerHTML={{ __html:themeLabels }}></span>
         </div>
         <p
           className="fdk-p-search-hit"
@@ -137,7 +165,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <div className={distributionClass}>
           <strong>{accessRights}</strong>
           <br />
-          <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
+          {this._renderFormats(source)}
         </div>
           {source.landingPage &&
             <div>
