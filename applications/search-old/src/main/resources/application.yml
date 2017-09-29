@@ -1,9 +1,11 @@
 logging:
-  level.: ERROR
+  level.: WARN
   level.no.brreg: DEBUG
-  level.no.difi: ERROR
+  level.no.difi: INFO
   level.no.dcat: INFO
-  level.org.springframework: ERROR
+  level.org.springframework: INFO
+server:
+  port: 3001
 
 application:
   queryService: http://search-api:8080
