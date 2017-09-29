@@ -3,7 +3,7 @@
     "title": "Felles datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge",
     "publisher": "Virksomhet",
-    "menu": "Meny"
+    "menu": "Menu"
   },
   "beta": {
     "first": "Dette er en beta-versjon. Gi oss gjerne",
@@ -40,8 +40,8 @@
   },
   "page": {
     "navigation": "Sidenavigering",
-    "next": "Neste side",
-    "prev": "Forrige side",
+    "next": "Next page",
+    "prev": "Previous page",
     "result.summary": "Treff:",
     "dataset":"datasett"
 
@@ -57,7 +57,7 @@
     "standard":"Standard"
   },
   "result": {
-    "dataset":"Datasett",
+    "dataset":"Dataset",
     "waiting":"Henter data ..."
   },
   "noHits": {
@@ -70,14 +70,14 @@
     "mail": "fellesdatakatalog@brreg.no"
   },
   "sort": {
-    "by": "Sorter på",
-    "by.relevance": "Relevans",
-    "by.title": "Tittel",
-    "by.publisher": "Utgiver",
-    "by.modified": "Sist endret"
+    "by": "Sort by",
+    "by.relevance": "Relevance",
+    "by.title": "Title",
+    "by.publisher": "Publisher",
+    "by.modified": "Modified"
   },
   "search_hit": {
-    "owned": "Eies av",
-    "public": "Offentlig"
+    "owned": "Owned by",
+    "public": "Public"
   }
 }

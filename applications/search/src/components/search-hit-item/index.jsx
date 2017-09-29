@@ -63,21 +63,15 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   render() {
     const result = this.state.result;
-    let url =  'datasets?id=' + encodeURIComponent(result._id);
-    //let queryObj = qs.parse(window.location.search.substr(1));
-    let queryObj = qs.parse(window.location.search);
-    let language = queryObj.lang ? queryObj.lang : 'nb';
-    if(!queryObj.lang || queryObj.lang === 'nb') {
-      url += '&lang=nb';
-    } else if(queryObj.lang === 'nn'){
-      url += '&lang=nn';
-    } else {
-      url += '&lang=en';
-    }
+    const url =  'datasets?id=' + encodeURIComponent(result._id);
+    const language = this.props.selectedLanguageCode;
     const source = _.extend({}, result._source, result.highlight);
+
+    // Read fields from search-hit, use correct language field if specified.
     const hit_id = encodeURIComponent(source.id);
     const hit_element_id = `search-hit-${hit_id}`;
-    const title = source.title[language] ? source.title[language] : '';
+    const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
+    const description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
     const link = `/datasets?id=${hit_id}`;
 
     let themeLabels = '';
@@ -89,6 +83,13 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           themeLabels += ' </div>';
         }
       });
+    }
+
+    let accessRights;
+    if(source.accessRights) {
+      accessRights = source.accessRights.prefLabel[language] || singleTheme.accessRights.prefLabel.nb || singleTheme.accessRights.prefLabel.nn || singleTheme.accessRights.prefLabel.en
+    } else {
+      accessRights = localization.search_hit.public;
     }
 
     let distribution_restricted = false;
@@ -130,16 +131,19 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         </div>
         <p
           className="fdk-p-search-hit"
-          dangerouslySetInnerHTML={
-            {__html:source.description[language] || source.description.nb || source.description.nn || source.description.en}}
         >
+          {description}
         </p>
         <div className={distributionClass}>
-          <strong>{source.accessRights ? source.accessRights.prefLabel[language] : 'Offentlig'}</strong>
+          <strong>{accessRights}</strong>
           <br />
           <div dangerouslySetInnerHTML={{__html: this._renderFormats(source)}} />
         </div>
-        {source.landingPage ? <div dangerouslySetInnerHTML={{__html:  source.landingPage}}/> : ''}
+          {source.landingPage &&
+            <div>
+              {source.landingPage}
+            </div>
+          }
         </div>
       </a>
     );

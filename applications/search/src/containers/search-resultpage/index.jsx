@@ -26,7 +26,6 @@ import {RefinementOptionThemes} from '../../components/search-refinementoption-t
 import {RefinementOptionPublishers} from "../../components/search-refinementoption-publishers";
 import {SearchBox} from "../../components/search-searchbox/SearchBox.jsx";
 import {QueryTransport} from "../../QueryTransport.jsx";
-import {addOrReplaceParam} from "../../addOrReplaceUrlParam.js";
 import localization from "../../components/localization";
 import SearchHitItem from "../../components/search-hit-item/index.jsx";
 import SelectDropdown from '../../components/search-searchkit-selector-dropdown';
@@ -130,20 +129,13 @@ export class SearchPage extends React.Component {
   }
 
   render() {
-    let href = window.location.href.replace('#', '');
-    let queryObj = qs.parse(window.location.search.substr(1));
-    let getLangUrl = (langCode) => {
-      if (langCode === 'nb') {
-        return addOrReplaceParam(href, 'lang', '');
-      } else if (href.indexOf('lang=') === -1) {
-        return href.indexOf('?') === -1 ? href + '?' + '&lang=' + langCode : href + '&lang=' + langCode;
-      } else if (langCode !== queryObj.lang) {
-        return addOrReplaceParam(href, 'lang', langCode);
-      } else {
-        return href;
-      }
-    }
-    let language = queryObj.lang ? queryObj.lang : 'nb';
+    const selectDropdownWithProps = React.createElement(SelectDropdown, {
+      selectedLanguageCode: this.props.selectedLanguageCode
+    });
+
+    const searchHitItemWithProps = React.createElement(SearchHitItem, {
+      selectedLanguageCode: this.props.selectedLanguageCode
+    });
 
     return (
       <SearchkitProvider searchkit={searchkit}>
@@ -161,6 +153,7 @@ export class SearchPage extends React.Component {
               </div>
               <div className="col-md-12 text-center">
                 <HitsStats/>
+                {this.props.selectedLanguageCode} - {localization.sort.by}
               </div>
             </div>
             <section id="resultPanel">
@@ -200,30 +193,23 @@ export class SearchPage extends React.Component {
                         <div className="pull-right">
                         <SortingSelector
                           options={[
-                            {
-                              label: localization.sort.by + ' ' + localization.sort['by.relevance'],
-                              className: "aaa",
-                              field: "_score",
-                              order: "asc",
-                              defaultOption: true
-                            },
+                            {label: localization.sort.by + ' ' + localization.sort['by.relevance'], field: "_score", order: "asc", defaultOption: true},
                             {label: localization.sort.by + ' ' + localization.sort['by.title'], field: "title", order: "asc"},
                             {label: localization.sort.by + ' ' + localization.sort['by.modified'], field: "modified", order: "desc"},
                             {label: localization.sort.by + ' ' + localization.sort['by.publisher'], field: "publisher.name", order: "asc"},
                           ]}
-                          listComponent={SelectDropdown}
+                          listComponent={selectDropdownWithProps}
                         />
                         </div>
                       </div>
                     </div>
-                    <Hits mod="sk-hits-grid" hitsPerPage={50} itemComponent={SearchHitItem}
+                    <Hits mod="sk-hits-grid" hitsPerPage={50} itemComponent={searchHitItemWithProps}
                           sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
                     <NoHits translations={{
                       "NoHits.NoResultsFound": localization.page.nohits
                     }}/>
                     <Pagination
                       showNumbers={true}
-                      listComponent={Toggle}
                     />
                   </div>
                 </div>

@@ -1,11 +1,4 @@
 import * as React from "react";
-
-//import { ItemComponent, CheckboxItemComponent } from "./ItemComponents"
-//import { ListProps } from "./ListProps"
-//import { ListProps } from "../node_modules/searchkit/src/components/ui/list"
-//import {PureRender} from "../../../core"
-import {ItemComponent, CheckboxItemComponent, ListProps, PureRender} from 'searchkit';
-let block = require("bem-cn")
 import {map} from "lodash"
 import {filter} from "lodash"
 import {transform} from "lodash"
@@ -15,6 +8,7 @@ import {DropdownButton, MenuItem} from 'react-bootstrap';
 
 import localization from '../localization';
 
+const block = require("bem-cn")
 
 export default class Select extends React.Component {
 
@@ -36,7 +30,6 @@ export default class Select extends React.Component {
   onChange(e){
     //const { setItems } = this.props
     const key = e.key;
-    console.log("dropdown key: " + key);
     this.state.setItems([key]);
     let text = this.props.translate(e.label || e.title || e.key)
     this.setState({
