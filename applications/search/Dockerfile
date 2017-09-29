@@ -22,7 +22,7 @@ RUN npm install --loglevel=warn
 # Install app dependencies
 COPY . /usr/src/app/
 
-RUN npm build
+RUN npm run build
 
 #RUN npm test
 
