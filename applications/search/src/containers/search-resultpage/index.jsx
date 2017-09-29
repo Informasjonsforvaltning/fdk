@@ -153,7 +153,6 @@ export class SearchPage extends React.Component {
               </div>
               <div className="col-md-12 text-center">
                 <HitsStats/>
-                {this.props.selectedLanguageCode} - {localization.sort.by}
               </div>
             </div>
             <section id="resultPanel">
