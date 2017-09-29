@@ -6,4 +6,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp
 ADD *.jar app.jar
 RUN sh -c 'touch /app.jar'
+
+EXPOSE 3001
+
 CMD java -jar $JAVA_OPTS app.jar
