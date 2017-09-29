@@ -295,7 +295,7 @@ then
         createOpenshiftService search-old
         oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
         exposeService search-old
-        oc expose dc/search-old --port=3001
+        oc expose dc/search-old --port=8080
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage search-old

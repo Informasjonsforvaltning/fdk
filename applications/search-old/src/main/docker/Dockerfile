@@ -7,6 +7,6 @@ VOLUME /tmp
 ADD *.jar app.jar
 RUN sh -c 'touch /app.jar'
 
-EXPOSE 3001
+EXPOSE 8080
 
 CMD java -jar $JAVA_OPTS app.jar
