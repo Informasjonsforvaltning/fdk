@@ -2,6 +2,7 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.service.CodesService;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBService;
@@ -26,8 +27,9 @@ public class CodeBuildersTest {
     public void testModel() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
         tdbService.postConstruct();
+        TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
+        TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
-        TDBConnection tdbConnection = new TDBConnection(tdbService);
 
 
         List<SkosCode> codes = new CodesService(tdbConnection).getCodes(Types.provenancestatement);

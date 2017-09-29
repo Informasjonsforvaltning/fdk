@@ -12,6 +12,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Scope("thread")
+
 public class CodesService extends BaseServiceWithFraming {
 
 
