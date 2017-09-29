@@ -331,7 +331,7 @@ then
     if [ $deploymode = recreateServices ]
     then
         profile=prod
-        createOpenshiftService gdoc
+        createOpenshiftService harvester
         exposeService harvester
     else
         # deploymentmode = onlyDeployImages
