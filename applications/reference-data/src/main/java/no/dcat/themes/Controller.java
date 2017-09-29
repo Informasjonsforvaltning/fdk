@@ -60,6 +60,13 @@ public class Controller {
 
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/help-texts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<HelpText> helpTexts(@PathVariable(name = "id") String id) {
+
+        return helpTextsService.getHelpTexts(Types.valueOf(id));
+
+    }
 
     @PreAuthorize("hasAuthority('LOCATIONS_PUT')")
     @CrossOrigin
