@@ -27,13 +27,12 @@ import javax.annotation.PostConstruct;
 @Service
 public class TDBService {
 
-    static private final Logger logger = LoggerFactory.getLogger(TDBService.class);
 
     static public final String THEMES_GRAPH = "http://data.brreg.no/fdk/themes-graph";
 
     private final Dataset dataset;
 
-    private static Model schema;
+    static private final Logger logger = LoggerFactory.getLogger(TDBService.class);
 
     public TDBService() {
         this("./tdb");
@@ -46,9 +45,7 @@ public class TDBService {
 
 
 
-    static {
-        schema = FileManager.get().loadModel("ontology.ttl");
-    }
+
 
     Dataset getDataset() {
         return dataset;
@@ -114,30 +111,5 @@ public class TDBService {
     }
 
 
-    public Model getModel(String name) {
 
-        logger.info("Model for name not cached: {}", name);
-        return dataset.getNamedModel(name);
-
-    }
-
-    public Model getModelWithInference(String name) {
-
-        logger.info("Model for name not cached: {}", name);
-        return ModelFactory.createInfModel(ReasonerRegistry.getRDFSReasoner(), schema, dataset.getNamedModel(name));
-
-    }
-
-
-    public void addModelToGraph(Model model, String location) {
-        dataset.getNamedModel(location).add(model);
-        evictCache();
-    }
-
-    public Model describeWithInference(String uri) {
-        Query query = QueryFactory.create("describe <" + uri + ">");
-        Model model = QueryExecutionFactory.create(query, dataset).execDescribe();
-        return ModelFactory.createInfModel(ReasonerRegistry.getRDFSReasoner(), schema, model);
-
-    }
 }

@@ -3,6 +3,7 @@ package no.dcat.themes.builders;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
 import org.junit.Rule;
@@ -27,7 +28,8 @@ public class LocationTest {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
         tdbService.postConstruct();
 
-        TDBConnection tdbConnection = new TDBConnection(tdbService);
+        TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
+        TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
 
         SkosCode code = new CodesService(tdbConnection).addLocation("http://sws.geonames.org/3144096/");
