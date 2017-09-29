@@ -28,6 +28,7 @@ import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -122,7 +123,9 @@ public class AuthorizationService {
     protected List<String> getAuthorizedOrganisations(String ssn) throws AuthorizationServiceException {
         List<String> organisations = new ArrayList<>();
 
-        List<Entity> entries = getAuthorizedEntities(ssn).stream().filter(entry -> "Enterprise".equals(entry.getType())).filter(authorizedOrgformService::isIncluded).collect(Collectors.toList());
+        logger.warn(getAuthorizedEntities(ssn).toString());
+        List<Entity> entries = getAuthorizedEntities(ssn).stream().filter(isApprovedEntityType()).collect(Collectors.toList());
+        logger.warn(entries.toString());
 
         String name = "unknown";
         for (Entity entry : entries) {
@@ -140,6 +143,10 @@ public class AuthorizationService {
         entityNameService.setUserName(ssn, name);
 
         return organisations;
+    }
+
+    private Predicate<Entity> isApprovedEntityType() {
+        return entry -> "Person".equals(entry.getType()) || ("Enterprise".equals(entry.getType()) && authorizedOrgformService.isIncluded(entry));
     }
 
     /**
