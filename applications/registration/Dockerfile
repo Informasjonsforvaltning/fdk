@@ -19,6 +19,7 @@ RUN npm install --loglevel=warn
 # Install app dependencies
 COPY . /usr/src/app/
 
+RUN npm run build
 
 ENV REG_API_URL https://localhost:8099
 ENV QUERY_SERVICE_URL /reference-data

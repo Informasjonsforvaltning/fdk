@@ -1,13 +1,10 @@
 logging:
-  level.: ERROR
+  level.: WARN
   level.no.brreg: DEBUG
-  level.no.difi: ERROR
+  level.no.difi: INFO
   level.no.dcat: INFO
-  level.org.springframework: ERROR
-server:
-  port: 8080
-management:
-  port: 8181
+  level.org.springframework: INFO
+
 application:
   queryService: http://search-api:8080
   queryServiceExternal: ${search_queryServiceExternal:http://localhost:8083}
@@ -16,6 +13,14 @@ application:
   themeServiceUrl: http://reference-data:8080
 
 ---
+
+spring:
+  profiles: prod
+server:
+  port: 8080
+
+---
+
 
 spring:
   profiles: docker

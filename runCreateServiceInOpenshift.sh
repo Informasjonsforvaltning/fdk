@@ -114,6 +114,7 @@ else
     cluster=ose-npc
 
     registrationGuiExternalAddress=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+    searchGuiExternalAddress=fellesdatakatalog-$environment.$cluster.brreg.no
 
     #point to Altinn test environnment
     altinnServiceCode=4814
@@ -133,6 +134,7 @@ if [ $environment = ppe ]
 then
   host=ppe.brreg.no
   registrationGuiExternalAddress=registrering-fdk.$host
+  searchGuiExternalAddress=fellesdatakatalog.$host
 fi
 
 # configuration that is specific for externally accessible test environment
@@ -140,6 +142,7 @@ if [ $environment = tt1 ]
 then
   host=tt1.brreg.no
   registrationGuiExternalAddress=registrering-fdk.$host
+  searchGuiExternalAddress=fellesdatakatalog.$host
 fi
 
 
@@ -284,14 +287,28 @@ then
         deployNewDockerImage registration-api
     fi
 
+elif [ $service = search-old ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService search-old
+        oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
+        exposeService search-old
+        oc expose dc/search-old --port=8080
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage search-old
+    fi
+
 elif [ $service = search ]
 then
     if [ $deploymode = recreateServices ]
     then
         profile=prod
         createOpenshiftService search
-        oc env dc/search search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
         exposeService search
+        oc expose dc/search --port=3000
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage search
@@ -351,6 +368,22 @@ then
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx
+    fi
+
+elif [ $service = nginx-search ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService nginx-search
+
+        #create secure route for registration gui
+        oc create route edge --service=nginx-search --hostname=$searchGuiExternalAddress --port=8080
+        oc label route nginx-search environmentTag=$environmentTag --overwrite=true
+        oc label route nginx-search environmentDate=$dateTag --overwrite=true
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage nginx-search
     fi
 
 else
