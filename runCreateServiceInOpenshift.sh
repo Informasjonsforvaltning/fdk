@@ -14,6 +14,7 @@
 # example:
 # runCreateServiceInOpenshift registration-api st2 latest st2_2017-02-18 recreateServices
 
+# todo sjekk at riktig profil brukes på miljøene som ikke skal ha idport ingetrasjon prod-localauth
 
 function createOpenshiftService {
     osService=$1
@@ -23,8 +24,9 @@ function createOpenshiftService {
     oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
     oc label service $osService --overwrite=true \
         environmentTag=$environmentTag \
+        environmentDate=$dateTag
+    oc label dc $osService --overwrite=true \
         environmentTag=$environmentTag \
-        environmentDate=$dateTag \
         environmentDate=$dateTag
 
 }
@@ -36,8 +38,9 @@ function deployNewDockerImage {
 
     oc label service $osService --overwrite=true \
         environmentTag=$environmentTag \
+        environmentDate=$dateTag
+    oc label dc $osService --overwrite=true \
         environmentTag=$environmentTag \
-        environmentDate=$dateTag \
         environmentDate=$dateTag
 
 }
