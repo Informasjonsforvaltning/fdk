@@ -14,7 +14,7 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-components="fuseki harvester harvester-api nginx reference-data registration registration-api registration-auth registration-validator search search-api"
+components="fuseki harvester harvester-api nginx nginx-search reference-data registration registration-api registration-auth registration-validator search search-old search-api"
 
 
 # remove all local tags
@@ -24,7 +24,7 @@ git fetch --tags
 
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
-docker login --username ${dockerUsername} --password ${dockerPassword}
+#docker login --username ${dockerUsername} --password ${dockerPassword}
 
 function dockerTag {
   component=$1
