@@ -63,7 +63,7 @@ export interface Dataset {
   type?: string;
   legalBasisForRestrictions?:any[];
   legalBasisForProcessings?:any[];
-  legalBasisForAccesss?:any[];
+  legalBasisForAccesses?:any[];
 
   _lastModified: string;
 

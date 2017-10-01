@@ -16,7 +16,7 @@ export class LegalBasisFormComponent implements OnInit {
 
     language: string = 'nb';
     showForm: boolean = false;
-    showError: boolean = false;
+    //showError: boolean = false;
 
     @Input('formArray')
     public legalBasisListFormArray: FormArray;
@@ -66,6 +66,7 @@ export class LegalBasisFormComponent implements OnInit {
         this.showForm = !this.showForm;
     }
 
+    /*
     private showErrorMessage() : void {
         this.showError = true;
     }
@@ -77,7 +78,7 @@ export class LegalBasisFormComponent implements OnInit {
     public validate() : void {
         console.log('show error or something');
         this.showErrorMessage();
-    }
+    } */
 
     removeLegalBasis(idx: number) : boolean {
         this.deleteLegalBasis.emit(idx.toString());
