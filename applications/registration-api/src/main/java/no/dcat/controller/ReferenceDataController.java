@@ -27,7 +27,7 @@ public class ReferenceDataController {
 
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/subject", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/subjects", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<SkosCode> getSubject(@Param("uri") String uri) {
         return ResponseEntity.ok(referenceDataService.getSkosCode(uri));
 

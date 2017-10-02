@@ -36,7 +36,7 @@ public class ReferenceDataService {
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
         String referenceDataUri = UriComponentsBuilder
-                .fromHttpUrl(referenceDataUrl + "/subject")
+                .fromHttpUrl(referenceDataUrl + "/subjects")
                 .queryParam("uri", uri)
                 .toUriString();
 

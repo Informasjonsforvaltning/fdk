@@ -11,15 +11,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class ReferenceDataControllerIT {
 
@@ -32,9 +30,8 @@ public class ReferenceDataControllerIT {
     public void getSubjectTest() throws Exception {
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get("/referenceData/subject", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
-                .andExpect(content().string("{\"uri\":\"https://data-david.github.io/Begrep/begrep/Hovedenhet\",\"prefLabel\":{\"no\":\"hovedenhet\"}}"));
-
+                .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
+                .andExpect(MockMvcResultMatchers.content().json("{\"uri\":\"https://data-david.github.io/Begrep/begrep/Hovedenhet\",\"prefLabel\":{\"no\":\"hovedenhet\"}}"));
     }
 
 
@@ -42,8 +39,8 @@ public class ReferenceDataControllerIT {
     public void getSubjectAnonymousFailsTest() throws Exception {
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get("/referenceData/subject", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
-                .andExpect(status().is3xxRedirection()); // redirect to login page
+                .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection()); // redirect to login page
 
     }
 
