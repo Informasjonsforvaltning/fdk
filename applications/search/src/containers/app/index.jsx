@@ -123,7 +123,7 @@ export class App extends React.Component {
             <div className="row">
               <div className="col-md-2">
                 <a
-                  href="#"
+                  href="https://www.brreg.no/personvernerklaering/"
                 >
                   {localization.footer.information}
                 </a>
