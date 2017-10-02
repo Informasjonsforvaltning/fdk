@@ -94,16 +94,16 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       accessRights = localization.search_hit.public;
     }
 
-    let distribution_restricted = false;
     let distribution_non_public = false;
+    let distribution_restricted = false;
     let distribution_public = false;
 
-    if (source.accessRights && source.accessRights.authorityCode === 'RESTRICTED') {
+    if (source.accessRights && source.accessRights.authorityCode === 'NON_PUBLIC') {
+      distribution_non_public = true;
+    } else if (source.accessRights && source.accessRights.authorityCode === 'RESTRICTED') {
       distribution_restricted = true;
     } else if (source.accessRights && source.accessRights.authorityCode === 'PUBLIC') {
       distribution_public = true;
-    } else if (source.accessRights && source.accessRights.authorityCode === 'NON_PUBLIC') {
-      distribution_non_public = true;
     } else if (!source.accessRights) { // antar public hvis authoritycode mangler
       distribution_public = true;
     }
@@ -111,8 +111,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const distributionClass = cx(
       'fdk-container-distributions',
       {
-        'fdk-distributions-red': distribution_restricted,
-        'fdk-distributions-yellow': distribution_non_public,
+        'fdk-distributions-red': distribution_non_public,
+        'fdk-distributions-yellow': distribution_restricted,
         'fdk-distributions-green': distribution_public
       }
     );
