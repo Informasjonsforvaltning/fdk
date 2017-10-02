@@ -59,18 +59,37 @@ $sk-border-radius: 3px !default;
   position: relative;
 }
 
-/*
-.fdk-button-language {
-  background-color: transparent;
-  border-color: transparent;
-  text-shadow: none;
-  box-shadow: none;
-  background-image: none;
-  text-decoration: underline;
-  &:hover, &:active, &:focus {
-    background-color: transparent !important;
-    border-color: transparent !important;
+
+.btn-group {
+  .fdk-button-language {
+    background-color: transparent;
+    border-color: transparent;
+    text-shadow: none;
+    box-shadow: none;
+    background-image: none;
+    text-decoration: underline;
+    &:focus, &:active {
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
   }
 }
-*/
+
+.fdk-header-padding {
+  padding-top: 5px;
+}
+
+.fdk-button-menu {
+  &:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: "\f0c9";
+    margin-right: .2em;
+  }
+}
+
+
 
