@@ -13,8 +13,8 @@ public class ApplicationThemes {
     public static void main(String... args) {
         ConfigurableApplicationContext run = SpringApplication.run(ApplicationThemes.class, args);
 
-        Scope threadScope = new SimpleThreadScope();
-        run.getBeanFactory().registerScope("thread", threadScope);
+        //Scope threadScope = new SimpleThreadScope();
+       // run.getBeanFactory().registerScope("thread", threadScope);
 
     }
 
