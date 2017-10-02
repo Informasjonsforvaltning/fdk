@@ -14,7 +14,6 @@
 # example:
 # runCreateServiceInOpenshift registration-api st2 latest st2_2017-02-18 recreateServices
 
-
 function createOpenshiftService {
     osService=$1
 
@@ -23,10 +22,13 @@ function createOpenshiftService {
     oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
     oc label service $osService --overwrite=true \
         environmentTag=$environmentTag \
+        environmentDate=$dateTag
+    oc label dc $osService --overwrite=true \
         environmentTag=$environmentTag \
-        environmentDate=$dateTag \
         environmentDate=$dateTag
 
+    #tag the image stream to auto-pull new images from docker hub
+    oc tag --scheduled=true docker.io/dcatno/$osService:$tag $osService:$tag
 }
 
 function deployNewDockerImage {
@@ -36,8 +38,9 @@ function deployNewDockerImage {
 
     oc label service $osService --overwrite=true \
         environmentTag=$environmentTag \
+        environmentDate=$dateTag
+    oc label dc $osService --overwrite=true \
         environmentTag=$environmentTag \
-        environmentDate=$dateTag \
         environmentDate=$dateTag
 
 }
@@ -55,28 +58,28 @@ function exposeService {
 if [ -z "$1" ]
 then
     echo "service must be specified: search, registration, search-api etc..."
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
 
 if [ -z "$2" ]
 then
     echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
 
 if [ -z "$3" ]
 then
     echo "docker  tag must be supplied. Example: latest"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
 
 if [ -z "$4" ]
 then
     echo "Environment date tag must be supplied. Example: ST1_2017-09-13"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag>  <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag>  <date-tag> <deploymode>"
     exit 1
 fi
 

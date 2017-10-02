@@ -14,7 +14,7 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-components="fuseki harvester harvester-api nginx reference-data registration registration-api registration-auth registration-validator search search-api"
+components="fuseki harvester harvester-api nginx nginx-search reference-data registration registration-api registration-auth registration-validator search search-old search-api"
 
 
 # remove all local tags
@@ -86,8 +86,6 @@ if [ "$1" == "st1" ] ; then
 
   gitTag ut1 st1
 
-  #todo dobbeltsjekk at dockertag blir riktig
-#  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
 elif [ "$1" == "st2" ] ; then
 
@@ -97,9 +95,6 @@ elif [ "$1" == "st2" ] ; then
   done
 
   gitTag ut1 st2
-
-  #todo dobbeltsjekk at dockertag blir riktig
-#  openshiftDeploy st2 ${toEnvironment}_${DATETIME}
 
 
 elif [ "$1" == "tt1" ] ; then
@@ -111,8 +106,6 @@ elif [ "$1" == "tt1" ] ; then
 
   gitTag st2 tt1
 
-#  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
-
 
 elif [ "$1" == "ppe" ] ; then
   for i in $components
@@ -122,7 +115,6 @@ elif [ "$1" == "ppe" ] ; then
 
   gitTag st1 ppe
 
-#  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
 
 
 
