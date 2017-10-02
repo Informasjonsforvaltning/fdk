@@ -42,8 +42,8 @@
     "navigation": "Sidenavigering",
     "next": "Neste side",
     "prev": "Forrige side",
-    "result.summary": "Treff:",
-    "dataset":"datasett"
+    "result.summary": "Søket ga ",
+    "dataset":"treff"
 
   },
   "facet": {

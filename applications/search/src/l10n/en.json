@@ -1,31 +1,31 @@
 {
   "app": {
-    "title": "Felles datakatalog",
-    "titleSub": "Oversikt over datasett fra virksomheter i Norge",
-    "publisher": "Virksomhet",
+    "title": "Norwegian Data Catalog",
+    "titleSub": "Datasets from publishers in Norway",
+    "publisher": "Choose by publisher",
     "menu": "Menu"
   },
   "beta": {
-    "first": "Dette er en beta-versjon. Gi oss gjerne",
-    "second": "tilbakemeldinger",
-    "last": "om hva du synes!"
+    "first": "This is a beta version. Please give us",
+    "second": "feedback",
+    "last": "about the application!"
   },
   "lang": {
-    "choose": "Velg språk",
-    "chosenLanguage": "Norsk (bokmål)",
+    "choose": "Choose language",
+    "chosenLanguage": "English",
     "norwegian-nb": "Norsk (bokmål)",
     "norwegian-nn": "Norsk (nynorsk)",
-    "english-en": "Engelsk"
+    "english-en": "English"
   },
   "feedback": {
-    "title": "Tilbakemelding"
+    "title": "Feedback"
   },
   "query": {
-    "intro": "Søk etter innhold",
-    "do": "Utfør søk"
+    "intro": "Search for datasets...",
+    "do": "search"
   },
   "login": {
-    "title": "Logg inn"
+    "title": "Log in"
   },
   "about": {
     "about": "Om",
