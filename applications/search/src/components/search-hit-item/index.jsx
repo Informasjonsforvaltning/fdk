@@ -64,31 +64,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return formatNodes;
   }
 
-  /*
-  _renderFormats(source) {
-    let distribution = source.distribution;
-    let formatRet;
-    if(source.distribution) {
-      formatRet = Object.keys(distribution).map(key => {
-        if(distribution[key].format) {
-          let formatArray = distribution[key].format.trim().split(',');
-          let ret = '';
-          formatArray.forEach((format) => {
-            if (format !== null) {
-              ret += '<div class="fdk-button-format fdk-button-format-inactive">';
-              ret += '<i class="fa fa-download fdk-fa-left"></i>';
-              ret += format;
-              ret += '</div>';
-            }
-          });
-          return ret;
-        } return null;
-      });
-    }
-    return formatRet;
-  }
-  */
-
   render() {
     const result = this.state.result;
     const url =  'datasets?id=' + encodeURIComponent(result._id);
