@@ -15,11 +15,9 @@ const Home = () => {
 
 const routes =
   (
-    <Route patch="/" component={App}>
-    <Route path="/" component={SearchPage}>
-      <Route path="*" component={SearchPage}/>
+    <Route path="/" component={App}>
+      <Route path="/datasets" component={SearchPage}/>
       <IndexRoute component={SearchPage}/>
-    </Route>
     </Route>
   );
 
@@ -29,3 +27,15 @@ ReactDOM.render((
 </Router>
 ), document.getElementById('root'));
 
+
+/*
+
+
+ const routes =
+ (
+ <Route path="/" component={App}>
+ <IndexRoute component={SearchPage}/>
+ </Route>
+ );
+
+ */

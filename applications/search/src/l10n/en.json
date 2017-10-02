@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Norwegian Data Catalog",
+    "titleSub": "Datasets from publishers in Norway",
+    "publisher": "Choose by publisher",
+    "menu": "Menu"
+  },
+  "beta": {
+    "first": "This is a beta version. Please give us",
+    "second": "feedback",
+    "last": "about the application!"
+  },
+  "lang": {
+    "choose": "Choose language",
+    "chosenLanguage": "Språk",
+    "norwegian-nb": "Norsk (bokmål)",
+    "norwegian-nn": "Norsk (nynorsk)",
+    "english-en": "English"
+  },
+  "feedback": {
+    "title": "Feedback"
+  },
+  "query": {
+    "intro": "Search for datasets...",
+    "do": "search"
+  },
+  "login": {
+    "title": "Log in"
+  },
+  "about": {
+    "about": "About",
+    "title": "About the application",
+    "help": "Help",
+    "status":"Status implementation",
+    "standard":"The DCAT-AP-NO 1.1 standard",
+    "guide":"Standard Guide",
+    "fordataowners": "For data owners",
+    "fordatausers": "For data users",
+    "technical": "Technical information"
+  },
+  "page": {
+    "navigation": "Page navigation",
+    "next": "Next page",
+    "prev": "Previous page",
+    "result.summary": "",
+    "dataset":"results"
+
+  },
+  "facet": {
+    "organisation":"ORGANISATION",
+    "theme":"THEME",
+    "accessRight":"Access",
+    "concept":"Concept",
+    "legal":"Legal",
+    "spatial":"Spatial",
+    "temporal":"Temporal",
+    "standard":"Standard"
+  },
+  "result": {
+    "dataset":"Dataset",
+    "waiting":"Fetching data ..."
+  },
+  "noHits": {
+    "error": "Ingen datasett funnet"
+  },
+  "footer": {
+    "organisation.number": "Organisation number:",
+    "information": "Information capsules",
+    "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
+    "mail": "fellesdatakatalog@brreg.no"
+  },
+  "sort": {
+    "by": "Sort by",
+    "by.relevance": "relevance",
+    "by.title": "title",
+    "by.publisher": "publisher",
+    "by.modified": "modified"
+  },
+  "search_hit": {
+    "owned": "Owned by",
+    "public": "Public"
+  }
+}

@@ -2,13 +2,13 @@
   "app": {
     "title": "Felles datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge",
-    "publisher": "Virksomhet",
+    "publisher": "Velg ut frå verksemd",
     "menu": "Meny"
   },
   "beta": {
-    "first": "Dette er en beta-versjon. Gi oss gjerne",
+    "first": "Dette er ein beta-versjon. Gi oss gjerne ",
     "second": "tilbakemeldinger",
-    "last": "om hva du synes!"
+    "last": "om kva du synast!"
   },
   "lang": {
     "choose": "Velg språk",
@@ -22,7 +22,7 @@
   },
   "query": {
     "intro": "Søk etter innhold",
-    "do": "Utfør søk"
+    "do": "Utføre søk"
   },
   "login": {
     "title": "Logg inn"
@@ -33,25 +33,25 @@
     "help": "Hjelp",
     "status":"Status implementasjon",
     "standard":"DCAT-AP-NO 1.1 standarden",
-    "guide":"Veileder",
-    "fordataowners": "For dataeiere",
-    "fordatausers": "For databrukere",
+    "guide":"Rettleiar",
+    "fordataowners": "For dataeigare",
+    "fordatausers": "For databrukare",
     "technical": "Teknisk"
   },
   "page": {
     "navigation": "Sidenavigering",
     "next": "Neste side",
     "prev": "Forrige side",
-    "result.summary": "Søket ga ",
+    "result.summary": "Søket gav ",
     "dataset":"treff"
 
   },
   "facet": {
-    "organisation":"Virksomhet",
+    "organisation":"Verksemd",
     "theme":"Tema",
     "accessRight":"Tilgang",
-    "concept":"Begrep",
-    "legal":"Hjemmel",
+    "concept":"Omgrep",
+    "legal":"Heimel",
     "spatial":"Geografi",
     "temporal":"Tidsperiode",
     "standard":"Standard"
@@ -65,7 +65,7 @@
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
-    "information": "Informasjonskapsler",
+    "information": "Informasjonskapslar - personvern",
     "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
     "mail": "fellesdatakatalog@brreg.no"
   },
@@ -74,7 +74,7 @@
     "by.relevance": "Relevans",
     "by.title": "Tittel",
     "by.publisher": "Utgiver",
-    "by.modified": "Sist endret"
+    "by.modified": "Sist endra"
   },
   "search_hit": {
     "owned": "Eies av",
