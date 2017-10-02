@@ -1,6 +1,7 @@
 package no.dcat.bddtest.cucumber.glue;
 
 import com.google.common.base.Predicate;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import no.dcat.bddtest.cucumber.SpringIntegrationTestConfigIT;
 import no.difi.dcat.datastore.Elasticsearch;
@@ -8,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -68,6 +71,20 @@ public abstract class CommonPage extends SpringIntegrationTestConfigIT {
         return value;
     }
 
+    protected void setupDriverChrome() {
+        ChromeDriverManager.getInstance().setup();
+
+        DesiredCapabilities dcap = new DesiredCapabilities();
+        String[] chromeArgs = new  String[] {
+                "headless",
+                "window-size=1200x600"
+        };
+        dcap.setCapability(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, chromeArgs);
+
+        driver = new ChromeDriver();
+
+    }
+
     protected void setupDriver() {
         PhantomJsDriverManager.getInstance().setup();
         DesiredCapabilities dcap = new DesiredCapabilities();
@@ -76,8 +93,7 @@ public abstract class CommonPage extends SpringIntegrationTestConfigIT {
         };
         dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
 
-        driver = new PhantomJSDriver(dcap);
-
+       driver = new PhantomJSDriver(dcap);
     }
 
 

@@ -12,9 +12,14 @@ RUN mkdir -p /usr/src/app && chmod 777 /usr/src/app
 RUN mkdir /.pm2 && chmod 777 /.pm2
 WORKDIR /usr/src/app
 
+COPY package.json /usr/src/app/package.json
+RUN npm install --loglevel=warn
+
+
 # Install app dependencies
 COPY . /usr/src/app/
 
+RUN npm run build
 
 ENV REG_API_URL https://localhost:8099
 ENV QUERY_SERVICE_URL /reference-data

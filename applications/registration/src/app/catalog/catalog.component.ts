@@ -91,7 +91,7 @@ export class CatalogComponent implements OnInit {
     this.datasetService.delete(catalog.id, dataset)
       .then(() => {
         this.getAllDatasets();
-        console.log('deleted!');
+
       })
   }
 

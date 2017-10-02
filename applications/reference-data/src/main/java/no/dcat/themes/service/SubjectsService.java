@@ -9,9 +9,6 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.riot.RDFLanguages;
-import org.apache.jena.riot.RiotException;
-import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +58,6 @@ public class SubjectsService extends BaseServiceWithFraming {
 
 
     }
-
-
-
 
     public SkosCode getSubject(String uri) {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {

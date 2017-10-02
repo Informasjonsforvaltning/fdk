@@ -176,5 +176,23 @@ public class ImportControllerIT {
 //
 //    }
 
+    /*
+    Test commented out because travis does not like accessing external urls
+    @Test
+    public void importBrreg() throws Throwable {
+        String catalogId = "974760673";
+
+        Catalog cat = new Catalog(catalogId);
+        catalogController.saveCatalog(cat);
+
+        HttpEntity<Catalog> result = importController.importCatalog(catalogId, "http://portal-fdk.ppe.brreg.no/catalogs?id=http://data.brreg.no/datakatalog/katalog/974760673/1&format=ttl");
+        List<Dataset> ds = result.getBody().getDataset();
+
+        assertThat(ds.size(), is(27));
+
+        Dataset d = ds.get(0);
+    }
+    */
+
 
 }

@@ -99,15 +99,16 @@ export class DatasetComponent implements OnInit {
 
     this.identifiersForm = new FormGroup({});
 
-
     this.identifiersForm.addControl("identifiersControl", new FormControl([]));
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
-      console.log('dataset is ', dataset);
+
+      console.log('dataset from api: ', dataset);
       this.dataset = dataset;
-      if (dataset.languages) {
+
+      if (this.dataset.languages) {
         this.availableLanguages.forEach((language, languageIndex, languageArray) => {
           dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray) => {
             if (language.uri === datasetLanguage.uri) {
@@ -116,29 +117,36 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildSummaries(dataset);
+      this.buildGeoTimeSummaries(this.dataset);
 
-      // Only allows one contact point per dataset
-      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-
+      // Make sure all arrays are set or empty
+      // catalog and publisher is set by api
+      this.dataset.keywords = this.dataset.keywords || [];
+      this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
+      this.dataset.subjects = this.dataset.subjects || [];
+      this.dataset.themes = this.dataset.themes || [];
+      this.dataset.spatials = this.dataset.spatials || [];
       this.dataset.landingPages = this.dataset.landingPages || [];
-      //this.dataset.landingPages[0] = this.dataset.landingPages[0] || "testpagelanding";
-
       this.dataset.identifiers = this.dataset.identifiers || [];
+      this.dataset.contactPoints = this.dataset.contactPoints || [];
+      // Only allow one contact point per dataset
+      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
+      this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.distributions = this.dataset.distributions || [];
+      this.dataset.samples = this.dataset.samples || [];
+      this.dataset.languages = this.dataset.languages || [];
+      this.dataset.temporals = this.dataset.temporals || [];
 
-      //set default publisher to be the same as catalog
-      this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
-      this.dataset.languages = [];
-
-      dataset.samples = dataset.samples || [];
-      dataset.languages = dataset.languages || [];
-      dataset.temporals = dataset.temporals || [];
+      // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
+
       this.datasetSavingEnabled = false;
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-          console.log('dataset is ', dataset);
+          console.log('saving dataset:', dataset);
+
+          // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
             this.availableLanguages.forEach((language, index) => {
@@ -164,6 +172,14 @@ export class DatasetComponent implements OnInit {
           if (dataset.issued && dataset.issued.formatted) {
             dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
           }
+
+          if (_.isEmpty(dataset.issued)) {
+            dataset.issued = null;
+          }
+          if (_.isEmpty(dataset.modified)) {
+            dataset.modified = null;
+          }
+
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
               if (temporal.startDate && temporal.startDate.formatted) {
@@ -206,7 +222,7 @@ export class DatasetComponent implements OnInit {
 
     });
   }
-  buildSummaries(dataset) {
+  buildGeoTimeSummaries(dataset) {
     this.summaries.geotime = "";
     if(dataset.spatials && dataset.spatials.length > 0) {
       this.summaries.geotime += dataset.spatials.map(spatial=>{return spatial.uri}).join(', ');
@@ -221,7 +237,7 @@ export class DatasetComponent implements OnInit {
   }
 
   save(): void {
-    this.buildSummaries(this.dataset);
+    this.buildGeoTimeSummaries(this.dataset);
     this.datasetSavingEnabled = false;
     this.service.save(this.catId, this.dataset)
       .then(() => {
@@ -285,7 +301,7 @@ export class DatasetComponent implements OnInit {
 
   private getDateObjectFromUnixTimestamp(timestamp: string) {
     if (!timestamp) {
-      return null;
+      return {};
     }
     let date = new Date(timestamp);
     return {
@@ -304,7 +320,7 @@ export class DatasetComponent implements OnInit {
       };*/
 
   private toFormGroup(data: Dataset): FormGroup {
-    this.getDateObjectFromUnixTimestamp(data.issued)
+
     const formGroup = this.formBuilder.group({
 
       //title: title,

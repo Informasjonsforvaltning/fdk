@@ -2,6 +2,7 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.themes.database.TDBConnection;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.SubjectsService;
 import org.junit.Rule;
@@ -26,7 +27,8 @@ public class SubjectsTests {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
         tdbService.postConstruct();
 
-        TDBConnection tdbConnection = new TDBConnection(tdbService);
+        TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
+        TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
 //        checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Enhet", "enhet");
         checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Hovedenhet", "hovedenhet");
@@ -42,7 +44,8 @@ public class SubjectsTests {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
         tdbService.postConstruct();
 
-        TDBConnection tdbConnection = new TDBConnection(tdbService);
+        TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
+        TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
         checkSkosCode(tdbConnection, "file:///Users/havardottestad/Documents/BRREG/felles-datakatalog/applications/reference-data/src/main/resources/rdf/data-theme-skos.rdf", "hovedenhet");
 

@@ -12,6 +12,7 @@ import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,8 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
+@Scope("thread")
+
 public class Controller {
 
     @Autowired
@@ -83,7 +86,7 @@ public class Controller {
 
     @PreAuthorize("hasAuthority('INTERNAL_CALL')")
     @CrossOrigin
-    @RequestMapping(value = "/subject",  method = RequestMethod.GET)
+    @RequestMapping(value = "/subjects",  method = RequestMethod.GET)
     public SkosCode getRemoteResourceForSubject(@RequestParam String uri) throws MalformedURLException {
         logger.debug(uri);
         try {
