@@ -75,4 +75,21 @@ $sk-border-radius: 3px !default;
   }
 }
 
+.fdk-header-padding {
+  padding-top: 5px;
+}
+
+.fdk-button-menu {
+  &:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: "\f0c9";
+    margin-right: .2em;
+  }
+}
+
+
 

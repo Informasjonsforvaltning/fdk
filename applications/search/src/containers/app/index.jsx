@@ -92,7 +92,7 @@ export class App extends React.Component {
                 <DropdownButton
                   id="search-menu-dropdown-1"
                   bsStyle="default"
-                  className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white "
+                  className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
                   title={localization.app.menu}
                 >
                   <MenuItem key="1" eventKey="1">Menypunkt 1</MenuItem>
@@ -104,7 +104,7 @@ export class App extends React.Component {
                       id="search-language-dropdown-1"
                       bsStyle="default"
                       className="dropdown-toggle fdk-button-language"
-                      title={this.state.selectedLanguage}
+                      title={localization.lang.chosenLanguage}
                       onSelect={this.onChangeLanguage}
                     >
                       <MenuItem key="1" eventKey="nb">{localization.lang["norwegian-nb"]}</MenuItem>
@@ -114,21 +114,6 @@ export class App extends React.Component {
                   </div>
                 </div>
               </div>
-              {false &&
-              <div className="fdk-header-menu">
-                <div className="dropdown fdk-container-dropdown-menu">
-                  <div className="dropdown fdk-dropdown-toggle-menu">
-                    <a data-toggle="dropdown" href="#">&#9776;</a>
-                    <ul className="dropdown-menu fdk-dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <li><a href="#">{localization.about.title}</a></li>
-                      <li><a href="#">{localization.faq}</a></li>
-                      <li><a href="https://doc.difi.no/dcat-ap-no/">{localization.about.standard}</a></li>
-                      <li><a href="http://portal-fdk.tt1.brreg.no/coverage.html">{localization.about.status}</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              }
             </div>
             </div>
         </div>

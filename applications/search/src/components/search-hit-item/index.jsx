@@ -19,7 +19,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   }
 
   componentDidUpdate() {
-    console.log("search-hit-item componentDidUpdate");
     this.state = {
       result: this.props.result
     };

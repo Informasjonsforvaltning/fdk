@@ -12,7 +12,7 @@
   },
   "lang": {
     "choose": "Choose language",
-    "chosenLanguage": "English",
+    "chosenLanguage": "Språk",
     "norwegian-nb": "Norsk (bokmål)",
     "norwegian-nn": "Norsk (nynorsk)",
     "english-en": "English"
@@ -28,53 +28,53 @@
     "title": "Log in"
   },
   "about": {
-    "about": "Om",
-    "title": "Om applikasjonen",
-    "help": "Hjelp",
-    "status":"Status implementasjon",
-    "standard":"DCAT-AP-NO 1.1 standarden",
-    "guide":"Veileder",
-    "fordataowners": "For dataeiere",
-    "fordatausers": "For databrukere",
-    "technical": "Teknisk"
+    "about": "About",
+    "title": "About the application",
+    "help": "Help",
+    "status":"Status implementation",
+    "standard":"The DCAT-AP-NO 1.1 standard",
+    "guide":"Standard Guide",
+    "fordataowners": "For data owners",
+    "fordatausers": "For data users",
+    "technical": "Technical information"
   },
   "page": {
-    "navigation": "Sidenavigering",
+    "navigation": "Page navigation",
     "next": "Next page",
     "prev": "Previous page",
-    "result.summary": "Treff:",
-    "dataset":"datasett"
+    "result.summary": "",
+    "dataset":"results"
 
   },
   "facet": {
-    "organisation":"Virksomhet",
-    "theme":"Tema",
-    "accessRight":"Tilgang",
-    "concept":"Begrep",
-    "legal":"Hjemmel",
-    "spatial":"Geografi",
-    "temporal":"Tidsperiode",
+    "organisation":"ORGANISATION",
+    "theme":"THEME",
+    "accessRight":"Access",
+    "concept":"Concept",
+    "legal":"Legal",
+    "spatial":"Spatial",
+    "temporal":"Temporal",
     "standard":"Standard"
   },
   "result": {
     "dataset":"Dataset",
-    "waiting":"Henter data ..."
+    "waiting":"Fetching data ..."
   },
   "noHits": {
     "error": "Ingen datasett funnet"
   },
   "footer": {
-    "organisation.number": "Organisasjonsnummer:",
-    "information": "Informasjonskapsler",
+    "organisation.number": "Organisation number:",
+    "information": "Information capsules",
     "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
     "mail": "fellesdatakatalog@brreg.no"
   },
   "sort": {
     "by": "Sort by",
-    "by.relevance": "Relevance",
-    "by.title": "Title",
-    "by.publisher": "Publisher",
-    "by.modified": "Modified"
+    "by.relevance": "relevance",
+    "by.title": "title",
+    "by.publisher": "publisher",
+    "by.modified": "modified"
   },
   "search_hit": {
     "owned": "Owned by",

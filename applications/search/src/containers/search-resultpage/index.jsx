@@ -129,6 +129,7 @@ export class SearchPage extends React.Component {
   }
 
   render() {
+
     const selectDropdownWithProps = React.createElement(SelectDropdown, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
@@ -152,7 +153,11 @@ export class SearchPage extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
+
                 <HitsStats/>
+                <NoHits translations={{
+                  "NoHits.NoResultsFound": localization.page.nohits
+                }}/>
               </div>
             </div>
             <section id="resultPanel">
@@ -204,9 +209,6 @@ export class SearchPage extends React.Component {
                     </div>
                     <Hits mod="sk-hits-grid" hitsPerPage={50} itemComponent={searchHitItemWithProps}
                           sourceFilter={["title", "description", "keyword", "catalog", "theme", "publisher", "contactPoint", "distribution"]}/>
-                    <NoHits translations={{
-                      "NoHits.NoResultsFound": localization.page.nohits
-                    }}/>
                     <Pagination
                       showNumbers={true}
                     />
