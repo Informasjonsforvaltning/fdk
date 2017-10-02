@@ -16,7 +16,6 @@ export class LegalBasisFormComponent implements OnInit {
 
     language: string = 'nb';
     showForm: boolean = false;
-    //showError: boolean = false;
 
     @Input('formArray')
     public legalBasisListFormArray: FormArray;
@@ -30,6 +29,9 @@ export class LegalBasisFormComponent implements OnInit {
     @Input('legalBasisType')
     public legalBasisType: string;
 
+    @Input('showDelete')
+    public showDelete: boolean;
+
     @Output()
     deleteLegalBasis: EventEmitter<string> = new EventEmitter();
 
@@ -42,6 +44,7 @@ export class LegalBasisFormComponent implements OnInit {
 
     ngOnInit() {
         if (this.legalBasis.ui_visible) this.showForm = true;
+       // if (this.legalBasis.showDelete) this.showDelete = true;
         this.legalBasisForm = this.toFormGroup(this.legalBasis);
         this.legalBasisListFormArray.push(this.legalBasisForm);
 
@@ -66,25 +69,15 @@ export class LegalBasisFormComponent implements OnInit {
         this.showForm = !this.showForm;
     }
 
-    /*
-    private showErrorMessage() : void {
-        this.showError = true;
-    }
-
-    private hideErrorMessage() : void {
-        this.showError = false;
-    }
-
-    public validate() : void {
-        console.log('show error or something');
-        this.showErrorMessage();
-    } */
-
     removeLegalBasis(idx: number) : boolean {
         this.deleteLegalBasis.emit(idx.toString());
         this.legalBasisListFormArray.removeAt(idx);
         return false;
     }
+
+   /* setShowDelete() {
+        this.showDelete = this.legalBasis.showDelete;
+    }*/
 
     focus(e) : void {
         e.target.childNodes.forEach(node => {
