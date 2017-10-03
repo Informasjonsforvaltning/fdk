@@ -2,8 +2,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Router, Link, Route, browserHistory, IndexRoute } from 'react-router'
 
-import {SearchPage} from "./containers/search-resultpage/index";
-import DetailsPage from './containers/search-detailspage/index';
+import {SearchPage} from "./containers/search-results/index";
+import DetailsPage from './containers/search-details/index';
 import {App} from "./containers/app";
 
 const Home = () => {

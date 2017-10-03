@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SearchHitItem from '../../../src/components/search-hit-item/index';
+import SearchHitItem from '../../../src/components/search-results-hit-item/index';
 
 describe('a passing test', () => {
   it('should pass', () => {

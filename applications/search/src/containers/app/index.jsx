@@ -5,7 +5,7 @@ import qs from 'qs';
 import {DropdownButton, MenuItem} from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
-import {addOrReplaceParam} from '../../addOrReplaceUrlParam';
+import {addOrReplaceParam} from '../../utils/addOrReplaceUrlParam';
 import "./index.scss";
 
 export class App extends React.Component {
