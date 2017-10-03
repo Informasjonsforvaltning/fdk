@@ -194,6 +194,8 @@ describe('SearchHitItem', () => {
 
   beforeEach(() => {
     wrapper = shallow(<SearchHitItem result={props} selectedLanguageCode="nb" />);
+    //wrapper = shallow(<SearchHitItem />);
+    //wrapper.setProps({ result: props });
   });
 
   it ('should render', () => {
