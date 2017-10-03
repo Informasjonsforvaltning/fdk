@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,11 +25,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bjg on 19.06.2017.
@@ -45,6 +40,8 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
 
     private Map<String, List<Entity>> userEntities = new HashMap<>();
     private Map<String, String> userNames = new HashMap<>();
+
+    public static final String ROLE_USER = "ROLE_USER";
 
     @Bean
     public AuthenticationSuccessHandler loginSuccessHandler() {
@@ -97,14 +94,10 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
                         .map(SimpleGrantedAuthority::new)
                         .forEach(authorities::add);
 
-                if (authorities.size() > 0) {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                logger.warn("Authorities {}", authorities);
 
-                    User user = new User(personnummer, "password01", authorities);
-                    return user;
-                } else {
-                    throw new UsernameNotFoundException("Unable to find user with username provided!");
-                }
+                authorities.add(new SimpleGrantedAuthority(ROLE_USER));
+                return new User(personnummer, "password01", authorities);
             } catch (AuthorizationServiceException e) {
                 throw new UsernameNotFoundException(e.getLocalizedMessage(), e);
             }

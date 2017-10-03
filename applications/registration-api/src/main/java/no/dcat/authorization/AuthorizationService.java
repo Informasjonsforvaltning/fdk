@@ -123,9 +123,9 @@ public class AuthorizationService {
     protected List<String> getAuthorizedOrganisations(String ssn) throws AuthorizationServiceException {
         List<String> organisations = new ArrayList<>();
 
-        logger.warn(getAuthorizedEntities(ssn).toString());
-        List<Entity> entries = getAuthorizedEntities(ssn).stream().filter(isApprovedEntityType()).collect(Collectors.toList());
-        logger.warn(entries.toString());
+        List<Entity> authorizedEntities = getAuthorizedEntities(ssn);
+
+        List<Entity> entries = authorizedEntities.stream().filter(isApprovedEntityType()).collect(Collectors.toList());
 
         String name = "unknown";
         for (Entity entry : entries) {
