@@ -1,67 +1,62 @@
-import {Component, OnInit, ViewChild, ChangeDetectorRef} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormGroup, FormControl, FormBuilder, FormArray, Validators} from "@angular/forms";
-import {DatasetService} from "./dataset.service";
-import {CodesService} from "./codes.service";
-import {CatalogService} from "../catalog/catalog.service";
-import {Dataset} from "./dataset";
-import {Catalog} from "../catalog/catalog"
-import {Observable} from 'rxjs';
-import {Http, Response} from '@angular/http';
-import {NgModule} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {ConfirmComponent} from "../confirm/confirm.component";
-import {DialogService} from "ng2-bootstrap-modal";
-import {DistributionFormComponent} from "./distribution/distribution.component";
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from "@angular/forms";
+import { DatasetService } from "./dataset.service";
+import { CodesService } from "./codes.service";
+import { CatalogService } from "../catalog/catalog.service";
+import { Dataset } from "./dataset";
+import { Catalog } from "../catalog/catalog"
+import { Observable } from 'rxjs';
+import { Http, Response } from '@angular/http';
+import { NgModule } from '@angular/core';
+import { environment } from "../../environments/environment";
+import { ConfirmComponent } from "../confirm/confirm.component";
+import { DialogService } from "ng2-bootstrap-modal";
+import { DistributionFormComponent } from "./distribution/distribution.component";
 import * as _ from 'lodash';
-import {ThemesService} from "./themes.service";
-import {IMyDpOptions} from 'mydatepicker';
-import {TemporalListComponent} from "./temporal/temporal-list.component";
-import {HelpText} from "./helptext/helptext.component";
+import { ThemesService } from "./themes.service";
+import { IMyDpOptions } from 'mydatepicker';
+import { TemporalListComponent } from "./temporal/temporal-list.component";
+import { HelpText } from "./helptext/helptext.component";
 
 @Component({
-  selector: 'app-dataset',
-  templateUrl: './dataset.component.html',
-  styleUrls: ['./dataset.component.css']
-})// class Select
+    selector: 'app-dataset',
+    templateUrl: './dataset.component.html',
+    styleUrls: ['./dataset.component.css']
+})
 
 export class DatasetComponent implements OnInit {
-  title = 'Registrer datasett';
-  dataset: Dataset;
-  catalog: Catalog;
-  // title: string;
-  description: string;
-  language: string;
-  timer: number;
-  saved: boolean;
-  catId: string;
-  lastSaved: string;
+    title = 'Registrer datasett';
+    dataset: Dataset;
+    catalog: Catalog;
+    description: string;
+    language: string;
+    timer: number;
+    saved: boolean;
+    catId: string;
+    lastSaved: string;
+    identifiersForm: FormGroup;
+    datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
+    saveDelay: number = 1000;
+    datasetForm: FormGroup = new FormGroup({});
+    myDatePickerOptions: IMyDpOptions = {
+        dateFormat: 'yyyy.mm.dd',
+    };
+    availableLanguages: any;
+    summaries: any = {};
+    legalBasis: any[];
 
-
-  identifiersForm: FormGroup;
-
-  datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
-
-  saveDelay: number = 1000;
-
-  datasetForm: FormGroup = new FormGroup({});
-  myDatePickerOptions: IMyDpOptions = {
-    dateFormat: 'yyyy.mm.dd',
-  };
-  availableLanguages: any;
-  summaries:any = {};
-
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private service: DatasetService,
-              private codesService: CodesService,
-              private themesService: ThemesService,
-              private catalogService: CatalogService,
-              private http: Http,
-              private dialogService: DialogService,
-              private formBuilder: FormBuilder,
-              private cdr: ChangeDetectorRef) {
-  }
+    constructor(private route: ActivatedRoute,
+        private router: Router,
+        private service: DatasetService,
+        private codesService: CodesService,
+        private themesService: ThemesService,
+        private catalogService: CatalogService,
+        private http: Http,
+        private dialogService: DialogService,
+        private formBuilder: FormBuilder,
+        private cdr: ChangeDetectorRef) {
+    }
 
 
   ngOnInit() {
@@ -99,15 +94,14 @@ export class DatasetComponent implements OnInit {
 
     this.identifiersForm = new FormGroup({});
 
+
     this.identifiersForm.addControl("identifiersControl", new FormControl([]));
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
-
       console.log('dataset from api: ', dataset);
       this.dataset = dataset;
-
       if (this.dataset.languages) {
         this.availableLanguages.forEach((language, languageIndex, languageArray) => {
           dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray) => {
@@ -129,14 +123,16 @@ export class DatasetComponent implements OnInit {
       this.dataset.landingPages = this.dataset.landingPages || [];
       this.dataset.identifiers = this.dataset.identifiers || [];
       this.dataset.contactPoints = this.dataset.contactPoints || [];
-      // Only allow one contact point per dataset
+      //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-      this.dataset.conformsTos = this.dataset.conformsTos || [];
+this.dataset.conformsTos = this.dataset.conformsTos || [];
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
-      this.dataset.languages = this.dataset.languages || [];
+this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
-
+      this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
+      this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
+      this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -155,13 +151,13 @@ export class DatasetComponent implements OnInit {
           });
 
           if (dataset.distributions) {
-            dataset.distributions.forEach((distribution) => {
+            dataset.distributions.forEach(distribution => {
               distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
               distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
             })
           }
           if (dataset.samples) {
-            dataset.samples.forEach((distribution) => {
+            dataset.samples.forEach(distribution => {
               distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
               distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
             })
@@ -172,26 +168,23 @@ export class DatasetComponent implements OnInit {
           if (dataset.issued && dataset.issued.formatted) {
             dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
           }
-
-          if (_.isEmpty(dataset.issued)) {
+if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
           if (_.isEmpty(dataset.modified)) {
             dataset.modified = null;
-          }
-
-          if (dataset.temporals) {
+          }          if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
               if (temporal.startDate && temporal.startDate.formatted) {
                 var date = temporal.startDate.jsdate;
-                //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) + '-' +  ("0" + date.getDay()).slice(-2);
+
                 temporal.startDate = temporal.startDate.epoc;
               } else if (temporal.startDate === null) {
                 delete temporal.startDate;
               }
               if (temporal.endDate && temporal.endDate.formatted) {
                 var date = temporal.endDate.jsdate;
-                //var formatedDate = date.getFullYear() + '-' + ("0" + date.getMonth()).slice(-2) +  '-' + ("0" + date.getDay()).slice(-2);
+
                 temporal.endDate = temporal.endDate.epoc;
               } else if (temporal.endDate === null) {
                 delete temporal.endDate;
@@ -236,94 +229,91 @@ export class DatasetComponent implements OnInit {
     this.save();
   }
 
-  save(): void {
-    this.buildGeoTimeSummaries(this.dataset);
-    this.datasetSavingEnabled = false;
-    this.service.save(this.catId, this.dataset)
-      .then(() => {
-        this.saved = true;
-        var d = new Date();
-        this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
-        this.datasetSavingEnabled = true;
-      })
-  }
+    save(): void {
+        this.buildGeoTimeSummaries(this.dataset);
+        this.datasetSavingEnabled = false;
+        this.service.save(this.catId, this.dataset)
+            .then(() => {
+                this.saved = true;
+                var d = new Date();
+                this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+                this.datasetSavingEnabled = true;
+            })
+    }
 
-  valuechange(): void {
-    var that = this;
-    this.delay(() => {
-      if (this.datasetSavingEnabled) {
-        that.save.call(that);
-      }
-    }, this.saveDelay);
+    valuechange(): void {
+        var that = this;
+        this.delay(() => {
+            if (this.datasetSavingEnabled) {
+                that.save.call(that);
+            }
+        }, this.saveDelay);
 
-  }
+    }
 
-  delay(callback, ms): void {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(callback, ms);
-  }
+    delay(callback, ms): void {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(callback, ms);
+    }
 
-  back(): void {
-    this.router.navigate(['/catalogs', this.catId]);
-  }
+    back(): void {
+        this.router.navigate(['/catalogs', this.catId]);
+    }
 
-  delete(): void {
-    this.service.delete(this.catId, this.dataset)
-      .then(() => {
-        this.back()
-      })
-  }
+    delete(): void {
+        this.service.delete(this.catId, this.dataset)
+            .then(() => {
+                this.back()
+            })
+    }
 
-  showConfirmDelete() {
-    let disposable = this.dialogService.addDialog(ConfirmComponent, {
-      title: 'Slett datasett',
-      message: 'Vil du virkelig slette datasett ' + this.dataset.title[this.language] + '?'
-    })
-      .subscribe((isConfirmed) => {
-        //We get dialog result
-        if (isConfirmed) {
-          this.delete();
+    showConfirmDelete() {
+        let disposable = this.dialogService.addDialog(ConfirmComponent, {
+            title: 'Slett datasett',
+            message: 'Vil du virkelig slette datasett ' + this.dataset.title[this.language] + '?'
+        })
+            .subscribe((isConfirmed) => {
+                //We get dialog result
+                if (isConfirmed) {
+                    this.delete();
+                }
+            });
+        //If dialog was not closed manually close it by timeout
+        setTimeout(() => {
+            disposable.unsubscribe();
+        }, 10000);
+    }
+
+
+    private getDatasett(): Promise<Dataset> {
+        // Insert mock object here.  Likely provided via a resolver in a
+        // real world scenario
+        let datasetId = this.route.snapshot.params['dataset_id'];
+        return this.service.get(this.catId, datasetId);
+    }
+
+    private getDateObjectFromUnixTimestamp(timestamp: string) {
+        if (!timestamp) {
+            return {};
         }
-      });
-    //If dialog was not closed manually close it by timeout
-    setTimeout(() => {
-      disposable.unsubscribe();
-    }, 10000);
-  }
-
-
-  private getDatasett(): Promise<Dataset> {
-    // Insert mock object here.  Likely provided via a resolver in a
-    // real world scenario
-    let datasetId = this.route.snapshot.params['dataset_id'];
-    return this.service.get(this.catId, datasetId);
-  }
-
-  private getDateObjectFromUnixTimestamp(timestamp: string) {
-    if (!timestamp) {
-      return {};
+        let date = new Date(timestamp);
+        return {
+            date: {
+                year: date.getFullYear(),
+                month: date.getMonth() + 1,
+                day: date.getDate()
+            },
+            formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
+        }
     }
-    let date = new Date(timestamp);
-    return {
-      date: {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate()
-      },
-      formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
-    }
-  }
 
-  /*
-      get skills(): FormArray {
-        return this.form.get('skills') as FormArray;
-      };*/
+
 
   private toFormGroup(data: Dataset): FormGroup {
 
     const formGroup = this.formBuilder.group({
 
-      //title: title,
+
       description: [data.description],
       catalog: [data.catalog],
       landingPages: [data.landingPages],
@@ -340,6 +330,6 @@ export class DatasetComponent implements OnInit {
       published: data.registrationStatus == "PUBLISH"
     });
 
-    return formGroup;
-  }
+        return formGroup;
+    }
 }
