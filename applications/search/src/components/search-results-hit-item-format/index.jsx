@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 export default class SearchHitFormat extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
   render() {
     const formatClass = cx(
       'fdk-button-format',

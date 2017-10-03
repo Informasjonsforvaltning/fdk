@@ -10,7 +10,7 @@
     "servexxx": "ng serve --host=0.0.0.0 --live-reload-client http://localhost:3000 --disable-host-check=true",
     "test": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
     "tdd": "npm test -- --watch",
-    "lint": "eslint ./src --ext=.js,.jsx",
+    "lint": "eslint ./src --ext=.js,.jsx --fix",
     "e2e": "ng e2e --progress false"
   },
   "authors": [
