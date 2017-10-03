@@ -11,6 +11,7 @@
   "globals": {
     "$": false
   },
+  /*
   "ecmaFeatures": {
     "arrowFunctions": true,
     "blockBindings": true,
@@ -29,6 +30,7 @@
     "templateStrings": true,
     "jsx": true
   },
+  */
   "rules": {
     "no-console": [
       1,
