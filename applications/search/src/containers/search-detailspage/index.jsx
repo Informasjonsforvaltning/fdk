@@ -1,11 +1,36 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      dataset: null
+    };
+    this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
 
+  componentDidMount() {
+    this.loadDatasetFromServer();
+  }
+
+  // @params: the function has no param but the query need dataset id from prop
+  // loads all the info for this dataset
+  loadDatasetFromServer() {
+    const url = `/detail?id=${this.props.params.id}`;
+    axios.get(url)
+      .then((res) => {
+        const data = res.data;
+        this.setState({
+          dataset: data.hits.hits[0]
+        });
+      });
+  }
+
+
   render() {
+    console.log(JSON.stringify(this.state.dataset));
     return (
       <div className="container">
         <div className="row">
@@ -152,3 +177,8 @@ export default class DetailsPage extends React.Component {
     );
   }
 }
+
+DetailsPage.propTypes = {
+  id: PropTypes.string,
+  params: PropTypes.object
+};
