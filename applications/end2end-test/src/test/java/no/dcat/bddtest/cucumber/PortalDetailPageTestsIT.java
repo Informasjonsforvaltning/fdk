@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         format = {"pretty", "html:target/cucumber"},
-        features = "classpath:feature/FDK-338-detailPage.feature",
+        features = "classpath:feature/DetailPage.feature",
         tags = {"~@ignore"}
 
 )

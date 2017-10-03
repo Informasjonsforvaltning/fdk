@@ -3,8 +3,11 @@ version: "2"
 services:
   search:
     restart: always
+    command: npm start
     ports:
-      - 8080:8080
+      - 127.0.0.1:3000:3000
+    volumes:
+      -   ./applications/search/src:/usr/src/app/src:rw
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.queryService=http://search-api:8080
@@ -14,11 +17,33 @@ services:
   search-api:
     restart: always
     ports:
-      - 8083:8080
+      - 127.0.0.1:8083:8080
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
+
+  search-old:
+    restart: always
+    ports:
+      - 127.0.0.1:3001:8080
+    environment:
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - application.elasticsearchHost=elasticsearch
+     - application.elasticsearchPort=9300
+     - application.queryService=http://search-api:8080
+     - application.queryServiceExternal=http://localhost:8083
+     - application.fusekiService=http://fuseki:8080/fuseki
+
+  nginx-search:
+    image: dcatno/nginx-search:latest
+    restart: always
+    depends_on:
+      - search
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      platform:
 
   gdoc:
     ports:
@@ -127,11 +152,13 @@ services:
     ports:
       - 4200:4200
     volumes:
-      -   ./applications/registration:/usr/src/app/:rw
+      -   ./applications/registration/src:/usr/src/app/src:rw
     environment:
      - registrationApi_API_URL=https://localhost:8099
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
+    depends_on:
+     - nginx-ssl
 
   registration-auth:
       restart: always

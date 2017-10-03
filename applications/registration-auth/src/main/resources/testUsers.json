@@ -78,5 +78,22 @@
         "Status": "Active"
       }
     ]
+  },
+  {
+    "user": 5,
+    "ssn": "01234567891",
+    "entities": [
+      {
+        "Name": "REGISTERENHETEN I BRØNNØYSUND",
+        "Type": "Business",
+        "OrganizationNumber": "974760673",
+        "Status": "Active"
+      },
+      {
+        "Name": "BRØNNØYSUND BRØNNØY",
+        "Type": "Person",
+        "SocialSecurityNumber": "01234567891"
+      }
+    ]
   }
 ]

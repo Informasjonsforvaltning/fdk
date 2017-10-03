@@ -14,18 +14,21 @@
 # example:
 # runCreateServiceInOpenshift registration-api st2 latest st2_2017-02-18 recreateServices
 
-
 function createOpenshiftService {
     osService=$1
 
     oc new-app dcatno/$osService:$tag
     oc expose dc/$osService --port=8080
     oc env dc/$osService SPRING_PROFILES_ACTIVE=$profile JVM_OPTIONS="-Xms128m -Xmx256m"
-    oc label service $osService environmentTag=$environmentTag --overwrite=true
-    oc label dc $osService environmentTag=$environmentTag --overwrite=true
-    oc label service $osService environmentDate=$dateTag --overwrite=true
-    oc label dc $osService environmentDate=$dateTag --overwrite=true
+    oc label service $osService --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag
+    oc label dc $osService --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag
 
+    #tag the image stream to auto-pull new images from docker hub
+    oc tag --scheduled=true docker.io/dcatno/$osService:$tag $osService:$tag
 }
 
 function deployNewDockerImage {
@@ -33,18 +36,21 @@ function deployNewDockerImage {
 
     oc import-image dcatno/$osService:$tag
 
-    oc label service $osService environmentTag=$environmentTag --overwrite=true
-    oc label dc $osService environmentTag=$environmentTag --overwrite=true
-    oc label service $osService environmentDate=$dateTag --overwrite=true
-    oc label dc $osService environmentDate=$dateTag --overwrite=true
+    oc label service $osService --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag
+    oc label dc $osService --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag
 
 }
 
 function exposeService {
     serviceName=$1
     oc expose svc/$serviceName
-    oc label route $serviceName environmentTag=$environmentTag --overwrite=true
-    oc label route $serviceName environmentDate=$dateTag --overwrite=true
+    oc label route $serviceName --overwrite=true \
+        environmentTag=$environmentTag \
+        environmentDate=$dateTag
 }
 
 
@@ -52,28 +58,28 @@ function exposeService {
 if [ -z "$1" ]
 then
     echo "service must be specified: search, registration, search-api etc..."
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
 
 if [ -z "$2" ]
 then
     echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
 
 if [ -z "$3" ]
 then
     echo "docker  tag must be supplied. Example: latest"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
 
 if [ -z "$4" ]
 then
     echo "Environment date tag must be supplied. Example: ST1_2017-09-13"
-    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag>  <date-tag>"
+    echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag>  <date-tag> <deploymode>"
     exit 1
 fi
 
@@ -114,6 +120,7 @@ else
     cluster=ose-npc
 
     registrationGuiExternalAddress=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+    searchGuiExternalAddress=fellesdatakatalog-$environment.$cluster.brreg.no
 
     #point to Altinn test environnment
     altinnServiceCode=4814
@@ -133,6 +140,7 @@ if [ $environment = ppe ]
 then
   host=ppe.brreg.no
   registrationGuiExternalAddress=registrering-fdk.$host
+  searchGuiExternalAddress=fellesdatakatalog.$host
 fi
 
 # configuration that is specific for externally accessible test environment
@@ -140,6 +148,7 @@ if [ $environment = tt1 ]
 then
   host=tt1.brreg.no
   registrationGuiExternalAddress=registrering-fdk.$host
+  searchGuiExternalAddress=fellesdatakatalog.$host
 fi
 
 
@@ -199,8 +208,9 @@ then
 
         #create secure route for reference-data
         oc create route edge --service=reference-data --hostname=reference-data-fellesdatakatalog-$environment.$cluster.brreg.no
-        oc label route reference-data environmentTag=$environmentTag --overwrite=true
-        oc label route reference-data environmentDate=$dateTag --overwrite=true
+        oc label route reference-data --overwrite=true \
+            environmentTag=$environmentTag \
+            environmentDate=$dateTag
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage reference-data
@@ -258,21 +268,22 @@ then
         fi
 
         createOpenshiftService registration-api
-        oc env dc/registration-api SPRING_PROFILES_ACTIVE=$profile
-        oc env dc/registration-api registrationApi_IncludeServerPortInRequestUrl=false
-        oc env dc/registration-api registrationApi_OpenshiftEnvironment=$environment
-        oc env dc/registration-api registrationApi_ServerName=$registrationGuiExternalAddress
-        oc env dc/registration-api registrationApi_altinnServiceCode=$altinnServiceCode
-        oc env dc/registration-api registrationApi_altinnServiceEdition=$altinnServiceEdition
-        oc env dc/registration-api registrationApi_altinnServiceUrl=$altinnServiceUrl
-        oc env dc/registration-api registrationApi_apikey=$altinnApiKey
-        oc env dc/registration-api registrationApi_clientSSLCertificateKeystoreLocation="$clientCertificateKeystoreLocation"
-        oc env dc/registration-api registrationApi_clientSSLCertificateKeystorePassword=changeit
-        oc env dc/registration-api registrationApi_ipKeyPassword=changeit
-        oc env dc/registration-api registrationApi_ipStorePassword=changeit
-        oc env dc/registration-api registrationApi_sslKeyPassword=changeit
-        oc env dc/registration-api registrationApi_sslKeystoreLocation=$sslKeystoreLocation
-        oc env dc/registration-api registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile
+        oc env dc/registration-api \
+            SPRING_PROFILES_ACTIVE=$profile \
+            registrationApi_IncludeServerPortInRequestUrl=false \
+            registrationApi_OpenshiftEnvironment=$environment \
+            registrationApi_ServerName=$registrationGuiExternalAddress \
+            registrationApi_altinnServiceCode=$altinnServiceCode \
+            registrationApi_altinnServiceEdition=$altinnServiceEdition \
+            registrationApi_altinnServiceUrl=$altinnServiceUrl \
+            registrationApi_apikey=$altinnApiKey \
+            registrationApi_clientSSLCertificateKeystoreLocation="$clientCertificateKeystoreLocation" \
+            registrationApi_clientSSLCertificateKeystorePassword=changeit \
+            registrationApi_ipKeyPassword=changeit \
+            registrationApi_ipStorePassword=changeit \
+            registrationApi_sslKeyPassword=changeit \
+            registrationApi_sslKeystoreLocation=$sslKeystoreLocation \
+            registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile
 
         echo "Registration-api: Keystore password environment variables must be set manually"
         echo "Registration-api: Remember to mount /conf volume"
@@ -284,14 +295,28 @@ then
         deployNewDockerImage registration-api
     fi
 
+elif [ $service = search-old ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService search-old
+        oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
+        exposeService search-old
+        oc expose dc/search-old --port=8080
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage search-old
+    fi
+
 elif [ $service = search ]
 then
     if [ $deploymode = recreateServices ]
     then
         profile=prod
         createOpenshiftService search
-        oc env dc/search search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
         exposeService search
+        oc expose dc/search --port=3000
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage search
@@ -314,7 +339,7 @@ then
     if [ $deploymode = recreateServices ]
     then
         profile=prod
-        createOpenshiftService gdoc
+        createOpenshiftService harvester
         exposeService harvester
     else
         # deploymentmode = onlyDeployImages
@@ -330,8 +355,9 @@ then
 
         #create secure route for search api
         oc create route edge --service=search-api --hostname=search-api-fellesdatakatalog-$environment.$cluster.brreg.no
-        oc label route search-api environmentTag=$environmentTag --overwrite=true
-        oc label route search-api environmentDate=$dateTag --overwrite=true
+        oc label route search-api --overwrite=true \
+            environmentTag=$environmentTag \
+            environmentDate=$dateTag
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage search-api
@@ -346,11 +372,28 @@ then
 
         #create secure route for registration gui
         oc create route edge --service=nginx --hostname=$registrationGuiExternalAddress --port=8080
-        oc label route nginx environmentTag=$environmentTag --overwrite=true
-        oc label route nginx environmentDate=$dateTag --overwrite=true
+        oc label route nginx --overwrite=true \
+            environmentTag=$environmentTag \
+            nginx environmentDate=$dateTag
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx
+    fi
+
+elif [ $service = nginx-search ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService nginx-search
+
+        #create secure route for registration gui
+        oc create route edge --service=nginx-search --hostname=$searchGuiExternalAddress --port=8080
+        oc label route nginx-search environmentTag=$environmentTag --overwrite=true
+        oc label route nginx-search environmentDate=$dateTag --overwrite=true
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage nginx-search
     fi
 
 else

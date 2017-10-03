@@ -59,7 +59,7 @@ export class TemaComponent implements OnInit {
         themesArray: this.formBuilder.array(this.allThemes.map(s => {
           return this.formBuilder.control(this.selectedThemes[s.value] != null)}))
       });
-    }
+    } 
 
     fetchThemes() {
       return this.themesService.fetchThemes('nb').then(themes =>

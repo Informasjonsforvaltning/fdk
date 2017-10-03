@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Felles datakatalog",
+    "titleSub": "Oversikt over datasett fra virksomheter i Norge",
+    "publisher": "Velg ut frå verksemd",
+    "menu": "Meny"
+  },
+  "beta": {
+    "first": "Dette er ein beta-versjon. Gi oss gjerne ",
+    "second": "tilbakemeldinger",
+    "last": "om kva du synast!"
+  },
+  "lang": {
+    "choose": "Velg språk",
+    "chosenLanguage": "Language",
+    "norwegian-nb": "Norsk (bokmål)",
+    "norwegian-nn": "Norsk (nynorsk)",
+    "english-en": "Engelsk"
+  },
+  "feedback": {
+    "title": "Tilbakemelding"
+  },
+  "query": {
+    "intro": "Søk etter innhold",
+    "do": "Utføre søk"
+  },
+  "login": {
+    "title": "Logg inn"
+  },
+  "about": {
+    "about": "Om",
+    "title": "Om applikasjonen",
+    "help": "Hjelp",
+    "status":"Status implementasjon",
+    "standard":"DCAT-AP-NO 1.1 standarden",
+    "guide":"Rettleiar",
+    "fordataowners": "For dataeigare",
+    "fordatausers": "For databrukare",
+    "technical": "Teknisk"
+  },
+  "page": {
+    "navigation": "Sidenavigering",
+    "next": "Neste side",
+    "prev": "Forrige side",
+    "result.summary": "Søket gav ",
+    "dataset":"treff"
+
+  },
+  "facet": {
+    "organisation":"Verksemd",
+    "theme":"Tema",
+    "accessRight":"Tilgang",
+    "concept":"Omgrep",
+    "legal":"Heimel",
+    "spatial":"Geografi",
+    "temporal":"Tidsperiode",
+    "standard":"Standard"
+  },
+  "result": {
+    "dataset":"Datasett",
+    "waiting":"Henter data ..."
+  },
+  "noHits": {
+    "error": "Ingen datasett funnet"
+  },
+  "footer": {
+    "organisation.number": "Organisasjonsnummer:",
+    "information": "Informasjonskapslar - personvern",
+    "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
+    "mail": "fellesdatakatalog@brreg.no"
+  },
+  "sort": {
+    "by": "Sorter på",
+    "by.relevance": "Relevans",
+    "by.title": "Tittel",
+    "by.publisher": "Utgiver",
+    "by.modified": "Sist endra"
+  },
+  "search_hit": {
+    "owned": "Eies av",
+    "public": "Offentlig"
+  }
+}

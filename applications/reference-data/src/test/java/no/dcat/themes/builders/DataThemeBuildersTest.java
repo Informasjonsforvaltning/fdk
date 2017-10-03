@@ -1,6 +1,7 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.DataTheme;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.service.ThemesService;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBService;
@@ -26,9 +27,8 @@ public class DataThemeBuildersTest {
     public void testDataThemeBuilders() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
         tdbService.postConstruct();
-
-        TDBConnection tdbConnection = new TDBConnection(tdbService);
-
+        TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
+        TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
         List<DataTheme> dataThemes = new ThemesService(tdbConnection).getThemes();
 

@@ -1,6 +1,6 @@
 application:
+  themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
-  themesServiceUrl: http://localhost:8100
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
   altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://localhost:8077}
   altinnServiceCode: ${registrationApi_altinnServiceCode:4814}
@@ -34,6 +34,7 @@ saml:
         difi.brreg.datakatalog.registrering.tt1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.ut1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.st2: ${registrationApi_ipKeyPassword}
+        difi.brreg.datakatalog.registrering.dev: ${registrationApi_ipKeyPassword}
     context-provider:
       lb:
         context-path: /
@@ -123,6 +124,7 @@ spring:
         http:
           enabled: true
 application:
+  themesServiceUrl: http://localhost:8100
   clientSSLCertificateKeystoreLocation: ../../conf/dummy-client-SSL-cert.p12
   clientSSLCertificateKeystorePassword: password
   altinnServiceUrl: http://localhost:8077
