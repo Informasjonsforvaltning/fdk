@@ -53,6 +53,7 @@ export class QualityComponent implements OnInit {
     ngOnInit() {
         this.fetchFrequencies();
         this.fetchProvenances();
+//        window;
 
         if (this.dataset.accrualPeriodicity) {
             let skosCode = this.dataset.accrualPeriodicity;
