@@ -22,29 +22,29 @@ install:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
       env:
         - comment=First build the project to look for syntax/build problems
 
     - stage: Tests # Run regular unit tests
-      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
+      script: travis_wait mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
       env:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B  > /dev/null  && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true -B  > /dev/null  && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 
     - stage: deploy
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
       deploy:
         provider: script
         skip_cleanup: true
