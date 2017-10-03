@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SearchHitItem from '../../../src/components/search-hit-item/index';
+import SearchHitItem from '../../../src/components/search-results-hit-item';
 
 describe('a passing test', () => {
   it('should pass', () => {
@@ -194,6 +194,8 @@ describe('SearchHitItem', () => {
 
   beforeEach(() => {
     wrapper = shallow(<SearchHitItem result={props} selectedLanguageCode="nb" />);
+    //wrapper = shallow(<SearchHitItem />);
+    //wrapper.setProps({ result: props });
   });
 
   it ('should render', () => {
@@ -202,7 +204,7 @@ describe('SearchHitItem', () => {
   });
 
   it ('should render restricted', () => {
-    expect(wrapper.find('.fdk-distributions-red').length).to.be.equal(1);
+    expect(wrapper.find('.fdk-distributions-yellow').length).to.be.equal(1);
   });
 
   /*
