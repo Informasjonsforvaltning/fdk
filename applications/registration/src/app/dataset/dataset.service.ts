@@ -36,7 +36,8 @@ export class DatasetService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  getAll(catId: String): Promise<Dataset[]> {
+  getAll(catId: String): Promise<any> {
+    console.log('aa');
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
     return this.http.get(datasetUrl)
       .toPromise()
@@ -57,7 +58,11 @@ export class DatasetService {
     return this.http.get(datasetUrl)
       .toPromise()
       .then((response) => {
+        
+        console.log("JSON", response.json);
         const dataset = pluralizeObjectKeys(response.json());
+        
+        console.log("PLURALIZED", dataset);
         dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
         return dataset as Dataset
       })
@@ -71,7 +76,6 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
-
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()

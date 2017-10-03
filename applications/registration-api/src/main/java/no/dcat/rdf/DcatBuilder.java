@@ -56,8 +56,8 @@ public class DcatBuilder {
     public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
     public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
 
-    public static final Property dcatno_restricedPursuantToLegalBasis = mod.createProperty(DCATNO, "restricedPursuantToLegalBasis");
-    public static final Property dcatno_basisForProcessing = mod.createProperty(DCATNO, "basisForProcessing");
+    public static final Property dcatno_legalBasisForRestriction = mod.createProperty(DCATNO, "legalBasisForRestriction");
+    public static final Property dcatno_legalBasisForProcessing = mod.createProperty(DCATNO, "legalBasisForProcessing");
     public static final Property dcatno_legalBasisForAccess = mod.createProperty(DCATNO, "legalBasisForAccess");
 
 
@@ -148,12 +148,12 @@ public class DcatBuilder {
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
                 addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
 
-                dataset.getRestricedPursuantToLegalBasis().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_restricedPursuantToLegalBasis, skosConceptWithHomepage);
+                dataset.getLegalBasisForRestriction().forEach(skosConceptWithHomepage -> {
+                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
                 });
 
-                dataset.getBasisForProcessing().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_basisForProcessing, skosConceptWithHomepage);
+                dataset.getLegalBasisForProcessing().forEach(skosConceptWithHomepage -> {
+                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
                 });
                 dataset.getLegalBasisForAccess().forEach(skosConceptWithHomepage -> {
                     addSkosConceptWithHomepage(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);

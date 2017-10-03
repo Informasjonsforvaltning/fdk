@@ -1,0 +1,36 @@
+<div *ngIf="legalBasisForm && legalBasisForm.controls.prefLabel">
+    <div class="form-group legalBasis-form sub-form-group" 
+        [formGroup]="legalBasisForm">
+        <div class="row form-group">
+            <h4 (click)="toggleForm()">
+                <span *ngFor="let singleFormat of legalBasis.format; let idx=index">
+                    {{singleFormat}}{{legalBasis.format.length !== idx+1 ? ',' : '' }}
+                </span>
+                <span *ngIf="legalBasis.format && legalBasis.format.length === 0">
+                    (Ingen format)
+                </span>
+            </h4>
+            <div class="form sub-form">
+                <div class="fdk-input-container">
+                    <div *ngIf="legalBasisForm.controls.prefLabel" class="col-md-5">
+                        <p class="fdk-input-label">
+                            Tittel på {{legalBasisType}}
+                        </p>
+                        <input formControlName="prefLabel" class="fdk-input ng-touched" type="text" />
+                    </div>
+                    <div *ngIf="legalBasisForm.controls.uri" class="col-md-5">
+                        <p class="fdk-input-label">
+                            Lenke til {{legalBasisType}}
+                        </p>
+                        <input formControlName="uri" class="fdk-input ng-touched" type="text" />
+                    </div>
+                    <span class="delete-legalBasis-wrapper" *ngIf="showDelete">
+                        <a href="" class="delete-legalBasis-button" 
+                            (click)="removeLegalBasis(legalBasisIndex)">
+                            <i class="fa fa-trash fdk-fa-dark fdk-fa-left"></i>Slett
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
