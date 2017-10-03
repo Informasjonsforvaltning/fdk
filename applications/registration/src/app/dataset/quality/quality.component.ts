@@ -2,6 +2,8 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Dataset} from "../dataset";
 import {CodesService} from "../codes.service";
+import {DatasetComponent} from "../dataset.component";
+import * as _ from 'lodash';
 
 
 @Component({
@@ -23,37 +25,36 @@ export class QualityComponent implements OnInit {
     frequencies = [];
     provenancestatements = [];
     provenancesModel:any[];
-    public typeForm: FormGroup;
-    typeModel = [];
-    selectedProvenanceIdx = 1;
-
+    selectedProvenanceIdx = 0;
+    currentness;
 
     constructor(private fb: FormBuilder,
-                private codesService: CodesService)
+                private codesService: CodesService,
+                private parent: DatasetComponent)
     {
       this.provenancesModel = [
-          {
-              id: 1,
-              label: 'Brukerinnsamlede data',
-              uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
-          },
-          {
-              id: 2,
-              label: 'Tredjepart',
-              uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
-          },
-          {
-              id: 3,
-              label: 'Statlig vedtak',
-              uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
-          }
+        {
+          id: 3,
+          label: 'Statlig vedtak',
+          uri: 'http://data.brreg.no/datakatalog/provinens/vedtak'
+        },
+        {
+          id: 1,
+          label: 'Brukerinnsamlede data',
+          uri: 'http://data.brreg.no/datakatalog/provinens/bruker'
+        },
+        {
+          id: 2,
+          label: 'Tredjepart',
+          uri: 'http://data.brreg.no/datakatalog/provinens/tredjepart'
+        }
+
       ]
     }
 
     ngOnInit() {
         this.fetchFrequencies();
         this.fetchProvenances();
-//        window;
 
         if (this.dataset.accrualPeriodicity) {
             let skosCode = this.dataset.accrualPeriodicity;
@@ -70,7 +71,9 @@ export class QualityComponent implements OnInit {
             this.dataset.provenance = { uri: '', prefLabel: {nb:''}};
         }
 
-        this.dataset.conformsTos = this.dataset.conformsTos || [];
+        if (this.dataset.hasCurrentnessAnnotation) {
+          this.currentness = this.dataset.hasCurrentnessAnnotation.hasBody.no;
+        }
 
         this.qualityForm = this.toFormGroup(this.dataset);
 
@@ -78,9 +81,17 @@ export class QualityComponent implements OnInit {
             quality => {
 
                 if (quality.provenance) {
+                    let uri = "";
+                    let label = "";
+                    this.provenancesModel.forEach( provenanceValue => {
+                        if (quality.provenance === provenanceValue.id) {
+                          uri = provenanceValue.uri;
+                          label = provenanceValue.label;
+                        }
+                    });
                     this.dataset.provenance = {
-                        uri: quality.provenance,
-                        prefLabel: {'nb': this.getLabel(this.provenancestatements, quality.provenance)}
+                        uri: uri,
+                        prefLabel: {'nb': label}
                     };
                 }
 
@@ -90,40 +101,39 @@ export class QualityComponent implements OnInit {
                         uri: quality.accrualPeriodicity,
                         prefLabel: {'no': this.getLabel(this.frequencies, quality.accrualPeriodicity)}
                     };
-
                 }
 
-                if (quality.conformsTo) {
-                    this.dataset.conformsTos = quality.conformsTo;
+                if (quality.modified && quality.modified.formatted) {
+                    let date = quality.modified.formatted.replace(/\./g, "-");
+                    let value = date.split("-");
+                    // TODO make this more robust
+                    if (value[2].length > 2) {
+                      this.dataset.modified = value[2] + '-' + value[1] + '-' + value[0];
+                    } else {
+                      this.dataset.modified = date;
+                    }
                 }
+                if (_.isEmpty(quality.modified)) {
+                  this.dataset.modified = null;
+                }
+
+              if (quality.currentness) {
+                  this.dataset.hasCurrentnessAnnotation = {
+                    inDimension: "iso:Currentness",
+                    motivatedBy: "dqv:qualityAssessment",
+                    hasBody: {"no": quality.currentness}
+                  }
+                }
+
+                this.parent.buildProvenanceSummary();
 
                 this.onSave.emit(true);
-
-                    if (quality.accessRightsComment && quality.accessRightsComment.length === 0) {
-                        this.dataset.accessRightsComments = null;
-                    } else {
-                        this.dataset.accessRightsComments = quality.accessRightsComment;
-                    }
-                    if (quality.accessRights) {
-                        this.provenancesModel.forEach(entry => {
-                            if (entry.id == quality.provenance) {
-                                this.dataset.accessRights = {uri: entry.uri}
-                            }
-                        });
-                    }
-                    this.onSave.emit(true);
-
             }
         );
 
-
-            if(!this.dataset.accessRights) {
-                this.dataset.accessRights = {uri: this.provenancesModel[0].uri}
-            }
-            this.provenancesModel
-                .filter(entry => entry.uri == this.dataset.accessRights.uri)
-                .forEach(entry => this.selectedProvenanceIdx = entry.id)
-
+        this.provenancesModel
+          .filter(entry => entry.uri == this.dataset.accessRights.uri)
+              .forEach(entry => this.selectedProvenanceIdx = entry.id)
 
     }
 
@@ -132,10 +142,11 @@ export class QualityComponent implements OnInit {
         return this.fb.group({
             accrualPeriodicity: [ data.accrualPeriodicity.uri || '' ],
             provenance: [ data.provenance.uri || ''],
-            accessRights : [ data.accessRights || {}],
-            conformsTo: [ data.conformsTos ]
+            modified: [ this.parent.getDateObjectFromUnixTimestamp(data.modified) ],
+            currentness: [ this.currentness || '']
         });
     }
+
 
     codifySkosCodes(code, lang) {
         return {value: code['uri'], label: code['prefLabel'][lang]}
