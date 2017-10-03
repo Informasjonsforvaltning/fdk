@@ -10,7 +10,7 @@
       },
       {
         "Name": "RAMSUND OG ROGNAN REVISJON",
-        "Type": "Business",
+        "Type": "Enterprise",
         "OrganizationNumber": "910244132",
         "Status": "Active"
       }
@@ -22,7 +22,7 @@
     "entities": [
       {
         "Name": "RAMSUND OG ROGNAN REVISJON",
-        "Type": "Business",
+        "Type": "Enterprise",
         "OrganizationNumber": "910244132",
         "Status": "Active"
       },
@@ -85,7 +85,7 @@
     "entities": [
       {
         "Name": "REGISTERENHETEN I BRØNNØYSUND",
-        "Type": "Business",
+        "Type": "Enterprise",
         "OrganizationNumber": "974760673",
         "Status": "Active"
       },
