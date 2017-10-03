@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { map } from 'lodash';
-import { filter } from 'lodash';
-import { transform } from 'lodash';
-import { find } from 'lodash';
-import { identity } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 import localization from '../localization';
-
-const block = require('bem-cn');
 
 export default class Select extends React.Component {
   constructor(props) {
@@ -38,7 +32,7 @@ export default class Select extends React.Component {
 
   getSelectedValue() {
     const { selectedItems = [] } = this.props;
-    if (selectedItems.length == 0) return null;
+    if (selectedItems.length === 0) return null;
     return selectedItems[0];
   }
 
@@ -48,7 +42,6 @@ export default class Select extends React.Component {
 
 
     const props = this.props;
-    const { bemBlocks } = props;
     return (
       <DropdownButton
         id="search-result-dropdown-1"

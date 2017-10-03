@@ -1,16 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Router, Link, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
-import { SearchPage } from './containers/search-results/index';
+import SearchPage from './containers/search-results/index';
 import DetailsPage from './containers/search-details/index';
-import { App } from './containers/app';
-
-const Home = () => (
-  <div>
-    <Link to="search">Go to Search</Link>
-  </div>
-);
+import App from './containers/app';
 
 const routes =
   (
@@ -26,16 +20,3 @@ ReactDOM.render((
     {routes}
   </Router>
 ), document.getElementById('root'));
-
-
-/*
-
-
- const routes =
- (
- <Route path="/" component={App}>
- <IndexRoute component={SearchPage}/>
- </Route>
- );
-
- */

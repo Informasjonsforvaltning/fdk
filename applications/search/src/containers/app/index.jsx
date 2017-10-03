@@ -1,14 +1,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import localization from '../../components/localization';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
+import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import './index.scss';
 
-export class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,9 +22,7 @@ export class App extends React.Component {
   onChangeLanguage(e) {
     const langCode = e;
     const langUrl = this.getLangUrl(langCode);
-    console.log(langUrl);
     const nextUrl = `${location.pathname}${langUrl}`;
-    console.log(nextUrl);
     browserHistory.push(nextUrl);
 
     let text;
@@ -45,13 +43,10 @@ export class App extends React.Component {
   getLangUrl(langCode) {
     const href = window.location.search;
     const queryObj = qs.parse(window.location.search.substr(1));
-    console.log(langCode);
-    console.log(href);
-    console.log(queryObj);
     if (langCode === 'nb') {
       return addOrReplaceParam(href, 'lang', '');
     } else if (href.indexOf('lang=') === -1) {
-      return href.indexOf('?') === -1 ? `${href}?` + `lang=${langCode}` : `${href}&lang=${langCode}`;
+      return href.indexOf('?') === -1 ? `${href}?lang=${langCode}` : `${href}&lang=${langCode}`;
     } else if (langCode !== queryObj.lang) {
       const replacedUrl = addOrReplaceParam(href, 'lang', langCode);
       return replacedUrl.substring(replacedUrl.indexOf('?'));
@@ -62,7 +57,6 @@ export class App extends React.Component {
   render() {
     // let queryObj = qs.parse(window.location.search.substr(1));
     // let language = queryObj.lang ? queryObj.lang : 'nb';
-    const language = this.state.selectedLanguageCode;
     const childWithProp =
       React.Children.map(this.props.children, child => React.cloneElement(child, {
         selectedLanguageCode: this.state.selectedLanguageCode
@@ -70,7 +64,8 @@ export class App extends React.Component {
     return (
       <div>
         <div className="fdk-header-beta">
-          {localization.beta.first} <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">{localization.beta.second}</a> {localization.beta.last}
+          {localization.beta.first}
+          <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">{localization.beta.second}</a> {localization.beta.last}
         </div>
         <div className="fdk-header">
           <div className="container">

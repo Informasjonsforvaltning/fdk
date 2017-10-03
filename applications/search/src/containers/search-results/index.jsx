@@ -8,13 +8,7 @@ import {
   NoHits,
   Pagination,
   SortingSelector,
-  PageSizeSelector,
-  TopBar,
-  ActionBar,
-  ActionBarRow,
-  Tabs,
-  Toggle,
-  ItemList
+  TopBar
 } from 'searchkit';
 import {
   createHistory as createHistoryFn,
@@ -24,16 +18,14 @@ import {
 
 import { RefinementOptionThemes } from '../../components/search-refinementoption-themes';
 import { RefinementOptionPublishers } from '../../components/search-refinementoption-publishers';
-import { SearchBox } from '../../components/search-results-searchbox/SearchBox.jsx';
-import { QueryTransport } from '../../utils/QueryTransport.jsx';
+import { SearchBox } from '../../components/search-results-searchbox/SearchBox';
+import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../../components/localization';
-import SearchHitItem from '../../components/search-results-hit-item/index.jsx';
-import SelectDropdown from '../../components/search-searchkit-selector-dropdown';
+import SearchHitItem from '../../components/search-results-hit-item';
+import SelectDropdown from '../../components/search-results-selector-dropdown';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
 
-
-const defaults = require('lodash/defaults');
 const qs = require('qs');
 const sa = require('superagent');
 
@@ -65,8 +57,8 @@ const searchkit = new SearchkitManager(
         Object.keys(parsedQuery).map((e) => {
           if (parsedQuery[e].indexOf(',')) parsedQuery[e] = parsedQuery[e].split(',');
           if (e === 'sort') {
-            let key = parsedQuery[e][0].slice(0, -4),
-              value = parsedQuery[e][0].substr(-4);
+            const key = parsedQuery[e][0].slice(0, -4);
+            const value = parsedQuery[e][0].substr(-4);
             parsedQuery[e][key] = value;
             delete parsedQuery[e][0];
           }
@@ -94,7 +86,7 @@ searchkit.translateFunction = (key) => {
   return translations[key];
 };
 
-export class SearchPage extends React.Component {
+export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const that = this;
@@ -118,8 +110,6 @@ export class SearchPage extends React.Component {
                 themes.push(obj);
               }
             });
-          } else {
-
           }
         });
     }
@@ -190,10 +180,27 @@ export class SearchPage extends React.Component {
                         <div className="pull-right">
                           <SortingSelector
                             options={[
-                              { label: `${localization.sort.by} ${localization.sort['by.relevance']}`, field: '_score', order: 'asc', defaultOption: true },
-                              { label: `${localization.sort.by} ${localization.sort['by.title']}`, field: 'title', order: 'asc' },
-                              { label: `${localization.sort.by} ${localization.sort['by.modified']}`, field: 'modified', order: 'desc' },
-                              { label: `${localization.sort.by} ${localization.sort['by.publisher']}`, field: 'publisher.name', order: 'asc' }
+                              {
+                                label: `${localization.sort.by} ${localization.sort['by.relevance']}`,
+                                field: '_score',
+                                order: 'asc',
+                                defaultOption: true
+                              },
+                              {
+                                label: `${localization.sort.by} ${localization.sort['by.title']}`,
+                                field: 'title',
+                                order: 'asc'
+                              },
+                              {
+                                label: `${localization.sort.by} ${localization.sort['by.modified']}`,
+                                field: 'modified',
+                                order: 'desc'
+                              },
+                              {
+                                label: `${localization.sort.by} ${localization.sort['by.publisher']}`,
+                                field: 'publisher.name',
+                                order: 'asc'
+                              }
                             ]}
                             listComponent={selectDropdownWithProps}
                           />
