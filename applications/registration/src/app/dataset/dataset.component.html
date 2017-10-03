@@ -1,7 +1,8 @@
 <div *ngIf="dataset && catalog && dataset.publisher">
   <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
-<div class="row justify-content-md-center nv-dataset" *ngIf="datasetForm && dataset" id="{{dataset.id}}">
+<div *ngIf="dataset && datasetForm">
+<div class="row justify-content-md-center nv-dataset" id="{{dataset.id}}">
   <label for="title-and-description-toggle" class="col-md-push-1 col-md-2 section-title">
     Tittel og beskrivelse<b class="caret-right"></b>
   </label>
@@ -56,7 +57,7 @@
 
 
 
-<div class="row justify-content-md-center" *ngIf="dataset">
+<div class="row justify-content-md-center" >
   <label for="access-level-toggle" class="col-md-push-1 col-md-2 section-title">
     Tilgangsnivå<b class="caret-right"></b>
   </label>
@@ -72,7 +73,7 @@
 </div>
 
 
-<div class="row justify-content-md-center" *ngIf="dataset">
+<div class="row justify-content-md-center" >
   <label for="tema-toggle" class="col-md-push-1 col-md-2 section-title">
     Tema<b class="caret-right"></b>
   </label>
@@ -81,7 +82,7 @@
     <label for="tema-toggle" class="collapsed-content expand-label">
       <div class="truncate">
         <span class="" *ngFor="let tema of dataset.themes; let i=index" >
-          <span *ngIf="tema.title">{{tema.title.nb}}</span>
+          <span *ngIf="tema.title">{{tema.title.nb || tema.title.no}}</span>
         </span>
       </div>
       <div *ngIf="dataset.themes && dataset.themes.length === 0">Klikk for å fylle ut</div>
@@ -114,24 +115,22 @@
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="terms-toggle" class="expand-checkbox" />
-    <label for="tema-toggle" class="collapsed-content expand-label">
-      <div class="truncate">
+    <label for="terms-toggle" class="collapsed-content expand-label">
+      <div *ngIf="!((dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0))" class="truncate">
         <span *ngIf="(dataset.subjects && dataset.subjects.length !== 0)">
-          Begrep:
           <span class="" *ngFor="let subject of dataset.subjects; let i=index" >
             <span>{{subject}}</span>
           </span>
         </span>
         <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">
-          Søkeord:
           <span class="" *ngFor="let keyword of dataset.keywords; let i=index" >
             <span *ngIf="keyword.nb">{{keyword.nb}}</span>
           </span>
         </span>
       </div>
-      <div *ngIf="(dataset.subjects && dataset.subjects.length === 0) || (dataset.keywords && dataset.keywords.length === 0)">Klikk for å fylle ut</div>
+      <div *ngIf="(dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0)"><span><span class="">Klikk for å fylle ut</span></span></div>
     </label>
-    <label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label>
+    <!--label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label-->
     <div class="expanded-content">
       <information [dataset]="dataset" (onSave)="onSave($event)"></information>
     </div>
@@ -159,7 +158,7 @@
           (onSave)="onSave($event)">
         </spatial>
       </div>
-      <div class="fdk-input-container" *ngIf="dataset.title">
+      <div class="fdk-input-container" *ngIf="dataset.temporals && datasetForm.controls.temporals">
         <temporals
           title="Tidsperiode"
           [datasetForm]="datasetForm"
@@ -180,7 +179,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">
           <p class="fdk-input-label">Språk</p>
           <helptext
             text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
@@ -235,7 +234,7 @@
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="contact-toggle" class="expand-checkbox" />
     <label for="contact-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
-    <div class="expanded-content">
+    <div *ngIf="datasetForm.controls.contactPoints" class="expanded-content">
       <contact
       [contactsArray]="datasetForm.controls.contactPoints"
       [contact]="dataset.contactPoints[0]">
@@ -251,7 +250,7 @@
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="distributions-toggle" class="expand-checkbox" />
     <label for="distributions-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
-    <div class="expanded-content">
+    <div *ngIf="dataset.samples && dataset.distributions" class="expanded-content">
       <distributions
       [datasetForm]="datasetForm"
       [distributionsFormArray]="datasetForm.controls.samples"
@@ -300,4 +299,5 @@
     </label>
     <div class="verticalAlignCenter" style="padding-left:4px" [style.fontWeight]="dataset.registrationStatus == 'PUBLISH' ? 'bold':''">Publisert</div>
   </div>
+</div>
 </div>

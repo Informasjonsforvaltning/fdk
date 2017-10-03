@@ -135,7 +135,7 @@ public class GdocCatalogSteps extends CommonPage {
             String dsId = dataset.get(0);
             logger.info("Test dataset {}", dsId);
 
-            openPage(PORTAL_URL + "/detail?id=" + dsId);
+            openPage(PORTAL_URL + "/datasets?id=" + dsId);
 
             assertTrue("Detail page has title ", driver.getTitle() != null);
         }

@@ -32,7 +32,7 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B > /dev/null  && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B  > /dev/null  && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
@@ -51,5 +51,5 @@ jobs:
         script:
           - ./travisPushToDockerHub.sh
         on:
-          condition: $TRAVIS_TAG = ''
           branch: develop
+          condition: $TRAVIS_TAG = ''

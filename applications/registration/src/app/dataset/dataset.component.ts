@@ -58,169 +58,179 @@ export class DatasetComponent implements OnInit {
         private cdr: ChangeDetectorRef) {
     }
 
-    ngOnInit() {
-        this.language = 'nb';
-        this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
-            {
-                uri: "http://publications.europa.eu/resource/authority/language/ENG",
-                code: 'ENG',
-                prefLabel: {
-                    nb: 'Engelsk'
-                },
-                selected: false
-            },
-            {
-                uri: "http://publications.europa.eu/resource/authority/language/NOR",
-                code: 'NOR',
-                prefLabel: {
-                    nb: 'Norsk'
-                },
-                selected: false
-            },
-            {
-                uri: "http://publications.europa.eu/resource/authority/language/SMI",
-                code: 'SMI',
-                prefLabel: {
-                    nb: 'Samisk'
-                },
-                selected: false
+
+  ngOnInit() {
+    this.language = 'nb';
+    this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
+      {
+        uri: "http://publications.europa.eu/resource/authority/language/ENG",
+        code: 'ENG',
+        prefLabel: {
+          nb: 'Engelsk'
+        },
+        selected: false
+      },
+      {
+        uri: "http://publications.europa.eu/resource/authority/language/NOR",
+        code: 'NOR',
+        prefLabel: {
+          nb: 'Norsk'
+        },
+        selected: false
+      },
+      {
+        uri: "http://publications.europa.eu/resource/authority/language/SMI",
+        code: 'SMI',
+        prefLabel: {
+          nb: 'Samisk'
+        },
+        selected: false
+      }
+    ];
+    this.timer = 0;
+    var that = this;
+    // snapshot alternative
+    this.catId = this.route.snapshot.params['cat_id'];
+
+    this.identifiersForm = new FormGroup({});
+
+
+    this.identifiersForm.addControl("identifiersControl", new FormControl([]));
+
+    let datasetId = this.route.snapshot.params['dataset_id'];
+    this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
+    this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
+      console.log('dataset from api: ', dataset);
+      this.dataset = dataset;
+      if (this.dataset.languages) {
+        this.availableLanguages.forEach((language, languageIndex, languageArray) => {
+          dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray) => {
+            if (language.uri === datasetLanguage.uri) {
+              languageArray[languageIndex].selected = true;
             }
-        ];
+          })
+        })
+      }
+      this.buildGeoTimeSummaries(this.dataset);
 
-        this.timer = 0;
-        var that = this;
-        // snapshot alternative
-        this.catId = this.route.snapshot.params['cat_id'];
-        this.identifiersForm = new FormGroup({});
-        this.identifiersForm.addControl("identifiersControl", new FormControl([]));
-        let datasetId = this.route.snapshot.params['dataset_id'];
-        this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
+      // Make sure all arrays are set or empty
+      // catalog and publisher is set by api
+      this.dataset.keywords = this.dataset.keywords || [];
+      this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
+      this.dataset.subjects = this.dataset.subjects || [];
+      this.dataset.themes = this.dataset.themes || [];
+      this.dataset.spatials = this.dataset.spatials || [];
+      this.dataset.landingPages = this.dataset.landingPages || [];
+      this.dataset.identifiers = this.dataset.identifiers || [];
+      this.dataset.contactPoints = this.dataset.contactPoints || [];
+      //Only allow one contact point per dataset
+      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
+this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.distributions = this.dataset.distributions || [];
+      this.dataset.samples = this.dataset.samples || [];
+this.dataset.languages = this.dataset.languages || [];
+      this.dataset.temporals = this.dataset.temporals || [];
+      this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
+      this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
+      this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
+      // construct controller
+      this.datasetForm = this.toFormGroup(this.dataset);
 
-        this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
-            console.log('dataset is ', dataset);
-            this.dataset = dataset;
-            if (dataset.languages) {
-                this.availableLanguages.forEach((language, languageIndex, languageArray) => {
-                    dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray) => {
-                        if (language.uri === datasetLanguage.uri) {
-                            languageArray[languageIndex].selected = true;
-                        }
-                    })
-                })
+      this.datasetSavingEnabled = false;
+      setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
+      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
+        .subscribe(dataset => {
+          console.log('saving dataset:', dataset);
+
+          // converting attributes for saving
+          this.dataset.languages = [];
+          dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
+            this.availableLanguages.forEach((language, index) => {
+              if ((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
+            });
+          });
+
+          if (dataset.distributions) {
+            dataset.distributions.forEach(distribution => {
+              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+            })
+          }
+          if (dataset.samples) {
+            dataset.samples.forEach(distribution => {
+              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+            })
+          }
+          if (dataset.modified && dataset.modified.formatted) {
+            dataset.modified = dataset.modified.formatted.replace(/\./g, "-");
+          }
+          if (dataset.issued && dataset.issued.formatted) {
+            dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
+          }
+if (_.isEmpty(dataset.issued)) {
+            dataset.issued = null;
+          }
+          if (_.isEmpty(dataset.modified)) {
+            dataset.modified = null;
+          }          if (dataset.temporals) {
+            dataset.temporals.forEach(temporal => {
+              if (temporal.startDate && temporal.startDate.formatted) {
+                var date = temporal.startDate.jsdate;
+
+                temporal.startDate = temporal.startDate.epoc;
+              } else if (temporal.startDate === null) {
+                delete temporal.startDate;
+              }
+              if (temporal.endDate && temporal.endDate.formatted) {
+                var date = temporal.endDate.jsdate;
+
+                temporal.endDate = temporal.endDate.epoc;
+              } else if (temporal.endDate === null) {
+                delete temporal.endDate;
+              }
+            });
+            if (dataset.temporals.length === 0) {
+              dataset.temporals = undefined;
             }
-            this.buildSummaries(dataset);
+          } else {
+            dataset.temporals = [];
+          }
+          if(dataset.published){
+            this.dataset.registrationStatus = "PUBLISH";
+          }else{
+            this.dataset.registrationStatus = "DRAFT";
+          }
+          this.dataset = _.merge(this.dataset, dataset);
 
-            // Only allows one contact point per dataset
-            this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-
-            this.dataset.landingPages = this.dataset.landingPages || [];
-            //this.dataset.landingPages[0] = this.dataset.landingPages[0] || "testpagelanding";
-
-            this.dataset.identifiers = this.dataset.identifiers || [];
-
-            //set default publisher to be the same as catalog
-            this.dataset.publisher = this.dataset.publisher || this.catalog.publisher;
-            this.dataset.languages = [];
-
-            this.dataset.samples = dataset.samples || [];
-            this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
-            this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
-            this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
-            this.dataset.languages = dataset.languages || [];
-            this.dataset.temporals = dataset.temporals || [];
-            this.datasetForm = this.toFormGroup(this.dataset);
-            this.datasetSavingEnabled = false;
-            setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
-
-            this.datasetForm.valueChanges // when fetching back data, de-flatten the object
-                .subscribe(dataset => {
-                    console.log('dataset is ', dataset);
-                    this.dataset.languages = [];
-                    dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
-                        this.availableLanguages.forEach((language, index) => {
-                            if ((index === checkboxIndex) && checkbox) 
-                                this.dataset.languages.push(language);
-                        });
-                    });
-
-                    if (dataset.distributions) {
-                        dataset.distributions.forEach( distribution => {
-                            distribution.title = typeof distribution.title === 'object' ? distribution.title : { 'nb': distribution.title };
-                            distribution.description = typeof distribution.description === 'object' ? distribution.description : { 'nb': distribution.description };
-                        })
-                    }
-                    if (dataset.samples) {
-                        dataset.samples.forEach( distribution => {
-                            distribution.title = typeof distribution.title === 'object' ? distribution.title : { 'nb': distribution.title };
-                            distribution.description = typeof distribution.description === 'object' ? distribution.description : { 'nb': distribution.description };
-                        })
-                    }
-                    if (dataset.modified && dataset.modified.formatted) {
-                        dataset.modified = dataset.modified.formatted.replace(/\./g, "-");
-                    }
-                    if (dataset.issued && dataset.issued.formatted) {
-                        dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
-                    }
-                    if (dataset.temporals) {
-                        dataset.temporals.forEach( temporal => {
-                            if (temporal.startDate && temporal.startDate.formatted) {
-                                var date = temporal.startDate.jsdate;
-                                temporal.startDate = temporal.startDate.epoc;
-                            } else if (temporal.startDate === null) {
-                                delete temporal.startDate;
-                            }
-
-                            if (temporal.endDate && temporal.endDate.formatted) {
-                                var date = temporal.endDate.jsdate;
-                                temporal.endDate = temporal.endDate.epoc;
-                            } else if (temporal.endDate === null) {
-                                delete temporal.endDate;
-                            }
-                        });
-
-                        if (dataset.temporals.length === 0) {
-                            dataset.temporals = undefined;
-                        }
-                    } else {
-                        dataset.temporals = [];
-                    }
-
-                    if (dataset.published) {
-                        this.dataset.registrationStatus = "PUBLISH";
-                    } else {
-                        this.dataset.registrationStatus = "DRAFT";
-                    }
-
-                    this.dataset = _.merge(this.dataset, dataset);
-                    this.cdr.detectChanges();
-                    var that = this;
-
-                    this.delay(() => {
-                        if (this.datasetSavingEnabled) {
-                            that.save.call(that);
-                        }
-                    }, this.saveDelay);
-                });
-
-
+          this.cdr.detectChanges();
+          var that = this;
+          this.delay(() => {
+            if (this.datasetSavingEnabled) {
+              that.save.call(that);
+            }
+          }, this.saveDelay);
         });
+
+
+    });
+  }
+  buildGeoTimeSummaries(dataset) {
+    this.summaries.geotime = "";
+    if(dataset.spatials && dataset.spatials.length > 0) {
+      this.summaries.geotime += dataset.spatials.map(spatial=>{return spatial.uri}).join(', ');
     }
-    buildSummaries(dataset) {
-        this.summaries.geotime = "";
-        if (dataset.spatials && dataset.spatials.length > 0) {
-            this.summaries.geotime += dataset.spatials.map(spatial => { return spatial.uri }).join(', ');
-        }
-        if (dataset.languages && dataset.languages.length > 0) {
-            this.summaries.geotime += ' ' + dataset.languages.map(language => { return language.prefLabel['nb'] }).join(', ');
-        }
-        this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
+    if(dataset.languages && dataset.languages.length > 0) {
+      this.summaries.geotime += ' ' + dataset.languages.map(language=>{return language.prefLabel['nb']}).join(', ');
     }
-    onSave(ok: boolean) {
-        this.save();
-    }
+    this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
+  }
+  onSave(ok: boolean) {
+    this.save();
+  }
 
     save(): void {
-        this.buildSummaries(this.dataset);
+        this.buildGeoTimeSummaries(this.dataset);
         this.datasetSavingEnabled = false;
         this.service.save(this.catId, this.dataset)
             .then(() => {
@@ -284,7 +294,7 @@ export class DatasetComponent implements OnInit {
 
     private getDateObjectFromUnixTimestamp(timestamp: string) {
         if (!timestamp) {
-            return null;
+            return {};
         }
         let date = new Date(timestamp);
         return {
@@ -297,24 +307,28 @@ export class DatasetComponent implements OnInit {
         }
     }
 
-    private toFormGroup(data: Dataset): FormGroup {
-        this.getDateObjectFromUnixTimestamp(data.issued)
-        const formGroup = this.formBuilder.group({
-            description: [data.description],
-            catalog: [data.catalog],
-            landingPages: [data.landingPages],
-            publisher: [data.publisher],
-            contactPoints: this.formBuilder.array([]),
-            distributions: this.formBuilder.array([]),
-            temporals: this.formBuilder.array([]),
-            issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
-            modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
-            samples: this.formBuilder.array([]),
-            checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
-                return this.formBuilder.control(s.selected)
-            })),
-            published: data.registrationStatus == "PUBLISH"
-        });
+
+
+  private toFormGroup(data: Dataset): FormGroup {
+
+    const formGroup = this.formBuilder.group({
+
+
+      description: [data.description],
+      catalog: [data.catalog],
+      landingPages: [data.landingPages],
+      publisher: [data.publisher],
+      contactPoints: this.formBuilder.array([]),
+      distributions: this.formBuilder.array([]),
+      temporals: this.formBuilder.array([]),
+      issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
+      modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
+      samples: this.formBuilder.array([]),
+      checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
+        return this.formBuilder.control(s.selected)
+      })),
+      published: data.registrationStatus == "PUBLISH"
+    });
 
         return formGroup;
     }

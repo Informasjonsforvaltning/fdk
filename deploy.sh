@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+# Deployment pipeline (environment order)
+# UT1 -> ST2 -> TT1 (mocked authorisation )
+# UT1 -> ST1 -> PPE (idporten authorisation)
+
+
 git fetch
 
 GIT_STATUS=`git status | grep "Your branch is up-to-date with"`
@@ -9,7 +14,7 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-components="fuseki harvester harvester-api nginx reference-data registration registration-api registration-auth registration-validator search search-api"
+components="fuseki harvester harvester-api nginx nginx-search reference-data registration registration-api registration-auth registration-validator search search-old search-api"
 
 
 # remove all local tags
@@ -62,14 +67,14 @@ function gitTag {
 
 }
 
-function openshiftDeploy {
-    osEnvironment=$1
-    dateTag=$2
+#function openshiftDeploy {
+#    osEnvironment=$1
+#    dateTag=$2
+#
+#    #Deply new images on openshift - assuming all services are correctly set up
+#    # sh runCreateAllServicesInOpenshift.sh $osEnvironment $datetag $dateTag onlyDeployImages
+#}
 
-    #Delete old services from openshift, and deploy new ones
-    sh runDeleteServicesInOpenshift.sh $osEnvironment
-    sh runCreateAllServicesInOpenshift.sh $osEnvironment $datetag $dateTag
-}
 
 
 if [ "$1" == "st1" ] ; then
@@ -81,32 +86,35 @@ if [ "$1" == "st1" ] ; then
 
   gitTag ut1 st1
 
-  #todo dobbeltsjekk at dockertag blir riktig
-  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
+elif [ "$1" == "st2" ] ; then
+
+  for i in $components
+  do
+    dockerTag ${i} ut1 st2
+  done
+
+  gitTag ut1 st2
 
 
 elif [ "$1" == "tt1" ] ; then
 
   for i in $components
   do
-    dockerTag registration st1 tt1
+    dockerTag registration st2 tt1
   done
 
-  gitTag st1 tt1
-
-  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
+  gitTag st2 tt1
 
 
 elif [ "$1" == "ppe" ] ; then
   for i in $components
   do
-    dockerTag registration tt1 ppe
+    dockerTag registration st1 ppe
   done
 
-  gitTag tt1 ppe
+  gitTag st1 ppe
 
-  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
 
 
 
@@ -120,7 +128,7 @@ elif [ "$1" == "prod" ] ; then
   gitTag ppe prod
 
   #todo: sjekk om prod-navnet er prd eller prod
-  openshiftDeploy prod ${toEnvironment}_${DATETIME}
+#  openshiftDeploy prod ${toEnvironment}_${DATETIME}
 
 else
 
@@ -135,6 +143,4 @@ else
 fi
 
 
-echo "Done"
-
-
+echo "Done";
