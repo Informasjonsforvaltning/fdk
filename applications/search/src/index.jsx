@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
-import SearchPage from './containers/search-results/index';
-import DetailsPage from './containers/search-details/index';
+import SearchPage from './containers/search-results';
+import DetailsPage from './containers/search-detailspage';
 import App from './containers/app';
 
 const routes =
