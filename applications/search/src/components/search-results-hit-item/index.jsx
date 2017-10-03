@@ -2,11 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
-import qs from 'qs';
-import defaults from 'lodash/defaults';
 
 import localization from '../../components/localization';
-import SearchHitFormat from '../search-hit-item-format';
+import SearchHitFormat from '../search-results-hit-item-format';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
