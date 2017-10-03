@@ -19,6 +19,13 @@ install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
+branches:
+  except:
+    - /ut1_.*/
+    - /st1_.*/
+    - /st2_.*/
+    - /tt1_.*/
+    - /ppe_.*/
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
