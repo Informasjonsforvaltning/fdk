@@ -10,7 +10,7 @@
     "servexxx": "ng serve --host=0.0.0.0 --live-reload-client http://localhost:3000 --disable-host-check=true",
     "test": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
     "tdd": "npm test -- --watch",
-    "lint": "ng lint",
+    "lint": "eslint ./src --ext=.js,.jsx",
     "e2e": "ng e2e --progress false"
   },
   "authors": [
@@ -59,6 +59,11 @@
     "css-loader": "^0.28.7",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-15": "^1.0.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
