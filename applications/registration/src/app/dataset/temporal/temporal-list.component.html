@@ -1,7 +1,3 @@
-<h3>
-    {{title}}
-</h3>
-
 <div *ngIf="temporals" class="temporal-list"
      [formGroup]="datasetForm">
     <div formArrayName="temporals">
@@ -10,7 +6,8 @@
                 [temporalsFormArray]="temporalsFormArray"
                 [temporal]="temporal"
                 (deleteTemporal)="removeTemporal($event)"
-                [temporalIndex]="idx">
+                [temporalIndex]="idx"
+                [showDelete] ="showDelete">
             </temporal>
         </div>
         <a href="#" (click)="addTemporal()">

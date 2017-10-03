@@ -23,6 +23,9 @@ export class TemporalFormComponent implements OnInit {
     @Input('temporalIndex')
     public temporalIndex: number;
 
+    @Input('showDelete')
+    public showDelete: boolean;
+
     @Output()
     deleteTemporal:EventEmitter<string> = new EventEmitter();
 

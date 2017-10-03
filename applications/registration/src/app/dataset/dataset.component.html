@@ -139,65 +139,86 @@
 </div>
 
 <div class="row justify-content-md-center" *ngIf="dataset">
-  <label for="geotime-toggle" class="col-md-push-1 col-md-2 section-title">
-    Geografi, tid, og språk<b class="caret-right"></b>
-  </label>
-  <div class="col-md-push-1 col-md-8 collapsed">
-    <input type="checkbox" id="geotime-toggle" class="expand-checkbox" />
-    <label for="tema-toggle" class="collapsed-content expand-label">
-      {{summaries.geotime}}
+    <label for="geotime-toggle" class="col-md-push-1 col-md-2 section-title">
+        Geografi, tid, og språk<b class="caret-right"></b>
     </label>
-    <div class="expanded-content">
-      <div class="fdk-input-container" *ngIf="dataset.title">
-        <p class="fdk-input-label">Geografisk avgrensning</p>
-        <helptext
-          text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-          moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-          name="geoavgrensning">
-        </helptext>
-        <spatial [dataset]="dataset"
-          (onSave)="onSave($event)">
-        </spatial>
-      </div>
-      <div class="fdk-input-container" *ngIf="dataset.temporals && datasetForm.controls.temporals">
-        <temporals
-          title="Tidsperiode"
-          [datasetForm]="datasetForm"
-          [temporalsFormArray]="datasetForm.controls.temporals"
-          [temporals]="dataset.temporals"
-        ></temporals>
-      </div>
-      <div class="row">
-        <div [formGroup]="datasetForm" class="col-md-4">
-          <p class="fdk-input-label">Utgivelsesdato</p>
-          <helptext
-            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-            name="utgivelse">
-          </helptext>
-          <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions" locale="no"
-        formControlName="issued" ></my-date-picker>
+    <div class="col-md-push-1 col-md-8 collapsed">
+        <input type="checkbox" id="geotime-toggle" class="expand-checkbox" />
+        <label for="tema-toggle" class="collapsed-content expand-label">
+            {{summaries.geotime}}
+        </label>
+        <div class="expanded-content">
+            <div class="fdk-input-container" *ngIf="dataset.title">
+                <p class="fdk-input-label">Geografisk avgrensning</p>
+                <helptext
+                    text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                    moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                    name="geoavgrensning">
+                </helptext>
+                <spatial 
+                    [dataset]="dataset"
+                    (onSave)="onSave($event)">
+                </spatial>
+            </div>
+            <div class="fdk-input-container" *ngIf="dataset.temporals && datasetForm.controls.temporals">
+                <temporals
+                    title="Tidsperiode"
+                    [datasetForm]="datasetForm"
+                    [temporalsFormArray]="datasetForm.controls.temporals"
+                    [temporals]="dataset.temporals">
+                </temporals>
+            </div>
+            <div class="fdk-input-container" style="margin-bottom: 20px">
+                <div [formGroup]="datasetForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="fdk-input-label">Utgivelsesdato</p>
+                            <helptext
+                                text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                                moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                                name="utgivelse">
+                            </helptext>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <my-date-picker 
+                                id="issued" 
+                                placeholder="Opprettet dato" 
+                                name="issued" 
+                                [options]="myDatePickerOptions" 
+                                locale="no"
+                                formControlName="issued" >
+                            </my-date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fdk-input-container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="fdk-input-label">Språk</p>
+                        <helptext
+                            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                            name="language">
+                        </helptext>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">                    
+                        <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="language-checkbox">
+                            <label><!-- 416 -->
+                            <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
+                            <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
+                                <span>{{availableLanguages[i].prefLabel.nb}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">
-          <p class="fdk-input-label">Språk</p>
-          <helptext
-            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-            name="language">
-          </helptext>
-          <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="language-checkbox">
-            <label><!-- 416 -->
-              <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
-              <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
-              <span>{{availableLanguages[i].prefLabel.nb}}</span>
-            </label>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="row justify-content-md-center" *ngIf="dataset">

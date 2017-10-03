@@ -22,21 +22,27 @@ export class TemporalListComponent implements OnInit {
     @Input('title')
     public title: string;
 
+    showDelete: boolean = false;
+
     temporal: PeriodOfTime;
 
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
+        if (this.temporals.length == 0) {
+            this.addTemporal();
+        }
     }
 
     addTemporal() {
         const temporal: PeriodOfTime = {
-          startDate:null,
-          endDate:null
+            startDate:null,
+            endDate:null
         };
-          this.temporals.push(temporal);
-          this.cd.detectChanges();
-          return false;
+        this.temporals.push(temporal);
+        this.cd.detectChanges();
+        this.showHideDelete();
+        return false;
     }
 
     removeTemporal(idx: number) {
@@ -44,6 +50,14 @@ export class TemporalListComponent implements OnInit {
             this.temporals.splice(idx, 1);
             this.temporalsFormArray.removeAt(idx);
         }
+        this.showHideDelete();
         return false;
+    }
+
+    showHideDelete() {
+        if (this.temporals.length > 1)
+            this.showDelete = true;
+        else
+            this.showDelete = false;
     }
 }
