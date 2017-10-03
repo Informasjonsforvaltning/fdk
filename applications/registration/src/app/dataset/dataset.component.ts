@@ -40,7 +40,8 @@ export class DatasetComponent implements OnInit {
     saveDelay: number = 1000;
     datasetForm: FormGroup = new FormGroup({});
     myDatePickerOptions: IMyDpOptions = {
-        dateFormat: 'yyyy.mm.dd',
+        //dateFormat: 'dd.mm.yyyy',//'yyyy.mm.dd',
+        showClearDateBtn: false
     };
     availableLanguages: any;
     summaries: any = {};
@@ -125,10 +126,10 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints = this.dataset.contactPoints || [];
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.conformsTos = this.dataset.conformsTos || [];
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
-this.dataset.languages = this.dataset.languages || [];
+      this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
       this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
       this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
@@ -166,9 +167,20 @@ this.dataset.languages = this.dataset.languages || [];
             dataset.modified = dataset.modified.formatted.replace(/\./g, "-");
           }
           if (dataset.issued && dataset.issued.formatted) {
-            dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
+              dataset.issued = this.convertDateStringFormat(dataset.issued.formatted);
+            //dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
+            /**
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             */
           }
-if (_.isEmpty(dataset.issued)) {
+          if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
           if (_.isEmpty(dataset.modified)) {
@@ -211,23 +223,75 @@ if (_.isEmpty(dataset.issued)) {
             }
           }, this.saveDelay);
         });
-
-
     });
   }
-  buildGeoTimeSummaries(dataset) {
-    this.summaries.geotime = "";
-    if(dataset.spatials && dataset.spatials.length > 0) {
-      this.summaries.geotime += dataset.spatials.map(spatial=>{return spatial.uri}).join(', ');
+    buildGeoTimeSummaries(dataset): void {
+        this.summaries.geotime = "";
+
+        // Add spatial count to summary if exists.
+        if (dataset.spatials && dataset.spatials.length > 0) {
+            if (dataset.spatials.length == 1)
+                this.summaries.geotime += "1 geografisk avgrensing. ";
+            else 
+                this.summaries.geotime += dataset.spatials.length + " geografiske avgrensinger. ";
+        }
+        
+        // Add temporal count to summary if exists.
+        if (dataset.temporals && dataset.temporals.length > 0) {
+            if (dataset.temporals.length == 1)
+                this.summaries.geotime += "1 tidsmessig avgrensing. ";
+            else 
+                this.summaries.geotime += dataset.temporals.length + " tidsmessige avgrensinger. ";
+        }
+        
+        // Add issued to summary if exists.
+        if (dataset.issued) {
+            this.summaries.geotime += "Utgitt den " + dataset.issued + ". ";
+        }
+        
+        // Add language count to summary if exists.
+        if (dataset.languages && dataset.languages.length > 0) {
+            if (dataset.languages.length == 1)
+                this.summaries.geotime += "Ett språk. ";
+            else 
+                this.summaries.geotime += dataset.languages.length + " språk. ";
+        }
+
+        this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
     }
-    if(dataset.languages && dataset.languages.length > 0) {
-      this.summaries.geotime += ' ' + dataset.languages.map(language=>{return language.prefLabel['nb']}).join(', ');
+
+    /**
+     * 
+     * @param dateIn string in format of dd.mm.yyyy. 
+     * Split on ".", then reverse the array to get [yyyy, mm, dd].
+     * Return new string with "-" separtors in correct mask.
+     */
+    convertDateStringFormat(dateIn: string): string {
+
+        if (dateIn && dateIn.length > 0) {  
+            var dateSplitHyphen: string[] = dateIn.split("-");            
+            var dateSplitDot: string[] = dateIn.split(".");
+            var dateSplit: string[] = (dateSplitHyphen.length > dateSplitDot.length) ? dateSplitHyphen : dateSplitDot;
+
+            if (dateSplit.length == 3) {
+                dateSplit = dateSplit.reverse();
+                dateSplit.forEach(date => {
+                    if (date.length == 1) {
+                        date = "0" + date;
+                    }
+                });
+                
+                return dateSplit[0] + "-" + dateSplit[1] + "-" + dateSplit[2];
+            }
+            console.log("dateIn not in correct format. dateIn: ", dateIn, ", dateSplit: ", dateSplit);
+            return "";
+        }
+        return "dateIn null or empty. dateIn: " + dateIn;
     }
-    this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
-  }
-  onSave(ok: boolean) {
-    this.save();
-  }
+
+    onSave(ok: boolean): void {
+        this.save();
+    }
 
     save(): void {
         this.buildGeoTimeSummaries(this.dataset);

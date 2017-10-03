@@ -43,30 +43,32 @@ export class TemporalFormComponent implements OnInit {
        this.temporalsFormArray.push(this.temporalForm);
     }
 
-      private getDateObjectFromUnixTimestamp(timestamp:string) {
+    private getDateObjectFromUnixTimestamp(timestamp:string) {
         if(!timestamp) return {};
         var timestamp2 = parseInt(timestamp);
         if(timestamp2.toString().length === 10) timestamp2 = parseInt(timestamp.toString() + "000");
         let date = new Date(timestamp2);
         return {
-          date: {
-            year: date.getFullYear(),
-            month: date.getMonth() + 1,
-            day: date.getDate()
-          },
-          formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
+            date: {
+                year: date.getFullYear(),
+                month: date.getMonth() + 1,
+                day: date.getDate()
+            },
+            formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
         }
-      }
-    private toFormGroup(temporal: PeriodOfTime) {
+    }
+
+    private toFormGroup(temporal: PeriodOfTime) : FormGroup {
         const formGroup = this.fb.group({
             startDate: [this.getDateObjectFromUnixTimestamp(temporal.startDate)],
             endDate: [this.getDateObjectFromUnixTimestamp(temporal.endDate)]
         });
         return formGroup;
     }
-    removeTemporal(idx: number) {
-      this.deleteTemporal.emit(idx.toString());
-       this.temporalsFormArray.removeAt(idx);
-      return false;
+
+    removeTemporal(idx: number) : boolean {
+        this.deleteTemporal.emit(idx.toString());
+        this.temporalsFormArray.removeAt(idx);
+        return false;
     }
 }
