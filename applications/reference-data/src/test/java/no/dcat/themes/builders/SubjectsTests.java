@@ -1,6 +1,7 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
@@ -30,11 +31,11 @@ public class SubjectsTests {
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
-//        checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Enhet", "enhet");
-        checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Hovedenhet", "hovedenhet");
-//        checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Foretaksnavn", "Foretaksnavn");
-//        checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Organisasjonsummer", "hovedenhet");
-//        checkSkosCode(tdbConnection, "https://data-david.github.io/Begrep/begrep/Underenhet", "hovedenhet");
+        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Enhet", "enhet");
+        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Hovedenhet", "hovedenhet");
+        //checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Organisasjonsummer", "Organisasjonsnummer");
+        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Foretaksnavn", "Foretaksnavn");
+        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Underenhet", "underenhet");
 
     }
 
@@ -47,16 +48,16 @@ public class SubjectsTests {
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
-        checkSkosCode(tdbConnection, "file:///Users/havardottestad/Documents/BRREG/felles-datakatalog/applications/reference-data/src/main/resources/rdf/data-theme-skos.rdf", "hovedenhet");
+        checkSubject(tdbConnection, "file:///Users/havardottestad/Documents/BRREG/felles-datakatalog/applications/reference-data/src/main/resources/rdf/data-theme-skos.rdf", "hovedenhet");
 
     }
 
-    private void checkSkosCode(TDBConnection tdbConnection, String uri, String prefLabel) throws MalformedURLException {
+    private void checkSubject(TDBConnection tdbConnection, String uri, String prefLabel) throws MalformedURLException {
         System.out.println(uri);
-        SkosCode code = new SubjectsService(tdbConnection).addSubject(uri);
+        Subject subject = new SubjectsService(tdbConnection).addSubject(uri);
 
-        assertEquals(prefLabel, code.getPrefLabel().get("no"));
-        System.out.println(code.toString());
+        assertEquals(prefLabel, subject.getPrefLabel().get("no"));
+        System.out.println(subject.toString());
     }
 
 

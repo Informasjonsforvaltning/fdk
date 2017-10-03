@@ -2,6 +2,7 @@ package no.dcat.themes.service;
 
 import com.google.gson.Gson;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
 import org.apache.commons.io.IOUtils;
@@ -28,7 +29,7 @@ public class SubjectsService extends BaseServiceWithFraming {
 
     static {
         try {
-            frame = IOUtils.toString(BaseServiceWithFraming.class.getClassLoader().getResourceAsStream("frames/skosCode.json"), "utf-8");
+            frame = IOUtils.toString(BaseServiceWithFraming.class.getClassLoader().getResourceAsStream("frames/subject.json"), "utf-8");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +42,7 @@ public class SubjectsService extends BaseServiceWithFraming {
 
 
     @Cacheable("subjects")
-    public SkosCode addSubject(String uri) throws MalformedURLException {
+    public Subject addSubject(String uri) throws MalformedURLException {
 
         try {
             return getSubject(uri);
@@ -59,13 +60,13 @@ public class SubjectsService extends BaseServiceWithFraming {
 
     }
 
-    public SkosCode getSubject(String uri) {
+    public Subject getSubject(String uri) {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Dataset dataset = DatasetFactory.create(connection.describeWithInference(uri));
             String json = frame(dataset, frame);
-
+            logger.debug("json= {}",json);
             dataset.close();
-            return new Gson().fromJson(json, FramedSkosCode.class).getGraph().get(0);
+            return new Gson().fromJson(json, FramedSubject.class).getGraph().get(0);
         });
     }
 }

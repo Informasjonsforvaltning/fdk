@@ -2,6 +2,7 @@ package no.dcat.themes;
 
 import no.dcat.shared.LocationUri;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.shared.DataTheme;
 import no.dcat.themes.service.CodesService;
@@ -87,7 +88,7 @@ public class Controller {
     @PreAuthorize("hasAuthority('INTERNAL_CALL')")
     @CrossOrigin
     @RequestMapping(value = "/subjects",  method = RequestMethod.GET)
-    public SkosCode getRemoteResourceForSubject(@RequestParam String uri) throws MalformedURLException {
+    public Subject getRemoteResourceForSubject(@RequestParam String uri) throws MalformedURLException {
         logger.debug(uri);
         try {
             return subjectsService.addSubject(uri);
