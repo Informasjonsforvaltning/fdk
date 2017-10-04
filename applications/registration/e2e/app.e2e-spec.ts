@@ -429,14 +429,14 @@ describe('registration application:', () => {
            expect(items[2].getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
         });
 
-/*
-        await browser.wait(EC.presenceOf(accrualPeriodicityControl));
-        await expect(accrualPeriodicityControl.getText()).toMatch(/årlig.*/);
 
-        await browser.wait(EC.presenceOf(currentness));
-        console.log("currentness:", currentness);
-        await expect(currentness.getText()).toMatch("Ferske reker")
-*/
+        //await browser.wait(EC.presenceOf(accrualPeriodicityControl));
+        //await expect(accrualPeriodicityControl.getText()).toMatch(/årlig.*/);
+
+        //await browser.wait(EC.presenceOf(currentness));
+        //console.log("currentness:", currentness);
+        //await expect(currentness.getText()).toMatch("Ferske reker")
+
     });
 
 
