@@ -294,6 +294,10 @@ public class ImportController {
             if (d.getAccessRights() != null) {
                 d.getAccessRights().setPrefLabel(getLabelForCode("rightsstatement", d.getAccessRights().getUri()));
             }
+
+
+            d.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
+
         });
     }
 
