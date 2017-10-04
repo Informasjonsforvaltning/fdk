@@ -18,7 +18,6 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //@Autowired
     private RestTemplate restTemplate = new RestTemplate();
 
     @Value("${application.authentication.includedOrgforms}")
@@ -27,7 +26,7 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
     @Value("${application.authentication.includedOrgnr}")
     private String[] authorizedOrgnr;
 
-    @Value("${openDataEnhet}")
+    @Value("${application.openDataEnhet}")
     private String openDataEnhetsregisteret;
 
     @Override
