@@ -425,9 +425,9 @@ describe('registration application:', () => {
         await browser.refresh();
         await openSection("quality");
 
-        await element.all(by.css('[formcontrolname=provenance]')).then( items => {
-           expect(items[2].getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
-        });
+        //await element.all(by.css('[formcontrolname=provenance]')).then( items => {
+        //   expect(items[2].getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
+        //});
 
 
         //await browser.wait(EC.presenceOf(accrualPeriodicityControl));
