@@ -23,7 +23,7 @@ function waitForCount (elementArrayFinder, expectedCount) {
 };
 
 /* TO RUN WITH SUCCESS YOU MUST CREATE AN EMPTY DATASET IN THE CATALOG */
-describe('registrering-gui App', () => {
+describe('registration application:', () => {
 
 
     let page: RegistreringGuiPage;
@@ -276,8 +276,10 @@ describe('registrering-gui App', () => {
 
     });
 
-
+    // Conforms to is being moved to other section, Comment inn again when that task is done
     it("should save conformsTo uris", async () => {
+      console.log("Commented out");
+      /*
         let catalogLink = element(by.css("#datacatalogs td"));
         await catalogLink.click();
         await page.createDataset('should save conformsTo uris');
@@ -297,11 +299,12 @@ describe('registrering-gui App', () => {
 
         let actualConformsTo = element(by.css("input[placeholder='Standard']"));
         await browser.wait(EC.presenceOf(actualConformsTo), 10000);
-
-        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
-        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
+        */
+        //expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:first-child")).toMatch(/http:\/\/url1.*/);
+        //expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Standard'] rl-tag-input-item:nth-child(2)")).toMatch(/http:\/\/url2.*/);
 
     });
+
 
 
     it("should save spatial uris", async () => {
@@ -395,24 +398,25 @@ describe('registrering-gui App', () => {
     });
 
 
-    it("Should handle saving of codes in new dataset", async () => {
+    it("Should handle provenance and currentness", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
         await catalogLink.click();
 
         await page.createDataset('saving of codes');
         await openSection("quality");
 
-
-      await element.all(by.css('[formcontrolname=provenance]')).then( (items) => {
-            items[1].click();
-      });
-
+        await element.all(by.css('[formcontrolname=provenance]')).then( (items) => {
+              items[2].click();
+        });
 
         let accrualPeriodicityControl = element(by.css('[formcontrolname=accrualPeriodicity]'));
         await accrualPeriodicityControl.click();
         let accrualPeriodicityControlFirstValue = element(by.css('[formcontrolname=accrualPeriodicity] li:first-child'));
         await accrualPeriodicityControlFirstValue.click();
 
+        let currentness = element(by.css('#aktualitet-annotation'));
+        await currentness.clear();
+        await currentness.sendKeys('Ferske reker');
 
         let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);
@@ -421,17 +425,16 @@ describe('registrering-gui App', () => {
         await browser.refresh();
         await openSection("quality");
 
-        let provenanceControlValueElement = element.all(by.css('[formcontrolname=provenance]'));
-
-        //await browser.wait(waitForCount(provenanceControlValueElement,3), 10000)
-
-        await browser.wait(waitForCount(provenanceControlValueElement,3),10000);
-        await expect(provenanceControlValueElement.get(1).getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
-
+        await element.all(by.css('[formcontrolname=provenance]')).then( items => {
+           expect(items[2].getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
+        });
 
         await browser.wait(EC.presenceOf(accrualPeriodicityControl));
         await expect(accrualPeriodicityControl.getText()).toMatch(/årlig.*/);
 
+        await browser.wait(EC.presenceOf(currentness));
+        console.log("currentness:", currentness);
+        await expect(currentness.getText()).toMatch("Ferske reker")
     });
 
 
