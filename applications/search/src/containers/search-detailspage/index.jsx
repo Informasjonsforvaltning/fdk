@@ -47,6 +47,7 @@ export default class DetailsPage extends React.Component {
         />
       );
     }
+    return null;
   }
 
   _renderDistribution() {
@@ -92,11 +93,7 @@ export default class DetailsPage extends React.Component {
     return (
       <div className="container">
         <div className="row">
-
-
-
-
-
+          {this._renderDatasetDescription()}
           <div className="col-md-8">
             <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
               <i className="fa fa-unlock fdk-fa-left fdk-color-green" />Datasettet er offentlig
