@@ -32,10 +32,12 @@ export class QualityComponent implements OnInit {
                 private codesService: CodesService,
                 private parent: DatasetComponent)
     {
+      // Hardcode this since the service code service takes time to finish
+
       this.provenancesModel = [
         {
           id: 3,
-          label: 'Statlig vedtak',
+          label: 'Vedtak',
           uri: 'http://data.brreg.no/datakatalog/provinens/vedtak'
         },
         {
@@ -64,12 +66,7 @@ export class QualityComponent implements OnInit {
             this.dataset.accrualPeriodicity = { uri: '', prefLabel: {no: ''}};
         }
 
-        if (this.dataset.provenance) {
-            let skosCode = this.dataset.provenance;
-            this.provenancestatements.push(this.codifySkosCodes(skosCode,'nb'));
-        } else {
-            this.dataset.provenance = { uri: '', prefLabel: {nb:''}};
-        }
+        this.dataset.provenance = this.dataset.provenance || { uri: '', prefLabel: {nb:''}};
 
         if (this.dataset.hasCurrentnessAnnotation) {
           this.currentness = this.dataset.hasCurrentnessAnnotation.hasBody.no;
@@ -86,7 +83,7 @@ export class QualityComponent implements OnInit {
                     this.provenancesModel.forEach( provenanceValue => {
                         if (quality.provenance === provenanceValue.id) {
                           uri = provenanceValue.uri;
-                          label = provenanceValue.label;
+                          label = this.getLabel(this.provenancestatements, provenanceValue.uri);
                         }
                     });
                     this.dataset.provenance = {

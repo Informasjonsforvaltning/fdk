@@ -6,6 +6,7 @@ import no.dcat.model.Dataset;
 import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
+import no.dcat.model.QualityAnnotation;
 import no.dcat.model.SkosCode;
 import no.dcat.model.SkosConceptWithHomepage;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
@@ -46,10 +47,13 @@ public class DcatBuilder {
     public static final String TIME = "http://www.w3.org/TR/owl-time/";
     public static final String ADMS = "http://www.w3.org/ns/adms#";
 
+    public static final String dqvNS = "http://www.w3.org/ns/dqvNS#";
+    public static final String isoNS = "http://iso.org/25012/2008/dataquality/";
+    public static final String oaNS  = "http://www.w3.org/ns/prov#";
 
+    public static final Resource QUALITY_ANNOTATION = mod.createResource(dqvNS + "QualityAnnotation");
 
     public static final Property adms_identifier = mod.createProperty(ADMS, "identifier");
-
 
     public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
     public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
@@ -74,6 +78,10 @@ public class DcatBuilder {
         model.setNsPrefix("dcatno", DCATNO);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS);
+        model.setNsPrefix("iso", isoNS);
+        model.setNsPrefix("oa", oaNS);
+        model.setNsPrefix("dqv", dqvNS);
+        model.setNsPrefix("rdf", RDF.uri);
     }
 
 
@@ -169,10 +177,39 @@ public class DcatBuilder {
                 addProperty(datRes, DCTerms.type, dataset.getType());
                 addProperties(datRes, adms_identifier, dataset.getAdmsIdentifier());
 
+                Property hasQualityAnnotation = model.createProperty(dqvNS +"hasQualityAnnotation");
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAvailabilityAnnotations());
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasRelevanceAnnotation());
             }
         }
 
         return this;
+    }
+
+
+
+    private void addQualityAnnotation(Resource datRes, Property hasQualityAnnotation, QualityAnnotation annotation) {
+        if (annotation != null) {
+            Resource qualityAnnotation = model.createResource();
+            Resource dimension = model.createResource(isoNS + annotation.getInDimension());
+            qualityAnnotation.addProperty(RDF.type, QUALITY_ANNOTATION);
+
+            datRes.addProperty(hasQualityAnnotation, qualityAnnotation);
+
+            Property inDimension = model.createProperty(dqvNS + "inDimension");
+            qualityAnnotation.addProperty(inDimension, dimension);
+
+            Property hasBody = model.createProperty(oaNS + "hasBody");
+
+            Resource body = model.createResource();
+            addLiterals(body, RDF.value, annotation.getHasBody());
+
+            qualityAnnotation.addProperty(hasBody, body);
+
+        }
     }
 
     private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConceptWithHomepage skosConceptWithHomepage) {
