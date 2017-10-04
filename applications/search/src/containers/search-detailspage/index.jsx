@@ -2,11 +2,14 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import DatasetDescription from '../../components/search-dataset-description';
+
 export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: null
+      dataset: {},
+      loading: true
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
@@ -23,39 +26,26 @@ export default class DetailsPage extends React.Component {
       .then((res) => {
         const data = res.data;
         this.setState({
-          dataset: data.hits.hits[0]
+          dataset: data.hits.hits[0]._source,
+          loading: false
         });
       });
   }
 
 
   render() {
-    console.log(JSON.stringify(this.state.dataset));
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <div className="designsystemNumber">3.1</div>
-            <div className="designsystemH1">Detaljsiden</div>
-          </div>
-
-          <div className="col-md-8">
-            <h1 className="fdk-margin-bottom">Markagrensen Oslo Kommune og nærliggende kommuner</h1>
-            <div className="fdk-margin-bottom">
-              Eies av <a>Kartverket</a>
-              <a><div className="fdk-label">Forvaltning og offentlig sektor</div></a>
-              <a><div className="fdk-label">Miljø</div></a>
-            </div>
-
-            <p className="fdk-ingress">
-              Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009.
-              Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
-            </p>
-            <p className="fdk-ingress">
-              Datasettes formål er nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus
-              sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
-            </p>
-          </div>
+          {!this.state.loading &&
+          <DatasetDescription
+            title={this.state.dataset.title}
+            description={this.state.dataset.description}
+            publisher={this.state.dataset.publisher}
+            themes={this.state.dataset.theme}
+            selectedLanguageCode={this.props.selectedLanguageCode}
+          />
+          }
 
           <div className="col-md-8">
             <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
@@ -180,5 +170,6 @@ export default class DetailsPage extends React.Component {
 
 DetailsPage.propTypes = {
   id: PropTypes.string,
-  params: PropTypes.object
+  params: PropTypes.object,
+  selectedLanguageCode: PropTypes.string
 };

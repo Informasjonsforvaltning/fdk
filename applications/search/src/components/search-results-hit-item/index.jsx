@@ -62,7 +62,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   render() {
     const result = this.state.result;
-    const url = `datasets?id=${encodeURIComponent(result._id)}`;
+    const url = `dataset/${encodeURIComponent(result._id)}`;
     const language = this.props.selectedLanguageCode;
     const source = _.extend({}, result._source, result.highlight);
 
@@ -71,7 +71,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const hit_element_id = `search-hit-${hit_id}`;
     const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
     const description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
-    const link = `/datasets?id=${hit_id}`;
+    const link = `/dataset/${hit_id}`;
 
     let themeLabels = '';
     if (source.theme) {
@@ -125,7 +125,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <div className="fdk-container fdk-container-search-hit">
           <h2>{title}</h2>
           <div>
-            {localization.search_hit.owned} <span href="#">{source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}</span>
+            {localization.search_hit.owned} <span>{source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}</span>
             <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
           </div>
           <p

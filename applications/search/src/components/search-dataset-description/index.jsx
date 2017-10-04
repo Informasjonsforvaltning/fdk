@@ -2,31 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import localization from '../../components/localization';
+
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const formatClass = cx(
-      'fdk-button-format',
-      {
-        'fdk-button-format-inactive': this.props.inactive,
-        'fdk-button-format-active': this.props.active
-      }
-    );
+    const language = this.props.selectedLanguageCode;
+    const title = this.props.title[language] || this.props.title.nb || this.props.title.nn || this.props.title.en;
+    const description =
+      this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
+
+    let themeLabels = '';
+    const themes = this.props.themes;
+    if (themes) {
+      themes.forEach((singleTheme) => {
+        if (singleTheme.title) {
+          themeLabels += `<a href=${singleTheme.id}><div class="fdk-label">`;
+          themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en;
+          themeLabels += ' </div></a>';
+        }
+      });
+    }
+
     return (
       <div className="col-md-8">
-        <h1 className="fdk-margin-bottom">{this.props.title}</h1>
+        <h1 className="fdk-margin-bottom">{title}</h1>
         <div className="fdk-margin-bottom">
-          Eies av <a>Kartverket</a>
-          <a><div className="fdk-label">Forvaltning og offentlig sektor</div></a>
-          <a><div className="fdk-label">Miljø</div></a>
+          {localization.search_hit.owned}&nbsp;
+          <a
+            href={this.props.publisher.id}
+          >
+            {this.props.publisher ? this.props.publisher.name.charAt(0) + this.props.publisher.name.substring(1).toLowerCase() : ''}
+          </a>
+          <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
         </div>
-
         <p className="fdk-ingress">
-          Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009.
-          Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
-        </p>
-        <p className="fdk-ingress">
-          Datasettes formål er nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus
-          sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+          {description}
         </p>
       </div>
     );
@@ -34,11 +44,17 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 }
 
 DatasetDescription.defaultProps = {
-  title: '',
-  description: ''
+  title: null,
+  description: null,
+  publisher: null,
+  themes: null,
+  selectedLanguageCode: null
 };
 
 DatasetDescription.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string
+  title: PropTypes.object,
+  description: PropTypes.object,
+  publisher: PropTypes.object,
+  themes: PropTypes.object,
+  selectedLanguageCode: PropTypes.string
 };
