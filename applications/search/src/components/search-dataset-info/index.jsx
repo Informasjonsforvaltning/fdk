@@ -41,7 +41,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>Opphav {localization.detail.provenance}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">01.01.2015</p>
+              <p className="fdk-ingress fdk-margin-bottom-no">TODO: {this.props.provenance}</p>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-text">
               <h5>Aktualitet {localization.detail.issued}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no">
-                Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                TODO: Tekst for aktualitet
               </p>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>Geografisk avgrenset til {localization.detail.spatial}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">Asker, Bærum, Hurum, Røyken</p>
+              <p className="fdk-ingress fdk-margin-bottom-no">TODO: Asker, Bærum, Hurum, Røyken</p>
             </div>
           </div>
         </div>
@@ -78,8 +78,8 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
               <i className="fa fa-calendar"></i>
             </div>
             <div className="fdk-detail-text">
-              <h5>Tidsmessig avgrenset fra {localization.detail.period}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">01.01.2001</p>
+              <h5>TODO: Tidsmessig avgrenset fra {localization.detail.period}</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no">TODO: 01.01.2001</p>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>Språk {localization.detail.language}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">Norsk bokmål</p>
+              <p className="fdk-ingress fdk-margin-bottom-no">{this.props.language}</p>
             </div>
           </div>
         </div>
@@ -104,11 +104,13 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-text">
               <h5>Datasettet er en del av {localization.detail.isPartOf}</h5>
               <p className="fdk-ingress">
+                TODO:
                 <a>Dybdedata<i className="fa fa-external-link fdk-fa-right" /></a>
                 <a>Dybdedata 50m grid<i className="fa fa-external-link fdk-fa-right" /></a>
               </p>
-              <h5>Datasettet er relatert til {localization.detail.issued}</h5>
+              <h5>TODO: Datasettet er relatert til {localization.detail.issued}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no">
+                TODO:
                 <a>Navn fra Sentralt Stedsnavnsregister (SSR)<i className="fa fa-external-link fdk-fa-right" /></a>
               </p>
             </div>
@@ -124,13 +126,15 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 DatasetInfo.defaultProps = {
   issued: '-',
   accrualPeriodicity: '-',
-  provenance: '-'
+  provenance: '-',
+  language: '-'
 
 };
 
 DatasetInfo.propTypes = {
   issued: PropTypes.string,
   accrualPeriodicity: PropTypes.string,
-  provenance: PropTypes.string
+  provenance: PropTypes.string,
+  language: PropTypes.string
 
 };
