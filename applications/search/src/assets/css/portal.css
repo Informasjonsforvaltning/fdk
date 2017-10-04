@@ -146,7 +146,6 @@
 }
 
 .fdk-detail-icon {
-	/* width: 5rem; */
 	display: block;
 	float: left;
 	font-size: 2.8rem;
@@ -154,9 +153,13 @@
 	color: var(--color-cta);
 }
 
+.fdk-detail-icon-oneline {
+	padding-top: 0px;
+}
+
 .fdk-detail-text {
 	display: block;
-	margin-left: 5rem;
+	padding-left: 5rem;
 }
 
 

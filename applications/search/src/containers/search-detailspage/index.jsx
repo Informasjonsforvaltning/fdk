@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import DatasetDescription from '../../components/search-dataset-description';
+import DatasetDistribution from '../../components/search-dataset-distribution';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
@@ -32,6 +33,50 @@ export default class DetailsPage extends React.Component {
       });
   }
 
+  /*
+  _renderMainItem() {
+    const { mainItem } = this.props;
+    const mainItemNodes = '';
+    if (mainItem && mainItem.length > 0) {
+      return (
+        <MainImage
+          id={mainItem[0].documentId}
+          key={mainItem[0].documentId}
+          title={mainItem[0].title}
+          lead={mainItem[0].lead}
+          imageTitle={mainItem[0].imageTitle}
+          image={mainItem[0].image}
+          image_320={mainItem[0].image_320}
+          image_640={mainItem[0].image_640}
+          image_1024={mainItem[0].image_1024}
+          image_2000={mainItem[0].image_2000}
+          showBackButton={this.props.showBackButton}
+        />
+      );
+    }
+    return mainItemNodes;
+  }
+  */
+
+  _renderDistribution() {
+    let distributionNodes;
+    const {distribution} = this.state.dataset;
+    if (distribution) {
+      distributionNodes = distribution.map((distribution, index) => (
+        <DatasetDistribution
+          id={encodeURIComponent(distribution.id)}
+          key={encodeURIComponent(distribution.id)}
+          title={distribution.title}
+          description={distribution.description}
+          accessUrl={distribution.accessURL}
+          format={distribution.format}
+          authorityCode={this.state.dataset.accessRights.authorityCode}
+          selectedLanguageCode={this.props.selectedLanguageCode}
+        />
+    ));
+    }
+    return distributionNodes;
+  }
 
   render() {
     return (
@@ -47,41 +92,22 @@ export default class DetailsPage extends React.Component {
           />
           }
 
+
+
+
           <div className="col-md-8">
             <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
-              <i className="fa fa-unlock fdk-fa-left fdk-color-green"></i>Datasettet er offentlig
+              <i className="fa fa-unlock fdk-fa-left fdk-color-green" />Datasettet er offentlig
             </div>
-            <div className="fdk-container-detail fdk-container-detail-offentlig">
-              <h4 className="fdk-margin-bottom">Distribusjon</h4>
-              <p className="fdk-ingress">
-                Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen.
-              </p>
-              <h5 className="fdk-space-above">Tilgjengelige format</h5>
-              <div className="fdk-label-distribution fdk-bg-green2"><i className="fa fa-cogs fdk-fa-left"></i><strong className="fdk-distribution-format">API</strong>application/rdf+xml</div>
-              <div className="fdk-label-distribution fdk-bg-green2"><i className="fa fa-cogs fdk-fa-left"></i><strong className="fdk-distribution-format">API</strong>text/json</div>
 
-              <h5 className="fdk-margin-top-double">TilgangsURL</h5>
-              <a>http://www.detteerenlenke.no/til-nedlasting<i className="fa fa-external-link fdk-fa-right"></i></a>
+            {this._renderDistribution()}
 
-              <div className="fdk-container-detail-text">
-                <h5 className="fdk-margin-top-double">Utgivelsesdato</h5>
-                <p className="fdk-ingress fdk-ingress-detail">Dette er innholdet i denne boksen.</p>
-              </div>
-            </div>
-            <div className="fdk-container-detail fdk-container-detail-offentlig">
-              <h4>Distribusjon</h4>
-              <h5 className="fdk-margin-top">Tilgjengelige format</h5>
-              <div className="fdk-label-distribution fdk-bg-green2"><i className="fa fa-download fdk-fa-left"></i><strong className="fdk-distribution-format">Nedlastbar fil</strong>application/rdf+xml</div>
-
-              <h5 className="fdk-margin-top-double">TilgangsURL</h5>
-              <a>http://www.detteerenlenke.no/til-nedlasting<i className="fa fa-external-link fdk-fa-right"></i></a>
-            </div>
 
             <div className="row fdk-row fdk-margin-top-triple">
               <div className="col-md-6 fdk-padding-no">
                 <div className="fdk-container-detail">
                   <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail"></i>
+                    <i className="fa fa-upload fdk-fa-detail" />
                   </div>
                   <div className="fdk-detail-text">
                     <h5>Utgivelsesdato</h5>
@@ -92,7 +118,7 @@ export default class DetailsPage extends React.Component {
               <div className="col-md-6 fdk-padding-no">
                 <div className="fdk-container-detail">
                   <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail"></i>
+                    <i className="fa fa-upload fdk-fa-detail" />
                   </div>
                   <div className="fdk-detail-text">
                     <h5>Opphav</h5>
@@ -103,7 +129,7 @@ export default class DetailsPage extends React.Component {
               <div className="col-md-4 fdk-padding-no">
                 <div className="fdk-container-detail">
                   <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail"></i>
+                    <i className="fa fa-upload fdk-fa-detail" />
                   </div>
                   <div className="fdk-detail-text">
                     <h5>Utgivelsesdato</h5>
@@ -114,7 +140,7 @@ export default class DetailsPage extends React.Component {
               <div className="col-md-4 fdk-padding-no">
                 <div className="fdk-container-detail">
                   <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail"></i>
+                    <i className="fa fa-upload fdk-fa-detail" />
                   </div>
                   <div className="fdk-detail-text">
                     <h5>Opphav</h5>
@@ -125,7 +151,7 @@ export default class DetailsPage extends React.Component {
               <div className="col-md-4 fdk-padding-no">
                 <div className="fdk-container-detail">
                   <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail"></i>
+                    <i className="fa fa-upload fdk-fa-detail" />
                   </div>
                   <div className="fdk-detail-text">
                     <h5>Opphav</h5>
@@ -136,7 +162,7 @@ export default class DetailsPage extends React.Component {
             </div>
 
             <div className="fdk-container-detail fdk-container-detail-header">
-              <i className="fa fa-star fdk-fa-left fdk-color-cta"></i>Kvalitet på innhold
+              <i className="fa fa-star fdk-fa-left fdk-color-cta" />Kvalitet på innhold
             </div>
             <div className="fdk-container-detail">
               <h5>Relevans</h5>
@@ -150,16 +176,16 @@ export default class DetailsPage extends React.Component {
             </div>
 
             <div className="fdk-container-detail fdk-container-detail-header">
-              <i className="fa fa-book fdk-fa-left fdk-color-cta"></i>Begrep
+              <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
             </div>
             <div className="fdk-container-detail fdk-container-detail-begrep">
-              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right"></i></p>
+              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" /></p>
             </div>
             <div className="fdk-container-detail fdk-container-detail-begrep">
-              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right"></i></p>
+              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" /></p>
             </div>
             <div className="fdk-container-detail fdk-container-detail-begrep">
-              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right"></i></p>
+              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" /></p>
             </div>
           </div>
         </div>

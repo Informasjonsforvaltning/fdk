@@ -55,6 +55,6 @@ DatasetDescription.propTypes = {
   title: PropTypes.object,
   description: PropTypes.object,
   publisher: PropTypes.object,
-  themes: PropTypes.object,
+  themes: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

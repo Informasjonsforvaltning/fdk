@@ -79,5 +79,38 @@
   "search_hit": {
     "owned": "Eies av",
     "public": "Offentlig"
+  },
+  "detail": {
+    "title": "Datasett",
+    "conformsTo": "Konformitet",
+    "distribution": {
+      "title": "Distribusjon",
+      "description": "Beskrivelse",
+      "format": "Format",
+      "accessUrl": "Tilgangsurl"
+    },
+
+    "quality.title": "Kvalitet",
+    "provenance": "Opphav",
+    "frequency": "Frekvens",
+    "miscInfo": "Øvrig info",
+    "created": "Opprettet",
+    "modified": "Sist endret",
+    "language": "Språk",
+    "theme": "Tema",
+    "period": "Tidsperiode",
+    "spatial": "Dekningsområde",
+    "information": "Opplysninger",
+    "keyword": "Emneord",
+    "subject": "Begrep",
+    "restrictions": "Restriksjoner",
+    "comments": "Kommentar",
+    "objective": "Formål",
+    "related": "Relaterte",
+    "relates": "Relatert",
+    "restriction": "Restriksjon",
+    "downloadText": "Last ned DCAT-beskrivelse:"
   }
+
 }
+
