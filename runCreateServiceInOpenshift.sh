@@ -301,7 +301,7 @@ then
     then
         profile=prod
         createOpenshiftService search-old
-        oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$host search_queryServiceExternal=https://search-api-fellesdatakatalog-$host
+        oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$environment.$cluster.brreg.no search_queryServiceExternal=https://search-api-fellesdatakatalog-$environment.$cluster.brreg.no
         exposeService search-old
         oc expose dc/search-old --port=8080
     else
