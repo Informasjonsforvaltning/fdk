@@ -5,12 +5,37 @@ import cx from 'classnames';
 import localization from '../../components/localization';
 
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  _renderPublisher() {
+    const publisher = this.props.publisher;
+    if (publisher && publisher.name && publisher.id) {
+      return (
+        <span>
+          {localization.search_hit.owned}&nbsp;
+          <a
+            href={publisher.id}
+          >
+            <span>
+              {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
+            </span>
+          </a>
+        </span>
+      );
+    } else if (publisher && publisher.name) {
+      return (
+        <span>
+          {localization.search_hit.owned}&nbsp;
+          <span>
+            {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
+          </span>
+        </span>
+      );
+    }
+    return null;
+  }
+
   render() {
     const language = this.props.selectedLanguageCode;
-    const title = this.props.title[language] || this.props.title.nb || this.props.title.nn || this.props.title.en;
-    const description =
-      this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
-
     let themeLabels = '';
     const themes = this.props.themes;
     if (themes) {
@@ -25,19 +50,22 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 
     return (
       <div className="col-md-8">
-        <h1 className="fdk-margin-bottom">{title}</h1>
+        {this.props.title &&
+        <h1 className="fdk-margin-bottom">
+          {this.props.title}
+        </h1>
+        }
+
         <div className="fdk-margin-bottom">
-          {localization.search_hit.owned}&nbsp;
-          <a
-            href={this.props.publisher.id}
-          >
-            {this.props.publisher ? this.props.publisher.name.charAt(0) + this.props.publisher.name.substring(1).toLowerCase() : ''}
-          </a>
+          {this._renderPublisher()}
           <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
         </div>
+        {this.props.description &&
         <p className="fdk-ingress">
-          {description}
+          {this.props.description}
         </p>
+        }
+
       </div>
     );
   }
@@ -52,8 +80,8 @@ DatasetDescription.defaultProps = {
 };
 
 DatasetDescription.propTypes = {
-  title: PropTypes.object,
-  description: PropTypes.object,
+  title: PropTypes.string,
+  description: PropTypes.string,
   publisher: PropTypes.object,
   themes: PropTypes.array,
   selectedLanguageCode: PropTypes.string

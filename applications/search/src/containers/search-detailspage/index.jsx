@@ -5,6 +5,8 @@ import axios from 'axios';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetDistribution from '../../components/search-dataset-distribution';
 import DatasetInfo from '../../components/search-dataset-info';
+import DatasetQuality from '../../components/search-dataset-quality-content';
+import DatasetBegrep from '../../components/search-dataset-begrep';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
@@ -39,8 +41,20 @@ export default class DetailsPage extends React.Component {
     if (dataset.description) {
       return (
         <DatasetDescription
-          title={dataset.title}
-          description={dataset.description}
+          title={dataset.title ?
+            dataset.title[this.props.selectedLanguageCode]
+            || dataset.title.nb
+            || dataset.title.nn
+            || dataset.title.en
+            : null
+          }
+          description={dataset.description ?
+            dataset.description[this.props.selectedLanguageCode]
+            || dataset.description.nb
+            || dataset.description.nn
+            || dataset.description.en
+            : null
+          }
           publisher={dataset.publisher}
           themes={dataset.theme}
           selectedLanguageCode={this.props.selectedLanguageCode}
@@ -52,20 +66,25 @@ export default class DetailsPage extends React.Component {
 
   _renderDistribution() {
     let distributionNodes;
-    const {distribution} = this.state.dataset;
+    const { distribution } = this.state.dataset;
     if (distribution) {
-      distributionNodes = distribution.map((distribution, index) => (
+      distributionNodes = distribution.map(distribution => (
         <DatasetDistribution
           id={encodeURIComponent(distribution.id)}
           key={encodeURIComponent(distribution.id)}
-          title={distribution.title}
-          description={distribution.description}
+          description={distribution.description ?
+            distribution.description[this.props.selectedLanguageCode]
+            || distribution.description.nb
+            || distribution.description.nn
+            || distribution.description.en
+            : null
+          }
           accessUrl={distribution.accessURL}
           format={distribution.format}
-          authorityCode={this.state.dataset.accessRights.authorityCode}
+          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
-    ));
+      ));
     }
     return distributionNodes;
   }
@@ -78,16 +97,17 @@ export default class DetailsPage extends React.Component {
           issued={this.state.dataset.issued}
           accrualPeriodicity={
             accrualPeriodicity.prefLabel[this.props.selectedLanguageCode]
-            || accrualPeriodicity.prefLabel["nb"]
-            || accrualPeriodicity.prefLabel["nn"]
-            || accrualPeriodicity.prefLabel["en"]
+            || accrualPeriodicity.prefLabel.nb
+            || accrualPeriodicity.prefLabel.nn
+            || accrualPeriodicity.prefLabel.en
           }
           provenance={this.state.dataset.provenance}
-          language={
-            this.state.dataset.language.prefLabel["nb"]
-            || this.state.dataset.language.prefLabel["nb"]
-            || this.state.dataset.language.prefLabel["nn"]
-            || this.state.dataset.language.prefLabel["en"]
+          language={this.state.dataset.language ?
+            this.state.dataset.language.prefLabel[this.props.selectedLanguageCode]
+            || this.state.dataset.language.prefLabel.nb
+            || this.state.dataset.language.prefLabel.nn
+            || this.state.dataset.language.prefLabel.en
+            : '-'
           }
         />
       );
@@ -109,33 +129,23 @@ export default class DetailsPage extends React.Component {
 
             {this._renderDatasetInfo()}
 
+            <DatasetQuality
+              header="Kvalitet på innhold2"
+              relevans="tekst følger"
+              kompletthet="tekst følger"
+              noyaktighet="tekst følger"
+              tilgjengelighet="tekst følger"
+            />
 
-            <div className="fdk-container-detail fdk-container-detail-header">
-              <i className="fa fa-star fdk-fa-left fdk-color-cta" />Kvalitet på innhold
-            </div>
-            <div className="fdk-container-detail">
-              <h5>Relevans</h5>
-              <p className="fdk-ingress fdk-margin-bottom-double">Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-              <h5>Kompletthet</h5>
-              <p className="fdk-ingress fdk-margin-bottom-double">Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-              <h5>Nøyaktighet</h5>
-              <p className="fdk-ingress fdk-margin-bottom-double fdk-margin-bottom-no">Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit.</p>
-              <h5>Tilgjengelighet</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
-            </div>
 
             <div className="fdk-container-detail fdk-container-detail-header">
               <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
             </div>
-            <div className="fdk-container-detail fdk-container-detail-begrep">
-              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" /></p>
-            </div>
-            <div className="fdk-container-detail fdk-container-detail-begrep">
-              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" /></p>
-            </div>
-            <div className="fdk-container-detail fdk-container-detail-begrep">
-              <p className="fdk-ingress fdk-margin-bottom-no"><strong>Jordsmonn:</strong> Dette er Kartverket sin korte og presise definisjon av begrepet jo… <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" /></p>
-            </div>
+
+            <DatasetBegrep
+              title="Jordsmonn"
+              description="Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet"
+            />
           </div>
         </div>
       </div>
