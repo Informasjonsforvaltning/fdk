@@ -167,18 +167,7 @@ export class DatasetComponent implements OnInit {
             dataset.modified = dataset.modified.formatted.replace(/\./g, "-");
           }
           if (dataset.issued && dataset.issued.formatted) {
-              dataset.issued = this.convertDateStringFormat(dataset.issued.formatted);
-            //dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
-            /**
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             * 
-             */
+              dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
           }
           if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
@@ -225,7 +214,8 @@ export class DatasetComponent implements OnInit {
         });
     });
   }
-    buildGeoTimeSummaries(dataset): void {
+    
+  buildGeoTimeSummaries(dataset): void {
         this.summaries.geotime = "";
 
         // Add spatial count to summary if exists.
@@ -246,7 +236,7 @@ export class DatasetComponent implements OnInit {
         
         // Add issued to summary if exists.
         if (dataset.issued) {
-            this.summaries.geotime += "Utgitt den " + dataset.issued + ". ";
+            this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(dataset.issued, "-", ".") + ". ";
         }
         
         // Add language count to summary if exists.
@@ -260,33 +250,30 @@ export class DatasetComponent implements OnInit {
         this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
     }
 
-    /**
-     * 
-     * @param dateIn string in format of dd.mm.yyyy. 
-     * Split on ".", then reverse the array to get [yyyy, mm, dd].
-     * Return new string with "-" separtors in correct mask.
-     */
-    convertDateStringFormat(dateIn: string): string {
 
-        if (dateIn && dateIn.length > 0) {  
-            var dateSplitHyphen: string[] = dateIn.split("-");            
-            var dateSplitDot: string[] = dateIn.split(".");
-            var dateSplit: string[] = (dateSplitHyphen.length > dateSplitDot.length) ? dateSplitHyphen : dateSplitDot;
+   /**
+     * Splits on splitChar, then reverse the array to get to swap year and day placement.
+     * Return new string separated by toChar.
+     * @param dateIn Date string to be formatted.
+     * @param splitChar Split date string based on this character
+     * @param toChar Returns date string separated by this chaaracter.
+     */
+    public static convertDateStringFormat(dateIn: string, splitChar: string, toChar: string): string {
+        if (dateIn && dateIn.length > 0) {         
+            var dateSplit: string[] = dateIn.split(splitChar);
 
             if (dateSplit.length == 3) {
-                dateSplit = dateSplit.reverse();
                 dateSplit.forEach(date => {
                     if (date.length == 1) {
                         date = "0" + date;
                     }
                 });
                 
-                return dateSplit[0] + "-" + dateSplit[1] + "-" + dateSplit[2];
+                return dateSplit[2] + toChar + dateSplit[1] + toChar + dateSplit[0];
             }
-            console.log("dateIn not in correct format. dateIn: ", dateIn, ", dateSplit: ", dateSplit);
-            return "";
+            return dateIn;
         }
-        return "dateIn null or empty. dateIn: " + dateIn;
+        return dateIn;
     }
 
     onSave(ok: boolean): void {
