@@ -6,26 +6,49 @@ import localization from '../../components/localization';
 import DistributionFormat from '../search-dataset-format';
 
 export default class DatasetDistribution extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  _renderFormats() {
+    if (this.props.format) {
+      const formatArray = this.props.format.trim().split(',');
+      const formatNodes = Object.keys(formatArray).map((key) => {
+        if (formatArray[key] !== null) {
+          return (
+            <DistributionFormat
+              key={key}
+              text={formatArray[key]}
+            />
+          );
+        }
+      });
+      return formatNodes;
+    }
+    return null;
+  }
 
-  _renderFormats(format) {
-    const formatArray = format.trim().split(',');
-    const formatNodes = Object.keys(formatArray).map((key) => {
-      if (formatArray[key] !== null) {
-        return (
-          <DistributionFormat
-            key={key}
-            text={formatArray[key]}
-          />
-        );
-      }
-    });
-    return formatNodes;
+  _renderTilgangsURL() {
+    if (this.props.accessUrl) {
+      return (
+        <div>
+          <h5 className="fdk-margin-top-double">{localization.detail.distribution.accessUrl}</h5>
+          <p className="fdk-ingress">
+            <a
+              href={this.props.accessUrl}
+            >
+              {this.props.accessUrl}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          </p>
+        </div>
+      );
+    }
+    return null;
   }
 
   render() {
     const language = this.props.selectedLanguageCode;
-    const description =
-      this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
+    let description;
+    if (this.props.description) {
+      description = this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
+    }
 
     let distribution_non_public = false;
     let distribution_restricted = false;
@@ -48,7 +71,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
         'fdk-container-detail-begrenset': distribution_restricted,
         'fdk-container-detail-unntatt-offentlig': distribution_non_public
       }
-    )
+    );
 
     return (
       <div>
@@ -61,21 +84,8 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           {this.props.format &&
           <h5 className="fdk-space-above">{localization.detail.distribution.format}</h5>
           }
-
-          {this._renderFormats(this.props.format)}
-
-
-          <h5 className="fdk-margin-top-double">{localization.detail.distribution.accessUrl}</h5>
-          <p className="fdk-ingress">
-            <a
-              href={this.props.accessURL}
-            >
-              {this.props.accessUrl}
-              <i className="fa fa-external-link fdk-fa-right" />
-            </a>
-          </p>
-
-
+          {this._renderFormats()}
+          {this._renderTilgangsURL()}
           <div className="fdk-container-detail-text">
             <h5 className="fdk-margin-top-double">{localization.detail.distribution.created}</h5>
             <p className="fdk-ingress fdk-ingress-detail">Dette er innholdet i denne boksen.</p>
@@ -89,7 +99,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 DatasetDistribution.defaultProps = {
   title: null,
   description: null,
-  accessURL: null,
+  accessUrl: null,
   format: null,
   authorityCode: 'PUBLIC',
   selectedLanguageCode: null

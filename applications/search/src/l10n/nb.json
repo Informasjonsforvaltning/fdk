@@ -89,17 +89,17 @@
       "format": "Format",
       "accessUrl": "Tilgangsurl"
     },
-
+    "issued": "Utgivelsesdato",
     "quality.title": "Kvalitet",
     "provenance": "Opphav",
-    "frequency": "Frekvens",
+    "frequency": "Oppdateringsfrekvens",
     "miscInfo": "Øvrig info",
     "created": "Opprettet",
     "modified": "Sist endret",
     "language": "Språk",
     "theme": "Tema",
-    "period": "Tidsperiode",
-    "spatial": "Dekningsområde",
+    "period": "Tidsmessig avgrenset fra",
+    "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
     "keyword": "Emneord",
     "subject": "Begrep",
@@ -109,7 +109,8 @@
     "related": "Relaterte",
     "relates": "Relatert",
     "restriction": "Restriksjon",
-    "downloadText": "Last ned DCAT-beskrivelse:"
+    "downloadText": "Last ned DCAT-beskrivelse:",
+    "isPartOf": "Datasettet er en del av"
   }
 
 }

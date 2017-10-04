@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetDistribution from '../../components/search-dataset-distribution';
+import DatasetInfo from '../../components/search-dataset-info';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
@@ -33,30 +34,20 @@ export default class DetailsPage extends React.Component {
       });
   }
 
-  /*
-  _renderMainItem() {
-    const { mainItem } = this.props;
-    const mainItemNodes = '';
-    if (mainItem && mainItem.length > 0) {
+  _renderDatasetDescription() {
+    const dataset = this.state.dataset;
+    if (dataset.description) {
       return (
-        <MainImage
-          id={mainItem[0].documentId}
-          key={mainItem[0].documentId}
-          title={mainItem[0].title}
-          lead={mainItem[0].lead}
-          imageTitle={mainItem[0].imageTitle}
-          image={mainItem[0].image}
-          image_320={mainItem[0].image_320}
-          image_640={mainItem[0].image_640}
-          image_1024={mainItem[0].image_1024}
-          image_2000={mainItem[0].image_2000}
-          showBackButton={this.props.showBackButton}
+        <DatasetDescription
+          title={dataset.title}
+          description={dataset.description}
+          publisher={dataset.publisher}
+          themes={dataset.theme}
+          selectedLanguageCode={this.props.selectedLanguageCode}
         />
       );
     }
-    return mainItemNodes;
   }
-  */
 
   _renderDistribution() {
     let distributionNodes;
@@ -78,19 +69,30 @@ export default class DetailsPage extends React.Component {
     return distributionNodes;
   }
 
+  _renderDatasetInfo() {
+    const { accrualPeriodicity } = this.state.dataset;
+    if (accrualPeriodicity) {
+      return (
+        <DatasetInfo
+          issued={this.state.dataset.issued}
+          accrualPeriodicity={
+            accrualPeriodicity.prefLabel[this.props.selectedLanguageCode]
+            || accrualPeriodicity.prefLabel["nb"]
+            || accrualPeriodicity.prefLabel["nn"]
+            || accrualPeriodicity.prefLabel["en"]
+          }
+          provenance={this.state.dataset.provenance}
+        />
+      );
+    }
+    return null;
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
-          {!this.state.loading &&
-          <DatasetDescription
-            title={this.state.dataset.title}
-            description={this.state.dataset.description}
-            publisher={this.state.dataset.publisher}
-            themes={this.state.dataset.theme}
-            selectedLanguageCode={this.props.selectedLanguageCode}
-          />
-          }
+
 
 
 
@@ -102,64 +104,8 @@ export default class DetailsPage extends React.Component {
 
             {this._renderDistribution()}
 
+            {this._renderDatasetInfo()}
 
-            <div className="row fdk-row fdk-margin-top-triple">
-              <div className="col-md-6 fdk-padding-no">
-                <div className="fdk-container-detail">
-                  <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail" />
-                  </div>
-                  <div className="fdk-detail-text">
-                    <h5>Utgivelsesdato</h5>
-                    <p className="fdk-ingress fdk-margin-bottom-no">01.01.2015</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6 fdk-padding-no">
-                <div className="fdk-container-detail">
-                  <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail" />
-                  </div>
-                  <div className="fdk-detail-text">
-                    <h5>Opphav</h5>
-                    <p className="fdk-ingress fdk-margin-bottom-no">Tredjepart</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 fdk-padding-no">
-                <div className="fdk-container-detail">
-                  <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail" />
-                  </div>
-                  <div className="fdk-detail-text">
-                    <h5>Utgivelsesdato</h5>
-                    <p className="fdk-ingress fdk-margin-bottom-no">01.01.2015</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 fdk-padding-no">
-                <div className="fdk-container-detail">
-                  <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail" />
-                  </div>
-                  <div className="fdk-detail-text">
-                    <h5>Opphav</h5>
-                    <p className="fdk-ingress fdk-margin-bottom-no">Tredjepart</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 fdk-padding-no">
-                <div className="fdk-container-detail">
-                  <div className="fdk-detail-icon">
-                    <i className="fa fa-upload fdk-fa-detail" />
-                  </div>
-                  <div className="fdk-detail-text">
-                    <h5>Opphav</h5>
-                    <p className="fdk-ingress fdk-margin-bottom-no">Tredjepart</p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div className="fdk-container-detail fdk-container-detail-header">
               <i className="fa fa-star fdk-fa-left fdk-color-cta" />Kvalitet på innhold
