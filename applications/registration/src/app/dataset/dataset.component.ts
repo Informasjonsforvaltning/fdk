@@ -136,7 +136,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
-
+      
       this.datasetSavingEnabled = false;
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
@@ -169,31 +169,36 @@ export class DatasetComponent implements OnInit {
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
           }
+          
           if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
           if (_.isEmpty(dataset.modified)) {
             dataset.modified = null;
-          }          if (dataset.temporals) {
+          }      
+          
+          console.log("temporals before", dataset.temporals);    
+          if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-              if (temporal.startDate && temporal.startDate.formatted) {
-                var date = temporal.startDate.jsdate;
-
-                temporal.startDate = temporal.startDate.epoc;
-              } else if (temporal.startDate === null) {
-                delete temporal.startDate;
-              }
-              if (temporal.endDate && temporal.endDate.formatted) {
-                var date = temporal.endDate.jsdate;
-
-                temporal.endDate = temporal.endDate.epoc;
-              } else if (temporal.endDate === null) {
-                delete temporal.endDate;
-              }
+                if (temporal.startDate && temporal.startDate.formatted) {
+                    temporal.startDate = temporal.startDate.epoc;
+                } else {
+                    delete temporal.startDate;
+                }
+                if (temporal.endDate && temporal.endDate.formatted) {
+                    temporal.endDate = temporal.endDate.epoc;
+                } else {
+                    delete temporal.endDate;
+                }
             });
-            if (dataset.temporals.length === 0) {
-              dataset.temporals = undefined;
-            }
+            /*for (let i=0; i<dataset.temporals.length; i++) {
+                if (!(dataset.temporals[i].startDate) && this.dataset.temporals[i].startDate) {
+                    delete this.dataset.temporals[i].startDate;
+                }
+                if (!(dataset.temporals[i].endDate) === null && this.dataset.temporals[i].endDate) {
+                    delete this.dataset.temporals[i].endDate;
+                }
+            }*/
           } else {
             dataset.temporals = [];
           }
@@ -202,8 +207,11 @@ export class DatasetComponent implements OnInit {
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
+          console.log('dataset.temporals ', dataset.temporals)
           this.dataset = _.merge(this.dataset, dataset);
 
+          
+          console.log('this.dataset.temporals ', this.dataset.temporals)
           this.cdr.detectChanges();
           var that = this;
           this.delay(() => {
@@ -215,7 +223,7 @@ export class DatasetComponent implements OnInit {
     });
   }
     
-  buildGeoTimeSummaries(dataset): void {
+    buildGeoTimeSummaries(dataset): void {
         this.summaries.geotime = "";
 
         // Add spatial count to summary if exists.
@@ -228,10 +236,21 @@ export class DatasetComponent implements OnInit {
         
         // Add temporal count to summary if exists.
         if (dataset.temporals && dataset.temporals.length > 0) {
-            if (dataset.temporals.length == 1)
-                this.summaries.geotime += "1 tidsmessig avgrensing. ";
-            else 
-                this.summaries.geotime += dataset.temporals.length + " tidsmessige avgrensinger. ";
+            if (dataset.temporals.length == 1) {
+                if (dataset.temporals[0].startDate || dataset.temporals[0].endDate) {
+                    this.summaries.geotime += "1 tidsmessig avgrensing. ";
+                }
+            } else {
+                let count: number = 0;
+                this.dataset.temporals.forEach( temporal => {
+                    if (temporal.startDate && temporal.endDate) {
+                        count++;
+                    }
+                });
+                if (count > 0) {
+                    this.summaries.geotime += dataset.temporals.length + " tidsmessige avgrensinger. ";
+                }
+            }
         }
         
         // Add issued to summary if exists.
