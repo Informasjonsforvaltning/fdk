@@ -10,9 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.util.List;
 
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -36,6 +34,8 @@ public class AuthorizationServiceTest {
         List<Entity> response = mapper.readValue(example.getInputStream(), new TypeReference<List<Entity>>(){});
 
         doReturn(response).when(authorizationService).getAuthorizedEntities(anyString());
+
+        authorizationService.setAuthorizedOrgformService(new AlwaysTrueAuthorizedOrgformService());
 
     }
 
