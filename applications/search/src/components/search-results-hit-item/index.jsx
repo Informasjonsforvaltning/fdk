@@ -60,6 +60,21 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return formatNodes;
   }
 
+  _renderPublisher(source) {
+    const {publisher} = source;
+    if (publisher && publisher.name) {
+      return (
+        <span>
+          {localization.search_hit.owned}&nbsp;
+          <span>
+            {source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
+          </span>
+        </span>
+      );
+    }
+    return null;
+  }
+
   render() {
     const result = this.state.result;
     const url = `dataset/${encodeURIComponent(result._id)}`;
@@ -125,7 +140,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <div className="fdk-container fdk-container-search-hit">
           <h2>{title}</h2>
           <div>
-            {localization.search_hit.owned} <span>{source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}</span>
+            {this._renderPublisher(source)}
             <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
           </div>
           <p
