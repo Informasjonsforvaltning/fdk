@@ -4,6 +4,7 @@ import {Dataset} from "../dataset";
 import {CodesService} from "../codes.service";
 import {DatasetComponent} from "../dataset.component";
 import * as _ from 'lodash';
+import {IMyDpOptions} from "mydatepicker";
 
 
 @Component({
@@ -27,6 +28,11 @@ export class QualityComponent implements OnInit {
     provenancesModel:any[];
     selectedProvenanceIdx = 0;
     currentness;
+
+  private myDatePickerOptions: IMyDpOptions = {
+    // other options...
+    showClearDateBtn: false
+  };
 
     constructor(private fb: FormBuilder,
                 private codesService: CodesService,
@@ -68,6 +74,12 @@ export class QualityComponent implements OnInit {
 
         this.dataset.provenance = this.dataset.provenance || { uri: '', prefLabel: {nb:''}};
 
+        this.provenancesModel.forEach( (model, index) => {
+            if (model.uri === this.dataset.provenance.uri) {
+                this.selectedProvenanceIdx = model.id;
+            }
+        });
+
         if (this.dataset.hasCurrentnessAnnotation) {
           this.currentness = this.dataset.hasCurrentnessAnnotation.hasBody.no;
         }
@@ -81,7 +93,7 @@ export class QualityComponent implements OnInit {
                     let uri = "";
                     let label = "";
                     this.provenancesModel.forEach( provenanceValue => {
-                        if (quality.provenance === provenanceValue.id) {
+                        if (quality.provenance === provenanceValue.id || quality.provenance === provenanceValue.uri) {
                           uri = provenanceValue.uri;
                           label = this.getLabel(this.provenancestatements, provenanceValue.uri);
                         }
