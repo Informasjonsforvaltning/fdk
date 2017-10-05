@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.ToString;
+import no.dcat.shared.Subject;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -173,7 +174,12 @@ public class Dataset {
     //dct:subject
     //Norwegian: begrep
     @Field
-    private List<String> subject;
+    private List<Subject> subject;
+
+    // dct: informationModel
+    // Norwegian: informasjonsmodell
+    @Field
+    private List<SkosConceptWithSource> informationModel;
 
     //dct:type
     //Norwegian: type

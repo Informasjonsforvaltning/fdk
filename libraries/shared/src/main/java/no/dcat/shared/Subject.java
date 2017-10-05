@@ -81,7 +81,7 @@ public class Subject implements Serializable{
 
     @Override
     public String toString() {
-        return "SkosCode{" +
+        return "Subject{" +
                 "uri='" + uri + '\'' +
                 ", prefLabel=" + prefLabel +
                 ", definition=" + definition +
