@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser(applicationSettings.getHttpUsername()).password(applicationSettings.getHttpPassword()).authorities(Authorities.LOCATIONS_PUT);
+                .withUser(applicationSettings.getHttpUsername()).password(applicationSettings.getHttpPassword()).authorities(Authorities.INTERNAL_CALL);
     }
 
 

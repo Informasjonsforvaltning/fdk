@@ -12,6 +12,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.util.FileManager;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -105,6 +106,7 @@ public class CrawlerResultHandlerTest {
 
 
 	@Test
+	@Ignore
 	public void testValidationLoggingSyntaxError() throws IOException {
 		DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
 		Mockito.doNothing().when(dcatDataStore).saveDataCatalogue(Mockito.any(), Mockito.any());

@@ -14,8 +14,12 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
+    private final CatalogPermissionEvaluator catalogPermissionEvaluator;
+
     @Autowired
-    private CatalogPermissionEvaluator catalogPermissionEvaluator;
+    public MethodSecurityConfig(CatalogPermissionEvaluator catalogPermissionEvaluator) {
+        this.catalogPermissionEvaluator = catalogPermissionEvaluator;
+    }
 
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {

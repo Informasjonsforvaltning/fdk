@@ -45,14 +45,18 @@ public class CatalogController {
 
     private static Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
-    @Autowired
-    private CatalogRepository catalogRepository;
+    private final CatalogRepository catalogRepository;
+
+    private final SpringSecurityContextBean springSecurityContextBean;
+
+    private final EntityNameService entityNameService;
 
     @Autowired
-    private SpringSecurityContextBean springSecurityContextBean;
-
-    @Autowired
-    private EntityNameService entityNameService;
+    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
+        this.catalogRepository = catalogRepository;
+        this.springSecurityContextBean = springSecurityContextBean;
+        this.entityNameService = entityNameService;
+    }
 
 
     /**

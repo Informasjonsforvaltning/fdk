@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,6 +17,6 @@ import java.util.Map;
 public class SkosCode {
     private String uri;
     private String code;
-    private Map<String, String> prefLabel;
+    private Map<String, String> prefLabel = new HashMap<>();
 
 }

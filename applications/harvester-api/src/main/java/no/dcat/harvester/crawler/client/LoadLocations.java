@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
  * Class for loading and retrieving locations from/into elasticsearch.
  */
 public class LoadLocations {
-    public static final String[] LANGUAGES = new String[] {"en", "no", "nn", "nb"};
 
     private final String themesHostname;
     private final String httpUsername;

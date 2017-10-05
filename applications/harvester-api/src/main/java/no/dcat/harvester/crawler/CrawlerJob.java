@@ -50,7 +50,7 @@ public class CrawlerJob implements Runnable {
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
-    private List<ValidationError> validationErrors = new ArrayList<>();
+//    private List<ValidationError> validationErrors = new ArrayList<>();
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
@@ -116,7 +116,7 @@ public class CrawlerJob implements Runnable {
                 adminDataStore.addCrawlResults(dcatSource, DifiMeta.networkError, e.getMessage());
             }
             logger.error(String.format("[crawler_operations] [fail] Error running crawler job: %1$s, error=%2$s", dcatSource.toString(), e.toString()),e);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             if (adminDataStore != null) {
                 adminDataStore.addCrawlResults(dcatSource, DifiMeta.error, e.getMessage());
             }
@@ -164,27 +164,32 @@ public class CrawlerJob implements Runnable {
      *
      * @return enriched model
      */
-    private Model prepareModelForValidation() {
+    private Model prepareModelForValidation() throws MalformedURLException {
         logger.debug("loadDataset: "+ dcatSource.getUrl());
-        Dataset dataset = RDFDataMgr.loadDataset(dcatSource.getUrl());
-        Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
-        Iterator<String> stringIterator = dataset.listNames();
+        URL url = new URL(dcatSource.getUrl());
+        if (url.getProtocol().equals("http") || url.getProtocol().equals("https")) {
+            Dataset dataset = RDFDataMgr.loadDataset(url.toString());
+            Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+            Iterator<String> stringIterator = dataset.listNames();
 
-        while (stringIterator.hasNext()) {
-            union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
+            while (stringIterator.hasNext()) {
+                union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
+            }
+            verifyModelByParsing(union);
+
+            //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
+            DataEnricher enricher = new DataEnricher();
+            Model enrichedUnion = enricher.enrichData(union);
+            union = enrichedUnion;
+
+            // Checks if publisher is registrered in BRREG Enhetsregistret
+            BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+            brregAgentConverter.collectFromModel(union);
+
+            return union;
+        }else{
+            throw new MalformedURLException("Protocol not supported");
         }
-        verifyModelByParsing(union);
-
-        //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
-        DataEnricher enricher = new DataEnricher();
-        Model enrichedUnion = enricher.enrichData(union);
-        union = enrichedUnion;
-
-        // Checks if publisher is registrered in BRREG Enhetsregistret
-        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-        brregAgentConverter.collectFromModel(union);
-
-        return union;
     }
 
 
@@ -236,7 +241,7 @@ public class CrawlerJob implements Runnable {
         final String[] message = {null};
 
         validationResult.clear();  //TODO: cleanup: trengs egentlig validationMessage/validationResult?
-        validationErrors.clear();
+//        validationErrors.clear();
         nonValidDatasets.clear();
 
         final int[] errors ={0}, warnings ={0}, others ={0};
@@ -244,7 +249,7 @@ public class CrawlerJob implements Runnable {
         DcatValidation.validate(model, (error) -> {
             String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
             validationResult.add(msg);
-            validationErrors.add(error);
+//            validationErrors.add(error);
 
             //add validation status per dataset for non-valid datasets
             if("Dataset".equals(error.getClassName())) {
