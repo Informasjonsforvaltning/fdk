@@ -375,6 +375,9 @@ then
         oc label route nginx --overwrite=true \
             environmentTag=$environmentTag \
             nginx environmentDate=$dateTag
+
+        #todo: should be automated
+        echo "Remember: Container port 80 must be deleted"
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx
@@ -387,10 +390,15 @@ then
         profile=prod
         createOpenshiftService nginx-search
 
-        #create secure route for registration gui
-        oc create route edge --service=nginx-search --hostname=$searchGuiExternalAddress --port=8080
-        oc label route nginx-search environmentTag=$environmentTag --overwrite=true
-        oc label route nginx-search environmentDate=$dateTag --overwrite=true
+        #create route for registration gui
+        oc create route --service=nginx-search --hostname=$searchGuiExternalAddress --port=8080
+        oc label route nginx-search --overwrite=true \
+            environmentTag=$environmentTag \
+            environmentDate=$dateTag
+
+        #todo: should be automated
+        echo "Remember: Container port 80 must be deleted"
+
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx-search
