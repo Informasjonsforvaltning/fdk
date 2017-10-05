@@ -6,6 +6,16 @@ import SearchPage from './containers/search-results';
 import DetailsPage from './containers/search-detailspage';
 import App from './containers/app';
 
+function handleUpdate() {
+  const {
+    action
+  } = this.state.location;
+
+  if (action === 'PUSH') {
+    window.scrollTo(0, 0);
+  }
+}
+
 const routes =
   (
     <Route path="/" component={App}>
@@ -16,7 +26,7 @@ const routes =
   );
 
 ReactDOM.render((
-  <Router history={browserHistory}>
+  <Router history={browserHistory} onUpdate={handleUpdate}>
     {routes}
   </Router>
 ), document.getElementById('root'));

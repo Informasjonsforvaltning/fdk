@@ -18,6 +18,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
             />
           );
         }
+        return null;
       });
       return formatNodes;
     }
@@ -45,11 +46,6 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 
   render() {
     const language = this.props.selectedLanguageCode;
-    let description;
-    if (this.props.description) {
-      description = this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
-    }
-
     let distribution_non_public = false;
     let distribution_restricted = false;
     let distribution_public = false;
@@ -77,18 +73,21 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       <div>
         <div className={distributionClass}>
           <h4 className="fdk-margin-bottom">{localization.detail.distribution.title}</h4>
+          {this.props.description &&
           <p className="fdk-ingress">
-            {description}
+            {this.props.description}
           </p>
-
+          }
           {this.props.format &&
-          <h5 className="fdk-space-above">{localization.detail.distribution.format}</h5>
+          <h5 className="fdk-space-above">
+            {localization.detail.distribution.format}
+          </h5>
           }
           {this._renderFormats()}
           {this._renderTilgangsURL()}
           <div className="fdk-container-detail-text">
             <h5 className="fdk-margin-top-double">{localization.detail.distribution.created}</h5>
-            <p className="fdk-ingress fdk-ingress-detail">Dette er innholdet i denne boksen.</p>
+            <p className="fdk-ingress fdk-ingress-detail">TODO: Dette er innholdet i denne boksen.</p>
           </div>
         </div>
       </div>
@@ -97,7 +96,6 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 }
 
 DatasetDistribution.defaultProps = {
-  title: null,
   description: null,
   accessUrl: null,
   format: null,
@@ -106,8 +104,7 @@ DatasetDistribution.defaultProps = {
 };
 
 DatasetDistribution.propTypes = {
-  title: PropTypes.object,
-  description: PropTypes.object,
+  description: PropTypes.string,
   accessUrl: PropTypes.string,
   format: PropTypes.string,
   authorityCode: PropTypes.string,

@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
+import { Link } from 'react-router';
 
 import localization from '../../components/localization';
 import SearchHitFormat from '../search-results-hit-item-format';
@@ -60,6 +61,21 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return formatNodes;
   }
 
+  _renderPublisher(source) {
+    const {publisher} = source;
+    if (publisher && publisher.name) {
+      return (
+        <span>
+          {localization.search_hit.owned}&nbsp;
+          <span>
+            {source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
+          </span>
+        </span>
+      );
+    }
+    return null;
+  }
+
   render() {
     const result = this.state.result;
     const url = `dataset/${encodeURIComponent(result._id)}`;
@@ -68,7 +84,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
     // Read fields from search-hit, use correct language field if specified.
     const hit_id = encodeURIComponent(source.id);
-    const hit_element_id = `search-hit-${hit_id}`;
+    const hitElementId = `search-hit-${hit_id}`;
     const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
     const description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
     const link = `/dataset/${hit_id}`;
@@ -114,18 +130,26 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       }
     );
 
+    /*
+     <Link
+     title={`Nyhet: ${this.props.title}`}
+     to={link}
+     >
+     {titleTrunc}
+     </Link>
+     */
+
     return (
-      <a
-        id={hit_element_id}
+      <Link
+        id={hitElementId}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        href={link}
-        rel="noopener noreferrer"
+        to={link}
       >
         <div className="fdk-container fdk-container-search-hit">
           <h2>{title}</h2>
           <div>
-            {localization.search_hit.owned} <span>{source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}</span>
+            {this._renderPublisher(source)}
             <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
           </div>
           <p
@@ -144,7 +168,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             </div>
           }
         </div>
-      </a>
+      </Link>
     );
   }
 }

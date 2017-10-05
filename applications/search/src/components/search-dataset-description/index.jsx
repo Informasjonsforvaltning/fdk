@@ -1,43 +1,73 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import localization from '../../components/localization';
 
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    const language = this.props.selectedLanguageCode;
-    const title = this.props.title[language] || this.props.title.nb || this.props.title.nn || this.props.title.en;
-    const description =
-      this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
 
-    let themeLabels = '';
-    const themes = this.props.themes;
-    if (themes) {
-      themes.forEach((singleTheme) => {
-        if (singleTheme.title) {
-          themeLabels += `<a href=${singleTheme.id}><div class="fdk-label">`;
-          themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en;
-          themeLabels += ' </div></a>';
-        }
-      });
-    }
-
-    return (
-      <div className="col-md-8">
-        <h1 className="fdk-margin-bottom">{title}</h1>
-        <div className="fdk-margin-bottom">
+  _renderPublisher() {
+    const publisher = this.props.publisher;
+    if (publisher && publisher.name && publisher.id) {
+      return (
+        <span>
           {localization.search_hit.owned}&nbsp;
           <a
-            href={this.props.publisher.id}
+            id="dataset-descritption-publisher-link"
+            href={publisher.id}
           >
-            {this.props.publisher ? this.props.publisher.name.charAt(0) + this.props.publisher.name.substring(1).toLowerCase() : ''}
+            <span id="dataset-descritption-publisher-text">
+              {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
+            </span>
           </a>
-          <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
+        </span>
+      );
+    } else if (publisher && publisher.name) {
+      return (
+        <span>
+          {localization.search_hit.owned}&nbsp;
+          <span id="dataset-descritption-publisher-text">
+            {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
+          </span>
+        </span>
+      );
+    }
+    return null;
+  }
+
+  _renderThemes() {
+    let themeNodes;
+    const themes = this.props.themes;
+    if (themes) {
+      themeNodes = themes.map(singleTheme => (
+        <a href={singleTheme.id}>
+          <div id="dataset-description-theme" className="fdk-label">
+            {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+          </div>
+        </a>
+      ));
+    }
+    return themeNodes;
+  }
+
+  render() {
+    return (
+      <div id="dataset-description" className="col-md-8">
+        {this.props.title &&
+        <h1 className="fdk-margin-bottom">
+          {this.props.title}
+        </h1>
+        }
+
+        <div className="fdk-margin-bottom">
+          {this._renderPublisher()}
+          {this._renderThemes()}
         </div>
+        {this.props.description &&
         <p className="fdk-ingress">
-          {description}
+          {this.props.description}
         </p>
+        }
+
       </div>
     );
   }
@@ -52,9 +82,9 @@ DatasetDescription.defaultProps = {
 };
 
 DatasetDescription.propTypes = {
-  title: PropTypes.object,
-  description: PropTypes.object,
-  publisher: PropTypes.object,
-  themes: PropTypes.array,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  publisher: PropTypes.shape({}),
+  themes: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   selectedLanguageCode: PropTypes.string
 };

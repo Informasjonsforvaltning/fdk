@@ -15,16 +15,23 @@ export default class DistributionFormat extends React.Component { // eslint-disa
     return (
       <div className={formatClass}>
         <i className="fa fa-cogs fdk-fa-left"/>
-        <strong className="fdk-distribution-format">API</strong>{this.props.text}
+        {this.props.type &&
+        <strong className="fdk-distribution-format">
+          {this.props.type}
+          </strong>
+        }
+        {this.props.text}
       </div>
     );
   }
 }
 
 DistributionFormat.defaultProps = {
+  type: null,
   text: null
 };
 
 DistributionFormat.propTypes = {
+  type: PropTypes.string,
   text: PropTypes.string
 };
