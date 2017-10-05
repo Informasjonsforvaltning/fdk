@@ -86,7 +86,6 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getBasicUserDetailsService() {
         return personnummer -> {
-            logger.error("HERE!!!!");
             Set<GrantedAuthority> authorities = new HashSet<>();
             try {
                 authorizationService.getOrganisations(personnummer)

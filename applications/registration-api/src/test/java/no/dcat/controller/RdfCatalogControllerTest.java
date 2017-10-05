@@ -1,6 +1,5 @@
 package no.dcat.controller;
 
-import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.rdf.DcatBuilderTest;
@@ -9,6 +8,7 @@ import no.dcat.service.DatasetRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +22,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 /**
@@ -33,29 +30,26 @@ import static org.mockito.Mockito.when;
 
 public class RdfCatalogControllerTest {
 
-    RdfCatalogController controller, spy;
-    Catalog catalog;
+    private RdfCatalogController controller;
+    private Catalog catalog;
 
     @Mock
-    DatasetRepository mockDR;
+    private DatasetRepository mockDR;
 
     @Mock
-    CatalogRepository mockCR;
+    private CatalogRepository mockCR;
 
     @Before
-    public void setup () {
-        controller = new RdfCatalogController();
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
 
         catalog = (new DcatBuilderTest()).createCompleteCatalog();
 
-        mockDR = mock(DatasetRepository.class);
-        mockCR = mock(CatalogRepository.class);
+
         when(mockCR.findOne(anyString())).thenReturn(catalog);
 
-        spy = spy(controller);
         //when(controller.getCatalogRepository()).thenReturn(mockCR);
-        doReturn(mockCR).when(spy).getCatalogRepository();
-        doReturn(mockDR).when(spy).getDatasetRepository();
+        controller = new RdfCatalogController(mockCR, mockDR);
 
     }
 
@@ -147,7 +141,7 @@ public class RdfCatalogControllerTest {
 
         when(mockDR.findByCatalog(anyString(), (Pageable) anyObject())).thenReturn(pagedDataset);
 
-        HttpEntity<Catalog> actualEntity = spy.getCatalog(catalogId);
+        HttpEntity<Catalog> actualEntity = controller.getCatalog(catalogId);
 
         Catalog actual = actualEntity.getBody();
         assertThat(actual.getId(), is(catalogId));

@@ -34,13 +34,13 @@ public class LoginController {
     private CatalogController catalogController;
     private SpringSecurityContextBean springSecurityContextBean;
 
-    @Autowired
-    EntityNameService entityNameService;
+    private final EntityNameService entityNameService;
 
     @Autowired
-    public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean) {
+    public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
         this.catalogController = catalogController;
         this.springSecurityContextBean = springSecurityContextBean;
+        this.entityNameService = entityNameService;
     }
 
 

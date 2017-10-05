@@ -29,4 +29,12 @@
         <persistence strategy="none"/>
     </cache>
 
+    <cache name="subjects"
+           maxEntriesLocalHeap="100"
+           eternal="true"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="none"/>
+    </cache>
+
 </ehcache>

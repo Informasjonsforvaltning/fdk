@@ -13,7 +13,7 @@
 
     },
     "@explicit": true,
-    "authorityCode": {},
+    "authorityCode": {"@default":"", "@omitDefault":true},
     "prefLabel": {}
 
 }

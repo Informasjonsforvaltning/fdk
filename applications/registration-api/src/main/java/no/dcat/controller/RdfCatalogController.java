@@ -29,19 +29,17 @@ public class RdfCatalogController {
 
     private static Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
-    @Autowired
-    private CatalogRepository catalogRepository;
+    private final CatalogRepository catalogRepository;
+
+    private final DatasetRepository datasetRepository;
 
     @Autowired
-    private DatasetRepository datasetRepository;
-
-    CatalogRepository getCatalogRepository() {
-        return catalogRepository;
+    public RdfCatalogController(CatalogRepository catalogRepository, DatasetRepository datasetRepository) {
+        this.catalogRepository = catalogRepository;
+        this.datasetRepository = datasetRepository;
     }
 
-    DatasetRepository getDatasetRepository() {
-        return datasetRepository;
-    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/{id}",
@@ -51,14 +49,14 @@ public class RdfCatalogController {
 
         logger.debug ("get rdf catalog {} ",id);
 
-        Catalog catalog = getCatalogRepository().findOne(id);
+        Catalog catalog = catalogRepository.findOne(id);
 
         if (catalog == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         // TODO fix limitation in more than 1000 datasets
-        Page<Dataset> datasets = getDatasetRepository()
+        Page<Dataset> datasets = datasetRepository
                 .findByCatalogAndRegistrationStatus(catalog.getId(), Dataset.REGISTRATION_STATUS_PUBLISH, new PageRequest(0,1000));
 
         if (datasets != null) {

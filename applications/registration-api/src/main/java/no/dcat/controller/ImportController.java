@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -7,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import no.dcat.model.Catalog;
+import no.dcat.model.DataTheme;
 import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
 import no.dcat.model.SkosCode;
@@ -38,6 +40,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,12 +51,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -64,25 +68,27 @@ public class ImportController {
 
     private static Logger logger = LoggerFactory.getLogger(ImportController.class);
 
-    @Autowired
-    protected CatalogController catalogController;
+    protected final CatalogController catalogController;
 
-    @Autowired
-    protected DatasetController datasetController;
+    protected final DatasetController datasetController;
 
-    @Autowired
-    protected CatalogRepository catalogRepository;
+    protected final CatalogRepository catalogRepository;
 
     @Value("${application.themesServiceUrl}")
     private String  THEMES_SERVICE_URL = "http://error.themes.service.url.not.set";
 
-    final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
+    private final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
     final Map<String,DataTheme> allThemes = new HashMap<>();
-
-    private String[] languages = {"no", "nb", "nn", "en"};
-
     private final static Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
 
+    @Autowired
+    public ImportController(CatalogController catalogController, DatasetController datasetController, CatalogRepository catalogRepository) {
+        this.catalogController = catalogController;
+        this.datasetController = datasetController;
+        this.catalogRepository = catalogRepository;
+    }
+
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "",
             method = POST,
@@ -93,7 +99,7 @@ public class ImportController {
         logger.info("import requested for {} starts", url);
         Catalog catalog;
 
-        catalog = importDatasets(catalogId, url);
+        catalog = importDatasets(catalogId, new URL(url));
 
         logger.info("import request for {} finished", url);
         return new ResponseEntity<>(catalog, HttpStatus.OK);
@@ -117,11 +123,15 @@ public class ImportController {
         return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
     }
 
-    protected Catalog importDatasets(String catalogId, String url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
+    private Catalog importDatasets(String catalogId, URL url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
+        if(!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))){
+            throw new MalformedURLException("Supports only http and https");
+        }
+
         Model model = null;
 
         try {
-            model = FileManager.get().loadModel(url);
+            model = FileManager.get().loadModel(url.toString());
         } catch (NullPointerException e) {
             throw new IOException(String.format("Cannot open import url %s",url));
         }
@@ -185,16 +195,14 @@ public class ImportController {
         return importedDatasets;
     }
 
-    protected List<Catalog> parseCatalogs(Model model) throws IOException {
+    List<Catalog> parseCatalogs(Model model) throws IOException {
 
         String json = frame(DatasetFactory.create(model), IOUtils.toString(new ClassPathResource("frames/catalog.json").getInputStream(), "UTF-8"));
 
-        List<Catalog> result = new Gson().fromJson(json, FramedCatalog.class).getGraph();
-
-        return result;
+        return new Gson().fromJson(json, FramedCatalog.class).getGraph();
     }
 
-    protected List<Dataset> parseDatasets(Model model) throws IOException {
+    List<Dataset> parseDatasets(Model model) throws IOException {
 
         // using owl ontology to get inverse relations from dataset to catalog
         InfModel modelWithInverseCatalogRelations = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), owlSchema, model);
@@ -261,11 +269,11 @@ public class ImportController {
 
 
         });
-        
+
         return gson.toJson(model);
     }
 
-    protected void postprosessDatasetAttributes(List<Dataset> result) {
+    void postprosessDatasetAttributes(List<Dataset> result) {
         try {
             fetchCodes();
         } catch (CodesImportException e) {
@@ -316,7 +324,7 @@ public class ImportController {
     }
 
 
-    protected void fetchCodes() throws CodesImportException {
+    void fetchCodes() throws CodesImportException {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<String>> codeTypesResponse = restTemplate.exchange(THEMES_SERVICE_URL + "codes",
@@ -337,25 +345,12 @@ public class ImportController {
             }
 
             List<SkosCode> codelist = responseEntity.getBody();
-            List<SkosCode> prunedCodelist = codelist.stream().map(skosCode -> {
-                List<String> labelsToRemove = new ArrayList<>();
-                skosCode.getPrefLabel().keySet().forEach(k -> {
-                    if (!Arrays.asList(languages).contains(k)) {
-                        labelsToRemove.add(k);
+            pruneLanguages(codelist);
 
-                    }
-                });
-                labelsToRemove.forEach(label -> {
-                    skosCode.getPrefLabel().remove(label);
-                });
-
-                return skosCode;
-            }).collect(Collectors.toList());
-
-            logger.debug("pruned codes {}",prunedCodelist);
+            logger.debug("pruned codes {}",codelist);
 
             Map<String, SkosCode> codeMap = new HashMap<>();
-            prunedCodelist.forEach(skosCode -> {
+            codelist.forEach(skosCode -> {
                 codeMap.put(skosCode.getUri(), skosCode);
             });
 
@@ -376,7 +371,13 @@ public class ImportController {
 
     }
 
-    protected Map<String,String> getLabelForCode(String codeType, String code) {
+    private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
+
+    void pruneLanguages(List<SkosCode> codelist) {
+        codelist.forEach(skosCode -> skosCode.getPrefLabel().keySet().removeIf(lang -> !languages.contains(lang)));
+    }
+
+    Map<String,String> getLabelForCode(String codeType, String code) {
         SkosCode skosCode = allCodes.get(codeType).get(code);
 
         if (skosCode != null) {
@@ -386,7 +387,7 @@ public class ImportController {
         return null;
     }
 
-    String frame(org.apache.jena.query.Dataset dataset, String frame) {
+    private String frame(org.apache.jena.query.Dataset dataset, String frame) {
 
         WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_FRAME_PRETTY);
         PrefixMap pm = RiotLib.prefixMap(dataset.getDefaultModel().getGraph());

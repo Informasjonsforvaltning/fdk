@@ -425,17 +425,27 @@ describe('registration application:', () => {
         await browser.refresh();
         await openSection("quality");
 
+
         //await element.all(by.css('[formcontrolname=provenance]')).then( items => {
         //   expect(items[2].getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
         //});
 
 
+        //this fails in Travis
+        //let provenanceControlValueElement = element.all(by.css('[formcontrolname=provenance]'));
+
+        //await browser.wait(waitForCount(provenanceControlValueElement,3), 10000)
+
+        //await browser.wait(waitForCount(provenanceControlValueElement,3),10000);
+        //await expect(provenanceControlValueElement.get(1).getAttribute('checked')).toBeTruthy("Tredjepart should be selected");
+
+
         //await browser.wait(EC.presenceOf(accrualPeriodicityControl));
         //await expect(accrualPeriodicityControl.getText()).toMatch(/årlig.*/);
 
-        //await browser.wait(EC.presenceOf(currentness));
-        //console.log("currentness:", currentness);
-        //await expect(currentness.getText()).toMatch("Ferske reker")
+        //await browser.wait(EC.presenceOf(accrualPeriodicityControl));
+        //await expect(accrualPeriodicityControl.getText()).toMatch(/årlig.*/);
+
 
     });
 
