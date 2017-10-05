@@ -30,8 +30,47 @@ export default class DetailsPage extends React.Component {
     axios.get(url)
       .then((res) => {
         const data = res.data;
+        let dataset = data.hits.hits[0]._source;
+        // ##### MOCK DATA START - please remove when backend is fixed;
+        dataset.type = "Kodelister";
+        dataset.conformsTo = ["SOSI"];
+        dataset.legalBasisForRestrictions = [
+          {
+            source: "http://www.example.com/somepath/somelegalbasis",
+            foafHomepage: null,
+            prefLabel: {
+                nb:"Den spesifike loven "
+            }
+          },
+          {
+            source: "http://www.example.com/somepath/someotherlegalbasis",
+            foafHomepage: null,
+            prefLabel: {
+                nb:"Den andre spesifike loven"
+            }
+          }
+        ];
+        dataset.legalBasisForProcessings = [
+          {
+            source: "http://www.example.com/somepath/someotherlegalbasis",
+            foafHomepage: null,
+            prefLabel: {
+                nb:"a legalBasisForProcessings that has a long title"
+            }
+          }
+        ];
+        dataset.legalBasisForAccesses = [
+          {
+            source: "http://www.example.com/somepath/someotherlegalbasis",
+            foafHomepage: null,
+            prefLabel: {
+                nb:"a legalBasisForAccesses that has a long title"
+            }
+          }
+        ]
+        // ### MOCK DATA END
         this.setState({
-          dataset: data.hits.hits[0]._source,
+          dataset: dataset,
           loading: false
         });
       });
@@ -97,6 +136,11 @@ export default class DetailsPage extends React.Component {
           <DatasetKeyInfo
           authorityCode={this.state.dataset.authorityCode}
           selectedLanguageCode={this.props.selectedLanguageCode}
+          type={this.state.dataset.type}
+          conformsTo={this.state.dataset.conformsTo}
+          legalBasisForRestrictions={this.state.dataset.legalBasisForRestrictions}
+          legalBasisForProcessings={this.state.dataset.legalBasisForProcessings}
+          legalBasisForAccesses={this.state.dataset.legalBasisForAccesses}
           />
         );
       }
