@@ -52,19 +52,19 @@ export default class DetailsPage extends React.Component {
         ];
         dataset.legalBasisForProcessings = [
           {
-            uri: "",
+            uri: "http://www.example.com/somepath/someotherlegalbasis",
             foafHomepage: null,
             prefLabel: {
-                nb:""
+                nb:"a legalBasisForProcessings that has a long title"
             }
           }
         ];
         dataset.legalBasisForAccesses = [
           {
-            uri: "",
+            uri: "http://www.example.com/somepath/someotherlegalbasis",
             foafHomepage: null,
             prefLabel: {
-                nb:""
+                nb:"a legalBasisForAccesses that has a long title"
             }
           }
         ]
@@ -139,6 +139,8 @@ export default class DetailsPage extends React.Component {
           type={this.state.dataset.type}
           conformsTo={this.state.dataset.conformsTo}
           legalBasisForRestrictions={this.state.dataset.legalBasisForRestrictions}
+          legalBasisForProcessings={this.state.dataset.legalBasisForProcessings}
+          legalBasisForAccesses={this.state.dataset.legalBasisForAccesses}
           />
         );
       }

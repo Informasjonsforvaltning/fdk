@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import './index.scss';
 
 import localization from '../../components/localization';
 
@@ -73,12 +74,40 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                   <div className="fdk-detail-icon">
                       <i className="fa fa-user"></i>
                   </div>
-                  <div className="fdk-detail-text">
+                  <div className="fdk-detail-text legal-basis">
                       <h5>Skjermingshjemmel</h5>
-                      <p className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForRestrictions && this.props.legalBasisForRestrictions.length !== 0 ?
-                        this.props.legalBasisForRestrictions.map((t, i) => <li key={i}><a href={t.uri}>{t.prefLabel.nb}</a></li>)
+                      <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForRestrictions && this.props.legalBasisForRestrictions.length !== 0 ?
+                        this.props.legalBasisForRestrictions.map((t, i) =>
+                          <li key={i}>
+                            <a href={t.uri}>
+                              {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                        )
                         : ''
-                      }</p>
+                      }</ul>
+                      <h5>Behandlingsgrunnlag</h5>
+                      <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForProcessings && this.props.legalBasisForProcessings.length !== 0 ?
+                        this.props.legalBasisForProcessings.map((t, i) =>
+                          <li key={i}>
+                            <a href={t.uri}>
+                              {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                        )
+                        : ''
+                      }</ul>
+                      <h5>Utleveringshjemmel</h5>
+                      <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForAccesses && this.props.legalBasisForAccesses.length !== 0 ?
+                        this.props.legalBasisForAccesses.map((t, i) =>
+                          <li key={i}>
+                            <a href={t.uri}>
+                              {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                        )
+                        : ''
+                      }</ul>
                   </div>
               </div>
           </div>
