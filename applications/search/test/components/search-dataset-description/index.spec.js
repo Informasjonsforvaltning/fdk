@@ -18,11 +18,6 @@ describe('DatasetDescription', () => {
     expect(wrapper.find('h1.fdk-margin-bottom').length).to.be.equal(1);
   });
 
-  it ('should render title', () => {
-    wrapper.setProps({ title: 'tittel'});
-    expect(wrapper.find('h1.fdk-margin-bottom').length).to.be.equal(1);
-  });
-
   it ('should render description', () => {
     wrapper.setProps({ description: 'description'});
     expect(wrapper.find('p.fdk-ingress').length).to.be.equal(1);
@@ -61,6 +56,6 @@ describe('DatasetDescription', () => {
         }
       }]
     });
-    expect(wrapper.find('#dataset-description-theme').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-description-theme-0').length).to.be.equal(1);
   });
 });

@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { Link } from 'react-router';
 
 import localization from '../../components/localization';
-import SearchHitFormat from '../search-results-hit-item-format';
+import DatasetFormat from '../search-dataset-format';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -36,18 +36,18 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return domain;
   }
 
-  _renderFormats(source) {
+  _renderFormats(source, authoriyCode) {
     const distribution = source.distribution;
     let formatNodes;
     if (distribution) {
       formatNodes = Object.keys(distribution).map((key) => {
         if (distribution[key].format) {
           const formatArray = distribution[key].format.trim().split(',');
-          let nodes;
-          nodes = Object.keys(formatArray).map((key) => {
+          const nodes = Object.keys(formatArray).map((key) => {
             if (formatArray[key] !== null) {
               return (
-                <SearchHitFormat
+                <DatasetFormat
+                  authorityCode={authoriyCode}
                   text={formatArray[key]}
                 />
               );
@@ -86,7 +86,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const hit_id = encodeURIComponent(source.id);
     const hitElementId = `search-hit-${hit_id}`;
     const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
-    const description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+    let description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+    if(description.length > 220) {
+      description = `${description.substr(0, 220)}...`;
+    }
     const link = `/dataset/${hit_id}`;
 
     let themeLabels = '';
@@ -100,44 +103,38 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       });
     }
 
-    let accessRights;
-    if (source.accessRights) {
-      accessRights = source.accessRights.prefLabel[language] || singleTheme.accessRights.prefLabel.nb || singleTheme.accessRights.prefLabel.nn || singleTheme.accessRights.prefLabel.en;
-    } else {
-      accessRights = localization.search_hit.public;
+    let accessRightsLabel;
+    let distributionNonPublic = false;
+    let distributionRestricted = false;
+    let distributionPublic = false;
+
+    let authorityCode = '';
+    if (source.accessRights && source.accessRights.authorityCode) {
+      authorityCode = source.accessRights.authorityCode;
     }
 
-    let distribution_non_public = false;
-    let distribution_restricted = false;
-    let distribution_public = false;
-
-    if (source.accessRights && source.accessRights.authorityCode === 'NON_PUBLIC') {
-      distribution_non_public = true;
-    } else if (source.accessRights && source.accessRights.authorityCode === 'RESTRICTED') {
-      distribution_restricted = true;
-    } else if (source.accessRights && source.accessRights.authorityCode === 'PUBLIC') {
-      distribution_public = true;
+    if (source.accessRights && authorityCode === 'NON_PUBLIC') {
+      distributionNonPublic = true;
+      accessRightsLabel = localization.dataset.accessRights.authorityCode.nonPublic;
+    } else if (source.accessRights && authorityCode === 'RESTRICTED') {
+      distributionRestricted = true;
+      accessRightsLabel = localization.dataset.accessRights.authorityCode.restricted;
+    } else if (source.accessRights && authorityCode === 'PUBLIC') {
+      distributionPublic = true;
+      accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
     } else if (!source.accessRights) { // antar public hvis authoritycode mangler
-      distribution_public = true;
+      distributionPublic = true;
+      accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
     }
 
     const distributionClass = cx(
       'fdk-container-distributions',
       {
-        'fdk-distributions-red': distribution_non_public,
-        'fdk-distributions-yellow': distribution_restricted,
-        'fdk-distributions-green': distribution_public
+        'fdk-distributions-red': distributionNonPublic,
+        'fdk-distributions-yellow': distributionRestricted,
+        'fdk-distributions-green': distributionPublic
       }
     );
-
-    /*
-     <Link
-     title={`Nyhet: ${this.props.title}`}
-     to={link}
-     >
-     {titleTrunc}
-     </Link>
-     */
 
     return (
       <Link
@@ -153,14 +150,14 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
           </div>
           <p
-            className="fdk-p-search-hit"
+            className="fdk-p-search-hit block-with-textx"
           >
             {description}
           </p>
           <div className={distributionClass}>
-            <strong>{accessRights}</strong>
+            <strong>{accessRightsLabel}</strong>
             <br />
-            {this._renderFormats(source)}
+            {this._renderFormats(source, authorityCode)}
           </div>
           {source.landingPage &&
             <div>

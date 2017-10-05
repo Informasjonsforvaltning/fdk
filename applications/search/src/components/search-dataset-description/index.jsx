@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import localization from '../../components/localization';
 
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
   _renderPublisher() {
     const publisher = this.props.publisher;
     if (publisher && publisher.name && publisher.id) {
@@ -39,8 +38,11 @@ export default class DatasetDescription extends React.Component { // eslint-disa
     const themes = this.props.themes;
     if (themes) {
       themeNodes = themes.map((singleTheme, index) => (
-        <a key={index} href={singleTheme.id}>
-          <div id="dataset-description-theme" className="fdk-label">
+        <a
+          key={`theme-${index}`}
+          href={singleTheme.id}
+        >
+          <div id={`dataset-description-theme-${index}`} className="fdk-label">
             {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
           </div>
         </a>
