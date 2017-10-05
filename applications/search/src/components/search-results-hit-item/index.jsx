@@ -4,8 +4,8 @@ import * as _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router';
 
-import localization from '../../components/localization';
 import DatasetFormat from '../search-dataset-format';
+import localization from '../../components/localization';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -62,7 +62,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   }
 
   _renderPublisher(source) {
-    const {publisher} = source;
+    const { publisher } = source;
     if (publisher && publisher.name) {
       return (
         <span>
@@ -76,9 +76,26 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return null;
   }
 
+  _renderThemes(source) {
+    let themeNodes;
+    const { theme } = source;
+    if (theme) {
+      themeNodes = theme.map((singleTheme, index) => (
+        <div
+          key={`dataset-description-theme-${index}`}
+          id={`dataset-description-theme-${index}`}
+          className="fdk-label"
+        >
+          {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+        </div>
+      ));
+    }
+    return themeNodes;
+  }
+
   render() {
     const result = this.state.result;
-    const url = `dataset/${encodeURIComponent(result._id)}`;
+    //const url = `dataset/${encodeURIComponent(result._id)}`;
     const language = this.props.selectedLanguageCode;
     const source = _.extend({}, result._source, result.highlight);
 
@@ -87,21 +104,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const hitElementId = `search-hit-${hit_id}`;
     const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
     let description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
-    if(description.length > 220) {
+    if (description.length > 220) {
       description = `${description.substr(0, 220)}...`;
     }
     const link = `/dataset/${hit_id}`;
-
-    let themeLabels = '';
-    if (source.theme) {
-      source.theme.forEach((singleTheme, index) => {
-        if (singleTheme.title) {
-          themeLabels += '<div class="fdk-label fdk-label-on-white">';
-          themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en;
-          themeLabels += ' </div>';
-        }
-      });
-    }
 
     let accessRightsLabel;
     let distributionNonPublic = false;
@@ -147,7 +153,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           <h2>{title}</h2>
           <div>
             {this._renderPublisher(source)}
-            <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
+            {this._renderThemes(source)}
           </div>
           <p
             className="fdk-p-search-hit block-with-textx"
@@ -171,9 +177,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 }
 
 SearchHitItem.defaultProps = {
-  result: null
+  result: null,
+  selectedLanguageCode: 'nb'
 };
 
 SearchHitItem.propTypes = {
-  result: PropTypes.object
+  result: PropTypes.shape({}),
+  selectedLanguageCode: PropTypes.string
 };

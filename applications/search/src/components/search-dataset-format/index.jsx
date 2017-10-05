@@ -9,7 +9,7 @@ export default class DistributionFormat extends React.Component { // eslint-disa
       {
         'fdk-bg-green2': this.props.authorityCode === 'PUBLIC',
         'fdk-bg-yellow2': this.props.authorityCode === 'RESTRICTED',
-        'fdk-bg-red2': this.props.authorityCode === 'NON-PUBLIC',
+        'fdk-bg-red2': this.props.authorityCode === 'NON-PUBLIC'
       }
     );
     return (
