@@ -8,22 +8,15 @@ export default class Select extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: `${localization.sort.by} ${localization.sort['by.relevance'].toLowerCase()}`,
-      setItems: null
+      selectedValue: `${localization.sort.by} ${localization.sort['by.relevance'].toLowerCase()}`
     };
     this.onChange = this.onChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState({
-      setItems: this.props.setItems
-    });
   }
 
   onChange(e) {
     // const { setItems } = this.props
     const key = e.key;
-    this.state.setItems([key]);
+    this.props.setItems([key]);
     const text = this.props.translate(e.label || e.title || e.key);
     this.setState({
       selectedValue: `${text}`
