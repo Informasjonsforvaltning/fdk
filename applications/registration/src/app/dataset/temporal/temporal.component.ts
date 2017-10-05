@@ -12,8 +12,10 @@ import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
   })
 
 export class TemporalFormComponent implements OnInit {
+
     language:string = 'nb';
     showForm:boolean = false;
+
     @Input('temporalsFormArray')
     public temporalsFormArray: FormArray;
 
@@ -32,7 +34,6 @@ export class TemporalFormComponent implements OnInit {
     public temporalForm: FormGroup;
 
     private myDatePickerOptions: IMyDpOptions = {
-        // other options...
         showClearDateBtn: false
     };
 
@@ -41,12 +42,32 @@ export class TemporalFormComponent implements OnInit {
     ngOnInit() {
        this.temporalForm = this.toFormGroup(this.temporal);
        this.temporalsFormArray.push(this.temporalForm);
+       this.temporalForm.valueChanges.subscribe(
+        temporalFormElement => {
+            
+            if (temporalFormElement.startDate && temporalFormElement.startDate.epoc)
+                this.temporal.startDate = temporalFormElement.startDate.epoc;
+            else
+                delete this.temporal.startDate;
+
+            if (temporalFormElement.endDate && temporalFormElement.endDate.epoc)
+                this.temporal.endDate = temporalFormElement.endDate.epoc; 
+            else
+                delete this.temporal.endDate;
+
+            this.cdr.detectChanges();
+        }
+    );
     }
 
     private getDateObjectFromUnixTimestamp(timestamp:string) {
-        if(!timestamp) return {};
-        var timestamp2 = parseInt(timestamp);
-        if(timestamp2.toString().length === 10) timestamp2 = parseInt(timestamp.toString() + "000");
+        if (!timestamp) 
+            return {};
+
+        let timestamp2 = parseInt(timestamp);
+        if (timestamp2.toString().length === 10) 
+            timestamp2 = parseInt(timestamp.toString() + "000");
+
         let date = new Date(timestamp2);
         return {
             date: {
@@ -55,7 +76,7 @@ export class TemporalFormComponent implements OnInit {
                 day: date.getDate()
             },
             formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
-        }
+        };
     }
 
     private toFormGroup(temporal: PeriodOfTime) : FormGroup {

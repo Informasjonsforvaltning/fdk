@@ -10,6 +10,7 @@ import {TemporalFormComponent} from './temporal.component';
     templateUrl: './temporal-list.component.html'
 })
 export class TemporalListComponent implements OnInit {
+    
     @Input('temporalsFormArray')
     public temporalsFormArray: FormArray;
 
@@ -29,9 +30,11 @@ export class TemporalListComponent implements OnInit {
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
+        this.temporals = this.temporals || [];
         if (this.temporals.length == 0) {
             this.addTemporal();
         }
+        this.showHideDelete();
     }
 
     addTemporal() {
@@ -49,6 +52,9 @@ export class TemporalListComponent implements OnInit {
         if (this.temporals.length > 0) {
             this.temporals.splice(idx, 1);
             this.temporalsFormArray.removeAt(idx);
+        }
+        if (this.temporals.length == 0) {
+            this.addTemporal();
         }
         this.showHideDelete();
         return false;

@@ -26,6 +26,7 @@ import { HelpText } from "./helptext/helptext.component";
 })
 
 export class DatasetComponent implements OnInit {
+
     title = 'Registrer datasett';
     dataset: Dataset;
     catalog: Catalog;
@@ -139,7 +140,7 @@ export class DatasetComponent implements OnInit {
       
       this.datasetSavingEnabled = false;
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
-      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
+      this.datasetForm.valueChanges  // when fetching back data, de-flatten the object
         .subscribe(dataset => {
           console.log('saving dataset:', dataset);
 
@@ -176,8 +177,7 @@ export class DatasetComponent implements OnInit {
           if (_.isEmpty(dataset.modified)) {
             dataset.modified = null;
           }      
-          
-          console.log("temporals before", dataset.temporals);    
+           
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
                 if (temporal.startDate && temporal.startDate.formatted) {
@@ -191,27 +191,19 @@ export class DatasetComponent implements OnInit {
                     delete temporal.endDate;
                 }
             });
-            /*for (let i=0; i<dataset.temporals.length; i++) {
-                if (!(dataset.temporals[i].startDate) && this.dataset.temporals[i].startDate) {
-                    delete this.dataset.temporals[i].startDate;
-                }
-                if (!(dataset.temporals[i].endDate) === null && this.dataset.temporals[i].endDate) {
-                    delete this.dataset.temporals[i].endDate;
-                }
-            }*/
+
           } else {
             dataset.temporals = [];
           }
+
           if(dataset.published){
             this.dataset.registrationStatus = "PUBLISH";
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
-          console.log('dataset.temporals ', dataset.temporals)
+          
           this.dataset = _.merge(this.dataset, dataset);
 
-          
-          console.log('this.dataset.temporals ', this.dataset.temporals)
           this.cdr.detectChanges();
           var that = this;
           this.delay(() => {
@@ -243,12 +235,12 @@ export class DatasetComponent implements OnInit {
             } else {
                 let count: number = 0;
                 this.dataset.temporals.forEach( temporal => {
-                    if (temporal.startDate && temporal.endDate) {
+                    if (temporal.startDate || temporal.endDate) {
                         count++;
                     }
                 });
                 if (count > 0) {
-                    this.summaries.geotime += dataset.temporals.length + " tidsmessige avgrensinger. ";
+                    this.summaries.geotime += count + " tidsmessige avgrensinger. ";
                 }
             }
         }
