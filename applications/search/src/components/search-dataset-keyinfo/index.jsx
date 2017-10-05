@@ -22,12 +22,14 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     } else if (!this.props.accessRights) { // antar public hvis authoritycode mangler
       distribution_public = true;
     }
+    distribution_public = false;
+    distribution_non_public = true;
 
     const accessRightClass = cx(
       'fa fdk-fa-left',
       {
         'fdk-color-green fa-unlock': distribution_public,
-        'fa-lock fdk-color-orange': distribution_restricted,
+        'fa-unlock-alt fdk-color-yellow': distribution_restricted,
         'fa-lock fdk-color-red': distribution_non_public
       }
     )
@@ -37,8 +39,8 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
           <i className={accessRightClass} />
             Datasettet er {distribution_public ? 'offentlig':''}
-             {distribution_restricted ? 'begrenset':''}
-             {distribution_non_public ? 'ikke offentlig':''}
+             {distribution_restricted ? 'begrenset for offentligheten':''}
+             {distribution_non_public ? 'skjermet for offentligheten':''}
         </div>
         <div className="row fdk-row">
           <div className="col-md-6 fdk-padding-no">
