@@ -109,7 +109,7 @@ public class ImportControllerTest {
     public void parseSetsPublisher() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
-        ImportController importController = new ImportController();
+        ImportController importController = new ImportController(null, null, null);
         ImportController iController = Mockito.spy(importController);
         Map<String,String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");

@@ -64,7 +64,6 @@ public class DcatBuilder {
     public static final Property dcatno_legalBasisForProcessing = mod.createProperty(DCATNO, "legalBasisForProcessing");
     public static final Property dcatno_legalBasisForAccess = mod.createProperty(DCATNO, "legalBasisForAccess");
 
-
     private final Model model;
     private final Map<Object, Resource> resourceMap = new HashMap<>();
 
@@ -82,6 +81,7 @@ public class DcatBuilder {
         model.setNsPrefix("oa", oaNS);
         model.setNsPrefix("dqv", dqvNS);
         model.setNsPrefix("rdf", RDF.uri);
+        model.setNsPrefix("skos", SKOS.uri);
     }
 
 
@@ -218,6 +218,8 @@ public class DcatBuilder {
         skosConceptWithHomepageResource.addProperty(RDF.type, SKOS.Concept);
         skosConceptWithHomepageResource.addProperty(FOAF.homepage, SKOS.Concept);
 
+
+        datRes.addProperty(predicate, skosConceptWithHomepageResource);
 
     }
 

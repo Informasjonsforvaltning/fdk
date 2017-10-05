@@ -118,6 +118,8 @@ public class DcatBuilderTest {
         dataset.setPage(Collections.singletonList("http://uri1"));
         dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/CONT"));
 
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithHomepage.getInstance("http://url", "preflabel")));
+
         List<String> subjects = new ArrayList<>();
         subjects.add("http://testetaten.no/begrep/4450");
         subjects.add("http://testetaten.no/begrep/4599");

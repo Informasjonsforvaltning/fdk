@@ -14,6 +14,8 @@
 @prefix oa:    <http://www.w3.org/ns/prov#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
 
 <http://brreg.no/catalogs/974760673/datasets/komplett>
     a                       dcat:Dataset ;
@@ -23,17 +25,23 @@
     dct:type                <Kodeliste>;
     dcat:keyword            "Bestemmelse"@nb , "jord"@nb , "regulering"@nb, "statlig bestemmelse"@nb ;
     dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-    dct:conformsTo          [ a owl:ObjectProperty ; rdfs:label "SOSI" ; rdfs:range <https://www.kartverket.no/geodataarbeid/standarder/sosi/>  ] ;
-    dcatno:informationModel [ a owl:ObjectProperty ; rdfs:label "SKOS" ; rdfs:range <https://www.w3.org/2004/02/skos/> ] ;
+    dct:conformsTo          [ a dct:Standard , skos:Concept ; skos:prefLabel "SOSI"@no ; dct:source <https://www.kartverket.no/geodataarbeid/standarder/sosi/>  ] ;
+    dcatno:informationModel [ a skos:Concept ; skos:prefLabel "SKOS"@no ; dct:source <https://www.w3.org/2004/02/skos/> ] ;
+    dcatno:subject          [ a skos:Concept ; dct:identifier "https://data-david.github.io/Begrep/begrep/Enhet" ;
+                            		skos:prefLabel "enhet"@no ;
+                            		dct:created "2017-02-01T15:19:00Z"^^xsd:DateTime;
+                            		skos:definition "alt som er registrert med et organisasjonsnummer "@no ;
+                            		skos:note "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."@no ;
+                            		dct:source <https://jira.brreg.no/browse/BEGREP-208> ] ;
     dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
     dct:issued              "2012-01-01"^^xsd:date ;
-    dct:modified            "2016-09-21"^^xsd:date ;
+    dct:modified            "2016-09-21%00:01:30Z"^^xsd:dateTime ;
     dct:provenance          <http://data.brreg.no/datakatalog/provinens/tredjepart> ;
     dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
                                         dqv:inDimension  iso:Currentness ;
                                         oa:hasBody       [ rdf:value  "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."@no ]
                                       ] ;
-    dct:spatial             <http://Asker> , <http://Bærum>, <http://Hurum>, <http://Røyken> ;
+    dct:spatial             <http://www.geonames.org/3162656/asker.html> , <http://www.geonames.org/3162212/baerum.html>, <http://www.geonames.org/3151404/hurum.html>, <http://www.geonames.org/3141104/royken.html> ;
 
     dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
                                         dqv:inDimension  iso:Relevance ;
