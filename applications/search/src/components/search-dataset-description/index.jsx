@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import localization from '../../components/localization';
 
@@ -13,9 +12,10 @@ export default class DatasetDescription extends React.Component { // eslint-disa
         <span>
           {localization.search_hit.owned}&nbsp;
           <a
+            id="dataset-descritption-publisher-link"
             href={publisher.id}
           >
-            <span>
+            <span id="dataset-descritption-publisher-text">
               {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
             </span>
           </a>
@@ -25,7 +25,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
       return (
         <span>
           {localization.search_hit.owned}&nbsp;
-          <span>
+          <span id="dataset-descritption-publisher-text">
             {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
           </span>
         </span>
@@ -34,22 +34,24 @@ export default class DatasetDescription extends React.Component { // eslint-disa
     return null;
   }
 
-  render() {
-    const language = this.props.selectedLanguageCode;
-    let themeLabels = '';
+  _renderThemes() {
+    let themeNodes;
     const themes = this.props.themes;
     if (themes) {
-      themes.forEach((singleTheme) => {
-        if (singleTheme.title) {
-          themeLabels += `<a href=${singleTheme.id}><div class="fdk-label">`;
-          themeLabels += singleTheme.title[language] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en;
-          themeLabels += ' </div></a>';
-        }
-      });
+      themeNodes = themes.map(singleTheme => (
+        <a href={singleTheme.id}>
+          <div id="dataset-description-theme" className="fdk-label">
+            {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+          </div>
+        </a>
+      ));
     }
+    return themeNodes;
+  }
 
+  render() {
     return (
-      <div className="col-md-8">
+      <div id="dataset-description" className="col-md-8">
         {this.props.title &&
         <h1 className="fdk-margin-bottom">
           {this.props.title}
@@ -58,7 +60,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}
-          <span dangerouslySetInnerHTML={{ __html: themeLabels }} />
+          {this._renderThemes()}
         </div>
         {this.props.description &&
         <p className="fdk-ingress">
@@ -82,7 +84,7 @@ DatasetDescription.defaultProps = {
 DatasetDescription.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  publisher: PropTypes.object,
-  themes: PropTypes.array,
+  publisher: PropTypes.shape({}),
+  themes: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   selectedLanguageCode: PropTypes.string
 };
