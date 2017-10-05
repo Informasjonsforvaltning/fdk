@@ -337,7 +337,7 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addProperty(Resource resource, Property property, SkosCode code) {
-        if (code != null) {
+        if (code != null && code.getUri() != null && !"".equals(code.getUri())) {
             Resource r = model.createResource(code.getUri());
             resource.addProperty(property, r);
         }
@@ -366,7 +366,9 @@ public class DcatBuilder {
             try {
                 Method m = objectWithUri.getClass().getMethod("getUri");
                 String uri = (String) m.invoke(objectWithUri);
-                addProperty(resource, property, uri);
+                if (!"".equals(uri)) {
+                    addProperty(resource, property, uri);
+                }
             } catch (Exception e) {
                 logger.error("Unable to add URI to {}", property.getLocalName(), e);
             }
@@ -395,7 +397,7 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addProperty(Resource resource, Property property, String uri) {
-        if (uri != null) {
+        if (uri != null && !"".equals(uri)) {
             Resource r = model.createResource(uri);
             resource.addProperty(property, r);
         }
