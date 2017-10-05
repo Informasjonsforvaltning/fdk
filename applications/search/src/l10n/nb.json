@@ -80,7 +80,7 @@
     "owned": "Eies av",
     "public": "Offentlig"
   },
-  "detail": {
+  "dataset": {
     "title": "Datasett",
     "conformsTo": "Konformitet",
     "distribution": {
@@ -110,7 +110,14 @@
     "relates": "Relatert",
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
-    "isPartOf": "Datasettet er en del av"
+    "isPartOf": "Datasettet er en del av",
+    "accessRights": {
+      "authorityCode": {
+        "public": "Offentlig",
+        "restricted": "Begrenset offentlighet",
+        "nonPublic": "Unntatt offentlighet"
+      }
+    }
   }
 
 }

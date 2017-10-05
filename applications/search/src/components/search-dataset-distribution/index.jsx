@@ -6,13 +6,14 @@ import localization from '../../components/localization';
 import DistributionFormat from '../search-dataset-format';
 
 export default class DatasetDistribution extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  _renderFormats() {
+  _renderFormats(authorityCode) {
     if (this.props.format) {
       const formatArray = this.props.format.trim().split(',');
       const formatNodes = Object.keys(formatArray).map((key) => {
         if (formatArray[key] !== null) {
           return (
             <DistributionFormat
+              authorityCode={authorityCode}
               key={key}
               text={formatArray[key]}
             />
@@ -29,7 +30,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
     if (this.props.accessUrl) {
       return (
         <div id="dataset-distribution-accessurl">
-          <h5 className="fdk-margin-top-double">{localization.detail.distribution.accessUrl}</h5>
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
           <p className="fdk-ingress">
             <a
               href={this.props.accessUrl}
@@ -49,11 +50,29 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
     let distributionRestricted = false;
     let distributionPublic = false;
 
+    /*
     if (this.props.authorityCode === 'NON_PUBLIC') {
       distributionNonPublic = true;
     } else if (this.props.authorityCode === 'RESTRICTED') {
       distributionRestricted = true;
     } else if (this.props.authorityCode === 'PUBLIC') {
+      distributionPublic = true;
+    } else { // antar public hvis authoritycode mangler
+      distributionPublic = true;
+    }
+    */
+
+
+    let authorityCode = '';
+    if (this.props.authorityCode) {
+      authorityCode = this.props.authorityCode;
+    }
+
+    if (authorityCode === 'NON_PUBLIC') {
+      distributionNonPublic = true;
+    } else if (authorityCode === 'RESTRICTED') {
+      distributionRestricted = true;
+    } else if (authorityCode === 'PUBLIC') {
       distributionPublic = true;
     } else { // antar public hvis authoritycode mangler
       distributionPublic = true;
@@ -71,7 +90,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
     return (
       <div>
         <div id="dataset-distribution" className={distributionClass}>
-          <h4 className="fdk-margin-bottom">{localization.detail.distribution.title}</h4>
+          <h4 className="fdk-margin-bottom">{localization.dataset.distribution.title}</h4>
           {this.props.description &&
           <p id="dataset-distribution-description" className="fdk-ingress">
             {this.props.description}
@@ -79,13 +98,13 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           }
           {this.props.format &&
           <h5 className="fdk-space-above">
-            {localization.detail.distribution.format}
+            {localization.dataset.distribution.format}
           </h5>
           }
-          {this._renderFormats()}
+          {this._renderFormats(authorityCode)}
           {this._renderTilgangsURL()}
           <div className="fdk-container-detail-text">
-            <h5 className="fdk-margin-top-double">{localization.detail.distribution.created}</h5>
+            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
             <p className="fdk-ingress fdk-ingress-detail">TODO: Dette er innholdet i denne boksen.</p>
           </div>
         </div>

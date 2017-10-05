@@ -6,19 +6,21 @@ export default class DistributionFormat extends React.Component { // eslint-disa
   render() {
     const formatClass = cx(
       'fdk-label-distribution',
-      'fdk-bg-green2',
       {
-        'fdk-button-format-inactive': this.props.inactive,
-        'fdk-button-format-active': this.props.active
+        'fdk-bg-green2': this.props.authorityCode === 'PUBLIC',
+        'fdk-bg-yellow2': this.props.authorityCode === 'RESTRICTED',
+        'fdk-bg-red2': this.props.authorityCode === 'NON-PUBLIC',
       }
     );
     return (
       <div className={formatClass}>
-        <i className="fa fa-cogs fdk-fa-left"/>
         {this.props.type &&
-        <strong className="fdk-distribution-format">
-          {this.props.type}
+        <span>
+          <i className="fa fa-cogs fdk-fa-left" />
+          <strong className="fdk-distribution-format">
+            {this.props.type}
           </strong>
+        </span>
         }
         {this.props.text}
       </div>
@@ -27,11 +29,13 @@ export default class DistributionFormat extends React.Component { // eslint-disa
 }
 
 DistributionFormat.defaultProps = {
+  authorityCode: 'PUBLIC',
   type: null,
   text: null
 };
 
 DistributionFormat.propTypes = {
+  authorityCode: PropTypes.string,
   type: PropTypes.string,
   text: PropTypes.string
 };
