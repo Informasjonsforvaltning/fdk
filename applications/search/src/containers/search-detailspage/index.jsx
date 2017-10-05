@@ -101,7 +101,13 @@ export default class DetailsPage extends React.Component {
             || accrualPeriodicity.prefLabel.nn
             || accrualPeriodicity.prefLabel.en
           }
-          provenance={this.state.dataset.provenance}
+          provenance={this.state.dataset.provenance ?
+            this.state.dataset.provenance.prefLabel[this.props.selectedLanguageCode]
+            || this.state.dataset.provenance.prefLabel.nb
+            || this.state.dataset.provenance.prefLabel.nn
+            || this.state.dataset.provenance.prefLabel.en
+            : '-'
+          }
           language={this.state.dataset.language ?
             this.state.dataset.language.prefLabel[this.props.selectedLanguageCode]
             || this.state.dataset.language.prefLabel.nb
