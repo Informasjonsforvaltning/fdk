@@ -8,13 +8,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 
   render() {
     const language = this.props.selectedLanguageCode;
-    const description =
-      this.props.description[language] || this.props.description.nb || this.props.description.nn || this.props.description.en;
 
     let distribution_non_public = false;
     let distribution_restricted = false;
     let distribution_public = false;
-
+    console.log('this.props.accessRights is ', this.props.accessRights);
     if (this.props.accessRights && this.props.authorityCode === 'NON_PUBLIC') {
       distribution_non_public = true;
     } else if (this.props.accessRights && this.props.authorityCode === 'RESTRICTED') {
@@ -25,19 +23,22 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       distribution_public = true;
     }
 
-    const distributionClass = cx(
-      'fdk-container-detail',
+    const accessRightClass = cx(
+      'fa fdk-fa-left',
       {
-        'fdk-container-detail-offentlig': distribution_public,
-        'fdk-container-detail-begrenset': distribution_restricted,
-        'fdk-container-detail-unntatt-offentlig': distribution_non_public
+        'fdk-color-green fa-unlock': distribution_public,
+        'fa-lock fdk-color-orange': distribution_restricted,
+        'fa-lock fdk-color-red': distribution_non_public
       }
     )
 
     return (
       <div>
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
-          <i className="fa fa-unlock fdk-fa-left fdk-color-green" />Datasettet er offentlig
+          <i className={accessRightClass} />
+            Datasettet er {distribution_public ? 'offentlig':''}
+             {distribution_restricted ? 'begrenset':''}
+             {distribution_non_public ? 'ikke offentlig':''}
         </div>
       </div>
     );
@@ -45,19 +46,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 }
 
 DatasetKeyInfo.defaultProps = {
-  title: null,
-  description: null,
-  accessURL: null,
-  format: null,
   authorityCode: 'PUBLIC',
   selectedLanguageCode: null
 };
 
 DatasetKeyInfo.propTypes = {
-  title: PropTypes.object,
-  description: PropTypes.object,
-  accessUrl: PropTypes.string,
-  format: PropTypes.string,
   authorityCode: PropTypes.string,
   selectedLanguageCode: PropTypes.string
 };
