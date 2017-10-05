@@ -34,11 +34,16 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
         ResponseEntity<OpenDataEnhet> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
             response = restTemplate.getForEntity(openDataEnhetsregisteret + entry.getOrganizationNumber(), OpenDataEnhet.class);
+            return response.getStatusCode().is2xxSuccessful() && isAuthorisedOrganisation(response.getBody());
         } catch (RuntimeException rte) {
             logger.warn("Error in getting entity from {} on {}", openDataEnhetsregisteret, entry.getOrganizationNumber());
             logger.warn("Actual error", rte);
+
+            //if enhetsregisteret webservice is unavailable, include organisation
+            //todo: should be handled better
+            logger.info("including entity {} due to missing response from Enhetsregisteret web service", entry.getOrganizationNumber());
+            return true;
         }
-        return response.getStatusCode().is2xxSuccessful() && isAuthorisedOrganisation(response.getBody());
     }
 
     private boolean isAuthorisedOrganisation(OpenDataEnhet enhet) {
