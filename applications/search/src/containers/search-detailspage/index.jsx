@@ -30,8 +30,47 @@ export default class DetailsPage extends React.Component {
     axios.get(url)
       .then((res) => {
         const data = res.data;
+        let dataset = data.hits.hits[0]._source;
+        // ##### MOCK DATA START - please remove when backend is fixed;
+        dataset.type = "Kodelister";
+        dataset.conformsTo = ["SOSI"];
+        dataset.legalBasisForRestrictions = [
+          {
+            uri: "http://www.example.com/somepath/somelegalbasis",
+            foafHomepage: null,
+            prefLabel: {
+                nb:"Den spesifike loven "
+            }
+          },
+          {
+            uri: "http://www.example.com/somepath/someotherlegalbasis",
+            foafHomepage: null,
+            prefLabel: {
+                nb:"Den andre spesifike loven"
+            }
+          }
+        ];
+        dataset.legalBasisForProcessings = [
+          {
+            uri: "",
+            foafHomepage: null,
+            prefLabel: {
+                nb:""
+            }
+          }
+        ];
+        dataset.legalBasisForAccesses = [
+          {
+            uri: "",
+            foafHomepage: null,
+            prefLabel: {
+                nb:""
+            }
+          }
+        ]
+        // ### MOCK DATA END
         this.setState({
-          dataset: data.hits.hits[0]._source,
+          dataset: dataset,
           loading: false
         });
       });
@@ -97,6 +136,9 @@ export default class DetailsPage extends React.Component {
           <DatasetKeyInfo
           authorityCode={this.state.dataset.authorityCode}
           selectedLanguageCode={this.props.selectedLanguageCode}
+          type={this.state.dataset.type}
+          conformsTo={this.state.dataset.conformsTo}
+          legalBasisForRestrictions={this.state.dataset.legalBasisForRestrictions}
           />
         );
       }

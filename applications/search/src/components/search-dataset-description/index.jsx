@@ -38,8 +38,8 @@ export default class DatasetDescription extends React.Component { // eslint-disa
     let themeNodes;
     const themes = this.props.themes;
     if (themes) {
-      themeNodes = themes.map(singleTheme => (
-        <a href={singleTheme.id}>
+      themeNodes = themes.map((singleTheme, index) => (
+        <a key={index} href={singleTheme.id}>
           <div id="dataset-description-theme" className="fdk-label">
             {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
           </div>
