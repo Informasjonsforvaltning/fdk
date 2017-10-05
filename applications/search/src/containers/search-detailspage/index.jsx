@@ -36,14 +36,14 @@ export default class DetailsPage extends React.Component {
         dataset.conformsTo = ["SOSI"];
         dataset.legalBasisForRestrictions = [
           {
-            uri: "http://www.example.com/somepath/somelegalbasis",
+            source: "http://www.example.com/somepath/somelegalbasis",
             foafHomepage: null,
             prefLabel: {
                 nb:"Den spesifike loven "
             }
           },
           {
-            uri: "http://www.example.com/somepath/someotherlegalbasis",
+            source: "http://www.example.com/somepath/someotherlegalbasis",
             foafHomepage: null,
             prefLabel: {
                 nb:"Den andre spesifike loven"
@@ -52,7 +52,7 @@ export default class DetailsPage extends React.Component {
         ];
         dataset.legalBasisForProcessings = [
           {
-            uri: "http://www.example.com/somepath/someotherlegalbasis",
+            source: "http://www.example.com/somepath/someotherlegalbasis",
             foafHomepage: null,
             prefLabel: {
                 nb:"a legalBasisForProcessings that has a long title"
@@ -61,7 +61,7 @@ export default class DetailsPage extends React.Component {
         ];
         dataset.legalBasisForAccesses = [
           {
-            uri: "http://www.example.com/somepath/someotherlegalbasis",
+            source: "http://www.example.com/somepath/someotherlegalbasis",
             foafHomepage: null,
             prefLabel: {
                 nb:"a legalBasisForAccesses that has a long title"

@@ -79,7 +79,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                       <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForRestrictions && this.props.legalBasisForRestrictions.length !== 0 ?
                         this.props.legalBasisForRestrictions.map((t, i) =>
                           <li key={i}>
-                            <a href={t.uri}>
+                            <a href={t.source}>
                               {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
                             </a>
                           </li>
@@ -90,7 +90,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                       <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForProcessings && this.props.legalBasisForProcessings.length !== 0 ?
                         this.props.legalBasisForProcessings.map((t, i) =>
                           <li key={i}>
-                            <a href={t.uri}>
+                            <a href={t.source}>
                               {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
                             </a>
                           </li>
@@ -101,7 +101,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                       <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForAccesses && this.props.legalBasisForAccesses.length !== 0 ?
                         this.props.legalBasisForAccesses.map((t, i) =>
                           <li key={i}>
-                            <a href={t.uri}>
+                            <a href={t.source}>
                               {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
                             </a>
                           </li>
