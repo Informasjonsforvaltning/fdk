@@ -1,0 +1,91 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix http:  <http://www.w3.org/2011/http#> .
+@prefix fo:    <http://www.w3.org/1999/XSL/Format#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix er:    <http://data.brreg.no/meta/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix dcatno:    <http://difi.no/dcatno#> .
+@prefix dqv:   <http://www.w3.org/ns/dqvNS#> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<http://brreg.no/catalogs/974760673/datasets/komplett>
+    a                       dcat:Dataset ;
+    dct:title               "Markagrensen Oslo Kommune og nærliggende kommuner"@nb ;
+    dct:description         "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."@nb ;
+    dcatno:objective        "Datasettes formål er nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."@nb ;
+    dct:type                <Kodeliste>;
+    dcat:keyword            "Bestemmelse"@nb , "jord"@nb , "regulering"@nb, "statlig bestemmelse"@nb ;
+    dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+    dct:conformsTo          [ a owl:ObjectProperty ; rdfs:label "SOSI" ; rdfs:range <https://www.kartverket.no/geodataarbeid/standarder/sosi/>  ] ;
+    dcatno:informationModel [ a owl:ObjectProperty ; rdfs:label "SKOS" ; rdfs:range <https://www.w3.org/2004/02/skos/> ] ;
+    dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+    dct:issued              "2012-01-01"^^xsd:date ;
+    dct:modified            "2016-09-21"^^xsd:date ;
+    dct:provenance          <http://data.brreg.no/datakatalog/provinens/tredjepart> ;
+    dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
+                                        dqv:inDimension  iso:Currentness ;
+                                        oa:hasBody       [ rdf:value  "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."@no ]
+                                      ] ;
+    dct:spatial             <http://Asker> , <http://Bærum>, <http://Hurum>, <http://Røyken> ;
+
+    dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
+                                        dqv:inDimension  iso:Relevance ;
+                                        oa:hasBody       [ rdf:value  "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."@no ]
+                                      ] ;
+    dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
+                                      dqv:inDimension  iso:Completeness ;
+                                      oa:hasBody       [ rdf:value  "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."@no ]
+                                    ] ;
+    dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
+                                      dqv:inDimension  iso:Accuracy ;
+                                      oa:hasBody       [ rdf:value  "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."@no ]
+                                    ] ;
+    dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
+                                      dqv:inDimension  iso:Availability ;
+                                      oa:hasBody       [ rdf:value  "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."@no ]
+                                    ] ;
+    dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673.json> ;
+    dcat:landingPage        <https://www.brreg.no/landingpage/>  ;
+    dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+    dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+    dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/ENVI> , <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/katalog/974760673/1>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Brønnøysundregistrene"@nb ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title        "Brønnøysundregistrene datakatalog"@nb ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/komplett> .
+
+<http://brreg.no/catalogs/974760673/datasets/75573cda-ea3b-4844-96f6-13075f2faefd/distributions/1>
+        a                dcat:Distribution ;
+        dct:description  "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."@nb ;
+        dct:format       "text/json" , "application/rdf+xml" ;
+        dct:license      <http://Norsk_lisens_for_åpne_data_(NLOD)> ;
+        foaf:page        <http://Dokumentasjon_av_distribusjonen> ;
+        dct:conformsTo   <http://SOSI> ;
+        dcat:accessURL   <http://www.detteerenlenke.no/til-nedlasting> , <http://www.detteerenannenlenke.no/til-en-annen-nedlasting> , <http://www.detteerentredjelenke.no/til-en-tredje-nedlasting> .
+
+<http://brreg.no/catalogs/974760673/datasets/75573cda-ea3b-4844-96f6-13075f2faefd/distributions/2>
+        a                dcat:Distribution ;
+        dct:format       "application/rdf+xml" ;
+        dcat:accessURL   <http://www.dennelenken.no/kan-være-lang-og-stygg/12356application+rdf+xml> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-4>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:dig@brreg.no> ;
+        vcard:hasTelephone       <tel:> ;
+        vcard:organization-unit  "Avdeling digitalisering" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974760673.json>
+        a               foaf:Agent ;
+        dct:identifier  "974760673" ;
+        foaf:name       "REGISTERENHETEN I BRØNNØYSUND" .
+
