@@ -28,7 +28,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   _renderTilgangsURL() {
     if (this.props.accessUrl) {
       return (
-        <div>
+        <div id="dataset-distribution-accessurl">
           <h5 className="fdk-margin-top-double">{localization.detail.distribution.accessUrl}</h5>
           <p className="fdk-ingress">
             <a
@@ -45,36 +45,35 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   render() {
-    const language = this.props.selectedLanguageCode;
-    let distribution_non_public = false;
-    let distribution_restricted = false;
-    let distribution_public = false;
+    let distributionNonPublic = false;
+    let distributionRestricted = false;
+    let distributionPublic = false;
 
-    if (this.props.accessRights && this.props.authorityCode === 'NON_PUBLIC') {
-      distribution_non_public = true;
-    } else if (this.props.accessRights && this.props.authorityCode === 'RESTRICTED') {
-      distribution_restricted = true;
-    } else if (this.props.accessRights && this.props.authorityCode === 'PUBLIC') {
-      distribution_public = true;
-    } else if (!this.props.accessRights) { // antar public hvis authoritycode mangler
-      distribution_public = true;
+    if (this.props.authorityCode === 'NON_PUBLIC') {
+      distributionNonPublic = true;
+    } else if (this.props.authorityCode === 'RESTRICTED') {
+      distributionRestricted = true;
+    } else if (this.props.authorityCode === 'PUBLIC') {
+      distributionPublic = true;
+    } else { // antar public hvis authoritycode mangler
+      distributionPublic = true;
     }
 
     const distributionClass = cx(
       'fdk-container-detail',
       {
-        'fdk-container-detail-offentlig': distribution_public,
-        'fdk-container-detail-begrenset': distribution_restricted,
-        'fdk-container-detail-unntatt-offentlig': distribution_non_public
+        'fdk-container-detail-offentlig': distributionPublic,
+        'fdk-container-detail-begrenset': distributionRestricted,
+        'fdk-container-detail-unntatt-offentlig': distributionNonPublic
       }
     );
 
     return (
       <div>
-        <div className={distributionClass}>
+        <div id="dataset-distribution" className={distributionClass}>
           <h4 className="fdk-margin-bottom">{localization.detail.distribution.title}</h4>
           {this.props.description &&
-          <p className="fdk-ingress">
+          <p id="dataset-distribution-description" className="fdk-ingress">
             {this.props.description}
           </p>
           }

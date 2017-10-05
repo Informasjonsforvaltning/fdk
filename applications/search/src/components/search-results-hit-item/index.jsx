@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { Link } from 'react-router';
 
 import localization from '../../components/localization';
-import SearchHitFormat from '../search-results-hit-item-format';
+import DatasetFormat from '../search-dataset-format';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -43,11 +43,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       formatNodes = Object.keys(distribution).map((key) => {
         if (distribution[key].format) {
           const formatArray = distribution[key].format.trim().split(',');
-          let nodes;
-          nodes = Object.keys(formatArray).map((key) => {
+          const nodes = Object.keys(formatArray).map((key) => {
             if (formatArray[key] !== null) {
               return (
-                <SearchHitFormat
+                <DatasetFormat
                   text={formatArray[key]}
                 />
               );
