@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import DatasetDescription from '../../components/search-dataset-description';
+import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
 import DatasetDistribution from '../../components/search-dataset-distribution';
 import DatasetInfo from '../../components/search-dataset-info';
 
@@ -70,6 +71,19 @@ export default class DetailsPage extends React.Component {
     return distributionNodes;
   }
 
+
+    _renderKeyInfo() {
+      if (this.state.dataset) {
+        return (
+          <DatasetKeyInfo
+          authorityCode={this.state.dataset.authorityCode}
+          selectedLanguageCode={this.props.selectedLanguageCode}
+          />
+        );
+      }
+      return null;
+    }
+
   _renderDatasetInfo() {
     const { accrualPeriodicity } = this.state.dataset;
     if (accrualPeriodicity) {
@@ -95,9 +109,9 @@ export default class DetailsPage extends React.Component {
         <div className="row">
           {this._renderDatasetDescription()}
           <div className="col-md-8">
-            <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
-              <i className="fa fa-unlock fdk-fa-left fdk-color-green" />Datasettet er offentlig
-            </div>
+
+
+            {this._renderKeyInfo()}
 
             {this._renderDistribution()}
 
