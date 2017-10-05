@@ -29,7 +29,7 @@ branches:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
       env:
         - comment=First build the project to look for syntax/build problems
 
@@ -39,14 +39,14 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and intergation tests + generate test coverage report
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B  && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P all-tests org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run unit and intergation tests + generate test coverage report
 
     - stage: Tests # Run Angular e2e tests
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B  && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
       env:
         - comment=Run Angular e2e tests
 

@@ -9,7 +9,8 @@ public enum Types {
    //LINGUISTICSYSTEM("http://publications.europa.eu/mdr/resource/authority/language/skos/languages-skos.rdf", "linguisticsystem");
    linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem"),
 
-    location(null, "location");
+    location(null, "location"),
+    subject(null, "subject");
 
    private String sourceUrl;
    private String type;
@@ -33,4 +34,10 @@ public enum Types {
    public void setSourceUrl(String sourceUrl) {
        this.sourceUrl = sourceUrl;
    }
+
+
+    @Override
+    public String toString() {
+        return type;
+    }
 }

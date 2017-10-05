@@ -6,18 +6,37 @@ import java.util.Map;
 /**
  * Model class codes:<type>.
  */
-public class SkosCode implements Serializable{
+public class Subject implements Serializable{
     private String uri;
-    private String authorityCode;
-
     private Map<String, String> prefLabel;
+    private Map<String,String> definition;
+    private Map<String,String> note;
+    private String source;
 
-    public SkosCode() {
+
+    public Map<String,String> getNote() {
+        return note;
     }
 
-    public SkosCode(String uri, String authorityCode, Map<String, String> prefLabel) {
+    public void setNote(Map<String,String> note) {
+        this.note = note;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+
+    public Subject() {
+    }
+
+    public Subject(String uri, Map<String,String> definition, Map<String, String> prefLabel) {
         this.uri = uri;
-        this.authorityCode = authorityCode;
+        this.definition = definition;
         this.prefLabel = prefLabel;
     }
 
@@ -25,9 +44,9 @@ public class SkosCode implements Serializable{
         return uri;
     }
 
-    public String getAuthorityCode() { return authorityCode; }
+    public Map<String,String> getDefinition() { return definition; }
 
-    public void setAuthorityCode(String authorityCode) { this.authorityCode = authorityCode; }
+    public void setDefinition(Map<String,String> definition) { this.definition = definition; }
 
     public void setUri(String uri) {
         this.uri = uri;
@@ -50,9 +69,9 @@ public class SkosCode implements Serializable{
             return false;
         }
 
-        SkosCode skosCode = (SkosCode) o;
+        Subject subject = (Subject) o;
 
-        return getUri() != null ? getUri().equals(skosCode.getUri()) : skosCode.getUri() == null;
+        return getUri() != null ? getUri().equals(subject.getUri()) : subject.getUri() == null;
     }
 
     @Override
@@ -64,8 +83,10 @@ public class SkosCode implements Serializable{
     public String toString() {
         return "SkosCode{" +
                 "uri='" + uri + '\'' +
-                ", authorityCode='" + authorityCode + '\'' +
                 ", prefLabel=" + prefLabel +
+                ", definition=" + definition +
+                ", note=" + note  +
+                ", source=" + source +
                 '}';
     }
 }
