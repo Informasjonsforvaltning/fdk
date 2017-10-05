@@ -10,7 +10,7 @@ import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
 import no.dcat.model.SkosCode;
-import no.dcat.model.SkosConceptWithHomepage;
+import no.dcat.model.SkosConceptWithSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -63,6 +63,104 @@ public class DcatBuilderTest {
         Dataset dataset = RegistrationFactory.createDataset(catalog.getId());
         catalog.setDataset(Collections.singletonList(dataset));
 
+        dataset.setTitle(map("nb", "Markagrensen Oslo Kommune og nærliggende kommuner"));
+        dataset.setDescription(map("nb", "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."));
+        dataset.setObjective(map("nb", "Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."));
+
+        dataset.setType("Kodeliste");
+
+        List<Map<String, String>> keywords = new ArrayList<>();
+        keywords.add(map("nb", "Bestemmelse"));
+        keywords.add(map("nb", "jord"));
+        keywords.add(map("nb", "regulering"));
+        keywords.add(map("nb", "statlig bestemmelse"));
+        dataset.setKeyword(keywords);
+
+        dataset.setAccessRights(skosCode("http://publications.europa.eu/resource/authority/access-right/RESTRICTED"));
+
+        Contact contact = RegistrationFactory.createContact(catalog.getId());
+        contact.setFullname("Fullname");
+        contact.setEmail("test@testetaten.no");
+        contact.setHasURL("http://testetaten.no/url");
+        contact.setHasTelephone("+47444444444");
+        contact.setOrganizationName("Testetaten");
+        contact.setOrganizationUnit("Enhet A");
+
+        dataset.setContactPoint(Collections.singletonList(contact));
+        dataset.setConformsTo(Collections.singletonList(
+                SkosConceptWithSource.getInstance()"http://norsk-lov"));
+
+
+        dataset.setPublisher(publisher);
+        dataset.setIssued(Date.from(LocalDateTime.of(2016,12,24,12,30).toInstant(ZoneOffset.UTC)));
+        dataset.setModified(Date.from(LocalDateTime.of(2017,01,20,13,25,3).toInstant(ZoneOffset.UTC)));
+        dataset.setLanguage(Collections.singletonList(skosCode(
+                        "http://publications.europa.eu/resource/authority/language/NOR",
+                        "NOR",
+                        map("nb", "Norsk"))));
+
+        dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
+        DataTheme theme = new DataTheme();
+        theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        dataset.setTheme(Collections.singletonList(theme));
+
+        Distribution distribution = RegistrationFactory.createDistribution(catalog.getId(), dataset.getId());
+        distribution.setAccessURL(Collections.singletonList("http://testetaten.no/data/access"));
+        distribution.setTitle(map("nb", "Standard data"));
+        distribution.setDescription(map("nb", "Beskrivelsen er ikke tilgjengelig"));
+        distribution.setLicense("http://opne.data.no/lisens/nr1");
+        distribution.setFormat(Collections.singletonList("application/json"));
+
+        dataset.setDistribution(Collections.singletonList(distribution));
+
+        PeriodOfTime pot = new PeriodOfTime();
+        pot.setStartDate(Date.from(LocalDateTime.of(2017,1,1,0,0).toInstant(ZoneOffset.UTC)));
+        pot.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
+        dataset.setTemporal(Collections.singletonList(pot));
+
+        dataset.setSpatial(Collections.singletonList(skosCode("http://sws.geonames.org/3144096/", null, map("nb", "Norge"))));
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithSource.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
+        dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
+        dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
+        dataset.setIdentifier(Collections.singletonList("42"));
+        dataset.setPage(Collections.singletonList("http://uri1"));
+        dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/CONT"));
+
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithSource.getInstance("http://url", "preflabel")));
+
+        List<String> subjects = new ArrayList<>();
+        subjects.add("http://testetaten.no/begrep/4450");
+        subjects.add("http://testetaten.no/begrep/4599");
+
+        dataset.setSubject(subjects);
+
+        dataset.setAdmsIdentifier(Collections.singletonList("http://adms.identifier.no/scheme/42"));
+
+        dataset.setHasCurrentnessAnnotation(createQualityAnnotation("Currentness", "Ferskere blir det ikke"));
+        dataset.setHasAccuracyAnnotation(createQualityAnnotation("Accuracy", "Millimeternøyaktighet"));
+
+        logger.debug("hasCurrentnessAnnotation:\n {}", dataset.getHasCurrentnessAnnotation());
+
+        return catalog;
+    }
+
+    public Catalog createCompleteCatalog2() {
+        Catalog catalog = new Catalog();
+        catalog.setId("987654321");
+        catalog.setTitle(map("nb", "Tittel"));
+        catalog.setDescription(map("nb", "Beskrivelse"));
+        catalog.setUri(RegistrationFactory.getCatalogUri(catalog.getId()));
+
+        Publisher publisher = new Publisher();
+        publisher.setId("987654321");
+        publisher.setName("TESTETATEN");
+        publisher.setUri("http://data.brreg.no/enhetsregisteret/enhet/987654321");
+
+        catalog.setPublisher(publisher);
+
+        Dataset dataset = RegistrationFactory.createDataset(catalog.getId());
+        catalog.setDataset(Collections.singletonList(dataset));
+
         dataset.setTitle(map("nb", "Datasettittel"));
         dataset.setDescription(map("nb", "Datasettbeskrivelse"));
 
@@ -85,9 +183,9 @@ public class DcatBuilderTest {
         dataset.setIssued(Date.from(LocalDateTime.of(2016,12,24,12,30).toInstant(ZoneOffset.UTC)));
         dataset.setModified(Date.from(LocalDateTime.of(2017,01,20,13,25,3).toInstant(ZoneOffset.UTC)));
         dataset.setLanguage(Collections.singletonList(skosCode(
-                        "http://publications.europa.eu/resource/authority/language/NOR",
-                        "NOR",
-                        map("nb", "Norsk"))));
+                "http://publications.europa.eu/resource/authority/language/NOR",
+                "NOR",
+                map("nb", "Norsk"))));
 
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
         DataTheme theme = new DataTheme();
@@ -111,14 +209,14 @@ public class DcatBuilderTest {
 
         dataset.setSpatial(Collections.singletonList(skosCode("http://sws.geonames.org/3144096/", null, map("nb", "Norge"))));
         dataset.setAccessRights(skosCode("http://publications.europa.eu/resource/authority/access-right/RESTRICTED"));
-        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithHomepage.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithSource.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
         dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
         dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
         dataset.setIdentifier(Collections.singletonList("42"));
         dataset.setPage(Collections.singletonList("http://uri1"));
         dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/CONT"));
 
-        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithHomepage.getInstance("http://url", "preflabel")));
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithSource.getInstance("http://url", "preflabel")));
 
         List<String> subjects = new ArrayList<>();
         subjects.add("http://testetaten.no/begrep/4450");
@@ -135,6 +233,7 @@ public class DcatBuilderTest {
 
         return catalog;
     }
+
 
     QualityAnnotation createQualityAnnotation(String dimension, String text) {
         QualityAnnotation qualityAnnotation = new QualityAnnotation();

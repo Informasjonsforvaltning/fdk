@@ -41,7 +41,7 @@
             name="datasett-objective"></helptext>
           <textarea autofocus class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
                     (ngModelChange)="valuechange(this)"
-                    [(ngModel)]='dataset.objective'></textarea>
+                    [(ngModel)]='dataset.objective[language]'></textarea>
         </div>
 
         <div class="fdk-input-container" *ngIf="dataset.landingPages">

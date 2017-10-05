@@ -48,7 +48,7 @@ public class Dataset {
     //dcatno:objective
     //Norwegian: Formål
     @Field
-    private String objective;
+    private Map<String,String> objective;
 
     //dcat:contactPoint
     //Norwegian: Kontaktpunkt
@@ -103,7 +103,7 @@ public class Dataset {
     //dcat:conformsTo
     //Norwegian: I samsvar med
     @Field
-    private List<String> conformsTo;
+    private List<SkosConceptWithSource> conformsTo;
 
     //dct:temporal
     //Norwegian: tidsperiode
@@ -125,17 +125,17 @@ public class Dataset {
     // dcatno:legalBasisForRestriction
     //Norwegian: skjermingshjemmel
     @Field
-    private List<SkosConceptWithHomepage> legalBasisForRestriction = Collections.emptyList();
+    private List<SkosConceptWithSource> legalBasisForRestriction = Collections.emptyList();
 
     // dcatno:legalBasisForProcessing
     //Norwegian: behanlingsgrunnlag
     @Field
-    private List<SkosConceptWithHomepage> legalBasisForProcessing = Collections.emptyList();
+    private List<SkosConceptWithSource> legalBasisForProcessing = Collections.emptyList();
 
     // dcatno:legalBasisForAccess
     //Norwegian: utleveringshjemmel
     @Field
-    private List<SkosConceptWithHomepage> legalBasisForAccess = Collections.emptyList();
+    private List<SkosConceptWithSource> legalBasisForAccess = Collections.emptyList();
 
     // dcatno:hasXXXXAnnotation
     @Field

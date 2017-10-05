@@ -11,18 +11,20 @@ import java.util.UUID;
 @Data
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SkosConceptWithHomepage {
+public class SkosConceptWithSource {
 
 
-    public static  SkosConceptWithHomepage getInstance(String foafHomepage, String prefLabelInNb) {
-        SkosConceptWithHomepage skosConceptWithHomepage = new SkosConceptWithHomepage();
-        skosConceptWithHomepage.foafHomepage = foafHomepage;
-        skosConceptWithHomepage.prefLabel = new HashMap<>();
+    public static SkosConceptWithSource getInstance(String sourceUrl, String prefLabelInNb, String extraType) {
+        SkosConceptWithSource skosConceptWithHomepage = new SkosConceptWithSource();
+        skosConceptWithHomepage.source = sourceUrl;
         skosConceptWithHomepage.prefLabel.put("nb", prefLabelInNb);
+        skosConceptWithHomepage.extraType = extraType;
         return skosConceptWithHomepage;
     }
 
-    private String foafHomepage = "";
+    private String extraType;
+
+    private String source = "";
 
     // internal id
     private String uri = "http://brreg.no/skosConcept/" + UUID.randomUUID().toString();

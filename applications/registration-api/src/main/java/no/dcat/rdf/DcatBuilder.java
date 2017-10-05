@@ -8,7 +8,7 @@ import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
 import no.dcat.model.SkosCode;
-import no.dcat.model.SkosConceptWithHomepage;
+import no.dcat.model.SkosConceptWithSource;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -212,7 +212,7 @@ public class DcatBuilder {
         }
     }
 
-    private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConceptWithHomepage skosConceptWithHomepage) {
+    private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConceptWithSource skosConceptWithHomepage) {
         Resource skosConceptWithHomepageResource = model.createResource(skosConceptWithHomepage.getUri());
 
         skosConceptWithHomepageResource.addProperty(RDF.type, SKOS.Concept);
