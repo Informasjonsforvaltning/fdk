@@ -56,7 +56,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                   </div>
                   <div className="fdk-detail-text">
                       <h5>Type</h5>
-                      <p className="fdk-ingress fdk-margin-bottom-no">{this.props.type}</p>
+                      <p className="fdk-ingress fdk-margin-bottom-no">{this.props.type || '—'}</p>
                   </div>
               </div>
           </div>
@@ -71,7 +71,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                       <p className="fdk-ingress fdk-margin-bottom-no">
                       {this.props.conformsTo && this.props.conformsTo.length !== 0 ? this.props.conformsTo
                         .map((t, i) => <span key={i}>{t}</span>)
-                        .reduce((prev, curr) => [prev, ', ', curr]) : ''}
+                        .reduce((prev, curr) => [prev, ', ', curr]) : '—'}
                         </p>
                   </div>
               </div>
@@ -92,7 +92,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                             </a>
                           </li>
                         )
-                        : ''
+                        : '—'
                       }</ul>
                       <h5>Behandlingsgrunnlag</h5>
                       <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForProcessings && this.props.legalBasisForProcessings.length !== 0 ?
@@ -103,7 +103,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                             </a>
                           </li>
                         )
-                        : ''
+                        : '—'
                       }</ul>
                       <h5>Utleveringshjemmel</h5>
                       <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForAccesses && this.props.legalBasisForAccesses.length !== 0 ?
@@ -114,7 +114,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
                             </a>
                           </li>
                         )
-                        : ''
+                        : '—'
                       }</ul>
                   </div>
               </div>

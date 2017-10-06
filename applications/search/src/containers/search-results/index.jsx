@@ -34,38 +34,7 @@ const host = '/dcat';
 const searchkit = new SearchkitManager(
   host,
   {
-    transport: new QueryTransport(),
-    createHistoryFunc: useQueries(createHistoryFn)({ // TODO append lang string if it's not present
-      stringifyQuery(ob) {
-        Object.keys(ob).map((e) => {
-          if (typeof ob[e] === 'object') { // is array
-            ob[e] = ob[e].map(filterItem => encodeURIComponent(filterItem));
-            ob[e] = ob[e].join(',');
-          } else {
-            ob[e] = encodeURIComponent(ob[e]);
-          }
-          if (ob[e].length === 0) delete ob[e];
-        });
-        if (window.location.search.indexOf('lang=') !== -1) {
-          const queryObj = qs.parse(window.location.search.substr(1));
-          ob.lang = queryObj.lang;
-        }
-        return qs.stringify(ob, { encode: false });
-      },
-      parseQueryString(str) {
-        const parsedQuery = qs.parse(str);
-        Object.keys(parsedQuery).map((e) => {
-          if (parsedQuery[e].indexOf(',')) parsedQuery[e] = parsedQuery[e].split(',');
-          if (e === 'sort') {
-            const key = parsedQuery[e][0].slice(0, -4);
-            const value = parsedQuery[e][0].substr(-4);
-            parsedQuery[e][key] = value;
-            delete parsedQuery[e][0];
-          }
-        });
-        return parsedQuery;
-      }
-    })
+    transport: new QueryTransport()
   }
 );
 
@@ -114,6 +83,19 @@ export default class SearchPage extends React.Component {
         });
     }
   }
+  _renderPublisherRefinementListFilter() {
+    this.publisherFilter =
+      <RefinementListFilter
+        id="publisher"
+        title={localization.facet.organisation}
+        field="publisher.name.raw"
+        operator="AND"
+        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+        itemComponent={RefinementOptionPublishers}
+      />
+
+    return this.publisherFilter;
+  }
 
   render() {
     const selectDropdownWithProps = React.createElement(SelectDropdown, {
@@ -123,6 +105,7 @@ export default class SearchPage extends React.Component {
     const searchHitItemWithProps = React.createElement(SearchHitItem, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
+
 
     return (
       <SearchkitProvider searchkit={searchkit}>
@@ -149,14 +132,7 @@ export default class SearchPage extends React.Component {
                 <div className="row" />
                 <div className="row">
                   <div className="col-sm-4 flex-move-first-item-to-bottom">
-                    <RefinementListFilter
-                      id="publisher"
-                      title={localization.facet.organisation}
-                      field="publisher.name.raw"
-                      operator="AND"
-                      size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                      itemComponent={RefinementOptionPublishers}
-                    />
+                    {this._renderPublisherRefinementListFilter()}
                     <RefinementListFilter
                       id="theme"
                       title={localization.facet.theme}
