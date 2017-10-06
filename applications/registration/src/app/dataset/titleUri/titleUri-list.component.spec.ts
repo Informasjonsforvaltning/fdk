@@ -1,19 +1,19 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {LegalBasisFormComponent} from "./legalBasis.component";
+import {TitleUriListComponent} from "./titleUri-list.component";
 
 describe('DatasetComponent', () => {
-  let component: LegalBasisFormComponent;
-  let fixture: ComponentFixture<LegalBasisFormComponent>;
+  let component: TitleUriListComponent;
+  let fixture: ComponentFixture<TitleUriListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LegalBasisFormComponent ]
+      declarations: [ TitleUriListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LegalBasisFormComponent);
+    fixture = TestBed.createComponent(TitleUriListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
