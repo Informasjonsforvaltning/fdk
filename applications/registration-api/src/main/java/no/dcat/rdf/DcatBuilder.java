@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.apache.jena.vocabulary.VCARD4;
@@ -158,14 +159,14 @@ public class DcatBuilder {
                 addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
 
                 dataset.getLegalBasisForRestriction().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
+                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
                 });
 
                 dataset.getLegalBasisForProcessing().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
+                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
                 });
                 dataset.getLegalBasisForAccess().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
+                    addSkosConcept(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
                 });
 
 
@@ -213,14 +214,17 @@ public class DcatBuilder {
         }
     }
 
-    private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConcept skosConceptWithHomepage) {
-        Resource skosConceptWithHomepageResource = model.createResource(skosConceptWithHomepage.getUri());
+    private void addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
+        Resource skosConceptResource = model.createResource();
 
-        skosConceptWithHomepageResource.addProperty(RDF.type, SKOS.Concept);
-        skosConceptWithHomepageResource.addProperty(FOAF.homepage, SKOS.Concept);
+        skosConceptResource.addProperty(RDF.type, SKOS.Concept);
+        if (skosConcept.getExtraType() != null) {
+            skosConceptResource.addProperty(RDF.type, skosConcept.getExtraType());
+        }
+        skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
+        addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
 
-
-        datRes.addProperty(predicate, skosConceptWithHomepageResource);
+        datRes.addProperty(predicate, skosConceptResource);
 
     }
 

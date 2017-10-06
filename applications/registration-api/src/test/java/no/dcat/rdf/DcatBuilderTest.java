@@ -152,7 +152,7 @@ public class DcatBuilderTest {
 
         Distribution distribution = RegistrationFactory.createDistribution(catalog.getId(), dataset.getId());
         distribution.setAccessURL(Arrays.asList("http://www.detteerenlenke.no/til-nedlasting",
-                "http://www.detteerenannenlenke.no/til-en-annen-nedlasting\n",
+                "http://www.detteerenannenlenke.no/til-en-annen-nedlasting",
                 "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"));
         distribution.setDescription(map("nb", "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."));
         distribution.setLicense(sosi);
@@ -161,13 +161,27 @@ public class DcatBuilderTest {
 
         dataset.setDistribution(Collections.singletonList(distribution));
 
+        Distribution sample = RegistrationFactory.createDistribution(catalog.getId(), dataset.getId());
+        sample.setDescription(map("nb", "Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."));
+        sample.setFormat(Arrays.asList("application/rdf+xml"));
+        sample.setAccessURL(Arrays.asList("http://www.detteerenlenke.no/til-nedlasting"));
+
+        dataset.setSample(Arrays.asList(sample));
+
         PeriodOfTime pot = new PeriodOfTime();
         pot.setStartDate(Date.from(LocalDateTime.of(2017,1,1,0,0).toInstant(ZoneOffset.UTC)));
         pot.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
         dataset.setTemporal(Collections.singletonList(pot));
 
-        dataset.setLegalBasisForRestriction(Collections.singletonList(
-                SkosConcept.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
+        dataset.setLegalBasisForRestriction(Arrays.asList(
+                SkosConcept.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]"),
+                SkosConcept.getInstance("http://lovdata/paragraph/20", "Den spesifikke loven § 20"),
+                SkosConcept.getInstance("http://lovdata/paragraph/26", "Den mindre spesifikke loven § 26")));
+        dataset.setLegalBasisForProcessing(Arrays.asList(SkosConcept.getInstance("http://lovdata/paragraph/2", "Den andre loven med lenger tittel § 2")));
+
+        dataset.setLegalBasisForAccess(Arrays.asList(
+                SkosConcept.getInstance("http://lovdata/paragraph/10", "Den siste loven med den lengste tittelen § 10")));
+
         dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
         dataset.setIdentifier(Collections.singletonList("42"));
         dataset.setPage(Collections.singletonList("http://uri1"));
@@ -192,7 +206,7 @@ public class DcatBuilderTest {
     }
 
     @Test
-    public void convertCompleteCatalogOK() throws Throwable {
+    public void convertCompleteCatalogToTurtleOK() throws Throwable {
         builder = new DcatBuilder();
         Catalog catalog = createCompleteCatalog();
 
