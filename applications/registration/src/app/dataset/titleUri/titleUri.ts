@@ -1,5 +1,4 @@
-export interface LegalBasis {
-    foafHomepage?: string;
+export interface TitleUri {
     uri?: string;
     prefLabel?: {
         [language: string]: string
