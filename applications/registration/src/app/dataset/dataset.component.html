@@ -242,7 +242,7 @@
     </label>
     <div class="col-md-push-1 col-md-8 collapsed">
       <input type="checkbox" id="content-toggle" class="expand-checkbox"/>
-      <label for="content-toggle" class="collapsed-content expand-label">{{ summaries.content || 'Klikk for å fylle ut'}}</label>
+      <label for="content-toggle" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" class="collapsed-content expand-label">{{ summaries.content || 'Klikk for å fylle ut'}}</label>
 
       <div class="expanded-content">
         <content [dataset]="dataset"
