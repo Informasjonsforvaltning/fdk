@@ -65,6 +65,12 @@ export interface Dataset {
   legalBasisForProcessings?:any[];
   legalBasisForAccesses?:any[];
 
+  hasAccuracyAnnotation?:any;
+  hasCompletenessAnnotation?:any;
+  hasCurrentnessAnnotation?:any;
+  hasAvailabilityAnnotations?:any;
+  hasRelevanceAnnotation?:any;
+
   _lastModified: string;
 
   registrationStatus? : string;

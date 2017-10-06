@@ -86,13 +86,13 @@ public class DatasetController {
             throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
-        Dataset savedDataset = saveDataset(catalogId, dataset, catalog);
+        Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalog);
 
 
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
 
-    Dataset saveDataset(String catalogId, Dataset dataset, Catalog catalog) {
+    Dataset createAndSaveDataset(String catalogId, Dataset dataset, Catalog catalog) {
 
         // Create new dataset
         Dataset datasetWithNewId = RegistrationFactory.createDataset(catalogId);
@@ -111,6 +111,10 @@ public class DatasetController {
         logger.debug("create dataset {} at timestamp {}", dataset.getId(), Calendar.getInstance().getTime());
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
+        return save(dataset);
+    }
+
+    Dataset save(Dataset dataset) {
         return datasetRepository.save(dataset);
     }
 

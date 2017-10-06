@@ -37,8 +37,8 @@ public class CodeBuildersTest {
         SkosCode vedtak = codes.stream().filter(code -> code.getUri().equals("http://data.brreg.no/datakatalog/provinens/vedtak")).findAny().get();
 
         assertEquals("Governmental decisions", vedtak.getPrefLabel().get("en"));
-        assertEquals("Statlig vedtak", vedtak.getPrefLabel().get("nb"));
-        assertEquals("Statlig vedtak", vedtak.getPrefLabel().get("nn"));
+        assertEquals("Vedtak", vedtak.getPrefLabel().get("nb"));
+        assertEquals("Vedtak", vedtak.getPrefLabel().get("nn"));
 
         SkosCode bruker = codes.stream().filter(code -> code.getUri().equals("http://data.brreg.no/datakatalog/provinens/bruker")).findAny().get();
 

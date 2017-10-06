@@ -17,8 +17,8 @@
 		<atold:op-code>VEDTAK</atold:op-code>
 		<dc:identifier>VEDTAK</dc:identifier>
         <skos:prefLabel xml:lang="en">Governmental decisions</skos:prefLabel>
-        <skos:prefLabel xml:lang="nb">Statlig vedtak</skos:prefLabel>
-        <skos:prefLabel xml:lang="nn">Statlig vedtak</skos:prefLabel>
+        <skos:prefLabel xml:lang="nb">Vedtak</skos:prefLabel>
+        <skos:prefLabel xml:lang="nn">Vedtak</skos:prefLabel>
     </skos:Concept>
      <skos:Concept rdf:about="http://data.brreg.no/datakatalog/provinens/bruker" at:deprecated="false">
         <skos:inScheme rdf:resource="http://data.brreg.no/datakatalog/provinens"/>

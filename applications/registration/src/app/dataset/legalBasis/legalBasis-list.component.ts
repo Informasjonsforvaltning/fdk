@@ -19,7 +19,7 @@ export class LegalBasisListComponent implements OnInit {
 
     @Input('legalBasisList')
     public legalBasisList: LegalBasis[];
-    
+
     @Input('legalBasisType')
     public legalBasisType: string;
 
@@ -50,7 +50,7 @@ export class LegalBasisListComponent implements OnInit {
         this.showHideDelete();
         return false;
     }
-    
+
     removeLegalBasis(idx: number) : boolean {
         if (this.legalBasisList.length > 0) {
             this.legalBasisList.splice(idx, 1);

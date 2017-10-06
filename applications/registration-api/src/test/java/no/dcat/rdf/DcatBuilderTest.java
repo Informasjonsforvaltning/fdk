@@ -8,10 +8,13 @@ import no.dcat.model.Dataset;
 import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
+import no.dcat.model.QualityAnnotation;
 import no.dcat.model.SkosCode;
 import no.dcat.model.SkosConceptWithHomepage;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -33,6 +36,7 @@ import static org.junit.Assert.assertThat;
  */
 @ActiveProfiles(value = "develop")
 public class DcatBuilderTest {
+    static Logger logger = LoggerFactory.getLogger(DcatBuilderTest.class);
 
     DcatBuilder builder;
 
@@ -114,6 +118,8 @@ public class DcatBuilderTest {
         dataset.setPage(Collections.singletonList("http://uri1"));
         dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/CONT"));
 
+        dataset.setLegalBasisForRestriction(Collections.singletonList(SkosConceptWithHomepage.getInstance("http://url", "preflabel")));
+
         List<String> subjects = new ArrayList<>();
         subjects.add("http://testetaten.no/begrep/4450");
         subjects.add("http://testetaten.no/begrep/4599");
@@ -122,7 +128,22 @@ public class DcatBuilderTest {
 
         dataset.setAdmsIdentifier(Collections.singletonList("http://adms.identifier.no/scheme/42"));
 
+        dataset.setHasCurrentnessAnnotation(createQualityAnnotation("Currentness", "Ferskere blir det ikke"));
+        dataset.setHasAccuracyAnnotation(createQualityAnnotation("Accuracy", "Millimeternøyaktighet"));
+
+        logger.debug("hasCurrentnessAnnotation:\n {}", dataset.getHasCurrentnessAnnotation());
+
         return catalog;
+    }
+
+    QualityAnnotation createQualityAnnotation(String dimension, String text) {
+        QualityAnnotation qualityAnnotation = new QualityAnnotation();
+        qualityAnnotation.setInDimension(dimension);
+        Map<String,String> value = new HashMap<>();
+        value.put("no", text);
+        qualityAnnotation.setHasBody(value);
+
+        return qualityAnnotation;
     }
 
     @Test

@@ -137,6 +137,13 @@ public class Dataset {
     @Field
     private List<SkosConceptWithHomepage> legalBasisForAccess = Collections.emptyList();
 
+    // dcatno:hasXXXXAnnotation
+    @Field
+    private QualityAnnotation hasAccuracyAnnotation;
+    private QualityAnnotation hasCompletenessAnnotation;
+    private QualityAnnotation hasCurrentnessAnnotation;
+    private QualityAnnotation hasAvailabilityAnnotations;
+    private QualityAnnotation hasRelevanceAnnotation;
 
     //dct:references
     //Norwegian: Refererer til.

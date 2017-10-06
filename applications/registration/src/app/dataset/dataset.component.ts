@@ -18,6 +18,7 @@ import { ThemesService } from "./themes.service";
 import { IMyDpOptions } from 'mydatepicker';
 import { TemporalListComponent } from "./temporal/temporal-list.component";
 import { HelpText } from "./helptext/helptext.component";
+import {isNullOrUndefined} from "util";
 
 @Component({
     selector: 'app-dataset',
@@ -26,7 +27,6 @@ import { HelpText } from "./helptext/helptext.component";
 })
 
 export class DatasetComponent implements OnInit {
-
     title = 'Registrer datasett';
     dataset: Dataset;
     catalog: Catalog;
@@ -137,12 +137,13 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
-      
+
+      this.buildSummaries();
+
       this.datasetSavingEnabled = false;
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
-      this.datasetForm.valueChanges  // when fetching back data, de-flatten the object
+      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-          console.log('saving dataset:', dataset);
 
           // converting attributes for saving
           this.dataset.languages = [];
@@ -164,20 +165,15 @@ export class DatasetComponent implements OnInit {
               distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
             })
           }
-          if (dataset.modified && dataset.modified.formatted) {
-            dataset.modified = dataset.modified.formatted.replace(/\./g, "-");
-          }
+
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
           }
-          
+
           if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
-          if (_.isEmpty(dataset.modified)) {
-            dataset.modified = null;
-          }      
-           
+
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
                 if (temporal.startDate && temporal.startDate.formatted) {
@@ -201,7 +197,7 @@ export class DatasetComponent implements OnInit {
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
-          
+
           this.dataset = _.merge(this.dataset, dataset);
 
           this.cdr.detectChanges();
@@ -214,7 +210,12 @@ export class DatasetComponent implements OnInit {
         });
     });
   }
-    
+  buildSummaries() {
+    //this.buildGeoTimeSummaries(this.dataset);
+    this.buildProvenanceSummary();
+  }
+
+
     buildGeoTimeSummaries(dataset): void {
         this.summaries.geotime = "";
 
@@ -222,10 +223,10 @@ export class DatasetComponent implements OnInit {
         if (dataset.spatials && dataset.spatials.length > 0) {
             if (dataset.spatials.length == 1)
                 this.summaries.geotime += "1 geografisk avgrensing. ";
-            else 
+            else
                 this.summaries.geotime += dataset.spatials.length + " geografiske avgrensinger. ";
         }
-        
+
         // Add temporal count to summary if exists.
         if (dataset.temporals && dataset.temporals.length > 0) {
             if (dataset.temporals.length == 1) {
@@ -244,17 +245,17 @@ export class DatasetComponent implements OnInit {
                 }
             }
         }
-        
+
         // Add issued to summary if exists.
         if (dataset.issued) {
             this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(dataset.issued, "-", ".") + ". ";
         }
-        
+
         // Add language count to summary if exists.
         if (dataset.languages && dataset.languages.length > 0) {
             if (dataset.languages.length == 1)
                 this.summaries.geotime += "Ett språk. ";
-            else 
+            else
                 this.summaries.geotime += dataset.languages.length + " språk. ";
         }
 
@@ -270,7 +271,7 @@ export class DatasetComponent implements OnInit {
      * @param toChar Returns date string separated by this chaaracter.
      */
     public static convertDateStringFormat(dateIn: string, splitChar: string, toChar: string): string {
-        if (dateIn && dateIn.length > 0) {         
+        if (dateIn && dateIn.length > 0) {
             var dateSplit: string[] = dateIn.split(splitChar);
 
             if (dateSplit.length == 3) {
@@ -279,7 +280,7 @@ export class DatasetComponent implements OnInit {
                         date = "0" + date;
                     }
                 });
-                
+
                 return dateSplit[2] + toChar + dateSplit[1] + toChar + dateSplit[0];
             }
             return dateIn;
@@ -354,7 +355,7 @@ export class DatasetComponent implements OnInit {
         return this.service.get(this.catId, datasetId);
     }
 
-    private getDateObjectFromUnixTimestamp(timestamp: string) {
+    public getDateObjectFromUnixTimestamp(timestamp: string) {
         if (!timestamp) {
             return {};
         }
@@ -369,12 +370,44 @@ export class DatasetComponent implements OnInit {
         }
     }
 
+    public buildProvenanceSummary() {
+      let provenance = "";
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+        provenance = this.dataset.provenance.prefLabel['nb'];
+      }
+      let frequency   = "";
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+        frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
+      }
+
+      let modified    = this.dataset.modified ? this.dataset.modified : '';
+
+      let currentness = "";
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+        currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
+      }
+
+      this.summaries.provenance = "";
+      if (provenance.length > 0) {
+        this.summaries.provenance =  provenance ;
+      }
+      if (frequency.length > 0) {
+        this.summaries.provenance += " " +frequency;
+      }
+      if (modified.length > 0) {
+        this.summaries.provenance += " " + modified;
+      }
+
+      if (currentness.length > 0) {
+        this.summaries.provenance += " " + currentness;
+      }
+    }
+
 
 
   private toFormGroup(data: Dataset): FormGroup {
 
     const formGroup = this.formBuilder.group({
-
 
       description: [data.description],
       catalog: [data.catalog],
@@ -384,7 +417,6 @@ export class DatasetComponent implements OnInit {
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
-      modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)

@@ -1,8 +1,10 @@
 package no.dcat.controller;
 
 
+import gherkin.lexer.Th;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.model.Publisher;
 import no.dcat.model.SkosCode;
 import no.dcat.model.exceptions.CodesImportException;
 import org.apache.jena.rdf.model.Model;
@@ -11,24 +13,37 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.isNotNull;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ImportControllerTest {
+    static Logger logger = LoggerFactory.getLogger(ImportControllerTest.class);
 
     ImportController importController;
     Model model;
@@ -90,6 +105,57 @@ public class ImportControllerTest {
         assertThat(ds.size(), is(27));
     }
 
+    @Test
+    public void parseSetsPublisher() throws Throwable {
+        model = FileManager.get().loadModel("ut1-export.ttl");
+
+        ImportController importController = new ImportController(null, null, null);
+        ImportController iController = Mockito.spy(importController);
+        Map<String,String> prefLabel = new HashMap<>();
+        prefLabel.put("no", "test");
+
+        doNothing().when(iController).fetchCodes();
+        doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
+
+        List<Dataset> ds = iController.parseDatasets(model);
+
+        ds.forEach( dataset -> {
+            assertThat(String.format("dataset %s has null publisher", dataset.getId()), dataset.getPublisher(), is(not(nullValue())));
+        });
+    }
+
+    /*
+    @Test
+    public void importDatasetSetsPublisher() throws Throwable {
+
+        model = FileManager.get().loadModel("ut1-export.ttl");
+        String catalogId = "974760673";
+        Publisher publisher = new Publisher();
+        publisher.setName("BRREG");
+        Catalog catalog = new Catalog();
+        catalog.setId(catalogId);
+        catalog.setPublisher(publisher);
+
+        ImportController importController = new ImportController();
+        DatasetController datasetController = new DatasetController(null,null);
+        importController.datasetController = datasetController;
+
+        ImportController iController = Mockito.spy(importController);
+        Map<String,String> prefLabel = new HashMap<>();
+        prefLabel.put("no", "test");
+
+        doNothing().when(iController).fetchCodes();
+        doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
+
+
+        List<Dataset> datasets = iController.parseAndSaveDatasets(model,  catalog, catalogId );
+
+        datasets.forEach( dataset -> {
+            logger.warn(dataset.getId() + " " + dataset.getPublisher().getName() + " " + dataset.getRegistrationStatus());
+
+        });
+    }
+*/
 
     @Test
     public void testLanguagePruning(){

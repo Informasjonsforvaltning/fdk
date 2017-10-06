@@ -29,7 +29,7 @@ Feature: Detail page for presenting properties for a dataset.
   Scenario: I can change language on the page - jeg kan skifte språk mellom bokmål, nynorsk og engelsk
     Given I change page-language to "Bokmål"
     Then the following dataset shall have the following norwegian properties (id, provenance, frequency, language, access-right, locations):
-      | http://data.brreg.no/datakatalog/dataset/1 | Statlig vedtak  | kontinuerlig | Norsk | Offentlig | Norge|
+      | http://data.brreg.no/datakatalog/dataset/1 | Vedtak  | kontinuerlig | Norsk | Offentlig | Norge|
       | http://data.brreg.no/datakatalog/dataset/26 | Brukerinnsamlede data | | | Begrenset | Norge |
       | http://data.brreg.no/datakatalog/dataset/27 | Brukerinnsamlede data | | | Ikke-offentlig | Norge |
     Given I change page-language to "English"
