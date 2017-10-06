@@ -54,7 +54,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <span>
           {localization.search_hit.owned}&nbsp;
           <span id="search-hit-publisher-text">
-            {source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
+            { (source.publisher && source.publisher.name) ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
           </span>
         </span>
       );
