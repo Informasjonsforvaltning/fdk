@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Collapse} from 'react-bootstrap';
+import { Collapse } from 'react-bootstrap';
 import cx from 'classnames';
 
 import localization from '../../components/localization';
@@ -10,13 +10,12 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
     super(props);
     this.state = {
       detailed: false
-    }
-    this.toggle = this.toggle.bind(this)
+    };
+    this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
-    console.log(this.state.detailed)
-    this.setState({detailed: !this.state.detailed})
+    this.setState({ detailed: !this.state.detailed });
   }
 
   render() {

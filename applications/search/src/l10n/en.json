@@ -78,7 +78,8 @@
   },
   "search_hit": {
     "owned": "Eies av",
-    "public": "Offentlig"
+    "public": "Offentlig",
+    "sample": "Eksempeldata tilgjengelig"
   },
   "dataset": {
     "title": "Datasett",
@@ -92,6 +93,7 @@
     "issued": "Utgivelsesdato",
     "quality.title": "Kvalitet",
     "provenance": "Opphav",
+    "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
     "miscInfo": "Øvrig info",
     "created": "Opprettet",

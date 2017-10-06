@@ -5,8 +5,6 @@ import cx from 'classnames';
 import localization from '../../components/localization';
 
 export default class DatasetInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
-
   render() {
     return (
       <div className="row fdk-row fdk-margin-top-triple">

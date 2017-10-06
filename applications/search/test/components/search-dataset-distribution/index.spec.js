@@ -11,17 +11,17 @@ describe('DatasetDistribution', () => {
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('#dataset-distribution').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-distribution')).to.have.length(1);
   });
 
   it ('should render description', () => {
     wrapper.setProps({ description: 'description'});
-    expect(wrapper.find('#dataset-distribution-description').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-distribution-description')).to.have.length(1);
   });
 
   it ('should render access url', () => {
     wrapper.setProps({ accessUrl: 'test-link'});
-    expect(wrapper.find('#dataset-distribution-accessurl').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-distribution-accessurl')).to.have.length(1);
   });
 
   it ('should render format', () => {

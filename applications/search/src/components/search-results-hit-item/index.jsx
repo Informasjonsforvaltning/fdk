@@ -14,26 +14,12 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     this.state = {
       result: props.result
     };
-    this.extractDomain = this.extractDomain.bind(this);
   }
 
   componentDidUpdate() {
     this.state = {
       result: this.props.result
     };
-  }
-
-  extractDomain(url) {
-    let domain;
-    // find & remove protocol (http, ftp, etc.) and get domain
-    if (url.indexOf('://') > -1) {
-      domain = url.split('/')[2];
-    } else {
-      domain = url.split('/')[0];
-    }
-    // find & remove port number
-    domain = domain.split(':')[0];
-    return domain;
   }
 
   _renderFormats(source, authoriyCode) {
@@ -67,7 +53,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       return (
         <span>
           {localization.search_hit.owned}&nbsp;
-          <span>
+          <span id="search-hit-publisher-text">
             {source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
           </span>
         </span>
@@ -93,21 +79,34 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return themeNodes;
   }
 
+  _renderSample(source) {
+    const { sample } = source;
+    if (sample) {
+      if (sample.length > 0) {
+        return (
+          <span id="search-hit-sample">
+            {localization.search_hit.sample}
+          </span>
+        );
+      }
+    }
+    return null;
+  }
+
   render() {
-    const result = this.state.result;
-    //const url = `dataset/${encodeURIComponent(result._id)}`;
     const language = this.props.selectedLanguageCode;
+    const result = this.state.result;
     const source = _.extend({}, result._source, result.highlight);
 
     // Read fields from search-hit, use correct language field if specified.
-    const hit_id = encodeURIComponent(source.id);
-    const hitElementId = `search-hit-${hit_id}`;
+    const hitId = encodeURIComponent(source.id);
+    const hitElementId = `search-hit-${hitId}`;
     const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
     let description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
     if (description.length > 220) {
       description = `${description.substr(0, 220)}...`;
     }
-    const link = `/dataset/${hit_id}`;
+    const link = `/dataset/${hitId}`;
 
     let accessRightsLabel;
     let distributionNonPublic = false;
@@ -143,14 +142,14 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     );
 
     return (
-      <Link
+      <a
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        to={link}
+        href={link}
       >
         <div className="fdk-container fdk-container-search-hit">
-          <h2>{title}</h2>
+          <h2 id="search-hit-title">{title}</h2>
           <div>
             {this._renderPublisher(source)}
             {this._renderThemes(source)}
@@ -164,9 +163,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             <strong>{accessRightsLabel}</strong>
             <br />
             {this._renderFormats(source, authorityCode)}
+            {this._renderSample(source)}
           </div>
         </div>
-      </Link>
+      </a>
     );
   }
 }
