@@ -7,7 +7,7 @@ import { LegalBasisFormComponent } from './legalBasis.component';
 
 @Component({
     selector: 'legal-basis-list',
-    templateUrl: './legalBasis-list.html'
+    templateUrl: './legalBasis-list.component.html'
 })
 export class LegalBasisListComponent implements OnInit {
 
@@ -19,7 +19,7 @@ export class LegalBasisListComponent implements OnInit {
 
     @Input('legalBasisList')
     public legalBasisList: LegalBasis[];
-    
+
     @Input('legalBasisType')
     public legalBasisType: string;
 
@@ -50,7 +50,7 @@ export class LegalBasisListComponent implements OnInit {
         this.showHideDelete();
         return false;
     }
-    
+
     removeLegalBasis(idx: number) : boolean {
         if (this.legalBasisList.length > 0) {
             this.legalBasisList.splice(idx, 1);
@@ -68,7 +68,5 @@ export class LegalBasisListComponent implements OnInit {
             this.showDelete = true;
         else
             this.showDelete = false;
-
-        console.log('SHOWDELETE: ', this.showDelete)
     }
 }

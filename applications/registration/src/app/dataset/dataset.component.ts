@@ -18,6 +18,7 @@ import { ThemesService } from "./themes.service";
 import { IMyDpOptions } from 'mydatepicker';
 import { TemporalListComponent } from "./temporal/temporal-list.component";
 import { HelpText } from "./helptext/helptext.component";
+import {isNullOrUndefined} from "util";
 
 @Component({
     selector: 'app-dataset',
@@ -40,7 +41,8 @@ export class DatasetComponent implements OnInit {
     saveDelay: number = 1000;
     datasetForm: FormGroup = new FormGroup({});
     myDatePickerOptions: IMyDpOptions = {
-        dateFormat: 'yyyy.mm.dd',
+        //dateFormat: 'dd.mm.yyyy',//'yyyy.mm.dd',
+        showClearDateBtn: false
     };
     availableLanguages: any;
     summaries: any = {};
@@ -125,10 +127,10 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints = this.dataset.contactPoints || [];
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.conformsTos = this.dataset.conformsTos || [];
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
-this.dataset.languages = this.dataset.languages || [];
+      this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
       this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
       this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
@@ -136,11 +138,12 @@ this.dataset.languages = this.dataset.languages || [];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
+      this.buildSummaries();
+
       this.datasetSavingEnabled = false;
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-          console.log('saving dataset:', dataset);
 
           // converting attributes for saving
           this.dataset.languages = [];
@@ -162,45 +165,39 @@ this.dataset.languages = this.dataset.languages || [];
               distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
             })
           }
-          if (dataset.modified && dataset.modified.formatted) {
-            dataset.modified = dataset.modified.formatted.replace(/\./g, "-");
-          }
+
           if (dataset.issued && dataset.issued.formatted) {
-            dataset.issued = dataset.issued.formatted.replace(/\./g, "-");
+              dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
           }
-if (_.isEmpty(dataset.issued)) {
+
+          if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
-          if (_.isEmpty(dataset.modified)) {
-            dataset.modified = null;
-          }          if (dataset.temporals) {
+
+          if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-              if (temporal.startDate && temporal.startDate.formatted) {
-                var date = temporal.startDate.jsdate;
-
-                temporal.startDate = temporal.startDate.epoc;
-              } else if (temporal.startDate === null) {
-                delete temporal.startDate;
-              }
-              if (temporal.endDate && temporal.endDate.formatted) {
-                var date = temporal.endDate.jsdate;
-
-                temporal.endDate = temporal.endDate.epoc;
-              } else if (temporal.endDate === null) {
-                delete temporal.endDate;
-              }
+                if (temporal.startDate && temporal.startDate.formatted) {
+                    temporal.startDate = temporal.startDate.epoc;
+                } else {
+                    delete temporal.startDate;
+                }
+                if (temporal.endDate && temporal.endDate.formatted) {
+                    temporal.endDate = temporal.endDate.epoc;
+                } else {
+                    delete temporal.endDate;
+                }
             });
-            if (dataset.temporals.length === 0) {
-              dataset.temporals = undefined;
-            }
+
           } else {
             dataset.temporals = [];
           }
+
           if(dataset.published){
             this.dataset.registrationStatus = "PUBLISH";
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
+
           this.dataset = _.merge(this.dataset, dataset);
 
           this.cdr.detectChanges();
@@ -211,23 +208,89 @@ if (_.isEmpty(dataset.issued)) {
             }
           }, this.saveDelay);
         });
-
-
     });
   }
-  buildGeoTimeSummaries(dataset) {
-    this.summaries.geotime = "";
-    if(dataset.spatials && dataset.spatials.length > 0) {
-      this.summaries.geotime += dataset.spatials.map(spatial=>{return spatial.uri}).join(', ');
-    }
-    if(dataset.languages && dataset.languages.length > 0) {
-      this.summaries.geotime += ' ' + dataset.languages.map(language=>{return language.prefLabel['nb']}).join(', ');
-    }
-    this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
+  buildSummaries() {
+    //this.buildGeoTimeSummaries(this.dataset);
+    this.buildProvenanceSummary();
   }
-  onSave(ok: boolean) {
-    this.save();
-  }
+
+
+    buildGeoTimeSummaries(dataset): void {
+        this.summaries.geotime = "";
+
+        // Add spatial count to summary if exists.
+        if (dataset.spatials && dataset.spatials.length > 0) {
+            if (dataset.spatials.length == 1)
+                this.summaries.geotime += "1 geografisk avgrensing. ";
+            else
+                this.summaries.geotime += dataset.spatials.length + " geografiske avgrensinger. ";
+        }
+
+        // Add temporal count to summary if exists.
+        if (dataset.temporals && dataset.temporals.length > 0) {
+            if (dataset.temporals.length == 1) {
+                if (dataset.temporals[0].startDate || dataset.temporals[0].endDate) {
+                    this.summaries.geotime += "1 tidsmessig avgrensing. ";
+                }
+            } else {
+                let count: number = 0;
+                this.dataset.temporals.forEach( temporal => {
+                    if (temporal.startDate || temporal.endDate) {
+                        count++;
+                    }
+                });
+                if (count > 0) {
+                    this.summaries.geotime += count + " tidsmessige avgrensinger. ";
+                }
+            }
+        }
+
+        // Add issued to summary if exists.
+        if (dataset.issued) {
+            this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(dataset.issued, "-", ".") + ". ";
+        }
+
+        // Add language count to summary if exists.
+        if (dataset.languages && dataset.languages.length > 0) {
+            if (dataset.languages.length == 1)
+                this.summaries.geotime += "Ett språk. ";
+            else
+                this.summaries.geotime += dataset.languages.length + " språk. ";
+        }
+
+        this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
+    }
+
+
+   /**
+     * Splits on splitChar, then reverse the array to get to swap year and day placement.
+     * Return new string separated by toChar.
+     * @param dateIn Date string to be formatted.
+     * @param splitChar Split date string based on this character
+     * @param toChar Returns date string separated by this chaaracter.
+     */
+    public static convertDateStringFormat(dateIn: string, splitChar: string, toChar: string): string {
+        if (dateIn && dateIn.length > 0) {
+            var dateSplit: string[] = dateIn.split(splitChar);
+
+            if (dateSplit.length == 3) {
+                dateSplit.forEach(date => {
+                    if (date.length == 1) {
+                        date = "0" + date;
+                    }
+                });
+
+                return dateSplit[2] + toChar + dateSplit[1] + toChar + dateSplit[0];
+            }
+            return dateIn;
+        }
+        return dateIn;
+    }
+
+    onSave(ok: boolean): void {
+        this.save();
+    }
 
     save(): void {
         this.buildGeoTimeSummaries(this.dataset);
@@ -292,7 +355,7 @@ if (_.isEmpty(dataset.issued)) {
         return this.service.get(this.catId, datasetId);
     }
 
-    private getDateObjectFromUnixTimestamp(timestamp: string) {
+    public getDateObjectFromUnixTimestamp(timestamp: string) {
         if (!timestamp) {
             return {};
         }
@@ -307,12 +370,44 @@ if (_.isEmpty(dataset.issued)) {
         }
     }
 
+    public buildProvenanceSummary() {
+      let provenance = "";
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+        provenance = this.dataset.provenance.prefLabel['nb'];
+      }
+      let frequency   = "";
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+        frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
+      }
+
+      let modified    = this.dataset.modified ? this.dataset.modified : '';
+
+      let currentness = "";
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+        currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
+      }
+
+      this.summaries.provenance = "";
+      if (provenance.length > 0) {
+        this.summaries.provenance =  provenance ;
+      }
+      if (frequency.length > 0) {
+        this.summaries.provenance += " " +frequency;
+      }
+      if (modified.length > 0) {
+        this.summaries.provenance += " " + modified;
+      }
+
+      if (currentness.length > 0) {
+        this.summaries.provenance += " " + currentness;
+      }
+    }
+
 
 
   private toFormGroup(data: Dataset): FormGroup {
 
     const formGroup = this.formBuilder.group({
-
 
       description: [data.description],
       catalog: [data.catalog],
@@ -322,7 +417,6 @@ if (_.isEmpty(dataset.issued)) {
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
-      modified: [this.getDateObjectFromUnixTimestamp(data.modified)],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)

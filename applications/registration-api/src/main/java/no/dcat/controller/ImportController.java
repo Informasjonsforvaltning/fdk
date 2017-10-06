@@ -11,7 +11,6 @@ import no.dcat.model.Catalog;
 import no.dcat.model.DataTheme;
 import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
-import no.dcat.model.Distribution;
 import no.dcat.model.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.CodesImportException;
@@ -143,7 +142,24 @@ public class ImportController {
             throw new CatalogNotFoundException(String.format("Catalog %s does not exist in registration database", catalogId));
         }
 
+        Catalog catalogToImportTo = parseCatalog(model, existingCatalog, catalogId);
 
+        if (catalogToImportTo == null) {
+            throw new CatalogNotFoundException(String.format("Catalog %s is not found in imported data", catalogId));
+        }
+
+        List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
+
+        if (importedDatasets.size() == 0) {
+            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId ));
+        }
+
+        catalogToImportTo.setDataset(importedDatasets);
+
+        return catalogToImportTo;
+    }
+
+    Catalog parseCatalog(Model model, Catalog existingCatalog, String catalogId) throws  IOException, CatalogNotFoundException {
         List<Catalog> catalogs = parseCatalogs(model);
 
         Catalog catalogToImportTo = catalogs
@@ -157,26 +173,27 @@ public class ImportController {
         catalogToImportTo.setId(existingCatalog.getId());
         catalogToImportTo.setTitle(existingCatalog.getTitle());
         catalogToImportTo.setDescription(existingCatalog.getDescription());
-
-        List<Dataset> datasets = parseDatasets(model);
-        List<Dataset> importedDatasets = new ArrayList<>();
-        for (Dataset ds : datasets) {
-            if (ds.getCatalog() != null && ds.getCatalog().contains(catalogId)) {
-                Dataset newDataset = datasetController.saveDataset(catalogId, ds, catalogToImportTo);
-                importedDatasets.add(ds);
-                logger.debug("ds: {}", newDataset);
-            }
-        }
-
-        if (importedDatasets.size() == 0) {
-            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId ));
-        }
-
-        catalogToImportTo.setDataset(importedDatasets);
+        catalogToImportTo.setPublisher(existingCatalog.getPublisher());
 
         return catalogToImportTo;
     }
 
+    List<Dataset> parseAndSaveDatasets(Model model, Catalog catalogToImportTo, String catalogId) throws IOException {
+        List<Dataset> importedDatasets = new ArrayList<>();
+
+        List<Dataset> datasets = parseDatasets(model);
+
+        for (Dataset dataset : datasets) {
+            if (dataset.getCatalog() != null && dataset.getCatalog().contains(catalogId)) {
+
+                Dataset newDataset = datasetController.createAndSaveDataset(catalogId, dataset, catalogToImportTo);
+                importedDatasets.add(newDataset);
+                logger.trace("ds: {}", newDataset);
+            }
+        }
+
+        return importedDatasets;
+    }
 
     List<Catalog> parseCatalogs(Model model) throws IOException {
 
@@ -302,6 +319,7 @@ public class ImportController {
             if (d.getAccessRights() != null) {
                 d.getAccessRights().setPrefLabel(getLabelForCode("rightsstatement", d.getAccessRights().getUri()));
             }
+
         });
     }
 
