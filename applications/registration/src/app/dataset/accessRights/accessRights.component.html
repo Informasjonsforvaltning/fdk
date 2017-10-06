@@ -34,8 +34,7 @@
                     [legalBasisList]="dataset.legalBasisForRestrictions"
                     [legalBasisListFormArray]="accessRightsForm.controls.legalBasisForRestrictions"
                     [legalBasisType]="'skjermingshjemmel'"
-                    [datasetForm]="accessRightsForm"
-                    (onSave)="onSave($event)">
+                    [datasetForm]="accessRightsForm">
                 </legal-basis-list>
             </div>
             <div class="form-group" *ngIf="showAccessRightComments()" >
@@ -48,8 +47,7 @@
                     [legalBasisList]="dataset.legalBasisForProcessings"
                     [legalBasisListFormArray]="accessRightsForm.controls.legalBasisForProcessings"
                     [legalBasisType]="'behandlingsgrunnlag'"
-                    [datasetForm]="accessRightsForm"
-                    (onSave)="onSave($event)">
+                    [datasetForm]="accessRightsForm">
                 </legal-basis-list>
             </div>
            <div class="form-group" *ngIf="showAccessRightComments()" >
@@ -62,8 +60,7 @@
                     [legalBasisList]="dataset.legalBasisForAccesses"
                     [legalBasisListFormArray]="accessRightsForm.controls.legalBasisForAccesses"
                     [legalBasisType]="'utleveringshjemmel'"
-                    [datasetForm]="accessRightsForm"
-                    (onSave)="onSave($event)">
+                    [datasetForm]="accessRightsForm">
                 </legal-basis-list>
             </div>
         </div>

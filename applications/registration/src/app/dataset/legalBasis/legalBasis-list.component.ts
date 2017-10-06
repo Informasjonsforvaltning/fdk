@@ -7,7 +7,7 @@ import { LegalBasisFormComponent } from './legalBasis.component';
 
 @Component({
     selector: 'legal-basis-list',
-    templateUrl: './legalBasis-list.html'
+    templateUrl: './legalBasis-list.component.html'
 })
 export class LegalBasisListComponent implements OnInit {
 
@@ -68,7 +68,5 @@ export class LegalBasisListComponent implements OnInit {
             this.showDelete = true;
         else
             this.showDelete = false;
-
-        console.log('SHOWDELETE: ', this.showDelete)
     }
 }
