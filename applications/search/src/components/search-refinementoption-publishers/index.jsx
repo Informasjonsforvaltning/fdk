@@ -37,5 +37,4 @@ export class RefinementOptionPublishers extends React.Component {
       </div>
     );
   }
-
 }

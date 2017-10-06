@@ -85,14 +85,14 @@ export default class SearchPage extends React.Component {
   }
   _renderPublisherRefinementListFilter() {
     this.publisherFilter =
-      <RefinementListFilter
+      (<RefinementListFilter
         id="publisher"
         title={localization.facet.organisation}
         field="publisher.name.raw"
         operator="AND"
         size={5/* NOT IN USE!!! see QueryTransport.jsx */}
         itemComponent={RefinementOptionPublishers}
-      />
+      />);
 
     return this.publisherFilter;
   }
