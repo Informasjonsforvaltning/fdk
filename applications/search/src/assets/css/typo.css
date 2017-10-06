@@ -41,10 +41,12 @@ h4 {
 }
 
 h5 {
-    color: var(--color1);
-    font-size: 1.5rem;
+    color: var(--color3);
+    font-size: 1.4rem;
     line-height: 1.8rem;
-    font-weight: 600;
+    font-weight: 400;
+    padding: 0px;
+    margin: 0px 0px 4px 0px;
 }
 
 p {
@@ -56,6 +58,11 @@ p {
     line-height: 2.625rem;
     font-weight: 400;
     margin: 0 0 2.1rem 0;
+}
+
+.fdk-ingress-detail {
+    margin: 0px;
+    padding: 0px;
 }
 
 a {
