@@ -1,6 +1,5 @@
 <div *ngIf="dataset && catalog && dataset.publisher">
-  <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong
-    id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
+  <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
 <div *ngIf="dataset && datasetForm">
   <div class="row justify-content-md-center nv-dataset" id="{{dataset.id}}">
@@ -18,31 +17,31 @@
             text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
             moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
             name="datasett-tittel"></helptext>
-          <input class="fdk-input" autofocus id="dataset-title" (keyup)="valuechange($event)" type="text"
+          <input autofocus class="fdk-input" id="dataset-title" (keyup)="valuechange($event)" type="text"
                  [(ngModel)]="dataset.title[language]"/>
         </div>
 
-        <div class="fdk-input-container" *ngIf="dataset.description">
-          <p class="fdk-input-label">Beskrivelse av datasettet <span class="fdk-obligatorisk">Obligatorisk</span></p>
-          <helptext
-            text="En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder."
-            moretext="Beskrivelsen skal være kortfattet slik at lister over datasett forståes ved å lese de første linjene. Hensikten med datasettet bør komme fram (f.eks. “Løsøreregisteret inneholder tinglyste flyttbare eiendeler”). For datasett som er omfattet av Personopplysningsloven, skal behandlingsformålet beskrives. Hvilke opplysninger som utgjør kjernen i datasettet bør angis. Feltinnhold skal ikke listes, men listes i emneord eller begreper. Beskrivelsen er ikke en gjentakelse av tittel Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk) Beskriv hva datasettet inneholder Beskriv avgrensninger, hva det ikke inneholder, dersom dette kan misforstås ut fra tittelen. Begrens lenker og markup (formatering) i teksten. Skal man angi språk må teksten formelt sett være fri for lenker og formatering (HTML)."
-            name="dataset-description"></helptext>
-          <textarea class="fdk-input fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
-                    (ngModelChange)="valuechange(this)"
-                    [(ngModel)]='dataset.description[language]'></textarea>
-        </div>
+      <div class="fdk-input-container" *ngIf="dataset.description">
+        <p class="fdk-input-label">Beskrivelse av datasettet <span class="fdk-obligatorisk">Obligatorisk</span></p>
+        <helptext
+        text="En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder."
+        moretext="Beskrivelsen skal være kortfattet slik at lister over datasett forståes ved å lese de første linjene. Hensikten med datasettet bør komme fram (f.eks. “Løsøreregisteret inneholder tinglyste flyttbare eiendeler”). For datasett som er omfattet av Personopplysningsloven, skal behandlingsformålet beskrives. Hvilke opplysninger som utgjør kjernen i datasettet bør angis. Feltinnhold skal ikke listes, men listes i emneord eller begreper. Beskrivelsen er ikke en gjentakelse av tittel Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk) Beskriv hva datasettet inneholder Beskriv avgrensninger, hva det ikke inneholder, dersom dette kan misforstås ut fra tittelen. Begrens lenker og markup (formatering) i teksten. Skal man angi språk må teksten formelt sett være fri for lenker og formatering (HTML)."
+        name="dataset-description"></helptext>
+        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
+        (ngModelChange)="valuechange(this)"
+        [(ngModel)]='dataset.description[language]'></textarea>
+      </div>
 
-        <div class="fdk-input-container">
-          <label for="dataset-objective" class="fdk-input-label">Formålet med datasettet</label>
-          <helptext
-            text="En setnings-beskrivelse av formålet til datasettet."
-            moretext="Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet. I søkeløsningen vil feltet vises samlet med beskrivelsen. Dersom datasettet inneholder personopplysninger skal behandlingsformålet for personopplysninger etter Personopplysningsloven beskrives her."
-            name="datasett-objective"></helptext>
-          <textarea autofocus class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
-                    (ngModelChange)="valuechange(this)"
-                    [(ngModel)]='dataset.objective[language]'></textarea>
-        </div>
+      <div class="fdk-input-container">
+        <label for="dataset-objective" class="fdk-input-label">Formålet med datasettet</label>
+        <helptext
+        text="En setnings-beskrivelse av formålet til datasettet."
+        moretext="Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet. I søkeløsningen vil feltet vises samlet med beskrivelsen. Dersom datasettet inneholder personopplysninger skal behandlingsformålet for personopplysninger etter Personopplysningsloven beskrives her."
+        name="datasett-objective"></helptext>
+        <textarea class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
+        (ngModelChange)="valuechange(this)"
+        [(ngModel)]='dataset.objective[language]'></textarea>
+      </div>
 
         <div class="fdk-input-container" *ngIf="dataset.landingPages">
           <label for="dataset-landingpage" class="fdk-input-label">Lenke til mer informasjon om datasettet</label>
@@ -74,135 +73,150 @@
   </div>
 
 
-  <div class="row justify-content-md-center">
-    <label for="tema-toggle" class="col-md-push-1 col-md-2 section-title">
-      Tema<b class="caret-right"></b>
-    </label>
-    <div class="col-md-push-1 col-md-8 collapsed">
-      <input type="checkbox" id="tema-toggle" class="expand-checkbox"/>
-      <label for="tema-toggle" class="collapsed-content expand-label">
-        <div class="truncate">
-        <span class="" *ngFor="let tema of dataset.themes; let i=index">
+<div class="row justify-content-md-center" >
+  <label for="tema-toggle" class="col-md-push-1 col-md-2 section-title">
+    Tema<b class="caret-right"></b>
+  </label>
+  <div class="col-md-push-1 col-md-8 collapsed">
+    <input type="checkbox" id="tema-toggle" class="expand-checkbox" />
+    <label for="tema-toggle" class="collapsed-content expand-label">
+      <div class="truncate">
+        <span class="" *ngFor="let tema of dataset.themes; let i=index" >
           <span *ngIf="tema.title">{{tema.title.nb || tema.title.no}}</span>
         </span>
-        </div>
-        <div *ngIf="dataset.themes && dataset.themes.length === 0">Klikk for å fylle ut</div>
-      </label>
-      <div class="expanded-content">
-        <tema [dataset]="dataset" (onSave)="onSave($event)"></tema>
       </div>
+      <div *ngIf="dataset.themes && dataset.themes.length === 0">Klikk for å fylle ut</div>
+    </label>
+    <div class="expanded-content">
+      <tema [dataset]="dataset" (onSave)="onSave($event)"></tema>
     </div>
   </div>
+</div>
 
-  <div class="row justify-content-md-center" *ngIf="dataset">
-    <label for="type-toggle" class="col-md-push-1 col-md-2 section-title">
-      Type<b class="caret-right"></b>
-    </label>
-    <div class="col-md-push-1 col-md-8 collapsed">
-      <input type="checkbox" id="type-toggle" class="expand-checkbox"/>
-      <label for="type-toggle" class="collapsed-content expand-label">{{dataset.type || 'Klikk for å fylle ut'}}</label>
-      <div class="expanded-content">
+<div class="row justify-content-md-center" *ngIf="dataset">
+  <label for="type-toggle" class="col-md-push-1 col-md-2 section-title">
+    Type<b class="caret-right"></b>
+  </label>
+  <div class="col-md-push-1 col-md-8 collapsed">
+    <input type="checkbox" id="type-toggle" class="expand-checkbox" />
+    <label for="type-toggle" class="collapsed-content expand-label">{{dataset.type || 'Klikk for å fylle ut'}}</label>
+    <div class="expanded-content">
 
-        <type [dataset]="dataset"
-              (onSave)="onSave($event)">
-        </type>
-      </div>
+      <type [dataset]="dataset"
+      (onSave)="onSave($event)">
+    </type>
     </div>
   </div>
+</div>
 
-  <div class="row justify-content-md-center" *ngIf="dataset">
-    <label for="terms-toggle" class="col-md-push-1 col-md-2 section-title">
-      Begrep og søkeord<b class="caret-right"></b>
-    </label>
-    <div class="col-md-push-1 col-md-8 collapsed">
-      <input type="checkbox" id="terms-toggle" class="expand-checkbox"/>
-      <label for="terms-toggle" class="collapsed-content expand-label">
-        <div
-          *ngIf="!((dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0))"
-          class="truncate">
+<div class="row justify-content-md-center" *ngIf="dataset">
+  <label for="terms-toggle" class="col-md-push-1 col-md-2 section-title">
+    Begrep og søkeord<b class="caret-right"></b>
+  </label>
+  <div class="col-md-push-1 col-md-8 collapsed">
+    <input type="checkbox" id="terms-toggle" class="expand-checkbox" />
+    <label for="terms-toggle" class="collapsed-content expand-label">
+      <div *ngIf="!((dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0))" class="truncate">
         <span *ngIf="(dataset.subjects && dataset.subjects.length !== 0)">
-          <span class="" *ngFor="let subject of dataset.subjects; let i=index">
+          <span class="" *ngFor="let subject of dataset.subjects; let i=index" >
             <span>{{subject}}</span>
           </span>
         </span>
-          <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">
-          <span class="" *ngFor="let keyword of dataset.keywords; let i=index">
+        <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">
+          <span class="" *ngFor="let keyword of dataset.keywords; let i=index" >
             <span *ngIf="keyword.nb">{{keyword.nb}}</span>
           </span>
         </span>
-        </div>
-        <div
-          *ngIf="(dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0)">
-          <span><span class="">Klikk for å fylle ut</span></span></div>
-      </label>
-      <!--label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label-->
-      <div class="expanded-content">
-        <information [dataset]="dataset" (onSave)="onSave($event)"></information>
       </div>
+      <div *ngIf="(dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0)"><span><span class="">Klikk for å fylle ut</span></span></div>
+    </label>
+    <!--label for="terms-toggle" class="collapsed-content expand-label" *ngIf="dataset.keywords && dataset.keywords.length === 0 && dataset.subjects && dataset.subjects.length === 0" >Klikk for å fylle ut</label-->
+    <div class="expanded-content">
+      <information [dataset]="dataset" (onSave)="onSave($event)"></information>
     </div>
   </div>
+</div>
 
-  <div class="row justify-content-md-center" *ngIf="dataset">
+<div class="row justify-content-md-center" *ngIf="dataset">
     <label for="geotime-toggle" class="col-md-push-1 col-md-2 section-title">
-      Geografi, tid, og språk<b class="caret-right"></b>
+        Geografi, tid, og språk<b class="caret-right"></b>
     </label>
     <div class="col-md-push-1 col-md-8 collapsed">
-      <input type="checkbox" id="geotime-toggle" class="expand-checkbox"/>
-      <label for="tema-toggle" class="collapsed-content expand-label">
-        {{summaries.geotime}}
-      </label>
-      <div class="expanded-content">
-        <div class="fdk-input-container" *ngIf="dataset.title">
-          <p class="fdk-input-label">Geografisk avgrensning</p>
-          <helptext
-            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-            name="geoavgrensning">
-          </helptext>
-          <spatial [dataset]="dataset"
-                   (onSave)="onSave($event)">
-          </spatial>
-        </div>
-        <div class="fdk-input-container" *ngIf="dataset.temporals && datasetForm.controls.temporals">
-          <temporals
-            title="Tidsperiode"
-            [datasetForm]="datasetForm"
-            [temporalsFormArray]="datasetForm.controls.temporals"
-            [temporals]="dataset.temporals"
-          ></temporals>
-        </div>
-        <div class="row">
-          <div [formGroup]="datasetForm" class="col-md-4">
-            <p class="fdk-input-label">Utgivelsesdato</p>
-            <helptext
-              text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-              moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-              name="utgivelse">
-            </helptext>
-            <my-date-picker id="issued" placeholder="Opprettet dato" name="issued" [options]="myDatePickerOptions"
-                            locale="no"
-                            formControlName="issued"></my-date-picker>
-          </div>
-        </div>
-        <div class="row">
-          <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">
-            <p class="fdk-input-label">Språk</p>
-            <helptext
-              text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-              moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-              name="language">
-            </helptext>
-            <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index"
-                 class="language-checkbox">
-              <label><!-- 416 -->
-                <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control"/>
-                <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
-                <span>{{availableLanguages[i].prefLabel.nb}}</span>
-              </label>
+        <input type="checkbox" id="geotime-toggle" class="expand-checkbox" />
+        <label for="tema-toggle" class="collapsed-content expand-label">
+            {{summaries.geotime}}
+        </label>
+        <div class="expanded-content">
+            <div class="fdk-input-container" *ngIf="dataset.title">
+                <p class="fdk-input-label">Geografisk avgrensning</p>
+                <helptext
+                    text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                    moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                    name="geoavgrensning">
+                </helptext>
+                <spatial
+                    [dataset]="dataset"
+                    (onSave)="onSave($event)">
+                </spatial>
             </div>
-          </div>
+            <div class="fdk-input-container">
+                <temporals
+                    title="Tidsperiode"
+                    [datasetForm]="datasetForm"
+                    [temporalsFormArray]="datasetForm.controls.temporals"
+                    [temporals]="dataset.temporals">
+                </temporals>
+            </div>
+            <div class="fdk-input-container" style="margin-bottom: 20px">
+                <div [formGroup]="datasetForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="fdk-input-label">Utgivelsesdato</p>
+                            <helptext
+                                text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                                moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                                name="utgivelse">
+                            </helptext>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <my-date-picker
+                                id="issued"
+                                placeholder="Opprettet dato"
+                                name="issued"
+                                [options]="myDatePickerOptions"
+                                locale="no"
+                                formControlName="issued" >
+                            </my-date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fdk-input-container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="fdk-input-label">Språk</p>
+                        <helptext
+                            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                            name="language">
+                        </helptext>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">
+                        <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="language-checkbox">
+                            <label><!-- 416 -->
+                            <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
+                            <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
+                                <span>{{availableLanguages[i].prefLabel.nb}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
   </div>
 

@@ -11,8 +11,11 @@
     --color-cta2: #197DAF; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
     --color-cta3: #009BCD; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
     --color-green: #00DCA0; /* grønn */
+    --color-green2: #BEF5E6; /* lys grønn */
     --color-yellow: #FFD200; /* gul */
+    --color-yellow2: #FFF5B9; /* lys gul */
     --color-red: #FF3C64; /* rød */
+    --color-red2: #FFCDD7; /* lys rød */
 }
 
 .fdk-color0 {
@@ -68,4 +71,16 @@
 
 .fdk-color-icon-cta {
     color: var(--color-cta3);
+}
+
+.fdk-bg-green2 {
+    background-color: var(--color-green2);
+}
+
+.fdk-bg-yellow2 {
+    background-color: var(--color-yellow2);
+}
+
+.fdk-bg-red2 {
+    background-color: var(--color-red2);
 }

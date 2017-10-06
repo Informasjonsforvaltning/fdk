@@ -27,8 +27,14 @@
                         formControlName="endDate" ></my-date-picker>
       </div>
       <div class="col-md-4">
-        <span class="delete-temporal-wrapper">
+        <!--<span class="delete-temporal-wrapper">
           <a href=""  class="delete-temporal-button" (click)="removeTemporal(temporalIndex)">╳</a>
+        </span>-->
+        <span class="delete-temporal-wrapper" *ngIf="showDelete">
+            <a href="" class="delete-temporal-button" 
+                (click)="removeTemporal(temporalIndex)">
+                <i class="fa fa-trash fdk-fa-dark fdk-fa-left"></i>Slett
+            </a>
         </span>
       </div>
     </div>

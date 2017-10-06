@@ -1,0 +1,5 @@
+node_modules
+src/utils
+src/l10n
+src/ts
+test
