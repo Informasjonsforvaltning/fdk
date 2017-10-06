@@ -142,11 +142,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     );
 
     return (
-      <Link
+      <a
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        to={link}
+        href={link}
       >
         <div className="fdk-container fdk-container-search-hit">
           <h2 id="search-hit-title">{title}</h2>
@@ -166,7 +166,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             {this._renderSample(source)}
           </div>
         </div>
-      </Link>
+      </a>
     );
   }
 }
