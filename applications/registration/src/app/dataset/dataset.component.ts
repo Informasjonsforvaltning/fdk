@@ -116,6 +116,7 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
       this.dataset.subjects = this.dataset.subjects || [];
@@ -316,18 +317,18 @@ this.dataset.languages = this.dataset.languages || [];
 
     public buildProvenanceSummary() {
       let provenance = "";
-      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];
       }
       let frequency   = "";
-      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
         frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
       }
 
       let modified    = this.dataset.modified ? this.dataset.modified : '';
 
       let currentness = "";
-      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
         currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
       }
 

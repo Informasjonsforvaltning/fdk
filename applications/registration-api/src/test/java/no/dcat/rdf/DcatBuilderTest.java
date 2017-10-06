@@ -132,7 +132,7 @@ public class DcatBuilderTest {
         dataset.setHasRelevanceAnnotation(createQualityAnnotation("Relevance", "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."));
         dataset.setHasCompletenessAnnotation(createQualityAnnotation("Completeness", "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."));
         dataset.setHasAccuracyAnnotation(createQualityAnnotation("Accuracy", "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."));
-        dataset.setHasAvailabilityAnnotations(createQualityAnnotation("Availability", "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."));
+        dataset.setHasAvailabilityAnnotation(createQualityAnnotation("Availability", "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."));
 
         dataset.setLanguage(Collections.singletonList(skosCode(
                         "http://publications.europa.eu/resource/authority/language/NOR",

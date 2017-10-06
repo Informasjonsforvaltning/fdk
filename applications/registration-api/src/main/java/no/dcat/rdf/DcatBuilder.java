@@ -19,7 +19,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.apache.jena.vocabulary.VCARD4;
@@ -181,7 +180,7 @@ public class DcatBuilder {
 
                 Property hasQualityAnnotation = model.createProperty(dqvNS +"hasQualityAnnotation");
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAvailabilityAnnotations());
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasRelevanceAnnotation());
