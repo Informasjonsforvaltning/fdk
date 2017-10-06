@@ -1,20 +1,15 @@
-<h3>
-    {{title}}
-</h3>
-
 <div *ngIf="temporals" class="temporal-list"
-     [formGroup]="datasetForm">
-    <div formArrayName="temporals">
-        <div *ngFor="let temporal of temporals; let idx=index ">
-            <temporal
-                [temporalsFormArray]="temporalsFormArray"
-                [temporal]="temporal"
-                (deleteTemporal)="removeTemporal($event)"
-                [temporalIndex]="idx">
-            </temporal>
-        </div>
-        <a href="#" (click)="addTemporal()">
-            <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
-        </a>
+    [formGroup]="datasetForm">
+    <div *ngFor="let temporal of temporals; let idx=index ">
+        <temporal
+            [temporalsFormArray]="temporalsFormArray"
+            [temporal]="temporal"
+            [temporalIndex]="idx"
+            [showDelete] ="showDelete"
+            (deleteTemporal)="removeTemporal($event)">
+        </temporal>
     </div>
+    <a href="#" (click)="addTemporal()">
+        <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
+    </a>
 </div>

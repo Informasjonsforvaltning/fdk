@@ -7,7 +7,7 @@ import { LegalBasisFormComponent } from './legalBasis.component';
 
 @Component({
     selector: 'legal-basis-list',
-    templateUrl: './legalBasis-list.html'
+    templateUrl: './legalBasis-list.component.html'
 })
 export class LegalBasisListComponent implements OnInit {
 

@@ -35,16 +35,12 @@ export class LegalBasisFormComponent implements OnInit {
     @Output()
     deleteLegalBasis: EventEmitter<string> = new EventEmitter();
 
-    @Output()
-    onSave = new EventEmitter<boolean>();
-
     public legalBasisForm: FormGroup;
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
         if (this.legalBasis.ui_visible) this.showForm = true;
-       // if (this.legalBasis.showDelete) this.showDelete = true;
         this.legalBasisForm = this.toFormGroup(this.legalBasis);
         this.legalBasisListFormArray.push(this.legalBasisForm);
 
