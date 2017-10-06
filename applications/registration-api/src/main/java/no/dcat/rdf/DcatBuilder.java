@@ -8,7 +8,7 @@ import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
 import no.dcat.model.SkosCode;
-import no.dcat.model.SkosConceptWithSource;
+import no.dcat.model.SkosConcept;
 import no.dcat.shared.Subject;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;
@@ -213,7 +213,7 @@ public class DcatBuilder {
         }
     }
 
-    private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConceptWithSource skosConceptWithHomepage) {
+    private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConcept skosConceptWithHomepage) {
         Resource skosConceptWithHomepageResource = model.createResource(skosConceptWithHomepage.getUri());
 
         skosConceptWithHomepageResource.addProperty(RDF.type, SKOS.Concept);
@@ -340,7 +340,7 @@ public class DcatBuilder {
     }
 
 
-    public DcatBuilder addProperty(Resource resource, Property property, SkosConceptWithSource concept) {
+    public DcatBuilder addProperty(Resource resource, Property property, SkosConcept concept) {
         if (concept != null && concept.getUri() != null && !"".equals(concept.getUri())) {
             Resource r = model.createResource();
             r.addProperty(DCTerms.source, concept.getUri());
@@ -380,9 +380,9 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConceptWithSource> concepts) {
+    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts) {
         if (concepts != null) {
-            for (SkosConceptWithSource concept : concepts) {
+            for (SkosConcept concept : concepts) {
                 addProperty(resource, property, concept);
             }
         }

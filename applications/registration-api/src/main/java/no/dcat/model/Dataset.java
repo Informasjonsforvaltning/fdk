@@ -104,7 +104,7 @@ public class Dataset {
     //dcat:conformsTo
     //Norwegian: I samsvar med
     @Field
-    private List<SkosConceptWithSource> conformsTo;
+    private List<SkosConcept> conformsTo;
 
     //dct:temporal
     //Norwegian: tidsperiode
@@ -126,17 +126,17 @@ public class Dataset {
     // dcatno:legalBasisForRestriction
     //Norwegian: skjermingshjemmel
     @Field
-    private List<SkosConceptWithSource> legalBasisForRestriction = Collections.emptyList();
+    private List<SkosConcept> legalBasisForRestriction = Collections.emptyList();
 
     // dcatno:legalBasisForProcessing
     //Norwegian: behanlingsgrunnlag
     @Field
-    private List<SkosConceptWithSource> legalBasisForProcessing = Collections.emptyList();
+    private List<SkosConcept> legalBasisForProcessing = Collections.emptyList();
 
     // dcatno:legalBasisForAccess
     //Norwegian: utleveringshjemmel
     @Field
-    private List<SkosConceptWithSource> legalBasisForAccess = Collections.emptyList();
+    private List<SkosConcept> legalBasisForAccess = Collections.emptyList();
 
     // dcatno:hasXXXXAnnotation
     @Field
@@ -179,7 +179,7 @@ public class Dataset {
     // dct: informationModel
     // Norwegian: informasjonsmodell
     @Field
-    private List<SkosConceptWithSource> informationModel;
+    private List<SkosConcept> informationModel;
 
     //dct:type
     //Norwegian: type

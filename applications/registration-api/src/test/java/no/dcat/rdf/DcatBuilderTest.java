@@ -16,7 +16,7 @@ import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
 import no.dcat.model.SkosCode;
-import no.dcat.model.SkosConceptWithSource;
+import no.dcat.model.SkosConcept;
 import no.dcat.shared.Subject;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -98,13 +97,13 @@ public class DcatBuilderTest {
         contact.setOrganizationUnit("Avdeling for digitalisering");
 
         dataset.setContactPoint(Collections.singletonList(contact));
-        dataset.setConformsTo(Collections.singletonList(
-                SkosConceptWithSource.getInstance("https://www.kartverket.no/geodataarbeid/standarder/sosi/", "SOSI", "dct:Standard")));
+        SkosConcept sosi =SkosConcept.getInstance("https://www.kartverket.no/geodataarbeid/standarder/sosi/", "SOSI", "dct:Standard");
+        dataset.setConformsTo(Collections.singletonList(sosi));
 
         dataset.setPublisher(publisher);
 
         dataset.setInformationModel(Collections.singletonList(
-                SkosConceptWithSource.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null)));
+                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null)));
 
         Subject subject = new Subject();
         subject.setDefinition(map("no","alt som er registrert med et organisasjonsnummer "));
@@ -116,12 +115,12 @@ public class DcatBuilderTest {
                 subject
         ));
 
-        dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/ANNUAL"));
+        dataset.setAccrualPeriodicity(skosCode("http://publications.europa.eu/resource/authority/frequency/ANNUAL", "ANNUAL", map("nb","årlig")));
 
         dataset.setIssued(Date.from(LocalDateTime.of(2012,01,01,00,00).toInstant(ZoneOffset.UTC)));
         dataset.setModified(Date.from(LocalDateTime.of(2016,9,21,01,30,3).toInstant(ZoneOffset.UTC)));
 
-        dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak"));
+        dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak", "vedtak", map("nb", "Vedtak")));
         dataset.setHasCurrentnessAnnotation(createQualityAnnotation("Currentness", "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
         dataset.setSpatial(Arrays.asList(
                 skosCode("http://www.geonames.org/3162656/asker.html", null, map("nb", "Asker")),
@@ -152,10 +151,12 @@ public class DcatBuilderTest {
         dataset.setTheme(Arrays.asList(theme, theme2));
 
         Distribution distribution = RegistrationFactory.createDistribution(catalog.getId(), dataset.getId());
-        distribution.setAccessURL(Collections.singletonList("http://testetaten.no/data/access"));
-        distribution.setTitle(map("nb", "Standard data"));
-        distribution.setDescription(map("nb", "Beskrivelsen er ikke tilgjengelig"));
-        distribution.setLicense("http://opne.data.no/lisens/nr1");
+        distribution.setAccessURL(Arrays.asList("http://www.detteerenlenke.no/til-nedlasting",
+                "http://www.detteerenannenlenke.no/til-en-annen-nedlasting\n",
+                "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"));
+        distribution.setDescription(map("nb", "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."));
+        distribution.setLicense(sosi);
+        distribution.setPage(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen"));
         distribution.setFormat(Collections.singletonList("application/json"));
 
         dataset.setDistribution(Collections.singletonList(distribution));
@@ -166,13 +167,12 @@ public class DcatBuilderTest {
         dataset.setTemporal(Collections.singletonList(pot));
 
         dataset.setLegalBasisForRestriction(Collections.singletonList(
-                SkosConceptWithSource.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]",null)));
+                SkosConcept.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]")));
         dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
         dataset.setIdentifier(Collections.singletonList("42"));
         dataset.setPage(Collections.singletonList("http://uri1"));
 
         dataset.setAdmsIdentifier(Collections.singletonList("http://adms.identifier.no/scheme/42"));
-
 
         logger.debug("hasCurrentnessAnnotation:\n {}", dataset.getHasCurrentnessAnnotation());
 
@@ -214,7 +214,7 @@ public class DcatBuilderTest {
             }
         };
         //Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).setPrettyPrinting().create();
 
         String actual = gson.toJson(catalog);
 
@@ -231,12 +231,6 @@ public class DcatBuilderTest {
         return result;
     }
 
-    SkosCode skosCode(String uri) {
-        SkosCode result = new SkosCode();
-        result.setUri(uri);
-
-        return result;
-    }
 
     @Test
     public void convertMinimumCatalogOK() throws Throwable {

@@ -20,6 +20,8 @@ public class Distribution {
     private Map<String,String> description;
     private List<String> downloadURL;
     private List<String> accessURL;
-    private String license;
+    private SkosConcept license;
+    private List<SkosConcept> conformsTo;
+    private SkosConcept page;
     private List<String> format;
 }
