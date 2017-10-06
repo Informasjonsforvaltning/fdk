@@ -10,17 +10,17 @@ describe('DatasetDescription', () => {
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('#dataset-description').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-description')).to.have.length(1);
   });
 
   it ('should render title', () => {
     wrapper.setProps({ title: 'tittel'});
-    expect(wrapper.find('h1.fdk-margin-bottom').length).to.be.equal(1);
+    expect(wrapper.find('h1.fdk-margin-bottom')).to.have.length(1);
   });
 
   it ('should render description', () => {
     wrapper.setProps({ description: 'description'});
-    expect(wrapper.find('p.fdk-ingress').length).to.be.equal(1);
+    expect(wrapper.find('p.fdk-ingress')).to.have.length(1);
   });
 
   it ('should render publisher with link', () => {
@@ -30,8 +30,8 @@ describe('DatasetDescription', () => {
         "name": "SKATTEETATEN",
       }
     });
-    expect(wrapper.find('#dataset-descritption-publisher-text').length).to.be.equal(1);
-    expect(wrapper.find('#dataset-descritption-publisher-link').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-descritption-publisher-text')).to.have.length(1);
+    expect(wrapper.find('#dataset-descritption-publisher-link')).to.have.length(1);
   });
 
   it ('should render publisher without link', () => {
@@ -40,8 +40,8 @@ describe('DatasetDescription', () => {
         "name": "SKATTEETATEN",
       }
     });
-    expect(wrapper.find('#dataset-descritption-publisher-text').length).to.be.equal(1);
-    expect(wrapper.find('#dataset-descritption-publisher-link').length).to.be.equal(0);
+    expect(wrapper.find('#dataset-descritption-publisher-text')).to.have.length(1);
+    expect(wrapper.find('#dataset-descritption-publisher-link')).to.have.length(0);
   });
 
   it ('should render themes', () => {
@@ -56,6 +56,6 @@ describe('DatasetDescription', () => {
         }
       }]
     });
-    expect(wrapper.find('#dataset-description-theme-0').length).to.be.equal(1);
+    expect(wrapper.find('#dataset-description-theme-0')).to.have.length(1);
   });
 });

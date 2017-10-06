@@ -53,7 +53,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       return (
         <span>
           {localization.search_hit.owned}&nbsp;
-          <span>
+          <span id="search-hit-publisher-text">
             {source.publisher ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
           </span>
         </span>
@@ -84,7 +84,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (sample) {
       if (sample.length > 0) {
         return (
-          <span>
+          <span id="search-hit-sample">
             {localization.search_hit.sample}
           </span>
         );
@@ -149,7 +149,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         to={link}
       >
         <div className="fdk-container fdk-container-search-hit">
-          <h2>{title}</h2>
+          <h2 id="search-hit-title">{title}</h2>
           <div>
             {this._renderPublisher(source)}
             {this._renderThemes(source)}
