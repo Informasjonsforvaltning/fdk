@@ -95,7 +95,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   render() {
     const result = this.state.result;
-    //const url = `dataset/${encodeURIComponent(result._id)}`;
+    // const url = `dataset/${encodeURIComponent(result._id)}`;
     const language = this.props.selectedLanguageCode;
     const source = _.extend({}, result._source, result.highlight);
 

@@ -30,47 +30,47 @@ export default class DetailsPage extends React.Component {
     axios.get(url)
       .then((res) => {
         const data = res.data;
-        let dataset = data.hits.hits[0]._source;
+        const dataset = data.hits.hits[0]._source;
         // ##### MOCK DATA START - please remove when backend is fixed;
-        dataset.type = "Kodelister";
-        dataset.conformsTo = ["SOSI"];
+        dataset.type = 'Kodelister';
+        dataset.conformsTo = ['SOSI'];
         dataset.legalBasisForRestrictions = [
           {
-            source: "http://www.example.com/somepath/somelegalbasis",
+            source: 'http://www.example.com/somepath/somelegalbasis',
             foafHomepage: null,
             prefLabel: {
-                nb:"Den spesifike loven "
+              nb: 'Den spesifike loven '
             }
           },
           {
-            source: "http://www.example.com/somepath/someotherlegalbasis",
+            source: 'http://www.example.com/somepath/someotherlegalbasis',
             foafHomepage: null,
             prefLabel: {
-                nb:"Den andre spesifike loven"
+              nb: 'Den andre spesifike loven'
             }
           }
         ];
         dataset.legalBasisForProcessings = [
           {
-            source: "http://www.example.com/somepath/someotherlegalbasis",
+            source: 'http://www.example.com/somepath/someotherlegalbasis',
             foafHomepage: null,
             prefLabel: {
-                nb:"a legalBasisForProcessings that has a long title"
+              nb: 'a legalBasisForProcessings that has a long title'
             }
           }
         ];
         dataset.legalBasisForAccesses = [
           {
-            source: "http://www.example.com/somepath/someotherlegalbasis",
+            source: 'http://www.example.com/somepath/someotherlegalbasis',
             foafHomepage: null,
             prefLabel: {
-                nb:"a legalBasisForAccesses that has a long title"
+              nb: 'a legalBasisForAccesses that has a long title'
             }
           }
-        ]
+        ];
         // ### MOCK DATA END
         this.setState({
-          dataset: dataset,
+          dataset,
           loading: false
         });
       });
@@ -130,10 +130,10 @@ export default class DetailsPage extends React.Component {
   }
 
 
-    _renderKeyInfo() {
-      if (this.state.dataset) {
-        return (
-          <DatasetKeyInfo
+  _renderKeyInfo() {
+    if (this.state.dataset) {
+      return (
+        <DatasetKeyInfo
           authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
           selectedLanguageCode={this.props.selectedLanguageCode}
           type={this.state.dataset.type}
@@ -141,11 +141,11 @@ export default class DetailsPage extends React.Component {
           legalBasisForRestrictions={this.state.dataset.legalBasisForRestrictions}
           legalBasisForProcessings={this.state.dataset.legalBasisForProcessings}
           legalBasisForAccesses={this.state.dataset.legalBasisForAccesses}
-          />
-        );
-      }
-      return null;
+        />
+      );
     }
+    return null;
+  }
 
   _renderDatasetInfo() {
     const { accrualPeriodicity } = this.state.dataset;
@@ -180,12 +180,20 @@ export default class DetailsPage extends React.Component {
   }
 
   render() {
+    /*
+     <div className="fdk-container-detail fdk-container-detail-header">
+     <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
+     </div>
+     <DatasetBegrep
+     title="Jordsmonn"
+     description="Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet"
+     />
+     */
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-8 col-md-offset-2">
-          {this._renderDatasetDescription()}
-
+            {this._renderDatasetDescription()}
 
 
             {this._renderKeyInfo()}
@@ -202,15 +210,6 @@ export default class DetailsPage extends React.Component {
               tilgjengelighet="-"
             />
 
-
-            <div className="fdk-container-detail fdk-container-detail-header">
-              <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
-            </div>
-
-            <DatasetBegrep
-              title="Jordsmonn"
-              description="Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet"
-            />
           </div>
         </div>
       </div>

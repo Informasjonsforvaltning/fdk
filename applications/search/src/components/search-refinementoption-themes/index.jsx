@@ -3,6 +3,7 @@ import * as React from 'react';
 export class RefinementOptionThemes extends React.Component {
   render() {
     const props = this.props;
+    console.log('themes: ' + JSON.stringify(props));
     let themeLabel = '';
 		  const {
 		    bemBlocks, onClick, active, disabled, style, itemKey,

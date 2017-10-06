@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 
-export class RefinementOptionPublishers extends React.Component {
+export default class RefinementOptionPublishers extends React.Component {
   render() {
     const props = this.props;
+    console.log('publ: ' + JSON.stringify(props));
 		  const {
 		    bemBlocks, onClick, active, disabled, style, itemKey,
 		    label, count, showCount, showCheckbox } = props;

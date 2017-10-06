@@ -93,7 +93,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           {this._renderTilgangsURL()}
           <div className="fdk-container-detail-text">
             <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
-            <p className="fdk-ingress fdk-ingress-detail"></p>
+            <p className="fdk-ingress fdk-ingress-detail" />
           </div>
         </div>
       </div>
