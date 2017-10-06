@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import localization from '../../components/localization';
 import DistributionFormat from '../search-dataset-format';
+import './index.scss';
 
 export default class DatasetDistribution extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderFormats(authorityCode) {
@@ -50,19 +51,6 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
     let distributionRestricted = false;
     let distributionPublic = false;
 
-    /*
-    if (this.props.authorityCode === 'NON_PUBLIC') {
-      distributionNonPublic = true;
-    } else if (this.props.authorityCode === 'RESTRICTED') {
-      distributionRestricted = true;
-    } else if (this.props.authorityCode === 'PUBLIC') {
-      distributionPublic = true;
-    } else { // antar public hvis authoritycode mangler
-      distributionPublic = true;
-    }
-    */
-
-
     let authorityCode = '';
     if (this.props.authorityCode) {
       authorityCode = this.props.authorityCode;
@@ -105,7 +93,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           {this._renderTilgangsURL()}
           <div className="fdk-container-detail-text">
             <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
-            <p className="fdk-ingress fdk-ingress-detail">TODO: Dette er innholdet i denne boksen.</p>
+            <p className="fdk-ingress fdk-ingress-detail"></p>
           </div>
         </div>
       </div>

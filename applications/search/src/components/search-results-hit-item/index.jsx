@@ -165,11 +165,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             <br />
             {this._renderFormats(source, authorityCode)}
           </div>
-          {source.landingPage &&
-            <div>
-              {source.landingPage}
-            </div>
-          }
         </div>
       </Link>
     );

@@ -213,10 +213,6 @@ export default class SearchPage extends React.Component {
                       itemComponent={searchHitItemWithProps}
                       sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
                     />
-                    <NoHits translations={{
-                      'NoHits.NoResultsFound': localization.page.nohits
-                    }}
-                    />
                     <Pagination
                       showNumbers
                     />

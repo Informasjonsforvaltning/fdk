@@ -183,8 +183,9 @@ export default class DetailsPage extends React.Component {
     return (
       <div className="container">
         <div className="row">
+          <div className="col-md-8 col-md-offset-2">
           {this._renderDatasetDescription()}
-          <div className="col-md-8">
+
 
 
             {this._renderKeyInfo()}
@@ -194,11 +195,11 @@ export default class DetailsPage extends React.Component {
             {this._renderDatasetInfo()}
 
             <DatasetQuality
-              header="Kvalitet på innhold2"
-              relevans="tekst følger"
-              kompletthet="tekst følger"
-              noyaktighet="tekst følger"
-              tilgjengelighet="tekst følger"
+              header="Kvalitet på innhold"
+              relevans="-"
+              kompletthet="-"
+              noyaktighet="-"
+              tilgjengelighet="-"
             />
 
 

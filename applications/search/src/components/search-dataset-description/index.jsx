@@ -53,7 +53,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 
   render() {
     return (
-      <div id="dataset-description" className="col-md-8">
+      <div id="dataset-description">
         {this.props.title &&
         <h1 className="fdk-margin-bottom">
           {this.props.title}
