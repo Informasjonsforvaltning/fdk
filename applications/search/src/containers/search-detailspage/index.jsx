@@ -134,7 +134,7 @@ export default class DetailsPage extends React.Component {
       if (this.state.dataset) {
         return (
           <DatasetKeyInfo
-          authorityCode={this.state.dataset.authorityCode}
+          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
           selectedLanguageCode={this.props.selectedLanguageCode}
           type={this.state.dataset.type}
           conformsTo={this.state.dataset.conformsTo}

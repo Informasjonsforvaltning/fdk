@@ -8,29 +8,35 @@ import localization from '../../components/localization';
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
+    console.log(JSON.stringify(this.props.authorityCode));
     const language = this.props.selectedLanguageCode;
 
-    let distribution_non_public = false;
-    let distribution_restricted = false;
-    let distribution_public = false;
-    if (this.props.accessRights && this.props.authorityCode === 'NON_PUBLIC') {
-      distribution_non_public = true;
-    } else if (this.props.accessRights && this.props.authorityCode === 'RESTRICTED') {
-      distribution_restricted = true;
-    } else if (this.props.accessRights && this.props.authorityCode === 'PUBLIC') {
-      distribution_public = true;
-    } else if (!this.props.accessRights) { // antar public hvis authoritycode mangler
-      distribution_public = true;
+
+    let distributionNonPublic = false;
+    let distributionRestricted = false;
+    let distributionPublic = false;
+    let authorityCode = '';
+
+    if (this.props.authorityCode) {
+      authorityCode = this.props.authorityCode;
     }
-    distribution_public = false;
-    distribution_non_public = true;
+
+    if (authorityCode === 'NON_PUBLIC') {
+      distributionNonPublic = true;
+    } else if (authorityCode === 'RESTRICTED') {
+      distributionRestricted = true;
+    } else if (authorityCode === 'PUBLIC') {
+      distributionPublic = true;
+    } else { // antar public hvis authoritycode mangler
+      distributionPublic = true;
+    }
 
     const accessRightClass = cx(
       'fa fdk-fa-left',
       {
-        'fdk-color-green fa-unlock': distribution_public,
-        'fa-unlock-alt fdk-color-yellow': distribution_restricted,
-        'fa-lock fdk-color-red': distribution_non_public
+        'fdk-color-green fa-unlock': distributionPublic,
+        'fa-unlock-alt fdk-color-yellow': distributionRestricted,
+        'fa-lock fdk-color-red': distributionNonPublic
       }
     )
 
@@ -38,9 +44,9 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       <div>
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
           <i className={accessRightClass} />
-            Datasettet er {distribution_public ? 'offentlig':''}
-             {distribution_restricted ? 'begrenset for offentligheten':''}
-             {distribution_non_public ? 'skjermet for offentligheten':''}
+            Datasettet er {distributionPublic ? 'offentlig':''}
+             {distributionRestricted ? 'begrenset for offentligheten':''}
+             {distributionNonPublic ? 'skjermet for offentligheten':''}
         </div>
         <div className="row fdk-row">
           <div className="col-md-6 fdk-padding-no">
