@@ -179,7 +179,7 @@ public class DcatBuilder {
 
                 Property hasQualityAnnotation = model.createProperty(dqvNS +"hasQualityAnnotation");
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAvailabilityAnnotations());
+                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
                 addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasRelevanceAnnotation());

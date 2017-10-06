@@ -68,7 +68,7 @@ export interface Dataset {
   hasAccuracyAnnotation?:any;
   hasCompletenessAnnotation?:any;
   hasCurrentnessAnnotation?:any;
-  hasAvailabilityAnnotations?:any;
+  hasAvailabilityAnnotation?:any;
   hasRelevanceAnnotation?:any;
 
   _lastModified: string;

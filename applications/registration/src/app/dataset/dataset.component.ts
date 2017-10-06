@@ -210,9 +210,11 @@ export class DatasetComponent implements OnInit {
         });
     });
   }
+
   buildSummaries() {
     //this.buildGeoTimeSummaries(this.dataset);
     this.buildProvenanceSummary();
+
   }
 
 
@@ -370,7 +372,31 @@ export class DatasetComponent implements OnInit {
         }
     }
 
-    public buildProvenanceSummary() {
+  public buildContentSummary() {
+    this.summaries.content = "";
+
+    //TODO conformsTo
+
+    if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
+      this.summaries.content = this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasCompletenessAnnotation && this.dataset.hasCompletenessAnnotation.hasBody && this.dataset.hasCompletenessAnnotation.hasBody['no']  !== "") {
+      this.summaries.content += this.dataset.hasCompletenessAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasAccuracyAnnotation && this.dataset.hasAccuracyAnnotation.hasBody && this.dataset.hasAccuracyAnnotation.hasBody['no']  !== "") {
+      this.summaries.content += this.dataset.hasAccuracyAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasAvailabilityAnnotation && this.dataset.hasAvailabilityAnnotation.hasBody &&this.dataset.hasAvailabilityAnnotation.hasBody['no'] !== "") {
+      this.summaries.content += this.dataset.hasAvailabilityAnnotation.hasBody['no'] + ". ";
+    }
+
+  }
+
+
+  public buildProvenanceSummary() {
       let provenance = "";
       if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];

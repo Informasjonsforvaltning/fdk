@@ -1,0 +1,76 @@
+<div class="" *ngIf="contentForm">
+  <div [formGroup]="contentForm" class="form-group">
+    <div class="fdk-input-container">
+      <div class="form-group">
+
+      <helptext
+                text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+                moretext="Lang tekst ...."
+                name="dataset.accrualPeriodicity">
+
+      </helptext>
+
+        <p>Placeholder for standard</p>
+      <titleUri
+        [formArray]="titleUriListFormArray"
+        [titleUri]="titleUri"
+        [titleUriIndex]="idx"
+        [titleUriType]="titleUriType"
+        [showDelete]="showDelete"
+        (deleteTitleUri)="removeTitleUri($event)">
+      </titleUri>
+      </div>
+      <br/>
+
+      <div class="form-group">
+        <p class="fdk-input-label">Relevans</p>
+        <helptext
+          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+          moretext="Lang tekst ...."
+          name="dataset.hasRelevanceAnnotation">
+        </helptext>
+        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="relevance-annotation"
+                  formControlName="relevance"></textarea>
+      </div>
+
+      <br/>
+
+      <div class="form-group">
+        <p class="fdk-input-label">Kompletthet</p>
+        <helptext
+          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+          moretext="Lang tekst ...."
+          name="dataset.hasCompletnessAnnotation">
+        </helptext>
+        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="completeness-annotation"
+                  formControlName="completeness"></textarea>
+      </div>
+
+      <br/>
+
+      <div class="form-group">
+        <p class="fdk-input-label">Nøyaktighet</p>
+        <helptext
+          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+          moretext="Lang tekst ...."
+          name="dataset.hasAccuracyAnnotation">
+        </helptext>
+        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="accuracy-annotation"
+                  formControlName="accuracy"></textarea>
+      </div>
+
+      <br/>
+
+      <div class="form-group">
+        <p class="fdk-input-label">Tilgjengelighet</p>
+        <helptext
+          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+          moretext="Lang tekst ...."
+          name="dataset.hasAvailabilityAnnotation">
+        </helptext>
+        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="availability-annotation"
+                  formControlName="availability"></textarea>
+      </div>
+
+  </div>
+</div>
