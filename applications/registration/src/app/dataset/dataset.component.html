@@ -233,12 +233,12 @@
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="contact-toggle" class="expand-checkbox" />
-    <label for="contact-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+    <label for="contact-toggle" class="collapsed-content expand-label">{{dataset.contactPoints[0].organizationUnit || 'Klikk for å fylle ut'}}</label>
     <div *ngIf="datasetForm.controls.contactPoints" class="expanded-content">
       <contact
-      [contactsArray]="datasetForm.controls.contactPoints"
-      [contact]="dataset.contactPoints[0]">
-        </contact>
+        [contactsArray]="datasetForm.controls.contactPoints"
+        [contact]="dataset.contactPoints[0]">
+      </contact>
     </div>
   </div>
 </div>
