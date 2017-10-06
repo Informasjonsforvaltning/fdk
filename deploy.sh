@@ -24,7 +24,8 @@ git fetch --tags
 
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
-docker login --username ${dockerUsername} --password ${dockerPassword}
+# doesnt work in git bash on Windows. Log in with docker login -u user -p passwd before running script
+#docker login --username ${dockerUsername} --password ${dockerPassword}
 
 function dockerTag {
   component=$1
@@ -101,7 +102,7 @@ elif [ "$1" == "tt1" ] ; then
 
   for i in $components
   do
-    dockerTag registration st2 tt1
+    dockerTag ${i} st2 tt1
   done
 
   gitTag st2 tt1
@@ -110,7 +111,7 @@ elif [ "$1" == "tt1" ] ; then
 elif [ "$1" == "ppe" ] ; then
   for i in $components
   do
-    dockerTag registration st1 ppe
+    dockerTag ${i} st1 ppe
   done
 
   gitTag st1 ppe
@@ -122,7 +123,7 @@ elif [ "$1" == "prod" ] ; then
 
   for i in $components
   do
-    dockerTag registration ppe prod
+    dockerTag ${i} ppe prod
   done
 
   gitTag ppe prod
