@@ -78,7 +78,8 @@
   },
   "search_hit": {
     "owned": "Eies av",
-    "public": "Offentlig"
+    "public": "Offentlig",
+    "sample": "Eksempeldata tilgjengelig"
   },
   "dataset": {
     "title": "Datasett",
