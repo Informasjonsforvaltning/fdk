@@ -13,14 +13,295 @@ export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {},
+      dataset: {
+        "id": "3645d5a8-6689-4fc1-8684-d3d6c2d47386",
+        "uri": "http://brreg.no/catalogs/987654321/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386",
+        "catalog": "987654321",
+        "title": {
+          "nb": "Markagrensen Oslo Kommune og nærliggende kommuner"
+        },
+        "description": {
+          "nb": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
+        },
+        "objective": {
+          "nb": "Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."
+        },
+        "contactPoint": [
+          {
+            "id": "3c50088c-489f-4168-95e6-e6f3cd0c67c5",
+            "uri": "http://brreg.no/catalogs/987654321/contacts/null",
+            "email": "digitalisering@kartverket.no",
+            "organizationUnit": "Avdeling for digitalisering",
+            "hasURL": "http://testetaten.no/url",
+            "hasTelephone": "22306022"
+          }
+        ],
+        "keyword": [
+          {
+            "nb": "Bestemmelse"
+          },
+          {
+            "nb": "jord"
+          },
+          {
+            "nb": "regulering"
+          },
+          {
+            "nb": "statlig bestemmelse"
+          }
+        ],
+        "publisher": {
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+          "id": "987654321",
+          "name": "TESTETATEN"
+        },
+        "issued": 1325376000000,
+        "modified": 1474421403000,
+        "language": [
+          {
+            "uri": "http://publications.europa.eu/resource/authority/language/NOR",
+            "code": "NOR",
+            "prefLabel": {
+              "nb": "Norsk"
+            }
+          }
+        ],
+        "landingPage": [
+          "http://testetaten.no/landingsside/nr1"
+        ],
+        "theme": [
+          {
+            "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+            "title": {
+              "nb": "Forvaltning og offentlig støtte"
+            }
+          },
+          {
+            "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+            "title": {
+              "nb": "Miljø"
+            }
+          }
+        ],
+        "distribution": [
+          {
+            "id": "96d63bba-e624-4f39-ad26-26b8c6a68880",
+            "uri": "http://brreg.no/catalogs/987654321/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386/distributions/96d63bba-e624-4f39-ad26-26b8c6a68880",
+            "description": {
+              "nb": "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
+            },
+            "accessURL": [
+              "http://www.detteerenlenke.no/til-nedlasting",
+              "http://www.detteerenannenlenke.no/til-en-annen-nedlasting\n",
+              "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
+            ],
+            "license": {
+              "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
+              "prefLabel": {
+                "nb": "SOSI"
+              },
+              "extraType": "dct:Standard"
+            },
+            "page": {
+              "uri": "http://lenke/til/mer/info",
+              "prefLabel": {
+                "nb": "Dokumentasjon av distribusjonen"
+              }
+            },
+            "format": [
+              "application/json"
+            ]
+          }
+        ],
+        "sample": [
+          {
+            "id": "95a6b5e5-753c-4bc3-a421-2671c8f6a7bb",
+            "uri": "http://brreg.no/catalogs/987654321/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386/distributions/95a6b5e5-753c-4bc3-a421-2671c8f6a7bb",
+            "description": {
+              "nb": "Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
+            },
+            "accessURL": [
+              "http://www.detteerenlenke.no/til-nedlasting"
+            ],
+            "format": [
+              "application/rdf+xml"
+            ]
+          }
+        ],
+        "conformsTo": [
+          {
+            "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
+            "prefLabel": {
+              "nb": "SOSI"
+            },
+            "extraType": "dct:Standard"
+          }
+        ],
+        "temporal": [
+          {
+            "startDate": 1483228800000,
+            "endDate": 1514764799000
+          }
+        ],
+        "spatial": [
+          {
+            "uri": "http://www.geonames.org/3162656/asker.html",
+            "prefLabel": {
+              "nb": "Asker"
+            }
+          },
+          {
+            "uri": "http://www.geonames.org/3162212/baerum.html",
+            "prefLabel": {
+              "nb": "Bærum"
+            }
+          },
+          {
+            "uri": "http://www.geonames.org/3151404/hurum.html",
+            "prefLabel": {
+              "nb": "Hurum"
+            }
+          },
+          {
+            "uri": "http://www.geonames.org/3141104/royken.html",
+            "prefLabel": {
+              "nb": "Røyken"
+            }
+          }
+        ],
+        "accessRights": {
+          "uri": "http://publications.europa.eu/resource/authority/access-right/RESTRICTED",
+          "code": "RESTRICTED",
+          "prefLabel": {
+            "nb": "Begrenset"
+          }
+        },
+        "legalBasisForRestriction": [
+          {
+            "uri": "https://lovdata.no/dokument/NL/lov/1992-12-04-126",
+            "prefLabel": {
+              "nb": "Lov om arkiv [arkivlova]"
+            }
+          },
+          {
+            "uri": "http://lovdata/paragraph/20",
+            "prefLabel": {
+              "nb": "Den spesifikke loven § 20"
+            }
+          },
+          {
+            "uri": "http://lovdata/paragraph/26",
+            "prefLabel": {
+              "nb": "Den mindre spesifikke loven § 26"
+            }
+          }
+        ],
+        "legalBasisForProcessing": [
+          {
+            "uri": "http://lovdata/paragraph/2",
+            "prefLabel": {
+              "nb": "Den andre loven med lenger tittel § 2"
+            }
+          }
+        ],
+        "legalBasisForAccess": [
+          {
+            "uri": "http://lovdata/paragraph/10",
+            "prefLabel": {
+              "nb": "Den siste loven med den lengste tittelen § 10"
+            }
+          }
+        ],
+        "hasAccuracyAnnotation": {
+          "inDimension": "Accuracy",
+          "hasBody": {
+            "no": "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."
+          }
+        },
+        "hasCompletenessAnnotation": {
+          "inDimension": "Completeness",
+          "hasBody": {
+            "no": "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."
+          }
+        },
+        "hasCurrentnessAnnotation": {
+          "inDimension": "Currentness",
+          "hasBody": {
+            "no": "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+          }
+        },
+        "hasAvailabilityAnnotations": {
+          "inDimension": "Availability",
+          "hasBody": {
+            "no": "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."
+          }
+        },
+        "hasRelevanceAnnotation": {
+          "inDimension": "Relevance",
+          "hasBody": {
+            "no": "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."
+          }
+        },
+        "references": [
+          "http://testeetatens.no/catalog/2/dataset/42"
+        ],
+        "provenance": {
+          "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+          "code": "vedtak",
+          "prefLabel": {
+            "nb": "Vedtak"
+          }
+        },
+        "identifier": [
+          "42"
+        ],
+        "page": [
+          "http://uri1"
+        ],
+        "accrualPeriodicity": {
+          "uri": "http://publications.europa.eu/resource/authority/frequency/ANNUAL",
+          "code": "ANNUAL",
+          "prefLabel": {
+            "nb": "årlig"
+          }
+        },
+        "subject": [
+          {
+            "uri": "https://data-david.github.io/Begrep/begrep/Enhet",
+            "prefLabel": {
+              "no": "enhet"
+            },
+            "definition": {
+              "no": "alt som er registrert med et organisasjonsnummer "
+            },
+            "note": {
+              "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."
+            },
+            "source": "https://jira.brreg.no/browse/BEGREP-208"
+          }
+        ],
+        "informationModel": [
+          {
+            "uri": "https://www.w3.org/2004/02/skos/",
+            "prefLabel": {
+              "nb": "SKOS"
+            }
+          }
+        ],
+        "type": "Kodeliste",
+        "admsIdentifier": [
+          "http://adms.identifier.no/scheme/42"
+        ],
+        "registrationStatus": "DRAFT"
+      }
+      ,
       loading: true
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
 
   componentDidMount() {
-    this.loadDatasetFromServer();
+    //this.loadDatasetFromServer();
   }
 
   // @params: the function has no param but the query need dataset id from prop
@@ -68,6 +349,8 @@ export default class DetailsPage extends React.Component {
             }
           }
         ];
+
+
         // ### MOCK DATA END
         this.setState({
           dataset,
@@ -121,7 +404,7 @@ export default class DetailsPage extends React.Component {
           }
           accessUrl={distribution.accessURL}
           format={distribution.format}
-          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
+          code={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       ));
@@ -148,35 +431,47 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderDatasetInfo() {
-    const { accrualPeriodicity } = this.state.dataset;
-    if (accrualPeriodicity) {
+    const {
+      issued,
+      accrualPeriodicity,
+      provenance,
+      hasCurrentnessAnnotation,
+      spatial,
+      temporal,
+      language
+    } = this.state.dataset;
+
       return (
         <DatasetInfo
-          issued={this.state.dataset.issued}
-          accrualPeriodicity={
+          issued={issued ?
+            issued : null
+          }
+          accrualPeriodicity={accrualPeriodicity ?
             accrualPeriodicity.prefLabel[this.props.selectedLanguageCode]
             || accrualPeriodicity.prefLabel.nb
             || accrualPeriodicity.prefLabel.nn
             || accrualPeriodicity.prefLabel.en
+            : null
           }
-          provenance={this.state.dataset.provenance ?
-            this.state.dataset.provenance.prefLabel[this.props.selectedLanguageCode]
-            || this.state.dataset.provenance.prefLabel.nb
-            || this.state.dataset.provenance.prefLabel.nn
-            || this.state.dataset.provenance.prefLabel.en
-            : '-'
+          provenance={provenance ?
+            provenance.prefLabel[this.props.selectedLanguageCode]
+            || provenance.prefLabel.nb
+            || provenance.prefLabel.nn
+            || provenance.prefLabel.en
+            : null
           }
-          language={this.state.dataset.language ?
-            this.state.dataset.language.prefLabel[this.props.selectedLanguageCode]
-            || this.state.dataset.language.prefLabel.nb
-            || this.state.dataset.language.prefLabel.nn
-            || this.state.dataset.language.prefLabel.en
-            : '-'
-          }
+          hasCurrentnessAnnotation={hasCurrentnessAnnotation ?
+            hasCurrentnessAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasCurrentnessAnnotation.hasBody.nb
+            || hasCurrentnessAnnotation.hasBody.nn
+            || hasCurrentnessAnnotation.hasBody.no
+            || hasCurrentnessAnnotation.hasBody.en
+            : null}
+          spatial={spatial}
+          temporal={temporal}
+          language={language}
         />
       );
-    }
-    return null;
   }
 
   render() {
@@ -189,26 +484,30 @@ export default class DetailsPage extends React.Component {
      description="Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet"
      />
      */
+
+    /*
+     {this._renderKeyInfo()}
+
+
+
+
+
+     <DatasetQuality
+     header="Kvalitet på innhold"
+     relevans="-"
+     kompletthet="-"
+     noyaktighet="-"
+     tilgjengelighet="-"
+     />
+     */
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-8 col-md-offset-2">
             {this._renderDatasetDescription()}
-
-
-            {this._renderKeyInfo()}
-
             {this._renderDistribution()}
-
             {this._renderDatasetInfo()}
 
-            <DatasetQuality
-              header="Kvalitet på innhold"
-              relevans="-"
-              kompletthet="-"
-              noyaktighet="-"
-              tilgjengelighet="-"
-            />
 
           </div>
         </div>
