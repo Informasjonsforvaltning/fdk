@@ -106,7 +106,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (description.length > 220) {
       description = `${description.substr(0, 220)}...`;
     }
-    const link = `/dataset/${hitId}`;
+    const link = `/datasets/${hitId}`;
 
     let accessRightsLabel;
     let distributionNonPublic = false;
