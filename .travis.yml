@@ -1,4 +1,4 @@
-language: java
+language: java, node
 services:
   - docker # enable docker support in travis
 jdk:
