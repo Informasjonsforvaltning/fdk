@@ -1,41 +1,32 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Router, Link, Route, browserHistory, IndexRoute } from 'react-router'
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
-import {SearchPage} from "./containers/search-resultpage/index";
-import {App} from "./containers/app";
+import SearchPage from './containers/search-results';
+import DetailsPage from './containers/search-detailspage';
+import App from './containers/app';
 
-const Home = () => {
-  return (
-    <div>
-      <Link to="search">Go to Search</Link>
-    </div>
-  )
+function handleUpdate() {
+  const {
+    action
+  } = this.state.location;
+
+  if (action === 'PUSH') {
+    window.scrollTo(0, 0);
+  }
 }
 
 const routes =
   (
     <Route path="/" component={App}>
-      <Route path="/datasets" component={SearchPage}/>
-      <IndexRoute component={SearchPage}/>
+      <Route path="/datasets" component={SearchPage} />
+      <IndexRoute component={SearchPage} />
+      <Route path="/datasets/(:id)" component={DetailsPage} />
     </Route>
   );
 
 ReactDOM.render((
-<Router history={browserHistory}>
-  {routes}
-</Router>
+  <Router history={browserHistory} onUpdate={handleUpdate}>
+    {routes}
+  </Router>
 ), document.getElementById('root'));
-
-
-/*
-
-
- const routes =
- (
- <Route path="/" component={App}>
- <IndexRoute component={SearchPage}/>
- </Route>
- );
-
- */
