@@ -486,7 +486,7 @@ export default class DetailsPage extends React.Component {
      */
 
     /*
-     {this._renderKeyInfo()}
+
 
 
 
@@ -505,6 +505,7 @@ export default class DetailsPage extends React.Component {
         <div className="row">
           <div className="col-md-8 col-md-offset-2">
             {this._renderDatasetDescription()}
+            {this._renderKeyInfo()}
             {this._renderDistribution()}
             {this._renderDatasetInfo()}
 
