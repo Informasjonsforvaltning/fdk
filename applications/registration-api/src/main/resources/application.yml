@@ -2,11 +2,14 @@ application:
   themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
-  altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://localhost:8077}
+  altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://registration-auth:8080}
   altinnServiceCode: ${registrationApi_altinnServiceCode:4814}
   altinnServiceEdition: ${registrationApi_altinnServiceEdition:3}
   clientSSLCertificateKeystoreLocation: ${registrationApi_clientSSLCertificateKeystoreLocation:conf/dummy-client-SSL-cert.p12}
   clientSSLCertificateKeystorePassword: ${registrationApi_clientSSLCertificateKeystorePassword:password}
+  httpUsername: ${themesHttpUsername:user}
+  httpPassword: ${themesHttpPassword:password}
+
 spring:
   hateoas:
     use-hal-as-default-json-media-type: false
@@ -52,15 +55,19 @@ spring:
       clusterName: fellesdatakatalog
 logging:
   level.: ERROR
-  level.no.brreg: DEBUG
-  level.no.dcat: DEBUG
+  level.no.brreg: INFO
+  level.no.dcat: INFO
   level.org.springframework: INFO
-  level.org.springframework.web: WARN
-  level.org.opensaml: DEBUG
+  level.org.springframework.web: ERROR
+  level.org.opensaml: INFO
 health:
   config:
     enabled: false
 application:
+  authentication:
+    includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
+    includedOrgnr: 974760673
+  openDataEnhet: http://data.brreg.no/enhetsregisteret/enhet/
 management:
   port: 8181
 server:
@@ -127,3 +134,11 @@ application:
   altinnServiceCode: 1234
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij
+
+
+
+
+
+
+
+

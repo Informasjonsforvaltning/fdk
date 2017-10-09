@@ -8,6 +8,7 @@ import no.dcat.service.DatasetRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
 
 import static org.hamcrest.Matchers.is;
@@ -34,8 +35,7 @@ public class DatasetControllerTest {
 
     @Before
     public void setup () {
-        mockDatasetRepository = mock(DatasetRepository.class);
-        mockCatalogRepository = mock(CatalogRepository.class);
+        MockitoAnnotations.initMocks(this);
 
         String catalogId = "1234";
         Catalog catalog = new Catalog();
@@ -43,7 +43,7 @@ public class DatasetControllerTest {
         when(mockCatalogRepository.findOne(anyString())).thenReturn(catalog);
 
 
-        detasetController = spy(new DatasetController(mockDatasetRepository, mockCatalogRepository));
+        detasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository);
 
     }
 

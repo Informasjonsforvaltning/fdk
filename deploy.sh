@@ -14,7 +14,7 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-components="fuseki harvester harvester-api nginx reference-data registration registration-api registration-auth registration-validator search search-api"
+components="fuseki harvester harvester-api nginx nginx-search reference-data registration registration-api registration-auth registration-validator search search-old search-api"
 
 
 # remove all local tags
@@ -24,7 +24,8 @@ git fetch --tags
 
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
-docker login --username ${dockerUsername} --password ${dockerPassword}
+# doesnt work in git bash on Windows. Log in with docker login -u user -p passwd before running script
+#docker login --username ${dockerUsername} --password ${dockerPassword}
 
 function dockerTag {
   component=$1
@@ -86,8 +87,6 @@ if [ "$1" == "st1" ] ; then
 
   gitTag ut1 st1
 
-  #todo dobbeltsjekk at dockertag blir riktig
-#  openshiftDeploy st1 ${toEnvironment}_${DATETIME}
 
 elif [ "$1" == "st2" ] ; then
 
@@ -98,31 +97,25 @@ elif [ "$1" == "st2" ] ; then
 
   gitTag ut1 st2
 
-  #todo dobbeltsjekk at dockertag blir riktig
-#  openshiftDeploy st2 ${toEnvironment}_${DATETIME}
-
 
 elif [ "$1" == "tt1" ] ; then
 
   for i in $components
   do
-    dockerTag registration st2 tt1
+    dockerTag ${i} st2 tt1
   done
 
   gitTag st2 tt1
-
-#  openshiftDeploy tt1 ${toEnvironment}_${DATETIME}
 
 
 elif [ "$1" == "ppe" ] ; then
   for i in $components
   do
-    dockerTag registration st1 ppe
+    dockerTag ${i} st1 ppe
   done
 
   gitTag st1 ppe
 
-#  openshiftDeploy ppe ${toEnvironment}_${DATETIME}
 
 
 
@@ -130,7 +123,7 @@ elif [ "$1" == "prod" ] ; then
 
   for i in $components
   do
-    dockerTag registration ppe prod
+    dockerTag ${i} ppe prod
   done
 
   gitTag ppe prod

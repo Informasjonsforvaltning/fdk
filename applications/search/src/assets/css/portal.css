@@ -64,6 +64,10 @@
 	border-left: 10px solid var(--color-green);
 }
 
+.fdk-distributions-yellow {
+	border-left: 10px solid var(--color-yellow);
+}
+
 .fdk-distributions-red {
 	border-left: 10px solid var(--color-red);
 }
@@ -79,6 +83,97 @@
 }
 
 
+
+/*  D E T A I L  P A G E  */
+
+.fdk-container-detail {
+	background-color: var(--color0);
+	margin: 3px;
+	padding: 28px 30px 30px 30px;
+	border-radius: 4px;
+	display: block;
+}
+
+.fdk-container-detail-header {
+	background-color: var(--color1);
+	color: var(--color0);
+  font-size: 2.25rem;
+  line-height: 2.25rem;
+	margin-top: 60px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.fdk-container-detail-header > .fdk-fa-left {
+	margin-right: 15px;
+}
+
+.fdk-container-detail-begrep {
+	padding-top: 18px;
+	padding-bottom: 20px;
+}
+
+.fdk-container-detail-begrep:hover {
+	box-shadow: 0px 3px 12px var(--color4);
+}
+
+.fdk-container-detail-offentlig {
+	border-left: 10px solid var(--color-green);
+	padding-left: 20px;
+}
+
+.fdk-container-detail-begrenset {
+	border-left: 10px solid var(--color-yellow);
+	padding-left: 20px;
+}
+
+.fdk-container-detail-unntatt {
+	border-left: 10px solid var(--color-red);
+	padding-left: 20px;
+}
+
+.fdk-container-detail-text {
+	margin: 0px;
+}
+
+.fdk-label-distribution {
+	padding: 14px 18px;
+	margin: 6px 2px 0px 0px;
+	color: var(--color1);
+	size: 1.4rem;
+	line-height: 1.4rem;
+	border-radius: 5px;
+	size: auto;
+	display: inline-block;
+}
+
+.fdk-row {
+	padding: 0px 15px;
+}
+
+.fdk-col-detail {
+	padding: 4px;
+}
+
+.fdk-detail-icon {
+	display: block;
+	float: left;
+	font-size: 2.8rem;
+	padding-top: 6px;
+	color: var(--color-cta);
+}
+
+.fdk-detail-icon-oneline {
+	padding-top: 0px;
+}
+
+.fdk-detail-text {
+	display: block;
+	padding-left: 5rem;
+}
+
+
+
 /*  T Y P O G R A P H Y  */
 
 .fdk-search-subheading {
@@ -86,4 +181,21 @@
     border-bottom: 1px solid var(--color3);
     padding: 0.4rem 0 0.8rem 0;
     margin-bottom: 0.6rem;    
+}
+
+.fdk-icon-detail-big {
+	color: var(--color-cta);
+	font-size: 3rem;
+}
+
+.fdk-p-detail {
+	color: var(--color4);
+	size: 1.5rem;
+	line-height: 1.5rem;
+}
+
+.fdk-distribution-format {
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-right: 6px;
 }

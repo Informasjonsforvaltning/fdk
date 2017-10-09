@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static no.dcat.config.BasicAuthConfig.ROLE_USER;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -34,13 +34,13 @@ public class LoginController {
     private CatalogController catalogController;
     private SpringSecurityContextBean springSecurityContextBean;
 
-    @Autowired
-    EntityNameService entityNameService;
+    private final EntityNameService entityNameService;
 
     @Autowired
-    public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean) {
+    public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
         this.catalogController = catalogController;
         this.springSecurityContextBean = springSecurityContextBean;
+        this.entityNameService = entityNameService;
     }
 
 
@@ -66,13 +66,14 @@ public class LoginController {
                 .filter(catalog -> catalog.matches("\\d{9}"))
                 .collect(toList());
 
-        if (catalogs.size() > 0) {
-
+        if (!catalogs.isEmpty()) {
             createCatalogsIfNeeded(catalogs);
+        }
 
+        if (authentication.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals(ROLE_USER))) {
             return new ResponseEntity<>(user, OK);
         } else {
-            return new ResponseEntity<User>(user, FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

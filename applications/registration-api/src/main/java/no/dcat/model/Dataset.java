@@ -122,21 +122,28 @@ public class Dataset {
 
 
 
-    // dcatno:restricedPursuantToLegalBasis
+    // dcatno:legalBasisForRestriction
     //Norwegian: skjermingshjemmel
     @Field
-    private List<SkosConceptWithHomepage> restricedPursuantToLegalBasis = Collections.emptyList();
+    private List<SkosConceptWithHomepage> legalBasisForRestriction = Collections.emptyList();
 
-    // dcatno:basisForProcessing
+    // dcatno:legalBasisForProcessing
     //Norwegian: behanlingsgrunnlag
     @Field
-    private List<SkosConceptWithHomepage> basisForProcessing = Collections.emptyList();
+    private List<SkosConceptWithHomepage> legalBasisForProcessing = Collections.emptyList();
 
     // dcatno:legalBasisForAccess
     //Norwegian: utleveringshjemmel
     @Field
     private List<SkosConceptWithHomepage> legalBasisForAccess = Collections.emptyList();
 
+    // dcatno:hasXXXXAnnotation
+    @Field
+    private QualityAnnotation hasAccuracyAnnotation;
+    private QualityAnnotation hasCompletenessAnnotation;
+    private QualityAnnotation hasCurrentnessAnnotation;
+    private QualityAnnotation hasAvailabilityAnnotations;
+    private QualityAnnotation hasRelevanceAnnotation;
 
     //dct:references
     //Norwegian: Refererer til.

@@ -10,6 +10,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RiotException;
 import org.apache.jena.shared.BadURIException;
 import org.apache.jena.util.FileManager;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -95,6 +96,7 @@ public class CrawlerJobTest {
 
 
     @Test
+    @Ignore
     public void testCrawlerJobFromEntryscape() throws IOException {
 
         ClassLoader classLoader = getClass().getClassLoader();
@@ -121,6 +123,7 @@ public class CrawlerJobTest {
     }
 
     @Test
+    @Ignore
     public void testCrawlerJobFromVegesenet() throws IOException {
 
         ClassLoader classLoader = getClass().getClassLoader();

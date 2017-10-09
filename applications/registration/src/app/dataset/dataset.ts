@@ -3,6 +3,11 @@ import {Publisher} from "./publisher";
 import {Distribution} from "./distribution/distribution";
 import {PeriodOfTime} from "./temporal/periodoftime";
 import {Skoscode} from './skoscode';
+/**
+ * WARNING pluralize arrays will append s to array name if singular and overwrite with an empty array.
+ */
+
+
 export interface Dataset {
   id: string;
   title?: {
@@ -56,6 +61,15 @@ export interface Dataset {
   temporals?: PeriodOfTime[];
 
   type?: string;
+  legalBasisForRestrictions?:any[];
+  legalBasisForProcessings?:any[];
+  legalBasisForAccesses?:any[];
+
+  hasAccuracyAnnotation?:any;
+  hasCompletenessAnnotation?:any;
+  hasCurrentnessAnnotation?:any;
+  hasAvailabilityAnnotations?:any;
+  hasRelevanceAnnotation?:any;
 
   _lastModified: string;
 

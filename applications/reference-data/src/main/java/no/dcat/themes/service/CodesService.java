@@ -16,6 +16,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,9 +67,9 @@ public class CodesService extends BaseServiceWithFraming {
     }
 
 
-    public SkosCode addLocation(String locationUri) {
+    public SkosCode addLocation(String locationUri) throws MalformedURLException {
 
-        Model model = FileManager.get().loadModel(locationUri);
+        Model model = getRemoteModel(new URL(locationUri));
 
         tdbConnection.inTransaction(ReadWrite.WRITE, connection -> {
             connection.addModelToGraph(model, Types.location.toString());

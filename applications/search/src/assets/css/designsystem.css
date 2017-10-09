@@ -147,6 +147,11 @@
     color: var(--color1);
 }
 
+.designsystemColorYellow {
+    background-color: var(--color-yellow);
+    color: var(--color1);
+}
+
 .designsystemColorRed {
     background-color: var(--color-red);
     color: var(--color1);
