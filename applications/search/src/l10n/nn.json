@@ -78,6 +78,49 @@
   },
   "search_hit": {
     "owned": "Eies av",
-    "public": "Offentlig"
+    "public": "Offentlig",
+    "sample": "Eksempeldata tilgjengelig"
+  },
+  "dataset": {
+    "title": "Datasett",
+    "conformsTo": "Konformitet",
+    "distribution": {
+      "title": "Distribusjon",
+      "description": "Beskrivelse",
+      "format": "Tilgjengelige format",
+      "accessUrl": "TilgangsURL"
+    },
+    "issued": "Utgivelsesdato",
+    "quality.title": "Kvalitet",
+    "provenance": "Opphav",
+    "currentness": "Aktualitet",
+    "frequency": "Oppdateringsfrekvens",
+    "miscInfo": "Øvrig info",
+    "created": "Opprettet",
+    "modified": "Sist endret",
+    "language": "Språk",
+    "theme": "Tema",
+    "period": "Tidsmessig avgrenset fra",
+    "spatial": "Geografisk avgrenset til",
+    "information": "Opplysninger",
+    "keyword": "Emneord",
+    "subject": "Begrep",
+    "restrictions": "Restriksjoner",
+    "comments": "Kommentar",
+    "objective": "Formål",
+    "related": "Relaterte",
+    "relates": "Relatert",
+    "restriction": "Restriksjon",
+    "downloadText": "Last ned DCAT-beskrivelse:",
+    "isPartOf": "Datasettet er en del av",
+    "accessRights": {
+      "authorityCode": {
+        "public": "Offentleg",
+        "restricted": "Avgrensa offentlegheit",
+        "nonPublic": "Unntatt offentlegheit"
+      }
+    }
   }
+
 }
+

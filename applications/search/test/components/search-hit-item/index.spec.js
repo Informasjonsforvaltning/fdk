@@ -1,14 +1,9 @@
 import React from 'react';
 
-import SearchHitItem from '../../../src/components/search-hit-item/index';
-
-describe('a passing test', () => {
-  it('should pass', () => {
-    expect(true).to.be.true;
-  });
-});
+import SearchHitItem from '../../../src/components/search-results-hit-item';
 
 describe('SearchHitItem', () => {
+
   const props =
     {
       "_index": "dcat",
@@ -125,6 +120,21 @@ describe('SearchHitItem', () => {
             "format": "application/xml, application/json"
           }
         ],
+        "sample": [
+          {
+            "id": "95a6b5e5-753c-4bc3-a421-2671c8f6a7bb",
+            "uri": "http://brreg.no/catalogs/987654321/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386/distributions/95a6b5e5-753c-4bc3-a421-2671c8f6a7bb",
+            "description": {
+              "nb": "Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
+            },
+            "accessURL": [
+              "http://www.detteerenlenke.no/til-nedlasting"
+            ],
+            "format": [
+              "application/rdf+xml"
+            ]
+          }
+        ],
         "conformsTo": [],
         "temporal": [],
         "spatial": [],
@@ -180,36 +190,36 @@ describe('SearchHitItem', () => {
         "ADMSIdentifier": []
       }
     }
-  /*
-   global.window = {
-   location: {
-   search: {
-   lang: 'nb'
-   }
-   }
-   }
-   */
 
   let wrapper;
 
   beforeEach(() => {
+
     wrapper = shallow(<SearchHitItem result={props} selectedLanguageCode="nb" />);
   });
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('.fdk-container-search-hit').length).to.be.equal(1);
+    expect(wrapper.find('.fdk-container-search-hit')).to.have.length(1);
+  });
+
+  it ('should render publisher', () => {
+    expect(wrapper.find('#search-hit-publisher-text')).to.have.length(1);
+  });
+
+  it ('should render themes', () => {
+    expect(wrapper.find('#dataset-description-theme-0')).to.have.length(1);
   });
 
   it ('should render restricted', () => {
-    expect(wrapper.find('.fdk-distributions-red').length).to.be.equal(1);
+    expect(wrapper.find('.fdk-distributions-yellow')).to.have.length(1);
   });
 
-  /*
-  it ('should render two formats', () => {
-    expect(wrapper.find('.fdk-button-format').length).to.be.equal(2);
+  it ('should render sample', () => {
+    expect(wrapper.find('#search-hit-sample')).to.have.length(1);
   });
-  */
+
+
 
   /*
    it ('sorting table by title', () => {

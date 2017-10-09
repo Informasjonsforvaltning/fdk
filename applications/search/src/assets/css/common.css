@@ -138,6 +138,7 @@ body {
 }
 
 
+
 /* fonts */
 
 a > .fdk-button {
@@ -171,7 +172,7 @@ a > .fdk-button {
     border-radius: 5px;
     padding: 6px 8px 5px 8px;
     display: inline-block;
-    margin: -1px -4px -1px 10px;
+    margin: -1px 0px -1px 0px;
 }
 
 .fdk-label:hover {
@@ -205,10 +206,6 @@ a > .fdk-label {
     font-size: 1.4rem
 }
 
-.fdk.label > p {
-    float: right;
-}
-
 
 
 /*  G E N E R A L   C S S  */
@@ -233,6 +230,14 @@ a > .fdk-label {
 
 /*  S P A C E  */
 
+.fdk-padding-no {
+    padding: 0px;
+}
+
+.fdk-margin-no {
+    margin: 0px;
+}
+
 .fdk-margin-top-no {
     margin-top: 0px;
 }
@@ -246,7 +251,7 @@ a > .fdk-label {
 }
 
 .fdk-margin-top-triple {
-    margin-top: 40px;
+    margin-top: 60px;
 }
 
 .fdk-margin-bottom-no {
