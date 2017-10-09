@@ -476,6 +476,9 @@ export default class DetailsPage extends React.Component {
 
   render() {
     /*
+     {this._renderKeyInfo()}
+
+
      <div className="fdk-container-detail fdk-container-detail-header">
      <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
      </div>
@@ -486,11 +489,6 @@ export default class DetailsPage extends React.Component {
      */
 
     /*
-
-
-
-
-
 
      <DatasetQuality
      header="Kvalitet på innhold"
@@ -505,11 +503,8 @@ export default class DetailsPage extends React.Component {
         <div className="row">
           <div className="col-md-8 col-md-offset-2">
             {this._renderDatasetDescription()}
-            {this._renderKeyInfo()}
             {this._renderDistribution()}
             {this._renderDatasetInfo()}
-
-
           </div>
         </div>
       </div>

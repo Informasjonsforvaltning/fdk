@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import Moment from 'react-moment';
 
 import localization from '../../components/localization';
 
@@ -50,7 +51,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.issued}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">{this.props.issued}</p>
+              <p className="fdk-ingress fdk-margin-bottom-no">
+
+              </p>
             </div>
           </div>
         </div>
