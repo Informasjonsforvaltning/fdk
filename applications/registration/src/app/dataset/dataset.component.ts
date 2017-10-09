@@ -19,6 +19,7 @@ import { IMyDpOptions } from 'mydatepicker';
 import { TemporalListComponent } from "./temporal/temporal-list.component";
 import { HelpText } from "./helptext/helptext.component";
 import {isNullOrUndefined} from "util";
+import { TitleUri } from "./titleUri/titleUri"
 
 @Component({
     selector: 'app-dataset',
@@ -46,7 +47,6 @@ export class DatasetComponent implements OnInit {
     };
     availableLanguages: any;
     summaries: any = {};
-    legalBasis: any[];
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -113,7 +113,6 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildGeoTimeSummaries(this.dataset);
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
@@ -135,6 +134,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
       this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
       this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
+      this.dataset.informationModel = dataset.informationModel;
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -173,6 +173,10 @@ export class DatasetComponent implements OnInit {
           if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
+ 
+          if (_.isEmpty(dataset.informationModel)) {
+            dataset.informationModel = {};
+          }
 
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
@@ -210,27 +214,36 @@ export class DatasetComponent implements OnInit {
         });
     });
   }
-  buildSummaries() {
-    //this.buildGeoTimeSummaries(this.dataset);
-    this.buildProvenanceSummary();
-  }
+    buildSummaries() {
+        this.buildGeoTimeSummaries();
+        this.buildProvenanceSummary();
+        this.buildInformationModelSummary();
+    }
 
+    buildInformationModelSummary(): void {
+        // Add informationModel to summary if exists.
+        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel["nb"]) {
+            this.summaries.informationModel = this.dataset.informationModel.prefLabel["nb"];
+        } else {
+            this.summaries.informationModel = "Klikk for å fylle ut";
+        }
+    }
 
-    buildGeoTimeSummaries(dataset): void {
+    buildGeoTimeSummaries(): void {
         this.summaries.geotime = "";
 
         // Add spatial count to summary if exists.
-        if (dataset.spatials && dataset.spatials.length > 0) {
-            if (dataset.spatials.length == 1)
+        if (this.dataset.spatials && this.dataset.spatials.length > 0) {
+            if (this.dataset.spatials.length == 1)
                 this.summaries.geotime += "1 geografisk avgrensing. ";
             else
-                this.summaries.geotime += dataset.spatials.length + " geografiske avgrensinger. ";
+                this.summaries.geotime += this.dataset.spatials.length + " geografiske avgrensinger. ";
         }
 
         // Add temporal count to summary if exists.
-        if (dataset.temporals && dataset.temporals.length > 0) {
-            if (dataset.temporals.length == 1) {
-                if (dataset.temporals[0].startDate || dataset.temporals[0].endDate) {
+        if (this.dataset.temporals && this.dataset.temporals.length > 0) {
+            if (this.dataset.temporals.length == 1) {
+                if (this.dataset.temporals[0].startDate || this.dataset.temporals[0].endDate) {
                     this.summaries.geotime += "1 tidsmessig avgrensing. ";
                 }
             } else {
@@ -247,16 +260,16 @@ export class DatasetComponent implements OnInit {
         }
 
         // Add issued to summary if exists.
-        if (dataset.issued) {
-            this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(dataset.issued, "-", ".") + ". ";
+        if (this.dataset.issued) {
+            this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(this.dataset.issued, "-", ".") + ". ";
         }
 
         // Add language count to summary if exists.
-        if (dataset.languages && dataset.languages.length > 0) {
-            if (dataset.languages.length == 1)
+        if (this.dataset.languages && this.dataset.languages.length > 0) {
+            if (this.dataset.languages.length == 1)
                 this.summaries.geotime += "Ett språk. ";
             else
-                this.summaries.geotime += dataset.languages.length + " språk. ";
+                this.summaries.geotime += this.dataset.languages.length + " språk. ";
         }
 
         this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
@@ -293,7 +306,6 @@ export class DatasetComponent implements OnInit {
     }
 
     save(): void {
-        this.buildGeoTimeSummaries(this.dataset);
         this.datasetSavingEnabled = false;
         this.service.save(this.catId, this.dataset)
             .then(() => {
@@ -417,6 +429,7 @@ export class DatasetComponent implements OnInit {
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
+      informationModel: [data.informationModel],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)
