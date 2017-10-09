@@ -1,4 +1,4 @@
-language: java, node
+language: java
 services:
   - docker # enable docker support in travis
 jdk:
@@ -10,7 +10,7 @@ apt:
     - google-chrome-stable
 
 before_install:
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - # we need nodejs for building the Angular code
+#  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - # we need nodejs for building the Angular code
   - sudo apt-get install -y nodejs > /dev/null
   - sudo apt-get install -y build-essential > /dev/null
 install:
