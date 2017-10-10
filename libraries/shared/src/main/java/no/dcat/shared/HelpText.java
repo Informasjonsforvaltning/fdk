@@ -9,11 +9,11 @@ public class HelpText {
         this.description = description;
     }
 
-    public String getTitle() {
+    public String getAbstract() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setAbstract(String title) {
         this.title = title;
     }
 
