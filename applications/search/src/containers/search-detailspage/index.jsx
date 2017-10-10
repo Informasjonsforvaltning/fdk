@@ -478,30 +478,62 @@ export default class DetailsPage extends React.Component {
       );
   }
 
+  _renderQuality() {
+    const {
+      hasRelevanceAnnotation,
+      hasCompletenessAnnotation,
+      hasAccuracyAnnotation,
+      hasAvailabilityAnnotations
+    } = this.state.dataset;
+    return (
+      <DatasetQuality
+        relevanceAnnotation={hasRelevanceAnnotation ?
+          hasRelevanceAnnotation.hasBody[this.props.selectedLanguageCode]
+          || hasRelevanceAnnotation.hasBody.nb
+          || hasRelevanceAnnotation.hasBody.no
+          || hasRelevanceAnnotation.hasBody.nn
+          || hasRelevanceAnnotation.hasBody.en
+          : null
+        }
+        completenessAnnotation={hasCompletenessAnnotation ?
+          hasCompletenessAnnotation.hasBody[this.props.selectedLanguageCode]
+          || hasCompletenessAnnotation.hasBody.nb
+          || hasCompletenessAnnotation.hasBody.no
+          || hasCompletenessAnnotation.hasBody.nn
+          || hasCompletenessAnnotation.hasBody.en
+          : null
+        }
+        accuracyAnnotation={hasAccuracyAnnotation ?
+          hasAccuracyAnnotation.hasBody[this.props.selectedLanguageCode]
+          || hasAccuracyAnnotation.hasBody.nb
+          || hasAccuracyAnnotation.hasBody.no
+          || hasAccuracyAnnotation.hasBody.nn
+          || hasAccuracyAnnotation.hasBody.en
+          : null
+        }
+        availabilityAnnotations={hasAvailabilityAnnotations ?
+          hasAvailabilityAnnotations.hasBody[this.props.selectedLanguageCode]
+          || hasAvailabilityAnnotations.hasBody.nb
+          || hasAvailabilityAnnotations.hasBody.no
+          || hasAvailabilityAnnotations.hasBody.nn
+          || hasAvailabilityAnnotations.hasBody.en
+          : null
+        }
+      />
+        );
+  }
+
+  _renderContactInfo() {
+
+    return (
+      <div />
+    );
+  }
+
   render() {
     /*
-     {this._renderKeyInfo()}
-
-
-     <div className="fdk-container-detail fdk-container-detail-header">
-     <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
-     </div>
-     <DatasetBegrep
-     title="Jordsmonn"
-     description="Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet"
-     />
-     */
-
-    /*
-
-     <DatasetQuality
-     header="Kvalitet på innhold"
-     relevans="-"
-     kompletthet="-"
-     noyaktighet="-"
-     tilgjengelighet="-"
-     />
-     */
+    {this._renderKeyInfo()}
+    */
     return (
       <div className="container">
         <div className="row">
@@ -509,6 +541,12 @@ export default class DetailsPage extends React.Component {
             {this._renderDatasetDescription()}
             {this._renderDistribution()}
             {this._renderDatasetInfo()}
+            {this._renderQuality()}
+
+
+            <DatasetBegrep
+              keyword={this.state.dataset.keyword}
+            />
           </div>
         </div>
       </div>

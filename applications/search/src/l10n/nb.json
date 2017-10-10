@@ -91,7 +91,7 @@
       "accessUrl": "TilgangsURL"
     },
     "issued": "Utgivelsesdato",
-    "quality.title": "Kvalitet",
+    "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
@@ -103,7 +103,7 @@
     "period": "Tidsmessig avgrenset fra",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
-    "keyword": "Emneord",
+    "keyword": "Søkeord",
     "subject": "Begrep",
     "restrictions": "Restriksjoner",
     "comments": "Kommentar",
@@ -113,6 +113,11 @@
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
     "isPartOf": "Datasettet er en del av",
+    "relevanceAnnotation": "Relevans",
+    "completenessAnnotation": "Kompletthet",
+    "accuracyAnnotation": "Nøyaktighet",
+    "availabilityAnnotations": "Tilgjengelighet",
+
     "accessRights": {
       "authorityCode": {
         "public": "Offentlig",

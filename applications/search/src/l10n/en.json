@@ -91,7 +91,7 @@
       "accessUrl": "Tilgangsurl"
     },
     "issued": "Utgivelsesdato",
-    "quality.title": "Kvalitet",
+    "quality": "Kvalitet",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import localization from '../../components/localization';
 
@@ -10,62 +9,61 @@ export default class DatasetQuality extends React.Component { // eslint-disable-
       <div>
         <div className="fdk-container-detail fdk-container-detail-header">
           <i className="fa fa-star fdk-fa-left fdk-color-cta" />
-          {this.props.header}
+          {localization.dataset.quality}
         </div>
         <div className="fdk-container-detail">
-          {this.props.relevans &&
+          {this.props.relevanceAnnotation &&
           <div>
-            <h5>Relevans</h5>
+            <h5>{localization.dataset.relevanceAnnotation}</h5>
             <p className="fdk-ingress fdk-margin-bottom-double">
-              {this.props.relevans}
+              {this.props.relevanceAnnotation}
             </p>
           </div>
           }
 
-          {this.props.kompletthet &&
+          {this.props.completenessAnnotation &&
           <div>
-            <h5>Relevans</h5>
+            <h5>{localization.dataset.completenessAnnotation}</h5>
             <p className="fdk-ingress fdk-margin-bottom-double">
-              {this.props.kompletthet}
+              {this.props.completenessAnnotation}
             </p>
           </div>
           }
 
-          {this.props.noyaktighet &&
+          {this.props.accuracyAnnotation &&
           <div>
-            <h5>Relevans</h5>
+            <h5>{localization.dataset.accuracyAnnotation}</h5>
             <p className="fdk-ingress fdk-margin-bottom-double">
-              {this.props.noyaktighet}
+              {this.props.accuracyAnnotation}
             </p>
           </div>
           }
 
-          {this.props.tilgjengelighet &&
+          {this.props.availabilityAnnotations &&
           <div>
-            <h5>Relevans</h5>
+            <h5>{localization.dataset.availabilityAnnotations}</h5>
             <p className="fdk-ingress fdk-margin-bottom-double">
-              {this.props.tilgjengelighet}
+              {this.props.availabilityAnnotations}
             </p>
           </div>
           }
         </div>
+
       </div>
     );
   }
 }
 
 DatasetQuality.defaultProps = {
-  header: '',
-  relevans: null,
-  kompletthet: null,
-  noyaktighet: null,
-  tilgjengelighet: null
+  relevanceAnnotation: null,
+  completenessAnnotation: null,
+  accuracyAnnotation: null,
+  availabilityAnnotations: null
 };
 
 DatasetQuality.propTypes = {
-  header: PropTypes.string,
-  relevans: PropTypes.string,
-  kompletthet: PropTypes.string,
-  noyaktighet: PropTypes.string,
-  tilgjengelighet: PropTypes.string
+  relevanceAnnotation: PropTypes.string,
+  completenessAnnotation: PropTypes.string,
+  accuracyAnnotation: PropTypes.string,
+  availabilityAnnotations: PropTypes.string
 };
