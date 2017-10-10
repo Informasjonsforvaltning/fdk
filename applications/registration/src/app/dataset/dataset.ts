@@ -66,6 +66,7 @@ export interface Dataset {
   legalBasisForAccesses?:any[];
 
   informationModel?:any;
+  standard?:any;
 
   hasAccuracyAnnotation?:any;
   hasCompletenessAnnotation?:any;

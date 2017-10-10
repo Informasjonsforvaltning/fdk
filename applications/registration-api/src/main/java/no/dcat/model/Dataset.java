@@ -142,6 +142,11 @@ public class Dataset {
     @Field
     private SkosConceptWithHomepage informationModel;
 
+     // dcatno:standard
+    //Norwegian: standard
+    @Field
+    private SkosConceptWithHomepage standard;
+
     // dcatno:hasXXXXAnnotation
     @Field
     private QualityAnnotation hasAccuracyAnnotation;
