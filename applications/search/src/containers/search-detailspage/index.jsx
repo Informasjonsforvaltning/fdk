@@ -243,29 +243,7 @@ export default class DetailsPage extends React.Component {
             "no": "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."
           }
         },
-        "references": [
-          {
-            "referenceType": {
-              "uri": "http://www.w3.org/2002/07/hasVersion",
-              "code": "hasVersion",
-              "prefLabel": {
-                "nb": "Har versjon"
-              }
-            },
-            "source": {
-              "uri": "http://referenced/dataset",
-              "title": {
-                "nb": "The first one"
-              },
-              "description": {},
-              "contactPoint": [],
-              "legalBasisForRestriction": [],
-              "legalBasisForProcessing": [],
-              "legalBasisForAccess": [],
-              "registrationStatus": "DRAFT"
-            }
-          }
-        ],
+
         "provenance": {
           "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
           "code": "vedtak",
