@@ -254,7 +254,7 @@
     </div>
   </div>
 
-  
+
     <div class="row justify-content-md-center" *ngIf="dataset">
         <label for="information-model-toggle" class="col-md-push-1 col-md-2 section-title">
             Informasjonsmodell<b class="caret-right"></b>
@@ -277,7 +277,7 @@
                         [titleUri]="dataset.informationModel"
                         [titleUriType]="'informasjonsmodell'"
                         [showDelete]="false"
-                        (onSave)="onSave($event)">                  
+                        (onSave)="onSave($event)">
                     </titleUri>
                 </div>
             </div>
@@ -293,7 +293,9 @@
       <input type="checkbox" id="relations-toggle" class="expand-checkbox"/>
       <label for="relations-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
       <div class="expanded-content">
-        Relasjoner
+        <relations [dataset]="dataset"
+                   (onSave)="onSave($event)">
+        </relations>
       </div>
     </div>
   </div>
