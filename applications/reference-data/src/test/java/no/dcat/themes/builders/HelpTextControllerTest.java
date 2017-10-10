@@ -3,9 +3,6 @@ package no.dcat.themes.builders;
 import no.dcat.shared.HelpText;
 import no.dcat.themes.Controller;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matcher.*;
-
-import org.apache.commons.lang3.Validate;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,12 +24,18 @@ public class HelpTextControllerTest {
         private Controller controller;
 
         @Test
-        public void helpTextsExists() throws Throwable {
+        public void helpTextsHasDesc() throws Throwable {
             List<HelpText> helpTexts = controller.helpTexts("foo");
- //           helpTexts.stream().anyMatch(helpText -> {helpText.get
- //                   equals("http://brreg.no/fdk/fields#Dataset_title")});
-            String actual = helpTexts.get(2).getDescription().get("nb");
-            assertThat(actual, Matchers.is(Matchers.startsWith("En setnings-beskrivelse av formålet til datasettet")));
-            System.out.println(helpTexts.get(2).getDescription().toString());
+            //           helpTexts.stream().anyMatch(helpText -> {helpText.get
+            //                   equals("http://brreg.no/fdk/fields#Dataset_title")});
+            assertThat(helpTexts.get(2).getDescription().get("nb"), Matchers.is(Matchers.startsWith("En setnings-beskrivelse av formålet til datasettet")));
+        }
+
+        @Test
+        public void helpTextsHasAbstract() throws Throwable {
+        List<HelpText> helpTexts = controller.helpTexts("foo");
+            assertEquals(helpTexts.get(2).getAbstract().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
+            assertEquals(helpTexts.get(2).getTitle().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
+            System.out.println(helpTexts.get(2).getTitle().toString());
         }
     }
