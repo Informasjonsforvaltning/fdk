@@ -63,6 +63,8 @@ public class DcatBuilder {
     public static final Property dcatno_legalBasisForRestriction = mod.createProperty(DCATNO, "legalBasisForRestriction");
     public static final Property dcatno_legalBasisForProcessing = mod.createProperty(DCATNO, "legalBasisForProcessing");
     public static final Property dcatno_legalBasisForAccess = mod.createProperty(DCATNO, "legalBasisForAccess");
+    public static final Property dcatno_informationModel = mod.createProperty(DCATNO, "informationModel");    
+    public static final Property dcatno_standard = mod.createProperty(DCATNO, "standard");
 
     private final Model model;
     private final Map<Object, Resource> resourceMap = new HashMap<>();
@@ -166,8 +168,9 @@ public class DcatBuilder {
                 dataset.getLegalBasisForAccess().forEach(skosConceptWithHomepage -> {
                     addSkosConceptWithHomepage(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
                 });
-
-
+                
+                addSkosConceptWithHomepage(datRes, dcatno_informationModel, dataset.getInformationModel());                
+                addSkosConceptWithHomepage(datRes, dcatno_standard, dataset.getStandard());
                 addProperties(datRes, DCTerms.references, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
                 addStringLiterals(datRes, DCTerms.identifier, dataset.getIdentifier());
