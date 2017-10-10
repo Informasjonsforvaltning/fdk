@@ -25,7 +25,7 @@ public class SkosConceptWithHomepage {
     private String foafHomepage = "";
 
     // internal id
-    private String uri = "http://brreg.no/skosConcept/" + UUID.randomUUID().toString();
+    private String uri ; //= "http://brreg.no/skosConcept/" + UUID.randomUUID().toString();
 
     private Map<String, String> prefLabel = new HashMap<>();
 

@@ -216,7 +216,7 @@ public class DcatBuilder {
     }
 
     private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConceptWithHomepage skosConceptWithHomepage) {
-        Resource skosConceptWithHomepageResource = model.createResource(skosConceptWithHomepage.getUri());
+        Resource skosConceptWithHomepageResource = model.createResource();
 
         skosConceptWithHomepageResource.addProperty(RDF.type, SKOS.Concept);
         skosConceptWithHomepageResource.addProperty(FOAF.homepage, SKOS.Concept);
