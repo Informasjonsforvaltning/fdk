@@ -6,6 +6,7 @@ import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.shared.DataTheme;
 import no.dcat.themes.service.CodesService;
+import no.dcat.themes.service.HelpTextService;
 import no.dcat.themes.service.SubjectsService;
 import no.dcat.themes.service.ThemesService;
 import org.apache.jena.rdf.model.Model;
@@ -34,6 +35,9 @@ public class Controller {
 
     @Autowired
     private CodesService codesService;
+
+    @Autowired
+    private HelpTextService helpTextService;
 
     @Autowired
     private ThemesService themesService;
@@ -71,7 +75,7 @@ public class Controller {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/help-texts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/helptexts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<HelpText> helpTexts(@PathVariable(name = "id") String id) {
 
         return helpTextsService.getHelpTexts(Types.valueOf(id));
