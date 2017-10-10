@@ -1,31 +1,39 @@
-<div style="padding:40px;" *ngIf="contactForm">
-  <div [formGroup]="contactForm" class="form-group fdk-container-input fdk-input-gap-double">
-    <label for="contact-avdeling" class="input-label">Avdeling:</label>
-    <helptext
-      text="Dette er en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      moretext="Dette er en annen en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      name="contact-avdeling"></helptext>
-    <input id="contact-avdeling" type="text" formControlName="organizationUnit" class="fdk-input"/>
-    <label for="contact-url" class="input-label">Kontaktskjema:</label>
-    <helptext
-      text="2Dette er en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      moretext="Dette er en annen en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      name="contact-url"></helptext>
-    <input id="contact-url" type="url" formControlName="hasURL" title="Angi url til kontaktskjema" class="fdk-input"/>
-    <label for="contact-email" class="input-label">E-post:</label>
-    <helptext
-      text="3Dette er en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      moretext="Dette er en annen en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      name="contact-email"></helptext>
-    <input id="contact-email" type="email" formControlName="email"
-    title="Angi epostadresse" class="fdk-input"/>
-    <label for="contact-telephone" class="input-label">Telefon:</label>
-    <helptext
-      text="4Dette er en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      moretext="Dette er en annen en hjelpetekst som beskriver hvordan feltene bør fylles ut."
-      name="contact-telephone"></helptext>
-    <input id="contact-telephone" type="telephone" formControlName="hasTelephone"
-    title="Oppgi telefonnummer" class="fdk-input"
-    />
+<div class="" *ngIf="contactForm">
+  <div [formGroup]="contactForm" class="form-group">
+    <div class="fdk-input-container">
+      <p class="fdk-input-label">Kontaktpunkt</p>
+      <helptext
+        text="Egenskapen angis for å komme i dialog med eieren av datasettet."
+        moretext="Avdeling, seksjon, kontor e.l."
+        name="contact-avdeling"></helptext>
+      <input id="contact-avdeling" type="text" formControlName="organizationUnit" class="fdk-input"/>
+    </div>
+    <div class="fdk-input-container">
+      <p class="fdk-input-label">Kontaktskjema</p>
+      <helptext
+        text="Adresse til web-basert kontaktskjema."
+        moretext=""
+        name="contact-url"></helptext>
+      <input id="contact-url" type="url" formControlName="hasURL" class="fdk-input"/>
+    </div>
+    <div class="fdk-input-container">
+      <p class="fdk-input-label">E-post</p>
+      <helptext
+        text="Epost-adresse for å komme i kontakt med eieren av datasettet."
+        moretext=""
+        name="contact-email"></helptext>
+      <input id="contact-email" type="email" formControlName="email"
+      title="Angi epostadresse" class="fdk-input"/>
+    </div>
+    <div class="fdk-input-container">
+      <p class="fdk-input-label">Telefon</p>
+      <helptext
+        text="Telefonnummer for å komme i kontakt med eieren av datasettet."
+        moretext=""
+        name="contact-telephone"></helptext>
+      <input id="contact-telephone" type="telephone" formControlName="hasTelephone"
+        class="fdk-input"
+      />
+    </div>
   </div>
 </div>
