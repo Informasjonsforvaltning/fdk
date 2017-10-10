@@ -62,6 +62,6 @@ jobs:
           condition: $TRAVIS_TAG = ''
 
     - stage: Tests # Run React unit tests
-      script: npm test
+      script: cd search && npm install && npm test
       env:
         - comment=Run regular React unit tests
