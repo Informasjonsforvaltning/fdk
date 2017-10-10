@@ -5,6 +5,8 @@ import Moment from 'react-moment';
 
 import localization from '../../components/localization';
 
+const noTextToShow = '-';
+
 export default class DatasetInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderSpatial() {
     let spatialNodes;
@@ -20,7 +22,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       ));
       return spatialNodes;
     }
-    return null;
+    return noTextToShow;
   }
 
   _renderTemporal() {
@@ -30,7 +32,10 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       temporalNodes = temporal.map((item, index) => {
         if (item.startDate && item.endDate) {
           return (
-            <div key={`dataset-info-temporal-${index}`}>
+            <div
+              key={`dataset-info-temporal-${index}`}
+              id={`dataset-info-temporal-${index}`}
+            >
               <h5>{localization.dataset.period}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -40,27 +45,30 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
               <h5>{localization.dataset.period}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
-                {item.endDate}
+                  {item.endDate}
                 </Moment>
               </p>
             </div>
           );
         } else if (item.startDate) {
           return (
-            <div key={`dataset-info-temporal-${index}`}>
+            <div
+              key={`dataset-info-temporal-${index}`}
+              id={`dataset-info-temporal-${index}`}
+            >
               <h5>{localization.dataset.period}</h5>
-                <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                  <Moment format="DD.MM.YYYY">
-                    {item.startDate}
-                  </Moment>
-                </p>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.startDate}
+                </Moment>
+              </p>
             </div>
           );
         }
       });
       return temporalNodes;
     }
-    return null;
+    return noTextToShow;
   }
 
   _renderLanguage() {
@@ -70,6 +78,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       languageNodes = language.map((item, index) => (
         <p
           key={`dataset-info-language-${index}`}
+          id={`dataset-info-language-${index}`}
           className="fdk-ingress fdk-margin-bottom-no"
         >
           {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
@@ -77,7 +86,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       ));
       return languageNodes;
     }
-    return null;
+    return noTextToShow;
   }
 
   _renderIsPartOf() {
@@ -119,7 +128,10 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
   render() {
     return (
-      <div className="row fdk-row fdk-margin-top-triple">
+      <div
+        id="dataset-info"
+        className="row fdk-row fdk-margin-top-triple"
+      >
 
         <div className="col-md-4 fdk-padding-no">
           <div className="fdk-container-detail">
@@ -128,8 +140,13 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.issued}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+              <p id="dataset-info-issued" className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                {this.props.issued &&
                 <Moment format="DD.MM.YYYY">{this.props.issued}</Moment>
+                }
+                {!this.props.issued &&
+                <span>-</span>
+                }
               </p>
             </div>
           </div>
@@ -142,7 +159,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.frequency}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">{this.props.accrualPeriodicity}</p>
+              <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">{this.props.accrualPeriodicity}</p>
             </div>
           </div>
         </div>
@@ -154,7 +171,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.provenance}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">{this.props.provenance}</p>
+              <p id="dataset-info-provenance" className="fdk-ingress fdk-margin-bottom-no">{this.props.provenance}</p>
             </div>
           </div>
         </div>
@@ -166,7 +183,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.currentness}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
+              <p id="dataset-info-currentnessAnnotation" className="fdk-ingress fdk-margin-bottom-no">
                 {this.props.hasCurrentnessAnnotation}
               </p>
             </div>
@@ -180,7 +197,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.spatial}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
+              <p id="dataset-info-spatial" className="fdk-ingress fdk-margin-bottom-no">
                 {this._renderSpatial()}
               </p>
             </div>
@@ -192,7 +209,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-calendar" />
             </div>
-            <div className="fdk-detail-text">
+            <div id="dataset-info-temporal" className="fdk-detail-text">
               {this._renderTemporal()}
             </div>
           </div>
@@ -203,7 +220,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-flag" />
             </div>
-            <div className="fdk-detail-text">
+            <div id="dataset-info-language" className="fdk-detail-text">
               <h5>{localization.dataset.language}</h5>
               {this._renderLanguage()}
             </div>
