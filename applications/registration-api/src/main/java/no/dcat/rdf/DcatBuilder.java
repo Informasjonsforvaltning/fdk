@@ -1,13 +1,13 @@
 package no.dcat.rdf;
 
 import no.dcat.model.Catalog;
-import no.dcat.model.Contact;
+import no.dcat.shared.Contact;
 import no.dcat.model.Dataset;
-import no.dcat.model.Distribution;
-import no.dcat.model.PeriodOfTime;
-import no.dcat.model.Publisher;
-import no.dcat.model.QualityAnnotation;
-import no.dcat.model.Reference;
+import no.dcat.shared.Distribution;
+import no.dcat.shared.PeriodOfTime;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.Reference;
 import no.dcat.model.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;

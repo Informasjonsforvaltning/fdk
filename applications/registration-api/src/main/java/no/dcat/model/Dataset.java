@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.ToString;
+import no.dcat.shared.Contact;
+import no.dcat.shared.Distribution;
+import no.dcat.shared.PeriodOfTime;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.Reference;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.springframework.data.annotation.Id;
@@ -20,18 +26,12 @@ import java.util.*;
 @Relation(collectionRelation = "datasets")
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Dataset {
+public class Dataset extends no.dcat.shared.Dataset {
 
     public static final String ELASTIC_TYPE = "dataset";
 
     public static final String REGISTRATION_STATUS_DRAFT = "DRAFT";
     public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
-
-    @NonNull
-    @Id
-    private String id;
-
-    private String uri;
 
     //Can't specify parent if no parent field has been configured
     @Field(type = FieldType.String, store = true)
@@ -206,12 +206,4 @@ public class Dataset {
     @Field
     private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
 
-
-    public Dataset() {
-        //Blank override
-    }
-
-    public Dataset(String id) {
-        this.id = id;
-    }
 }

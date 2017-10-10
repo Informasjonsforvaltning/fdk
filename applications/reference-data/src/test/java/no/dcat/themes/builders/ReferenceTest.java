@@ -2,10 +2,6 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.themes.Controller;
-import no.dcat.themes.service.CodesService;
-import org.hamcrest.core.Is;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +34,7 @@ public class ReferenceTest {
 
         assertThat(actual.size(), is(12));
 
-        assertThat(actual.stream().anyMatch(r -> r.getAuthorityCode().equals("isReferencedBy")),is(true));
+        assertThat(actual.stream().anyMatch(r -> r.getCode().equals("isReferencedBy")),is(true));
     }
 
     @Test

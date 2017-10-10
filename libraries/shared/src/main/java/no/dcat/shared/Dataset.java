@@ -1,14 +1,21 @@
 package no.dcat.shared;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.ToString;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Data
+@ToString(includeFieldNames = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Dataset {
 
     private String id;
 
     private String uri;
-/*
 
     // dct:title
     // Norwegian: Tittel
@@ -80,15 +87,15 @@ public class Dataset {
 
     // dcatno:legalBasisForRestriction
     //Norwegian: skjermingshjemmel
-    private List<SkosConcept> legalBasisForRestriction = Collections.emptyList();
+    private List<SkosConcept> legalBasisForRestriction;
 
     // dcatno:legalBasisForProcessing
     //Norwegian: behanlingsgrunnlag
-   private List<SkosConcept> legalBasisForProcessing = Collections.emptyList();
+   private List<SkosConcept> legalBasisForProcessing;
 
     // dcatno:legalBasisForAccess
     //Norwegian: utleveringshjemmel
-    private List<SkosConcept> legalBasisForAccess = Collections.emptyList();
+    private List<SkosConcept> legalBasisForAccess;
 
     // dcatno:hasXXXXAnnotation
     private QualityAnnotation hasAccuracyAnnotation;
@@ -99,8 +106,7 @@ public class Dataset {
 
     //dct:references
     //Norwegian: Refererer til.
-   private List<Reference> references;
-
+    private List<Reference> references;
 
     //dct:provenance
     //Norwegian: Opphav
@@ -135,7 +141,6 @@ public class Dataset {
     private List<String> admsIdentifier;
 
 
-*/
     public Dataset() {
         //Blank override
     }

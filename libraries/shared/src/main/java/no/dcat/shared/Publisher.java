@@ -1,4 +1,4 @@
-package no.dcat.model;
+package no.dcat.shared;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

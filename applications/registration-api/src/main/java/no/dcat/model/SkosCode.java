@@ -19,4 +19,18 @@ public class SkosCode {
     private String code;
     private Map<String, String> prefLabel = new HashMap<>();
 
+    public SkosCode(String uri, String code, Map<String, String> prefLabel) {
+        this.uri = uri;
+        this.code = code;
+        this.prefLabel = prefLabel;
+    }
+
+    @Override
+    public String toString() {
+        return "SkosCode{" +
+                "uri='" + uri + '\'' +
+                ", code='" + code + '\'' +
+                ", prefLabel=" + prefLabel +
+                '}';
+    }
 }

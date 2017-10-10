@@ -8,26 +8,28 @@ import java.util.Map;
  */
 public class SkosCode implements Serializable{
     private String uri;
-    private String authorityCode;
+    private String code;
 
     private Map<String, String> prefLabel;
 
     public SkosCode() {
     }
 
-    public SkosCode(String uri, String authorityCode, Map<String, String> prefLabel) {
+
+    public SkosCode(String uri, String code, Map<String, String> prefLabel) {
         this.uri = uri;
-        this.authorityCode = authorityCode;
+        this.code = code;
         this.prefLabel = prefLabel;
     }
+
 
     public String getUri() {
         return uri;
     }
 
-    public String getAuthorityCode() { return authorityCode; }
+    public String getCode() { return code; }
 
-    public void setAuthorityCode(String authorityCode) { this.authorityCode = authorityCode; }
+    public void setCode(String code) { this.code = code; }
 
     public void setUri(String uri) {
         this.uri = uri;
@@ -64,7 +66,7 @@ public class SkosCode implements Serializable{
     public String toString() {
         return "SkosCode{" +
                 "uri='" + uri + '\'' +
-                ", authorityCode='" + authorityCode + '\'' +
+                ", code='" + code + '\'' +
                 ", prefLabel=" + prefLabel +
                 '}';
     }
