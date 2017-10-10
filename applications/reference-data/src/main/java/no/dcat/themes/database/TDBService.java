@@ -70,7 +70,7 @@ public class TDBService {
         Model m = FileManager.get().loadModel("rdf/data-theme-skos.rdf");
         changeLanguageNoToNb(DatasetFactory.create(m));
         overwrite(THEMES_GRAPH, m);
-        Model hm = FileManager.get().loadModel("rdf/helptexts.rdf");
+        Model hm = FileManager.get().loadModel("https://data-david.github.io/FDK-hjelpetekster/guideline.ttl");
         changeLanguageNoToNb(DatasetFactory.create(hm));
         overwrite(HELPTEXTS_GRAPH, hm);
 
@@ -111,7 +111,7 @@ public class TDBService {
     }
 
 
-    @CacheEvict(cacheNames = {"codes", "themes"}, allEntries = true)
+    @CacheEvict(cacheNames = {"codes", "themes", "helptexts"}, allEntries = true)
     public void evictCache() {
         logger.debug("Cache evicted");
     }
