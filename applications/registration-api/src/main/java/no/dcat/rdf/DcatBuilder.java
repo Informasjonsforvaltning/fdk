@@ -9,7 +9,7 @@ import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
 import no.dcat.model.Reference;
 import no.dcat.model.SkosCode;
-import no.dcat.model.SkosConcept;
+import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;

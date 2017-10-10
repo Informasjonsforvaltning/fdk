@@ -1,22 +1,6 @@
 package no.dcat.shared;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.hateoas.core.Relation;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Data
 public class Dataset {
@@ -24,7 +8,7 @@ public class Dataset {
     private String id;
 
     private String uri;
-
+/*
 
     // dct:title
     // Norwegian: Tittel
@@ -151,7 +135,7 @@ public class Dataset {
     private List<String> admsIdentifier;
 
 
-
+*/
     public Dataset() {
         //Blank override
     }

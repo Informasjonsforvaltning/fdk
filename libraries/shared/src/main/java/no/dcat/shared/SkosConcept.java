@@ -1,6 +1,5 @@
-package no.dcat.model;
+package no.dcat.shared;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
@@ -10,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @ToString(includeFieldNames = false)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SkosConcept {
 
     private String uri = "http://brreg.no/skosConcept/" + UUID.randomUUID().toString();

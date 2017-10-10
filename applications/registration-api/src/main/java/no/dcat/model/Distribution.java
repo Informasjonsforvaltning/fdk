@@ -3,6 +3,7 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
+import no.dcat.shared.SkosConcept;
 
 import java.util.List;
 import java.util.Map;
