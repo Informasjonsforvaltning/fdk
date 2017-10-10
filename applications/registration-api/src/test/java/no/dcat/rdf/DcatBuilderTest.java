@@ -9,14 +9,14 @@ import com.google.gson.JsonSerializer;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.shared.Contact;
-import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
+import no.dcat.shared.DataTheme;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.QualityAnnotation;
 import no.dcat.shared.Reference;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.junit.Before;
@@ -186,10 +186,9 @@ public class DcatBuilderTest {
         dataset.setLegalBasisForAccess(Arrays.asList(
                 SkosConcept.getInstance("http://lovdata/paragraph/10", "Den siste loven med den lengste tittelen § 10")));
 
-        SkosCode hasVersion = new SkosCode();
-        hasVersion.setUri("http://www.w3.org/2002/07/hasVersion");
-        hasVersion.setPrefLabel(map("nb", "Har versjon" ));
-        hasVersion.setCode("hasVersion");
+        SkosCode hasVersion = new SkosCode("http://www.w3.org/2002/07/hasVersion",
+                "hasVersion",
+                map("nb", "Har versjon" ));
 
         Dataset referencedDataset = new Dataset();
         referencedDataset.setUri("http://referenced/dataset");
@@ -269,6 +268,11 @@ public class DcatBuilderTest {
         System.out.println(actual);
     }
 
+    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
+        SkosCode result = new SkosCode(uri, code, prefLabel);
+
+        return result;
+    }
 
 
     @Test

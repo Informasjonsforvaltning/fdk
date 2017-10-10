@@ -8,7 +8,7 @@ import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.QualityAnnotation;
 import no.dcat.shared.Reference;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.apache.jena.datatypes.xsd.XSDDatatype;

@@ -140,12 +140,4 @@ public class Dataset {
     //Norwegian: annen identifikator
     private List<String> admsIdentifier;
 
-
-    public Dataset() {
-        //Blank override
-    }
-
-    public Dataset(String id) {
-        this.id = id;
-    }
 }

@@ -8,9 +8,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import no.dcat.model.Catalog;
-import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.CodesImportException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
@@ -336,7 +336,7 @@ public class ImportController {
 
             // themes
             if (d.getTheme() != null) {
-                for (DataTheme theme : d.getTheme()) {
+                for (no.dcat.shared.DataTheme theme : d.getTheme()) {
                     DataTheme themeWithLabel = allThemes.get(theme.getUri());
 
                     if (themeWithLabel != null) {

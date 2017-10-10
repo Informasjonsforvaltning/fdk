@@ -3,7 +3,7 @@ package no.dcat.controller;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.SkosCode;
 import no.dcat.model.exceptions.CodesImportException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;

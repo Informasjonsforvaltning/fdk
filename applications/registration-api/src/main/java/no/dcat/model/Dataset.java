@@ -206,4 +206,22 @@ public class Dataset extends no.dcat.shared.Dataset {
     @Field
     private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
 
+    public Dataset() {
+        super();
+        //Blank override
+        setTitle(new HashMap<>());
+        setDescription(new HashMap<>());
+        setObjective(new HashMap<>());
+    }
+
+    public Dataset(String id) {
+        this.setId(id);
+    }
+
+    @Override
+    public String toString() {
+        String first = super.toString() ;
+
+        return first.substring(0, first.length()-1) +", " + catalog + ", " + _lastModified + ", " + registrationStatus + ")";
+    }
 }
