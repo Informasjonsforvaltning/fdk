@@ -114,7 +114,7 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildGeoTimeSummaries(this.dataset);
+      this.buildGeoTimeSummaries();
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
