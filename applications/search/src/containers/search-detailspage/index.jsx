@@ -244,7 +244,27 @@ export default class DetailsPage extends React.Component {
           }
         },
         "references": [
-          "http://testeetatens.no/catalog/2/dataset/42"
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The first one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          }
         ],
         "provenance": {
           "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
