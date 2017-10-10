@@ -36,6 +36,6 @@ public class HelpTextControllerTest {
         List<HelpText> helpTexts = controller.helpTexts("foo");
             assertEquals(helpTexts.get(2).getAbstract().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
             assertEquals(helpTexts.get(2).getTitle().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
-            System.out.println(helpTexts.get(2).getTitle().toString());
+            System.out.println("OMG" + helpTexts.get(2).getTitle().toString());
         }
     }
