@@ -24,4 +24,5 @@ public class Distribution {
     private List<SkosConcept> conformsTo;
     private SkosConcept page;
     private List<String> format;
+    private String type;
 }

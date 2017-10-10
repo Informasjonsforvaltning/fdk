@@ -15,6 +15,7 @@ import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
+import no.dcat.model.Reference;
 import no.dcat.model.SkosCode;
 import no.dcat.model.SkosConcept;
 import no.dcat.shared.Subject;
@@ -182,7 +183,17 @@ public class DcatBuilderTest {
         dataset.setLegalBasisForAccess(Arrays.asList(
                 SkosConcept.getInstance("http://lovdata/paragraph/10", "Den siste loven med den lengste tittelen § 10")));
 
-        dataset.setReferences(Collections.singletonList("http://testeetatens.no/catalog/2/dataset/42"));
+        SkosCode hasVersion = new SkosCode();
+        hasVersion.setUri("http://www.w3.org/2002/07/hasVersion");
+        hasVersion.setPrefLabel(map("nb", "Har versjon" ));
+        hasVersion.setCode("hasVersion");
+
+        Dataset referencedDataset = new Dataset();
+        referencedDataset.setUri("http://referenced/dataset");
+        referencedDataset.setTitle(map("nb", "The first one"));
+
+        dataset.setReferences(Arrays.asList(
+                new Reference(hasVersion, referencedDataset)));
         dataset.setIdentifier(Collections.singletonList("42"));
         dataset.setPage(Collections.singletonList("http://uri1"));
 
@@ -192,8 +203,6 @@ public class DcatBuilderTest {
 
         return catalog;
     }
-
-
 
     QualityAnnotation createQualityAnnotation(String dimension, String text) {
         QualityAnnotation qualityAnnotation = new QualityAnnotation();

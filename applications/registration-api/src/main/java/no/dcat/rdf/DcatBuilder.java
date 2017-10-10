@@ -7,6 +7,7 @@ import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
+import no.dcat.model.Reference;
 import no.dcat.model.SkosCode;
 import no.dcat.model.SkosConcept;
 import no.dcat.shared.Subject;
@@ -169,7 +170,7 @@ public class DcatBuilder {
                 });
 
 
-                addProperties(datRes, DCTerms.references, dataset.getReferences());
+                addReferences(datRes, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
                 addStringLiterals(datRes, DCTerms.identifier, dataset.getIdentifier());
                 addProperties(datRes, FOAF.page, dataset.getPage());
@@ -190,6 +191,17 @@ public class DcatBuilder {
         return this;
     }
 
+    private void addReferences(Resource datRes, List<Reference> references) {
+        if (references != null && references.size() > 0) {
+            references.forEach(reference -> {
+
+                Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
+
+                datRes.addProperty(referenceProperty, reference.getSource().getUri());
+
+            });
+        }
+    }
 
 
     private void addQualityAnnotation(Resource datRes, Property hasQualityAnnotation, QualityAnnotation annotation) {
