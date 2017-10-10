@@ -1,12 +1,22 @@
 package no.dcat.shared;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 /**
  * Created by extkkj on 10.10.2017.
  */
 public class HelpText {
-    public HelpText(String title, String description) {
+
+    public HelpText(String id, String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    private String id;
+
+    public URI getURI() throws URISyntaxException {
+      return new URI("http://brreg.no/fdk/fields#" + id);
     }
 
     public String getAbstract() {
