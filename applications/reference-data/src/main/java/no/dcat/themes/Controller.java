@@ -1,10 +1,6 @@
 package no.dcat.themes;
 
-import no.dcat.shared.LocationUri;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.Subject;
-import no.dcat.shared.Types;
-import no.dcat.shared.DataTheme;
+import no.dcat.shared.*;
 import no.dcat.themes.service.CodesService;
 import no.dcat.themes.service.HelpTextService;
 import no.dcat.themes.service.SubjectsService;
@@ -78,7 +74,7 @@ public class Controller {
     @RequestMapping(value = "/helptexts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<HelpText> helpTexts(@PathVariable(name = "id") String id) {
 
-        return helpTextsService.getHelpTexts(Types.valueOf(id));
+        return helpTextService.getHelpTexts();
 
     }
 

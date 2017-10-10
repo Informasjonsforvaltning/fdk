@@ -70,9 +70,9 @@ public class TDBService {
         Model m = FileManager.get().loadModel("rdf/data-theme-skos.rdf");
         changeLanguageNoToNb(DatasetFactory.create(m));
         overwrite(THEMES_GRAPH, m);
-        Model m = FileManager.get().loadModel("rdf/helptexts.rdf");
-        changeLanguageNoToNb(DatasetFactory.create(m));
-        overwrite(HELPTEXTS_GRAPH, m);
+        Model hm = FileManager.get().loadModel("rdf/helptexts.rdf");
+        changeLanguageNoToNb(DatasetFactory.create(hm));
+        overwrite(HELPTEXTS_GRAPH, hm);
 
     }
 

@@ -10,6 +10,7 @@ import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 /**
  * Created by extkkj on 10.10.2017.
  */
+
+@Service
 public class HelpTextService extends BaseServiceWithFraming {
 
     @Autowired
