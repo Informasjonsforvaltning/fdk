@@ -42,6 +42,7 @@ import { TitleUriFormComponent } from "./dataset/titleUri/titleUri.component";
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { GlobalErrorHandler } from './GlobalErrorHandler';
+import {ContentComponent} from "./dataset/content/content.component";
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import { GlobalErrorHandler } from './GlobalErrorHandler';
         HelpText,
         ModalComponent,
         TitleUriListComponent,
-        TitleUriFormComponent
+        TitleUriFormComponent,
+        ContentComponent
     ],
     imports: [
         BrowserModule,

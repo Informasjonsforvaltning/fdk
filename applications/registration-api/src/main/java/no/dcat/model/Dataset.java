@@ -147,7 +147,7 @@ public class Dataset {
     private QualityAnnotation hasAccuracyAnnotation;
     private QualityAnnotation hasCompletenessAnnotation;
     private QualityAnnotation hasCurrentnessAnnotation;
-    private QualityAnnotation hasAvailabilityAnnotations;
+    private QualityAnnotation hasAvailabilityAnnotation;
     private QualityAnnotation hasRelevanceAnnotation;
 
     //dct:references

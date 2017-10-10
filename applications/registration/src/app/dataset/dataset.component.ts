@@ -47,6 +47,7 @@ export class DatasetComponent implements OnInit {
     };
     availableLanguages: any;
     summaries: any = {};
+    legalBasis: any[];
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -113,6 +114,7 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
+      this.buildGeoTimeSummaries();
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
@@ -173,7 +175,7 @@ export class DatasetComponent implements OnInit {
           if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
           }
- 
+
           if (_.isEmpty(dataset.informationModel)) {
             dataset.informationModel = {};
           }
@@ -214,11 +216,10 @@ export class DatasetComponent implements OnInit {
         });
     });
   }
-    buildSummaries() {
-        this.buildGeoTimeSummaries();
-        this.buildProvenanceSummary();
-        this.buildInformationModelSummary();
-    }
+  buildSummaries() {
+    this.buildGeoTimeSummaries();
+    this.buildProvenanceSummary();
+    this.buildInformationModelSummary();  }
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
@@ -382,7 +383,31 @@ export class DatasetComponent implements OnInit {
         }
     }
 
-    public buildProvenanceSummary() {
+  public buildContentSummary() {
+    this.summaries.content = "";
+
+    //TODO conformsTo
+
+    if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
+      this.summaries.content = this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasCompletenessAnnotation && this.dataset.hasCompletenessAnnotation.hasBody && this.dataset.hasCompletenessAnnotation.hasBody['no']  !== "") {
+      this.summaries.content += this.dataset.hasCompletenessAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasAccuracyAnnotation && this.dataset.hasAccuracyAnnotation.hasBody && this.dataset.hasAccuracyAnnotation.hasBody['no']  !== "") {
+      this.summaries.content += this.dataset.hasAccuracyAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasAvailabilityAnnotation && this.dataset.hasAvailabilityAnnotation.hasBody &&this.dataset.hasAvailabilityAnnotation.hasBody['no'] !== "") {
+      this.summaries.content += this.dataset.hasAvailabilityAnnotation.hasBody['no'] + ". ";
+    }
+
+  }
+
+
+  public buildProvenanceSummary() {
       let provenance = "";
       if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];
