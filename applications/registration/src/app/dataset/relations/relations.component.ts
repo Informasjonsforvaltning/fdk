@@ -25,4 +25,8 @@ export class ContentComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private parent: DatasetComponent) {
   }
+
+  ngOnInit() {
+
+  }
 }

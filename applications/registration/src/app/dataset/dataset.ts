@@ -75,6 +75,8 @@ export interface Dataset {
   hasAvailabilityAnnotation?:any;
   hasRelevanceAnnotation?:any;
 
+  references?:any[];
+
   _lastModified: string;
 
   registrationStatus? : string;
