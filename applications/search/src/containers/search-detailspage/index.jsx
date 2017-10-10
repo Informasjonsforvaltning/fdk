@@ -438,7 +438,9 @@ export default class DetailsPage extends React.Component {
       hasCurrentnessAnnotation,
       spatial,
       temporal,
-      language
+      language,
+      isPartOf,
+      references
     } = this.state.dataset;
 
       return (
@@ -470,6 +472,8 @@ export default class DetailsPage extends React.Component {
           spatial={spatial}
           temporal={temporal}
           language={language}
+          isPartOf={isPartOf}
+          references={references}
         />
       );
   }

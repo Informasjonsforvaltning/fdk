@@ -23,6 +23,46 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     return null;
   }
 
+  _renderTemporal() {
+    let temporalNodes;
+    const { temporal } = this.props;
+    if (temporal) {
+      temporalNodes = temporal.map((item, index) => {
+        if (item.startDate && item.endDate) {
+          return (
+            <div key={`dataset-info-temporal-${index}`}>
+              <h5>{localization.dataset.period}</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.startDate}
+                </Moment>
+              </p>
+              <h5>{localization.dataset.period}</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                {item.endDate}
+                </Moment>
+              </p>
+            </div>
+          );
+        } else if (item.startDate) {
+          return (
+            <div key={`dataset-info-temporal-${index}`}>
+              <h5>{localization.dataset.period}</h5>
+                <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                  <Moment format="DD.MM.YYYY">
+                    {item.startDate}
+                  </Moment>
+                </p>
+            </div>
+          );
+        }
+      });
+      return temporalNodes;
+    }
+    return null;
+  }
+
   _renderLanguage() {
     let languageNodes;
     const language = this.props.language;
@@ -40,6 +80,43 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     return null;
   }
 
+  _renderIsPartOf() {
+    let isPartOfNodes;
+    const isPartOf = this.props.isPartOf;
+    if (isPartOf) {
+      isPartOfNodes = isPartOf.map((item, index) => (
+        <a
+          key={`dataset-info-ispartof-${index}`}
+          href={item.uri}
+        >
+          {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+
+      ));
+      return isPartOfNodes;
+    }
+    return null;
+  }
+
+  _renderReferences() {
+    let referencesNodes;
+    const references = this.props.references;
+    if (references) {
+      referencesNodes = references.map((item, index) => (
+        <a
+          key={`dataset-info-references-${index}`}
+          href={item}
+        >
+          {item}
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      ));
+      return referencesNodes;
+    }
+    return null;
+  }
+
   render() {
     return (
       <div className="row fdk-row fdk-margin-top-triple">
@@ -51,8 +128,8 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.issued}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">{this.props.issued}</Moment>
               </p>
             </div>
           </div>
@@ -116,8 +193,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
               <i className="fa fa-calendar" />
             </div>
             <div className="fdk-detail-text">
-              <h5>{localization.dataset.period}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">-</p>
+              {this._renderTemporal()}
             </div>
           </div>
         </div>
@@ -139,20 +215,24 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-link" />
             </div>
+            {this.props.isPartOf &&
             <div className="fdk-detail-text">
               <h5>{localization.dataset.isPartOf}</h5>
               <p className="fdk-ingress">
-                <a>-<i className="fa fa-external-link fdk-fa-right" /></a>
-              </p>
-              <h5>Datasettet er relatert til</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                <a>-<i className="fa fa-external-link fdk-fa-right" /></a>
+                {this._renderIsPartOf()}
               </p>
             </div>
+            }
+            {this.props.references &&
+            <div className="fdk-detail-text">
+              <h5>Datasettet er relatert til</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no">
+                {this._renderReferences()}
+              </p>
+            </div>
+            }
           </div>
         </div>
-
-
       </div>
     );
   }
@@ -176,6 +256,7 @@ DatasetInfo.propTypes = {
   hasCurrentnessAnnotation: PropTypes.string,
   spatial: PropTypes.array,
   temporal: PropTypes.array,
-  language: PropTypes.array
-
+  language: PropTypes.array,
+  isPartOf: PropTypes.array,
+  references: PropTypes.array
 };
