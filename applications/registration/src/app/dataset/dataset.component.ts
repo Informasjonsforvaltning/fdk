@@ -118,6 +118,7 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
       this.dataset.subjects = this.dataset.subjects || [];
@@ -182,12 +183,12 @@ export class DatasetComponent implements OnInit {
 
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted) {
+                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted) {
+                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
                 } else {
                     delete temporal.endDate;
@@ -409,18 +410,18 @@ export class DatasetComponent implements OnInit {
 
   public buildProvenanceSummary() {
       let provenance = "";
-      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];
       }
       let frequency   = "";
-      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
         frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
       }
 
       let modified    = this.dataset.modified ? this.dataset.modified : '';
 
       let currentness = "";
-      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
         currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
       }
 
