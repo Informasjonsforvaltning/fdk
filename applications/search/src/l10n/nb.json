@@ -117,7 +117,10 @@
     "completenessAnnotation": "Kompletthet",
     "accuracyAnnotation": "Nøyaktighet",
     "availabilityAnnotations": "Tilgjengelighet",
-
+    "contactPoint": {
+      "background": "Bakgrunnsinformasjon om datasettet",
+      "organizationUnit": "Ta kontakt med"
+    },
     "accessRights": {
       "authorityCode": {
         "public": "Offentlig",

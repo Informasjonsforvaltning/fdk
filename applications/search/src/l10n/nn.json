@@ -113,6 +113,14 @@
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
     "isPartOf": "Datasettet er en del av",
+    "relevanceAnnotation": "Relevans",
+    "completenessAnnotation": "Kompletthet",
+    "accuracyAnnotation": "Nøyaktighet",
+    "availabilityAnnotations": "Tilgjengelighet",
+    "contactPoint": {
+      "background": "Bakgrunnsinformasjon om datasettet",
+      "organizationUnit": "Ta kontakt med"
+    },
     "accessRights": {
       "authorityCode": {
         "public": "Offentleg",

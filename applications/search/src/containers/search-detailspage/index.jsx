@@ -8,6 +8,7 @@ import DatasetDistribution from '../../components/search-dataset-distribution';
 import DatasetInfo from '../../components/search-dataset-info';
 import DatasetQuality from '../../components/search-dataset-quality-content';
 import DatasetBegrep from '../../components/search-dataset-begrep';
+import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
@@ -524,10 +525,17 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderContactInfo() {
-
-    return (
-      <div />
-    );
+    const { contactPoint } = this.state.dataset;
+    return contactPoint.map((item, index) => (
+      <DatasetContactInfo
+        key={index}
+        uri={item.uri}
+        email={item.email}
+        organizationUnit={item.organizationUnit}
+        url={item.hasURL}
+        telephone={item.hasTelephone}
+      />
+    ));
   }
 
   render() {
@@ -542,11 +550,10 @@ export default class DetailsPage extends React.Component {
             {this._renderDistribution()}
             {this._renderDatasetInfo()}
             {this._renderQuality()}
-
-
             <DatasetBegrep
               keyword={this.state.dataset.keyword}
             />
+            {this._renderContactInfo()}
           </div>
         </div>
       </div>
