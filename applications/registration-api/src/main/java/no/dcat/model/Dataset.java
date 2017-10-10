@@ -139,6 +139,11 @@ public class Dataset {
     @Field
     private List<SkosConcept> legalBasisForAccess = Collections.emptyList();
 
+    // dcatno:informationModel
+    //Norwegian: informasjonsmodell
+    @Field
+    private SkosConceptWithHomepage informationModel;
+
     // dcatno:hasXXXXAnnotation
     @Field
     private QualityAnnotation hasAccuracyAnnotation;

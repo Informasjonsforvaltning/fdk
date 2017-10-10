@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 import { PeriodOfTime } from './periodoftime';
-import { Dataset } from '../dataset';
 import {TemporalFormComponent} from './temporal.component';
 
 @Component({
@@ -10,7 +9,7 @@ import {TemporalFormComponent} from './temporal.component';
     templateUrl: './temporal-list.component.html'
 })
 export class TemporalListComponent implements OnInit {
-    
+
     @Input('temporalsFormArray')
     public temporalsFormArray: FormArray;
 
