@@ -160,20 +160,24 @@ public class DcatBuilder {
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
                 addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
 
-                dataset.getLegalBasisForRestriction().forEach(skosConceptWithHomepage -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
+                dataset.getLegalBasisForRestriction().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, concept);
                 });
 
-                dataset.getLegalBasisForProcessing().forEach(skosConceptWithHomepage -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
+                dataset.getLegalBasisForProcessing().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, concept);
                 });
-                dataset.getLegalBasisForAccess().forEach(skosConceptWithHomepage -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
+                dataset.getLegalBasisForAccess().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_legalBasisForAccess, concept);
                 });
 
-                addSkosConcept(datRes, dcatno_informationModel, dataset.getInformationModel());
-                addSkosConcept(datRes, dcatno_standard, dataset.getStandard());
+                dataset.getInformationModel().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_informationModel, concept);
+                });
 
+                dataset.getConformsTo().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_standard, concept);
+                });
 
                 addReferences(datRes, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());

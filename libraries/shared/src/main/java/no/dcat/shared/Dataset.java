@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -69,10 +70,6 @@ public class Dataset {
     //Norwegian: Eksempeldata
     private List<Distribution> sample;
 
-    //dcat:conformsTo
-    //Norwegian: I samsvar med
-    private List<SkosConcept> conformsTo;
-
     //dct:temporal
     //Norwegian: tidsperiode
     private List<PeriodOfTime> temporal;
@@ -85,17 +82,7 @@ public class Dataset {
     //Norwegian: tilgangsnivå
     private SkosCode accessRights;
 
-    // dcatno:legalBasisForRestriction
-    //Norwegian: skjermingshjemmel
-    private List<SkosConcept> legalBasisForRestriction;
 
-    // dcatno:legalBasisForProcessing
-    //Norwegian: behanlingsgrunnlag
-   private List<SkosConcept> legalBasisForProcessing;
-
-    // dcatno:legalBasisForAccess
-    //Norwegian: utleveringshjemmel
-    private List<SkosConcept> legalBasisForAccess;
 
     // dcatno:hasXXXXAnnotation
     private QualityAnnotation hasAccuracyAnnotation;
@@ -128,16 +115,36 @@ public class Dataset {
     //Norwegian: begrep
     private List<Subject> subject;
 
+    //adms:identifier
+    //Norwegian: annen identifikator
+    private List<String> admsIdentifier;
+
+    //dcat:conformsTo
+    //Norwegian: I samsvar med
+    private List<SkosConcept> conformsTo = Collections.emptyList();;
+
+    // NEW FIELDS DCAT-AP-NO 1.2?
+
     // dct: informationModel
     // Norwegian: informasjonsmodell
-    private List<SkosConcept> informationModel;
+    private List<SkosConcept> informationModel = Collections.emptyList();;
+
+    // dcatno:legalBasisForRestriction
+    //Norwegian: skjermingshjemmel
+    private List<SkosConcept> legalBasisForRestriction = Collections.emptyList();;
+
+    // dcatno:legalBasisForProcessing
+    //Norwegian: behanlingsgrunnlag
+    private List<SkosConcept> legalBasisForProcessing = Collections.emptyList();
+
+    // dcatno:legalBasisForAccess
+    //Norwegian: utleveringshjemmel
+    private List<SkosConcept> legalBasisForAccess = Collections.emptyList();;
 
     //dct:type
     //Norwegian: type
     private String type;
 
-    //adms:identifier
-    //Norwegian: annen identifikator
-    private List<String> admsIdentifier;
+
 
 }

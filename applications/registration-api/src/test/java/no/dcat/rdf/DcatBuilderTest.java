@@ -8,8 +8,8 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
-import no.dcat.shared.Contact;
 import no.dcat.model.Dataset;
+import no.dcat.shared.Contact;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -103,8 +102,8 @@ public class DcatBuilderTest {
 
         dataset.setPublisher(publisher);
 
-        dataset.setInformationModel(
-                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null));
+        dataset.setInformationModel(Arrays.asList(
+                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null)));
 
         Subject subject = new Subject();
         subject.setDefinition(map("no","alt som er registrert med et organisasjonsnummer "));
@@ -216,15 +215,6 @@ public class DcatBuilderTest {
         return qualityAnnotation;
     }
 
-
-    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
-        SkosCode result = new SkosCode();
-        result.setUri(uri);
-        result.setCode(code);
-        result.setPrefLabel(prefLabel);
-
-        return result;
-    }
 
     public Map<String,String> map(String lang, String value) {
         Map<String, String> result = new HashMap<>();
