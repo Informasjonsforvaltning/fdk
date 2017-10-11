@@ -2,7 +2,6 @@ package no.dcat.config;
 
 import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.AuthorizationServiceException;
-import no.dcat.authorization.Entity;
 import no.dcat.authorization.EntityNameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +18,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import java.net.URL;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import static no.dcat.config.Roles.ROLE_USER;
 
 /**
  * Created by bjg on 19.06.2017.
@@ -38,11 +39,6 @@ import java.util.*;
 @EnableWebSecurity
 public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
-
-    private Map<String, List<Entity>> userEntities = new HashMap<>();
-    private Map<String, String> userNames = new HashMap<>();
-
-    public static final String ROLE_USER = "ROLE_USER";
 
     @Bean
     public AuthenticationSuccessHandler loginSuccessHandler() {
@@ -94,13 +90,14 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
                         .map(SimpleGrantedAuthority::new)
                         .forEach(authorities::add);
 
-                logger.warn("Authorities {}", authorities);
+                logger.info("Authorities {}", authorities);
 
+            } catch (AuthorizationServiceException | RuntimeException e) {
+                logger.error("Feil ved autorisasjon i Altinn {}", e);
+            } finally {
                 authorities.add(new SimpleGrantedAuthority(ROLE_USER));
-                return new User(personnummer, "password01", authorities);
-            } catch (AuthorizationServiceException e) {
-                throw new UsernameNotFoundException(e.getLocalizedMessage(), e);
             }
+            return new User(personnummer, "password01", authorities);
         };
     }
 

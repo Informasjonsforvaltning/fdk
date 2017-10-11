@@ -114,7 +114,6 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildGeoTimeSummaries();
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
@@ -129,7 +128,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints = this.dataset.contactPoints || [];
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-      this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.standard = this.dataset.standard || {};
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
@@ -179,6 +178,9 @@ export class DatasetComponent implements OnInit {
 
           if (_.isEmpty(dataset.informationModel)) {
             dataset.informationModel = {};
+          }
+          if (_.isEmpty(dataset.standard)) {
+            dataset.standard = {};
           }
 
           if (dataset.temporals) {
@@ -387,10 +389,12 @@ export class DatasetComponent implements OnInit {
   public buildContentSummary() {
     this.summaries.content = "";
 
-    //TODO conformsTo
+    if (this.dataset.standard && this.dataset.standard.prefLabel) {
+        this.summaries.content = this.dataset.standard.prefLabel['nb'] + ". ";
+    }
 
     if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
-      this.summaries.content = this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
+      this.summaries.content += this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
     }
 
     if (this.dataset.hasCompletenessAnnotation && this.dataset.hasCompletenessAnnotation.hasBody && this.dataset.hasCompletenessAnnotation.hasBody['no']  !== "") {

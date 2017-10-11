@@ -65,6 +65,8 @@ public class DcatBuilder {
     public static final Property dcatno_legalBasisForRestriction = mod.createProperty(DCATNO, "legalBasisForRestriction");
     public static final Property dcatno_legalBasisForProcessing = mod.createProperty(DCATNO, "legalBasisForProcessing");
     public static final Property dcatno_legalBasisForAccess = mod.createProperty(DCATNO, "legalBasisForAccess");
+    public static final Property dcatno_informationModel = mod.createProperty(DCATNO, "informationModel");
+    public static final Property dcatno_standard = mod.createProperty(DCATNO, "standard");
 
     private final Model model;
     private final Map<Object, Resource> resourceMap = new HashMap<>();
@@ -169,6 +171,9 @@ public class DcatBuilder {
                     addSkosConcept(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
                 });
 
+                addSkosConcept(datRes, dcatno_informationModel, dataset.getInformationModel());
+                addSkosConcept(datRes, dcatno_standard, dataset.getStandard());
+
 
                 addReferences(datRes, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
@@ -225,41 +230,50 @@ public class DcatBuilder {
         }
     }
 
-    private void addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
-        Resource skosConceptResource = model.createResource();
+    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
+        if (skosConcept != null) {
+            Resource skosConceptResource = model.createResource();
 
-        skosConceptResource.addProperty(RDF.type, SKOS.Concept);
-        if (skosConcept.getExtraType() != null) {
-            skosConceptResource.addProperty(RDF.type, skosConcept.getExtraType());
+            skosConceptResource.addProperty(RDF.type, SKOS.Concept);
+            if (skosConcept.getExtraType() != null) {
+                skosConceptResource.addProperty(RDF.type, skosConcept.getExtraType());
+            }
+            skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
+            addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
+
+            datRes.addProperty(predicate, skosConceptResource);
         }
-        skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
-        addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
 
-        datRes.addProperty(predicate, skosConceptResource);
-
+        return this;
     }
 
     public DcatBuilder addPeriodResourceAnnon(Resource resource, Property property, PeriodOfTime period) {
+        if (period != null) {
 
-        Resource temporal = model.createResource();
-        model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
+            Resource temporal = model.createResource();
+            model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
 
-        resource.addProperty(property,temporal);
+            resource.addProperty(property, temporal);
 
-        temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
-        temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+            temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
+            temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+
+        }
 
         return this;
     }
 
     public Resource createTimeInstantResource(Date date) {
-        Resource timeInstant = model.createResource();
-        model.add(timeInstant, RDF.type, TIME_INSTANT);
+        if (date != null) {
+            Resource timeInstant = model.createResource();
+            model.add(timeInstant, RDF.type, TIME_INSTANT);
 
-        Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
-        timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
+            Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+            timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
 
-        return timeInstant;
+            return timeInstant;
+        }
+        return null;
     }
 
 

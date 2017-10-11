@@ -103,8 +103,8 @@ public class DcatBuilderTest {
 
         dataset.setPublisher(publisher);
 
-        dataset.setInformationModel(Collections.singletonList(
-                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null)));
+        dataset.setInformationModel(
+                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null));
 
         Subject subject = new Subject();
         subject.setDefinition(map("no","alt som er registrert med et organisasjonsnummer "));
