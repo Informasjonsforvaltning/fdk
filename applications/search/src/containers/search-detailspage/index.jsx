@@ -243,7 +243,92 @@ export default class DetailsPage extends React.Component {
             "no": "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."
           }
         },
-
+        "references": [
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The first one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          },
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The second one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          },
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/isPartOf",
+              "code": "isPartOf",
+              "prefLabel": {
+                "nb": "Er del av"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The third one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          },
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The fourth one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          }
+        ],
         "provenance": {
           "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
           "code": "vedtak",
@@ -293,6 +378,7 @@ export default class DetailsPage extends React.Component {
         ],
         "registrationStatus": "DRAFT"
       }
+
       ,
       loading: true
     };

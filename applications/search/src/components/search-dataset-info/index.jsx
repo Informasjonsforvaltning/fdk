@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import Moment from 'react-moment';
+import _sortBy from 'lodash/sortBy';
 
 import localization from '../../components/localization';
 
@@ -12,14 +12,26 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     let spatialNodes;
     const { spatial } = this.props;
     if (spatial) {
-      spatialNodes = spatial.map((item, index) => (
-        <span
-          key={`dataset-info-spatial-${index}`}
-          className="fdk-ingress fdk-margin-bottom-no"
-        >
-          {`${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}, `}
-        </span>
-      ));
+      spatialNodes = spatial.map((item, index) => {
+        if (index > 0) {
+          return (
+            <span
+              key={`dataset-info-spatial-${index}`}
+              className="fdk-ingress fdk-margin-bottom-no"
+            >
+              {`, ${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}`}
+            </span>
+          );
+        }
+        return (
+          <span
+            key={`dataset-info-spatial-${index}`}
+            className="fdk-ingress fdk-margin-bottom-no"
+          >
+            {`${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}`}
+          </span>
+        );
+      });
       return spatialNodes;
     }
     return noTextToShow;
@@ -89,38 +101,63 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     return noTextToShow;
   }
 
-  _renderIsPartOf() {
-    let isPartOfNodes;
-    const isPartOf = this.props.isPartOf;
-    if (isPartOf) {
-      isPartOfNodes = isPartOf.map((item, index) => (
-        <a
-          key={`dataset-info-ispartof-${index}`}
-          href={item.uri}
-        >
-          {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
-
-      ));
-      return isPartOfNodes;
-    }
-    return null;
-  }
-
   _renderReferences() {
     let referencesNodes;
-    const references = this.props.references;
+    const { references } = this.props;
+
     if (references) {
-      referencesNodes = references.map((item, index) => (
-        <a
-          key={`dataset-info-references-${index}`}
-          href={item}
-        >
-          {item}
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
-      ));
+      let groupReferences = references;
+      groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
+
+      let referenceTypeCode = '';
+      referencesNodes = groupReferences.map((item, index) => {
+        if (item.referenceType.code !== referenceTypeCode) {
+          referenceTypeCode = item.referenceType.code;
+          return (
+            <div
+              key={`dataset-${index}`}
+            >
+              <h5>
+                {
+                  item.referenceType.prefLabel[this.props.selectedLanguageCode]
+                  || item.referenceType.prefLabel.nb
+                  || item.referenceType.prefLabel.nn
+                  || item.referenceType.prefLabel.en
+                }
+              </h5>
+              <p className="fdk-ingress">
+                <a
+                  href={item.source.uri}
+                >
+                  {
+                    item.source.title[this.props.selectedLanguageCode]
+                    || item.source.title.nb
+                    || item.source.title.nn
+                    || item.source.title.en
+                  }
+                </a>
+              </p>
+            </div>
+          );
+        }
+        return (
+          <p
+            key={`dataset-${index}`}
+            className="fdk-ingress"
+          >
+            <a
+              href={item.source.uri}
+            >
+              {
+                item.source.title[this.props.selectedLanguageCode]
+                || item.source.title.nb
+                || item.source.title.nn
+                || item.source.title.en
+              }
+            </a>
+          </p>
+        );
+      });
       return referencesNodes;
     }
     return null;
@@ -159,7 +196,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.frequency}</h5>
-              <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">{this.props.accrualPeriodicity}</p>
+              <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
+                {this.props.accrualPeriodicity.charAt(0).toUpperCase()}{this.props.accrualPeriodicity.substr(1)}
+              </p>
             </div>
           </div>
         </div>
@@ -232,20 +271,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-link" />
             </div>
-            {this.props.isPartOf &&
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.isPartOf}</h5>
-              <p className="fdk-ingress">
-                {this._renderIsPartOf()}
-              </p>
-            </div>
-            }
             {this.props.references &&
-            <div className="fdk-detail-text">
-              <h5>Datasettet er relatert til</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                {this._renderReferences()}
-              </p>
+            <div className="fdk-detail-text refer">
+              {this._renderReferences()}
             </div>
             }
           </div>
