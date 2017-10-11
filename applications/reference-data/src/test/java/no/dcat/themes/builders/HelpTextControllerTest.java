@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by extkkj on 10.10.2017.
@@ -55,4 +56,27 @@ public class HelpTextControllerTest {
         assertThat(helpTexts.get(0).getShortdesc().get("nb"), is(notNullValue()));
 
     }
+
+    @Test
+    public void helpTextsMoreHasDesc() throws Throwable {
+        List<HelpText> helpTexts = controller.helpTexts();
+        assertThat(helpTexts.get(0).getDescription(), is(notNullValue()));
+        //   assertThat(helpTexts.get(0).getDescription(), isMapContaining); Want to test the Map<String, String> structure
+        assertThat(helpTexts.get(0).getDescription().get("nb"), is(notNullValue()));
+        assertTrue(helpTexts.stream().allMatch(helpText -> helpText.getDescription().containsKey("nb")));
+        assertTrue(helpTexts.stream().anyMatch(helpText -> helpText.getDescription().get("nb").contains("beskrivelse")));
+    }
+
+    @Test
+    public void helpTextsMoreHasAbstract() throws Throwable {
+        List<HelpText> helpTexts = controller.helpTexts();
+        assertThat(helpTexts.get(0).getShortdesc(), is(notNullValue()));
+        assertThat(helpTexts.get(0).getAbstract(), is(notNullValue()));
+        //   assertThat(helpTexts.get(0).getShortdesc(), isMapContaining); Want to test the Map<String, String> structure
+        assertThat(helpTexts.get(0).getShortdesc().get("nb"), is(notNullValue()));
+        assertTrue(helpTexts.stream().allMatch(helpText -> helpText.getShortdesc().containsKey("nb")));
+    }
+
+
+
 }
