@@ -17,7 +17,7 @@ describe('DatasetInfo', () => {
 
   it ('should render issued', () => {
     expect(wrapper.find('#dataset-info-issued').text()).to.equal('-');
-    wrapper.setProps({ issued: '1325376000000'});
+    wrapper.setProps({ issued: 1325376000000});
     expect(wrapper.find('#dataset-info-issued').text()).not.equal('-')
   });
 
