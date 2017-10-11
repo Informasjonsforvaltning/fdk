@@ -28,9 +28,9 @@ describe('DatasetInfo', () => {
     wrapper.setProps({
       "accrualPeriodicity": "årlig",
       "provenance": "Vedtak",
-      "hasCurrentnessAnnotation": "test tekst"
+      "hasCurrentnessAnnotation": "test tekst",
     });
-    expect(wrapper.find('#dataset-info-accrualPeriodicity').text()).to.equal('årlig');
+    expect(wrapper.find('#dataset-info-accrualPeriodicity').text()).to.equal('Årlig');
     expect(wrapper.find('#dataset-info-provenance').text()).to.equal('Vedtak');
     expect(wrapper.find('#dataset-info-currentnessAnnotation').text()).to.equal('test tekst');
   });
@@ -65,7 +65,7 @@ describe('DatasetInfo', () => {
         }
       ],
     });
-    expect(wrapper.find('#dataset-info-spatial').text()).to.equal('Asker, Bærum, Hurum, Røyken, ');
+    expect(wrapper.find('#dataset-info-spatial').text()).to.equal('Asker, Bærum, Hurum, Røyken');
   });
 
   it ('should render temporal', () => {

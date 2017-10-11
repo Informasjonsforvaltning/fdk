@@ -272,9 +272,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-calendar" />
             </div>
-
+            <div id="dataset-info-temporal">
               {this._renderTemporal()}
-
+            </div>
           </div>
         </div>
 

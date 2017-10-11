@@ -6,8 +6,7 @@ import localization from '../../components/localization';
 export default class DatasetContactInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div className="row fdk-row fdk-margin-top-triple">
-
+      <div id="dataset-contactinfo" className="row fdk-row fdk-margin-top-triple">
         {this.props.uri &&
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
@@ -17,6 +16,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
             <div className="fdk-detail-text">
               <p className="fdk-ingress fdk-margin-bottom-no">
                 <a
+                  id="dataset-contact-uri"
                   title={localization.dataset.contactPoint.background}
                   href={this.props.uri}
                   target="_blank"
@@ -40,6 +40,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
               <div className="fdk-detail-text">
                 <p className="fdk-ingress fdk-margin-bottom-no">
                   <a
+                    id="dataset-contact-url"
                     title={`${localization.dataset.contactPoint.organizationUnit} ${this.props.organizationUnit}`}
                     href={this.props.url}
                     target="_blank"
@@ -63,6 +64,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
             <div className="fdk-detail-text">
               <p className="fdk-ingress fdk-margin-bottom-no">
                 <a
+                  id="dataset-contact-email"
                   title={this.props.email}
                   href={`mailto:${this.props.email}`}
                   target="_blank"

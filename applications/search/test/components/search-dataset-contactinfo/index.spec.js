@@ -22,7 +22,8 @@ describe('DatasetContactInfo', () => {
 
   it ('should render url href', () => {
     wrapper.setProps({
-      url: 'http://www.example.com/some/random/url'
+      url: 'http://www.example.com/some/random/url',
+      "organizationUnit": "Avdeling for digitalisering"
     });
     expect(wrapper.find('#dataset-contact-url').prop('href')).to.have.length(38);
   });
