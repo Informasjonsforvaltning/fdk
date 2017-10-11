@@ -12,7 +12,7 @@ import java.util.UUID;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SkosConcept {
 
-    private String uri = "http://brreg.no/skosConcept/" + UUID.randomUUID().toString();
+    private String uri; // = "http://brreg.no/skosConcept/" + UUID.randomUUID().toString();
     private Map<String, String> prefLabel = new HashMap<>();
     private String extraType;
 

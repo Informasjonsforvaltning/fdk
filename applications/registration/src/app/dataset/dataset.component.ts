@@ -128,7 +128,9 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints = this.dataset.contactPoints || [];
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-      this.dataset.standard = this.dataset.standard || {};
+      this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
+
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
@@ -178,9 +180,6 @@ export class DatasetComponent implements OnInit {
 
           if (_.isEmpty(dataset.informationModel)) {
             dataset.informationModel = {};
-          }
-          if (_.isEmpty(dataset.standard)) {
-            dataset.standard = {};
           }
 
           if (dataset.temporals) {
@@ -389,8 +388,8 @@ export class DatasetComponent implements OnInit {
   public buildContentSummary() {
     this.summaries.content = "";
 
-    if (this.dataset.standard && this.dataset.standard.prefLabel) {
-        this.summaries.content = this.dataset.standard.prefLabel['nb'] + ". ";
+    if (this.dataset.conformsTos[0] && this.dataset.conformsTos[0].prefLabel) {
+        this.summaries.content = this.dataset.conformsTos[0].prefLabel['nb'] + ". ";
     }
 
     if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
