@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import _sortBy from 'lodash/sortBy';
 
 import localization from '../../components/localization';
+import './index.scss';
 
 const noTextToShow = '-';
 
@@ -47,19 +48,26 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div
               key={`dataset-info-temporal-${index}`}
               id={`dataset-info-temporal-${index}`}
+              className="fdk-detail-text"
             >
-              <h5>{localization.dataset.period}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                <Moment format="DD.MM.YYYY">
-                  {item.startDate}
-                </Moment>
-              </p>
-              <h5>{localization.dataset.period}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                <Moment format="DD.MM.YYYY">
-                  {item.endDate}
-                </Moment>
-              </p>
+              <div
+                className="dataset-temporal-date"
+              >
+                <h5>{localization.dataset.periodFrom}</h5>
+                <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                  <Moment format="DD.MM.YYYY">
+                    {item.startDate}
+                  </Moment>
+                </p>
+              </div>
+              <div className="dataset-temporal-date ml-1">
+                <h5>{localization.dataset.periodTo}</h5>
+                <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                  <Moment format="DD.MM.YYYY">
+                    {item.endDate}
+                  </Moment>
+                </p>
+              </div>
             </div>
           );
         } else if (item.startDate) {
@@ -68,10 +76,24 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
               key={`dataset-info-temporal-${index}`}
               id={`dataset-info-temporal-${index}`}
             >
-              <h5>{localization.dataset.period}</h5>
+              <h5>{localization.dataset.periodFrom}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
                   {item.startDate}
+                </Moment>
+              </p>
+            </div>
+          );
+        } else if (item.endDate) {
+          return (
+            <div
+              key={`dataset-info-temporal-${index}`}
+              id={`dataset-info-temporal-${index}`}
+            >
+              <h5>{localization.dataset.periodTo}</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.endDate}
                 </Moment>
               </p>
             </div>
@@ -135,6 +157,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                     || item.source.title.nn
                     || item.source.title.en
                   }
+                  <i className="fa fa-external-link fdk-fa-right" />
                 </a>
               </p>
             </div>
@@ -154,6 +177,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                 || item.source.title.nn
                 || item.source.title.en
               }
+              <i className="fa fa-external-link fdk-fa-right" />
             </a>
           </p>
         );
@@ -248,9 +272,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-calendar" />
             </div>
-            <div id="dataset-info-temporal" className="fdk-detail-text">
+
               {this._renderTemporal()}
-            </div>
+
           </div>
         </div>
 

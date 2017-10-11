@@ -6,21 +6,7 @@ import localization from '../../components/localization';
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderPublisher() {
     const publisher = this.props.publisher;
-    if (publisher && publisher.name && publisher.id) {
-      return (
-        <span>
-          {localization.search_hit.owned}&nbsp;
-          <a
-            id="dataset-descritption-publisher-link"
-            href={publisher.id}
-          >
-            <span id="dataset-descritption-publisher-text">
-              {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
-            </span>
-          </a>
-        </span>
-      );
-    } else if (publisher && publisher.name) {
+    if (publisher && publisher.name) {
       return (
         <span>
           {localization.search_hit.owned}&nbsp;

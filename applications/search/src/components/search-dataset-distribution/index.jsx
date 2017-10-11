@@ -42,6 +42,44 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
     return null;
   }
 
+  _renderLicense() {
+    const { license } = this.props;
+    if (license && license.uri && license.prefLabel) {
+      return (
+        <a
+          href={license.uri}
+        >
+          {
+            license.prefLabel[this.props.selectedLanguageCode]
+            || license.prefLabel.nb
+            || license.prefLabel.nn
+            || license.prefLabel.en
+          }
+        </a>
+      );
+    }
+    return null;
+  }
+
+  _renderDistributionPage() {
+    const { page } = this.props;
+    if (page && page.uri && page.prefLabel) {
+      return (
+        <a
+          href={page.uri}
+        >
+          {
+            page.prefLabel[this.props.selectedLanguageCode]
+            || page.prefLabel.nb
+            || page.prefLabel.nn
+            || page.prefLabel.en
+          }
+        </a>
+      );
+    }
+    return null;
+  }
+
   render() {
     let distributionNonPublic = false;
     let distributionRestricted = false;
@@ -96,6 +134,26 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
             </p>
           </div>
           }
+
+          {this.props.license &&
+          <div>
+            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
+            <p className="fdk-ingress">
+              {this._renderLicense()}
+            </p>
+          </div>
+          }
+
+          {this.props.page &&
+          <div>
+            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
+            <p className="fdk-ingress">
+              {this._renderDistributionPage()}
+            </p>
+          </div>
+          }
+
+
           <div className="fdk-container-detail-text">
             <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
             <p className="fdk-ingress fdk-ingress-detail" />
@@ -119,5 +177,7 @@ DatasetDistribution.propTypes = {
   accessUrl: PropTypes.array,
   format: PropTypes.array,
   code: PropTypes.string,
+  license: PropTypes.object,
+  page: PropTypes.object,
   selectedLanguageCode: PropTypes.string
 };

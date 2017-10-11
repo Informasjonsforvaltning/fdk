@@ -490,6 +490,8 @@ export default class DetailsPage extends React.Component {
           accessUrl={distribution.accessURL}
           format={distribution.format}
           code={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
+          license={distribution.license}
+          page={distribution.page}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       ));
