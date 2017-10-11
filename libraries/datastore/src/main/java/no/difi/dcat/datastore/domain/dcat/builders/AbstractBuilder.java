@@ -1,8 +1,12 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.Contact;
+import no.dcat.shared.Dataset;
+import no.dcat.shared.PeriodOfTime;
+import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.Contact;
-import no.difi.dcat.datastore.domain.dcat.PeriodOfTime;
+import no.dcat.shared.SkosConcept;
+import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
@@ -45,6 +49,53 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+    public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
+        //TODO
+        List<SkosConcept> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+
+            result.add(SkosConcept.getInstance(statement.getObject().toString(), ""));
+        }
+        return result;
+    }
+
+    // TODO
+    public static List<Subject> extractSubjects(Resource resource, Property property) {
+        List<Subject> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+
+            Subject subject = new Subject();
+            subject.setUri(statement.getObject().toString());
+
+            result.add(subject);
+        }
+
+        return result;
+    }
+
+    // TODO
+    public static List<Reference> extractReferences(Resource resource, Property property) {
+        List<Reference> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+
+            Dataset source = new Dataset();
+            source.setUri(statement.getObject().toString());
+            SkosCode code = new SkosCode();
+            Map<String, String> label = new HashMap<>();
+            label.put("nb", "reference");
+            code.setPrefLabel(label);
+            Reference reference = new Reference(code, source);
+            result.add(reference);
+        }
+
+        return result;
+    }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
         List<String> result = new ArrayList<>();
@@ -77,19 +128,23 @@ public abstract class AbstractBuilder {
         return result;
     }
 
-    public static Map<String, List<String>> extractMultipleLanguageLiterals(Resource resource, Property property) {
-        Map<String, List<String>> map = new HashMap<>();
+    // input: dcat:keyword "beate"@nb, "poteter"@nb, "potatoes"@en, "tomater"@nn
+    //
+    public static List<Map<String, String>> extractKeywords(Resource resource, Property property) {
+        List<Map<String, String>> result = new ArrayList<>();
+
         StmtIterator iterator = resource.listProperties(property);
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
             String key = statement.getLanguage();
             String value = statement.getString();
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
-            }
-            map.get(key).add(value);
+            Map<String, String> map = new HashMap<>();
+
+            map.put(key, value);
+            result.add(map);
         }
-        return map;
+
+        return result;
     }
 
     public static Date extractDate(Resource resource, Property property) {
@@ -143,7 +198,7 @@ public abstract class AbstractBuilder {
             final String telephone = extractAsString(object, Vcard.hasTelephone);
             if (telephone != null) {
                 hasAttributes = true;
-                contact.setTelephone(telephone); //.replace("tel:", ""));
+                contact.setHasTelephone(telephone); //.replace("tel:", ""));
             }
 
             final String organizationName = extractAsString(object, Vcard.organizationName);
@@ -258,7 +313,7 @@ public abstract class AbstractBuilder {
     }
 
     protected static SkosCode getCode(Map<String, SkosCode> codes, String locUri) {
-        if(locUri == null || locUri.trim().equals("")){
+        if (locUri == null || locUri.trim().equals("")) {
             return null;
         }
 
@@ -275,7 +330,7 @@ public abstract class AbstractBuilder {
         List<SkosCode> result = new ArrayList();
 
         for (String locUri : locsUri) {
-            if(locUri == null || locUri.trim().equals("")){
+            if (locUri == null || locUri.trim().equals("")) {
                 continue;
             }
             SkosCode locCode = locations.get(locUri);

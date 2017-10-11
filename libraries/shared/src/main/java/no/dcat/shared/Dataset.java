@@ -82,6 +82,11 @@ public class Dataset {
     //Norwegian: tilgangsnivå
     private SkosCode accessRights;
 
+    //dcatno:accessRightsComment
+    //Norwegian: Skjermingshjemmel.
+    //Norwegian extension to the dcat standard. Recommended used with accesRights.
+    @Deprecated
+    private List<String> accessRightsComment;
 
 
     // dcatno:hasXXXXAnnotation

@@ -2,6 +2,7 @@ package no.difi.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.SkosConcept;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
@@ -13,6 +14,7 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -61,17 +63,18 @@ public class DistributionBuilder extends AbstractBuilder {
 
     }
 
-    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
-                                      Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
+    public static no.difi.dcat.datastore.domain.dcat.Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
+                                                                         Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
         Distribution created = new Distribution();
 
         if (distribution != null) {
             created.setId(distribution.getURI());
             created.setTitle(extractLanguageLiteral(distribution, DCTerms.title));
             created.setDescription(extractLanguageLiteral(distribution, DCTerms.description));
-            created.setAccessURL(extractAsString(distribution, DCAT.accessUrl));
-            created.setLicense(extractAsString(distribution, DCTerms.license));
-            created.setFormat(extractAsString(distribution, DCTerms.format));
+            //TODO
+            created.setAccessURL(Arrays.asList(extractAsString(distribution, DCAT.accessUrl)));
+            created.setLicense(SkosConcept.getInstance(extractAsString(distribution, DCTerms.license),""));
+            created.setFormat(Arrays.asList(extractAsString(distribution, DCTerms.format)));
         }
         if (dataset != null && dataset != null) {
             created.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
