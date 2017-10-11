@@ -35,7 +35,7 @@ public class HelpTextControllerTest {
         public void helpTextsHasAbstract() throws Throwable {
         List<HelpText> helpTexts = controller.helpTexts("foo");
             assertEquals(helpTexts.get(2).getAbstract().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
-            assertEquals(helpTexts.get(2).getTitle().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
-            System.out.println("OMG" + helpTexts.get(2).getTitle().toString());
+            assertEquals(helpTexts.get(2).getShortdesc().get("nb"), "Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet.");
+            System.out.println("OMG" + helpTexts.get(2).getShortdesc().toString());
         }
     }
