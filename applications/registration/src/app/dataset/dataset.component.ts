@@ -117,6 +117,7 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
       this.dataset.subjects = this.dataset.subjects || [];
@@ -127,7 +128,9 @@ export class DatasetComponent implements OnInit {
       this.dataset.contactPoints = this.dataset.contactPoints || [];
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-      this.dataset.standard = this.dataset.standard || {};
+      this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
+
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
@@ -178,18 +181,15 @@ export class DatasetComponent implements OnInit {
           if (_.isEmpty(dataset.informationModel)) {
             dataset.informationModel = {};
           }
-          if (_.isEmpty(dataset.standard)) {
-            dataset.standard = {};
-          }
 
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted) {
+                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted) {
+                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
                 } else {
                     delete temporal.endDate;
@@ -388,8 +388,8 @@ export class DatasetComponent implements OnInit {
   public buildContentSummary() {
     this.summaries.content = "";
 
-    if (this.dataset.standard && this.dataset.standard.prefLabel) {
-        this.summaries.content = this.dataset.standard.prefLabel['nb'] + ". ";
+    if (this.dataset.conformsTos[0] && this.dataset.conformsTos[0].prefLabel) {
+        this.summaries.content = this.dataset.conformsTos[0].prefLabel['nb'] + ". ";
     }
 
     if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
@@ -413,18 +413,18 @@ export class DatasetComponent implements OnInit {
 
   public buildProvenanceSummary() {
       let provenance = "";
-      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];
       }
       let frequency   = "";
-      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
         frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
       }
 
       let modified    = this.dataset.modified ? this.dataset.modified : '';
 
       let currentness = "";
-      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
         currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
       }
 

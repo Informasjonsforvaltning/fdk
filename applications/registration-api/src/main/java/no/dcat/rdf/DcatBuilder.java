@@ -7,8 +7,10 @@ import no.dcat.model.Distribution;
 import no.dcat.model.PeriodOfTime;
 import no.dcat.model.Publisher;
 import no.dcat.model.QualityAnnotation;
+import no.dcat.model.Reference;
 import no.dcat.model.SkosCode;
-import no.dcat.model.SkosConceptWithHomepage;
+import no.dcat.shared.SkosConcept;
+import no.dcat.shared.Subject;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -63,7 +65,7 @@ public class DcatBuilder {
     public static final Property dcatno_legalBasisForRestriction = mod.createProperty(DCATNO, "legalBasisForRestriction");
     public static final Property dcatno_legalBasisForProcessing = mod.createProperty(DCATNO, "legalBasisForProcessing");
     public static final Property dcatno_legalBasisForAccess = mod.createProperty(DCATNO, "legalBasisForAccess");
-    public static final Property dcatno_informationModel = mod.createProperty(DCATNO, "informationModel");    
+    public static final Property dcatno_informationModel = mod.createProperty(DCATNO, "informationModel");
     public static final Property dcatno_standard = mod.createProperty(DCATNO, "standard");
 
     private final Model model;
@@ -147,7 +149,7 @@ public class DcatBuilder {
 
                 addDistributions(datRes, dataset.getDistribution());
 
-                addProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
+                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
 
                 if (dataset.getTemporal() != null) {
                     for (PeriodOfTime period : dataset.getTemporal()) {
@@ -159,24 +161,26 @@ public class DcatBuilder {
                 addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
 
                 dataset.getLegalBasisForRestriction().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
+                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
                 });
 
                 dataset.getLegalBasisForProcessing().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
+                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
                 });
                 dataset.getLegalBasisForAccess().forEach(skosConceptWithHomepage -> {
-                    addSkosConceptWithHomepage(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
+                    addSkosConcept(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
                 });
-                
-                addSkosConceptWithHomepage(datRes, dcatno_informationModel, dataset.getInformationModel());                
-                addSkosConceptWithHomepage(datRes, dcatno_standard, dataset.getStandard());
-                addProperties(datRes, DCTerms.references, dataset.getReferences());
+
+                addSkosConcept(datRes, dcatno_informationModel, dataset.getInformationModel());
+                addSkosConcept(datRes, dcatno_standard, dataset.getStandard());
+
+
+                addReferences(datRes, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
                 addStringLiterals(datRes, DCTerms.identifier, dataset.getIdentifier());
                 addProperties(datRes, FOAF.page, dataset.getPage());
                 addProperty(datRes, DCTerms.accrualPeriodicity, dataset.getAccrualPeriodicity());
-                addProperties(datRes, DCTerms.subject, dataset.getSubject());
+                addSubjects(datRes, DCTerms.subject, dataset.getSubject());
                 addProperty(datRes, DCTerms.type, dataset.getType());
                 addProperties(datRes, adms_identifier, dataset.getAdmsIdentifier());
 
@@ -192,6 +196,17 @@ public class DcatBuilder {
         return this;
     }
 
+    private void addReferences(Resource datRes, List<Reference> references) {
+        if (references != null && references.size() > 0) {
+            references.forEach(reference -> {
+
+                Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
+
+                datRes.addProperty(referenceProperty, reference.getSource().getUri());
+
+            });
+        }
+    }
 
 
     private void addQualityAnnotation(Resource datRes, Property hasQualityAnnotation, QualityAnnotation annotation) {
@@ -215,38 +230,54 @@ public class DcatBuilder {
         }
     }
 
-    private void addSkosConceptWithHomepage(Resource datRes, Property predicate, SkosConceptWithHomepage skosConceptWithHomepage) {
-        Resource skosConceptWithHomepageResource = model.createResource();
+    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
+        if (skosConcept != null) {
+            Resource skosConceptResource = model.createResource();
 
-        skosConceptWithHomepageResource.addProperty(RDF.type, SKOS.Concept);
-        skosConceptWithHomepageResource.addProperty(FOAF.homepage, SKOS.Concept);
+            skosConceptResource.addProperty(RDF.type, SKOS.Concept);
+            if (skosConcept.getExtraType() != null) {
+                skosConceptResource.addProperty(RDF.type, skosConcept.getExtraType());
+            }
+            skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
+            addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
 
+            datRes.addProperty(predicate, skosConceptResource);
+        }
 
-        datRes.addProperty(predicate, skosConceptWithHomepageResource);
-
+        return this;
     }
 
     public DcatBuilder addPeriodResourceAnnon(Resource resource, Property property, PeriodOfTime period) {
+        if (period != null) {
 
-        Resource temporal = model.createResource();
-        model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
+            Resource temporal = model.createResource();
+            model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
 
-        resource.addProperty(property,temporal);
+            resource.addProperty(property, temporal);
 
-        temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
-        temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+            if (period.getStartDate() != null) {
+                temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
+            }
+            if (period.getEndDate() != null) {
+                temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+            }
+
+        }
 
         return this;
     }
 
     public Resource createTimeInstantResource(Date date) {
-        Resource timeInstant = model.createResource();
-        model.add(timeInstant, RDF.type, TIME_INSTANT);
+        if (date != null) {
+            Resource timeInstant = model.createResource();
+            model.add(timeInstant, RDF.type, TIME_INSTANT);
 
-        Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
-        timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
+            Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+            timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
 
-        return timeInstant;
+            return timeInstant;
+        }
+        return null;
     }
 
 
@@ -341,6 +372,21 @@ public class DcatBuilder {
         return resource;
     }
 
+
+    public DcatBuilder addProperty(Resource resource, Property property, SkosConcept concept) {
+        if (concept != null && concept.getUri() != null && !"".equals(concept.getUri())) {
+            Resource r = model.createResource();
+            r.addProperty(DCTerms.source, concept.getUri());
+            if (concept.getExtraType() != null && !"".equals(concept.getExtraType())) {
+                r.addProperty(RDF.type, concept.getExtraType());
+            }
+            addLiterals(r, SKOS.prefLabel, concept.getPrefLabel() );
+            resource.addProperty(property, r);
+        }
+
+        return this;
+    }
+
     public DcatBuilder addProperty(Resource resource, Property property, SkosCode code) {
         if (code != null && code.getUri() != null && !"".equals(code.getUri())) {
             Resource r = model.createResource(code.getUri());
@@ -353,6 +399,25 @@ public class DcatBuilder {
     public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes) {
         if (codes != null) {
             codes.forEach(code -> this.addProperty(resource, property, code));
+        }
+        return this;
+    }
+
+
+    public DcatBuilder addSubjects(Resource resource, Property property, List<Subject> concepts) {
+        if (concepts != null) {
+            for (Subject concept : concepts) {
+                //addProperty(resource, property, concept);
+            }
+        }
+        return this;
+    }
+
+    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts) {
+        if (concepts != null) {
+            for (SkosConcept concept : concepts) {
+                addProperty(resource, property, concept);
+            }
         }
         return this;
     }

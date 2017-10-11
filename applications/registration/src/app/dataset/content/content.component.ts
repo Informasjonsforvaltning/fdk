@@ -50,8 +50,8 @@ export class ContentComponent implements OnInit {
       this.availability = this.dataset.hasAvailabilityAnnotation.hasBody.no;
     }
 
-    if (this.dataset.standard) {
-        this.standard = this.dataset.standard;
+    if (this.dataset.conformsTos[0]) {
+        this.standard = this.dataset.conformsTos[0];
     } else {
         this.standard =
         {
@@ -97,10 +97,6 @@ export class ContentComponent implements OnInit {
           }
         }
 
-        if (quality.standard) {
-            this.dataset.standard = quality.standard;
-        }
-
         this.parent.buildContentSummary();
         this.onSave.emit(true);
       }
@@ -109,10 +105,11 @@ export class ContentComponent implements OnInit {
 
   private save() {
     if (this.standard) {
-        this.dataset.standard = this.standard;
+        this.dataset.conformsTos[0] = this.standard;
     }
+
     this.parent.buildContentSummary();
-    this.onSave.emit(true); 
+    this.onSave.emit(true);
   }
 
   private toFormGroup(data: Dataset) {
