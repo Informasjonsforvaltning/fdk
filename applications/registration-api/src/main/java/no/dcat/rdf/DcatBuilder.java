@@ -255,8 +255,12 @@ public class DcatBuilder {
 
             resource.addProperty(property, temporal);
 
-            temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
-            temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+            if (period.getStartDate() != null) {
+                temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
+            }
+            if (period.getEndDate() != null) {
+                temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+            }
 
         }
 

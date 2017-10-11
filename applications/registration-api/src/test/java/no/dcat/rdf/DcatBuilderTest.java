@@ -172,7 +172,10 @@ public class DcatBuilderTest {
         PeriodOfTime pot = new PeriodOfTime();
         pot.setStartDate(Date.from(LocalDateTime.of(2017,1,1,0,0).toInstant(ZoneOffset.UTC)));
         pot.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
-        dataset.setTemporal(Collections.singletonList(pot));
+
+        PeriodOfTime pot2 = new PeriodOfTime();
+        pot2.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
+        dataset.setTemporal(Arrays.asList(pot, pot2));
 
         dataset.setLegalBasisForRestriction(Arrays.asList(
                 SkosConcept.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]"),
@@ -214,6 +217,25 @@ public class DcatBuilderTest {
         return qualityAnnotation;
     }
 
+
+    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
+        SkosCode result = new SkosCode();
+        result.setUri(uri);
+        result.setCode(code);
+        result.setPrefLabel(prefLabel);
+
+        return result;
+    }
+
+    public Map<String,String> map(String lang, String value) {
+        Map<String, String> result = new HashMap<>();
+        result.put(lang, value);
+
+        return result;
+    }
+
+
+
     @Test
     public void convertCompleteCatalogToTurtleOK() throws Throwable {
         builder = new DcatBuilder();
@@ -223,7 +245,9 @@ public class DcatBuilderTest {
 
         assertThat(actual, is(notNullValue()));
         System.out.println(actual);
+
     }
+
 
     @Test
     public void convertCompleteCatalogToJsonOK() throws Throwable {
@@ -245,14 +269,6 @@ public class DcatBuilderTest {
         System.out.println(actual);
     }
 
-    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
-        SkosCode result = new SkosCode();
-        result.setUri(uri);
-        result.setCode(code);
-        result.setPrefLabel(prefLabel);
-
-        return result;
-    }
 
 
     @Test
@@ -266,11 +282,22 @@ public class DcatBuilderTest {
         System.out.println(actual);
     }
 
+    @Test
+    public void convertMinimumCatalogToTurtleOK() throws Throwable {
+        builder = new DcatBuilder();
+        Catalog catalog = new Catalog() ;
 
-    public Map<String,String> map(String lang, String value) {
-        Map<String, String> result = new HashMap<>();
-        result.put(lang, value);
+        Dataset dataset = new Dataset();
+        dataset.setTitle(map("nb","minimum dataset"));
+        dataset.setUri("http://uri/12345");
 
-        return result;
+        catalog.setDataset(Arrays.asList(dataset));
+
+        String actual = builder.transform(catalog, "TURTLE");
+
+        assertThat(actual, is(notNullValue()));
+        System.out.println(actual);
+
     }
+
 }
