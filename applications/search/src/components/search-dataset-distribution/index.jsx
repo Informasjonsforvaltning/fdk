@@ -137,7 +137,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 
           {this.props.license &&
           <div>
-            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
+            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
             <p className="fdk-ingress">
               {this._renderLicense()}
             </p>
@@ -146,7 +146,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 
           {this.props.page &&
           <div>
-            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
+            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.page}</h5>
             <p className="fdk-ingress">
               {this._renderDistributionPage()}
             </p>

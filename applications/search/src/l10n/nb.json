@@ -90,7 +90,9 @@
       "title": "Distribusjon",
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
-      "accessUrl": "TilgangsURL"
+      "accessUrl": "TilgangsURL",
+      "license": "Innholdsstandard",
+      "page": "Mer informasjon om denne distribusjonen"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",
