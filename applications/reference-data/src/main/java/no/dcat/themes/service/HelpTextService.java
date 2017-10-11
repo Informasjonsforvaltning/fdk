@@ -3,11 +3,13 @@ package no.dcat.themes.service;
 import com.google.gson.Gson;
 import no.dcat.shared.HelpText;
 import no.dcat.themes.database.TDBConnection;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
+import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +45,17 @@ public class HelpTextService extends BaseServiceWithFraming {
         super(tdbConnection);
     }
 
-
+    // @Cacheable("helptexts")
+    public List<HelpText> getHelpTexts(String id) {
+        return getHelpTexts();
+    }
 
     // @Cacheable("helptexts")
     public List<HelpText> getHelpTexts() {
 
 
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
-            Dataset dataset = DatasetFactory.create(connection.getModel(TDBService.HELPTEXTS_GRAPH));
+            Dataset dataset = DatasetFactory.create(helpTextModel(connection));
 
             String json = frame(dataset, frame);
             logger.trace("JSON returned with Helptexts: {}", json);
@@ -59,4 +64,7 @@ public class HelpTextService extends BaseServiceWithFraming {
         });
     }
 
+    private Model helpTextModel(TDBInferenceService connection) { // TODO: InferenceService shouldn't be necessary
+        return connection.getModel(TDBService.HELPTEXTS_GRAPH);
+    }
 }

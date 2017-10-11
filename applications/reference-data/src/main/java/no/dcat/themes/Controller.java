@@ -71,10 +71,18 @@ public class Controller {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/helptexts/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<HelpText> helpTexts() {
+
+        return helpTextService.getHelpTexts();
+
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/helptexts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<HelpText> helpTexts(@PathVariable(name = "id") String id) {
 
-        return helpTextService.getHelpTexts();
+        return helpTextService.getHelpTexts(id);
 
     }
 
