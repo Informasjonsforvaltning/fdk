@@ -19,16 +19,16 @@ describe('DatasetDistribution', () => {
     expect(wrapper.find('#dataset-distribution-description')).to.have.length(1);
   });
 
-  it ('should render access url', () => {
-    wrapper.setProps({ accessUrl: 'test-link'});
-    expect(wrapper.find('#dataset-distribution-accessurl')).to.have.length(1);
-  });
-
   it ('should render format', () => {
     wrapper.setProps({
-      "format" : "text/html"
+      "format" : ['text/html', 'json']
     });
-    expect(wrapper.find(DatasetFormat)).to.have.length(1);
-    expect(wrapper.find(DatasetFormat).dive().find('.fdk-label-distribution')).to.have.length(1);
+    expect(wrapper.find(DatasetFormat)).to.have.length(2);
   })
+
+  it ('should render access url', () => {
+    wrapper.setProps({ accessUrl: ['test-link', 'test-link-2']});
+    expect(wrapper.find('#dataset-distribution-accessurl-0')).to.have.length(1);
+    expect(wrapper.find('#dataset-distribution-accessurl-1')).to.have.length(1);
+  });
 });

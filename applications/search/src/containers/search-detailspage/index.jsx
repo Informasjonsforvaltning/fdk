@@ -244,7 +244,90 @@ export default class DetailsPage extends React.Component {
           }
         },
         "references": [
-          "http://testeetatens.no/catalog/2/dataset/42"
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The first one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          },
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The second one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          },
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/isPartOf",
+              "code": "isPartOf",
+              "prefLabel": {
+                "nb": "Er del av"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The third one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          },
+          {
+            "referenceType": {
+              "uri": "http://www.w3.org/2002/07/hasVersion",
+              "code": "hasVersion",
+              "prefLabel": {
+                "nb": "Har versjon"
+              }
+            },
+            "source": {
+              "uri": "http://referenced/dataset",
+              "title": {
+                "nb": "The fourth one"
+              },
+              "description": {},
+              "contactPoint": [],
+              "legalBasisForRestriction": [],
+              "legalBasisForProcessing": [],
+              "legalBasisForAccess": [],
+              "registrationStatus": "DRAFT"
+            }
+          }
         ],
         "provenance": {
           "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
@@ -295,6 +378,7 @@ export default class DetailsPage extends React.Component {
         ],
         "registrationStatus": "DRAFT"
       }
+
       ,
       loading: true
     };
