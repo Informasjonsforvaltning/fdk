@@ -43,8 +43,8 @@
     "next": "Neste side",
     "prev": "Forrige side",
     "result.summary": "Søket ga ",
-    "dataset":"treff"
-
+    "dataset":"treff",
+    "nosearch.summary":"Søk blant 4450 datasettbeskrivelser"
   },
   "facet": {
     "organisation":"Virksomhet",
@@ -123,4 +123,3 @@
   }
 
 }
-
