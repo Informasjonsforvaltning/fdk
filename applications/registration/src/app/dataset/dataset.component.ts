@@ -114,7 +114,6 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildGeoTimeSummaries();
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
@@ -130,6 +129,8 @@ export class DatasetComponent implements OnInit {
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
+
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
@@ -206,7 +207,7 @@ export class DatasetComponent implements OnInit {
           }
 
           this.dataset = _.merge(this.dataset, dataset);
-
+          this.buildSummaries();
           this.cdr.detectChanges();
           var that = this;
           this.delay(() => {
@@ -224,7 +225,7 @@ export class DatasetComponent implements OnInit {
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
-        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel["nb"]) {
+        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel && this.dataset.informationModel.prefLabel["nb"]) {
             this.summaries.informationModel = this.dataset.informationModel.prefLabel["nb"];
         } else {
             this.summaries.informationModel = "Klikk for å fylle ut";
@@ -380,17 +381,19 @@ export class DatasetComponent implements OnInit {
                 month: date.getMonth() + 1,
                 day: date.getDate()
             },
-            formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
+            formatted: date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()
         }
     }
 
   public buildContentSummary() {
     this.summaries.content = "";
 
-    //TODO conformsTo
+    if (this.dataset.conformsTos[0] && this.dataset.conformsTos[0].prefLabel) {
+        this.summaries.content = this.dataset.conformsTos[0].prefLabel['nb'] + ". ";
+    }
 
     if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
-      this.summaries.content = this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
+      this.summaries.content += this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
     }
 
     if (this.dataset.hasCompletenessAnnotation && this.dataset.hasCompletenessAnnotation.hasBody && this.dataset.hasCompletenessAnnotation.hasBody['no']  !== "") {
@@ -433,7 +436,7 @@ export class DatasetComponent implements OnInit {
         this.summaries.provenance += " " +frequency;
       }
       if (modified.length > 0) {
-        this.summaries.provenance += " " + modified;
+        this.summaries.provenance += " " + DatasetComponent.convertDateStringFormat(modified, "-", ".");
       }
 
       if (currentness.length > 0) {

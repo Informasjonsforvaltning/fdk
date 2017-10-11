@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
-import static no.dcat.config.BasicAuthConfig.ROLE_USER;
+import static no.dcat.config.Roles.ROLE_USER;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 

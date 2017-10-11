@@ -49,7 +49,7 @@ export interface Dataset {
 
   contactPoints?: Contact[];
 
-  conformsTos?: string[];
+  conformsTos?: any[];
 
   distributions?: Distribution[];
 
@@ -69,6 +69,7 @@ export interface Dataset {
   legalBasisForAccesses?:any[];
 
   informationModel?:any;
+  standard?:any;
 
   hasAccuracyAnnotation?:any;
   hasCompletenessAnnotation?:any;

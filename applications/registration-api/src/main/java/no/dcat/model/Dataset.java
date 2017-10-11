@@ -142,7 +142,12 @@ public class Dataset {
     // dcatno:informationModel
     //Norwegian: informasjonsmodell
     @Field
-    private SkosConceptWithHomepage informationModel;
+    private SkosConcept informationModel;
+
+     // dcatno:standard
+    //Norwegian: standard
+    @Field
+    private SkosConcept standard;
 
     // dcatno:hasXXXXAnnotation
     @Field
@@ -182,11 +187,6 @@ public class Dataset {
     //Norwegian: begrep
     @Field
     private List<Subject> subject;
-
-    // dct: informationModel
-    // Norwegian: informasjonsmodell
-    @Field
-    private List<SkosConcept> informationModel;
 
     //dct:type
     //Norwegian: type

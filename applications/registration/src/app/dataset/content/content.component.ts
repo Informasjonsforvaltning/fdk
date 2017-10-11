@@ -1,6 +1,7 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Dataset} from "../dataset";
+import { TitleUri } from "../titleUri/titleUri";
 
 import {DatasetComponent} from "../dataset.component";
 
@@ -24,6 +25,7 @@ export class ContentComponent implements OnInit {
   completeness;
   accuracy;
   availability;
+  standard: TitleUri;
 
   constructor(private fb: FormBuilder,
               private parent: DatasetComponent) {
@@ -46,6 +48,16 @@ export class ContentComponent implements OnInit {
 
     if (this.dataset.hasAvailabilityAnnotation) {
       this.availability = this.dataset.hasAvailabilityAnnotation.hasBody.no;
+    }
+
+    if (this.dataset.conformsTos[0]) {
+        this.standard = this.dataset.conformsTos[0];
+    } else {
+        this.standard =
+        {
+            uri: '',
+            prefLabel: {'nb' : ''}
+        }
     }
 
     this.contentForm = this.toFormGroup(this.dataset);
@@ -86,20 +98,30 @@ export class ContentComponent implements OnInit {
         }
 
         this.parent.buildContentSummary();
-
         this.onSave.emit(true);
       }
     );
+  }
 
+  private save() {
+    if (this.standard) {
+        this.dataset.conformsTos[0] = this.standard;
+    }
+
+    this.parent.buildContentSummary();
+    this.onSave.emit(true);
   }
 
   private toFormGroup(data: Dataset) {
     return this.fb.group({
-      conformsTo: [data.conformsTos || {}],
       relevance: [this.relevance || ''],
       completeness: [this.completeness || ''],
       accuracy: [this.accuracy || ''],
-      availability: [this.availability || '']
+      availability: [this.availability || ''],
+      standard: [this.standard || {
+        uri: '',
+        prefLabel: {'nb' : ''}
+        }]
     });
   }
 
