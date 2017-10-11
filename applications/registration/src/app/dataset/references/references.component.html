@@ -11,16 +11,22 @@
         </helptext>
 
 
-      <div class="form-group">
-        <p class="fdk-input-label">Type relasjon</p>
-        <helptext
-          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
-          moretext="Lang tekst ...."
-          name="dataset.referenceType">
-        </helptext>
-        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="relevance-annotation"
-                  formControlName="referenceType"></textarea>
-      </div>
+        <div (click)="fetchReferenceTypes()" class="form-group">
+          <p class="fdk-input-label">Relasjonstyper</p>
+          <helptext id="Dataset.accrualPeriodicity"
+                    text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+                    moretext="Lang tekst ...."
+                    name="dataset.referenceType">
+          </helptext>
+          <div style="width: 40%">
+            <ng-select id="referenceType"
+                       [options]="referenceTypes"
+                       [multiple]="false"
+                       placeholder="Velg..."
+                       formControlName="references">
+            </ng-select>
+          </div>
+        </div>
 
       <div class="form-group">
         <p class="fdk-input-label">Relatert datasett</p>

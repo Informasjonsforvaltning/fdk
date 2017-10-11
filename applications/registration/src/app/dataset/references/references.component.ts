@@ -2,6 +2,7 @@ import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Dataset} from "../dataset";
 import {Reference} from '../reference'
+import {CodesService} from "../codes.service";
 
 import {DatasetComponent} from "../dataset.component";
 
@@ -21,12 +22,15 @@ export class ReferencesComponent implements OnInit {
   public referencesForm: FormGroup;
 
   references: Reference[];
+  referenceTypes = [];
 
   constructor(private fb: FormBuilder,
+              private codesService: CodesService,
               private parent: DatasetComponent) {
   }
 
   ngOnInit() {
+    this.fetchReferenceTypes();
     this.referencesForm = this.toFormGroup(this.dataset);
 
   }
@@ -43,5 +47,10 @@ export class ReferencesComponent implements OnInit {
     return this.fb.group({
       references: [this.references]
     });
+  }
+
+  fetchReferenceTypes() {
+    this.codesService.fetchCodes('referencetypes', 'nb').then( referenceTypes =>
+      this.referenceTypes = referenceTypes);
   }
 }
