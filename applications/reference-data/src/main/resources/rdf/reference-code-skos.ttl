@@ -1,0 +1,80 @@
+@prefix at: <http://publications.europa.eu/ontology/authority/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+<reference-types>
+    a skos:ConceptScheme ;
+    skos:prefLabel "Referanse typer"@nb .
+
+<references>
+    a skos:Concept ;
+    at:authority-code "dct:references";
+    skos:inScheme   <reference-types> ;
+    skos:prefLabel "Refererer"@nb , "Refererar"@nn , "References"@en .
+
+<isReferencedBy>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "isReferencedBy";
+    skos:prefLabel "Er referert av"@nb , "Er referert av"@nn , "Is Referenced By"@en .
+
+<isPartOf>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "isPartOf";
+    skos:prefLabel "Er en del av"@nb , "Er del av"@nn , "Is Part Of"@en .
+
+<requires>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "requires";
+    skos:prefLabel "Krever"@nb , "Krevjar"@nn , "Requires"@en .
+
+<isRequiredBy>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "requires";
+    skos:prefLabel "Er påkrevd av"@nb , "Er påkravd av"@nn , "Is required by"@en .
+
+<hasVersion>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "hasVersion";
+    skos:prefLabel "Har versjon"@nb , "Har versjon"@nn , "Has version"@en .
+
+<isVersionOf>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "isVersionOf";
+    skos:prefLabel "Er versjon av"@nb , "Er versjon av"@nn , "Is version of"@en .
+
+<replaces>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "replaces";
+    skos:prefLabel "Erstatter"@nb , "Erstatter"@nn , "Replaces"@en .
+
+<isReplacedBy>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "isReplacedBy";
+    skos:prefLabel "Er erstattet av"@nb , "Er erstatta av"@nn , "Is replaced by"@en .
+
+<source>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "source";
+    skos:prefLabel "Er avledet fra"@nb , "Er avleda frå"@nn , "Source"@en .
+
+<relation>
+    a skos:Concept ;
+    skos:inScheme   <reference-types> ;
+    at:authority-code "relation";
+    skos:prefLabel "Er relatert til"@nb , "Er relatert til"@nn , "Has relation to"@en .
+

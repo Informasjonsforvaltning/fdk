@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import no.dcat.model.Catalog;
 import no.dcat.model.DataTheme;
-import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
 import no.dcat.model.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
@@ -211,8 +210,11 @@ public class ImportController {
                 IOUtils.toString(new ClassPathResource("frames/dataset.json").getInputStream(), "UTF-8"));
 
         logger.trace("json after frame: {}",json);
+        String preprocessedJson = preProcessDatasetAttributes(json);
 
-        List<Dataset> result = new Gson().fromJson(preProcessDatasetAttributes(json), FramedDataset.class).getGraph();
+        logger.trace("json after preprocessing: {}", preprocessedJson);
+
+        List<Dataset> result = new Gson().fromJson(preprocessedJson, FramedDataset.class).getGraph();
 
         postprosessDatasetAttributes(result);
 
@@ -252,6 +254,14 @@ public class ImportController {
                 }
             }
 
+            // handle SkosConcepts: conformsTo
+            handleSkosConcepts(dataset, "conformsTo");
+            handleSkosConcepts(dataset, "subject");
+            handleSkosConcepts(dataset, "legalBasisForRestriction");
+            handleSkosConcepts(dataset, "legalBasisForProcessing");
+            handleSkosConcepts(dataset, "legalBasisForAccess");
+            handleSkosConcepts(dataset, "informationModel");
+
             // handle extension to DCAT-AP-NO 1.1 - multiple formats
             JsonArray distributions = dataset.getAsJsonObject().getAsJsonArray("distribution");
             if (distributions != null) {
@@ -264,13 +274,46 @@ public class ImportController {
                     } catch (ClassCastException cce) {
                         // do nothing. Format is either missing or is an array already
                     }
+
+
+                    handleSkosConcepts(distribution, "conformsTo");
                 });
+
+
             }
 
 
         });
 
         return gson.toJson(model);
+    }
+
+    /**
+     * Converts arrays of string(uris) to SkosConcepts with uri.
+     *
+     * No attempt at guessing prefLabel.
+     *
+     * @param dataset
+     * @param propertyName
+     */
+    void handleSkosConcepts(JsonElement dataset, String propertyName) {
+        JsonArray conformsTo = dataset.getAsJsonObject().getAsJsonArray(propertyName);
+        if (conformsTo != null) {
+            JsonArray arry = new JsonArray();
+            conformsTo.forEach(element -> {
+                if (element instanceof JsonPrimitive) {
+
+                    // assume array of uris
+                    String uri = element.getAsString();
+                    JsonObject newSkosConcept = new JsonObject();
+                    newSkosConcept.addProperty("uri", uri);
+                    arry.add(newSkosConcept);
+                }
+            });
+            if (arry.size()>0) {
+                dataset.getAsJsonObject().add(propertyName, arry);
+            }
+        }
     }
 
     void postprosessDatasetAttributes(List<Dataset> result) {

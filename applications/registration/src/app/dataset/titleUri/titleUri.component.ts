@@ -35,30 +35,42 @@ export class TitleUriFormComponent implements OnInit {
     @Output()
     deleteTitleUri: EventEmitter<string> = new EventEmitter();
 
+    @Output()
+    onSave: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     public titleUriForm: FormGroup;
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
-        if (this.titleUri.ui_visible) this.showForm = true;
+
         this.titleUriForm = this.toFormGroup(this.titleUri);
-        this.titleUriListFormArray.push(this.titleUriForm);
+
+        if (this.titleUriListFormArray)
+            this.titleUriListFormArray.push(this.titleUriForm);
 
         this.titleUriForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             titleUriFormElement => {
                 this.titleUri.prefLabel = { 'nb': titleUriFormElement.prefLabel };
                 this.titleUri.uri = titleUriFormElement.uri;
                 this.cdr.detectChanges();
+                this.onSave.emit();
             }
         );
     }
 
     private toFormGroup(titleUri: TitleUri) : FormGroup {
-        const formGroup = this.fb.group({
-            uri: [titleUri.uri || '', Validators.required],
-            prefLabel: [titleUri.prefLabel ? titleUri.prefLabel[this.language] : '']
-        });
-        return formGroup;
+        if (titleUri) {
+            return this.fb.group({
+                uri: [titleUri.uri || ''],
+                prefLabel: [titleUri.prefLabel ? titleUri.prefLabel[this.language] : '']
+            });
+        } else {
+            return this.fb.group({
+                uri: [''],
+                prefLabel: ['']
+            });
+        }
     }
     toggleForm() : void {
         this.showForm = !this.showForm;

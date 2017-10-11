@@ -19,6 +19,7 @@ import { IMyDpOptions } from 'mydatepicker';
 import { TemporalListComponent } from "./temporal/temporal-list.component";
 import { HelpText } from "./helptext/helptext.component";
 import {isNullOrUndefined} from "util";
+import { TitleUri } from "./titleUri/titleUri"
 
 @Component({
     selector: 'app-dataset',
@@ -113,10 +114,10 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildGeoTimeSummaries(this.dataset);
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
       this.dataset.subjects = this.dataset.subjects || [];
@@ -128,6 +129,8 @@ export class DatasetComponent implements OnInit {
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.conformsTos = this.dataset.conformsTos || [];
+      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
+
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
@@ -135,6 +138,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
       this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
       this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
+      this.dataset.informationModel = dataset.informationModel;
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -174,14 +178,18 @@ export class DatasetComponent implements OnInit {
             dataset.issued = null;
           }
 
+          if (_.isEmpty(dataset.informationModel)) {
+            dataset.informationModel = {};
+          }
+
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted) {
+                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted) {
+                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
                 } else {
                     delete temporal.endDate;
@@ -199,7 +207,7 @@ export class DatasetComponent implements OnInit {
           }
 
           this.dataset = _.merge(this.dataset, dataset);
-
+          this.buildSummaries();
           this.cdr.detectChanges();
           var that = this;
           this.delay(() => {
@@ -211,26 +219,34 @@ export class DatasetComponent implements OnInit {
     });
   }
   buildSummaries() {
-    //this.buildGeoTimeSummaries(this.dataset);
+    this.buildGeoTimeSummaries();
     this.buildProvenanceSummary();
-  }
+    this.buildInformationModelSummary();  }
 
+    buildInformationModelSummary(): void {
+        // Add informationModel to summary if exists.
+        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel && this.dataset.informationModel.prefLabel["nb"]) {
+            this.summaries.informationModel = this.dataset.informationModel.prefLabel["nb"];
+        } else {
+            this.summaries.informationModel = "Klikk for å fylle ut";
+        }
+    }
 
-    buildGeoTimeSummaries(dataset): void {
+    buildGeoTimeSummaries(): void {
         this.summaries.geotime = "";
 
         // Add spatial count to summary if exists.
-        if (dataset.spatials && dataset.spatials.length > 0) {
-            if (dataset.spatials.length == 1)
+        if (this.dataset.spatials && this.dataset.spatials.length > 0) {
+            if (this.dataset.spatials.length == 1)
                 this.summaries.geotime += "1 geografisk avgrensing. ";
             else
-                this.summaries.geotime += dataset.spatials.length + " geografiske avgrensinger. ";
+                this.summaries.geotime += this.dataset.spatials.length + " geografiske avgrensinger. ";
         }
 
         // Add temporal count to summary if exists.
-        if (dataset.temporals && dataset.temporals.length > 0) {
-            if (dataset.temporals.length == 1) {
-                if (dataset.temporals[0].startDate || dataset.temporals[0].endDate) {
+        if (this.dataset.temporals && this.dataset.temporals.length > 0) {
+            if (this.dataset.temporals.length == 1) {
+                if (this.dataset.temporals[0].startDate || this.dataset.temporals[0].endDate) {
                     this.summaries.geotime += "1 tidsmessig avgrensing. ";
                 }
             } else {
@@ -247,16 +263,16 @@ export class DatasetComponent implements OnInit {
         }
 
         // Add issued to summary if exists.
-        if (dataset.issued) {
-            this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(dataset.issued, "-", ".") + ". ";
+        if (this.dataset.issued) {
+            this.summaries.geotime += "Utgitt den " + DatasetComponent.convertDateStringFormat(this.dataset.issued, "-", ".") + ". ";
         }
 
         // Add language count to summary if exists.
-        if (dataset.languages && dataset.languages.length > 0) {
-            if (dataset.languages.length == 1)
+        if (this.dataset.languages && this.dataset.languages.length > 0) {
+            if (this.dataset.languages.length == 1)
                 this.summaries.geotime += "Ett språk. ";
             else
-                this.summaries.geotime += dataset.languages.length + " språk. ";
+                this.summaries.geotime += this.dataset.languages.length + " språk. ";
         }
 
         this.summaries.geotime = this.summaries.geotime || "Klikk for å fylle ut";
@@ -293,7 +309,6 @@ export class DatasetComponent implements OnInit {
     }
 
     save(): void {
-        this.buildGeoTimeSummaries(this.dataset);
         this.datasetSavingEnabled = false;
         this.service.save(this.catId, this.dataset)
             .then(() => {
@@ -366,24 +381,50 @@ export class DatasetComponent implements OnInit {
                 month: date.getMonth() + 1,
                 day: date.getDate()
             },
-            formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
+            formatted: date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()
         }
     }
 
-    public buildProvenanceSummary() {
+  public buildContentSummary() {
+    this.summaries.content = "";
+
+    if (this.dataset.conformsTos[0] && this.dataset.conformsTos[0].prefLabel) {
+        this.summaries.content = this.dataset.conformsTos[0].prefLabel['nb'] + ". ";
+    }
+
+    if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
+      this.summaries.content += this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasCompletenessAnnotation && this.dataset.hasCompletenessAnnotation.hasBody && this.dataset.hasCompletenessAnnotation.hasBody['no']  !== "") {
+      this.summaries.content += this.dataset.hasCompletenessAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasAccuracyAnnotation && this.dataset.hasAccuracyAnnotation.hasBody && this.dataset.hasAccuracyAnnotation.hasBody['no']  !== "") {
+      this.summaries.content += this.dataset.hasAccuracyAnnotation.hasBody['no'] + ". ";
+    }
+
+    if (this.dataset.hasAvailabilityAnnotation && this.dataset.hasAvailabilityAnnotation.hasBody &&this.dataset.hasAvailabilityAnnotation.hasBody['no'] !== "") {
+      this.summaries.content += this.dataset.hasAvailabilityAnnotation.hasBody['no'] + ". ";
+    }
+
+  }
+
+
+  public buildProvenanceSummary() {
       let provenance = "";
-      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];
       }
       let frequency   = "";
-      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
         frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
       }
 
       let modified    = this.dataset.modified ? this.dataset.modified : '';
 
       let currentness = "";
-      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
         currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
       }
 
@@ -395,7 +436,7 @@ export class DatasetComponent implements OnInit {
         this.summaries.provenance += " " +frequency;
       }
       if (modified.length > 0) {
-        this.summaries.provenance += " " + modified;
+        this.summaries.provenance += " " + DatasetComponent.convertDateStringFormat(modified, "-", ".");
       }
 
       if (currentness.length > 0) {
@@ -417,6 +458,7 @@ export class DatasetComponent implements OnInit {
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
+      informationModel: [data.informationModel],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)
