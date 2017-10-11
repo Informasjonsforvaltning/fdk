@@ -83,7 +83,9 @@
   },
   "dataset": {
     "title": "Datasett",
-    "conformsTo": "Konformitet",
+    "type": "Type",
+    "conformsTo": "Innholdsstandard",
+    "informationModel": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",

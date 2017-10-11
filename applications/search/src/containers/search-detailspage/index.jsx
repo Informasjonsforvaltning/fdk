@@ -504,13 +504,11 @@ export default class DetailsPage extends React.Component {
     if (this.state.dataset) {
       return (
         <DatasetKeyInfo
-          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
+          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
           selectedLanguageCode={this.props.selectedLanguageCode}
           type={this.state.dataset.type}
           conformsTo={this.state.dataset.conformsTo}
-          legalBasisForRestrictions={this.state.dataset.legalBasisForRestrictions}
-          legalBasisForProcessings={this.state.dataset.legalBasisForProcessings}
-          legalBasisForAccesses={this.state.dataset.legalBasisForAccesses}
+          informationModel={this.state.dataset.informationModel}
         />
       );
     }
@@ -625,14 +623,12 @@ export default class DetailsPage extends React.Component {
   }
 
   render() {
-    /*
-    {this._renderKeyInfo()}
-    */
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-8 col-md-offset-2">
             {this._renderDatasetDescription()}
+            {this._renderKeyInfo()}
             {this._renderDistribution()}
             {this._renderDatasetInfo()}
             {this._renderQuality()}

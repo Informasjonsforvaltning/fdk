@@ -83,7 +83,9 @@
   },
   "dataset": {
     "title": "Datasett",
-    "conformsTo": "Konformitet",
+    "type": "Type",
+    "conformsTo": "Innholdsstandard",
+    "informationModel": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
@@ -91,7 +93,7 @@
       "accessUrl": "Tilgangsurl"
     },
     "issued": "Utgivelsesdato",
-    "quality": "Kvalitet",
+    "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",

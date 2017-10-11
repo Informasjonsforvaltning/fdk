@@ -6,9 +6,51 @@ import './index.scss';
 import localization from '../../components/localization';
 
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  _renderInformationModel() {
+    let informationModelNodes;
+    const { informationModel } = this.props;
+    if (informationModel) {
+      informationModelNodes = informationModel.map((item, index) => (
+        <a
+          key={`dataset-keyinfo-${index}`}
+          href={item.uri}
+        >
+          {
+            item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+          }
+        </a>
+      ));
+      return informationModelNodes;
+    }
+    return null;
+  }
+
+  _renderConformsTo() {
+    let conformsToNodes;
+    const conformsTo = this.props.conformsTo;
+    if (conformsTo) {
+      conformsToNodes = conformsTo.map((item, index) => (
+        <a
+          key={`dataset-keyinfo-${index}`}
+          href={item.uri}
+        >
+          {
+            item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+          }
+        </a>
+      ));
+      return conformsToNodes;
+    }
+    return null;
+  }
 
   render() {
-    console.log(JSON.stringify(this.props.authorityCode));
     const language = this.props.selectedLanguageCode;
 
 
@@ -48,77 +90,50 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           {distributionRestricted ? 'begrenset for offentligheten':''}
           {distributionNonPublic ? 'skjermet for offentligheten':''}
         </div>
-        <div className="row fdk-row">
-          <div className="col-md-6 fdk-padding-no">
-            <div className="fdk-container-detail">
-              <div className="fdk-detail-icon">
-                <i className="fa fa-upload"></i>
-              </div>
-              <div className="fdk-detail-text">
-                <h5>Type</h5>
-                <p className="fdk-ingress fdk-margin-bottom-no">{this.props.type || '—'}</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="col-md-6 fdk-padding-no">
+        <div className="row fdk-row">
+          <div className="col-md-4 fdk-padding-no">
             <div className="fdk-container-detail">
               <div className="fdk-detail-icon">
-                <i className="fa fa-refresh"></i>
+                <i className="fa fa-upload" />
               </div>
               <div className="fdk-detail-text">
-                <h5>Innholdsstandard </h5>
+                <h5>{localization.dataset.type}</h5>
                 <p className="fdk-ingress fdk-margin-bottom-no">
-                  {this.props.conformsTo && this.props.conformsTo.length !== 0 ? this.props.conformsTo
-                      .map((t, i) => <span key={i}>{t}</span>)
-                      .reduce((prev, curr) => [prev, ', ', curr]) : '—'}
+                  {this.props.type || '—'}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="col-md-12 fdk-padding-no">
+          <div className="col-md-4 fdk-padding-no">
             <div className="fdk-container-detail">
               <div className="fdk-detail-icon">
-                <i className="fa fa-user"></i>
+                <i className="fa fa-refresh" />
               </div>
-              <div className="fdk-detail-text legal-basis">
-                <h5>Skjermingshjemmel</h5>
-                <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForRestrictions && this.props.legalBasisForRestrictions.length !== 0 ?
-                  this.props.legalBasisForRestrictions.map((t, i) =>
-                    <li key={i}>
-                      <a href={t.source}>
-                        {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                  )
-                  : '—'
-                }</ul>
-                <h5>Behandlingsgrunnlag</h5>
-                <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForProcessings && this.props.legalBasisForProcessings.length !== 0 ?
-                  this.props.legalBasisForProcessings.map((t, i) =>
-                    <li key={i}>
-                      <a href={t.source}>
-                        {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                  )
-                  : '—'
-                }</ul>
-                <h5>Utleveringshjemmel</h5>
-                <ul className="fdk-ingress fdk-margin-bottom-no">{this.props.legalBasisForAccesses && this.props.legalBasisForAccesses.length !== 0 ?
-                  this.props.legalBasisForAccesses.map((t, i) =>
-                    <li key={i}>
-                      <a href={t.source}>
-                        {t.prefLabel.nb} <i className="fa fa-external-link" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                  )
-                  : '—'
-                }</ul>
+              <div className="fdk-detail-text">
+                <h5>{localization.dataset.conformsTo} </h5>
+                <p className="fdk-ingress fdk-margin-bottom-no">
+                  {this._renderConformsTo()}
+                </p>
               </div>
             </div>
           </div>
+
+          <div className="col-md-4 fdk-padding-no">
+            <div className="fdk-container-detail">
+              <div className="fdk-detail-icon">
+                <i className="fa fa-refresh" />
+              </div>
+              <div className="fdk-detail-text">
+                <h5>{localization.dataset.informationModel}</h5>
+                <p className="fdk-ingress fdk-margin-bottom-no">
+                  {this._renderInformationModel()}
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     );
@@ -129,8 +144,8 @@ DatasetKeyInfo.defaultProps = {
   authorityCode: 'PUBLIC',
   selectedLanguageCode: null,
   type:'',
-  conformsTo:[],
-  legalBasisForRestrictions:[]
+  conformsTo: null,
+  informationModel:[]
 };
 
 DatasetKeyInfo.propTypes = {
@@ -138,5 +153,5 @@ DatasetKeyInfo.propTypes = {
   selectedLanguageCode: PropTypes.string,
   type: PropTypes.string,
   conformsTo: PropTypes.array,
-  legalBasisForRestrictions: PropTypes.array
+  informationModel: PropTypes.array
 };
