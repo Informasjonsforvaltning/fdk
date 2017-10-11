@@ -11,7 +11,7 @@ export class RefinementOptionPublishers extends React.Component {
 		  const className = block()
 		    .state({ active, disabled })
 		    .mix(bemBlocks.container('item'));
-        
+
     return (
       <div className="checkbox">
         <label>

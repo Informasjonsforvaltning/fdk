@@ -78,7 +78,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
       <div>
         {this._renderHeader()}
         <div className="fdk-container-detail fdk-container-detail-begrep">
-          <div className="fdk-detail-icon"><i className="fa fa-search"></i></div>
+          <div className="fdk-detail-icon"><i className="fa fa-search" /></div>
           <div className="fdk-detail-text">
             <h5>{localization.dataset.keyword}</h5>
             <p className="fdk-ingress fdk-margin-bottom-no">

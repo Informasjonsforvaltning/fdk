@@ -80,15 +80,15 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
         'fa-unlock-alt fdk-color-yellow': distributionRestricted,
         'fa-lock fdk-color-red': distributionNonPublic
       }
-    )
+    );
 
     return (
       <div>
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
           <i className={accessRightClass} />
-          Datasettet er {distributionPublic ? 'offentlig':''}
-          {distributionRestricted ? 'begrenset for offentligheten':''}
-          {distributionNonPublic ? 'skjermet for offentligheten':''}
+          Datasettet er {distributionPublic ? 'offentlig' : ''}
+          {distributionRestricted ? 'begrenset for offentligheten' : ''}
+          {distributionNonPublic ? 'skjermet for offentligheten' : ''}
         </div>
 
         <div className="row fdk-row">
@@ -143,9 +143,9 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 DatasetKeyInfo.defaultProps = {
   authorityCode: 'PUBLIC',
   selectedLanguageCode: null,
-  type:'',
+  type: '',
   conformsTo: null,
-  informationModel:[]
+  informationModel: []
 };
 
 DatasetKeyInfo.propTypes = {
