@@ -3,7 +3,6 @@ package no.dcat.themes.service;
 import com.google.gson.Gson;
 import no.dcat.shared.HelpText;
 import no.dcat.themes.database.TDBConnection;
-import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.Dataset;
