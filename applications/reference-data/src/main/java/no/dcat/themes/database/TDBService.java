@@ -70,7 +70,7 @@ public class TDBService {
         Model m = FileManager.get().loadModel("rdf/data-theme-skos.rdf");
         changeLanguageNoToNb(DatasetFactory.create(m));
         overwrite(THEMES_GRAPH, m);
-        Model hm = FileManager.get().loadModel("https://data-david.github.io/FDK-hjelpetekster/guideline.ttl");
+        Model hm = FileManager.get().loadModel("rdf/hjelpetekster.ttl");
         changeLanguageNoToNb(DatasetFactory.create(hm));
         overwrite(HELPTEXTS_GRAPH, hm);
 

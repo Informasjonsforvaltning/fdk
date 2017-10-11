@@ -77,7 +77,4 @@ public class HelpTextService extends BaseServiceWithFraming {
         });
     }
 
-    private Model helpTextModel(TDBInferenceService connection) { // TODO: InferenceService shouldn't be necessary
-        return connection.getModel(TDBService.HELPTEXTS_GRAPH);
-    }
 }
