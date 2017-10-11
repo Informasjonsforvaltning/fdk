@@ -56,7 +56,7 @@ public class HelpTextService extends BaseServiceWithFraming {
             Dataset dataset = DatasetFactory.create(newModel);
 
             String json = frame(dataset, frame);
-            logger.trace("JSON returned with Helptexts: {}", json);
+            logger.trace("JSON returned for ID: {} with Helptexts:\n{}", id, json);
 
             return new Gson().fromJson(json, FramedHelpText.class).getGraph();
         });
@@ -68,10 +68,13 @@ public class HelpTextService extends BaseServiceWithFraming {
 
 
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
-            Dataset dataset = DatasetFactory.create(connection.getModel(TDBService.HELPTEXTS_GRAPH));
-
+            Model model = connection.getModel(TDBService.HELPTEXTS_GRAPH);
+            Dataset dataset = DatasetFactory.create(model);
+            if (logger.isTraceEnabled()) {
+                logger.trace("Helptexts available for: {}", model.listSubjects().toList().toString());
+            }
             String json = frame(dataset, frame);
-            logger.trace("JSON returned with Helptexts: {}", json);
+
 
             return new Gson().fromJson(json, FramedHelpText.class).getGraph();
         });
