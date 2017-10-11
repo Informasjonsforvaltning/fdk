@@ -45,7 +45,7 @@ public class HelpTextService extends BaseServiceWithFraming {
         super(tdbConnection);
     }
 
-    // @Cacheable("helptexts")
+    @Cacheable("helptexts")
     public List<HelpText> getHelpTexts(String id) {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Model model = connection.getModel(TDBService.HELPTEXTS_GRAPH);
@@ -63,7 +63,7 @@ public class HelpTextService extends BaseServiceWithFraming {
     }
 
 
-    // @Cacheable("helptexts")
+    @Cacheable("helptexts")
     public List<HelpText> getHelpTexts() {
 
 
