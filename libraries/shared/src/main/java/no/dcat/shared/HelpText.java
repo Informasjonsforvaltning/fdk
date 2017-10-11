@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class HelpText {
 
-    public String id;
-    public Map<String,String> shortdesc;
-    public Map<String,String> description;
+    private String id;
+    private Map<String,String> shortdesc;
+    private Map<String,String> description;
 
     public HelpText(String id,
                     Map<String, String> shortdesc,
