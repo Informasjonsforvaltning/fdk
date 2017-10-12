@@ -1,22 +1,22 @@
-<h3>
-    {{title}}
-</h3>
-
-<div *ngIf="distributions" class="distribution-list"
-     [formGroup]="datasetForm">
-
+<div *ngIf="distributions" 
+    class="distribution-list"
+    [formGroup]="datasetForm">
     <div formArrayName="distributions">
-        <div *ngFor="let distribution of distributions; let idx=index ">
-        <br />
+        <div *ngFor="let distribution of distributions; let idx=index" style="margin-bottom: 7px; margin-top: 7px">
             <distribution
                 [distributionsFormArray]="distributionsFormArray"
                 [distribution]="distribution"
-                (deleteDistribution)="removeDistribution($event)"
-                [distributionIndex]="idx">
+                [distributionIndex]="idx"
+                [ui_visible]="true"
+                [showDelete]="showDelete"
+                (deleteDistribution)="removeDistribution($event)" 
+                >
             </distribution>
+            <br>
+            <hr>
         </div>
         <a href="#" (click)="addDistribution()">
-              <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
+            <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
         </a>
     </div>
 </div>

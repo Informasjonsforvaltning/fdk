@@ -32,3 +32,6 @@ applications/registration-api/.settings/org.eclipse.jdt.core.prefs
 applications/registration-api/.settings/org.eclipse.core.resources.prefs
 applications/registration-api/.project
 applications/registration-api/.classpath
+*.prefs
+*.project
+*.classpath

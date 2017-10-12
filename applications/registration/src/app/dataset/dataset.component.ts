@@ -129,7 +129,6 @@ export class DatasetComponent implements OnInit {
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.conformsTos = this.dataset.conformsTos || [];
-      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
 
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
@@ -159,16 +158,19 @@ export class DatasetComponent implements OnInit {
 
           if (dataset.distributions) {
             dataset.distributions.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+              //distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+              //distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+              console.log("type: ", distribution.type);
             })
           }
           if (dataset.samples) {
             dataset.samples.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+             // distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+             // distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+             console.log("type: ", distribution.type);
             })
           }
+          //
 
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");

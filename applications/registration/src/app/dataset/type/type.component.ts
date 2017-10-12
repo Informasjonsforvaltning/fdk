@@ -12,43 +12,43 @@ import {Dataset} from "../dataset";
 export class TypeComponent implements OnInit {
 
     @Input('dataset')
-    public dataset: Dataset;
+    public dataset: any;
+
+    @Input('typeModel')
+    public typeModel = [];
 
     @Output()
     onSave = new EventEmitter<boolean>();
 
     public typeForm: FormGroup;
-    typeModel = [];
-    selectedTypeIdx = 0;
+    public selectedTypeIdx = 0;
 
     constructor(private fb: FormBuilder)
     {
-        this.typeModel = [
-            {
-                id: 1,
-                label: 'Data'
-            },
-            {
-                id: 2,
-                label: 'Kodelister'
-            },
-            {
-                id: 3,
-                label: 'Tesauri'
-            },
-            {
-                id: 4,
-                label: 'Taksonomi'
-            },
-            {
-                id: 5,
-                label: 'Testdata'
-            }
-        ]
-    }
-
-    showAccessRightComments(): boolean {
-        return this.dataset.type !== this.typeModel[0]
+        if (!this.typeModel || this.typeModel.length == 0) {
+            this.typeModel = [
+                {
+                    id: 1,
+                    label: 'Data'
+                },
+                {
+                    id: 2,
+                    label: 'Kodelister'
+                },
+                {
+                    id: 3,
+                    label: 'Tesauri'
+                },
+                {
+                    id: 4,
+                    label: 'Taksonomi'
+                },
+                {
+                    id: 5,
+                    label: 'Testdata'
+                }
+            ]
+        }
     }
 
     ngOnInit() {
@@ -73,8 +73,6 @@ export class TypeComponent implements OnInit {
             }
         );
     }
-
-
 
     private toFormGroup(data: Dataset) {
         return this.fb.group({

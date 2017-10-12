@@ -43,6 +43,7 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { GlobalErrorHandler } from './GlobalErrorHandler';
 import {ContentComponent} from "./dataset/content/content.component";
+//import {SkosConcept} from "./dataset/skosConcept";
 
 @NgModule({
     declarations: [
