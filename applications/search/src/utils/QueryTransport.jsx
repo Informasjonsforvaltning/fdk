@@ -108,6 +108,7 @@ export class QueryTransport extends AxiosESTransport {
 
 
   getData(response) {
+    /*
     response = {
       data: {
         "took" : 10,
@@ -469,6 +470,7 @@ export class QueryTransport extends AxiosESTransport {
             delete aggregations[name];
         }
       })
+      */
     return response.data
   }
 
