@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,8 +57,8 @@ public class SimpleQueryService {
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     /* api names */
-    public static final String QUERY_SEARCH = "/search";
-    public static final String QUERY_DETAIL = "/detail";
+    public static final String QUERY_SEARCH = "/datasets";
+    public static final String QUERY_DETAIL = "/datasets/{id}";
     public static final String QUERY_THEME_COUNT = "/themecount";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
@@ -277,7 +278,7 @@ public class SimpleQueryService {
      */
     @CrossOrigin
     @RequestMapping(value = QUERY_DETAIL, produces = "application/json")
-    public ResponseEntity<String> detail(@RequestParam(value = "id", defaultValue = "") String id) {
+    public ResponseEntity<String> detail(@PathVariable(value = "id") String id) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
         QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
