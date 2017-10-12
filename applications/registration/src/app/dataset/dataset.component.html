@@ -63,7 +63,7 @@
     </label>
     <div class="col-md-push-1 col-md-8 collapsed">
       <input type="checkbox" id="access-level-toggle" class="expand-checkbox"/>
-      <label for="access-level-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <label for="access-level-toggle" class="collapsed-content expand-label">{{summaries.accessRights || 'Klikk for å fylle ut'}}</label>
       <div class="expanded-content">
         <accessRights [dataset]="dataset"
                       (onSave)="onSave($event)">
