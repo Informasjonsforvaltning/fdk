@@ -1,7 +1,8 @@
-<div class="" *ngIf="contentForm">
-  <div [formGroup]="contentForm" class="form-group">
+<div class="" *ngIf="referencesForm">
+  <div [formGroup]="referencesForm" class="form-group">
     <div class="fdk-input-container">
       <div class="form-group">
+        <p>Ekspandert references</p>
 
         <helptext
           text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
@@ -23,7 +24,7 @@
                        [options]="referenceTypes"
                        [multiple]="false"
                        placeholder="Velg..."
-                       formControlName="references">
+                       formControlName="referenceType">
             </ng-select>
           </div>
         </div>
@@ -37,6 +38,7 @@
         </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="relevance-annotation"
                   formControlName="referenceUrl"></textarea>
+
       </div>
 
     </div>

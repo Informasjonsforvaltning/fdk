@@ -13,15 +13,16 @@ import {DatasetComponent} from "../dataset.component";
 })
 
 export class ReferencesComponent implements OnInit {
-  @Input('dataset')
-  public dataset: Dataset;
+  @Input('references')
+  public references: Reference[];
 
   @Output()
   onSave = new EventEmitter<boolean>();
 
   public referencesForm: FormGroup;
 
-  references: Reference[];
+  //references: Reference[];
+  reference: Reference;
   referenceTypes = [];
 
   constructor(private fb: FormBuilder,
@@ -31,7 +32,15 @@ export class ReferencesComponent implements OnInit {
 
   ngOnInit() {
     this.fetchReferenceTypes();
-    this.referencesForm = this.toFormGroup(this.dataset);
+    this.referencesForm = this.toFormGroup(this.references);
+
+    //dummy
+    this.references = [
+      {
+        referenceType: "http://www.w3.org/2002/07/hasVersion",
+        source: "http://www.vg.no"
+      }
+    ]
 
   }
 
@@ -43,9 +52,11 @@ export class ReferencesComponent implements OnInit {
     })
   }
 
-  private toFormGroup(data: Dataset) {
+  //todo: håndtere flere refereanser
+  private toFormGroup(references: Reference[]) {
     return this.fb.group({
-      references: [this.references]
+      referenceUrl: "http://www.w3.org/2002/07/hasVersion",
+      referenceType: "http://www.vg.no"
     });
   }
 
