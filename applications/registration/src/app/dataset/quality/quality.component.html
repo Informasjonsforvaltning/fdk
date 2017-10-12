@@ -1,0 +1,71 @@
+<div class="" *ngIf="contentForm">
+  <div [formGroup]="contentForm" class="form-group">
+    <div class="fdk-input-container">
+      <p class="fdk-input-label">Opphav</p>
+      <helptext
+        text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+        moretext="Lang tekst ...."
+        name="dataset.provenanceStatement">
+      </helptext>
+      <div id="provenanceSelector">
+        <div class="radio" *ngFor="let provenance of provenancesModel">
+          <label>
+            <input
+              type="radio"
+              [checked]="provenance.id === selectedProvenanceIdx"
+              [value]="provenance.id"
+              formControlName="provenance">
+            {{provenance.label}}
+          </label>
+        </div>
+      </div>
+
+      <br/>
+
+      <div (click)="fetchFrequencies()" class="form-group">
+        <p class="fdk-input-label">Oppdateringsfrekvens</p>
+        <helptext id="Dataset.accrualPeriodicity"
+                  text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+                  moretext="Lang tekst ...."
+                  name="dataset.accrualPeriodicity">
+        </helptext>
+        <div style="width: 40%">
+          <ng-select id="quality-frequency"
+                     [options]="frequencies"
+                     [multiple]="false"
+                     placeholder="Velg..."
+                     formControlName="accrualPeriodicity">
+          </ng-select>
+        </div>
+      </div>
+      <br/>
+
+      <div>
+        <p class="fdk-input-label">Sist oppdatert</p>
+        <helptext
+          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+          moretext="Lang tekst ...."
+          name="dataset.modfied">
+        </helptext>
+        <div style="width: 30%">
+          <my-date-picker id="issued" placeholder="Endret dato" name="modified" [options]="myDatePickerOptions"
+                          locale="no"
+                          formControlName="modified"></my-date-picker>
+        </div>
+      </div>
+      <br/>
+
+      <div>
+        <p class="fdk-input-label">Aktualitet</p>
+        <helptext
+          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
+          moretext="Lang tekst ...."
+          name="dataset.hasActualityAnnotation">
+        </helptext>
+        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="aktualitet-annotation"
+                  formControlName="currentness"></textarea>
+
+      </div>
+    </div>
+  </div>
+</div>

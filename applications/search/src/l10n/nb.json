@@ -1,0 +1,126 @@
+{
+  "app": {
+    "title": "Felles datakatalog",
+    "titleSub": "Oversikt over datasett fra virksomheter i Norge",
+    "publisher": "Virksomhet",
+    "menu": "Meny"
+  },
+  "beta": {
+    "first": "Dette er en beta-versjon. Gi oss gjerne",
+    "second": "tilbakemeldinger",
+    "last": "om hva du synes!"
+  },
+  "lang": {
+    "choose": "Velg språk",
+    "chosenLanguage": "Language",
+    "norwegian-nb": "Norsk (bokmål)",
+    "norwegian-nn": "Norsk (nynorsk)",
+    "english-en": "Engelsk"
+  },
+  "feedback": {
+    "title": "Tilbakemelding"
+  },
+  "query": {
+    "intro": "Søk etter innhold",
+    "do": "Utfør søk"
+  },
+  "login": {
+    "title": "Logg inn"
+  },
+  "about": {
+    "about": "Om",
+    "title": "Om applikasjonen",
+    "help": "Hjelp",
+    "status":"Status implementasjon",
+    "standard":"DCAT-AP-NO 1.1 standarden",
+    "guide":"Veileder",
+    "fordataowners": "For dataeiere",
+    "fordatausers": "For databrukere",
+    "technical": "Teknisk"
+  },
+  "page": {
+    "navigation": "Sidenavigering",
+    "next": "Neste side",
+    "prev": "Forrige side",
+    "result.summary": "Søket ga ",
+    "dataset":"treff"
+
+  },
+  "facet": {
+    "organisation":"Virksomhet",
+    "theme":"Tema",
+    "accessRight":"Tilgang",
+    "concept":"Begrep",
+    "legal":"Hjemmel",
+    "spatial":"Geografi",
+    "temporal":"Tidsperiode",
+    "standard":"Standard"
+  },
+  "result": {
+    "dataset":"Datasett",
+    "waiting":"Henter data ..."
+  },
+  "noHits": {
+    "error": "Ingen datasett funnet"
+  },
+  "footer": {
+    "organisation.number": "Organisasjonsnummer:",
+    "information": "Informasjonskapsler",
+    "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
+    "mail": "fellesdatakatalog@brreg.no"
+  },
+  "sort": {
+    "by": "Sorter på",
+    "by.relevance": "Relevans",
+    "by.title": "Tittel",
+    "by.publisher": "Utgiver",
+    "by.modified": "Sist endret"
+  },
+  "search_hit": {
+    "owned": "Eies av",
+    "public": "Offentlig",
+    "sample": "Eksempeldata tilgjengelig"
+  },
+  "dataset": {
+    "title": "Datasett",
+    "conformsTo": "Konformitet",
+    "distribution": {
+      "title": "Distribusjon",
+      "description": "Beskrivelse",
+      "format": "Tilgjengelige format",
+      "accessUrl": "TilgangsURL"
+    },
+    "issued": "Utgivelsesdato",
+    "quality.title": "Kvalitet",
+    "provenance": "Opphav",
+    "currentness": "Aktualitet",
+    "frequency": "Oppdateringsfrekvens",
+    "miscInfo": "Øvrig info",
+    "created": "Opprettet",
+    "modified": "Sist endret",
+    "language": "Språk",
+    "theme": "Tema",
+    "period": "Tidsmessig avgrenset fra",
+    "spatial": "Geografisk avgrenset til",
+    "information": "Opplysninger",
+    "keyword": "Emneord",
+    "subject": "Begrep",
+    "restrictions": "Restriksjoner",
+    "comments": "Kommentar",
+    "objective": "Formål",
+    "related": "Relaterte",
+    "relates": "Relatert",
+    "restriction": "Restriksjon",
+    "downloadText": "Last ned DCAT-beskrivelse:",
+    "isPartOf": "Datasettet er en del av",
+    "accessRights": {
+      "authorityCode": {
+        "public": "Offentlig",
+        "restricted": "Begrenset offentlighet",
+        "nonPublic": "Unntatt offentlighet"
+      }
+    }
+  }
+
+}
+

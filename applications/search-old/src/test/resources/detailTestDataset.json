@@ -1,0 +1,174 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "dcat",
+        "_type": "dataset",
+        "_id": "https://kartkatalog.geonorge.no/Metadata/uuid/bb632639-d04e-4cd3-9807-4e71a1cde8b7",
+        "_score": 1.0,
+        "_source": {
+          "id": "https://kartkatalog.geonorge.no/Metadata/uuid/bb632639-d04e-4cd3-9807-4e71a1cde8b7",
+          "title": {
+            "nb": "Statlig arealplan - Kraftleidning Skåreheia-Holen"
+          },
+          "description": {
+            "nb": "Statlig vedtatt reguleringsplan for 420KV kraftleidning Skåreheia-Holen i Valle kommune."
+          },
+          "contactPoint": {
+            "id": "https://register.geonorge.no/register/organisasjoner/kartverket",
+            "email": "mailto:harald.stavestrand@kartverket.no",
+            "organizationName": "Kartverket"
+          },
+          "keyword": {
+            "nb": [
+              "Arealplan",
+              "Valle kommune",
+              "Norge digitalt",
+              "Land use",
+              "Plan",
+              "Åpne data",
+              "Reguleringsplan",
+              "Statlig vedtatt reguleringsplan"
+            ]
+          },
+          "publisher": {
+            "id": "https://register.geonorge.no/register/organisasjoner/kartverket/kartverket",
+            "name": "Kartverket",
+            "subPublisher": [],
+            "aggrSubPublisher": []
+          },
+          "language": {
+            "code": "http://publications.europa.eu/resource/authority/language/NOR",
+            "title": {
+              "no": "Norsk"
+            }
+          },
+          "theme": [
+            {
+              "id": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+              "code": "ENVI",
+              "startUse": "2015-10-01",
+              "title": {
+                "nb": "Miljø",
+                "en": "Environment"
+              },
+              "conceptSchema": {
+                "id": "http://publications.europa.eu/resource/authority/data-theme",
+                  "title": {
+                      "nb": "Dataset types Named Authority List"
+                  },
+                "versioninfo": "20160921-0",
+                "versionnumber": "20160921-0"
+              }
+            },
+            {
+              "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+              "code": "GOVE",
+              "startUse": "2015-10-01",
+              "title": {
+                "nb": "Forvaltning og offentlig sektor",
+                "en": "Government and public sector"
+              },
+              "conceptSchema": {
+                "id": "http://publications.europa.eu/resource/authority/data-theme",
+                  "title": {
+                      "nb": "Dataset types Named Authority List"
+                  },
+                "versioninfo": "20160921-0",
+                "versionnumber": "20160921-0"
+              }
+            }
+          ],
+          "catalog": {
+            "id": "http://www.geonorge.no/geonetwork",
+            "title": {
+              "nb": "Geonorge"
+            },
+            "description": {
+              "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon"
+            },
+            "publisher": {
+              "id": "https://register.geonorge.no/register/organisasjoner/kartverket/kartverket",
+              "name": "Kartverket",
+              "subPublisher": [],
+              "aggrSubPublisher": []
+            },
+            "issued": "2016-12-20T00:00:00+01",
+            "modified": "2016-12-19T00:00:00+01",
+            "themeTaxonomy": [
+              "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+              "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+              "http://www.eionet.europa.eu/gemet/inspire_themes"
+            ]
+          },
+          "distribution": [
+            {
+              "id": "https://kartkatalog.geonorge.no/Metadata/uuid/bb632639-d04e-4cd3-9807-4e71a1cde8b7/SOSI",
+              "title": {
+                "nb": "GEONORGE:DOWNLOAD"
+              },
+              "description": {
+                "nb": ""
+              },
+              "accessURL": "https://kartkatalog.geonorge.no/metadata/uuid/bb632639-d04e-4cd3-9807-4e71a1cde8b7",
+              "license": "",
+              "format": "SOSI"
+            }
+          ],
+          "conformsTo": [],
+          "temporal": [],
+          "spatial": [
+            {
+              "code": "http://sws.geonames.org/3144096/",
+              "title": {
+                "nn": "Noreg",
+                "no": "Norge",
+                "nb": "Norge",
+                "en": "Norway"
+              }
+            }
+          ],
+          "accessRights": {
+            "code": "Public",
+            "title": {
+              "no": "Offentlig",
+              "en": "Public"
+            }
+          },
+          "accessRightsComment": [],
+          "references": [],
+          "provenance": {
+            "code": "statlig",
+            "title": {
+              "nn": "Statlig vedtak",
+              "nb": "Statlig vedtak",
+              "en": "Governmental decisions"
+            }
+          },
+          "identifier": [
+            "bb632639-d04e-4cd3-9807-4e71a1cde8b7"
+          ],
+          "page": [],
+          "accrualPeriodicity": {
+            "code": "kontinuerlig",
+            "title": {
+              "no": "kontinuerlig",
+              "en": "continuous"
+            }
+          },
+          "subject": [],
+          "ADMSIdentifier": []
+        }
+      }
+    ]
+  }
+}

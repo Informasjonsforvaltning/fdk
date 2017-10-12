@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.apache.http" level="WARN"/>
+    <logger name="org.apache.jena" level="ERROR"/>
+	<logger name="no.difi.dcat" level="ERROR" />
+    <logger name="no.dcat" level="ERROR" />
+    <logger name="org.openqa.phantomjs" level="WARN" />
+    <logger name="org.openqa" level="WARN" />
+    <logger name="org.elasticsearch" level="WARN"/>
+    <logger name="sun.net" level="WARN"/>
+    <logger name="io.github" level="WARN"/>
+    <logger name="org.elasticsearch.node" level="WARN"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+</configuration>

@@ -1,0 +1,113 @@
+{
+  "extends": "airbnb",
+  //"parser": "babel-eslint",
+  "plugins": [
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "$": false
+  },
+  /*
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": false,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": false,
+    "objectLiteralShorthandProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "jsx": true
+  },
+  */
+  "rules": {
+    "no-console": [
+      1,
+      { "allow": ["warn", "error"] }
+    ],
+    "max-len": [
+      2,
+      140,
+      4,
+      {"ignoreUrls": true}
+    ],
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "brace-style": [
+      2,
+      "1tbs",
+      { "allowSingleLine": true }
+    ],
+    "consistent-return": 2,
+    "object-curly-spacing": [1, "always"],
+    "curly": [
+      2,
+      "multi-line"
+    ],
+    "dot-notation": 2,
+    "eol-last": 2,
+    "indent": [
+      2,
+      2,
+      {"SwitchCase": 1}
+    ],
+    "no-else-return": 2,
+    "no-return-assign": 1,
+    "no-eq-null": 2,
+    "no-floating-decimal": 2,
+    "no-param-reassign": 2,
+    "no-self-compare": 2,
+    "no-shadow": 0,
+    "no-throw-literal": 2,
+    "no-underscore-dangle": 0,
+    "quotes": [
+      2,
+      "single"
+    ],
+    "keyword-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true,
+        "overrides": {}
+      }
+    ],
+    "strict": 0,
+    "vars-on-top": 2,
+    "wrap-iife": 2,
+    "semi": [
+      2,
+      "always"
+    ],
+    "no-trailing-spaces": 2,
+    "space-before-blocks": 2,
+    "space-before-function-paren": [
+      2,
+      "never"
+    ],
+    "space-infix-ops": 2,
+    "spaced-comment": 2,
+    "react/prefer-es6-class": 0,
+    "react/jsx-indent": [
+      2,
+      2
+    ],
+    "react/jsx-indent-props": [
+      2,
+      2
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fdk</artifactId>
+        <groupId>no.dcat</groupId>
+        <version>0.2.4-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>applications</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>fuseki</module>
+        <module>kibana</module>
+        <module>logstash</module>
+
+        <module>nginx</module>
+        <module>nginx-ssl</module>
+
+        <module>reference-data</module>
+
+        <module>nginx-search</module>
+        <module>search-old</module>
+        <module>search-api</module>
+        <module>search</module>
+
+        <module>registration-api</module>
+        <module>registration</module>
+        <module>registration-auth</module>
+        <module>registration-validator</module>
+
+        <module>harvester-api</module>
+        <module>harvester</module>
+
+        <module>dev-management</module>
+        <module>gdoc</module>
+        <module>end2end-test</module>
+    </modules>
+
+
+</project>

@@ -1,0 +1,110 @@
+:root {
+    --color0: #ffffff; /* hvit */
+    --color1: #2D3741; /* mørkest blågrå – heading */
+    --color2: #4B555F; /* mørk blågrå – tekst */
+    --color3: #646E78; /* medium blågrå – lysere tekst */
+    --color4: #C2C8CE; /* mellomlys blågrå –  */
+    --color5: #D7DDE3; /* ultralys blågrå – inputfelter */
+    --color6: #EEF0F2; /* lys blågrå – bakgrunner */
+    --color7: #F6F8FA; /* ultralys blågrå – inputfelter */
+    --color-cta: #00B4E6; /* blå themefarge – call to actions og "krydder" */
+    --color-cta2: #197DAF; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
+    --color-cta3: #009BCD; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
+    --color-green: #00DCA0; /* grønn */
+    --color-red: #FF3C64; /* rød */
+}
+
+.fdk-color0 {
+    color: var(--color0);
+}
+
+.fdk-color1 {
+    color: var(--color1);
+}
+
+.fdk-color2 {
+    color: var(--color2);
+}
+
+.fdk-color3 {
+    color: var(--color3);
+}
+.fdk-color4 {
+    color: var(--color4);
+}
+
+.fdk-color5 {
+    color: var(--color5);
+}
+
+.fdk-color6 {
+    color: var(--color6);
+}
+
+.fdk-color-cta {
+    color: var(--color-cta);
+}
+
+.fdk-color-cta2 {
+    color: var(--color-cta2);
+}
+
+.fdk-color-green {
+    color: var(--color-green);
+}
+
+.fdk-color-red {
+    color: var(--color-red);
+}
+
+.fdk-color-icon-cta {
+    color: var(--color-cta3);
+}
+
+
+.fdk-background-color0 {
+    background-color: var(--color0);
+}
+
+.fdk-background-color1 {
+    background-color: var(--color1);
+}
+
+.fdk-background-color2 {
+    background-color: var(--color2);
+}
+
+.fdk-background-color3 {
+    background-color: var(--color3);
+}
+.fdk-background-color4 {
+    background-color: var(--color4);
+}
+
+.fdk-background-color5 {
+    background-color: var(--color5);
+}
+
+.fdk-background-color6 {
+    background-color: var(--color6);
+}
+
+.fdk-background-color-cta {
+    background-color: var(--color-cta);
+}
+
+.fdk-background-color-cta2 {
+    background-color: var(--color-cta2);
+}
+
+.fdk-background-color-green {
+    background-color: var(--color-green);
+}
+
+.fdk-background-color-red {
+    background-color: var(--color-red);
+}
+
+.fdk-background-color-icon-cta {
+    background-color: var(--color-cta3);
+}

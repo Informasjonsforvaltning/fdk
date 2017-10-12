@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<logger name="org.springframework.web" level="WARN" />
+	<logger name="org.apache.http.wire" level="WARN" />
+	<logger name="org.apache.jena" level="ERROR" />
+
+	<timestamp key="datetime" datePattern="yyyy-MM-dd HH:mm:ss"/>
+
+	<appender name="dcat-admin-logger" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="no.difi.dcat">
+		<appender-ref ref="dcat-admin-logger" />
+	</logger>
+
+</configuration>

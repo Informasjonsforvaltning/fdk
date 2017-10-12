@@ -1,0 +1,6 @@
+logging:
+  level.: ERROR
+  level.no.brreg: ERROR
+  level.no.dcat: WARN
+  level.org.springframework: ERROR
+

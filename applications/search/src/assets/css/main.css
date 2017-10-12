@@ -1,0 +1,279 @@
+@import url("colors.css");
+
+body {
+    background-color: var(--color6) !important;
+    font-family: "heebo", "helvetica", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 2.1rem;
+    color: var(--color1);
+}
+
+
+/*  C O N T A I N E R   &   H E A D E R   &   F O O T E R   */
+
+.fdk-container {
+    background-color: var(--color0);
+    border-radius: 4px;
+    margin: 0px 0px 10px 0px;
+}
+
+.fdk-container:hover {
+	box-shadow: 0px 3px 12px var(--color4);
+}
+
+.fdk-header-beta {
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    background-color: var(--color1);
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    color: var(--color0);
+}
+
+.fdk-header {
+    background-color: var(--color0);
+    border-bottom: 1px solid var(--color5);
+    padding: 20px 0px;
+    margin-bottom: 60px;
+}
+
+.fkd-header-right {
+    text-align: right;
+}
+
+.fdk-header-padding {
+    padding-top: 10px;
+}
+
+
+
+/*  D R O P D O W N   U N I V E R S A L  */
+
+.fdk-dropdown-caret {
+	margin-left: 15px !important;
+}
+
+
+
+/* * * * *   B U T T O N S   * * * * */
+
+.fdk-button {
+	font-size: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 6px;
+    border: 3px solid var(--color6);
+    padding: 11px 12px 10px 12px;
+    margin: 0px 2px 6px 0px;
+    display: inline-block;
+    background-image: none;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.fdk-button-default {
+    background-color: var(--color5);
+    border-color: var(--color6);
+}
+
+.fdk-button-default:hover, .fdk-button-default:focus .fdk-button-default:active .open>.fdk-button-default {
+    border-radius: 3px;
+    border: 3px solid var(--color5);
+    background-color: var(--color5);
+}
+
+.fdk-button-cta {
+    background-color: var(--color-cta);
+    border: 3px solid var(--color6);
+}
+
+.fdk-button-cta:hover {
+    border-radius: 3px;
+    background-color: var(--color-cta);
+    border: 3px solid var(--color-cta);
+}
+
+.fdk-button-inactive {
+    border: 1px dashed var(--color4);
+    color: var(--color4);
+    border-radius: 4px;
+    margin: 0px 6px 6px 0px;
+}
+
+.fdk-button-format {
+	font-size: 15px;
+    line-height: 15px;
+	font-weight: 300;
+    border-radius: 6px;
+    border: 3px solid var(--color6);
+    padding: 11px 12px 10px 12px;
+    margin: 0px 0px 6px 0px;
+    display: inline-block;
+    background-image: none;
+    background-color: var(--color1);
+    color: var(--color0);
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.fdk-button-format:hover {
+    border: 3px solid var(--color1);
+    border-radius: 3px;
+}
+
+.fdk-button-format-inactive {
+	font-weight: 400;
+    background-color: var(--color0);
+    color: var(--color1);
+    border: 1px dashed var(--color1);
+    padding: 10px 11px 9px 11px;
+    margin: 8px 6px 0px 0px;
+    border-radius: 3px;
+}
+
+.fdk-button-format-inactive:hover {
+    border: 1px dashed var(--color1);
+    border-radius: 3px;
+}
+
+
+
+/* fonts */
+
+a > .fdk-button {
+    text-decoration: none;
+    font-weight: 400;
+    color: var(--color1);
+}
+
+.fdk-button-format > i {
+    color: var(--color0);
+}
+
+.fdk-button-format-inactive > i {
+    color: var(--color1);
+}
+
+.fdk-button-on-white {
+    border-color: var(--color0);
+}
+
+
+/* * * * *   L A B E L S   * * * * */
+
+.fdk-label {
+    background-color: var(--color5);
+    border: 2px solid var(--color6);
+    color: var(--color1);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    border-radius: 5px;
+    padding: 6px 8px 5px 8px;
+    display: inline-block;
+    margin: -1px 0px -1px 0px;
+}
+
+.fdk-label:hover {
+    border: 2px solid var(--color5);
+    border-radius: 3px;
+}
+
+.fdk-label-inactive {
+    background-color: var(--color6);
+    border: 1px dashed var(--color1);
+    padding: 5px 11px 4px 11px;
+    border-radius: 3px;
+}
+
+.fdk-label-inactive:hover {
+    background-color: var(--color6);
+    border: 1px dashed var(--color1);
+}
+
+.fdk-label-on-white {
+    border-color: var(--color0);
+}
+
+
+
+/* fonts */
+
+a > .fdk-label {
+    color: var(--color1);
+    text-decoration: none;
+    font-size: 1.4rem
+}
+
+
+
+/*  G E N E R A L   C S S  */
+
+.fdk-margin-right {
+    margin-right: 10px;
+}
+
+.fdk-margin-right-double {
+    margin-right: 20px;
+}
+
+.fdk-float-right {
+    float: right;
+}
+
+.fdk-float-none {
+    float: none;
+}
+
+
+
+/*  S P A C E  */
+
+.fdk-padding-no {
+    padding: 0px;
+}
+
+.fdk-margin-no {
+    margin: 0px;
+}
+
+.fdk-margin-top-no {
+    margin-top: 0px;
+}
+
+.fdk-margin-top {
+    margin-top: 20px;
+}
+
+.fdk-margin-top-double {
+    margin-top: 40px;
+}
+
+.fdk-margin-top-triple {
+    margin-top: 60px;
+}
+
+.fdk-margin-bottom-no {
+    margin-bottom: 0px;
+}
+
+.fdk-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.fdk-margin-bottom-double {
+    margin-bottom: 40px;
+}
+
+.fdk-margin-bottom-triple {
+    margin-bottom: 60px;
+}
+
+
+
+/*  O V E R R I D E S  */
+
+.btn-default {
+	text-shadow: none;
+}

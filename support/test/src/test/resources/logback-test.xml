@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.springframework.web" level="DEBUG"/>
-    <logger name="org.apache.http.wire" level="WARN"/>
-    <logger name="org.apache.jena" level="ERROR"/>
-	<logger name="no.difi.dcat" level="TRACE" />
-    <logger name="no.dcat" level="TRACE" />
-</configuration>

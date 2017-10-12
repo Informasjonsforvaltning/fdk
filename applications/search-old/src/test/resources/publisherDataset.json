@@ -1,0 +1,432 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 36,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971032081",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971032081",
+          "name": "Statens vegvesen",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/Kommune",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/Kommune",
+          "name": "Kommune",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971526157",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971526157",
+          "name": "Patentstyret",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/974760983",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/974760983",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/867668292",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/867668292",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971274042",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971274042",
+          "name": "Meterologisk institutt",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/983744516",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/983744516",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971277882",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971277882",
+          "name": "Norad",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/870917732",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/870917732",
+          "name": "Oljedirektoratet",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/982531950",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/982531950",
+          "name": "Politidirektoratet",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971526920",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971526920",
+          "name": "SSB",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/991609407",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/991609407",
+          "name": "Ruter",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/986339523",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/986339523",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/874789542",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/874789542",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+          "name": "Brønnøysundregistrene",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/939508295",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/939508295",
+          "name": "Stavanger kommune",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/977161630",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/977161630",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/942114184",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/942114184",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/961181399",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/961181399",
+          "name": "Arkivverket",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/974760819",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/974760819",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/979469241",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/979469241",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+          "name": "Statens Kartverk",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/958381492",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/958381492",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/986252932",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/986252932",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/985399077",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/985399077",
+          "name": "Mattilsynet",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/915933149",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/915933149",
+          "name": "Direktoratet for e-Helse",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/958935420",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/958935420",
+          "name": "Oslo Kommune",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/970205039",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/970205039",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/974761211",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/974761211",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/971527412",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/971527412",
+          "name": "Norsk kulturråd",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/985821585",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/985821585",
+          "name": "Uninett Norid",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/889640782",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/889640782",
+          "name": "NAV",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+          "name": "Skatteetaten",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      },
+      {
+        "_index": "dcat",
+        "_type": "publisher",
+        "_id": "http://data.brreg.no/enhetsregisteret/enhet/972417807",
+        "_score": 1,
+        "_source": {
+          "id": "http://data.brreg.no/enhetsregisteret/enhet/972417807",
+          "name": "Finansdepartementet",
+          "subPublisher": [],
+          "aggrSubPublisher": []
+        }
+      }
+    ]
+  }
+}

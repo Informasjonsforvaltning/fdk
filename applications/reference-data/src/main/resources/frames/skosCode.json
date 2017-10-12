@@ -1,0 +1,21 @@
+{
+    "@context": {
+        "skos": "http://www.w3.org/2004/02/skos/core#",
+        "at":"http://publications.europa.eu/ontology/authority/",
+        "uri": "@id",
+        "type": "@type",
+
+        "authorityCode": "at:authority-code",
+        "prefLabel": {
+            "@id": "skos:prefLabel",
+            "@container": "@language"
+        }
+
+    },
+    "@explicit": true,
+    "authorityCode": {"@default":"", "@omitDefault":true},
+    "prefLabel": {}
+
+}
+
+

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:dct="http://purl.org/dc/terms/"
+         xmlns:prov="http://www.w3.org/ns/prov#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:void="http://www.w3.org/TR/void/"
+         xmlns:locn="http://www.w3.org/ns/locn#"
+         xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+         xmlns:dcat="http://www.w3.org/ns/dcat#"
+         xmlns:dctype="http://purl.org/dc/dcmitype/">
+    <dcat:Catalog rdf:about="http://www.geonorge.no/geonetworkbeta">
+        <dct:title xml:lang="en">Geonorge</dct:title>
+        <dct:description>
+            Test
+        </dct:description>
+        <rdfs:label xml:lang="en">Geonorge (Kartverket)</rdfs:label>
+        <foaf:homepage>http://www.geonorge.no/geonetworkbeta</foaf:homepage>
+        <void:openSearchDescription>http://www.geonorge.no/geonetworkbeta/srv/eng/portal.opensearch</void:openSearchDescription>
+        <void:uriLookupEndpoint>http://www.geonorge.no/geonetworkbeta/srv/eng/rdf.search?any=</void:uriLookupEndpoint>
+        <dct:publisher rdf:resource="https://register.geonorge.no/register/organisasjoner/kartverket/kartverket"/>
+        <dcat:themes rdf:resource="http://www.geonorge.no/geonetworkbeta/thesaurus/external.place.regions"/>
+        <dct:language>eng</dct:language>
+        <dcat:dataset rdf:resource="http://www.geonorge.no/geonetworkbeta/resource/Friluftruter-nasjonalbase"/>
+    </dcat:Catalog>
+    <foaf:Organization rdf:about="http://www.geonorge.no/geonetworkbeta/organization/0">
+        <foaf:name>Kartverket</foaf:name>
+    </foaf:Organization>
+    <skos:ConceptScheme rdf:about="http://www.geonorge.no/geonetworkbeta/thesaurus/external.place.regions">
+        <dct:title>Region</dct:title>
+        <dct:uri>http://www.geonorge.no/geonetworkbeta/srv/eng/thesaurus.download?ref=external.place.regions</dct:uri>
+    </skos:ConceptScheme>
+    <dcat:Dataset rdf:about="http://www.geonorge.no/geonetworkbeta/resource/Friluftruter-nasjonalbase">
+        <dct:title xml:lang="">Friluftruter - nasjonal base</dct:title>
+        <dct:description xml:lang="">Sammendrag: Landsdekkende datasett over tur- og friluftsruter i Norge. Datasettet inneholder fotruter, skiløyper, sykkelruter, andre ruter og tilretteleggingstiltak i friluftslivsområder. Dataene kan brukes i prosesser etter plan- og bygningsloven (kommuneplanlegging og saksbehandlingsom for eksempel byggesak) i kommunene, til analyser, rapportering, oppslag og visualisering av ruter til turplanlegging.</dct:description>
+        <dct:accrualPeriodicity rdf:resource="http://publications.europa.eu/resource/authority/frequency/WEEKLY"/>
+        <dcat:theme rdf:parseType="Resource">
+            <skos:prefLabel xml:lang="">Transport networks</skos:prefLabel>
+            <skos:inScheme>
+                <skos:ConceptScheme>
+                    <dct:title xml:lang="">GEMET - INSPIRE themes, version 1.0</dct:title>
+                    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-01</dct:issued>
+                </skos:ConceptScheme>
+            </skos:inScheme>
+        </dcat:theme>
+        <dcat:theme rdf:parseType="Resource">
+            <skos:prefLabel xml:lang="">Norge digitalt</skos:prefLabel>
+            <skos:inScheme>
+                <skos:ConceptScheme>
+                    <dct:title xml:lang="">Nasjonal inndeling i geografiske initiativ og SDI-er</dct:title>
+                    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-03-20</dct:issued>
+                </skos:ConceptScheme>
+            </skos:inScheme>
+        </dcat:theme>
+        <dcat:theme rdf:parseType="Resource">
+            <skos:prefLabel xml:lang="">Åpne data</skos:prefLabel>
+            <skos:inScheme>
+                <skos:ConceptScheme>
+                    <dct:title xml:lang="">Nasjonal inndeling i geografiske initiativ og SDI-er</dct:title>
+                    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-03-20</dct:issued>
+                </skos:ConceptScheme>
+            </skos:inScheme>
+        </dcat:theme>
+        <dcat:theme rdf:parseType="Resource">
+            <skos:prefLabel xml:lang="">Inspire</skos:prefLabel>
+            <skos:inScheme>
+                <skos:ConceptScheme>
+                    <dct:title xml:lang="">Nasjonal inndeling i geografiske initiativ og SDI-er</dct:title>
+                    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-03-20</dct:issued>
+                </skos:ConceptScheme>
+            </skos:inScheme>
+        </dcat:theme>
+        <dcat:theme rdf:parseType="Resource">
+            <skos:prefLabel xml:lang="">Friluftsliv</skos:prefLabel>
+            <skos:inScheme>
+                <skos:ConceptScheme>
+                    <dct:title xml:lang="">Nasjonal tematisk inndeling (DOK-kategori)</dct:title>
+                    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-10-28</dct:issued>
+                </skos:ConceptScheme>
+            </skos:inScheme>
+        </dcat:theme>
+        <dcat:keyword xml:lang="">Fjellet</dcat:keyword>
+        <dcat:keyword xml:lang="">Friluftsruter</dcat:keyword>
+        <dcat:keyword xml:lang="">turplanlegging</dcat:keyword>
+        <dcat:keyword xml:lang="">blåmerka</dcat:keyword>
+        <dcat:keyword xml:lang="">rødmerka</dcat:keyword>
+        <dct:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://data.geonorge.no/so/friluftrutebasen</dct:identifier>
+        <dct:spatial rdf:parseType="Resource">
+            <locn:geometry rdf:datatype="http://www.opengis.net/ont/geosparql#wktLiteral"><![CDATA[POLYGON((2 72,33 72,33 57,2 57,2 72))]]></locn:geometry>
+            <locn:geometry rdf:datatype="http://www.opengis.net/ont/geosparql#gmlLiteral"><![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2 57</gml:lowerCorner><gml:upperCorner>33 72</gml:upperCorner></gml:Envelope>]]></locn:geometry>
+            <locn:geometry rdf:datatype="https://www.iana.org/assignments/media-types/application/vnd.geo+json"><![CDATA[{"type":"Polygon","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"coordinates":[[[2,72],[33,72],[33,57],[2,57],[2,72]]]}]]></locn:geometry>
+        </dct:spatial>
+        <dct:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2016-01-22</dct:created>
+        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2016-01-24</dct:issued>
+        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2016-01-26</dct:modified>
+        <dct:provenance>
+            <dct:ProvenanceStatement>
+                <rdfs:label xml:lang="">Departementet tildelte Kartverket oppgaven å samarbeide med Miljødirektoratet om en felles satsning for etablering av nasjonale sti- og løypedata i 2009. Det ble fra da av arbeidet med en fagområdestandard for Friluftsliv. En første versjon av produktspesifikasjon for nasjonale tur-og friluftsruter var ferdig i desember 2013, og database og rutiner for lagring av data i databasen var i drift fra samme tid (desember 2013). Siden da har det pågått kontinuerlig lagring av data i databasen.</rdfs:label>
+            </dct:ProvenanceStatement>
+        </dct:provenance>
+        <rdfs:comment xml:lang="en">Spatial resolution (equivalent scale): 1:1500</rdfs:comment>
+        <prov:wasUsedBy>
+            <prov:Activity>
+                <prov:qualifiedAssociation rdf:parseType="Resource">
+                    <prov:hadPlan rdf:parseType="Resource">
+                        <prov:wasDerivedFrom rdf:parseType="Resource">
+                            <dct:title xml:lang="">COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</dct:title>
+                            <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-12-08</dct:issued>
+                        </prov:wasDerivedFrom>
+                    </prov:hadPlan>
+                </prov:qualifiedAssociation>
+                <prov:generated rdf:parseType="Resource">
+                    <dct:type rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/notConformant"/>
+                    <dct:description xml:lang="">Ressursen følger nasjonal spesifikasjon og er ikke forsøkt harmonisert mot Inspire-spesifikasjonen</dct:description>
+                </prov:generated>
+            </prov:Activity>
+        </prov:wasUsedBy>
+        <prov:wasUsedBy>
+            <prov:Activity>
+                <prov:qualifiedAssociation rdf:parseType="Resource">
+                    <prov:hadPlan rdf:parseType="Resource">
+                        <prov:wasDerivedFrom rdf:parseType="Resource">
+                            <dct:title xml:lang="">SOSI-produktspesifikasjon: Kartlagte og verdsatte friluftslivsområder</dct:title>
+                            <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-12-14</dct:issued>
+                        </prov:wasDerivedFrom>
+                    </prov:hadPlan>
+                </prov:qualifiedAssociation>
+                <prov:generated rdf:parseType="Resource">
+                    <dct:type rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/conformant"/>
+                    <dct:description xml:lang="">Datasettet er i henhold til angitt spesifikasjon</dct:description>
+                </prov:generated>
+            </prov:Activity>
+        </prov:wasUsedBy>
+        <dct:conformsTo rdf:parseType="Resource">
+            <dct:title xml:lang="">SOSI-produktspesifikasjon: Kartlagte og verdsatte friluftslivsområder</dct:title>
+            <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-12-14</dct:issued>
+        </dct:conformsTo>
+        <prov:wasUsedBy>
+            <prov:Activity>
+                <prov:qualifiedAssociation rdf:parseType="Resource">
+                    <prov:hadPlan rdf:parseType="Resource">
+                        <prov:wasDerivedFrom rdf:parseType="Resource">
+                            <dct:title xml:lang="">COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</dct:title>
+                            <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-12-08</dct:issued>
+                        </prov:wasDerivedFrom>
+                    </prov:hadPlan>
+                </prov:qualifiedAssociation>
+                <prov:generated rdf:parseType="Resource">
+                    <dct:type rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/notConformant"/>
+                    <dct:description xml:lang="">Ressursen følger nasjonal spesifikasjon og er ikke forsøkt harmonisert mot Inspire-spesifikasjonen</dct:description>
+                </prov:generated>
+            </prov:Activity>
+        </prov:wasUsedBy>
+        <prov:wasUsedBy>
+            <prov:Activity>
+                <prov:qualifiedAssociation rdf:parseType="Resource">
+                    <prov:hadPlan rdf:parseType="Resource">
+                        <prov:wasDerivedFrom rdf:parseType="Resource">
+                            <dct:title xml:lang="">SOSI-produktspesifikasjon: Kartlagte og verdsatte friluftslivsområder</dct:title>
+                            <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-12-14</dct:issued>
+                        </prov:wasDerivedFrom>
+                    </prov:hadPlan>
+                </prov:qualifiedAssociation>
+                <prov:generated rdf:parseType="Resource">
+                    <dct:type rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/conformant"/>
+                    <dct:description xml:lang="">Datasettet er i henhold til angitt spesifikasjon</dct:description>
+                </prov:generated>
+            </prov:Activity>
+        </prov:wasUsedBy>
+        <dcat:landingPage>
+            <foaf:Document rdf:about="https://data.kartverket.no"/>
+        </dcat:landingPage>
+        <dct:publisher>
+            <foaf:Organization>
+                <foaf:name xml:lang="">Kartverket</foaf:name>
+                <foaf:mbox rdf:resource="mailto:arnlar@kartverket.no"/>
+            </foaf:Organization>
+        </dct:publisher>
+        <prov:qualifiedAttribution>
+            <prov:Attribution>
+                <prov:agent>
+                    <vcard:Kind>
+                        <vcard:organization-name xml:lang="">Kartverket</vcard:organization-name>
+                        <vcard:hasEmail rdf:resource="mailto:arnlar@kartverket.no"/>
+                    </vcard:Kind>
+                </prov:agent>
+                <dct:type rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/publisher"/>
+            </prov:Attribution>
+        </prov:qualifiedAttribution>
+        <dct:rightsHolder>
+            <foaf:Organization>
+                <foaf:name xml:lang="">Kartverket</foaf:name>
+                <foaf:mbox rdf:resource="mailto:arnlar@kartverket.no"/>
+            </foaf:Organization>
+        </dct:rightsHolder>
+        <prov:qualifiedAttribution>
+            <prov:Attribution>
+                <prov:agent>
+                    <vcard:Kind>
+                        <vcard:organization-name xml:lang="">Kartverket</vcard:organization-name>
+                        <vcard:hasEmail rdf:resource="mailto:arnlar@kartverket.no"/>
+                    </vcard:Kind>
+                </prov:agent>
+                <dct:type rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner"/>
+            </prov:Attribution>
+        </prov:qualifiedAttribution>
+    </dcat:Dataset>
+</rdf:RDF>
