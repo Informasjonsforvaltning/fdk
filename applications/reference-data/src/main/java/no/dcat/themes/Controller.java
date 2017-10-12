@@ -65,7 +65,7 @@ public class Controller {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/helptexts/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/helptexts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<HelpText> helpTexts() {
 
         return helpTextService.getHelpTexts();
