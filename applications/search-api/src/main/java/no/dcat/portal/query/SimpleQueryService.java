@@ -435,6 +435,7 @@ public class SimpleQueryService {
                 .terms(terms)
                 .field(field)
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
+                .missing("N/A")
                 .order(Order.count(false));
     }
 
