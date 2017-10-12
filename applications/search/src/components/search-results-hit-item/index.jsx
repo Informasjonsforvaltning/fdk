@@ -106,9 +106,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (sample) {
       if (sample.length > 0) {
         return (
-          <span id="search-hit-sample">
+          <div id="search-hit-sample">
             {localization.search_hit.sample}
-          </span>
+          </div>
         );
       }
     }
