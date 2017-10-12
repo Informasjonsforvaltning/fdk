@@ -18,6 +18,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,8 +54,12 @@ public abstract class AbstractBuilder {
         //TODO
         List<SkosConcept> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
+        Statement type = resource.getProperty(RDF.type);
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
+            if (type != null) {
+                logger.debug("Found type {}", type.getString());
+            }
 
             result.add(SkosConcept.getInstance(statement.getObject().toString(), ""));
         }

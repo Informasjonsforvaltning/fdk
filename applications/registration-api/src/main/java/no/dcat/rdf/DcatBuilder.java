@@ -1,8 +1,8 @@
 package no.dcat.rdf;
 
 import no.dcat.model.Catalog;
-import no.dcat.shared.Contact;
 import no.dcat.model.Dataset;
+import no.dcat.shared.Contact;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Publisher;
