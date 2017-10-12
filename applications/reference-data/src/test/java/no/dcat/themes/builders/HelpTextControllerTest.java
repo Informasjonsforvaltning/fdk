@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import static org.hamcrest.Matchers.*;
 
+import org.apache.jena.shared.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,14 @@ public class HelpTextControllerTest {
         assertThat(helpTexts.get(0).getAbstract(), is(notNullValue()));
         //   assertThat(helpTexts.get(0).getShortdesc(), isMapContaining); Want to test the Map<String, String> structure
         assertThat(helpTexts.get(0).getShortdesc().get("nb"), is(notNullValue()));
-
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
+    public void helpTextSingleThrows() throws Throwable {
+        List<HelpText> helpTexts = controller.helpTexts("Dahut_description");
+    }
+
+        @Test
     public void helpTextsMoreHasDesc() throws Throwable {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.get(0).getDescription(), is(notNullValue()));

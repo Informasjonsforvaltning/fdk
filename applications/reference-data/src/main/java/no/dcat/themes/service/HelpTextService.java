@@ -9,6 +9,7 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,12 @@ public class HelpTextService extends BaseServiceWithFraming {
     }
 
     @Cacheable("helptexts")
-    public List<HelpText> getHelpTexts(String id) {
+    public List<HelpText> getHelpTexts(String id) throws NotFoundException {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Model model = connection.getModel(TDBService.HELPTEXTS_GRAPH);
             Resource subject = model.createResource("http://brreg.no/fdk/fields#" + id);
             StmtIterator descIter = model.listStatements(subject, null, (RDFNode) null);
+            if (! descIter.hasNext()) throw new NotFoundException(id + " Not found");
             Model newModel = ModelFactory.createDefaultModel();
             newModel.add(descIter);
             Dataset dataset = DatasetFactory.create(newModel);
