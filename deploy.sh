@@ -8,7 +8,7 @@ set -e
 
 git fetch
 
-GIT_STATUS=`git status | grep "Your branch is up-to-date with"`
+GIT_STATUS=`git status | grep "Your branch is"`
 if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; then
   echo "You need to be on origin/develop and be up to date with origin";
   exit;

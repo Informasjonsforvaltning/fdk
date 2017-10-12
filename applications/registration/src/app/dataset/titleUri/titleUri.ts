@@ -3,6 +3,5 @@ export interface TitleUri {
     prefLabel?: {
         [language: string]: string
     };
-    ui_visible?: boolean;
 }
 

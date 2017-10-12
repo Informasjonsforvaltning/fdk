@@ -40,7 +40,7 @@
         name="datasett-objective"></helptext>
         <textarea class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
         (ngModelChange)="valuechange(this)"
-        [(ngModel)]='dataset.objective'></textarea>
+        [(ngModel)]='dataset.objective[language]'></textarea>
       </div>
 
         <div class="fdk-input-container" *ngIf="dataset.landingPages">
@@ -57,21 +57,20 @@
   </div>
 
 
-
-<div class="row justify-content-md-center" >
-  <label for="access-level-toggle" class="col-md-push-1 col-md-2 section-title">
-    Tilgangsnivå<b class="caret-right"></b>
-  </label>
-  <div class="col-md-push-1 col-md-8 collapsed">
-    <input type="checkbox" id="access-level-toggle" class="expand-checkbox" />
-    <label for="access-level-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
-    <div class="expanded-content">
-      <accessRights [dataset]="dataset"
-      (onSave)="onSave($event)">
-    </accessRights>
+  <div class="row justify-content-md-center">
+    <label for="access-level-toggle" class="col-md-push-1 col-md-2 section-title">
+      Tilgangsnivå<b class="caret-right"></b>
+    </label>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="access-level-toggle" class="expand-checkbox"/>
+      <label for="access-level-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div class="expanded-content">
+        <accessRights [dataset]="dataset"
+                      (onSave)="onSave($event)">
+        </accessRights>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 
 
 <div class="row justify-content-md-center" >
@@ -144,7 +143,7 @@
     </label>
     <div class="col-md-push-1 col-md-8 collapsed">
         <input type="checkbox" id="geotime-toggle" class="expand-checkbox" />
-        <label for="tema-toggle" class="collapsed-content expand-label">
+        <label for="geotime-toggle" class="collapsed-content expand-label">
             {{summaries.geotime}}
         </label>
         <div class="expanded-content">
@@ -219,7 +218,7 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
 
   <div class="row justify-content-md-center" *ngIf="dataset && datasetForm">
     <label for="quality-toggle" class="col-md-push-1 col-md-2 section-title">
@@ -242,28 +241,47 @@
     </label>
     <div class="col-md-push-1 col-md-8 collapsed">
       <input type="checkbox" id="content-toggle" class="expand-checkbox"/>
-      <label for="content-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <label for="content-toggle" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" class="collapsed-content expand-label">{{ summaries.content || 'Klikk for å fylle ut'}}</label>
 
       <div class="expanded-content">
+        <content [dataset]="dataset"
+                 (onSave)="onSave($event)">
 
-        <div class="fdk-input-container">
-          <p class="fdk-input-label">I samsvar med standard</p>
-          <helptext
-            text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-            moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-            name="frekvens">
-          </helptext>
-          <!--rl-tag-input (click)="focus($event)" id="quality-conformsto"
-                        class="fdk-input"
-                        placeholder="Standard"
-                        formControlName="conformsTo">
-          </rl-tag-input-->
-
-        </div>
-
+        </content>
       </div>
+
     </div>
   </div>
+
+
+    <div class="row justify-content-md-center" *ngIf="dataset">
+        <label for="information-model-toggle" class="col-md-push-1 col-md-2 section-title">
+            Informasjonsmodell<b class="caret-right"></b>
+        </label>
+        <div class="col-md-push-1 col-md-8 collapsed">
+            <input type="checkbox" id="information-model-toggle" class="expand-checkbox" />
+            <label for="information-model-toggle" class="collapsed-content expand-label">{{summaries.informationModel}}</label>
+            <div class="expanded-content">
+              <!--  <info-model [dataset]="dataset"
+                    (onSave)="onSave($event)">
+                </info-model>
+            -->
+                <div class="fdk-input-container" *ngIf="dataset.title">
+                    <helptext
+                        text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                        moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                        name="geoavgrensning">
+                    </helptext>
+                    <titleUri
+                        [titleUri]="dataset.informationModel"
+                        [titleUriType]="'informasjonsmodell'"
+                        [showDelete]="false"
+                        (onSave)="onSave($event)">
+                    </titleUri>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
   <div class="row justify-content-md-center" *ngIf="dataset">
@@ -279,77 +297,86 @@
     </div>
   </div>
 
+
 <div class="row justify-content-md-center" *ngIf="dataset">
   <label for="contact-toggle" class="col-md-push-1 col-md-2 section-title">
     Kontaktinformasjon<b class="caret-right"></b>
   </label>
   <div class="col-md-push-1 col-md-8 collapsed">
     <input type="checkbox" id="contact-toggle" class="expand-checkbox" />
-    <label for="contact-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+    <label for="contact-toggle" class="collapsed-content expand-label">{{dataset.contactPoints[0].organizationUnit || 'Klikk for å fylle ut'}}</label>
     <div *ngIf="datasetForm.controls.contactPoints" class="expanded-content">
       <contact
-      [contactsArray]="datasetForm.controls.contactPoints"
-      [contact]="dataset.contactPoints[0]">
-        </contact>
+        [contactsArray]="datasetForm.controls.contactPoints"
+        [contact]="dataset.contactPoints[0]">
+      </contact>
+
     </div>
   </div>
 </div>
 
-<div class="row justify-content-md-center" *ngIf="dataset">
-  <label for="distributions-toggle" class="col-md-push-1 col-md-2 section-title">
-    Distribusjoner og eksempeldata<b class="caret-right"></b>
-  </label>
-  <div class="col-md-push-1 col-md-8 collapsed">
-    <input type="checkbox" id="distributions-toggle" class="expand-checkbox" />
-    <label for="distributions-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
-    <div *ngIf="dataset.samples && dataset.distributions" class="expanded-content">
-      <distributions
-      [datasetForm]="datasetForm"
-      [distributionsFormArray]="datasetForm.controls.samples"
-      [distributions]="dataset.samples"
-      title="Eksempeldata"
-      >
-      </distributions>
-      <distributions
-    [datasetForm]="datasetForm"
-    [distributionsFormArray]="datasetForm.controls.distributions"
-    [distributions]="dataset.distributions"
-    title="Distribusjoner"
-    >
-      </distributions>
-    </div>
-  </div>
-</div>
-
-<div class="row justify-content-md-center">
-  <div class="row">
-    <div class="col-md-push-3 col-md-8 fdk-changes-bar fdk-saved" *ngIf="saved">
-      <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
-    </div>
-    <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="!saved">
-      <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
-    </div>
-  </div>
-  <div class="col-md-push-3 col-md-8 fdk-buttons">
-
-    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()" id="button_back_to_catalog">Tilbake til datakatalogen</button>
-    <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()" id="button_delete_catalog">Slett datasett
-    </button>
-  </div>
-</div>
-
-<div class="row" style="margin-top: 10px" *ngIf="dataset && catalog && dataset.publisher" >
-  <div class="col-md-push-1 col-md-10 registrationStatusBox" style="font-size: 1.2em"  [formGroup]="datasetForm">
-
-    <div class="verticalAlignCenter" style="margin-right: 10px">Endre status for denne datasettbeskrivelsen:</div>
-
-    <div class="verticalAlignCenter" style="padding-right:5px" [style.fontWeight]="dataset.registrationStatus == 'DRAFT' ? 'bold':''">Utkast</div>
-
-    <label class="switch verticalAlignCenter">
-      <input type="checkbox"  formControlName="published">
-      <span class="slider round"></span>
+  <div class="row justify-content-md-center" *ngIf="dataset">
+    <label for="distributions-toggle" class="col-md-push-1 col-md-2 section-title">
+      Distribusjoner og eksempeldata<b class="caret-right"></b>
     </label>
-    <div class="verticalAlignCenter" style="padding-left:4px" [style.fontWeight]="dataset.registrationStatus == 'PUBLISH' ? 'bold':''">Publisert</div>
+    <div class="col-md-push-1 col-md-8 collapsed">
+      <input type="checkbox" id="distributions-toggle" class="expand-checkbox"/>
+      <label for="distributions-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+      <div *ngIf="dataset.samples && dataset.distributions" class="expanded-content">
+        <distributions
+          [datasetForm]="datasetForm"
+          [distributionsFormArray]="datasetForm.controls.samples"
+          [distributions]="dataset.samples"
+          title="Eksempeldata"
+        >
+        </distributions>
+        <distributions
+          [datasetForm]="datasetForm"
+          [distributionsFormArray]="datasetForm.controls.distributions"
+          [distributions]="dataset.distributions"
+          title="Distribusjoner"
+        >
+        </distributions>
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="row justify-content-md-center">
+    <div class="row">
+      <div class="col-md-push-3 col-md-8 fdk-changes-bar fdk-saved" *ngIf="saved">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> Sist lagret {{lastSaved}}
+      </div>
+      <div class="col-md-push-3 col-md-8 fdk-changes-bar" *ngIf="!saved">
+        <i class="fa fa-circle" aria-hidden="true"></i> Endringer lagres automatisk
+      </div>
+    </div>
+    <div class="col-md-push-3 col-md-8 fdk-buttons">
+
+      <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="back()"
+              id="button_back_to_catalog">Tilbake til datakatalogen
+      </button>
+      <button type="button" class="btn btn-default fdk-label fdk-label-default" (click)="showConfirmDelete()"
+              id="button_delete_catalog">Slett datasett
+      </button>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 10px" *ngIf="dataset && catalog && dataset.publisher">
+    <div class="col-md-push-1 col-md-10 registrationStatusBox" style="font-size: 1.2em" [formGroup]="datasetForm">
+
+      <div class="verticalAlignCenter" style="margin-right: 10px">Endre status for denne datasettbeskrivelsen:</div>
+
+      <div class="verticalAlignCenter" style="padding-right:5px"
+           [style.fontWeight]="dataset.registrationStatus == 'DRAFT' ? 'bold':''">Utkast
+      </div>
+
+      <label class="switch verticalAlignCenter">
+        <input type="checkbox" formControlName="published">
+        <span class="slider round"></span>
+      </label>
+      <div class="verticalAlignCenter" style="padding-left:4px"
+           [style.fontWeight]="dataset.registrationStatus == 'PUBLISH' ? 'bold':''">Publisert
+      </div>
+    </div>
+  </div>
 </div>

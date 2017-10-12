@@ -30,7 +30,9 @@ export interface Dataset {
         [language: string]: string
     }[]; */
   subjects?: string[];
-  objective?: string;
+  objective?: {
+    [language: string]:string
+  };
   themes?: {uri:string, title:{"nb":string}}[];
   catalog: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
@@ -46,7 +48,7 @@ export interface Dataset {
 
   contactPoints?: Contact[];
 
-  conformsTos?: string[];
+  conformsTos?: any[];
 
   distributions?: Distribution[];
 
@@ -65,10 +67,13 @@ export interface Dataset {
   legalBasisForProcessings?:any[];
   legalBasisForAccesses?:any[];
 
+  informationModel?:any;
+  standard?:any;
+
   hasAccuracyAnnotation?:any;
   hasCompletenessAnnotation?:any;
   hasCurrentnessAnnotation?:any;
-  hasAvailabilityAnnotations?:any;
+  hasAvailabilityAnnotation?:any;
   hasRelevanceAnnotation?:any;
 
   _lastModified: string;

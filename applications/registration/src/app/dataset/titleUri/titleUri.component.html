@@ -3,12 +3,14 @@
         [formGroup]="titleUriForm">
         <div class="row form-group">
             <h4 (click)="toggleForm()">
-                <span *ngFor="let singleFormat of titleUri.format; let idx=index">
-                    {{singleFormat}}{{titleUri.format.length !== idx+1 ? ',' : '' }}
-                </span>
-                <span *ngIf="titleUri.format && titleUri.format.length === 0">
-                    (Ingen format)
-                </span>
+                <div *ngIf="titleUri && titleUri.format">
+                    <span *ngFor="let singleFormat of titleUri.format; let idx=index">
+                        {{singleFormat}}{{titleUri.format.length !== idx+1 ? ',' : '' }}
+                    </span>
+                    <span *ngIf="titleUri.format && titleUri.format.length === 0">
+                        (Ingen format)
+                    </span>
+                </div>
             </h4>
             <div class="form sub-form">
                 <div class="fdk-input-container">

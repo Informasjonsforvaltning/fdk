@@ -35,7 +35,7 @@
                             		dct:source <https://jira.brreg.no/browse/BEGREP-208> ] ;
     dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
     dct:issued              "2012-01-01"^^xsd:date ;
-    dct:modified            "2016-09-21%00:01:30Z"^^xsd:dateTime ;
+    dct:modified            "2016-09-21T00:01:30Z"^^xsd:dateTime ;
     dct:provenance          <http://data.brreg.no/datakatalog/provinens/tredjepart> ;
     dqv:hasQualityAnnotation  [ a       dqv:QualityAnnotation ;
                                         dqv:inDimension  iso:Currentness ;
@@ -76,9 +76,9 @@
         a                dcat:Distribution ;
         dct:description  "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."@nb ;
         dct:format       "text/json" , "application/rdf+xml" ;
-        dct:license      <http://Norsk_lisens_for_åpne_data_(NLOD)> ;
-        foaf:page        <http://Dokumentasjon_av_distribusjonen> ;
-        dct:conformsTo   <http://SOSI> ;
+        dct:license      [ a dct:Standard , skos:Concept ; skos:prefLabel "Norsk lisens for åpne data (NLOD)"@no ; dct:source <https://data.norge.no/nlod/no/1.0> ];
+        foaf:page        [ a dct:Standard , skos:Concept ; skos:prefLabel "Dokumentasjon av distribusjonen"@no ; dct:source <https://data.norge.no/nlod/no/1.0> ];
+        dct:conformsTo   [ a dct:Standard , skos:Concept ; skos:prefLabel "SOSI"@no ; dct:source <https://www.kartverket.no/geodataarbeid/standarder/sosi/> ] ;
         dcat:accessURL   <http://www.detteerenlenke.no/til-nedlasting> , <http://www.detteerenannenlenke.no/til-en-annen-nedlasting> , <http://www.detteerentredjelenke.no/til-en-tredje-nedlasting> .
 
 <http://brreg.no/catalogs/974760673/datasets/75573cda-ea3b-4844-96f6-13075f2faefd/distributions/2>
