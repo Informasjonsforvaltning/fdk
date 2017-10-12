@@ -27,7 +27,7 @@ export default class DetailsPage extends React.Component {
   // @params: the function has no param but the query need dataset id from prop
   // loads all the info for this dataset
   loadDatasetFromServer() {
-    const url = `/search?id=${this.props.params.id}`;
+    const url = `/datasets/${this.props.params.id}`;
     axios.get(url)
       .then((res) => {
         const data = res.data;
