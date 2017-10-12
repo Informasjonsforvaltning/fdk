@@ -28,11 +28,6 @@ public class HelpTextControllerTest {
     @Autowired
     private Controller controller;
 
-    @Test
-    public void helpTextsSingleIsSingle() throws Throwable {
-        List<HelpText> helpTexts = controller.helpTexts("Dataset_description");
-        assertEquals(helpTexts.size(), 1);
-    }
 
     @Test
     public void helpTextsMoreisMore() throws Throwable {
@@ -42,24 +37,24 @@ public class HelpTextControllerTest {
 
     @Test
     public void helpTextsSingleHasDesc() throws Throwable {
-        List<HelpText> helpTexts = controller.helpTexts("Dataset_description");
-        assertThat(helpTexts.get(0).getDescription(), is(notNullValue()));
+        HelpText helpText = controller.helpTexts("Dataset_description");
+        assertThat(helpText.getDescription(), is(notNullValue()));
      //   assertThat(helpTexts.get(0).getDescription(), isMapContaining); Want to test the Map<String, String> structure
-        assertThat(helpTexts.get(0).getDescription().get("nb"), is(notNullValue()));
+        assertThat(helpText.getDescription().get("nb"), is(notNullValue()));
     }
 
     @Test
     public void helpTextsSingleHasAbstract() throws Throwable {
-        List<HelpText> helpTexts = controller.helpTexts("Dataset_description");
-        assertThat(helpTexts.get(0).getShortdesc(), is(notNullValue()));
-        assertThat(helpTexts.get(0).getAbstract(), is(notNullValue()));
+        HelpText helpText = controller.helpTexts("Dataset_description");
+        assertThat(helpText.getShortdesc(), is(notNullValue()));
+        assertThat(helpText.getAbstract(), is(notNullValue()));
         //   assertThat(helpTexts.get(0).getShortdesc(), isMapContaining); Want to test the Map<String, String> structure
-        assertThat(helpTexts.get(0).getShortdesc().get("nb"), is(notNullValue()));
+        assertThat(helpText.getShortdesc().get("nb"), is(notNullValue()));
     }
 
     @Test(expected = NotFoundException.class)
     public void helpTextSingleThrows() throws Throwable {
-        List<HelpText> helpTexts = controller.helpTexts("Dahut_description");
+        HelpText helpText = controller.helpTexts("Dahut_description");
     }
 
         @Test

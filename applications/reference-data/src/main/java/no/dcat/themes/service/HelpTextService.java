@@ -46,7 +46,7 @@ public class HelpTextService extends BaseServiceWithFraming {
     }
 
     @Cacheable("helptexts")
-    public List<HelpText> getHelpTexts(String id) throws NotFoundException {
+    public HelpText getHelpTexts(String id) throws NotFoundException {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Model model = connection.getModel(TDBService.HELPTEXTS_GRAPH);
             Resource subject = model.createResource("http://brreg.no/fdk/fields#" + id);
@@ -59,7 +59,7 @@ public class HelpTextService extends BaseServiceWithFraming {
             String json = frame(dataset, frame);
             logger.trace("JSON returned for ID: {} with Helptexts:\n{}", id, json);
 
-            return new Gson().fromJson(json, FramedHelpText.class).getGraph();
+            return new Gson().fromJson(json, FramedHelpText.class).getGraph().get(0);
         });
     }
 

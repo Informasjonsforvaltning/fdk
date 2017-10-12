@@ -76,7 +76,7 @@ public class Controller {
     @RequestMapping(value = "/helptexts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public List<HelpText> helpTexts(@PathVariable(name = "id") String id) {
+    public HelpText helpTexts(@PathVariable(name = "id") String id) {
 
         return helpTextService.getHelpTexts(id);
 
