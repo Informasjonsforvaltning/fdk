@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Dataset } from "../dataset";
-import { ChangeDetectorRef } from "@angular/core";
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Dataset} from "../dataset";
+import {AccessRightsService} from "./accessRights.service";
+import {DatasetComponent} from "../dataset.component";
 
 @Component({
     selector: 'accessRights',
@@ -21,24 +22,11 @@ export class AccessRightsComponent implements OnInit {
     accessRightsModel = [];
     selectedAccessRightIdx = 1;
 
-    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
-        this.accessRightsModel = [
-            {
-                id: 1,
-                label: 'Offentlig',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
-            },
-            {
-                id: 2,
-                label: 'Begrenset offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
-            },
-            {
-                id: 3,
-                label: 'Unntatt offentlighet',
-                uri: 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
-            }
-        ]
+    constructor(private fb: FormBuilder,
+                private cdr: ChangeDetectorRef,
+                private accessRightsService: AccessRightsService,
+                private parent: DatasetComponent) {
+
     }
 
     showAccessRightComments(): boolean {
@@ -46,6 +34,7 @@ export class AccessRightsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.accessRightsModel = this.accessRightsService.getAll();
         this.accessRightsForm = this.toFormGroup(this.dataset);
 
         if (!this.dataset.accessRights) {
@@ -70,6 +59,7 @@ export class AccessRightsComponent implements OnInit {
                     });
                 }
                 this.cdr.detectChanges();
+              this.parent.buildAccessRightsSummary();
                 this.onSave.emit(true);
             }
         );
