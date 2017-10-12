@@ -44,7 +44,7 @@ public class SimpleQueryService {
 
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
-    public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.authorityCode.raw";
+    public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
 
     public static final String TERMS_THEME_COUNT = "theme_count";
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
@@ -159,7 +159,7 @@ public class SimpleQueryService {
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
                     .field("publisher.name")
-                    .field("accessRights.authorityCode");
+                    .field("accessRights.code");
         }
 
         logger.trace(search.toString());
@@ -258,7 +258,7 @@ public class SimpleQueryService {
 
         if (!StringUtils.isEmpty(accessRight)) {
             BoolQueryBuilder boolFilter3 = QueryBuilders.boolQuery();
-            boolFilter3.must(QueryBuilders.termQuery("accessRights.authorityCode.raw", accessRight));
+            boolFilter3.must(QueryBuilders.termQuery("accessRights.code.raw", accessRight));
 
             boolQuery.filter(boolFilter3);
         }

@@ -123,11 +123,13 @@ public class AuthorizationService {
     protected List<String> getAuthorizedOrganisations(String ssn) throws AuthorizationServiceException {
         List<String> organisations = new ArrayList<>();
 
+        String name = "Bruker ikke funnet i Altinn";
+        entityNameService.setUserName(ssn, name);
+
         List<Entity> authorizedEntities = getAuthorizedEntities(ssn);
 
         List<Entity> entries = authorizedEntities.stream().filter(isApprovedEntityType()).collect(Collectors.toList());
 
-        String name = "unknown";
         for (Entity entry : entries) {
 
             if (entry.getSocialSecurityNumber() != null) {

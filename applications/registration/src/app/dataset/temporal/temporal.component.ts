@@ -44,14 +44,14 @@ export class TemporalFormComponent implements OnInit {
        this.temporalsFormArray.push(this.temporalForm);
        this.temporalForm.valueChanges.subscribe(
         temporalFormElement => {
-            
+
             if (temporalFormElement.startDate && temporalFormElement.startDate.epoc)
                 this.temporal.startDate = temporalFormElement.startDate.epoc;
             else
                 delete this.temporal.startDate;
 
             if (temporalFormElement.endDate && temporalFormElement.endDate.epoc)
-                this.temporal.endDate = temporalFormElement.endDate.epoc; 
+                this.temporal.endDate = temporalFormElement.endDate.epoc;
             else
                 delete this.temporal.endDate;
 
@@ -61,11 +61,11 @@ export class TemporalFormComponent implements OnInit {
     }
 
     private getDateObjectFromUnixTimestamp(timestamp:string) {
-        if (!timestamp) 
+        if (!timestamp)
             return {};
 
         let timestamp2 = parseInt(timestamp);
-        if (timestamp2.toString().length === 10) 
+        if (timestamp2.toString().length === 10)
             timestamp2 = parseInt(timestamp.toString() + "000");
 
         let date = new Date(timestamp2);

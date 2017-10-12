@@ -1,8 +1,9 @@
-package no.dcat.model;
+package no.dcat.shared;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
+import no.dcat.shared.SkosConcept;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,9 @@ public class Distribution {
     private Map<String,String> description;
     private List<String> downloadURL;
     private List<String> accessURL;
-    private String license;
+    private SkosConcept license;
+    private List<SkosConcept> conformsTo;
+    private SkosConcept page;
     private List<String> format;
+    private String type;
 }
