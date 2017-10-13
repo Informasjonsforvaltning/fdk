@@ -71,6 +71,9 @@ public class HelpTextService extends BaseServiceWithFraming {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Model model = connection.getModel(TDBService.HELPTEXTS_GRAPH);
             Dataset dataset = DatasetFactory.create(model);
+            if (logger.isInfoEnabled()) {
+                logger.info("Number of helptext subjects found: {}", model.listSubjects().toList().size());
+            }
             if (logger.isTraceEnabled()) {
                 logger.trace("Helptexts available for: {}", model.listSubjects().toList().toString());
             }
