@@ -1,19 +1,10 @@
 package no.dcat.harvester;
 
 
+import no.dcat.harvester.clean.HtmlCleaner;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
@@ -59,7 +50,7 @@ public class DataEnricher {
         if (isVegvesenet()) {
             enrichForVegvesenet();
         }
-        enrichLanguage();
+        enrichLanguageAndCleanHtml();
 
         //Remove statements marked for deletion
         statementsToDelete.forEach(model::remove);
@@ -190,21 +181,20 @@ public class DataEnricher {
 
     } //end method enrichForVegvesenet
 
-
     /**
      * Add language tag to dataset title, description and keyword if this is missing
      * Value will be set to "no-nb"
      * See Jira https://jira.brreg.no/browse/FDK-82
      */
-    private void enrichLanguage() {
+    private void enrichLanguageAndCleanHtml() {
         //Enrich title properties
-        enrichLanguageForProperty(DCTerms.title, DEFAULT_LANGUAGE);
+        enrichLanguageForPropertyAndCleanHtml(DCTerms.title, DEFAULT_LANGUAGE);
 
         //Enrich description properties
-        enrichLanguageForProperty(DCTerms.description, DEFAULT_LANGUAGE);
+        enrichLanguageForPropertyAndCleanHtml(DCTerms.description, DEFAULT_LANGUAGE);
 
         //Enrich keyword properties
-        enrichLanguageForProperty(DCAT.keyword, DEFAULT_LANGUAGE);
+        enrichLanguageForPropertyAndCleanHtml(DCAT.keyword, DEFAULT_LANGUAGE);
     }
 
 
@@ -214,18 +204,22 @@ public class DataEnricher {
      * @param predicate predicate to search for
      * @param language language code that will be added to literal
      */
-    private void enrichLanguageForProperty(Property predicate, String language) {
+    private void enrichLanguageForPropertyAndCleanHtml(Property predicate, String language) {
         //Find all statements with specified property
         StmtIterator statementIterator = model.listStatements(new SimpleSelector(null, predicate, (RDFNode) null));
         while(statementIterator.hasNext()) {
             Statement statement = statementIterator.nextStatement();
             Literal literal = statement.getObject().asLiteral();
 
+            String originalLiteralString = literal.getString();
+            String cleanedString = HtmlCleaner.clean(originalLiteralString);
+
             //if language is blank, specified language should be added
             //if language code is "no", change to specified language, in order to keep language coding consistent
-            if("".equals(literal.getLanguage()) || "no".equals(literal.getLanguage())) {
+            if(isLanguageBlankOrNo(literal) || !originalLiteralString.equals(cleanedString)) {
                 //create new resource with language added
-                Literal literalWithLang = ResourceFactory.createLangLiteral(literal.getString(), language);
+                String languageToSet = isLanguageBlankOrNo(literal) ? language : literal.getLanguage();
+                Literal literalWithLang = ResourceFactory.createLangLiteral(cleanedString, languageToSet);
                 statement.getSubject().addLiteral(predicate, literalWithLang);
 
                 //mark resource without language for deletion
@@ -233,5 +227,10 @@ public class DataEnricher {
             }
         }
     }
+
+    private boolean isLanguageBlankOrNo(Literal literal) {
+        return "".equals(literal.getLanguage()) || "no".equals(literal.getLanguage());
+    }
+
 
 }
