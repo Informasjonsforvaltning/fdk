@@ -1,14 +1,14 @@
 package no.dcat.rdf;
 
 import no.dcat.model.Catalog;
-import no.dcat.model.Contact;
+import no.dcat.shared.Contact;
 import no.dcat.model.Dataset;
-import no.dcat.model.Distribution;
-import no.dcat.model.PeriodOfTime;
-import no.dcat.model.Publisher;
-import no.dcat.model.QualityAnnotation;
-import no.dcat.model.Reference;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.Distribution;
+import no.dcat.shared.PeriodOfTime;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.Reference;
+import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
@@ -160,20 +160,24 @@ public class DcatBuilder {
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
                 addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
 
-                dataset.getLegalBasisForRestriction().forEach(skosConceptWithHomepage -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, skosConceptWithHomepage);
+                dataset.getLegalBasisForRestriction().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, concept);
                 });
 
-                dataset.getLegalBasisForProcessing().forEach(skosConceptWithHomepage -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, skosConceptWithHomepage);
+                dataset.getLegalBasisForProcessing().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, concept);
                 });
-                dataset.getLegalBasisForAccess().forEach(skosConceptWithHomepage -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForAccess, skosConceptWithHomepage);
+                dataset.getLegalBasisForAccess().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_legalBasisForAccess, concept);
                 });
 
-                addSkosConcept(datRes, dcatno_informationModel, dataset.getInformationModel());
-                addSkosConcept(datRes, dcatno_standard, dataset.getStandard());
+                dataset.getInformationModel().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_informationModel, concept);
+                });
 
+                dataset.getConformsTo().forEach(concept -> {
+                    addSkosConcept(datRes, dcatno_standard, concept);
+                });
 
                 addReferences(datRes, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());

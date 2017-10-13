@@ -1,14 +1,22 @@
 package no.dcat.shared;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.ToString;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Data
+@ToString(includeFieldNames = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Dataset {
 
     private String id;
 
     private String uri;
-/*
 
     // dct:title
     // Norwegian: Tittel
@@ -62,10 +70,6 @@ public class Dataset {
     //Norwegian: Eksempeldata
     private List<Distribution> sample;
 
-    //dcat:conformsTo
-    //Norwegian: I samsvar med
-    private List<SkosConcept> conformsTo;
-
     //dct:temporal
     //Norwegian: tidsperiode
     private List<PeriodOfTime> temporal;
@@ -78,17 +82,12 @@ public class Dataset {
     //Norwegian: tilgangsnivå
     private SkosCode accessRights;
 
-    // dcatno:legalBasisForRestriction
-    //Norwegian: skjermingshjemmel
-    private List<SkosConcept> legalBasisForRestriction = Collections.emptyList();
+    //dcatno:accessRightsComment
+    //Norwegian: Skjermingshjemmel.
+    //Norwegian extension to the dcat standard. Recommended used with accesRights.
+    @Deprecated
+    private List<String> accessRightsComment;
 
-    // dcatno:legalBasisForProcessing
-    //Norwegian: behanlingsgrunnlag
-   private List<SkosConcept> legalBasisForProcessing = Collections.emptyList();
-
-    // dcatno:legalBasisForAccess
-    //Norwegian: utleveringshjemmel
-    private List<SkosConcept> legalBasisForAccess = Collections.emptyList();
 
     // dcatno:hasXXXXAnnotation
     private QualityAnnotation hasAccuracyAnnotation;
@@ -99,8 +98,7 @@ public class Dataset {
 
     //dct:references
     //Norwegian: Refererer til.
-   private List<Reference> references;
-
+    private List<Reference> references;
 
     //dct:provenance
     //Norwegian: Opphav
@@ -122,25 +120,36 @@ public class Dataset {
     //Norwegian: begrep
     private List<Subject> subject;
 
+    //adms:identifier
+    //Norwegian: annen identifikator
+    private List<String> admsIdentifier;
+
+    //dcat:conformsTo
+    //Norwegian: I samsvar med
+    private List<SkosConcept> conformsTo = Collections.emptyList();;
+
+    // NEW FIELDS DCAT-AP-NO 1.2?
+
     // dct: informationModel
     // Norwegian: informasjonsmodell
-    private List<SkosConcept> informationModel;
+    private List<SkosConcept> informationModel = Collections.emptyList();;
+
+    // dcatno:legalBasisForRestriction
+    //Norwegian: skjermingshjemmel
+    private List<SkosConcept> legalBasisForRestriction = Collections.emptyList();;
+
+    // dcatno:legalBasisForProcessing
+    //Norwegian: behanlingsgrunnlag
+    private List<SkosConcept> legalBasisForProcessing = Collections.emptyList();
+
+    // dcatno:legalBasisForAccess
+    //Norwegian: utleveringshjemmel
+    private List<SkosConcept> legalBasisForAccess = Collections.emptyList();;
 
     //dct:type
     //Norwegian: type
     private String type;
 
-    //adms:identifier
-    //Norwegian: annen identifikator
-    private List<String> admsIdentifier;
 
 
-*/
-    public Dataset() {
-        //Blank override
-    }
-
-    public Dataset(String id) {
-        this.id = id;
-    }
 }

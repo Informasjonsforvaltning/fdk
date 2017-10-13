@@ -1,6 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.model.SkosCode;
+import no.dcat.shared.SkosCode;
 import no.dcat.service.ReferenceDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
