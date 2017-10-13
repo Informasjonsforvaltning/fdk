@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Created by extkkj on 10.10.2017.
@@ -47,7 +46,6 @@ public class HelpTextControllerTest {
     public void helpTextsSingleHasAbstract() throws Throwable {
         HelpText helpText = controller.helpTexts("Dataset_description");
         assertThat(helpText.getShortdesc(), is(notNullValue()));
-        assertThat(helpText.getAbstract(), is(notNullValue()));
         //   assertThat(helpTexts.get(0).getShortdesc(), isMapContaining); Want to test the Map<String, String> structure
         assertThat(helpText.getShortdesc().get("nb"), is(notNullValue()));
     }
@@ -71,7 +69,7 @@ public class HelpTextControllerTest {
     public void helpTextsMoreHasAbstract() throws Throwable {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.get(0).getShortdesc(), is(notNullValue()));
-        assertThat(helpTexts.get(0).getAbstract(), is(notNullValue()));
+
         //   assertThat(helpTexts.get(0).getShortdesc(), isMapContaining); Want to test the Map<String, String> structure
         assertThat(helpTexts.get(0).getShortdesc().get("nb"), is(notNullValue()));
         assertTrue(helpTexts.stream().allMatch(helpText -> helpText.getShortdesc().containsKey("nb")));

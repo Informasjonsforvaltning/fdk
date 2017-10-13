@@ -1,7 +1,5 @@
 package no.dcat.shared;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Map;
 
 /**
@@ -29,11 +27,6 @@ public class HelpText {
         this.id = id;
     }
 
-    public Map<String, String> getAbstract() {
-        return shortdesc;
-    }
-
-
     public Map<String, String> getShortdesc() {
         return shortdesc;
     }
@@ -48,11 +41,6 @@ public class HelpText {
 
     public void setDescription(Map<String, String> description) {
         this.description = description;
-    }
-
-
-    public URI getURI() throws URISyntaxException {
-      return new URI(id);
     }
 
 }
