@@ -2,19 +2,10 @@
   <div [formGroup]="referencesForm" class="form-group">
     <div class="fdk-input-container">
       <div class="form-group">
-        <p>Ekspandert references</p>
-
-        <helptext
-          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
-          moretext="Lang tekst ...."
-          name="dataset.relations">
-
-        </helptext>
-
 
         <div (click)="fetchReferenceTypes()" class="form-group">
           <p class="fdk-input-label">Relasjonstyper</p>
-          <helptext id="Dataset.accrualPeriodicity"
+          <helptext id="dataset.referenceType"
                     text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
                     moretext="Lang tekst ...."
                     name="dataset.referenceType">

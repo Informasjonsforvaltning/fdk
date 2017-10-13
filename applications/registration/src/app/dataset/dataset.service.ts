@@ -73,8 +73,13 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
+
+    //special treatment for field dcat:references
+    // - it is spelled "plural-like" and is unintentionally singularized
+    //it therfore has to be changed back to its correct form
+    let payloadcopy = payload.replace('"reference":', '"references":');
     return this.http
-      .put(datasetUrl, payload, {headers: this.headers})
+      .put(datasetUrl, payloadcopy, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       ;

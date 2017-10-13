@@ -292,7 +292,7 @@
       <input type="checkbox" id="relations-toggle" class="expand-checkbox"/>
       <label for="relations-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
       <div class="expanded-content">
-        <references [references]="dataset.references"
+        <references [dataset]="dataset"
                    (onSave)="onSave($event)">
         </references>
       </div>

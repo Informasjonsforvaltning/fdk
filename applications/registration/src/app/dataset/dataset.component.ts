@@ -139,6 +139,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
       this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
       this.dataset.informationModel = dataset.informationModel;
+
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 

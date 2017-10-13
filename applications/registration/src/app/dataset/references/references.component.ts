@@ -13,8 +13,8 @@ import {DatasetComponent} from "../dataset.component";
 })
 
 export class ReferencesComponent implements OnInit {
-  @Input('references')
-  public references: Reference[];
+  @Input('dataset')
+  public dataset: Dataset;
 
   @Output()
   onSave = new EventEmitter<boolean>();
@@ -32,17 +32,37 @@ export class ReferencesComponent implements OnInit {
 
   ngOnInit() {
     this.fetchReferenceTypes();
-    this.referencesForm = this.toFormGroup(this.references);
 
-    //dummy
-    this.references = [
-      {
-        referenceType: "http://www.w3.org/2002/07/hasVersion",
-        source: "http://www.vg.no"
-      }
-    ]
+    //dummy - fjernes etter at lagring er i orden
+    //this.dataset.references = [
+    //  {
+    //    referenceType: "http://www.w3.org/2002/07/hasVersion",
+    //    source: "http://www.nrk.no"
+    //  }
+    //]
 
+    this.dataset.references = this.dataset.references || [{ source : '', referenceType : '' }];
+    this.referencesForm = this.toFormGroup(this.dataset.references);
+
+    this.referencesForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe( refs => {
+      console.log("refs:");
+      console.log(refs);
+
+      if (refs.referenceType) {
+        console.log("refs.referencetype = true");
+        //todo håndtere flere
+        this.dataset.references[0] = {
+          referenceType: refs.referenceType,
+          source: refs.referenceUrl}
+      };
+      console.log("referenceform.valuechanges");
+      console.log(this.dataset.references);
+
+      this.onSave.emit(true);
+
+    });
   }
+
 
   focus(e) {
     e.target.childNodes.forEach(node=>{
@@ -52,16 +72,20 @@ export class ReferencesComponent implements OnInit {
     })
   }
 
+
   //todo: håndtere flere refereanser
   private toFormGroup(references: Reference[]) {
     return this.fb.group({
-      referenceUrl: "http://www.w3.org/2002/07/hasVersion",
-      referenceType: "http://www.vg.no"
+      referenceUrl: [ references[0].source || '' ],
+      referenceType: [ references[0].referenceType || '' ]
     });
   }
+
 
   fetchReferenceTypes() {
     this.codesService.fetchCodes('referencetypes', 'nb').then( referenceTypes =>
       this.referenceTypes = referenceTypes);
+    console.log("referencetypes fetched:");
+    console.log(this.referenceTypes);
   }
 }

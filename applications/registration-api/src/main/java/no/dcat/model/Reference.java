@@ -9,9 +9,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Reference {
     SkosCode referenceType;
-    Dataset  source;
+    String  source; //string with dataset id
 
-    public Reference(SkosCode referenceType, Dataset source) {
+    public Reference(SkosCode referenceType, String source) {
         this.referenceType = referenceType;
         this.source = source;
     }
