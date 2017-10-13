@@ -24,6 +24,25 @@ export class ReferencesComponent implements OnInit {
   //references: Reference[];
   reference: Reference;
   referenceTypes = [];
+  emptyReference = [
+    { referenceType : {
+      uri : '',
+      code : '',
+      prefLabel: {
+        'no' : ''
+      },
+      selected: true
+    },
+    source : ''}
+  ];
+  emptyReferenceType = {
+    uri : '',
+    code : '',
+    prefLabel: {
+      'no' : ''
+    },
+    selected: true
+  };
 
   constructor(private fb: FormBuilder,
               private codesService: CodesService,
@@ -41,7 +60,12 @@ export class ReferencesComponent implements OnInit {
     //  }
     //]
 
-    this.dataset.references = this.dataset.references || [{ source : '', referenceType : '' }];
+    if (this.dataset.references) {
+      let skosKode = this.dataset.references[0].referenceType;
+    } else {
+
+    }
+    this.dataset.references = this.dataset.references || this.emptyReference;
     this.referencesForm = this.toFormGroup(this.dataset.references);
 
     this.referencesForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe( refs => {
@@ -77,7 +101,7 @@ export class ReferencesComponent implements OnInit {
   private toFormGroup(references: Reference[]) {
     return this.fb.group({
       referenceUrl: [ references[0].source || '' ],
-      referenceType: [ references[0].referenceType || '' ]
+      referenceType: [ references[0].referenceType || this.emptyReferenceType ]
     });
   }
 
