@@ -57,11 +57,6 @@ jobs:
       env:
         - comment=Run Angular e2e tests
 
-    - stage: Tests # Run regualar React unit tests
-          script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
-          env:
-            - comment=Run regular React unit tests
-
     - stage: deploy
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
       deploy:
