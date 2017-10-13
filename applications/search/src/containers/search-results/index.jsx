@@ -25,7 +25,7 @@ import SearchHitItem from '../../components/search-results-hit-item';
 import SelectDropdown from '../../components/search-results-selector-dropdown';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
-import {CustomHitStats} from '../../utils/CustomHitStats';
+import {CustomHitsStats} from '../../components/search-result-custom-hitstats';
 
 const qs = require('qs');
 const sa = require('superagent');
@@ -106,8 +106,6 @@ export default class SearchPage extends React.Component {
     const searchHitItemWithProps = React.createElement(SearchHitItem, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
-    let hasSearchQuery = Object.keys(this.queryObj).length > 1;
-    console.log('hasSearchQuery is ', hasSearchQuery);
     return (
       <SearchkitProvider searchkit={searchkit}>
         <div>
@@ -123,7 +121,7 @@ export default class SearchPage extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitStats}/>
+                <HitsStats component={CustomHitsStats}/>
               </div>
             </div>
             <section id="resultPanel">
