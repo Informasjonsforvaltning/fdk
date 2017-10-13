@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
 import {Dataset} from "../dataset";
 
 
@@ -10,6 +10,9 @@ import {Dataset} from "../dataset";
 })
 
 export class TypeComponent implements OnInit {
+
+    @Input('formArray')
+    formArray: FormArray;
 
     @Input('dataset')
     public dataset: any;
@@ -56,6 +59,8 @@ export class TypeComponent implements OnInit {
         if(!this.dataset.type) {
             this.dataset.type = "";
         }
+        if (this.formArray)
+            this.formArray.push(this.typeForm);
         this.typeModel
             .filter(entry => entry.label == this.dataset.type)
             .forEach(entry => this.selectedTypeIdx = entry.id)

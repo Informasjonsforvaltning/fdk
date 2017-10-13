@@ -322,15 +322,16 @@
         <div class="col-md-push-1 col-md-8 collapsed">
             <input type="checkbox" id="distributions-toggle" class="expand-checkbox"/>
             <div *ngIf="dataset.distributions">
-                <div *ngFor="let distribution of dataset.distributions">                        
+                <div *ngFor="let distribution of dataset.distributions">
+                    {{distribution.type}}
                     <label for="distributions-toggle" class="expand-label collapsed-content" style="display:block;">
                         <div *ngIf="distribution && distribution.format">
                             <span *ngFor="let singleFormat of distribution.format; let idx=index">
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="distribution.type === 'Feed'"></i>
+                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>                                    
                                     <i class="fa fa-cogs" *ngIf="distribution.type === 'API'"></i>
-                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>
                                     {{distribution.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
                             </span>
@@ -347,6 +348,7 @@
                     [distributionsFormArray]="datasetForm.controls.distributions"
                     [distributions]="dataset.distributions"
                     [title]="Distribusjoner"
+                    (onSave)="onSave($event)"
                     >
                 </distributions>
             </div>

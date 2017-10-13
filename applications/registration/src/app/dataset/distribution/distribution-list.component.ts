@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 import { Distribution } from './distribution';
@@ -22,6 +22,9 @@ export class DistributionListComponent implements OnInit {
 
     @Input('title')
     public title: string;
+
+    @Output()
+    onSave: EventEmitter<boolean> = new EventEmitter();
     
     showDelete: boolean = false;
 
@@ -73,5 +76,11 @@ export class DistributionListComponent implements OnInit {
         else
             this.showDelete = false;
         console.log("showDelete: ", this.showDelete);
+    }
+
+    save(ok: boolean) {
+        console.log("SAVE");
+        this.cd.detectChanges();
+        //this.onSave.emit();
     }
 }

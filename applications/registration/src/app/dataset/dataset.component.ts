@@ -147,7 +147,8 @@ export class DatasetComponent implements OnInit {
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-
+            
+        console.log("subscribe");
           // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
@@ -311,6 +312,7 @@ export class DatasetComponent implements OnInit {
     }
 
     save(): void {
+        console.log("SAVING");
         this.datasetSavingEnabled = false;
         this.service.save(this.catId, this.dataset)
             .then(() => {
