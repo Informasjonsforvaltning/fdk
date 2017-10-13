@@ -18,7 +18,7 @@ export const CustomHitsStats = (props) => {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
-          {localization.page['nosearch.summary']}
+          {localization.page['nosearch.summary']} {hitsCount} {localization.page['nosearch.descriptions']}
         </div>
       </div>
     )
