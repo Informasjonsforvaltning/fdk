@@ -1,7 +1,7 @@
 const qs = require('qs');
 const React = require('react');
 
-import localization from '../components/localization';
+import localization from '../localization';
 
 export const CustomHitsStats = (props) => {
   const {resultsFoundLabel, bemBlocks, hitsCount, timeTaken} = props;

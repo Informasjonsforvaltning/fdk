@@ -25,7 +25,7 @@ import SearchHitItem from '../../components/search-results-hit-item';
 import SelectDropdown from '../../components/search-results-selector-dropdown';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
-import {CustomHitsStats} from '../../utils/CustomHitsStats';
+import {CustomHitsStats} from '../../components/search-result-custom-hitstats';
 
 const qs = require('qs');
 const sa = require('superagent');
