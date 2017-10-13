@@ -130,6 +130,7 @@ export default class DetailsPage extends React.Component {
         accrualPeriodicity={accrualPeriodicity ?
           accrualPeriodicity.prefLabel[this.props.selectedLanguageCode]
             || accrualPeriodicity.prefLabel.nb
+          || accrualPeriodicity.prefLabel.no
             || accrualPeriodicity.prefLabel.nn
             || accrualPeriodicity.prefLabel.en
           : null
@@ -164,80 +165,88 @@ export default class DetailsPage extends React.Component {
       hasAccuracyAnnotation,
       hasAvailabilityAnnotations
     } = this.state.dataset;
-    return (
-      <DatasetQuality
-        relevanceAnnotation={hasRelevanceAnnotation ?
-          hasRelevanceAnnotation.hasBody[this.props.selectedLanguageCode]
-          || hasRelevanceAnnotation.hasBody.nb
-          || hasRelevanceAnnotation.hasBody.no
-          || hasRelevanceAnnotation.hasBody.nn
-          || hasRelevanceAnnotation.hasBody.en
-          : null
-        }
-        completenessAnnotation={hasCompletenessAnnotation ?
-          hasCompletenessAnnotation.hasBody[this.props.selectedLanguageCode]
-          || hasCompletenessAnnotation.hasBody.nb
-          || hasCompletenessAnnotation.hasBody.no
-          || hasCompletenessAnnotation.hasBody.nn
-          || hasCompletenessAnnotation.hasBody.en
-          : null
-        }
-        accuracyAnnotation={hasAccuracyAnnotation ?
-          hasAccuracyAnnotation.hasBody[this.props.selectedLanguageCode]
-          || hasAccuracyAnnotation.hasBody.nb
-          || hasAccuracyAnnotation.hasBody.no
-          || hasAccuracyAnnotation.hasBody.nn
-          || hasAccuracyAnnotation.hasBody.en
-          : null
-        }
-        availabilityAnnotations={hasAvailabilityAnnotations ?
-          hasAvailabilityAnnotations.hasBody[this.props.selectedLanguageCode]
-          || hasAvailabilityAnnotations.hasBody.nb
-          || hasAvailabilityAnnotations.hasBody.no
-          || hasAvailabilityAnnotations.hasBody.nn
-          || hasAvailabilityAnnotations.hasBody.en
-          : null
-        }
-      />
-    );
+    if (hasRelevanceAnnotation || hasCompletenessAnnotation || hasAccuracyAnnotation || hasAvailabilityAnnotations) {
+      return (
+        <DatasetQuality
+          relevanceAnnotation={hasRelevanceAnnotation ?
+            hasRelevanceAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasRelevanceAnnotation.hasBody.nb
+            || hasRelevanceAnnotation.hasBody.no
+            || hasRelevanceAnnotation.hasBody.nn
+            || hasRelevanceAnnotation.hasBody.en
+            : null
+          }
+          completenessAnnotation={hasCompletenessAnnotation ?
+            hasCompletenessAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasCompletenessAnnotation.hasBody.nb
+            || hasCompletenessAnnotation.hasBody.no
+            || hasCompletenessAnnotation.hasBody.nn
+            || hasCompletenessAnnotation.hasBody.en
+            : null
+          }
+          accuracyAnnotation={hasAccuracyAnnotation ?
+            hasAccuracyAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasAccuracyAnnotation.hasBody.nb
+            || hasAccuracyAnnotation.hasBody.no
+            || hasAccuracyAnnotation.hasBody.nn
+            || hasAccuracyAnnotation.hasBody.en
+            : null
+          }
+          availabilityAnnotations={hasAvailabilityAnnotations ?
+            hasAvailabilityAnnotations.hasBody[this.props.selectedLanguageCode]
+            || hasAvailabilityAnnotations.hasBody.nb
+            || hasAvailabilityAnnotations.hasBody.no
+            || hasAvailabilityAnnotations.hasBody.nn
+            || hasAvailabilityAnnotations.hasBody.en
+            : null
+          }
+        />
+      );
+    }
+    return null;
   }
 
   _renderContactInfo() {
     const { contactPoint } = this.state.dataset;
-    return contactPoint.map(item => (
-      <DatasetContactInfo
-        key={item.id}
-        uri={item.uri}
-        email={item.email}
-        organizationUnit={item.organizationUnit}
-        url={item.hasURL}
-        telephone={item.hasTelephone}
-      />
-    ));
+    if (contactPoint && contactPoint.id ) {
+      return contactPoint.map(item => (
+        <DatasetContactInfo
+          key={item.id}
+          uri={item.uri}
+          email={item.email}
+          organizationUnit={item.organizationUnit}
+          url={item.hasURL}
+          telephone={item.hasTelephone}
+        />
+      ));
+    }
+    return null;
   }
 
   render() {
-    /*
-     {this._renderDatasetInfo()}
-     {this._renderQuality()}
-     <DatasetBegrep
-     keyword={this.state.dataset.keyword}
-     />
-     {this._renderContactInfo()}
-     */
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8 col-md-offset-2">
-            {this._renderDatasetDescription()}
-            {this._renderKeyInfo()}
-            {this._renderDistribution()}
-
-
+    const {loading} = this.state;
+    if (!loading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              {this._renderDatasetDescription()}
+              {this._renderKeyInfo()}
+              {this._renderDistribution()}
+              {this._renderDatasetInfo()}
+              {this._renderQuality()}
+              {this.state.dataset.keyword &&
+              <DatasetBegrep
+                keyword={this.state.dataset.keyword}
+              />
+              }
+              {this._renderContactInfo()}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
+    return null;
   }
 }
 

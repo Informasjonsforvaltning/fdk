@@ -31,7 +31,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         </div>
         }
 
-        {this.props.organizationUnit && this.props.url &&
+        {this.props.organizationUnit && this.props.uri &&
           <div className="col-md-12 fdk-padding-no">
             <div className="fdk-container-detail">
               <div className="fdk-detail-icon fdk-padding-no">
@@ -42,7 +42,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
                   <a
                     id="dataset-contact-url"
                     title={`${localization.dataset.contactPoint.organizationUnit} ${this.props.organizationUnit}`}
-                    href={this.props.url}
+                    href={this.props.url || null}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -56,7 +56,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         }
 
         {this.props.email &&
-        <div className="col-md-8 fdk-padding-no">
+        <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-envelope" />
@@ -79,7 +79,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         }
 
         {this.props.telephone &&
-        <div className="col-md-4 fdk-padding-no">
+        <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-phone" />

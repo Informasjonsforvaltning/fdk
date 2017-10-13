@@ -57,6 +57,14 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           }
         </a>
       );
+    } else if (license && license.uri) {
+      return (
+        <a
+          href={license.uri}
+        >
+          {localization.dataset.distribution.standard}
+        </a>
+      );
     }
     return null;
   }
@@ -135,7 +143,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           </div>
           }
 
-          {this.props.license &&
+          {this.props.license.uri &&
           <div>
             <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
             <p className="fdk-ingress">

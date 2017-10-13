@@ -7,9 +7,9 @@ import localization from '../../components/localization';
 
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderInformationModel() {
-    let informationModelNodes;
+    let informationModelNodes = null;
     const { informationModel } = this.props;
-    if (informationModel) {
+    if (typeof informationModel !== 'undefined' && informationModel.length > 0) {
       informationModelNodes = informationModel.map((item, index) => (
         <a
           key={`dataset-keyinfo-${index}`}
@@ -21,17 +21,18 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
             || item.prefLabel.nn
             || item.prefLabel.en
           }
+          <i className="fa fa-external-link fdk-fa-right" />
         </a>
       ));
       return informationModelNodes;
     }
-    return null;
+    return '—';
   }
 
   _renderConformsTo() {
-    let conformsToNodes;
+    let conformsToNodes = null;
     const conformsTo = this.props.conformsTo;
-    if (conformsTo) {
+    if (typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
       conformsToNodes = conformsTo.map((item, index) => (
         <a
           key={`dataset-keyinfo-${index}`}
@@ -42,12 +43,14 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
+            || localization.dataset.distribution.standard
           }
+          <i className="fa fa-external-link fdk-fa-right" />
         </a>
       ));
       return conformsToNodes;
     }
-    return null;
+    return '—';
   }
 
   render() {
