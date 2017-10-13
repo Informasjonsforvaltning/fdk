@@ -143,7 +143,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
           </div>
           }
 
-          {this.props.license.uri &&
+          {this.props.license &&
           <div>
             <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
             <p className="fdk-ingress">

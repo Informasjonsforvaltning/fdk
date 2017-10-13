@@ -12,7 +12,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   _renderSpatial() {
     let spatialNodes;
     const { spatial } = this.props;
-    if (typeof spatial !== 'undefined' && spatial.length > 0) {
+    if (spatial && typeof spatial !== 'undefined' && spatial.length > 0) {
       spatialNodes = spatial.map((item, index) => {
         if (index > 0) {
           return (
@@ -216,7 +216,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                 <Moment format="DD.MM.YYYY">{this.props.issued}</Moment>
                 }
                 {!this.props.issued &&
-                <span>—</span>
+                <span>{noTextToShow}</span>
                 }
               </p>
             </div>
@@ -238,7 +238,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
               }
               {!this.props.accrualPeriodicity &&
               <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
-                <span>—</span>
+                <span>{noTextToShow}</span>
               </p>
               }
             </div>
