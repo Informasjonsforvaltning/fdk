@@ -25,10 +25,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   _renderFormats(source, code) {
     let formatNodes;
     const distribution = source.distribution;
-    if (distribution) {
+    if (distribution && _.isArray(Object.keys(distribution))) {
       formatNodes = Object.keys(distribution).map((key) => {
         if (distribution[key].format) {
-          const formatArray = distribution[key].format;
+          let formatArray = distribution[key].format;
+          formatArray = _.isString(formatArray) ? [formatArray] : formatArray;
           const nodes = formatArray.map((item, index) => (
             <DistributionFormat
               code={code}

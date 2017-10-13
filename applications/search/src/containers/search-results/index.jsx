@@ -129,7 +129,6 @@ export default class SearchPage extends React.Component {
                 <div className="row" />
                 <div className="row">
                   <div className="col-sm-4 flex-move-first-item-to-bottom">
-                    {this._renderPublisherRefinementListFilter()}
                     <RefinementListFilter
                       id="theme"
                       title={localization.facet.theme}
@@ -138,6 +137,7 @@ export default class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionThemes}
                     />
+                    {this._renderPublisherRefinementListFilter()}
                     <RefinementListFilter
                       id="accessRight"
                       title={localization.facet.accessRight}

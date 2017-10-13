@@ -13,7 +13,7 @@ export class RefinementOptionPublishers extends React.Component {
 		    .mix(bemBlocks.container('item'));
 
     let optionLabel;
-    if (props.label !== 'N/A') {
+    if (props.label !== 'Ukjent') {
       optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
     } else { optionLabel = props.label; }
 

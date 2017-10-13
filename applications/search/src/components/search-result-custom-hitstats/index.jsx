@@ -14,7 +14,7 @@ export const CustomHitsStats = (props) => {
           </div>
         </div>
       )
-  } else {
+  } else if(hitsCount) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
@@ -22,5 +22,7 @@ export const CustomHitsStats = (props) => {
         </div>
       </div>
     )
+  } else {
+    return null
   }
 }
