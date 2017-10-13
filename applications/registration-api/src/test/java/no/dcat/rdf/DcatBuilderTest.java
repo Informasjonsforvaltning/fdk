@@ -156,7 +156,7 @@ public class DcatBuilderTest {
                 "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"));
         distribution.setDescription(map("nb", "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."));
         distribution.setLicense(sosi);
-        distribution.setPage(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen"));
+        distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen")));
         distribution.setFormat(Collections.singletonList("application/json"));
 
         dataset.setDistribution(Collections.singletonList(distribution));

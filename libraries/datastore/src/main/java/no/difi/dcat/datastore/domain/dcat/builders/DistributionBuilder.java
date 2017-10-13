@@ -10,6 +10,7 @@ import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
@@ -63,24 +64,31 @@ public class DistributionBuilder extends AbstractBuilder {
 
     }
 
-    public static no.difi.dcat.datastore.domain.dcat.Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
+    public static no.difi.dcat.datastore.domain.dcat.Distribution create(Resource distResource, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
                                                                          Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
-        Distribution created = new Distribution();
+        Distribution dist = new Distribution();
 
-        if (distribution != null) {
-            created.setId(distribution.getURI());
-            created.setTitle(extractLanguageLiteral(distribution, DCTerms.title));
-            created.setDescription(extractLanguageLiteral(distribution, DCTerms.description));
-            //TODO
-            created.setAccessURL(Arrays.asList(extractAsString(distribution, DCAT.accessUrl)));
-            created.setLicense(SkosConcept.getInstance(extractAsString(distribution, DCTerms.license),""));
-            created.setFormat(Arrays.asList(extractAsString(distribution, DCTerms.format)));
+        if (distResource != null) {
+            dist.setId(distResource.getURI());
+            dist.setUri(distResource.getURI());
+
+            dist.setTitle(extractLanguageLiteral(distResource, DCTerms.title));
+            dist.setDescription(extractLanguageLiteral(distResource, DCTerms.description));
+            dist.setAccessURL(Arrays.asList(extractAsString(distResource, DCAT.accessUrl)));
+            dist.setLicense(SkosConcept.getInstance(extractAsString(distResource, DCTerms.license),""));
+
+            dist.setConformsTo(extractSkosConcept(distResource, DCTerms.conformsTo));
+            dist.setPage(extractSkosConcept(distResource, FOAF.page));
+            dist.setFormat(Arrays.asList(extractAsString(distResource, DCTerms.format)));
+
+            dist.setType(extractAsString(distResource, DCTerms.type));
+
         }
         if (dataset != null && dataset != null) {
-            created.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
+            dist.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
         }
 
-        return created;
+        return dist;
     }
 
 }
