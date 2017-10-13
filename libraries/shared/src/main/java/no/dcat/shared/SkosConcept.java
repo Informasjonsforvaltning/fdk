@@ -16,6 +16,23 @@ public class SkosConcept {
     private Map<String, String> prefLabel = new HashMap<>();
     private String extraType;
 
+    public static SkosConcept getInstance(String sourceUrl) {
+        SkosConcept skosConcept = new SkosConcept();
+
+        skosConcept.uri = sourceUrl;
+
+        return skosConcept;
+    }
+
+
+    public static SkosConcept getInstance(String sourceUrl, Map<String,String> prefLabel) {
+        SkosConcept skosConcept = new SkosConcept();
+        skosConcept.uri = sourceUrl;
+        skosConcept.prefLabel = prefLabel;
+
+        return skosConcept;
+    }
+
     public static SkosConcept getInstance(String sourceUrl, String prefLabelInNb, String extraType) {
         SkosConcept skosConcept = new SkosConcept();
         skosConcept.uri = sourceUrl;

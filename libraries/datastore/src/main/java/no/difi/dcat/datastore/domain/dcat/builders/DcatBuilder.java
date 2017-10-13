@@ -1,7 +1,5 @@
-package no.dcat.rdf;
+package no.difi.dcat.datastore.domain.dcat.builders;
 
-import no.dcat.model.Catalog;
-import no.dcat.model.Dataset;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
@@ -11,6 +9,8 @@ import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
+import no.difi.dcat.datastore.domain.dcat.Catalog;
+import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
@@ -52,7 +52,7 @@ public class DcatBuilder {
     public static final String TIME = "http://www.w3.org/TR/owl-time/";
     public static final String ADMS = "http://www.w3.org/ns/adms#";
 
-    public static final String isoNS = "http://iso.org/25012/2008/dataquality/";
+
 
     public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
 
@@ -76,7 +76,7 @@ public class DcatBuilder {
         model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS);
-        model.setNsPrefix("iso", isoNS);
+        model.setNsPrefix("iso", QualityAnnotation.isoNS);
         model.setNsPrefix("oa", OA.NS);
         model.setNsPrefix("dqv", DQV.NS);
         model.setNsPrefix("rdf", RDF.uri);
@@ -100,7 +100,7 @@ public class DcatBuilder {
         return out.toString();
     }
 
-    private DcatBuilder addCatalog(Catalog catalog) {
+    private DcatBuilder addCatalog(no.difi.dcat.datastore.domain.dcat.Catalog catalog) {
         Resource catRes = createResource(catalog, catalog.getUri(), DCAT.Catalog);
         addLiterals(catRes, DCTerms.title, catalog.getTitle());
         addLiterals(catRes, DCTerms.description, catalog.getDescription());
@@ -203,7 +203,7 @@ public class DcatBuilder {
     private void addQualityAnnotation(Resource datRes, Property hasQualityAnnotation, QualityAnnotation annotation) {
         if (annotation != null) {
             Resource qualityAnnotation = model.createResource();
-            Resource dimension = model.createResource(isoNS + annotation.getInDimension());
+            Resource dimension = model.createResource(annotation.getInDimension());
             qualityAnnotation.addProperty(RDF.type, QUALITY_ANNOTATION);
 
             datRes.addProperty(hasQualityAnnotation, qualityAnnotation);

@@ -20,5 +20,9 @@ public class Dataset extends no.dcat.shared.Dataset{
 	//Reference to catalog owning the dataset
 	private Catalog catalog;
 
+	@Override
+	public String toString() {
+		return super.toString() ;
+	}
 
 }

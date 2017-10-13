@@ -3,19 +3,12 @@ package no.difi.dcat.datastore.domain.dcat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Data
-public class Catalog {
+public class Catalog extends no.dcat.shared.Catalog{
 
-	private String id;
-	private Map<String, String> title;
-	private Map<String, String> description;
-	private Publisher publisher;
-	private Date issued;
-	private Date modified;
-	private String language;
-	private List<String> themeTaxonomy;
-
+	List<Dataset> dataset;
 }

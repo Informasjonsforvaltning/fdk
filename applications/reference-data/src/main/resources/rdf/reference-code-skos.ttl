@@ -14,7 +14,7 @@
 
 <references>
     a skos:Concept ;
-    at:authority-code "dct:references";
+    at:authority-code "references";
     skos:inScheme   <reference-types> ;
     skos:prefLabel "Refererer"@nb , "Refererar"@nn , "References"@en .
 

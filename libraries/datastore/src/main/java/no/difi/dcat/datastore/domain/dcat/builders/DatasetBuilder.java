@@ -91,6 +91,7 @@ public class DatasetBuilder extends AbstractBuilder {
         if (resource != null) {
 
             ds.setId(resource.getURI());
+            ds.setUri(resource.getURI());
 
             ds.setTitle(extractLanguageLiteral(resource, DCTerms.title));
             ds.setDescription(extractLanguageLiteral(resource, DCTerms.description));
@@ -119,13 +120,13 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setLegalBasisForProcessing(extractSkosConcept(resource, DCATNO.legalBasisForProcessing));
             ds.setLegalBasisForRestriction(extractSkosConcept(resource, DCATNO.legalBasisForRestriction));
 
-            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource,QualityAnnotation.AccuracyDimension));
-            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource,QualityAnnotation.AvailabilityDimension));
-            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.CompletenessDimension));
-            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.CurrentnessDimension));
-            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource,QualityAnnotation.RelevanceDimension));
+            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Accuracy));
+            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Availability));
+            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Completeness));
+            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Currentness));
+            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Relevance));
 
-            ds.setReferences(extractReferences(resource, DCTerms.references));
+            ds.setReferences(extractReferences(resource, DCTerms.references, codes.get(Types.referencetypes.getType())));
             ds.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(resource, DCTerms.provenance)));
             ds.setIdentifier(extractMultipleStrings(resource, DCTerms.identifier));
 
@@ -157,11 +158,13 @@ public class DatasetBuilder extends AbstractBuilder {
             Resource annotation = statement.getResource();
             Statement dimension = annotation.getProperty(DQV.inDimension);
             if (dimension != null && dimension.toString().contains(dimensionName)) {
-                Map<String,String> annotationText = extractLanguageLiteral(annotation,OA.hasBody);
+                Statement body = annotation.getProperty(OA.hasBody);
+
+                Map<String,String> annotationText = extractLanguageLiteral(body.getResource(),RDF.value);
                 if (annotationText != null ) {
                     result = new QualityAnnotation();
                     result.setHasBody(annotationText);
-                    result.setInDimension(dimension.toString());
+                    result.setInDimension(dimension.getObject().toString());
                 }
             };
 

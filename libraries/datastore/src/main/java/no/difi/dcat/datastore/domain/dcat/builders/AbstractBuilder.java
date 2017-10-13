@@ -11,6 +11,7 @@ import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -19,6 +20,7 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,17 +53,20 @@ public abstract class AbstractBuilder {
     }
 
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
-        //TODO
         List<SkosConcept> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
-        Statement type = resource.getProperty(RDF.type);
+
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
-            if (type != null) {
-                logger.debug("Found type {}", type.getString());
-            }
 
-            result.add(SkosConcept.getInstance(statement.getObject().toString(), ""));
+            Resource skosConcept = statement.getObject().asResource();
+            if (skosConcept != null) {
+                Map<String,String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
+                String source = skosConcept.getProperty(DCTerms.source).getString();
+                result.add(SkosConcept.getInstance(source, prefLabel));
+            } else {
+                result.add(SkosConcept.getInstance(statement.getObject().toString()));
+            }
         }
         return result;
     }
@@ -83,7 +88,7 @@ public abstract class AbstractBuilder {
     }
 
     // TODO
-    public static List<Reference> extractReferences(Resource resource, Property property) {
+    public static List<Reference> extractReferences(Resource resource, Property property, Map<String,SkosCode> referenceTypes) {
         List<Reference> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
         while (iterator.hasNext()) {
@@ -94,6 +99,7 @@ public abstract class AbstractBuilder {
             SkosCode code = new SkosCode();
             Map<String, String> label = new HashMap<>();
             label.put("nb", "reference");
+
             code.setPrefLabel(label);
             Reference reference = new Reference(code, source);
             result.add(reference);
@@ -325,7 +331,8 @@ public abstract class AbstractBuilder {
         SkosCode result = codes.get(locUri);
 
         if (result == null) {
-            logger.warn("Location with uri {} does not exist.", locUri);
+            logger.warn("Code with uri {} does not exist and will be removed.", locUri);
+
         }
 
         return result;
@@ -341,7 +348,7 @@ public abstract class AbstractBuilder {
             SkosCode locCode = locations.get(locUri);
 
             if (locCode == null) {
-                logger.info("Location with uri {} does not exist.", locsUri);
+                logger.info("Location with uri {} does not exist and will be removed.", locsUri);
                 continue;
             }
 
@@ -361,7 +368,7 @@ public abstract class AbstractBuilder {
 
         SkosCode code = codesOfType.get(codeKey);
         if (code == null) {
-            logger.info("Codes of type {} and key {} does not exist.", type, codeKey);
+            logger.info("Codes of type {} and key {} does not exist and will be removed.", type, codeKey);
             return null;
         }
 

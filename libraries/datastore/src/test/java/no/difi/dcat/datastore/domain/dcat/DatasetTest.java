@@ -47,17 +47,20 @@ public class DatasetTest {
         Resource catalogResource = catalogIterator.next();
         Resource datasetResource = datasetIterator.next();
 
-        //Create codes.
-        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
-        Map<String, SkosCode> locations = new HashMap<>();
+        Map<String, SkosCode> locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
 
+        data = DatasetBuilder.create(datasetResource, catalogResource, locations, initializeCodes(), new HashMap<>());
+    }
+
+    public static Map<String, Map<String, SkosCode>> initializeCodes() {
+        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
         codes.put(Types.provenancestatement.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
         codes.put(Types.linguisticsystem.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
         codes.put(Types.rightsstatement.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
         codes.put(Types.frequency.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
-        locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
+        codes.put(Types.referencetypes.getType(), generateCode("references", "references"));
 
-        data = DatasetBuilder.create(datasetResource, catalogResource, locations, codes, new HashMap<>());
+        return codes;
     }
 
     @Test
@@ -146,7 +149,7 @@ public class DatasetTest {
         Assert.assertEquals(expected.getTitle(), data.getTitle());
     }
 
-    private Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
+    public static Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
         Map titles = new HashMap();
         titles.put("no", norwegianTitle);
 
