@@ -100,16 +100,23 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   _renderLanguage() {
     let languageNodes;
     const language = this.props.language;
-    if (language) {
-      languageNodes = language.map((item, index) => (
-        <p
-          key={`dataset-info-language-${index}`}
-          id={`dataset-info-language-${index}`}
-          className="fdk-ingress fdk-margin-bottom-no"
-        >
-          {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
-        </p>
-      ));
+    if (language && typeof language !== 'undefined' && language.length > 0) {
+      languageNodes = language.map((item, index) => {
+        if (item !== null) {
+          return (
+            <p
+              key={`dataset-info-language-${index}`}
+              id={`dataset-info-language-${index}`}
+              className="fdk-ingress fdk-margin-bottom-no"
+            >
+              {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
+            </p>
+          );
+        } else { return noTextToShow; }
+      });
+      if (languageNodes === null) {
+        return noTextToShow;
+      }
       return languageNodes;
     }
     return noTextToShow;

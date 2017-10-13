@@ -12,6 +12,11 @@ export class RefinementOptionPublishers extends React.Component {
 		    .state({ active, disabled })
 		    .mix(bemBlocks.container('item'));
 
+    let optionLabel;
+    if (props.label !== 'N/A') {
+      optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
+    } else { optionLabel = props.label; }
+
     return (
       <div className="checkbox">
         <label>
@@ -22,7 +27,7 @@ export class RefinementOptionPublishers extends React.Component {
             className={`${props.bemBlocks.option().state({ active: props.active }).mix(props.bemBlocks.container('item'))
             } list-group-item fdk-label fdk-label-default`}
           />
-          {props.label.charAt(0)}{props.label.substring(1).toLowerCase()} ({props.count})
+          {optionLabel} ({props.count})
         </label>
       </div>
     );

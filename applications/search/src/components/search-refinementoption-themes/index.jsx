@@ -8,7 +8,11 @@ export class RefinementOptionThemes extends React.Component {
 		    bemBlocks, onClick, active, disabled, style, itemKey,
 		    label, count, showCount, showCheckbox } = props;
     if (window.themes.length > 0) {
-      themeLabel = _.find(window.themes, props.label.substr(-4))[props.label.substr(-4)];
+      if (props.label !== 'N/A') {
+        themeLabel = _.find(window.themes, props.label.substr(-4))[props.label.substr(-4)];
+      } else {
+        themeLabel = props.label;
+      }
     }
     const block = bemBlocks.option;
 		  const className = block()
