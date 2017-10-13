@@ -3,6 +3,7 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
+import no.dcat.shared.Publisher;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 

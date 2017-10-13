@@ -123,16 +123,16 @@ export class DatasetComponent implements OnInit {
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.conformsTos = this.dataset.conformsTos || [];
-      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
 
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
-      this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
-      this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
-      this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
-      this.dataset.informationModel = dataset.informationModel;
+      this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
+      this.dataset.legalBasisForProcessings = this.dataset.legalBasisForProcessings || [];
+      this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
+      this.dataset.informationModels = this.dataset.informationModels || [];
+      this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -170,10 +170,6 @@ export class DatasetComponent implements OnInit {
 
           if (_.isEmpty(dataset.issued)) {
             dataset.issued = null;
-          }
-
-          if (_.isEmpty(dataset.informationModel)) {
-            dataset.informationModel = {};
           }
 
           if (dataset.temporals) {
@@ -221,8 +217,8 @@ export class DatasetComponent implements OnInit {
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
-        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel && this.dataset.informationModel.prefLabel["nb"]) {
-            this.summaries.informationModel = this.dataset.informationModel.prefLabel["nb"];
+        if (this.dataset.informationModels && this.dataset.informationModels[0] && this.dataset.informationModels[0].prefLabel && this.dataset.informationModels[0].prefLabel["nb"]) {
+            this.summaries.informationModel = this.dataset.informationModels[0].prefLabel["nb"];
         } else {
             this.summaries.informationModel = "Klikk for å fylle ut";
         }
@@ -310,6 +306,7 @@ export class DatasetComponent implements OnInit {
     }
 
     onSave(ok: boolean): void {
+
         this.save();
     }
 
@@ -463,7 +460,6 @@ export class DatasetComponent implements OnInit {
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
-      informationModel: [data.informationModel],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)

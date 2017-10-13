@@ -1,6 +1,8 @@
 package no.difi.dcat.datastore.domain.dcat;
 
+import no.dcat.shared.Contact;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
@@ -60,7 +62,7 @@ public class DatasetTest {
 
     @Test
     public void publisherExists() {
-        Publisher actual = data.getPublisher();
+        no.dcat.shared.Publisher actual = data.getPublisher();
         Publisher expected = new Publisher();
         expected.setId("http://data.brreg.no/enhetsregisteret/enhet/974760673");
         expected.setName("Brønnøysundregistrene");
@@ -74,11 +76,11 @@ public class DatasetTest {
 
     @Test
     public void contactExists() {
-        Contact actual = data.getContactPoint();
+        Contact actual = data.getContactPoint().get(0);
         Contact expected = new Contact();
         expected.setId("http://data.brreg.no/datakatalog/kontaktpunkt/4");
         expected.setFullname("Kontakt for Altinn");
-        expected.setTelephone("tel:+4775007500");
+        expected.setHasTelephone("tel:+4775007500");
         expected.setEmail("mailto:bjarne.base@brreg.no");
         expected.setOrganizationName("Skatt");
         expected.setOrganizationUnit("AAS");
@@ -86,7 +88,7 @@ public class DatasetTest {
 
         Assert.assertEquals("id expected", expected.getId(), actual.getId());
         Assert.assertEquals("id expected", expected.getFullname(), actual.getFullname());
-        Assert.assertEquals("id expected", expected.getTelephone(), actual.getTelephone());
+        Assert.assertEquals("id expected", expected.getHasTelephone(), actual.getHasTelephone());
         Assert.assertEquals("id expected", expected.getEmail(), actual.getEmail());
         Assert.assertEquals("Org. name expected", expected.getOrganizationName(), actual.getOrganizationName());
         Assert.assertEquals("Org. unit expected", expected.getOrganizationUnit(), actual.getOrganizationUnit());
@@ -96,15 +98,15 @@ public class DatasetTest {
     @Test
     public void datasetProperties() throws ParseException {
         Dataset expected = new Dataset();
-        expected.setIdentifier(createListOfStrings("10"));
-        expected.setSubject(createListOfStrings("http://brreg.no/begrep/orgnr"));
+        expected.setIdentifier(Arrays.asList("10"));
+        expected.setSubject(Arrays.asList(new Subject("http://brreg.no/begrep/orgnr",null,null)));
 
         SkosCode accrualPeriodicity = new SkosCode("http://publications.europa.eu/resource/authority/frequency/CONT", "CONT", new HashMap<String, String>());
         accrualPeriodicity.getPrefLabel().put("no", "kontinuerlig");
         expected.setAccrualPeriodicity(accrualPeriodicity);
 
-        expected.setPage(createListOfStrings("https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/"));
-        expected.setADMSIdentifier(createListOfStrings("http://data.brreg.no/identifikator/99"));
+        expected.setPage(Arrays.asList("https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/"));
+        expected.setAdmsIdentifier(Arrays.asList("http://data.brreg.no/identifikator/99"));
         expected.setType("Type");
 
         SkosCode accessRight = new SkosCode("http://publications.europa.eu/resource/authority/access-right/PUBLIC", "PUBLIC", new HashMap<String, String>());
@@ -113,11 +115,11 @@ public class DatasetTest {
 
         expected.setDescription(createMapOfStrings("Oversikt over lag og foreninger som er registrert i Frivillighetsregisteret.  Har som formål å bedre og forenkle samhandlingen mellom frivillige organisasjoner og offentlige myndigheter. Registeret skal sikre systematisk informasjon som kan styrke legitimiteten til og kunnskapen om den frivillige aktiviteten. Registeret er lagt til Brønnøysundregistrene og åpnet for registrering 2. desember 2008"));
         expected.setIssued(createDate("01-01-2009 00:00:00"));
-        expected.setLandingPage("https://w2.brreg.no/frivillighetsregisteret/");
+        expected.setLandingPage(Arrays.asList("https://w2.brreg.no/frivillighetsregisteret/"));
 
         SkosCode language = new SkosCode("http://publications.europa.eu/resource/authority/language/2", "2", new HashMap<String,String>());
         language.getPrefLabel().put("no", "norsk");
-        expected.setLanguage(language);
+        expected.setLanguage(Arrays.asList(language));
 
         SkosCode provinance = new SkosCode("http://data.brreg.no/datakatalog/provinens/vedtak", "vedtak", new HashMap<String, String>());
         provinance.getPrefLabel().put("no", "statlig vedtak");
@@ -131,13 +133,13 @@ public class DatasetTest {
         Assert.assertEquals(expected.getSubject(), data.getSubject());
         Assert.assertEquals(expected.getAccrualPeriodicity().getUri(), data.getAccrualPeriodicity().getUri());
         Assert.assertEquals(expected.getPage(), data.getPage());
-        Assert.assertEquals(expected.getADMSIdentifier(), data.getADMSIdentifier());
+        Assert.assertEquals(expected.getAdmsIdentifier(), data.getAdmsIdentifier());
         Assert.assertEquals(expected.getType(), data.getType());
         Assert.assertEquals(expected.getAccessRights().getUri(), data.getAccessRights().getUri());
         Assert.assertEquals(expected.getDescription().get("nb"), data.getDescription().get("nb"));
         Assert.assertEquals(expected.getIssued(), data.getIssued());
         Assert.assertEquals(expected.getLandingPage(), data.getLandingPage());
-        Assert.assertEquals(expected.getLanguage().getUri(), data.getLanguage().getUri());
+        Assert.assertEquals(expected.getLanguage().get(0).getUri(), data.getLanguage().get(0).getUri());
         Assert.assertEquals(expected.getProvenance().getUri(), data.getProvenance().getUri());
         Assert.assertEquals(expected.getSpatial().get(0).getUri(), data.getSpatial().get(0).getUri());
         Assert.assertEquals(expected.getSpatial().get(0).getPrefLabel().get("no"), data.getSpatial().get(0).getPrefLabel().get("no"));
@@ -160,11 +162,6 @@ public class DatasetTest {
         return sdf.parse(dateInString);
     }
 
-    private List<String> createListOfStrings(String data) {
-        List list = new ArrayList<String>();
-        list.add(data);
-        return list;
-    }
 
     private List<SkosCode> createListOfMaps(String code, String title) {
         SkosCode co = new SkosCode();
