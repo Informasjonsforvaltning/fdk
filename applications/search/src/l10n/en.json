@@ -83,7 +83,9 @@
   },
   "dataset": {
     "title": "Datasett",
-    "conformsTo": "Konformitet",
+    "type": "Type",
+    "conformsTo": "Innholdsstandard",
+    "informationModel": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
@@ -91,7 +93,7 @@
       "accessUrl": "Tilgangsurl"
     },
     "issued": "Utgivelsesdato",
-    "quality.title": "Kvalitet",
+    "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
@@ -100,10 +102,11 @@
     "modified": "Sist endret",
     "language": "Språk",
     "theme": "Tema",
-    "period": "Tidsmessig avgrenset fra",
+    "periodFrom": "Gjelder fra",
+    "periodTo": "Gjelder til",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
-    "keyword": "Emneord",
+    "keyword": "Søkeord",
     "subject": "Begrep",
     "restrictions": "Restriksjoner",
     "comments": "Kommentar",
@@ -113,6 +116,14 @@
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
     "isPartOf": "Datasettet er en del av",
+    "relevanceAnnotation": "Relevans",
+    "completenessAnnotation": "Kompletthet",
+    "accuracyAnnotation": "Nøyaktighet",
+    "availabilityAnnotations": "Tilgjengelighet",
+    "contactPoint": {
+      "background": "Bakgrunnsinformasjon om datasettet",
+      "organizationUnit": "Ta kontakt med"
+    },
     "accessRights": {
       "authorityCode": {
         "public": "Public",

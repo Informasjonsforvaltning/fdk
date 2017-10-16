@@ -37,4 +37,11 @@
         <persistence strategy="none"/>
     </cache>
 
+    <cache name="helptexts"
+           maxEntriesLocalHeap="100"
+           eternal="true"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="none"/>
+    </cache>
 </ehcache>

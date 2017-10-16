@@ -8,15 +8,15 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
-import no.dcat.model.Contact;
-import no.dcat.model.DataTheme;
 import no.dcat.model.Dataset;
-import no.dcat.model.Distribution;
-import no.dcat.model.PeriodOfTime;
-import no.dcat.model.Publisher;
-import no.dcat.model.QualityAnnotation;
-import no.dcat.model.Reference;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.Contact;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.Distribution;
+import no.dcat.shared.PeriodOfTime;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.Reference;
+import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.junit.Before;
@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -103,8 +102,8 @@ public class DcatBuilderTest {
 
         dataset.setPublisher(publisher);
 
-        dataset.setInformationModel(
-                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null));
+        dataset.setInformationModel(Arrays.asList(
+                SkosConcept.getInstance("https://www.w3.org/2004/02/skos/", "SKOS", null)));
 
         Subject subject = new Subject();
         subject.setDefinition(map("no","alt som er registrert med et organisasjonsnummer "));
@@ -186,10 +185,9 @@ public class DcatBuilderTest {
         dataset.setLegalBasisForAccess(Arrays.asList(
                 SkosConcept.getInstance("http://lovdata/paragraph/10", "Den siste loven med den lengste tittelen § 10")));
 
-        SkosCode hasVersion = new SkosCode();
-        hasVersion.setUri("http://www.w3.org/2002/07/hasVersion");
-        hasVersion.setPrefLabel(map("nb", "Har versjon" ));
-        hasVersion.setCode("hasVersion");
+        SkosCode hasVersion = new SkosCode("http://www.w3.org/2002/07/hasVersion",
+                "hasVersion",
+                map("nb", "Har versjon" ));
 
         Dataset referencedDataset = new Dataset();
         referencedDataset.setUri("http://referenced/dataset");
@@ -217,15 +215,6 @@ public class DcatBuilderTest {
         return qualityAnnotation;
     }
 
-
-    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
-        SkosCode result = new SkosCode();
-        result.setUri(uri);
-        result.setCode(code);
-        result.setPrefLabel(prefLabel);
-
-        return result;
-    }
 
     public Map<String,String> map(String lang, String value) {
         Map<String, String> result = new HashMap<>();
@@ -269,6 +258,11 @@ public class DcatBuilderTest {
         System.out.println(actual);
     }
 
+    SkosCode skosCode(String uri, String code, Map<String,String> prefLabel) {
+        SkosCode result = new SkosCode(uri, code, prefLabel);
+
+        return result;
+    }
 
 
     @Test
