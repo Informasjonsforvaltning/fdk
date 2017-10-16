@@ -19,7 +19,7 @@ export class RefinementOptionThemes extends React.Component {
 		    .state({ active, disabled })
 		    .mix(bemBlocks.container('item'));
     const id = encodeURIComponent(itemKey);
-    
+
     return (
       <div className="checkbox">
         <label>

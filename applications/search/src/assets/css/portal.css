@@ -229,3 +229,6 @@ input:checked ~ .checkbox-replacement::after {
   position: absolute;
   left:-9999px;
 }
+.sk-hits-grid {
+	margin-top: 7px;
+}
