@@ -18,15 +18,19 @@ export class RefinementOptionThemes extends React.Component {
 		  const className = block()
 		    .state({ active, disabled })
 		    .mix(bemBlocks.container('item'));
+    const id = encodeURIComponent(itemKey);
+    
     return (
       <div className="checkbox">
         <label>
           <input
             type="checkbox"
+            id={id}
             checked={props.active}
             onChange={props.onClick}
             className={`${props.bemBlocks.option().state({ active: props.active })} list-group-item fdk-label fdk-label-default`}
           />
+          <label className="checkbox-replacement" htmlFor={id}></label>
           {themeLabel} ({props.count})
         </label>
       </div>
