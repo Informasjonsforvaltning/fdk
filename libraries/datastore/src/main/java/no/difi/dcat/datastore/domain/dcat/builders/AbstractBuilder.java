@@ -11,7 +11,8 @@ import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
-import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -19,7 +20,6 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,22 +88,31 @@ public abstract class AbstractBuilder {
     }
 
     // TODO
-    public static List<Reference> extractReferences(Resource resource, Property property, Map<String,SkosCode> referenceTypes) {
+    public static List<Reference> extractReferences(Resource resource, Map<String,SkosCode> referenceTypes) {
         List<Reference> result = new ArrayList<>();
-        StmtIterator iterator = resource.listProperties(property);
-        while (iterator.hasNext()) {
-            Statement statement = iterator.next();
 
-            Dataset source = new Dataset();
-            source.setUri(statement.getObject().toString());
-            SkosCode code = new SkosCode();
-            Map<String, String> label = new HashMap<>();
-            label.put("nb", "reference");
+        referenceTypes.keySet().forEach( referenceType -> {
+            SkosCode reference = referenceTypes.get(referenceType);
 
-            code.setPrefLabel(label);
-            Reference reference = new Reference(code, source);
-            result.add(reference);
-        }
+            Property[] propertyList = {DCTerms.hasVersion, DCTerms.isVersionOf, DCTerms.isPartOf, DCTerms.hasPart /* TODO complete */};
+
+            for (Property property : propertyList) {
+                StmtIterator iterator = resource.listProperties(property);
+                while (iterator.hasNext()) {
+                    Statement statement = iterator.next();
+
+                    Dataset source = new Dataset();
+                    source.setUri(statement.getObject().toString());
+                    SkosCode code = referenceTypes.get(property.getURI());
+
+                    Reference referenceElement = new Reference(code, source);
+                    result.add(referenceElement);
+                }
+            }
+
+
+        });
+
 
         return result;
     }

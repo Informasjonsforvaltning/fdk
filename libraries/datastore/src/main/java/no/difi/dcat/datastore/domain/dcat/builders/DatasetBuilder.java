@@ -126,7 +126,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Currentness));
             ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Relevance));
 
-            ds.setReferences(extractReferences(resource, DCTerms.references, codes.get(Types.referencetypes.getType())));
+            ds.setReferences(extractReferences(resource, codes.get(Types.referencetypes.getType())));
             ds.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(resource, DCTerms.provenance)));
             ds.setIdentifier(extractMultipleStrings(resource, DCTerms.identifier));
 
