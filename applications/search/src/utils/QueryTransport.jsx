@@ -11,7 +11,7 @@ export class QueryTransport extends AxiosESTransport {
       headers:{},
       //searchUrlPath: window.fdkSettings.queryUrl + "/search"
         // TODO MAKE THIS GENERIC
-        searchUrlPath: "/search"
+        searchUrlPath: "/datasets"
     })
     if(this.options.basicAuth){
       this.options.headers["Authorization"] = (
@@ -123,5 +123,4 @@ export class QueryTransport extends AxiosESTransport {
       })
     return response.data
   }
-
 }

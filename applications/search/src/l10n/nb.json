@@ -43,8 +43,9 @@
     "next": "Neste side",
     "prev": "Forrige side",
     "result.summary": "Søket ga ",
-    "dataset":"treff"
-
+    "dataset":"treff",
+    "nosearch.summary":"Søk blant",
+    "nosearch.descriptions":"datasettbeskrivelser"
   },
   "facet": {
     "organisation":"Virksomhet",
@@ -83,15 +84,20 @@
   },
   "dataset": {
     "title": "Datasett",
-    "conformsTo": "Konformitet",
+    "type": "Type",
+    "conformsTo": "Innholdsstandard",
+    "informationModel": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
-      "accessUrl": "TilgangsURL"
+      "accessUrl": "TilgangsURL",
+      "license": "Innholdsstandard",
+      "page": "Mer informasjon om denne distribusjonen",
+      "standard": "Standard"
     },
     "issued": "Utgivelsesdato",
-    "quality.title": "Kvalitet",
+    "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
@@ -100,10 +106,11 @@
     "modified": "Sist endret",
     "language": "Språk",
     "theme": "Tema",
-    "period": "Tidsmessig avgrenset fra",
+    "periodFrom": "Gjelder fra",
+    "periodTo": "Gjelder til",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
-    "keyword": "Emneord",
+    "keyword": "Søkeord",
     "subject": "Begrep",
     "restrictions": "Restriksjoner",
     "comments": "Kommentar",
@@ -113,6 +120,14 @@
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
     "isPartOf": "Datasettet er en del av",
+    "relevanceAnnotation": "Relevans",
+    "completenessAnnotation": "Kompletthet",
+    "accuracyAnnotation": "Nøyaktighet",
+    "availabilityAnnotations": "Tilgjengelighet",
+    "contactPoint": {
+      "background": "Bakgrunnsinformasjon om datasettet",
+      "organizationUnit": "Ta kontakt med"
+    },
     "accessRights": {
       "authorityCode": {
         "public": "Offentlig",
@@ -123,4 +138,3 @@
   }
 
 }
-

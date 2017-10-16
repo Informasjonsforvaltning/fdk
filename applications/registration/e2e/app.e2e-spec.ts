@@ -1,6 +1,5 @@
 import {RegistreringGuiPage} from "./app.po";
-import {browser, element, by, protractor} from "protractor";
-import {} from 'jasmine';
+import {browser, by, element, protractor} from "protractor";
 
 declare function setTimeout(callback: Function, milliseconds: number): any
 
@@ -380,7 +379,7 @@ describe('registration application:', () => {
         await page.createDataset('should save labels for subject uris');
         await openSection("terms");
 
-        let subjectInput = element(by.css("input[placeholder='Begrep']"));
+        let subjectInput = element(by.css("#begrep-datasett input"));
         await subjectInput.clear();
         await subjectInput.sendKeys('http://brreg.no/begrep/testbegrep,'); //comma finishes entry
 
@@ -391,9 +390,9 @@ describe('registration application:', () => {
         await browser.refresh();
         await openSection("terms");
 
-        let actualSubjects = element(by.css("input[placeholder=Begrep]"));
+        let actualSubjects = element(by.css("#begrep-datasett input"));
         await browser.wait(EC.presenceOf(actualSubjects), 10000);
-        expect(<any>page.getTextFromCssElement("rl-tag-input[placeholder='Begrep'] rl-tag-input-item:first-child")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
+        expect(<any>page.getTextFromCssElement("#begrep-datasett input")).toMatch(/http:\/\/brreg.no\/begrep\/testbegrep.*/);
 
     });
 

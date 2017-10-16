@@ -1,22 +1,16 @@
-
 import no.dcat.harvester.DataEnricher;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -199,6 +193,24 @@ public class DataEnricherTest {
         assertEquals("Keyword: Default language should be nb", "nb", foundLanguage);
     }
 
+    @Test
+    public void ifLanguageIsEnItShouldBeKept()  throws IOException {
+
+        //Prepare test code
+        Model model = loadTestModel("datasett-mini.ttl");
+
+        //Do the actual enricments. This is the code that is being tested
+        DataEnricher enricher = new DataEnricher();
+        Model enriched = enricher.enrichData(model);
+
+        //Find statement where language is known to be missing in test data
+        Resource dcatRes = model.getResource("http://data.brreg.no/datakatalog/dataset/27");
+        Literal kw = dcatRes.getProperty(DCTerms.description).getLiteral();
+        String foundLanguage = kw.getLanguage();
+
+        assertEquals("Keyword: Default language should be nb", "en", foundLanguage);
+    }
+
 
     /**
      * Check that language in source data is not overwritten by default
@@ -222,4 +234,23 @@ public class DataEnricherTest {
 
         assertEquals("Title with preexisting language should not be changed", "en", foundLanguage);
     }
+
+    @Test
+    public void descriptionShouldRemoveHTMLTags()  throws IOException {
+
+        //Prepare test code
+        Model model = loadTestModel("datasett-mini.ttl");
+
+        //Do the actual enricments. This is the code that is being tested
+        DataEnricher enricher = new DataEnricher();
+        Model enriched = enricher.enrichData(model);
+
+        //Find statement where language is known to be missing in test data
+        Resource dcatRes = model.getResource("http://data.brreg.no/datakatalog/dataset/27");
+        Literal desc = dcatRes.getProperty(DCTerms.description).getLiteral();
+        String foundString = desc.getString();
+
+        assertThat(foundString, is("Dataset with english \n description."));
+    }
+
 }

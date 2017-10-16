@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -56,8 +57,7 @@ public class SimpleQueryService {
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     /* api names */
-    public static final String QUERY_SEARCH = "/search";
-    public static final String QUERY_DETAIL = "/detail";
+    public static final String QUERY_SEARCH = "/datasets";
     public static final String QUERY_THEME_COUNT = "/themecount";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
@@ -98,7 +98,7 @@ public class SimpleQueryService {
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
      * @param theme         Narrows the search to the specified theme. ex. GOVE
      * @param publisher     Narrows the search to the specified publisher. ex. UTDANNINGSDIREKTORATET
-     * @param accessright   Narrows the search to the specified theme. ex. RESTRICTED
+     * @param accessRight   Narrows the search to the specified theme. ex. RESTRICTED
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
@@ -276,9 +276,13 @@ public class SimpleQueryService {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @RequestMapping(value = QUERY_DETAIL, produces = "application/json")
-    public ResponseEntity<String> detail(@RequestParam(value = "id", defaultValue = "") String id) {
+    @RequestMapping(value = "/datasets/**", produces = "application/json")
+    public ResponseEntity<String> detail(HttpServletRequest request) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+
+        String id = extractIdentifier(request);
+
+        logger.info("request for {}", id);
 
         QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
 
@@ -296,7 +300,16 @@ public class SimpleQueryService {
             return jsonError;
         }
 
+        logger.info("request sucess for {}", id);
+
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    String extractIdentifier(HttpServletRequest request) {
+        String id = request.getServletPath().replaceFirst("/datasets/","");
+        id = id.replaceFirst(":/", "://");
+
+        return id;
     }
 
 
@@ -422,6 +435,7 @@ public class SimpleQueryService {
                 .terms(terms)
                 .field(field)
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
+                .missing("N/A")
                 .order(Order.count(false));
     }
 

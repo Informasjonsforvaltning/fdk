@@ -1,25 +1,18 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from "@angular/forms";
-import { DatasetService } from "./dataset.service";
-import { CodesService } from "./codes.service";
-import { CatalogService } from "../catalog/catalog.service";
-import { Dataset } from "./dataset";
-import { Catalog } from "../catalog/catalog"
-import { Observable } from 'rxjs';
-import { Http, Response } from '@angular/http';
-import { NgModule } from '@angular/core';
-import { environment } from "../../environments/environment";
-import { ConfirmComponent } from "../confirm/confirm.component";
-import { DialogService } from "ng2-bootstrap-modal";
-import { DistributionFormComponent } from "./distribution/distribution.component";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {DatasetService} from "./dataset.service";
+import {CodesService} from "./codes.service";
+import {CatalogService} from "../catalog/catalog.service";
+import {Dataset} from "./dataset";
+import {Catalog} from "../catalog/catalog"
+import {Http} from '@angular/http';
+import {ConfirmComponent} from "../confirm/confirm.component";
+import {DialogService} from "ng2-bootstrap-modal";
 import * as _ from 'lodash';
-import { ThemesService } from "./themes.service";
-import { IMyDpOptions } from 'mydatepicker';
-import { TemporalListComponent } from "./temporal/temporal-list.component";
-import { HelpText } from "./helptext/helptext.component";
-import {isNullOrUndefined} from "util";
-import { TitleUri } from "./titleUri/titleUri"
+import {ThemesService} from "./themes.service";
+import {IMyDpOptions} from 'mydatepicker';
+import {AccessRightsService} from "./accessRights/accessRights.service";
 
 @Component({
     selector: 'app-dataset',
@@ -58,7 +51,8 @@ export class DatasetComponent implements OnInit {
         private http: Http,
         private dialogService: DialogService,
         private formBuilder: FormBuilder,
-        private cdr: ChangeDetectorRef) {
+        private cdr: ChangeDetectorRef,
+        private accessRightsService: AccessRightsService) {
     }
 
 
@@ -217,7 +211,9 @@ export class DatasetComponent implements OnInit {
   buildSummaries() {
     this.buildGeoTimeSummaries();
     this.buildProvenanceSummary();
-    this.buildInformationModelSummary();  }
+    this.buildInformationModelSummary();
+    this.buildAccessRightsSummary();
+  }
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
@@ -227,6 +223,15 @@ export class DatasetComponent implements OnInit {
             this.summaries.informationModel = "Klikk for å fylle ut";
         }
     }
+
+  buildAccessRightsSummary(): void {
+    // Add informationModel to summary if exists.
+    if (this.dataset.accessRights) {
+      this.summaries.accessRights = this.accessRightsService.get(this.dataset.accessRights.uri).label;
+    } else {
+      this.summaries.accessRights = "Klikk for å fylle ut";
+    }
+  }
 
     buildGeoTimeSummaries(): void {
         this.summaries.geotime = "";

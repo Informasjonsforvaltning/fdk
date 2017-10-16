@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router';
 
-import DatasetFormat from '../search-dataset-format';
+import DistributionFormat from '../search-dataset-format';
 import localization from '../../components/localization';
 import './index.scss';
 
@@ -22,7 +22,29 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     };
   }
 
-  _renderFormats(source, authoriyCode) {
+  _renderFormats(source, code) {
+    let formatNodes;
+    const distribution = source.distribution;
+    if (distribution) {
+      formatNodes = Object.keys(distribution).map((key) => {
+        if (distribution[key].format) {
+          const formatArray = distribution[key].format;
+          const nodes = formatArray.map((item, index) => (
+            <DistributionFormat
+              code={code}
+              key={`dataset-distribution-format${index}`}
+              text={item}
+            />
+          ));
+          return nodes;
+        }
+        return null;
+      });
+    }
+    return formatNodes;
+  }
+
+  _renderFormats2(source, authoriyCode) {
     const distribution = source.distribution;
     let formatNodes;
     if (distribution) {
@@ -32,7 +54,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           const nodes = Object.keys(formatArray).map((key) => {
             if (formatArray[key] !== null) {
               return (
-                <DatasetFormat
+                <DistributionFormat
                   authorityCode={authoriyCode}
                   text={formatArray[key]}
                 />
@@ -84,9 +106,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (sample) {
       if (sample.length > 0) {
         return (
-          <span id="search-hit-sample">
+          <div id="search-hit-sample">
             {localization.search_hit.sample}
-          </span>
+          </div>
         );
       }
     }
@@ -114,8 +136,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     let distributionPublic = false;
 
     let authorityCode = '';
-    if (source.accessRights && source.accessRights.authorityCode) {
-      authorityCode = source.accessRights.authorityCode;
+    if (source.accessRights && source.accessRights.code) {
+      authorityCode = source.accessRights.code;
     }
 
     if (source.accessRights && authorityCode === 'NON_PUBLIC') {

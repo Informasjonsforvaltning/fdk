@@ -25,6 +25,7 @@ import SearchHitItem from '../../components/search-results-hit-item';
 import SelectDropdown from '../../components/search-results-selector-dropdown';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
+import {CustomHitsStats} from '../../components/search-result-custom-hitstats';
 
 const qs = require('qs');
 const sa = require('superagent');
@@ -48,7 +49,7 @@ searchkit.translateFunction = (key) => {
     'facets.view_all': localization.page.seeall,
     'facets.view_less': localization.page.seefewer,
     'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} ` + ' {hitCount}' + ` ${localization.page.dataset}`,
+    'hitstats.results_found': `${localization.page['result.summary']} ` + ' {numberResults}' + ` ${localization.page.dataset}`,
     'NoHits.Error': localization.noHits.error,
     'NoHits.ResetSearch': '.'
   };
@@ -59,6 +60,7 @@ export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const that = this;
+    this.queryObj = qs.parse(window.location.search.substr(1));
     if (!window.themes) {
       window.themes = [];
 
@@ -66,8 +68,7 @@ export default class SearchPage extends React.Component {
         .end((err, res) => {
           if (!err && res) {
             res.body.forEach((hit) => {
-              const queryObj = qs.parse(window.location.search.substr(1));
-              if (queryObj.lang === 'en') {
+              if (this.queryObj.lang === 'en') {
                 if (hit.title.en) {
                   const obj = {};
                   obj[hit.code] = hit.title.en;
@@ -105,8 +106,6 @@ export default class SearchPage extends React.Component {
     const searchHitItemWithProps = React.createElement(SearchHitItem, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
-
-
     return (
       <SearchkitProvider searchkit={searchkit}>
         <div>
@@ -122,9 +121,7 @@ export default class SearchPage extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-
-                <HitsStats />
-
+                <HitsStats component={CustomHitsStats}/>
               </div>
             </div>
             <section id="resultPanel">
