@@ -83,9 +83,10 @@ a:hover {
 }
 
 .fdk-p-header-sub {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    padding: 0px;
+    font-size: 1.7rem;
+    line-height: 1.7rem;
+    text-align: center;
+    padding: 1.3rem 0px 0px 0px;
     margin: 0px;
 }
 

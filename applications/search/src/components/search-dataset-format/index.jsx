@@ -7,9 +7,9 @@ export default class DistributionFormat extends React.Component { // eslint-disa
     const formatClass = cx(
       'fdk-label-distribution',
       {
-        'fdk-bg-green2': this.props.code === 'PUBLIC',
-        'fdk-bg-yellow2': this.props.code === 'RESTRICTED',
-        'fdk-bg-red2': this.props.code === 'NON-PUBLIC'
+        'fdk-label-distribution-offentlig': this.props.code === 'PUBLIC',
+        'fdk-label-distribution-begrenset': this.props.code === 'RESTRICTED',
+        'fdk-label-distribution-skjermet': this.props.code === 'NON-PUBLIC'
       }
     );
     return (

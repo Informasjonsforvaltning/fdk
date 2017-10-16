@@ -48,6 +48,13 @@ body {
 }
 
 
+.fdk-logo {
+    width: 155px;
+    height: 60px;
+    margin: -10px 0px;
+}
+
+
 
 /*  D R O P D O W N   U N I V E R S A L  */
 
@@ -117,26 +124,6 @@ body {
     box-shadow: none;
 }
 
-.fdk-button-format:hover {
-    border: 3px solid var(--color1);
-    border-radius: 3px;
-}
-
-.fdk-button-format-inactive {
-	font-weight: 400;
-    background-color: var(--color0);
-    color: var(--color1);
-    border: 1px dashed var(--color1);
-    padding: 10px 11px 9px 11px;
-    margin: 8px 6px 0px 0px;
-    border-radius: 3px;
-}
-
-.fdk-button-format-inactive:hover {
-    border: 1px dashed var(--color1);
-    border-radius: 3px;
-}
-
 
 
 /* fonts */
@@ -164,36 +151,14 @@ a > .fdk-button {
 
 .fdk-label {
     background-color: var(--color5);
-    border: 2px solid var(--color6);
     color: var(--color1);
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.4rem;
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 6px 8px 5px 8px;
     display: inline-block;
-    margin: -1px 0px -1px 0px;
-}
-
-.fdk-label:hover {
-    border: 2px solid var(--color5);
-    border-radius: 3px;
-}
-
-.fdk-label-inactive {
-    background-color: var(--color6);
-    border: 1px dashed var(--color1);
-    padding: 5px 11px 4px 11px;
-    border-radius: 3px;
-}
-
-.fdk-label-inactive:hover {
-    background-color: var(--color6);
-    border: 1px dashed var(--color1);
-}
-
-.fdk-label-on-white {
-    border-color: var(--color0);
+    margin: -1px 0px -1px 2px;
 }
 
 
