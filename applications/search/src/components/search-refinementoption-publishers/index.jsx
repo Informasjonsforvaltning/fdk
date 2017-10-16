@@ -29,15 +29,6 @@ export class RefinementOptionPublishers extends React.Component {
             } list-group-item fdk-label fdk-label-default`}
           />
           <label className="checkbox-replacement" htmlFor={id}></label>
-          {/*
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" id="theme-checkbox-1{{i}}" [formControl]="control" />
-              <label class="checkbox-replacement" for="theme-checkbox-1{{i}}"></label>
-              {{allThemes[i].label}}
-            </label>
-          </div>
-        */}
           {optionLabel} ({props.count})
         </label>
       </div>
