@@ -22,13 +22,8 @@ export class DistributionListComponent implements OnInit {
 
     @Input('title')
     public title: string;
-
-    @Output()
-    onSave: EventEmitter<boolean> = new EventEmitter();
     
-    showDelete: boolean = false;
-
-    
+    showDelete: boolean = false;    
 
     constructor(private cd: ChangeDetectorRef) { }
 
@@ -76,11 +71,5 @@ export class DistributionListComponent implements OnInit {
         else
             this.showDelete = false;
         console.log("showDelete: ", this.showDelete);
-    }
-
-    save(ok: boolean) {
-        console.log("SAVE");
-        this.cd.detectChanges();
-        //this.onSave.emit();
     }
 }

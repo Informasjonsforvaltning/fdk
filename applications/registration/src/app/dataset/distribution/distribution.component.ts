@@ -31,9 +31,6 @@ export class DistributionFormComponent implements OnInit {
     @Output()
     deleteDistribution: EventEmitter<string> = new EventEmitter();
 
-    @Output()
-    save: EventEmitter<boolean> = new EventEmitter();
-
     public distributionForm: FormGroup;
 
     private typeModel = [];
@@ -67,27 +64,25 @@ export class DistributionFormComponent implements OnInit {
             .filter(entry => entry.label == this.distribution.type)
             .forEach(entry => this.selectedTypeId = entry.id);
 
-        console.log("this.typeIcon: ", this.typeIcon);
-
         this.distributionForm.valueChanges.debounceTime(1000).distinctUntilChanged().subscribe(
             distributionFormElement => {
                 console.log("distributionFormElement: ", distributionFormElement);
                 this.distribution = {
                     id: this.distribution.id || Math.floor(Math.random() * 1000000).toString(),
                     uri: distributionFormElement.uri || '',
-                    type: distributionFormElement.type || 'API',
+                    type: distributionFormElement.type || '',
                     title: distributionFormElement.title || {'nb': ''},
                     description: distributionFormElement.description || {'nb': ''},
                     downloadURL: distributionFormElement.downloadURL || [] as string[],
-                    accessURL: distributionFormElement.accessURL || [] as string[],
+                    accessURL: [distributionFormElement.accessURL] || [] as string[],
                     format: distributionFormElement.format || [] as string[],
                     license: distributionFormElement.license || {} as SkosConcept,
                     conformsTo: distributionFormElement.conformsTo || [] as SkosConcept[],
                     page: distributionFormElement.page || {} as SkosConcept
                 }
+                //this.distribution.accessURL[0] = distributionFormElement.accessURL;
                 console.log("this.distribution: ", this.distribution);
                 this.cdr.detectChanges();
-                this.save.emit();
             }
         );
     }
@@ -108,30 +103,6 @@ export class DistributionFormComponent implements OnInit {
         });
         return formGroup;
     } 
-
-    public onSave(ok: boolean): void {
-        
-        console.log("this.distribution b4: ", this.distribution.type);
-        this.distribution = {
-            id: this.distribution.id,
-            uri: this.distribution.uri || '',
-            type: this.distribution.type || 'API',
-            title: this.distribution.title || {'nb': ''},
-            description: this.distribution.description || {'nb': ''},
-            downloadURL: this.distribution.downloadURL || [] as string[],
-            accessURL: this.distribution.accessURL || [] as string[],
-            format: this.distribution.format || [] as string[],
-            license: this.distribution.license || {} as SkosConcept,
-            conformsTo: this.distribution.conformsTo || [] as SkosConcept[],
-            page: this.distribution.page || {} as SkosConcept
-        }
-        
-        this.cdr.detectChanges();
-        console.log("this.distribution after: ", this.distribution.type);
-        this.save.emit();
-        
-        console.log("this.distribution after save: ", this.distribution.type);
-    }
 
     toggleForm(): void {
         this.showForm = !this.showForm;
