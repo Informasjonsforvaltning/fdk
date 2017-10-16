@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.hateoas.core.Relation;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -26,8 +27,7 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     //Can't specify parent if no parent field has been configured
     @Field(type = FieldType.String, store = true)
-    private String catalog;
-
+    private String catalogId;
 
     //Meta information about editiong of the dataset description
     @Field
@@ -39,10 +39,9 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     public Dataset() {
         super();
-        //Blank override
-        setTitle(new HashMap<>());
-        setDescription(new HashMap<>());
-        setObjective(new HashMap<>());
+        setTitle(Collections.EMPTY_MAP);
+        setDescription(Collections.EMPTY_MAP);
+        setObjective(Collections.EMPTY_MAP);
     }
 
     public Dataset(String id) {
@@ -53,6 +52,6 @@ public class Dataset extends no.dcat.shared.Dataset {
     public String toString() {
         String first = super.toString() ;
 
-        return first.substring(0, first.length()-1) +", " + catalog + ", " + _lastModified + ", " + registrationStatus + ")";
+        return first.substring(0, first.length()-1) +", " + catalogId + ", " + _lastModified + ", " + registrationStatus + ")";
     }
 }

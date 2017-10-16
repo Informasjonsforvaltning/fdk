@@ -66,7 +66,7 @@ public class ElasticSearchResponseTest {
             "            \"versionnumber\" : \"20160921-0\"\n" +
             "          }\n" +
             "        } ],\n" +
-            "        \"catalog\" : {\n" +
+            "        \"catalogId\" : {\n" +
             "          \"id\" : \"http://data.brreg.no/datakatalog/katalog/6\",\n" +
             "          \"title\" : {\n" +
             "            \"nb\" : \"Test datakatalog\"\n" +

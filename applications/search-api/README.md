@@ -1,10 +1,10 @@
-# Search api for data catalog repository 
+# Search api for data catalogId repository 
 
 Docker image: [dcatno/search-api](https://hub.docker.com/r/dcatno/search-api/)
 Base image: [ubuntu](https://hub.docker.com/_/ubuntu/)
 Source: [Dockerfile](https://github.com/...)
 
-Provides a query api for the data catalog repository.
+Provides a query api for the data catalogId repository.
 
 
 # License

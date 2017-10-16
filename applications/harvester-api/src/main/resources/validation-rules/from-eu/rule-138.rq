@@ -1,6 +1,6 @@
 # Rule_ID:138
 # @title [Catalog] dct:license should be a dct:LicenseDocument
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

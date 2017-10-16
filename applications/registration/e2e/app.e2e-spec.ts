@@ -107,14 +107,14 @@ describe('registration application:', () => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
     });
 
-  it("Should save data catalog title upon typing", async () => {
+  it("Should save data catalogId title upon typing", async () => {
 
         let catalogLink = element(by.css("#datacatalogs td"));
         await browser.wait(EC.presenceOf(catalogLink), 10000, "Could not find catalogLink");
         await catalogLink.click();
 
         let datasetH1Input = element(by.css(".fdk-register-h1"));
-        await browser.wait(EC.presenceOf(datasetH1Input), 10000, "Could not find catalog title element");
+        await browser.wait(EC.presenceOf(datasetH1Input), 10000, "Could not find catalogId title element");
 
         await datasetH1Input.clear();
         await datasetH1Input.sendKeys('New datacatalog name');
@@ -227,11 +227,11 @@ describe('registration application:', () => {
     });
 
 
-    it("Should copy publiser from catalog into new dataset", async () => {
+    it("Should copy publiser from catalogId into new dataset", async () => {
         let catalogLink = element(by.css("#datacatalogs td"));
         await catalogLink.click();
 
-        await page.createDataset('Should copy publiser from catalog into new dataset');
+        await page.createDataset('Should copy publiser from catalogId into new dataset');
 
         let alertSuccess = element(by.css('.fdk-saved'));
         await browser.wait(EC.presenceOf(alertSuccess), 10000);

@@ -9,10 +9,12 @@ import com.google.gson.JsonSerializer;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.difi.dcat.datastore.domain.dcat.data.CompleteCatalog;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Type;
@@ -41,15 +43,11 @@ public class DcatBuilderTest {
     }
 
 
-
-
-
-
-
     @Test
     public void convertCompleteCatalogToTurtleOK() throws Throwable {
         builder = new DcatBuilder();
-        Catalog catalog = CompleteCatalog.getCompleteCatalog();
+        Catalog catalog = new Catalog();
+        BeanUtils.copyProperties(CompleteCatalog.getCompleteCatalog(), catalog);
 
         String actual = builder.transform(catalog, "TURTLE");
 
@@ -62,7 +60,9 @@ public class DcatBuilderTest {
     @Test
     public void convertCompleteCatalogToJsonOK() throws Throwable {
         builder = new DcatBuilder();
-        Catalog catalog = CompleteCatalog.getCompleteCatalog();
+        Catalog catalog = new Catalog();
+        BeanUtils.copyProperties(CompleteCatalog.getCompleteCatalog(), catalog);
+
         JsonSerializer<Date> ser = new JsonSerializer<Date>() {
             @Override
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext

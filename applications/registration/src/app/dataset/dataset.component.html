@@ -1,5 +1,5 @@
-<div *ngIf="dataset && catalog && dataset.publisher">
-  <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalog.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
+<div *ngIf="dataset && catalogId && dataset.publisher">
+  <p class="fdk-input-informationtext">Du registrerer i <strong>{{catalogId.title[language]}}</strong> på vegne av <strong id="datasett-utgiver-navn">{{dataset.publisher.name}}</strong></p>
 </div>
 <div *ngIf="dataset && datasetForm">
   <div class="row justify-content-md-center nv-dataset" id="{{dataset.id}}">
@@ -361,7 +361,7 @@
     </div>
   </div>
 
-  <div class="row" style="margin-top: 10px" *ngIf="dataset && catalog && dataset.publisher">
+  <div class="row" style="margin-top: 10px" *ngIf="dataset && catalogId && dataset.publisher">
     <div class="col-md-push-1 col-md-10 registrationStatusBox" style="font-size: 1.2em" [formGroup]="datasetForm">
 
       <div class="verticalAlignCenter" style="margin-right: 10px">Endre status for denne datasettbeskrivelsen:</div>

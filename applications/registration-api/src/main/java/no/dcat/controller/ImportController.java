@@ -16,6 +16,7 @@ import no.dcat.model.exceptions.CodesImportException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
+import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.InfModel;
@@ -150,10 +151,14 @@ public class ImportController {
         List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
 
         if (importedDatasets.size() == 0) {
-            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId ));
+            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalogId %s", catalogId ));
         }
 
-        catalogToImportTo.setDataset(importedDatasets);
+        List<no.dcat.shared.Dataset> theList = new ArrayList<>();
+        importedDatasets.forEach(d -> {
+            theList.add(d);
+        });
+        catalogToImportTo.setDataset(theList);
 
         return catalogToImportTo;
     }
@@ -164,11 +169,11 @@ public class ImportController {
         Catalog catalogToImportTo = catalogs
                 .stream()
                 .filter(cat -> cat.getUri().contains(catalogId))
-                .peek(cat -> logger.debug("Found catalog {} in external data", cat.toString()))
+                .peek(cat -> logger.debug("Found catalogId {} in external data", cat.toString()))
                 .findFirst()
                 .orElseThrow(() -> new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
 
-        // Ignore imported catalog attributes, i.e. copy over stored values to result
+        // Ignore imported catalogId attributes, i.e. copy over stored values to result
         catalogToImportTo.setId(existingCatalog.getId());
         catalogToImportTo.setTitle(existingCatalog.getTitle());
         catalogToImportTo.setDescription(existingCatalog.getDescription());
@@ -183,7 +188,7 @@ public class ImportController {
         List<Dataset> datasets = parseDatasets(model);
 
         for (Dataset dataset : datasets) {
-            if (dataset.getCatalog() != null && dataset.getCatalog().contains(catalogId)) {
+            if (dataset.getCatalogId() != null && dataset.getCatalogId().contains(catalogId)) {
 
                 Dataset newDataset = datasetController.createAndSaveDataset(catalogId, dataset, catalogToImportTo);
                 importedDatasets.add(newDataset);
@@ -203,7 +208,7 @@ public class ImportController {
 
     List<Dataset> parseDatasets(Model model) throws IOException {
 
-        // using owl ontology to get inverse relations from dataset to catalog
+        // using owl ontology to get inverse relations from dataset to catalogId
         InfModel modelWithInverseCatalogRelations = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), owlSchema, model);
 
         String json = frame(DatasetFactory.create(modelWithInverseCatalogRelations),

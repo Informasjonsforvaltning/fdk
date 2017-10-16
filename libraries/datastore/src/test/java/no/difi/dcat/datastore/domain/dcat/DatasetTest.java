@@ -1,6 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat;
 
 import no.dcat.shared.Contact;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;

@@ -89,7 +89,7 @@ public class PortalRestControllerTest {
     public void getCatalogsFailsOnNoCatalogsFound() throws Throwable {
         PortalRestController spy = spy(portal);
 
-        // read modelfile with no catalog in
+        // read modelfile with no catalogId in
         Resource mResource = new ClassPathResource("data-no-catalog.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());

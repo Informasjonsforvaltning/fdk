@@ -1,6 +1,6 @@
 # Rule_ID:6
 # @title [Catalog] dct:description is a required property for Catalog
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

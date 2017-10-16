@@ -67,7 +67,7 @@ public class DatasetControllerIT {
                                 .post("/catalogs")
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
                 .andExpect(status().isOk());
 
 
@@ -89,7 +89,7 @@ public class DatasetControllerIT {
                                 .content(asJsonString(dataset))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.catalog").value(catalogId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.catalogId").value(catalogId))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -116,13 +116,13 @@ public class DatasetControllerIT {
         languangeDescription.put("nb", "test");
         dataset.setDescription(languangeDescription);
 
-        dataset.setCatalog("910244132");
+        dataset.setCatalogId("910244132");
 
 
         mockMvc
                 .perform(
                         MockMvcRequestBuilders
-                                .post("/catalogs/" + dataset.getCatalog() + "/datasets/")
+                                .post("/catalogs/" + dataset.getCatalogId() + "/datasets/")
                                 .content(asJsonString(dataset))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
@@ -161,11 +161,11 @@ public class DatasetControllerIT {
 //    @Test
 //    @WithUserDetails("03096000854")
 //    public void deleteDatasetSuccess() throws Exception {
-//        Catalog catalog = new Catalog();
+//        Catalog catalogId = new Catalog();
 //        String catalogId = "910244132";
-//        catalog.setId(catalogId);
+//        catalogId.setId(catalogId);
 //        Catalog catResult = authorizedRestTemplate
-//                .postForObject("/catalogs/", catalog, Catalog.class);
+//                .postForObject("/catalogs/", catalogId, Catalog.class);
 //
 //        String datasetId = "101";
 //        Dataset dataset = new Dataset(datasetId);
@@ -178,7 +178,7 @@ public class DatasetControllerIT {
 //        languangeDescription.put("nb","test");
 //        dataset.setDescription(languangeDescription);
 //
-//        dataset.setCatalog(catalogId);
+//        dataset.setCatalogId(catalogId);
 //
 //        Dataset result = authorizedRestTemplate
 //                .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);

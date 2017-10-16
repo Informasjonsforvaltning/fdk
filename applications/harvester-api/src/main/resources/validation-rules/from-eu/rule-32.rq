@@ -1,6 +1,6 @@
 # Rule_ID:32
 # @title [Catalog] dct:modified should be a literal typed as date or dateTime
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

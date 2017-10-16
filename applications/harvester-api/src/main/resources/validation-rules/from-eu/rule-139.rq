@@ -1,6 +1,6 @@
 # Rule_ID:139
 # @title [Catalog] dcat:themeTaxonomy should be a skos:ConceptScheme
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

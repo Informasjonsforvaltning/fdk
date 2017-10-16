@@ -1,6 +1,6 @@
 # Rule_ID:34
 # @title [Catalog] dct:rights should be a dct:RightsStatement
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

@@ -1,6 +1,6 @@
 # Rule_ID:17
 # @title [Catalog] foaf:homepage should be a foaf:Document
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>

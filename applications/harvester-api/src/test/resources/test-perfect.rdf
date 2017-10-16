@@ -8,9 +8,9 @@
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
 	xmlns:schema="http://schema.org/"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <rdf:Description rdf:about="http://nobelprize.org/datasets/dcat#catalog">
+  <rdf:Description rdf:about="http://nobelprize.org/datasets/dcat#catalogId">
     <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
-    <dct:title xml:lang="en">Nobel Media Dataset catalog</dct:title>
+    <dct:title xml:lang="en">Nobel Media Dataset catalogId</dct:title>
     <dct:description>A range of datasets maintained by Nobel Media AB </dct:description>
     <dcat:themeTaxonomy rdf:resource="http://eurovoc.europa.eu/"/>
     <dcat:dataset rdf:resource="http://nobelprize.org/datasets/dcat#ds1"/>
@@ -37,7 +37,8 @@
     <dcat:keyword>Nobel prize</dcat:keyword>
     <dcat:keyword>prize</dcat:keyword>
     <dcat:keyword>science</dcat:keyword>
-    <dcat:theme rdf:resource="http://eurovoc.europa.eu/100142"/>
+
+    <dcat:theme rdf:resource="http://eurovoc.europa.eu/100142"/>
     <dct:publisher rdf:resource="http://nobelprize.org/publisher/n2"/>
     <dcat:distribution rdf:resource="http://nobelprize.org/datasets/dcat#dist1"/>
     <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-01-15</dct:issued>

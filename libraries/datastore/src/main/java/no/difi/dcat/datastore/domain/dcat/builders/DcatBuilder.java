@@ -1,6 +1,8 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Publisher;
@@ -9,8 +11,7 @@ import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.Catalog;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
+
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
@@ -100,7 +101,7 @@ public class DcatBuilder {
         return out.toString();
     }
 
-    private DcatBuilder addCatalog(no.difi.dcat.datastore.domain.dcat.Catalog catalog) {
+    private DcatBuilder addCatalog(Catalog catalog) {
         Resource catRes = createResource(catalog, catalog.getUri(), DCAT.Catalog);
         addLiterals(catRes, DCTerms.title, catalog.getTitle());
         addLiterals(catRes, DCTerms.description, catalog.getDescription());

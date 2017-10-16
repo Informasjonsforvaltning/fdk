@@ -1,6 +1,6 @@
 # Rule_ID:14
 # @title [Catalog] foaf:homepage is a recommended property for Catalog
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>

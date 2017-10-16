@@ -59,7 +59,7 @@ public class ImportControllerIT {
 //    public void importCatalogOK() throws Throwable {
 //        String catalogId = "958935420";
 //
-//        // make sure catalog exist in database
+//        // make sure catalogId exist in database
 //        Catalog cat = new Catalog(catalogId);
 //        catalogController.saveCatalog(cat);
 //
@@ -67,12 +67,12 @@ public class ImportControllerIT {
 //
 //        HttpEntity<Catalog> response = importController.importCatalog(catalogId, "export-oslokommune.ttl");
 //
-//        Catalog catalog = response.getBody();
+//        Catalog catalogId = response.getBody();
 //
-//        assertThat(catalog, is(notNullValue())) ;
-//        assertThat(catalog.getId(), is(catalogId));
+//        assertThat(catalogId, is(notNullValue())) ;
+//        assertThat(catalogId.getId(), is(catalogId));
 //
-//        assertThat(catalog.getDataset().size(), is(5));
+//        assertThat(catalogId.getDataset().size(), is(5));
 //
 //    }
 //
@@ -80,19 +80,19 @@ public class ImportControllerIT {
 //    public void importCatalogWithDatasets() throws Exception {
 //        String catalogId = "974760673";
 //
-//        // make sure catalog exist in database
+//        // make sure catalogId exist in database
 //        Catalog cat = new Catalog(catalogId);
 //        catalogController.saveCatalog(cat);
 //
 //
 //        HttpEntity<Catalog> result =  importController.importCatalog(catalogId, "export.jsonld");
 //
-//        Catalog catalog = result.getBody();
+//        Catalog catalogId = result.getBody();
 //
-//        assertThat(catalog, is(notNullValue())) ;
-//        assertThat(catalog.getId(), is(catalogId));
+//        assertThat(catalogId, is(notNullValue())) ;
+//        assertThat(catalogId.getId(), is(catalogId));
 //
-//        assertThat(catalog.getDataset().size(), is(27));
+//        assertThat(catalogId.getDataset().size(), is(27));
 //
 //    }
 //
@@ -157,7 +157,7 @@ public class ImportControllerIT {
 //    public void frameDatasetAddsLabels() throws Throwable {
 //        String catalogId = "974760673";
 //
-//        // make sure catalog exist in database
+//        // make sure catalogId exist in database
 //        Catalog cat = new Catalog(catalogId);
 //        catalogController.saveCatalog(cat);
 //

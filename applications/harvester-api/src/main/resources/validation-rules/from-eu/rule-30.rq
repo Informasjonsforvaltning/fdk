@@ -1,6 +1,6 @@
 # Rule_ID:30
 # @title [Catalog] dcat:record should be a dcat:CatalogRecord
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 

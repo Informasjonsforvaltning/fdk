@@ -20,10 +20,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let catalog of catalogs" (click)="selectCatalog(catalog)" >
-      <td>{{catalog.id}}</td>
-      <td>{{catalog.title.nb}}</td>
-      <td>{{catalog.description.nb}}</td>
+    <tr *ngFor="let catalogId of catalogs" (click)="selectCatalog(catalogId)" >
+      <td>{{catalogId.id}}</td>
+      <td>{{catalogId.title.nb}}</td>
+      <td>{{catalogId.description.nb}}</td>
     </tr>
     </tbody>
   </table>

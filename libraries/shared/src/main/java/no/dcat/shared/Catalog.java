@@ -18,5 +18,6 @@ public class Catalog {
     private Date modified;
     private String language;
     private List<String> themeTaxonomy;
+    private List<Dataset> dataset;
 }
 

@@ -3,10 +3,12 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
+
 import no.dcat.shared.Publisher;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +20,6 @@ import java.util.Map;
 public class Catalog extends no.dcat.shared.Catalog {
     public static final String ELASTIC_TYPE = "catalog";
 
-    private List<Dataset> dataset;
-
     public Catalog(String orgnr) {
         this.setId(orgnr);
     }
@@ -27,4 +27,5 @@ public class Catalog extends no.dcat.shared.Catalog {
     public Catalog() {
         // Default constructor needed for frameworks
     }
+
 }

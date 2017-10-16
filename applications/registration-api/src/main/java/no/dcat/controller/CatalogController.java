@@ -84,10 +84,10 @@ public class CatalogController {
     }
 
     /**
-     * Creates a catalog.
+     * Creates a catalogId.
      *
-     * @param catalog catalog skeleton to copy from
-     * @return new catalog object
+     * @param catalog catalogId skeleton to copy from
+     * @return new catalogId object
      */
     @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
@@ -96,7 +96,7 @@ public class CatalogController {
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
 
-        logger.info("Add catalog: " + catalog.toString());
+        logger.info("Add catalogId: " + catalog.toString());
         if (catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -141,11 +141,11 @@ public class CatalogController {
     }
 
     /**
-     * Update existing catalog.
+     * Update existing catalogId.
      *
-     * @param id      the of the catalog
-     * @param catalog the catalog object with fields to update
-     * @return the saved catalog
+     * @param id      the of the catalogId
+     * @param catalog the catalogId object with fields to update
+     * @return the saved catalogId
      */
     @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
@@ -155,7 +155,7 @@ public class CatalogController {
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> updateCatalog(@PathVariable("id") String id,
                                              @RequestBody Catalog catalog) {
-        logger.info("Modify catalog: " + catalog.toString());
+        logger.info("Modify catalogId: " + catalog.toString());
 
         if (!catalog.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -176,9 +176,9 @@ public class CatalogController {
 
 
     /**
-     * Deletes a catalog
+     * Deletes a catalogId
      *
-     * @param id the catalog id to delet
+     * @param id the catalogId id to delet
      * @return acknowledgement of success or failure
      */
     @PreAuthorize("hasPermission(#id, 'write')")
@@ -186,16 +186,16 @@ public class CatalogController {
     @RequestMapping(value = "/{id}", method = DELETE,
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
-        logger.info("Delete catalog: " + id);
+        logger.info("Delete catalogId: " + id);
         catalogRepository.delete(id);
         return new ResponseEntity<>(OK);
     }
 
     /**
-     * Gets a catalog
+     * Gets a catalogId
      *
-     * @param id of the catalog
-     * @return the catalog if it exist
+     * @param id of the catalogId
+     * @return the catalogId if it exist
      */
     @PreAuthorize("hasPermission(#id, 'read')")
     @CrossOrigin

@@ -1,6 +1,6 @@
 # Rule_ID:7
 # @title [Catalog] dct:description should be a literal
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

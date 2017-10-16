@@ -1,11 +1,14 @@
 package no.difi.dcat.datastore.domain.dcat;
 
+import no.dcat.shared.Catalog;
 import no.dcat.shared.DataTheme;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.difi.dcat.datastore.domain.dcat.builders.CatalogBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.difi.dcat.datastore.domain.dcat.data.CompleteCatalog;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -17,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class DatasetConverterTest {
         Catalog catalog  = CompleteCatalog.getCompleteCatalog();
 
         String catalogUri = catalog.getUri();
-        Dataset expectedDataset = catalog.getDataset().get(0);
+        no.dcat.shared.Dataset expectedDataset = catalog.getDataset().get(0);
         String datasetUri = expectedDataset.getUri();
 
         DcatBuilder dcatBuilder = new DcatBuilder();

@@ -1,11 +1,11 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.DataTheme;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.QualityAnnotation;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
-import no.difi.dcat.datastore.domain.dcat.Dataset;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;

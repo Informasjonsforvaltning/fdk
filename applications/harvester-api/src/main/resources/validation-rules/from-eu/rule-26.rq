@@ -1,6 +1,6 @@
 # Rule_ID:26
 # @title [Catalog] dct:issued has maximum cardinality of 1 for Catalog
-# @tag catalog
+# @tag catalogId
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

@@ -151,6 +151,6 @@ public class Dataset {
     //Norwegian: type
     private String type;
 
-
+    private Catalog catalog;
 
 }

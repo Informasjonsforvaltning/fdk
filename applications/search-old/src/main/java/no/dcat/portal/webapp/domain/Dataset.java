@@ -57,9 +57,9 @@ public class Dataset {
 	//Norwegian: Tema
     private List<DataTheme> theme;
 
-	//dcat:catalog
+	//dcat:catalogId
 	//Norwegian: Katalog
-	//Reference to catalog owning the dataset
+	//Reference to catalogId owning the dataset
 	private Catalog catalog;
 
 	//dcat:distribution
