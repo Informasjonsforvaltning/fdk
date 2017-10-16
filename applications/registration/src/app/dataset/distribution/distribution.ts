@@ -5,10 +5,10 @@ export interface Distribution {
     type?: string;
     title?: {[language: string]: string};
     description?: {[language: string]: string};
-    downloadURL?: string[];
-    accessURL?: string[];
-    format?: string[];
+    downloadURLs?: string[];
+    accessURLs?: string[];
+    formats?: string[];
     license?: SkosConcept; 
-    conformsTo?: SkosConcept[]; 
+    conformsTos?: SkosConcept[]; 
     page?: SkosConcept;
 }

@@ -42,11 +42,11 @@ export class DistributionListComponent implements OnInit {
             type: '',
             title: {'nb': ''},
             description: {'nb': ''},
-            downloadURL: [] as string[],
-            accessURL: [] as string[],
-            format: [] as string[],
+            downloadURLs: [] as string[],
+            accessURLs: [] as string[],
+            formats: [] as string[],
             license: {} as SkosConcept,
-            conformsTo: [] as SkosConcept[],
+            conformsTos: [] as SkosConcept[],
             page: {} as SkosConcept
         };
         console.log(distribution);

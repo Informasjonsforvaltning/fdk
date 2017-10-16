@@ -73,11 +73,11 @@ export class DistributionFormComponent implements OnInit {
                     type: distributionFormElement.type || '',
                     title: distributionFormElement.title || {'nb': ''},
                     description: distributionFormElement.description || {'nb': ''},
-                    downloadURL: distributionFormElement.downloadURL || [] as string[],
-                    accessURL: [distributionFormElement.accessURL] || [] as string[],
-                    format: distributionFormElement.format || [] as string[],
+                    downloadURLs: distributionFormElement.downloadURL || [] as string[],
+                    accessURLs: [distributionFormElement.accessURL] || [] as string[],
+                    formats: distributionFormElement.formats || [] as string[],
                     license: distributionFormElement.license || {} as SkosConcept,
-                    conformsTo: distributionFormElement.conformsTo || [] as SkosConcept[],
+                    conformsTos: distributionFormElement.conformsTo || [] as SkosConcept[],
                     page: distributionFormElement.page || {} as SkosConcept
                 }
                 //this.distribution.accessURL[0] = distributionFormElement.accessURL;
@@ -94,11 +94,11 @@ export class DistributionFormComponent implements OnInit {
             type: [distribution.type || ''],
             title: [ distribution.title || {'nb': ''}],
             description: [ distribution.description || {'nb': ''}], 
-            accessURL: [ distribution.accessURL || [] as string[]],
-            downloadURL: [ distribution.downloadURL || [] as string[]],
-            format: [ distribution.format || [] as string[]],
+            accessURLs: [ distribution.accessURLs || [] as string[]],
+            downloadURLs: [ distribution.downloadURLs || [] as string[]],
+            formats: [ distribution.formats || [] as string[]],
             license: [ distribution.license || {} as SkosConcept],
-            conformsTo: [ distribution.conformsTo || [] as SkosConcept[]],
+            conformsTos: [ distribution.conformsTos || [] as SkosConcept[]],
             page: [ distribution.page || {} as SkosConcept]
         });
         return formGroup;

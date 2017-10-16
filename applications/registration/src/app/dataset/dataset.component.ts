@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
 import {IMyDpOptions} from 'mydatepicker';
 import {AccessRightsService} from "./accessRights/accessRights.service";
+import {SkosConcept} from "./skosConcept";
 
 @Component({
     selector: 'app-dataset',
@@ -156,7 +157,21 @@ export class DatasetComponent implements OnInit {
             dataset.distributions.forEach(distribution => {
               //distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
               //distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-              console.log("type: ", distribution.type);
+                distribution = {
+                    id: distribution.id || Math.floor(Math.random() * 1000000).toString(),
+                    uri: distribution.uri || '',
+                    type: distribution.type || '',
+                    title: distribution.title || {'nb': ''},
+                    description: distribution.description || {'nb': ''},
+                    downloadURLs: [distribution.downloadURLs] || [] as string[],
+                    accessURLs: [distribution.accessURLs] || [] as string[],
+                    formats: distribution.formats || [] as string[],
+                    license: distribution.license || {} as SkosConcept,
+                    conformsTos: distribution.conformsTos || [] as SkosConcept[],
+                    page: distribution.page || {} as SkosConcept
+                }
+
+              console.log("dataset.component distribution: ", distribution);
             })
           }
           if (dataset.samples) {
