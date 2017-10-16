@@ -38,6 +38,8 @@ export class DistributionFormComponent implements OnInit {
 
     private typeModel = [];
 
+    private selectedTypeId = 1;
+
     private typeIcon: string = "fa fa-cogs";
 
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
@@ -58,13 +60,16 @@ export class DistributionFormComponent implements OnInit {
     }
 
     ngOnInit() {
-       if(this.ui_visible) this.showForm = true; 
-       this.distributionForm = this.toFormGroup(this.distribution);
-       this.distributionsFormArray.push(this.distributionForm);
-       this.setTypeIcon();
-       console.log("this.typeIcon: ", this.typeIcon);
+        if(this.ui_visible) this.showForm = true; 
+        this.distributionForm = this.toFormGroup(this.distribution);
+        this.distributionsFormArray.push(this.distributionForm);
+        this.typeModel
+            .filter(entry => entry.label == this.distribution.type)
+            .forEach(entry => this.selectedTypeId = entry.id);
 
-       this.distributionForm.valueChanges.debounceTime(1000).distinctUntilChanged().subscribe(
+        console.log("this.typeIcon: ", this.typeIcon);
+
+        this.distributionForm.valueChanges.debounceTime(1000).distinctUntilChanged().subscribe(
             distributionFormElement => {
                 console.log("distributionFormElement: ", distributionFormElement);
                 this.distribution = {
@@ -81,9 +86,6 @@ export class DistributionFormComponent implements OnInit {
                     page: distributionFormElement.page || {} as SkosConcept
                 }
                 console.log("this.distribution: ", this.distribution);
-                this.setTypeIcon();
-
-                console.log("this.typeIcon: ", this.typeIcon);
                 this.cdr.detectChanges();
                 this.save.emit();
             }
@@ -124,9 +126,7 @@ export class DistributionFormComponent implements OnInit {
             page: this.distribution.page || {} as SkosConcept
         }
         
-        this.setTypeIcon();
         this.cdr.detectChanges();
-        //console.log("this.typeIcon: ", this.typeIcon);
         console.log("this.distribution after: ", this.distribution.type);
         this.save.emit();
         
@@ -149,15 +149,5 @@ export class DistributionFormComponent implements OnInit {
                 node.childNodes[1].focus();
             }
         })
-    }
-
-    public setTypeIcon() : void {
-        if (this.distribution.type === "Feed") {
-            this.typeIcon = "fa fa-rss";
-        } else if (this.distribution.type === "Nedlastbar fil") {
-            this.typeIcon = "fa fa-download";
-        } else {
-            this.typeIcon = "fa fa-cogs";
-        }
     }
 }
