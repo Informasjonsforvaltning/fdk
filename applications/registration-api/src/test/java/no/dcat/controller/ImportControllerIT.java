@@ -80,12 +80,17 @@ public class ImportControllerIT {
 
         List<Dataset> ds = importController.parseDatasets(model);
 
-        long countDatasetWithSubjects = ds.stream().filter(dataset -> { return dataset.getSubject().size() > 0;})
+        long countDatasetWithSubjects = ds.stream()
+                .filter(dataset -> {
+                    if (dataset.getSubject() != null) return dataset.getSubject().size() > 0;
+                    else return false;
+                })
                 .peek(dataset -> {
                     dataset.getSubject().forEach(subject -> {
                         assertThat(subject.getUri(), is(notNullValue()));
                     });
-                }).count();
+                })
+                .count();
 
         logger.info("gdoc {} datasets, wheras {} has subject", ds.size(), countDatasetWithSubjects);
 

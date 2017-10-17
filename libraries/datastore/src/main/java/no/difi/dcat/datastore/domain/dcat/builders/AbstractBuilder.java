@@ -185,7 +185,13 @@ public abstract class AbstractBuilder {
         StmtIterator iterator = resource.listProperties(property);
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
-            map.put(statement.getLanguage(), statement.getString());
+            String language = statement.getLanguage();
+            if (language == null || language.isEmpty()) {
+                language = "no";
+            }
+            if (statement.getString() != null && ! statement.getString().isEmpty()) {
+                map.put(language, statement.getString());
+            }
         }
 
         if (map.keySet().size() > 0) {
@@ -202,7 +208,11 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
             result.add(statement.getObject().toString());
         }
-        return result;
+        if (result.size() > 0) {
+            return result;
+        }
+
+        return null;
     }
 
     // input: dcat:keyword "beate"@nb, "poteter"@nb, "potatoes"@en, "tomater"@nn
@@ -221,7 +231,11 @@ public abstract class AbstractBuilder {
             result.add(map);
         }
 
-        return result;
+        if (result.size() > 0 ) {
+            return result;
+        }
+
+        return null;
     }
 
     public static Date extractDate(Resource resource, Property property) {

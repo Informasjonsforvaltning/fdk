@@ -42,9 +42,15 @@ public class SkosConcept {
     }
 
     public static SkosConcept getInstance(String sourceUrl, String prefLabelInNb) {
+        if (sourceUrl == null || sourceUrl.isEmpty()) {
+            return null;
+        }
+
         SkosConcept skosConcept = new SkosConcept();
         skosConcept.uri = sourceUrl;
-        skosConcept.prefLabel.put("nb", prefLabelInNb);
+        if (prefLabelInNb != null && !prefLabelInNb.isEmpty()) {
+            skosConcept.prefLabel.put("nb", prefLabelInNb);
+        }
         skosConcept.extraType = null;
         return skosConcept;
     }
