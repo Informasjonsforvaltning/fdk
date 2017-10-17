@@ -193,8 +193,8 @@ public class DcatBuilder {
             references.forEach(reference -> {
 
                 Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
-
-                datRes.addProperty(referenceProperty, reference.getSource().getUri());
+                Resource r = model.createResource(reference.getSource().getUri());
+                datRes.addProperty(referenceProperty, r);
 
             });
         }

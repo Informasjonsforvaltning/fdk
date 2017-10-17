@@ -20,6 +20,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +105,8 @@ public abstract class AbstractBuilder {
                 while (iterator.hasNext()) {
                     Statement statement = iterator.next();
 
-                    Dataset source = new Dataset();
+                    SkosConcept source = new SkosConcept();
+                    source.setExtraType("dcat:Dataset");
                     source.setUri(statement.getObject().toString());
                     SkosCode code = referenceTypes.get(property.getURI());
 

@@ -104,7 +104,6 @@ public class DatasetConverterTest {
     }
 
     @Test
-    @Ignore // not finished yet
     public void hasReferences() throws Throwable {
         logger.info("number of references {}", actualDataset.getReferences().size());
         assertThat(actualDataset.getReferences(), is (expectedDataset.getReferences()));
