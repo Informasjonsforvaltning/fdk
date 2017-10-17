@@ -18,6 +18,8 @@ public class Dataset {
 
     private String uri;
 
+    private String source;
+
     // dct:title
     // Norwegian: Tittel
     private Map<String,String> title ;

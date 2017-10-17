@@ -54,8 +54,7 @@ public class ImportControllerTest {
 
 
     @Test
-    @Ignore
-    public void framingDataset() throws IOException {
+    public void importDataset() throws IOException {
         Mockito.doNothing().when(importController).postprosessDatasetAttributes(Matchers.anyObject());
         List<Dataset> ds = importController.parseDatasets(model);
 
