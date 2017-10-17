@@ -138,14 +138,15 @@ public class TestCompleteCatalog {
                 "http://www.detteerenannenlenke.no/til-en-annen-nedlasting",
                 "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"));
         distribution.setDescription(map("nb", "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."));
-        distribution.setLicense(sosi);
+        distribution.setConformsTo(Arrays.asList(sosi));
+        distribution.setLicense(SkosConcept.getInstance("https://data.norge.no/nlod/no/2.0", "NODL"));
         distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen")));
         distribution.setFormat(Collections.singletonList("application/json"));
 
         dataset.setDistribution(Collections.singletonList(distribution));
 
         Distribution sample = new Distribution();
-        distribution.setUri(dataset.getUri() + "/samples/d2");
+        sample.setUri(dataset.getUri() + "/samples/d2");
 
         sample.setDescription(map("nb", "Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."));
         sample.setFormat(Arrays.asList("application/rdf+xml"));

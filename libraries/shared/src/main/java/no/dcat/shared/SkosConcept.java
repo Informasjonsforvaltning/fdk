@@ -47,6 +47,7 @@ public class SkosConcept {
         }
 
         SkosConcept skosConcept = new SkosConcept();
+
         skosConcept.uri = sourceUrl;
         if (prefLabelInNb != null && !prefLabelInNb.isEmpty()) {
             skosConcept.prefLabel.put("nb", prefLabelInNb);

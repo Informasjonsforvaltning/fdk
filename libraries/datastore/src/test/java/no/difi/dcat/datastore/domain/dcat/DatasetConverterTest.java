@@ -3,6 +3,7 @@ package no.difi.dcat.datastore.domain.dcat;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
+import no.dcat.shared.Distribution;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.difi.dcat.datastore.domain.dcat.builders.CatalogBuilder;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
@@ -95,7 +97,9 @@ public class DatasetConverterTest {
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/GOVE", gove);
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/ENVI", envi);
 
-        actualDataset = DatasetBuilder.create(model.getResource(datasetUri), catalogResource , locations, codes, dataThemeMap);
+        DatasetBuilder builder = new DatasetBuilder(model, locations,codes,dataThemeMap);
+        List<Dataset> dataset = builder.build();
+        actualDataset = dataset.get(0); //DatasetBuilder.create(model.getResource(datasetUri), catalogResource , locations, codes, dataThemeMap);
 
         logger.info("java: {}", actualDataset.toString());
     }
@@ -103,7 +107,6 @@ public class DatasetConverterTest {
     @Test
     public void hasAccuracyAnnotation() throws Throwable {
         assertThat(actualDataset.getHasAccuracyAnnotation(), is (expectedDataset.getHasAccuracyAnnotation()));
-
     }
 
     @Test
@@ -113,9 +116,47 @@ public class DatasetConverterTest {
     }
 
     @Test
-    public void checkThemes() throws Throwable {
+    public void checkContactPoints() throws Throwable {
+        expectedDataset.getContactPoint().get(0).setId(null);
+        assertThat(actualDataset.getContactPoint(), is(expectedDataset.getContactPoint()));
+    }
 
-        assertThat(actualDataset.getTheme(), is (expectedDataset.getTheme()));
+    @Test
+    public void checkMiscProperties() throws Throwable {
+
+        //assertThat("spatial", actualDataset.getSpatial(), is (expectedDataset.getSpatial()));
+        assertThat("temporal", actualDataset.getTemporal(), is (expectedDataset.getTemporal()));
+        assertThat("conformsTo", actualDataset.getConformsTo(), is (expectedDataset.getConformsTo()));
+    }
+
+    @Test
+    public void checkDistribution() throws Throwable {
+        Distribution actualDist = actualDataset.getDistribution().get(0);
+        Distribution expectedDist =  expectedDataset.getDistribution().get(0);
+
+        assertThat("description", actualDist.getDescription(), is (expectedDist.getDescription()));
+        assertThat("licence", actualDist.getLicense(), is (expectedDist.getLicense()));
+        assertThat("conformsTo", actualDist.getConformsTo(), is (expectedDist.getConformsTo()));
+        assertThat("format", actualDist.getFormat(), is (expectedDist.getFormat()));
+        assertThat("accessURL", actualDist.getAccessURL(), is (expectedDist.getAccessURL()));
+        assertThat("page", actualDist.getPage(), is (expectedDist.getPage()));
+
+    }
+
+    @Test
+    public void checkThemes() throws Throwable {
+        int count = 0;
+        for (DataTheme expectedTheme : expectedDataset.getTheme()) {
+
+            for (DataTheme actualTheme: actualDataset.getTheme()) {
+                if (actualTheme.getUri().equals(expectedTheme.getUri())){
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        assertThat(count, is (expectedDataset.getTheme().size()));
     }
 
     @Test

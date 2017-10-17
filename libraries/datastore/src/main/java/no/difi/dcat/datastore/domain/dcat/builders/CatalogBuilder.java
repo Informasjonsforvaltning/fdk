@@ -20,7 +20,7 @@ public class CatalogBuilder extends AbstractBuilder {
 			created.setModified(extractDate(catalog, DCTerms.modified));
 			created.setLanguage(extractAsString(catalog, DCTerms.language));
 			created.setPublisher(extractPublisher(catalog));
-			created.setThemeTaxonomy(extractTheme(catalog, DCAT.themeTaxonomy ));
+			created.setThemeTaxonomy(extractMultipleStrings(catalog, DCAT.themeTaxonomy ));
 		}
 		
 		return created;

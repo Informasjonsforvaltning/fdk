@@ -21,6 +21,7 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.DCTypes;
+import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,13 +82,27 @@ public abstract class AbstractBuilder {
 
             Resource skosConcept = statement.getObject().asResource();
             if (skosConcept != null) {
+                String type = null;
+
+                StmtIterator stmtIterator = skosConcept.listProperties(RDF.type);
+                while (stmtIterator.hasNext()) {
+                    Statement typeStmnt = stmtIterator.next();
+                    if( typeStmnt != null && typeStmnt.getObject().toString().c("Concept")) {
+                        type = typeStmnt.getObject().toString();
+                    }
+                }
+
+
+
                 Map<String,String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
                 String source = null;
                 if (skosConcept.getProperty(DCTerms.source) != null) {
-                    source = skosConcept.getProperty(DCTerms.source).getString();
+                    source = skosConcept.getProperty(DCTerms.source).getObject().toString();
                 }
                 if (source != null) {
-                    result.add(SkosConcept.getInstance(source, prefLabel));
+                    SkosConcept concept = SkosConcept.getInstance(source, prefLabel);
+                    concept.setExtraType(type);
+                    result.add(concept);
                 }
             } else {
                 result.add(SkosConcept.getInstance(statement.getObject().toString()));
@@ -201,20 +216,6 @@ public abstract class AbstractBuilder {
 
         if (map.keySet().size() > 0) {
             return map;
-        }
-
-        return null;
-    }
-
-    public static List<String> extractTheme(Resource resource, Property property) {
-        List<String> result = new ArrayList<>();
-        StmtIterator iterator = resource.listProperties(property);
-        while (iterator.hasNext()) {
-            Statement statement = iterator.next();
-            result.add(statement.getObject().toString());
-        }
-        if (result.size() > 0) {
-            return result;
         }
 
         return null;

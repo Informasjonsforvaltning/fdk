@@ -12,6 +12,7 @@ import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 
+import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
@@ -51,13 +52,8 @@ public class DcatBuilder {
     public static final Model mod = ModelFactory.createDefaultModel();
 
     public static final String TIME = "http://www.w3.org/TR/owl-time/";
-    public static final String ADMS = "http://www.w3.org/ns/adms#";
-
-
 
     public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
-
-    public static final Property adms_identifier = mod.createProperty(ADMS, "identifier");
 
     public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
     public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
@@ -76,7 +72,7 @@ public class DcatBuilder {
         model.setNsPrefix("time", TIME);
         model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
-        model.setNsPrefix("adms", ADMS);
+        model.setNsPrefix("adms", ADMS.NS);
         model.setNsPrefix("iso", QualityAnnotation.isoNS);
         model.setNsPrefix("oa", OA.NS);
         model.setNsPrefix("dqv", DQV.NS);
@@ -135,8 +131,8 @@ public class DcatBuilder {
                 addProperties(datRes, DCAT.landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, DCAT.theme, dataset.getTheme());
 
-                addDistributions(datRes, dataset.getDistribution());
-                addDistributions(datRes, dataset.getSample());
+                addDistributions(datRes, DCAT.distribution, dataset.getDistribution());
+                addDistributions(datRes, ADMS.sample, dataset.getSample());
 
                 addTemporal(dataset, datRes);
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
@@ -161,7 +157,7 @@ public class DcatBuilder {
                 addProperty(datRes, DCTerms.accrualPeriodicity, dataset.getAccrualPeriodicity());
                 addSubjects(datRes, DCTerms.subject, dataset.getSubject());
 
-                addProperties(datRes, adms_identifier, dataset.getAdmsIdentifier());
+                addProperties(datRes, ADMS.identifier, dataset.getAdmsIdentifier());
                 addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel());
                 addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
 
@@ -244,7 +240,9 @@ public class DcatBuilder {
 
             skosConceptResource.addProperty(RDF.type, SKOS.Concept);
             if (skosConcept.getExtraType() != null) {
-                skosConceptResource.addProperty(RDF.type, skosConcept.getExtraType());
+                if (skosConcept.getExtraType() != null && skosConcept.getExtraType().contains("Standard")) {
+                    skosConceptResource.addProperty(RDF.type, DCTerms.Standard);
+                }
             }
             skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
             addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
@@ -317,10 +315,10 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addDistributions(Resource dataset, List<Distribution> distributions) {
+    public DcatBuilder addDistributions(Resource dataset, Property property, List<Distribution> distributions) {
         if (distributions != null) {
             for (Distribution distribution : distributions) {
-                addProperty(dataset, DCAT.distribution, distribution.getUri());
+                addProperty(dataset, property, distribution.getUri());
 
                 Resource disRes = createResource(distribution, distribution.getUri(), DCAT.Distribution);
 
