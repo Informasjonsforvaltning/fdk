@@ -88,15 +88,15 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setDescription(extractLanguageLiteral(resource, DCTerms.description));
             ds.setObjective(extractLanguageLiteral(resource, DCATNO.objective));
 
-            ds.setContactPoint(singletonList(extractContact(resource)));
+            ds.setContactPoint(asList(extractContact(resource)));
             ds.setKeyword(extractKeywords(resource, DCAT.keyword));
             ds.setPublisher(extractPublisher(resource));
 
             ds.setIssued(extractDate(resource, DCTerms.issued));
             ds.setModified(extractDate(resource, DCTerms.modified));
 
-            ds.setLanguage(singletonList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
-            ds.setLandingPage(singletonList(extractAsString(resource, DCAT.landingPage)));
+            ds.setLanguage(asList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
+            ds.setLandingPage(asList(extractAsString(resource, DCAT.landingPage)));
             ds.setTheme(extractTheme(resource, DCAT.theme, dataThemes));
 
             // distributions handled externally
