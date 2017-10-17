@@ -99,7 +99,8 @@ public class BrregAgentConverter {
                     // TODO: deal with the possibility of multiple dct:identifiers?
                     if (identiterator.hasNext()) {
                         String orgnr = identiterator.next().asLiteral().getValue().toString();
-                        collectFromUri("http://data.brreg.no/enhetsregisteret/enhet/" + orgnr, model);
+                        orgnr = orgnr.replaceAll("\\s", "");
+                        collectFromUri("http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml", model);
                     } else {
                         logger.debug("Found no identifier for {}", orgresource.getURI());
                     }
