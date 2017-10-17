@@ -154,23 +154,40 @@ export class DatasetComponent implements OnInit {
 
             if (dataset.distributions) {
                 dataset.distributions.forEach(distribution => {
-                    console.log("DATASET");
-                    //distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-                    //distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-                
                     console.log("dataset.component distribution BEFORE: ", distribution);
                     distribution.id = distribution.id || Math.floor(Math.random() * 1000000).toString();
                     distribution.uri = distribution.uri || "";
                     distribution.type = distribution.type || "";
                     distribution.title = distribution.title || {"nb": ""};
-                    distribution.description = distribution.description || {"nb": ""};
-                    distribution.downloadURL = (distribution.downloadURL) ? [distribution.downloadURL] : [] as string[]; 
-                    distribution.accessURL = (distribution.accessURL) ? [distribution.accessURL] : [] as string[]; 
+
+                    distribution.description = (typeof distribution.description === 'object') ? 
+                                                distribution.description : {"nb": distribution.description};
+
+                    distribution.downloadURL = (distribution.downloadURL instanceof Array) ? 
+                                                distribution.downloadURL : (distribution.downloadURL) ?
+                                                    [distribution.downloadURL] : [] as string[]; 
+
+                    distribution.accessURL = (distribution.accessURL instanceof Array) ? 
+                                                distribution.accessURL : (distribution.accessURL) ?
+                                                    [distribution.accessURL] : [] as string[];
+
                     distribution.format = distribution.format || [] as string[];
-                    distribution.license = new SkosConcept(distribution.license, {"nb": ""}) || new SkosConcept();
-                    distribution.conformsTo = (distribution.conformsTo) ? [distribution.conformsTo] : [] as string[]; 
-                    distribution.page = (distribution.page) ? new SkosConcept(distribution.page, {"nb": ""}) : new SkosConcept();
-            })
+
+                    distribution.license = (distribution.license instanceof SkosConcept) ? 
+                                            distribution.license : ((distribution.license) ? 
+                                                new SkosConcept(distribution.license, {"nb": ""}) : new SkosConcept());
+
+                    distribution.conformsTo = [new SkosConcept(distribution.conformsToUri, {'nb': distribution.conformsToPrefLabel})] || [] as SkosConcept[]; 
+                    
+                    distribution.page = (distribution.page instanceof SkosConcept) ? 
+                                            distribution.page : ((distribution.page) ? 
+                                                new SkosConcept(distribution.page, {"nb": ""}) : new SkosConcept());
+                                                
+                });
+                dataset.distributions.forEach(distribution => {                    
+                    delete distribution.conformsToPrefLabel;
+                    delete distribution.conformsToUri;
+                });
             }
           
           console.log("dataset.component distributions: ", dataset.distributions);

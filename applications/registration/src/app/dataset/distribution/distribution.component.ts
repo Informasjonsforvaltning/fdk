@@ -66,22 +66,6 @@ export class DistributionFormComponent implements OnInit {
 
         this.distributionForm.valueChanges.distinctUntilChanged().subscribe(
             distributionFormElement => {
-                console.log("distributionFormElement: ", distributionFormElement);
-                this.distribution = {
-                    id: this.distribution.id || Math.floor(Math.random() * 1000000).toString(),
-                    uri: distributionFormElement.uri || '',
-                    type: distributionFormElement.type || '',
-                    title: distributionFormElement.title || {'nb': ''},
-                    description: distributionFormElement.description || {'nb': ''},
-                    downloadURL: [distributionFormElement.downloadURL] || [] as string[],
-                    accessURL: [distributionFormElement.accessURL] || [] as string[],
-                    format: distributionFormElement.format || [] as string[], 
-                    license: new SkosConcept(distributionFormElement.license, {'nb': ''}) || new SkosConcept(),
-                    conformsTo: [distributionFormElement.conformsTo] || [] as SkosConcept[],
-                    page: (distributionFormElement.page) ? new SkosConcept(distributionFormElement.page, {'nb': ''}): new SkosConcept()
-                }
-                //this.distribution.accessURL[0] = distributionFormElement.accessURL;
-                console.log("this.distribution: ", this.distribution);
                 this.cdr.detectChanges();
             }
         );
@@ -95,13 +79,16 @@ export class DistributionFormComponent implements OnInit {
             uri: [ distribution.uri || '', Validators.required ],
             type: distribution.type || '',
             title: distribution.title || '',
-            description: distribution.description || '', 
+            description: distribution.description['nb'] || '', 
             accessURL: distribution.accessURL || [] as string[],
             downloadURL: distribution.downloadURL || [] as string[],
             format: [distribution.format || [] as string[]],
             license: (distribution.license) ? distribution.license.uri : '',
-            conformsTo: distribution.conformsTo || [] as SkosConcept[],
-            page:  (distribution.page) ? distribution.page.uri : ''
+            conformsToPrefLabel: (distribution.conformsTo && distribution.conformsTo[0] && distribution.conformsTo[0].prefLabel) ? 
+                                    distribution.conformsTo[0].prefLabel['nb'] : '',
+            conformsToUri: (distribution.conformsTo && distribution.conformsTo[0] && distribution.conformsTo[0].uri) ? 
+                                distribution.conformsTo[0].uri : '',
+            page: (distribution.page) ? distribution.page.uri : ''
         });
         
         console.log("toFormGroup AFTER: ", this.distribution);

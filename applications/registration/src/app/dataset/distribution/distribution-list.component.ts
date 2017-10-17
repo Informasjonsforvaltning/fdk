@@ -46,10 +46,9 @@ export class DistributionListComponent implements OnInit {
             accessURL: [] as string[],
             format: [] as string[],
             license: new SkosConcept(),
-            conformsTo: [] as SkosConcept[],
+            conformsTo: [new SkosConcept()] as SkosConcept[],
             page: new SkosConcept()
         };
-        console.log('dist-list: ', distribution);
         this.distributions.push(distribution);
         this.cd.detectChanges();
         this.showHideDelete();
@@ -70,6 +69,5 @@ export class DistributionListComponent implements OnInit {
             this.showDelete = true;
         else
             this.showDelete = false;
-        console.log("showDelete: ", this.showDelete);
     }
 }
