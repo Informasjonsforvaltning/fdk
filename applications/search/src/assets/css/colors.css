@@ -1,19 +1,22 @@
 :root {
     --color0: #ffffff; /* hvit */
-    --color1: #2D3741; /* mÃ¸rkest blÃ¥grÃ¥ â€“ heading */
-    --color2: #4B555F; /* mÃ¸rk blÃ¥grÃ¥ â€“ tekst */
-    --color3: #646E78; /* medium blÃ¥grÃ¥ â€“ lysere tekst */
-    --color4: #CDD2D7; /* mellomlys blÃ¥grÃ¥ â€“  */
-    --color5: #DADFE4; /* lys blÃ¥grÃ¥ â€“ inputfelter */
-    --color6: #EEF0F2; /* lys blÃ¥grÃ¥ â€“ bakgrunner */
-    --color7: #F6F8FA; /* ultralys blÃ¥grÃ¥ â€“ inputfelter */
-    --color-cta: #00C3FF; /* blÃ¥ themefarge â€“Â call to actions og "krydder" */
-    --color-cta2: #007CBE; /* blÃ¥ themefarge mot lys bakgrunn - for Ã¸kt kontrast pÃ¥ fargede ikoner */
-    --color-cta3: #009BD7; /* blÃ¥ themefarge mot lys bakgrunn - for Ã¸kt kontrast pÃ¥ fargede ikoner */
-    --color-cta4: #AAE6FF; /* lys blÃ¥ themefarge */
-    --color-green: #00F5C8; /* grÃ¸nn */
-    --color-yellow: #FFDC64; /* gul */
-    --color-red: #FF4682; /* rÃ¸d */
+    --color1: #2D3741; /* mørkest blågrå – heading */
+    --color2: #4B555F; /* mørk blågrå – tekst */
+    --color3: #646E78; /* medium blågrå – lysere tekst */
+    --color4: #C2C8CE; /* mellomlys blågrå –  */
+    --color5: #D7DDE3; /* ultralys blågrå – inputfelter */
+    --color6: #EEF0F2; /* lys blågrå – bakgrunner */
+    --color7: #F6F8FA; /* ultralys blågrå – inputfelter */
+    --color-cta: #00B4E6; /* blå themefarge – call to actions og "krydder" */
+    --color-cta2: #197DAF; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
+    --color-cta3: #009BCD; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
+    --color-cta4: #AAE6FF; /* lys blå themefarge */
+    --color-green: #00DCA0; /* grønn */
+    --color-green2: #DCFFF5; /* lys grønn */
+    --color-yellow: #FFD200; /* gul */
+    --color-yellow2: #FFFAD7; /* lys gul */
+    --color-red: #FF3C64; /* rød */
+    --color-red2: #FAE6EB; /* lys rød */
 }
 
 .fdk-color0 {

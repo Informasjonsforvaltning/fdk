@@ -152,13 +152,28 @@
     color: var(--color1);
 }
 
+.designsystemColorGreen2 {
+    background-color: var(--color-green2);
+    color: var(--color1);
+}
+
 .designsystemColorYellow {
     background-color: var(--color-yellow);
     color: var(--color1);
 }
 
+.designsystemColorYellow2 {
+    background-color: var(--color-yellow2);
+    color: var(--color1);
+}
+
 .designsystemColorRed {
     background-color: var(--color-red);
+    color: var(--color1);
+}
+
+.designsystemColorRed2 {
+    background-color: var(--color-red2);
     color: var(--color1);
 }
 
