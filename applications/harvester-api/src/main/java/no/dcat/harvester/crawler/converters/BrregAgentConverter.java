@@ -106,7 +106,7 @@ public class BrregAgentConverter {
                     }
                 }
             } else {
-                logger.debug("{} is not a resource", next);
+                logger.warn("{} is not a resource. Probably really broken input!", next);
             }
         }
 
