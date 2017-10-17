@@ -1,7 +1,7 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, FormArray, Validators} from "@angular/forms";
 import {Dataset} from "../dataset";
-
+import {SubjectService} from "./subject.service";
 
 @Component({
   selector: 'information',
@@ -23,7 +23,9 @@ export class InformationComponent implements OnInit {
   subjects: any[];
 
   constructor(private fb: FormBuilder,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private subjectService: SubjectService) {
+
     }
 
     ngOnInit() {
@@ -41,7 +43,27 @@ export class InformationComponent implements OnInit {
         });
       }
       this.informationForm = this.toFormGroup(this.dataset);
+      this.informationForm.valueChanges.subscribe((information) => {
+        information.subjects.forEach((subject) => {
+          if(subject.indexOf('https://') !== -1 || subject.indexOf('http://') !== -1) {
+            this.replaceUriWithLabel(subject).then((subjectObject) => {
+/*              let i = this.dataset.subjects.indexOf(subject);
+              if(i === -1) i = 0;
+              this.dataset.subjects[i] = subjectObject;*/
+              this.dataset.subjects.push(subjectObject);
+              this.onSave.emit(true);
+              var value = this.dataset.subjects.map((subject2)=>{
+                return subject2.prefLabel.no;
+              });
+              this.informationForm.controls['subjects'].setValue(value);
+            }).catch((err)=>{
+              console.log('promise failed, error: ', err);
+            });
+          } else {
 
+          }
+        });
+      })
       this.informationForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
         (information) => {
           if (information.keywords.length === 0) {
@@ -51,20 +73,31 @@ export class InformationComponent implements OnInit {
               return {nb: keyword}
             });
           }
-
           information.languages = null;
-          information.subjects = information.subjects || [];
-          this.dataset.subjects = information.subjects;
+          console.log('information.subjects length is ', information.subjects.length);
+          console.log('this.dataset.subjects length is ', this.dataset.subjects.length);
+          if(information.subjects && information.subjects.length === 0) {
+            information.subjects = information.subjects || [];
+            this.dataset.subjects = information.subjects;
+          }
 
           this.onSave.emit(true);
         }
       );
-      this.subjects = this.dataset.subjects || [];
 
+    }
+    replaceUriWithLabel (subjectUri) {
+      // get this: https://localhost:8099/referenceData/subjects?uri=https://data-david.github.io/Begrep/begrep/Hovedenhet
+      // https://localhost:8099/referenceData/subjects?uri= + urlencoded('https://data-david.github.io/Begrep/begrep/Hovedenhet ')
+      return this.subjectService.get(subjectUri);
+      /*return {
+        label: response.prefLabel['nb'],
+        uri: subjectUri
+      }*/
     }
     focus(e) {
       e.target.childNodes.forEach(node=>{
-        if(node.className && node.className.match(/\bng2-tag-input-form\b/)) { 
+        if(node.className && node.className.match(/\bng2-tag-input-form\b/)) {
           node.childNodes[1].focus();
         }
       })
@@ -72,7 +105,9 @@ export class InformationComponent implements OnInit {
 
     private toFormGroup(data: Dataset) {
       return this.fb.group({
-        subjects: [this.subjects],
+        subjects: [this.subjects.map((subject)=>{
+          return subject.prefLabel.no;
+        })],
         keywords: [this.keywords]
       });
     }
