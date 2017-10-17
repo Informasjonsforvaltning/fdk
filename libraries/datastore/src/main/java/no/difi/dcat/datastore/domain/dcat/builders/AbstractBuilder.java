@@ -62,7 +62,10 @@ public abstract class AbstractBuilder {
             Resource skosConcept = statement.getObject().asResource();
             if (skosConcept != null) {
                 Map<String,String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
-                String source = skosConcept.getProperty(DCTerms.source).getString();
+                String source = null;
+                if (skosConcept.getProperty(DCTerms.source) != null) {
+                    source = skosConcept.getProperty(DCTerms.source).getString();
+                }
                 result.add(SkosConcept.getInstance(source, prefLabel));
             } else {
                 result.add(SkosConcept.getInstance(statement.getObject().toString()));

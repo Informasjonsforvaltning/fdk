@@ -17,6 +17,7 @@ import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.InfModel;
@@ -32,6 +33,7 @@ import org.apache.jena.riot.system.RiotLib;
 import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -208,6 +210,19 @@ public class ImportController {
 
     List<Dataset> parseDatasets(Model model) throws IOException {
 
+
+        DcatReader reader = new DcatReader(model, "http://localhost:8100", "user", "password");
+
+        List<no.dcat.shared.Dataset> firstResult = reader.getDatasets();
+        List<Dataset> result = new ArrayList<>();
+        firstResult.forEach( dataset -> {
+            Dataset d = new Dataset();
+            BeanUtils.copyProperties(dataset,d);
+            logger.debug ("dataset {}", d.getUri());
+            result.add(d);
+        });
+
+        /*
         // using owl ontology to get inverse relations from dataset to catalogId
         InfModel modelWithInverseCatalogRelations = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), owlSchema, model);
 
@@ -223,6 +238,7 @@ public class ImportController {
 
         postprosessDatasetAttributes(result);
 
+        */
         logger.trace("Result frame transformation: {}", new GsonBuilder().setPrettyPrinting().create().toJson(result));
         logger.info("parsed {} datasets from RDF import", result.size());
 
