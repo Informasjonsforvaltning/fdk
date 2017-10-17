@@ -8,6 +8,7 @@ import DatasetDistribution from '../../components/search-dataset-distribution';
 import DatasetInfo from '../../components/search-dataset-info';
 import DatasetQuality from '../../components/search-dataset-quality-content';
 import DatasetBegrep from '../../components/search-dataset-begrep';
+import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
@@ -26,49 +27,11 @@ export default class DetailsPage extends React.Component {
   // @params: the function has no param but the query need dataset id from prop
   // loads all the info for this dataset
   loadDatasetFromServer() {
-    const url = `/detail?id=${this.props.params.id}`;
+    const url = `/datasets/${this.props.params.id}`;
     axios.get(url)
       .then((res) => {
         const data = res.data;
         const dataset = data.hits.hits[0]._source;
-        // ##### MOCK DATA START - please remove when backend is fixed;
-        dataset.type = 'Kodelister';
-        dataset.conformsTo = ['SOSI'];
-        dataset.legalBasisForRestrictions = [
-          {
-            source: 'http://www.example.com/somepath/somelegalbasis',
-            foafHomepage: null,
-            prefLabel: {
-              nb: 'Den spesifike loven '
-            }
-          },
-          {
-            source: 'http://www.example.com/somepath/someotherlegalbasis',
-            foafHomepage: null,
-            prefLabel: {
-              nb: 'Den andre spesifike loven'
-            }
-          }
-        ];
-        dataset.legalBasisForProcessings = [
-          {
-            source: 'http://www.example.com/somepath/someotherlegalbasis',
-            foafHomepage: null,
-            prefLabel: {
-              nb: 'a legalBasisForProcessings that has a long title'
-            }
-          }
-        ];
-        dataset.legalBasisForAccesses = [
-          {
-            source: 'http://www.example.com/somepath/someotherlegalbasis',
-            foafHomepage: null,
-            prefLabel: {
-              nb: 'a legalBasisForAccesses that has a long title'
-            }
-          }
-        ];
-        // ### MOCK DATA END
         this.setState({
           dataset,
           loading: false
@@ -121,7 +84,9 @@ export default class DetailsPage extends React.Component {
           }
           accessUrl={distribution.accessURL}
           format={distribution.format}
-          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
+          code={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
+          license={distribution.license}
+          page={distribution.page}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       ));
@@ -134,13 +99,11 @@ export default class DetailsPage extends React.Component {
     if (this.state.dataset) {
       return (
         <DatasetKeyInfo
-          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.authorityCode : null}
+          authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
           selectedLanguageCode={this.props.selectedLanguageCode}
           type={this.state.dataset.type}
           conformsTo={this.state.dataset.conformsTo}
-          legalBasisForRestrictions={this.state.dataset.legalBasisForRestrictions}
-          legalBasisForProcessings={this.state.dataset.legalBasisForProcessings}
-          legalBasisForAccesses={this.state.dataset.legalBasisForAccesses}
+          informationModel={this.state.dataset.informationModel}
         />
       );
     }
@@ -148,30 +111,94 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderDatasetInfo() {
-    const { accrualPeriodicity } = this.state.dataset;
-    if (accrualPeriodicity) {
-      return (
-        <DatasetInfo
-          issued={this.state.dataset.issued}
-          accrualPeriodicity={
-            accrualPeriodicity.prefLabel[this.props.selectedLanguageCode]
+    const {
+      issued,
+      accrualPeriodicity,
+      provenance,
+      hasCurrentnessAnnotation,
+      spatial,
+      temporal,
+      language,
+      isPartOf,
+      references
+    } = this.state.dataset;
+
+    return (
+      <DatasetInfo
+        issued={issued || null
+        }
+        accrualPeriodicity={accrualPeriodicity ?
+          accrualPeriodicity.prefLabel[this.props.selectedLanguageCode]
             || accrualPeriodicity.prefLabel.nb
+          || accrualPeriodicity.prefLabel.no
             || accrualPeriodicity.prefLabel.nn
             || accrualPeriodicity.prefLabel.en
+          : null
+        }
+        provenance={provenance ?
+          provenance.prefLabel[this.props.selectedLanguageCode]
+            || provenance.prefLabel.nb
+            || provenance.prefLabel.nn
+            || provenance.prefLabel.en
+          : null
+        }
+        hasCurrentnessAnnotation={hasCurrentnessAnnotation ?
+          hasCurrentnessAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasCurrentnessAnnotation.hasBody.nb
+            || hasCurrentnessAnnotation.hasBody.nn
+            || hasCurrentnessAnnotation.hasBody.no
+            || hasCurrentnessAnnotation.hasBody.en
+          : null}
+        spatial={spatial}
+        temporal={temporal}
+        language={language}
+        isPartOf={isPartOf}
+        references={references}
+      />
+    );
+  }
+
+  _renderQuality() {
+    const {
+      hasRelevanceAnnotation,
+      hasCompletenessAnnotation,
+      hasAccuracyAnnotation,
+      hasAvailabilityAnnotations
+    } = this.state.dataset;
+    if (hasRelevanceAnnotation || hasCompletenessAnnotation || hasAccuracyAnnotation || hasAvailabilityAnnotations) {
+      return (
+        <DatasetQuality
+          relevanceAnnotation={hasRelevanceAnnotation ?
+            hasRelevanceAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasRelevanceAnnotation.hasBody.nb
+            || hasRelevanceAnnotation.hasBody.no
+            || hasRelevanceAnnotation.hasBody.nn
+            || hasRelevanceAnnotation.hasBody.en
+            : null
           }
-          provenance={this.state.dataset.provenance ?
-            this.state.dataset.provenance.prefLabel[this.props.selectedLanguageCode]
-            || this.state.dataset.provenance.prefLabel.nb
-            || this.state.dataset.provenance.prefLabel.nn
-            || this.state.dataset.provenance.prefLabel.en
-            : '-'
+          completenessAnnotation={hasCompletenessAnnotation ?
+            hasCompletenessAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasCompletenessAnnotation.hasBody.nb
+            || hasCompletenessAnnotation.hasBody.no
+            || hasCompletenessAnnotation.hasBody.nn
+            || hasCompletenessAnnotation.hasBody.en
+            : null
           }
-          language={this.state.dataset.language ?
-            this.state.dataset.language.prefLabel[this.props.selectedLanguageCode]
-            || this.state.dataset.language.prefLabel.nb
-            || this.state.dataset.language.prefLabel.nn
-            || this.state.dataset.language.prefLabel.en
-            : '-'
+          accuracyAnnotation={hasAccuracyAnnotation ?
+            hasAccuracyAnnotation.hasBody[this.props.selectedLanguageCode]
+            || hasAccuracyAnnotation.hasBody.nb
+            || hasAccuracyAnnotation.hasBody.no
+            || hasAccuracyAnnotation.hasBody.nn
+            || hasAccuracyAnnotation.hasBody.en
+            : null
+          }
+          availabilityAnnotations={hasAvailabilityAnnotations ?
+            hasAvailabilityAnnotations.hasBody[this.props.selectedLanguageCode]
+            || hasAvailabilityAnnotations.hasBody.nb
+            || hasAvailabilityAnnotations.hasBody.no
+            || hasAvailabilityAnnotations.hasBody.nn
+            || hasAvailabilityAnnotations.hasBody.en
+            : null
           }
         />
       );
@@ -179,46 +206,56 @@ export default class DetailsPage extends React.Component {
     return null;
   }
 
+  _renderContactInfo() {
+    const { contactPoint } = this.state.dataset;
+    if (contactPoint && contactPoint.id ) {
+      return contactPoint.map(item => (
+        <DatasetContactInfo
+          key={item.id}
+          uri={item.uri}
+          email={item.email}
+          organizationUnit={item.organizationUnit}
+          url={item.hasURL}
+          telephone={item.hasTelephone}
+        />
+      ));
+    }
+    return null;
+  }
+
   render() {
-    /*
-     <div className="fdk-container-detail fdk-container-detail-header">
-     <i className="fa fa-book fdk-fa-left fdk-color-cta" />Begrep
-     </div>
-     <DatasetBegrep
-     title="Jordsmonn"
-     description="Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet Dette er Kartverket sin korte og presise definisjon av begrepet"
-     />
-     */
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8 col-md-offset-2">
-            {this._renderDatasetDescription()}
-
-
-            {this._renderKeyInfo()}
-
-            {this._renderDistribution()}
-
-            {this._renderDatasetInfo()}
-
-            <DatasetQuality
-              header="Kvalitet på innhold"
-              relevans="-"
-              kompletthet="-"
-              noyaktighet="-"
-              tilgjengelighet="-"
-            />
-
+    const {loading} = this.state;
+    if (!loading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              {this._renderDatasetDescription()}
+              {this._renderKeyInfo()}
+              {this._renderDistribution()}
+              {this._renderDatasetInfo()}
+              {this._renderQuality()}
+              {this.state.dataset.keyword &&
+              <DatasetBegrep
+                keyword={this.state.dataset.keyword}
+              />
+              }
+              {this._renderContactInfo()}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
+    return null;
   }
 }
 
+DetailsPage.defaultProps = {
+  params: null,
+  selectedLanguageCode: null
+};
+
 DetailsPage.propTypes = {
-  id: PropTypes.string,
-  params: PropTypes.object,
+  params: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   selectedLanguageCode: PropTypes.string
 };

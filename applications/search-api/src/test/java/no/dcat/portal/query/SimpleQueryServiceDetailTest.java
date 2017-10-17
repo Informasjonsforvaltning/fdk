@@ -13,6 +13,18 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -38,7 +50,7 @@ public class SimpleQueryServiceDetailTest {
      */
     @Test
     public void testWithHits() {
-        ResponseEntity<String> actual = sqs.detail("29");
+        ResponseEntity<String> actual = sqs.detail(new ServletRequest("29"));
 
         verify(client.prepareSearch("dcat").setQuery(any(QueryBuilder.class)).execute()).actionGet();
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -50,7 +62,7 @@ public class SimpleQueryServiceDetailTest {
     @Test
     public void testWithNoHits() {
         when(response.getHits().getTotalHits()).thenReturn((long) 0);
-        ResponseEntity<String> actual = sqs.detail("29");
+        ResponseEntity<String> actual = sqs.detail(new ServletRequest("29"));
 
         verify(client.prepareSearch("dcat").setQuery(any(QueryBuilder.class)).execute()).actionGet();
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.NOT_FOUND.value());

@@ -1,11 +1,9 @@
 package no.dcat.controller;
 
 
-import gherkin.lexer.Th;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.model.Publisher;
-import no.dcat.model.SkosCode;
+import no.dcat.shared.SkosCode;
 import no.dcat.model.exceptions.CodesImportException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +25,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.isNotNull;
 
 import static org.junit.Assert.assertNotNull;
@@ -40,7 +36,6 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ImportControllerTest {
     static Logger logger = LoggerFactory.getLogger(ImportControllerTest.class);

@@ -361,7 +361,7 @@
             },
             "accessRights": {
                 "properties": {
-                    "authorityCode": {
+                    "code": {
                         "type": "string",
                         "analyzer": "norwegian",
                         "fields": {
