@@ -119,6 +119,7 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
+        <div className="fdk-container-path" />
         {childWithProp}
         <div className="fdk-footer">
           <div className="container">
