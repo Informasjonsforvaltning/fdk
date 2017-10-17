@@ -144,7 +144,6 @@ export class DatasetComponent implements OnInit {
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
             
-        console.log("subscribe");
           // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
@@ -153,32 +152,33 @@ export class DatasetComponent implements OnInit {
             });
           });
 
-          if (dataset.distributions) {
-            dataset.distributions.forEach(distribution => {
-              //distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              //distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-                distribution = {
-                    id: distribution.id || Math.floor(Math.random() * 1000000).toString(),
-                    uri: distribution.uri || '',
-                    type: distribution.type || '',
-                    title: distribution.title || {'nb': ''},
-                    description: distribution.description || {'nb': ''},
-                    downloadURLs: [distribution.downloadURLs] || [] as string[],
-                    accessURLs: [distribution.accessURLs] || [] as string[],
-                    formats: distribution.formats || [] as string[],
-                    license: distribution.license || {} as SkosConcept,
-                    conformsTos: distribution.conformsTos || [] as SkosConcept[],
-                    page: distribution.page || {} as SkosConcept
-                }
-
-              console.log("dataset.component distribution: ", distribution);
+            if (dataset.distributions) {
+                dataset.distributions.forEach(distribution => {
+                    console.log("DATASET");
+                    //distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
+                    //distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
+                
+                    console.log("dataset.component distribution BEFORE: ", distribution);
+                    distribution.id = distribution.id || Math.floor(Math.random() * 1000000).toString();
+                    distribution.uri = distribution.uri || "";
+                    distribution.type = distribution.type || "";
+                    distribution.title = distribution.title || {"nb": ""};
+                    distribution.description = distribution.description || {"nb": ""};
+                    distribution.downloadURL = (distribution.downloadURL) ? [distribution.downloadURL] : [] as string[]; 
+                    distribution.accessURL = (distribution.accessURL) ? [distribution.accessURL] : [] as string[]; 
+                    distribution.format = distribution.format || [] as string[];
+                    distribution.license = new SkosConcept(distribution.license, {"nb": ""}) || new SkosConcept();
+                    distribution.conformsTo = (distribution.conformsTo) ? [distribution.conformsTo] : [] as string[]; 
+                    distribution.page = (distribution.page) ? new SkosConcept(distribution.page, {"nb": ""}) : new SkosConcept();
             })
-          }
+            }
+          
+          console.log("dataset.component distributions: ", dataset.distributions);
           if (dataset.samples) {
             dataset.samples.forEach(distribution => {
              // distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
              // distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-             console.log("type: ", distribution.type);
+            // console.log("type: ", distribution.type);
             })
           }
           //

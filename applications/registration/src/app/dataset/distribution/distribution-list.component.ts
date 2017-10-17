@@ -42,14 +42,14 @@ export class DistributionListComponent implements OnInit {
             type: '',
             title: {'nb': ''},
             description: {'nb': ''},
-            downloadURLs: [] as string[],
-            accessURLs: [] as string[],
-            formats: [] as string[],
-            license: {} as SkosConcept,
-            conformsTos: [] as SkosConcept[],
-            page: {} as SkosConcept
+            downloadURL: [] as string[],
+            accessURL: [] as string[],
+            format: [] as string[],
+            license: new SkosConcept(),
+            conformsTo: [] as SkosConcept[],
+            page: new SkosConcept()
         };
-        console.log(distribution);
+        console.log('dist-list: ', distribution);
         this.distributions.push(distribution);
         this.cd.detectChanges();
         this.showHideDelete();

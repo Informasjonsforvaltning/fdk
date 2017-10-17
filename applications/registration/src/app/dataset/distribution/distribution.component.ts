@@ -64,7 +64,7 @@ export class DistributionFormComponent implements OnInit {
             .filter(entry => entry.label == this.distribution.type)
             .forEach(entry => this.selectedTypeId = entry.id);
 
-        this.distributionForm.valueChanges.debounceTime(1000).distinctUntilChanged().subscribe(
+        this.distributionForm.valueChanges.distinctUntilChanged().subscribe(
             distributionFormElement => {
                 console.log("distributionFormElement: ", distributionFormElement);
                 this.distribution = {
@@ -73,12 +73,12 @@ export class DistributionFormComponent implements OnInit {
                     type: distributionFormElement.type || '',
                     title: distributionFormElement.title || {'nb': ''},
                     description: distributionFormElement.description || {'nb': ''},
-                    downloadURLs: distributionFormElement.downloadURL || [] as string[],
-                    accessURLs: [distributionFormElement.accessURL] || [] as string[],
-                    formats: distributionFormElement.formats || [] as string[],
-                    license: distributionFormElement.license || {} as SkosConcept,
-                    conformsTos: distributionFormElement.conformsTo || [] as SkosConcept[],
-                    page: distributionFormElement.page || {} as SkosConcept
+                    downloadURL: [distributionFormElement.downloadURL] || [] as string[],
+                    accessURL: [distributionFormElement.accessURL] || [] as string[],
+                    format: distributionFormElement.format || [] as string[], 
+                    license: new SkosConcept(distributionFormElement.license, {'nb': ''}) || new SkosConcept(),
+                    conformsTo: [distributionFormElement.conformsTo] || [] as SkosConcept[],
+                    page: (distributionFormElement.page) ? new SkosConcept(distributionFormElement.page, {'nb': ''}): new SkosConcept()
                 }
                 //this.distribution.accessURL[0] = distributionFormElement.accessURL;
                 console.log("this.distribution: ", this.distribution);
@@ -88,19 +88,23 @@ export class DistributionFormComponent implements OnInit {
     }
 
     private toFormGroup(distribution: Distribution): FormGroup {
+        
+        console.log("toFormGroup BEFORE: ", this.distribution);
         const formGroup = this.fb.group({
-            id: [ distribution.id || Math.random().toString().substr(2)],
+            id: distribution.id || Math.random().toString().substr(2),
             uri: [ distribution.uri || '', Validators.required ],
-            type: [distribution.type || ''],
-            title: [ distribution.title || {'nb': ''}],
-            description: [ distribution.description || {'nb': ''}], 
-            accessURLs: [ distribution.accessURLs || [] as string[]],
-            downloadURLs: [ distribution.downloadURLs || [] as string[]],
-            formats: [ distribution.formats || [] as string[]],
-            license: [ distribution.license || {} as SkosConcept],
-            conformsTos: [ distribution.conformsTos || [] as SkosConcept[]],
-            page: [ distribution.page || {} as SkosConcept]
+            type: distribution.type || '',
+            title: distribution.title || '',
+            description: distribution.description || '', 
+            accessURL: distribution.accessURL || [] as string[],
+            downloadURL: distribution.downloadURL || [] as string[],
+            format: [distribution.format || [] as string[]],
+            license: (distribution.license) ? distribution.license.uri : '',
+            conformsTo: distribution.conformsTo || [] as SkosConcept[],
+            page:  (distribution.page) ? distribution.page.uri : ''
         });
+        
+        console.log("toFormGroup AFTER: ", this.distribution);
         return formGroup;
     } 
 

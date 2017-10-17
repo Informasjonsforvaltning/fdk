@@ -320,17 +320,17 @@
             <div *ngIf="dataset.distributions">
                 <div *ngFor="let distribution of dataset.distributions">
                     <label for="distributions-toggle" class="expand-label collapsed-content" style="display:block;">
-                        <div *ngIf="distribution && distribution.formats">
-                            <span *ngFor="let singleFormat of distribution.formats; let idx=index">
+                        <div *ngIf="distribution && distribution.format">
+                            <span *ngFor="let singleFormat of distribution.format; let idx=index">
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="distribution.type === 'Feed'"></i>
                                     <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>                                    
                                     <i class="fa fa-cogs" *ngIf="distribution.type === 'API'"></i>
-                                    {{distribution.formats.length !== idx+1 ? '&nbsp;' : '' }}
+                                    {{distribution.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
                             </span>
-                            <span *ngIf="distribution.formats.length === 0">
+                            <span *ngIf="distribution.format.length === 0">
                                 Klikk for å fylle ut
                             </span>
                         </div>
@@ -349,7 +349,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-md-center" *ngIf="dataset">
+   <!-- <div class="row justify-content-md-center" *ngIf="dataset">
         <label for="samples-toggle" class="col-md-push-1 col-md-2 section-title">
             Eksempeldata<b class="caret-right"></b>
         </label>
@@ -366,7 +366,7 @@
                 </distributions>
             </div>
         </div>
-    </div>
+    </div> -->
 
   <div class="row justify-content-md-center">
     <div class="row">
