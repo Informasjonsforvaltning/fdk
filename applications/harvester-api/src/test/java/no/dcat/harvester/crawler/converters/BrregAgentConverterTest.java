@@ -64,4 +64,13 @@ public class BrregAgentConverterTest {
 		assertTrue("Expected empty model", listObjectsOfProperty.toList().isEmpty());
 	}
 
+	@Test
+	public void testConvertOnRDF() throws Exception {
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+		Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
+		converter.collectFromModel(model);
+
+
+	}
+
 }

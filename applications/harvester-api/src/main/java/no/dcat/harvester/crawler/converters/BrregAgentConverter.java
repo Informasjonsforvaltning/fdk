@@ -88,6 +88,7 @@ public class BrregAgentConverter {
     public void collectFromModel(Model model) {
         NodeIterator orgiterator = model.listObjectsOfProperty(DCTerms.publisher);
 
+
         while (orgiterator.hasNext()) {
             RDFNode next = orgiterator.next();
             if (next.isURIResource()) {
@@ -100,7 +101,9 @@ public class BrregAgentConverter {
                     if (identiterator.hasNext()) {
                         String orgnr = identiterator.next().asLiteral().getValue().toString();
                         orgnr = orgnr.replaceAll("\\s", "");
-                        collectFromUri("http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml", model);
+                        String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
+                        logger.trace("Used dct:identifier to collect from {}", url);
+                        collectFromUri(url, model);
                     } else {
                         logger.debug("Found no identifier for {}", orgresource.getURI());
                     }
