@@ -190,7 +190,7 @@ public class DatasetBuilder extends AbstractBuilder {
             DataTheme dataTheme = dataThemes.get(themeCode);
 
             if (dataTheme == null) {
-                logger.warn(String.format("Themecode %s does not exist", themeCode));
+                logger.warn(String.format("Themecode %s does not exist and will be ignored", themeCode));
             } else {
                 result.add(dataTheme);
             }

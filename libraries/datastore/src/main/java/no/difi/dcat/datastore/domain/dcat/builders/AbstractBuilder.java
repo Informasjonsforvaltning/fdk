@@ -44,7 +44,12 @@ public abstract class AbstractBuilder {
                 if (statement.getObject().isLiteral()) {
                     return statement.getString();
                 } else {
-                    return statement.getObject().asResource().getURI();
+                    if (statement.getObject().isResource()) {
+                        return statement.getObject().asResource().getURI();
+                    } else {
+                        return statement.getObject().asLiteral().getValue().toString();
+                    }
+
                 }
             }
         } catch (Exception e) {
@@ -273,7 +278,7 @@ public abstract class AbstractBuilder {
 
             final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
 
-            contact.setId(object.getURI());
+            contact.setUri(object.getURI());
             final String fn = extractAsString(object, Vcard.fn);
             if (fn != null) {
                 hasAttributes = true;
@@ -283,13 +288,21 @@ public abstract class AbstractBuilder {
             final String email = extractAsString(object, Vcard.hasEmail);
             if (email != null) {
                 hasAttributes = true;
-                contact.setEmail(email); //.replace("mailto:", ""));
+                if (email.startsWith("mailto:")){
+                    contact.setEmail(email.substring("mailto:".length(), email.length()));
+                } else {
+                    contact.setEmail(email);
+                }
             }
 
             final String telephone = extractAsString(object, Vcard.hasTelephone);
             if (telephone != null) {
                 hasAttributes = true;
-                contact.setHasTelephone(telephone); //.replace("tel:", ""));
+                if (telephone.startsWith("tel:")) {
+                    contact.setHasTelephone(telephone.substring("tel:".length(),telephone.length()));
+                } else {
+                    contact.setHasTelephone(telephone);
+                }
             }
 
             final String organizationName = extractAsString(object, Vcard.organizationName);

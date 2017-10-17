@@ -87,8 +87,13 @@ public class DatasetConverterTest {
 
 
         Map<String,DataTheme> dataThemeMap = new HashMap<>();
-        dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/GOVE", new DataTheme());
-        dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/ENVI", new DataTheme());
+        DataTheme gove = new DataTheme();
+        gove.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        DataTheme envi = new DataTheme();
+        envi.setUri("http://publications.europa.eu/resource/authority/data-theme/ENVI");
+
+        dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/GOVE", gove);
+        dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/ENVI", envi);
 
         actualDataset = DatasetBuilder.create(model.getResource(datasetUri), catalogResource , locations, codes, dataThemeMap);
 
@@ -105,6 +110,19 @@ public class DatasetConverterTest {
     public void hasReferences() throws Throwable {
         logger.info("number of references {}", actualDataset.getReferences().size());
         assertThat(actualDataset.getReferences(), is (expectedDataset.getReferences()));
+    }
+
+    @Test
+    public void checkThemes() throws Throwable {
+
+        assertThat(actualDataset.getTheme(), is (expectedDataset.getTheme()));
+    }
+
+    @Test
+    public void java2dcatAndBack() throws Throwable {
+        actualDataset.setId(null);
+        expectedDataset.setId(null);
+        assertThat(actualDataset, is(expectedDataset));
     }
 
 
