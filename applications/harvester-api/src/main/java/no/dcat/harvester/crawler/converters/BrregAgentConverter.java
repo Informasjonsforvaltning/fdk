@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -87,12 +89,12 @@ public class BrregAgentConverter {
             if (next.isURIResource()) {
                 Resource orgresource = next.asResource();
                 if (orgresource.getURI().contains("data.brreg.no")) {
-                    collectFromUri(orgresource.getURI(), model);
+                    collectFromUri(orgresource.getURI(), model, orgresource);
                 } else {
                     String orgnr = getOrgnr(model, orgresource);
-                    String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
+                    String url = publisherIdURI + orgnr + ".xml";
                     logger.trace("Used dct:identifier to collect from {}", url);
-                    collectFromUri(url, model);
+                    collectFromUri(url, model, orgresource);
                 }
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
@@ -104,11 +106,11 @@ public class BrregAgentConverter {
 
     /* For each organisation, transform the RDF to match what we expect from it */
 
-    protected void collectFromUri(String uri, Model model) {
+    protected void collectFromUri(String uri, Model model, Resource publisherResource) {
         if (!uri.endsWith(".xml")) {
             uri = uri.concat(".xml");
         }
-
+        logger.debug("Collecting from URL {} using subject URI {}", uri, publisherResource.toString());
         try {
             if (brregCache != null) {
 
@@ -117,12 +119,25 @@ public class BrregAgentConverter {
 
                 InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
                 Model incomingModel = convert(inputStream);
-
-                logger.trace("[model_after_conversion] {}", incomingModel);
+                if (logger.isTraceEnabled()) {
+                    OutputStream output = new ByteArrayOutputStream();
+                    incomingModel.write(output, "TURTLE");
+                    logger.trace("[model_after_conversion] \n{}", output.toString());
+                }
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
 
-                NodeIterator identiterator = model.listObjectsOfProperty(DCTerms.identifier);
+        /*        String orgnr = getOrgnr(model, publisherResource); */
 
+        /*        if (orgnr != null) {
+                    org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("kanoniske.csv");
+                    CSVParser parser = CSVParser.parse(canonicalNamesFile.getFile().toString(), CSVFormat.EXCEL);
+                    for (CSVRecord line : parser) {
+                        if (line.get(0).equals(orgnr) && publisherResource != null) { // Should check publisherResource, since all names will be removed if it is null
+                            incomingModel.remove(publisherResource, FOAF.name, null);
+                            incomingModel.add(publisherResource, FOAF.name, incomingModel.createLiteral(line.get(1), "nb"));
+                        }
+                    }
+                } */
 
                 processBlankNodes(incomingModel, uri);
 
@@ -136,7 +151,8 @@ public class BrregAgentConverter {
                     if (organisasjonsform.equals(ORGANISASJONSLEDD) && overordnetEnhet != null) {
 
                         logger.trace("Found superior publisher: {}", overordnetEnhet.getObject());
-                        collectFromUri(String.format(publisherIdURI, overordnetEnhet.getObject().toString()), model);
+                        String supOrgUri = String.format(publisherIdURI, overordnetEnhet.getObject().toString());
+                        collectFromUri(supOrgUri, model, model.createResource(supOrgUri));
                     }
                 }
                 logger.trace(incomingModel.toString());

@@ -29,7 +29,7 @@ public class BrregAgentConverterTest {
 		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
 
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model);
+		converter.collectFromUri(uri.toString(), model, model.createResource("http://data.brreg.no/enhetsregisteret/underenhet/814716902"));
 
 		model.write(System.out, "TTL");
 		
@@ -57,7 +57,7 @@ public class BrregAgentConverterTest {
 		
 		Model model = ModelFactory.createDefaultModel();
 		
-		converter.collectFromUri("http://test", model);
+		converter.collectFromUri("http://test", model, model.createResource("http://test"));
 		
 		NodeIterator listObjectsOfProperty = model.listObjectsOfProperty(RDF.type);
 		
