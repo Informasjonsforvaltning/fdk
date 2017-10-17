@@ -148,15 +148,17 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         'col-md-12': !isTemporal
       }
     );
-    const children = items => items.map((item, index) => (
-      <p
-        key={`dataset-info-language-${index}`}
-        id={`dataset-info-language-${index}`}
-        className="fdk-ingress fdk-margin-bottom-no"
-      >
-        {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
-      </p>
-    ));
+    const children = items => items.map((item, index) => {
+      if (item && item.prefLabel) {
+        <p
+          key={`dataset-info-language-${index}`}
+          id={`dataset-info-language-${index}`}
+          className="fdk-ingress fdk-margin-bottom-no"
+        >
+          {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
+        </p>
+      }
+    });
 
     if (language && typeof language !== 'undefined' && language.length > 0) {
       return (
