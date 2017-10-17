@@ -144,7 +144,7 @@ export default class App extends React.Component {
                   <a
                     href="mailto:felleskatalog@brreg.no"
                   >
-                    <div>{localization.footer.contact}</div>
+                    {localization.footer.contact}<br />
                     {localization.footer.mail}
                   </a>
                 </p>
