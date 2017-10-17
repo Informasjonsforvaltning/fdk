@@ -6,14 +6,7 @@ import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
@@ -96,17 +89,10 @@ public class BrregAgentConverter {
                 if (orgresource.getURI().contains("data.brreg.no")) {
                     collectFromUri(orgresource.getURI(), model);
                 } else {
-                    NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
-                    // TODO: deal with the possibility of multiple dct:identifiers?
-                    if (identiterator.hasNext()) {
-                        String orgnr = identiterator.next().asLiteral().getValue().toString();
-                        orgnr = orgnr.replaceAll("\\s", "");
-                        String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
-                        logger.trace("Used dct:identifier to collect from {}", url);
-                        collectFromUri(url, model);
-                    } else {
-                        logger.debug("Found no identifier for {}", orgresource.getURI());
-                    }
+                    String orgnr = getOrgnr(model, orgresource);
+                    String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
+                    logger.trace("Used dct:identifier to collect from {}", url);
+                    collectFromUri(url, model);
                 }
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
@@ -134,6 +120,10 @@ public class BrregAgentConverter {
 
                 logger.trace("[model_after_conversion] {}", incomingModel);
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
+
+                NodeIterator identiterator = model.listObjectsOfProperty(DCTerms.identifier);
+
+
                 processBlankNodes(incomingModel, uri);
 
                 ResIterator subjects = incomingModel.listSubjectsWithProperty(EnhetsregisteretRDF.organisasjonsform);
@@ -245,4 +235,18 @@ public class BrregAgentConverter {
     protected void setPublisherIdURI(String publisherIdURI) {
         this.publisherIdURI = publisherIdURI;
     }
+
+    private String getOrgnr(Model model, Resource orgresource) {
+        NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
+        // TODO: deal with the possibility of multiple dct:identifiers?
+        if (identiterator.hasNext()) {
+            String orgnr = identiterator.next().asLiteral().getValue().toString();
+            return orgnr.replaceAll("\\s", "");
+        } else {
+            logger.debug("Found no identifier for {}", orgresource.getURI());
+        }
+        return null;
+    }
+
+    
 }
