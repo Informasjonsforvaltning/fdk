@@ -236,25 +236,17 @@ public class BrregAgentConverter {
         this.publisherIdURI = publisherIdURI;
     }
 
-
     private String getOrgnr(Model model, Resource orgresource) {
         NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
-        return getOrgnr(identiterator);
-    }
-
-    private String getOrgnr(Model model) {
-        NodeIterator identiterator = model.listObjectsOfProperty(DCTerms.identifier);
-        return getOrgnr(identiterator);
-    }
-
-    private String getOrgnr(NodeIterator identiterator) {
         // TODO: deal with the possibility of multiple dct:identifiers?
         if (identiterator.hasNext()) {
             String orgnr = identiterator.next().asLiteral().getValue().toString();
             return orgnr.replaceAll("\\s", "");
-        } 
+        } else {
+            logger.debug("Found no identifier for {}", orgresource.getURI());
+        }
         return null;
     }
 
-
+    
 }
