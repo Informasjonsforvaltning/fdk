@@ -69,8 +69,10 @@ public class BrregAgentConverterTest {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
 		converter.collectFromModel(model);
-
-
+		NodeIterator countryiter = model.listObjectsOfProperty(
+				model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
+				model.createProperty("http://data.brreg.no/meta/land"));
+		assertEquals(countryiter.next().asLiteral().getValue().toString(),"Norge");
 	}
 
 }
