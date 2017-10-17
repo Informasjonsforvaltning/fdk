@@ -92,11 +92,14 @@
 .fdk-label-register {
     background-color: var(--color1);
     color: var(--color0) !important;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
     font-weight: 300;
     border: none;
-    padding: 8px 9px 7px 11px;
+    padding: 6px 8px 6px 8px;
     margin: 0px 2px 0px 0px;
     border-radius: 3px;
+    display: inline-block;
 }
 
 /*fonts*/
@@ -174,36 +177,38 @@ p.fdk-input-heading {
 
 
 
-/*  S P A C E  */
+/*  C A L E N D A R  */
 
-.fdk-margin-top-no {
-    margin-top: 0px;
+.fdk-calendar {
+    background-color: var(--color0);
+    padding: 20px;
+    border-radius: 3px;
+    display: inline-block;
 }
 
-.fdk-margin-top {
-    margin-top: 20px;
+.fdk-calendar-container-arrow {
+    width: 20%;
+    height: auto;
+    float: left;
+    border: 1px solid black;
 }
 
-.fdk-margin-top-double {
-    margin-top: 40px;
+.fdk-calendar-container-text {
+    width: 60%;
+    height: auto;
+    float: left;
 }
 
-.fdk-margin-top-triple {
-    margin-top: 40px;
+.fdk-button-arrow {
+    background-color: var(--color5);
+    padding: 5px 6px;
+	font-size: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 20px;
+    border: 3px solid var(--color0);
+    display: inline-block;
 }
 
-.fdk-margin-bottom-no {
-    margin-bottom: 0px;
-}
-
-.fdk-margin-bottom {
-    margin-bottom: 20px;
-}
-
-.fdk-margin-bottom-double {
-    margin-bottom: 40px;
-}
-
-.fdk-margin-bottom-triple {
-    margin-bottom: 60px;
+.fdk-button-arrow:hover {
+    border-color: var(--color5);
 }

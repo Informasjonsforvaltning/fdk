@@ -142,6 +142,11 @@
     color: var(--color1);
 }
 
+.designsystemColorCta4 {
+    background-color: var(--color-cta4);
+    color: var(--color1);
+}
+
 .designsystemColorGreen {
     background-color: var(--color-green);
     color: var(--color1);

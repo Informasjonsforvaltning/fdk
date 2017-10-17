@@ -124,24 +124,30 @@ export default class App extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3">
-                <a
-                  href="https://www.brreg.no/personvernerklaering/"
-                >
-                  {localization.footer.information}<br />
-                  {localization.footer.privacy}
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
+                <p className="fdk-p-footer">
+                  <a
+                    href="https://www.brreg.no/personvernerklaering/"
+                  >
+                    {localization.footer.information}<br />
+                    {localization.footer.privacy}
+                    <i className="fa fa-external-link fdk-fa-right" />
+                  </a>
+                </p>
               </div>
               <div className="col-md-6 text-center">
-                {localization.footer.information_text}
+                <p className="fdk-p-footer">
+                  {localization.footer.information_text}
+                </p>
               </div>
               <div className="col-md-3 text-right">
-                <a
-                  href="mailto:felleskatalog@brreg.no"
-                >
-                  <div>{localization.footer.contact}</div>
-                  {localization.footer.mail}
-                </a>
+                <p className="fdk-p-footer">
+                  <a
+                    href="mailto:felleskatalog@brreg.no"
+                  >
+                    <div>{localization.footer.contact}</div>
+                    {localization.footer.mail}
+                  </a>
+                </p>
               </div>
             </div>
           </div>
