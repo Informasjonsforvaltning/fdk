@@ -23,6 +23,7 @@ public class DcatReader {
 
     public DcatReader(Model model, String codeServiceHost, String httpUsername, String httpPassword) {
         this.model = model;
+
         // Retrieve all codes from elasticsearch.
         logger.debug("reading themes from: {}",codeServiceHost);
         dataThemes = RetrieveDataThemes.getAllDataThemes(codeServiceHost);

@@ -77,7 +77,7 @@ public class ImportController {
     protected final CatalogRepository catalogRepository;
 
     @Value("${application.themesServiceUrl}")
-    private String  THEMES_SERVICE_URL = "http://error.themes.service.url.not.set";
+    private String  THEMES_SERVICE_URL = "http://localhost:8100";
 
     private final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
     final Map<String,DataTheme> allThemes = new HashMap<>();
@@ -210,8 +210,7 @@ public class ImportController {
 
     List<Dataset> parseDatasets(Model model) throws IOException {
 
-
-        DcatReader reader = new DcatReader(model, "http://localhost:8100", "user", "password");
+        DcatReader reader = new DcatReader(model, THEMES_SERVICE_URL, "user", "password");
 
         List<no.dcat.shared.Dataset> firstResult = reader.getDatasets();
         List<Dataset> result = new ArrayList<>();
@@ -222,217 +221,10 @@ public class ImportController {
             result.add(d);
         });
 
-        /*
-        // using owl ontology to get inverse relations from dataset to catalogId
-        InfModel modelWithInverseCatalogRelations = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), owlSchema, model);
-
-        String json = frame(DatasetFactory.create(modelWithInverseCatalogRelations),
-                IOUtils.toString(new ClassPathResource("frames/dataset.json").getInputStream(), "UTF-8"));
-
-        logger.trace("json after frame: {}",json);
-        String preprocessedJson = preProcessDatasetAttributes(json);
-
-        logger.trace("json after preprocessing: {}", preprocessedJson);
-
-        List<Dataset> result = new Gson().fromJson(preprocessedJson, FramedDataset.class).getGraph();
-
-        postprosessDatasetAttributes(result);
-
-        */
         logger.trace("Result frame transformation: {}", new GsonBuilder().setPrettyPrinting().create().toJson(result));
         logger.info("parsed {} datasets from RDF import", result.size());
 
         return result;
-    }
-
-    private String preProcessDatasetAttributes(String json) {
-        Gson gson = new GsonBuilder().create();
-
-        JsonObject model = gson.fromJson(json, JsonObject.class);
-        JsonArray datasets = model.getAsJsonArray("@graph");
-
-        datasets.forEach( (JsonElement dataset) -> {
-            // preprocess temporals because framing cannot convert object structure
-            JsonArray temporals = dataset.getAsJsonObject().getAsJsonArray("temporal");
-            if (temporals != null) {
-                temporals.forEach((JsonElement t) -> {
-                    JsonElement hasBeginning = t.getAsJsonObject().getAsJsonObject("owt:hasBeginning").getAsJsonObject("owt:inXSDDateTime").getAsJsonPrimitive("@value");
-                    JsonElement hasEnd = t.getAsJsonObject().getAsJsonObject("owt:hasEnd").getAsJsonObject("owt:inXSDDateTime").getAsJsonPrimitive("@value");
-                    t.getAsJsonObject().add("startDate", hasBeginning);
-                    t.getAsJsonObject().add("endDate", hasEnd);
-                });
-            }
-
-            JsonObject publisher = dataset.getAsJsonObject().getAsJsonObject("publisher");
-            if (publisher != null) {
-                JsonElement publisherName = publisher.get("name");
-                if (publisherName != null && publisherName instanceof JsonArray) {
-                    logger.warn("Publisher has multiple names: {}", publisherName.toString());
-                    JsonArray nameArray = (JsonArray) publisherName;
-                    if (nameArray.size() >= 1) {
-                        publisher.add("name", nameArray.get(0));
-                    }
-                }
-            }
-
-            // handle SkosConcepts: conformsTo
-            handleSkosConcepts(dataset, "conformsTo");
-            handleSkosConcepts(dataset, "subject");
-            handleSkosConcepts(dataset, "legalBasisForRestriction");
-            handleSkosConcepts(dataset, "legalBasisForProcessing");
-            handleSkosConcepts(dataset, "legalBasisForAccess");
-            handleSkosConcepts(dataset, "informationModel");
-
-            // handle extension to DCAT-AP-NO 1.1 - multiple formats
-            JsonArray distributions = dataset.getAsJsonObject().getAsJsonArray("distribution");
-            if (distributions != null) {
-                distributions.forEach(distribution -> {
-                    try {
-                        JsonPrimitive format = distribution.getAsJsonObject().getAsJsonPrimitive("dct:format");
-                        JsonArray array = new JsonArray();
-                        array.add(format);
-                        distribution.getAsJsonObject().add("format", array);
-                    } catch (ClassCastException cce) {
-                        // do nothing. Format is either missing or is an array already
-                    }
-
-
-                    handleSkosConcepts(distribution, "conformsTo");
-                });
-
-
-            }
-
-
-        });
-
-        return gson.toJson(model);
-    }
-
-    /**
-     * Converts arrays of string(uris) to SkosConcepts with uri.
-     *
-     * No attempt at guessing prefLabel.
-     *
-     * @param dataset
-     * @param propertyName
-     */
-    void handleSkosConcepts(JsonElement dataset, String propertyName) {
-        JsonArray conformsTo = dataset.getAsJsonObject().getAsJsonArray(propertyName);
-        if (conformsTo != null) {
-            JsonArray arry = new JsonArray();
-            conformsTo.forEach(element -> {
-                if (element instanceof JsonPrimitive) {
-
-                    // assume array of uris
-                    String uri = element.getAsString();
-                    JsonObject newSkosConcept = new JsonObject();
-                    newSkosConcept.addProperty("uri", uri);
-                    arry.add(newSkosConcept);
-                }
-            });
-            if (arry.size()>0) {
-                dataset.getAsJsonObject().add(propertyName, arry);
-            }
-        }
-    }
-
-    void postprosessDatasetAttributes(List<Dataset> result) {
-        try {
-            fetchCodes();
-        } catch (CodesImportException e) {
-            logger.error("Fetch codes failed: {}", e.getLocalizedMessage(), e);
-        }
-
-        result.forEach(d -> {
-            // Postprocess keywords
-            if (d.getKeyword() != null) {
-                d.getKeyword().forEach(k -> {
-                    String lang = k.get("@language");
-                    String value = k.get("@value");
-                    k.clear();
-                    k.put(lang, value);
-                });
-            }
-
-            // themes
-            if (d.getTheme() != null) {
-                for (no.dcat.shared.DataTheme theme : d.getTheme()) {
-                    DataTheme themeWithLabel = allThemes.get(theme.getUri());
-
-                    if (themeWithLabel != null) {
-                        theme.setTitle(themeWithLabel.getTitle());
-                        theme.setCode(themeWithLabel.getCode());
-                    }
-                }
-            }
-
-            // accrualPeriodicity
-            if (d.getAccrualPeriodicity() != null) {
-                String code = d.getAccrualPeriodicity().getUri();
-                d.getAccrualPeriodicity().setPrefLabel(getLabelForCode("frequency", code));
-            }
-            if (d.getLanguage() != null) {
-                d.getLanguage().forEach(lang -> {
-                    lang.setPrefLabel(getLabelForCode("linguisticsystem", lang.getUri()));
-                });
-            }
-            if (d.getProvenance() != null) {
-                d.getProvenance().setPrefLabel(getLabelForCode("provenancestatement", d.getProvenance().getUri()));
-            }
-            if (d.getAccessRights() != null) {
-                d.getAccessRights().setPrefLabel(getLabelForCode("rightsstatement", d.getAccessRights().getUri()));
-            }
-
-        });
-    }
-
-
-    void fetchCodes() throws CodesImportException {
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<List<String>> codeTypesResponse = restTemplate.exchange(THEMES_SERVICE_URL + "codes",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {});
-
-        if (codeTypesResponse.getStatusCode() != HttpStatus.OK) {
-            throw new CodesImportException(String.format("Cannot access themes service for code types. Error %d",codeTypesResponse.getStatusCodeValue()));
-        }
-
-        for (String type : codeTypesResponse.getBody()) {
-            logger.debug("fetching {}", type);
-            ResponseEntity<List<SkosCode>> responseEntity = restTemplate.exchange(THEMES_SERVICE_URL + "codes/" + type,
-                    HttpMethod.GET, null, new ParameterizedTypeReference<List<SkosCode>>() {});
-            logger.debug("found {} SkosCode", responseEntity.getBody());
-
-            if (responseEntity.getStatusCode() != HttpStatus.OK) {
-                throw new CodesImportException(String.format("Cannot access themes service for code type %s. Error %d",type, responseEntity.getStatusCodeValue()));
-            }
-
-            List<SkosCode> codelist = responseEntity.getBody();
-            pruneLanguages(codelist);
-
-            logger.debug("pruned codes {}",codelist);
-
-            Map<String, SkosCode> codeMap = new HashMap<>();
-            codelist.forEach(skosCode -> {
-                codeMap.put(skosCode.getUri(), skosCode);
-            });
-
-            allCodes.put(type,codeMap);
-        }
-
-        // fetch themes
-        ResponseEntity<List<DataTheme>> themesResponseEntity = restTemplate.exchange(THEMES_SERVICE_URL + "/themes",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<DataTheme>>() {});
-
-        if (themesResponseEntity.getStatusCode() != HttpStatus.OK) {
-            throw new CodesImportException(String.format("Cannot access themes service for code types. Error %d", codeTypesResponse.getStatusCodeValue()));
-        }
-
-        for (DataTheme theme: themesResponseEntity.getBody()) {
-            allThemes.put(theme.getId(), theme);
-        }
-
     }
 
     private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");

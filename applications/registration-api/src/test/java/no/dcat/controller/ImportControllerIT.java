@@ -10,6 +10,7 @@ import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public class ImportControllerIT {
     private static Logger logger = LoggerFactory.getLogger(ImportControllerIT.class);
 
+    Model model;
+
     @Autowired
     ImportController importController ;
 
@@ -50,10 +53,22 @@ public class ImportControllerIT {
     @Before
     public void before() {
         catalogRepository.deleteAll();
+        model = FileManager.get().loadModel("export.jsonld");
     }
 
     @Test
-    public void dummyTest(){}
+    public void importDatasets() throws IOException {
+        List<Dataset> ds = importController.parseDatasets(model);
+
+        assertThat(ds.size(), is(27));
+    }
+
+    @Test
+    public void importCatalog() throws IOException {
+        List<Catalog> ds = importController.parseCatalogs(model);
+
+        assertThat(ds.size(), is(1));
+    }
 
 //    @Test
 //    public void importCatalogOK() throws Throwable {

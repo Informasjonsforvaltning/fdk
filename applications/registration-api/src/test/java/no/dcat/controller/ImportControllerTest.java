@@ -4,17 +4,13 @@ package no.dcat.controller;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.shared.SkosCode;
-import no.dcat.model.exceptions.CodesImportException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,18 +21,11 @@ import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isNotNull;
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 public class ImportControllerTest {
     static Logger logger = LoggerFactory.getLogger(ImportControllerTest.class);
@@ -52,40 +41,7 @@ public class ImportControllerTest {
         importController = Mockito.spy(imp);
     }
 
-
     @Test
-    public void importDataset() throws IOException {
-        Mockito.doNothing().when(importController).postprosessDatasetAttributes(Matchers.anyObject());
-        List<Dataset> ds = importController.parseDatasets(model);
-
-        assertThat(ds.size(), is(27));
-    }
-
-    @Test
-    public void framingCatalog() throws IOException {
-        Mockito.doNothing().when(importController).postprosessDatasetAttributes(Matchers.anyObject());
-        List<Catalog> ds = importController.parseCatalogs(model);
-
-        assertThat(ds.size(), is(1));
-    }
-
-    @Test(expected = CodesImportException.class)
-    public void fetchOfCodesFails() throws Throwable {
-        Mockito.doThrow(new CodesImportException("test")).when(importController).fetchCodes();
-
-        importController.fetchCodes();
-    }
-
-
-    @Test(expected = ResourceAccessException.class)
-    public void fetchOfCodesFailsURLNotValid() throws Throwable {
-
-        importController.fetchCodes();
-    }
-
-
-    @Test
-    @Ignore
     public void publisherContainsMultipleNamesWhenOnlyOneIsExpected() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
@@ -94,7 +50,6 @@ public class ImportControllerTest {
         Map<String,String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");
 
-        doNothing().when(iController).fetchCodes();
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
 
         List<Dataset> ds = iController.parseDatasets(model);
@@ -111,7 +66,6 @@ public class ImportControllerTest {
         Map<String,String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");
 
-        doNothing().when(iController).fetchCodes();
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
 
         List<Dataset> ds = iController.parseDatasets(model);
