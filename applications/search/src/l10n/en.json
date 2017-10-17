@@ -1,12 +1,13 @@
 {
   "app": {
     "title": "Norwegian Data Catalog",
-    "titleSub": "Datasets from publishers in Norway",
+    "titleSub": "Datasets from publishers in Norway.",
     "publisher": "Choose by publisher",
-    "menu": "Menu"
+    "menu": "Menu",
+    "readMore": "Read more about "
   },
   "beta": {
-    "first": "This is a beta version. Please give us",
+    "first": "This is a beta version. Please give us ",
     "second": "feedback",
     "last": "about the application!"
   },
@@ -28,8 +29,10 @@
     "title": "Log in"
   },
   "about": {
-    "about": "About",
-    "title": "About the application",
+    "about": "Om Felles datakatalog",
+    "title": "Overordnet tekst FDK",
+    "ingress": "Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.",
+    "maintext": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang. Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
     "help": "Help",
     "status":"Status implementation",
     "standard":"The DCAT-AP-NO 1.1 standard",
@@ -43,8 +46,9 @@
     "next": "Next page",
     "prev": "Previous page",
     "result.summary": "",
-    "dataset":"results"
-
+    "dataset":"results",
+    "nosearch.summary":"Søk blant",
+    "nosearch.descriptions":"datasettbeskrivelser"
   },
   "facet": {
     "organisation":"ORGANISATION",
@@ -67,7 +71,9 @@
     "organisation.number": "Organisation number:",
     "information": "Information capsules",
     "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
-    "mail": "fellesdatakatalog@brreg.no"
+    "mail": "fellesdatakatalog@brreg.no",
+    "privacy": " and privacy",
+    "contact": "Contact:"
   },
   "sort": {
     "by": "Sort by",
@@ -89,8 +95,11 @@
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
-      "format": "Format",
-      "accessUrl": "Tilgangsurl"
+      "format": "Tilgjengelige format",
+      "accessUrl": "TilgangsURL",
+      "license": "Innholdsstandard",
+      "page": "Mer informasjon om denne distribusjonen",
+      "standard": "Standard"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",
