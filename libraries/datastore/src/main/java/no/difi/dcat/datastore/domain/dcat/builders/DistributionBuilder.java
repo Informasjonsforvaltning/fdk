@@ -5,19 +5,16 @@ import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Collections.singletonList;
 
 public class DistributionBuilder extends AbstractBuilder {
 
@@ -74,17 +71,17 @@ public class DistributionBuilder extends AbstractBuilder {
 
             dist.setTitle(extractLanguageLiteral(distResource, DCTerms.title));
             dist.setDescription(extractLanguageLiteral(distResource, DCTerms.description));
-            dist.setAccessURL(asList(extractAsString(distResource, DCAT.accessUrl)));
+            dist.setAccessURL(singletonList(extractAsString(distResource, DCAT.accessUrl)));
             dist.setLicense(SkosConcept.getInstance(extractAsString(distResource, DCTerms.license),""));
 
             dist.setConformsTo(extractSkosConcept(distResource, DCTerms.conformsTo));
             dist.setPage(extractSkosConcept(distResource, FOAF.page));
-            dist.setFormat(asList(extractAsString(distResource, DCTerms.format)));
+            dist.setFormat(singletonList(extractAsString(distResource, DCTerms.format)));
 
             dist.setType(extractAsString(distResource, DCTerms.type));
 
         }
-        if (dataset != null && dataset != null) {
+        if (dataset != null) {
             dist.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
         }
 

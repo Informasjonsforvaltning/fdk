@@ -3,27 +3,18 @@ package no.dcat.controller;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.shared.DataTheme;
-import no.dcat.shared.SkosCode;
 import no.dcat.model.exceptions.CatalogNotFoundException;
-import no.dcat.model.exceptions.CodesImportException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
-import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.SkosCode;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
-import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.reasoner.ReasonerRegistry;
 import org.apache.jena.riot.JsonLDWriteContext;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
@@ -36,30 +27,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -113,7 +92,7 @@ public class ImportController {
         error.setErrorCode(HttpStatus.BAD_REQUEST.value());
         error.setMessage(ex.getMessage());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {CatalogNotFoundException.class, DatasetNotFoundException.class })
@@ -122,7 +101,7 @@ public class ImportController {
         error.setErrorCode(HttpStatus.NOT_FOUND.value());
         error.setMessage(ex.getMessage());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     private Catalog importDatasets(String catalogId, URL url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
@@ -152,14 +131,12 @@ public class ImportController {
 
         List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
 
-        if (importedDatasets.size() == 0) {
+        if (importedDatasets.isEmpty()) {
             throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalogId %s", catalogId ));
         }
 
         List<no.dcat.shared.Dataset> theList = new ArrayList<>();
-        importedDatasets.forEach(d -> {
-            theList.add(d);
-        });
+        theList.addAll(importedDatasets);
         catalogToImportTo.setDataset(theList);
 
         return catalogToImportTo;

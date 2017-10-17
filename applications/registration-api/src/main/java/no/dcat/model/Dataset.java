@@ -3,7 +3,7 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -11,12 +11,11 @@ import org.springframework.hateoas.core.Relation;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 
 @Document(indexName = "register", type = Dataset.ELASTIC_TYPE)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Relation(collectionRelation = "datasets")
-@ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Dataset extends no.dcat.shared.Dataset {
 
@@ -39,9 +38,9 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     public Dataset() {
         super();
-        setTitle(Collections.EMPTY_MAP);
-        setDescription(Collections.EMPTY_MAP);
-        setObjective(Collections.EMPTY_MAP);
+        setTitle(Collections.emptyMap());
+        setDescription(Collections.emptyMap());
+        setObjective(Collections.emptyMap());
     }
 
     public Dataset(String id) {

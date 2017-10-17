@@ -1,22 +1,8 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
-import no.dcat.shared.DataTheme;
-import no.dcat.shared.Dataset;
-import no.dcat.shared.Distribution;
-import no.dcat.shared.QualityAnnotation;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.Types;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import no.dcat.shared.*;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.*;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
@@ -24,9 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Collections.singletonList;
 
 public class DatasetBuilder extends AbstractBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DatasetBuilder.class);
@@ -101,15 +88,15 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setDescription(extractLanguageLiteral(resource, DCTerms.description));
             ds.setObjective(extractLanguageLiteral(resource, DCATNO.objective));
 
-            ds.setContactPoint(asList(extractContact(resource)));
+            ds.setContactPoint(singletonList(extractContact(resource)));
             ds.setKeyword(extractKeywords(resource, DCAT.keyword));
             ds.setPublisher(extractPublisher(resource));
 
             ds.setIssued(extractDate(resource, DCTerms.issued));
             ds.setModified(extractDate(resource, DCTerms.modified));
 
-            ds.setLanguage(asList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
-            ds.setLandingPage(asList(extractAsString(resource, DCAT.landingPage)));
+            ds.setLanguage(singletonList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
+            ds.setLandingPage(singletonList(extractAsString(resource, DCAT.landingPage)));
             ds.setTheme(extractTheme(resource, DCAT.theme, dataThemes));
 
             // distributions handled externally

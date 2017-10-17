@@ -2,19 +2,13 @@ package no.dcat.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import no.dcat.shared.Publisher;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Document(indexName = "register", type = Catalog.ELASTIC_TYPE)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Catalog extends no.dcat.shared.Catalog {
