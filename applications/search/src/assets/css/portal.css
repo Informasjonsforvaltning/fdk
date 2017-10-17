@@ -137,7 +137,7 @@
 }
 
 .fdk-label-distribution {
-	padding: 14px 18px;
+	padding: 10px 14px;
 	margin: 6px 2px 0px 0px;
 	color: var(--color1);
 	size: 1.4rem;
@@ -145,6 +145,23 @@
 	border-radius: 5px;
 	size: auto;
 	display: inline-block;
+	border: 2px dotted;
+}
+
+.fdk-label-distribution-offentlig {
+	border-color: var(--color-green);
+}
+
+.fdk-label-distribution-begrenset {
+	border-color: var(--color-yellow);
+}
+
+.fdk-label-distribution-skjermet {
+	border-color: var(--color-red);
+}
+
+.fdk-label-distribution-testdata {
+	border-color: var(--color1);
 }
 
 .fdk-row {
@@ -173,6 +190,10 @@
 }
 
 
+.fdk-button-page {
+	width: 50px;
+}
+
 
 /*  T Y P O G R A P H Y  */
 
@@ -180,7 +201,7 @@
     font-weight: 400;
     border-bottom: 1px solid var(--color3);
     padding: 0.4rem 0 0.8rem 0;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.6rem;    
 }
 
 .fdk-icon-detail-big {
@@ -198,37 +219,4 @@
 	font-weight: 700;
 	text-transform: uppercase;
 	margin-right: 6px;
-}
-
-.checkbox-replacement {
-    height: 16px;
-    width: 16px;
-    border: 1px solid #2D3741;
-    border-radius: 3px;
-}
-.checkbox label {
-  padding-left:0;
-}
-.checkbox label label {
-	margin-right: 4px;
-	vertical-align: middle;
-	background: #fff;
-	min-height: auto;
-}
-input:checked ~ .checkbox-replacement::after {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #2D3741;
-    left: 3px;
-    top: 6px;
-    border-radius: 3px;
-		content:'';
-}
-.checkbox label input[type="checkbox"]{
-  position: absolute;
-  left:-9999px;
-}
-.sk-hits-grid {
-	margin-top: 7px;
 }
