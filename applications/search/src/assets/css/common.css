@@ -36,7 +36,7 @@ body {
     background-color: var(--color0);
     border-bottom: 1px solid var(--color5);
     padding: 20px 0px;
-    margin-bottom: 60px;
+    margin: 0;
 }
 
 .fkd-header-right {
@@ -45,6 +45,17 @@ body {
 
 .fdk-header-padding {
     padding-top: 10px;
+}
+
+.fdk-container-path {
+    padding: 10px 0px;
+    margin: 0px 0px 50px 0px;
+}
+
+.fdk-logo {
+    width: 155px;
+    height: 60px;
+    margin: -10px 0px;
 }
 
 
@@ -80,14 +91,13 @@ body {
 }
 
 .fdk-button-default {
-    background-color: var(--color5);
+    background-color: var(--color-cta4);
     border-color: var(--color6);
 }
 
 .fdk-button-default:hover, .fdk-button-default:focus .fdk-button-default:active .open>.fdk-button-default {
     border-radius: 3px;
-    border: 3px solid var(--color5);
-    background-color: var(--color5);    
+    border: 3px solid var(--color-cta4);    
 }
 
 .fdk-button-cta {
@@ -102,8 +112,8 @@ body {
 }
 
 .fdk-button-inactive {
-    border: 1px dashed var(--color4);
-    color: var(--color4);
+    background-color: var(--color5);
+    color: var(--color4); 
     border-radius: 4px;
     margin: 0px 6px 6px 0px;
 }
@@ -121,7 +131,7 @@ body {
     background-color: var(--color1);
     color: var(--color0);
     text-shadow: none;
-    box-shadow: none;
+    box-shadow: none; 
 }
 
 
@@ -147,6 +157,7 @@ a > .fdk-button {
 }
 
 
+
 /* * * * *   L A B E L S   * * * * */
 
 .fdk-label {
@@ -159,6 +170,10 @@ a > .fdk-button {
     padding: 6px 8px 5px 8px;
     display: inline-block;
     margin: -1px 0px -1px 2px;
+}
+
+.fdk-label-on-grey {
+    background-color: var(--color4);
 }
 
 

@@ -160,6 +160,10 @@
 	border-color: var(--color-red);
 }
 
+.fdk-label-distribution-testdata {
+	border-color: var(--color1);
+}
+
 .fdk-row {
 	padding: 0px 15px;
 }
@@ -185,6 +189,10 @@
 	padding-left: 5rem;
 }
 
+
+.fdk-button-page {
+	width: 50px;
+}
 
 
 /*  T Y P O G R A P H Y  */
