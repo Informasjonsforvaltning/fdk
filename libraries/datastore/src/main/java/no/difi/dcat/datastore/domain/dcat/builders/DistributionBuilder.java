@@ -74,12 +74,12 @@ public class DistributionBuilder extends AbstractBuilder {
 
             dist.setTitle(extractLanguageLiteral(distResource, DCTerms.title));
             dist.setDescription(extractLanguageLiteral(distResource, DCTerms.description));
-            dist.setAccessURL(Arrays.asList(extractAsString(distResource, DCAT.accessUrl)));
+            dist.setAccessURL(asList(extractAsString(distResource, DCAT.accessUrl)));
             dist.setLicense(SkosConcept.getInstance(extractAsString(distResource, DCTerms.license),""));
 
             dist.setConformsTo(extractSkosConcept(distResource, DCTerms.conformsTo));
             dist.setPage(extractSkosConcept(distResource, FOAF.page));
-            dist.setFormat(Arrays.asList(extractAsString(distResource, DCTerms.format)));
+            dist.setFormat(asList(extractAsString(distResource, DCTerms.format)));
 
             dist.setType(extractAsString(distResource, DCTerms.type));
 

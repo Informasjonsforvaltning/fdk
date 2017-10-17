@@ -4,7 +4,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
-import no.difi.dcat.datastore.domain.dcat.data.CompleteCatalog;
+import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -45,7 +45,7 @@ public class RdfCatalogControllerTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         catalog = new Catalog();
-        BeanUtils.copyProperties(CompleteCatalog.getCompleteCatalog(), catalog);
+        BeanUtils.copyProperties(TestCompleteCatalog.getCompleteCatalog(), catalog);
 
         when(mockCR.findOne(anyString())).thenReturn((no.dcat.model.Catalog) catalog);
 

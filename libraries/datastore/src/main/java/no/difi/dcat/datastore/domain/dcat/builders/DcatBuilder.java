@@ -193,8 +193,17 @@ public class DcatBuilder {
             references.forEach(reference -> {
 
                 Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
-                Resource r = model.createResource(reference.getSource().getUri());
-                datRes.addProperty(referenceProperty, r);
+                if (reference.getSource() != null && reference.getSource().getPrefLabel() != null) {
+                    Resource r = model.createResource();
+                    r.addProperty(RDF.type, DCAT.Dataset);
+                    addLiterals(r, SKOS.prefLabel, reference.getSource().getPrefLabel());
+                    r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
+                    datRes.addProperty(referenceProperty, r);
+
+                } else {
+                    Resource r = model.createResource(reference.getSource().getUri());
+                    datRes.addProperty(referenceProperty, r);
+                }
 
             });
         }

@@ -53,6 +53,20 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+    public static <T> List<T> asList(T... elements) {
+        List<T> result = new ArrayList<>();
+        for (T el : elements) {
+            if (el != null) {
+                result.add(el);
+            }
+        }
+        if (result.size() > 0 ) {
+            return result;
+        }
+
+        return null;
+    }
+
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
         List<SkosConcept> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
@@ -67,15 +81,22 @@ public abstract class AbstractBuilder {
                 if (skosConcept.getProperty(DCTerms.source) != null) {
                     source = skosConcept.getProperty(DCTerms.source).getString();
                 }
-                result.add(SkosConcept.getInstance(source, prefLabel));
+                if (source != null) {
+                    result.add(SkosConcept.getInstance(source, prefLabel));
+                }
             } else {
                 result.add(SkosConcept.getInstance(statement.getObject().toString()));
             }
         }
-        return result;
+
+        if (result.size() > 0) {
+            return result;
+        }
+
+        return null;
     }
 
-    // TODO
+
     public static List<Subject> extractSubjects(Resource resource, Property property) {
         List<Subject> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
@@ -83,43 +104,66 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
 
             Subject subject = new Subject();
-            subject.setUri(statement.getObject().toString());
+            if (statement.getObject().isURIResource()) {
+                subject.setUri(statement.getObject().toString());
+            } else {
+                Resource subjectResource = statement.getObject().asResource();
+                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel ));
+                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
+                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
+                subject.setSource(extractAsString(subjectResource, DCTerms.source));
+                subject.setUri(subject.getSource());
+            }
 
             result.add(subject);
         }
 
-        return result;
+        if (result.size() > 0) {
+            return result;
+        }
+
+        return null;
     }
 
-    // TODO
+
     public static List<Reference> extractReferences(Resource resource, Map<String,SkosCode> referenceTypes) {
         List<Reference> result = new ArrayList<>();
 
-        referenceTypes.keySet().forEach( referenceType -> {
-            SkosCode reference = referenceTypes.get(referenceType);
+        Property[] propertyList = {
+                DCTerms.hasVersion, DCTerms.isVersionOf,
+                DCTerms.isPartOf, DCTerms.hasPart,
+                DCTerms.references, DCTerms.isReferencedBy,
+                DCTerms.replaces, DCTerms.isReplacedBy,
+                DCTerms.requires, DCTerms.isRequiredBy,
+                DCTerms.relation
+        };
 
-            Property[] propertyList = {DCTerms.hasVersion, DCTerms.isVersionOf, DCTerms.isPartOf, DCTerms.hasPart /* TODO complete */};
+        for (Property property : propertyList) {
+            StmtIterator iterator = resource.listProperties(property);
+            while (iterator.hasNext()) {
+                Statement statement = iterator.next();
 
-            for (Property property : propertyList) {
-                StmtIterator iterator = resource.listProperties(property);
-                while (iterator.hasNext()) {
-                    Statement statement = iterator.next();
+                SkosConcept source = new SkosConcept();
 
-                    SkosConcept source = new SkosConcept();
-                    source.setExtraType("dcat:Dataset");
+                source.setUri(extractAsString(statement.getResource(), DCTerms.source));
+                if (source.getUri() == null) {
                     source.setUri(statement.getObject().toString());
-                    SkosCode code = referenceTypes.get(property.getURI());
-
-                    Reference referenceElement = new Reference(code, source);
-                    result.add(referenceElement);
+                } else {
+                    source.setExtraType(extractAsString(statement.getResource(), DCAT.Dataset));
+                    source.setPrefLabel(extractLanguageLiteral(statement.getObject().asResource(), SKOS.prefLabel));
                 }
+
+                SkosCode code = referenceTypes.get(property.getURI());
+
+                Reference referenceElement = new Reference(code, source);
+                result.add(referenceElement);
             }
+        }
+        if (result.size() > 0) {
+            return result;
+        }
 
-
-        });
-
-
-        return result;
+        return null;
     }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
@@ -129,7 +173,10 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
             result.add(statement.getObject().toString());
         }
-        return result;
+        if (result.size() > 0) {
+            return result;
+        }
+        return null;
     }
 
 
@@ -140,7 +187,12 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
             map.put(statement.getLanguage(), statement.getString());
         }
-        return map;
+
+        if (map.keySet().size() > 0) {
+            return map;
+        }
+
+        return null;
     }
 
     public static List<String> extractTheme(Resource resource, Property property) {
@@ -301,7 +353,11 @@ public abstract class AbstractBuilder {
         } catch (Exception e) {
             logger.warn("Error when extracting property {} from resource {}", DCTerms.temporal, resource.getURI(), e);
         }
-        return result;
+        if (result.size() > 0) {
+            return result;
+        }
+
+        return null;
     }
 
 
@@ -354,21 +410,27 @@ public abstract class AbstractBuilder {
 
     protected static List<SkosCode> getCodes(Map<String, SkosCode> locations, List<String> locsUri) {
         List<SkosCode> result = new ArrayList();
+        if (locsUri != null) {
+            for (String locUri : locsUri) {
+                if (locUri == null || locUri.trim().equals("")) {
+                    continue;
+                }
+                SkosCode locCode = locations.get(locUri);
 
-        for (String locUri : locsUri) {
-            if (locUri == null || locUri.trim().equals("")) {
-                continue;
+                if (locCode == null) {
+                    logger.info("Location with uri {} does not exist and will be removed.", locsUri);
+                    continue;
+                }
+
+                result.add(locCode);
             }
-            SkosCode locCode = locations.get(locUri);
-
-            if (locCode == null) {
-                logger.info("Location with uri {} does not exist and will be removed.", locsUri);
-                continue;
-            }
-
-            result.add(locCode);
         }
-        return result;
+
+        if (result.size() > 0) {
+            return result;
+        }
+
+        return null;
     }
 
     protected static Map<String, String> getTitlesOfCode(Map<String, Map<String, SkosCode>> allCodes, String type, String codeKey) {

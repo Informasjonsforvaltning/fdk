@@ -9,7 +9,7 @@ import com.google.gson.JsonSerializer;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.difi.dcat.datastore.domain.dcat.data.CompleteCatalog;
+import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class DcatBuilderTest {
     public void convertCompleteCatalogToTurtleOK() throws Throwable {
         builder = new DcatBuilder();
         Catalog catalog = new Catalog();
-        BeanUtils.copyProperties(CompleteCatalog.getCompleteCatalog(), catalog);
+        BeanUtils.copyProperties(TestCompleteCatalog.getCompleteCatalog(), catalog);
 
         String actual = builder.transform(catalog, "TURTLE");
 
@@ -61,7 +61,7 @@ public class DcatBuilderTest {
     public void convertCompleteCatalogToJsonOK() throws Throwable {
         builder = new DcatBuilder();
         Catalog catalog = new Catalog();
-        BeanUtils.copyProperties(CompleteCatalog.getCompleteCatalog(), catalog);
+        BeanUtils.copyProperties(TestCompleteCatalog.getCompleteCatalog(), catalog);
 
         JsonSerializer<Date> ser = new JsonSerializer<Date>() {
             @Override

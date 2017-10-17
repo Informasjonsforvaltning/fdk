@@ -5,6 +5,7 @@ import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.service.CatalogRepository;
+import no.dcat.shared.Subject;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
@@ -53,11 +54,13 @@ public class ImportControllerIT {
     @Before
     public void before() {
         catalogRepository.deleteAll();
-        model = FileManager.get().loadModel("export.jsonld");
+
     }
 
     @Test
     public void importDatasets() throws IOException {
+        model = FileManager.get().loadModel("export.jsonld");
+
         List<Dataset> ds = importController.parseDatasets(model);
 
         assertThat(ds.size(), is(27));
@@ -65,10 +68,33 @@ public class ImportControllerIT {
 
     @Test
     public void importCatalog() throws IOException {
+        model = FileManager.get().loadModel("export.jsonld");
         List<Catalog> ds = importController.parseCatalogs(model);
 
         assertThat(ds.size(), is(1));
     }
+
+    @Test
+    public void importCatalogFromGdocSubjectOK() throws Throwable {
+        model = FileManager.get().loadModel("export-gdoc-2017-10-17.ttl");
+
+        List<Dataset> ds = importController.parseDatasets(model);
+
+        long countDatasetWithSubjects = ds.stream().filter(dataset -> { return dataset.getSubject().size() > 0;})
+                .peek(dataset -> {
+                    dataset.getSubject().forEach(subject -> {
+                        assertThat(subject.getUri(), is(notNullValue()));
+                    });
+                }).count();
+
+        logger.info("gdoc {} datasets, wheras {} has subject", ds.size(), countDatasetWithSubjects);
+
+        assertThat(countDatasetWithSubjects, is (17L));
+        assertThat(ds.size(), is (132));
+
+
+    }
+
 
 //    @Test
 //    public void importCatalogOK() throws Throwable {

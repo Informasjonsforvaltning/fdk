@@ -8,7 +8,7 @@ import no.dcat.shared.Types;
 import no.difi.dcat.datastore.domain.dcat.builders.CatalogBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.difi.dcat.datastore.domain.dcat.data.CompleteCatalog;
+import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -16,9 +16,7 @@ import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +36,7 @@ public class DatasetConverterTest {
 
     @BeforeClass
     public static void setup() {
-        catalog = CompleteCatalog.getCompleteCatalog();
+        catalog = TestCompleteCatalog.getCompleteCatalog();
 
         String catalogUri = catalog.getUri();
         expectedDataset = catalog.getDataset().get(0);
