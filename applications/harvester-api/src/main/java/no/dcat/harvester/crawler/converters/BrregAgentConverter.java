@@ -92,7 +92,7 @@ public class BrregAgentConverter {
                     collectFromUri(orgresource.getURI(), model, orgresource);
                 } else {
                     String orgnr = getOrgnr(model, orgresource);
-                    String url = publisherIdURI + orgnr + ".xml";
+                    String url = String.format(publisherIdURI, orgnr, ".xml");
                     logger.trace("Used dct:identifier to collect from {}", url);
                     collectFromUri(url, model, orgresource);
                 }
