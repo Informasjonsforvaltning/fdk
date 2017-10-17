@@ -7,3 +7,10 @@
 
 <http://difi.no/#enheten> a foaf:Agent ;
                           dct:identifier "991825827" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971040238>
+        a               foaf:Agent ;
+        dct:identifier  "971040238" ;
+        foaf:name       "Statens Kartverk"@no .
+
+<http://kartverket.no/#etdataset> dct:publisher <http://data.brreg.no/enhetsregisteret/enhet/971040238> .

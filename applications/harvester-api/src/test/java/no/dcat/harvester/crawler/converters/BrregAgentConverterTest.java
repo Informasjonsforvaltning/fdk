@@ -75,4 +75,16 @@ public class BrregAgentConverterTest {
 		assertEquals("Norge" , countryiter.next().asLiteral().getValue().toString());
 	}
 
+    @Test
+    public void testConvertOnRDFReplaceCanonicalName() throws Exception {
+        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
+        converter.collectFromModel(model);
+        NodeIterator nameiter = model.listObjectsOfProperty(
+                model.createResource("http://data.brreg.no/enhetsregisteret/enhet/971040238"),
+                model.createProperty("http://xmlns.com/foaf/0.1/name"));
+        assertEquals("Kartverket" , nameiter.next().asLiteral().getValue().toString());
+    }
+
+
 }
