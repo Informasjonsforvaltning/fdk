@@ -9,7 +9,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.hateoas.core.Relation;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -42,15 +41,15 @@ public class Dataset extends no.dcat.shared.Dataset {
         initialize();
     }
 
+    public Dataset(String id) {
+        this.setId(id);
+        initialize();
+    }
+
     private void initialize() {
         setTitle(new HashMap<>());
         setDescription(new HashMap<>());
         setObjective(new HashMap<>());
-    }
-
-    public Dataset(String id) {
-        this.setId(id);
-        initialize();
     }
 
     @Override
