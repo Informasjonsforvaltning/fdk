@@ -2,11 +2,6 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.HelpText;
 import no.dcat.themes.Controller;
-
-import static org.junit.Assert.*;
-
-import static org.hamcrest.Matchers.*;
-
 import org.apache.jena.shared.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by extkkj on 10.10.2017.
@@ -75,6 +73,14 @@ public class HelpTextControllerTest {
         assertTrue(helpTexts.stream().allMatch(helpText -> helpText.getShortdesc().containsKey("nb")));
     }
 
+    @Test
+    public void helpTextsMoreHasIds() throws Throwable {
+        List<HelpText> helpTexts = controller.helpTexts();
+        assertThat(helpTexts.get(0).getId(), is(notNullValue()));
+        assertThat(helpTexts.get(0).getURI(), is(notNullValue()));
+        assertTrue(helpTexts.get(0).getURI().toString().contains(helpTexts.get(0).getId()));
+
+    }
 
 
 }
