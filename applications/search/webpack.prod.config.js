@@ -71,10 +71,11 @@ module.exports = {
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
       {
-        test: /\.(jpg|png|svg)$/,
-        loaders: [
-            'file-loader?name=[path][name].[ext]'
-        ]
+        test: /\.(png|jpg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: { limit: 10000 } // Convert images < 10k to base64 strings
+        }]
       }
     ]
   }
