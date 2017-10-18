@@ -45,17 +45,22 @@ export class InformationComponent implements OnInit {
       }
       this.informationForm = this.toFormGroup(this.dataset);
       this.informationForm.valueChanges.subscribe((information) => {
+        console.log('valueChanges!');
         information.subjects.forEach((subject) => {
+          console.log('for each subject, this.subjectLookupInProgress is ', this.subjectLookupInProgress);
           if((subject.indexOf('https://') !== -1 || subject.indexOf('http://') !== -1) && !this.subjectLookupInProgress) {
-            this.subjectLookupInProgress = true;
+            console.log('uri pasted!');
             let uri = subject; // it's http or https, it's a uri!
             let alreadyExists = false;
-            this.dataset.subjects.forEach((s)=>{
+            this.dataset.subjects && this.dataset.subjects.forEach((s)=>{
               if(s.uri === uri) alreadyExists = true;
             });
             if(alreadyExists) {
               console.log('uri pasted already exists in this dataset\'s subjects');
+              information.subjects.slice(-1);
+              this.setSubjectControlValues();
             } else {
+              this.subjectLookupInProgress = true;
               this.replaceUriWithLabel(uri).then((subjectObject) => {
                 this.dataset.subjects = this.dataset.subjects || [];
                 this.dataset.subjects.push(subjectObject);
