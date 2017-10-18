@@ -3,22 +3,27 @@
     [formGroup]="datasetForm">
     <div formArrayName="distributions">
         <div *ngFor="let distribution of distributions; let idx=index" style="margin-bottom: 7px; margin-top: 7px">
+            <br>
             <distribution
                 [distributionsFormArray]="distributionsFormArray"
                 [distribution]="distribution"
                 [distributionIndex]="idx"
                 [ui_visible]="true"
                 [showDelete]="showDelete"
+                [componentTitle]="componentTitle"
                 (deleteDistribution)="removeDistribution($event)" 
                 >
             </distribution>
-            <a href="#" (click)="addDistribution()">
-                <i class="fa fa-plus fdk-color-icon-cta fdk-fa-left"></i>Legg til ny distribusjon
-            </a>
-            <br>
-            <br>
-            <hr>
-            <br>
+            <div *ngIf="allowAdding">
+                <a href="#" (click)="addDistribution()">
+                    <i class="fa fa-plus fdk-color-icon-cta fdk-fa-left"></i>Legg til ny {{componentTitle}}
+                </a> 
+                <div *ngIf="distributions.length > 1 && idx != distributions.length - 1">
+                    <br>
+                    <br>
+                    <hr>
+                </div>
+            </div>       
         </div>
     </div>
 </div>

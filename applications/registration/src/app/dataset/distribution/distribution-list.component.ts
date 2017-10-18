@@ -20,8 +20,11 @@ export class DistributionListComponent implements OnInit {
     @Input('distributions')
     public distributions: Distribution[];
 
-    @Input('title')
-    public title: string;
+    @Input('componentTitle')
+    public componentTitle: string;
+
+    @Input('allowAdding')
+    public allowAdding: boolean;
     
     showDelete: boolean = false;    
 

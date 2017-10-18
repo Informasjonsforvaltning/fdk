@@ -128,6 +128,19 @@ export class DatasetComponent implements OnInit {
 
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
+      this.dataset.samples[0] = this.dataset.samples[0] || { 
+        id: Math.floor(Math.random() * 1000000).toString(),
+        uri: '',
+        type: '',
+        title: {'nb': ''},
+        description: {'nb': ''},
+        downloadURL: [] as string[],
+        accessURL: [] as string[],
+        format: [] as string[],
+        license: new SkosConcept(),
+        conformsTo: [new SkosConcept()] as SkosConcept[],
+        page: new SkosConcept()
+    }; 
       this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
       this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
@@ -154,8 +167,9 @@ export class DatasetComponent implements OnInit {
           });
 
           dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
-          
-          
+          console.log(dataset.samples);
+          dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
+          console.log(dataset.samples);
 
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");

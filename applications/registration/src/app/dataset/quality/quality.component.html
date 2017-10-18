@@ -11,11 +11,11 @@
         <div class="fdk-radio" *ngFor="let provenance of provenancesModel">
             <input
                 type="radio"
-                id="{{provenance.id}}"
+                id="provenanceSelector-{{provenance.id}}"
                 [checked]="provenance.id === selectedProvenanceIdx"
                 [value]="provenance.id"
                 formControlName="provenance">
-            <label for="{{provenance.id}}">
+            <label for="provenanceSelector-{{provenance.id}}">
                 {{provenance.label}}
             </label>
         </div>

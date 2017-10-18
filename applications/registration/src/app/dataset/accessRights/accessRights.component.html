@@ -17,10 +17,10 @@
                     <input
                         type="radio"
                         formControlName="accessRights"
-                        id="{{accessRight.id}}"
+                        id="accessRightSelector-{{accessRight.id}}"
                         [checked]="accessRight.id === selectedAccessRightIdx"
                         [value]="accessRight.id" />
-                    <label for="{{accessRight.id}}">
+                    <label for="accessRightSelector-{{accessRight.id}}">
                         {{accessRight.label}}
                     </label>
                 </div>

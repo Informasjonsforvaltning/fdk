@@ -1,15 +1,15 @@
 <div class="form-group"  class="distribution-form sub-form-group" [formGroup]="distributionForm">
     <div class="form-group" style="margin-bottom: 7px;">        
         <div class="form sub-form" *ngIf="showForm">
-            <div id="distributionTypeSelector">
+            <div id="distributionTypeSelector-for-{{componentTitle}}-{{distributionIndex}}">
                 <div class="fdk-radio" *ngFor="let type of typeModel">
                     <input
                         type="radio"
                         formControlName="type"
-                        id="{{type.id}}"
+                        id="distributionTypeSelector-for-{{componentTitle}}-{{distributionIndex}}-{{type.id}}"
                         [checked]="type.id === selectedTypeId"
                         [value]="type.label" />
-                    <label for="{{type.id}}">
+                    <label for="distributionTypeSelector-for-{{componentTitle}}-{{distributionIndex}}-{{type.id}}">
                         {{type.label}}
                     </label>
                 </div>
@@ -80,6 +80,6 @@
 <span class="delete-distribution-wrapper pull-right" *ngIf="showDelete">
     <a href="" class="delete-distribution-button"
         (click)="removeDistribution(distributionIndex)">
-        <i class="fa fa-trash fdk-color-icon-cta fdk-fa-left"></i>Slett distribusjon
+        <i class="fa fa-trash fdk-color-icon-cta fdk-fa-left"></i>Slett {{componentTitle}}
     </a>
 </span>
