@@ -34,7 +34,7 @@ branches:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true > /dev/null
       env:
         - comment=First build the project to look for syntax/build problems
 
