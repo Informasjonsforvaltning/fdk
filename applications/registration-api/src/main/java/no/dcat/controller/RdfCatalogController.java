@@ -46,7 +46,7 @@ public class RdfCatalogController {
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
 
-        logger.debug ("get rdf catalogId {} ",id);
+        logger.debug ("get rdf catalog {} ",id);
 
         Catalog catalog = catalogRepository.findOne(id);
 

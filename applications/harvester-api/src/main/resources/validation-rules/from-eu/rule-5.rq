@@ -1,6 +1,6 @@
 # Rule_ID:5
 # @title [Catalog] dcat:dataset should be a dcat:Dataset
-# @tag catalogId
+# @tag catalog
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 

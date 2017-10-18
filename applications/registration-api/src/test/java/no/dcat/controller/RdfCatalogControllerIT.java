@@ -55,23 +55,23 @@ public class RdfCatalogControllerIT {
     @Test
     public void catalogExportsOK() throws Exception {
         //
-//        Catalog catalogId = new Catalog();
+//        Catalog catalog = new Catalog();
 //        String id = "910244132";
-//        catalogId.setId(id);
+//        catalog.setId(id);
 //
 //        Map<String, String> description = new HashMap<>();
 //        description.put("no", "test");
-//        catalogId.setDescription(description);
+//        catalog.setDescription(description);
 //
 //        Map<String, String> title = new HashMap<>();
 //        title.put("no", "test");
-//        catalogId.setTitle(title);
+//        catalog.setTitle(title);
 //
 //        Catalog result = restTemplate.postForObject("/catalogs/", catalogId, Catalog.class);
 //
 //        assertNotNull(result.getId());
 //
-//        Catalog resultget = restTemplate.getForObject("/catalogs/" + catalogId.getId(), Catalog.class);
+//        Catalog resultget = restTemplate.getForObject("/catalogs/" + catalog.getId(), Catalog.class);
 //
 //        String catalogUrl = "/catalogs/" + resultget.getId();
 //

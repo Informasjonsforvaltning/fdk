@@ -132,7 +132,7 @@ public class ImportController {
         List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
 
         if (importedDatasets.isEmpty()) {
-            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalogId %s", catalogId ));
+            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId ));
         }
 
         List<no.dcat.shared.Dataset> theList = new ArrayList<>();
@@ -149,11 +149,11 @@ public class ImportController {
         Catalog catalogToImportTo = catalogs
                 .stream()
                 .filter(cat -> cat.getUri().contains(catalogId))
-                .peek(cat -> logger.debug("Found catalogId {} in external data", cat.toString()))
+                .peek(cat -> logger.debug("Found catalog {} in external data", cat.toString()))
                 .findFirst()
                 .orElseThrow(() -> new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
 
-        // Ignore imported catalogId attributes, i.e. copy over stored values to result
+        // Ignore imported catalog attributes, i.e. copy over stored values to result
         catalogToImportTo.setId(existingCatalog.getId());
         catalogToImportTo.setTitle(existingCatalog.getTitle());
         catalogToImportTo.setDescription(existingCatalog.getDescription());

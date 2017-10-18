@@ -2226,7 +2226,7 @@
           "dcat:distribution": [
             {
               "@type": "dcat:Distribution",
-              "dcat:accessURL": "http://thredds.data.npolar.no/thredds/catalogId/showAll/catalogId.html?dataset=CryoDatasetScan/CryoClim_GFA_SJ_1992-2011.nc",
+              "dcat:accessURL": "http://thredds.data.npolar.no/thredds/catalog/showAll/catalog.html?dataset=CryoDatasetScan/CryoClim_GFA_SJ_1992-2011.nc",
               "dcat:mediaType": null,
               "dc:title": "Glacier Firn Area Change",
               "dc:license": "http://creativecommons.org/licenses/by/4.0/",

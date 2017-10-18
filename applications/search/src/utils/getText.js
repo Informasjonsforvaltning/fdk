@@ -4,7 +4,7 @@ export function getText(langTextCode) {
   let langCode = typeof queryObj.lang === 'object' ? queryObj.lang[0] : queryObj.lang || 'nb';
   var langStrings = window.langStrings || {
     en: {
-      'Datakatalog': 'data catalogId'
+      'Datakatalog': 'data catalog'
     },
     nb: {
       'Datakatalog': 'Datakatalog'

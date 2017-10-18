@@ -37,7 +37,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @Controller
-@RequestMapping("/catalogs/{catalogId}/datasets")
+@RequestMapping("/catalogs/{catalog}/datasets")
 public class DatasetController {
 
     private static Logger logger = LoggerFactory.getLogger(DatasetController.class);
@@ -60,7 +60,7 @@ public class DatasetController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
+    public HttpEntity<Dataset> getDataset(@PathVariable("catalog") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
         if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {

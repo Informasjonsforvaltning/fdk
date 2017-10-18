@@ -1,6 +1,6 @@
 # Rule_ID:27
 # @title [Catalog] dcat:themeTaxonomy is a recommended property for Catalog
-# @tag catalogId
+# @tag catalog
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

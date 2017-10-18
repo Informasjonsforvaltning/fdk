@@ -40,7 +40,7 @@ public class DistributionBuilder extends AbstractBuilder {
         while (catalogIterator.hasNext()) {
             Resource catalog = catalogIterator.next();
 
-            //ResIterator datasetIterator = catalogId.getModel().listResourcesWithProperty(RDF.type, DCAT.Dataset);
+            //ResIterator datasetIterator = catalog.getModel().listResourcesWithProperty(RDF.type, DCAT.Dataset);
             StmtIterator datasetIterator = catalog.listProperties(DCAT.dataset);
 
 

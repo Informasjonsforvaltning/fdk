@@ -1,6 +1,6 @@
 # Rule_ID:99
 # @title [Catalog] dct:isPartOf has maximum cardinality of 1 for Catalog
-# @tag catalogId
+# @tag catalog
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>

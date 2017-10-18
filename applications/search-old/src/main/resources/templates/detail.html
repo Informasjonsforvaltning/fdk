@@ -202,8 +202,8 @@
                     <span th:each="id : ${dataset.identifier}" th:text="${id}"></span>
                 </dd>
 
-                <dt th:text="#{catalogId}">Katalog</dt>
-                <dd id="catalogName" th:text="${dataset.catalogId.title.get(pageLanguage)}"></dd>
+                <dt th:text="#{catalog}">Katalog</dt>
+                <dd id="catalogName" th:text="${dataset.catalog.title.get(pageLanguage)}"></dd>
 
             </dl>
         </div>

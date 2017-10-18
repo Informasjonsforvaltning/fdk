@@ -961,8 +961,8 @@ Dataene inneholder sensitive personopplysninger, og deles derfor ikke uten vider
     </dcat:dataset>
   </dcat:Catalog>
   <hydra:PagedCollection rdf:about="http://10.247.12.23:8983/catalog.xml?page=1">
-    <hydra:firstPage>http://10.247.12.23:8983/catalogId.xml?page=1</hydra:firstPage>
-    <hydra:lastPage>http://10.247.12.23:8983/catalogId.xml?page=1</hydra:lastPage>
+    <hydra:firstPage>http://10.247.12.23:8983/catalog.xml?page=1</hydra:firstPage>
+    <hydra:lastPage>http://10.247.12.23:8983/catalog.xml?page=1</hydra:lastPage>
     <hydra:itemsPerPage rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</hydra:itemsPerPage>
     <hydra:totalItems rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">58</hydra:totalItems>
   </hydra:PagedCollection>

@@ -1,6 +1,6 @@
 # Rule_ID:112
 # @title [Catalog] dcat:Catalog does not exist
-# @tag catalogId
+# @tag catalog
 
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 

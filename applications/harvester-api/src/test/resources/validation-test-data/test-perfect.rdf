@@ -8,9 +8,9 @@
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
 	xmlns:schema="http://schema.org/"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <rdf:Description rdf:about="http://nobelprize.org/datasets/dcat#catalogId">
+  <rdf:Description rdf:about="http://nobelprize.org/datasets/dcat#catalog">
     <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
-    <dct:title xml:lang="en">Nobel Media Dataset catalogId</dct:title>
+    <dct:title xml:lang="en">Nobel Media Dataset catalog</dct:title>
     <dct:description>A range of datasets maintained by Nobel Media AB </dct:description>
     <dcat:themeTaxonomy rdf:resource="http://eurovoc.europa.eu/"/>
     <dcat:dataset rdf:resource="http://nobelprize.org/datasets/dcat#ds1"/>

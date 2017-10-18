@@ -161,9 +161,9 @@ public class DatasetControllerIT {
 //    @Test
 //    @WithUserDetails("03096000854")
 //    public void deleteDatasetSuccess() throws Exception {
-//        Catalog catalogId = new Catalog();
+//        Catalog catalog = new Catalog();
 //        String catalogId = "910244132";
-//        catalogId.setId(catalogId);
+//        catalog.setId(catalogId);
 //        Catalog catResult = authorizedRestTemplate
 //                .postForObject("/catalogs/", catalogId, Catalog.class);
 //
