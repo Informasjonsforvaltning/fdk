@@ -185,9 +185,13 @@ public class ImportController {
         return new Gson().fromJson(json, FramedCatalog.class).getGraph();
     }
 
+    DcatReader getDcatReader(Model model) {
+        return new DcatReader(model, THEMES_SERVICE_URL, "user", "password");
+    }
+
     List<Dataset> parseDatasets(Model model) throws IOException {
 
-        DcatReader reader = new DcatReader(model, THEMES_SERVICE_URL, "user", "password");
+        DcatReader reader = getDcatReader(model);
 
         List<no.dcat.shared.Dataset> firstResult = reader.getDatasets();
         List<Dataset> result = new ArrayList<>();
@@ -198,7 +202,7 @@ public class ImportController {
             result.add(d);
         });
 
-        logger.trace("Result frame transformation: {}", new GsonBuilder().setPrettyPrinting().create().toJson(result));
+        logger.trace("Result from Dcat transformation: {}", new GsonBuilder().setPrettyPrinting().create().toJson(result));
         logger.info("parsed {} datasets from RDF import", result.size());
 
         return result;

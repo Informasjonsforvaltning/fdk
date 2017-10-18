@@ -87,12 +87,10 @@ public abstract class AbstractBuilder {
                 StmtIterator stmtIterator = skosConcept.listProperties(RDF.type);
                 while (stmtIterator.hasNext()) {
                     Statement typeStmnt = stmtIterator.next();
-                    if( typeStmnt != null && typeStmnt.getObject().toString().c("Concept")) {
+                    if( typeStmnt != null && !typeStmnt.getObject().toString().equals(SKOS.Concept.getURI())) {
                         type = typeStmnt.getObject().toString();
                     }
                 }
-
-
 
                 Map<String,String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
                 String source = null;
@@ -422,6 +420,10 @@ public abstract class AbstractBuilder {
     }
 
     protected static SkosCode getCode(Map<String, SkosCode> codes, String locUri) {
+        if (codes == null) {
+            return null;
+        }
+
         if (locUri == null || locUri.trim().equals("")) {
             return null;
         }

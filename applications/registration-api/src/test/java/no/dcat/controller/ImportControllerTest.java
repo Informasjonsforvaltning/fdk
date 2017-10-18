@@ -4,6 +4,7 @@ package no.dcat.controller;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.shared.SkosCode;
+import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
@@ -24,6 +25,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 
@@ -51,6 +53,7 @@ public class ImportControllerTest {
         prefLabel.put("no", "test");
 
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
+        doReturn(new DcatReader(model)).when(iController).getDcatReader(anyObject());
 
         List<Dataset> ds = iController.parseDatasets(model);
 
@@ -67,6 +70,7 @@ public class ImportControllerTest {
         prefLabel.put("no", "test");
 
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
+        doReturn(new DcatReader(model)).when(iController).getDcatReader(anyObject());
 
         List<Dataset> ds = iController.parseDatasets(model);
 

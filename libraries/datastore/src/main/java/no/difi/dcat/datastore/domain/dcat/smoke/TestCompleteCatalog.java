@@ -79,7 +79,7 @@ public class TestCompleteCatalog {
         contact.setOrganizationUnit("Avdeling for digitalisering");
 
         dataset.setContactPoint(Collections.singletonList(contact));
-        SkosConcept sosi =SkosConcept.getInstance("https://www.kartverket.no/geodataarbeid/standarder/sosi/", "SOSI", "dct:Standard");
+        SkosConcept sosi =SkosConcept.getInstance("https://www.kartverket.no/geodataarbeid/standarder/sosi/", "SOSI", DCTerms.Standard.getURI());
         dataset.setConformsTo(Collections.singletonList(sosi));
 
         dataset.setPublisher(publisher);

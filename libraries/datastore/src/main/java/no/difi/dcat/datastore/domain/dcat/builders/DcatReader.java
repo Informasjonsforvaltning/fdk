@@ -10,6 +10,7 @@ import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class DcatReader {
     private static Logger logger = LoggerFactory.getLogger(DcatReader.class);
 
     Map<String, DataTheme> dataThemes;
-    LoadLocations loadLocations;
+    Map<String, SkosCode> locations;
     Map<String, Map<String, SkosCode>> codes;
     Model model;
 
@@ -28,18 +29,26 @@ public class DcatReader {
         logger.debug("reading themes from: {}",codeServiceHost);
         dataThemes = RetrieveDataThemes.getAllDataThemes(codeServiceHost);
 
-        loadLocations = new LoadLocations(codeServiceHost, httpUsername, httpPassword);
+        LoadLocations loadLocations = new LoadLocations(codeServiceHost, httpUsername, httpPassword);
         loadLocations.addLocationsToThemes(model);
+        locations = loadLocations.getLocations();
 
         codes = RetrieveCodes.getAllCodes(codeServiceHost);
     }
 
+    public DcatReader(Model model) {
+        this.model = model;
+        dataThemes = new HashMap<>();
+        codes = new HashMap<>();
+        locations = new HashMap<>();
+    }
+
     public List<no.difi.dcat.datastore.domain.dcat.Distribution> getDistributions() {
-        return new DistributionBuilder(model, loadLocations.getLocations(), codes, dataThemes).build();
+        return new DistributionBuilder(model, locations, codes, dataThemes).build();
     }
 
     public List<Dataset> getDatasets() {
-        return new DatasetBuilder(model, loadLocations.getLocations(), codes, dataThemes).build();
+        return new DatasetBuilder(model, locations, codes, dataThemes).build();
     }
 
 }

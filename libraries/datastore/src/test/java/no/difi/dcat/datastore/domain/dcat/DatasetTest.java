@@ -82,15 +82,15 @@ public class DatasetTest {
     public void contactExists() {
         Contact actual = data.getContactPoint().get(0);
         Contact expected = new Contact();
-        expected.setId("http://data.brreg.no/datakatalog/kontaktpunkt/4");
+        expected.setUri("http://data.brreg.no/datakatalog/kontaktpunkt/4");
         expected.setFullname("Kontakt for Altinn");
-        expected.setHasTelephone("tel:+4775007500");
-        expected.setEmail("mailto:bjarne.base@brreg.no");
+        expected.setHasTelephone("+4775007500");
+        expected.setEmail("bjarne.base@brreg.no");
         expected.setOrganizationName("Skatt");
         expected.setOrganizationUnit("AAS");
         expected.setHasURL("httpd://skatt.no/schema");
 
-        Assert.assertEquals("id expected", expected.getId(), actual.getId());
+        Assert.assertEquals("id expected", expected.getUri(), actual.getUri());
         Assert.assertEquals("id expected", expected.getFullname(), actual.getFullname());
         Assert.assertEquals("id expected", expected.getHasTelephone(), actual.getHasTelephone());
         Assert.assertEquals("id expected", expected.getEmail(), actual.getEmail());

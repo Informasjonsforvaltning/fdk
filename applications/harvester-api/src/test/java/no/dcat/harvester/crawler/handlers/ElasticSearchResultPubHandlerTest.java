@@ -15,8 +15,6 @@ public class ElasticSearchResultPubHandlerTest {
     private static String result = "index {[dcat][publisher][http://data.brreg.no/enhetsregisteret/enhet/983887457], source[{\n" +
             "  \"overordnetEnhet\": \"814716872\",\n" +
             "  \"organisasjonsform\": \"ORGL\",\n" +
-            "  \"subPublisher\": [],\n" +
-            "  \"aggrSubPublisher\": [],\n" +
             "  \"id\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n" +
             "  \"name\": \"BR\"\n" +
             "}]}";
