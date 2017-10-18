@@ -37,7 +37,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @Controller
-@RequestMapping("/catalogs/{catalog}/datasets")
+@RequestMapping("/catalogs/{catalogId}/datasets")
 public class DatasetController {
 
     private static Logger logger = LoggerFactory.getLogger(DatasetController.class);
@@ -60,7 +60,7 @@ public class DatasetController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> getDataset(@PathVariable("catalog") String catalogId, @PathVariable("id") String id) {
+    public HttpEntity<Dataset> getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
         if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
@@ -71,7 +71,7 @@ public class DatasetController {
 
 
     /**
-     * Create new dataset in catalogId. ID for the dataset is created automatically.
+     * Create new dataset in catalog. ID for the dataset is created automatically.
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
@@ -83,7 +83,7 @@ public class DatasetController {
         Catalog catalog = catalogRepository.findOne(catalogId);
 
         if (catalog == null) {
-            throw new CatalogNotFoundException(String.format("Unable to create dataset, catalogId with id %s not found", catalogId));
+            throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
         Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalog);
@@ -129,7 +129,7 @@ public class DatasetController {
     }
 
     /**
-     * Modify dataset in catalogId.
+     * Modify dataset in catalog.
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
@@ -155,11 +155,11 @@ public class DatasetController {
     }
 
     /**
-     * Return list of all datasets in catalogId.
+     * Return list of all datasets in catalog.
      * Without parameters, the first 20 datasets are returned
      * The returned data contains paging hyperlinks.
      * <p>
-     * @param catalogId the id of the catalogId
+     * @param catalogId the id of the catalog
      * @param pageable number of datasets returned
      * @return List of data sets, with hyperlinks to other pages in search result
      */
