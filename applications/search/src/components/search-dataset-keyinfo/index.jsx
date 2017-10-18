@@ -32,7 +32,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
   _renderConformsTo() {
     let conformsToNodes = null;
     const conformsTo = this.props.conformsTo;
-    if (typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
+    if (conformsTo && conformsTo.length > 0) {
       conformsToNodes = conformsTo.map((item, index) => (
         <a
           key={`dataset-keyinfo-${index}`}

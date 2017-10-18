@@ -19,11 +19,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -31,6 +35,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ActiveProfiles("unit-integration")
@@ -41,6 +47,9 @@ public class ImportControllerIT {
     private static Logger logger = LoggerFactory.getLogger(ImportControllerIT.class);
 
     Model model;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
     ImportController importController ;
@@ -96,10 +105,23 @@ public class ImportControllerIT {
 
         assertThat(countDatasetWithSubjects, is (17L));
         assertThat(ds.size(), is (132));
-
-
     }
 
+
+    @Test
+    public void importOnlyDatasetsWithCatalog() throws  Throwable {
+        model = FileManager.get().loadModel("export-gdoc-2017-10-17.ttl");
+
+        String catalogId = "974760673";
+        Catalog targetCatalog = new Catalog();
+        targetCatalog.setId(catalogId);
+        catalogRepository.save(targetCatalog);
+
+        Catalog importCatalog = importController.importDatasets(catalogId,new URL("http://gdoc-fellesdatakatalog-ppe.ose-pc.brreg.no/versions/latest"));
+
+        assertThat(importCatalog.getId(), is(catalogId));
+
+    }
 
 //    @Test
 //    public void importCatalogOK() throws Throwable {

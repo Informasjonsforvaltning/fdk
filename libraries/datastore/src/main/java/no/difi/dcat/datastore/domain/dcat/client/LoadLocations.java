@@ -67,7 +67,7 @@ public class LoadLocations {
                 SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
                 locations.put(skosCode.getUri(), skosCode);
             } catch (Exception e) {
-                logger.error("Error posting location {} to themes", locationUri.getUri(), e);
+                logger.error("Error posting location {} to reference-data service", locationUri.getUri(), e);
             }
         });
 

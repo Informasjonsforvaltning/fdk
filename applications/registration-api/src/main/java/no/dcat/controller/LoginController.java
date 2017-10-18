@@ -127,13 +127,9 @@ public class LoginController {
             logger.info("Create catalog for {} ", orgnr);
             Catalog catalog = new Catalog(orgnr);
 
-            if (catalog.getTitle() == null) {
-                 catalog.setTitle(new HashMap<>());
-            }
-
             String organizationName = entityNameService.getOrganizationName(orgnr);
             if (organizationName != null) {
-                catalog.addTitle("no", "Datakatalog for " + organizationName);
+                catalog.getTitle().put("nb", "Datakatalog for " + organizationName);
             }
             return Optional.of(catalogController.createCatalog(catalog).getBody());
         }

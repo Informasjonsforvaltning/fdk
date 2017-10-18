@@ -11,6 +11,7 @@ import org.springframework.hateoas.core.Relation;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 
 @Document(indexName = "register", type = Dataset.ELASTIC_TYPE)
 @Data
@@ -38,9 +39,9 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     public Dataset() {
         super();
-        //setTitle(Collections.emptyMap());
-        //setDescription(Collections.emptyMap());
-        //setObjective(Collections.emptyMap());
+        setTitle(new HashMap<>());
+        setDescription(new HashMap<>());
+        setObjective(new HashMap<>());
     }
 
     public Dataset(String id) {

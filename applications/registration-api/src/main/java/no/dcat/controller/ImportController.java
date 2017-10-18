@@ -82,7 +82,7 @@ public class ImportController {
 
         catalog = importDatasets(catalogId, new URL(url));
 
-        logger.info("import request for {} finished", url);
+        logger.info("import request for {} finished. Found {} dataset to import", url, catalog.getDataset());
         return new ResponseEntity<>(catalog, HttpStatus.OK);
     }
 
@@ -104,7 +104,7 @@ public class ImportController {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    private Catalog importDatasets(String catalogId, URL url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
+    Catalog importDatasets(String catalogId, URL url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
         if(!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))){
             throw new MalformedURLException("Supports only http and https");
         }
@@ -139,6 +139,7 @@ public class ImportController {
         theList.addAll(importedDatasets);
         catalogToImportTo.setDataset(theList);
 
+
         return catalogToImportTo;
     }
 
@@ -167,7 +168,9 @@ public class ImportController {
         List<Dataset> datasets = parseDatasets(model);
 
         for (Dataset dataset : datasets) {
-            if (dataset.getCatalogId() != null && dataset.getCatalogId().contains(catalogId)) {
+            if (dataset.getCatalog() != null && dataset.getCatalog().getId().contains(catalogId) ) {
+                dataset.setCatalogId(catalogId);
+                dataset.setCatalog(null);
 
                 Dataset newDataset = datasetController.createAndSaveDataset(catalogId, dataset, catalogToImportTo);
                 importedDatasets.add(newDataset);

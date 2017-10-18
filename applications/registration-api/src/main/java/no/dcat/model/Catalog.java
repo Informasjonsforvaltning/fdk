@@ -17,17 +17,14 @@ public class Catalog extends no.dcat.shared.Catalog {
     public static final String ELASTIC_TYPE = "catalog";
 
     public Catalog(String orgnr) {
+        setTitle(new HashMap<>());
+        setDescription(new HashMap<>());
         this.setId(orgnr);
     }
 
     public Catalog() {
         // Default constructor needed for frameworks
-    }
-
-    public void addTitle(String language, String title) {
-        if (this.getTitle() == null) {
-            this.setTitle(new HashMap<>());
-        }
-        this.getTitle().put(language, title);
+        setTitle(new HashMap<>());
+        setDescription(new HashMap<>());
     }
 }
