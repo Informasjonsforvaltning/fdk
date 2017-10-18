@@ -30,25 +30,12 @@ public class HelpText {
         return URI.create(id);
     }
 
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Map<String, String> getShortdesc() {
         return shortdesc;
     }
 
-    public void setShortdesc(Map<String, String> shortdesc) {
-        this.shortdesc = shortdesc;
-    }
-
     public Map<String, String> getDescription() {
         return description;
-    }
-
-    public void setDescription(Map<String, String> description) {
-        this.description = description;
     }
 
 }
