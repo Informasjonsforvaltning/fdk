@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,7 +127,10 @@ public class LoginController {
             logger.info("Create catalog for {} ", orgnr);
             Catalog catalog = new Catalog(orgnr);
             if (entityNameService.getOrganizationName(orgnr) != null) {
-                if (catalog.getTitle() == null) catalog.setTitle(Collections.emptyMap());
+                if (catalog.getTitle() == null) {
+                    catalog.setTitle(new HashMap<>());
+                }
+
                 catalog.getTitle().put("nb", "Datakatalog for " + entityNameService.getOrganizationName(orgnr));
             }
             return Optional.of(catalogController.createCatalog(catalog).getBody());

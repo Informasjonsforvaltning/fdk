@@ -1,23 +1,23 @@
 <div class="row">
-  <div class="col-md-12" *ngIf="catalogId">
-    <div class="" *ngIf="catalogId">
+  <div class="col-md-12" *ngIf="catalog">
+    <div >
       <div class="">
         <div class="form-group">
           <h1>
-            <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalogId.title[language]"/>
+            <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]"/>
           </h1>
         </div>
       </div>
       <div>
-        <h4>Eies av {{catalogId.publisher.name}}</h4>
+        <h4>Eies av {{catalog.publisher.name}}</h4>
       </div>
       <div class="fdk-container fdk-container-collapsed" style="margin-top:20px" (click)="descriptionExpanded = !descriptionExpanded; " [hidden]="descriptionExpanded">
-        <span>{{catalogId.description[language]}}</span>
+        <span>{{catalog.description[language]}}</span>
       </div>
       <div class="fdk-container fdk-container-expanded" style="margin-top:20px" [hidden]="!descriptionExpanded">
         <label class="fdk-input-label">Beskrivelse <span class="fdk-obligatorisk">Obligatorisk</span></label>
         <p class="fdk-input-helptext">Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte. Flere anbefalinger.</p>
-        <textarea class="" (blur)="descriptionExpanded = !descriptionExpanded" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalogId.description[language]'></textarea>
+        <textarea class="" (blur)="descriptionExpanded = !descriptionExpanded" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
       </div>
 
     </div>
@@ -30,7 +30,7 @@
 </div>
 <div class="row">
 
-  <div class="col-md-12" *ngIf="catalogId" style="margin-bottom:20px">
+  <div class="col-md-12" *ngIf="catalog" style="margin-bottom:20px">
     <a (click)="newDataset()" href="#" id="button_new_dataset">
       <i class="fa fa-plus fdk-color-icon-cta" aria-hidden="true" style="padding-right:0.2em"></i>Legg til ny datasettbeskrivelse
     </a>
@@ -57,7 +57,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-12" *ngIf="catalogId">
+  <div class="col-md-12" *ngIf="catalog">
 
 
     <table class="fdk-dataset" style="table-layout: fixed">
@@ -80,7 +80,7 @@
       <tr *ngIf="datasets.length === 0">
         <td (click)="newDataset()" colspan="2" class="fdk-input-helptext">Ingen datasettbeskrivelse registrert. <a href="#">Klikk for å legge til.</a></td>
       </tr>
-      <tr *ngFor="let dataset of datasets" id="{{dataset.id}}" class="fdk-row-padding" (click)="selectDataset(catalogId, dataset)">
+      <tr *ngFor="let dataset of datasets" id="{{dataset.id}}" class="fdk-row-padding" (click)="selectDataset(catalog, dataset)">
         <td  class="fdk-register fdk-register-datacatalogue-1">
           <div *ngIf="getTitle(dataset);then showTitle else emptyTitle"></div>
           <ng-template #showTitle>{{getTitle(dataset)}}</ng-template>

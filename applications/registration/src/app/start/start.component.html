@@ -22,8 +22,8 @@
     <tbody>
     <tr *ngFor="let catalogId of catalogs" (click)="selectCatalog(catalogId)" >
       <td>{{catalogId.id}}</td>
-      <td>{{catalogId.title.nb}}</td>
-      <td>{{catalogId.description.nb}}</td>
+      <td *ngIf="catalogId.title">{{catalogId.title.nb}}</td>
+      <td *ngIf="catalogId.description">{{catalogId.description.nb}}</td>
     </tr>
     </tbody>
   </table>
