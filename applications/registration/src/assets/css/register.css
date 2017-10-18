@@ -119,7 +119,7 @@
 .more-help-checkbox:checked ~ .flere-anbefalinger {
 	display: inline;
 }
-.flere-anbefalinger, .more-help-checkbox:checked ~ .toggle-help-button {
+.flere-anbefalinger, .more-help-checkbox:checked ~ .toggle-help-button, .more-help-checkbox:checked ~ .faerre-anbefalinger {
 	display: none;
 }
 
