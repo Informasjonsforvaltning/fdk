@@ -44,19 +44,33 @@ export class InformationComponent implements OnInit {
         });
       }
       this.informationForm = this.toFormGroup(this.dataset);
+      this.handlePastedSubjectUris();
+      this.informationForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
+        (information) => {
+          if (information.keywords.length === 0) {
+            this.dataset.keywords = null;
+          } else {
+            this.dataset.keywords = information.keywords.map(keyword => {
+              return {nb: keyword}
+            });
+          }
+          information.languages = null;
+          this.handleSubjectRemoval(information);
+          this.onSave.emit(true);
+        }
+      );
+
+    }
+    handlePastedSubjectUris() {
       this.informationForm.valueChanges.subscribe((information) => {
-        console.log('valueChanges!');
         information.subjects.forEach((subject) => {
-          console.log('for each subject, this.subjectLookupInProgress is ', this.subjectLookupInProgress);
           if((subject.indexOf('https://') !== -1 || subject.indexOf('http://') !== -1) && !this.subjectLookupInProgress) {
-            console.log('uri pasted!');
             let uri = subject; // it's http or https, it's a uri!
             let alreadyExists = false;
             this.dataset.subjects && this.dataset.subjects.forEach((s)=>{
               if(s.uri === uri) alreadyExists = true;
             });
             if(alreadyExists) {
-              console.log('uri pasted already exists in this dataset\'s subjects');
               information.subjects.slice(-1);
               this.setSubjectControlValues();
             } else {
@@ -68,7 +82,6 @@ export class InformationComponent implements OnInit {
                 this.setSubjectControlValues();
                 this.subjectLookupInProgress = false;
               }).catch((err)=>{
-                console.log('Kunne ikke hente begrepsdefinisjon fra URI som ble limt inn');
                 information.subjects.slice(-1);
                 this.setSubjectControlValues();
               });
@@ -83,49 +96,32 @@ export class InformationComponent implements OnInit {
               })
             }
             if(!subjectIsAlreadyAdded) {
-              console.log('Validator: Hei! Vi må vite hva du mener med ' + subject + '. Vi aksepterer derfor kun URI til begrepsdefinisjon.');
               information.subjects.slice(-1);
               this.setSubjectControlValues(); // removes the faulty value from the input control;
             }
           }
         });
-      })
-      this.informationForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
-        (information) => {
-          if (information.keywords.length === 0) {
-            this.dataset.keywords = null;
-          } else {
-            this.dataset.keywords = information.keywords.map(keyword => {
-              return {nb: keyword}
-            });
+      });
+    }
+    handleSubjectRemoval (information) {
+      let hasSubjects = information.subjects && information.subjects.length > 0;
+      if(!hasSubjects) {
+        this.dataset.subjects = null;
+      }
+      else if(this.dataset.subjects && information.subjects.length < this.dataset.subjects.length) { // a subject has been removed
+        this.dataset.subjects.forEach((datasetSubject, index)=> {
+          var presentInBothArrays = false;
+          information.subjects.forEach((subject)=> {
+            if(subject === datasetSubject.prefLabel.no) {
+              presentInBothArrays = true;
+            }
+          });
+          if(!presentInBothArrays) {
+            this.dataset.subjects.splice(index, 1);
           }
-          information.languages = null;
-          let hasSubjects = information.subjects && information.subjects.length > 0;
-          if(!hasSubjects) {
-            console.log('there are no subjects');
-            this.dataset.subjects = null;
+        })
 
-            //            information.subjects = information.subjects || [];
-          }
-          else if(this.dataset.subjects && information.subjects.length < this.dataset.subjects.length) { // a subject has been removed
-            console.log('a subject has been removed');
-            this.dataset.subjects.forEach((datasetSubject, index)=> {
-              var presentInBothArrays = false;
-              information.subjects.forEach((subject)=> {
-                if(subject === datasetSubject.prefLabel.no) {
-                  presentInBothArrays = true;
-                }
-              });
-              if(!presentInBothArrays) {
-                this.dataset.subjects.splice(index, 1);
-              }
-            })
-
-          }
-          this.onSave.emit(true);
-        }
-      );
-
+      }
     }
     setSubjectControlValues() {
       this.dataset.subjects = this.dataset.subjects || [];
