@@ -1,5 +1,6 @@
 package no.dcat.shared;
 
+import java.net.URI;
 import java.util.Map;
 
 /**
@@ -15,32 +16,26 @@ public class HelpText {
     public HelpText(String id,
                     Map<String, String> shortdesc,
                     Map<String, String> description) {
-        this.id = id;
+        this.id = id; // Internally, the id is actually a URI, but that's hard to modify
         this.shortdesc = shortdesc;
         this.description = description;
     }
 
     public String getId() {
-        return id;
+        String parts[] = id.split("#");
+        return parts[1];
     }
-    public void setId(String id) {
-        this.id = id;
+
+    public URI getURI() {
+        return URI.create(id);
     }
 
     public Map<String, String> getShortdesc() {
         return shortdesc;
     }
 
-    public void setShortdesc(Map<String, String> shortdesc) {
-        this.shortdesc = shortdesc;
-    }
-
     public Map<String, String> getDescription() {
         return description;
-    }
-
-    public void setDescription(Map<String, String> description) {
-        this.description = description;
     }
 
 }
