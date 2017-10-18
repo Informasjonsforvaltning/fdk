@@ -278,11 +278,8 @@ public class DcatBuilder {
         if (date != null) {
             Resource timeInstant = model.createResource();
             model.add(timeInstant, RDF.type, TIME_INSTANT);
-            // TODO - fix this in registration, it produces epochs which is seconds since 1970 And not miliseconds which Java.Date has.
-            long epoch = date.getTime();
-            Date adjustedDate = new Date(epoch * 1000L);
 
-            Literal dateLiteral = model.createTypedLiteral(sdfDate.format(adjustedDate), XSDDatatype.XSDdate);
+            Literal dateLiteral = model.createTypedLiteral(sdfDate.format(date), XSDDatatype.XSDdate);
             timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
 
             return timeInstant;
