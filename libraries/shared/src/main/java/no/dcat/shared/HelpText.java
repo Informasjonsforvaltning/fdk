@@ -16,7 +16,7 @@ public class HelpText {
     public HelpText(String id,
                     Map<String, String> shortdesc,
                     Map<String, String> description) {
-        this.id = id;
+        this.id = id; // Internally, the id is actually a URI, but that's hard to modify
         this.shortdesc = shortdesc;
         this.description = description;
     }
