@@ -50,7 +50,8 @@ public class DatasetWithElasticSearchIT {
 
         datasetRepository.save(dataset);
 
-        assertThat(datasetRepository.findOne("1"), is(dataset));
+        Dataset actual = datasetRepository.findOne("1");
+        assertThat(actual, is(dataset));
 
         datasetRepository.delete(dataset);
     }
