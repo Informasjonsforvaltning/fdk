@@ -125,19 +125,29 @@ export class InformationComponent implements OnInit {
     }
     setSubjectControlValues() {
       this.dataset.subjects = this.dataset.subjects || [];
-      var value = this.dataset.subjects.map((subject)=>{
-        return subject.prefLabel.no;
-      });
+      var value = this.getSubjectLabels();
       this.informationForm.controls['subjects'].setValue(value);
     }
+    getSubjectLabels() {
+      return this.dataset.subjects.map((subject)=>{
+        let numberOfLabelOccurences = 0;
+        this.dataset.subjects.forEach((subject2)=>{
+          if(subject2.prefLabel.no === subject.prefLabel.no) {
+            numberOfLabelOccurences++;
+          }
+        });
+        let label = subject.prefLabel.no;
+        if(numberOfLabelOccurences > 1) label += ' [' + this.domainFromUrl(subject.uri) + ']'; // more than one occurence of this label found, show domain
+        return label;
+      });
+    }
     replaceUriWithLabel (subjectUri) {
-      // get this: https://localhost:8099/referenceData/subjects?uri=https://data-david.github.io/Begrep/begrep/Hovedenhet
-      // https://localhost:8099/referenceData/subjects?uri= + urlencoded('https://data-david.github.io/Begrep/begrep/Hovedenhet ')
-      return this.subjectService.get(subjectUri);
-      /*return {
-        label: response.prefLabel['nb'],
-        uri: subjectUri
-      }*/
+      return this.subjectService.get(subjectUri); 
+    }
+    domainFromUrl(url) {
+      var parser = document.createElement('a');
+      parser.href = url;
+      return parser.hostname;
     }
     focus(e) {
       e.target.childNodes.forEach(node=>{
@@ -149,9 +159,7 @@ export class InformationComponent implements OnInit {
 
     private toFormGroup(data: Dataset) {
       return this.fb.group({
-        subjects: [this.subjects.map((subject)=>{
-          return subject.prefLabel.no;
-        })],
+        subjects: [this.getSubjectLabels()],
         keywords: [this.keywords]
       });
     }
