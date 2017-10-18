@@ -137,6 +137,7 @@ public class BrregAgentConverter {
                         if (line.get(0).equals(orgnr) && publisherResource != null) { // Should check publisherResource, since all names will be removed if it is null
                             incomingModel.removeAll(publisherResource, FOAF.name, null);
                             incomingModel.add(publisherResource, FOAF.name, incomingModel.createLiteral(line.get(1), "nb"));
+                            break;
                         }
                     }
                 }
