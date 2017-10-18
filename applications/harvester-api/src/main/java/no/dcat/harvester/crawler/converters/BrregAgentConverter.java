@@ -6,17 +6,17 @@ import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -126,18 +126,20 @@ public class BrregAgentConverter {
                 }
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
 
-        /*        String orgnr = getOrgnr(model, publisherResource); */
+                String orgnr = getOrgnr(model, publisherResource);
 
-        /*        if (orgnr != null) {
+                if (orgnr != null) {
                     org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("kanoniske.csv");
-                    CSVParser parser = CSVParser.parse(canonicalNamesFile.getFile().toString(), CSVFormat.EXCEL);
-                    for (CSVRecord line : parser) {
+                    Reader in = new FileReader(canonicalNamesFile.getFile().toString());
+                    Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
+                    for (CSVRecord line : records) {
+                        logger.trace("Found line from CSV:\nOrgnr: {}\tName: {}", line.get(0), line.get(1));
                         if (line.get(0).equals(orgnr) && publisherResource != null) { // Should check publisherResource, since all names will be removed if it is null
-                            incomingModel.remove(publisherResource, FOAF.name, null);
+                            incomingModel.removeAll(publisherResource, FOAF.name, null);
                             incomingModel.add(publisherResource, FOAF.name, incomingModel.createLiteral(line.get(1), "nb"));
                         }
                     }
-                } */
+                }
 
                 processBlankNodes(incomingModel, uri);
 
