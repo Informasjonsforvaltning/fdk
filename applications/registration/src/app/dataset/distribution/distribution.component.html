@@ -1,20 +1,15 @@
 <div class="form-group"  class="distribution-form sub-form-group" [formGroup]="distributionForm">
-    <div class="row form-group" style="margin-bottom: 7px;">        
-        <div class="form sub-form" *ngIf="showForm">            
-           <!-- <type
-                [dataset]="distribution"
-                [typeModel]="typeModel"
-               
-                (onSave)="onSave($event)">
-            </type>-->
+    <div class="form-group" style="margin-bottom: 7px;">        
+        <div class="form sub-form" *ngIf="showForm">
             <div id="distributionTypeSelector">
-                <div class="radio" *ngFor="let type of typeModel">
-                    <label>
-                        <input
-                            type="radio"
-                            formControlName="type"
-                            [checked]="type.id === selectedTypeId"
-                            [value]="type.label" />
+                <div class="fdk-radio" *ngFor="let type of typeModel">
+                    <input
+                        type="radio"
+                        formControlName="type"
+                        id="{{type.id}}"
+                        [checked]="type.id === selectedTypeId"
+                        [value]="type.label" />
+                    <label for="{{type.id}}">
                         {{type.label}}
                     </label>
                 </div>
@@ -67,40 +62,24 @@
                     moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
                     name="conformsTo">
                 </helptext>
-                <div class="fdk-input-container">
+                <div class="row">
                     <div class="col-md-5">
                         <p class="fdk-input-label">Tittel på standard</p>
                         <input formControlName="conformsToPrefLabel" class="fdk-input ng-touched" type="text" />
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-7">
                         <p class="fdk-input-label">Lenke til standard</p>
                         <input formControlName="conformsToUri" class="fdk-input ng-touched" type="text" />
                     </div>
                 </div>
             </div>
-
-
-
-
-            <span class="delete-distribution-wrapper pull-right" *ngIf="showDelete">
-                <a href="" class="delete-distribution-button"
-                    (click)="removeDistribution(distributionIndex)">
-                    <i class="fa fa-trash fdk-fa-dark fdk-fa-left"></i>Slett
-                </a>
-            </span>
-            <!--<label for="format" class="control-label">Format:</label>
-            <rl-tag-input  (click)="focus($event)" id="format" formControlName="format" placeholder=" "></rl-tag-input>
-            <label for="description" class="control-label">Kommentar:</label>
-            <textarea id="description" type="text" formControlName="description" class="fdk-input"></textarea>
-            <label for="accessURL" class="control-label">Tilgangs-URL:</label>
-            <rl-tag-input  (click)="focus($event)" id="accessURL" formControlName="accessURL" placeholder=" "></rl-tag-input>
-            <label for="downloadURL" class="control-label">Nedlastnings-URL:</label>
-            <rl-tag-input  (click)="focus($event)" id="downloadURL" formControlName="downloadURL" placeholder=" "></rl-tag-input>
-            <label for="license" class="control-label">Lisens:</label>
-            <input id="license" type="text"  formControlName="license" class="fdk-input"/>
-            <span class="delete-distribution-wrapper">
-             (<a href=""  class="delete-distribution-button" (click)="removeDistribution(distributionIndex)">Slett distribusjon</a>)
-            </span>-->
         </div>
     </div>
 </div>
+<br>
+<span class="delete-distribution-wrapper pull-right" *ngIf="showDelete">
+    <a href="" class="delete-distribution-button"
+        (click)="removeDistribution(distributionIndex)">
+        <i class="fa fa-trash fdk-color-icon-cta fdk-fa-left"></i>Slett distribusjon
+    </a>
+</span>

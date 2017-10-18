@@ -12,11 +12,13 @@
                 (deleteDistribution)="removeDistribution($event)" 
                 >
             </distribution>
+            <a href="#" (click)="addDistribution()">
+                <i class="fa fa-plus fdk-color-icon-cta fdk-fa-left"></i>Legg til ny distribusjon
+            </a>
+            <br>
             <br>
             <hr>
+            <br>
         </div>
-        <a href="#" (click)="addDistribution()">
-            <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
-        </a>
     </div>
 </div>

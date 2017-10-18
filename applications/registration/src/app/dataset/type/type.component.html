@@ -8,14 +8,14 @@
           name="type">
         </helptext>
         <div id="typeSelector">
-            <div class="radio" *ngFor="let type of typeModel">
-                <label>
-                    <input
-                        type="radio"
-                        [checked]="type.id === selectedTypeIdx"
-                        [value]="type.id"
-                        formControlName="type"
-                    >
+            <div class="fdk-radio" *ngFor="let type of typeModel">
+                <input
+                    type="radio"
+                    id="{{type.id}}"
+                    [checked]="type.id === selectedTypeIdx"
+                    [value]="type.id"
+                    formControlName="type">                    
+                <label for="{{type.id}}">
                     {{type.label}}
                 </label>
             </div>

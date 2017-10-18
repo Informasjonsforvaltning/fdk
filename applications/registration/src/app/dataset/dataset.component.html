@@ -208,9 +208,9 @@
                     <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">
                         <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="language-checkbox">
                             <label><!-- 416 -->
-                            <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
-                            <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
-                                <span>{{availableLanguages[i].prefLabel.nb}}</span>
+                                <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
+                                <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
+                                    <span style="font-weight: 400">{{availableLanguages[i].prefLabel.nb}}</span>
                             </label>
                         </div>
                     </div>

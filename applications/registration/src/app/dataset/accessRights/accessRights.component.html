@@ -13,13 +13,14 @@
                 name="access-rights">
             </helptext>
             <div id="accessRightSelector">
-                <div class="radio" *ngFor="let accessRight of accessRightsModel">
-                    <label>
-                        <input
-                            type="radio"
-                            formControlName="accessRights"
-                            [checked]="accessRight.id === selectedAccessRightIdx"
-                            [value]="accessRight.id" />
+                <div class="fdk-radio" *ngFor="let accessRight of accessRightsModel">
+                    <input
+                        type="radio"
+                        formControlName="accessRights"
+                        id="{{accessRight.id}}"
+                        [checked]="accessRight.id === selectedAccessRightIdx"
+                        [value]="accessRight.id" />
+                    <label for="{{accessRight.id}}">
                         {{accessRight.label}}
                     </label>
                 </div>

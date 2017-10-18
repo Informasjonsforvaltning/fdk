@@ -72,12 +72,10 @@ export class DistributionFormComponent implements OnInit {
     }
 
     private toFormGroup(distribution: Distribution): FormGroup {
-        
-        console.log("toFormGroup BEFORE: ", this.distribution);
         const formGroup = this.fb.group({
             id: distribution.id || Math.random().toString().substr(2),
             uri: [ distribution.uri || '', Validators.required ],
-            type: distribution.type || '',
+            type: distribution.type || this.typeModel[this.selectedTypeId].label,
             title: distribution.title || '',
             description: distribution.description['nb'] || '', 
             accessURL: distribution.accessURL || [] as string[],
@@ -90,8 +88,6 @@ export class DistributionFormComponent implements OnInit {
                                 distribution.conformsTo[0].uri : '',
             page: (distribution.page) ? distribution.page.uri : ''
         });
-        
-        console.log("toFormGroup AFTER: ", this.distribution);
         return formGroup;
     } 
 
@@ -111,5 +107,41 @@ export class DistributionFormComponent implements OnInit {
                 node.childNodes[1].focus();
             }
         })
+    }
+
+    public static setDistributions(distributions: any[]): any[] {
+        if (distributions) {
+            distributions.forEach(distribution => {
+                distribution.id = distribution.id || Math.floor(Math.random() * 1000000).toString();
+                distribution.uri = distribution.uri || "";
+                distribution.type = distribution.type || "";
+                distribution.title = distribution.title || {"nb": ""};
+
+                distribution.description = (typeof distribution.description === 'object') ? 
+                                            distribution.description : {"nb": distribution.description};
+
+                distribution.downloadURL = (distribution.downloadURL instanceof Array) ? 
+                                            distribution.downloadURL : (distribution.downloadURL) ?
+                                                [distribution.downloadURL] : [] as string[]; 
+
+                distribution.accessURL = (distribution.accessURL instanceof Array) ? 
+                                            distribution.accessURL : (distribution.accessURL) ?
+                                                [distribution.accessURL] : [] as string[];
+
+                distribution.format = distribution.format || [] as string[];
+
+                distribution.license = (distribution.license instanceof SkosConcept) ? 
+                                        distribution.license : ((distribution.license) ? 
+                                            new SkosConcept(distribution.license, {"nb": ""}) : new SkosConcept());
+
+                distribution.conformsTo = [new SkosConcept(distribution.conformsToUri, {'nb': distribution.conformsToPrefLabel})] || [] as SkosConcept[]; 
+                
+                distribution.page = (distribution.page instanceof SkosConcept) ? 
+                                        distribution.page : ((distribution.page) ? 
+                                            new SkosConcept(distribution.page, {"nb": ""}) : new SkosConcept());
+                                            
+            });
+        }
+        return distributions;
     }
 }
