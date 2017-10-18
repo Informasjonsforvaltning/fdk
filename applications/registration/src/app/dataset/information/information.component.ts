@@ -59,7 +59,6 @@ export class InformationComponent implements OnInit {
           this.onSave.emit(true);
         }
       );
-
     }
     handlePastedSubjectUris() {
       this.informationForm.valueChanges.subscribe((information) => {
@@ -142,7 +141,7 @@ export class InformationComponent implements OnInit {
       });
     }
     replaceUriWithLabel (subjectUri) {
-      return this.subjectService.get(subjectUri); 
+      return this.subjectService.get(subjectUri);
     }
     domainFromUrl(url) {
       var parser = document.createElement('a');
