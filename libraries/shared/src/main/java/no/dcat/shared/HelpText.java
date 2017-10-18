@@ -21,8 +21,10 @@ public class HelpText {
     }
 
     public String getId() {
-        return id;
+        String parts[] = id.split("#");
+        return parts[1];
     }
+
     public void setId(String id) {
         this.id = id;
     }
