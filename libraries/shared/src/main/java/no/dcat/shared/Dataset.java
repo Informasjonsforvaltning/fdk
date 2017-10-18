@@ -22,11 +22,11 @@ public class Dataset {
 
     // dct:title
     // Norwegian: Tittel
-    private Map<String,String> title ;
+    private Map<String,String> title;
 
     //dct:description
     //Norwegian: Beskrivelse
-    private Map<String,String> description ;
+    private Map<String,String> description;
 
     //dcatno:objective
     //Norwegian: Formål
@@ -34,7 +34,7 @@ public class Dataset {
 
     //dcat:contactPoint
     //Norwegian: Kontaktpunkt
-    private List<Contact> contactPoint ;
+    private List<Contact> contactPoint;
 
     //dcat:keyword
     //Norwegian: Emneord

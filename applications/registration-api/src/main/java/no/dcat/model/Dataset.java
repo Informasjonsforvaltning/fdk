@@ -38,9 +38,9 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     public Dataset() {
         super();
-        setTitle(Collections.emptyMap());
-        setDescription(Collections.emptyMap());
-        setObjective(Collections.emptyMap());
+        //setTitle(Collections.emptyMap());
+        //setDescription(Collections.emptyMap());
+        //setObjective(Collections.emptyMap());
     }
 
     public Dataset(String id) {
