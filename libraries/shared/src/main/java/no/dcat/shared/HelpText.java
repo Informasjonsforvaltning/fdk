@@ -1,5 +1,6 @@
 package no.dcat.shared;
 
+import java.net.URI;
 import java.util.Map;
 
 /**
@@ -24,6 +25,11 @@ public class HelpText {
         String parts[] = id.split("#");
         return parts[1];
     }
+
+    public URI getURI() {
+        return URI.create(id);
+    }
+
 
     public void setId(String id) {
         this.id = id;
