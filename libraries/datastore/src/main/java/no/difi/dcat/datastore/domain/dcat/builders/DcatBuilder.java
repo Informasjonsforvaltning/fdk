@@ -11,7 +11,6 @@ import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
-
 import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
@@ -259,13 +258,15 @@ public class DcatBuilder {
             Resource temporal = model.createResource();
             model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
 
-            resource.addProperty(property, temporal);
+            if (period.getStartDate() != null || period.getEndDate() != null) {
+                resource.addProperty(property, temporal);
 
-            if (period.getStartDate() != null) {
-                temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
-            }
-            if (period.getEndDate() != null) {
-                temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+                if (period.getStartDate() != null) {
+                    temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
+                }
+                if (period.getEndDate() != null) {
+                    temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+                }
             }
 
         }
@@ -277,8 +278,11 @@ public class DcatBuilder {
         if (date != null) {
             Resource timeInstant = model.createResource();
             model.add(timeInstant, RDF.type, TIME_INSTANT);
+            // TODO - fix this in registration, it produces epochs which is seconds since 1970 And not miliseconds which Java.Date has.
+            long epoch = date.getTime();
+            Date adjustedDate = new Date(epoch * 1000L);
 
-            Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+            Literal dateLiteral = model.createTypedLiteral(sdfDate.format(adjustedDate), XSDDatatype.XSDdate);
             timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
 
             return timeInstant;
@@ -502,7 +506,7 @@ public class DcatBuilder {
         if (map != null) {
             for (String l : map.keySet()) {
                 String v = map.get(l);
-                if (v != null) {
+                if (v != null && !v.isEmpty()) {
                     Literal literal = model.createLiteral(v, l);
                     resource.addProperty(property, literal);
                 }
