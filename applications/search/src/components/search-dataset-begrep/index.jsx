@@ -47,28 +47,37 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
   }
 
   _renderKeyword() {
-    let keywordNodes;
     const { keyword } = this.props;
-    if (keyword) {
-      keywordNodes = keyword.map((item, index) => {
-        if (index > 0) {
-          return (
-            <span
-              key={`dataset-begrep-search-${index}`}
-            >
-              {`, ${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
-            </span>
-          );
-        }
+    const children = items => items.map((item, index) => {
+      if (index > 0) {
         return (
           <span
             key={`dataset-begrep-search-${index}`}
           >
-            {`${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
+            {`, ${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
           </span>
         );
-      });
-      return keywordNodes;
+      }
+      return (
+        <span
+          key={`dataset-begrep-search-${index}`}
+        >
+          {`${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
+        </span>
+      );
+    });
+    if (keyword) {
+      return (
+        <div className="fdk-container-detail fdk-container-detail-begrep mt-60">
+          <div className="fdk-detail-icon"><i className="fa fa-search" /></div>
+          <div className="fdk-detail-text">
+            <h5>{localization.dataset.keyword}</h5>
+            <p className="fdk-ingress fdk-margin-bottom-no">
+              { children(keyword) }
+            </p>
+          </div>
+        </div>
+      );
     }
     return null;
   }
@@ -76,16 +85,9 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
   render() {
     return (
       <div>
-        {this._renderHeader()}
-        <div className="fdk-container-detail fdk-container-detail-begrep">
-          <div className="fdk-detail-icon"><i className="fa fa-search" /></div>
-          <div className="fdk-detail-text">
-            <h5>{localization.dataset.keyword}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-no">
-              {this._renderKeyword()}
-            </p>
-          </div>
-        </div>
+
+        { this._renderKeyword() }
+
       </div>
     );
   }
@@ -94,11 +96,13 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
 DatasetBegrep.defaultProps = {
   title: null,
   description: null,
-  keyword: null
+  keyword: null,
+  selectedLanguageCode: null
 };
 
 DatasetBegrep.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  keyword: PropTypes.array
+  keyword: PropTypes.array,
+  selectedLanguageCode: PropTypes.string
 };

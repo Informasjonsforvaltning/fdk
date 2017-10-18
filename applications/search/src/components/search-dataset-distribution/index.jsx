@@ -8,62 +8,104 @@ import './index.scss';
 
 export default class DatasetDistribution extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderFormats(code) {
-    let formatNodes;
     const { format } = this.props;
-    if (format) {
-      formatNodes = format.map((item, index) => (
-        <DistributionFormat
-          code={code}
-          key={`dataset-distribution-format${index}`}
-          text={item}
-        />
-      ));
-      return formatNodes;
+
+    const children = (items, code) => items.map((item) => {
+      if (item !== null) {
+        const formatArray = item.trim().split(',');
+        return formatArray.map((item, index) => {
+          if (item === null) {
+            return null;
+          }
+          return (
+            <DistributionFormat
+              key={`dataset-distribution-format${index}`}
+              code={code}
+              text={item}
+            />
+          );
+        });
+      }
+      return null;
+    });
+
+    if (format && format[0] !== null) {
+      return (
+        <div>
+          <h5 className="fdk-space-above">
+            {localization.dataset.distribution.format}
+          </h5>
+          { children(format, code) }
+        </div>
+      );
     }
     return null;
   }
 
+
   _renderTilgangsURL() {
-    let accessUrlNodes;
     const { accessUrl } = this.props;
+    const children = items => items.map((item, index) => (
+      <a
+        key={`dataset-distribution-accessurl-${index}`}
+        id={`dataset-distribution-accessurl-${index}`}
+        href={item}
+      >
+        {item}
+        <i className="fa fa-external-link fdk-fa-right" />
+      </a>
+    ));
+
     if (accessUrl) {
-      accessUrlNodes = accessUrl.map((item, index) => (
-        <a
-          key={`dataset-distribution-accessurl-${index}`}
-          id={`dataset-distribution-accessurl-${index}`}
-          href={item}
-        >
-          {item}
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
-      ));
-      return accessUrlNodes;
+      return (
+        <div>
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
+          <p className="fdk-ingress">
+            { children(accessUrl) }
+          </p>
+        </div>
+      );
     }
     return null;
   }
 
   _renderLicense() {
     const { license } = this.props;
-    if (license && license.uri && license.prefLabel) {
+
+    const children = items => items.map((license) => {
+      if (license && license.uri && license.prefLabel) {
+        return (
+          <a
+            href={license.uri}
+          >
+            {
+              license.prefLabel[this.props.selectedLanguageCode]
+              || license.prefLabel.nb
+              || license.prefLabel.nn
+              || license.prefLabel.en
+            }
+          </a>
+        );
+      } else if (license && license.uri) {
+        return (
+          <a
+            href={license.uri}
+          >
+            {localization.dataset.distribution.standard}
+          </a>
+        );
+      }
+      return null;
+    });
+
+    if (license && license.uri) {
       return (
-        <a
-          href={license.uri}
-        >
-          {
-            license.prefLabel[this.props.selectedLanguageCode]
-            || license.prefLabel.nb
-            || license.prefLabel.nn
-            || license.prefLabel.en
-          }
-        </a>
-      );
-    } else if (license && license.uri) {
-      return (
-        <a
-          href={license.uri}
-        >
-          {localization.dataset.distribution.standard}
-        </a>
+        <div>
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
+          <p className="fdk-ingress">
+            { children(license) }
+          </p>
+        </div>
       );
     }
     return null;
@@ -71,18 +113,32 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 
   _renderDistributionPage() {
     const { page } = this.props;
-    if (page && page.uri && page.prefLabel) {
+    const children = items => items.map((page) => {
+      if (page && page.uri && page.prefLabel) {
+        return (
+          <a
+            href={page.uri}
+          >
+            {
+              page.prefLabel[this.props.selectedLanguageCode]
+              || page.prefLabel.nb
+              || page.prefLabel.nn
+              || page.prefLabel.en
+            }
+          </a>
+        );
+      }
+      return null;
+    });
+
+    if (page && page.uri) {
       return (
-        <a
-          href={page.uri}
-        >
-          {
-            page.prefLabel[this.props.selectedLanguageCode]
-            || page.prefLabel.nb
-            || page.prefLabel.nn
-            || page.prefLabel.en
-          }
-        </a>
+        <div>
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.page}</h5>
+          <p className="fdk-ingress">
+            { children(page) }
+          </p>
+        </div>
       );
     }
     return null;
@@ -117,57 +173,27 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       }
     );
     return (
-      <div>
-        <div id="dataset-distribution" className={distributionClass}>
-          <h4 className="fdk-margin-bottom">{localization.dataset.distribution.title}</h4>
-          {this.props.description &&
+      <div id="dataset-distribution" className={distributionClass}>
+
+        <h4 className="fdk-margin-bottom">{localization.dataset.distribution.title}</h4>
+
+        {this.props.description &&
           <p id="dataset-distribution-description" className="fdk-ingress">
             {this.props.description}
           </p>
-          }
-          {this.props.format &&
-          <div>
-            <h5 className="fdk-space-above">
-              {localization.dataset.distribution.format}
-            </h5>
-            {this._renderFormats(code)}
-          </div>
-          }
+        }
 
-          {this.props.accessUrl &&
-          <div>
-            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.accessUrl}</h5>
-            <p className="fdk-ingress">
-              {this._renderTilgangsURL()}
-            </p>
-          </div>
-          }
+        { this._renderFormats(code) }
+        { this._renderTilgangsURL() }
+        { this._renderLicense() }
+        { this._renderDistributionPage() }
 
-          {this.props.license &&
-          <div>
-            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
-            <p className="fdk-ingress">
-              {this._renderLicense()}
-            </p>
-          </div>
-          }
-
-          {this.props.page &&
-          <div>
-            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.page}</h5>
-            <p className="fdk-ingress">
-              {this._renderDistributionPage()}
-            </p>
-          </div>
-          }
-
-
-          <div className="fdk-container-detail-text">
-            <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
-            <p className="fdk-ingress fdk-ingress-detail" />
-          </div>
+        <div className="fdk-container-detail-text">
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
+          <p className="fdk-ingress fdk-ingress-detail" />
         </div>
       </div>
+
     );
   }
 }

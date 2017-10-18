@@ -8,10 +8,12 @@ export default class DatasetQuality extends React.Component { // eslint-disable-
     return (
       <div>
         <div className="fdk-container-detail fdk-container-detail-header">
-          <i className="fa fa-star fdk-fa-left fdk-color-cta"/>
+          <i className="fa fa-star fdk-fa-left fdk-color-cta" />
           {localization.dataset.quality}
         </div>
+
         <div className="fdk-container-detail">
+
           {this.props.relevanceAnnotation &&
           <div>
             <h5>{localization.dataset.relevanceAnnotation}</h5>
