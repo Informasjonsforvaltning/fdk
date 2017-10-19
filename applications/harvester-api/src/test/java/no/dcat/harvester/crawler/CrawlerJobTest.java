@@ -13,13 +13,19 @@ import org.apache.jena.util.FileManager;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class CrawlerJobTest {
+    private static Logger logger = LoggerFactory.getLogger(CrawlerJobTest.class);
 
 
     @Test
@@ -42,6 +48,34 @@ public class CrawlerJobTest {
 
 
     }
+
+    @Test
+    public void testDIFICrawlerJob() throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        ClassPathResource resource = new ClassPathResource("difi-dataset-2017-10-19.jsonld");
+
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
+
+        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
+        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+
+        FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
+
+        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+
+        CrawlerJob spyJob = Mockito.spy(job);
+        Mockito.doReturn(job.loadModelAndValidate(resource.getURL())).when(spyJob).prepareModelForValidation();
+
+        spyJob.run();
+
+        List<String> report =  spyJob.getValidationResult();
+
+        logger.debug("validation report: {}", report);
+
+    }
+
 
     @Test
     public void testCrawlerJob() throws IOException {

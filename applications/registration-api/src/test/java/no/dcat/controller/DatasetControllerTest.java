@@ -11,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.anyObject;
@@ -52,14 +55,16 @@ public class DatasetControllerTest {
         String catalogId = "1234";
 
         Dataset copy = RegistrationFactory.createDataset(catalogId);
-        copy.getTitle().put("nb","test");
+        Map<String,String> title = new HashMap<>();
+        title.put("nb","test");
+        copy.setTitle(title);
 
         when(mockDatasetRepository.save((Dataset)anyObject())).thenReturn(copy);
 
         HttpEntity<Dataset> actualEntity = detasetController.saveDataset(catalogId, copy);
 
         Dataset actual = actualEntity.getBody();
-        assertThat(actual.getCatalog(), is(catalogId));
+        assertThat(actual.getCatalogId(), is(catalogId));
 
     }
 }

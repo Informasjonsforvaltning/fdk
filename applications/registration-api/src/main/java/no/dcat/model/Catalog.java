@@ -2,44 +2,28 @@ package no.dcat.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import no.dcat.shared.Publisher;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Document(indexName = "register", type = Catalog.ELASTIC_TYPE)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Catalog {
+public class Catalog extends no.dcat.shared.Catalog {
     public static final String ELASTIC_TYPE = "catalog";
 
-    @Id
-    private String id;
-
-    private String uri;
-
-    // dct:title
-    // Norwegian: Tittel
-    private Map<String,String> title = new HashMap<>();
-
-    //dct:description
-    //Norwegian: Beskrivelse
-    private Map<String,String> description = new HashMap<>();
-
-    private Publisher publisher;
-
-    private List<Dataset> dataset;
-
     public Catalog(String orgnr) {
-        this.id = orgnr;
+        this();
+        this.setId(orgnr);
     }
 
     public Catalog() {
+        this.setTitle(new HashMap<>());
+        this.setDescription(new HashMap<>());
         // Default constructor needed for frameworks
     }
 }

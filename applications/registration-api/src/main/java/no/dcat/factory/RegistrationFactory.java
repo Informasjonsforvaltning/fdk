@@ -13,7 +13,7 @@ public class RegistrationFactory {
 
         dataset.setId(UUID.randomUUID().toString());
         dataset.setUri(getCatalogUri(catalogId) + "/datasets/" + dataset.getId());
-        dataset.setCatalog(catalogId);
+        dataset.setCatalogId(catalogId);
 
         return dataset;
     }

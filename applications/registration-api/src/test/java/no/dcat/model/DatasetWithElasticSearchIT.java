@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.PostConstruct;
@@ -51,7 +50,8 @@ public class DatasetWithElasticSearchIT {
 
         datasetRepository.save(dataset);
 
-        assertThat(datasetRepository.findOne("1"), is(dataset));
+        Dataset actual = datasetRepository.findOne("1");
+        assertThat(actual, is(dataset));
 
         datasetRepository.delete(dataset);
     }
@@ -59,22 +59,22 @@ public class DatasetWithElasticSearchIT {
     @Test
     public void getAllDatasetsWithStatusPublished() throws Throwable {
         Dataset datasetPublished = new Dataset("1");
-        datasetPublished.setCatalog("cat1");
+        datasetPublished.setCatalogId("cat1");
         datasetPublished.setRegistrationStatus(Dataset.REGISTRATION_STATUS_PUBLISH);
         datasetRepository.save(datasetPublished);
 
         Dataset datasetDraft = new Dataset("2");
-        datasetDraft.setCatalog("cat1");
+        datasetDraft.setCatalogId("cat1");
         datasetDraft.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
         datasetRepository.save(datasetDraft);
 
-        Page<Dataset> actual = datasetRepository.findByCatalogAndRegistrationStatus("cat1", Dataset.REGISTRATION_STATUS_PUBLISH, new PageRequest(0, 20));
+        Page<Dataset> actual = datasetRepository.findByCatalogIdAndRegistrationStatus("cat1", Dataset.REGISTRATION_STATUS_PUBLISH, new PageRequest(0, 20));
 
         assertThat(actual.getTotalElements(), is(1L));
 
         assertThat(actual.getContent().get(0).getId(), is("1"));
 
-        Page<Dataset> all = datasetRepository.findByCatalog("cat1", new PageRequest(0, 20));
+        Page<Dataset> all = datasetRepository.findByCatalogId("cat1", new PageRequest(0, 20));
 
         assertThat(all.getTotalElements(), is(2L));
 

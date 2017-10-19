@@ -31,7 +31,7 @@ public class DetailPage extends CommonPage {
     private static final String ID_LOCATIONS_TEXT = "locationsText";
     private static final String ID_ACCESS_RIGTH_TEXT = "accessRightText";
     private static final String ID_ACCRUAL_PERIODICITY_TEXT = "accrualPeriodicityText";
-    private final String PAGE_URL = PORTAL_URL+"/datasets?id=%s&lang=%s";
+    private final String PAGE_URL = PORTAL_URL+"/datasets/%s&lang=%s";
     private String langId = "nb";
 
     private String detailPageUrl(String datasetName) {

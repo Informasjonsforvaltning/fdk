@@ -38,15 +38,15 @@ public class LoginControllerTest {
 //        Mockito.doReturn(authorities).when(authentication).getAuthorities();
 //        when(springSecurityContextBean.getAuthentication()).thenReturn(authentication);
 //
-//        Catalog catalog = new Catalog(orgnr);
+//        Catalog catalogId = new Catalog(orgnr);
 //        HttpEntity<Catalog> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //
-//        when(catalogController.createCatalog(catalog)).thenReturn(new HttpEntity<>(catalog));
-//        when(catalogController.getCatalog(orgnr)).thenReturn(response);
+//        when(catalogController.createCatalog(catalogId)).thenReturn(new HttpEntity<>(catalogId));
+//        when(catalogController.getCatalogId(orgnr)).thenReturn(response);
 //
 //        loginController.authenticateAndCreateMissingCatalogs();
 //
-//        verify(catalogController, times(0)).createCatalog(eq(catalog));
+//        verify(catalogController, times(0)).createCatalog(eq(catalogId));
 //    }
 //
 //
@@ -62,15 +62,15 @@ public class LoginControllerTest {
 //        Mockito.doReturn(authorities).when(authentication).getAuthorities();
 //        when(springSecurityContextBean.getAuthentication()).thenReturn(authentication);
 //
-//        Catalog catalog = new Catalog(orgnr);
+//        Catalog catalogId = new Catalog(orgnr);
 //        HttpEntity<Catalog> response = new ResponseEntity<>(HttpStatus.OK);
 //
-//        when(catalogController.createCatalog(catalog)).thenReturn(new HttpEntity<>(catalog));
-//        when(catalogController.getCatalog(orgnr)).thenReturn(response);
+//        when(catalogController.createCatalog(catalogId)).thenReturn(new HttpEntity<>(catalogId));
+//        when(catalogController.getCatalogId(orgnr)).thenReturn(response);
 //
 //        loginController.authenticateAndCreateMissingCatalogs();
 //
-//        verify(catalogController, times(0)).createCatalog(eq(catalog));
+//        verify(catalogController, times(0)).createCatalog(eq(catalogId));
 //    }
 //
 //    @Test
@@ -85,15 +85,15 @@ public class LoginControllerTest {
 //        Mockito.doReturn(authorities).when(authentication).getAuthorities();
 //        when(springSecurityContextBean.getAuthentication()).thenReturn(authentication);
 //
-//        Catalog catalog = new Catalog(orgnr);
+//        Catalog catalogId = new Catalog(orgnr);
 //        HttpEntity<Catalog> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //
-//        when(catalogController.createCatalog(catalog)).thenReturn(new HttpEntity<>(catalog));
-//        when(catalogController.getCatalog(orgnr)).thenReturn(response);
+//        when(catalogController.createCatalog(catalogId)).thenReturn(new HttpEntity<>(catalogId));
+//        when(catalogController.getCatalogId(orgnr)).thenReturn(response);
 //
 //        loginController.authenticateAndCreateMissingCatalogs();
 //
-//        verify(catalogController, times(1)).createCatalog(eq(catalog));
+//        verify(catalogController, times(1)).createCatalog(eq(catalogId));
 //    }
 
 }

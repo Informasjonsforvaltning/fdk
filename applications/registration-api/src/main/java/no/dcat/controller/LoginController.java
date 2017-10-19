@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,8 +126,10 @@ public class LoginController {
         if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
             logger.info("Create catalog for {} ", orgnr);
             Catalog catalog = new Catalog(orgnr);
-            if (entityNameService.getOrganizationName(orgnr) != null) {
-                catalog.getTitle().put("nb", "Datakatalog for " + entityNameService.getOrganizationName(orgnr));
+
+            String organizationName = entityNameService.getOrganizationName(orgnr);
+            if (organizationName != null) {
+                catalog.getTitle().put("nb", "Datakatalog for " + organizationName);
             }
             return Optional.of(catalogController.createCatalog(catalog).getBody());
         }

@@ -81,6 +81,7 @@ describe('DatasetInfo', () => {
     expect(wrapper.find('#dataset-info-temporal-0')).to.have.length(1);
   });
 
+  /*
   it ('should render language', () => {
     expect(wrapper.find('#dataset-info-language-0')).to.have.length(0);
     wrapper.setProps({
@@ -96,4 +97,5 @@ describe('DatasetInfo', () => {
     });
     expect(wrapper.find('#dataset-info-language-0')).to.have.length(1);
   });
+  */
 });

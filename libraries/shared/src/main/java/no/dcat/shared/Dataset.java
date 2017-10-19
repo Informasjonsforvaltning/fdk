@@ -18,13 +18,15 @@ public class Dataset {
 
     private String uri;
 
+    private String source;
+
     // dct:title
     // Norwegian: Tittel
-    private Map<String,String> title ;
+    private Map<String,String> title;
 
     //dct:description
     //Norwegian: Beskrivelse
-    private Map<String,String> description ;
+    private Map<String,String> description;
 
     //dcatno:objective
     //Norwegian: Formål
@@ -88,6 +90,18 @@ public class Dataset {
     @Deprecated
     private List<String> accessRightsComment;
 
+    // dcatno:legalBasisForRestriction
+    //Norwegian: skjermingshjemmel
+    private List<SkosConcept> legalBasisForRestriction;
+
+    // dcatno:legalBasisForProcessing
+    //Norwegian: behanlingsgrunnlag
+    private List<SkosConcept> legalBasisForProcessing ;
+
+    // dcatno:legalBasisForAccess
+    //Norwegian: utleveringshjemmel
+    private List<SkosConcept> legalBasisForAccess ;
+
 
     // dcatno:hasXXXXAnnotation
     private QualityAnnotation hasAccuracyAnnotation;
@@ -126,30 +140,19 @@ public class Dataset {
 
     //dcat:conformsTo
     //Norwegian: I samsvar med
-    private List<SkosConcept> conformsTo = Collections.emptyList();;
+    private List<SkosConcept> conformsTo;
 
     // NEW FIELDS DCAT-AP-NO 1.2?
 
     // dct: informationModel
     // Norwegian: informasjonsmodell
-    private List<SkosConcept> informationModel = Collections.emptyList();;
+    private List<SkosConcept> informationModel;
 
-    // dcatno:legalBasisForRestriction
-    //Norwegian: skjermingshjemmel
-    private List<SkosConcept> legalBasisForRestriction = Collections.emptyList();;
-
-    // dcatno:legalBasisForProcessing
-    //Norwegian: behanlingsgrunnlag
-    private List<SkosConcept> legalBasisForProcessing = Collections.emptyList();
-
-    // dcatno:legalBasisForAccess
-    //Norwegian: utleveringshjemmel
-    private List<SkosConcept> legalBasisForAccess = Collections.emptyList();;
 
     //dct:type
     //Norwegian: type
     private String type;
 
-
+    private Catalog catalog;
 
 }

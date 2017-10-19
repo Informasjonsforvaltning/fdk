@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {HelptextsService} from "../helptexts.service";
 
 @Component({
     selector: 'helptext',
@@ -16,9 +16,26 @@ export class HelpText implements OnInit {
     @Input('name')
     public name: string;
 
+    allHelptexts: any[];
+    resolvedShortDesc: string = null;
+    resolvedDescription: string = null;
 
-    constructor() {}
+  constructor(private helptextsService: HelptextsService) {
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+    this.fetchHelpTexts().then(()=> {
+      this.allHelptexts
+        .filter(entry => entry.id == this.name)
+        .forEach(entry => {
+          this.resolvedShortDesc = entry.shortdesc;
+          this.resolvedDescription = entry.description;
+        })
+    });
+  }
+
+  fetchHelpTexts() {
+    return this.helptextsService.fetchHelptexts('nb').then(helptexts =>
+      this.allHelptexts = helptexts);
+  }
 }

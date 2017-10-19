@@ -113,6 +113,8 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.title = this.dataset.title || {"nb": ""};
+      this.dataset.description = this.dataset.description || {"nb": ""};
       this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];

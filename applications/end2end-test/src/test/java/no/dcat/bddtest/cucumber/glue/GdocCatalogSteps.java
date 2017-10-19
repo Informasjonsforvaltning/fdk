@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,7 @@ public class GdocCatalogSteps extends CommonPage {
             String dsId = dataset.get(0);
             logger.info("Test dataset {}", dsId);
 
-            openPage(PORTAL_URL + "/datasets?id=" + dsId);
+            openPage(PORTAL_URL + "/datasets/" + URLEncoder.encode(dsId,"utf-8"));
 
             assertTrue("Detail page has title ", driver.getTitle() != null);
         }

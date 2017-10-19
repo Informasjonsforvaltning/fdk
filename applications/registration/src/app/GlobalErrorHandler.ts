@@ -8,7 +8,7 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   handleError(error) {
-    alert(error);
+    //alert(error);
     console.error(error.stack);
     // IMPORTANT: Rethrow the error otherwise it gets swallowed
     throw error;

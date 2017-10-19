@@ -16,10 +16,10 @@ public class Publisher extends no.dcat.shared.Publisher {
     // private Publisher superierPublishers;
 
     // All Publisher first level below.
-    private List<Publisher> subPublisher = new ArrayList<>();
+    private List<Publisher> subPublisher;
     private Publisher superiorPublisher;
 
     // All Publisher all levels below.
-    private List<Publisher> aggrSubPublisher= new ArrayList<>();;
+    private List<Publisher> aggrSubPublisher;
 
 }
