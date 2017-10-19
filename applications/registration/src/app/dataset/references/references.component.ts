@@ -110,8 +110,8 @@ export class ReferencesComponent implements OnInit {
   }
 
   fetchDatasets() {
-    //todo hente fra service
     let catalogId = this.dataset.catalog;
+    console.log("fetchDatasets: catalogId: " + catalogId );
     this.datasetService.getAll(catalogId).then((datasets: Dataset[]) => {
       this.datasets = datasets;
       //this.datasets = _.sortBy(this.datasets, [a => a.title.nb || ""]);
