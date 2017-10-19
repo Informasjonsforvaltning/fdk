@@ -118,8 +118,8 @@
     <label for="terms-toggle" class="collapsed-content expand-label">
       <div *ngIf="!((dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0))" class="truncate">
         <span *ngIf="(dataset.subjects && dataset.subjects.length !== 0)">
-          <span class="" *ngFor="let subject of dataset.subjects; let i=index" >
-            <span>{{subject}}</span>
+          <span class="summary-subject" *ngFor="let subject of dataset.subjects; let i=index" >
+            <span>{{subject.prefLabel.no}}</span>
           </span>
         </span>
         <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">

@@ -13,7 +13,7 @@ export class SubjectService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   get(url: string): Promise<any> {
-    const datasetUrl = `${this.subjectsUrl}?uri=${url}/`;
+    const datasetUrl = `${this.subjectsUrl}?uri=${url}`;
     return this.http.get(datasetUrl)
       .toPromise()
       .then((response) => {
