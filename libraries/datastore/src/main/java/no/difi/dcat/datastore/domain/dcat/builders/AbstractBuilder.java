@@ -80,7 +80,10 @@ public abstract class AbstractBuilder {
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
 
-            Resource skosConcept = statement.getObject().asResource();
+            Resource skosConcept = null;
+            if (statement.getObject().isResource()) {
+                skosConcept = statement.getObject().asResource();
+            }
             if (skosConcept != null) {
                 String type = null;
 
@@ -170,8 +173,14 @@ public abstract class AbstractBuilder {
                     source.setExtraType(extractAsString(statement.getResource(), DCAT.Dataset));
                     source.setPrefLabel(extractLanguageLiteral(statement.getObject().asResource(), SKOS.prefLabel));
                 }
-
-                SkosCode code = referenceTypes.get(property.getURI());
+                SkosCode code = null;
+                if (referenceTypes != null) {
+                    code = referenceTypes.get(property.getURI());
+                }
+                if (code == null) {
+                    code = new SkosCode();
+                    code.setUri(property.getURI());
+                }
 
                 Reference referenceElement = new Reference(code, source);
                 result.add(referenceElement);
