@@ -6,19 +6,22 @@ import localization from '../localization';
 export const CustomHitsStats = (props) => {
   const {resultsFoundLabel, bemBlocks, hitsCount, timeTaken} = props;
   let queryObj = qs.parse(window.location.search.substr(1));
-  if(queryObj && Object.keys(queryObj).length > 1 || Object.keys(queryObj).length === 1 && !queryObj.lang) { // it's a search
+  let requestCompleted = timeTaken > 0;
+  let filteringOrTextSearchPerformed = queryObj ? Object.keys(queryObj).length > 1 || (Object.keys(queryObj).length === 1 && !queryObj.lang) : false;
+  let hitsCountInt = hitsCount ? parseInt(hitsCount) : 0;
+  if(requestCompleted && filteringOrTextSearchPerformed) { // it's a search
       return (
         <div className="sk-hits-stats" data-qa="hits-stats">
           <div className="sk-hits-stats__info" data-qa="info">
-            {localization.page['result.summary']} {hitsCount} {localization.page.dataset}
+            <span>{localization.page['result.summary']}</span> <span>{hitsCount}</span> {localization.page.dataset}
           </div>
         </div>
       )
-  } else if(hitsCount) {
+  } else if(requestCompleted && hitsCountInt) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
-          {localization.page['nosearch.summary']} {hitsCount} {localization.page['nosearch.descriptions']}
+          <span>{localization.page['nosearch.summary']}</span> <span>{hitsCount}</span> {localization.page['nosearch.descriptions']}
         </div>
       </div>
     )
