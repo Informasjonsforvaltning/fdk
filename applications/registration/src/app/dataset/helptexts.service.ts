@@ -7,15 +7,13 @@ import {environment} from "../../environments/environment";
 @Injectable()
 export class HelptextsService {
 
-  constructor(private http: Http) {
-  }
-
   private serviceUrl = environment.queryUrl + "/helptexts";
   private cachedHelptexts: any = {};
-  private helptextType = 'data-helptext';
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
+  constructor(private http: Http) {
+  }
 
   makeSingular(codeType: string): string {
     return codeType.indexOf('ies') === codeType.length - 3 ? codeType.substr(0, codeType.length - 3) + 'y' : codeType.substr(0, codeType.length - 1);
@@ -36,19 +34,17 @@ export class HelptextsService {
 
 
   public fetchHelptexts(lang: string): Promise<any[]> {
-    if (this.cachedHelptexts[this.helptextType]) {
-
+    if (this.cachedHelptexts[lang]) {
       return new Promise((resolve, reject) => {
-        resolve(this.cachedHelptexts[this.helptextType]);
+        resolve(this.cachedHelptexts[lang]);
       });
 
     } else {
-
-      return this.get(lang).then(data => {
-        this.cachedHelptexts[this.helptextType] = data;
-        return this.cachedHelptexts[this.helptextType];
+      this.cachedHelptexts[lang] =  this.get(lang).then(data => {
+        return data;
       });
 
     }
+    return this.cachedHelptexts[lang];
   }
 }

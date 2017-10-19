@@ -8,7 +8,7 @@ export interface Distribution {
     downloadURL?: string[];
     accessURL?: string[];
     format?: string[];
-    license?: SkosConcept; 
-    conformsTo?: SkosConcept[]; 
-    page?: SkosConcept;
+    license?: SkosConcept;
+    conformsTo?: SkosConcept[];
+    page?: SkosConcept[];
 }

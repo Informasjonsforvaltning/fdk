@@ -60,7 +60,7 @@ export class DistributionFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        if(this.ui_visible) this.showForm = true; 
+        if(this.ui_visible) this.showForm = true;
         this.distributionForm = this.toFormGroup(this.distribution);
         this.distributionsFormArray.push(this.distributionForm);
         this.typeModel
@@ -80,20 +80,20 @@ export class DistributionFormComponent implements OnInit {
             uri: [ distribution.uri || '', Validators.required ],
             type: distribution.type || this.typeModel[this.selectedTypeId].label,
             title: distribution.title || '',
-            description: distribution.description['nb'] || '', 
+            description: distribution.description['nb'] || '',
             accessURL: distribution.accessURL || [] as string[],
             downloadURL: distribution.downloadURL || [] as string[],
             format: [distribution.format || [] as string[]],
             license: (distribution.license) ? distribution.license.uri : '',
-            conformsToPrefLabel: (distribution.conformsTo && distribution.conformsTo[0] && distribution.conformsTo[0].prefLabel) ? 
+            conformsToPrefLabel: (distribution.conformsTo && distribution.conformsTo[0] && distribution.conformsTo[0].prefLabel) ?
                                     distribution.conformsTo[0].prefLabel['nb'] : '',
-            conformsToUri: (distribution.conformsTo && distribution.conformsTo[0] && distribution.conformsTo[0].uri) ? 
+            conformsToUri: (distribution.conformsTo && distribution.conformsTo[0] && distribution.conformsTo[0].uri) ?
                                 distribution.conformsTo[0].uri : '',
-            page: (distribution.page) ? distribution.page.uri : ''
+            page: (distribution.page && distribution.page[0]) ? distribution.page[0].uri : ''
         });
         console.log(this.componentTitle + ".formGroup: ", )
         return formGroup;
-    } 
+    }
 
     toggleForm(): void {
         this.showForm = !this.showForm;
@@ -122,32 +122,32 @@ export class DistributionFormComponent implements OnInit {
                 distribution.type = distribution.type || "";
                 distribution.title = distribution.title || {"nb": ""};
 
-                distribution.description = (typeof distribution.description === 'object') ? 
+                distribution.description = (typeof distribution.description === 'object') ?
                                             distribution.description : {"nb": distribution.description};
 
-                distribution.downloadURL = (distribution.downloadURL instanceof Array) ? 
+                distribution.downloadURL = (distribution.downloadURL instanceof Array) ?
                                             distribution.downloadURL : (distribution.downloadURL) ?
-                                                [distribution.downloadURL] : [] as string[]; 
+                                                [distribution.downloadURL] : [] as string[];
 
-                distribution.accessURL = (distribution.accessURL instanceof Array) ? 
+                distribution.accessURL = (distribution.accessURL instanceof Array) ?
                                             distribution.accessURL : (distribution.accessURL) ?
                                                 [distribution.accessURL] : [] as string[];
 
                 distribution.format = distribution.format || [] as string[];
 
-                distribution.license = (distribution.license instanceof SkosConcept) ? 
-                                        distribution.license : ((distribution.license) ? 
+                distribution.license = (distribution.license instanceof SkosConcept) ?
+                                        distribution.license : ((distribution.license) ?
                                             new SkosConcept(distribution.license, {"nb": ""}) : new SkosConcept());
 
-                distribution.conformsTo = [new SkosConcept(distribution.conformsToUri, {'nb': distribution.conformsToPrefLabel})] || [] as SkosConcept[]; 
-                
-                distribution.page = (distribution.page instanceof SkosConcept) ? 
-                                        distribution.page : ((distribution.page) ? 
-                                            new SkosConcept(distribution.page, {"nb": ""}) : new SkosConcept());
-                                            
+                distribution.conformsTo = [new SkosConcept(distribution.conformsToUri, {'nb': distribution.conformsToPrefLabel})] || [] as SkosConcept[];
+
+                distribution.page = (distribution.page instanceof Array) ?
+                                        distribution.page : ((distribution.page) ?
+                                            [new SkosConcept(distribution.page, {"nb": ""})] : [] as SkosConcept[]);
+
             });
         }
-        
+
         console.log('samples after setDistributions: ', distributions);
         return distributions;
     }
