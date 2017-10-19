@@ -105,7 +105,7 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
             String dsId = dataset.get(0);
             logger.info("Test dataset {}", dsId);
 
-            openPageWaitRetry(PORTAL_URL+"/datasets?id=" + dsId, "languageText", 5);
+            openPageWaitRetry(PORTAL_URL+"/datasets/" + URLEncoder.encode(dsId, "utf-8"), "languageText", 5);
             String contents = driver.getPageSource();
 
             assertTrue(contents, contents.contains("mbox:aas@brreg.no"));
@@ -126,7 +126,7 @@ public class OnlyImportValidDatasetsSteps extends CommonPage {
             String dsId = dataset.get(0);
             logger.info("Test dataset {}", dsId);
 
-            openPage(PORTAL_URL + "/datasets?id=" + URLEncoder.encode(dsId));
+            openPage(PORTAL_URL + "/datasets/" + URLEncoder.encode(dsId, "utf-8"));
             String contents = driver.getPageSource();
 
             assertTrue(contents, contents.contains("404"));

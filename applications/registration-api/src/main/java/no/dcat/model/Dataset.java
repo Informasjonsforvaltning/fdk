@@ -3,7 +3,7 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -14,8 +14,8 @@ import java.util.HashMap;
 
 @Document(indexName = "register", type = Dataset.ELASTIC_TYPE)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Relation(collectionRelation = "datasets")
-@ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Dataset extends no.dcat.shared.Dataset {
 
@@ -26,8 +26,7 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     //Can't specify parent if no parent field has been configured
     @Field(type = FieldType.String, store = true)
-    private String catalog;
-
+    private String catalogId;
 
     //Meta information about editiong of the dataset description
     @Field
@@ -39,20 +38,24 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     public Dataset() {
         super();
-        //Blank override
-        setTitle(new HashMap<>());
-        setDescription(new HashMap<>());
-        setObjective(new HashMap<>());
+        initialize();
     }
 
     public Dataset(String id) {
         this.setId(id);
+        initialize();
+    }
+
+    private void initialize() {
+        setTitle(new HashMap<>());
+        setDescription(new HashMap<>());
+        setObjective(new HashMap<>());
     }
 
     @Override
     public String toString() {
         String first = super.toString() ;
 
-        return first.substring(0, first.length()-1) +", " + catalog + ", " + _lastModified + ", " + registrationStatus + ")";
+        return first.substring(0, first.length()-1) +", " + catalogId + ", " + _lastModified + ", " + registrationStatus + ")";
     }
 }

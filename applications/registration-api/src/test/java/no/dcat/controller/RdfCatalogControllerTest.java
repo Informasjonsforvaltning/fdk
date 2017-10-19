@@ -2,19 +2,21 @@ package no.dcat.controller;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.rdf.DcatBuilderTest;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
+import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,11 +44,10 @@ public class RdfCatalogControllerTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        catalog = new Catalog();
+        BeanUtils.copyProperties(TestCompleteCatalog.getCompleteCatalog(), catalog);
 
-        catalog = (new DcatBuilderTest()).createCompleteCatalog();
-
-
-        when(mockCR.findOne(anyString())).thenReturn(catalog);
+        when(mockCR.findOne(anyString())).thenReturn((no.dcat.model.Catalog) catalog);
 
         //when(controller.getCatalogRepository()).thenReturn(mockCR);
         controller = new RdfCatalogController(mockCR, mockDR);
@@ -90,7 +91,11 @@ public class RdfCatalogControllerTest {
 
             @Override
             public List<Dataset> getContent() {
-                return catalog.getDataset();
+                List<Dataset> ds = new ArrayList<>();
+                catalog.getDataset().forEach(d -> {
+                    ds.add((Dataset) d);
+                });
+                return ds;
             }
 
             @Override
@@ -139,7 +144,7 @@ public class RdfCatalogControllerTest {
             }
         };
 
-        when(mockDR.findByCatalog(anyString(), (Pageable) anyObject())).thenReturn(pagedDataset);
+        when(mockDR.findByCatalogId(anyString(), (Pageable) anyObject())).thenReturn(pagedDataset);
 
         HttpEntity<Catalog> actualEntity = controller.getCatalog(catalogId);
 

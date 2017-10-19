@@ -101,34 +101,7 @@ docker-compose down
 
 ## Kjøre applikasjonene 
 
-Portal-webapp:
-http://localhost:8080
-
-Harvester-service: 
-http://localhost:8081/
-
-Harvester-admin:
-http://localhost:8082/
-(ta kontakt for passord)
-
-Portal-query:
-http://localhost:8083/search
-
-Gdoc-import:
-http://localhost:8084/versions/latest
-
-Test-admin:
-http://localhost:8085/
-(ta kontakt for passord)
-
-Fuseki:
-http://localhost:3030/fuseki/
-
-Elasticsearch:
-http://localhost:9200
-
-Kibana:
-http://localhost:5601/
+Se docker-compose.override.yml for portnummer for de forskjellige tjenestene.
 
 
 ## Common Problems

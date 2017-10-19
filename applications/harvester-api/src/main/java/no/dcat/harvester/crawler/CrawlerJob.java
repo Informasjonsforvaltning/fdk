@@ -164,32 +164,38 @@ public class CrawlerJob implements Runnable {
      *
      * @return enriched model
      */
-    private Model prepareModelForValidation() throws MalformedURLException {
+    Model prepareModelForValidation() throws MalformedURLException {
         logger.debug("loadDataset: "+ dcatSource.getUrl());
         URL url = new URL(dcatSource.getUrl());
         if (url.getProtocol().equals("http") || url.getProtocol().equals("https")) {
-            Dataset dataset = RDFDataMgr.loadDataset(url.toString());
-            Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
-            Iterator<String> stringIterator = dataset.listNames();
 
-            while (stringIterator.hasNext()) {
-                union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
-            }
-            verifyModelByParsing(union);
+            return loadModelAndValidate(url);
 
-            //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
-            DataEnricher enricher = new DataEnricher();
-            Model enrichedUnion = enricher.enrichData(union);
-            union = enrichedUnion;
-
-            // Checks if publisher is registrered in BRREG Enhetsregistret
-            BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-            brregAgentConverter.collectFromModel(union);
-
-            return union;
         }else{
             throw new MalformedURLException("Protocol not supported");
         }
+    }
+
+    Model loadModelAndValidate(URL url) {
+        Dataset dataset = RDFDataMgr.loadDataset(url.toString());
+        Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+        Iterator<String> stringIterator = dataset.listNames();
+
+        while (stringIterator.hasNext()) {
+            union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
+        }
+        verifyModelByParsing(union);
+
+        //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
+        DataEnricher enricher = new DataEnricher();
+        Model enrichedUnion = enricher.enrichData(union);
+        union = enrichedUnion;
+
+        // Checks if publisher is registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
+
+        return union;
     }
 
 
@@ -342,7 +348,7 @@ public class CrawlerJob implements Runnable {
                     model.removeAll(resource,DCTerms.spatial,null);
                     logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}",locUri);
                 }
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException | ClassCastException e) {
                 logger.error("URL not valid: {} ", locUri,e);
             } catch (IOException e) {
                 logger.error("IOException: {} ", locUri, e);

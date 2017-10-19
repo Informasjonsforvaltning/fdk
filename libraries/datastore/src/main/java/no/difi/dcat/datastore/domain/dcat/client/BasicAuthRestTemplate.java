@@ -1,4 +1,4 @@
-package no.dcat.harvester.crawler.client;
+package no.difi.dcat.datastore.domain.dcat.client;
 
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;

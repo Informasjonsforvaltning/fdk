@@ -23,7 +23,7 @@ public class Distribution {
     private List<String> accessURL;
     private SkosConcept license;
     private List<SkosConcept> conformsTo;
-    private SkosConcept page;
+    private List<SkosConcept> page;
     private List<String> format;
     private String type;
 }

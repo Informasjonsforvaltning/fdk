@@ -1,4 +1,4 @@
-package no.dcat.harvester.crawler.client;
+package no.difi.dcat.datastore.domain.dcat.client;
 
 import no.dcat.shared.DataTheme;
 import org.springframework.core.ParameterizedTypeReference;
