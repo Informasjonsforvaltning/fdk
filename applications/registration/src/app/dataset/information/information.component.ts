@@ -131,7 +131,6 @@ export class InformationComponent implements OnInit {
       return this.dataset.subjects.map((subject)=>{
         let numberOfLabelOccurences = 0;
         this.dataset.subjects.forEach((subject2)=>{
-          console.log(JSON.stringify(subject));
           if (subject.prefLabel && subject2.prefLabel) {
             if (subject2.prefLabel.no === subject.prefLabel.no) {
               numberOfLabelOccurences++;
