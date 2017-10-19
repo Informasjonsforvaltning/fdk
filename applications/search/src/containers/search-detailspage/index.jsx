@@ -68,30 +68,29 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderDistribution() {
-    let distributionNodes;
     const { distribution } = this.state.dataset;
-    if (distribution) {
-      distributionNodes = distribution.map(distribution => (
-        <DatasetDistribution
-          id={encodeURIComponent(distribution.id)}
-          key={encodeURIComponent(distribution.id)}
-          description={distribution.description ?
-            distribution.description[this.props.selectedLanguageCode]
-            || distribution.description.nb
-            || distribution.description.nn
-            || distribution.description.en
-            : null
-          }
-          accessUrl={distribution.accessURL}
-          format={distribution.format}
-          code={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
-          license={distribution.license}
-          page={distribution.page}
-          selectedLanguageCode={this.props.selectedLanguageCode}
-        />
-      ));
+    if (!distribution) {
+      return null;
     }
-    return distributionNodes;
+    return distribution.map(distribution => (
+      <DatasetDistribution
+        id={encodeURIComponent(distribution.id)}
+        key={encodeURIComponent(distribution.id)}
+        description={distribution.description ?
+          distribution.description[this.props.selectedLanguageCode]
+          || distribution.description.nb
+          || distribution.description.nn
+          || distribution.description.en
+          : null
+        }
+        accessUrl={distribution.accessURL}
+        format={distribution.format}
+        code={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
+        license={distribution.license}
+        page={distribution.page}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    ));
   }
 
 
@@ -100,10 +99,10 @@ export default class DetailsPage extends React.Component {
       return (
         <DatasetKeyInfo
           authorityCode={this.state.dataset.accessRights ? this.state.dataset.accessRights.code : null}
-          selectedLanguageCode={this.props.selectedLanguageCode}
           type={this.state.dataset.type}
           conformsTo={this.state.dataset.conformsTo}
           informationModel={this.state.dataset.informationModel}
+          selectedLanguageCode={this.props.selectedLanguageCode}
         />
       );
     }
@@ -208,7 +207,7 @@ export default class DetailsPage extends React.Component {
 
   _renderContactInfo() {
     const { contactPoint } = this.state.dataset;
-    if (contactPoint && contactPoint.id ) {
+    if (contactPoint && contactPoint.id) {
       return contactPoint.map(item => (
         <DatasetContactInfo
           key={item.id}

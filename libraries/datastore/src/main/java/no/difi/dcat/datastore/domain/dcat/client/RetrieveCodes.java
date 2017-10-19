@@ -1,6 +1,5 @@
-package no.dcat.harvester.crawler.client;
+package no.difi.dcat.datastore.domain.dcat.client;
 
-import com.google.gson.Gson;
 import no.dcat.shared.SkosCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

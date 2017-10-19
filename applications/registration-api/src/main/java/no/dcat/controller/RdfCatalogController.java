@@ -12,11 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -57,10 +56,12 @@ public class RdfCatalogController {
 
         // TODO fix limitation in more than 1000 datasets
         Page<Dataset> datasets = datasetRepository
-                .findByCatalogAndRegistrationStatus(catalog.getId(), Dataset.REGISTRATION_STATUS_PUBLISH, new PageRequest(0,1000));
+                .findByCatalogIdAndRegistrationStatus(catalog.getId(), Dataset.REGISTRATION_STATUS_PUBLISH, new PageRequest(0,1000));
 
         if (datasets != null) {
-            catalog.setDataset(datasets.getContent());
+            List<no.dcat.shared.Dataset> theList = new ArrayList<>();
+            datasets.forEach(theList::add);
+            catalog.setDataset(theList);
         }
 
         return new ResponseEntity<>(catalog, OK);

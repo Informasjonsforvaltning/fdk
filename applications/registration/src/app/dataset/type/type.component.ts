@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
 import {Dataset} from "../dataset";
 
 
@@ -18,11 +18,10 @@ export class TypeComponent implements OnInit {
     onSave = new EventEmitter<boolean>();
 
     public typeForm: FormGroup;
-    typeModel = [];
-    selectedTypeIdx = 0;
+    public selectedTypeIdx = 0;
+    private typeModel = [];
 
-    constructor(private fb: FormBuilder)
-    {
+    constructor(private fb: FormBuilder) {
         this.typeModel = [
             {
                 id: 1,
@@ -44,11 +43,7 @@ export class TypeComponent implements OnInit {
                 id: 5,
                 label: 'Testdata'
             }
-        ]
-    }
-
-    showAccessRightComments(): boolean {
-        return this.dataset.type !== this.typeModel[0]
+        ];
     }
 
     ngOnInit() {
@@ -73,8 +68,6 @@ export class TypeComponent implements OnInit {
             }
         );
     }
-
-
 
     private toFormGroup(data: Dataset) {
         return this.fb.group({

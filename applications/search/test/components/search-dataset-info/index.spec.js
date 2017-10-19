@@ -16,9 +16,9 @@ describe('DatasetInfo', () => {
   });
 
   it ('should render issued', () => {
-    expect(wrapper.find('#dataset-info-issued').text()).to.equal('—');
-    wrapper.setProps({ issued: 1325376000000});
-    expect(wrapper.find('#dataset-info-issued').text()).not.equal('—')
+    expect(wrapper.find('#dataset-info-issued')).to.have.length(0);
+    wrapper.setProps({ issued: "1325376000000"});
+    expect(wrapper.find('#dataset-info-issued')).to.have.length(1);
   });
 
   it ('should render accrualPeriodicity, provenance and hasCurrentnessAnnotation', () => {
@@ -36,7 +36,7 @@ describe('DatasetInfo', () => {
   });
 
   it ('should render spatial', () => {
-    expect(wrapper.find('#dataset-info-spatial').text()).to.equal('—');
+    expect(wrapper.find('#dataset-info-spatial')).to.have.length(0)
     wrapper.setProps({
       "spatial": [
         {
@@ -81,6 +81,7 @@ describe('DatasetInfo', () => {
     expect(wrapper.find('#dataset-info-temporal-0')).to.have.length(1);
   });
 
+  /*
   it ('should render language', () => {
     expect(wrapper.find('#dataset-info-language-0')).to.have.length(0);
     wrapper.setProps({
@@ -96,4 +97,5 @@ describe('DatasetInfo', () => {
     });
     expect(wrapper.find('#dataset-info-language-0')).to.have.length(1);
   });
+  */
 });

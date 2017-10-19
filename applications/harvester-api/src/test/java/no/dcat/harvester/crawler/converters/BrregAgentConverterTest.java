@@ -83,6 +83,17 @@ public class BrregAgentConverterTest {
 
 		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
 		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/814716872", iterator.nextResource().getURI());
+}
+  
+	public void testConvertOnRDF() throws Exception {
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+		Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
+		converter.collectFromModel(model);
+		NodeIterator countryiter = model.listObjectsOfProperty(
+				model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
+				model.createProperty("http://data.brreg.no/meta/land"));
+		assertEquals(countryiter.next().asLiteral().getValue().toString(),"Norge");
+
 	}
 
 }

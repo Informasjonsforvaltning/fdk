@@ -13,6 +13,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.aggregations.bucket.missing.Missing;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ public class SimpleQueryService {
 
     public static final String TERMS_THEME_COUNT = "theme_count";
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
-    public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightCount";
+    public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
 
     private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
     protected Client client = null;
@@ -111,7 +112,7 @@ public class SimpleQueryService {
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
                                          @RequestParam(value = "theme", defaultValue = "") String theme,
                                          @RequestParam(value = "publisher", defaultValue = "") String publisher,
-                                         @RequestParam(value = "accessright", defaultValue = "") String accessRight,
+                                         @RequestParam(value = "accessrights", defaultValue = "") String accessRights,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -128,7 +129,7 @@ public class SimpleQueryService {
                 .append(" sortdirection:").append(sortdirection)
                 .append(" theme:").append(theme)
                 .append(" publisher:").append(publisher)
-                .append(" accessRights:").append(accessRight);
+                .append(" accessRights:").append(accessRights);
 
         logger.debug(loggMsg.toString());
 
@@ -165,7 +166,7 @@ public class SimpleQueryService {
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRight, search);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
@@ -173,9 +174,9 @@ public class SimpleQueryService {
                 .setQuery(boolQuery)
                 .setFrom(from)
                 .setSize(size)
-                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
-                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
-                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME));
+                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
+                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
+                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"));
 
         addSort(sortfield, sortdirection, searchBuilder);
 
@@ -233,7 +234,7 @@ public class SimpleQueryService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRight, QueryBuilder search) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -243,7 +244,11 @@ public class SimpleQueryService {
         if (!StringUtils.isEmpty(theme)) {
 
             for (String t : theme.split(",")) {
+              if(t.equals("Ukjent")) {
+                boolFilter.must(QueryBuilders.missingQuery("theme.code"));
+              } else {
                 boolFilter.must(QueryBuilders.termQuery("theme.code", t));
+              }
             }
 
             boolQuery.filter(boolFilter);
@@ -251,14 +256,22 @@ public class SimpleQueryService {
 
         if (!StringUtils.isEmpty(publisher)) {
             BoolQueryBuilder boolFilter2 = QueryBuilders.boolQuery();
-            boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
+            if(publisher.equals("Ukjent")) {
+              boolFilter2.must(QueryBuilders.missingQuery("publisher.name.raw"));
+            } else {
+              boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
+            }
 
             boolQuery.filter(boolFilter2);
         }
 
-        if (!StringUtils.isEmpty(accessRight)) {
+        if (!StringUtils.isEmpty(accessRights)) {
             BoolQueryBuilder boolFilter3 = QueryBuilders.boolQuery();
-            boolFilter3.must(QueryBuilders.termQuery("accessRights.code.raw", accessRight));
+            if(accessRights.equals("Ukjent")) {
+              boolFilter3.must(QueryBuilders.missingQuery("accessRights.code.raw"));
+            } else {
+              boolFilter3.must(QueryBuilders.termQuery("accessRights.code.raw", accessRights));
+            }
 
             boolQuery.filter(boolFilter3);
         }
@@ -329,7 +342,7 @@ public class SimpleQueryService {
     @CrossOrigin
     @RequestMapping(value = QUERY_THEME_COUNT, produces = "application/json")
     public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "") String themecode) {
-        return aggregateOnField(FIELD_THEME_CODE, themecode, TERMS_THEME_COUNT);
+        return aggregateOnField(FIELD_THEME_CODE, themecode, TERMS_THEME_COUNT, "Ukjent");
     }
 
     /**
@@ -345,7 +358,7 @@ public class SimpleQueryService {
     @CrossOrigin
     @RequestMapping(value = QUERY_PUBLISHER_COUNT, produces = "application/json")
     public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "") String publisher) {
-        return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT);
+        return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT, "Ukjent");
     }
 
     /**
@@ -378,7 +391,7 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
     }
 
-    private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term) {
+    private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term, String missing) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
         QueryBuilder search;
@@ -402,7 +415,7 @@ public class SimpleQueryService {
         }
 
         //Create the aggregation object that counts the datasets
-        AggregationBuilder aggregation = createAggregation(term, field);
+        AggregationBuilder aggregation = createAggregation(term, field, missing);
 
         SearchResponse response = client.prepareSearch(INDEX_DCAT)
                 .setQuery(search)
@@ -430,12 +443,12 @@ public class SimpleQueryService {
      * @param field The field to be aggregated.
      * @return Aggregation builder object to be used in query
      */
-    private AggregationBuilder createAggregation(String terms, String field) {
+    private AggregationBuilder createAggregation(String terms, String field, String missing) {
         return AggregationBuilders
                 .terms(terms)
+                .missing(missing)
                 .field(field)
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
-                .missing("N/A")
                 .order(Order.count(false));
     }
 

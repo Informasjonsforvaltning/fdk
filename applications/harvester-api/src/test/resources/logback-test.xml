@@ -4,6 +4,6 @@
     <logger name="org.springframework.web" level="ERROR"/>
     <logger name="org.apache.http.wire" level="ERROR"/>
     <logger name="org.apache.jena" level="ERROR"/>
-	<logger name="no.difi.dcat" level="ERROR" />
-    <logger name="no.dcat" level="ERROR" />
+	<logger name="no.difi.dcat" level="INFO" />
+    <logger name="no.dcat" level="INFO" />
 </configuration>

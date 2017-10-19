@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -49,7 +50,7 @@ public class ContactInformation extends CommonPage {
 
 
                 assertTrue("Detail page has title ", driver.getTitle() != null);
-                openPageWaitRetry(PORTAL_URL+"/datasets?id="+ dsId, "chosenLanguage", 10 );
+                openPageWaitRetry(PORTAL_URL+"/datasets/" + URLEncoder.encode(dsId, "utf-8"), "chosenLanguage", 10 );
                 if (!"".equals(name)) {
                     WebElement nameElement = driver.findElement(By.xpath("//h3[.='Kontaktinformasjon']/../dl/dt[.='Navn']/following-sibling::dd[1]"));
                     assertEquals(name, nameElement.getText());

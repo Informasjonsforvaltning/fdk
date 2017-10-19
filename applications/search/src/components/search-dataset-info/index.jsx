@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import _sortBy from 'lodash/sortBy';
+import cx from 'classnames';
 
 import localization from '../../components/localization';
 import './index.scss';
@@ -10,116 +11,173 @@ const noTextToShow = '—';
 
 export default class DatasetInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderSpatial() {
-    let spatialNodes;
     const { spatial } = this.props;
-    if (spatial && typeof spatial !== 'undefined' && spatial.length > 0) {
-      spatialNodes = spatial.map((item, index) => {
-        if (index > 0) {
-          return (
-            <span
-              key={`dataset-info-spatial-${index}`}
-              className="fdk-ingress fdk-margin-bottom-no"
-            >
-              {`, ${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}`}
-            </span>
-          );
-        }
+    const header = localization.dataset.spatial;
+
+    const children = items => items.map((item, index) => {
+      if (index > 0) {
         return (
           <span
             key={`dataset-info-spatial-${index}`}
             className="fdk-ingress fdk-margin-bottom-no"
           >
-            {`${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}`}
+            {`, ${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}`}
           </span>
         );
-      });
-      return spatialNodes;
+      }
+      return (
+        <span
+          key={`dataset-info-spatial-${index}`}
+          className="fdk-ingress fdk-margin-bottom-no"
+        >
+          {`${item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}`}
+        </span>
+      );
+    });
+
+    if (spatial && typeof spatial !== 'undefined' && spatial.length > 0) {
+      return (
+        <div className="col-md-12 fdk-padding-no">
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-map" />
+            </div>
+            <div className="fdk-detail-text">
+              <h5>{ header }</h5>
+              <p id="dataset-info-spatial" className="fdk-ingress fdk-margin-bottom-no">
+                { children(spatial) }
+              </p>
+            </div>
+          </div>
+        </div>
+      );
     }
-    return noTextToShow;
+    return null;
   }
 
   _renderTemporal() {
-    let temporalNodes;
     const { temporal } = this.props;
+    const headerFrom = localization.dataset.periodFrom;
+    const headerTo = localization.dataset.periodTo;
+
+    const children = items => items.map((item, index) => {
+      if (item.startDate && item.endDate) {
+        return (
+          <div
+            key={`dataset-info-temporal-${index}`}
+            id={`dataset-info-temporal-${index}`}
+          >
+            <div className="dataset-temporal-date">
+              <h5>{ headerFrom }</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.startDate}
+                </Moment>
+              </p>
+            </div>
+            <div className="dataset-temporal-date pull-right">
+                <h5>{ headerTo }</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.endDate}
+                </Moment>
+              </p>
+            </div>
+          </div>
+        );
+      } else if (item.startDate) {
+        return (
+          <div
+            key={`dataset-info-temporal-${index}`}
+            id={`dataset-info-temporal-${index}`}
+          >
+            <div className="dataset-temporal-date">
+              <h5>{ headerFrom }</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.startDate}
+                </Moment>
+              </p>
+            </div>
+          </div>
+        );
+      } else if (item.endDate) {
+        return (
+          <div
+            key={`dataset-info-temporal-${index}`}
+            id={`dataset-info-temporal-${index}`}
+          >
+            <div className="dataset-temporal-date">
+              <h5>{ headerTo }</h5>
+              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                <Moment format="DD.MM.YYYY">
+                  {item.endDate}
+                </Moment>
+              </p>
+            </div>
+          </div>
+        );
+      } return null;
+    });
+
     if (temporal && temporal.length > 0) {
-      temporalNodes = temporal.map((item, index) => {
-        if (item.startDate && item.endDate) {
-          return (
-            <div
-              key={`dataset-info-temporal-${index}`}
-              id={`dataset-info-temporal-${index}`}
-            >
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                <Moment format="DD.MM.YYYY">
-                  {item.startDate}
-                </Moment>
-              </p>
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                <Moment format="DD.MM.YYYY">
-                  {item.endDate}
-                </Moment>
-              </p>
+      return (
+        <div className="col-md-8 fdk-padding-no">
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-calendar" />
             </div>
-          );
-        } else if (item.startDate) {
-          return (
-            <div
-              key={`dataset-info-temporal-${index}`}
-              id={`dataset-info-temporal-${index}`}
-            >
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                <Moment format="DD.MM.YYYY">
-                  {item.startDate}
-                </Moment>
-              </p>
+            <div id="dataset-info-temporal" className="fdk-detail-text">
+              { children(temporal) }
             </div>
-          );
-        } else if (item.endDate) {
-          return (
-            <div
-              key={`dataset-info-temporal-${index}`}
-              id={`dataset-info-temporal-${index}`}
-            >
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                <Moment format="DD.MM.YYYY">
-                  {item.endDate}
-                </Moment>
-              </p>
-            </div>
-          );
-        }
-      });
-      if (temporalNodes === null) {
-        return noTextToShow;
-      }
-      return temporalNodes;
+          </div>
+        </div>
+      );
     }
-    return noTextToShow;
+
+    return null;
   }
 
   _renderLanguage() {
-    let languageNodes;
-    const language = this.props.language;
-    if (language && typeof language !== 'undefined' && language.length > 0) {
-      languageNodes = language.map((item, index) => {
-        if (item !== null) {
-          return (
-            <p
-              key={`dataset-info-language-${index}`}
-              id={`dataset-info-language-${index}`}
-              className="fdk-ingress fdk-margin-bottom-no"
-            >
-              {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
-            </p>
-          );
-        } else { return noTextToShow; }
-      });
-      if (languageNodes === null) {
-        return noTextToShow;
+    const { language, temporal } = this.props;
+    const isTemporal = (temporal && temporal.length > 0) || false;
+    const languageClass = cx(
+      'fdk-padding-no',
+      {
+        'col-md-4': isTemporal,
+        'col-md-12': !isTemporal
       }
-      return languageNodes;
+    );
+    const children = items => items.map((item, index) => {
+      if (item && item.prefLabel) {
+        return (
+          <p
+            key={`dataset-info-language-${index}`}
+            id={`dataset-info-language-${index}`}
+            className="fdk-ingress fdk-margin-bottom-no"
+          >
+            {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
+          </p>
+        );
+      }
+    });
+
+    if (language && typeof language !== 'undefined' && language.length > 0) {
+      return (
+        <div className={languageClass}>
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-flag" />
+            </div>
+            <div id="dataset-info-language" className="fdk-detail-text">
+              <h5>{localization.dataset.language}</h5>
+              { children(language) }
+            </div>
+          </div>
+        </div>
+      );
     }
-    return noTextToShow;
+    return null;
   }
 
   _renderReferences() {
@@ -205,13 +263,40 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   }
 
   render() {
+    const {
+      issued,
+      accrualPeriodicity,
+      provenance,
+      hasCurrentnessAnnotation
+    } = this.props;
+
+    const isIssued = issued ? true : false;
+    const isAccrualPeriodicity = accrualPeriodicity ? true : false;
+
+    const issuedClass = cx(
+      'fdk-padding-no',
+      {
+        'col-md-4': isAccrualPeriodicity,
+        'col-md-12': !isAccrualPeriodicity
+      }
+    );
+
+    const accrualPeriodicityClass = cx(
+      'fdk-padding-no',
+      {
+        'col-md-8': isIssued,
+        'col-md-12': !isIssued
+      }
+    );
+
     return (
       <div
         id="dataset-info"
         className="row fdk-row fdk-margin-top-triple"
       >
 
-        <div className="col-md-4 fdk-padding-no">
+        {issued &&
+        <div className={issuedClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
               <i className="fa fa-upload" />
@@ -219,31 +304,30 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-text">
               <h5>{localization.dataset.issued}</h5>
               <p id="dataset-info-issued" className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                {this.props.issued &&
-                <Moment format="DD.MM.YYYY">{this.props.issued}</Moment>
-                }
-                {!this.props.issued &&
-                <span>{noTextToShow}</span>
+                {issued &&
+                <Moment format="DD.MM.YYYY">{issued}</Moment>
                 }
               </p>
             </div>
           </div>
         </div>
+        }
 
-        <div className="col-md-8 fdk-padding-no">
+        {accrualPeriodicity &&
+        <div className={accrualPeriodicityClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-refresh" />
+              <i className="fa fa-refresh"/>
             </div>
 
             <div className="fdk-detail-text">
               <h5>{localization.dataset.frequency}</h5>
-              {this.props.accrualPeriodicity &&
+              {accrualPeriodicity &&
               <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
-                {this.props.accrualPeriodicity.charAt(0).toUpperCase()}{this.props.accrualPeriodicity.substr(1)}
+                {accrualPeriodicity.charAt(0).toUpperCase()}{accrualPeriodicity.substr(1)}
               </p>
               }
-              {!this.props.accrualPeriodicity &&
+              {!accrualPeriodicity &&
               <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
                 <span>{noTextToShow}</span>
               </p>
@@ -251,76 +335,48 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             </div>
           </div>
         </div>
+        }
 
+        {provenance &&
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-user" />
+              <i className="fa fa-user"/>
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.provenance}</h5>
               <p id="dataset-info-provenance" className="fdk-ingress fdk-margin-bottom-no">
-                {this.props.provenance || noTextToShow}
+                {provenance}
               </p>
             </div>
           </div>
         </div>
+        }
 
+        {hasCurrentnessAnnotation &&
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-certificate" />
+              <i className="fa fa-certificate"/>
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.currentness}</h5>
               <p id="dataset-info-currentnessAnnotation" className="fdk-ingress fdk-margin-bottom-no">
-                {this.props.hasCurrentnessAnnotation || noTextToShow}
+                {hasCurrentnessAnnotation || noTextToShow}
               </p>
             </div>
           </div>
         </div>
+        }
 
-        <div className="col-md-12 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-map" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.spatial}</h5>
-              <p id="dataset-info-spatial" className="fdk-ingress fdk-margin-bottom-no">
-                {this._renderSpatial()}
-              </p>
-            </div>
-          </div>
-        </div>
+        { this._renderSpatial() }
 
-        <div className="col-md-8 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-calendar" />
-            </div>
-            <div id="dataset-info-temporal" className="fdk-detail-text">
-              <div className="dataset-temporal-date">
-                <h5>{localization.dataset.periodFrom}</h5>
-                {this._renderTemporal()}
-              </div>
-            </div>
-          </div>
-        </div>
+        { this._renderTemporal() }
 
-        <div className="col-md-4 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-flag" />
-            </div>
-            <div id="dataset-info-language" className="fdk-detail-text">
-              <h5>{localization.dataset.language}</h5>
-              {this._renderLanguage()}
-            </div>
-          </div>
-        </div>
+        { this._renderLanguage() }
 
         {this._renderReferences()}
+
       </div>
     );
   }
@@ -328,23 +384,23 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
 DatasetInfo.defaultProps = {
   issued: null,
-  accrualPeriodicity: '-',
-  provenance: '-',
-  hasCurrentnessAnnotation: '-',
+  accrualPeriodicity: null,
+  provenance: null,
+  hasCurrentnessAnnotation: null,
   spatial: null,
   temporal: null,
-  language: null
-
+  language: null,
+  selectedLanguageCode: null
 };
 
 DatasetInfo.propTypes = {
-  issued: PropTypes.number,
+  issued: PropTypes.string,
   accrualPeriodicity: PropTypes.string,
   provenance: PropTypes.string,
   hasCurrentnessAnnotation: PropTypes.string,
   spatial: PropTypes.array,
   temporal: PropTypes.array,
   language: PropTypes.array,
-  isPartOf: PropTypes.array,
-  references: PropTypes.array
+  references: PropTypes.array,
+  selectedLanguageCode: PropTypes.string
 };

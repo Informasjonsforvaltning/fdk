@@ -1,8 +1,8 @@
-package no.dcat.rdf;
+package no.difi.dcat.datastore.domain.dcat.builders;
 
-import no.dcat.model.Catalog;
+import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
-import no.dcat.model.Dataset;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Publisher;
@@ -11,6 +11,10 @@ import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -45,28 +49,15 @@ public class DcatBuilder {
     private static final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 
     public static final Model mod = ModelFactory.createDefaultModel();
-    public static final String DCATNO = "http://difi.no/dcatno#";
+
     public static final String TIME = "http://www.w3.org/TR/owl-time/";
-    public static final String ADMS = "http://www.w3.org/ns/adms#";
 
-    public static final String dqvNS = "http://www.w3.org/ns/dqvNS#";
-    public static final String isoNS = "http://iso.org/25012/2008/dataquality/";
-    public static final String oaNS  = "http://www.w3.org/ns/prov#";
-
-    public static final Resource QUALITY_ANNOTATION = mod.createResource(dqvNS + "QualityAnnotation");
-
-    public static final Property adms_identifier = mod.createProperty(ADMS, "identifier");
+    public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
 
     public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
     public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
     public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
     public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
-
-    public static final Property dcatno_legalBasisForRestriction = mod.createProperty(DCATNO, "legalBasisForRestriction");
-    public static final Property dcatno_legalBasisForProcessing = mod.createProperty(DCATNO, "legalBasisForProcessing");
-    public static final Property dcatno_legalBasisForAccess = mod.createProperty(DCATNO, "legalBasisForAccess");
-    public static final Property dcatno_informationModel = mod.createProperty(DCATNO, "informationModel");
-    public static final Property dcatno_standard = mod.createProperty(DCATNO, "standard");
 
     private final Model model;
     private final Map<Object, Resource> resourceMap = new HashMap<>();
@@ -78,16 +69,15 @@ public class DcatBuilder {
         model.setNsPrefix("foaf", FOAF.NS);
         model.setNsPrefix("vcard", VCARD4.NS);
         model.setNsPrefix("time", TIME);
-        model.setNsPrefix("dcatno", DCATNO);
+        model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
-        model.setNsPrefix("adms", ADMS);
-        model.setNsPrefix("iso", isoNS);
-        model.setNsPrefix("oa", oaNS);
-        model.setNsPrefix("dqv", dqvNS);
+        model.setNsPrefix("adms", ADMS.NS);
+        model.setNsPrefix("iso", QualityAnnotation.isoNS);
+        model.setNsPrefix("oa", OA.NS);
+        model.setNsPrefix("dqv", DQV.NS);
         model.setNsPrefix("rdf", RDF.uri);
         model.setNsPrefix("skos", SKOS.uri);
     }
-
 
     /**
      * Transforms a Catalog object to DCAT format.
@@ -127,77 +117,70 @@ public class DcatBuilder {
 
                 addLiterals(datRes, DCTerms.title, dataset.getTitle());
                 addLiterals(datRes, DCTerms.description, dataset.getDescription());
+                addLiterals(datRes, DCATNO.objective, dataset.getObjective());
 
                 addContactPoints(datRes, dataset.getContactPoint());
-
-                if (dataset.getKeyword() != null) {
-                    for (Map<String, String> keyword : dataset.getKeyword()) {
-                        addLiterals(datRes, DCAT.keyword, keyword);
-                    }
-                }
+                addKeywords(datRes, dataset.getKeyword());
                 addUriProperty(datRes, DCTerms.publisher, dataset.getPublisher());
 
                 addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
                 addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
-                if (dataset.getLanguage() != null) {
-                  for (SkosCode code : dataset.getLanguage()) {
-                    addProperty(datRes, DCTerms.language, code.getUri());
-                  }
-                }
+
+                addSkosCodes(datRes, DCTerms.language, dataset.getLanguage());
                 addProperties(datRes, DCAT.landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, DCAT.theme, dataset.getTheme());
 
-                addDistributions(datRes, dataset.getDistribution());
+                addDistributions(datRes, DCAT.distribution, dataset.getDistribution());
+                addDistributions(datRes, ADMS.sample, dataset.getSample());
 
-                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
-
-                if (dataset.getTemporal() != null) {
-                    for (PeriodOfTime period : dataset.getTemporal()) {
-                        addPeriodResourceAnnon(datRes, DCTerms.temporal, period);
-                    }
-                }
-
+                addTemporal(dataset, datRes);
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
+
                 addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
+                addProperties(datRes, DCATNO.accessRightsComment, dataset.getAccessRightsComment());
+                addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess());
+                addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing());
+                addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction());
 
-                dataset.getLegalBasisForRestriction().forEach(concept -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForRestriction, concept);
-                });
-
-                dataset.getLegalBasisForProcessing().forEach(concept -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForProcessing, concept);
-                });
-                dataset.getLegalBasisForAccess().forEach(concept -> {
-                    addSkosConcept(datRes, dcatno_legalBasisForAccess, concept);
-                });
-
-                dataset.getInformationModel().forEach(concept -> {
-                    addSkosConcept(datRes, dcatno_informationModel, concept);
-                });
-
-                dataset.getConformsTo().forEach(concept -> {
-                    addSkosConcept(datRes, dcatno_standard, concept);
-                });
+                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
+                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
+                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
+                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
+                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasRelevanceAnnotation());
 
                 addReferences(datRes, dataset.getReferences());
                 addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
                 addStringLiterals(datRes, DCTerms.identifier, dataset.getIdentifier());
+
                 addProperties(datRes, FOAF.page, dataset.getPage());
                 addProperty(datRes, DCTerms.accrualPeriodicity, dataset.getAccrualPeriodicity());
                 addSubjects(datRes, DCTerms.subject, dataset.getSubject());
-                addProperty(datRes, DCTerms.type, dataset.getType());
-                addProperties(datRes, adms_identifier, dataset.getAdmsIdentifier());
 
-                Property hasQualityAnnotation = model.createProperty(dqvNS +"hasQualityAnnotation");
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
-                addQualityAnnotation(datRes, hasQualityAnnotation, dataset.getHasRelevanceAnnotation());
+                addProperties(datRes, ADMS.identifier, dataset.getAdmsIdentifier());
+                addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel());
+                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
+
+                addProperty(datRes, DCTerms.type, dataset.getType());
             }
         }
 
         return this;
+    }
+
+    private void addKeywords(Resource datRes, List<Map<String,String>> keywords) {
+        if (keywords != null) {
+            for (Map<String, String> keyword : keywords) {
+                addLiterals(datRes, DCAT.keyword, keyword);
+            }
+        }
+    }
+
+    private void addTemporal(Dataset dataset, Resource datRes) {
+        if (dataset.getTemporal() != null) {
+            for (PeriodOfTime period : dataset.getTemporal()) {
+                addPeriodResourceAnnon(datRes, DCTerms.temporal, period);
+            }
+        }
     }
 
     private void addReferences(Resource datRes, List<Reference> references) {
@@ -205,8 +188,17 @@ public class DcatBuilder {
             references.forEach(reference -> {
 
                 Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
+                if (reference.getSource() != null && reference.getSource().getPrefLabel() != null) {
+                    Resource r = model.createResource();
+                    r.addProperty(RDF.type, DCAT.Dataset);
+                    addLiterals(r, SKOS.prefLabel, reference.getSource().getPrefLabel());
+                    r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
+                    datRes.addProperty(referenceProperty, r);
 
-                datRes.addProperty(referenceProperty, reference.getSource().getUri());
+                } else {
+                    Resource r = model.createResource(reference.getSource().getUri());
+                    datRes.addProperty(referenceProperty, r);
+                }
 
             });
         }
@@ -216,22 +208,29 @@ public class DcatBuilder {
     private void addQualityAnnotation(Resource datRes, Property hasQualityAnnotation, QualityAnnotation annotation) {
         if (annotation != null) {
             Resource qualityAnnotation = model.createResource();
-            Resource dimension = model.createResource(isoNS + annotation.getInDimension());
+            Resource dimension = model.createResource(annotation.getInDimension());
             qualityAnnotation.addProperty(RDF.type, QUALITY_ANNOTATION);
 
             datRes.addProperty(hasQualityAnnotation, qualityAnnotation);
 
-            Property inDimension = model.createProperty(dqvNS + "inDimension");
-            qualityAnnotation.addProperty(inDimension, dimension);
-
-            Property hasBody = model.createProperty(oaNS + "hasBody");
+            qualityAnnotation.addProperty(DQV.inDimension, dimension);
 
             Resource body = model.createResource();
             addLiterals(body, RDF.value, annotation.getHasBody());
 
-            qualityAnnotation.addProperty(hasBody, body);
+            qualityAnnotation.addProperty(OA.hasBody, body);
 
         }
+    }
+
+    DcatBuilder addSkosConcepts(Resource datRes, Property property, List<SkosConcept> concepts) {
+        if (concepts != null) {
+            concepts.forEach( concept -> {
+                addSkosConcept(datRes, property, concept);
+            });
+        }
+
+        return this;
     }
 
     private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
@@ -240,7 +239,9 @@ public class DcatBuilder {
 
             skosConceptResource.addProperty(RDF.type, SKOS.Concept);
             if (skosConcept.getExtraType() != null) {
-                skosConceptResource.addProperty(RDF.type, skosConcept.getExtraType());
+                if (skosConcept.getExtraType() != null && skosConcept.getExtraType().contains("Standard")) {
+                    skosConceptResource.addProperty(RDF.type, DCTerms.Standard);
+                }
             }
             skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
             addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
@@ -257,13 +258,15 @@ public class DcatBuilder {
             Resource temporal = model.createResource();
             model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
 
-            resource.addProperty(property, temporal);
+            if (period.getStartDate() != null || period.getEndDate() != null) {
+                resource.addProperty(property, temporal);
 
-            if (period.getStartDate() != null) {
-                temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
-            }
-            if (period.getEndDate() != null) {
-                temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+                if (period.getStartDate() != null) {
+                    temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
+                }
+                if (period.getEndDate() != null) {
+                    temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
+                }
             }
 
         }
@@ -276,7 +279,7 @@ public class DcatBuilder {
             Resource timeInstant = model.createResource();
             model.add(timeInstant, RDF.type, TIME_INSTANT);
 
-            Literal dateLiteral = model.createTypedLiteral(sdfDateTime.format(date), XSDDatatype.XSDdateTime);
+            Literal dateLiteral = model.createTypedLiteral(sdfDate.format(date), XSDDatatype.XSDdate);
             timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
 
             return timeInstant;
@@ -313,19 +316,24 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addDistributions(Resource dataset, List<Distribution> distributions) {
+    public DcatBuilder addDistributions(Resource dataset, Property property, List<Distribution> distributions) {
         if (distributions != null) {
             for (Distribution distribution : distributions) {
-                addProperty(dataset, DCAT.distribution, distribution.getUri());
+                addProperty(dataset, property, distribution.getUri());
 
                 Resource disRes = createResource(distribution, distribution.getUri(), DCAT.Distribution);
 
                 addLiterals(disRes, DCTerms.title, distribution.getTitle());
                 addLiterals(disRes, DCTerms.description, distribution.getDescription());
+                addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
                 addProperty(disRes, DCTerms.license, distribution.getLicense());
 
-                addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
+                addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo());
+                addSkosConcepts(disRes, FOAF.page, distribution.getPage());
                 addLiterals(disRes, DCTerms.format, distribution.getFormat());
+
+                addLiteral(disRes, DCTerms.type, distribution.getType());
+
             }
         }
 
@@ -375,6 +383,7 @@ public class DcatBuilder {
 
         return resource;
     }
+
 
 
     public DcatBuilder addProperty(Resource resource, Property property, SkosConcept concept) {
@@ -494,7 +503,7 @@ public class DcatBuilder {
         if (map != null) {
             for (String l : map.keySet()) {
                 String v = map.get(l);
-                if (v != null) {
+                if (v != null && !v.isEmpty()) {
                     Literal literal = model.createLiteral(v, l);
                     resource.addProperty(property, literal);
                 }

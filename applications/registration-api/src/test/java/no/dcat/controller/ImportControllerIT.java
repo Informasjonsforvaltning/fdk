@@ -5,11 +5,13 @@ import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.service.CatalogRepository;
+import no.dcat.shared.Subject;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -29,6 +35,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ActiveProfiles("unit-integration")
@@ -37,6 +45,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @AutoConfigureMockMvc
 public class ImportControllerIT {
     private static Logger logger = LoggerFactory.getLogger(ImportControllerIT.class);
+
+    Model model;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
     ImportController importController ;
@@ -50,16 +63,70 @@ public class ImportControllerIT {
     @Before
     public void before() {
         catalogRepository.deleteAll();
+
     }
 
     @Test
-    public void dummyTest(){}
+    public void importDatasets() throws IOException {
+        model = FileManager.get().loadModel("export.jsonld");
 
+        List<Dataset> ds = importController.parseDatasets(model);
+
+        assertThat(ds.size(), is(27));
+    }
+
+    @Test
+    public void importCatalog() throws IOException {
+        model = FileManager.get().loadModel("export.jsonld");
+        List<Catalog> ds = importController.parseCatalogs(model);
+
+        assertThat(ds.size(), is(1));
+    }
+
+    @Test
+    public void importCatalogFromGdocSubjectOK() throws Throwable {
+        model = FileManager.get().loadModel("export-gdoc-2017-10-17.ttl");
+
+        List<Dataset> ds = importController.parseDatasets(model);
+
+        long countDatasetWithSubjects = ds.stream()
+                .filter(dataset -> {
+                    if (dataset.getSubject() != null) return dataset.getSubject().size() > 0;
+                    else return false;
+                })
+                .peek(dataset -> {
+                    dataset.getSubject().forEach(subject -> {
+                        assertThat(subject.getUri(), is(notNullValue()));
+                    });
+                })
+                .count();
+
+        logger.info("gdoc {} datasets, wheras {} has subject", ds.size(), countDatasetWithSubjects);
+
+        assertThat(countDatasetWithSubjects, is (17L));
+        assertThat(ds.size(), is (132));
+    }
+
+/*  Commented out. Need to import from an url. And travis do not like that.
+    @Test
+    public void importOnlyDatasetsWithCatalog() throws  Throwable {
+
+        String catalogId = "974760673";
+        Catalog targetCatalog = new Catalog();
+        targetCatalog.setId(catalogId);
+        catalogRepository.save(targetCatalog);
+
+        Catalog importCatalog = importController.importDatasets(catalogId,new URL("http://gdoc-fellesdatakatalog-ppe.ose-pc.brreg.no/versions/latest"));
+
+        assertThat(importCatalog.getId(), is(catalogId));
+
+    }
+*/
 //    @Test
 //    public void importCatalogOK() throws Throwable {
 //        String catalogId = "958935420";
 //
-//        // make sure catalog exist in database
+//        // make sure catalogId exist in database
 //        Catalog cat = new Catalog(catalogId);
 //        catalogController.saveCatalog(cat);
 //
@@ -67,12 +134,12 @@ public class ImportControllerIT {
 //
 //        HttpEntity<Catalog> response = importController.importCatalog(catalogId, "export-oslokommune.ttl");
 //
-//        Catalog catalog = response.getBody();
+//        Catalog catalogId = response.getBody();
 //
-//        assertThat(catalog, is(notNullValue())) ;
-//        assertThat(catalog.getId(), is(catalogId));
+//        assertThat(catalogId, is(notNullValue())) ;
+//        assertThat(catalogId.getId(), is(catalogId));
 //
-//        assertThat(catalog.getDataset().size(), is(5));
+//        assertThat(catalogId.getDataset().size(), is(5));
 //
 //    }
 //
@@ -80,19 +147,19 @@ public class ImportControllerIT {
 //    public void importCatalogWithDatasets() throws Exception {
 //        String catalogId = "974760673";
 //
-//        // make sure catalog exist in database
+//        // make sure catalogId exist in database
 //        Catalog cat = new Catalog(catalogId);
 //        catalogController.saveCatalog(cat);
 //
 //
 //        HttpEntity<Catalog> result =  importController.importCatalog(catalogId, "export.jsonld");
 //
-//        Catalog catalog = result.getBody();
+//        Catalog catalogId = result.getBody();
 //
-//        assertThat(catalog, is(notNullValue())) ;
-//        assertThat(catalog.getId(), is(catalogId));
+//        assertThat(catalogId, is(notNullValue())) ;
+//        assertThat(catalogId.getId(), is(catalogId));
 //
-//        assertThat(catalog.getDataset().size(), is(27));
+//        assertThat(catalogId.getDataset().size(), is(27));
 //
 //    }
 //
@@ -157,7 +224,7 @@ public class ImportControllerIT {
 //    public void frameDatasetAddsLabels() throws Throwable {
 //        String catalogId = "974760673";
 //
-//        // make sure catalog exist in database
+//        // make sure catalogId exist in database
 //        Catalog cat = new Catalog(catalogId);
 //        catalogController.saveCatalog(cat);
 //

@@ -13,6 +13,8 @@ import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
 import {IMyDpOptions} from 'mydatepicker';
 import {AccessRightsService} from "./accessRights/accessRights.service";
+import {SkosConcept} from "./skosConcept";
+import {DistributionFormComponent} from "./distribution/distribution.component";
 
 @Component({
     selector: 'app-dataset',
@@ -111,6 +113,8 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.title = this.dataset.title || {"nb": ""};
+      this.dataset.description = this.dataset.description || {"nb": ""};
       this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
@@ -126,6 +130,19 @@ export class DatasetComponent implements OnInit {
 
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
+      this.dataset.samples[0] = this.dataset.samples[0] || { 
+        id: Math.floor(Math.random() * 1000000).toString(),
+        uri: '',
+        type: '',
+        title: {'nb': ''},
+        description: {'nb': ''},
+        downloadURL: [] as string[],
+        accessURL: [] as string[],
+        format: [] as string[],
+        license: new SkosConcept(),
+        conformsTo: [new SkosConcept()] as SkosConcept[],
+        page: new SkosConcept()
+    }; 
       this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
       this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
@@ -142,7 +159,7 @@ export class DatasetComponent implements OnInit {
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-
+            
           // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
@@ -151,18 +168,10 @@ export class DatasetComponent implements OnInit {
             });
           });
 
-          if (dataset.distributions) {
-            dataset.distributions.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-            })
-          }
-          if (dataset.samples) {
-            dataset.samples.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-            })
-          }
+          dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
+          console.log(dataset.samples);
+          dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
+          console.log(dataset.samples);
 
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
@@ -174,13 +183,19 @@ export class DatasetComponent implements OnInit {
 
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
+                if (temporal.startDate && temporal.startDate.epoc && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
+                    if (temporal.startDate.toString().length === 10) {
+                        temporal.startDate = parseInt(temporal.startDate.toString() + "000");
+                    }
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
+                if (temporal.endDate && temporal.endDate.epoc && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
+                    if (temporal.endDate.toString().length === 10) {
+                        temporal.endDate = parseInt(temporal.endDate.toString() + "000");
+                    }
                 } else {
                     delete temporal.endDate;
                 }
@@ -195,7 +210,6 @@ export class DatasetComponent implements OnInit {
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
-
           this.dataset = _.merge(this.dataset, dataset);
           this.buildSummaries();
           this.cdr.detectChanges();
@@ -372,11 +386,16 @@ export class DatasetComponent implements OnInit {
         return this.service.get(this.catId, datasetId);
     }
 
-    public getDateObjectFromUnixTimestamp(timestamp: string) {
+    public static getDateObjectFromUnixTimestamp(timestamp: string): any {
         if (!timestamp) {
             return {};
         }
-        let date = new Date(timestamp);
+        let timestamp2 = parseInt(timestamp);
+        if (timestamp2.toString().length === 10) {
+            timestamp2 = parseInt(timestamp.toString() + "000");
+
+        }
+        let date = new Date(timestamp2);
         return {
             date: {
                 year: date.getFullYear(),
@@ -459,7 +478,7 @@ export class DatasetComponent implements OnInit {
       contactPoints: this.formBuilder.array([]),
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
-      issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
+      issued: [DatasetComponent.getDateObjectFromUnixTimestamp(data.issued)],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)

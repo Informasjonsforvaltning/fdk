@@ -14,6 +14,8 @@ import {CatalogService} from "./catalog/catalog.service";
 import {DatasetService} from "./dataset/dataset.service";
 import {ThemesService} from "./dataset/themes.service";
 import {CodesService} from "./dataset/codes.service";
+import {HelptextsService} from "./dataset/helptexts.service";
+import {SubjectService} from "./dataset/information/subject.service";
 import {BootstrapModalModule} from "ng2-bootstrap-modal";
 import {ConfirmComponent} from "./confirm/confirm.component";
 import {AuthGuard} from "./security/auth.guard";
@@ -94,7 +96,9 @@ import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
         CatalogService,
         DatasetService,
         CodesService,
+        SubjectService,
         ThemesService,
+        HelptextsService,
         AccessRightsService,
         AuthGuard,
         AuthenticationService,

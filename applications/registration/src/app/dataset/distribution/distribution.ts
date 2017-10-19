@@ -1,15 +1,14 @@
+import {SkosConcept} from '../skosConcept';
 export interface Distribution {
-  id?: string;
-  uri?: string;
-  title?: {
-    [language: string]:string
-  };
-  description?: {
-    [language: string]:string
-  };
-  accessURL?: string[];
-  downloadURL?: string[];
-  license?: string;
-  format?: string[];
-  ui_visible?:boolean;
+    id?: string;
+    uri?: string;
+    type?: string;
+    title?: {[language: string]: string};
+    description?: {[language: string]: string};
+    downloadURL?: string[];
+    accessURL?: string[];
+    format?: string[];
+    license?: SkosConcept; 
+    conformsTo?: SkosConcept[]; 
+    page?: SkosConcept;
 }

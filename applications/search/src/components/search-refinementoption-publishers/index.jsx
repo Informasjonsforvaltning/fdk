@@ -13,20 +13,22 @@ export class RefinementOptionPublishers extends React.Component {
 		    .mix(bemBlocks.container('item'));
 
     let optionLabel;
-    if (props.label !== 'N/A') {
+    if (props.label !== 'Ukjent') {
       optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
     } else { optionLabel = props.label; }
-
+    const id = encodeURIComponent(itemKey);
     return (
       <div className="checkbox">
         <label>
           <input
             type="checkbox"
-            checked={props.active}
-            onChange={props.onClick}
-            className={`${props.bemBlocks.option().state({ active: props.active }).mix(props.bemBlocks.container('item'))
+            id={id}
+            checked={active}
+            onChange={onClick}
+            className={`${bemBlocks.option().state({ active: active }).mix(bemBlocks.container('item'))
             } list-group-item fdk-label fdk-label-default`}
           />
+          <label className="checkbox-replacement" htmlFor={id}></label>
           {optionLabel} ({props.count})
         </label>
       </div>
