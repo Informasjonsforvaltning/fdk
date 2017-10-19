@@ -13,6 +13,8 @@ import * as _ from 'lodash';
 import {ThemesService} from "./themes.service";
 import {IMyDpOptions} from 'mydatepicker';
 import {AccessRightsService} from "./accessRights/accessRights.service";
+import {SkosConcept} from "./skosConcept";
+import {DistributionFormComponent} from "./distribution/distribution.component";
 
 @Component({
     selector: 'app-dataset',
@@ -128,6 +130,19 @@ export class DatasetComponent implements OnInit {
 
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
+      this.dataset.samples[0] = this.dataset.samples[0] || { 
+        id: Math.floor(Math.random() * 1000000).toString(),
+        uri: '',
+        type: '',
+        title: {'nb': ''},
+        description: {'nb': ''},
+        downloadURL: [] as string[],
+        accessURL: [] as string[],
+        format: [] as string[],
+        license: new SkosConcept(),
+        conformsTo: [new SkosConcept()] as SkosConcept[],
+        page: new SkosConcept()
+    }; 
       this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
       this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
@@ -144,7 +159,7 @@ export class DatasetComponent implements OnInit {
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-
+            
           // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
@@ -153,18 +168,10 @@ export class DatasetComponent implements OnInit {
             });
           });
 
-          if (dataset.distributions) {
-            dataset.distributions.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-            })
-          }
-          if (dataset.samples) {
-            dataset.samples.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-            })
-          }
+          dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
+          console.log(dataset.samples);
+          dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
+          console.log(dataset.samples);
 
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
