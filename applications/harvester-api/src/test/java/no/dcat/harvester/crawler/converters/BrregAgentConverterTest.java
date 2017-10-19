@@ -5,6 +5,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
@@ -31,8 +32,7 @@ public class BrregAgentConverterTest {
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
 		converter.collectFromUri(uri.toString(), model, model.createResource("http://data.brreg.no/enhetsregisteret/underenhet/814716902"));
 
-		model.write(System.out, "TTL");
-		
+
 		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
 
 		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
@@ -82,7 +82,7 @@ public class BrregAgentConverterTest {
         converter.collectFromModel(model);
         NodeIterator nameiter = model.listObjectsOfProperty(
                 model.createResource("http://data.brreg.no/enhetsregisteret/enhet/971040238"),
-                model.createProperty("http://xmlns.com/foaf/0.1/name"));
+                FOAF.name);
         assertEquals("Kartverket" , nameiter.next().asLiteral().getValue().toString());
     }
 
