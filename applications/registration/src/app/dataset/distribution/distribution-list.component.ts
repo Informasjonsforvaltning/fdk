@@ -25,8 +25,8 @@ export class DistributionListComponent implements OnInit {
 
     @Input('allowAdding')
     public allowAdding: boolean;
-    
-    showDelete: boolean = false;    
+
+    showDelete: boolean = false;
 
     constructor(private cd: ChangeDetectorRef) { }
 
@@ -39,7 +39,7 @@ export class DistributionListComponent implements OnInit {
     }
 
     addDistribution() {
-        const distribution: Distribution = { 
+        const distribution: Distribution = {
             id: Math.floor(Math.random() * 1000000).toString(),
             uri: '',
             type: '',
@@ -49,8 +49,8 @@ export class DistributionListComponent implements OnInit {
             accessURL: [] as string[],
             format: [] as string[],
             license: new SkosConcept(),
-            conformsTo: [new SkosConcept()] as SkosConcept[],
-            page: new SkosConcept()
+            conformsTo: [],
+            page: []
         };
         this.distributions.push(distribution);
         this.cd.detectChanges();
@@ -62,7 +62,7 @@ export class DistributionListComponent implements OnInit {
         if (this.distributions.length > 0) {
             this.distributions.splice(idx, 1);
             this.distributionsFormArray.removeAt(idx);
-        }        
+        }
         this.showHideDelete();
         return false;
     }
