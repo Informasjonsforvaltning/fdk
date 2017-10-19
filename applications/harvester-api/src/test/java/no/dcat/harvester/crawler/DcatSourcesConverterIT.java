@@ -58,10 +58,21 @@ public class DcatSourcesConverterIT {
         List<Dataset> datasets = reader.getDatasets();
 
         assertThat(datasets.size(), is(168));
-        //Catalog actualCatalog = CatalogBuilder.create(model.getResource(catalogUri));
 
     }
 
 
+    @Test
+    public void readGdocData() throws Throwable {
+
+        Model model = ModelFactory.createDefaultModel();
+        model = FileManager.get().loadModel("gdoc-data-2017-10-19.ttl" );
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        assertThat(datasets.size(), is(132));
+
+    }
 
 }
