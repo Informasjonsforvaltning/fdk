@@ -5,7 +5,6 @@ import {Dataset} from "../dataset";
 describe('SpatialComponent', () => {
   let component: SpatialComponent;
   let fixture: ComponentFixture<SpatialComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SpatialComponent ]
