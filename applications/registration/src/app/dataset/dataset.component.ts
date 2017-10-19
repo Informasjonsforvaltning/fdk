@@ -176,13 +176,19 @@ export class DatasetComponent implements OnInit {
 
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
+                if (temporal.startDate && temporal.startDate.epoc && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
+                    if (temporal.startDate.toString().length === 10) {
+                        temporal.startDate = parseInt(temporal.startDate.toString() + "000");
+                    }
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
+                if (temporal.endDate && temporal.endDate.epoc && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
+                    if (temporal.endDate.toString().length === 10) {
+                        temporal.endDate = parseInt(temporal.endDate.toString() + "000");
+                    }
                 } else {
                     delete temporal.endDate;
                 }
@@ -197,7 +203,6 @@ export class DatasetComponent implements OnInit {
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
-
           this.dataset = _.merge(this.dataset, dataset);
           this.buildSummaries();
           this.cdr.detectChanges();
@@ -374,11 +379,16 @@ export class DatasetComponent implements OnInit {
         return this.service.get(this.catId, datasetId);
     }
 
-    public getDateObjectFromUnixTimestamp(timestamp: string) {
+    public static getDateObjectFromUnixTimestamp(timestamp: string): any {
         if (!timestamp) {
             return {};
         }
-        let date = new Date(timestamp);
+        let timestamp2 = parseInt(timestamp);
+        if (timestamp2.toString().length === 10) {
+            timestamp2 = parseInt(timestamp.toString() + "000");
+
+        }
+        let date = new Date(timestamp2);
         return {
             date: {
                 year: date.getFullYear(),
@@ -461,7 +471,7 @@ export class DatasetComponent implements OnInit {
       contactPoints: this.formBuilder.array([]),
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
-      issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
+      issued: [DatasetComponent.getDateObjectFromUnixTimestamp(data.issued)],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)

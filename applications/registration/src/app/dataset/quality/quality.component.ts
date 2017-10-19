@@ -151,7 +151,7 @@ export class QualityComponent implements OnInit {
         return this.fb.group({
             accrualPeriodicity: [ data.accrualPeriodicity.uri || '' ],
             provenance: [ data.provenance.uri || ''],
-            modified: [ this.parent.getDateObjectFromUnixTimestamp(data.modified) ],
+            modified: [ DatasetComponent.getDateObjectFromUnixTimestamp(data.modified) ],
             currentness: [ this.currentness || '']
         });
     }
