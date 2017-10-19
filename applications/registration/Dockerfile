@@ -4,8 +4,8 @@ FROM node:6.10-alpine
 #FROM node:boron
 
 RUN npm init -y
-RUN npm install ejs express method-override body-parser compression
-RUN npm install pm2 -g
+RUN npm install ejs express method-override body-parser compression --loglevel error
+RUN npm install pm2 -g -s --loglevel error
 
 # Create app directory
 RUN mkdir -p /usr/src/app && chmod 777 /usr/src/app
