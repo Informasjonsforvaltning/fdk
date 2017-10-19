@@ -6,17 +6,22 @@ import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -89,12 +94,19 @@ public class BrregAgentConverter {
             if (next.isURIResource()) {
                 Resource orgresource = next.asResource();
                 if (orgresource.getURI().contains("data.brreg.no")) {
-                    collectFromUri(orgresource.getURI(), model, orgresource);
+                    collectFromUri(orgresource.getURI(), model);
                 } else {
-                    String orgnr = getOrgnr(model, orgresource);
-                    String url = String.format(publisherIdURI, orgnr, ".xml");
-                    logger.trace("Used dct:identifier to collect from {}", url);
-                    collectFromUri(url, model, orgresource);
+                    NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
+                    // TODO: deal with the possibility of multiple dct:identifiers?
+                    if (identiterator.hasNext()) {
+                        String orgnr = identiterator.next().asLiteral().getValue().toString();
+                        orgnr = orgnr.replaceAll("\\s", "");
+                        String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
+                        logger.trace("Used dct:identifier to collect from {}", url);
+                        collectFromUri(url, model);
+                    } else {
+                        logger.debug("Found no identifier for {}", orgresource.getURI());
+                    }
                 }
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
@@ -106,11 +118,11 @@ public class BrregAgentConverter {
 
     /* For each organisation, transform the RDF to match what we expect from it */
 
-    protected void collectFromUri(String uri, Model model, Resource publisherResource) {
+    protected void collectFromUri(String uri, Model model) {
         if (!uri.endsWith(".xml")) {
             uri = uri.concat(".xml");
         }
-        logger.debug("Collecting from URL {} using subject URI {}", uri, publisherResource.toString());
+
         try {
             if (brregCache != null) {
 
@@ -119,29 +131,9 @@ public class BrregAgentConverter {
 
                 InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
                 Model incomingModel = convert(inputStream);
-                if (logger.isTraceEnabled()) {
-                    OutputStream output = new ByteArrayOutputStream();
-                    incomingModel.write(output, "TURTLE");
-                    logger.trace("[model_after_conversion] \n{}", output.toString());
-                }
+
+                logger.trace("[model_after_conversion] {}", incomingModel);
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
-
-                String orgnr = getOrgnr(model, publisherResource);
-
-                if (orgnr != null) {
-                    org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("kanoniske.csv");
-                    Reader in = new FileReader(canonicalNamesFile.getFile().toString());
-                    Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-                    for (CSVRecord line : records) {
-                        logger.trace("Found line from CSV:\nOrgnr: {}\tName: {}", line.get(0), line.get(1));
-                        if (line.get(0).equals(orgnr) && publisherResource != null) { // Should check publisherResource, since all names will be removed if it is null
-                            incomingModel.removeAll(publisherResource, FOAF.name, null);
-                            incomingModel.add(publisherResource, FOAF.name, incomingModel.createLiteral(line.get(1), "nb"));
-                            break;
-                        }
-                    }
-                }
-
                 processBlankNodes(incomingModel, uri);
 
                 ResIterator subjects = incomingModel.listSubjectsWithProperty(EnhetsregisteretRDF.organisasjonsform);
@@ -154,8 +146,7 @@ public class BrregAgentConverter {
                     if (organisasjonsform.equals(ORGANISASJONSLEDD) && overordnetEnhet != null) {
 
                         logger.trace("Found superior publisher: {}", overordnetEnhet.getObject());
-                        String supOrgUri = String.format(publisherIdURI, overordnetEnhet.getObject().toString());
-                        collectFromUri(supOrgUri, model, model.createResource(supOrgUri));
+                        collectFromUri(String.format(publisherIdURI, overordnetEnhet.getObject().toString()), model);
                     }
                 }
                 logger.trace(incomingModel.toString());
@@ -254,18 +245,4 @@ public class BrregAgentConverter {
     protected void setPublisherIdURI(String publisherIdURI) {
         this.publisherIdURI = publisherIdURI;
     }
-
-    private String getOrgnr(Model model, Resource orgresource) {
-        NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
-        // TODO: deal with the possibility of multiple dct:identifiers?
-        if (identiterator.hasNext()) {
-            String orgnr = identiterator.next().asLiteral().getValue().toString();
-            return orgnr.replaceAll("\\s", "");
-        } else {
-            logger.debug("Found no identifier for {}", orgresource.getURI());
-        }
-        return null;
-    }
-
-    
 }
