@@ -33,6 +33,7 @@ import { TypeComponent } from "./dataset/type/type.component";
 import { InformationComponent } from "./dataset/information/information.component";
 import { TemaComponent } from "./dataset/tema/tema.component";
 import { ReferencesComponent } from "./dataset/references/references.component";
+import { ReferenceListComponent } from "./dataset/references/reference-list.component";
 import { MyDatePickerModule } from 'mydatepicker';
 import { SpatialComponent } from "./dataset/spatial/spatial.component";
 import { HelpText } from "./dataset/helptext/helptext.component";
@@ -68,7 +69,8 @@ import {ContentComponent} from "./dataset/content/content.component";
         TitleUriListComponent,
         TitleUriFormComponent,
         ContentComponent,
-        ReferencesComponent
+        ReferencesComponent,
+        ReferenceListComponent
     ],
     imports: [
         BrowserModule,

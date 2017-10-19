@@ -1,0 +1,16 @@
+<div *ngIf="references" class="temporal-list"
+     [formGroup]="datasetForm">
+  <div *ngFor="let reference of references; let idx=index ">
+    <references
+      [referencesFormArray]="referencesFormArray"
+      [reference]="reference"
+      [dataset]="dataset"
+      [referenceIndex]="idx"
+      [showDelete] ="showDelete"
+      (deleteReference)="removeReference($event)">
+    </references>
+  </div>
+  <a href="#" (click)="addReference()">
+    <i class="fa fa-plus-circle fdk-fa-dark fdk-fa-left"></i>Legg til {{title}}
+  </a>
+</div>

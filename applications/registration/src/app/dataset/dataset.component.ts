@@ -460,6 +460,7 @@ export class DatasetComponent implements OnInit {
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
       informationModel: [data.informationModel],
+      references: this.formBuilder.array([]),
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)
