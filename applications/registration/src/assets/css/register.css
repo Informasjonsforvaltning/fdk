@@ -317,3 +317,12 @@ rl-tag-input-item {
   top:2px;
   left:2px;
 }
+.summary-subject::after {
+  content:',';
+  display:inline;
+  margin-left:-3px;
+}
+.summary-subject:last-child::after {
+  content:'';
+  display:inline;
+}
