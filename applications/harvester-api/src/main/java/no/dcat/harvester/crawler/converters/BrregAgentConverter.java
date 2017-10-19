@@ -47,7 +47,7 @@ public class BrregAgentConverter {
         Reader in = null;
         Iterable<CSVRecord> records = null;
         try {
-            in = new FileReader(canonicalNamesFile.getFile().toString());
+            in = new BufferedReader(new InputStreamReader(canonicalNamesFile.getInputStream()));
             records = CSVFormat.EXCEL.parse(in);
         } catch (IOException e) {
             logger.error("Could not read canonical names: {}", e.getMessage());
