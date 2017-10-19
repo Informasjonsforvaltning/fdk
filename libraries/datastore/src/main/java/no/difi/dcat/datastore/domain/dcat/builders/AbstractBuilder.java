@@ -23,6 +23,7 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
+import org.apache.jena.vocabulary.XSD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -343,6 +344,11 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+    static Property owlTime_hasBeginning = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning");
+    static Property owlTime_hasEnd = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd");
+    static Property schema_startDate = ResourceFactory.createProperty("http://schema.org/startDate");
+    static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
+
     /**
      * Extract period of time property from DCAT resource and map to model class.
      *
@@ -369,16 +375,24 @@ public abstract class AbstractBuilder {
                     StmtIterator timePeriodStmts = timePeriodRes.listProperties();
                     while (timePeriodStmts.hasNext()) {
                         Statement tpStmt = timePeriodStmts.next();
-                        if (tpStmt.getPredicate().equals(ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning"))) {
+                        // the norheim way
+                        if (tpStmt.getPredicate().equals(owlTime_hasBeginning)) {
                             Resource hasBeginningRes = tpStmt.getObject().asResource();
                             StmtIterator begIt = hasBeginningRes.listProperties();
                             period.setStartDate(extractDate(hasBeginningRes, ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/inXSDDateTime")));
 
                         }
-                        if (tpStmt.getPredicate().equals(ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd"))) {
+                        if (tpStmt.getPredicate().equals(owlTime_hasEnd)) {
                             Resource hasEndRes = tpStmt.getObject().asResource();
                             StmtIterator endIt = hasEndRes.listProperties();
                             period.setEndDate(extractDate(hasEndRes, ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/inXSDDateTime")));
+                        }
+                        // the standard way dcat-ap-no
+                        if (tpStmt.getPredicate().equals(schema_startDate)) {
+                            period.setStartDate(extractDate(timePeriodRes,schema_startDate));
+                        }
+                        if (tpStmt.getPredicate().equals(schema_endDate)) {
+                            period.setEndDate(extractDate(timePeriodRes,schema_endDate));
                         }
                     }
                     logger.debug("   POT: Periode identifisert: start: " + period.getStartDate() + " end: " + period.getEndDate());
