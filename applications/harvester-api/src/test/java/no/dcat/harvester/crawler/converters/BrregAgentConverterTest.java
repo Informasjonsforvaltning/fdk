@@ -29,7 +29,7 @@ public class BrregAgentConverterTest {
 		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
 
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model);
+		converter.collectFromUri(uri.toString(), model, model.createResource("http://data.brreg.no/enhetsregisteret/underenhet/814716902"));
 
 		model.write(System.out, "TTL");
 		
@@ -57,7 +57,7 @@ public class BrregAgentConverterTest {
 		
 		Model model = ModelFactory.createDefaultModel();
 		
-		converter.collectFromUri("http://test", model);
+		converter.collectFromUri("http://test", model, model.createResource("http://test"));
 		
 		NodeIterator listObjectsOfProperty = model.listObjectsOfProperty(RDF.type);
 		
@@ -65,14 +65,26 @@ public class BrregAgentConverterTest {
 	}
 
 	@Test
-	public void testConvertOnRDF() throws Exception {
+	public void testConvertOnRDFWithIdentifier() throws Exception {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
 		converter.collectFromModel(model);
 		NodeIterator countryiter = model.listObjectsOfProperty(
 				model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
 				model.createProperty("http://data.brreg.no/meta/land"));
-		assertEquals(countryiter.next().asLiteral().getValue().toString(),"Norge");
+		assertEquals("Norge" , countryiter.next().asLiteral().getValue().toString());
 	}
+
+    @Test
+    public void testConvertOnRDFReplaceCanonicalName() throws Exception {
+        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
+        converter.collectFromModel(model);
+        NodeIterator nameiter = model.listObjectsOfProperty(
+                model.createResource("http://data.brreg.no/enhetsregisteret/enhet/971040238"),
+                model.createProperty("http://xmlns.com/foaf/0.1/name"));
+        assertEquals("Kartverket" , nameiter.next().asLiteral().getValue().toString());
+    }
+
 
 }
