@@ -96,6 +96,43 @@ $sk-border-radius: 3px !default;
 }
 
 
+/*
+ FILTER CHECKBOX
+ */
+.checkbox-replacement {
+  height: 16px;
+  width: 16px;
+  border: 1px solid #2D3741;
+  border-radius: 3px;
+}
+.checkbox label {
+  padding-left:0;
+}
+.checkbox label label {
+  margin-right: 4px;
+  vertical-align: middle;
+  background: #fff;
+  min-height: auto;
+}
+input:checked ~ .checkbox-replacement::after {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #2D3741;
+  left: 3px;
+  top: 6px;
+  border-radius: 3px;
+  content:'';
+}
+.checkbox label input[type="checkbox"]{
+  position: absolute;
+  left:-9999px;
+}
+.sk-hits-grid {
+  margin-top: 7px;
+}
+
+
 
 
 
