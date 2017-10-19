@@ -5,7 +5,7 @@
         "uri": "@id",
         "type": "@type",
 
-        "authorityCode": "at:authority-code",
+        "code": "at:authority-code",
         "prefLabel": {
             "@id": "skos:prefLabel",
             "@container": "@language"
@@ -13,7 +13,7 @@
 
     },
     "@explicit": true,
-    "authorityCode": {"@default":"", "@omitDefault":true},
+    "code": {"@default":"", "@omitDefault":true},
     "prefLabel": {}
 
 }

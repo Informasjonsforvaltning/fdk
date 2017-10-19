@@ -89,7 +89,7 @@
     "@type" : "dcat:Dataset",
     "accessRights" : "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
     "accrualPeriodicity" : "http://publications.europa.eu/resource/authority/frequency/CONT",
-    "conformsTo" : "https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/",
+    "conformsTo" : ["https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/"],
     "provenance" : "https://fpfpfpfpfpfpf",
     "dct:description" : [ {
       "@language" : "en",

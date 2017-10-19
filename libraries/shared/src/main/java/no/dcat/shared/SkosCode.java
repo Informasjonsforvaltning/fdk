@@ -1,70 +1,39 @@
 package no.dcat.shared;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Model class codes:<type>.
+ * Created by bjg on 24.02.2017.
+ * Model class to represent code  values
  */
-public class SkosCode implements Serializable{
+@Data
+@ToString(includeFieldNames = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class SkosCode {
     private String uri;
-    private String authorityCode;
+    private String code;
+    private Map<String, String> prefLabel = new HashMap<>();
 
-    private Map<String, String> prefLabel;
+    public SkosCode(String uri, String code, Map<String, String> prefLabel) {
+        this.uri = uri;
+        this.code = code;
+        this.prefLabel = prefLabel;
+    }
 
     public SkosCode() {
-    }
 
-    public SkosCode(String uri, String authorityCode, Map<String, String> prefLabel) {
-        this.uri = uri;
-        this.authorityCode = authorityCode;
-        this.prefLabel = prefLabel;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public String getAuthorityCode() { return authorityCode; }
-
-    public void setAuthorityCode(String authorityCode) { this.authorityCode = authorityCode; }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public Map<String, String> getPrefLabel() {
-        return prefLabel;
-    }
-
-    public void setPrefLabel(Map<String, String> prefLabel) {
-        this.prefLabel = prefLabel;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        SkosCode skosCode = (SkosCode) o;
-
-        return getUri() != null ? getUri().equals(skosCode.getUri()) : skosCode.getUri() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return getUri() != null ? getUri().hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "SkosCode{" +
                 "uri='" + uri + '\'' +
-                ", authorityCode='" + authorityCode + '\'' +
+                ", code='" + code + '\'' +
                 ", prefLabel=" + prefLabel +
                 '}';
     }

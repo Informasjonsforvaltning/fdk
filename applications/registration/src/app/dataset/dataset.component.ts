@@ -1,25 +1,18 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from "@angular/forms";
-import { DatasetService } from "./dataset.service";
-import { CodesService } from "./codes.service";
-import { CatalogService } from "../catalog/catalog.service";
-import { Dataset } from "./dataset";
-import { Catalog } from "../catalog/catalog"
-import { Observable } from 'rxjs';
-import { Http, Response } from '@angular/http';
-import { NgModule } from '@angular/core';
-import { environment } from "../../environments/environment";
-import { ConfirmComponent } from "../confirm/confirm.component";
-import { DialogService } from "ng2-bootstrap-modal";
-import { DistributionFormComponent } from "./distribution/distribution.component";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {DatasetService} from "./dataset.service";
+import {CodesService} from "./codes.service";
+import {CatalogService} from "../catalog/catalog.service";
+import {Dataset} from "./dataset";
+import {Catalog} from "../catalog/catalog"
+import {Http} from '@angular/http';
+import {ConfirmComponent} from "../confirm/confirm.component";
+import {DialogService} from "ng2-bootstrap-modal";
 import * as _ from 'lodash';
-import { ThemesService } from "./themes.service";
-import { IMyDpOptions } from 'mydatepicker';
-import { TemporalListComponent } from "./temporal/temporal-list.component";
-import { HelpText } from "./helptext/helptext.component";
-import {isNullOrUndefined} from "util";
-import { TitleUri } from "./titleUri/titleUri"
+import {ThemesService} from "./themes.service";
+import {IMyDpOptions} from 'mydatepicker';
+import {AccessRightsService} from "./accessRights/accessRights.service";
 
 @Component({
     selector: 'app-dataset',
@@ -58,7 +51,8 @@ export class DatasetComponent implements OnInit {
         private http: Http,
         private dialogService: DialogService,
         private formBuilder: FormBuilder,
-        private cdr: ChangeDetectorRef) {
+        private cdr: ChangeDetectorRef,
+        private accessRightsService: AccessRightsService) {
     }
 
 
@@ -114,10 +108,10 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-      this.buildGeoTimeSummaries();
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
       this.dataset.subjects = this.dataset.subjects || [];
@@ -129,14 +123,16 @@ export class DatasetComponent implements OnInit {
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.conformsTos = this.dataset.conformsTos || [];
+
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
       this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
-      this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
-      this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
-      this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
-      this.dataset.informationModel = dataset.informationModel;
+      this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
+      this.dataset.legalBasisForProcessings = this.dataset.legalBasisForProcessings || [];
+      this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
+      this.dataset.informationModels = this.dataset.informationModels || [];
+      this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -176,18 +172,14 @@ export class DatasetComponent implements OnInit {
             dataset.issued = null;
           }
 
-          if (_.isEmpty(dataset.informationModel)) {
-            dataset.informationModel = {};
-          }
-
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted) {
+                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted) {
+                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
                 } else {
                     delete temporal.endDate;
@@ -205,7 +197,7 @@ export class DatasetComponent implements OnInit {
           }
 
           this.dataset = _.merge(this.dataset, dataset);
-
+          this.buildSummaries();
           this.cdr.detectChanges();
           var that = this;
           this.delay(() => {
@@ -219,16 +211,27 @@ export class DatasetComponent implements OnInit {
   buildSummaries() {
     this.buildGeoTimeSummaries();
     this.buildProvenanceSummary();
-    this.buildInformationModelSummary();  }
+    this.buildInformationModelSummary();
+    this.buildAccessRightsSummary();
+  }
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
-        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel["nb"]) {
-            this.summaries.informationModel = this.dataset.informationModel.prefLabel["nb"];
+        if (this.dataset.informationModels && this.dataset.informationModels[0] && this.dataset.informationModels[0].prefLabel && this.dataset.informationModels[0].prefLabel["nb"]) {
+            this.summaries.informationModel = this.dataset.informationModels[0].prefLabel["nb"];
         } else {
             this.summaries.informationModel = "Klikk for å fylle ut";
         }
     }
+
+  buildAccessRightsSummary(): void {
+    // Add informationModel to summary if exists.
+    if (this.dataset.accessRights) {
+      this.summaries.accessRights = this.accessRightsService.get(this.dataset.accessRights.uri).label;
+    } else {
+      this.summaries.accessRights = "Klikk for å fylle ut";
+    }
+  }
 
     buildGeoTimeSummaries(): void {
         this.summaries.geotime = "";
@@ -303,6 +306,7 @@ export class DatasetComponent implements OnInit {
     }
 
     onSave(ok: boolean): void {
+
         this.save();
     }
 
@@ -379,17 +383,19 @@ export class DatasetComponent implements OnInit {
                 month: date.getMonth() + 1,
                 day: date.getDate()
             },
-            formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
+            formatted: date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()
         }
     }
 
   public buildContentSummary() {
     this.summaries.content = "";
 
-    //TODO conformsTo
+    if (this.dataset.conformsTos[0] && this.dataset.conformsTos[0].prefLabel) {
+        this.summaries.content = this.dataset.conformsTos[0].prefLabel['nb'] + ". ";
+    }
 
     if (this.dataset.hasRelevanceAnnotation &&  this.dataset.hasRelevanceAnnotation.hasBody && this.dataset.hasRelevanceAnnotation.hasBody['no'] !== "") {
-      this.summaries.content = this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
+      this.summaries.content += this.dataset.hasRelevanceAnnotation.hasBody['no'] + ". ";
     }
 
     if (this.dataset.hasCompletenessAnnotation && this.dataset.hasCompletenessAnnotation.hasBody && this.dataset.hasCompletenessAnnotation.hasBody['no']  !== "") {
@@ -409,18 +415,18 @@ export class DatasetComponent implements OnInit {
 
   public buildProvenanceSummary() {
       let provenance = "";
-      if (this.dataset.provenance && this.dataset.provenance.prefLabel['nb'] !== '') {
+      if (this.dataset.provenance && this.dataset.provenance.prefLabel && this.dataset.provenance.prefLabel['nb'] !== '') {
         provenance = this.dataset.provenance.prefLabel['nb'];
       }
       let frequency   = "";
-      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
+      if (this.dataset.accrualPeriodicity && this.dataset.accrualPeriodicity.prefLabel && this.dataset.accrualPeriodicity.prefLabel['no'] !== '') {
         frequency = this.dataset.accrualPeriodicity.prefLabel['no'];
       }
 
       let modified    = this.dataset.modified ? this.dataset.modified : '';
 
       let currentness = "";
-      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
+      if (this.dataset.hasCurrentnessAnnotation && this.dataset.hasCurrentnessAnnotation.hasBody && this.dataset.hasCurrentnessAnnotation.hasBody['no'] !== ''){
         currentness = this.dataset.hasCurrentnessAnnotation.hasBody['no'];
       }
 
@@ -432,7 +438,7 @@ export class DatasetComponent implements OnInit {
         this.summaries.provenance += " " +frequency;
       }
       if (modified.length > 0) {
-        this.summaries.provenance += " " + modified;
+        this.summaries.provenance += " " + DatasetComponent.convertDateStringFormat(modified, "-", ".");
       }
 
       if (currentness.length > 0) {
@@ -454,7 +460,6 @@ export class DatasetComponent implements OnInit {
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
       issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
-      informationModel: [data.informationModel],
       samples: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)
