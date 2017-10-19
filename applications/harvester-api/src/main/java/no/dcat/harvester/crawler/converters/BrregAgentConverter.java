@@ -158,8 +158,13 @@ public class BrregAgentConverter {
                         collectFromUri(supOrgUri, model, model.createResource(supOrgUri));
                     }
                 }
-                logger.trace(incomingModel.toString());
+                logger.debug("Adding {} triples to the model for {}", incomingModel.size(), uri);
                 model.add(incomingModel);
+                if (logger.isTraceEnabled()) {
+                    OutputStream output = new ByteArrayOutputStream();
+                    model.write(output, "TURTLE");
+                    logger.trace("[model_after_enriching] \n{}", output.toString());
+                }
             } else {
                 logger.warn("Unable to look up publisher {} - cache is not initiatilized.", uri);
             }
