@@ -19,6 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 public class BrregAgentConverter {
 
@@ -26,6 +27,7 @@ public class BrregAgentConverter {
     public static final String ORGANISASJONSLEDD = "ORGL";
     private final XmlToRdfAdvancedJena xmlToRdfObject;
     private final LoadingCache<URL, String> brregCache;
+    private HashMap<String, String> canonicalNames = new HashMap<>();
 
     private static final Logger logger = LoggerFactory.getLogger(BrregAgentConverter.class);
 
@@ -40,6 +42,20 @@ public class BrregAgentConverter {
                 .renameElement("http://data.brreg.no/meta/navn", FOAF.name.getURI())
                 .renameElement("http://data.brreg.no/meta/enhet", FOAF.Agent.getURI()).build();
         logger.debug("end ");
+
+        org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("kanoniske.csv");
+        Reader in = null;
+        Iterable<CSVRecord> records = null;
+        try {
+            in = new FileReader(canonicalNamesFile.getFile().toString());
+            records = CSVFormat.EXCEL.parse(in);
+        } catch (IOException e) {
+            logger.error("Could not read canonical names: {}", e.getMessage());
+        }
+        for (CSVRecord line : records) {
+            canonicalNames.put(line.get(0), line.get(1));
+        }
+        logger.debug("Read {} canonical names from file.", canonicalNames.size());
     }
 
     private Model convert(InputStream inputStream) {
@@ -128,18 +144,9 @@ public class BrregAgentConverter {
 
                 String orgnr = getOrgnr(model, publisherResource);
 
-                if (orgnr != null) {
-                    org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("kanoniske.csv");
-                    Reader in = new FileReader(canonicalNamesFile.getFile().toString());
-                    Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-                    for (CSVRecord line : records) {
-                        logger.trace("Found line from CSV:\nOrgnr: {}\tName: {}", line.get(0), line.get(1));
-                        if (line.get(0).equals(orgnr) && publisherResource != null) { // Should check publisherResource, since all names will be removed if it is null
-                            incomingModel.removeAll(publisherResource, FOAF.name, null);
-                            incomingModel.add(publisherResource, FOAF.name, incomingModel.createLiteral(line.get(1), "nb"));
-                            break;
-                        }
-                    }
+                if (orgnr != null && canonicalNames.containsKey(orgnr)) {
+                    incomingModel.removeAll(publisherResource, FOAF.name, null);
+                    incomingModel.add(publisherResource, FOAF.name, incomingModel.createLiteral(canonicalNames.get(orgnr), "nb"));
                 }
 
                 processBlankNodes(incomingModel, uri);
