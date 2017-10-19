@@ -2,7 +2,7 @@
     class="distribution-list"
     [formGroup]="datasetForm">
     <div formArrayName="distributions">
-        <div *ngFor="let distribution of distributions; let idx=index" style="margin-bottom: 7px; margin-top: 7px">
+        <div *ngFor="let distribution of distributions; let idx=index">
             <br>
             <distribution
                 [distributionsFormArray]="distributionsFormArray"

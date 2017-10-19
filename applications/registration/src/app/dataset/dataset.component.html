@@ -207,11 +207,9 @@
                 <div class="row">
                     <div *ngIf="datasetForm && datasetForm.controls['checkboxArray']" class="col-md-4">
                         <div *ngFor="let control of datasetForm.controls['checkboxArray'].controls; let i=index" class="language-checkbox">
-                            <label><!-- 416 -->
-                                <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
-                                <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
-                                    <span style="font-weight: 400">{{availableLanguages[i].prefLabel.nb}}</span>
-                            </label>
+                            <input type="checkbox" id="language-checkbox-{{i}}" [formControl]="control" />
+                            <label class="checkbox-replacement" for="language-checkbox-{{i}}"></label>
+                            <span>{{availableLanguages[i].prefLabel.nb}}</span>
                         </div>
                     </div>
                 </div>
@@ -350,61 +348,42 @@
     </div>
 
     <div class="row justify-content-md-center" *ngIf="dataset">
-            <label for="samples-toggle" class="col-md-push-1 col-md-2 section-title">
-                Eksempeldata<b class="caret-right"></b>
-            </label>
-            <div class="col-md-push-1 col-md-8 collapsed">
-                <input type="checkbox" id="samples-toggle" class="expand-checkbox"/>
-                <div *ngIf="dataset.samples">
-                    <div *ngFor="let sample of dataset.samples">
-                        <label for="samples-toggle" class="expand-label collapsed-content" style="display:block;">
-                            <div *ngIf="sample && sample.format">
-                                <span *ngFor="let singleFormat of sample.format; let idx=index">
-                                    <div *ngIf="idx < 5" style="display: inline">
-                                        {{singleFormat}}
-                                        <i class="fa fa-rss" *ngIf="sample.type === 'Feed'"></i>
-                                        <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>                                    
-                                        <i class="fa fa-cogs" *ngIf="sample.type === 'API'"></i>
-                                        {{sample.format.length !== idx+1 ? '&nbsp;' : '' }}
-                                    </div>
-                                </span>
-                            </div>                            
-                            <span *ngIf="!sample || !sample.format || sample.format.length === 0">
-                                Klikk for å fylle ut
-                            </span>
-                        </label>
-                    </div>
-                </div>
-                <div *ngIf="dataset.samples" class="expanded-content">
-                    <distributions
-                        [datasetForm]="datasetForm"
-                        [distributionsFormArray]="datasetForm.controls.samples"
-                        [distributions]="dataset.samples"
-                        [componentTitle]="'eksempeldata'"
-                        [allowAdding]="false">
-                    </distributions>
-                </div>
-            </div>
-        </div>
-
-   <!-- <div class="row justify-content-md-center" *ngIf="dataset">
         <label for="samples-toggle" class="col-md-push-1 col-md-2 section-title">
             Eksempeldata<b class="caret-right"></b>
         </label>
         <div class="col-md-push-1 col-md-8 collapsed">
             <input type="checkbox" id="samples-toggle" class="expand-checkbox"/>
-            <label for="samples-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
+            <div *ngIf="dataset.samples">
+                <div *ngFor="let sample of dataset.samples">
+                    <label for="samples-toggle" class="expand-label collapsed-content" style="display:block;">
+                        <div *ngIf="sample && sample.format">
+                            <span *ngFor="let singleFormat of sample.format; let idx=index">
+                                <div *ngIf="idx < 5" style="display: inline">
+                                    {{singleFormat}}
+                                    <i class="fa fa-rss" *ngIf="sample.type === 'Feed'"></i>
+                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-cogs" *ngIf="sample.type === 'API'"></i>
+                                    {{sample.format.length !== idx+1 ? '&nbsp;' : '' }}
+                                </div>
+                            </span>
+                        </div>                            
+                        <span *ngIf="!sample || !sample.format || sample.format.length === 0">
+                            Klikk for å fylle ut
+                        </span>
+                    </label>
+                </div>
+            </div>
             <div *ngIf="dataset.samples" class="expanded-content">
                 <distributions
                     [datasetForm]="datasetForm"
                     [distributionsFormArray]="datasetForm.controls.samples"
                     [distributions]="dataset.samples"
-                    [title]="Eksempeldata"
-                    >
+                    [componentTitle]="'eksempeldata'"
+                    [allowAdding]="false">
                 </distributions>
             </div>
         </div>
-    </div> -->
+    </div>
 
   <div class="row justify-content-md-center">
     <div class="row">

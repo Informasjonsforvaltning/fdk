@@ -38,7 +38,7 @@ export class DistributionFormComponent implements OnInit {
 
     private typeModel = [];
 
-    private selectedTypeId = 1;
+    private selectedTypeId = 0;
 
     private typeIcon: string = "fa fa-cogs";
 

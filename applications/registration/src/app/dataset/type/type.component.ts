@@ -11,47 +11,39 @@ import {Dataset} from "../dataset";
 
 export class TypeComponent implements OnInit {
 
-    @Input('formArray')
-    formArray: FormArray;
-
     @Input('dataset')
-    public dataset: any;
-
-    @Input('typeModel')
-    public typeModel = [];
+    public dataset: Dataset;
 
     @Output()
     onSave = new EventEmitter<boolean>();
 
     public typeForm: FormGroup;
     public selectedTypeIdx = 0;
+    private typeModel = [];
 
-    constructor(private fb: FormBuilder)
-    {
-        if (!this.typeModel || this.typeModel.length == 0) {
-            this.typeModel = [
-                {
-                    id: 1,
-                    label: 'Data'
-                },
-                {
-                    id: 2,
-                    label: 'Kodelister'
-                },
-                {
-                    id: 3,
-                    label: 'Tesauri'
-                },
-                {
-                    id: 4,
-                    label: 'Taksonomi'
-                },
-                {
-                    id: 5,
-                    label: 'Testdata'
-                }
-            ]
-        }
+    constructor(private fb: FormBuilder) {
+        this.typeModel = [
+            {
+                id: 1,
+                label: 'Data'
+            },
+            {
+                id: 2,
+                label: 'Kodelister'
+            },
+            {
+                id: 3,
+                label: 'Tesauri'
+            },
+            {
+                id: 4,
+                label: 'Taksonomi'
+            },
+            {
+                id: 5,
+                label: 'Testdata'
+            }
+        ];
     }
 
     ngOnInit() {
@@ -59,8 +51,6 @@ export class TypeComponent implements OnInit {
         if(!this.dataset.type) {
             this.dataset.type = "";
         }
-        if (this.formArray)
-            this.formArray.push(this.typeForm);
         this.typeModel
             .filter(entry => entry.label == this.dataset.type)
             .forEach(entry => this.selectedTypeIdx = entry.id)
