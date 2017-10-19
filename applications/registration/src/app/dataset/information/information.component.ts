@@ -131,11 +131,14 @@ export class InformationComponent implements OnInit {
       return this.dataset.subjects.map((subject)=>{
         let numberOfLabelOccurences = 0;
         this.dataset.subjects.forEach((subject2)=>{
-          if(subject2.prefLabel.no === subject.prefLabel.no) {
-            numberOfLabelOccurences++;
+          console.log(JSON.stringify(subject));
+          if (subject.prefLabel && subject2.prefLabel) {
+            if (subject2.prefLabel.no === subject.prefLabel.no) {
+              numberOfLabelOccurences++;
+            }
           }
         });
-        let label = subject.prefLabel.no;
+        let label = subject.prefLabel ? subject.prefLabel.no : subject.uri;
         if(numberOfLabelOccurences > 1) label += ' [' + this.domainFromUrl(subject.uri) + ']'; // more than one occurence of this label found, show domain
         return label;
       });

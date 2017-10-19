@@ -111,7 +111,7 @@
       <div *ngIf="!((dataset.subjects && dataset.subjects.length === 0) && (dataset.keywords && dataset.keywords.length === 0))" class="truncate">
         <span *ngIf="(dataset.subjects && dataset.subjects.length !== 0)">
           <span class="summary-subject" *ngFor="let subject of dataset.subjects; let i=index" >
-            <span>{{subject.prefLabel.no}}</span>
+            <span>{{subject.prefLabel ? subject.prefLabel.no : subject.uri}}</span>
           </span>
         </span>
         <span *ngIf="(dataset.keywords && dataset.keywords.length !== 0)">
