@@ -21,3 +21,4 @@ public class PeriodOfTime {
     private Date startDate;
     private Date endDate;
 }
+

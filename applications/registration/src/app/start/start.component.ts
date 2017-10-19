@@ -26,7 +26,13 @@ export class StartComponent implements OnInit {
   ngOnInit() {
     this.language = 'nb';
     this._catalogService.getAll()
-      .then(catalogs => this.catalogs = catalogs)
+      .then(catalogs => {
+        this.catalogs = catalogs;
+        this.catalogs.forEach(c => {
+          c.description = c.description || {};
+          c.title = c.title || {};
+        })
+      })
       .catch(err => {this.errorGettingCatalogs = true})
   }
 

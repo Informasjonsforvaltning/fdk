@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 import { Distribution } from './distribution';
 import { Dataset } from '../dataset';
 import {DistributionFormComponent} from './distribution.component';
+import { SkosConcept } from '../skosConcept';
 
 @Component({
     selector: 'distributions',
@@ -19,29 +20,42 @@ export class DistributionListComponent implements OnInit {
     @Input('distributions')
     public distributions: Distribution[];
 
-    @Input('title')
-    public title: string;
+    @Input('componentTitle')
+    public componentTitle: string;
+
+    @Input('allowAdding')
+    public allowAdding: boolean;
+
+    showDelete: boolean = false;
 
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {
+        this.distributions = this.distributions || [];
+        if (this.distributions.length == 0) {
+            this.addDistribution();
+        }
+        this.showHideDelete();
     }
 
     addDistribution() {
         const distribution: Distribution = {
             id: Math.floor(Math.random() * 1000000).toString(),
             uri: '',
-            title: null,
-            description: null,
-            accessURL: [],
-            downloadURL: [],
-            license: '',
-            format: [],
-            ui_visible: true
+            type: '',
+            title: {'nb': ''},
+            description: {'nb': ''},
+            downloadURL: [] as string[],
+            accessURL: [] as string[],
+            format: [] as string[],
+            license: new SkosConcept(),
+            conformsTo: [],
+            page: []
         };
-          this.distributions.push(distribution);
-          this.cd.detectChanges();
-          return false;
+        this.distributions.push(distribution);
+        this.cd.detectChanges();
+        this.showHideDelete();
+        return false;
     }
 
     removeDistribution(idx: number) {
@@ -49,6 +63,14 @@ export class DistributionListComponent implements OnInit {
             this.distributions.splice(idx, 1);
             this.distributionsFormArray.removeAt(idx);
         }
+        this.showHideDelete();
         return false;
+    }
+
+    showHideDelete() {
+        if (this.distributions.length > 1)
+            this.showDelete = true;
+        else
+            this.showDelete = false;
     }
 }

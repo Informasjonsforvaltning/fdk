@@ -69,7 +69,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
   _renderInformationModel() {
     let informationModelNodes = null;
     const { informationModel } = this.props;
-    if (typeof informationModel !== 'undefined' && informationModel.length > 0) {
+    if (informationModel && informationModel.length > 0) {
       informationModelNodes = informationModel.map((item, index) => (
         <div
           key={`dataset-keyinfo-${index}`}

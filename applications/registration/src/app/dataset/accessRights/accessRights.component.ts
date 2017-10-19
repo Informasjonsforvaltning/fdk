@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import 'rxjs/add/operator/distinctUntilChanged';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Dataset} from "../dataset";
 import {AccessRightsService} from "./accessRights.service";

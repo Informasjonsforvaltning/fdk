@@ -1,10 +1,8 @@
-import { Component, Input, Output, OnInit, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
-import { TitleUri } from './titleUri';
-
-import { TagInputModule } from 'ngx-chips';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import {TitleUri} from './titleUri';
+import {DatasetComponent} from "../dataset.component"; // this is needed!
 
 @Component({
     selector: 'titleUri',
@@ -40,7 +38,9 @@ export class TitleUriFormComponent implements OnInit {
 
     public titleUriForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
+    constructor(private fb: FormBuilder,
+                private cdr: ChangeDetectorRef,
+                private parent: DatasetComponent) { }
 
     ngOnInit() {
 
@@ -54,6 +54,7 @@ export class TitleUriFormComponent implements OnInit {
                 this.titleUri.prefLabel = { 'nb': titleUriFormElement.prefLabel };
                 this.titleUri.uri = titleUriFormElement.uri;
                 this.cdr.detectChanges();
+                this.parent.buildInformationModelSummary();
                 this.onSave.emit();
             }
         );

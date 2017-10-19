@@ -63,7 +63,7 @@ public class DatasetController {
     public HttpEntity<Dataset> getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
-        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalog())) {
+        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(dataset, HttpStatus.OK);
@@ -97,10 +97,10 @@ public class DatasetController {
         // Create new dataset
         Dataset datasetWithNewId = RegistrationFactory.createDataset(catalogId);
 
-        // force new id, uri and catalog, to ensure saving
+        // force new id, uri and catalogId, to ensure saving
         dataset.setId(datasetWithNewId.getId());
         dataset.setUri(datasetWithNewId.getUri());
-        dataset.setCatalog(datasetWithNewId.getCatalog());
+        dataset.setCatalogId(datasetWithNewId.getCatalogId());
 
         // force publisher
         dataset.setPublisher(catalog.getPublisher());
@@ -139,7 +139,7 @@ public class DatasetController {
     public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
         logger.info("requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
-        dataset.setCatalog(catalogId);
+        dataset.setCatalogId(catalogId);
 
         Dataset datasetFromDatabase = datasetRepository.findOne(dataset.getId());
         if(datasetFromDatabase == null ){
@@ -168,7 +168,7 @@ public class DatasetController {
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Dataset>> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler assembler) {
 
-        Page<Dataset> datasets = datasetRepository.findByCatalog(catalogId, pageable);
+        Page<Dataset> datasets = datasetRepository.findByCatalogId(catalogId, pageable);
         return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
     }
 
@@ -185,7 +185,7 @@ public class DatasetController {
     public HttpEntity<Dataset> deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
         Dataset dataset = datasetRepository.findOne(id);
 
-        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalog())) {
+        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         datasetRepository.delete(dataset);

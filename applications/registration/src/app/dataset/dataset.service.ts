@@ -15,7 +15,7 @@ const TEST_DATASETS: Dataset[] = [
       "nb": "Datasett med mange attributter"
     },
     "keywords": [{'nb': 'keyword1'}],
-    "subjects": ["term1", "term2", "term3"],
+    "subjects": [{"uri":"https://data-david.github.io/Begrep/begrep/Hovedenhet","prefLabel":{"no":"hovedenhet"}}],
     "themes": [],
     "catalog": "974760673",
     "landingPages": ["http://www.brreg.no", "http://www.difi.no"],
@@ -57,10 +57,7 @@ export class DatasetService {
     return this.http.get(datasetUrl)
       .toPromise()
       .then((response) => {
-
         const dataset = pluralizeObjectKeys(response.json());
-
-        dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
         return dataset as Dataset
       })
       ;

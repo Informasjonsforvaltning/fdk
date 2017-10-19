@@ -1,6 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat;
 
 import no.dcat.shared.Contact;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
@@ -47,17 +48,20 @@ public class DatasetTest {
         Resource catalogResource = catalogIterator.next();
         Resource datasetResource = datasetIterator.next();
 
-        //Create codes.
-        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
-        Map<String, SkosCode> locations = new HashMap<>();
+        Map<String, SkosCode> locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
 
+        data = DatasetBuilder.create(datasetResource, catalogResource, locations, initializeCodes(), new HashMap<>());
+    }
+
+    public static Map<String, Map<String, SkosCode>> initializeCodes() {
+        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
         codes.put(Types.provenancestatement.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
         codes.put(Types.linguisticsystem.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
         codes.put(Types.rightsstatement.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
         codes.put(Types.frequency.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
-        locations = generateCode("Norge", "http://sws.geonames.org/3144096/");
+        codes.put(Types.referencetypes.getType(), generateCode("references", "references"));
 
-        data = DatasetBuilder.create(datasetResource, catalogResource, locations, codes, new HashMap<>());
+        return codes;
     }
 
     @Test
@@ -78,15 +82,15 @@ public class DatasetTest {
     public void contactExists() {
         Contact actual = data.getContactPoint().get(0);
         Contact expected = new Contact();
-        expected.setId("http://data.brreg.no/datakatalog/kontaktpunkt/4");
+        expected.setUri("http://data.brreg.no/datakatalog/kontaktpunkt/4");
         expected.setFullname("Kontakt for Altinn");
-        expected.setHasTelephone("tel:+4775007500");
-        expected.setEmail("mailto:bjarne.base@brreg.no");
+        expected.setHasTelephone("+4775007500");
+        expected.setEmail("bjarne.base@brreg.no");
         expected.setOrganizationName("Skatt");
         expected.setOrganizationUnit("AAS");
         expected.setHasURL("httpd://skatt.no/schema");
 
-        Assert.assertEquals("id expected", expected.getId(), actual.getId());
+        Assert.assertEquals("id expected", expected.getUri(), actual.getUri());
         Assert.assertEquals("id expected", expected.getFullname(), actual.getFullname());
         Assert.assertEquals("id expected", expected.getHasTelephone(), actual.getHasTelephone());
         Assert.assertEquals("id expected", expected.getEmail(), actual.getEmail());
@@ -146,7 +150,7 @@ public class DatasetTest {
         Assert.assertEquals(expected.getTitle(), data.getTitle());
     }
 
-    private Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
+    public static Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
         Map titles = new HashMap();
         titles.put("no", norwegianTitle);
 

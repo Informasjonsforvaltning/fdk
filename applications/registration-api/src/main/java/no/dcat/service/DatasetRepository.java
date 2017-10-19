@@ -8,8 +8,8 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 public interface DatasetRepository extends ElasticsearchRepository<Dataset, String> {
 
 
-    Page<Dataset> findByCatalog(String catalog, Pageable pageable);
+    Page<Dataset> findByCatalogId(String catalogId, Pageable pageable);
 
-    Page<Dataset> findByCatalogAndRegistrationStatus(String catalog, String status, Pageable pageable);
+    Page<Dataset> findByCatalogIdAndRegistrationStatus(String catalogId, String status, Pageable pageable);
 
 }
