@@ -7,6 +7,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
   render() {
     return (
       <div id="dataset-contactinfo" className="row fdk-row fdk-margin-top-triple">
+
         {this.props.uri &&
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
@@ -92,6 +93,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
           </div>
         </div>
         }
+
       </div>
     );
   }

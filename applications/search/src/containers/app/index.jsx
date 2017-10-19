@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
@@ -70,15 +70,23 @@ export default class App extends React.Component {
         <div className="fdk-header">
           <div className="container">
             <div className="row">
-              <div className="col-md-5">
-                <p className="fdk-p-header">
-                  {localization.app.title}
-                </p>
+
+              <div className="col-md-4">
+                <Link to="/">
+                  <img className="fdk-logo" src="/static/img/fdk-logo@2x.png" alt="Logo for Felles datakatalog" />
+                </Link>
+              </div>
+
+              <div className="col-md-4">
                 <p className="fdk-p-header-sub">
-                  {localization.app.titleSub}
+                  {localization.app.titleSub} {localization.app.readMore}
+                  <a href="/about">
+                    {localization.app.title}
+                  </a>
                 </p>
               </div>
-              <div className="col-md-7 fdk-header-right">
+
+              <div className="col-md-4 fdk-header-right">
                 <div className="fdk-float-right">
                   <DropdownButton
                     id="search-menu-dropdown-1"
@@ -86,7 +94,10 @@ export default class App extends React.Component {
                     className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
                     title={localization.app.menu}
                   >
-                    <MenuItem key="1" eventKey="1">Menypunkt 1</MenuItem>
+                    <MenuItem
+                      key="menu-1"
+                      eventKey="menu-1"
+                      href="/about">Om Felles Datakatalog</MenuItem>
                   </DropdownButton>
                 </div>
                 <div className="fdk-header-padding">
@@ -108,26 +119,36 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
+        <div className="fdk-container-path" />
         {childWithProp}
         <div className="fdk-footer">
           <div className="container">
             <div className="row">
-              <div className="col-md-2">
-                <a
-                  href="https://www.brreg.no/personvernerklaering/"
-                >
-                  {localization.footer.information}
-                </a>
+              <div className="col-md-3">
+                <p className="fdk-p-footer">
+                  <a
+                    href="https://www.brreg.no/personvernerklaering/"
+                  >
+                    {localization.footer.information}<br />
+                    {localization.footer.privacy}
+                    <i className="fa fa-external-link fdk-fa-right" />
+                  </a>
+                </p>
               </div>
-              <div className="col-md-8">
-                {localization.footer.information_text}
+              <div className="col-md-6 text-center">
+                <p className="fdk-p-footer">
+                  {localization.footer.information_text}
+                </p>
               </div>
-              <div className="col-md-2 fdk-text-right">
-                <a
-                  href="mailto:felleskatalog@brreg.no"
-                >
-                  {localization.footer.mail}
-                </a>
+              <div className="col-md-3 text-right">
+                <p className="fdk-p-footer">
+                  <a
+                    href="mailto:felleskatalog@brreg.no"
+                  >
+                    {localization.footer.contact}<br />
+                    {localization.footer.mail}
+                  </a>
+                </p>
               </div>
             </div>
           </div>

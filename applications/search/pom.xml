@@ -11,13 +11,9 @@
     <artifactId>search</artifactId>
     <description>Search</description>
 
-
     <build>
         <!-- only filter dist -->
-
         <plugins>
-
-
             <!-- prevent maven from compiling -->
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
