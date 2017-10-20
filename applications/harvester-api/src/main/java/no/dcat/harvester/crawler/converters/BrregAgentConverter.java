@@ -20,6 +20,8 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BrregAgentConverter {
 
@@ -107,7 +109,7 @@ public class BrregAgentConverter {
                 if (orgresource.getURI().contains("data.brreg.no")) {
                     collectFromUri(orgresource.getURI(), model, orgresource);
                 } else {
-                    String orgnr = getOrgnr(model, orgresource);
+                    String orgnr = getOrgnrFromIdentifier(model, orgresource);
                     String url = String.format(publisherIdURI, orgnr, ".xml");
                     logger.trace("Used dct:identifier to collect from {}", url);
                     collectFromUri(url, model, orgresource);
@@ -147,7 +149,10 @@ public class BrregAgentConverter {
                 }
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
 
-                String orgnr = getOrgnr(model, publisherResource);
+                String orgnr = getOrgnrFromIdentifier(model, publisherResource);
+                if (orgnr == null) {
+                    orgnr = getOrgnrFromUri(uri);
+                }
 
                 if (orgnr != null && canonicalNames.containsKey(orgnr)) {
                     incomingModel.removeAll(publisherResource, FOAF.name, null);
@@ -185,6 +190,19 @@ public class BrregAgentConverter {
         } catch (Exception e) {
             logger.warn("Failed to look up publisher: {} reason {}", uri, e.getMessage(),e);
         }
+    }
+
+    // http://data.brreg.no/enhetsregisteret/enhet/974760983
+
+    String getOrgnrFromUri(String uri) {
+        Pattern p = Pattern.compile("[0-9]+");
+        Matcher m = p.matcher(uri);
+        String orgnr = null;
+
+        if (m.find()) {
+            orgnr = m.group();
+        }
+        return orgnr;
     }
 
     /**
@@ -272,7 +290,7 @@ public class BrregAgentConverter {
         this.publisherIdURI = publisherIdURI;
     }
 
-    private String getOrgnr(Model model, Resource orgresource) {
+    private String getOrgnrFromIdentifier(Model model, Resource orgresource) {
         NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
         // TODO: deal with the possibility of multiple dct:identifiers?
         if (identiterator.hasNext()) {
