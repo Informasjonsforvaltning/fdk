@@ -31,7 +31,3 @@ server:
   port: 8083
 management:
   port: 8993
-application:
-  elasticsearchHost: localhost
-  elasticsearchPort: 9300
-  clusterName: elasticsearch
