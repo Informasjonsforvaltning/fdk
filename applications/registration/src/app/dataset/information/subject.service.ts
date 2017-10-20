@@ -9,7 +9,7 @@ export class SubjectService {
   constructor(private http: Http) {
   }
 
-  private subjectsUrl = environment.api + "/referenceData/subjects";
+  private subjectsUrl = environment.api + ((environment.api.slice(-1) === "/")? "/" : "") + "referenceData/subjects";
   private headers = new Headers({'Content-Type': 'application/json'});
 
   get(url: string): Promise<any> {
