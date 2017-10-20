@@ -120,7 +120,12 @@ public class BrregAgentConverter {
 
     protected void collectFromUri(String uri, Model model) {
         if (!uri.endsWith(".xml")) {
-            uri = uri.concat(".xml");
+            if(uri.endsWith(".json")) {
+                uri = uri.replaceAll(".json",".xml");
+            } else {
+                uri = uri.concat(".xml");
+            }
+
         }
 
         try {
