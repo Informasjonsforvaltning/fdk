@@ -5,6 +5,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
@@ -74,8 +75,10 @@ public class BrregAgentConverterTest {
 
 		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
 
+		Resource resource = model.createResource("http://test.no/resource/1");
+
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model);
+		converter.collectFromUri(uri.toString(), model,resource);
 
 		model.write(System.out, "TTL");
 
