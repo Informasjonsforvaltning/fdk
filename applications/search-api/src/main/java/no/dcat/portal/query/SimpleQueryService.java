@@ -103,7 +103,7 @@ public class SimpleQueryService {
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
-     * @param sortfield     Defines that field that the search result shall be sorted on. Default is best match.
+     * @param sortfield     Defines that field that the search result shall be sorted on. Default is source
      * @param sortdirection Defines the direction of the sort, ascending or descending.
      * @return List of  elasticsearch records.
      */
