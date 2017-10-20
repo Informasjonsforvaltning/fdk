@@ -8,7 +8,7 @@
   opening tag -->
   <label for="{{name}}-more-help-button" class="toggle-help-button" *ngIf=resolvedDescription>Flere anbefalinger</label>
   <span class="flere-anbefalinger">
-    {{resolvedDescription}}
+    <span [innerHTML]=resolvedDescription></span>
     <label for="{{name}}-more-help-button" class="toggle-help-button">Færre anbefalinger</label>
   </span>.
 </p>

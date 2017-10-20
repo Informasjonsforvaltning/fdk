@@ -29,7 +29,7 @@ export class HelpText implements OnInit {
         .filter(entry => entry.id == this.name)
         .forEach(entry => {
           this.resolvedShortDesc = entry.shortdesc;
-          this.resolvedDescription = entry.description;
+          this.resolvedDescription = entry.description.replace(new RegExp('\n', 'g'), "<br />");
         })
     });
   }
