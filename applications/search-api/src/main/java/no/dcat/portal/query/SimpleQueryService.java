@@ -117,7 +117,7 @@ public class SimpleQueryService {
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
                                          @RequestParam(value = "sortfield", defaultValue = "source") String sortfield,
-                                         @RequestParam(value = "sortdirection", defaultValue = "desc") String sortdirection) {
+                                         @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection) {
 
 
         StringBuilder loggMsg = new StringBuilder()
@@ -189,7 +189,7 @@ public class SimpleQueryService {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
-    private void addSort(@RequestParam(value = "sortfield", defaultValue = "source") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "desc") String sortdirection, SearchRequestBuilder searchBuilder) {
+    private void addSort(@RequestParam(value = "sortfield", defaultValue = "source") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
 
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
