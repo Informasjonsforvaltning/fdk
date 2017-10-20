@@ -142,11 +142,7 @@ public class BrregAgentConverter {
 
                 InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
                 Model incomingModel = convert(inputStream);
-                if (logger.isTraceEnabled()) {
-                    OutputStream output = new ByteArrayOutputStream();
-                    incomingModel.write(output, "TURTLE");
-                    logger.trace("[model_after_conversion] \n{}", output.toString());
-                }
+
                 removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
 
                 String orgnr = getOrgnrFromIdentifier(model, publisherResource);
@@ -179,13 +175,11 @@ public class BrregAgentConverter {
                         collectFromUri(supOrgUri, model, model.createResource(supOrgUri));
                     }
                 }
+
                 logger.debug("Adding {} triples to the model for {}", incomingModel.size(), uri);
+                // TODO fix differences in URI on object with identifier and those without.
                 model.add(incomingModel);
-                if (logger.isTraceEnabled()) {
-                    OutputStream output = new ByteArrayOutputStream();
-                    model.write(output, "TURTLE");
-                    logger.trace("[model_after_enriching] \n{}", output.toString());
-                }
+
             } else {
                 logger.warn("Unable to look up publisher {} - cache is not initiatilized.", uri);
             }
