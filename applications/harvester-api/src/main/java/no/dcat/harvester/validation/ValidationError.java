@@ -14,6 +14,7 @@ public class ValidationError{
       RDFNode predicate;
       RDFNode object;
 
+
       public ValidationError(QuerySolution next) {
             className = next.getLiteral("Class_Name").toString();
             ruleId = next.getLiteral("Rule_ID").getInt();
@@ -21,8 +22,12 @@ public class ValidationError{
             ruleDescription = next.getLiteral("Rule_Description").toString();
 
             Literal messageLiteral = next.getLiteral("Message");
-            
-            message = messageLiteral.toString();
+
+            if(messageLiteral == null) {
+                  message = "Validation error: no error message supplied";
+            } else {
+                  message = messageLiteral.toString();
+            }
             
             subject = next.get("s");
             predicate = next.get("p");
