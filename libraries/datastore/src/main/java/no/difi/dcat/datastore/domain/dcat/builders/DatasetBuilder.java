@@ -84,6 +84,8 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setId(resource.getURI());
             ds.setUri(resource.getURI());
 
+            ds.setSource(extractAsString(resource, DCATNO.source));
+
             ds.setTitle(extractLanguageLiteral(resource, DCTerms.title));
             ds.setDescription(extractLanguageLiteral(resource, DCTerms.description));
             ds.setObjective(extractLanguageLiteral(resource, DCATNO.objective));
