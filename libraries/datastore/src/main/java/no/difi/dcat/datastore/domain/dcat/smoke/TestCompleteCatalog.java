@@ -14,6 +14,8 @@ import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.apache.jena.vocabulary.DCTerms;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class TestCompleteCatalog {
+
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
     private static TestCompleteCatalog singelton = new TestCompleteCatalog();
 
@@ -155,12 +160,18 @@ public class TestCompleteCatalog {
         dataset.setSample(Arrays.asList(sample));
 
         PeriodOfTime pot = new PeriodOfTime();
-        pot.setStartDate(Date.from(LocalDateTime.of(2017,1,1,0,0).toInstant(ZoneOffset.UTC)));
-        pot.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
+        try {
+            pot.setStartDate(dateFormat.parse("2017-01-01"));
+            pot.setEndDate(dateFormat.parse("2017-12-31"));
 
-        PeriodOfTime pot2 = new PeriodOfTime();
-        pot2.setEndDate(Date.from(LocalDateTime.of(2017,12,31,23,59,59,99).toInstant(ZoneOffset.UTC)));
-        dataset.setTemporal(Arrays.asList(pot, pot2));
+            PeriodOfTime pot2 = new PeriodOfTime();
+            pot2.setEndDate(dateFormat.parse("2018-10-20"));
+
+            dataset.setTemporal(Arrays.asList(pot, pot2));
+        } catch (ParseException p) {
+            p.printStackTrace();
+        }
+
 
         dataset.setLegalBasisForRestriction(Arrays.asList(
                 SkosConcept.getInstance("https://lovdata.no/dokument/NL/lov/1992-12-04-126", "Lov om arkiv [arkivlova]"),
