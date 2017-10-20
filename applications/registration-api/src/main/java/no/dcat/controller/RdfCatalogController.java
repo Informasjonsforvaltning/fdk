@@ -46,7 +46,7 @@ public class RdfCatalogController {
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
 
-        logger.debug ("get rdf catalog {} ",id);
+        logger.info("Export rdf catalog {} ",id);
 
         Catalog catalog = catalogRepository.findOne(id);
 
@@ -62,7 +62,9 @@ public class RdfCatalogController {
             List<no.dcat.shared.Dataset> theList = new ArrayList<>();
             datasets.forEach(theList::add);
             catalog.setDataset(theList);
+            logger.info("exported {} datasets", datasets.getTotalElements());
         }
+
 
         return new ResponseEntity<>(catalog, OK);
     }

@@ -111,7 +111,7 @@ public class BrregAgentConverter {
                 } else {
                     String orgnr = getOrgnrFromIdentifier(model, orgresource);
                     String url = String.format(publisherIdURI, orgnr, ".xml");
-                    logger.trace("Used dct:identifier to collect from {}", url);
+                    logger.info("Used dct:identifier to collect from {}", url);
                     collectFromUri(url, model, orgresource);
                 }
             } else {
@@ -152,6 +152,10 @@ public class BrregAgentConverter {
                 String orgnr = getOrgnrFromIdentifier(model, publisherResource);
                 if (orgnr == null) {
                     orgnr = getOrgnrFromUri(uri);
+                }
+
+                if (orgnr == null) {
+                    logger.warn("Publisher does not have a organisation number [{}]", uri);
                 }
 
                 if (orgnr != null && canonicalNames.containsKey(orgnr)) {
