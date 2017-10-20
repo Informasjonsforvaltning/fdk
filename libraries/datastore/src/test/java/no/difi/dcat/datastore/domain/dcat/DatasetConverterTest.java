@@ -134,7 +134,7 @@ public class DatasetConverterTest {
 
         Collections.sort(actualDataset.getTemporal(), new PeriodOfTimeComparer());
         Collections.sort(expectedDataset.getTemporal(), new PeriodOfTimeComparer());
-        //assertThat("temporal", actualDataset.getTemporal(), is (expectedDataset.getTemporal()));
+        assertThat("temporal", actualDataset.getTemporal(), is (expectedDataset.getTemporal()));
 
         assertThat("conformsTo", actualDataset.getConformsTo(), is (expectedDataset.getConformsTo()));
     }

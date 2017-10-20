@@ -37,6 +37,11 @@ import java.util.Map;
 
 public abstract class AbstractBuilder {
 
+    static Property owlTime_hasBeginning = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning");
+    static Property owlTime_hasEnd = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd");
+    static Property schema_startDate = ResourceFactory.createProperty("http://schema.org/startDate");
+    static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
+
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
 
     public static String extractAsString(Resource resource, Property property) {
@@ -344,10 +349,7 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    static Property owlTime_hasBeginning = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning");
-    static Property owlTime_hasEnd = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd");
-    static Property schema_startDate = ResourceFactory.createProperty("http://schema.org/startDate");
-    static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
+
 
     /**
      * Extract period of time property from DCAT resource and map to model class.
