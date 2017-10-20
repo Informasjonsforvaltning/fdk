@@ -93,10 +93,10 @@ public class CrawlerJob implements Runnable {
 
                 //add sort ranking to datasets
                 DatasetSortRankingCreator rankingCreator = new DatasetSortRankingCreator();
-                union = rankingCreator.rankDatasets(union, dcatSource.getUrl());
+                Model rankedUnion = rankingCreator.rankDatasets(union, dcatSource.getUrl());
 
                 for (CrawlerResultHandler handler : handlers) {
-                    handler.process(dcatSource, union);
+                    handler.process(dcatSource, rankedUnion);
                 }
             }
 
