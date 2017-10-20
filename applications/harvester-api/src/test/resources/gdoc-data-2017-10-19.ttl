@@ -1,0 +1,2315 @@
+@prefix :      <http://data.brreg.no/vocab/temp/> .
+@prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://www.geonames.org/ontology#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3c.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gr:    <http://purl.org/goodrelations/v1#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dbpedia-prop: <http://dbpedia.org/property/> .
+@prefix invanor: <http://invanor.no/> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix prefix_id: <http://opendata.computas.no/data/tellus/> .
+@prefix t:     <http://www.w3.org/TR/owl-time#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix apf:   <http://jena.apache.org/ARQ/property#> .
+@prefix time:  <http://www.w3.org/TR/owl-time/> .
+@prefix tellus: <http://opendata.computas.no/voc/tellus/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://data.brreg.no/datakatalog/dataset/976820088/5>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <https://www.oslo.kommune.no/avfall-og-gjenvinning/nar-hentes-avfallet/?sid=14712&street=+> ;
+        dct:description         "Minigjenbrukstasjoner, gjenbruksstasjoner, milljøstasjoner og butikker med avfallsposer (grønne og blå kio-poser). Eiendomsgrensene etter avtale med PBE. Informasjonsboks med eiendom (per XY-koordinater) som viser type avfallsbeholdere (papir, restavfall etc) og størrelse (liter), samt tømmehyppighet og dato for neste tømming. Mulighet for kunden å gi tilbakemelding/onlineklage i informasjonsboks."@nb ;
+        dct:identifier          "5" ;
+        dct:landingPage         <https://tjenester.oslo.kommune.no/ekstern/minside/#/> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/976820088> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Waste containers for residents in Oslo"@en , "Avfallsbeholdere for publikum"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-9> ;
+        dcat:keyword            "avfall"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/82>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/livsforsikring/v1_2_1/filformat-for-livsforsikring-v1_2_1_20161005.pdf> ;
+        dct:description             "Rapportering fra livsforsikringsselskaper som skal levere opplysninger til Skatteetaten om livsforsikringer og kapitalforsikring med sparing. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier              "82" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Livsforsikring"@nb ;
+        dcat:keyword                "livsforsikring"@nb , "formue"@nb , "inntekt"@nb , "grunnlagsdata"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/915933149>
+        a               foaf:Agent ;
+        dct:identifier  "915933149" ;
+        foaf:name       "Direktoratet for e-Helse" .
+
+<http://data.brreg.no/datakatalog/distribusjon/14>
+        a                dcat:Distribution ;
+        dct:description  "Aa-registeret distributør"@nb ;
+        dct:format       "web/xml/fil" ;
+        dcat:accessURL   <https://www.infotorg.no/services/arbeidsgiver-og-arbeidstakerregisteret> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/37>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Uttrekket omfatter alle elever, både videregående og høyere utdanning. både postadresse og DSF."@nb ;
+        dct:identifier          "37" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Hybeladresser til elever og studenter med støtte fra Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/61>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Informasjon om fordringer Skatteetaten har mot skattyter"@nb ;
+        dct:identifier              "61" ;
+        dct:landingPage             <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Restanser"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/24> ;
+        dcat:keyword                "forfalt og ubetalt"@nb , "organisasjonsnummer"@nb , "renter og gebyrer"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-13>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:brukerstotte.datasamarbeid@skatteetaten.no> ;
+        vcard:organization-unit  "Skatteetaten, datasamarbeid" .
+
+<http://data.brreg.no/datakatalog/katalog/985821585/12>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Norid" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985821585> ;
+        dct:title        "Norids datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/985821585/48> .
+
+<http://data.brreg.no/datakatalog/dataset/976820088/37>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <https://kommunekart.com/klient/osloren/> ;
+        dct:description         "Data fra Renovasjonsetatens fagsystem som pr eiendom (per XY-koordinater) viser type avfallsbeholdere (papir, restavfall etc) og størrelse (liter), samt tømmehyppighet og dato for neste tømming. Minigjenbrukstasjoner, gjenbruksstasjoner, milljøstasjoner og butikker med avfallsposer (grønne og blå kio-poser)."@nb ;
+        dct:identifier          "37" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/976820088> ;
+        dct:title               "Avfallsbeholdere for internt bruk"@nb , "Waste containers for internal use"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-9> ;
+        dcat:keyword            "avfall"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-4>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://hoydedata.no/LaserInnsyn/> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971032146>
+        a               foaf:Agent ;
+        dct:identifier  "971032146" ;
+        foaf:name       "KS" .
+
+<http://data.brreg.no/datakatalog/katalog/976820088/k-4>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Oslo kommune Renovasjonsetaten" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/976820088> ;
+        dct:title        "Oslo Kommunes renovasjonsetatens datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/976820088/37> , <http://data.brreg.no/datakatalog/dataset/976820088/5> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/28>
+        a                  dcat:Dataset ;
+        dct:description    "Samme innhold som Skråfoto-Oslo, men historiske / arkiverte versjoner til bruk eksempelvis i sammenhenger ved behov for å sammenligne tidligere status med dagens."@nb ;
+        dct:identifier     "28" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Historical versions of oblique aerial photography"@en , "Historisk Skråfoto-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/7>
+        a                dcat:Distribution ;
+        dct:description  "Tilgang til komplett kopi av Enhetsregisteret er bare tilgjengelig for noen utvalgte offentlige virksomheter."@nb ;
+        dct:format       "Batch" ;
+        dcat:accessURL   <https://www.brreg.no/> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/90>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/tilskudd/v2_0_3/filformat-for-tilskudd-til-vitenskapelig-forskning-eller-yrkesopplaring-v2_0_3_20161005.pdf> ;
+        dct:description             "Forhåndsgodkjente institutter skal levere opplysninger til Skatteetaten om tilskudd til vitenskapelig forskning eller yrkesopplæring som gir rett til fradrag for giver. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier              "90" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Tilskudd til vitenskapelig forskning eller yrkesopplæring"@nb ;
+        dcat:keyword                "tilskudd"@nb , "inntekt"@nb , "vitenskapelig forskning"@nb , "grunnlagsdata"@nb , "yrkesopplæring"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/22>
+        a                dcat:Distribution ;
+        dct:description  "Finn barnehage i Oslo"@nb ;
+        dcat:accessURL   <https://www.oslo.kommune.no/barnehage/finn-barnehage-i-oslo/> .
+
+<http://sws.geonames.org/3144096/>
+        a                gn:Feature , dct:Location ;
+        gn:name          "Norway" ;
+        gn:officialName  "Norway"@en , "Norge"@no .
+
+<http://data.brreg.no/datakatalog/dataset/991825827/52>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <https://samarbeid.difi.no/kontakt-og-reservasjonsregisteret> ;
+        dct:description         "The Norwegian Digital Contact Information Register contains mobile phone numbers and e-mail addresses of citizens wanting to communicate digitally with Norwegian public authorities. For those who have chosen digital mailbox, the choice of mailbox is registered. For those who have chosen to opt out of digital communication, this is also registered. Only municipal and central government agencies in Norway may use the information in the register."@en , "Kontakt- og reservasjonsregisteret er et register over norske innbyggeres digitale kontaktinformasjon og reservasjon. Registeret kan kun brukes av offentlige virksomheter. Registeret inneholder følgende informasjon:"@nb ;
+        dct:identifier          "52" ;
+        dct:landingPage         <https://samarbeid.difi.no/kontakt-og-reservasjonsregisteret> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/991825827> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Kontakt- og reservasjonsregisteret"@nb , "Norwegian Digital Contact Information Register"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-7> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/18> ;
+        dcat:keyword            "digital postkasse"@nb , "e-postadresse"@nb , "krypteringssertifikat"@nb , "Digital kontaktinformasjon"@nb , "digital kommunikasjon"@nb , "mobilnummer"@nb , "reservasjon"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/15>
+        a                  dcat:Dataset ;
+        dct:description    "Digital overflatemodell (DOM eller DSM) eller digital høydemodell (DHM) er et produkt som beskriver terrengoverflaten, samt  bygninger, anlegg og vegetasjon. Alle laserdata er brukt for å produsere modellen. Den er tilgjengelig med ulik detaljeringsgrad / nøyaktighet."@nb ;
+        dct:identifier     "15" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Overflatemodell-Oslo"@nb , "Digital surface model (DSM)"@en ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:distribution  <http://data.brreg.no/datakatalog/distribusjon/d-4> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/5>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/WEEKLY> ;
+        dct:description         "Akvakulturregisteret inneholder oversikt over akvakulturtillatelser og enkelte vesentlige vedtak knyttet til disse. I tillegg inneholder registeret en oversikt over overføringer, pantsettelser og andre rettigheter som er tinglyst på tillatelsene."@nb ;
+        dct:identifier          "5" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:subject             <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:title               "Aquaculture register"@en , "Akvakulturregisteret"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/1> ;
+        dcat:keyword            "Organisasjonsnummer"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/27>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo          <https://ehelse.no/standarder-kodeverk-og-referansekatalog/helsefaglige-kodeverk/prosedyrekodeverkene-kodeverk-for-medisinske-kirurgiske-og-radiologiske-prosedyrer-ncmp-ncsp-og-ncrp> ;
+        dct:description         "De medisinske, kirurgiske og radiologiske prosedyrene utføres av ulike deler av spesialisthelsetjenesten. Kodeverkene NCMP, NCSP og NCRP er tilpasset hverandre slik at de kan brukes uten forveksling."@nb ;
+        dct:identifier          "27" ;
+        dct:landingPage         <https://ehelse.no/standarder-kodeverk-og-referansekatalog/helsefaglige-kodeverk/prosedyrekodeverkene-kodeverk-for-medisinske-kirurgiske-og-radiologiske-prosedyrer-ncmp-ncsp-og-ncrp> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:subject             <http://begrep.helsedir.no/prosedyre> ;
+        dct:temporal            [ a                  dct:PeriodOfTime ;
+                                  time:hasBeginning  [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2017-01-01T00:00:00Z"^^xsd:dateTime
+                                                     ] ;
+                                  time:hasEnd        [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2017-12-31T00:00:00Z"^^xsd:dateTime
+                                                     ]
+                                ] ;
+        dct:title               "Prosedyrekodeverkene (Kodeverk for medisinske, kirurgiske og radiologiske prosedyrer, NCMP, NCSP og NCRP)"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-2> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/16> ;
+        dcat:keyword            "spesialisthelsetjeneste"@nb , "kodeverk"@nb , "prosedyre"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/961181399>
+        a               foaf:Agent ;
+        dct:identifier  "961181399" ;
+        foaf:name       "Arkivverket" .
+
+<http://data.brreg.no/datakatalog/dataset/958935420/2>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Oversikt over barnehager i Oslo, både kommunale og private"@nb ;
+        dct:identifier          "2" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:subject             <https://schema.org/Preschool> ;
+        dct:title               "Preschools in Oslo"@en , "Barnehager i Oslo"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-5> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/d-1> ;
+        dcat:keyword            "barnehager"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/98>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Registerinfo er en informasjons- og serviceenhet for byggenæringen."@nb ;
+        dct:identifier          "98" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "Registerinfo (Byggenæringsregister)"@nb ;
+        dcat:keyword            "byggenæringen"@nb , "skatteattest"@nb , "merverdiavgift"@nb , "skatt"@nb , "registerinfo"@nb , "kontraktspartner"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971526157/47>
+        a                dcat:Dataset ;
+        dct:description  "Varemerkeregisteret"@nb ;
+        dct:identifier   "47" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971526157> ;
+        dct:title        "Varemerkeregisteret"@nb ;
+        dcat:keyword     "Nice-klassifikasjon"@nb , "Figurative elementer"@nb , "Søker"@nb , "Søknadsnummer"@nb , "Vare"@nb , "Type merke"@nb , "Varefortegnelse"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/35>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Trær som forvaltes av BYM i byggesonen"@nb ;
+        dct:identifier          "35" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Tredatabase"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/17>
+        a                  dcat:Dataset ;
+        dct:description    "Pre-Legal Entity Identifer (pre-LEI) er en internasjonal identifikator,"@nb ;
+        dct:identifier     "17" ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title          "GLEI Norway"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/77>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/livsforsikring/v1_2_1/filformat-for-livsforsikring-v1_2_1_20161005.pdf> ;
+        dct:description             "Verdipapirsentralen skal levere opplysninger til Skatteetaten over investors finansielle instrumenter. Innleveringsfrist for ordinære oppgaver er 1. februar året etter inntektsåret for beholdningsoppgaver og 20. februar året etter inntektsåret for transaksjonsoppgaver. Opplysningene danner grunnlag for forhåndsutfylling av skattepliktige beløp i skattemelding."@nb ;
+        dct:identifier              "77" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Finansielle instrumenter"@nb ;
+        dcat:keyword                "Verdipapirsentralen (VPS)"@nb , "verdipapir"@nb , "finansielle instrumenter"@nb , "grunnlagsdata"@nb , "inntekt"@nb , "formue"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/56>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/lov/2012-06-22-43/§7> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Rapportering av lønns- og ansettelsesforhold til Skatteetaten, NAV og Statistisk sentralbyrå (SSB) er samlet i a-meldingen og sendes inn hver måned av alle som utbetaler lønn, pensjon og andre ytelser. A-meldingen innholder opplysninger om lønn ytelser, i tillegg til status på alle arbeidsforhold."@nb ;
+        dct:identifier              "56" ;
+        dct:landingPage             <http://www.skatteetaten.no/no/Om-skatteetaten/Kontakt-oss/E-post/Send-ny-epost/Skatt-og-avgift/a-ordningen/> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:title                   "A-meldingen"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-11> ;
+        dcat:keyword                "lønn"@nb , "ytelser"@nb , "pensjon"@nb , "arbeidsforhold"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-7>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:idporten@difi.no> ;
+        vcard:organization-unit  "Difi ID porten" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/985399077>
+        a               foaf:Agent ;
+        dct:identifier  "985399077" ;
+        foaf:name       "Mattilsynet" .
+
+<http://data.brreg.no/datakatalog/dataset/991609407/49>
+        a                dcat:Dataset ;
+        dct:description  "Ruter routes"@en , "Ruter ruter"@nb ;
+        dct:identifier   "49" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/991609407> ;
+        dct:title        "Ruter routes"@en , "Ruter ruter"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/23>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Med unntak av åpent vann vil terreng reflektere mer infrarødt lys enn synlig lys. Dette gjelder løvskog, barskog, gressdominerte områder, lyngdominert mark, myr, bar jord og stein/bart fjell. Alle de ulike elementene eller objektene reflekterer IR-lyset på ulike måter. Dette gjør det lettere å skille dem fra hverandre på IR-bilder enn på flyfoto med vanlige farger (RGB)."@nb ;
+        dct:identifier     "23" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Ortofoto-IR-Oslo"@nb , "Infrared Orthophoto / Orthoimagery"@en ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/2>
+        a                dcat:Distribution ;
+        dct:description  "Akvakulturregisteret hos fiskeridirektoratet"@nb ;
+        dct:format       "text/csv" ;
+        dcat:accessURL   <http://www.fiskeridir.no/Akvakultur/Registre-og-skjema/Akvakulturregisteret> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/7>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/SF/forskrift/2013-12-18-1599> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo              <http://www.kartverket.no/eiendom/saksbehandling/veiledning-og-kurs/veiledning-for-lokal-matrikkelmyndighet/> ;
+        dct:description             "Matrikkelen er Norges offisielle register over fast eiendom, herunder eiendomsgrenser, bygninger, boliger og adresser."@nb ;
+        dct:identifier              "7" ;
+        dct:landingPage             <http://www.seeiendom.no> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial                 <http://www.geonames.org/3143242/> ;
+        dct:title                   "Cadastre, including registered information of buildings and addresses"@en , "Matrikkelen-Oslo"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/67>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Enhetsregisteret inneholder juridiske personer (en juridisk betegnelse på et rettssubjekt som ikke er en fysisk person og som opptrer utad som en enhet) i Norge. Juridiske personer er eksempelvis aksjeselskap, ansvarlige selskap, foreninger, stat, fylkeskommuner og kommuner."@nb ;
+        dct:identifier          "67" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Enhetsregisteret - Juridiske Personer"@nb , "Central Coordination register for legal entities - legal entities"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-14> ;
+        dcat:keyword            "enhet"@nb , "juridisk person"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/17>
+        a                dcat:Distribution ;
+        dct:description  "Helsepersonell-kodeverk (via Volven-webservices)"@nb ;
+        dct:format       "ws/xml" ;
+        dcat:accessURL   <https://volven.no/toolws/index.asmx/wsAppInfoSchema?strKveKode=9060> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/46>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Registeret inneheld oversikt over godkjende aktørar i lotterimarknaden og gjeldande løyve for lotteri og bingo."@nb ;
+        dct:identifier          "46" ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:subject             <http://tinyurl.com/br-Organisasjonsummer> ;
+        dct:title               "Lotteriregisteret"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword            "Organisasjonsnummer"@nb , "Lokale"@nb , "Lotteri"@nb , "Bingo"@nb , "Formål"@nb , "Adresse"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/40>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Filen inneholder Danske statsborgere som har fått støtte fra Lånekassen i et gitt undervisningsår."@nb ;
+        dct:identifier          "40" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Danske statsborgere med støtte fra Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/100>
+        a                dcat:Dataset ;
+        dct:description  "Offentlige myndigheter skal skal levere opplysninger til Skatteetaten om skattefrie utbetalinger. Opplysningene kan innrapporteres løpende per måned eller samlet. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret"@nb ;
+        dct:identifier   "100" ;
+        dct:language     <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "Offentlige myndigheter - skattefrie utbetalinger"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/85>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/pass_og_stell_barn/v2_0_3/filformat-for-pass-og-stell-av-barn-v2_0_3_20161005.pdf> ;
+        dct:description             "Barnehager og skolefritidsordninger skal levere opplysninger til Skatteetaten om kostnader foreldrene har hatt til pass og stell av barn. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier              "85" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Barnehager og fritidsordninger"@nb ;
+        dcat:keyword                "skattefradrag"@nb , "skolefritidsordninger"@nb , "grunnlagsdata"@nb , "Barnehage"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/960885406>
+        a               foaf:Agent ;
+        dct:identifier  "960885406" ;
+        foaf:name       "Statens Lånekasse for Utdanning" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/64>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Overordnet informasjon om skattyters formue og inntekt. Ligger til grunn for selve skatteberegningen"@nb ;
+        dct:identifier              "64" ;
+        dct:landingPage             <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Beregningsgrunnlag"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/27> ;
+        dcat:keyword                "skatteberegningsgrunnlag"@nb , "formue"@nb , "inntekt"@nb , "gjeld og fradrag"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-7>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://www.oslo.kommune.no/plan-bygg-og-eiendom/veiledere-foringer-og-skjemaer/kommunedelplaner/> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/o-9>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:postmottak@ren.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, Renovasjonsetaten" .
+
+<http://data.brreg.no/datakatalog/katalog/974760673/1>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Brønnøysundregistrene" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title        "Brønnøysundregistrene datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/974760673/18> , <http://data.brreg.no/datakatalog/dataset/974760673/8> , <http://data.brreg.no/datakatalog/dataset/974760673/67> , <http://data.brreg.no/datakatalog/dataset/974760673/17> , <http://data.brreg.no/datakatalog/dataset/974760673/71> , <http://data.brreg.no/datakatalog/dataset/974760673/3> , <http://data.brreg.no/datakatalog/dataset/974760673/19> , <http://data.brreg.no/datakatalog/dataset/974760673/12> , <http://data.brreg.no/datakatalog/dataset/974760673/69> , <http://data.brreg.no/datakatalog/dataset/974760673/2> , <http://data.brreg.no/datakatalog/dataset/974760673/65> , <http://data.brreg.no/datakatalog/dataset/974760673/11> , <http://data.brreg.no/datakatalog/dataset/974760673/5> , <http://data.brreg.no/datakatalog/dataset/974760673/1> , <http://data.brreg.no/datakatalog/dataset/974760673/10> , <http://data.brreg.no/datakatalog/dataset/974760673/4> , <http://data.brreg.no/datakatalog/dataset/974760673/7> , <http://data.brreg.no/datakatalog/dataset/974760673/66> , <http://data.brreg.no/datakatalog/dataset/974760673/14> , <http://data.brreg.no/datakatalog/dataset/974760673/6> , <http://data.brreg.no/datakatalog/dataset/974760673/13> , <http://data.brreg.no/datakatalog/dataset/974760673/68> , <http://data.brreg.no/datakatalog/dataset/974760673/16> , <http://data.brreg.no/datakatalog/dataset/974760673/70> , <http://data.brreg.no/datakatalog/dataset/974760673/46> , <http://data.brreg.no/datakatalog/dataset/974760673/15> , <http://data.brreg.no/datakatalog/dataset/974760673/9> ;
+        foaf:homepage    <http://brreg.no> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/10>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:conformsTo     <http://www.kartverket.no/globalassets/standard/sosi-standarden-del-1-og-2/sosi-standarden/fastmerker.pdf> ;
+        dct:description    "Fastmerker er varig merkede punkter, markert med bolt eller annet merke der koordinater og ev. høyde er bestemt, eller er planlagt bestemt i et geodetisk system. Fastmerker tjener hovedsakelig som grunnlag for kartlegging og oppmåling, eksempelvis for innmåling av eiendomsgrenser, bygninger, veier, ledninger og andre tekniske installasjoner. Såkalte høydefastmerker er meget godt bestemt i høyde ved presisjonsnivellement, og brukes der det er strenge nøyaktighetskrav, f.eks. for enkelte bygg- og anleggsprosjekter."@nb ;
+        dct:identifier     "10" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Geodetic control point / network for Oslo"@en , "FKB-Fastmerke-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971526157>
+        a               foaf:Agent ;
+        dct:identifier  "971526157" ;
+        foaf:name       "Patentstyret" .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/22>
+        a                dcat:Dataset ;
+        dct:conformsTo   <https://register-web.test.nhn.no/> ;
+        dct:description  "Helsetjenestekatalogen (HTK) er en oversikt over behandlingstjenester som tilbys i spesialisthelsetjeneste delvis primærhelsetjeneste"@nb ;
+        dct:identifier   "22" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Helsetjenestekatalogen"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/distribusjon/25>
+        a                dcat:Distribution ;
+        dct:description  "Oppgaveinnlevering Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dcat:accessURL   <https://api.skatteetaten.no> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/93>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/kop/v2_1_2/filformat-for-kjop-fra-primarnaring-tilskudd-v2_1_2_20161005.pdf> ;
+        dct:description             "Offentlige myndigheter som utbetaler tilskudd innen landbruk, Reindriftsforvaltningen og Garantikassen for fiskere plikter å innrapportere kontrolloppgaver til Skatteetaten"@nb ;
+        dct:identifier              "93" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Offentlige tilskudd innen landbruk"@nb ;
+        dcat:keyword                "Reindriftsforvaltningen"@nb , "kontrolloppgaver"@nb , "Garantikassen"@nb , "tilskudd"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/provenance/vedtak>
+        a                    dct:ProvenanceStatement ;
+        rdfs:comment         "statlig vedtak" ;
+        rdfs:label           "vedtak" ;
+        prov:wasGeneratedBy  "vedtak" .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/30>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Byruter for sykkel i Oslo"@nb ;
+        dct:identifier          "30" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Byruter"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/12>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Ektepaktregisteret inneholder tinglyste avtaler mellom ektefeller/registrerte partnere, som regulerer formueforhold på andre måter enn det som følger det ordinære lovverket, f.eks særeie."@nb ;
+        dct:identifier     "12" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:title          "Ektepaktregisteret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword       "Ektepakt"@nb , "Ektefelle"@nb , "Adresse"@nb , "Personopplysninger"@nb , "Tinglysning"@nb , "Avtale"@nb , "Felleseie"@nb , "Særeie"@nb , "Formueforhold"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-2>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:kodehjelp@ehelse.no> ;
+        vcard:hasTelephone       <tel:+4721495070> ;
+        vcard:organization-unit  "e-helse, kodeverk" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/18>
+        a                       dcat:Dataset ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Gatenavnregisteret inneholder navn på gater, veier og plasser i Oslo kommune. Dette er det offisielle registeret over gate-, vei- og plassnavn som er vedtatt gjennom gatenavnsrevisjonen i 1755 og senere politiske prosesser."@nb ;
+        dct:identifier          "18" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Street name registry"@en , "Gatenavnsregister for Oslo"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/8>
+        a                  dcat:Dataset ;
+        dct:description    "Konkursregisteret inneholder opplysninger om konkursbo og tvangsavviklingsbo. Herunder informasjon om konkursåpning/-slutning, samt ansvarlige personer knyttet til det aktuelle foretak og roller disse har i andre foretak. Konkursregisteret har også opplysninger om hvilke personer som er ilagt konkurskarantene."@nb ;
+        dct:identifier     "8" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:title          "Konkursregisteret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword       "Konkursbo"@nb , "Tvangsakkord"@nb , "Konkurskarantene"@nb , "Tvangsavviklingsbo"@nb , "Gjeldsforhandling"@nb , "Konkurs"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/958935420>
+        a               foaf:Agent ;
+        dct:identifier  "958935420" ;
+        foaf:name       "Oslo kommune" .
+
+<http://data.brreg.no/datakatalog/distribusjon/12>
+        a                dcat:Distribution ;
+        dct:description  "Søk etter registrerte enheter i Enhetsregisteret"@nb ;
+        dct:format       "text/html" ;
+        dcat:accessURL   <https://w2.brreg.no/enhet/sok/> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/80>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/ip/v1_0_1/filformat-individuelle-pensjonsordninger-v1_0_1_20161005.pdf> ;
+        dct:description             "Livsforsikringsselskaper, pensjonskasser, banker mv. skal årlig levere opplysninger til Skatteetaten om innbetalinger vedrørende individuelle pensjonsordninger. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret. Utbetalinger skal innrapporteres månedlig i a-meldingen."@nb ;
+        dct:identifier              "80" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Individuelle pensjonsordninger"@nb ;
+        dcat:keyword                "individuelle pensjonsordninger"@nb , "IPA"@nb , "grunnlagsdata"@nb , "formue"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/35>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Inneholder studenter som studerer i utlandet, enten i form av et ordinært gradstudium eller som et delstudium. Inneholder også elever som går på lavere utdanning, såkalt ungdomsrett, og som tar studier i utlandet i form av utveksling."@nb ;
+        dct:identifier          "35" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/6295630/> ;
+        dct:title               "Norske elever og studenter ved utlandske utdanningssteder støttet av Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/59>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo              <https://aurora/wiki/display/im/Konstruksjonsmodell+Skattegrunnlag> ;
+        dct:description             "Detaljert informasjon om skattepliktiges formue, inntekt, gjeld og fradrag"@nb ;
+        dct:identifier              "59" ;
+        dct:landingPage             <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/reference_skattegrunnlag.html> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:subject                 <http://begrepskatalog/begrep/formue> ;
+        dct:title                   "Skattegrunnlag"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/21> ;
+        dcat:keyword                "formue"@nb , "gjeld og fradrag"@nb , "inntekt"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-11>
+        a                        vcard:Organization ;
+        vcard:organization-unit  "Skatteetaten, EFF" .
+
+<http://data.brreg.no/datakatalog/dataset/889640782/74>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Viser perioder med unntak fra medlemskap i norsk trygd basert på lovvalgsvurderinger i henhold til EØS-forordning 883/2004 og bilaterale trygdeavtaler mellom Norge og et annet land. Lovvalg betyr i denne sammenhengen at man tar stilling til hvilket lands lovgivning om trygderettigheter som gjelder for en enkeltperson når han/hun beveger seg over grensene i EU/EØS for å bo eller arbeide. Det er i lovvalgslandet søkeren har sine rettigheter (til ytelser) og plikter (betale avgift)."@nb ;
+        dct:identifier          "74" ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/889640782> ;
+        dct:title               "Unntak fra medlemskap i folketrygden"@nb , "Exceptions to membership pursuant to the provisions of the National Insurance Act"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-6> ;
+        dcat:keyword            "unntak"@nb , "medlemskap"@nb , "folketrygden"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-2>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://www.oslo.kommune.no/skole-og-utdanning/skoler-og-skoletilhorighet/skoler-i-oslo/> .
+
+<http://data.brreg.no/datakatalog/dataset/985399077/42>
+        a                dcat:Dataset ;
+        dct:description  "MATS"@nb ;
+        dct:identifier   "42" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
+        dct:title        "MATS"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971526920/33>
+        a                dcat:Dataset ;
+        dct:description  "Virksomhets- og foretaksregisteret (VoF) er Statistisk sentralbyrås"@nb ;
+        dct:identifier   "33" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971526920> ;
+        dct:title        "Virksomhets- og foretaksregister"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971526920>
+        a               foaf:Agent ;
+        dct:identifier  "971526920" ;
+        foaf:name       "SSB" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/26>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Samme innhold som FKB-Laser-Oslo, men historiske / arkiverte versjon(-er) til bruk eksempelvis i sammenhenger ved behov for å sammenligne tidligere status med dagens."@nb ;
+        dct:identifier     "26" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Historical version(-s) of laser scanning projects providing accurate elevation data."@en , "Historisk FKB-Laser-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/5>
+        a                dcat:Distribution ;
+        dct:description  "Patentregisteret"@nb ;
+        dct:format       "text/csv" ;
+        dcat:accessURL   <https://search.patentstyret.no/advanced> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/70>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Organisasjonsform er virksomhetens formelle selskapsform og gir retningslinjer overfor blant annet ansvarsforhold, skatt, revisjonsplikt og lignende."@nb ;
+        dct:identifier          "70" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title               "Enhetsregisteret - Organisasjonsform"@nb , "Organisational type"@en ;
+        dcat:keyword            "organisasjonform"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/katalog/996922766/k-3>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Oslo kommune Bymiljøetaten" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title        "Oslo Kommune bymiljøetatens datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/996922766/35> , <http://data.brreg.no/datakatalog/dataset/996922766/33> , <http://data.brreg.no/datakatalog/dataset/996922766/31> , <http://data.brreg.no/datakatalog/dataset/996922766/36> , <http://data.brreg.no/datakatalog/dataset/996922766/29> , <http://data.brreg.no/datakatalog/dataset/996922766/34> , <http://data.brreg.no/datakatalog/dataset/996922766/32> , <http://data.brreg.no/datakatalog/dataset/996922766/30> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/976820088>
+        a               foaf:Agent ;
+        dct:identifier  "976820088" ;
+        foaf:name       "Oslo kommune Renovasjonsetaten" .
+
+<http://data.brreg.no/datakatalog/distribusjon/20>
+        a                dcat:Distribution ;
+        dct:description  "a-melding data per arbeidsgiver"@nb ;
+        dct:format       "text/json, text/xml" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/arbeidsgiver/version/organisasjonsnummer> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/88>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/boligselskap/v2_1_1/filformat-for-boligselskap-v2_1_1_20161005.pdf> ;
+        dct:description             "Boligselskap skal levere opplysninger til Skatteetaten om andelshavers/aksjonærs andel av inntekter, utgifter, formue og gjeld. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret."@nb ;
+        dct:identifier              "88" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Boligselskap"@nb ;
+        dcat:keyword                "inntekt"@nb , "boligselskap"@nb , "grunnlagsdata"@nb , "formue"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/13>
+        a                  dcat:Dataset ;
+        dct:conformsTo     <http://www.kartverket.no/geodataarbeid/standarder/sosi/sosi-del-3/produktspesifikasjoner-fkb/> ;
+        dct:description    "Produktet FKB-Laser-Oslo er punkter på terrengoverflaten innsamlet ved fly- eller helikopterbåren laserskanning. Hvert enkelt punkt klassifiseres som bakke eller andre detaljer, og etter at denne klassifiseringen er utført kan det avledes flere produkter, eksempelvis terrengmodelldata eller overflatemodelldata. Punkt-tettheten kan variere, men vil typisk ligge på fra 2 til 10 punkter per kvadratmeter."@nb ;
+        dct:identifier     "13" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Laser scanning provides accurate elevation data."@en , "FKB-Laser-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/3>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/1935-06-07-2> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Løsøreregisteret er et tinglysingsregister for rettigheter og pant i løsøre. En tinglyst rettighet eller pant, gir rettsvern overfor kreditorer. Løsøreregisteret omfatter ikke tinglysning i fast eiendom, skip og luftfartøyer."@nb ;
+        dct:identifier              "3" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:modified                "2017-10-19"^^xsd:date ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:subject                 <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:title                   "Løsøreregisteret"@nb , "Register of Mortgaged Movable Property"@en ;
+        adms:identifier             <http://data.brreg.no/datakatalog/identifikator/3> ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword                "Pant"@nb , "Løsøre"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/25>
+        a                dcat:Dataset ;
+        dct:conformsTo   <https://ehelse.no/helseadministrative-registre/fastlegeregisteret> ;
+        dct:description  "This register provides an overview of all the doctors and their respectrive patients, who are part of the Municipal Regular GP Scheme (Fastlegeordning)."@en , "Fastlegeregisteret gir en oversikt over alle landets fastleger. Registeret viser tilknytningen mellom den enkelte fastlege og innbygger."@nb ;
+        dct:identifier   "25" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:spatial      <http://sws.geonames.org/3144096/> ;
+        dct:title        "Fastlegeregisteret"@nb ;
+        dcat:keyword     "innbygger"@nb , "fastlege"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/96>
+        a               dcat:Dataset ;
+        dct:identifier  "96" ;
+        dct:publisher   <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title       "Sentralt eiendomsregister (SERG)"@nb ;
+        dcat:theme      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/33>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Parkanlegg i byggesonen"@nb ;
+        dct:identifier          "33" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Parkanlegg_bym"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/15>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Registeret for offentlig støtte (ROFS) er et nasjonalt register for offentlige støttetildelinger som faller inn under EØS-avtalen. Registeret skal gjøre det enklere for offentlige myndigheter, som vurderer å gi offentlig støtte, å få informasjon om foretakene har fått annen offentlig støtte som må tas med i vurderingen."@nb ;
+        dct:identifier     "15" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:subject        <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:title          "Registeret for offentlig støtte"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword       "Foretak"@nb , "Offentlig støtte"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/75>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/Skjemaer/2016/RF-1087B.pdf> ;
+        dct:description             "Alle norske aksje- og allmennaksjeselskap, samt sparebanker med egenkapitalbevis, skal hvert år levere en aksjonærregisteroppave til Skatteetatens aksjonærregister. I registeret samles informasjon om alle hendelser og transaksjoner i selskapene."@nb ;
+        dct:identifier              "75" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Aksjonærregisteroppgaven"@nb ;
+        dcat:keyword                "aksjer"@nb , "skattemeding"@nb , "formue"@nb , "inntekt"@nb , "grunnlagsdata"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-5>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:web@uke.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, webforvaltningen" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/21>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Planregister for Oslo er et system for å holde orden på gjeldende arealplaner, planforslag, dispensasjoner med videre, og enkelt gi publikum innsyn."@nb ;
+        dct:identifier          "21" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:title               "Municipal planning register for Oslo"@en , "Planregister for Oslo"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/d-8> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/65>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Kontakt- og Fullmaktsregister for virksomheter"@nb ;
+        dct:identifier          "65" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "KoFuVi"@en , "KoFuVi"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-14> ;
+        dcat:keyword            "fullmakt"@nb , "kontakt"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/83>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/skadeforsikring/v1_0_1/filformat-for-skadeforsikring-v1_0_1_20161005.pdf> ;
+        dct:description             "Forsikringsselskaper skal levere opplysninger til Skatteetaten om utbetalinger på skadeforsikringer. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier              "83" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Skadeforsikring"@nb ;
+        dcat:keyword                "skadeforsikring"@nb , "inntekt"@nb , "grunnlagsdata"@nb , "formue"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/15>
+        a                dcat:Distribution ;
+        dct:description  "ICD-10 kodeverk"@nb ;
+        dct:format       "zip/csv" ;
+        dcat:accessURL   <https://ehelse.no/Documents/Helsefaglig%20kodeverk/ICD-10%202016%202015-12-17.zip> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/38>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Studenter og avsluttede utdanninger i utlandet"@nb ;
+        dct:identifier          "38" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/6295630/> ;
+        dct:title               "Studenter med avsluttede utdanninger i utlandet støttet av Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/62>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Informasjon om skattyters overholdelse av oppgaveplikten"@nb ;
+        dct:identifier              "62" ;
+        dct:landingPage             <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Oppgaveinnlevering"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/25> ;
+        dcat:keyword                "mva"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-14>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:registerforvaltning@brreg.no> ;
+        vcard:organization-unit  "Avdeling registerforvaltning" .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-5>
+        a               dcat:Distribution ;
+        dcat:accessURL  <http://www.norgeibilder.no/> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/991825827>
+        a               foaf:Agent ;
+        dct:identifier  "991825827" ;
+        foaf:name       "Direktoratet for forvaltning og IKT" .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/20>
+        a                dcat:Dataset ;
+        dct:conformsTo   <https://register-web.test.nhn.no/> ;
+        dct:description  "A common address book containing data for precise exchange of health data sent electronically and by mail within the healthcare sector. This applies both to the exchange of electronic messages and mail shipments."@en , "Adresseregisteret (AR) er et felles nasjonalt register for presis adressering ved utveksling av helseopplysninger som sendes elektronisk eller per post innen helse- og omsorgssektoren."@nb ;
+        dct:identifier   "20" ;
+        dct:language     <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Adresseregisteret"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/katalog/889640782/4>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett for NAV" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/889640782> ;
+        dct:title        "NAVs datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/889640782/74> , <http://data.brreg.no/datakatalog/dataset/889640782/73> , <http://data.brreg.no/datakatalog/dataset/889640782/72> , <http://data.brreg.no/datakatalog/dataset/889640782/30> ;
+        foaf:homepage    <http://www.nav.no> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/91>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:description             "Forhåndsgodkjente frivillige organisasjoner og tros- og livssynssamfunn skal levere opplysninger til Skatteetaten om mottatte gaver som gir giveren rett til fradrag. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier              "91" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Gaver til visse frivillige organisasjoner og tros- og livsynsamfunn"@nb ;
+        dcat:keyword                "frivillige organisasjoner"@nb , "gaver"@nb , "grunnlagsdata"@nb , "tros- og livsynssamfunn"@nb , "skattefradrag"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/23>
+        a                dcat:Distribution ;
+        dct:description  "Skoler i Oslo"@nb ;
+        dcat:accessURL   <https://www.oslo.kommune.no/skole-og-utdanning/skoler-og-skoletilhorighet/skoler-i-oslo/> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/10>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <https://www.brreg.no/lag-og-foreninger/registrering-i-frivillighetsregisteret/> ;
+        dct:description         "Register of clubs and associations. The purpose is to improve and simplify the interaction between NGOs and public authorities. The Registry will ensure systematic information that can strengthen the legitimacy and knowledge of the voluntary activity. Managed by Brønnøysund Registre"@en , "Frivillighetsregisteret har oversikt over lag og foreninger i Norge, og har som formål å forenkle samhandlingen mellom frivillige organisasjoner og offentlig sektor. De som registrerer seg i Frivillighetsregisteret kan delta i grasrotandelen til Norsk Tipping, og motta/få momskompensasjon."@nb ;
+        dct:identifier          "10" ;
+        dct:landingPage         <https://w2.brreg.no/frivillighetsregisteret/> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:subject             <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:title               "Frivillighetsregisteret"@nb ;
+        adms:identifier         <http://data.brreg.no/datakatalog/identifikator/7> ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/11> ;
+        dcat:keyword            "Forening"@nb , "Grasrotandel"@nb , "Kategori"@nb , "Organisasjonsnummer"@nb , "Postadresse"@nb , "Vedtekter"@nb , "Forretningsadresse"@nb , "Lag"@nb , "Kontonummer"@nb , "Årsregnskap"@nb , "Organisasjonsform"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/16>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo          <http://sosi.geonorge.no/Produktspesifikasjoner/tidligere/produktspesifikasjonortofotoversjon45-20130110.pdf> ;
+        dct:description         "Et ortofoto har samme geometriske egenskaper som et kart og er knyttet til et kartkoordinatsystem. Et ortofoto lages / beregnes med utgangspunkt i ett enkelt eller flere overlappende flyfoto. Ortofotoet kan vises sammen med digitale kartdata. Ortofoto for Oslo foreligger både basert på vertikale flyfoto som normalt brukes som grunnlag for det årlige kartajourholdet (FKB-Grunnkart-Oslo) og vertikale flyfoto som tas i forbindelse med skråfotografering."@nb ;
+        dct:identifier          "16" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Orthophoto / Orthoimagery"@en , "Ortofoto-Oslo"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/d-5> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/996922766>
+        a               foaf:Agent ;
+        dct:identifier  "996922766" ;
+        foaf:name       "Oslo kommune Bymiljøetaten" .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/o-10>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:postmottak@pbe.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, Plan- og bygningsetaten" .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/6>
+        a                  dcat:Dataset ;
+        dct:description    "Kunngjøringer kan trolig ikke defineres som et datasett. Kunngjøringer"@nb ;
+        dct:identifier     "6" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title          "Kunngjøringer"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/28>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:conformsTo     <https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060> ;
+        dct:description    "Kodeverket inneholder koder som benyttes for å kategorisere helsepersonell."@nb ;
+        dct:identifier     "28" ;
+        dct:landingPage    <https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060> ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:subject        <http://begrep.helsedir.no/helsepersonellkategori> ;
+        dct:title          "Helsepersonell"@nb ;
+        adms:identifier    <http://data.brreg.no/datakatalog/identifikator/6> ;
+        adms:sample        <https://volven.no/produkt.asp?open_f=true&id=283445&catID=3&subID=8&subCat=61&oid=9060> ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-2> ;
+        dcat:distribution  <http://data.brreg.no/datakatalog/distribusjon/17> ;
+        dcat:keyword       "kodeverk"@nb , "kategori"@nb , "helsepersonell"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/dataset/958935420/3>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Oversikt over kommunale skoler i Oslo"@nb ;
+        dct:identifier          "3" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:subject             <https://schema.org/School> ;
+        dct:title               "Skoler i Oslo"@nb , "Schools in Oslo"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-5> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/d-2> ;
+        dcat:keyword            "skoler"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/99>
+        a                dcat:Dataset ;
+        dct:description  "Skattyter eller selskap med deltakerfastsetting som eier næringseiendom som skal verdsettes etter forskrift 19. november 1999 nr 1158 (FSFIN) § 4-10, skal levere skjemaet RF-1098."@nb ;
+        dct:identifier   "99" ;
+        dct:language     <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "Formue av næringseiendom ???"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/36>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Plassering og taktgruppe for betalingsautomater"@nb ;
+        dct:identifier          "36" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Betalingsautomater"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/18>
+        a                  dcat:Dataset ;
+        dct:description    "Oppgaveregisteret inneholder oversikt over alle rapporteringsplikter/skjemaer som næringsdrivende må sende til statlige instanser. Registeret inneholder også oversikt over stipulert tidsbruk for næringslivet på de enkelte rapporteringsplikter, samt hjemler i lov/forskrift."@nb ;
+        dct:identifier     "18" ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:title          "Oppgaveregisteret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/78>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/verdipapirfond/v1_0_1/filformat-for-verdipapirfond-v1_0_1_20161005.pdf> ;
+        dct:description             "Rapportering av opplysninger om andelseiers beholdning av andeler og alle årets transaksjoner, herunder erverv, eierskifter, avkastning, utbytte og andre forhold som har betydning for skattleggingen, herunder skjermingsgrunnlag og aksjeandel."@nb ;
+        dct:identifier              "78" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Verdipapirfond"@nb ;
+        dcat:keyword                "grunnlagsdata"@nb , "transaksjoner"@nb , "utbytte"@nb , "formue"@nb , "verdipapirfond"@nb , "verdipapir"@nb , "inntekt"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/57>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "a-melding per innteksmottaker"@nb ;
+        dct:identifier              "57" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:title                   "A-melding per innteksmottaker"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/19> ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-8>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:postmottak@nae.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, Næringsetaten" .
+
+<http://data.brreg.no/datakatalog/dataset/889640782/72>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Viser perioder med frivillig medlemskap i henhold til folketrygdlovens kapittel 2. Personer som ikke er pliktige medlemmer av norsk folketrygd, men som ønsker medlemskap og frivillig betaler inn til norsk folketrygd. Frivillig medlemskap kan for eksempel gjelde personer med tilknytning til Norge, som for en avgrenset periode bor i utlandet og som søker om frivillig medlemskap i norsk folketrygd."@nb ;
+        dct:identifier          "72" ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/889640782> ;
+        dct:title               "Frivillig medlemskap i folketrygden"@nb , "Voluntary membership pursuant to the provisions of the National Insurance Act"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-6> ;
+        dcat:keyword            "frivillig"@nb , "folketrygden"@nb , "medlemskap"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/889640782/30>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://www.nav.no/no/Bedrift/Tjenester+og+skjemaer/Aa-registeret+og+a-meldingen/Hva+er+er+Aa-registeret/Tilgang+til+Aa-registret> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
+        dct:description             "The purpose of the State Register of Employers and Employees (Aa-registeret) is to provide an overview of employment in Norway."@en , "Arbeidsgiver- og arbeidstakerregisteret (Aa-registeret) gir oversikt over hvilke arbeidstakere som er ansatt hos den enkelte arbeidsgiver og inneholder blant annet opplysninger om arbeidsforholdenes type og omfang. Offentlige virksomheter kan etter søknad få tilgang til å gjøre oppslag i registeret. Arbeidsgiverne rapporterer månedlig til registeret via a-ordningen, en felles rapporteringskanal for NAV, Skatteetaten og SSB. Se www.altinn.no/no/a-ordningen/ for mer informasjon. Rapporteringsplikten omfatter tilnærmet alle norske arbeidsforhold på land og til sjøs, men følgende grupper finnes ikke i registeret:"@nb ;
+        dct:identifier              "30" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/889640782> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:subject                 <https://www.nav.no/no/Bedrift/Tjenester+og+skjemaer/Aa-registeret+og+a-meldingen/Hva+er+er+Aa-registeret> ;
+        dct:title                   "Arbeidsgiver- og arbeidstakerregisteret"@nb , "State Register of Employers and Employees (Aa-registeret)"@en ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-6> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/13> ;
+        dcat:keyword                "yrke"@nb , "arbeidstaker"@nb , "stillingsprosent"@nb , "permisjon"@nb , "arbeidsgiver"@nb , "Arbeidsforhold"@nb , "permittering"@nb , "Aa-registeret"@nb , "arbeidstid"@nb , "Aa-reg"@nb , "arbeidsforholdstype"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/24>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:description         "Oversiktskart for Oslo foreligger i ulike versjoner og for ulike områder (sentrumskart og kart over hele kommunen)."@nb ;
+        dct:identifier          "24" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Oslo city map"@en , "Oversiktskart for Oslo"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/3>
+        a                dcat:Distribution ;
+        dct:description  "Søk etter registrerte partier"@nb ;
+        dct:format       "text/html" ;
+        dcat:accessURL   <http://w2.brreg.no/partireg/> .
+
+<http://data.brreg.no/datakatalog/katalog/958935420/k-1>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Oslo Kommune" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:title        "Oslo Kommunes datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/958935420/19> , <http://data.brreg.no/datakatalog/dataset/958935420/4> , <http://data.brreg.no/datakatalog/dataset/958935420/3> , <http://data.brreg.no/datakatalog/dataset/958935420/2> , <http://data.brreg.no/datakatalog/dataset/958935420/1> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/8>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo          <file:///home/1000/dcat/mapper/Produktspesifikasjon%20for%20FKB%20AR5> , <https://register.geonorge.no/data/documents/Produktspesifikasjoner_FKB%20AR5_v2_produktspesifikasjon-fkb-ar5-4_6_.pdf> ;
+        dct:description         "AR5 står for arealressurskart beregnet for målestokk 1:5.000. AR5 for Oslo et detaljert heldekkende datasett og inneholder informasjon om arealressurser. Datasettet deler inn landarealet etter arealtype, skogbonitet, treslag og grunnforhold."@nb ;
+        dct:identifier          "8" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Land cover map for Oslo"@en , "FKB-Ar5-Oslo"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/68>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "De som driver næringsvirksomhet og/eller har ansatte, har et egen identifikator (organisasjonsnummer) for den virksomheten som enheten driver. Den som driver virksomhet på flere steder og/eller i ulike bransjer, har ett slikt nummer for hver av disse"@nb ;
+        dct:identifier          "68" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Central Coordination register for legal entities - branches"@en , "Enhetsregisteret - Virksomheter"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-14> ;
+        dcat:keyword            "enhet"@nb , "virksomhet"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/101>
+        a                dcat:Dataset ;
+        dct:description  "Norge har gjennom EØS-avtalen forpliktet seg til å opprette et nasjonalt register for offentlig støtte for tildelinger over 500 000 euro. Skatte og avgiftslettelser er å anse som offentlig støtte og Skatteetaten oppfattes som støttegiver for disse skatte- og avgiftslettelser."@nb ;
+        dct:identifier   "101" ;
+        dct:language     <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "Offentlig støtte"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/18>
+        a                dcat:Distribution ;
+        dct:description  "Kontakt og -reservasjonsregisteret oppslag"@nb ;
+        dct:format       "text/xml" ;
+        dcat:accessURL   <https://samarbeid.difi.no/sites/samarbeid/files/integrasjonsguide_for_oppslagstjenesten_2016.09.22.pdf> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/41>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Filen inneholder Svenske statsborgere som har fått støtte fra Lånekassen i ett gitt undervisningsår."@nb ;
+        dct:identifier          "41" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Svenske statsborgere med støtte fra Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/katalog/960885406/7>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Lånekassen" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:title        "Lånekassa datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/960885406/39> , <http://data.brreg.no/datakatalog/dataset/960885406/41> , <http://data.brreg.no/datakatalog/dataset/960885406/34> , <http://data.brreg.no/datakatalog/dataset/960885406/37> , <http://data.brreg.no/datakatalog/dataset/960885406/40> , <http://data.brreg.no/datakatalog/dataset/960885406/38> , <http://data.brreg.no/datakatalog/dataset/960885406/35> , <http://data.brreg.no/datakatalog/dataset/960885406/36> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/86>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/drosjesentraler/v1_0_3/filformat-for-drosje-v1_0_3_20161005.pdf> ;
+        dct:description             "Drosjesentraler skal årlig gi Skatteetaten opplysninger om drosjeløyvene som er tilknyttet sentralen. Opplysningene er i all hovedsak de samme som i \"skiftlappen\". Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret."@nb ;
+        dct:identifier              "86" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Drosjesentraler"@nb ;
+        dcat:keyword                "kredittomsetning"@nb , "kontrollopplysninger"@nb , "drosjeløyve"@nb , "kontantomsetning"@nb , "Drosjesentral"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/889640782>
+        a               foaf:Agent ;
+        dct:identifier  "889640782" ;
+        foaf:name       "NAV" .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-8>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://www.oslo.kommune.no/plan-bygg-og-eiendom/> .
+
+<http://data.brreg.no/datakatalog/dataset/958935420/19>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Gjeldende kommuneplan for Oslo ble vedtatt av Oslo bystyre 23.09.2015 (sak 262/15). Kommuneplanen heter «Oslo mot 2030: Smart, trygg og grønn». Utkast til ny kommuneplan er lagt ut på høring med høringsfrist 30. juni 2017."@nb ;
+        dct:identifier     "19" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:title          "The municipal master plan for Oslo"@en , "Kommuneplan for Oslo"@nb ;
+        dcat:distribution  <http://data.brreg.no/datakatalog/distribusjon/d-6> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974761076>
+        a               foaf:Agent ;
+        dct:identifier  "974761076" ;
+        foaf:name       "Skatteetaten" .
+
+<http://data.brreg.no/datakatalog/katalog/971526920/6>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Statistisk Sentralbyrå" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971526920> ;
+        dct:title        "SSB datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/971526920/33> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/11>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/MONTHLY> ;
+        dct:description         "FKB er en samling strukturerte datasett. FKB står for Felles kartdatabase. N5 betyr at informasjonen har noe lavere detaljeringsgrad og tilpasset presentasjon i målestokk 1:5.000. Datasettene i FKB-N5 består normalt av:Høyde: Høydekurver (5 m).Vann: Kyst, sjø, innsjø og vassdrag.Bygg og anlegg: Bygninger, bygningsmessige anlegg og ledninger.Samferdsel (FKB Veg): Vegsituasjon, jernbane, annen samferdsel.Tekst: Presentasjonsdata beregnet for målestokk 1:5.000."@nb ;
+        dct:identifier          "11" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "FKB-N5-Oslo"@nb , "Map information derived from detailed map for Oslo, Outline of buildings, roads, outline of fjord, lakes and rivers, altitude contour lines (5 m)."@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/1>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret> , <https://www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/foretaksregisteret/> ;
+        dct:description         "The Register of Business Enterprises registers Norwegian and foreign businesses in Norway, ensuring legal protection and financial overview. All businesses – with confining as well as complete responsibility – are obliged to register in the Register of Business Enterprises. The same applies to sole proprietorships engaging in trade with purchased goods or having more than five fully employed personell. Other sole proprietorships may register on a voluntary basis."@en , "Foretaksregisteret registrerer alle norske og utenlandske foretak i Norge, og skal sikre rettsvern og økonomisk oversikt. Enkeltpersonforetak som ikke driver handel med innkjøpte varer eller har mindre enn 5 ansatte i full stilling har ikke registreringsplikt, men har registreringsrett. Foretaksregisteret skal sikre rettsvern og økonomisk oversikt, og er en viktig kilde til informasjon om norsk næringsliv."@nb ;
+        dct:identifier          "1" ;
+        dct:landingPage         <https://www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/foretaksregisteret/> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:modified            "2017-10-19"^^xsd:date ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:subject             <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:temporal            [ a                  dct:PeriodOfTime ;
+                                  time:hasBeginning  [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2001-01-01T00:00:00Z"^^xsd:dateTime
+                                                     ] ;
+                                  time:hasEnd        [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2015-12-31T00:00:00Z"^^xsd:dateTime
+                                                     ]
+                                ] ;
+        dct:title               "Foretaksregisteret"@nb , "Register of Business Enterprises"@en ;
+        adms:identifier         <http://data.brreg.no/datakatalog/identifikator/1> ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-1> ;
+        dcat:keyword            "Foretaksnavn"@nb , "Forretningsadresse"@nb , "Organisasjonsnummer"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/23>
+        a                dcat:Dataset ;
+        dct:conformsTo   <https://register-web.test.nhn.no/> ;
+        dct:description  "A register representing the administrative organizational chart of the government-funded health services in Norway."@en , "I Register over Enheter i Spesialisthelsetjenesten (RESH) vedlikeholdes det administrative organisasjonskartet for den statlig finansierte spesialisthelsetjenesten i Norge, med detaljert beskrivelse av tjenestene som tilbys i kliniske enheter ved hjelp av et kodeverk for spesialisthelsetjenesten (OK2007 versjon 2.0). I tillegg blir alle kliniske enheter knyttet til en bedrift, slik at man kan se eksakt hvilke behandlingssteder disse fordeler seg til."@nb ;
+        dct:identifier   "23" ;
+        dct:landingPage  <https://register.nhn.no/resh> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Register over Enheter i Spesialisthelsetjenesten"@nb ;
+        dcat:keyword     "Adminstrative enheter"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/94>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/QUARTERLY> ;
+        dct:conformsTo          <file:///home/1000/dcat/mapper/Dokumentasjon%20ikke%20offentlig%20tilgjengelig,%20men%20utveksles%20mellom%20OSK%20og%20det%20begrensede%20omfanget%20av%20oppgavegivere%20(olje-og%20gasselskaper)> ;
+        dct:identifier          "94" ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "SAGA - gassomsetningsoppgaver"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/26>
+        a                dcat:Distribution ;
+        dct:description  "Innrapportert inntekt Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dcat:accessURL   <https://api.skatteetaten.no/api/innrapportert/inntektsmottaker/personidentifikator/oppgave/inntekt?fraOgMed=YYYY-MM&tilOgMed=YYYY-MM> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/31>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Områder med forurenset grunn"@nb ;
+        dct:identifier          "31" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Forurenset grunn"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/13>
+        a                  dcat:Dataset ;
+        dct:description    "Gjeldsordningsregisteret inneholder opplysninger om hvem som har fått innvilget gjeldsforhandlinger og gjeldsordninger."@nb ;
+        dct:identifier     "13" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title          "Gjeldsordningsregisteret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword       "Personopplysninger"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-3>
+        a                        vcard:Organization ;
+        vcard:organization-unit  "Avdeling datafangst" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/31>
+        a                  dcat:Dataset ;
+        dct:description    "MVA registeret"@nb ;
+        dct:identifier     "31" ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title          "MVA registeret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/katalog/915933149/2>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i direktoratet for e-helse" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Direktoratet for e-helse datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/915933149/20> , <http://data.brreg.no/datakatalog/dataset/915933149/21> , <http://data.brreg.no/datakatalog/dataset/915933149/25> , <http://data.brreg.no/datakatalog/dataset/915933149/22> , <http://data.brreg.no/datakatalog/dataset/915933149/26> , <http://data.brreg.no/datakatalog/dataset/915933149/27> , <http://data.brreg.no/datakatalog/dataset/915933149/28> , <http://data.brreg.no/datakatalog/dataset/915933149/24> ;
+        foaf:homepage    <http://helseportalen.no> .
+
+<http://data.brreg.no/datakatalog/katalog/983544622/3>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Helsedirektoratet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/983544622> ;
+        dct:title        "Helsedir datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/983544622/29> ;
+        foaf:homepage    <http://helsedirektoratet.no> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/9>
+        a                  dcat:Dataset ;
+        dct:description    "EMAS er et register med frivillig ordning for miljøregistrering av"@nb ;
+        dct:identifier     "9" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:title          "EMAS-registeret (Eco-Management and Audit Scheme)"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/81>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/saldo_og_renter/v3_0_2/filformat-for-innskudd-utlan-og-renter-v3_0_2_20161019.pdf> ;
+        dct:description             "Rapportering fra banker, forsikringsselskaper mv. som har penger til forvaltning eller driver utlånsvirksomhet om innskudd, utlån og renter. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier              "81" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Innskudd, utlån og renter"@nb ;
+        dcat:keyword                "utlån"@nb , "inntekt"@nb , "innskudd"@nb , "renter"@nb , "grunnlagsdata"@nb , "formue"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/13>
+        a                dcat:Distribution ;
+        dct:description  "Aa-registeret direkte"@nb ;
+        dct:format       "XML data (.xml)" ;
+        dcat:accessURL   <https://www.nav.no/no/Bedrift/Skjemaer%2C+oppgjor%2C+innkreving/NAV+Registerforvaltning/Hva+er+er+Aa-registeret/Tilgang+til+Aa-registret> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/36>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om vedtak. Disse dataene stammer igjen fra a) saksopplysninger fra studenter som søker om støtte, b) andre offentlige registre og c) opplysninger fra studiestedene."@nb ;
+        dct:identifier          "36" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Elever og studenter ved norske utdanningssteder"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-12>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:brukerstotte.datasamarbeid@skatteetaten.no> ;
+        vcard:organization-unit  "Skatteetaten" .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-3>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://hoydedata.no/LaserInnsyn/> .
+
+<http://data.brreg.no/datakatalog/dataset/985399077/43>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description   "Matvaretabellen"@nb ;
+        dct:identifier    "43" ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
+        dct:title         "Matvaretabellen"@en , "Matvaretabellen"@nb ;
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/o-5>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:web@uke.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, webforvaltningen" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/970018131>
+        a               foaf:Agent ;
+        dct:identifier  "970018131" ;
+        foaf:name       "Utdanningsdirektoratet" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/27>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Samme innhold som Ortofoto-Oslo, men historiske / arkiverte versjoner til bruk eksempelvis i sammenhenger ved behov for å sammenligne tidligere status med dagens."@nb ;
+        dct:identifier     "27" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Historisk Ortofoto-Oslo"@nb , "Historical versions of Orthophoto / Orthoimagery"@en ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/6>
+        a                dcat:Distribution ;
+        dct:description  "Patentregisteret"@nb ;
+        dct:format       "application/pdf" ;
+        dcat:accessURL   <https://search.patentstyret.no/advanced> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/71>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "En komplett oversikt over hvem som har registrerte roller i enheter registrert i Enhetsregisteret. Rollene inkluderer daglig leder, regnskapsfører, forretningsfører, signatur og styremedlem. Sensitive personopplyninger (fødselsnummer) er fjernet fra datasettet."@nb ;
+        dct:identifier          "71" ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title               "Enhetsregisterer - Roller uten personopplysninger"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/982531950>
+        a               foaf:Agent ;
+        dct:identifier  "982531950" ;
+        foaf:name       "Politidirektoratet" .
+
+<http://data.brreg.no/datakatalog/distribusjon/21>
+        a                dcat:Distribution ;
+        dct:description  "Skattegrunnlag Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dcat:accessURL   <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/reference_skattegrunnlag.html> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/89>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/fagforeningskontingent/v1_0_2/filformat-for-fagforeningskontingent-v1_0_2_20161104.pdf> ;
+        dct:description             "Fagforeningskontingent som medlemmene har innbetalt direkte til fagforeningen skal innrapporteres til Skatteetaten fra og med inntektsåret 2016. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret."@nb ;
+        dct:identifier              "89" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Fagforeningskontigent"@nb ;
+        dcat:keyword                "grunnlagsdata"@nb , "fagforeningskontigent"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/14>
+        a                  dcat:Dataset ;
+        dct:description    "Digital terrengmodell (DTM) er et produkt som beskriver terrengoverflaten (uten bygninger, anlegg eller vegetasjon). Kun de laserdata som har truffet bakken er brukt for å produsere modellen. Den er tilgjengelig med ulik detaljeringsgrad / nøyaktighet."@nb ;
+        dct:identifier     "14" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Digital terrain model (DTM)"@en , "Terrengmodell-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:distribution  <http://data.brreg.no/datakatalog/distribusjon/d-3> .
+
+<http://data.brreg.no/datakatalog/dataset/983544622/29>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <http://sites.helsedirektoratet.no/bevilgningsregisteret> ;
+        dct:description         "Registeret inneholder oversikt over gyldige salgs- og skjenkebevilgninger i Norge, samt alle tilvirkere, importører og grosisster av alkohol."@nb ;
+        dct:identifier          "29" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/983544622> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Bevilgningsregisteret"@nb ;
+        dcat:keyword            "Utlevering"@nb , "Skjenkebevilgning"@nb , "Alkohol"@nb , "Enhet"@nb , "Importør"@nb , "Tilvirkning"@nb , "Salgsbevilgning"@nb , "Grossist"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/katalog/971526157/11>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Patentsstyret" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971526157> ;
+        dct:title        "Patentsstyrets datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/971526157/47> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/4>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/lov/1998-07-17-56/§8-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:description             "The Register of Company Accounts receives yearly about 315 000 annual accounts from limited companies, saving banks, insurance companies and other accounting obligation companies in Norway. The yearly accounts contains accounting numbers in electronic formats. In addition attachments includes the annula report of the board, and notes, cash flow and auditors report where needed. All yearly accounts is availiable for everyone, and the most important datasource for everyone that wish to get understand the financial situation for Norwegian businesses."@en , "Regnskapsregisteret mottar årlig ca 315 000 (pr år 2017) årsregnskap fra aksjeselskaper, sparebanker, forsikringsselskaper og andre regnskapspliktige foretak i Norge. Årsregnskapene inneholder regnskapstall i elektronisk form. I tillegg er det vedlagt styrets årsberetning, noter, kontantstrømanalyse og revisors beretning, hvor dette kreves."@nb ;
+        dct:identifier              "4" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:subject                 <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:temporal                [ a                  dct:PeriodOfTime ;
+                                      time:hasBeginning  [ a                   time:Instant ;
+                                                           time:inXSDDateTime  "2006-01-01T00:00:00Z"^^xsd:dateTime
+                                                         ] ;
+                                      time:hasEnd        [ a                   time:Instant ;
+                                                           time:inXSDDateTime  "2016-12-31T00:00:00Z"^^xsd:dateTime
+                                                         ]
+                                    ] ;
+        dct:title                   "Regnskapsregisteret"@nb , "Register of Company Accounts"@en ;
+        adms:identifier             <http://data.brreg.no/datakatalog/identifikator/4> ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword                "Kostnader"@nb , "Driftsresultat"@nb , "Overføringer"@nb , "Finansinntekter"@nb , "Finanskostnader"@nb , "Egenkapital"@nb , "Inntekter"@nb , "Resultat"@nb , "Balanse"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/26>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo          <file:///home/1000/dcat/mapper/ICD-10%20utgitt%20av%20WHO> , <https://ehelse.no/Sider/RK_002_1_ICD-10.aspx> ;
+        dct:description         "Dette kodeverket benyttes for koding av sykdommer og beslektede helseproblemer. Anvendes i spesialisthelsetjenesten."@nb ;
+        dct:identifier          "26" ;
+        dct:landingPage         <https://ehelse.no/Sider/Kodeverket-ICD-10-(og-ICD-11).aspx> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:subject             <http://begrep.helsedir.no/helsetilstand> ;
+        dct:temporal            [ a                  dct:PeriodOfTime ;
+                                  time:hasBeginning  [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2016-01-01T00:00:00Z"^^xsd:dateTime
+                                                     ] ;
+                                  time:hasEnd        [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2016-12-31T00:00:00Z"^^xsd:dateTime
+                                                     ]
+                                ] ;
+        dct:title               "ICD-10: Den internasjonale statistiske klassifikasjonen av sykdommer og beslektede helseproblemer"@nb , "International Statistical Classification of Diseases and Related Health Problems 10th Revision"@en ;
+        adms:identifier         <http://data.brreg.no/datakatalog/identifikator/5> ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-2> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/15> ;
+        dcat:keyword            "sykdom"@nb , "skade"@nb , "spesialisthelsetjeneste"@nb , "symptom"@nb , "kodeverk"@nb , "diagnose"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/34>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Alpinbakker , Hoppbakker, Skileik, Skiskyteanlegg, Skianlegg for langrenn"@nb ;
+        dct:identifier          "34" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Skianlegg"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/958935420/1>
+        a                dcat:Dataset ;
+        dct:description  "City cycles"@nb ;
+        dct:identifier   "1" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:spatial      <http://www.geonames.org/3143242/> ;
+        dct:title        "City cycles"@en , "Bysykler"@nb ;
+        dcat:keyword     "sykkel"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/97>
+        a                dcat:Dataset ;
+        dct:description  "Rapportering av tredjepartsopplysninger om betalinger til selvstendig næringsdrivende."@nb ;
+        dct:identifier   "97" ;
+        dct:language     <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "Betalinger til selvstendig næringsdrivende"@nb ;
+        dcat:keyword     "selvstendig næringsdrivende"@nb , "skattemelding"@nb , "fast forretningssted"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/16>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Registeret for utøvere av alternativ behandling inneholder opplysninger om registrerte utøvere og godkjente utøverorganisasjoner. Registeret skal bidra med å vareta pasientvernet og forbrukerrettighetene for den som oppsøker en registrert alternativ behandler. I tillegg skal registeret medvirke til seriøsitet og ordnede forretningsvilkår"@nb ;
+        dct:identifier     "16" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:subject        <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:title          "Registeret for utøvere av alternativ behandling"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword       "Utøvarorganisasjon"@nb , "Organisasjonsnummer"@nb , "Registrert utøver"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/katalog/991609407/13>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Ruter AS" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/991609407> ;
+        dct:title        "Datakatalog Ruter AS" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/991609407/49> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/76>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/andre_finansprodukter/v2_1_1/filformat-for-andre-finansprodukter-v2_1_1_20161111.pdf> ;
+        dct:description             "Virksomheter omfattet av CRS/FATCA-reglene, og som ikke er omfattet av opplysningsplikt for Innskudd, utlån og renter, Livsforsikring eller Verdipapirfond, skal levere opplysninger til Skatteetaten om utenlandske kontohavere i ordningen Andre finansprodukter."@nb ;
+        dct:identifier              "76" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Andre finansprodukter"@nb ;
+        dcat:keyword                "FATCA"@nb , "informasjonsutveksling"@nb , "formue"@nb , "verdipapir"@nb , "grunnlagsdata"@nb , "inntekt"@nb , "CRS"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/55>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/lov/1970-01-16-1/§13> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Folkeregisteret omfatter nøkkelopplysninger om alle personer som er eller har vært bosatt i Norge. Per."@nb ;
+        dct:identifier              "55" ;
+        dct:landingPage             <http://www.skatteetaten.no/no/Person/Folkeregister/> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:title                   "Det sentrale folkeregisteret"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-10> ;
+        dcat:keyword                "farskap"@nb , "bostedsadresse"@nb , "dødsfall"@nb , "d-nummer"@nb , "innflytting"@nb , "utflytting"@nb , "fødselsnummer"@nb , "navnevalg"@nb , "sivilstand"@nb , "statsborgerskap"@nb , "foreldreansvar"@nb , "personopplysninger"@nb , "ekteskap"@nb , "flytting"@nb , "identitetsforvaltning"@nb , "navn"@nb , "familierelasjon"@nb , "adresseendring"@nb , "mor"@nb , "fødsel"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-6>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:nav.registerforvaltning@nav.no> ;
+        vcard:organization-unit  "NAV Registerforvaltning" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/22>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "En reguleringsplan er kommunens måte å styre utviklingen av et område på. En reguleringsplan består av et plankart med tilhørende bestemmelser. Det finnes to typer reguleringsplaner - områderegulering og detaljregulering. Områderegulering lages av kommunen og styrer utviklingen i et større område, for eksempel Skøyen, Slemdal eller Furuset. Detaljreguleringer er som regel knyttet opp til et spesifikt bygge- eller verneinitiativ. Detaljreguleringer kan lages av kommunen eller private utbyggere og initiativtakere, men man må da forholde seg til overordnede planer laget av kommunen"@nb ;
+        dct:identifier          "22" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:title               "Reguleringsplaner for Oslo"@nb , "Zoning plans for Oslo"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/d-9> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/1>
+        a                dcat:Distribution ;
+        dct:description  "Akvakulturregisteret hos fiskeridirektoratet"@nb ;
+        dct:format       "Excel" ;
+        dcat:accessURL   <http://www.fiskeridir.no/Akvakultur/Registre-og-skjema/Akvakulturregisteret> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/6>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:conformsTo     <http://www.kartverket.no/geodataarbeid/standarder/sosi/sosi-del-3/produktspesifikasjoner-fkb/> , <file:///home/1000/dcat/mapper/Produktspesifikasjon%20for%20FKB> ;
+        dct:description    "FKB er en samling strukturerte datasett. FKB står for Felles kartdatabase, og utgjør en viktig del av grunnkartet for Oslo. Datasettene i FKB består normalt av:Høyde: Høydekurver og høydepunkt.Vann: Kyst, sjø, innsjø og vassdrag.Bygg og anlegg: Bygninger, bygningsmessige anlegg og ledninger.Samferdsel (FKB Veg): Vegsituasjon, jernbane, annen samferdsel.Tekst: Presentasjonsdata.Dekningen til FKB-datasettene deles inn i FKB for byggesonen (inkl. Maridalen og Sørkedalen) og FKB for marka."@nb ;
+        dct:identifier     "6" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Detailed map for Oslo, Outline of buildings, shapes of roofs, roads, footpaths, outline of fjord, lakes and rivers, altitude contour lines (1 m)."@en , "FKB-Grunnkart-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/66>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "En samlet oversikt over data de ulike offentlige virksomheter har og hva de betyr."@nb ;
+        dct:identifier          "66" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title               "National data catalogue"@en , "Felles datakatalog"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword            "datasett"@nb , "distribusjon"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/84>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/lov/2004-05-28-29/§6> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo              <file:///home/1000/dcat/mapper/Det%20er%20laget%20Retningslinjer%20for%20rapportering%20til%20Valutaregisteret%20som%20ikke%20er%20tilgjengelig%20på%20skatteetaten.no,%20men%20som%20tilgjengeliggjøres%20direkte%20til%20de%20rapporteringspliktige> ;
+        dct:description             "Valutaregisteret inneholder opplysninger om valutaveksling og overføring av betalingsmidler inn og ut av Norge. Dette gjelder blant annet kortbruk i utlandet, og kontanter du tar med deg inn eller ut av Norge som du har deklarert til Tolletaten."@nb ;
+        dct:identifier              "84" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Valutaregister"@nb ;
+        dcat:keyword                "valutaveksling"@nb , "valutaregister"@nb , "kortbruk"@nb , "kontanter"@nb , "valuta"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/16>
+        a                dcat:Distribution ;
+        dct:description  "Prosedyrekodeverkene"@nb ;
+        dct:format       "zip/xlsm" ;
+        dcat:accessURL   <https://ehelse.no/Documents/Helsefaglig%20kodeverk/Alle%20prosedyrekoder%202016-2017%202016-09-20.zip> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/39>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Data om stipend og lån"@nb ;
+        dct:identifier          "39" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Tildelt stipend og lån fra Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/63>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "Informasjon om innrapportert inntekt"@nb ;
+        dct:identifier              "63" ;
+        dct:landingPage             <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Innrapportert inntekt"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/26> ;
+        dcat:keyword                "formue"@nb , "grunnlagsdata"@nb , "inntekt"@nb , "gjeld og fradrag"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/katalog/971040823/k-2>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over dattsett i Oslo kommune Plan- og bygningsetaten" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:title        "Oslo Kommune plan- og byggningsetatens datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/971040823/12> , <http://data.brreg.no/datakatalog/dataset/971040823/15> , <http://data.brreg.no/datakatalog/dataset/971040823/20> , <http://data.brreg.no/datakatalog/dataset/971040823/17> , <http://data.brreg.no/datakatalog/dataset/971040823/6> , <http://data.brreg.no/datakatalog/dataset/971040823/25> , <http://data.brreg.no/datakatalog/dataset/971040823/27> , <http://data.brreg.no/datakatalog/dataset/971040823/14> , <http://data.brreg.no/datakatalog/dataset/971040823/22> , <http://data.brreg.no/datakatalog/dataset/971040823/16> , <http://data.brreg.no/datakatalog/dataset/971040823/24> , <http://data.brreg.no/datakatalog/dataset/971040823/8> , <http://data.brreg.no/datakatalog/dataset/971040823/11> , <http://data.brreg.no/datakatalog/dataset/971040823/13> , <http://data.brreg.no/datakatalog/dataset/971040823/21> , <http://data.brreg.no/datakatalog/dataset/971040823/26> , <http://data.brreg.no/datakatalog/dataset/971040823/18> , <http://data.brreg.no/datakatalog/dataset/971040823/23> , <http://data.brreg.no/datakatalog/dataset/971040823/7> , <http://data.brreg.no/datakatalog/dataset/971040823/28> , <http://data.brreg.no/datakatalog/dataset/971040823/9> , <http://data.brreg.no/datakatalog/dataset/971040823/10> .
+
+<http://data.brreg.no/datakatalog/dataset/961181399/60>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Information about persons living in Norway in 1910, with residence, housing conditions, family relations, occupation, etc."@en , "Opplysninger om personer bosatt i Norge i 1910, med bosted, boforhold, familierelasjoner, yrke, m.m."@nb ;
+        dct:identifier     "60" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/961181399> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:title          "Census 1910"@en , "Folketellingen 1910"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-15> ;
+        dcat:keyword       "folketelling"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-15>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:post@arkivverket.no> ;
+        vcard:hasTelephone       <tel:+4748055666> ;
+        vcard:organization-unit  "Arkivverket" .
+
+<http://data.brreg.no/datakatalog/katalog/985399077/8>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett for Mattilsynet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985399077> ;
+        dct:title        "Mattilsynets datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/985399077/43> , <http://data.brreg.no/datakatalog/dataset/985399077/42> ;
+        foaf:homepage    <http://mattilsynet.no> .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-6>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://www.oslo.kommune.no/politikk-og-administrasjon/politikk/kommuneplan/kommuneplan-2015/> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/o-8>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:postmottak@nae.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, Næringsetaten" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/983544622>
+        a               foaf:Agent ;
+        dct:identifier  "983544622" ;
+        foaf:name       "Helsedirektoratet" .
+
+<http://data.brreg.no/datakatalog/distribusjon/9>
+        a                dcat:Distribution ;
+        dct:description  "Oppslag via data.brreg.no eller API"@nb ;
+        dct:format       "text/csv" ;
+        dct:license      <http://data.norge.no/nlod/no/1.0> ;
+        dcat:accessURL   <http://data.brreg.no/oppslag/enhetsregisteret/enheter.xhtml> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/971040823>
+        a               foaf:Agent ;
+        dct:identifier  "971040823" ;
+        foaf:name       "Oslo kommune Plan- og bygningsetaten" .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/21>
+        a                dcat:Dataset ;
+        dct:conformsTo   <https://register-web.test.nhn.no/> ;
+        dct:description  "A register of all healthcare personnel who are authorized to practice in Norway in accordance with current legislation; this includes licensed veterinarians. The registry is managed and governed by the Directorate of Health."@en , "Helsepersonellregisteret (HPR) er helsemyndighetens register over alt helsepersonell med autorisasjon eller lisens etter helsepersonelloven, og veterinærer med autorisasjon eller lisens etter dyrehelsepersonelloven. Ved søk gis opplysning om gjeldende autorisasjon, lisens og forskrivningsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere."@nb ;
+        dct:identifier   "21" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:title        "Helsepersonellregisteret"@nb ;
+        dcat:keyword     "Helsepersonellkategori"@nb , "Opplysninger om ansettelse/ansvar"@nb , "Utløpsdato"@nb , "SSB-koden"@nb , "Godkjenningsdato"@nb , "HPR-nummer"@nb , "Privatadresse"@nb , "Statsborgerskap"@nb , "Opplysninger om utdanning"@nb , "Helsepersonell"@nb , "Fødselsdato"@nb , "Opplysninger om godkjenning"@nb , "annen identifikasjon"@nb , "Navn"@nb , "Personopplysninger"@nb , "Kjønn"@nb , "Vilkår"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/katalog/974761076/5>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Skatteetaten" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title        "Skatteetaten datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/974761076/85> , <http://data.brreg.no/datakatalog/dataset/974761076/58> , <http://data.brreg.no/datakatalog/dataset/974761076/59> , <http://data.brreg.no/datakatalog/dataset/974761076/89> , <http://data.brreg.no/datakatalog/dataset/974761076/31> , <http://data.brreg.no/datakatalog/dataset/974761076/96> , <http://data.brreg.no/datakatalog/dataset/974761076/97> , <http://data.brreg.no/datakatalog/dataset/974761076/83> , <http://data.brreg.no/datakatalog/dataset/974761076/84> , <http://data.brreg.no/datakatalog/dataset/974761076/81> , <http://data.brreg.no/datakatalog/dataset/974761076/76> , <http://data.brreg.no/datakatalog/dataset/974761076/77> , <http://data.brreg.no/datakatalog/dataset/974761076/63> , <http://data.brreg.no/datakatalog/dataset/974761076/64> , <http://data.brreg.no/datakatalog/dataset/974761076/92> , <http://data.brreg.no/datakatalog/dataset/974761076/93> , <http://data.brreg.no/datakatalog/dataset/974761076/56> , <http://data.brreg.no/datakatalog/dataset/974761076/57> , <http://data.brreg.no/datakatalog/dataset/974761076/87> , <http://data.brreg.no/datakatalog/dataset/974761076/88> , <http://data.brreg.no/datakatalog/dataset/974761076/94> , <http://data.brreg.no/datakatalog/dataset/974761076/95> , <http://data.brreg.no/datakatalog/dataset/974761076/100> , <http://data.brreg.no/datakatalog/dataset/974761076/101> , <http://data.brreg.no/datakatalog/dataset/974761076/82> , <http://data.brreg.no/datakatalog/dataset/974761076/80> , <http://data.brreg.no/datakatalog/dataset/974761076/75> , <http://data.brreg.no/datakatalog/dataset/974761076/62> , <http://data.brreg.no/datakatalog/dataset/974761076/98> , <http://data.brreg.no/datakatalog/dataset/974761076/99> , <http://data.brreg.no/datakatalog/dataset/974761076/90> , <http://data.brreg.no/datakatalog/dataset/974761076/91> , <http://data.brreg.no/datakatalog/dataset/974761076/55> , <http://data.brreg.no/datakatalog/dataset/974761076/86> , <http://data.brreg.no/datakatalog/dataset/974761076/78> , <http://data.brreg.no/datakatalog/dataset/974761076/79> , <http://data.brreg.no/datakatalog/dataset/974761076/61> , <http://data.brreg.no/datakatalog/dataset/974761076/32> ;
+        foaf:homepage    <http://www.skatteetaten.no> .
+
+<http://data.brreg.no/datakatalog/distribusjon/24>
+        a                dcat:Distribution ;
+        dct:description  "Restanser Skatteetaten"@nb ;
+        dcat:accessURL   <https://api.skatteetaten.no/ws/innkreving/restanser/v1> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/92>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <file:///home/1000/dcat/mapper/Legg%20evt%20inn%20lenke%20til%20de%208%20forskjellige%20formatbeskrivelsene%20hvis%20denne%20skal%20brytes%20ned%20per%20definerte%20landbruksprodukt> ;
+        dct:description             "Rapportering av næringsdrivende som kjøper og omsetter landbruksprodukter. De plikter å gi opplysninger om all omsetning med produsentene til Skatteetaten."@nb ;
+        dct:identifier              "92" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Kontrolloppgaver primærnæring - kjøp av landbruksprodukter"@nb ;
+        dcat:keyword                "landbruksprodukter"@nb , "kontrolloppgaver"@nb , "primærnæring"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/11>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Jegerregisteret er et register over hvem som er kvalifisert til å drive jakt i Norge, samt oversikt over hvem som har betalt jegeravgift."@nb ;
+        dct:identifier          "11" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Jegerregisteret"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword            "Personopplysninger"@nb , "Lisensfelling"@nb , "Lisensjeger"@nb , "Jeger"@nb , "Jegeravgift"@nb , "Jaktår"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/AGRI> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/29>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Områder det finnes ladestolper"@nb ;
+        dct:identifier          "29" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Elbil-ladestasjoner"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-1>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:firmapost@brreg.no> ;
+        vcard:hasTelephone       <tel:+4775007500> ;
+        vcard:organization-unit  "Foretaksregisteret" .
+
+<http://sws.geonames.org/6295630/>
+        a                gn:Feature , dct:Location ;
+        gn:name          "World" ;
+        gn:officialName  "Verden"@en , "Verden"@no .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/17>
+        a                  dcat:Dataset ;
+        dct:description    "Flybilder som tas i flere himmelretninger, på skrå mot bakken ved bruk av spesialtilpasset kamera og programvare med egenskaper som gjør det mulig å lage fotorealistiske bymodeller og fasadebilder."@nb ;
+        dct:identifier     "17" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:title          "Oblique aerial photography"@en , "Skråfoto-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/o-11>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:postmottak@bym.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, Bymiljøetaten" .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/7>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/DAILY> ;
+        dct:description         "Partiregisteret er et register over politiske parti i Norge. Hovedformålet med registeret er å gi part anledning til å skaffe seg enerett på partinavn."@nb ;
+        dct:identifier          "7" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:subject             <https://data-david.github.io/Begrep/begrep/Organisasjonsnummer> ;
+        dct:title               "Partiregisteret"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/3> ;
+        dcat:keyword            "Parti"@nb , "Partinavn"@nb , "Organisasjonsnummer"@nb , "Kontaktperson"@nb , "Utøvende organ"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/958935420/4>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Data fra fagsystemet for skjenkebevillinger fra Oslo kommune (Næringsetaten). Fra Enhetsregisteret kommer informasjon om foretaket (org.nr, org.navn, adresse, selskapsform, signatur, styreleder, daglig leder, prokura). For hver bevilling er en bevillingsref., navn, adresse, type bevilling, status og gyldighet på evt skjenkebevilling, styrer, stedfortreder, omsettingsoppgaver."@nb ;
+        dct:identifier          "4" ;
+        dct:landingPage         <https://tjenester.oslo.kommune.no/ekstern/minside/#/> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/958935420> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Skjenkebevillinger"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-8> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/19>
+        a                  dcat:Dataset ;
+        dct:description    "Kommunalt rapporteringsregister inneholder oversikt over alle rapporteringsplikter/skjemaer kommunene må sende til statlige instanser. Registeret inneholder også oversikt over stipulert tidsbruk for kommunene på de enkelte rapporteringsplikter, samt hjemler i lov/forskrift."@nb ;
+        dct:identifier     "19" ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:title          "Kommunalt rapporteringsregister"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/960885406/34>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Studenter som studerer i utlandet, enten i form av et ordinært gradstudium eller som et delstudium. Inneholder også elever som går på lavere utdanning, såkalt ungdomsrett, og som tar studier i utlandet i form av utveksling."@nb ;
+        dct:identifier          "34" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/960885406> ;
+        dct:spatial             <http://sws.geonames.org/6295630/> ;
+        dct:title               "Elever og studenter med utdanning i utlandet med støtte fra Lånekassen"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-3> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/EDUC> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/79>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/bsu/v1_1_1/filformat-for-boligsparing-for-ungdom-v1_1_1_20170616.pdf> ;
+        dct:description             "Banker, samvirkelag og spareforeninger skal levere opplysninger til Skatteetaten om konti for boligsparing for ungdom. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret"@nb ;
+        dct:identifier              "79" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Boligsparing for ungdom (BSU)"@nb ;
+        dcat:keyword                "grunnlagsdata"@nb , "formue"@nb , "BSU"@nb , "boligsparing"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/11>
+        a                dcat:Distribution ;
+        dct:description  "Søk etter registrert frivillig organisasjon"@nb ;
+        dct:format       "text/html" ;
+        dcat:accessURL   <https://w2.brreg.no/frivillighetsregisteret/> .
+
+<http://data.brreg.no/datakatalog/provenance/bruker>
+        a                    dct:ProvenanceStatement ;
+        rdfs:comment         "brukerinnsamlede data" ;
+        rdfs:label           "brukerinnsamling" ;
+        prov:wasGeneratedBy  "brukerinnsamling" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/58>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/NL/lov/2016-05-27-14/§3-1> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description             "a-melding data per arbeidsgiver"@nb ;
+        dct:identifier              "58" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:spatial                 <http://sws.geonames.org/3144096/> ;
+        dct:title                   "A-melding data per arbeidsgiver"@nb ;
+        dcat:contactPoint           <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution           <http://data.brreg.no/datakatalog/distribusjon/20> ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-9>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:postmottak@ren.oslo.kommune.no> ;
+        vcard:organization-unit  "Oslo kommune, Renovasjonsetaten" .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-10>
+        a                        vcard:Organization ;
+        vcard:organization-unit  "Skatteetaten, DSF" .
+
+<http://data.brreg.no/datakatalog/dataset/889640782/73>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Viser perioder med pliktig medlemskap i henhold til folketrygdlovens kapittel 2. Pliktig medlemskap kan gjelde personer som oppholder seg i utlandet, men som opprettholder pliktig medlemskap i folketrygden i henhold til ftrl. § 2-5. Et eksempel på dette kan være studenter som studerer i utlandet med støtte fra Statens Lånekasse. Disse er pliktige medlemmer i folketrygden etter Lov om folketrygd, § 2-5 bokstav i."@nb ;
+        dct:identifier          "73" ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/889640782> ;
+        dct:title               "Pliktig medlemskap i folketrygden"@nb , "Compulsory membership pursuant to the provisions of the National Insurance Act"@en ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-6> ;
+        dcat:keyword            "medlemskap"@nb , "pliktig"@nb , "folketrygden"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-1>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://www.oslo.kommune.no/barnehage/finn-barnehage-i-oslo/> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974760673>
+        a               foaf:Agent ;
+        dct:identifier  "974760673" ;
+        foaf:name       "Brønnøysundregistrene" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/25>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Samme innhold som FKB-Grunnkart-Oslo, men historiske / arkiverte versjoner til bruk eksempelvis i sammenhenger ved behov for å sammenligne tidligere status med dagens."@nb ;
+        dct:identifier     "25" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial        <http://www.geonames.org/3143242/> ;
+        dct:title          "Historical versiones of detailed map for Oslo. Outline of buildings, shapes of roofs, roads, footpaths, outline of fjord, lakes and rivers, altitude contour lines (1 m)."@en , "Historisk FKB-Grunnkart-Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/4>
+        a                dcat:Distribution ;
+        dct:description  "Patentregisteret"@nb ;
+        dct:format       "text/html" ;
+        dcat:accessURL   <https://search.patentstyret.no/advanced> .
+
+<http://data.brreg.no/datakatalog/katalog/970018131/10>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Utdanningsdirektoratet" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/970018131> ;
+        dct:title        "Utdanningsdirektoratets datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/970018131/45> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/9>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:conformsTo    <file:///home/1000/dcat/mapper/Produktspesifikasjon%20for%20FKB%20Vegnett> , <http://www.kartverket.no/geodataarbeid/standarder/sosi/sosi-del-3/produktspesifikasjoner-fkb/> ;
+        dct:description   "Vegtyper: Europa-, riks-, fylkes- og kommunal veg, privat veg, skogsbilveg, gang og sykkelveg, fortau og sykkelveg. Attributter: Bru, tunnel, planovergang, veg under bane,"@nb ;
+        dct:identifier    "9" ;
+        dct:language      <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial       <http://www.geonames.org/3143242/> ;
+        dct:title         "FKB-Vegnett-Oslo"@nb , "Road network for Oslo"@en .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/69>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "En komplett oversikt over hvem som har registrerte roller i enheter registrert i Enhetsregisteret. Rollene inkluderer daglig leder, regnskapsfører, forretningsfører, signatur og styremedlem."@nb ;
+        dct:identifier          "69" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Central Coordination register for legal entities - roles"@en , "Enhetsregisteret - Roller"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-14> ;
+        dcat:keyword            "personopplysninger"@nb , "roller"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/970018131/45>
+        a                dcat:Dataset ;
+        dct:description  "Barnehagefakta.no kan du finne barnehager og se informasjon om dem."@nb ;
+        dct:identifier   "45" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/970018131> ;
+        dct:title        "Barnehagefakta"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/87>
+        a                           dcat:Dataset ;
+        dcatno:accessRightsComment  <https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven%20taushetsplikt#KAPITTEL_3> ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo              <http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/boligsameie/v2_1_1/filformat-for-boligsameie-v2_1_1_20161005.pdf> ;
+        dct:description             "Boligsameier med 9 eller flere eierseksjoner skal levere opplysninger til Skatteetaten om sameiers andel av felles inntekter, utgifter, formue og gjeld. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret."@nb ;
+        dct:identifier              "87" ;
+        dct:language                <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title                   "Boligsameie"@nb ;
+        dcat:keyword                "boligsameie"@nb , "grunnlagsdata"@nb , "formue"@nb , "inntekt"@nb ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/19>
+        a                dcat:Distribution ;
+        dct:description  "a-melding per innteksmottaker"@nb ;
+        dct:format       "text/json, text/xml" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/inntektsmottaker/version/personidentifkator/inntekt> .
+
+<http://data.brreg.no/datakatalog/katalog/991825827/14>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Difi" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/991825827> ;
+        dct:title        "Difis datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/991825827/52> .
+
+<http://data.brreg.no/datakatalog/distribusjon/d-9>
+        a               dcat:Distribution ;
+        dcat:accessURL  <https://www.oslo.kommune.no/plan-bygg-og-eiendom/> .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/12>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/MONTHLY> ;
+        dct:description         "FKB er en samling strukturerte datasett. FKB står for Felles kartdatabase. N20 betyr at informasjonen har lav detaljeringsgrad og tilpasset presentasjon i målestokk 1:20.000. Datasettene i FKB-N20 består normalt av:Høyde: Høydekurver (10 m).Vann: Kyst, sjø, innsjø og vassdrag.Bygg og anlegg: Bygninger, bygningsmessige anlegg og ledninger.Samferdsel (FKB Veg): Vegsituasjon, jernbane, annen samferdsel.Tekst: Presentasjonsdata beregnet for målestokk 1:20.000."@nb ;
+        dct:identifier          "12" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:spatial             <http://www.geonames.org/3143242/> ;
+        dct:title               "Map information derived from detailed map for Oslo, Outline of buildings, roads, outline of fjord, lakes and rivers, altitude contour lines (10 m)."@en , "FKB-N20-Oslo"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/2>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          <https://confluence.brreg.no/display/DBNPUB/API> , <https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret> ;
+        dct:description         "Enhetsregisteret inneholder oversikt over alle registrerte enheter Norge innen næringsliv, offentlig og frivillig sektor. Enhetsregisteret tildeler organisasjonsnummer, og samordner opplysninger om næringsliv og offentlige etater som finnes i ulike offentlige registre."@nb , "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis."@en ;
+        dct:identifier          "2" ;
+        dct:landingPage         <https://www.brreg.no/om-oss/samfunnsoppdraget-vart/registera-vare/einingsregisteret/> ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:modified            "2017-10-19"^^xsd:date ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:subject             <https://data-david.github.io/Begrep/begrep/Enhet> ;
+        dct:temporal            [ a                  dct:PeriodOfTime ;
+                                  time:hasBeginning  [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "1995-03-20T00:00:00Z"^^xsd:dateTime
+                                                     ] ;
+                                  time:hasEnd        [ a                   time:Instant ;
+                                                       time:inXSDDateTime  "2017-12-31T00:00:00Z"^^xsd:dateTime
+                                                     ]
+                                ] ;
+        dct:title               "Enhetsregisteret"@nb , "Central Coordinating Register for Legal Entities"@en ;
+        adms:identifier         <http://data.brreg.no/datakatalog/identifikator/2> ;
+        adms:sample             <http://data.brreg.no/enhetsregisteret/enhet.json?page=0&size=5&$filter=antallAnsatte%20ge%2010> ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/12> ;
+        dcat:keyword            "Bransje"@nb , "Organisasjonsnummer"@nb , "Roller"@nb , "Enhetsnavn"@nb , "Grunndata"@nb , "Enhet"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/915933149/24>
+        a                dcat:Dataset ;
+        dct:conformsTo   <https://ehelse.no/helseadministrative-registre/legestillingsregisteret-lsr> ;
+        dct:description  "A register of all physicians employed and their positions in the public health service. This covers the primary and specialist health services."@en , "Legestillingsregisteret (LSR) er helsemyndighetenes register over ansatte leger og legestillinger i primær- og spesialisthelsetjenesten."@nb ;
+        dct:identifier   "24" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/915933149> ;
+        dct:spatial      <http://sws.geonames.org/3144096/> ;
+        dct:title        "Legestillingsregisteret"@nb ;
+        dcat:keyword     "spesialisthelsetjeneste"@nb , "lege"@nb , "overlege"@nb , "primærhelsetjeneste"@nb , "avtalespesialist"@nb , "fastlege"@nb , "legestilling"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/HEAL> .
+
+<http://data.brreg.no/datakatalog/dataset/996922766/32>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Oversikt over områder med søppel"@nb ;
+        dct:identifier          "32" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/996922766> ;
+        dct:title               "Villfyllinger"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/o-11> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/95>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/YEARLY> ;
+        dct:conformsTo          <http://www.oecd.org/tax/oecd-releases-standardised-electronic-format-for-the-exchange-of-beps-country-by-country-reports.htm> ;
+        dct:description         "Store flernasjonale konsern må fra 2017 rapportere overordnet informasjon om aktiviteten i alle land de har virksomhet."@nb ;
+        dct:identifier          "95" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title               "Land-for-land-rapportering for store flernasjonale konsern"@nb ;
+        dcat:keyword            "base erosion and pricing shifting (BEPS)"@nb , "internprising"@nb , "flernasjonale konsern"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/27>
+        a                dcat:Distribution ;
+        dct:description  "Beregningsgrunnlag Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dcat:accessURL   <https://api.skatteetaten.no> .
+
+<http://data.brreg.no/datakatalog/katalog/961181399/15>
+        a                dcat:Catalog ;
+        dct:description  "Katalog over datasett i Arkivverket" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/961181399> ;
+        dct:title        "Arkivverkets datakatalog" ;
+        dcat:dataset     <http://data.brreg.no/datakatalog/dataset/961181399/60> ;
+        foaf:homepage    <http://arkivverket.no> .
+
+<http://data.brreg.no/datakatalog/dataset/974760673/14>
+        a                  dcat:Dataset ;
+        dct:description    "Reservasjonsregisteret inneholder informasjon om privatpersoner som har reservert seg mot direkte adressert reklame i posten og/eller telefonsalg. Alle foretak som sender ut reklame rettet mot privatpersoner, plikter å oppdatere sine kundelister mot Reservasjonsregisteret minst 1 gang per måned."@nb ;
+        dct:identifier     "14" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:spatial        <http://sws.geonames.org/3144096/> ;
+        dct:title          "Reservasjonsregisteret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-4> ;
+        dcat:keyword       "Personopplysninger"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/dataset/985821585/48>
+        a                dcat:Dataset ;
+        dct:description  "Domeneregisteret"@nb ;
+        dct:identifier   "48" ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/985821585> ;
+        dct:title        "Domeneregisteret"@nb ;
+        dcat:theme       <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-4>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:dig@brreg.no> ;
+        vcard:hasTelephone       <tel:+4775007500> ;
+        vcard:organization-unit  "Avdeling digitalisering" .
+
+<http://data.brreg.no/datakatalog/dataset/974761076/32>
+        a                  dcat:Dataset ;
+        dct:description    "Register over upersonlige skattytere"@nb ;
+        dct:identifier     "32" ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974761076> ;
+        dct:title          "Register over upersonlige skattytere"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/985821585>
+        a               foaf:Agent ;
+        dct:identifier  "985821585" ;
+        foaf:name       "Uninett Norid" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/991609407>
+        a               foaf:Agent ;
+        dct:identifier  "991609407" ;
+        foaf:name       "Ruter" .
+
+<http://data.brreg.no/datakatalog/dataset/971040823/20>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Det er utarbeidet kommunedelplaner for enkelte områder, tema eller virksomhetsområder i Oslo hvor dette har vært hensiktsmessig. Det er bystyret som avgjør om det skal settes i gang arbeid med en separat kommunedelplan, ev. at det aktuelle temaet i stedet tas opp som et tema innenfor en samlet kommuneplan."@nb ;
+        dct:identifier     "20" ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/971040823> ;
+        dct:title          "Kommunedelplaner for Oslo"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/o-10> ;
+        dcat:distribution  <http://data.brreg.no/datakatalog/distribusjon/d-7> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .

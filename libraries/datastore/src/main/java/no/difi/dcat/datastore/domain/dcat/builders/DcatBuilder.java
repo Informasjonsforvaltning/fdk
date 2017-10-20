@@ -59,6 +59,11 @@ public class DcatBuilder {
     public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
     public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
 
+    static Property schema_startDate = mod.createProperty("http://schema.org/startDate");
+    static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
+
+
+
     private final Model model;
     private final Map<Object, Resource> resourceMap = new HashMap<>();
 
@@ -77,6 +82,7 @@ public class DcatBuilder {
         model.setNsPrefix("dqv", DQV.NS);
         model.setNsPrefix("rdf", RDF.uri);
         model.setNsPrefix("skos", SKOS.uri);
+        model.setNsPrefix("schema", "http://schema.org/");
     }
 
     /**
@@ -178,7 +184,7 @@ public class DcatBuilder {
     private void addTemporal(Dataset dataset, Resource datRes) {
         if (dataset.getTemporal() != null) {
             for (PeriodOfTime period : dataset.getTemporal()) {
-                addPeriodResourceAnnon(datRes, DCTerms.temporal, period);
+                addPeriodOfTimeResource(datRes, DCTerms.temporal, period);
             }
         }
     }
@@ -251,8 +257,28 @@ public class DcatBuilder {
 
         return this;
     }
+    public DcatBuilder addPeriodOfTimeResource(Resource resource, Property property, PeriodOfTime period) {
+        if (period != null) {
 
-    public DcatBuilder addPeriodResourceAnnon(Resource resource, Property property, PeriodOfTime period) {
+            if (period.getStartDate() != null || period.getEndDate() != null) {
+                Resource temporal = model.createResource();
+                model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
+
+                resource.addProperty(property, temporal);
+
+                if (period.getStartDate() != null) {
+                    addDateLiteral(temporal, schema_startDate, period.getStartDate());
+                }
+                if (period.getEndDate() != null) {
+                    addDateLiteral(temporal, schema_endDate, period.getEndDate());
+                }
+            }
+        }
+
+        return this;
+    }
+
+    public DcatBuilder old_addPeriodResourceAnnon(Resource resource, Property property, PeriodOfTime period) {
         if (period != null) {
 
             Resource temporal = model.createResource();
