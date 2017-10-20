@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertThat;
 
 public class DcatSourcesConverterIT {
     private static Logger logger = LoggerFactory.getLogger(DcatSourcesConverterIT.class);
-
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public DcatReader setupReader(Model model) {
         return new DcatReader(model, "http://localhost:8100", "user", "password");
@@ -33,6 +34,18 @@ public class DcatSourcesConverterIT {
         List<Dataset> datasets = reader.getDatasets();
 
         assertThat(datasets.size(), is(33));
+
+        final int[] t = {0};
+        datasets.forEach(dataset -> {
+            if (dataset.getTemporal() != null) {
+                dataset.getTemporal().forEach( temporal -> {
+                    t[0]++;
+                   logger.info("{}: {} - {}", dataset.getUri(), sdf.format(temporal.getStartDate()), sdf.format(temporal.getEndDate()));
+                });
+            }
+        });
+
+        assertThat("has temporals", t[0], is(10));
     }
 
     @Test
@@ -45,10 +58,21 @@ public class DcatSourcesConverterIT {
         List<Dataset> datasets = reader.getDatasets();
 
         assertThat(datasets.size(), is(168));
-        //Catalog actualCatalog = CatalogBuilder.create(model.getResource(catalogUri));
 
     }
 
 
+    @Test
+    public void readGdocData() throws Throwable {
+
+        Model model = ModelFactory.createDefaultModel();
+        model = FileManager.get().loadModel("gdoc-data-2017-10-19.ttl" );
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        assertThat(datasets.size(), is(132));
+
+    }
 
 }

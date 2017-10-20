@@ -28,8 +28,8 @@ export class HelpText implements OnInit {
       this.allHelptexts
         .filter(entry => entry.id == this.name)
         .forEach(entry => {
-          this.resolvedShortDesc = entry.shortdesc;
-          this.resolvedDescription = entry.description;
+          this.resolvedShortDesc = entry.shortdesc.replace(new RegExp('\n', 'g'), "<br />");
+          this.resolvedDescription = entry.description.replace(new RegExp('\n', 'g'), "<br />");
         })
     });
   }

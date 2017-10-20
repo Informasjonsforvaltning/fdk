@@ -326,3 +326,7 @@ rl-tag-input-item {
   content:'';
   display:inline;
 }
+
+.modal-dialog {
+  z-index: 1050;
+}

@@ -25,15 +25,14 @@ public class DcatReader {
     public DcatReader(Model model, String codeServiceHost, String httpUsername, String httpPassword) {
         this.model = model;
 
-        // Retrieve all codes from elasticsearch.
-        logger.debug("reading themes from: {}",codeServiceHost);
+        // Retrieve all codes from reference-data.
+        logger.debug("reading codes from: {}",codeServiceHost);
         dataThemes = RetrieveDataThemes.getAllDataThemes(codeServiceHost);
+        codes = RetrieveCodes.getAllCodes(codeServiceHost);
 
         LoadLocations loadLocations = new LoadLocations(codeServiceHost, httpUsername, httpPassword);
         loadLocations.addLocationsToThemes(model);
         locations = loadLocations.getLocations();
-
-        codes = RetrieveCodes.getAllCodes(codeServiceHost);
     }
 
     public DcatReader(Model model) {

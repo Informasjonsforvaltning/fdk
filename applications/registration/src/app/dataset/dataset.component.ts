@@ -208,7 +208,7 @@ export class DatasetComponent implements OnInit {
             }
           }, this.saveDelay);
         });
-    });
+    })
   }
   buildSummaries() {
     this.buildGeoTimeSummaries();
@@ -321,6 +321,14 @@ export class DatasetComponent implements OnInit {
                 this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
                 this.datasetSavingEnabled = true;
             })
+          .catch(error => {
+            console.log(error);
+            this.showModal(
+              `Error: ${error.status}`,
+              `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
+              false
+            );
+          });
     }
 
     valuechange(): void {
@@ -364,6 +372,18 @@ export class DatasetComponent implements OnInit {
         setTimeout(() => {
             disposable.unsubscribe();
         }, 10000);
+    }
+
+    showModal(title, text, showFooter) {
+      let disposable = this.dialogService.addDialog(ConfirmComponent, {
+        title: title,
+        message: text,
+        showFooter: showFooter
+      })
+        .subscribe((isClose) => {
+          this.datasetSavingEnabled = true;
+          this.back();
+        })
     }
 
 
