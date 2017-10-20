@@ -47,6 +47,7 @@ export class DatasetService {
           return [] as Dataset[];
         }
       })
+      .catch(this.errorHandler.handleError)
       ;
   }
 
@@ -60,6 +61,7 @@ export class DatasetService {
         const dataset = pluralizeObjectKeys(response.json());
         return dataset as Dataset
       })
+      .catch(this.errorHandler.handleError)
       ;
   }
 
@@ -88,6 +90,7 @@ export class DatasetService {
       .delete(datasetUrl, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
+      .catch(this.errorHandler.handleError)
       ;
   }
 
@@ -102,6 +105,7 @@ export class DatasetService {
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()
       .then(res => res.json())
+      .catch(this.errorHandler.handleError)
       ;
   }
 
