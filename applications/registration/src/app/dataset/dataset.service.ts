@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, ErrorHandler} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
@@ -28,7 +28,7 @@ const TEST_DATASETS: Dataset[] = [
 @Injectable()
 export class DatasetService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private errorHandler: ErrorHandler) {
   }
 
   private catalogsUrl = environment.api + "/catalogs"
@@ -65,15 +65,16 @@ export class DatasetService {
 
   save(catId: string, dataset: Dataset): Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
-
     let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
+
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
+      .catch(this.errorHandler.handleError)
       ;
   }
 
