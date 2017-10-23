@@ -5,6 +5,8 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
@@ -29,10 +31,9 @@ public class BrregAgentConverterTest {
 		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
 
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model);
+		converter.collectFromUri(uri.toString(), model, model.createResource("http://data.brreg.no/enhetsregisteret/underenhet/814716902"));
 
-		model.write(System.out, "TTL");
-		
+
 		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
 
 		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
@@ -57,7 +58,7 @@ public class BrregAgentConverterTest {
 		
 		Model model = ModelFactory.createDefaultModel();
 		
-		converter.collectFromUri("http://test", model);
+		converter.collectFromUri("http://test", model, model.createResource("http://test"));
 		
 		NodeIterator listObjectsOfProperty = model.listObjectsOfProperty(RDF.type);
 		
@@ -74,8 +75,10 @@ public class BrregAgentConverterTest {
 
 		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
 
+		Resource resource = model.createResource("http://test.no/resource/1");
+
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model);
+		converter.collectFromUri(uri.toString(), model,resource);
 
 		model.write(System.out, "TTL");
 
@@ -83,17 +86,29 @@ public class BrregAgentConverterTest {
 
 		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
 		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/814716872", iterator.nextResource().getURI());
-}
+  }
   
-	public void testConvertOnRDF() throws Exception {
-		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+  @Test
+	public void testConvertOnRDFWithIdentifier() throws Exception {
+    BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
 		converter.collectFromModel(model);
 		NodeIterator countryiter = model.listObjectsOfProperty(
 				model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
 				model.createProperty("http://data.brreg.no/meta/land"));
-		assertEquals(countryiter.next().asLiteral().getValue().toString(),"Norge");
+		assertEquals("Norge" , countryiter.next().asLiteral().getValue().toString());
+  }
 
-	}
+    @Test
+    public void testConvertOnRDFReplaceCanonicalName() throws Exception {
+        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
+        converter.collectFromModel(model);
+        NodeIterator nameiter = model.listObjectsOfProperty(
+                model.createResource("http://data.brreg.no/enhetsregisteret/enhet/971040238"),
+                FOAF.name);
+        assertEquals("Kartverket" , nameiter.next().asLiteral().getValue().toString());
+    }
+
 
 }

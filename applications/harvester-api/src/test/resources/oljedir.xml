@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:void="http://www.w3.org/TR/void/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dctype="http://purl.org/dc/dcmitype/" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:xslUtils="java:org.fao.geonet.util.XslUtil" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+	<dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/fd4f0d98-3667-4910-8afb-933629cc1c00">
+		<dct:identifier>fd4f0d98-3667-4910-8afb-933629cc1c00</dct:identifier>
+		<dct:title xml:lang="no">TESTDATA</dct:title>
+		<dct:publisher rdf:resource="https://register.geonorge.no/register/organisasjoner/kartverket/oljedirektoratet" />
+	</dcat:Dataset>
+
+	<foaf:Agent rdf:about="https://register.geonorge.no/register/organisasjoner/kartverket/oljedirektoratet">
+		<dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority" />
+		<dct:identifier>870917732</dct:identifier>
+		<foaf:name>Oljedirektoratet</foaf:name>
+		<foaf:mbox>factweb@npd.no</foaf:mbox>
+		<owl:sameAs>http://data.brreg.no/enhetsregisteret/enhet/870917732</owl:sameAs>
+	</foaf:Agent>
+
+	<dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/xyz">
+		<dct:identifier>fd4f0d98-3667-4910-8afb-933629cc1c00</dct:identifier>
+		<dct:title xml:lang="no">TESTDATA2</dct:title>
+		<dct:publisher rdf:resource="https://register.geonorge.no/register/organisasjoner/kartverket/difi"/>
+	</dcat:Dataset>
+
+	<foaf:Agent rdf:about="https://register.geonorge.no/register/organisasjoner/kartverket/difi">
+		<dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority" />
+		<dct:identifier>991825827</dct:identifier>
+		<foaf:name>Direktoratet for IKT</foaf:name>
+	</foaf:Agent>
+
+
+	<dcat:Dataset rdf:about="https://test3">
+		<dct:identifier>fd4f0d98-3667-4910-8afb-933629cc1c00</dct:identifier>
+		<dct:title xml:lang="no">TESTDATA3</dct:title>
+		<dct:publisher rdf:resource="http://data.brreg.no/enhetsregisteret/enhet/971526920"/>
+	</dcat:Dataset>
+
+	<foaf:Agent rdf:about="http://data.brreg.no/enhetsregisteret/enhet/971526920">
+		<dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority" />
+		<dct:identifier>971526920</dct:identifier>
+		<foaf:name>Statistisk sentralbyrå</foaf:name>
+	</foaf:Agent>
+
+</rdf:RDF>
