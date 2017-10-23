@@ -142,7 +142,7 @@ public class DcatBuilder {
                 addTemporal(dataset, datRes);
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
 
-                addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
+                addProperty(datRes, DCTerms.accessRights, dataset.getAccessRights());
                 addProperties(datRes, DCATNO.accessRightsComment, dataset.getAccessRightsComment());
                 addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess());
                 addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing());
@@ -166,7 +166,7 @@ public class DcatBuilder {
                 addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel());
                 addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
 
-                addProperty(datRes, DCTerms.type, dataset.getType());
+                addLiteral(datRes, DCTerms.type, dataset.getType());
             }
         }
 
@@ -257,6 +257,9 @@ public class DcatBuilder {
 
         return this;
     }
+
+
+
     public DcatBuilder addPeriodOfTimeResource(Resource resource, Property property, PeriodOfTime period) {
         if (period != null) {
 
@@ -352,7 +355,7 @@ public class DcatBuilder {
                 addLiterals(disRes, DCTerms.title, distribution.getTitle());
                 addLiterals(disRes, DCTerms.description, distribution.getDescription());
                 addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
-                addProperty(disRes, DCTerms.license, distribution.getLicense());
+                addSkosConcept(disRes, DCTerms.license, distribution.getLicense());
 
                 addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo());
                 addSkosConcepts(disRes, FOAF.page, distribution.getPage());
@@ -411,23 +414,8 @@ public class DcatBuilder {
     }
 
 
-
-    public DcatBuilder addProperty(Resource resource, Property property, SkosConcept concept) {
-        if (concept != null && concept.getUri() != null && !"".equals(concept.getUri())) {
-            Resource r = model.createResource();
-            r.addProperty(DCTerms.source, concept.getUri());
-            if (concept.getExtraType() != null && !"".equals(concept.getExtraType())) {
-                r.addProperty(RDF.type, concept.getExtraType());
-            }
-            addLiterals(r, SKOS.prefLabel, concept.getPrefLabel() );
-            resource.addProperty(property, r);
-        }
-
-        return this;
-    }
-
     public DcatBuilder addProperty(Resource resource, Property property, SkosCode code) {
-        if (code != null && code.getUri() != null && !"".equals(code.getUri())) {
+        if (code != null && code.getUri() != null && !code.getUri().isEmpty()) {
             Resource r = model.createResource(code.getUri());
             resource.addProperty(property, r);
         }
@@ -446,6 +434,16 @@ public class DcatBuilder {
     public DcatBuilder addSubjects(Resource resource, Property property, List<Subject> concepts) {
         if (concepts != null) {
             for (Subject concept : concepts) {
+                Resource r = model.createResource(concept.getUri());
+                r.addProperty(RDF.type, SKOS.Concept);
+
+                addLiterals(r, SKOS.prefLabel, concept.getPrefLabel() );
+                addLiterals(r, SKOS.definition, concept.getDefinition());
+                addLiterals(r, SKOS.note, concept.getNote());
+                addLiteral(r, DCTerms.source, concept.getSource());
+
+                resource.addProperty(DCTerms.subject, r);
+
                 //addProperty(resource, property, concept);
             }
         }
@@ -455,7 +453,7 @@ public class DcatBuilder {
     public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts) {
         if (concepts != null) {
             for (SkosConcept concept : concepts) {
-                addProperty(resource, property, concept);
+                addSkosConcept(resource, property, concept);
             }
         }
         return this;

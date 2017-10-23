@@ -108,7 +108,6 @@ public class TestCompleteCatalog {
         dataset.setModified(Date.from(LocalDateTime.of(2016,9,21,01,30,3).toInstant(ZoneOffset.UTC)));
 
         dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak", "vedtak", map("nb", "Vedtak")));
-        dataset.setHasCurrentnessAnnotation(createQualityAnnotation("Currentness", "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
         dataset.setSpatial(Arrays.asList(
                 skosCode("http://www.geonames.org/3162656/asker.html", null, map("nb", "Asker")),
                 skosCode("http://www.geonames.org/3162212/baerum.html", null, map("nb", "Bærum")),
@@ -116,6 +115,7 @@ public class TestCompleteCatalog {
                 skosCode("http://www.geonames.org/3141104/royken.html", null, map("nb", "Røyken"))
         ));
 
+        dataset.setHasCurrentnessAnnotation(createQualityAnnotation(QualityAnnotation.Currentness, "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
         dataset.setHasRelevanceAnnotation(createQualityAnnotation(QualityAnnotation.Relevance, "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."));
         dataset.setHasCompletenessAnnotation(createQualityAnnotation(QualityAnnotation.Completeness, "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."));
         dataset.setHasAccuracyAnnotation(createQualityAnnotation(QualityAnnotation.Accuracy, "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."));

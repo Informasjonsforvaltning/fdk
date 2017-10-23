@@ -6,6 +6,7 @@ import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.difi.dcat.datastore.domain.dcat.builders.CatalogBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
@@ -81,7 +82,9 @@ public class DatasetConverterTest {
         addCode(codes.get(Types.linguisticsystem.getType()), "Norsk", "http://publications.europa.eu/resource/authority/language/NOR");
 
         codes.put(Types.rightsstatement.getType(), new HashMap<>());
-        addCode(codes.get(Types.rightsstatement.getType()),"Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+        addCode2(codes.get(Types.rightsstatement.getType()),"Offentlig", "PUBLIC","http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+        addCode2(codes.get(Types.rightsstatement.getType()),"Begrenset", "RESTRICTED","http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
+        addCode2(codes.get(Types.rightsstatement.getType()),"Untatt offentlighet","NON-PUBLIC", "http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC");
 
         codes.put(Types.frequency.getType(), new HashMap<>());
         addCode(codes.get(Types.frequency.getType()), "Årlig", "http://publications.europa.eu/resource/authority/frequency/ANNUAL");
@@ -90,7 +93,6 @@ public class DatasetConverterTest {
         addCode2(codes.get(Types.referencetypes.getType()), "references", "references", DCTerms.references.getURI());
         addCode2(codes.get(Types.referencetypes.getType()), "Har versjon", "hasVersion", DCTerms.hasVersion.getURI());
         addCode2(codes.get(Types.referencetypes.getType()), "Er del av", "isPartOf", DCTerms.isPartOf.getURI());
-
 
         Map<String,DataTheme> dataThemeMap = new HashMap<>();
         DataTheme gove = new DataTheme();
@@ -118,6 +120,42 @@ public class DatasetConverterTest {
         logger.info("number of references {}", actualDataset.getReferences().size());
         assertThat(actualDataset.getReferences(), is (expectedDataset.getReferences()));
     }
+
+    @Test
+    public void hasType() throws Throwable {
+        logger.info("type {}", actualDataset.getType());
+
+        assertThat(actualDataset.getType(), is(expectedDataset.getType()));
+    }
+
+    @Test
+    public void hasAccessRight() throws Throwable {
+        logger.info("accessRight {}", actualDataset.getAccessRights());
+
+        assertThat(actualDataset.getAccessRights(), is(expectedDataset.getAccessRights()));
+    }
+
+    @Test
+    public void hasObjective() throws Throwable {
+        logger.info("objective {}", actualDataset.getObjective());
+
+        assertThat(actualDataset.getObjective(), is(expectedDataset.getObjective()));
+    }
+
+    @Test
+    public void hasSubject() throws Throwable {
+        logger.info("subjects {}", actualDataset.getSubject());
+
+        Subject actualSubject = actualDataset.getSubject().get(0);
+        Subject expectedSubject = expectedDataset.getSubject().get(0);
+
+        assertThat(actualSubject.getUri(), is(expectedSubject.getUri()));
+        assertThat(actualSubject.getPrefLabel(), is(expectedSubject.getPrefLabel()));
+        assertThat(actualSubject.getDefinition(), is(expectedSubject.getDefinition()));
+        assertThat(actualSubject.getNote(), is(expectedSubject.getNote()));
+        assertThat(actualSubject.getSource(), is(expectedSubject.getSource()));
+    }
+
 
     @Test
     public void checkContactPoints() throws Throwable {
