@@ -1,3 +1,5 @@
+package no.dcat.harvester;
+
 import no.dcat.harvester.DataEnricher;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;

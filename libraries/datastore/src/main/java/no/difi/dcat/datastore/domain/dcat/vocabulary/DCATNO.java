@@ -3,6 +3,7 @@ package no.difi.dcat.datastore.domain.dcat.vocabulary;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
+import org.springframework.context.annotation.Profile;
 
 /**
  * Created by bjg on 11.11.2016.
@@ -17,6 +18,8 @@ public class DCATNO {
     public static String getURI() {
         return NS;
     }
+
+    public static final Property source = model.createProperty(NS, "source");
 
     public static final Property accessRightsComment = model.createProperty(NS, "accessRightsComment");
     public static final Property objective = model.createProperty(NS, "objective");
