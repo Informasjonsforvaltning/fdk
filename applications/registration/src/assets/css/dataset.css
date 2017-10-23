@@ -53,6 +53,51 @@ td.fdk-dataset-description {
 }
 
 
+/*  R A D I O  */
+
+.fdk-radio input {
+    display: none;
+}
+.fdk-radio > label {    
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-right: 16px;
+    padding-left: 24px;    
+    font-weight: 400;
+}
+.fdk-radio > label:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 0;
+    top: 50%;
+    margin-top: -8px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
+.fdk-radio > label:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 50%;
+    left: 8px;
+    margin-top: 0;
+    background: #000;
+    border-radius: 4px;
+    transition: .2s ease-in-out;
+}
+.fdk-radio :checked + :after {
+    height: 8px;
+    width: 8px;
+    margin-top: -4px;
+    left: 4px;
+}
+
 /*  O T H E R  */
 
 .fdk-vertical-align {

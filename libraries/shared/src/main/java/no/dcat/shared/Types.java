@@ -7,8 +7,8 @@ public enum Types {
     frequency("http://publications.europa.eu/mdr/resource/authority/frequency/skos/frequencies-skos.rdf","frequency"),
    // To bigfile, contains over 7700 languages, 5 milllion lines og code.
    //LINGUISTICSYSTEM("http://publications.europa.eu/mdr/resource/authority/language/skos/languages-skos.rdf", "linguisticsystem");
-   linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem"),
-    referencetype("rdf/reference-code-skos.ttl", "referencetype"),
+    linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem"),
+    referencetypes("rdf/reference-code-skos.ttl", "referencetypes"),
 
     location(null, "location"),
     subject(null, "subject");

@@ -2,6 +2,7 @@ package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
+import no.dcat.harvester.DatasetSortRankingCreator;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
@@ -9,14 +10,12 @@ import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
@@ -24,6 +23,7 @@ import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,10 +91,15 @@ public class CrawlerJob implements Runnable {
                 removeNonValidDatasets(union);
                 crawlerResultMessage.append(removeNonResolvableLocations(union));
 
+                //add sort ranking to datasets
+                DatasetSortRankingCreator rankingCreator = new DatasetSortRankingCreator();
+                Model rankedUnion = rankingCreator.rankDatasets(union, dcatSource.getUrl());
+
                 for (CrawlerResultHandler handler : handlers) {
-                    handler.process(dcatSource, union);
+                    handler.process(dcatSource, rankedUnion);
                 }
             }
+
 
             //Write info about crawl results to store
             String crawlerResultStr = crawlerResultMessage.toString();
@@ -164,32 +169,38 @@ public class CrawlerJob implements Runnable {
      *
      * @return enriched model
      */
-    private Model prepareModelForValidation() throws MalformedURLException {
+    Model prepareModelForValidation() throws MalformedURLException {
         logger.debug("loadDataset: "+ dcatSource.getUrl());
         URL url = new URL(dcatSource.getUrl());
         if (url.getProtocol().equals("http") || url.getProtocol().equals("https")) {
-            Dataset dataset = RDFDataMgr.loadDataset(url.toString());
-            Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
-            Iterator<String> stringIterator = dataset.listNames();
 
-            while (stringIterator.hasNext()) {
-                union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
-            }
-            verifyModelByParsing(union);
+            return loadModelAndValidate(url);
 
-            //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
-            DataEnricher enricher = new DataEnricher();
-            Model enrichedUnion = enricher.enrichData(union);
-            union = enrichedUnion;
-
-            // Checks if publisher is registrered in BRREG Enhetsregistret
-            BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-            brregAgentConverter.collectFromModel(union);
-
-            return union;
         }else{
             throw new MalformedURLException("Protocol not supported");
         }
+    }
+
+    Model loadModelAndValidate(URL url) {
+        Dataset dataset = RDFDataMgr.loadDataset(url.toString());
+        Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+        Iterator<String> stringIterator = dataset.listNames();
+
+        while (stringIterator.hasNext()) {
+            union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
+        }
+        verifyModelByParsing(union);
+
+        //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
+        DataEnricher enricher = new DataEnricher();
+        Model enrichedUnion = enricher.enrichData(union);
+        union = enrichedUnion;
+
+        // Checks if publisher is registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
+
+        return union;
     }
 
 
@@ -342,7 +353,7 @@ public class CrawlerJob implements Runnable {
                     model.removeAll(resource,DCTerms.spatial,null);
                     logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}",locUri);
                 }
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException | ClassCastException e) {
                 logger.error("URL not valid: {} ", locUri,e);
             } catch (IOException e) {
                 logger.error("IOException: {} ", locUri, e);

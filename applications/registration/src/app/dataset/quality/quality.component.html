@@ -8,15 +8,16 @@
         name="dataset.provenanceStatement">
       </helptext>
       <div id="provenanceSelector">
-        <div class="radio" *ngFor="let provenance of provenancesModel">
-          <label>
+        <div class="fdk-radio" *ngFor="let provenance of provenancesModel">
             <input
-              type="radio"
-              [checked]="provenance.id === selectedProvenanceIdx"
-              [value]="provenance.id"
-              formControlName="provenance">
-            {{provenance.label}}
-          </label>
+                type="radio"
+                id="provenanceSelector-{{provenance.id}}"
+                [checked]="provenance.id === selectedProvenanceIdx"
+                [value]="provenance.id"
+                formControlName="provenance">
+            <label for="provenanceSelector-{{provenance.id}}">
+                {{provenance.label}}
+            </label>
         </div>
       </div>
 

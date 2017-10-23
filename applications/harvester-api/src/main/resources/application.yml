@@ -1,8 +1,8 @@
 logging:
   level.: ERROR
   level.no.brreg: ERROR
-  level.no.difi: ERROR
-  level.no.dcat: ERROR
+  level.no.difi: INFO
+  level.no.dcat: INFO
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
 server:
@@ -30,6 +30,13 @@ application:
 ---
 spring:
     profiles: develop
+logging:
+  level.: ERROR
+  level.no.brreg: ERROR
+  level.no.difi: INFO
+  level.no.dcat: DEBUG
+  level.org.springframework: ERROR
+  level.org.springframework.web: ERROR
 fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin

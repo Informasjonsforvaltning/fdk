@@ -11,7 +11,7 @@ export class QueryTransport extends AxiosESTransport {
       headers:{},
       //searchUrlPath: window.fdkSettings.queryUrl + "/search"
         // TODO MAKE THIS GENERIC
-        searchUrlPath: "/search"
+        searchUrlPath: "/datasets"
     })
     if(this.options.basicAuth){
       this.options.headers["Authorization"] = (
@@ -24,23 +24,20 @@ export class QueryTransport extends AxiosESTransport {
     })
     this.filters = [
       {
-        key: 'publisher.name.raw',
-        paramName: 'publisher',
-        name: 'publisherCount',
-        rawName: 'publisher.name.raw3'
-      },
-      {
         key: 'theme.code.raw',
         paramName: 'theme',
-        rawName: 'theme.code.raw4',
         name: 'theme_count'
       },
       {
-        key: 'accessRights.authorityCode.raw',
-        paramName: 'accessright',
-        rawName: 'accessRights.authorityCode.raw5',
-        name: 'accessRightCount'
+        key: 'publisher.name.raw',
+        paramName: 'publisher',
+        name: 'publisherCount',
       },
+      {
+        key: 'accessRights.authorityCode.raw',
+        paramName: 'accessrights',
+        name: 'accessRightsCount'
+      }
     ];
   }
 
@@ -109,8 +106,8 @@ export class QueryTransport extends AxiosESTransport {
 
   getData(response) {
     let aggregations = response.data.aggregations;
-      this.filters.forEach((filter)=>{
-        let rawName = filter.rawName;
+      this.filters.forEach((filter, index)=>{
+        let rawName = filter.key + (index + 3); // why 3? seems the first 2-3 are internal searchkit stuff
         let name = filter.name;
         let rawNameShort = rawName.substr(0, rawName.length-1);
         if (aggregations && aggregations.hasOwnProperty(name)) {
@@ -123,5 +120,4 @@ export class QueryTransport extends AxiosESTransport {
       })
     return response.data
   }
-
 }

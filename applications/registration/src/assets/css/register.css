@@ -119,7 +119,7 @@
 .more-help-checkbox:checked ~ .flere-anbefalinger {
 	display: inline;
 }
-.flere-anbefalinger, .more-help-checkbox:checked ~ .toggle-help-button {
+.flere-anbefalinger, .more-help-checkbox:checked ~ .toggle-help-button, .more-help-checkbox:checked ~ .faerre-anbefalinger {
 	display: none;
 }
 
@@ -316,4 +316,17 @@ rl-tag-input-item {
 .language-checkbox input:checked ~ .checkbox-replacement::after {
   top:2px;
   left:2px;
+}
+.summary-subject::after {
+  content:',';
+  display:inline;
+  margin-left:-3px;
+}
+.summary-subject:last-child::after {
+  content:'';
+  display:inline;
+}
+
+.modal-dialog {
+  z-index: 1050;
 }

@@ -1,8 +1,8 @@
 package no.dcat.factory;
 
-import no.dcat.model.Contact;
+import no.dcat.shared.Contact;
 import no.dcat.model.Dataset;
-import no.dcat.model.Distribution;
+import no.dcat.shared.Distribution;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ public class RegistrationFactory {
 
         dataset.setId(UUID.randomUUID().toString());
         dataset.setUri(getCatalogUri(catalogId) + "/datasets/" + dataset.getId());
-        dataset.setCatalog(catalogId);
+        dataset.setCatalogId(catalogId);
 
         return dataset;
     }

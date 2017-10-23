@@ -64,4 +64,36 @@ public class BrregAgentConverterTest {
 		assertTrue("Expected empty model", listObjectsOfProperty.toList().isEmpty());
 	}
 
+	@Test
+	public void testWrongUrlFiletypeEnding() throws Exception {
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+
+		Model model = ModelFactory.createDefaultModel();
+
+		URL uri = Paths.get("src/test/resources/brreg/814716902.json").toUri().toURL();
+
+		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
+
+		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
+		converter.collectFromUri(uri.toString(), model);
+
+		model.write(System.out, "TTL");
+
+		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
+
+		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
+		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/814716872", iterator.nextResource().getURI());
+}
+  
+	public void testConvertOnRDF() throws Exception {
+		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+		Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
+		converter.collectFromModel(model);
+		NodeIterator countryiter = model.listObjectsOfProperty(
+				model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
+				model.createProperty("http://data.brreg.no/meta/land"));
+		assertEquals(countryiter.next().asLiteral().getValue().toString(),"Norge");
+
+	}
+
 }

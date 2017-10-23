@@ -86,24 +86,46 @@ public class BrregAgentConverter {
     }
 
     public void collectFromModel(Model model) {
-        NodeIterator iterator = model.listObjectsOfProperty(DCTerms.publisher);
+        NodeIterator orgiterator = model.listObjectsOfProperty(DCTerms.publisher);
 
-        while (iterator.hasNext()) {
-            RDFNode next = iterator.next();
-            if (next.isURIResource() && next.asResource().getURI().contains("data.brreg.no")) {
-                String uri = next.asResource().getURI();
-                collectFromUri(uri, model);
+
+        while (orgiterator.hasNext()) {
+            RDFNode next = orgiterator.next();
+            if (next.isURIResource()) {
+                Resource orgresource = next.asResource();
+                if (orgresource.getURI().contains("data.brreg.no")) {
+                    collectFromUri(orgresource.getURI(), model);
+                } else {
+                    NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
+                    // TODO: deal with the possibility of multiple dct:identifiers?
+                    if (identiterator.hasNext()) {
+                        String orgnr = identiterator.next().asLiteral().getValue().toString();
+                        orgnr = orgnr.replaceAll("\\s", "");
+                        String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
+                        logger.trace("Used dct:identifier to collect from {}", url);
+                        collectFromUri(url, model);
+                    } else {
+                        logger.debug("Found no identifier for {}", orgresource.getURI());
+                    }
+                }
             } else {
-                logger.trace("{} either is not a resource or does not contain \"data.brreg.no\"", next);
+                logger.warn("{} is not a resource. Probably really broken input!", next);
             }
         }
 
 
     }
 
+    /* For each organisation, transform the RDF to match what we expect from it */
+
     protected void collectFromUri(String uri, Model model) {
         if (!uri.endsWith(".xml")) {
-            uri = uri.concat(".xml");
+            if(uri.endsWith(".json")) {
+                uri = uri.replaceAll(".json",".xml");
+            } else {
+                uri = uri.concat(".xml");
+            }
+
         }
 
         try {

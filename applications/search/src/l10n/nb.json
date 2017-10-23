@@ -1,12 +1,13 @@
 {
   "app": {
     "title": "Felles datakatalog",
-    "titleSub": "Oversikt over datasett fra virksomheter i Norge",
+    "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
     "publisher": "Virksomhet",
-    "menu": "Meny"
+    "menu": "Meny",
+    "readMore": "Les mer om "
   },
   "beta": {
-    "first": "Dette er en beta-versjon. Gi oss gjerne",
+    "first": "Dette er en beta-versjon. Gi oss gjerne ",
     "second": "tilbakemeldinger",
     "last": "om hva du synes!"
   },
@@ -28,8 +29,10 @@
     "title": "Logg inn"
   },
   "about": {
-    "about": "Om",
-    "title": "Om applikasjonen",
+    "about": "Om Felles datakatalog",
+    "title": "Overordnet tekst FDK",
+    "ingress": "Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.",
+    "maintext": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang. Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
     "help": "Hjelp",
     "status":"Status implementasjon",
     "standard":"DCAT-AP-NO 1.1 standarden",
@@ -43,8 +46,9 @@
     "next": "Neste side",
     "prev": "Forrige side",
     "result.summary": "Søket ga ",
-    "dataset":"treff"
-
+    "dataset":"treff",
+    "nosearch.summary":"Søk blant",
+    "nosearch.descriptions":"datasettbeskrivelser"
   },
   "facet": {
     "organisation":"Virksomhet",
@@ -67,7 +71,9 @@
     "organisation.number": "Organisasjonsnummer:",
     "information": "Informasjonskapsler",
     "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
-    "mail": "fellesdatakatalog@brreg.no"
+    "mail": "fellesdatakatalog@brreg.no",
+    "privacy": " og personvern",
+    "contact": "Kontakt:"
   },
   "sort": {
     "by": "Sorter på",
@@ -83,15 +89,20 @@
   },
   "dataset": {
     "title": "Datasett",
-    "conformsTo": "Konformitet",
+    "type": "Type",
+    "conformsTo": "Innholdsstandard",
+    "informationModel": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
-      "accessUrl": "TilgangsURL"
+      "accessUrl": "TilgangsURL",
+      "license": "Innholdsstandard",
+      "page": "Mer informasjon om denne distribusjonen",
+      "standard": "Standard"
     },
     "issued": "Utgivelsesdato",
-    "quality.title": "Kvalitet",
+    "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
@@ -100,10 +111,11 @@
     "modified": "Sist endret",
     "language": "Språk",
     "theme": "Tema",
-    "period": "Tidsmessig avgrenset fra",
+    "periodFrom": "Gjelder fra",
+    "periodTo": "Gjelder til",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
-    "keyword": "Emneord",
+    "keyword": "Søkeord",
     "subject": "Begrep",
     "restrictions": "Restriksjoner",
     "comments": "Kommentar",
@@ -113,6 +125,14 @@
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
     "isPartOf": "Datasettet er en del av",
+    "relevanceAnnotation": "Relevans",
+    "completenessAnnotation": "Kompletthet",
+    "accuracyAnnotation": "Nøyaktighet",
+    "availabilityAnnotations": "Tilgjengelighet",
+    "contactPoint": {
+      "background": "Bakgrunnsinformasjon om datasettet",
+      "organizationUnit": "Ta kontakt med"
+    },
     "accessRights": {
       "authorityCode": {
         "public": "Offentlig",

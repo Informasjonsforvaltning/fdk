@@ -15,4 +15,5 @@ public class ADMS {
     public static final String NS = "http://www.w3.org/ns/adms#";
 
     public static final Property identifier = model.createProperty(NS, "identifier");
+    public static final Property sample = model.createProperty(NS, "sample");
 }

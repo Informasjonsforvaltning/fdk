@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { PeriodOfTime } from './periodoftime';
 import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
+import {DatasetComponent} from '../dataset.component';
 
 
 @Component({
@@ -40,49 +41,36 @@ export class TemporalFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
-       this.temporalForm = this.toFormGroup(this.temporal);
-       this.temporalsFormArray.push(this.temporalForm);
-       this.temporalForm.valueChanges.subscribe(
-        temporalFormElement => {
+        this.temporalForm = this.toFormGroup(this.temporal);
+        this.temporalsFormArray.push(this.temporalForm);
+        this.temporalForm.valueChanges.subscribe(
+            temporalFormElement => {
+                if (temporalFormElement.startDate && temporalFormElement.startDate.epoc) {
+                    this.temporal.startDate = temporalFormElement.startDate.epoc;
+                    if (this.temporal.startDate.toString().length === 10) {
+                        this.temporal.startDate = this.temporal.startDate.toString() + "000";
+                    }
+                } else {
+                    delete this.temporal.startDate;
+                }
 
-            if (temporalFormElement.startDate && temporalFormElement.startDate.epoc)
-                this.temporal.startDate = temporalFormElement.startDate.epoc;
-            else
-                delete this.temporal.startDate;
-
-            if (temporalFormElement.endDate && temporalFormElement.endDate.epoc)
-                this.temporal.endDate = temporalFormElement.endDate.epoc;
-            else
-                delete this.temporal.endDate;
-
-            this.cdr.detectChanges();
-        }
-    );
-    }
-
-    private getDateObjectFromUnixTimestamp(timestamp:string) {
-        if (!timestamp)
-            return {};
-
-        let timestamp2 = parseInt(timestamp);
-        if (timestamp2.toString().length === 10)
-            timestamp2 = parseInt(timestamp.toString() + "000");
-
-        let date = new Date(timestamp2);
-        return {
-            date: {
-                year: date.getFullYear(),
-                month: date.getMonth() + 1,
-                day: date.getDate()
-            },
-            formatted: date.getFullYear() + '-' + ('0' + date.getMonth()).slice(-2) + '-' + date.getDate()
-        };
+                if (temporalFormElement.endDate && temporalFormElement.endDate.epoc) {
+                    this.temporal.endDate = temporalFormElement.endDate.epoc;
+                    if (this.temporal.endDate.toString().length === 10) {
+                        this.temporal.endDate = this.temporal.endDate.toString() + "000";
+                    }
+                } else {
+                    delete this.temporal.endDate;
+                }
+                this.cdr.detectChanges();
+            }
+        );
     }
 
     private toFormGroup(temporal: PeriodOfTime) : FormGroup {
         const formGroup = this.fb.group({
-            startDate: [this.getDateObjectFromUnixTimestamp(temporal.startDate)],
-            endDate: [this.getDateObjectFromUnixTimestamp(temporal.endDate)]
+            startDate: [DatasetComponent.getDateObjectFromUnixTimestamp(temporal.startDate)],
+            endDate: [DatasetComponent.getDateObjectFromUnixTimestamp(temporal.endDate)]
         });
         return formGroup;
     }

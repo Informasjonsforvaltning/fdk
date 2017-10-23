@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, ErrorHandler} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {Dataset} from "./dataset";
@@ -15,7 +15,7 @@ const TEST_DATASETS: Dataset[] = [
       "nb": "Datasett med mange attributter"
     },
     "keywords": [{'nb': 'keyword1'}],
-    "subjects": ["term1", "term2", "term3"],
+    "subjects": [{"uri":"https://data-david.github.io/Begrep/begrep/Hovedenhet","prefLabel":{"no":"hovedenhet"}}],
     "themes": [],
     "catalog": "974760673",
     "landingPages": ["http://www.brreg.no", "http://www.difi.no"],
@@ -28,7 +28,7 @@ const TEST_DATASETS: Dataset[] = [
 @Injectable()
 export class DatasetService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private errorHandler: ErrorHandler) {
   }
 
   private catalogsUrl = environment.api + "/catalogs"
@@ -47,6 +47,7 @@ export class DatasetService {
           return [] as Dataset[];
         }
       })
+      .catch(this.errorHandler.handleError)
       ;
   }
 
@@ -57,18 +58,15 @@ export class DatasetService {
     return this.http.get(datasetUrl)
       .toPromise()
       .then((response) => {
-
         const dataset = pluralizeObjectKeys(response.json());
-
-        dataset.distributions = dataset.distributions || []; // use the model to create empty arrays
         return dataset as Dataset
       })
+      .catch(this.errorHandler.handleError)
       ;
   }
 
   save(catId: string, dataset: Dataset): Promise<Dataset> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
-
     let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
@@ -82,6 +80,7 @@ export class DatasetService {
       .put(datasetUrl, payloadcopy, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
+      .catch(this.errorHandler.handleError)
       ;
   }
 
@@ -95,6 +94,7 @@ export class DatasetService {
       .delete(datasetUrl, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
+      .catch(this.errorHandler.handleError)
       ;
   }
 
@@ -109,6 +109,7 @@ export class DatasetService {
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()
       .then(res => res.json())
+      .catch(this.errorHandler.handleError)
       ;
   }
 

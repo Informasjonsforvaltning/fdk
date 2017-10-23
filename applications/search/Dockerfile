@@ -4,8 +4,8 @@ FROM node:6.11
 #FROM node:boron
 
 RUN npm init -y
-RUN npm install ejs express method-override body-parser compression
-RUN npm install pm2 -g
+RUN npm install ejs express method-override body-parser compression --loglevel error
+RUN npm install pm2 -g --loglevel error
 
 #RUN apk update
 #RUN apk add python

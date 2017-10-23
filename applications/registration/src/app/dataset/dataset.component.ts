@@ -1,25 +1,20 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from "@angular/forms";
-import { DatasetService } from "./dataset.service";
-import { CodesService } from "./codes.service";
-import { CatalogService } from "../catalog/catalog.service";
-import { Dataset } from "./dataset";
-import { Catalog } from "../catalog/catalog"
-import { Observable } from 'rxjs';
-import { Http, Response } from '@angular/http';
-import { NgModule } from '@angular/core';
-import { environment } from "../../environments/environment";
-import { ConfirmComponent } from "../confirm/confirm.component";
-import { DialogService } from "ng2-bootstrap-modal";
-import { DistributionFormComponent } from "./distribution/distribution.component";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {DatasetService} from "./dataset.service";
+import {CodesService} from "./codes.service";
+import {CatalogService} from "../catalog/catalog.service";
+import {Dataset} from "./dataset";
+import {Catalog} from "../catalog/catalog"
+import {Http} from '@angular/http';
+import {ConfirmComponent} from "../confirm/confirm.component";
+import {DialogService} from "ng2-bootstrap-modal";
 import * as _ from 'lodash';
-import { ThemesService } from "./themes.service";
-import { IMyDpOptions } from 'mydatepicker';
-import { TemporalListComponent } from "./temporal/temporal-list.component";
-import { HelpText } from "./helptext/helptext.component";
-import {isNullOrUndefined} from "util";
-import { TitleUri } from "./titleUri/titleUri"
+import {ThemesService} from "./themes.service";
+import {IMyDpOptions} from 'mydatepicker';
+import {AccessRightsService} from "./accessRights/accessRights.service";
+import {SkosConcept} from "./skosConcept";
+import {DistributionFormComponent} from "./distribution/distribution.component";
 
 @Component({
     selector: 'app-dataset',
@@ -58,7 +53,8 @@ export class DatasetComponent implements OnInit {
         private http: Http,
         private dialogService: DialogService,
         private formBuilder: FormBuilder,
-        private cdr: ChangeDetectorRef) {
+        private cdr: ChangeDetectorRef,
+        private accessRightsService: AccessRightsService) {
     }
 
 
@@ -117,6 +113,8 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.title = this.dataset.title || {"nb": ""};
+      this.dataset.description = this.dataset.description || {"nb": ""};
       this.dataset.objective = this.dataset.objective || {"nb": ""};
       this.dataset.keywords = this.dataset.keywords || [];
       this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
@@ -129,17 +127,17 @@ export class DatasetComponent implements OnInit {
       //Only allow one contact point per dataset
       this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
       this.dataset.conformsTos = this.dataset.conformsTos || [];
-      this.dataset.conformsTos[0] = this.dataset.conformsTos[0] || {};
 
       this.dataset.distributions = this.dataset.distributions || [];
       this.dataset.samples = this.dataset.samples || [];
+
       this.dataset.languages = this.dataset.languages || [];
       this.dataset.temporals = this.dataset.temporals || [];
-      this.dataset.legalBasisForRestrictions = dataset.legalBasisForRestrictions || [];
-      this.dataset.legalBasisForProcessings = dataset.legalBasisForProcessings || [];
-      this.dataset.legalBasisForAccesses = dataset.legalBasisForAccesses || [];
-      this.dataset.informationModel = dataset.informationModel;
-
+      this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
+      this.dataset.legalBasisForProcessings = this.dataset.legalBasisForProcessings || [];
+      this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
+      this.dataset.informationModels = this.dataset.informationModels || [];
+      this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -158,18 +156,10 @@ export class DatasetComponent implements OnInit {
             });
           });
 
-          if (dataset.distributions) {
-            dataset.distributions.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-            })
-          }
-          if (dataset.samples) {
-            dataset.samples.forEach(distribution => {
-              distribution.title = typeof distribution.title === 'object' ? distribution.title : {'nb': distribution.title};
-              distribution.description = typeof distribution.description === 'object' ? distribution.description : {'nb': distribution.description};
-            })
-          }
+          dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
+          console.log(dataset.samples);
+          dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
+          console.log(dataset.samples);
 
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
@@ -179,19 +169,21 @@ export class DatasetComponent implements OnInit {
             dataset.issued = null;
           }
 
-          if (_.isEmpty(dataset.informationModel)) {
-            dataset.informationModel = {};
-          }
-
           if (dataset.temporals) {
             dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.formatted && !_.isEmpty(temporal.startDate)) {
+                if (temporal.startDate && temporal.startDate.epoc && !_.isEmpty(temporal.startDate)) {
                     temporal.startDate = temporal.startDate.epoc;
+                    if (temporal.startDate.toString().length === 10) {
+                        temporal.startDate = parseInt(temporal.startDate.toString() + "000");
+                    }
                 } else {
                     delete temporal.startDate;
                 }
-                if (temporal.endDate && temporal.endDate.formatted && !_.isEmpty(temporal.endDate)) {
+                if (temporal.endDate && temporal.endDate.epoc && !_.isEmpty(temporal.endDate)) {
                     temporal.endDate = temporal.endDate.epoc;
+                    if (temporal.endDate.toString().length === 10) {
+                        temporal.endDate = parseInt(temporal.endDate.toString() + "000");
+                    }
                 } else {
                     delete temporal.endDate;
                 }
@@ -206,7 +198,6 @@ export class DatasetComponent implements OnInit {
           }else{
             this.dataset.registrationStatus = "DRAFT";
           }
-
           this.dataset = _.merge(this.dataset, dataset);
           this.buildSummaries();
           this.cdr.detectChanges();
@@ -217,21 +208,32 @@ export class DatasetComponent implements OnInit {
             }
           }, this.saveDelay);
         });
-    });
+    })
   }
   buildSummaries() {
     this.buildGeoTimeSummaries();
     this.buildProvenanceSummary();
-    this.buildInformationModelSummary();  }
+    this.buildInformationModelSummary();
+    this.buildAccessRightsSummary();
+  }
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
-        if (this.dataset.informationModel && this.dataset.informationModel.prefLabel && this.dataset.informationModel.prefLabel["nb"]) {
-            this.summaries.informationModel = this.dataset.informationModel.prefLabel["nb"];
+        if (this.dataset.informationModels && this.dataset.informationModels[0] && this.dataset.informationModels[0].prefLabel && this.dataset.informationModels[0].prefLabel["nb"]) {
+            this.summaries.informationModel = this.dataset.informationModels[0].prefLabel["nb"];
         } else {
             this.summaries.informationModel = "Klikk for å fylle ut";
         }
     }
+
+  buildAccessRightsSummary(): void {
+    // Add informationModel to summary if exists.
+    if (this.dataset.accessRights) {
+      this.summaries.accessRights = this.accessRightsService.get(this.dataset.accessRights.uri).label;
+    } else {
+      this.summaries.accessRights = "Klikk for å fylle ut";
+    }
+  }
 
     buildGeoTimeSummaries(): void {
         this.summaries.geotime = "";
@@ -306,6 +308,7 @@ export class DatasetComponent implements OnInit {
     }
 
     onSave(ok: boolean): void {
+
         this.save();
     }
 
@@ -318,6 +321,14 @@ export class DatasetComponent implements OnInit {
                 this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
                 this.datasetSavingEnabled = true;
             })
+          .catch(error => {
+            console.log(error);
+            this.showModal(
+              `Error: ${error.status}`,
+              `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
+              false
+            );
+          });
     }
 
     valuechange(): void {
@@ -363,6 +374,18 @@ export class DatasetComponent implements OnInit {
         }, 10000);
     }
 
+    showModal(title, text, showFooter) {
+      let disposable = this.dialogService.addDialog(ConfirmComponent, {
+        title: title,
+        message: text,
+        showFooter: showFooter
+      })
+        .subscribe((isClose) => {
+          this.datasetSavingEnabled = true;
+          this.back();
+        })
+    }
+
 
     private getDatasett(): Promise<Dataset> {
         // Insert mock object here.  Likely provided via a resolver in a
@@ -371,11 +394,16 @@ export class DatasetComponent implements OnInit {
         return this.service.get(this.catId, datasetId);
     }
 
-    public getDateObjectFromUnixTimestamp(timestamp: string) {
+    public static getDateObjectFromUnixTimestamp(timestamp: string): any {
         if (!timestamp) {
             return {};
         }
-        let date = new Date(timestamp);
+        let timestamp2 = parseInt(timestamp);
+        if (timestamp2.toString().length === 10) {
+            timestamp2 = parseInt(timestamp.toString() + "000");
+
+        }
+        let date = new Date(timestamp2);
         return {
             date: {
                 year: date.getFullYear(),
@@ -458,10 +486,9 @@ export class DatasetComponent implements OnInit {
       contactPoints: this.formBuilder.array([]),
       distributions: this.formBuilder.array([]),
       temporals: this.formBuilder.array([]),
-      issued: [this.getDateObjectFromUnixTimestamp(data.issued)],
-      informationModel: [data.informationModel],
-      references: this.formBuilder.array([]),
+      issued: [DatasetComponent.getDateObjectFromUnixTimestamp(data.issued)],
       samples: this.formBuilder.array([]),
+      references: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)
       })),

@@ -30,7 +30,7 @@ export interface Dataset {
   delivery?: {
         [language: string]: string
     }[]; */
-  subjects?: string[];
+  subjects?: {prefLabel:{no:string},uri:string}[];
   objective?: {
     [language: string]:string
   };
@@ -68,7 +68,7 @@ export interface Dataset {
   legalBasisForProcessings?:any[];
   legalBasisForAccesses?:any[];
 
-  informationModel?:any;
+  informationModels?:any[];
   standard?:any;
 
   hasAccuracyAnnotation?:any;

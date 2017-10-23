@@ -2,6 +2,7 @@ package no.difi.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.SkosConcept;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
@@ -9,6 +10,7 @@ import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
@@ -61,23 +63,33 @@ public class DistributionBuilder extends AbstractBuilder {
 
     }
 
-    public static Distribution create(Resource distribution, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
-                                      Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
-        Distribution created = new Distribution();
+    public static no.difi.dcat.datastore.domain.dcat.Distribution create(Resource distResource, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
+                                                                         Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
+        Distribution dist = new Distribution();
 
-        if (distribution != null) {
-            created.setId(distribution.getURI());
-            created.setTitle(extractLanguageLiteral(distribution, DCTerms.title));
-            created.setDescription(extractLanguageLiteral(distribution, DCTerms.description));
-            created.setAccessURL(extractAsString(distribution, DCAT.accessUrl));
-            created.setLicense(extractAsString(distribution, DCTerms.license));
-            created.setFormat(extractAsString(distribution, DCTerms.format));
+        if (distResource != null) {
+            dist.setId(null);
+            dist.setUri(distResource.getURI());
+
+            dist.setTitle(extractLanguageLiteral(distResource, DCTerms.title));
+            dist.setDescription(extractLanguageLiteral(distResource, DCTerms.description));
+            dist.setAccessURL(extractMultipleStrings(distResource, DCAT.accessUrl));
+            List<SkosConcept> licences = extractSkosConcept(distResource, DCTerms.license);
+            if (licences != null && licences.size()>0)
+            dist.setLicense(licences.get(0));
+
+            dist.setConformsTo(extractSkosConcept(distResource, DCTerms.conformsTo));
+            dist.setPage(extractSkosConcept(distResource, FOAF.page));
+            dist.setFormat(extractMultipleStrings(distResource, DCTerms.format));
+
+            dist.setType(extractAsString(distResource, DCTerms.type));
+
         }
-        if (dataset != null && dataset != null) {
-            created.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
+        if (dataset != null) {
+            dist.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
         }
 
-        return created;
+        return dist;
     }
 
 }

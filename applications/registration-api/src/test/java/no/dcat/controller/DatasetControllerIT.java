@@ -89,7 +89,7 @@ public class DatasetControllerIT {
                                 .content(asJsonString(dataset))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.catalog").value(catalogId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.catalogId").value(catalogId))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -116,13 +116,13 @@ public class DatasetControllerIT {
         languangeDescription.put("nb", "test");
         dataset.setDescription(languangeDescription);
 
-        dataset.setCatalog("910244132");
+        dataset.setCatalogId("910244132");
 
 
         mockMvc
                 .perform(
                         MockMvcRequestBuilders
-                                .post("/catalogs/" + dataset.getCatalog() + "/datasets/")
+                                .post("/catalogs/" + dataset.getCatalogId() + "/datasets/")
                                 .content(asJsonString(dataset))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
@@ -165,7 +165,7 @@ public class DatasetControllerIT {
 //        String catalogId = "910244132";
 //        catalog.setId(catalogId);
 //        Catalog catResult = authorizedRestTemplate
-//                .postForObject("/catalogs/", catalog, Catalog.class);
+//                .postForObject("/catalogs/", catalogId, Catalog.class);
 //
 //        String datasetId = "101";
 //        Dataset dataset = new Dataset(datasetId);
@@ -178,7 +178,7 @@ public class DatasetControllerIT {
 //        languangeDescription.put("nb","test");
 //        dataset.setDescription(languangeDescription);
 //
-//        dataset.setCatalog(catalogId);
+//        dataset.setCatalogId(catalogId);
 //
 //        Dataset result = authorizedRestTemplate
 //                .postForObject("/catalogs/" + catalogId + "/datasets/", dataset, Dataset.class);
