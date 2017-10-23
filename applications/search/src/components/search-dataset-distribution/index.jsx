@@ -203,6 +203,8 @@ DatasetDistribution.defaultProps = {
   accessUrl: null,
   format: null,
   code: 'PUBLIC',
+  license: null,
+  page: null,
   selectedLanguageCode: null
 };
 

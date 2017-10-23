@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
@@ -30,11 +31,8 @@ export default class Select extends React.Component {
   }
 
   render() {
-    const { mod, className, items,
-      disabled, showCount, translate, countFormatter } = this.props;
+    const { items, showCount, translate, countFormatter } = this.props; // eslint-disable-line react/prop-types
 
-
-    const props = this.props;
     return (
       <DropdownButton
         id="search-result-dropdown-1"
@@ -44,9 +42,9 @@ export default class Select extends React.Component {
         onSelect={this.onChange}
       >
         {map(items, (item, idx) => {
-          const { key, label, title, disabled, doc_count } = item;
+          const { key, label, title, doc_count } = item;
           let text = translate(label || title || key);
-          if (showCount && doc_count !== undefined) text += ` (${countFormatter(doc_count)})`;
+          if (showCount && doc_count !== undefined) text += ` (${countFormatter(doc_count)})`; // eslint-disable-line camelcase
           return (
             <MenuItem key={idx} eventKey={item}>{text}</MenuItem>
           );
@@ -56,3 +54,11 @@ export default class Select extends React.Component {
     );
   }
 }
+
+Select.defaultProps = {
+  selectedItems: null
+};
+
+Select.propTypes = {
+  selectedItems: PropTypes.array
+};

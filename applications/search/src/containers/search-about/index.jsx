@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 
 import localization from '../../components/localization';
 
@@ -38,12 +37,3 @@ export default class About extends React.Component {
     );
   }
 }
-
-About.defaultProps = {
-  selectedLanguageCode: null
-};
-
-About.propTypes = {
-  selectedLanguageCode: PropTypes.string
-};
-
