@@ -15,4 +15,29 @@
 		<owl:sameAs>http://data.brreg.no/enhetsregisteret/enhet/870917732</owl:sameAs>
 	</foaf:Agent>
 
+	<dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/xyz">
+		<dct:identifier>fd4f0d98-3667-4910-8afb-933629cc1c00</dct:identifier>
+		<dct:title xml:lang="no">TESTDATA2</dct:title>
+		<dct:publisher rdf:resource="https://register.geonorge.no/register/organisasjoner/kartverket/difi"/>
+	</dcat:Dataset>
+
+	<foaf:Agent rdf:about="https://register.geonorge.no/register/organisasjoner/kartverket/difi">
+		<dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority" />
+		<dct:identifier>991825827</dct:identifier>
+		<foaf:name>Direktoratet for IKT</foaf:name>
+	</foaf:Agent>
+
+
+	<dcat:Dataset rdf:about="https://test3">
+		<dct:identifier>fd4f0d98-3667-4910-8afb-933629cc1c00</dct:identifier>
+		<dct:title xml:lang="no">TESTDATA3</dct:title>
+		<dct:publisher rdf:resource="http://data.brreg.no/enhetsregisteret/enhet/971526920"/>
+	</dcat:Dataset>
+
+	<foaf:Agent rdf:about="http://data.brreg.no/enhetsregisteret/enhet/971526920">
+		<dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority" />
+		<dct:identifier>971526920</dct:identifier>
+		<foaf:name>Statistisk sentralbyrå</foaf:name>
+	</foaf:Agent>
+
 </rdf:RDF>
