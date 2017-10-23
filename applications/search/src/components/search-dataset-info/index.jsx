@@ -76,7 +76,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
               </p>
             </div>
             <div className="dataset-temporal-date pull-right">
-                <h5>{ headerTo }</h5>
+              <h5>{ headerTo }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
                   {item.endDate}
@@ -160,6 +160,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           </p>
         );
       }
+      return null;
     });
 
     if (language && typeof language !== 'undefined' && language.length > 0) {
@@ -183,7 +184,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   _renderReferences() {
     let referencesNodes;
     const { references } = this.props;
-    if (typeof references !== 'undefined' && references.length > 0) {
+    if (references && typeof references !== 'undefined' && references.length > 0) {
       let groupReferences = references;
       groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
 
@@ -270,8 +271,8 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       hasCurrentnessAnnotation
     } = this.props;
 
-    const isIssued = issued ? true : false;
-    const isAccrualPeriodicity = accrualPeriodicity ? true : false;
+    const isIssued = !!issued;
+    const isAccrualPeriodicity = !!accrualPeriodicity;
 
     const issuedClass = cx(
       'fdk-padding-no',
@@ -317,7 +318,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className={accrualPeriodicityClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-refresh"/>
+              <i className="fa fa-refresh" />
             </div>
 
             <div className="fdk-detail-text">
@@ -341,7 +342,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-user"/>
+              <i className="fa fa-user" />
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.provenance}</h5>
@@ -357,7 +358,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-certificate"/>
+              <i className="fa fa-certificate" />
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.currentness}</h5>
@@ -375,7 +376,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
         { this._renderLanguage() }
 
-        {this._renderReferences()}
+        { this._renderReferences() }
 
       </div>
     );
@@ -390,6 +391,7 @@ DatasetInfo.defaultProps = {
   spatial: null,
   temporal: null,
   language: null,
+  references: null,
   selectedLanguageCode: null
 };
 

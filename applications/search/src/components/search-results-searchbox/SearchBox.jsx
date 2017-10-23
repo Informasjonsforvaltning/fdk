@@ -32,14 +32,14 @@ const SearchBox = (function(_super) {
   };
   SearchBox.prototype.defineAccessor = function() {
     const _this = this;
-    let _a = this.props,
-      id = _a.id,
-      prefixQueryFields = _a.prefixQueryFields,
-      queryFields = _a.queryFields,
-      queryBuilder = _a.queryBuilder,
-      searchOnChange = _a.searchOnChange,
-      queryOptions = _a.queryOptions,
-      prefixQueryOptions = _a.prefixQueryOptions;
+    const {
+      id,
+      prefixQueryFields,
+      queryFields,
+      queryBuilder,
+      queryOptions,
+      prefixQueryOptions
+    } = this.props;
     return new searchkit_1.QueryAccessor(id, {
       prefixQueryFields,
       prefixQueryOptions: assign({}, prefixQueryOptions),
@@ -89,9 +89,9 @@ const SearchBox = (function(_super) {
   SearchBox.prototype.setFocusState = function(focused) {
     if (!focused) {
       const input = this.state.input;
-      if (this.props.blurAction == 'search'
+      if (this.props.blurAction === 'search'
                 && !isUndefined(input)
-                && input != this.getAccessorValue()) {
+                && input !== this.getAccessorValue()) {
         this.searchQuery(input);
       }
       this.setState({

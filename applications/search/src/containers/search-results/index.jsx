@@ -1,20 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   SearchkitManager,
   SearchkitProvider,
   RefinementListFilter,
   Hits,
   HitsStats,
-  NoHits,
   Pagination,
   SortingSelector,
   TopBar
 } from 'searchkit';
-import {
-  createHistory as createHistoryFn,
-  useQueries
-} from 'history';
-
 
 import { RefinementOptionThemes } from '../../components/search-refinementoption-themes';
 import { RefinementOptionPublishers } from '../../components/search-refinementoption-publishers';
@@ -23,9 +18,9 @@ import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../../components/localization';
 import SearchHitItem from '../../components/search-results-hit-item';
 import SelectDropdown from '../../components/search-results-selector-dropdown';
+import { CustomHitsStats } from '../../components/search-result-custom-hitstats';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
-import {CustomHitsStats} from '../../components/search-result-custom-hitstats';
 
 const qs = require('qs');
 const sa = require('superagent');
@@ -59,7 +54,6 @@ searchkit.translateFunction = (key) => {
 export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    const that = this;
     this.queryObj = qs.parse(window.location.search.substr(1));
     if (!window.themes) {
       window.themes = [];
@@ -72,12 +66,12 @@ export default class SearchPage extends React.Component {
                 if (hit.title.en) {
                   const obj = {};
                   obj[hit.code] = hit.title.en;
-                  themes.push(obj);
+                  window.themes.push(obj);
                 }
               } else if (hit.title.nb) {
                 const obj = {};
                 obj[hit.code] = hit.title.nb;
-                themes.push(obj);
+                window.themes.push(obj);
               }
             });
           }
@@ -121,7 +115,7 @@ export default class SearchPage extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats}/>
+                <HitsStats component={CustomHitsStats} />
               </div>
             </div>
             <section id="resultPanel">
@@ -199,3 +193,11 @@ export default class SearchPage extends React.Component {
     );
   }
 }
+
+SearchPage.defaultProps = {
+  selectedLanguageCode: null
+};
+
+SearchPage.propTypes = {
+  selectedLanguageCode: PropTypes.string
+};

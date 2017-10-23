@@ -97,7 +97,8 @@ export default class App extends React.Component {
                     <MenuItem
                       key="menu-1"
                       eventKey="menu-1"
-                      href="/about">Om Felles Datakatalog</MenuItem>
+                      href="/about"
+                    >Om Felles Datakatalog</MenuItem>
                   </DropdownButton>
                 </div>
                 <div className="fdk-header-padding">

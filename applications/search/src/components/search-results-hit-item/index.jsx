@@ -2,7 +2,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
-import { Link } from 'react-router';
 
 import DistributionFormat from '../search-dataset-format';
 import localization from '../../components/localization';
@@ -45,31 +44,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return formatNodes;
   }
 
-  _renderFormats2(source, authoriyCode) {
-    const distribution = source.distribution;
-    let formatNodes;
-    if (distribution) {
-      formatNodes = Object.keys(distribution).map((key) => {
-        if (distribution[key].format) {
-          const formatArray = distribution[key].format.trim().split(',');
-          const nodes = Object.keys(formatArray).map((key) => {
-            if (formatArray[key] !== null) {
-              return (
-                <DistributionFormat
-                  authorityCode={authoriyCode}
-                  text={formatArray[key]}
-                />
-              );
-            }
-          });
-          return nodes;
-        }
-        return null;
-      });
-    }
-    return formatNodes;
-  }
-
   _renderPublisher(source) {
     const { publisher } = source;
     if (publisher && publisher.name) {
@@ -77,7 +51,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <span>
           {localization.search_hit.owned}&nbsp;
           <span id="search-hit-publisher-text">
-            { (source.publisher && source.publisher.name) ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
+            {
+              (source.publisher && source.publisher.name)
+                ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase()
+                : ''
+            }
           </span>
         </span>
       );

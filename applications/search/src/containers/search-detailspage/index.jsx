@@ -223,7 +223,7 @@ export default class DetailsPage extends React.Component {
   }
 
   render() {
-    const {loading} = this.state;
+    const { loading } = this.state;
     if (!loading) {
       return (
         <div className="container">
