@@ -25,6 +25,7 @@ import {DistributionFormComponent} from "./distribution/distribution.component";
 export class DatasetComponent implements OnInit {
     title = 'Registrer datasett';
     dataset: Dataset;
+    datasetSave: Dataset;
     catalog: Catalog;
     description: string;
     language: string;
@@ -57,159 +58,160 @@ export class DatasetComponent implements OnInit {
         private accessRightsService: AccessRightsService) {
     }
 
-
-  ngOnInit() {
-    this.language = 'nb';
-    this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
-      {
-        uri: "http://publications.europa.eu/resource/authority/language/ENG",
-        code: 'ENG',
-        prefLabel: {
-          nb: 'Engelsk'
-        },
-        selected: false
-      },
-      {
-        uri: "http://publications.europa.eu/resource/authority/language/NOR",
-        code: 'NOR',
-        prefLabel: {
-          nb: 'Norsk'
-        },
-        selected: false
-      },
-      {
-        uri: "http://publications.europa.eu/resource/authority/language/SMI",
-        code: 'SMI',
-        prefLabel: {
-          nb: 'Samisk'
-        },
-        selected: false
-      }
-    ];
-    this.timer = 0;
-    var that = this;
-    // snapshot alternative
-    this.catId = this.route.snapshot.params['cat_id'];
-
-    this.identifiersForm = new FormGroup({});
-
-
-    this.identifiersForm.addControl("identifiersControl", new FormControl([]));
-
-    let datasetId = this.route.snapshot.params['dataset_id'];
-    this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
-    this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
-      console.log('dataset from api: ', dataset);
-      this.dataset = dataset;
-      if (this.dataset.languages) {
-        this.availableLanguages.forEach((language, languageIndex, languageArray) => {
-          dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray) => {
-            if (language.uri === datasetLanguage.uri) {
-              languageArray[languageIndex].selected = true;
+    ngOnInit() {
+        this.language = 'nb';
+        this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
+            {
+                uri: "http://publications.europa.eu/resource/authority/language/ENG",
+                code: 'ENG',
+                prefLabel: {
+                    nb: 'Engelsk'
+                },
+                selected: false
+            },
+            {
+                uri: "http://publications.europa.eu/resource/authority/language/NOR",
+                code: 'NOR',
+                prefLabel: {
+                    nb: 'Norsk'
+                },
+                selected: false
+            },
+            {
+                uri: "http://publications.europa.eu/resource/authority/language/SMI",
+                code: 'SMI',
+                prefLabel: {
+                    nb: 'Samisk'
+                },
+                selected: false
             }
-          })
+        ];
+        this.timer = 0;
+        var that = this;
+        // snapshot alternative
+        this.catId = this.route.snapshot.params['cat_id'];
+
+        this.identifiersForm = new FormGroup({});
+
+
+        this.identifiersForm.addControl("identifiersControl", new FormControl([]));
+
+        let datasetId = this.route.snapshot.params['dataset_id'];
+        this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
+        this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
+            console.log('dataset from api: ', dataset);
+            this.dataset = dataset;
+            if (this.dataset.languages) {
+                this.availableLanguages.forEach((language, languageIndex, languageArray) => {
+                    dataset.languages.forEach((datasetLanguage, datasetLanguageIndex, datasetLanguageArray) => {
+                        if (language.uri === datasetLanguage.uri) {
+                            languageArray[languageIndex].selected = true;
+                        }
+                    })
+                })
+            }
+
+            // Make sure all arrays are set or empty
+            // catalog and publisher is set by api
+            this.dataset.title = this.dataset.title || {"nb": ""};
+            this.dataset.description = this.dataset.description || {"nb": ""};
+            this.dataset.objective = this.dataset.objective || {"nb": ""};
+            this.dataset.keywords = this.dataset.keywords || [];
+            this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
+            this.dataset.subjects = this.dataset.subjects || [];
+            this.dataset.themes = this.dataset.themes || [];
+            this.dataset.spatials = this.dataset.spatials || [];
+            this.dataset.landingPages = this.dataset.landingPages || [];
+            this.dataset.identifiers = this.dataset.identifiers || [];
+            this.dataset.contactPoints = this.dataset.contactPoints || [];
+            //Only allow one contact point per dataset
+            this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
+            this.dataset.conformsTos = this.dataset.conformsTos || [];
+
+            this.dataset.distributions = this.dataset.distributions || [];
+            this.dataset.samples = this.dataset.samples || [];
+
+            this.dataset.languages = this.dataset.languages || [];
+            this.dataset.temporals = this.dataset.temporals || [];
+            this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
+            this.dataset.legalBasisForProcessings = this.dataset.legalBasisForProcessings || [];
+            this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
+            this.dataset.informationModels = this.dataset.informationModels || [];
+            this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
+            // construct controller
+            this.datasetForm = this.toFormGroup(this.dataset);
+
+            this.buildSummaries();
+
+            this.datasetSavingEnabled = false;
+            setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
+            this.datasetForm.valueChanges // when fetching back data, de-flatten the object
+                .subscribe(dataset => {
+
+                // converting attributes for saving
+                this.dataset.languages = [];
+                dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
+                    this.availableLanguages.forEach((language, index) => {
+                        if ((index === checkboxIndex) && checkbox) 
+                            this.dataset.languages.push(language);
+                    });
+                });
+
+                dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
+                console.log(dataset.samples);
+                dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
+                console.log(dataset.samples);
+
+                if (dataset.issued && dataset.issued.formatted) {
+                    dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
+                }
+
+                if (_.isEmpty(dataset.issued)) {
+                    dataset.issued = null;
+                }
+
+                if (dataset.temporals) {
+                    dataset.temporals.forEach(temporal => {
+                        if (temporal.startDate && temporal.startDate.epoc && !_.isEmpty(temporal.startDate)) {
+                            temporal.startDate = temporal.startDate.epoc;
+                            if (temporal.startDate.toString().length === 10) {
+                                temporal.startDate = parseInt(temporal.startDate.toString() + "000");
+                            }
+                        } else {
+                            delete temporal.startDate;
+                        }
+                        if (temporal.endDate && temporal.endDate.epoc && !_.isEmpty(temporal.endDate)) {
+                            temporal.endDate = temporal.endDate.epoc;
+                            if (temporal.endDate.toString().length === 10) {
+                                temporal.endDate = parseInt(temporal.endDate.toString() + "000");
+                            }
+                        } else {
+                            delete temporal.endDate;
+                        }
+                    });
+
+                } else {
+                    dataset.temporals = [];
+                }
+
+                if (dataset.published) {
+                    this.dataset.registrationStatus = "PUBLISH";
+                } else {
+                    this.dataset.registrationStatus = "DRAFT";
+                }
+                this.dataset = _.merge(this.dataset, dataset);
+                this.buildSummaries();
+                this.cdr.detectChanges();
+                var that = this;
+                this.delay(() => {
+                    if (this.datasetSavingEnabled) {
+                        that.save.call(that);
+                    }
+                }, this.saveDelay);
+            });
         })
-      }
+    }
 
-      // Make sure all arrays are set or empty
-      // catalog and publisher is set by api
-      this.dataset.title = this.dataset.title || {"nb": ""};
-      this.dataset.description = this.dataset.description || {"nb": ""};
-      this.dataset.objective = this.dataset.objective || {"nb": ""};
-      this.dataset.keywords = this.dataset.keywords || [];
-      this.dataset.accessRightsComments = this.dataset.accessRightsComments || [];
-      this.dataset.subjects = this.dataset.subjects || [];
-      this.dataset.themes = this.dataset.themes || [];
-      this.dataset.spatials = this.dataset.spatials || [];
-      this.dataset.landingPages = this.dataset.landingPages || [];
-      this.dataset.identifiers = this.dataset.identifiers || [];
-      this.dataset.contactPoints = this.dataset.contactPoints || [];
-      //Only allow one contact point per dataset
-      this.dataset.contactPoints[0] = this.dataset.contactPoints[0] || {};
-      this.dataset.conformsTos = this.dataset.conformsTos || [];
-
-      this.dataset.distributions = this.dataset.distributions || [];
-      this.dataset.samples = this.dataset.samples || [];
-
-      this.dataset.languages = this.dataset.languages || [];
-      this.dataset.temporals = this.dataset.temporals || [];
-      this.dataset.legalBasisForRestrictions = this.dataset.legalBasisForRestrictions || [];
-      this.dataset.legalBasisForProcessings = this.dataset.legalBasisForProcessings || [];
-      this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
-      this.dataset.informationModels = this.dataset.informationModels || [];
-      this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
-      // construct controller
-      this.datasetForm = this.toFormGroup(this.dataset);
-
-      this.buildSummaries();
-
-      this.datasetSavingEnabled = false;
-      setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
-      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
-        .subscribe(dataset => {
-
-          // converting attributes for saving
-          this.dataset.languages = [];
-          dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
-            this.availableLanguages.forEach((language, index) => {
-              if ((index === checkboxIndex) && checkbox) this.dataset.languages.push(language);
-            });
-          });
-
-          dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
-          console.log(dataset.samples);
-          dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
-          console.log(dataset.samples);
-
-          if (dataset.issued && dataset.issued.formatted) {
-              dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");
-          }
-
-          if (_.isEmpty(dataset.issued)) {
-            dataset.issued = null;
-          }
-
-          if (dataset.temporals) {
-            dataset.temporals.forEach(temporal => {
-                if (temporal.startDate && temporal.startDate.epoc && !_.isEmpty(temporal.startDate)) {
-                    temporal.startDate = temporal.startDate.epoc;
-                    if (temporal.startDate.toString().length === 10) {
-                        temporal.startDate = parseInt(temporal.startDate.toString() + "000");
-                    }
-                } else {
-                    delete temporal.startDate;
-                }
-                if (temporal.endDate && temporal.endDate.epoc && !_.isEmpty(temporal.endDate)) {
-                    temporal.endDate = temporal.endDate.epoc;
-                    if (temporal.endDate.toString().length === 10) {
-                        temporal.endDate = parseInt(temporal.endDate.toString() + "000");
-                    }
-                } else {
-                    delete temporal.endDate;
-                }
-            });
-
-          } else {
-            dataset.temporals = [];
-          }
-
-          if(dataset.published){
-            this.dataset.registrationStatus = "PUBLISH";
-          }else{
-            this.dataset.registrationStatus = "DRAFT";
-          }
-          this.dataset = _.merge(this.dataset, dataset);
-          this.buildSummaries();
-          this.cdr.detectChanges();
-          var that = this;
-          this.delay(() => {
-            if (this.datasetSavingEnabled) {
-              that.save.call(that);
-            }
-          }, this.saveDelay);
-        });
-    })
-  }
   buildSummaries() {
     this.buildGeoTimeSummaries();
     this.buildProvenanceSummary();
@@ -307,6 +309,26 @@ export class DatasetComponent implements OnInit {
         return dateIn;
     }
 
+    private static validateDataset(dataset: Dataset): Dataset {
+        for (let obj in dataset) {
+            obj = DatasetComponent.validateObject(obj);
+        }
+        return dataset;
+    }
+
+    private static validateObject(parent: any): any {
+        let count = 0;
+        for (let child in parent) {
+            child = DatasetComponent.validateObject(child);
+            count++;
+        }
+        if (count == 0) {
+
+        }
+
+        return parent;
+    }
+
     onSave(ok: boolean): void {
 
         this.save();
@@ -314,7 +336,9 @@ export class DatasetComponent implements OnInit {
 
     save(): void {
         this.datasetSavingEnabled = false;
-        this.service.save(this.catId, this.dataset)
+        this.datasetSave = Object.assign({}, this.dataset);
+        this.datasetSave = DatasetComponent.validateDataset(this.datasetSave);
+        this.service.save(this.catId, this.datasetSave)
             .then(() => {
                 this.saved = true;
                 var d = new Date();
