@@ -356,8 +356,6 @@ public class DcatBuilder {
                 } else {
                     disRes = model.createResource(distribution.getUri());
                 }
-                disRes.addProperty(RDF.type, DCAT.Distribution);
-                dataset.addProperty(property, disRes);
 
                 addLiterals(disRes, DCTerms.title, distribution.getTitle());
                 addLiterals(disRes, DCTerms.description, distribution.getDescription());
@@ -370,11 +368,28 @@ public class DcatBuilder {
 
                 addLiteral(disRes, DCTerms.type, distribution.getType());
 
+                if (    disRes.getProperty(DCTerms.title) != null  ||
+                        disRes.getProperty(DCTerms.description) != null  ||
+                        disRes.getProperty(DCAT.accessURL) != null ||
+                        disRes.getProperty(DCTerms.license) != null ||
+                        disRes.getProperty(DCTerms.conformsTo) != null ||
+                        disRes.getProperty(FOAF.page) != null ||
+                        disRes.getProperty(DCTerms.format) != null ) {
+
+                    disRes.addProperty(RDF.type, DCAT.Distribution);
+                    dataset.addProperty(property, disRes);
+                } else {
+                    model.removeAll(disRes, null, null);
+                    model.removeAll(null, null, disRes);
+                }
+
             }
         }
 
         return this;
     }
+
+
 
     public DcatBuilder addContactPoints(Resource datRes, List<Contact> contacts) {
         if (contacts != null) {
@@ -395,7 +410,7 @@ public class DcatBuilder {
         addLiteral(contactRes, VCARD4.organization_name, contact.getOrganizationName());
         addLiteral(contactRes, VCARD4.organization_unit, contact.getOrganizationUnit());
 
-        if (contact.getEmail() != null) {
+        if (contact.getEmail() != null && !contact.getEmail().isEmpty()) {
             if (contact.getEmail().startsWith("mailto:")) {
                 addProperty(contactRes, VCARD4.hasEmail, contact.getEmail());
             } else {
@@ -403,7 +418,7 @@ public class DcatBuilder {
             }
         }
 
-        if (contact.getHasTelephone() != null) {
+        if (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) {
             if (contact.getHasTelephone().startsWith("tel:")) {
                 addProperty(contactRes, VCARD4.hasTelephone, contact.getHasTelephone());
             } else {
