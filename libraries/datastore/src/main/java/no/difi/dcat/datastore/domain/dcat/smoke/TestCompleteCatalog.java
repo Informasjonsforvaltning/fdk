@@ -129,10 +129,12 @@ public class TestCompleteCatalog {
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
         DataTheme theme = new DataTheme();
         theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        theme.setCode("GOVE");
         theme.setTitle(map("nb","Forvaltning og offentlig støtte"));
 
         DataTheme theme2 = new DataTheme();
         theme2.setUri("http://publications.europa.eu/resource/authority/data-theme/ENVI");
+        theme2.setCode("ENVI");
         theme2.setTitle(map("nb", "Miljø"));
 
         dataset.setTheme(Arrays.asList(theme, theme2));

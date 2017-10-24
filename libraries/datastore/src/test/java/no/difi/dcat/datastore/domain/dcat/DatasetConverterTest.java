@@ -76,10 +76,10 @@ public class DatasetConverterTest {
 
         Map<String, Map<String, SkosCode>> codes = new HashMap<>();
         codes.put(Types.provenancestatement.getType(), new HashMap<>());
-        addCode(codes.get(Types.provenancestatement.getType()),"Vedtak", "http://data.brreg.no/datakatalog/provenance/vedtak");
+        addCode2(codes.get(Types.provenancestatement.getType()),"Vedtak", "Vedtak", "http://data.brreg.no/datakatalog/provenance/vedtak");
 
         codes.put(Types.linguisticsystem.getType(), new HashMap<>());
-        addCode(codes.get(Types.linguisticsystem.getType()), "Norsk", "http://publications.europa.eu/resource/authority/language/NOR");
+        addCode2(codes.get(Types.linguisticsystem.getType()), "Norsk", "NOR", "http://publications.europa.eu/resource/authority/language/NOR");
 
         codes.put(Types.rightsstatement.getType(), new HashMap<>());
         addCode2(codes.get(Types.rightsstatement.getType()),"Offentlig", "PUBLIC","http://publications.europa.eu/resource/authority/access-right/PUBLIC");
@@ -87,7 +87,7 @@ public class DatasetConverterTest {
         addCode2(codes.get(Types.rightsstatement.getType()),"Untatt offentlighet","NON-PUBLIC", "http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC");
 
         codes.put(Types.frequency.getType(), new HashMap<>());
-        addCode(codes.get(Types.frequency.getType()), "Årlig", "http://publications.europa.eu/resource/authority/frequency/ANNUAL");
+        addCode2(codes.get(Types.frequency.getType()), "Årlig", "ANUAL","http://publications.europa.eu/resource/authority/frequency/ANNUAL");
 
         codes.put(Types.referencetypes.getType(), new HashMap<>());
         addCode2(codes.get(Types.referencetypes.getType()), "references", "references", DCTerms.references.getURI());
@@ -97,8 +97,10 @@ public class DatasetConverterTest {
         Map<String,DataTheme> dataThemeMap = new HashMap<>();
         DataTheme gove = new DataTheme();
         gove.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        gove.setCode("GOVE");
         DataTheme envi = new DataTheme();
         envi.setUri("http://publications.europa.eu/resource/authority/data-theme/ENVI");
+        envi.setCode("ENVI");
 
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/GOVE", gove);
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/ENVI", envi);
@@ -120,6 +122,13 @@ public class DatasetConverterTest {
         logger.info("number of references {}", actualDataset.getReferences().size());
         assertThat(actualDataset.getReferences(), is (expectedDataset.getReferences()));
     }
+
+    @Test
+    public void hasLanguage() throws Throwable {
+        logger.info("number of languages {}", actualDataset.getLanguage().size());
+        assertThat(actualDataset.getLanguage().get(0), is (expectedDataset.getLanguage().get(0)));
+    }
+
 
     @Test
     public void hasType() throws Throwable {

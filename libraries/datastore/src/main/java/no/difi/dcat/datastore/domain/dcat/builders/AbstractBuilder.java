@@ -79,6 +79,8 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+
+
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
         List<SkosConcept> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
