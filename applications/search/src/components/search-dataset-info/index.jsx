@@ -56,9 +56,16 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   }
 
   _renderTemporal() {
-    const { temporal } = this.props;
+    const { temporal, language } = this.props;
     const headerFrom = localization.dataset.periodFrom;
     const headerTo = localization.dataset.periodTo;
+    const temporalClass = cx(
+      'fdk-padding-no',
+      {
+        'col-md-8': (language && typeof language !== 'undefined' && language.length > 0),
+        'col-md-12': !(language && typeof language !== 'undefined' && language.length > 0),
+      }
+    );
 
     const children = items => items.map((item, index) => {
       if (item.startDate && item.endDate) {
@@ -122,7 +129,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
     if (temporal && temporal.length > 0) {
       return (
-        <div className="col-md-8 fdk-padding-no">
+        <div className={temporalClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
               <i className="fa fa-calendar" />
@@ -140,12 +147,11 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
   _renderLanguage() {
     const { language, temporal } = this.props;
-    const isTemporal = (temporal && temporal.length > 0) || false;
     const languageClass = cx(
       'fdk-padding-no',
       {
-        'col-md-4': isTemporal,
-        'col-md-12': !isTemporal
+        'col-md-4': (temporal && temporal.length > 0),
+        'col-md-12': !(temporal && temporal.length > 0)
       }
     );
     const children = items => items.map((item, index) => {
@@ -363,7 +369,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-text">
               <h5>{localization.dataset.currentness}</h5>
               <p id="dataset-info-currentnessAnnotation" className="fdk-ingress fdk-margin-bottom-no">
-                {hasCurrentnessAnnotation || noTextToShow}
+                {hasCurrentnessAnnotation}
               </p>
             </div>
           </div>
@@ -384,15 +390,15 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 }
 
 DatasetInfo.defaultProps = {
-  issued: null,
-  accrualPeriodicity: null,
-  provenance: null,
-  hasCurrentnessAnnotation: null,
+  issued: '',
+  accrualPeriodicity: '',
+  provenance: '',
+  hasCurrentnessAnnotation: '',
   spatial: null,
   temporal: null,
   language: null,
   references: null,
-  selectedLanguageCode: null
+  selectedLanguageCode: ''
 };
 
 DatasetInfo.propTypes = {

@@ -88,6 +88,7 @@
     "sample": "Eksempeldata tilgjengelig"
   },
   "dataset": {
+    "accessRight": "Datasettet er",
     "title": "Datasett",
     "type": "Type",
     "conformsTo": "Innholdsstandard",
@@ -139,6 +140,10 @@
         "restricted": "Begrenset offentlighet",
         "nonPublic": "Unntatt offentlighet"
       }
+    },
+    "contactPoint": {
+      "email": "E-post",
+      "telephone": "Telefon"
     }
   }
 

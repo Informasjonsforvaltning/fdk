@@ -5,6 +5,8 @@ import localization from '../../components/localization';
 
 export default class DatasetContactInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { uri, email, organizationUnit, hasTelephone} = this.props.contactPoint;
+
     return (
       <div id="dataset-contactinfo" className="row fdk-row fdk-margin-top-triple">
 
@@ -19,7 +21,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
                 <a
                   id="dataset-contact-uri"
                   title={localization.dataset.contactPoint.background}
-                  href={this.props.uri}
+                  href={uri}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -32,7 +34,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         </div>
         }
 
-        {this.props.organizationUnit && this.props.uri &&
+        {organizationUnit && uri &&
           <div className="col-md-12 fdk-padding-no">
             <div className="fdk-container-detail">
               <div className="fdk-detail-icon fdk-padding-no">
@@ -42,12 +44,12 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
                 <p className="fdk-ingress fdk-margin-bottom-no">
                   <a
                     id="dataset-contact-url"
-                    title={`${localization.dataset.contactPoint.organizationUnit} ${this.props.organizationUnit}`}
-                    href={this.props.url || null}
+                    title={`${localization.dataset.contactPoint.organizationUnit} ${organizationUnit}`}
+                    href={uri || null}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {localization.dataset.contactPoint.organizationUnit} {this.props.organizationUnit}
+                    {localization.dataset.contactPoint.organizationUnit} {organizationUnit}
                     <i className="fa fa-external-link fdk-fa-right" />
                   </a>
                 </p>
@@ -56,22 +58,23 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
           </div>
         }
 
-        {this.props.email &&
-        <div className="col-md-12 fdk-padding-no">
+        {email &&
+        <div className="col-md-8 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-envelope" />
             </div>
             <div className="fdk-detail-text">
+              <h5>{localization.dataset.contactPoint.email}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no">
                 <a
                   id="dataset-contact-email"
-                  title={this.props.email}
-                  href={`mailto:${this.props.email}`}
+                  title={email}
+                  href={`mailto:${email}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {this.props.email}
+                  {email}
                 </a>
               </p>
             </div>
@@ -79,15 +82,16 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         </div>
         }
 
-        {this.props.telephone &&
-        <div className="col-md-12 fdk-padding-no">
+        {hasTelephone &&
+        <div className="col-md-4 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-phone" />
             </div>
             <div className="fdk-detail-text">
+              <h5>{localization.dataset.contactPoint.telephone}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                {this.props.telephone}
+                {hasTelephone}
               </p>
             </div>
           </div>
@@ -100,17 +104,9 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
 }
 
 DatasetContactInfo.defaultProps = {
-  uri: null,
-  email: null,
-  organizationUnit: null,
-  url: null,
-  telephone: null
+  contactPoint: null
 };
 
 DatasetContactInfo.propTypes = {
-  uri: PropTypes.string,
-  email: PropTypes.string,
-  organizationUnit: PropTypes.string,
-  url: PropTypes.string,
-  telephone: PropTypes.string
+  contactPoint: PropTypes.object
 };

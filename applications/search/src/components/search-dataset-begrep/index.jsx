@@ -84,18 +84,16 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
   render() {
     return (
       <div>
-
         { this._renderKeyword() }
-
       </div>
     );
   }
 }
 
 DatasetBegrep.defaultProps = {
-  description: null,
+  description: '',
   keyword: null,
-  selectedLanguageCode: null
+  selectedLanguageCode: ''
 };
 
 DatasetBegrep.propTypes = {

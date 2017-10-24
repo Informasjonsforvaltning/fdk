@@ -7,9 +7,8 @@ import DistributionFormat from '../search-dataset-format';
 import './index.scss';
 
 export default class DatasetDistribution extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  _renderFormats(code) {
-    const { format } = this.props;
-
+  _renderFormats() {
+    const { code, format } = this.props;
     const children = (items, code) => items.map((item) => {
       if (item !== null) {
         const formatArray = item.trim().split(',');
@@ -145,49 +144,27 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   render() {
-    let distributionNonPublic = false;
-    let distributionRestricted = false;
-    let distributionPublic = false;
-
-    let code = '';
-    if (this.props.code) {
-      code = this.props.code;
-    }
-
-    if (code === 'NON_PUBLIC') {
-      distributionNonPublic = true;
-    } else if (code === 'RESTRICTED') {
-      distributionRestricted = true;
-    } else if (code === 'PUBLIC') {
-      distributionPublic = true;
-    } else { // antar public hvis authoritycode mangler
-      distributionPublic = true;
-    }
-
+    const { code } = this.props;
     const distributionClass = cx(
       'fdk-container-detail',
       {
-        'fdk-container-detail-offentlig': distributionPublic,
-        'fdk-container-detail-begrenset': distributionRestricted,
-        'fdk-container-detail-unntatt-offentlig': distributionNonPublic
+        'fdk-container-detail-unntatt-offentlig': code === 'NON_PUBLIC',
+        'fdk-container-detail-begrenset': code === 'RESTRICTED',
+        'fdk-container-detail-offentlig': code === 'PUBLIC'
       }
     );
     return (
       <div id="dataset-distribution" className={distributionClass}>
-
         <h4 className="fdk-margin-bottom">{localization.dataset.distribution.title}</h4>
-
         {this.props.description &&
           <p id="dataset-distribution-description" className="fdk-ingress">
             {this.props.description}
           </p>
         }
-
-        { this._renderFormats(code) }
+        { this._renderFormats() }
         { this._renderTilgangsURL() }
         { this._renderLicense() }
         { this._renderDistributionPage() }
-
         <div className="fdk-container-detail-text">
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
           <p className="fdk-ingress fdk-ingress-detail" />
@@ -202,7 +179,7 @@ DatasetDistribution.defaultProps = {
   description: null,
   accessUrl: null,
   format: null,
-  code: 'PUBLIC',
+  code: '',
   license: null,
   page: null,
   selectedLanguageCode: null

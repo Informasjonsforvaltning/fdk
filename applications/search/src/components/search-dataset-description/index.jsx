@@ -5,14 +5,15 @@ import localization from '../../components/localization';
 
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderPublisher() {
-    const publisher = this.props.publisher;
+    const { publisher } = this.props;
+    const ownedBy = localization.search_hit.owned;
     if (publisher && publisher.name) {
       return (
         <span>
-          {localization.search_hit.owned}&nbsp;
-          <span id="dataset-descritption-publisher-text">
+          {ownedBy}&nbsp;
+          <strong id="dataset-descritption-publisher-text" className="fdk-strong-virksomhet">
             {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
-          </span>
+          </strong>
         </span>
       );
     }
@@ -20,18 +21,17 @@ export default class DatasetDescription extends React.Component { // eslint-disa
   }
 
   _renderThemes() {
-    let themeNodes;
-    const themes = this.props.themes;
+    let themeNodes = null;
+    const { themes } = this.props;
     if (themes) {
-      themeNodes = themes.map((singleTheme, index) => (
-        <a
-          key={`theme-${index}`}
-          href={singleTheme.id}
+      themeNodes = themes.map(singleTheme => (
+        <div
+          key={`dataset-description-theme-${singleTheme.code}`}
+          id={`dataset-description-theme-${singleTheme.code}`}
+          className="fdk-label fdk-label-on-grey"
         >
-          <div id={`dataset-description-theme-${index}`} className="fdk-label">
-            {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
-          </div>
-        </a>
+          {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+        </div>
       ));
     }
     return themeNodes;
@@ -50,6 +50,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
           {this._renderPublisher()}
           {this._renderThemes()}
         </div>
+
         {this.props.description &&
         <p className="fdk-ingress">
           {this.props.description}
@@ -62,17 +63,17 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 }
 
 DatasetDescription.defaultProps = {
-  title: null,
-  description: null,
+  title: '',
+  description: '',
   publisher: null,
   themes: null,
-  selectedLanguageCode: null
+  selectedLanguageCode: ''
 };
 
 DatasetDescription.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  publisher: PropTypes.shape({}),
-  themes: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  publisher: PropTypes.object,
+  themes: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

@@ -137,7 +137,7 @@
 }
 
 .fdk-label-distribution {
-	padding: 10px 14px;
+	padding: 10px 12px;
 	margin: 6px 2px 0px 0px;
 	color: var(--color1);
 	size: 1.4rem;
@@ -145,7 +145,7 @@
 	border-radius: 5px;
 	size: auto;
 	display: inline-block;
-	border: 2px dotted;
+	border: 1px solid;
 }
 
 .fdk-label-distribution-offentlig {
