@@ -98,7 +98,8 @@
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
       "accessUrl": "TilgangsURL",
-      "license": "Innholdsstandard",
+      "license": "Forutsetning for bruk av datasettet",
+      "conformsTo": "Innholdsstandard",
       "page": "Mer informasjon om denne distribusjonen",
       "standard": "Standard"
     },
@@ -131,19 +132,20 @@
     "accuracyAnnotation": "Nøyaktighet",
     "availabilityAnnotations": "Tilgjengelighet",
     "contactPoint": {
+      "email": "E-post",
+      "telephone": "Telefon",
       "background": "Bakgrunnsinformasjon om datasettet",
       "organizationUnit": "Ta kontakt med"
     },
+    "legalBasisForRestriction": "Skjermingshjemmel",
+    "legalBasisForProcessing": "Behandlingsgrunnlag",
+    "legalBasisForAccess": "Utleveringshjemmel",
     "accessRights": {
       "authorityCode": {
         "public": "Offentlig",
         "restricted": "Begrenset offentlighet",
         "nonPublic": "Unntatt offentlighet"
       }
-    },
-    "contactPoint": {
-      "email": "E-post",
-      "telephone": "Telefon"
     }
   }
 

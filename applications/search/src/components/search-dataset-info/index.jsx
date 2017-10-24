@@ -7,8 +7,6 @@ import cx from 'classnames';
 import localization from '../../components/localization';
 import './index.scss';
 
-const noTextToShow = '—';
-
 export default class DatasetInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderSpatial() {
     const { spatial } = this.props;
@@ -63,7 +61,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       'fdk-padding-no',
       {
         'col-md-8': (language && typeof language !== 'undefined' && language.length > 0),
-        'col-md-12': !(language && typeof language !== 'undefined' && language.length > 0),
+        'col-md-12': !(language && typeof language !== 'undefined' && language.length > 0)
       }
     );
 
@@ -73,6 +71,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
+            className="clearfix"
           >
             <div className="dataset-temporal-date">
               <h5>{ headerFrom }</h5>
@@ -97,6 +96,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
+            className="clearfix"
           >
             <div className="dataset-temporal-date">
               <h5>{ headerFrom }</h5>
@@ -113,8 +113,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
+            className="clearfix"
           >
-            <div className="dataset-temporal-date">
+            <div className="dataset-temporal-date pull-right">
               <h5>{ headerTo }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -218,10 +219,10 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                       href={item.source.uri}
                     >
                       {
-                        item.source.title[this.props.selectedLanguageCode]
-                        || item.source.title.nb
-                        || item.source.title.nn
-                        || item.source.title.en
+                        item.source.prefLabel[this.props.selectedLanguageCode]
+                        || item.source.prefLabel.nb
+                        || item.source.prefLabel.nn
+                        || item.source.prefLabel.en
                       }
                       <i className="fa fa-external-link fdk-fa-right" />
                     </a>
@@ -251,10 +252,10 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                     href={item.source.uri}
                   >
                     {
-                      item.source.title[this.props.selectedLanguageCode]
-                      || item.source.title.nb
-                      || item.source.title.nn
-                      || item.source.title.en
+                      item.source.prefLabel[this.props.selectedLanguageCode]
+                      || item.source.prefLabel.nb
+                      || item.source.prefLabel.nn
+                      || item.source.prefLabel.en
                     }
                     <i className="fa fa-external-link fdk-fa-right" />
                   </a>
@@ -326,19 +327,11 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             <div className="fdk-detail-icon">
               <i className="fa fa-refresh" />
             </div>
-
             <div className="fdk-detail-text">
               <h5>{localization.dataset.frequency}</h5>
-              {accrualPeriodicity &&
               <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
                 {accrualPeriodicity.charAt(0).toUpperCase()}{accrualPeriodicity.substr(1)}
               </p>
-              }
-              {!accrualPeriodicity &&
-              <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
-                <span>{noTextToShow}</span>
-              </p>
-              }
             </div>
           </div>
         </div>
@@ -375,22 +368,17 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           </div>
         </div>
         }
-
         { this._renderSpatial() }
-
         { this._renderTemporal() }
-
         { this._renderLanguage() }
-
         { this._renderReferences() }
-
       </div>
     );
   }
 }
 
 DatasetInfo.defaultProps = {
-  issued: '',
+  issued: null,
   accrualPeriodicity: '',
   provenance: '',
   hasCurrentnessAnnotation: '',
@@ -402,7 +390,7 @@ DatasetInfo.defaultProps = {
 };
 
 DatasetInfo.propTypes = {
-  issued: PropTypes.string,
+  issued: PropTypes.number,
   accrualPeriodicity: PropTypes.string,
   provenance: PropTypes.string,
   hasCurrentnessAnnotation: PropTypes.string,

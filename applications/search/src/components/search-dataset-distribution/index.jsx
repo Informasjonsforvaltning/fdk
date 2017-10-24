@@ -70,39 +70,63 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 
   _renderLicense() {
     const { license } = this.props;
-
-    const children = items => items.map((license) => {
-      if (license && license.uri && license.prefLabel) {
-        return (
-          <a
-            href={license.uri}
-          >
-            {
-              license.prefLabel[this.props.selectedLanguageCode]
-              || license.prefLabel.nb
-              || license.prefLabel.nn
-              || license.prefLabel.en
-            }
-          </a>
-        );
-      } else if (license && license.uri) {
-        return (
-          <a
-            href={license.uri}
-          >
-            {localization.dataset.distribution.standard}
-          </a>
-        );
-      }
-      return null;
-    });
-
     if (license && license.uri) {
       return (
         <div>
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
           <p className="fdk-ingress">
-            { children(license) }
+            {license && license.uri && license.prefLabel &&
+            <a
+              href={license.uri}
+            >
+              {
+                license.prefLabel[this.props.selectedLanguageCode]
+                || license.prefLabel.nb
+                || license.prefLabel.nn
+                || license.prefLabel.en
+              }
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+            }
+            {license && license.uri && !license.prefLabel &&
+            <a
+              href={license.uri}
+            >
+              {localization.dataset.distribution.standard}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+            }
+          </p>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  _renderConformsTo() {
+    const { conformsTo } = this.props;
+
+    const children = items => items.map((item, index) => (
+      <a
+        key={item.uri}
+        href={item.uri}
+      >
+        {
+          item.prefLabel[this.props.selectedLanguageCode]
+          || item.prefLabel.nb
+          || item.prefLabel.nn
+          || item.prefLabel.en
+        }
+        <i className="fa fa-external-link fdk-fa-right" />
+      </a>
+    ));
+
+    if (conformsTo) {
+      return (
+        <div>
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.conformsTo}</h5>
+          <p className="fdk-ingress">
+            { children(conformsTo) }
           </p>
         </div>
       );
@@ -116,6 +140,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       if (page && page.uri && page.prefLabel) {
         return (
           <a
+            key={page.uri}
             href={page.uri}
           >
             {
@@ -130,7 +155,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       return null;
     });
 
-    if (page && page.uri) {
+    if (page) {
       return (
         <div>
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.page}</h5>
@@ -164,11 +189,14 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
         { this._renderFormats() }
         { this._renderTilgangsURL() }
         { this._renderLicense() }
+        { this._renderConformsTo() }
         { this._renderDistributionPage() }
+
         <div className="fdk-container-detail-text">
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
           <p className="fdk-ingress fdk-ingress-detail" />
         </div>
+
       </div>
 
     );
@@ -181,6 +209,7 @@ DatasetDistribution.defaultProps = {
   format: null,
   code: '',
   license: null,
+  conformsTo: null,
   page: null,
   selectedLanguageCode: null
 };
@@ -191,6 +220,7 @@ DatasetDistribution.propTypes = {
   format: PropTypes.array,
   code: PropTypes.string,
   license: PropTypes.object,
-  page: PropTypes.object,
+  conformsTo: PropTypes.array,
+  page: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

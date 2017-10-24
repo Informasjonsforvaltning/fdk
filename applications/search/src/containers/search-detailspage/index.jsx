@@ -10,12 +10,14 @@ import DatasetQuality from '../../components/search-dataset-quality-content';
 import DatasetBegrep from '../../components/search-dataset-begrep';
 import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 
+import api from '../../utils/api.json';
+
 export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {},
-      loading: true
+      dataset: {}, // api.dataset[0],
+      loading: false
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
@@ -58,6 +60,12 @@ export default class DetailsPage extends React.Component {
             || dataset.description.en
             : null
           }
+          objective={dataset.objective ?
+            dataset.objective[this.props.selectedLanguageCode]
+            || dataset.objective.nb
+            || dataset.objective.nn
+            || dataset.objective.en
+            : null}
           publisher={dataset.publisher}
           themes={dataset.theme}
           selectedLanguageCode={this.props.selectedLanguageCode}
@@ -69,7 +77,7 @@ export default class DetailsPage extends React.Component {
 
   _renderDistribution() {
     const { distribution } = this.state.dataset;
-    const {accessRights} = this.state.dataset;
+    const { accessRights } = this.state.dataset;
     if (!distribution) {
       return null;
     }
@@ -88,6 +96,7 @@ export default class DetailsPage extends React.Component {
         format={distribution.format}
         code={accessRights ? accessRights.code : null}
         license={distribution.license}
+        conformsTo={distribution.conformsTo}
         page={distribution.page}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
@@ -101,6 +110,9 @@ export default class DetailsPage extends React.Component {
       return (
         <DatasetKeyInfo
           accessRights={dataset.accessRights}
+          legalBasisForRestriction={dataset.legalBasisForRestriction}
+          legalBasisForProcessing={dataset.legalBasisForProcessing}
+          legalBasisForAccess={dataset.legalBasisForAccess}
           type={dataset.type}
           conformsTo={dataset.conformsTo}
           informationModel={dataset.informationModel}
@@ -208,16 +220,30 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderContactInfo() {
-    const { contactPoint } = this.state.dataset;
+    const { contactPoint, landingPage } = this.state.dataset;
     if (!contactPoint) {
       return null;
     }
     return contactPoint.map(item => (
       <DatasetContactInfo
         key={item.uri}
+        landingPage={landingPage}
         contactPoint={item}
       />
     ));
+  }
+
+  _renderBegrep() {
+    const { keyword, subject } = this.state.dataset;
+    if (keyword || subject) {
+      return (
+        <DatasetBegrep
+          keyword={keyword}
+          subject={subject}
+        />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -232,12 +258,7 @@ export default class DetailsPage extends React.Component {
               {this._renderDistribution()}
               {this._renderDatasetInfo()}
               {this._renderQuality()}
-
-              {this.state.dataset.keyword &&
-              <DatasetBegrep
-                keyword={this.state.dataset.keyword}
-              />
-              }
+              {this._renderBegrep()}
               {this._renderContactInfo()}
             </div>
           </div>

@@ -26,6 +26,102 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     }
     return null;
   }
+  _renderLegalBasis() {
+    const {
+      legalBasisForRestriction,
+      legalBasisForProcessing,
+      legalBasisForAccess
+    } = this.props;
+
+    const childrenLegalBasisForRestriction = items => items.map(item => (
+      <div
+        key={item.uri}
+      >
+        <a
+          href={item.uri}
+        >
+          {
+            item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            || localization.dataset.distribution.standard
+          }
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      </div>
+    ));
+
+    const childrenLegalBasisForProcessing = items => items.map(item => (
+      <div
+        key={item.uri}
+      >
+        <a
+          href={item.uri}
+        >
+          {
+            item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            || localization.dataset.distribution.standard
+          }
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      </div>
+    ));
+
+    const childrenLegalBasisForAccess = items => items.map(item => (
+      <div
+        key={item.uri}
+      >
+        <a
+          href={item.uri}
+        >
+          {
+            item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            || localization.dataset.distribution.standard
+          }
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      </div>
+    ));
+
+    if (legalBasisForProcessing || legalBasisForRestriction || legalBasisForAccess) {
+      return (
+        <div
+          className="col-md-12 fdk-padding-no"
+        >
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-institution" />
+            </div>
+            <div className="fdk-detail-text">
+              <h5>{localization.dataset.legalBasisForRestriction}</h5>
+              <div className="fdk-ingress">
+                { childrenLegalBasisForRestriction(legalBasisForRestriction) }
+              </div>
+
+              <h5>{localization.dataset.legalBasisForProcessing}</h5>
+              <div className="fdk-ingress">
+                { childrenLegalBasisForProcessing(legalBasisForProcessing) }
+              </div>
+
+              <h5>{localization.dataset.legalBasisForAccess}</h5>
+              <div className="fdk-ingress">
+                { childrenLegalBasisForAccess(legalBasisForAccess) }
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  }
+
   _renderType() {
     const { type } = this.props;
     if (!type) {
@@ -70,7 +166,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
       return (
         <div
-          className="col-md-12 fdk-padding-no"
+          className="col-md-4 fdk-padding-no"
         >
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
@@ -132,6 +228,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       <div>
         { this._renderHeader() }
         <div className="row fdk-row">
+          {this._renderLegalBasis()}
           {this._renderType()}
           {this._renderInformationModel()}
           {this._renderConformsTo()}
@@ -143,6 +240,9 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 
 DatasetKeyInfo.defaultProps = {
   accessRights: null,
+  legalBasisForRestriction: null,
+  legalBasisForProcessing: null,
+  legalBasisForAccess: null,
   type: '',
   conformsTo: null,
   informationModel: null,
@@ -151,6 +251,9 @@ DatasetKeyInfo.defaultProps = {
 
 DatasetKeyInfo.propTypes = {
   accessRights: PropTypes.object,
+  legalBasisForRestriction: PropTypes.array,
+  legalBasisForProcessing: PropTypes.array,
+  legalBasisForAccess: PropTypes.array,
   type: PropTypes.string,
   conformsTo: PropTypes.array,
   informationModel: PropTypes.array,

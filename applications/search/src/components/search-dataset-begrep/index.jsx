@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'react-bootstrap';
 
+import BegrepCollapse from '../search-dataset-begrep-collapse';
 import localization from '../../components/localization';
 
 export default class DatasetBegrep extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -17,15 +18,51 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
     this.setState({ detailed: !this.state.detailed });
   }
 
-  _renderHeader() {
-    return (
-      <div className="fdk-container-detail fdk-container-detail-header">
-        <i className="fa fa-book fdk-fa-left fdk-color-cta" />
-        {this.localization.dataset.subject}
-      </div>
-    );
-  }
   _renderBegrep() {
+    const { subject } = this.props;
+    const children = items => items.map(item => (
+      <BegrepCollapse
+        key={item.uri}
+        prefLabel={item.prefLabel ?
+          item.prefLabel[this.props.selectedLanguageCode]
+          || item.prefLabel.nb
+          || item.prefLabel.no
+          || item.prefLabel.nn
+          || item.prefLabel.en
+          : null
+        }
+        definition={item.definition ?
+          item.definition[this.props.selectedLanguageCode]
+          || item.definition.nb
+          || item.definition.no
+          || item.definition.nn
+          || item.definition.en
+          : null}
+        note={item.note ?
+          item.note[this.props.selectedLanguageCode]
+          || item.note.nb
+          || item.note.no
+          || item.note.nn
+          || item.note.en
+          : null}
+        source={item.source}
+      />
+    ));
+    if (subject) {
+      return (
+        <div>
+          <div className="fdk-container-detail fdk-container-detail-header">
+            <i className="fa fa-book fdk-fa-left fdk-color-cta" />
+            {localization.dataset.subject}
+          </div>
+          { children(subject) }
+        </div>
+      );
+    }
+    return null;
+  }
+
+  _renderBegrep2() {
     return (
       <div className="fdk-ingress fdk-margin-bottom-no" role="button" tabIndex={0} onClick={this.toggle}>
         <strong className="pull-left">Jordsmonn:&nbsp;</strong>
@@ -84,6 +121,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
   render() {
     return (
       <div>
+        { this._renderBegrep() }
         { this._renderKeyword() }
       </div>
     );
@@ -91,13 +129,13 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
 }
 
 DatasetBegrep.defaultProps = {
-  description: '',
+  subjet: null,
   keyword: null,
   selectedLanguageCode: ''
 };
 
 DatasetBegrep.propTypes = {
-  description: PropTypes.string,
+  description: PropTypes.array,
   keyword: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

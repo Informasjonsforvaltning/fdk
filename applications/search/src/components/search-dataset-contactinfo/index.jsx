@@ -1,16 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import localization from '../../components/localization';
 
 export default class DatasetContactInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { uri, email, organizationUnit, hasTelephone} = this.props.contactPoint;
+    const { contactPoint = null } = this.props;
+    let uri,
+      email,
+      organizationUnit,
+      hasTelephone = null;
+
+    if (contactPoint) {
+      uri = contactPoint.uri;
+      email = contactPoint.email;
+      organizationUnit = contactPoint.organizationUnit;
+      hasTelephone = contactPoint.hasTelephone;
+    }
+
+
+    const emailClass = cx(
+      'fdk-padding-no',
+      {
+        'col-md-8': hasTelephone,
+        'col-md-12': !hasTelephone
+      }
+    );
+
+    const telephoneClass = cx(
+      'fdk-padding-no',
+      {
+        'col-md-4': email,
+        'col-md-12': !email
+      }
+    );
 
     return (
       <div id="dataset-contactinfo" className="row fdk-row fdk-margin-top-triple">
 
-        {this.props.uri &&
+        {this.props.landingPage && this.props.landingPage[0] &&
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-padding-no">
@@ -21,7 +50,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
                 <a
                   id="dataset-contact-uri"
                   title={localization.dataset.contactPoint.background}
-                  href={uri}
+                  href={this.props.landingPage[0]}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -59,7 +88,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         }
 
         {email &&
-        <div className="col-md-8 fdk-padding-no">
+        <div className={emailClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-envelope" />
@@ -83,7 +112,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
         }
 
         {hasTelephone &&
-        <div className="col-md-4 fdk-padding-no">
+        <div className={telephoneClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-phone" />
@@ -104,9 +133,11 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
 }
 
 DatasetContactInfo.defaultProps = {
-  contactPoint: null
+  contactPoint: null,
+  landingPage: null
 };
 
 DatasetContactInfo.propTypes = {
-  contactPoint: PropTypes.object
+  contactPoint: PropTypes.object,
+  landingPage: PropTypes.array
 };
