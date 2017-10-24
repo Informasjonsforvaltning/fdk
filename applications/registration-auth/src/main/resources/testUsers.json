@@ -95,5 +95,22 @@
         "SocialSecurityNumber": "01234567891"
       }
     ]
+  },
+  {
+    "user": 6,
+    "ssn": "01122334455",
+    "entities": [
+      {
+        "Name": "SKATTEETATEN",
+        "Type": "Enterprise",
+        "OrganizationNumber": "974761076",
+        "Status": "Active"
+      },
+      {
+        "Name": "SKATT SKATTEETATEN",
+        "Type": "Person",
+        "SocialSecurityNumber": "01122334455"
+      }
+    ]
   }
 ]

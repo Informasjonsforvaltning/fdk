@@ -12,7 +12,7 @@ services:
 
 apt:
   sources:
-    - google-chrome # we need to install chrome for running the Angular e2e tests
+    - google-chrome # we need to install chrome for running the Angular e2e tests. En liten endring. Skal forkastes.
   packages:
     - google-chrome-stable
 
