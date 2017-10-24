@@ -45,7 +45,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
                 Dataset datasetObject = create(datasetResource, catalog, locations, codes, dataThemes);
                 datasetObject.setDistribution(getDistributions(datasetResource, DCAT.distribution));
-                datasetObject.setSample(getDistributions(datasetResource,DCAT.sample));
+                datasetObject.setSample(getDistributions(datasetResource, DCAT.sample));
 
                 datasets.add(datasetObject);
             }
@@ -107,7 +107,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setTemporal(extractPeriodOfTime(resource));
             ds.setSpatial(getCodes(locations, extractMultipleStrings(resource, DCTerms.spatial)));
 
-            ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()), extractAsString(resource, DCTerms.accessRights)));
+            ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()),extractAsString(resource, DCTerms.accessRights)));
             ds.setAccessRightsComment(extractMultipleStrings(resource, DCATNO.accessRightsComment));
             ds.setLegalBasisForAccess(extractSkosConcept(resource, DCATNO.legalBasisForAccess));
             ds.setLegalBasisForProcessing(extractSkosConcept(resource, DCATNO.legalBasisForProcessing));
