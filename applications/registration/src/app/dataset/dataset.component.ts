@@ -157,9 +157,7 @@ export class DatasetComponent implements OnInit {
           });
 
           dataset.distributions = DistributionFormComponent.setDistributions(dataset.distributions);
-          console.log(dataset.samples);
           dataset.samples = DistributionFormComponent.setDistributions(dataset.samples);
-          console.log(dataset.samples);
 
           if (dataset.issued && dataset.issued.formatted) {
               dataset.issued = DatasetComponent.convertDateStringFormat(dataset.issued.formatted, ".", "-");

@@ -38,9 +38,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
@@ -56,6 +58,7 @@ public class CrawlerJob implements Runnable {
     private Resource rdfStatus;
 
     public List<String> getValidationResult() {return validationResult;}
+    private Set<String> illegalUris = new HashSet<>();
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
@@ -343,15 +346,18 @@ public class CrawlerJob implements Runnable {
             Resource resource = locIter.next();
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
             try {
-                URL locUrl = new URL(locUri);
-                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
-                locConnection.setRequestMethod("GET");
-                if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    //Remove non-resolvable location from dataset
-                    resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
-                    resultMsg.append("\n");
-                    model.removeAll(resource,DCTerms.spatial,null);
-                    logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}",locUri);
+                if (!illegalUris.contains(locUri)) {
+                    URL locUrl = new URL(locUri);
+                    HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
+                    locConnection.setRequestMethod("GET");
+                    if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                        //Remove non-resolvable location from dataset
+                        resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
+                        resultMsg.append("\n");
+                        model.removeAll(resource, DCTerms.spatial, null);
+                        logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}", locUri);
+                        illegalUris.add(locUri);
+                    }
                 }
             } catch (MalformedURLException | ClassCastException e) {
                 logger.error("URL not valid: {} ", locUri,e);
