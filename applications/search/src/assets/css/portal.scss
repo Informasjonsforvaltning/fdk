@@ -1,8 +1,10 @@
+@import './colors.scss';
+
 /*  C O N T A I N E R  */
 
 .fd-column-search-left {
 	height: auto;
-	border: 1px solid var(--color4);
+	border: 1px solid $color4;
 	border-radius: 2px;
 	margin: 0;
 	padding: 15px 15px 20px 15px;
@@ -13,8 +15,8 @@
 
 
 .fdk-search {
-    color: var(--color1);
-    border: 1px solid var(--color1);
+    color: $color1;
+    border: 1px solid $color1;
     border-radius: 5px;
     font-size: 3rem;
     line-height: 3rem;
@@ -24,21 +26,21 @@
 }
 
 ::-webkit-input-placeholder { /* PLACEHOLDER COLOR FOR: WebKit, Blink, Edge */
-    color: var(--color3);
+    color: $color3;
 }
 
 :-moz-placeholder { /* PLACEHOLDER COLOR FOR: Mozilla Firefox 4 to 18 */
-   color: var(--color3);
+   color: $color3;
    opacity: 1;
 }
 
 ::-moz-placeholder { /* PLACEHOLDER COLOR FOR: Mozilla Firefox 19+ */
-   color: var(--color3);
+   color: $color3;
    opacity: 1;
 }
 
 :-ms-input-placeholder { /* PLACEHOLDER COLOR FOR: Internet Explorer 10-11 */
-   color: var(--color3);
+   color: $color3;
 }
 
 
@@ -46,8 +48,8 @@
 
 
 .fdk-container-search-hit {
-  background-color: var(--color0);
-	border: 1px solid var(--color6);
+  background-color: $color0;
+	border: 1px solid $color6;
   margin: 0 0 10px 0;
   padding: 10px 30px 35px 30px;
   border-radius: 5px;
@@ -56,20 +58,20 @@
 
 .fdk-container-distributions {
 	width: 100%;
-	border-left: 10px solid var(--color1);
+	border-left: 10px solid $color1;
 	padding-left: 10px;
 }
 
 .fdk-distributions-green {
-	border-left: 10px solid var(--color-green);
+	border-left: 10px solid $color-green;
 }
 
 .fdk-distributions-yellow {
-	border-left: 10px solid var(--color-yellow);
+	border-left: 10px solid $color-yellow;
 }
 
 .fdk-distributions-red {
-	border-left: 10px solid var(--color-red);
+	border-left: 10px solid $color-red;
 }
 
 .fdk-count {
@@ -87,7 +89,7 @@
 /*  D E T A I L  P A G E  */
 
 .fdk-container-detail {
-	background-color: var(--color0);
+	background-color: $color0;
 	margin: 3px;
 	padding: 28px 30px 30px 30px;
 	border-radius: 4px;
@@ -95,8 +97,8 @@
 }
 
 .fdk-container-detail-header {
-	background-color: var(--color1);
-	color: var(--color0);
+	background-color: $color1;
+	color: $color0;
   font-size: 2.25rem;
   line-height: 2.25rem;
 	margin-top: 60px;
@@ -114,21 +116,21 @@
 }
 
 .fdk-container-detail-begrep:hover {
-	box-shadow: 0px 3px 12px var(--color4);
+	box-shadow: 0px 3px 12px $color4;
 }
 
 .fdk-container-detail-offentlig {
-	border-left: 10px solid var(--color-green);
+	border-left: 10px solid $color-green;
 	padding-left: 20px;
 }
 
 .fdk-container-detail-begrenset {
-	border-left: 10px solid var(--color-yellow);
+	border-left: 10px solid $color-yellow;
 	padding-left: 20px;
 }
 
 .fdk-container-detail-unntatt {
-	border-left: 10px solid var(--color-red);
+	border-left: 10px solid $color-red;
 	padding-left: 20px;
 }
 
@@ -139,7 +141,7 @@
 .fdk-label-distribution {
 	padding: 10px 14px;
 	margin: 6px 2px 0px 0px;
-	color: var(--color1);
+	color: $color1;
 	size: 1.4rem;
 	line-height: 1.4rem;
 	border-radius: 5px;
@@ -149,19 +151,19 @@
 }
 
 .fdk-label-distribution-offentlig {
-	border-color: var(--color-green);
+	border-color: $color-green;
 }
 
 .fdk-label-distribution-begrenset {
-	border-color: var(--color-yellow);
+	border-color: $color-yellow;
 }
 
 .fdk-label-distribution-skjermet {
-	border-color: var(--color-red);
+	border-color: $color-red;
 }
 
 .fdk-label-distribution-testdata {
-	border-color: var(--color1);
+	border-color: $color1;
 }
 
 .fdk-row {
@@ -177,7 +179,7 @@
 	float: left;
 	font-size: 2.8rem;
 	padding-top: 6px;
-	color: var(--color-cta);
+	color: $color-cta;
 }
 
 .fdk-detail-icon-oneline {
@@ -199,18 +201,18 @@
 
 .fdk-search-subheading {
     font-weight: 400;
-    border-bottom: 1px solid var(--color3);
+    border-bottom: 1px solid $color3;
     padding: 0.4rem 0 0.8rem 0;
-    margin-bottom: 0.6rem;    
+    margin-bottom: 0.6rem;
 }
 
 .fdk-icon-detail-big {
-	color: var(--color-cta);
+	color: $color-cta;
 	font-size: 3rem;
 }
 
 .fdk-p-detail {
-	color: var(--color4);
+	color: $color4;
 	size: 1.5rem;
 	line-height: 1.5rem;
 }

@@ -1,8 +1,10 @@
+@import './colors.scss';
+
 /*  T Y P O G R A P H Y  */
 
 
 h1 {
-    color: var(--color1);
+    color: $color1;
     font-size: 3.0rem;
     line-height: 3.6rem;
     font-weight: 500;
@@ -10,7 +12,7 @@ h1 {
 }
 
 h2 {
-    color: var(--color1);
+    color: $color1;
     font-size: 2.625rem;
     line-height: 3.15rem;
     font-weight: 500;
@@ -19,13 +21,13 @@ h2 {
 h2.fdk-page-not-found { /* 404 */
     font-size: 160px;
     line-height: 160px;
-    color: var(--color4);
+    color: $color4;
     text-align: center;
     margin: 0;
 }
 
 h3 {
-    color: var(--color1);
+    color: $color1;
     font-size: 2.25rem;
     line-height: 2.7rem;
     font-weight: 500;
@@ -33,7 +35,7 @@ h3 {
 }
 
 h4 {
-    color: var(--color1);
+    color: $color1;
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: 500;
@@ -41,10 +43,12 @@ h4 {
 }
 
 h5 {
-    color: var(--color1);
-    font-size: 1.5rem;
+    color: $color3;
+    font-size: 1.4rem;
     line-height: 1.8rem;
-    font-weight: 600;
+    font-weight: 400;
+    padding: 0px;
+    margin: 0px 0px 4px 0px;
 }
 
 p {
@@ -58,14 +62,19 @@ p {
     margin: 0 0 2.1rem 0;
 }
 
+.fdk-ingress-detail {
+    margin: 0px;
+    padding: 0px;
+}
+
 a {
-    color: var(--color1);
+    color: $color1;
     text-decoration: underline;
 }
 
 a:hover {
     text-decoration: none;
-    color: var(--color1);
+    color: $color1;
 }
 
 .fdk-p-header {
@@ -76,10 +85,24 @@ a:hover {
 }
 
 .fdk-p-header-sub {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    padding: 0px;
+    font-size: 1.7rem;
+    line-height: 1.7rem;
+    text-align: center;
+    padding: 1.3rem 0px 0px 0px;
     margin: 0px;
+}
+
+.fdk-p-footer {
+    font-size: 1.4rem;
+    line-height: 1.9rem;
+    font-weight: 300;
+    color: $color3;
+    padding: 0;
+    margin: 0;
+}
+
+.fdk-p-footer > a {
+    color: $color3;
 }
 
 .fdk-header-beta > a {
@@ -87,7 +110,7 @@ a:hover {
 }
 
 .fdk-textregular {
-    font-weight: 400;
+	font-weight: 400;
 }
 
 .fdk-text-white {
@@ -95,15 +118,39 @@ a:hover {
 }
 
 .fdk-text-right {
-    text-align: right;
+	text-align: right;
 }
 
 .fdk-text-center {
-    text-align: center;
+	text-align: center;
 }
 
 .fdk-text-regular {
-    font-weight: 400;
+	font-weight: 400;
+}
+
+.fdk-strong-virksomhet {
+    color: $color-cta3;
+    font-weight: 600;
+    letter-spacing: 0.03rem;
+    margin-right: 10px;
+    font-size: 1.6rem;
+}
+
+.fdk-p-path {
+    color: $color3;
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+.fdk-p-path > a {
+    text-decoration: none;
+    color: $color3;
+}
+
+.fdk-p-path > a:hover {
+    text-decoration: underline;
 }
 
 
@@ -111,11 +158,11 @@ a:hover {
 /*  F O N T   A W E S O M E  */
 
 .fdk-fa-right {
-    margin-left: 5px;
+	margin-left: 5px;
 }
 
 .fdk-fa-left {
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .fdk-fa-big {
@@ -126,13 +173,19 @@ a:hover {
 }
 
 .fdk-lLabel-neutral:active > .fdk-fa-arrow-left {
-    color: #fff;
+	color: #fff;
 }
 
 .fdk-label-default:hover > .fdk-fa-button { /* Hovering for labels with font awesome icons */
-    color: var(--color1);
+	color: $color1;
 }
 
 .fdk-label-default:active > .fdk-fa-button { /* Hovering for labels with font awesome icons */
-    color: #fff;
+	color: #fff;
+}
+
+.fdk-fa-path {
+    color: $color3;
+    margin: 0px 8px;
+    font-size: 0.8rem !important;
 }

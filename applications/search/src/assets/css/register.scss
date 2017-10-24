@@ -1,17 +1,19 @@
+@import './colors.scss';
+
 /*  C O N T A I N E R S  */
 
 .fdk-container-reg-expanded {
-    background-color: var(--color0);
+    background-color: $color0;
     padding: 40px;
     margin: 0px 0px 10px 0px;
     border-radius: 4px;
-	box-shadow: 0px 3px 12px var(--color4);
+	box-shadow: 0px 3px 12px $color4;
 }
 
 .fdk-container-reg-collapsed {
     padding: 15px 20px;
     font-size: 1.5rem;
-    color: var(--color1);
+    color: $color1;
 }
 
 .fdk-input-reg-space {
@@ -23,7 +25,7 @@
 /*  T A B L E  */
 
 .fdk-table-reg {
-    color: var(--color0);
+    color: $color0;
     border-radius: 3px;
     width: 100%;
     padding: 10px 20px;
@@ -31,7 +33,7 @@
 }
 
 .fdk-table-reg-header {
-    background-color: var(--color1);
+    background-color: $color1;
 }
 
 
@@ -41,21 +43,21 @@
 
 .fdk-reg-divider-left {
     width: 40px;
-    border-top: 1px solid var(--color5);
+    border-top: 1px solid $color5;
     margin: 0px 0px 40px -40px;
     float: left;
 }
 
 .fdk-reg-divider-center {
     width: 100%;
-    border-top: 1px solid var(--color5);
+    border-top: 1px solid $color5;
     margin: 0px 0px 40px 0px;
     float: left;
 }
 
 .fdk-reg-divider-right {
     width: 40px;
-    border-top: 1px solid var(--color5);
+    border-top: 1px solid $color5;
     margin: 0px -40px 40px 0px;
     float: left;
 }
@@ -68,9 +70,9 @@
     width: 100%;
     padding: 6px 8px;
     margin: 0px 0px 50px 0px;
-    background-color: var(--color0);
-    color: var(--color1);
-    border: 2px solid var(--color5);
+    background-color: $color0;
+    color: $color1;
+    border: 2px solid $color5;
     border-radius: 4px;
     font-size: 1.875rem;
     line-height: 1.875rem;
@@ -78,11 +80,11 @@
 }
 
 .fdk-input-reg-string:hover {
-    border: 2px solid var(--color-cta2);
+    border: 2px solid $color-cta2;
 }
 
 .fdk-input-on-grey {
-    background-color: var(--color0);    
+    background-color: $color0;
 }
 
 .fdk-input-big {
@@ -90,8 +92,8 @@
 }
 
 .fdk-label-register {
-    background-color: var(--color1);
-    color: var(--color0) !important;
+    background-color: $color1;
+    color: $color0 !important;
     font-size: 1.5rem;
     line-height: 1.5rem;
     font-weight: 300;
@@ -104,7 +106,7 @@
 
 /*fonts*/
  .fdk-label-register > a > i.fdk-fa-right {
-    color: var(--color0);
+    color: $color0;
  }
 
 
@@ -115,7 +117,7 @@ p.fdk-input-label {
 	line-height: 1.7rem;
     font-size: 1.7rem;
     font-weight: 500;
-    color: var(--color-cta3);
+    color: $color-cta3;
     margin: 0px 0px 4px 0px;
     padding: 0px;
 }
@@ -124,19 +126,19 @@ p.fdk-input-helptext {
     font-size: 1.4rem;
     line-height: 1.7rem;
     font-weight: 300;
-    color: var(--color3);
+    color: $color3;
     padding: 0px;
 	margin: 0px 0px 8px 0px;
 }
 
 p.fdk-input-helptext > a {
-    color: var(--color3);
+    color: $color3;
     text-decoration: underline;
     font-weight: 300;
 }
 
 p.fdk-input-helptext > a:hover {
-    color: var(--color3);
+    color: $color3;
     text-decoration: none;
 }
 
@@ -144,16 +146,16 @@ p.fdk-input-heading {
 	line-height: 1.6rem;
     font-size: 1.6rem;
     font-weight: 500;
-    color: var(--color1);
+    color: $color1;
     margin: 0px 0px 2px 0px;
     padding: 0px;
 }
 
 .fdk-obligatorisk {
     font-size: 1.2rem;
-    color: var(--color0);
+    color: $color0;
     margin-left: 5px;
-    background-color: var(--color2);
+    background-color: $color2;
     padding: 1px 6px;
     border-radius: 2px;
     position: relative;
@@ -161,7 +163,7 @@ p.fdk-input-heading {
 }
 
 .fdk-container-reg-empty {
-    color: var(--color3);
+    color: $color3;
 }
 
 .fdk-container-reg-collapsed > .fdk-fa-right {
@@ -180,7 +182,7 @@ p.fdk-input-heading {
 /*  C A L E N D A R  */
 
 .fdk-calendar {
-    background-color: var(--color0);
+    background-color: $color0;
     padding: 20px;
     border-radius: 3px;
     display: inline-block;
@@ -200,15 +202,15 @@ p.fdk-input-heading {
 }
 
 .fdk-button-arrow {
-    background-color: var(--color5);
+    background-color: $color5;
     padding: 5px 6px;
 	font-size: 1.5rem;
     line-height: 1.5rem;
     border-radius: 20px;
-    border: 3px solid var(--color0);
+    border: 3px solid $color0;
     display: inline-block;
 }
 
 .fdk-button-arrow:hover {
-    border-color: var(--color5);
+    border-color: $color5;
 }

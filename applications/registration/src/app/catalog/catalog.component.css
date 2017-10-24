@@ -10,19 +10,19 @@ input {
   margin-top: 2px;
   margin-bottom: 2px;
   width: 100%;
-  background-color: var(--color6);
+  background-color: $color6;
   padding: 9px 10px;
 }
 
 input:hover, input:focus {
   outline: none;
   border: solid;
-  border-color: var(--color-cta);
+  border-color: $color-cta;
   border-width: 2px;
   margin-left: -12px;
   margin-top: 0px;
   margin-bottom: 0px;
-  background-color: var(--color0);
+  background-color: $color0;
   border-radius: 3px;
 
 }
@@ -48,27 +48,27 @@ td:last-child {
 }
 
 thead {
-  background-color: var(--color1);
-  color: var(--color0);
+  background-color: $color1;
+  color: $color0;
 }
 
 tbody > tr {
-  background-color: var(--color0);
+  background-color: $color0;
 }
 
 tbody > tr > td {
-  border-color: var(--color0);
+  border-color: $color0;
 }
 
 thead > tr > td {
-  border-color: var(--color1);
+  border-color: $color1;
 }
 
 textarea {
   width: 100%;
   outline: none;
   border: solid;
-  border-color: var(--color-cta);
+  border-color: $color-cta;
   border-width: 2px;
   border-radius: 3px;
   padding: 10px 15px;
