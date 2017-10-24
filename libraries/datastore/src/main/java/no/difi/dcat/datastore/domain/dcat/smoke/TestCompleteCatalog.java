@@ -12,6 +12,7 @@ import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 
 import java.text.ParseException;
@@ -146,8 +147,8 @@ public class TestCompleteCatalog {
                 "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"));
         distribution.setDescription(map("nb", "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."));
         distribution.setConformsTo(Arrays.asList(sosi));
-        distribution.setLicense(SkosConcept.getInstance("https://data.norge.no/nlod/no/2.0", "NODL"));
-        distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen")));
+        distribution.setLicense(SkosConcept.getInstance("https://data.norge.no/nlod/no/2.0", "NODL", DCTerms.LicenseDocument.getURI()));
+        distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen", FOAF.Document.getURI())));
         distribution.setFormat(Collections.singletonList("application/json"));
 
         dataset.setDistribution(Collections.singletonList(distribution));

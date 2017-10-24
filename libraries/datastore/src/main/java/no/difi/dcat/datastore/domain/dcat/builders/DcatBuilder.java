@@ -134,7 +134,7 @@ public class DcatBuilder {
                 addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
                 addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
 
-                addSkosCodes(datRes, DCTerms.language, dataset.getLanguage());
+                addSkosCodes(datRes, DCTerms.language, dataset.getLanguage(), DCTerms.LinguisticSystem);
                 addProperties(datRes, DCAT.landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, DCAT.theme, dataset.getTheme());
 
@@ -146,9 +146,9 @@ public class DcatBuilder {
 
                 addProperty(datRes, DCTerms.accessRights, dataset.getAccessRights());
                 addProperties(datRes, DCATNO.accessRightsComment, dataset.getAccessRightsComment());
-                addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess());
-                addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing());
-                addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction());
+                addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess(), DCTerms.RightsStatement);
+                addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing(), DCTerms.RightsStatement);
+                addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction(), DCTerms.RightsStatement);
 
                 addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
                 addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
@@ -165,8 +165,8 @@ public class DcatBuilder {
                 addSubjects(datRes, DCTerms.subject, dataset.getSubject());
 
                 addProperties(datRes, ADMS.identifier, dataset.getAdmsIdentifier());
-                addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel());
-                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
+                addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel(), DCTerms.Standard);
+                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo(), DCTerms.Standard);
 
                 addLiteral(datRes, DCTerms.type, dataset.getType());
             }
@@ -231,21 +231,23 @@ public class DcatBuilder {
         }
     }
 
-    DcatBuilder addSkosConcepts(Resource datRes, Property property, List<SkosConcept> concepts) {
+    DcatBuilder addSkosConcepts(Resource datRes, Property property, List<SkosConcept> concepts, Resource type) {
         if (concepts != null) {
             concepts.forEach( concept -> {
-                addSkosConcept(datRes, property, concept);
+                addSkosConcept(datRes, property, concept, type);
             });
         }
 
         return this;
     }
 
-    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
+    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept, Resource type) {
         if (skosConcept != null && skosConcept.getUri() != null && !skosConcept.getUri().isEmpty()) {
             Resource skosConceptResource = model.createResource();
 
             skosConceptResource.addProperty(RDF.type, SKOS.Concept);
+            skosConceptResource.addProperty(RDF.type, type);
+
             if (skosConcept.getExtraType() != null) {
                 if (skosConcept.getExtraType() != null && skosConcept.getExtraType().contains("Standard")) {
                     skosConceptResource.addProperty(RDF.type, DCTerms.Standard);
@@ -360,10 +362,10 @@ public class DcatBuilder {
                 addLiterals(disRes, DCTerms.title, distribution.getTitle());
                 addLiterals(disRes, DCTerms.description, distribution.getDescription());
                 addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
-                addSkosConcept(disRes, DCTerms.license, distribution.getLicense());
+                addSkosConcept(disRes, DCTerms.license, distribution.getLicense(), DCTerms.LicenseDocument);
 
-                addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo());
-                addSkosConcepts(disRes, FOAF.page, distribution.getPage());
+                addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo(), DCTerms.Standard);
+                addSkosConcepts(disRes, FOAF.page, distribution.getPage(), FOAF.Document);
                 addLiterals(disRes, DCTerms.format, distribution.getFormat());
 
                 addLiteral(disRes, DCTerms.type, distribution.getType());
@@ -445,17 +447,19 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes) {
+    public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes, Resource type) {
         if (codes != null) {
 
-            codes.forEach(code -> this.addSkosCode(resource, property, code));
+            codes.forEach(code -> this.addSkosCode(resource, property, code, type));
         }
         return this;
     }
 
-    public DcatBuilder addSkosCode(Resource resource, Property property, SkosCode code) {
+    public DcatBuilder addSkosCode(Resource resource, Property property, SkosCode code, Resource type) {
         if (code != null) {
             Resource r = model.createResource(code.getUri());
+            r.addProperty(RDF.type, type);
+
             addLiterals(r, SKOS.prefLabel, code.getPrefLabel());
             addLiteral(r, AT.authorityCode, code.getCode());
 
@@ -489,10 +493,10 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts) {
+    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts, Resource type) {
         if (concepts != null) {
             for (SkosConcept concept : concepts) {
-                addSkosConcept(resource, property, concept);
+                addSkosConcept(resource, property, concept, type);
             }
         }
         return this;
