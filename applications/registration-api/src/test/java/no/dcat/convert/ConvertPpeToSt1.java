@@ -36,7 +36,7 @@ public class ConvertPpeToSt1 {
 
             ElasticIndex dataset = gson.fromJson(json2, ElasticIndex.class);
 
-            logger.info(dataset.toString());
+            logger.debug(dataset.toString());
             data.add(dataset);
         }
 
@@ -50,7 +50,7 @@ public class ConvertPpeToSt1 {
         data.forEach(dataset -> {
 
             String j = builder.toJson(dataset);
-            logger.info(j);
+            logger.debug(j);
             writer.println(j);
         });
 
