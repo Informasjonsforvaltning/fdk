@@ -15,15 +15,16 @@ describe('DatasetContactInfo', () => {
 
   it ('should render uri href', () => {
     wrapper.setProps({
-      uri: 'http://www.example.com/some/random/uri'
+      contactPoint:
+        {
+          "id": "4e47a7d1-804d-4617-8be9-133d1d358a5e",
+          "uri": "http://contact/4e47a7d1-804d-4617-8be9-133d1d358a5e",
+          "email": "digitalisering@kartverket.no",
+          "organizationUnit": "Avdeling for digitalisering",
+          "hasURL": "http://testetaten.no/url",
+          "hasTelephone": "22306022"
+        }
     });
-    expect(wrapper.find('#dataset-contact-uri').prop('href')).to.have.length(38);
-  });
-
-  it ('should render email', () => {
-    wrapper.setProps({
-      email: 'someone@example.com'
-    });
-    expect(wrapper.find('#dataset-contact-email').text()).to.have.length(19);
+    expect(wrapper.find('#dataset-contact-url')).to.have.length(1);
   });
 });
