@@ -1,7 +1,7 @@
 import {Skoscode} from './skoscode';
-import {Dataset} from './dataset';
+import {SkosConcept} from './skosConcept';
 
 export interface Reference {
   referenceType: Skoscode;
-  source: Dataset;
+  source: SkosConcept;
 }

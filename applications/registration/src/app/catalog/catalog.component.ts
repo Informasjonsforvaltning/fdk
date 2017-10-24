@@ -126,7 +126,7 @@ export class CatalogComponent implements OnInit {
       id: "",
       _lastModified: "",
       title: {nb: "Laster ..."},
-      catalog: "",
+      catalogId: "",
       "identifiers": [""]
     });
     this.datasetService.create(this.catalog.id)

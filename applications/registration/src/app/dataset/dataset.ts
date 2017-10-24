@@ -35,7 +35,7 @@ export interface Dataset {
     [language: string]:string
   };
   themes?: {uri:string, title:{"nb":string}}[];
-  catalog: string;
+  catalogId: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
   provenance?: {uri:string, prefLabel:{"nb":string}};
 

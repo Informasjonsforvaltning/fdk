@@ -17,7 +17,7 @@ const TEST_DATASETS: Dataset[] = [
     "keywords": [{'nb': 'keyword1'}],
     "subjects": [{"uri":"https://data-david.github.io/Begrep/begrep/Hovedenhet","prefLabel":{"no":"hovedenhet"}}],
     "themes": [],
-    "catalog": "974760673",
+    "catalogId": "974760673",
     "landingPages": ["http://www.brreg.no", "http://www.difi.no"],
     "identifiers": ["http://brreg.no/identifier/1009"],
     "spatials": [{'uri': 'http://sws.geonames.org/3144096/', 'prefLabel': {'nb': 'Norge'}}],
@@ -53,7 +53,7 @@ export class DatasetService {
 
 
 
-  get(catId: string, datasetId: string): Promise<Dataset> {
+  get(catId: string, datasetId: string): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
     return this.http.get(datasetUrl)
       .toPromise()
@@ -65,7 +65,7 @@ export class DatasetService {
       ;
   }
 
-  save(catId: string, dataset: Dataset): Promise<Dataset> {
+  save(catId: string, dataset: Dataset): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
     let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
@@ -84,7 +84,7 @@ export class DatasetService {
       ;
   }
 
-  delete(catId: string, dataset: Dataset): Promise<Dataset> {
+  delete(catId: string, dataset: Dataset): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
     let authorization: string = localStorage.getItem("authorization");

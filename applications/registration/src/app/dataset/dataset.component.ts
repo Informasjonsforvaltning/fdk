@@ -113,6 +113,7 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.catalogId = dataset.catalogId || this.catId || "";
       this.dataset.title = this.dataset.title || {"nb": ""};
       this.dataset.description = this.dataset.description || {"nb": ""};
       this.dataset.objective = this.dataset.objective || {"nb": ""};
@@ -190,6 +191,12 @@ export class DatasetComponent implements OnInit {
           } else {
             dataset.temporals = [];
           }
+
+         /* if (dataset.references) {
+              dataset.references.forEach(reference => {
+                  if (reference.refenceType)
+              });
+          }*/
 
           if(dataset.published){
             this.dataset.registrationStatus = "PUBLISH";
@@ -319,14 +326,14 @@ export class DatasetComponent implements OnInit {
                 this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
                 this.datasetSavingEnabled = true;
             })
-          .catch(error => {
+          /*.catch(error => {
             console.log(error);
             this.showModal(
               `Error: ${error.status}`,
               `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
               false
             );
-          });
+          })*/;
     }
 
     valuechange(): void {
@@ -385,7 +392,7 @@ export class DatasetComponent implements OnInit {
     }
 
 
-    private getDatasett(): Promise<Dataset> {
+    private getDatasett(): Promise<Dataset | void> {
         // Insert mock object here.  Likely provided via a resolver in a
         // real world scenario
         let datasetId = this.route.snapshot.params['dataset_id'];
@@ -478,7 +485,7 @@ export class DatasetComponent implements OnInit {
     const formGroup = this.formBuilder.group({
 
       description: [data.description],
-      catalog: [data.catalog],
+      catalogId: [data.catalogId],
       landingPages: [data.landingPages],
       publisher: [data.publisher],
       contactPoints: this.formBuilder.array([]),
