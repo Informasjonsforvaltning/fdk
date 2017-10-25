@@ -1,4 +1,4 @@
-package no.dcat.convert;
+package no.dcat.migration;
 
 import lombok.Data;
 import no.dcat.model.Dataset;
