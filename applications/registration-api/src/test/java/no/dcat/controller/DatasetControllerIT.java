@@ -5,9 +5,14 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
+import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -216,6 +221,26 @@ public class DatasetControllerIT {
 
         return new Gson().toJson(obj);
 
+    }
+
+    @Test
+    public void repositoryCanSaveCompleteDataset() throws Throwable {
+        no.dcat.shared.Catalog catalog = TestCompleteCatalog.getCompleteCatalog();
+
+        no.dcat.shared.Dataset completeDataset = catalog.getDataset().get(0);
+
+        Dataset expected = new Dataset();
+        expected.setId("1");
+        BeanUtils.copyProperties(completeDataset, expected);
+
+        String id = expected.getId();
+
+        datasetRepository.save(expected);
+
+        Dataset actual = datasetRepository.findOne(id);
+
+        Assert.assertThat(actual, Matchers.is(expected));
+        Assert.assertThat(actual.getReferences(), Matchers.is(expected.getReferences()));
     }
 
 }
