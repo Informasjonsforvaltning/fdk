@@ -7,12 +7,11 @@ export class RefinementOptionThemes extends React.Component {
     if (window.themes.length > 0) {
       if (label === 'Ukjent') {
         themeLabel = label;
-        itemKey = itemKey + Math.random();
       } else {
         themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)];
       }
     }
-    const id = encodeURIComponent(itemKey);
+    const id = encodeURIComponent((itemKey + Math.random()));
     return (
       <div className="checkbox">
         <label htmlFor="themes">
