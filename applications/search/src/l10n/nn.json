@@ -146,7 +146,8 @@
         "restricted": "Avgrensa offentlegheit",
         "nonPublic": "Unntatt offentlegheit"
       }
-    }
+    },
+    "sample": "Eksempeldata"
   }
 
 }

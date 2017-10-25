@@ -146,7 +146,8 @@
         "restricted": "Begrenset offentlighet",
         "nonPublic": "Unntatt offentlighet"
       }
-    }
+    },
+    "sample": "Eksempeldata"
   }
 
 }

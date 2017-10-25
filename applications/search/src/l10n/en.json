@@ -94,7 +94,7 @@
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "distribution": {
-      "title": "Distribusjon",
+      "title": "Distribution",
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
       "accessUrl": "TilgangsURL",
@@ -146,7 +146,8 @@
         "restricted": "Restricted",
         "nonPublic": "Non public"
       }
-    }
+    },
+    "sample": "Eksempeldata"
   }
 
 }
