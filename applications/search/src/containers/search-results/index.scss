@@ -1,3 +1,4 @@
+@import '../../assets/css/colors.scss';
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
@@ -22,7 +23,7 @@
 }
 
 .sk-hits-stats__info {
-  color: var(--color1);
+  color: $color1;
   font-size: 2.25rem;
   line-height: 2.7rem;
   font-weight: 500;
@@ -56,7 +57,7 @@
   font-size: 1.5rem;
   line-height: 1.5rem;
   border-radius: 6px;
-  border: 3px solid var(--color6);
+  border: 3px solid $color6;
   padding: 11px 12px 10px 12px;
   margin: 0px 2px 6px 0px;
   display: inline-block;
@@ -64,18 +65,18 @@
   text-shadow: none;
   text-align: center;
   box-shadow: none;
-  background-color: var(--color5);
-  border-color: var(--color6);
+  background-color: $color5;
+  border-color: $color6;
   &:hover {
     border-radius: 3px;
-    border: 3px solid var(--color5);
-    background-color: var(--color5);
+    border: 3px solid $color5;
+    background-color: $color5;
   }
 }
 
 .sk-toggle-option.sk-toggle__item.is-disabled {
-  border: 1px dashed var(--color4);
-  color: var(--color4);
+  border: 1px dashed $color4;
+  color: $color4;
   border-radius: 4px;
   margin: 0px 6px 6px 0px;
 }
@@ -119,7 +120,7 @@
 .btn-group {
   .dropdown-toggle {
     &:focus, &:active {
-      background-color: var(--color5) !important;
+      background-color: $color5 !important;
       border-color: transparent !important;
       box-shadow: none !important;
     }
@@ -127,7 +128,7 @@
 }
 
 .open>.dropdown-toggle.btn-default {
-  background-color: var(--color5) !important;
+  background-color: $color5 !important;
   border-color: transparent !important;
   box-shadow: none !important;
 }
@@ -135,18 +136,16 @@
 /* SEARCHPAGE REFINEMENT FILTER */
 
 .sk-panel {
-  background-color: var(--color5);
+  background-color: $color5;
   padding: 10px 20px;
   margin: .5em auto;
   border-radius: 5px;
 }
 
 .sk-panel__header {
-  color: var(--color1);
+  color: $color1;
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 500;
   margin: 0px;
 }
-
-
