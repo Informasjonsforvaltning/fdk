@@ -65,6 +65,7 @@ export default class SearchPage extends React.Component {
                 const obj = {};
                 obj[hit.code] = {};
                 obj[hit.code].nb = hit.title.nb;
+                obj[hit.code].nn = hit.title.nb;
                 obj[hit.code].en = hit.title.en;
                 window.themes.push(obj);
             });
