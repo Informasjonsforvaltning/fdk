@@ -1,9 +1,8 @@
-<div [formGroup]="referencesForm" class="titleUri-form sub-form-group">
-
+<div [formGroup]="referencesForm" class="references-form sub-form-group">
     <div class="form sub-form">
         <div class="fdk-input-container">
             <div class="col-md-5" (click)="fetchReferenceTypes()">
-                <ng-select id="referenceType"
+                <ng-select id="referenceTypeForm"
                     [options]="referenceTypes"
                     [multiple]="false"
                     placeholder="Velg..."
@@ -11,8 +10,8 @@
                 </ng-select>
             </div>
             <div class="col-md-5" (click)="fetchSources()">
-                <ng-select id="source"
-                    [options]="datasets"
+                <ng-select id="sourceForm"
+                    [options]="sources"
                     [multiple]="false"
                     placeholder="Velg..."
                     formControlName="sourceForm">
@@ -21,10 +20,10 @@
         </div>
     </div>
 
-    <span class="delete-temporal-wrapper" *ngIf="showDelete">
-        <a href="" class="delete-temporal-button"
+    <span class="delete-references-wrapper" *ngIf="showDelete">
+        <a href="" class="delete-references-button"
             (click)="removeReference(referenceIndex)">
-            <i class="fa fa-trash fdk-fa-dark fdk-fa-left"></i>Slett
+            <i class="fa fa-trash fdk-color-icon-cta fdk-fa-left"></i>Slett
         </a>
     </span>
 </div>

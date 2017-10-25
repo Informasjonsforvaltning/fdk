@@ -47,9 +47,8 @@ export class ReferenceListComponent implements OnInit {
                 uri: "",
                 code: "",
                 prefLabel: {
-                    "no": ""
-                },
-                selected: true
+                    "nb": ""
+                }
             },
             source: new SkosConcept()
         };

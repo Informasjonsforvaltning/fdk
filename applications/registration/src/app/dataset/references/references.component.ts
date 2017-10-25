@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Dataset} from "../dataset";
 import {Reference} from '../reference'
@@ -44,6 +44,7 @@ export class ReferencesComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
+        private cdr: ChangeDetectorRef,
         private codesService: CodesService,
         private datasetService: DatasetService,
         private parent: DatasetComponent) {
@@ -52,78 +53,45 @@ export class ReferencesComponent implements OnInit {
     ngOnInit() {
         this.fetchReferenceTypes();
         this.fetchSources();
-
-
-        if (this.reference) {
-            let skosKode = this.reference.referenceType;
-        } else {
-            let skosKode = "";
-        }
-
         this.referencesForm = this.toFormGroup(this.reference);
         this.referencesFormArray.push(this.referencesForm);
 
-        this.referencesForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe( 
+        this.referencesForm.valueChanges.distinctUntilChanged().subscribe( 
             refs => {
-                console.log("refs.referenceType:" + refs.referenceType);
-                console.log("refs.referenceUrl:" + refs.referenceUrl);
-                //this.reference.referenceType = new SkosConcept(refs.referenceType)
-                if (refs.referenceTypeForm) {
+                if (refs.referenceTypeForm && this.referenceTypes.length > 0) {
+                    let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
                     this.reference.referenceType = {
-                            uri: refs.referenceTypeForm.value,
-                            code: "",
+                            uri: referenceType.value,
+                            code: "x",
                             prefLabel: {
-                            "nb": refs.referenceTypeForm.label
-                            },
-                            selected: true
+                                "nb": referenceType.label || "x"
+                            }
                         };
                 } else {
                     this.reference.referenceType = {
                         uri: "",
                         code: "",
                         prefLabel: {
-                        "nb": ""
-                        },
-                        selected: true
+                            "nb": ""
+                        }
                     };
                     this.reference.source = new SkosConcept();
                 }
-                if (refs.sourceForm) {
+                if (refs.sourceForm && this.sources.length > 0) {
+                    let source = this.sources.find( src => src.value === refs.sourceForm);
                     this.reference.source = new SkosConcept(
-                        refs.sourceForm.value,
+                        source.value,
                         {
-                            "nb" : refs.sourceForm.label
+                            "nb" : (source.label === "Ukjent tittel") ? "x" : source.label
                         }
                     );
                 } else {
                     this.reference.source = new SkosConcept();
                 }
-            
-                /*if (refs.referenceType) {
-                    console.log("refs.referencetype = true");
 
-                    this.reference = {
-                        //midertidig test: må erstattes av generert skoskode
-                        referenceType: {
-                            uri: refs.referenceType, 
-                            code: 'test',
-                            prefLabel: {
-                                nb: "testpreflabel"
-                            }, 
-                            selected: false
-                        },
-                        //todo: endre til å bruke skoscode i stedet or datasett når nytt api er klart
-                        source: {
-                            id: refs.referenceUrl, 
-                            catalog: 'xxx', 
-                            identifiers: ['yyy'], 
-                            _lastModified: '919191'
-                        } 
-                    } 
-                }; */
                 console.log("referenceform.valuechanges - reference after value change:");
                 console.log(this.reference);
-
+                this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
         );
@@ -151,9 +119,11 @@ export class ReferencesComponent implements OnInit {
     fetchReferenceTypes() {
         this.codesService.fetchCodes('referencetypess', 'nb')
             .then( referenceTypes => {
+                referenceTypes = _.sortBy(referenceTypes, [reference => reference.label || ""]);
                 this.referenceTypes = referenceTypes;
                 console.log("referencetypes fetched:");
                 console.log(this.referenceTypes);
+                
             }
         );
     }
@@ -161,16 +131,21 @@ export class ReferencesComponent implements OnInit {
     fetchSources() {
         let catalogId = this.dataset.catalogId;
         console.log("fetchSources: catalogId: " + catalogId );
-        this.referenceTypes = [];
+        let sources = [];
         this.datasetService.getAll(catalogId)  
             .then((datasets: Dataset[]) => {
                 datasets.forEach( dataset => {
-                    this.sources.push(
-                        new SkosConcept(dataset.id, {"nb": dataset.title["no"]})
-                    );
+                    let source = {
+                        value: dataset.id,
+                        label: dataset.title["no"]
+                    }
+                    if (!source.label) {
+                        source.label = "Ukjent tittel";
+                    }
+                    sources.push(source);
                 });
-                //this.referenceTypes= _.sortBy(this.referenceTypes, [a => a.title.nb || ""]);
-                
+                sources = _.sortBy(sources, [src => src.label || ""]);
+                this.sources = sources;
                 console.log("sources fetched: ", this.sources);
             }
         );
