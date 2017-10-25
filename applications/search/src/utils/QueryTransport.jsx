@@ -23,6 +23,7 @@ export class QueryTransport extends AxiosESTransport {
       headers:this.options.headers
     })
     this.filters = [
+      {key: 'sort.selector'},
       {
         key: 'theme.code.raw',
         paramName: 'theme',
