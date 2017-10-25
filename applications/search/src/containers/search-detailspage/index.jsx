@@ -16,14 +16,14 @@ export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {}, // api.dataset[0],
+      dataset: api.dataset[0],
       loading: false
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
 
   componentDidMount() {
-    this.loadDatasetFromServer();
+    //this.loadDatasetFromServer();
   }
 
   // @params: the function has no param but the query need dataset id from prop
