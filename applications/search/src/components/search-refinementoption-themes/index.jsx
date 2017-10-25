@@ -1,4 +1,5 @@
 import * as React from 'react';
+import localization from '../../components/localization';
 
 export class RefinementOptionThemes extends React.Component {
   render() {
@@ -8,7 +9,8 @@ export class RefinementOptionThemes extends React.Component {
       if (label === 'Ukjent') {
         themeLabel = label;
       } else {
-        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)]['nb'];
+        let lang = localization.getLanguage();
+        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)][lang];
       }
     }
     const id = encodeURIComponent((itemKey + Math.random()));
