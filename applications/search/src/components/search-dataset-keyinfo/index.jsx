@@ -99,21 +99,36 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
             <div className="fdk-detail-icon">
               <i className="fa fa-institution" />
             </div>
+
             <div className="fdk-detail-text">
-              <h5>{localization.dataset.legalBasisForRestriction}</h5>
-              <div className="fdk-ingress">
-                { childrenLegalBasisForRestriction(legalBasisForRestriction) }
-              </div>
 
-              <h5>{localization.dataset.legalBasisForProcessing}</h5>
-              <div className="fdk-ingress">
-                { childrenLegalBasisForProcessing(legalBasisForProcessing) }
+              {legalBasisForRestriction &&
+              <div>
+                <h5>{localization.dataset.legalBasisForRestriction}</h5>
+                <div className="fdk-ingress">
+                  { childrenLegalBasisForRestriction(legalBasisForRestriction) }
+                </div>
               </div>
+              }
 
-              <h5>{localization.dataset.legalBasisForAccess}</h5>
-              <div className="fdk-ingress">
-                { childrenLegalBasisForAccess(legalBasisForAccess) }
+              {legalBasisForProcessing &&
+              <div>
+                <h5>{localization.dataset.legalBasisForProcessing}</h5>
+                <div className="fdk-ingress">
+                  { childrenLegalBasisForProcessing(legalBasisForProcessing) }
+                </div>
               </div>
+              }
+
+              {legalBasisForAccess &&
+              <div>
+                <h5>{localization.dataset.legalBasisForAccess}</h5>
+                <div className="fdk-ingress">
+                  { childrenLegalBasisForAccess(legalBasisForAccess) }
+                </div>
+              </div>
+              }
+
             </div>
           </div>
         </div>
