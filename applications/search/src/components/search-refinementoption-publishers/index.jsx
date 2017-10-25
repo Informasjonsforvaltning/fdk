@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import localization from '../../components/localization';
 
 export class RefinementOptionPublishers extends React.Component {
   render() {
@@ -27,7 +27,7 @@ export class RefinementOptionPublishers extends React.Component {
             } list-group-item fdk-label fdk-label-default`}
           />
           <label className="checkbox-replacement" htmlFor={id} />
-          {optionLabel} ({props.count})
+          {localization.search_hit[optionLabel]} ({props.count})
         </label>
       </div>
     );
