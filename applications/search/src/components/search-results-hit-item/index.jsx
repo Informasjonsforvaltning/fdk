@@ -21,27 +21,45 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     };
   }
 
-  _renderFormats(source, code) {
+  _renderFormats(source, code, distributionClass) {
     let formatNodes;
     const distribution = source.distribution;
+
+    const children = (items, code) => items.map((item) => {
+      if (item !== null) {
+        const formatArray = item.trim().split(',');
+        return formatArray.map((item, index) => {
+          if (item === null) {
+            return null;
+          }
+          return (
+            <DistributionFormat
+              key={`dataset-distribution-format${index}`}
+              code={code}
+              text={item}
+            />
+          );
+        });
+      }
+      return null;
+    });
+
     if (distribution && _.isArray(Object.keys(distribution))) {
       formatNodes = Object.keys(distribution).map((key) => {
         if (distribution[key].format) {
-          let formatArray = distribution[key].format;
-          formatArray = _.isString(formatArray) ? [formatArray] : formatArray;
-          const nodes = formatArray.map((item, index) => (
-            <DistributionFormat
-              code={code}
-              key={`dataset-distribution-format${index}`}
-              text={item}
-            />
-          ));
-          return nodes;
+          return distribution[key].format[0];
         }
         return null;
       });
+      if (formatNodes && formatNodes[0] !== null) {
+        return (
+          <div className={distributionClass}>
+            { children(formatNodes, code) }
+          </div>
+        );
+      }
     }
-    return formatNodes;
+    return null;
   }
 
   _renderPublisher(source) {
@@ -128,14 +146,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     } else if (source.accessRights && authorityCode === 'PUBLIC') {
       distributionPublic = true;
       accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
-    } else if (!source.accessRights) { // antar public hvis authoritycode mangler
-      distributionPublic = true;
-      accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
     }
 
     const distributionClass = cx(
-      'fdk-container-distributions',
       {
+        'fdk-container-distributions': (distributionNonPublic || distributionRestricted || distributionPublic),
         'fdk-distributions-red': distributionNonPublic,
         'fdk-distributions-yellow': distributionRestricted,
         'fdk-distributions-green': distributionPublic
@@ -160,12 +175,17 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           >
             {description}
           </p>
+
           <div className={distributionClass}>
             <strong>{accessRightsLabel}</strong>
-            <br />
-            {this._renderFormats(source, authorityCode)}
+          </div>
+
+          {this._renderFormats(source, authorityCode, distributionClass)}
+
+          <div className={distributionClass}>
             {this._renderSample(source)}
           </div>
+
         </div>
       </a>
     );

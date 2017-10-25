@@ -10,8 +10,6 @@ import DatasetQuality from '../../components/search-dataset-quality-content';
 import DatasetBegrep from '../../components/search-dataset-begrep';
 import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 
-import api from '../../utils/api.json';
-
 export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
