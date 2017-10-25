@@ -12,6 +12,7 @@ import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.AT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
@@ -39,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by dask on 10.04.2017.
@@ -132,7 +134,7 @@ public class DcatBuilder {
                 addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
                 addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
 
-                addSkosCodes(datRes, DCTerms.language, dataset.getLanguage());
+                addSkosCodes(datRes, DCTerms.language, dataset.getLanguage(), DCTerms.LinguisticSystem);
                 addProperties(datRes, DCAT.landingPage, dataset.getLandingPage());
                 addUriProperties(datRes, DCAT.theme, dataset.getTheme());
 
@@ -142,11 +144,11 @@ public class DcatBuilder {
                 addTemporal(dataset, datRes);
                 addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
 
-                addProperty(datRes, DCTerms.rights, dataset.getAccessRights());
+                addProperty(datRes, DCTerms.accessRights, dataset.getAccessRights());
                 addProperties(datRes, DCATNO.accessRightsComment, dataset.getAccessRightsComment());
-                addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess());
-                addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing());
-                addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction());
+                addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess(), DCTerms.RightsStatement);
+                addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing(), DCTerms.RightsStatement);
+                addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction(), DCTerms.RightsStatement);
 
                 addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
                 addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
@@ -163,10 +165,10 @@ public class DcatBuilder {
                 addSubjects(datRes, DCTerms.subject, dataset.getSubject());
 
                 addProperties(datRes, ADMS.identifier, dataset.getAdmsIdentifier());
-                addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel());
-                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo());
+                addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel(), DCTerms.Standard);
+                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo(), DCTerms.Standard);
 
-                addProperty(datRes, DCTerms.type, dataset.getType());
+                addLiteral(datRes, DCTerms.type, dataset.getType());
             }
         }
 
@@ -229,21 +231,23 @@ public class DcatBuilder {
         }
     }
 
-    DcatBuilder addSkosConcepts(Resource datRes, Property property, List<SkosConcept> concepts) {
+    DcatBuilder addSkosConcepts(Resource datRes, Property property, List<SkosConcept> concepts, Resource type) {
         if (concepts != null) {
             concepts.forEach( concept -> {
-                addSkosConcept(datRes, property, concept);
+                addSkosConcept(datRes, property, concept, type);
             });
         }
 
         return this;
     }
 
-    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept) {
-        if (skosConcept != null) {
+    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept, Resource type) {
+        if (skosConcept != null && skosConcept.getUri() != null && !skosConcept.getUri().isEmpty()) {
             Resource skosConceptResource = model.createResource();
 
             skosConceptResource.addProperty(RDF.type, SKOS.Concept);
+            skosConceptResource.addProperty(RDF.type, type);
+
             if (skosConcept.getExtraType() != null) {
                 if (skosConcept.getExtraType() != null && skosConcept.getExtraType().contains("Standard")) {
                     skosConceptResource.addProperty(RDF.type, DCTerms.Standard);
@@ -257,6 +261,9 @@ public class DcatBuilder {
 
         return this;
     }
+
+
+
     public DcatBuilder addPeriodOfTimeResource(Resource resource, Property property, PeriodOfTime period) {
         if (period != null) {
 
@@ -345,26 +352,46 @@ public class DcatBuilder {
     public DcatBuilder addDistributions(Resource dataset, Property property, List<Distribution> distributions) {
         if (distributions != null) {
             for (Distribution distribution : distributions) {
-                addProperty(dataset, property, distribution.getUri());
-
-                Resource disRes = createResource(distribution, distribution.getUri(), DCAT.Distribution);
+                Resource disRes = null;
+                if (distribution.getUri() != null && distribution.getUri().isEmpty()) {
+                    disRes = model.createResource(UUID.randomUUID().toString());
+                } else {
+                    disRes = model.createResource(distribution.getUri());
+                }
 
                 addLiterals(disRes, DCTerms.title, distribution.getTitle());
                 addLiterals(disRes, DCTerms.description, distribution.getDescription());
                 addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
-                addProperty(disRes, DCTerms.license, distribution.getLicense());
+                addSkosConcept(disRes, DCTerms.license, distribution.getLicense(), DCTerms.LicenseDocument);
 
-                addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo());
-                addSkosConcepts(disRes, FOAF.page, distribution.getPage());
+                addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo(), DCTerms.Standard);
+                addSkosConcepts(disRes, FOAF.page, distribution.getPage(), FOAF.Document);
                 addLiterals(disRes, DCTerms.format, distribution.getFormat());
 
                 addLiteral(disRes, DCTerms.type, distribution.getType());
+
+                if (    disRes.getProperty(DCTerms.title) != null  ||
+                        disRes.getProperty(DCTerms.description) != null  ||
+                        disRes.getProperty(DCAT.accessURL) != null ||
+                        disRes.getProperty(DCTerms.license) != null ||
+                        disRes.getProperty(DCTerms.conformsTo) != null ||
+                        disRes.getProperty(FOAF.page) != null ||
+                        disRes.getProperty(DCTerms.format) != null ) {
+
+                    disRes.addProperty(RDF.type, DCAT.Distribution);
+                    dataset.addProperty(property, disRes);
+                } else {
+                    model.removeAll(disRes, null, null);
+                    model.removeAll(null, null, disRes);
+                }
 
             }
         }
 
         return this;
     }
+
+
 
     public DcatBuilder addContactPoints(Resource datRes, List<Contact> contacts) {
         if (contacts != null) {
@@ -385,7 +412,7 @@ public class DcatBuilder {
         addLiteral(contactRes, VCARD4.organization_name, contact.getOrganizationName());
         addLiteral(contactRes, VCARD4.organization_unit, contact.getOrganizationUnit());
 
-        if (contact.getEmail() != null) {
+        if (contact.getEmail() != null && !contact.getEmail().isEmpty()) {
             if (contact.getEmail().startsWith("mailto:")) {
                 addProperty(contactRes, VCARD4.hasEmail, contact.getEmail());
             } else {
@@ -393,7 +420,7 @@ public class DcatBuilder {
             }
         }
 
-        if (contact.getHasTelephone() != null) {
+        if (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) {
             if (contact.getHasTelephone().startsWith("tel:")) {
                 addProperty(contactRes, VCARD4.hasTelephone, contact.getHasTelephone());
             } else {
@@ -411,23 +438,8 @@ public class DcatBuilder {
     }
 
 
-
-    public DcatBuilder addProperty(Resource resource, Property property, SkosConcept concept) {
-        if (concept != null && concept.getUri() != null && !"".equals(concept.getUri())) {
-            Resource r = model.createResource();
-            r.addProperty(DCTerms.source, concept.getUri());
-            if (concept.getExtraType() != null && !"".equals(concept.getExtraType())) {
-                r.addProperty(RDF.type, concept.getExtraType());
-            }
-            addLiterals(r, SKOS.prefLabel, concept.getPrefLabel() );
-            resource.addProperty(property, r);
-        }
-
-        return this;
-    }
-
     public DcatBuilder addProperty(Resource resource, Property property, SkosCode code) {
-        if (code != null && code.getUri() != null && !"".equals(code.getUri())) {
+        if (code != null && code.getUri() != null && !code.getUri().isEmpty()) {
             Resource r = model.createResource(code.getUri());
             resource.addProperty(property, r);
         }
@@ -435,10 +447,25 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes) {
+    public DcatBuilder addSkosCodes(Resource resource, Property property, List<SkosCode> codes, Resource type) {
         if (codes != null) {
-            codes.forEach(code -> this.addProperty(resource, property, code));
+
+            codes.forEach(code -> this.addSkosCode(resource, property, code, type));
         }
+        return this;
+    }
+
+    public DcatBuilder addSkosCode(Resource resource, Property property, SkosCode code, Resource type) {
+        if (code != null) {
+            Resource r = model.createResource(code.getUri());
+            r.addProperty(RDF.type, type);
+
+            addLiterals(r, SKOS.prefLabel, code.getPrefLabel());
+            addLiteral(r, AT.authorityCode, code.getCode());
+
+            resource.addProperty(property, r);
+        }
+
         return this;
     }
 
@@ -446,16 +473,30 @@ public class DcatBuilder {
     public DcatBuilder addSubjects(Resource resource, Property property, List<Subject> concepts) {
         if (concepts != null) {
             for (Subject concept : concepts) {
-                //addProperty(resource, property, concept);
+                if (concept.getUri() != null && !concept.getUri().isEmpty()) {
+                    Resource r = model.createResource(concept.getUri());
+
+                    if (concept.getPrefLabel() != null) {
+                        r.addProperty(RDF.type, SKOS.Concept);
+
+                        addLiterals(r, SKOS.prefLabel, concept.getPrefLabel());
+                        addLiterals(r, SKOS.definition, concept.getDefinition());
+                        addLiterals(r, SKOS.note, concept.getNote());
+                        addLiteral(r, DCTerms.source, concept.getSource());
+                    }
+
+                    resource.addProperty(DCTerms.subject, r);
+                }
+
             }
         }
         return this;
     }
 
-    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts) {
+    public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts, Resource type) {
         if (concepts != null) {
             for (SkosConcept concept : concepts) {
-                addProperty(resource, property, concept);
+                addSkosConcept(resource, property, concept, type);
             }
         }
         return this;
@@ -539,7 +580,7 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addLiteral(Resource resource, Property property, String value) {
-        if (value != null) {
+        if (value != null && !value.isEmpty()) {
             Literal literal = model.createLiteral(value);
             resource.addProperty(property, literal);
         }

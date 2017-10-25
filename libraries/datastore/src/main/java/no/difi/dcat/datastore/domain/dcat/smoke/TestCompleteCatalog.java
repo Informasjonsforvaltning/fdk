@@ -12,6 +12,7 @@ import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 
 import java.text.ParseException;
@@ -108,7 +109,6 @@ public class TestCompleteCatalog {
         dataset.setModified(Date.from(LocalDateTime.of(2016,9,21,01,30,3).toInstant(ZoneOffset.UTC)));
 
         dataset.setProvenance(skosCode("http://data.brreg.no/datakatalog/provenance/vedtak", "vedtak", map("nb", "Vedtak")));
-        dataset.setHasCurrentnessAnnotation(createQualityAnnotation("Currentness", "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
         dataset.setSpatial(Arrays.asList(
                 skosCode("http://www.geonames.org/3162656/asker.html", null, map("nb", "Asker")),
                 skosCode("http://www.geonames.org/3162212/baerum.html", null, map("nb", "Bærum")),
@@ -116,6 +116,7 @@ public class TestCompleteCatalog {
                 skosCode("http://www.geonames.org/3141104/royken.html", null, map("nb", "Røyken"))
         ));
 
+        dataset.setHasCurrentnessAnnotation(createQualityAnnotation(QualityAnnotation.Currentness, "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
         dataset.setHasRelevanceAnnotation(createQualityAnnotation(QualityAnnotation.Relevance, "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."));
         dataset.setHasCompletenessAnnotation(createQualityAnnotation(QualityAnnotation.Completeness, "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."));
         dataset.setHasAccuracyAnnotation(createQualityAnnotation(QualityAnnotation.Accuracy, "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."));
@@ -129,10 +130,12 @@ public class TestCompleteCatalog {
         dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
         DataTheme theme = new DataTheme();
         theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
+        theme.setCode("GOVE");
         theme.setTitle(map("nb","Forvaltning og offentlig støtte"));
 
         DataTheme theme2 = new DataTheme();
         theme2.setUri("http://publications.europa.eu/resource/authority/data-theme/ENVI");
+        theme2.setCode("ENVI");
         theme2.setTitle(map("nb", "Miljø"));
 
         dataset.setTheme(Arrays.asList(theme, theme2));
@@ -144,8 +147,8 @@ public class TestCompleteCatalog {
                 "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"));
         distribution.setDescription(map("nb", "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."));
         distribution.setConformsTo(Arrays.asList(sosi));
-        distribution.setLicense(SkosConcept.getInstance("https://data.norge.no/nlod/no/2.0", "NODL"));
-        distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen")));
+        distribution.setLicense(SkosConcept.getInstance("https://data.norge.no/nlod/no/2.0", "NODL", DCTerms.LicenseDocument.getURI()));
+        distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen", FOAF.Document.getURI())));
         distribution.setFormat(Collections.singletonList("application/json"));
 
         dataset.setDistribution(Collections.singletonList(distribution));

@@ -7,9 +7,8 @@ import DistributionFormat from '../search-dataset-format';
 import './index.scss';
 
 export default class DatasetDistribution extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  _renderFormats(code) {
-    const { format } = this.props;
-
+  _renderFormats() {
+    const { code, format } = this.props;
     const children = (items, code) => items.map((item) => {
       if (item !== null) {
         const formatArray = item.trim().split(',');
@@ -71,39 +70,63 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 
   _renderLicense() {
     const { license } = this.props;
-
-    const children = items => items.map((license) => {
-      if (license && license.uri && license.prefLabel) {
-        return (
-          <a
-            href={license.uri}
-          >
-            {
-              license.prefLabel[this.props.selectedLanguageCode]
-              || license.prefLabel.nb
-              || license.prefLabel.nn
-              || license.prefLabel.en
-            }
-          </a>
-        );
-      } else if (license && license.uri) {
-        return (
-          <a
-            href={license.uri}
-          >
-            {localization.dataset.distribution.standard}
-          </a>
-        );
-      }
-      return null;
-    });
-
     if (license && license.uri) {
       return (
         <div>
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.license}</h5>
           <p className="fdk-ingress">
-            { children(license) }
+            {license && license.uri && license.prefLabel &&
+            <a
+              href={license.uri}
+            >
+              {
+                license.prefLabel[this.props.selectedLanguageCode]
+                || license.prefLabel.nb
+                || license.prefLabel.nn
+                || license.prefLabel.en
+              }
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+            }
+            {license && license.uri && !license.prefLabel &&
+            <a
+              href={license.uri}
+            >
+              {localization.dataset.distribution.standard}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+            }
+          </p>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  _renderConformsTo() {
+    const { conformsTo } = this.props;
+
+    const children = items => items.map((item, index) => (
+      <a
+        key={item.uri}
+        href={item.uri}
+      >
+        {
+          item.prefLabel[this.props.selectedLanguageCode]
+          || item.prefLabel.nb
+          || item.prefLabel.nn
+          || item.prefLabel.en
+        }
+        <i className="fa fa-external-link fdk-fa-right" />
+      </a>
+    ));
+
+    if (conformsTo) {
+      return (
+        <div>
+          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.conformsTo}</h5>
+          <p className="fdk-ingress">
+            { children(conformsTo) }
           </p>
         </div>
       );
@@ -117,6 +140,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       if (page && page.uri && page.prefLabel) {
         return (
           <a
+            key={page.uri}
             href={page.uri}
           >
             {
@@ -131,7 +155,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       return null;
     });
 
-    if (page && page.uri) {
+    if (page) {
       return (
         <div>
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.page}</h5>
@@ -145,53 +169,34 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   render() {
-    let distributionNonPublic = false;
-    let distributionRestricted = false;
-    let distributionPublic = false;
-
-    let code = '';
-    if (this.props.code) {
-      code = this.props.code;
-    }
-
-    if (code === 'NON_PUBLIC') {
-      distributionNonPublic = true;
-    } else if (code === 'RESTRICTED') {
-      distributionRestricted = true;
-    } else if (code === 'PUBLIC') {
-      distributionPublic = true;
-    } else { // antar public hvis authoritycode mangler
-      distributionPublic = true;
-    }
-
+    const { code } = this.props;
     const distributionClass = cx(
       'fdk-container-detail',
       {
-        'fdk-container-detail-offentlig': distributionPublic,
-        'fdk-container-detail-begrenset': distributionRestricted,
-        'fdk-container-detail-unntatt-offentlig': distributionNonPublic
+        'fdk-container-detail-unntatt-offentlig': code === 'NON_PUBLIC',
+        'fdk-container-detail-begrenset': code === 'RESTRICTED',
+        'fdk-container-detail-offentlig': code === 'PUBLIC'
       }
     );
     return (
       <div id="dataset-distribution" className={distributionClass}>
-
         <h4 className="fdk-margin-bottom">{localization.dataset.distribution.title}</h4>
-
         {this.props.description &&
           <p id="dataset-distribution-description" className="fdk-ingress">
             {this.props.description}
           </p>
         }
-
-        { this._renderFormats(code) }
+        { this._renderFormats() }
         { this._renderTilgangsURL() }
         { this._renderLicense() }
+        { this._renderConformsTo() }
         { this._renderDistributionPage() }
 
         <div className="fdk-container-detail-text">
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
           <p className="fdk-ingress fdk-ingress-detail" />
         </div>
+
       </div>
 
     );
@@ -202,8 +207,9 @@ DatasetDistribution.defaultProps = {
   description: null,
   accessUrl: null,
   format: null,
-  code: 'PUBLIC',
+  code: '',
   license: null,
+  conformsTo: null,
   page: null,
   selectedLanguageCode: null
 };
@@ -214,6 +220,7 @@ DatasetDistribution.propTypes = {
   format: PropTypes.array,
   code: PropTypes.string,
   license: PropTypes.object,
-  page: PropTypes.object,
+  conformsTo: PropTypes.array,
+  page: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };
