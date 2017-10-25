@@ -3,10 +3,7 @@ package no.dcat.migration;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,9 +23,10 @@ import java.util.List;
 public class ConvertPpeToSt1 {
     private static Logger logger = LoggerFactory.getLogger(ConvertPpeToSt1.class);
 
-    public static String dateFormat = "yyyy-MM-dd";
+    public static String dateFormat = "yyyy-MM-dd'T'hh.mm.ss.SSSZ";
+    public static SimpleDateFormat dateFormater = new SimpleDateFormat(dateFormat);
 
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         ConvertPpeToSt1 converter = new ConvertPpeToSt1();
         try {
             converter.readPpe();
@@ -47,39 +45,42 @@ public class ConvertPpeToSt1 {
     */
 
 
-    public void readPpe() throws IOException{
+    public void readPpe() throws IOException {
         String inputFile = "ppe_all_dataset.json";
         Gson gson = new Gson();
 
         Resource resource = new ClassPathResource(inputFile);
         BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
 
+        PrintWriter writer = new PrintWriter("sdk_ppe_output.json");
         List<ElasticIndex> data = new ArrayList<>();
         while (reader.ready()) {
             String json = reader.readLine();
 
             String json2 = convert(json);
 
-            ElasticIndex dataset = gson.fromJson(json2, ElasticIndex.class);
+            writer.println(json2);
 
-            logger.debug(dataset.toString());
-            data.add(dataset);
+           // ElasticIndex dataset = gson.fromJson(json2, ElasticIndex.class);
+
+            //logger.debug(dataset.toString());
+            //data.add(dataset);
         }
 
         logger.info("Antall dataset: {}", data.size());
 
         // export "2017-10-19T07:50:03.600+0000"
-        Gson builder = new GsonBuilder().setDateFormat(dateFormat).create();
+        Gson builder = new GsonBuilder().create(); //.setDateFormat(dateFormat).create();
 
-        PrintWriter writer = new PrintWriter("sdk_ppe_output.json");
-
+        //PrintWriter writer = new PrintWriter("sdk_ppe_output.json");
+/*
         data.forEach(dataset -> {
 
             String j = builder.toJson(dataset);
             logger.debug(j);
             writer.println(j);
         });
-
+*/
         writer.close();
 
     }
@@ -89,7 +90,7 @@ public class ConvertPpeToSt1 {
 
         JsonElement element = new JsonParser().parse(json);
         JsonElement dataset = element.getAsJsonObject().get("_source");
-
+/*
         fixDate(dataset, "modified");
         fixDate(dataset, "issued");
 
@@ -104,7 +105,7 @@ public class ConvertPpeToSt1 {
                 }
             }
         }
-
+*/
         JsonElement catalog = dataset.getAsJsonObject().get("catalog");
         String catalogId = catalog.getAsString();
         dataset.getAsJsonObject().remove("catalog");
@@ -123,10 +124,16 @@ public class ConvertPpeToSt1 {
             }
 
             Date d = new Date(Long.parseLong(dateInteger));
-            String formattedDate = new SimpleDateFormat(dateFormat).format(d);
+            String formattedDate = dateFormater.format(d);
 
-            element.getAsJsonObject().remove(fieldName);
-            element.getAsJsonObject().addProperty(fieldName, formattedDate);
+            logger.info("convert date {} from {} to {}", fieldName, dateInteger, formattedDate );
+            try {
+                Date newDate = dateFormater.parse(formattedDate);
+                element.getAsJsonObject().remove(fieldName);
+                element.getAsJsonObject().addProperty(fieldName, newDate.getTime());
+            } catch (ParseException p) {
+                logger.error("Couldn't parse date: {}", formattedDate, p);
+            }
         }
     }
 }
