@@ -115,24 +115,6 @@
   }
 }
 
-/*  SEARCHPAGE SORTING DROPDOWN  */
-
-.btn-group {
-  .dropdown-toggle {
-    &:focus, &:active {
-      background-color: $color5 !important;
-      border-color: transparent !important;
-      box-shadow: none !important;
-    }
-  }
-}
-
-.open>.dropdown-toggle.btn-default {
-  background-color: $color5 !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-
 /* SEARCHPAGE REFINEMENT FILTER */
 
 .sk-panel {
