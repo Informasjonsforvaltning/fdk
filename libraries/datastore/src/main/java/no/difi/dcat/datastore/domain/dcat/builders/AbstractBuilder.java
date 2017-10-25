@@ -79,6 +79,8 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+
+
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
         List<SkosConcept> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
@@ -133,13 +135,14 @@ public abstract class AbstractBuilder {
             Subject subject = new Subject();
             if (statement.getObject().isURIResource()) {
                 subject.setUri(statement.getObject().toString());
-            } else {
+
                 Resource subjectResource = statement.getObject().asResource();
-                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel ));
-                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
-                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
-                subject.setSource(extractAsString(subjectResource, DCTerms.source));
-                subject.setUri(subject.getSource());
+                if (subjectResource != null) {
+                    subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
+                    subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
+                    subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
+                    subject.setSource(extractAsString(subjectResource, DCTerms.source));
+                }
             }
 
             result.add(subject);

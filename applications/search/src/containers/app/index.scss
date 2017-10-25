@@ -1,5 +1,5 @@
 @import '../../assets/css/bootstrap.min.css';
-@import '../../assets/css/bootstrap-theme.min.css';
+//@import '../../assets/css/bootstrap-theme.min.css';
 @import '../../assets/css/designsystem.css';
 @import '../../assets/css/colors.css';
 @import '../../assets/css/register.css';
@@ -95,6 +95,18 @@ $sk-border-radius: 3px !default;
   margin-top: 4em;
 }
 
+.block {
+  display: block;
+}
+
+/*
+ TOP-HEADER
+ */
+
+.btn-group-default .dropdown-menu {
+  left: auto;
+  right: 0;
+}
 
 /*
  FILTER CHECKBOX
