@@ -8,7 +8,7 @@ export class RefinementOptionThemes extends React.Component {
       if (label === 'Ukjent') {
         themeLabel = label;
       } else {
-        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)];
+        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)]['nb'];
       }
     }
     const id = encodeURIComponent((itemKey + Math.random()));
