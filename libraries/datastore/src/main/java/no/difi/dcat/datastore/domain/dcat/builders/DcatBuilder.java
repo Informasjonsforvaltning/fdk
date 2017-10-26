@@ -558,8 +558,10 @@ public class DcatBuilder {
     public DcatBuilder addLiterals(Resource resource, Property property, List<String> values) {
         if (values != null) {
             for (String value : values) {
-                Literal literal = model.createLiteral(value);
-                resource.addProperty(property, literal);
+                if (value != null && !value.isEmpty()) {
+                    Literal literal = model.createLiteral(value);
+                    resource.addProperty(property, literal);
+                }
             }
         }
 

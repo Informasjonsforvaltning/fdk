@@ -1,5 +1,9 @@
 package no.dcat.model;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -25,5 +29,9 @@ public class DatasetTest {
         dataset.setDescription(languangeDescription);
         assertThat(dataset.toString(), is("Dataset(1, null, null, {}, {no=test}, {}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, DRAFT)"));
     }
+
+
+
+
 
 }
