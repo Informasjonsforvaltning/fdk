@@ -18,13 +18,13 @@
                         <p class="fdk-input-label">
                             Tittel på {{titleUriType}}
                         </p>
-                        <input formControlName="prefLabel" class="fdk-input ng-touched" type="text" />
+                        <input formControlName="prefLabel" class="fdk-input ng-touched" type="text"/>
                     </div>
                     <div *ngIf="titleUriForm.controls.uri" class="col-md-5">
                         <p class="fdk-input-label">
                             Lenke til {{titleUriType}}
                         </p>
-                        <input formControlName="uri" class="fdk-input ng-touched" type="text" />
+                        <input formControlName="uri" class="fdk-input ng-touched" type="text" trim/>
                     </div>
                     <span class="delete-titleUri-wrapper" *ngIf="showDelete">
                         <a href="" class="delete-titleUri-button" 

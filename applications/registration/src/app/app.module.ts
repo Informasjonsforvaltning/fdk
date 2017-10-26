@@ -46,6 +46,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'; //
 import {GlobalErrorHandler} from './GlobalErrorHandler';
 import {ContentComponent} from "./dataset/content/content.component";
 import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
+import {InputTrimDirective} from './dataset/InputTrimDirective';
 
 @NgModule({
     declarations: [
@@ -69,7 +70,8 @@ import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
         ModalComponent,
         TitleUriListComponent,
         TitleUriFormComponent,
-        ContentComponent
+        ContentComponent,
+        InputTrimDirective
     ],
     imports: [
         BrowserModule,
