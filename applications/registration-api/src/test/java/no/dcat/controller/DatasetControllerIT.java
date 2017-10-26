@@ -1,5 +1,7 @@
 package no.dcat.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
@@ -12,6 +14,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -40,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
 public class DatasetControllerIT {
+    private static Logger logger = LoggerFactory.getLogger(DatasetControllerIT.class);
 //    @Autowired
 //    private TestRestTemplate authorizedRestTemplate;
 //
@@ -241,6 +246,27 @@ public class DatasetControllerIT {
 
         Assert.assertThat(actual, Matchers.is(expected));
         Assert.assertThat(actual.getReferences(), Matchers.is(expected.getReferences()));
+    }
+
+    final String datasetWRefs =
+            "{\"id\":\"cb84a1ef-c502-4802-8cbb-02827a51874c\",\"uri\":\"http://brreg.no/catalogs/910244132/datasets/cb84a1ef-c502-4802-8cbb-02827a51874c\",\"title\":{},\"description\":{},\"objective\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"},\"accessRights\":{\"uri\":\"http://publications.europa.eu/resource/authority/access-right/PUBLIC\",\"prefLabel\":{}},\"provenance\":{\"uri\":\"\",\"prefLabel\":{\"nb\":\"\"}},\"accrualPeriodicity\":{\"uri\":\"\",\"prefLabel\":{\"no\":\"\"}},\"type\":\"\",\"catalogId\":\"910244132\",\"_lastModified\":\"2017-10-25T13:59:31.562+0000\",\"registrationStatus\":\"DRAFT\",\"issued\":null,\"modified\":null,\"contactPoint\":[{\"email\":\"\",\"organizationUnit\":\"\",\"hasURL\":\"\",\"hasTelephone\":\"\"}],\"keyword\":[],\"language\":[],\"landingPage\":[],\"theme\":[],\"distribution\":[{\"id\":\"507715\",\"uri\":\"\",\"title\":{\"nb\":\"\"},\"description\":{\"nb\":\"\"},\"downloadURL\":[],\"accessURL\":[],\"license\":{\"uri\":\"\",\"prefLabel\":{\"nb\":\"\"}},\"conformsTo\":[{\"uri\":\"\",\"prefLabel\":{\"nb\":\"\"}}],\"page\":[],\"format\":[],\"type\":\"API\",\"conformsToUri\":\"\"}],\"sample\":[{\"id\":\"993127\",\"uri\":\"\",\"title\":{\"nb\":\"\"},\"description\":{\"nb\":\"\"},\"downloadURL\":[],\"accessURL\":[],\"license\":{\"uri\":\"\",\"prefLabel\":{\"nb\":\"\"}},\"conformsTo\":[{\"uri\":\"\",\"prefLabel\":{\"nb\":\"\"}}],\"page\":[],\"format\":[],\"type\":\"API\",\"conformsToPrefLabel\":\"\",\"conformsToUri\":\"\"}],\"temporal\":[{}],\"spatial\":[],\"accessRightsComment\":[],\"legalBasisForRestriction\":[],\"legalBasisForProcessing\":[],\"legalBasisForAccess\":[],\"identifier\":[],\"subject\":[],\"conformsTo\":[],\"informationModel\":[{\"uri\":\"\",\"prefLabel\":{\"nb\":\"d\"},\"extraType\":null}],\"references\":[{\"referenceType\":{\"uri\":\"http://purl.org/dc/source\",\"code\":\"x\",\"prefLabel\":{\"nb\":\"Er avledet fra\"}},\"source\":{\"uri\":\"cb84a1ef-c502-4802-8cbb-02827a51874c\",\"prefLabel\":{\"nb\":\"x\"}}}]}";
+
+    @Test
+    public void canParseDatasetWithJackson() throws Throwable {
+        ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        Dataset expected = mapper.readValue(datasetWRefs, Dataset.class);
+
+        Assert.assertThat(expected.getReferences().size(), Matchers.is(1));
+
+        datasetRepository.save(expected);
+
+        Dataset actual = datasetRepository.findOne(expected.getId());
+
+        Assert.assertThat(actual, Matchers.is(expected));
+
+        logger.info(expected.getReferences().toString());
+
     }
 
 }

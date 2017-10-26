@@ -1,11 +1,9 @@
 package no.difi.dcat.datastore.domain.dcat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.shared.Reference;
 import org.hamcrest.Matchers;
-import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -52,4 +50,5 @@ public class ReferenceTest {
         Assert.assertThat(references[0].getReferenceType().getPrefLabel().get("nb"), Matchers.is(""));
 
     }
+
 }

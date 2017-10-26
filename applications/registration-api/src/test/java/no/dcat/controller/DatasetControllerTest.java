@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 
 public class DatasetControllerTest {
 
-    private DatasetController detasetController;
+    private DatasetController datasetController;
 
     @Mock
     private DatasetRepository mockDatasetRepository;
@@ -48,7 +48,7 @@ public class DatasetControllerTest {
         when(mockCatalogRepository.findOne(anyString())).thenReturn(catalog);
 
 
-        detasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository);
+        datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository);
 
     }
 
@@ -63,7 +63,7 @@ public class DatasetControllerTest {
 
         when(mockDatasetRepository.save((Dataset) anyObject())).thenReturn(copy);
 
-        HttpEntity<Dataset> actualEntity = detasetController.saveDataset(catalogId, copy);
+        HttpEntity<Dataset> actualEntity = datasetController.saveDataset(catalogId, copy);
 
         Dataset actual = actualEntity.getBody();
         assertThat(actual.getCatalogId(), is(catalogId));

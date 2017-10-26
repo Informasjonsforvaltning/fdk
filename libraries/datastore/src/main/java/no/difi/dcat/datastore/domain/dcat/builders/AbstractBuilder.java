@@ -44,23 +44,44 @@ public abstract class AbstractBuilder {
 
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
 
+    public static List<String> extractMultipleStrings(Resource resource, Property property) {
+        List<String> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            result.add(statement.getObject().toString());
+        }
+        if (result.size() > 0) {
+            return result;
+        }
+        return null;
+    }
+
     public static String extractAsString(Resource resource, Property property) {
         try {
             Statement statement = resource.getProperty(property);
-            if (statement != null) {
-                if (statement.getObject().isLiteral()) {
-                    return statement.getString();
-                } else {
-                    if (statement.getObject().isResource()) {
-                        return statement.getObject().asResource().getURI();
-                    } else {
-                        return statement.getObject().asLiteral().getValue().toString();
-                    }
-
-                }
-            }
+            String x = getStringFromStatement(statement);
+            if (x != null) return x;
         } catch (Exception e) {
             logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
+        }
+        return null;
+    }
+
+
+
+    private static String getStringFromStatement(Statement statement) {
+        if (statement != null) {
+            if (statement.getObject().isLiteral()) {
+                return statement.getString();
+            } else {
+                if (statement.getObject().isResource()) {
+                    return statement.getObject().asResource().getURI();
+                } else {
+                    return statement.getObject().asLiteral().getValue().toString();
+                }
+
+            }
         }
         return null;
     }
@@ -202,18 +223,7 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    public static List<String> extractMultipleStrings(Resource resource, Property property) {
-        List<String> result = new ArrayList<>();
-        StmtIterator iterator = resource.listProperties(property);
-        while (iterator.hasNext()) {
-            Statement statement = iterator.next();
-            result.add(statement.getObject().toString());
-        }
-        if (result.size() > 0) {
-            return result;
-        }
-        return null;
-    }
+
 
 
     public static Map<String, String> extractLanguageLiteral(Resource resource, Property property) {
