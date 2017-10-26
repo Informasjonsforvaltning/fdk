@@ -119,7 +119,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
             || item.prefLabel.en
             : item.uri
         }
-        <i className="fa fa-external-link fdk-fa-right"/>
+        <i className="fa fa-external-link fdk-fa-right" />
       </a>
     ));
 
