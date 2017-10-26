@@ -107,7 +107,6 @@
 }
 
 .sk-toggle-option.sk-toggle__item.is-disabled {
-  border: 1px dashed $color4;
   color: $color4;
   border-radius: 4px;
   margin: 0px 6px 6px 0px;
@@ -140,10 +139,10 @@
   border-right: 1px solid #ccc;
 }
 .sk-toggle-option.is-active {
-  background-color: #5A6778;
-  color: #fff;
+  background-color: $color1;
+  color: $color0;
   &:hover {
-    border-color: #5A6778;
+    border-color: $color1;
   }
 }
 
