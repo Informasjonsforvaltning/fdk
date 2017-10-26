@@ -29,14 +29,14 @@ export class QueryTransport extends AxiosESTransport {
         name: 'theme_count'
       },
       {
-        key: 'publisher.name.raw',
-        paramName: 'publisher',
-        name: 'publisherCount',
-      },
-      {
         key: 'accessRights.authorityCode.raw',
         paramName: 'accessrights',
         name: 'accessRightsCount'
+      },
+      {
+        key: 'publisher.name.raw',
+        paramName: 'publisher',
+        name: 'publisherCount',
       }
     ];
   }

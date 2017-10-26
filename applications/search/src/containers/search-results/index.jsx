@@ -126,7 +126,6 @@ export default class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionThemes}
                     />
-                    {this._renderPublisherRefinementListFilter()}
                     <RefinementListFilter
                       id="accessRight"
                       title={localization.facet.accessRight}
@@ -135,6 +134,7 @@ export default class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionPublishers}
                     />
+                    {this._renderPublisherRefinementListFilter()}
                   </div>
                   <div id="datasets" className="col-sm-8">
                     <div className="row">
