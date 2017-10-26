@@ -6,6 +6,34 @@ import './index.scss';
 import localization from '../../components/localization';
 
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = {
+      colClass: ''
+    };
+  }
+
+  componentWillMount() {
+    const { type, informationModel, conformsTo } = this.props;
+    let countClasses = 0;
+    if (type) {
+      countClasses = countClasses + 1;
+    }
+    if (informationModel && informationModel.length > 0) {
+      countClasses = countClasses + 1;
+    }
+    if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
+      countClasses = countClasses + 1;
+    }
+    if (countClasses > 0) {
+      const colWidht = 12 / countClasses;
+      const colClass = `col-md-${colWidht}`;
+      this.state = {
+        colClass: colClass
+      };
+    }
+  }
+
   _renderHeader() {
     const { accessRights } = this.props;
     if (accessRights) {
@@ -144,7 +172,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     }
     const heading = localization.dataset.type;
     return (
-      <div className="col-md-4 fdk-padding-no">
+      <div className={`${this.state.colClass} fdk-padding-no`}>
         <div className="fdk-container-detail">
           <div className="fdk-detail-icon">
             <i className="fa fa-upload" />
@@ -181,7 +209,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
       return (
         <div
-          className="col-md-4 fdk-padding-no"
+          className={`${this.state.colClass} fdk-padding-no`}
         >
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
@@ -219,7 +247,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (informationModel && informationModel.length > 0) {
       return (
         <div
-          className="col-md-4 fdk-padding-no"
+          className={`${this.state.colClass} fdk-padding-no`}
         >
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
@@ -258,7 +286,7 @@ DatasetKeyInfo.defaultProps = {
   legalBasisForRestriction: null,
   legalBasisForProcessing: null,
   legalBasisForAccess: null,
-  type: '',
+  type: null,
   conformsTo: null,
   informationModel: null,
   selectedLanguageCode: ''
