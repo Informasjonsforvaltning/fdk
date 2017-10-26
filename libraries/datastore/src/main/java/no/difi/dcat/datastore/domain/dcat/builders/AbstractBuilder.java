@@ -161,6 +161,10 @@ public abstract class AbstractBuilder {
                 }
 
                 Map<String,String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
+                if (prefLabel != null && prefLabel.size() == 0) {
+                    prefLabel = null;
+                }
+
                 String source = null;
                 if (skosConcept.getProperty(DCTerms.source) != null) {
                     source = skosConcept.getProperty(DCTerms.source).getObject().toString();
