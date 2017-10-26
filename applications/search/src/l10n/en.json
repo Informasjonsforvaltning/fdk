@@ -84,7 +84,9 @@
   },
   "search_hit": {
     "owned": "Eies av",
-    "public": "Offentlig",
+    "Public": "Public",
+    "Restricted": "Restricted",
+    "Ukjent": "Unknown",
     "sample": "Eksempeldata tilgjengelig"
   },
   "dataset": {
@@ -94,7 +96,7 @@
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "distribution": {
-      "title": "Distribusjon",
+      "title": "Distribution",
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
       "accessUrl": "TilgangsURL",
@@ -146,8 +148,8 @@
         "restricted": "Restricted",
         "nonPublic": "Non public"
       }
-    }
+    },
+    "sample": "Eksempeldata"
   }
 
 }
-
