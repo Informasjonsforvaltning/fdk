@@ -72,15 +72,21 @@ export default class App extends React.Component {
             <div className="row">
 
               <div className="col-md-4">
-                <Link to="/">
+                <a
+                  title="Link til Felles datakatalog"
+                  href="/"
+                >
                   <img className="fdk-logo" src="/static/img/fdk-logo@2x.png" alt="Logo for Felles datakatalog" />
-                </Link>
+                </a>
               </div>
 
               <div className="col-md-4">
                 <p className="fdk-p-header-sub">
                   {localization.app.titleSub} {localization.app.readMore}
-                  <a href="/about">
+                  <a
+                    title="Side om"
+                    href="/about"
+                  >
                     {localization.app.title}
                   </a>
                 </p>
