@@ -16,7 +16,7 @@ export class RefinementOptionThemes extends React.Component {
     const id = encodeURIComponent((itemKey + Math.random()));
     return (
       <div className="checkbox">
-        <label htmlFor="themes">
+        <label htmlFor={id}>
           <input
             type="checkbox"
             id={id}
