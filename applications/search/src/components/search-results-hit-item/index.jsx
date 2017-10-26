@@ -21,7 +21,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     };
   }
 
-  _renderFormats(source, code, distributionClass) {
+  _renderFormats(source, code) {
     let formatNodes;
     const distribution = source.distribution;
 
@@ -53,7 +53,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       });
       if (formatNodes && formatNodes[0] !== null) {
         return (
-          <div className={distributionClass}>
+          <div>
             { children(formatNodes, code) }
           </div>
         );
@@ -191,14 +191,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
           <div className={distributionClass}>
             <strong>{accessRightsLabel}</strong>
-          </div>
-
-          {this._renderFormats(source, authorityCode, distributionClass)}
-
-          <div className={distributionClass}>
+            {this._renderFormats(source, authorityCode)}
             {this._renderSample(source)}
           </div>
-
         </div>
       </a>
     );
