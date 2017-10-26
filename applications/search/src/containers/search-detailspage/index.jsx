@@ -9,6 +9,8 @@ import DatasetInfo from '../../components/search-dataset-info';
 import DatasetQuality from '../../components/search-dataset-quality-content';
 import DatasetBegrep from '../../components/search-dataset-begrep';
 import DatasetContactInfo from '../../components/search-dataset-contactinfo';
+import localization from '../../components/localization';
+//import api from '../../utils/api.json';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
@@ -83,6 +85,7 @@ export default class DetailsPage extends React.Component {
       <DatasetDistribution
         id={encodeURIComponent(distribution.uri)}
         key={encodeURIComponent(distribution.uri)}
+        title={localization.dataset.distribution.title}
         description={distribution.description ?
           distribution.description[this.props.selectedLanguageCode]
           || distribution.description.nb
@@ -96,6 +99,34 @@ export default class DetailsPage extends React.Component {
         license={distribution.license}
         conformsTo={distribution.conformsTo}
         page={distribution.page}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    ));
+  }
+
+  _renderSample() {
+    const { sample } = this.state.dataset;
+    if (!sample) {
+      return null;
+    }
+    return sample.map(sample => (
+      <DatasetDistribution
+        id={encodeURIComponent(sample.uri)}
+        key={encodeURIComponent(sample.uri)}
+        title={localization.dataset.sample}
+        description={sample.description ?
+          sample.description[this.props.selectedLanguageCode]
+          || sample.description.nb
+          || sample.description.nn
+          || sample.description.en
+          : null
+        }
+        accessUrl={sample.accessURL}
+        format={sample.format}
+        code="SAMPLE"
+        license={sample.license}
+        conformsTo={sample.conformsTo}
+        page={sample.page}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
@@ -254,6 +285,7 @@ export default class DetailsPage extends React.Component {
               {this._renderDatasetDescription()}
               {this._renderKeyInfo()}
               {this._renderDistribution()}
+              {this._renderSample()}
               {this._renderDatasetInfo()}
               {this._renderQuality()}
               {this._renderBegrep()}
