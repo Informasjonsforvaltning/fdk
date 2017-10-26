@@ -3,14 +3,10 @@ import * as React from 'react';
 import localization from '../../components/localization';
 
 export default class About extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  createMainTextMarkup() {
+    return {
+      __html: localization.about.maintext
     };
-  }
-
-  componentDidMount() {
-    this.loadDatasetFromServer();
   }
 
   render() {
@@ -23,13 +19,14 @@ export default class About extends React.Component {
             </h1>
             <div className="fdk-margin-bottom">
               <p className="fdk-ingress">
+                {localization.about.titleSub}
+              </p>
+              <p className="fdk-ingress">
                 {localization.about.ingress}
               </p>
             </div>
             <div className="fdk-textregular">
-              <p>
-                {localization.about.maintext}
-              </p>
+              <p dangerouslySetInnerHTML={this.createMainTextMarkup()} />
             </div>
           </div>
         </div>
