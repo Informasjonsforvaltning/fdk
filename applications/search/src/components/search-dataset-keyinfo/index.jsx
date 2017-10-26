@@ -169,7 +169,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     const { type } = this.props;
     if (!type) {
       return null;
-    }``
+    }
     const heading = localization.dataset.type;
     return (
       <div className={`${this.state.colClass} fdk-padding-no`}>
