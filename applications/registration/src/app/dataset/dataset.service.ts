@@ -74,14 +74,11 @@ export class DatasetService {
     //special treatment for field dcat:references
     // - it is spelled "plural-like" and is unintentionally singularized
     //it therfore has to be changed back to its correct form
-    let payloadcopy = payload.replace('"reference":', '"references":');
-    console.log(payloadcopy);
-    payloadcopy = payloadcopy.replace(/,"referenceTypeForm":\"(.*)\"/, '');    
-    console.log(payloadcopy);
-    payloadcopy = payloadcopy.replace(/,"sourceForm":\"(.*)\"/, '');
-    console.log(payloadcopy);
+    payload = payload.replace('"reference":', '"references":');
+    payload = payload.replace(/,"referenceTypeForm":\"(.*)\"/, '');    
+    payload = payload.replace(/,"sourceForm":\"(.*)\"/, '');
     return this.http
-      .put(datasetUrl, payloadcopy, {headers: this.headers})
+      .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
       .then(() => dataset)
       .catch(this.errorHandler.handleError)

@@ -56,15 +56,16 @@ export class ReferencesComponent implements OnInit {
         this.referencesForm = this.toFormGroup(this.reference);
         this.referencesFormArray.push(this.referencesForm);
 
-        this.referencesForm.valueChanges.distinctUntilChanged().subscribe( 
+        this.referencesForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe( 
             refs => {
+                console.log("THIS HAPPENS")
                 if (refs.referenceTypeForm && this.referenceTypes.length > 0) {
                     let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
                     this.reference.referenceType = {
                             uri: referenceType.value,
-                            code: "x",
+                            code: "",
                             prefLabel: {
-                                "nb": referenceType.label || "x"
+                                "nb": referenceType.label || ""
                             }
                         };
                 } else {
@@ -82,15 +83,12 @@ export class ReferencesComponent implements OnInit {
                     this.reference.source = new SkosConcept(
                         source.value,
                         {
-                            "nb" : (source.label === "Ukjent tittel") ? "x" : source.label
+                            "nb" : (source.label === "Ukjent tittel") ? "" : source.label
                         }
                     );
                 } else {
                     this.reference.source = new SkosConcept();
                 }
-
-                console.log("referenceform.valuechanges - reference after value change:");
-                console.log(this.reference);
                 this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
@@ -120,17 +118,13 @@ export class ReferencesComponent implements OnInit {
         this.codesService.fetchCodes('referencetypess', 'nb')
             .then( referenceTypes => {
                 referenceTypes = _.sortBy(referenceTypes, [reference => reference.label || ""]);
-                this.referenceTypes = referenceTypes;
-                console.log("referencetypes fetched:");
-                console.log(this.referenceTypes);
-                
+                this.referenceTypes = referenceTypes;                
             }
         );
     }
 
     fetchSources() {
         let catalogId = this.dataset.catalogId;
-        console.log("fetchSources: catalogId: " + catalogId );
         let sources = [];
         this.datasetService.getAll(catalogId)  
             .then((datasets: Dataset[]) => {
@@ -146,7 +140,6 @@ export class ReferencesComponent implements OnInit {
                 });
                 sources = _.sortBy(sources, [src => src.label || ""]);
                 this.sources = sources;
-                console.log("sources fetched: ", this.sources);
             }
         );
     }
