@@ -120,10 +120,23 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     // Read fields from search-hit, use correct language field if specified.
     const hitId = encodeURIComponent(source.id);
     const hitElementId = `search-hit-${hitId}`;
-    const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
-    let description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+    let { title, description, objective } = source;
+    if (title) {
+      title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
+    }
+    if (description) {
+      description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+    }
+    if (objective) {
+      objective = objective[language] || objective.nb || objective.nn || objective.en;
+    }
+
     if (description.length > 220) {
       description = `${description.substr(0, 220)}...`;
+    } else if (description.length < 150 && objective) {
+      const freeLength = 200 - description.length;
+      const objectiveLength = objective.length;
+      description = `${description} ${objective.substr(0, (200 - freeLength))} ${(objectiveLength > freeLength ? '...' : '')}`;
     }
     const link = `/datasets/${hitId}`;
 
