@@ -2,20 +2,6 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-/*
-.glyphicon-search-frontpage {
-  position: absolute;
-  right: 96px;
-  top: 92px;
-  font-size: 32px;
-  z-index: 1;
-  color: #213B4C;
-}
-
-.sk-search-box .glyphicon-search-frontpage{
-  top: 197px;
-}
-*/
 
 /*  SEARCHPAGE SEARCHBOX AND TEXT  */
 .mb-60 {
@@ -30,6 +16,52 @@
   margin: 0px;
 }
 
+/* SEARCHPAGE FILTERS */
+
+.filter--theme{
+  .sk-panel__header {
+    &:before {
+      content: "\F02E";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
+}
+
+.filter--publisher {
+  .sk-panel__header {
+    &:before {
+      content: "\F0F7";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
+}
+
+.filter--accessRight {
+  .sk-panel__header {
+    &:before {
+      content: "\F084";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
+}
 
 /*  SEARCHPAGE PAGINATION  */
 
