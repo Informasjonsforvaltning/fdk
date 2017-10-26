@@ -15,6 +15,7 @@ export class RefinementOptionPublishers extends React.Component {
       optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
     }
     const id = encodeURIComponent((itemKey + Math.random()));
+    const textLabel = localization.search_hit[optionLabel] ? localization.search_hit[optionLabel] : optionLabel;
     return (
       <div className="checkbox">
         <label>
@@ -27,7 +28,7 @@ export class RefinementOptionPublishers extends React.Component {
             } list-group-item fdk-label fdk-label-default`}
           />
           <label className="checkbox-replacement" htmlFor={id} />
-          {localization.search_hit[optionLabel]} ({props.count})
+          {textLabel} ({props.count})
         </label>
       </div>
     );
