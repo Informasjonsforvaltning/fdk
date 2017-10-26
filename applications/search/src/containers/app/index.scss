@@ -109,6 +109,26 @@ $sk-border-radius: 3px !default;
 }
 
 /*
+SEARCHPAGE SORTING DROPDOWN
+*/
+
+.btn-group {
+  .dropdown-toggle {
+    &:focus, &:active, &:hover {
+      background-color: $color-cta4 !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.open>.dropdown-toggle.btn-default {
+  background-color: $color-cta4 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/*
  FILTER CHECKBOX
  */
 .checkbox-replacement {
