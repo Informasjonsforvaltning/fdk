@@ -191,7 +191,7 @@ public class CrawlerRestController {
     void harvestAllDcatSources() throws InterruptedException {
         logger.info("HARVEST ALL - " + Calendar.getInstance().getTime().toString());
 
-        logger.debug("Start DCATCrawler Job for each dcat source");
+        logger.debug("Start Crawler Job for each dcat source");
         List<DcatSource> dcatSources = getDcatSources();
         for (DcatSource dcatSource : dcatSources) {
             CrawlerJob job = crawlerJobFactory.createCrawlerJob(dcatSource);
