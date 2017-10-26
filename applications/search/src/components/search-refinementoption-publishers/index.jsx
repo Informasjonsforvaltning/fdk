@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import localization from '../../components/localization';
 
 export class RefinementOptionPublishers extends React.Component {
   render() {
@@ -9,15 +9,15 @@ export class RefinementOptionPublishers extends React.Component {
       label
     } = props;
     let optionLabel;
-    if (props.label !== 'Ukjent') {
-      optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
-    } else {
+    if (props.label === 'Ukjent') {
       optionLabel = props.label;
+    } else {
+      optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
     }
-    const id = encodeURIComponent(itemKey);
+    const id = encodeURIComponent((itemKey + Math.random()));
     return (
       <div className="checkbox">
-        <label htmlFor="publisher">
+        <label>
           <input
             type="checkbox"
             id={id}
@@ -27,7 +27,7 @@ export class RefinementOptionPublishers extends React.Component {
             } list-group-item fdk-label fdk-label-default`}
           />
           <label className="checkbox-replacement" htmlFor={id} />
-          {optionLabel} ({props.count})
+          {localization.search_hit[optionLabel]} ({props.count})
         </label>
       </div>
     );
