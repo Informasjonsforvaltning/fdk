@@ -1,7 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.Contact;
-import no.dcat.shared.Dataset;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
@@ -9,10 +8,10 @@ import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -20,10 +19,8 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
-import org.apache.jena.vocabulary.XSD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,13 +54,51 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+    public static List<String> extractMultipleStringsExcludeBaseUri(Resource resource, Property property) {
+        List<String> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            String valueAsResource = statement.getObject().toString();
+
+            result.add(getStringWithNoBaseImportUri(resource.getModel(), valueAsResource));
+        }
+        if (result.size() > 0) {
+            return result;
+        }
+        return null;
+    }
+
+    public static String getStringWithNoBaseImportUri(Model model, String valueToStrip) {
+        if (model != null && valueToStrip != null) {
+            Resource importInformation = model.getResource(DCATCrawler.ImportResource.getURI());
+            if (importInformation != null) {
+                Statement sourceStatement = importInformation.getProperty(DCATCrawler.source_url);
+                if (sourceStatement != null) {
+                    String baseImportUri = sourceStatement.getObject().asResource().getNameSpace();
+
+                    String valueToStripString = valueToStrip.replaceFirst("(file|http|https):\\/+", "");
+                    baseImportUri = baseImportUri.replaceFirst("(file|http|https):\\/+", "");
+
+                    if (valueToStripString.startsWith(baseImportUri)) {
+                        return valueToStripString.replace(baseImportUri, "");
+                    } else {
+                        return valueToStrip;
+                    }
+                }
+            }
+        }
+
+        return valueToStrip;
+    }
+
     public static String extractAsString(Resource resource, Property property) {
         try {
             Statement statement = resource.getProperty(property);
             String x = getStringFromStatement(statement);
             if (x != null) return x;
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getMessage());
         }
         return null;
     }
@@ -76,7 +111,8 @@ public abstract class AbstractBuilder {
                 return statement.getString();
             } else {
                 if (statement.getObject().isResource()) {
-                    return statement.getObject().asResource().getURI();
+                    String x = statement.getObject().asResource().getURI();
+                    return getStringWithNoBaseImportUri(statement.getModel(), x);
                 } else {
                     return statement.getObject().asLiteral().getValue().toString();
                 }
@@ -279,7 +315,7 @@ public abstract class AbstractBuilder {
                 cal = DatatypeConverter.parseDate(statement.getString());
                 return cal.getTime();
             } catch (Exception e) {
-                logger.warn("Error when extracting property {} from resource {}", property, resource.getURI(), e);
+                logger.warn("Error when extracting property {} from resource {}. Reason: {}", property, resource.getURI(), e.getMessage());
             }
         }
         return null;
@@ -356,7 +392,7 @@ public abstract class AbstractBuilder {
                 return null;
             }
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", DCAT.contactPoint, resource.getURI(), e.getLocalizedMessage());
         }
 
         return null;
@@ -415,7 +451,7 @@ public abstract class AbstractBuilder {
                 }
             }
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}", DCTerms.temporal, resource.getURI(), e);
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", DCTerms.temporal, resource.getURI(), e.getLocalizedMessage());
         }
         if (result.size() > 0) {
             return result;
@@ -469,24 +505,25 @@ public abstract class AbstractBuilder {
         SkosCode result = codes.get(locUri);
 
         if (result == null) {
-            logger.warn("Code with uri {} does not exist and will be removed.", locUri);
+            logger.warn("Code with uri [{}] does not exist and will be removed.", locUri);
 
         }
 
         return result;
     }
 
-    protected static List<SkosCode> getCodes(Map<String, SkosCode> locations, List<String> locsUri) {
+    protected static List<SkosCode> getCodes(Model model, Map<String, SkosCode> locations, List<String> locsUri) {
         List<SkosCode> result = new ArrayList();
         if (locsUri != null) {
             for (String locUri : locsUri) {
                 if (locUri == null || locUri.trim().equals("")) {
                     continue;
                 }
+                locUri = getStringWithNoBaseImportUri(model, locUri);
                 SkosCode locCode = locations.get(locUri);
 
                 if (locCode == null) {
-                    logger.info("Location with uri {} does not exist and will be removed.", locsUri);
+                    logger.info("Location with uri [{}] does not exist and will be removed.", locUri);
                     continue;
                 }
 

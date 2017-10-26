@@ -25,7 +25,16 @@
 			"skos:inSchema": {
 				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/"
 			}
-		},  {
+		}, {
+			"@id": "text\/csv",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "application\/json",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "application\/xml",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
 			"@id": "https:\/\/data.norge.no\/node\/967",
 			"@type": "dcat:Distribution",
 			"dcat:accessURL": {

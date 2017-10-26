@@ -2,6 +2,7 @@ package no.difi.dcat.datastore.domain.dcat.client;
 
 import no.dcat.shared.LocationUri;
 import no.dcat.shared.SkosCode;
+import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.vocabulary.DCTerms;
@@ -56,18 +57,19 @@ public class LoadLocations {
      */
     public void addLocationsToThemes(Model model) {
 
-
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
         NodeIterator nodeIterator = model.listObjectsOfProperty(DCTerms.spatial);
         nodeIterator.forEachRemaining(node -> {
-            LocationUri locationUri = new LocationUri(node.asResource().getURI());
+            String uri = AbstractBuilder.getStringWithNoBaseImportUri(model, node.asResource().getURI());
+
+            LocationUri locationUri = new LocationUri(uri);
 
             try {
                 SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
                 locations.put(skosCode.getUri(), skosCode);
             } catch (Exception e) {
-                logger.error("Error posting location {} to reference-data service", locationUri.getUri(), e);
+                logger.error("Error posting location [{}] to reference-data service", locationUri.getUri());
             }
         });
 

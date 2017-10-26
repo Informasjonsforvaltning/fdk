@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Crawler for harvesting and load elasticsearch with publishers.
+ * DCATCrawler for harvesting and load elasticsearch with publishers.
  */
 public class CrawlerPublisherJob implements Runnable {
 

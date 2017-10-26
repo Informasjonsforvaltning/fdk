@@ -105,7 +105,7 @@ public class DatasetBuilder extends AbstractBuilder {
             // sample handled externally
 
             ds.setTemporal(extractPeriodOfTime(resource));
-            ds.setSpatial(getCodes(locations, extractMultipleStrings(resource, DCTerms.spatial)));
+            ds.setSpatial(getCodes(resource.getModel(), locations, extractMultipleStrings(resource, DCTerms.spatial)));
 
             ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()),extractAsString(resource, DCTerms.accessRights)));
             ds.setAccessRightsComment(extractMultipleStrings(resource, DCATNO.accessRightsComment));

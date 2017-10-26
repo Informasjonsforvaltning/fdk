@@ -11,12 +11,17 @@ import org.apache.jena.util.FileManager;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class DcatSourcesConverterIT {
@@ -53,8 +58,8 @@ public class DcatSourcesConverterIT {
     @Test
     public void readCompleteDifiData() throws Throwable {
 
-        Model model = RDFDataMgr.loadDataset("difi-complete-2017-10-25.jsonld").getDefaultModel();
-        //Model model = FileManager.get().loadModel("difi-complete-2017-10-25.jsonld");
+        Resource r = new ClassPathResource("difi-complete-2017-10-25.jsonld");
+        Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();
@@ -62,15 +67,17 @@ public class DcatSourcesConverterIT {
         datasets.forEach(dataset -> {
             if (dataset.getDistribution() != null) {
                 dataset.getDistribution().forEach( distribution -> {
-                    logger.info("{}: {}", dataset.getUri(), distribution.getFormat());
+                    logger.debug("{}: {}", dataset.getUri(), distribution.getFormat());
+                    if (distribution.getFormat() != null && distribution.getFormat().size() > 0) {
+                        String firstFormat = distribution.getFormat().get(0);
+                        assertThat(firstFormat, is(notNullValue()));
+                    }
+
                 });
             }
         });
 
-        Catalog c = new Catalog();
-        c.setDataset(datasets);
-        logger.info("FORMAT+n{}",DcatBuilder.transform(c, "TURTLE"));
-
+        assertThat(datasets.size() , is(484));
     }
 
     @Test
