@@ -18,7 +18,7 @@ export class RefinementOptionPublishers extends React.Component {
     const textLabel = localization.search_hit[optionLabel] ? localization.search_hit[optionLabel] : optionLabel;
     return (
       <div className="checkbox">
-        <label>
+        <label htmlFor={id}>
           <input
             type="checkbox"
             id={id}
