@@ -75,7 +75,7 @@ export class ReferencesComponent implements OnInit {
                     let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
                     this.reference.referenceType = {
                             uri: referenceType.value,
-                            code: "",
+                            code: referenceType.value.match(/[^/]+$/).toString() || "",
                             prefLabel: {
                                 "nb": referenceType.label || ""
                             }
@@ -133,7 +133,7 @@ export class ReferencesComponent implements OnInit {
         this.codesService.fetchCodes('referencetypess', 'nb')
             .then( referenceTypes => {
                 referenceTypes = _.sortBy(referenceTypes, [reference => reference.label || ""]);
-                this.referenceTypes = referenceTypes;                
+                this.referenceTypes = referenceTypes; 
             }
         );
     }
