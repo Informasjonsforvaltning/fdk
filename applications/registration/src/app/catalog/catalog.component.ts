@@ -13,7 +13,7 @@ import {LocalStorage, LocalStorageService} from 'ngx-webstorage';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.css']
+  styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
   title = 'Registrer katalog';

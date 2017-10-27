@@ -9,6 +9,7 @@ module.exports = {
   context:path.join(__dirname),
   entry: [
 //    'webpack-hot-middleware/client?reload=true',
+    "babel-polyfill",
     './src/index.jsx'
   ],
   output: {

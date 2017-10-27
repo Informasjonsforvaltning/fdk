@@ -1,11 +1,11 @@
 @import '../../assets/css/bootstrap.min.css';
-//@import '../../assets/css/bootstrap-theme.min.css';
-@import '../../assets/css/designsystem.css';
-@import '../../assets/css/colors.css';
-@import '../../assets/css/register.css';
-@import '../../assets/css/portal.css';
-@import '../../assets/css/typo.css';
-@import '../../assets/css/common.css';
+@import '../../assets/css/bootstrap-theme.min.css';
+@import '../../assets/css/designsystem.scss';
+@import '../../assets/css/colors.scss';
+@import '../../assets/css/register.scss';
+@import '../../assets/css/portal.scss';
+@import '../../assets/css/typo.scss';
+@import '../../assets/css/common.scss';
 @import '../../assets/css/font-awesome.min.css';
 //@import './assets/css/main.css';
 
@@ -109,6 +109,26 @@ $sk-border-radius: 3px !default;
 }
 
 /*
+SEARCHPAGE SORTING DROPDOWN
+*/
+
+.btn-group {
+  .dropdown-toggle {
+    &:focus, &:active, &:hover {
+      background-color: $color-cta4 !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.open>.dropdown-toggle.btn-default {
+  background-color: $color-cta4 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/*
  FILTER CHECKBOX
  */
 .checkbox-replacement {
@@ -143,8 +163,3 @@ input:checked ~ .checkbox-replacement::after {
 .sk-hits-grid {
   margin-top: 7px;
 }
-
-
-
-
-

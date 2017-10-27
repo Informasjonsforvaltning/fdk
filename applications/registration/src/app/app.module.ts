@@ -48,6 +48,7 @@ import {ContentComponent} from "./dataset/content/content.component";
 import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
 import { ReferencesComponent } from "./dataset/references/references.component";
 import { ReferenceListComponent } from "./dataset/references/reference-list.component";
+import {InputTrimDirective} from './dataset/inputTrimDirective';
 
 @NgModule({
     declarations: [
@@ -73,7 +74,8 @@ import { ReferenceListComponent } from "./dataset/references/reference-list.comp
         TitleUriFormComponent,
         ContentComponent,
         ReferencesComponent,
-        ReferenceListComponent
+        ReferenceListComponent,
+        InputTrimDirective
     ],
     imports: [
         BrowserModule,

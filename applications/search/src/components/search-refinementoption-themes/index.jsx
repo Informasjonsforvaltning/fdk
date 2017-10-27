@@ -1,20 +1,22 @@
 import * as React from 'react';
+import localization from '../../components/localization';
 
 export class RefinementOptionThemes extends React.Component {
   render() {
     const { bemBlocks, itemKey, label, active, onClick, count } = this.props; // eslint-disable-line react/prop-types
     let themeLabel = '';
     if (window.themes.length > 0) {
-      if (label !== 'Ukjent') {
-        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)];
-      } else {
+      if (label === 'Ukjent') {
         themeLabel = label;
+      } else {
+        let lang = localization.getLanguage();
+        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)][lang];
       }
     }
-    const id = encodeURIComponent(itemKey);
+    const id = encodeURIComponent((itemKey + Math.random()));
     return (
       <div className="checkbox">
-        <label htmlFor="themes">
+        <label htmlFor={id}>
           <input
             type="checkbox"
             id={id}

@@ -1,0 +1,102 @@
+@prefix schema: <http://schema.org/> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix dqv:   <http://www.w3.org/ns/dqvNS#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix time:  <http://www.w3.org/TR/owl-time/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<https://data-david.github.io/Begrep/begrep/Foretaksnavn>
+        a               skos:Concept ;
+        skos:prefLabel  "Foretaksnavn"@no .
+
+[ a       vcard:Organization ] .
+
+<http://brreg.no/catalogs/910888447>
+        a                dcat:Catalog ;
+        dct:description  "Dette er en datakatalog"@nb ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/910888447.json> ;
+        dct:title        "Datakatalog for REINLI OG BERLEVÅG REGNSKAP"@nb ;
+        dcat:dataset     <http://brreg.no/catalogs/910888447/datasets/614a1c83-6fcd-4712-bcfa-fdcbccbc0a72> .
+
+<7d0aaf8f-9f72-438f-9035-a193dc0ac479>
+        a               dcat:Distribution ;
+        dct:format      "application/rdf" ;
+        dct:license     [ a           dct:LicenseDocument , skos:Concept ;
+                          dct:source  "NLOD"
+                        ] ;
+        dct:type        "API" ;
+        dcat:accessURL  <www.enlenkefortilgang.no> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/910888447.json>
+        a               foaf:Agent ;
+        dct:identifier  "910888447" ;
+        foaf:name       "REINLI OG BERLEVÅG REGNSKAP" .
+
+<https://data-david.github.io/Begrep/begrep/Enhet>
+        a               skos:Concept ;
+        skos:prefLabel  "enhet"@no .
+
+<http://brreg.no/catalogs/910888447/datasets/614a1c83-6fcd-4712-bcfa-fdcbccbc0a72>
+        a                           dcat:Dataset ;
+        dcatno:informationModel     [ a               dct:Standard , skos:Concept ;
+                                      dct:source      "www.vg.no" ;
+                                      skos:prefLabel  "Kormodellen"@nb
+                                    ] ;
+        dcatno:legalBasisForAccess  [ a               dct:RightsStatement , skos:Concept ;
+                                      dct:source      "www.vg.no" ;
+                                      skos:prefLabel  "Utlevering av falske kormedlemmer"@nb
+                                    ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/lov/2000-04-14-31/§1" ;
+                  skos:prefLabel  "Personopplysningsloven § 1"@nb
+                ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/lov/2000-04-14-31/§8" ;
+                  skos:prefLabel  "Personopplysningsloven § 8"@nb
+                ] ;
+        dcatno:objective            "Formålet med datasettet er å avdekke falske kormedlemer."@nb ;
+        dct:accessRights            <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity      <http://publications.europa.eu/resource/authority/frequency/IRREG> ;
+        dct:description             "Datasettet skal gi en oversikt over alle sangere som har vært innom det verdenskjente koret. Fra bass til tenor."@nb ;
+        dct:issued                  "2017-10-26T02:00:00"^^xsd:dateTime ;
+        dct:modified                "2017-10-26"^^xsd:date ;
+        dct:provenance              <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher               <http://data.brreg.no/enhetsregisteret/enhet/910888447.json> ;
+        dct:subject                 <https://data-david.github.io/Begrep/begrep/Foretaksnavn> , <https://data-david.github.io/Begrep/begrep/Enhet> ;
+        dct:temporal                [ a               dct:PeriodOfTime ;
+                                      schema:endDate  "2009-10-24"^^xsd:date
+                                    ] ;
+        dct:title                   "Medlemsliste Berlevågs mannskor"@nb ;
+        dct:type                    "Data" ;
+        dcat:distribution           <7d0aaf8f-9f72-438f-9035-a193dc0ac479> ;
+        dcat:theme                  <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        dqv:hasQualityAnnotation    [ a                dqv:QualityAnnotation ;
+                                      dqv:inDimension  <iso:Availability> ;
+                                      oa:hasBody       [ rdf:value  "Dette er tilgjengelig"@no ]
+                                    ] ;
+        dqv:hasQualityAnnotation    [ a                dqv:QualityAnnotation ;
+                                      dqv:inDimension  <iso:Currentness> ;
+                                      oa:hasBody       [ rdf:value  "Dette er ikke aktuelt"@no ]
+                                    ] ;
+        dqv:hasQualityAnnotation    [ a                dqv:QualityAnnotation ;
+                                      dqv:inDimension  <iso:Completeness> ;
+                                      oa:hasBody       [ rdf:value  "Dette er komplett"@no ]
+                                    ] ;
+        dqv:hasQualityAnnotation    [ a                dqv:QualityAnnotation ;
+                                      dqv:inDimension  <iso:Accuracy> ;
+                                      oa:hasBody       [ rdf:value  "Dette er nøyaktig"@no ]
+                                    ] ;
+        dqv:hasQualityAnnotation    [ a                dqv:QualityAnnotation ;
+                                      dqv:inDimension  <iso:Relevance> ;
+                                      oa:hasBody       [ rdf:value  "Dette er relevant"@no ]
+                                    ] .

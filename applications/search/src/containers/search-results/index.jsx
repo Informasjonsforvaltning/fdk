@@ -62,17 +62,12 @@ export default class SearchPage extends React.Component {
         .end((err, res) => {
           if (!err && res) {
             res.body.forEach((hit) => {
-              if (this.queryObj.lang === 'en') {
-                if (hit.title.en) {
-                  const obj = {};
-                  obj[hit.code] = hit.title.en;
-                  window.themes.push(obj);
-                }
-              } else if (hit.title.nb) {
                 const obj = {};
-                obj[hit.code] = hit.title.nb;
+                obj[hit.code] = {};
+                obj[hit.code].nb = hit.title.nb;
+                obj[hit.code].nn = hit.title.nb;
+                obj[hit.code].en = hit.title.en;
                 window.themes.push(obj);
-              }
             });
           }
         });
@@ -162,7 +157,6 @@ export default class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionThemes}
                     />
-                    {this._renderPublisherRefinementListFilter()}
                     <RefinementListFilter
                       id="accessRight"
                       title={localization.facet.accessRight}
@@ -171,6 +165,7 @@ export default class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionPublishers}
                     />
+                    {this._renderPublisherRefinementListFilter()}
                   </div>
                   <div id="datasets" className="col-sm-8">
                     <Hits

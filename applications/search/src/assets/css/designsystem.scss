@@ -1,14 +1,15 @@
+@import './colors.scss';
 /*  D I V I D E R S   &   B O X E S  */
 
 .designsystemDivider {
-    border-color: var(--color5);
+    border-color: $color5;
     width: 100%;
     margin: 20px 0px;
 }
 
 .designsystemDividerSection {
     width: 100%;
-    border-top: 2px solid var(--color5);
+    border-top: 2px solid $color5;
     margin: 80px 0px 80px 0px;
 }
 
@@ -16,8 +17,8 @@
     width: 100%;
     padding: 10px;
     margin: 0px;
-    background-color: var(--color6);
-    border: 1px dashed var(--color1);
+    background-color: $color6;
+    border: 1px dashed $color1;
     border-radius: 2px;
     display: inline-block;
 }
@@ -40,7 +41,7 @@
 }
 
 .fdk-footer {
-    border-top: 1px solid var(--color5);
+    border-top: 1px solid $color5;
     padding: 20px 0px;
     margin: 60px 0px 0px 0px;
 }
@@ -54,8 +55,8 @@
     font-weight: 600;
     padding: 10px 5px 9px 5px;
     margin-right: 10px;
-    background-color: var(--color-cta);
-    color: var(--color1);
+    background-color: $color-cta;
+    color: $color1;
     width: 40px;
     height: auto;
     border-radius: 2px;
@@ -68,7 +69,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--color1);
+    color: $color1;
     padding: 10px 3px 9px 3px;
     margin: 0px 0px 50px 0px;
     height: auto;
@@ -89,97 +90,97 @@
 }
 
 .designsystemColor1 {
-    background-color: var(--color1);
+    background-color: $color1;
     color: #fff;
     font-weight: 300;
 }
 
 .designsystemColor2 {
-    background-color: var(--color2);
+    background-color: $color2;
     color: #fff;
     font-weight: 300;
 }
 
 .designsystemColor3 {
-    background-color: var(--color3);
+    background-color: $color3;
     color: #fff;
     font-weight: 300;
 }
 
 .designsystemColor4 {
-    background-color: var(--color4);
-    color: var(--color1);
+    background-color: $color4;
+    color: $color1;
 }
 
 .designsystemColor5 {
-    background-color: var(--color5);
-    color: var(--color1);
+    background-color: $color5;
+    color: $color1;
 }
 
 .designsystemColor6 {
-    background-color: var(--color6);
-    color: var(--color1);
-    border: 1px solid var(--color4);
+    background-color: $color6;
+    color: $color1;
+    border: 1px solid $color4;
 }
 
 .designsystemColor7 {
-    background-color: var(--color7);
-    color: var(--color1);
+    background-color: $color7;
+    color: $color1;
 }
 
 .designsystemColorCta {
-    background-color: var(--color-cta);
-    color: var(--color1);
+    background-color: $color-cta;
+    color: $color1;
 }
 
 .designsystemColorCta2 {
-    background-color: var(--color-cta2);
-    color: var(--color1);
+    background-color: $color-cta2;
+    color: $color1;
 }
 
 .designsystemColorCta3 {
-    background-color: var(--color-cta3);
-    color: var(--color1);
+    background-color: $color-cta3;
+    color: $color1;
 }
 
 .designsystemColorCta4 {
-    background-color: var(--color-cta4);
-    color: var(--color1);
+    background-color: $color-cta4;
+    color: $color1;
 }
 
 .designsystemColorGreen {
-    background-color: var(--color-green);
-    color: var(--color1);
+    background-color: $color-green;
+    color: $color1;
 }
 
 .designsystemColorGreen2 {
-    background-color: var(--color-green2);
-    color: var(--color1);
+    background-color: $color-green2;
+    color: $color1;
 }
 
 .designsystemColorYellow {
-    background-color: var(--color-yellow);
-    color: var(--color1);
+    background-color: $color-yellow;
+    color: $color1;
 }
 
 .designsystemColorYellow2 {
-    background-color: var(--color-yellow2);
-    color: var(--color1);
+    background-color: $color-yellow2;
+    color: $color1;
 }
 
 .designsystemColorRed {
-    background-color: var(--color-red);
-    color: var(--color1);
+    background-color: $color-red;
+    color: $color1;
 }
 
 .designsystemColorRed2 {
-    background-color: var(--color-red2);
-    color: var(--color1);
+    background-color: $color-red2;
+    color: $color1;
 }
 
 .designsystemColorWhite {
     background-color: #ffffff;
-    color: var(--color1);
+    color: $color1;
 }
 
 
@@ -187,9 +188,9 @@
 /* F O N T S */
 
 .designsystemLinks {
-    color: var(--color0);
+    color: $color0;
 }
 
 .designsystemLinks:hover {
-    color: var(--color-cta);
+    color: $color-cta;
 }

@@ -19,7 +19,7 @@ import {DistributionFormComponent} from "./distribution/distribution.component";
 @Component({
     selector: 'app-dataset',
     templateUrl: './dataset.component.html',
-    styleUrls: ['./dataset.component.css']
+    styleUrls: ['./dataset.component.scss']
 })
 
 export class DatasetComponent implements OnInit {

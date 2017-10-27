@@ -105,7 +105,7 @@ public class DatasetBuilder extends AbstractBuilder {
             // sample handled externally
 
             ds.setTemporal(extractPeriodOfTime(resource));
-            ds.setSpatial(getCodes(locations, extractMultipleStrings(resource, DCTerms.spatial)));
+            ds.setSpatial(getCodes(resource.getModel(), locations, extractMultipleStrings(resource, DCTerms.spatial)));
 
             ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()),extractAsString(resource, DCTerms.accessRights)));
             ds.setAccessRightsComment(extractMultipleStrings(resource, DCATNO.accessRightsComment));
@@ -143,7 +143,9 @@ public class DatasetBuilder extends AbstractBuilder {
 
 
 
-    public static QualityAnnotation extractQualityAnnotation(Resource resource, String dimensionName) {
+    public static QualityAnnotation extractQualityAnnotation(Resource resource, String dimensionUri) {
+        assert dimensionUri != null;
+
         QualityAnnotation result = null;
 
         StmtIterator iterator = resource.listProperties(DQV.hasQualityAnnotation);
@@ -152,17 +154,22 @@ public class DatasetBuilder extends AbstractBuilder {
 
             Resource annotation = statement.getResource();
             Statement dimension = annotation.getProperty(DQV.inDimension);
-            if (dimension != null && dimension.toString().contains(dimensionName)) {
-                Statement body = annotation.getProperty(OA.hasBody);
 
-                Map<String,String> annotationText = extractLanguageLiteral(body.getResource(),RDF.value);
-                if (annotationText != null ) {
-                    result = new QualityAnnotation();
-                    result.setHasBody(annotationText);
-                    result.setInDimension(dimension.getObject().toString());
+            if (dimension != null && annotation != null) {
+                String actualDimensionUri = dimension.getObject().toString();
+                String expandedDimensionUri = resource.getModel().expandPrefix(actualDimensionUri);
+
+                if (dimensionUri.equals(expandedDimensionUri)) {
+                    Statement body = annotation.getProperty(OA.hasBody);
+
+                    Map<String, String> annotationText = extractLanguageLiteral(body.getResource(), RDF.value);
+                    if (annotationText != null) {
+                        result = new QualityAnnotation();
+                        result.setHasBody(annotationText);
+                        result.setInDimension(dimension.getObject().toString());
+                    }
                 }
-            };
-
+            }
 
         }
         return result;

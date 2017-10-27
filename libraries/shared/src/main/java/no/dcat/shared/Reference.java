@@ -13,6 +13,10 @@ public class Reference {
 
     public Reference() {};
 
+    // needed for Jackson to parse
+    public Reference() {
+    }
+
     public Reference(SkosCode referenceType, SkosConcept source) {
         this.referenceType = referenceType;
         this.source = source;
