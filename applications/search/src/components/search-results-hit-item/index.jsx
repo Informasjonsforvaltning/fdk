@@ -5,6 +5,7 @@ import cx from 'classnames';
 
 import DistributionFormat from '../search-dataset-format';
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -91,7 +92,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           id={`dataset-description-theme-${index}`}
           className="fdk-label"
         >
-          {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+          {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
         </div>
       ));
     }

@@ -102,9 +102,12 @@
       "format": "Tilgjengelige format",
       "accessUrl": "TilgangsURL",
       "license": "Forutsetning for bruk av datasettet",
+      "licenseLinkDefault": "Lisens",
       "conformsTo": "Innholdsstandard",
       "page": "Mer informasjon om denne distribusjonen",
-      "standard": "Standard"
+      "standard": "Standard",
+      "referenceDefaultCode": "Andre relasjoner",
+      "referenceDefault": "Relasjon"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",

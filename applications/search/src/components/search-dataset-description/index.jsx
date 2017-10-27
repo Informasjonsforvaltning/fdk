@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderPublisher() {
@@ -22,7 +23,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 
   _renderThemes() {
     let themeNodes = null;
-    const { themes } = this.props;
+    const { themes, selectedLanguageCode } = this.props;
     if (themes) {
       themeNodes = themes.map(singleTheme => (
         <div
@@ -30,7 +31,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
           id={`dataset-description-theme-${singleTheme.code}`}
           className="fdk-label fdk-label-on-grey"
         >
-          {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+          {getTranslateText(singleTheme.title, selectedLanguageCode)}
         </div>
       ));
     }
