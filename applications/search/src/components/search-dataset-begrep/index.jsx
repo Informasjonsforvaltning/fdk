@@ -4,6 +4,7 @@ import { Collapse } from 'react-bootstrap';
 
 import BegrepCollapse from '../search-dataset-begrep-collapse';
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetBegrep extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -19,35 +20,20 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
   }
 
   _renderBegrep() {
-    const { subject } = this.props;
-    const children = items => items.map(item => (
-      <BegrepCollapse
-        key={item.uri}
-        prefLabel={item.prefLabel ?
-          item.prefLabel[this.props.selectedLanguageCode]
-          || item.prefLabel.nb
-          || item.prefLabel.no
-          || item.prefLabel.nn
-          || item.prefLabel.en
-          : null
-        }
-        definition={item.definition ?
-          item.definition[this.props.selectedLanguageCode]
-          || item.definition.nb
-          || item.definition.no
-          || item.definition.nn
-          || item.definition.en
-          : null}
-        note={item.note ?
-          item.note[this.props.selectedLanguageCode]
-          || item.note.nb
-          || item.note.no
-          || item.note.nn
-          || item.note.en
-          : null}
-        source={item.source}
-      />
-    ));
+    const { subject, selectedLanguageCode } = this.props;
+    const children = items => items.map(item => {
+      if (item.prefLabel && item.definition) {
+        return (
+          <BegrepCollapse
+            key={item.uri}
+            prefLabel={item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : null}
+            definition={item.definition ? getTranslateText(item.definition, selectedLanguageCode) : null}
+            note={item.note ? getTranslateText(item.note, selectedLanguageCode) : null}
+            source={item.source}
+          />
+        );
+      }
+    });
     if (subject) {
       return (
         <div>
@@ -62,35 +48,15 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
     return null;
   }
 
-  _renderBegrep2() {
-    return (
-      <div className="fdk-ingress fdk-margin-bottom-no" role="button" tabIndex={0} onClick={this.toggle}>
-        <strong className="pull-left">Jordsmonn:&nbsp;</strong>
-        <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
-        {!this.state.detailed &&
-        <div>
-          {this.props.description.substr(0, 30)}...
-        </div>
-        }
-
-        <Collapse in={this.state.detailed}>
-          <div>
-            {this.props.description}
-          </div>
-        </Collapse>
-      </div>
-    );
-  }
-
   _renderKeyword() {
-    const { keyword } = this.props;
+    const { keyword, selectedLanguageCode } = this.props;
     const children = items => items.map((item, index) => {
       if (index > 0) {
         return (
           <span
             key={`dataset-begrep-search-${index}`}
           >
-            {`, ${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
+            {`, ${getTranslateText(item, selectedLanguageCode)}`}
           </span>
         );
       }
@@ -98,7 +64,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
         <span
           key={`dataset-begrep-search-${index}`}
         >
-          {`${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
+          {getTranslateText(item, selectedLanguageCode)}
         </span>
       );
     });
@@ -129,13 +95,13 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
 }
 
 DatasetBegrep.defaultProps = {
-  subjet: null,
+  subject: null,
   keyword: null,
   selectedLanguageCode: ''
 };
 
 DatasetBegrep.propTypes = {
-  description: PropTypes.array,
+  subject: PropTypes.array,
   keyword: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

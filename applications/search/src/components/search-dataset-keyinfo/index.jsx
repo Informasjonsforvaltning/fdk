@@ -4,12 +4,13 @@ import cx from 'classnames';
 import './index.scss';
 
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
-      colClass: ''
+      colClass: 'col-md-12'
     };
   }
 
@@ -174,10 +175,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     return (
       <div className={`${this.state.colClass} fdk-padding-no`}>
         <div className="fdk-container-detail">
-          <div className="fdk-detail-icon">
-            <i className="fa fa-upload" />
-          </div>
-          <div className="fdk-detail-text">
+          <div>
             <h5>{heading}</h5>
             <p className="fdk-ingress fdk-margin-bottom-no">
               {type}
@@ -189,20 +187,14 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
   }
 
   _renderConformsTo() {
-    const { conformsTo } = this.props;
+    const { conformsTo, selectedLanguageCode } = this.props;
     const header = localization.dataset.conformsTo;
     const children = items => items.map(item => (
       <a
         key={item.uri}
         href={item.uri}
       >
-        {
-          item.prefLabel[this.props.selectedLanguageCode]
-          || item.prefLabel.nb
-          || item.prefLabel.nn
-          || item.prefLabel.en
-          || localization.dataset.distribution.standard
-        }
+        {item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : localization.dataset.distribution.standard}
         <i className="fa fa-external-link fdk-fa-right" />
       </a>
     ));
@@ -212,10 +204,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           className={`${this.state.colClass} fdk-padding-no`}
         >
           <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-refresh" />
-            </div>
-            <div className="fdk-detail-text">
+            <div>
               <h5>{header}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no">
                 { children(conformsTo) }
@@ -250,10 +239,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           className={`${this.state.colClass} fdk-padding-no`}
         >
           <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-refresh" />
-            </div>
-            <div className="fdk-detail-text">
+            <div>
               <h5>{localization.dataset.informationModel}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no">
                 { children(informationModel) }

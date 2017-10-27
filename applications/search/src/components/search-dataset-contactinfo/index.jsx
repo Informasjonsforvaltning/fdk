@@ -19,7 +19,6 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
       hasTelephone = contactPoint.hasTelephone;
     }
 
-
     const emailClass = cx(
       'fdk-padding-no',
       {
