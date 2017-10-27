@@ -101,7 +101,16 @@ public class DcatBuilder {
         return out.toString();
     }
 
-    private DcatBuilder addCatalog(Catalog catalog) {
+    public String getDcatOutput(String outputFormat) {
+        OutputStream out = new ByteArrayOutputStream();
+        return model.write(out, outputFormat).toString();
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public DcatBuilder addCatalog(Catalog catalog) {
 
         Resource catRes = createResource(catalog, catalog.getUri(), DCAT.Catalog);
         addLiterals(catRes, DCTerms.title, catalog.getTitle());
@@ -268,7 +277,7 @@ public class DcatBuilder {
         return this;
     }
 
-    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept, Resource type) {
+    public DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept, Resource type) {
         if (skosConcept != null && skosConcept.getUri() != null && !skosConcept.getUri().isEmpty()) {
             Resource skosConceptResource = model.createResource();
 
@@ -404,7 +413,7 @@ public class DcatBuilder {
         return this;
     }
 
-    private void createContactPoint(Resource datRes, Contact contact) {
+    void createContactPoint(Resource datRes, Contact contact) {
         if (contact != null) {
             addProperty(datRes, DCAT.contactPoint, contact.getUri());
 
