@@ -139,6 +139,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
       this.dataset.informationModels = this.dataset.informationModels || [];
       this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
+      this.dataset.references = this.dataset.references || [];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -192,12 +193,6 @@ export class DatasetComponent implements OnInit {
             dataset.temporals = [];
           }
 
-         /* if (dataset.references) {
-              dataset.references.forEach(reference => {
-                  if (reference.refenceType)
-              });
-          }*/
-
           if(dataset.published){
             this.dataset.registrationStatus = "PUBLISH";
           }else{
@@ -209,7 +204,7 @@ export class DatasetComponent implements OnInit {
           var that = this;
           this.delay(() => {
             if (this.datasetSavingEnabled) {
-              that.save.call(that);
+             that.save.call(that);
             }
           }, this.saveDelay);
         });
@@ -326,14 +321,14 @@ export class DatasetComponent implements OnInit {
                 this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
                 this.datasetSavingEnabled = true;
             })
-          /*.catch(error => {
+          .catch(error => {
             console.log(error);
             this.showModal(
               `Error: ${error.status}`,
               `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
               false
             );
-          })*/;
+          });
     }
 
     valuechange(): void {

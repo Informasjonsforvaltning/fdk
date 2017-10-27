@@ -51,15 +51,27 @@ export class ReferencesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchReferenceTypes();
-        this.fetchSources();
+        if (this.reference) {
+            if (this.reference.referenceType) {
+                this.referenceTypes.push({
+                    value: this.reference.referenceType.uri,
+                    label: this.reference.referenceType.prefLabel.nb
+                });
+            }
+            if (this.reference.source) {
+                this.sources.push({
+                    value: this.reference.source.uri,
+                    label: this.reference.source.prefLabel.nb || "Ukjent tittel"
+                });
+            }
+        }
         this.referencesForm = this.toFormGroup(this.reference);
         this.referencesFormArray.push(this.referencesForm);
 
         this.referencesForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe( 
             refs => {
-                console.log("THIS HAPPENS")
-                if (refs.referenceTypeForm && this.referenceTypes.length > 0) {
+                if ( this.referenceTypes.length > 0 ) {
+                if (refs.referenceTypeForm) {
                     let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
                     this.reference.referenceType = {
                             uri: referenceType.value,
@@ -76,9 +88,11 @@ export class ReferencesComponent implements OnInit {
                             "nb": ""
                         }
                     };
-                    this.reference.source = new SkosConcept();
                 }
-                if (refs.sourceForm && this.sources.length > 0) {
+            }
+            
+            if ( this.sources.length > 0 ) {
+                if (refs.sourceForm) {
                     let source = this.sources.find( src => src.value === refs.sourceForm);
                     this.reference.source = new SkosConcept(
                         source.value,
@@ -89,6 +103,7 @@ export class ReferencesComponent implements OnInit {
                 } else {
                     this.reference.source = new SkosConcept();
                 }
+            }
                 this.cdr.detectChanges();
                 this.onSave.emit(true);
             }
@@ -131,12 +146,14 @@ export class ReferencesComponent implements OnInit {
                 datasets.forEach( dataset => {
                     let source = {
                         value: dataset.id,
-                        label: dataset.title["no"]
+                        label: dataset.title["nb"]
                     }
                     if (!source.label) {
                         source.label = "Ukjent tittel";
                     }
-                    sources.push(source);
+                    if (source.value !== this.dataset.id) {
+                        sources.push(source);
+                    }
                 });
                 sources = _.sortBy(sources, [src => src.label || ""]);
                 this.sources = sources;
