@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Felles datakatalog",
+    "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
     "publisher": "Virksomhet",
     "menu": "Meny",
@@ -29,10 +29,10 @@
     "title": "Logg inn"
   },
   "about": {
-    "about": "Om Felles datakatalog",
+    "about": "Om Felles Datakatalog",
     "title": "Overordnet tekst FDK",
     "ingress": "Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.",
-    "maintext": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang. Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
+    "maintext": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles Datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles Datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang. Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
     "help": "Hjelp",
     "status":"Status implementasjon",
     "standard":"DCAT-AP-NO 1.1 standarden",
@@ -58,7 +58,9 @@
     "legal":"Hjemmel",
     "spatial":"Geografi",
     "temporal":"Tidsperiode",
-    "standard":"Standard"
+    "standard":"Standard",
+    "showmore":"Vis flere",
+    "showfewer":"Vis færre"
   },
   "result": {
     "dataset":"Datasett",

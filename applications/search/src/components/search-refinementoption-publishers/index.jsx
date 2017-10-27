@@ -9,8 +9,21 @@ export class RefinementOptionPublishers extends React.Component {
       label
     } = props;
     let optionLabel;
+    let toggleId = 'toggle-more-publishers';
     if (props.label === 'Ukjent') {
       optionLabel = props.label;
+    }  else if(label === 'showmorelabel') {
+      return (
+          <label htmlFor={toggleId} >{localization.facet.showmore}</label>
+      )
+    } else if(label === 'showfewerlabel') {
+      return (
+        <label htmlFor={toggleId} >{localization.facet.showfewer}</label>
+      )
+    } else if(label === 'showmoreinput') {
+      return (
+        <input type="checkbox" id={toggleId} ></input>
+      )
     } else {
       optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
     }
