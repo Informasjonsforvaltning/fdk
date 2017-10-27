@@ -189,68 +189,6 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     return null;
   }
 
-  _renderReferences2() {
-    let referencesNodes;
-    const { references, selectedLanguageCode } = this.props;
-    if (references && typeof references !== 'undefined' && references.length > 0) {
-      let groupReferences = references;
-      groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
-
-      let referenceTypeCode = null;
-      referencesNodes = groupReferences.map((item, index) => {
-        if (item.referenceType.code !== referenceTypeCode) {
-          referenceTypeCode = item.referenceType.code;
-          return (
-            <div key={`dataset-${index}`} className="col-md-12 fdk-padding-no">
-              <div className="fdk-container-detail">
-                <div className="fdk-detail-icon">
-                  <i className="fa fa-link" />
-                </div>
-                <div className="fdk-detail-text refer">
-                  <h5>
-                    {item.referenceType ? getTranslateText(item.referenceType, selectedLanguageCode) : ''}
-                  </h5>
-                  <p className="fdk-ingress">
-                    <a
-                      href={item.source.uri}
-                    >
-                      {item.source.prefLabel ? getTranslateText(item.source.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefault}
-                      <i className="fa fa-external-link fdk-fa-right" />
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        }
-        return (
-          <div key={`dataset-${index}`} className="col-md-12 fdk-padding-no">
-            <div className="fdk-container-detail">
-              <div className="fdk-detail-icon">
-                <i className="fa fa-link" />
-              </div>
-              <div className="fdk-detail-text refer">
-                <h5>
-                  {item.referenceType.prefLabel ? getTranslateText(item.referenceType.prefLabel, selectedLanguageCode) : ''}
-                </h5>
-                <p className="fdk-ingress">
-                  <a
-                    href={item.source.uri}
-                  >
-                    {item.source.prefLabel ? getTranslateText(item.source.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefault}
-                    <i className="fa fa-external-link fdk-fa-right" />
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-      });
-      return referencesNodes;
-    }
-    return null;
-  }
-
   _renderReferences() {
     let referencesNodes;
     const { references, selectedLanguageCode } = this.props;
