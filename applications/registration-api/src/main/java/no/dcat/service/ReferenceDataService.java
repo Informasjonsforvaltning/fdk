@@ -1,6 +1,7 @@
 package no.dcat.service;
 
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.SkosConcept;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class ReferenceDataService {
     }
 
 
-    public SkosCode getSkosCode(String uri) {
+    public SkosConcept getSkosConcept(String uri) {
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
         String referenceDataUri = UriComponentsBuilder
@@ -40,7 +41,7 @@ public class ReferenceDataService {
                 .queryParam("uri", uri)
                 .toUriString();
 
-        SkosCode forObject = template.getForObject(referenceDataUri, SkosCode.class);
+        SkosConcept forObject = template.getForObject(referenceDataUri, SkosConcept.class);
         logger.debug(forObject.toString());
         return forObject;
 

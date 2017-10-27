@@ -1,7 +1,7 @@
 package no.dcat.controller;
 
-import no.dcat.shared.SkosCode;
 import no.dcat.service.ReferenceDataService;
+import no.dcat.shared.SkosConcept;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpEntity;
@@ -28,8 +28,8 @@ public class ReferenceDataController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/subjects", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<SkosCode> getSubject(@Param("uri") String uri) {
-        return ResponseEntity.ok(referenceDataService.getSkosCode(uri));
+    public HttpEntity<SkosConcept> getSubject(@Param("uri") String uri) {
+        return ResponseEntity.ok(referenceDataService.getSkosConcept(uri));
 
     }
 

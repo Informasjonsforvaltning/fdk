@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.DatasetSortRankingCreator;
+import no.dcat.harvester.SubjectCrawler;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
@@ -189,8 +190,6 @@ public class CrawlerJob implements Runnable {
     }
 
     Model loadModelAndValidate(URL url) {
-        //Model union = ModelFactory.createDefaultModel();
-        //RDFDataMgr.read(union, url.toString(),"http://base", null);
 
         Dataset dataset = RDFDataMgr.loadDataset(url.toString());
         Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -215,6 +214,11 @@ public class CrawlerJob implements Runnable {
         // Checks if publisher is registrered in BRREG Enhetsregistret
         BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
         brregAgentConverter.collectFromModel(union);
+
+        // Checks subjects and resolve definitions
+        SubjectCrawler subjectCrawler = new SubjectCrawler();
+        Model modelWithSubjects = subjectCrawler.crawlSubjects(union);
+        union = modelWithSubjects;
 
         return union;
     }
