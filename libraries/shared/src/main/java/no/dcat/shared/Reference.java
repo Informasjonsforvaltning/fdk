@@ -11,8 +11,6 @@ public class Reference {
     private SkosCode referenceType;
     private SkosConcept source; // link to Dataset
 
-    public Reference() {};
-
     // needed for Jackson to parse
     public Reference() {
     }
