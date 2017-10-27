@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import DistributionFormat from '../search-dataset-format';
 import localization from '../../components/localization';
-import { getTranslateText } from '../../utils/translateText';
+import { getTranslateText, getLanguageFromUrl } from '../../utils/translateText';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -115,6 +115,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   render() {
     const language = this.props.selectedLanguageCode;
+    let langCode = getLanguageFromUrl();
+    let langParam = langCode ? `?lang=${langCode}` : '';
     const result = this.state.result;
     const source = _.extend({}, result._source, result.highlight);
 
@@ -176,7 +178,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        href={link}
+        href={`${link}${langParam}`}
       >
         <div className="fdk-container fdk-container-search-hit">
           <h2 id="search-hit-title">{title}</h2>
