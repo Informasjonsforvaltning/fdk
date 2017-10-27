@@ -29,7 +29,7 @@ application:
 
 ---
 spring:
-    profiles: develop
+    profiles: develop, unit-integration
 logging:
   level.: ERROR
   level.no.brreg: ERROR

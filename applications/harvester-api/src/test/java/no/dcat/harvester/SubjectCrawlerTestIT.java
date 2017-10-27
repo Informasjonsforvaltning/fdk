@@ -1,24 +1,37 @@
 package no.dcat.harvester;
 
+import no.dcat.harvester.service.ReferenceDataSubjectService;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class SubjectCrawlerTest {
-    private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerTest.class);
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
+@ActiveProfiles(value = "unit-integration")
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+public class SubjectCrawlerTestIT {
+    private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerTestIT.class);
+
+    @Autowired
+    private SubjectCrawler subjectCrawler;
 
     private final String catalogUri = "http://dcat.no/catalog/1234";
     Catalog catalog;
@@ -61,7 +74,7 @@ public class SubjectCrawlerTest {
         Model model = ModelFactory.createDefaultModel();
         model.read(new ByteArrayInputStream(modelAsString.getBytes()), null, "TURTLE");
 
-        SubjectCrawler subjectCrawler = new SubjectCrawler();
+
         Model actual = subjectCrawler.crawlSubjects(model);
 
         actual.write(System.out, "TURTLE");

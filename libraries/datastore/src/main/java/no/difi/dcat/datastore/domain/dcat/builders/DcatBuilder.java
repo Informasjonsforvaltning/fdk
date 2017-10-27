@@ -404,7 +404,7 @@ public class DcatBuilder {
 
     private void createContactPoint(Resource datRes, Contact contact) {
         addProperty(datRes, DCAT.contactPoint, contact.getUri());
-
+                                model.createResource();
         Resource contactRes = createResource(contact, contact.getUri(), VCARD4.Organization);
 
         addLiteral(contactRes, VCARD4.fn, contact.getFullname());

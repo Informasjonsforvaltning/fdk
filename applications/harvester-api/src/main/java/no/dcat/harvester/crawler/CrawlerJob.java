@@ -3,7 +3,7 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.DatasetSortRankingCreator;
-import no.dcat.harvester.SubjectCrawler;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
@@ -17,7 +17,6 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
@@ -31,6 +30,8 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 
 public class CrawlerJob implements Runnable {
 

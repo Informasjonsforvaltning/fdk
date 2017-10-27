@@ -6,6 +6,7 @@ import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
@@ -42,7 +43,7 @@ public class SubjectsService extends BaseServiceWithFraming {
 
 
     @Cacheable("subjects")
-    public Subject addSubject(String uri) throws MalformedURLException {
+    public Subject addSubject(String uri) throws MalformedURLException, HttpException {
 
         try {
             return getSubject(uri);
@@ -64,8 +65,9 @@ public class SubjectsService extends BaseServiceWithFraming {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Dataset dataset = DatasetFactory.create(connection.describeWithInference(uri));
             String json = frame(dataset, frame);
-            logger.debug("json= {}",json);
+            logger.trace("json= {}",json);
             dataset.close();
+
             return new Gson().fromJson(json, FramedSubject.class).getGraph().get(0);
         });
     }
