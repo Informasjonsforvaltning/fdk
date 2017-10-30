@@ -102,9 +102,12 @@
       "format": "Format",
       "accessUrl": "AccessURL",
       "license": "License",
+      "licenseLinkDefault": "License",
       "conformsTo": "Conforms to",
-      "page": "Mer informasjon om denne distribusjonen",
-      "standard": "Standard"
+      "page": "More information about this distribution",
+      "standard": "Standard",
+      "referenceDefaultCode": "Other relations",
+      "referenceDefault": "Relation"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",

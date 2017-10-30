@@ -61,7 +61,8 @@
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
           "code": "NOR",
           "prefLabel": {
-            "nb": "Norsk"
+            "nb": "Norsk",
+            "en": "English"
           }
         }
       ],
@@ -73,7 +74,8 @@
           "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
           "code": "GOVE",
           "title": {
-            "nb": "Forvaltning og offentlig støtte"
+            "nb": "Forvaltning og offentlig støtte",
+            "en": "english translation"
           }
         },
         {
@@ -257,7 +259,34 @@
           "source": {
             "uri": "http://referenced/dataset",
             "prefLabel": {
-              "nb": "The first one"
+              "nb": "Den første",
+              "en": "The first one"
+            }
+          }
+        },
+        {
+          "referenceType" : {
+            "uri" : "http://purl.org/dc/terms/relation"
+
+          },
+          "source" : {
+            "uri" : "http://hotell.difi.no/api"
+
+          }
+        },
+        {
+          "referenceType": {
+            "uri": "http://purl.org/dc/terms/hasVersion",
+            "code": "hasVersion",
+            "prefLabel": {
+              "nb": "Har versjon"
+            }
+          },
+          "source": {
+            "uri": "http://referenced/dataset",
+            "prefLabel": {
+              "nb": "Den første",
+              "en": "The first one"
             }
           }
         }
@@ -286,36 +315,21 @@
         {
           "uri": "https://data-david.github.io/Begrep/begrep/Enhet",
           "prefLabel": {
-            "no": "enhet"
+            "no": "enhet",
+            "en": "department"
           },
           "definition": {
             "no": "alt som er registrert med et organisasjonsnummer "
           },
           "note": {
-            "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."
+            "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.",
+            "en": "All departments."
           },
           "source": "https://jira.brreg.no/browse/BEGREP-208"
         }
       ],
       "admsIdentifier": [
         "http://adms.identifier.no/scheme/42"
-      ],
-      "conformsTo": [
-        {
-          "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
-          "prefLabel": {
-            "nb": "SOSI"
-          },
-          "extraType": "http://purl.org/dc/terms/Standard"
-        }
-      ],
-      "informationModel": [
-        {
-          "uri": "https://www.w3.org/2004/02/skos/",
-          "prefLabel": {
-            "nb": "SKOS"
-          }
-        }
       ],
       "type": "Kodeliste"
     }

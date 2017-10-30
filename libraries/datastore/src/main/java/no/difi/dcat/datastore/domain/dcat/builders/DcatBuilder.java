@@ -37,7 +37,6 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -65,9 +64,7 @@ public class DcatBuilder {
     static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
 
 
-
     private final Model model;
-    private final Map<Object, Resource> resourceMap = new HashMap<>();
 
     public DcatBuilder() {
         model = ModelFactory.createDefaultModel();
@@ -90,7 +87,7 @@ public class DcatBuilder {
     /**
      * Transforms a Catalog object to DCAT format.
      *
-     * @param catalog object to transform
+     * @param catalog      object to transform
      * @param outputFormat requested format(Jena/arq): TURTLE, RDF/XML, JSONLD
      * @return a string containing the DCAT data in the wanted format
      */
@@ -104,7 +101,17 @@ public class DcatBuilder {
         return out.toString();
     }
 
-    private DcatBuilder addCatalog(Catalog catalog) {
+    public String getDcatOutput(String outputFormat) {
+        OutputStream out = new ByteArrayOutputStream();
+        return model.write(out, outputFormat).toString();
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public DcatBuilder addCatalog(Catalog catalog) {
+
         Resource catRes = createResource(catalog, catalog.getUri(), DCAT.Catalog);
         addLiterals(catRes, DCTerms.title, catalog.getTitle());
         addLiterals(catRes, DCTerms.description, catalog.getDescription());
@@ -119,63 +126,71 @@ public class DcatBuilder {
     public DcatBuilder addDatasets(Resource catRes, List<Dataset> datasets) {
         if (datasets != null) {
             for (Dataset dataset : datasets) {
-                addProperty(catRes, DCAT.dataset, dataset.getUri());
+                if (dataset != null) {
+                    try {
+                        addProperty(catRes, DCAT.dataset, dataset.getUri());
 
-                Resource datRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
+                        Resource datRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
 
-                addLiterals(datRes, DCTerms.title, dataset.getTitle());
-                addLiterals(datRes, DCTerms.description, dataset.getDescription());
-                addLiterals(datRes, DCATNO.objective, dataset.getObjective());
+                        addPublisher(datRes, dataset.getPublisher());
 
-                addContactPoints(datRes, dataset.getContactPoint());
-                addKeywords(datRes, dataset.getKeyword());
-                addUriProperty(datRes, DCTerms.publisher, dataset.getPublisher());
+                        addLiterals(datRes, DCTerms.title, dataset.getTitle());
+                        addLiterals(datRes, DCTerms.description, dataset.getDescription());
+                        addLiterals(datRes, DCATNO.objective, dataset.getObjective());
 
-                addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
-                addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
+                        addContactPoints(datRes, dataset.getContactPoint());
+                        addKeywords(datRes, dataset.getKeyword());
+                        addUriProperty(datRes, DCTerms.publisher, dataset.getPublisher());
 
-                addSkosCodes(datRes, DCTerms.language, dataset.getLanguage(), DCTerms.LinguisticSystem);
-                addProperties(datRes, DCAT.landingPage, dataset.getLandingPage());
-                addUriProperties(datRes, DCAT.theme, dataset.getTheme());
+                        addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
+                        addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
 
-                addDistributions(datRes, DCAT.distribution, dataset.getDistribution());
-                addDistributions(datRes, ADMS.sample, dataset.getSample());
+                        addSkosCodes(datRes, DCTerms.language, dataset.getLanguage(), DCTerms.LinguisticSystem);
+                        addProperties(datRes, DCAT.landingPage, dataset.getLandingPage());
+                        addUriProperties(datRes, DCAT.theme, dataset.getTheme());
 
-                addTemporal(dataset, datRes);
-                addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
+                        addDistributions(datRes, DCAT.distribution, dataset.getDistribution());
+                        addDistributions(datRes, ADMS.sample, dataset.getSample());
 
-                addProperty(datRes, DCTerms.accessRights, dataset.getAccessRights());
-                addProperties(datRes, DCATNO.accessRightsComment, dataset.getAccessRightsComment());
-                addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess(), DCTerms.RightsStatement);
-                addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing(), DCTerms.RightsStatement);
-                addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction(), DCTerms.RightsStatement);
+                        addTemporal(dataset, datRes);
+                        addUriProperties(datRes, DCTerms.spatial, dataset.getSpatial());
 
-                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
-                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
-                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
-                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
-                addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasRelevanceAnnotation());
+                        addProperty(datRes, DCTerms.accessRights, dataset.getAccessRights());
+                        addProperties(datRes, DCATNO.accessRightsComment, dataset.getAccessRightsComment());
+                        addSkosProperties(datRes, DCATNO.legalBasisForAccess, dataset.getLegalBasisForAccess(), DCTerms.RightsStatement);
+                        addSkosProperties(datRes, DCATNO.legalBasisForProcessing, dataset.getLegalBasisForProcessing(), DCTerms.RightsStatement);
+                        addSkosProperties(datRes, DCATNO.legalBasisForRestriction, dataset.getLegalBasisForRestriction(), DCTerms.RightsStatement);
 
-                addReferences(datRes, dataset.getReferences());
-                addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
-                addStringLiterals(datRes, DCTerms.identifier, dataset.getIdentifier());
+                        addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAccuracyAnnotation());
+                        addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasAvailabilityAnnotation());
+                        addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasCompletenessAnnotation());
+                        addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasCurrentnessAnnotation());
+                        addQualityAnnotation(datRes, DQV.hasQualityAnnotation, dataset.getHasRelevanceAnnotation());
 
-                addProperties(datRes, FOAF.page, dataset.getPage());
-                addProperty(datRes, DCTerms.accrualPeriodicity, dataset.getAccrualPeriodicity());
-                addSubjects(datRes, DCTerms.subject, dataset.getSubject());
+                        addReferences(datRes, dataset.getReferences());
+                        addProperty(datRes, DCTerms.provenance, dataset.getProvenance());
+                        addStringLiterals(datRes, DCTerms.identifier, dataset.getIdentifier());
 
-                addProperties(datRes, ADMS.identifier, dataset.getAdmsIdentifier());
-                addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel(), DCTerms.Standard);
-                addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo(), DCTerms.Standard);
+                        addProperties(datRes, FOAF.page, dataset.getPage());
+                        addProperty(datRes, DCTerms.accrualPeriodicity, dataset.getAccrualPeriodicity());
+                        addSubjects(datRes, DCTerms.subject, dataset.getSubject());
 
-                addLiteral(datRes, DCTerms.type, dataset.getType());
+                        addProperties(datRes, ADMS.identifier, dataset.getAdmsIdentifier());
+                        addSkosProperties(datRes, DCATNO.informationModel, dataset.getInformationModel(), DCTerms.Standard);
+                        addSkosProperties(datRes, DCTerms.conformsTo, dataset.getConformsTo(), DCTerms.Standard);
+
+                        addLiteral(datRes, DCTerms.type, dataset.getType());
+                    } catch (Exception e) {
+                        logger.error("Unable to export dataset {} to DCAT. Reason {}", dataset.getId(), e.getLocalizedMessage(), e);
+                    }
+                }
             }
         }
 
         return this;
     }
 
-    private void addKeywords(Resource datRes, List<Map<String,String>> keywords) {
+    private void addKeywords(Resource datRes, List<Map<String, String>> keywords) {
         if (keywords != null) {
             for (Map<String, String> keyword : keywords) {
                 addLiterals(datRes, DCAT.keyword, keyword);
@@ -191,21 +206,42 @@ public class DcatBuilder {
         }
     }
 
+    boolean hasContent(Map<String, String> label) {
+        if (label == null || label.isEmpty()) {
+            return false;
+        } else {
+            int[] emptyValue = {0};
+            label.forEach((key, value) -> {
+                if (value == null || value.isEmpty()) {
+                    emptyValue[0]++;
+                }
+            });
+            if (emptyValue[0] == label.size())
+                return false;
+        }
+        return true;
+    }
+
     private void addReferences(Resource datRes, List<Reference> references) {
         if (references != null && references.size() > 0) {
             references.forEach(reference -> {
+                if (reference != null && reference.getReferenceType() != null &&
+                        reference.getSource() != null && reference.getSource().getUri() != null) {
 
-                Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
-                if (reference.getSource() != null && reference.getSource().getPrefLabel() != null) {
-                    Resource r = model.createResource();
-                    r.addProperty(RDF.type, DCAT.Dataset);
-                    addLiterals(r, SKOS.prefLabel, reference.getSource().getPrefLabel());
-                    r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
-                    datRes.addProperty(referenceProperty, r);
+                    Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
 
-                } else {
-                    Resource r = model.createResource(reference.getSource().getUri());
-                    datRes.addProperty(referenceProperty, r);
+                    Map<String, String> prefLabel = reference.getSource().getPrefLabel();
+                    if (hasContent(prefLabel)) {
+                        Resource r = model.createResource();
+                        r.addProperty(RDF.type, DCAT.Dataset);
+                        addLiterals(r, SKOS.prefLabel, prefLabel);
+                        r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
+                        datRes.addProperty(referenceProperty, r);
+
+                    } else {
+                        Resource r = model.createResource(reference.getSource().getUri());
+                        datRes.addProperty(referenceProperty, r);
+                    }
                 }
 
             });
@@ -233,7 +269,7 @@ public class DcatBuilder {
 
     DcatBuilder addSkosConcepts(Resource datRes, Property property, List<SkosConcept> concepts, Resource type) {
         if (concepts != null) {
-            concepts.forEach( concept -> {
+            concepts.forEach(concept -> {
                 addSkosConcept(datRes, property, concept, type);
             });
         }
@@ -241,7 +277,7 @@ public class DcatBuilder {
         return this;
     }
 
-    private DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept, Resource type) {
+    public DcatBuilder addSkosConcept(Resource datRes, Property predicate, SkosConcept skosConcept, Resource type) {
         if (skosConcept != null && skosConcept.getUri() != null && !skosConcept.getUri().isEmpty()) {
             Resource skosConceptResource = model.createResource();
 
@@ -254,14 +290,15 @@ public class DcatBuilder {
                 }
             }
             skosConceptResource.addProperty(DCTerms.source, skosConcept.getUri());
-            addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
+            if (hasContent(skosConcept.getPrefLabel())) {
+                addLiterals(skosConceptResource, SKOS.prefLabel, skosConcept.getPrefLabel());
+            }
 
             datRes.addProperty(predicate, skosConceptResource);
         }
 
         return this;
     }
-
 
 
     public DcatBuilder addPeriodOfTimeResource(Resource resource, Property property, PeriodOfTime period) {
@@ -285,41 +322,6 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder old_addPeriodResourceAnnon(Resource resource, Property property, PeriodOfTime period) {
-        if (period != null) {
-
-            Resource temporal = model.createResource();
-            model.add(temporal, RDF.type, DCTerms.PeriodOfTime);
-
-            if (period.getStartDate() != null || period.getEndDate() != null) {
-                resource.addProperty(property, temporal);
-
-                if (period.getStartDate() != null) {
-                    temporal.addProperty(time_hasBeginning, createTimeInstantResource(period.getStartDate()));
-                }
-                if (period.getEndDate() != null) {
-                    temporal.addProperty(time_hasEnd, createTimeInstantResource(period.getEndDate()));
-                }
-            }
-
-        }
-
-        return this;
-    }
-
-    public Resource createTimeInstantResource(Date date) {
-        if (date != null) {
-            Resource timeInstant = model.createResource();
-            model.add(timeInstant, RDF.type, TIME_INSTANT);
-
-            Literal dateLiteral = model.createTypedLiteral(sdfDate.format(date), XSDDatatype.XSDdate);
-            timeInstant.addProperty(time_inXSDDateTime, dateLiteral);
-
-            return timeInstant;
-        }
-        return null;
-    }
-
 
     public DcatBuilder addDateTimeLiteral(Resource resource, Property property, Date date) {
         if (date != null) {
@@ -339,12 +341,16 @@ public class DcatBuilder {
 
     public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
         if (publisher != null) {
-            addProperty(resource, DCTerms.publisher, publisher.getUri());
+            try {
+                addProperty(resource, DCTerms.publisher, publisher.getUri());
 
-            Resource pubRes = createResource(publisher, publisher.getUri(), FOAF.Agent);
+                Resource pubRes = createResource(publisher, publisher.getUri(), FOAF.Agent);
 
-            addLiteral(pubRes, FOAF.name, publisher.getName());
-            addLiteral(pubRes, DCTerms.identifier, publisher.getId());
+                addLiteral(pubRes, FOAF.name, publisher.getName());
+                addLiteral(pubRes, DCTerms.identifier, publisher.getId());
+            } catch (Exception e) {
+                logger.error("Unable to export publisher {}. Reason {}", publisher.getUri(), e.getLocalizedMessage(), e);
+            }
         }
         return this;
     }
@@ -352,37 +358,43 @@ public class DcatBuilder {
     public DcatBuilder addDistributions(Resource dataset, Property property, List<Distribution> distributions) {
         if (distributions != null) {
             for (Distribution distribution : distributions) {
-                Resource disRes = null;
-                if (distribution.getUri() != null && distribution.getUri().isEmpty()) {
-                    disRes = model.createResource(UUID.randomUUID().toString());
-                } else {
-                    disRes = model.createResource(distribution.getUri());
-                }
+                if (distribution != null) {
+                    try {
+                        Resource disRes = null;
+                        if (distribution.getUri() != null && distribution.getUri().isEmpty()) {
+                            disRes = model.createResource(UUID.randomUUID().toString());
+                        } else {
+                            disRes = model.createResource(distribution.getUri());
+                        }
 
-                addLiterals(disRes, DCTerms.title, distribution.getTitle());
-                addLiterals(disRes, DCTerms.description, distribution.getDescription());
-                addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
-                addSkosConcept(disRes, DCTerms.license, distribution.getLicense(), DCTerms.LicenseDocument);
+                        addLiterals(disRes, DCTerms.title, distribution.getTitle());
+                        addLiterals(disRes, DCTerms.description, distribution.getDescription());
+                        addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
+                        addSkosConcept(disRes, DCTerms.license, distribution.getLicense(), DCTerms.LicenseDocument);
 
-                addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo(), DCTerms.Standard);
-                addSkosConcepts(disRes, FOAF.page, distribution.getPage(), FOAF.Document);
-                addLiterals(disRes, DCTerms.format, distribution.getFormat());
+                        addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo(), DCTerms.Standard);
+                        addSkosConcepts(disRes, FOAF.page, distribution.getPage(), FOAF.Document);
+                        addLiterals(disRes, DCTerms.format, distribution.getFormat());
 
-                addLiteral(disRes, DCTerms.type, distribution.getType());
+                        addLiteral(disRes, DCTerms.type, distribution.getType());
 
-                if (    disRes.getProperty(DCTerms.title) != null  ||
-                        disRes.getProperty(DCTerms.description) != null  ||
-                        disRes.getProperty(DCAT.accessURL) != null ||
-                        disRes.getProperty(DCTerms.license) != null ||
-                        disRes.getProperty(DCTerms.conformsTo) != null ||
-                        disRes.getProperty(FOAF.page) != null ||
-                        disRes.getProperty(DCTerms.format) != null ) {
+                        if (disRes.getProperty(DCTerms.title) != null ||
+                                disRes.getProperty(DCTerms.description) != null ||
+                                disRes.getProperty(DCAT.accessURL) != null ||
+                                disRes.getProperty(DCTerms.license) != null ||
+                                disRes.getProperty(DCTerms.conformsTo) != null ||
+                                disRes.getProperty(FOAF.page) != null ||
+                                disRes.getProperty(DCTerms.format) != null) {
 
-                    disRes.addProperty(RDF.type, DCAT.Distribution);
-                    dataset.addProperty(property, disRes);
-                } else {
-                    model.removeAll(disRes, null, null);
-                    model.removeAll(null, null, disRes);
+                            disRes.addProperty(RDF.type, DCAT.Distribution);
+                            dataset.addProperty(property, disRes);
+                        } else {
+                            model.removeAll(disRes, null, null);
+                            model.removeAll(null, null, disRes);
+                        }
+                    } catch (Exception e) {
+                        logger.error("Unable to export distribution {} to DCAT. Reason {}", distribution.getUri(), e.getLocalizedMessage(), e);
+                    }
                 }
 
             }
@@ -390,7 +402,6 @@ public class DcatBuilder {
 
         return this;
     }
-
 
 
     public DcatBuilder addContactPoints(Resource datRes, List<Contact> contacts) {
@@ -402,36 +413,39 @@ public class DcatBuilder {
         return this;
     }
 
-    private void createContactPoint(Resource datRes, Contact contact) {
-        addProperty(datRes, DCAT.contactPoint, contact.getUri());
-                                model.createResource();
-        Resource contactRes = createResource(contact, contact.getUri(), VCARD4.Organization);
+    void createContactPoint(Resource datRes, Contact contact) {
+        if (contact != null) {
+            addProperty(datRes, DCAT.contactPoint, contact.getUri());
 
-        addLiteral(contactRes, VCARD4.fn, contact.getFullname());
-        addProperty(contactRes, VCARD4.hasURL, contact.getHasURL());
-        addLiteral(contactRes, VCARD4.organization_name, contact.getOrganizationName());
-        addLiteral(contactRes, VCARD4.organization_unit, contact.getOrganizationUnit());
+            Resource contactRes = createResource(contact, contact.getUri(), VCARD4.Organization);
 
-        if (contact.getEmail() != null && !contact.getEmail().isEmpty()) {
-            if (contact.getEmail().startsWith("mailto:")) {
-                addProperty(contactRes, VCARD4.hasEmail, contact.getEmail());
-            } else {
-                addProperty(contactRes, VCARD4.hasEmail, "mailto:" + contact.getEmail());
+            addLiteral(contactRes, VCARD4.fn, contact.getFullname());
+            addProperty(contactRes, VCARD4.hasURL, contact.getHasURL());
+            addLiteral(contactRes, VCARD4.organization_name, contact.getOrganizationName());
+            addLiteral(contactRes, VCARD4.organization_unit, contact.getOrganizationUnit());
+
+            if (contact.getEmail() != null && !contact.getEmail().isEmpty()) {
+                String email = contact.getEmail().replaceAll("\\s", "");
+                if (email.startsWith("mailto:")) {
+                    addProperty(contactRes, VCARD4.hasEmail, email);
+                } else {
+                    addProperty(contactRes, VCARD4.hasEmail, "mailto:" + email);
+                }
             }
-        }
 
-        if (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) {
-            if (contact.getHasTelephone().startsWith("tel:")) {
-                addProperty(contactRes, VCARD4.hasTelephone, contact.getHasTelephone());
-            } else {
-                addProperty(contactRes, VCARD4.hasTelephone, "tel:" + contact.getHasTelephone());
+            if (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) {
+                String telephone = contact.getHasTelephone().replaceAll("\\s", "");
+                if (telephone.startsWith("tel:")) {
+                    addProperty(contactRes, VCARD4.hasTelephone, telephone);
+                } else {
+                    addProperty(contactRes, VCARD4.hasTelephone, "tel:" + telephone);
+                }
             }
         }
     }
 
     public Resource createResource(Object o, String uri, Resource resourceType) {
         Resource resource = model.createResource(uri);
-        resourceMap.put(o, resource);
         model.add(resource, RDF.type, resourceType);
 
         return resource;
@@ -460,15 +474,15 @@ public class DcatBuilder {
             Resource r = model.createResource(code.getUri());
             r.addProperty(RDF.type, type);
 
-            addLiterals(r, SKOS.prefLabel, code.getPrefLabel());
+            if (hasContent(code.getPrefLabel())) {
+                addLiterals(r, SKOS.prefLabel, code.getPrefLabel());
+            }
             addLiteral(r, AT.authorityCode, code.getCode());
 
             resource.addProperty(property, r);
         }
-
         return this;
     }
-
 
     public DcatBuilder addSubjects(Resource resource, Property property, List<Subject> subjects) {
         if (subjects != null) {
@@ -515,12 +529,12 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addUriProperty(Resource resource, Property property, Object objectWithUri){
+    public DcatBuilder addUriProperty(Resource resource, Property property, Object objectWithUri) {
         if (objectWithUri != null) {
             try {
                 Method m = objectWithUri.getClass().getMethod("getUri");
                 String uri = (String) m.invoke(objectWithUri);
-                if (!"".equals(uri)) {
+                if (uri != null && !uri.isEmpty()) {
                     addProperty(resource, property, uri);
                 }
             } catch (Exception e) {
@@ -551,7 +565,7 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addProperty(Resource resource, Property property, String uri) {
-        if (uri != null && !"".equals(uri)) {
+        if (uri != null && !uri.isEmpty()) {
             Resource r = model.createResource(uri);
             resource.addProperty(property, r);
         }
@@ -572,15 +586,15 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addLiterals(Resource resource, Property property, Map<String, String> map) {
-        if (map != null) {
-            for (String l : map.keySet()) {
-                String v = map.get(l);
-                if (v != null && !v.isEmpty()) {
-                    Literal literal = model.createLiteral(v, l);
+    public DcatBuilder addLiterals(Resource resource, Property property, Map<String, String> languageMap) {
+        if (hasContent(languageMap)) {
+
+            languageMap.forEach((lang, value) -> {
+                if (value != null && !value.isEmpty()) {
+                    Literal literal = model.createLiteral(value, lang);
                     resource.addProperty(property, literal);
                 }
-            }
+            });
         }
         return this;
     }

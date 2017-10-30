@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'react-bootstrap';
 
+import './index.scss';
+
 export default class BegrepCollapse extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -18,14 +20,14 @@ export default class BegrepCollapse extends React.Component { // eslint-disable-
   render() {
     return (
       <div className="fdk-container-detail fdk-container-detail-begrep">
-        <div className="fdk-ingress fdk-margin-bottom-no" role="button" tabIndex={0} onClick={this.toggle}>
+        <div className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep" role="button" tabIndex={0} onClick={this.toggle}>
           <strong className="pull-left">{this.props.prefLabel}:&nbsp;</strong>
-          <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
-          {!this.state.detailed &&
+          {this.props.note &&
+          <i className="fa fa-chevron-down fdk-fa-right fdk-float-right"/>
+          }
           <div>
             {this.props.definition}
           </div>
-          }
           <Collapse in={this.state.detailed}>
             <div>
               {this.props.note}
