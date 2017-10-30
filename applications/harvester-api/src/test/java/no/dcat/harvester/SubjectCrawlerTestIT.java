@@ -1,6 +1,5 @@
 package no.dcat.harvester;
 
-import no.dcat.harvester.service.ReferenceDataSubjectService;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
@@ -68,14 +67,14 @@ public class SubjectCrawlerTestIT {
     }
 
     @Test
-    public void t1() throws Throwable {
+    public void harvestSimpleDatasetAddsSubjectDefinitions() throws Throwable {
         String modelAsString = DcatBuilder.transform(catalog, "TURTLE");
 
         Model model = ModelFactory.createDefaultModel();
         model.read(new ByteArrayInputStream(modelAsString.getBytes()), null, "TURTLE");
 
 
-        Model actual = subjectCrawler.crawlSubjects(model);
+        Model actual = subjectCrawler.annotateSubjects(model);
 
         actual.write(System.out, "TURTLE");
 

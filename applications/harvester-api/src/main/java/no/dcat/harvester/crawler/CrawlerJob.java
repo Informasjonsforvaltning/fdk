@@ -30,8 +30,6 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -63,6 +61,7 @@ public class CrawlerJob implements Runnable {
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
+    private SubjectCrawler subjectCrawler = new SubjectCrawler();
 
     public List<String> getValidationResult() {return validationResult;}
     private Set<String> illegalUris = new HashSet<>();
@@ -218,8 +217,7 @@ public class CrawlerJob implements Runnable {
         brregAgentConverter.collectFromModel(union);
 
         // Checks subjects and resolve definitions
-        SubjectCrawler subjectCrawler = new SubjectCrawler();
-        Model modelWithSubjects = subjectCrawler.crawlSubjects(union);
+        Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
         union = modelWithSubjects;
 
         return union;
