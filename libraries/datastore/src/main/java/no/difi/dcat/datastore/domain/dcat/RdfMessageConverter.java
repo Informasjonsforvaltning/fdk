@@ -1,6 +1,6 @@
-package no.dcat.rdf;
+package no.difi.dcat.datastore.domain.dcat;
 
-import no.dcat.model.Catalog;
+import no.dcat.shared.Catalog;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;

@@ -1,4 +1,4 @@
-package no.dcat.configuration;
+package no.dcat.portal.query;
 
 import no.difi.dcat.datastore.domain.dcat.RdfMessageConverter;
 import org.springframework.context.annotation.Configuration;
