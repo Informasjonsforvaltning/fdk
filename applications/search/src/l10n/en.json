@@ -59,7 +59,9 @@
     "legal":"Legal",
     "spatial":"Spatial",
     "temporal":"Temporal",
-    "standard":"Standard"
+    "standard":"Standard",
+    "showmore":"Show more",
+    "showfewer":"Show fewer"
   },
   "result": {
     "dataset":"Dataset",

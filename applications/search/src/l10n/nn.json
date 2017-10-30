@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Felles datakatalog",
+    "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
     "publisher": "Velg ut frå verksemd",
     "menu": "Meny",
@@ -59,7 +59,9 @@
     "legal":"Heimel",
     "spatial":"Geografi",
     "temporal":"Tidsperiode",
-    "standard":"Standard"
+    "standard":"Standard",
+    "showmore":"Vis flere",
+    "showfewer":"Vis færre"
   },
   "result": {
     "dataset":"Datasett",

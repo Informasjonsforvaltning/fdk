@@ -153,13 +153,13 @@ export default class SearchPage extends React.Component {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-sm-4 flex-move-first-item-to-bottom">
+                  <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                     <RefinementListFilter
                       id="theme"
                       title={localization.facet.theme}
                       field="theme.code.raw"
                       operator="AND"
-                      size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                      size={5}
                       itemComponent={RefinementOptionThemes}
                     />
                     <RefinementListFilter
