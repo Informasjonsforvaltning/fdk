@@ -201,6 +201,15 @@ public class DatasetConverterTest {
     }
 
     @Test
+    public void checkQuality() throws Throwable {
+        logger.info("quality: {}", actualDataset.getHasAccuracyAnnotation());
+        assertThat(actualDataset.getHasAccuracyAnnotation(), is(expectedDataset.getHasAccuracyAnnotation()));
+        assertThat(actualDataset.getHasAvailabilityAnnotation(), is(expectedDataset.getHasAvailabilityAnnotation()));
+        assertThat(actualDataset.getHasCompletenessAnnotation(), is(expectedDataset.getHasCompletenessAnnotation()));
+        assertThat(actualDataset.getHasCurrentnessAnnotation(), is(expectedDataset.getHasCurrentnessAnnotation()));
+    }
+
+    @Test
     public void checkThemes() throws Throwable {
         int count = 0;
         for (DataTheme expectedTheme : expectedDataset.getTheme()) {

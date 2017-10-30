@@ -340,45 +340,4 @@ describe('SearchHitItem', () => {
   it ('should render sample', () => {
     expect(wrapper.find('#search-hit-sample')).to.have.length(1);
   });
-
-
-  /*
-   it ('sorting table by title', () => {
-   let table = shallow(<OppslagTable oppslagItems={props} />)
-   table.setState({sortField: 'title', sortType: 'asc'});
-   expect(table.find('.table-item').first().key()).to.be.equal("1");
-   table.setState({sortField: 'title', sortType: 'desc'});
-   expect(table.find('.table-item').first().key()).to.be.equal("4");
-   })
-
-   it('sorting table by title click asc and desc', () => {
-   let wrapper = mount(<OppslagTable />);
-   wrapper.setProps({oppslagItems: props});
-   wrapper.find('button[name="titleAsc"]').simulate('click');
-   expect(wrapper.find('.table-item').first().key()).to.be.equal("1");
-   wrapper.find('button[name="titleDesc"]').simulate('click');
-   expect(wrapper.find('.table-item').first().key()).to.be.equal("4");
-   });
-
-   it('sorting table by date validFrom click asc and desc', () => {
-   let wrapper = mount(<OppslagTable />);
-   wrapper.setProps({oppslagItems: props});
-   wrapper.find('button[name="validFromAsc"]').simulate('click');
-   expect(wrapper.find('.table-item').first().key()).to.be.equal("2");
-   wrapper.find('button[name="validFromDesc"]').simulate('click');
-   expect(wrapper.find('.table-item').first().key()).to.be.equal("4");
-   });
-
-   it('paging', () => {
-   let wrapper = mount(<OppslagTable />);
-   wrapper.setProps({oppslagItems: props, paging: true});
-   expect(wrapper.find('.table-item').length).to.be.equal(4);
-   wrapper.setProps({itemsPerPage: 2});
-   expect(wrapper.find('.table-item').length).to.be.equal(2);
-   //expect(wrapper.find('button[name="prevPage"]').length).to.be.equal(0);
-   //expect(wrapper.find('button[name="nextPage"]').length).to.be.equal(1);
-   //wrapper.find('button[name="nextPage"]').simulate('click');
-   //expect(wrapper.find('button[name="prevPage"]').length).to.be.equal(1);
-   });
-   */
 });

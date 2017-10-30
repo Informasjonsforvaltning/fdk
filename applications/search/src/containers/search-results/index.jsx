@@ -46,7 +46,12 @@ searchkit.translateFunction = (key) => {
     'reset.clear_all': localization.page.resetfilters,
     'hitstats.results_found': `${localization.page['result.summary']} ` + ' {numberResults}' + ` ${localization.page.dataset}`,
     'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.'
+    'NoHits.ResetSearch': '.',
+    'sort.by': localization.sort.by,
+    'sort.relevance': localization.sort.relevance,
+    'sort.title': localization.sort.title,
+    'sort.publisher': localization.sort.publisher,
+    'sort.modified': localization.sort.modified
   };
   return translations[key];
 };
@@ -114,8 +119,39 @@ export default class SearchPage extends React.Component {
               </div>
             </div>
             <section id="resultPanel">
-              <div className="container-fluid">
-                <div className="row" />
+              <div className="container-fluidxx">
+                <div className="row">
+                  <div className="col-md-4 col-md-offset-8">
+                    <div className="pull-right">
+                      <SortingSelector
+                        options={[
+                          {
+                            label: 'sort.relevance',
+                            field: '_score',
+                            order: 'asc',
+                            defaultOption: true
+                          },
+                          {
+                            label: `sort.title`,
+                            field: 'title',
+                            order: 'asc'
+                          },
+                          {
+                            label: `sort.modified`,
+                            field: 'modified',
+                            order: 'desc'
+                          },
+                          {
+                            label: `sort.publisher`,
+                            field: 'publisher.name',
+                            order: 'asc'
+                          }
+                        ]}
+                        listComponent={selectDropdownWithProps}
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                     <RefinementListFilter
@@ -137,38 +173,6 @@ export default class SearchPage extends React.Component {
                     {this._renderPublisherRefinementListFilter()}
                   </div>
                   <div id="datasets" className="col-sm-8">
-                    <div className="row">
-                      <div className="col-md-4 col-md-offset-8">
-                        <div className="pull-right">
-                          <SortingSelector
-                            options={[
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.relevance']}`,
-                                field: '_score',
-                                order: 'asc',
-                                defaultOption: true
-                              },
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.title']}`,
-                                field: 'title',
-                                order: 'asc'
-                              },
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.modified']}`,
-                                field: 'modified',
-                                order: 'desc'
-                              },
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.publisher']}`,
-                                field: 'publisher.name',
-                                order: 'asc'
-                              }
-                            ]}
-                            listComponent={selectDropdownWithProps}
-                          />
-                        </div>
-                      </div>
-                    </div>
                     <Hits
                       mod="sk-hits-grid"
                       hitsPerPage={50}

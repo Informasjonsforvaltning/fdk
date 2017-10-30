@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 import DistributionFormat from '../search-dataset-format';
 import './index.scss';
 
@@ -69,7 +70,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   _renderLicense() {
-    const { license } = this.props;
+    const { license, selectedLanguageCode } = this.props;
     if (license && license.uri) {
       return (
         <div>
@@ -79,12 +80,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
             <a
               href={license.uri}
             >
-              {
-                license.prefLabel[this.props.selectedLanguageCode]
-                || license.prefLabel.nb
-                || license.prefLabel.nn
-                || license.prefLabel.en
-              }
+              {getTranslateText(license.prefLabel, selectedLanguageCode)}
               <i className="fa fa-external-link fdk-fa-right" />
             </a>
             }
@@ -92,7 +88,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
             <a
               href={license.uri}
             >
-              {localization.dataset.distribution.standard}
+              {localization.dataset.distribution.licenseLinkDefault}
               <i className="fa fa-external-link fdk-fa-right" />
             </a>
             }
@@ -104,19 +100,14 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   _renderConformsTo() {
-    const { conformsTo } = this.props;
+    const { conformsTo, selectedLanguageCode } = this.props;
 
     const children = items => items.map((item, index) => (
       <a
         key={item.uri}
         href={item.uri}
       >
-        {
-          item.prefLabel[this.props.selectedLanguageCode]
-          || item.prefLabel.nb
-          || item.prefLabel.nn
-          || item.prefLabel.en
-        }
+       {item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : localization.dataset.distribution.standard}
         <i className="fa fa-external-link fdk-fa-right" />
       </a>
     ));
@@ -135,20 +126,15 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   _renderDistributionPage() {
-    const { page } = this.props;
+    const { page, selectedLanguageCode } = this.props;
     const children = items => items.map((page) => {
-      if (page && page.uri && page.prefLabel) {
+      if (page && page.uri) {
         return (
           <a
             key={page.uri}
             href={page.uri}
           >
-            {
-              page.prefLabel[this.props.selectedLanguageCode]
-              || page.prefLabel.nb
-              || page.prefLabel.nn
-              || page.prefLabel.en
-            }
+            {page.prefLabel ? getTranslateText(page.prefLabel, selectedLanguageCode) : page.uri}
           </a>
         );
       }
@@ -169,18 +155,19 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   }
 
   render() {
-    const { code } = this.props;
+    const { title, code } = this.props;
     const distributionClass = cx(
       'fdk-container-detail',
       {
         'fdk-container-detail-unntatt-offentlig': code === 'NON_PUBLIC',
         'fdk-container-detail-begrenset': code === 'RESTRICTED',
-        'fdk-container-detail-offentlig': code === 'PUBLIC'
+        'fdk-container-detail-offentlig': code === 'PUBLIC',
+        'fdk-container-detail-sample': code === 'SAMPLE'
       }
     );
     return (
       <div id="dataset-distribution" className={distributionClass}>
-        <h4 className="fdk-margin-bottom">{localization.dataset.distribution.title}</h4>
+        <h4 className="fdk-margin-bottom">{title}</h4>
         {this.props.description &&
           <p id="dataset-distribution-description" className="fdk-ingress">
             {this.props.description}
@@ -204,6 +191,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
 }
 
 DatasetDistribution.defaultProps = {
+  title: '',
   description: null,
   accessUrl: null,
   format: null,
@@ -215,6 +203,7 @@ DatasetDistribution.defaultProps = {
 };
 
 DatasetDistribution.propTypes = {
+  title: PropTypes.string,
   description: PropTypes.string,
   accessUrl: PropTypes.array,
   format: PropTypes.array,

@@ -1,8 +1,8 @@
 /*  T Y P O G R A P H Y  */
-
+@import './colors.scss';
 
 h1 {
-    color: var(--color1);
+    color: $color1;
     font-size: 3.0rem;
     line-height: 3.6rem;
     font-weight: 500;
@@ -10,7 +10,7 @@ h1 {
 }
 
 h2 {
-    color: var(--color1);
+    color: $color1;
     font-size: 2.625rem;
     line-height: 3.15rem;
     font-weight: 500;
@@ -19,13 +19,13 @@ h2 {
 h2.fdk-page-not-found { /* 404 */
     font-size: 160px;
     line-height: 160px;
-    color: var(--color4);
+    color: $color4;
     text-align: center;
     margin: 0;
 }
 
 h3 {
-    color: var(--color1);
+    color: $color1;
     font-size: 2.25rem;
     line-height: 2.7rem;
     font-weight: 500;
@@ -33,7 +33,7 @@ h3 {
 }
 
 h4 {
-    color: var(--color1);
+    color: $color1;
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: 500;
@@ -41,7 +41,7 @@ h4 {
 }
 
 h5 {
-    color: var(--color1);
+    color: $color1;
     font-size: 1.5rem;
     line-height: 1.8rem;
     font-weight: 600;
@@ -59,13 +59,13 @@ p {
 }
 
 a {
-    color: var(--color1);
+    color: $color1;
     text-decoration: underline;
 }
 
 a:hover {
     text-decoration: none;
-    color: var(--color1);
+    color: $color1;
 }
 
 .fdk-p-header {
@@ -130,7 +130,7 @@ a:hover {
 }
 
 .fdk-label-default:hover > .fdk-fa-button { /* Hovering for labels with font awesome icons */
-    color: var(--color1);
+    color: $color1;
 }
 
 .fdk-label-default:active > .fdk-fa-button { /* Hovering for labels with font awesome icons */

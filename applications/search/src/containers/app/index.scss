@@ -1,11 +1,11 @@
 @import '../../assets/css/bootstrap.min.css';
-//@import '../../assets/css/bootstrap-theme.min.css';
-@import '../../assets/css/designsystem.css';
-@import '../../assets/css/colors.css';
-@import '../../assets/css/register.css';
-@import '../../assets/css/portal.css';
-@import '../../assets/css/typo.css';
-@import '../../assets/css/common.css';
+@import '../../assets/css/bootstrap-theme.min.css';
+@import '../../assets/css/designsystem.scss';
+@import '../../assets/css/colors.scss';
+@import '../../assets/css/register.scss';
+@import '../../assets/css/portal.scss';
+@import '../../assets/css/typo.scss';
+@import '../../assets/css/common.scss';
 @import '../../assets/css/font-awesome.min.css';
 //@import './assets/css/main.css';
 
@@ -62,13 +62,13 @@ $sk-border-radius: 3px !default;
 
 .btn-group {
   .fdk-button-language {
-    background-color: transparent;
+    background-color: transparent !important;
     border-color: transparent;
     text-shadow: none;
     box-shadow: none;
     background-image: none;
     text-decoration: underline;
-    &:focus, &:active {
+    &:focus, &:active, &:hover {
       background-color: transparent !important;
       border-color: transparent !important;
     }
@@ -109,6 +109,26 @@ $sk-border-radius: 3px !default;
 }
 
 /*
+SEARCHPAGE SORTING DROPDOWN
+*/
+
+.btn-group {
+  .dropdown-toggle {
+    &:focus, &:active, &:hover {
+      background-color: $color-cta4;
+      border-color: transparent;
+      box-shadow: none;
+    }
+  }
+}
+
+.open>.dropdown-toggle.btn-default {
+  background-color: $color-cta4;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/*
  FILTER CHECKBOX
  */
 .checkbox-replacement {
@@ -143,8 +163,3 @@ input:checked ~ .checkbox-replacement::after {
 .sk-hits-grid {
   margin-top: 7px;
 }
-
-
-
-
-

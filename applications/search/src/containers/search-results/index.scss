@@ -1,20 +1,7 @@
+@import '../../assets/css/colors.scss';
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-/*
-.glyphicon-search-frontpage {
-  position: absolute;
-  right: 96px;
-  top: 92px;
-  font-size: 32px;
-  z-index: 1;
-  color: #213B4C;
-}
-
-.sk-search-box .glyphicon-search-frontpage{
-  top: 197px;
-}
-*/
 
 /*  SEARCHPAGE SEARCHBOX AND TEXT  */
 .mb-60 {
@@ -22,13 +9,59 @@
 }
 
 .sk-hits-stats__info {
-  color: var(--color1);
+  color: $color1;
   font-size: 2.25rem;
   line-height: 2.7rem;
   font-weight: 500;
   margin: 0px;
 }
 
+/* SEARCHPAGE FILTERS */
+
+.filter--theme{
+  .sk-panel__header {
+    &:before {
+      content: "\F02E";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
+}
+
+.filter--publisher {
+  .sk-panel__header {
+    &:before {
+      content: "\F0F7";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
+}
+
+.filter--accessRight {
+  .sk-panel__header {
+    &:before {
+      content: "\F084";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
+}
 
 /*  SEARCHPAGE PAGINATION  */
 
@@ -56,7 +89,7 @@
   font-size: 1.5rem;
   line-height: 1.5rem;
   border-radius: 6px;
-  border: 3px solid var(--color6);
+  border: 3px solid $color6;
   padding: 11px 12px 10px 12px;
   margin: 0px 2px 6px 0px;
   display: inline-block;
@@ -64,18 +97,17 @@
   text-shadow: none;
   text-align: center;
   box-shadow: none;
-  background-color: var(--color5);
-  border-color: var(--color6);
+  background-color: $color5;
+  border-color: $color6;
   &:hover {
     border-radius: 3px;
-    border: 3px solid var(--color5);
-    background-color: var(--color5);
+    border: 3px solid $color5;
+    background-color: $color5;
   }
 }
 
 .sk-toggle-option.sk-toggle__item.is-disabled {
-  border: 1px dashed var(--color4);
-  color: var(--color4);
+  color: $color4;
   border-radius: 4px;
   margin: 0px 6px 6px 0px;
 }
@@ -107,46 +139,26 @@
   border-right: 1px solid #ccc;
 }
 .sk-toggle-option.is-active {
-  background-color: #5A6778;
-  color: #fff;
+  background-color: $color1;
+  color: $color0;
   &:hover {
-    border-color: #5A6778;
+    border-color: $color1;
   }
-}
-
-/*  SEARCHPAGE SORTING DROPDOWN  */
-
-.btn-group {
-  .dropdown-toggle {
-    &:focus, &:active {
-      background-color: var(--color5) !important;
-      border-color: transparent !important;
-      box-shadow: none !important;
-    }
-  }
-}
-
-.open>.dropdown-toggle.btn-default {
-  background-color: var(--color5) !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
 }
 
 /* SEARCHPAGE REFINEMENT FILTER */
 
 .sk-panel {
-  background-color: var(--color5);
+  background-color: $color5;
   padding: 10px 20px;
   margin: .5em auto;
   border-radius: 5px;
 }
 
 .sk-panel__header {
-  color: var(--color1);
+  color: $color1;
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 500;
   margin: 0px;
 }
-
-
