@@ -9,7 +9,7 @@
 	<logger name="org.elasticsearch" level ="WARN"/>
 	<logger name="no.difi.dcat" level ="WARN"/>
 
-	<logger name="no.dcat" level="DEBUG"/>
+	<logger name="no.dcat" level="INFO"/>
 
 
 </configuration>

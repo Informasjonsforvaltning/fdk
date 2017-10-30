@@ -62,13 +62,13 @@ $sk-border-radius: 3px !default;
 
 .btn-group {
   .fdk-button-language {
-    background-color: transparent;
+    background-color: transparent !important;
     border-color: transparent;
     text-shadow: none;
     box-shadow: none;
     background-image: none;
     text-decoration: underline;
-    &:focus, &:active {
+    &:focus, &:active, &:hover {
       background-color: transparent !important;
       border-color: transparent !important;
     }
@@ -115,17 +115,17 @@ SEARCHPAGE SORTING DROPDOWN
 .btn-group {
   .dropdown-toggle {
     &:focus, &:active, &:hover {
-      background-color: $color-cta4 !important;
-      border-color: transparent !important;
-      box-shadow: none !important;
+      background-color: $color-cta4;
+      border-color: transparent;
+      box-shadow: none;
     }
   }
 }
 
 .open>.dropdown-toggle.btn-default {
-  background-color: $color-cta4 !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+  background-color: $color-cta4;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 /*

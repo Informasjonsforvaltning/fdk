@@ -78,10 +78,10 @@
   },
   "sort": {
     "by": "Sorter på",
-    "by.relevance": "Relevans",
-    "by.title": "Tittel",
-    "by.publisher": "Utgiver",
-    "by.modified": "Sist endra"
+    "relevance": "relevans",
+    "title": "tittel",
+    "publisher": "utgiver",
+    "modified": "sist endra"
   },
   "search_hit": {
     "owned": "Eies av",
@@ -96,18 +96,22 @@
     "type": "Type",
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
+    "informationModelDefaultText": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
       "format": "Tilgjengelige format",
       "accessUrl": "TilgangsURL",
       "license": "Forutsetning for bruk av datasettet",
+      "licenseLinkDefault": "Lisens",
       "conformsTo": "Innholdsstandard",
       "page": "Mer informasjon om denne distribusjonen",
-      "standard": "Standard"
+      "standard": "Standard",
+      "referenceDefaultCode": "Andre relasjoner",
+      "referenceDefault": "Relasjon"
     },
     "issued": "Utgivelsesdato",
-    "quality": "Kvalitet",
+    "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
@@ -141,8 +145,11 @@
       "organizationUnit": "Ta kontakt med"
     },
     "legalBasisForRestriction": "Skjermingshjemmel",
+    "legalBasisForRestrictionDefaultText": "Hjemmel",
     "legalBasisForProcessing": "Behandlingsgrunnlag",
+    "legalBasisForProcessingDefaultText": "Grunnlag",
     "legalBasisForAccess": "Utleveringshjemmel",
+    "leagalBasisForAccessDefaultText": "Hjemmel",
     "accessRights": {
       "authorityCode": {
         "public": "Offentleg",

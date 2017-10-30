@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Norwegian Data Catalog",
+    "title": "The National Data Directory",
     "titleSub": "Datasets from publishers in Norway.",
     "publisher": "Choose by publisher",
     "menu": "Menu",
@@ -29,8 +29,8 @@
     "title": "Log in"
   },
   "about": {
-    "about": "Norwegian Data Catalog",
-    "title": "Norwegian Data Catalog",
+    "about": "About The National Data Directory",
+    "title": "The National Data Directory",
     "titleSub": "\n",
     "ingress": "The National Data Directory is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Directory makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes.",
     "maintext": "In Digital Agenda, the government states that the users should only have to provide public administration with the same information once. The various agencies within the administration must then share the necessary information with each other. The National Data Directory is the first step in order to reach this goal.<br><br> The cooperative body SKATE (Managing and coordinating services in electronic administration) has described the ambition for information management as a process of three levels. The National Data Directory being the first level, providing a common overview of data and a shared understanding of information in the shape of terms. The next level focuses on the availability of information in a common API catalogue. In the third level, everything should be set for reuse of data being the main rule and for the use of the principle of reporting information only once.<br><br> The Government's circular on digitalisation (emphasizes that all public agencies must have an overview of which data they process, what the data mean, what they can be used for, which processes they are included in and who are allowed to use the data (information management). The Agency for Public Management and e-Government (Difi) works out a common framework with standardized methods and principles, which will make it easier for the agencies in the process of getting started with terminology work.",
@@ -53,7 +53,7 @@
   },
   "facet": {
     "organisation":"Organization",
-    "theme":"Tema",
+    "theme":"Theme",
     "accessRight":"Access",
     "concept":"Concept",
     "legal":"Legal",
@@ -78,10 +78,10 @@
   },
   "sort": {
     "by": "Sort by",
-    "by.relevance": "relevance",
-    "by.title": "title",
-    "by.publisher": "publisher",
-    "by.modified": "modified"
+    "relevance": "relevance",
+    "title": "title",
+    "publisher": "publisher",
+    "modified": "modified"
   },
   "search_hit": {
     "owned": "Eies av",
@@ -95,16 +95,20 @@
     "title": "Dataset",
     "type": "Type",
     "conformsTo": "Conforms to",
-    "informationModel": "Information modell",
+    "informationModel": "Information model",
+    "informationModelDefaultText": "Information model",
     "distribution": {
       "title": "Distribution",
       "description": "Description",
       "format": "Format",
       "accessUrl": "AccessURL",
       "license": "License",
+      "licenseLinkDefault": "License",
       "conformsTo": "Conforms to",
-      "page": "Mer informasjon om denne distribusjonen",
-      "standard": "Standard"
+      "page": "More information about this distribution",
+      "standard": "Standard",
+      "referenceDefaultCode": "Other relations",
+      "referenceDefault": "Relation"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",
@@ -115,7 +119,7 @@
     "created": "Opprettet",
     "modified": "Sist endret",
     "language": "Språk",
-    "theme": "Tema",
+    "theme": "Theme",
     "periodFrom": "From",
     "periodTo": "To",
     "spatial": "Geografisk avgrenset til",
@@ -141,8 +145,11 @@
       "organizationUnit": "Contact"
     },
     "legalBasisForRestriction": "Legal basis for restriction",
+    "legalBasisForRestrictionDefaultText": "Legal basis for restriction",
     "legalBasisForProcessing": "Legal basis for processing",
+    "legalBasisForProcessingDefaultText": "Legal basis for processing",
     "legalBasisForAccess": "Legal basis for access",
+    "leagalBasisForAccessDefaultText": "Legal basis for access",
     "accessRights": {
       "authorityCode": {
         "public": "Public",

@@ -46,7 +46,12 @@ searchkit.translateFunction = (key) => {
     'reset.clear_all': localization.page.resetfilters,
     'hitstats.results_found': `${localization.page['result.summary']} ` + ' {numberResults}' + ` ${localization.page.dataset}`,
     'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.'
+    'NoHits.ResetSearch': '.',
+    'sort.by': localization.sort.by,
+    'sort.relevance': localization.sort.relevance,
+    'sort.title': localization.sort.title,
+    'sort.publisher': localization.sort.publisher,
+    'sort.modified': localization.sort.modified
   };
   return translations[key];
 };
@@ -121,23 +126,23 @@ export default class SearchPage extends React.Component {
                       <SortingSelector
                         options={[
                           {
-                            label: `${localization.sort.by} ${localization.sort['by.relevance']}`,
+                            label: 'sort.relevance',
                             field: '_score',
                             order: 'asc',
                             defaultOption: true
                           },
                           {
-                            label: `${localization.sort.by} ${localization.sort['by.title']}`,
+                            label: `sort.title`,
                             field: 'title',
                             order: 'asc'
                           },
                           {
-                            label: `${localization.sort.by} ${localization.sort['by.modified']}`,
+                            label: `sort.modified`,
                             field: 'modified',
                             order: 'desc'
                           },
                           {
-                            label: `${localization.sort.by} ${localization.sort['by.publisher']}`,
+                            label: `sort.publisher`,
                             field: 'publisher.name',
                             order: 'asc'
                           }

@@ -52,7 +52,7 @@ public class DcatBuilderTest {
         String actual = builder.transform(catalog, "TURTLE");
 
         assertThat(actual, is(notNullValue()));
-        System.out.println(actual);
+        logger.debug("actual DCAT \n{}",actual);
 
     }
 
@@ -76,7 +76,7 @@ public class DcatBuilderTest {
         String actual = gson.toJson(catalog);
 
         assertThat(actual, is(notNullValue()));
-        System.out.println(actual);
+        logger.debug("{}",actual);
     }
 
 
@@ -90,7 +90,7 @@ public class DcatBuilderTest {
         String actual = builder.transform(catalog, "TURTLE");
 
         assertThat(actual, is(notNullValue()));
-        System.out.println(actual);
+        logger.debug("mini catalog\n{}",actual);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class DcatBuilderTest {
         String actual = builder.transform(catalog, "TURTLE");
 
         assertThat(actual, is(notNullValue()));
-        System.out.println(actual);
+        logger.debug("miniimum catalog\n{}",actual);
 
     }
 

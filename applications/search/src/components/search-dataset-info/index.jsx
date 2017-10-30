@@ -5,6 +5,7 @@ import _sortBy from 'lodash/sortBy';
 import cx from 'classnames';
 
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 import './index.scss';
 
 export default class DatasetInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -71,9 +72,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
-            className="clearfix"
+            className="clearfix mb-1"
           >
-            <div className="dataset-temporal-date">
+            <div className="col-md-6 dataset-temporal-date">
               <h5>{ headerFrom }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -81,7 +82,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                 </Moment>
               </p>
             </div>
-            <div className="dataset-temporal-date pull-right">
+            <div className="col-md-6 dataset-temporal-date">
               <h5>{ headerTo }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -96,9 +97,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
-            className="clearfix"
+            className="clearfix mb-1"
           >
-            <div className="dataset-temporal-date">
+            <div className="col-md-6 dataset-temporal-date">
               <h5>{ headerFrom }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -115,7 +116,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             id={`dataset-info-temporal-${index}`}
             className="clearfix"
           >
-            <div className="dataset-temporal-date pull-right">
+            <div className="col-md-6 col-md-offset-6 dataset-temporal-date">
               <h5>{ headerTo }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -147,7 +148,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   }
 
   _renderLanguage() {
-    const { language, temporal } = this.props;
+    const { language, temporal, selectedLanguageCode } = this.props;
     const languageClass = cx(
       'fdk-padding-no',
       {
@@ -163,7 +164,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             id={`dataset-info-language-${index}`}
             className="fdk-ingress fdk-margin-bottom-no"
           >
-            {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
+            {getTranslateText(item.prefLabel, selectedLanguageCode)}
           </p>
         );
       }
@@ -190,82 +191,56 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
   _renderReferences() {
     let referencesNodes;
-    const { references } = this.props;
+    const { references, selectedLanguageCode } = this.props;
+
+    let referenceTypeCode;
+    const children = items => items.map((item, index) => {
+      if (item.referenceType.code !== referenceTypeCode) {
+        referenceTypeCode = item.referenceType.code;
+        return (
+          <div key={`dataset-reference-${index}`} className="fdk-detail-text refer">
+            <h5>
+              {item.referenceType.prefLabel ? getTranslateText(item.referenceType.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefaultCode}
+            </h5>
+            <p className="fdk-ingress">
+              <a
+                href={item.source.uri}
+              >
+                {item.source.prefLabel ? getTranslateText(item.source.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefault}
+                <i className="fa fa-external-link fdk-fa-right" />
+              </a>
+            </p>
+          </div>
+        );
+      }
+      return (
+        <div key={`dataset-reference-${index}`} className="fdk-detail-text refer">
+
+          <p className="fdk-ingress">
+            <a
+              href={item.source.uri}
+            >
+              {item.source.prefLabel ? getTranslateText(item.source.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefault}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          </p>
+        </div>
+      );
+    });
+
     if (references && typeof references !== 'undefined' && references.length > 0) {
       let groupReferences = references;
       groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
-
-      let referenceTypeCode = '';
-      referencesNodes = groupReferences.map((item, index) => {
-        if (item.referenceType.code !== referenceTypeCode) {
-          referenceTypeCode = item.referenceType.code;
-          return (
-            <div key={`dataset-${index}`} className="col-md-12 fdk-padding-no">
-              <div className="fdk-container-detail">
-                <div className="fdk-detail-icon">
-                  <i className="fa fa-link" />
-                </div>
-                <div className="fdk-detail-text refer">
-                  <h5>
-                    {
-                      item.referenceType.prefLabel[this.props.selectedLanguageCode]
-                      || item.referenceType.prefLabel.nb
-                      || item.referenceType.prefLabel.nn
-                      || item.referenceType.prefLabel.en
-                    }
-                  </h5>
-                  <p className="fdk-ingress">
-                    <a
-                      href={item.source.uri}
-                    >
-                      {
-                        item.source.prefLabel[this.props.selectedLanguageCode]
-                        || item.source.prefLabel.nb
-                        || item.source.prefLabel.nn
-                        || item.source.prefLabel.en
-                      }
-                      <i className="fa fa-external-link fdk-fa-right" />
-                    </a>
-                  </p>
-                </div>
-              </div>
+      return (
+        <div className="col-md-12 fdk-padding-no">
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-link" />
             </div>
-          );
-        }
-        return (
-          <div key={`dataset-${index}`} className="col-md-12 fdk-padding-no">
-            <div className="fdk-container-detail">
-              <div className="fdk-detail-icon">
-                <i className="fa fa-link" />
-              </div>
-              <div className="fdk-detail-text refer">
-                <h5>
-                  {
-                    item.referenceType.prefLabel[this.props.selectedLanguageCode]
-                    || item.referenceType.prefLabel.nb
-                    || item.referenceType.prefLabel.nn
-                    || item.referenceType.prefLabel.en
-                  }
-                </h5>
-                <p className="fdk-ingress">
-                  <a
-                    href={item.source.uri}
-                  >
-                    {
-                      item.source.prefLabel[this.props.selectedLanguageCode]
-                      || item.source.prefLabel.nb
-                      || item.source.prefLabel.nn
-                      || item.source.prefLabel.en
-                    }
-                    <i className="fa fa-external-link fdk-fa-right" />
-                  </a>
-                </p>
-              </div>
-            </div>
+            { children(groupReferences) }
           </div>
-        );
-      });
-      return referencesNodes;
+        </div>
+      );
     }
     return null;
   }

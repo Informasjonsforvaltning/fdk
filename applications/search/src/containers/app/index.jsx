@@ -6,6 +6,7 @@ import { browserHistory, Link } from 'react-router';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
+import { getLanguageFromUrl } from '../../utils/translateText';
 import './index.scss';
 
 export default class App extends React.Component {
@@ -17,6 +18,18 @@ export default class App extends React.Component {
     };
     this.onChangeLanguage = this.onChangeLanguage.bind(this);
     this.getLangUrl = this.getLangUrl.bind(this);
+  }
+
+  componentWillMount() {
+    const langCode = getLanguageFromUrl();
+    if (langCode !== null) {
+      localization.setLanguage(langCode)
+      const selectedLanguage = localization.lang[langCode]
+      this.state = {
+        selectedLanguage: selectedLanguage,
+        selectedLanguageCode: langCode
+      }
+    }
   }
 
   onChangeLanguage(e) {
@@ -55,8 +68,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    // let queryObj = qs.parse(window.location.search.substr(1));
-    // let language = queryObj.lang ? queryObj.lang : 'nb';
+    let langCode = getLanguageFromUrl();
+    let langParam = langCode ? `?lang=${langCode}` : '';
+
     const childWithProp =
       React.Children.map(this.props.children, child => React.cloneElement(child, {
         selectedLanguageCode: this.state.selectedLanguageCode
@@ -74,7 +88,7 @@ export default class App extends React.Component {
               <div className="col-md-4">
                 <a
                   title="Link til Felles datakatalog"
-                  href="/"
+                  href={`/${langParam}`}
                 >
                   <img className="fdk-logo" src="/static/img/fdk-logo@2x.png" alt="Logo for Felles datakatalog" />
                 </a>
@@ -85,7 +99,7 @@ export default class App extends React.Component {
                   {localization.app.titleSub} {localization.app.readMore}
                   <a
                     title="Side om"
-                    href="/about"
+                    href={`/about${langParam}`}
                   >
                     {localization.app.title}
                   </a>
@@ -104,7 +118,7 @@ export default class App extends React.Component {
                       key="menu-1"
                       eventKey="menu-1"
                       href="/about"
-                    >Om Felles Datakatalog</MenuItem>
+                    >{localization.about.about}</MenuItem>
                   </DropdownButton>
                 </div>
                 <div className="fdk-header-padding">
