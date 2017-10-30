@@ -240,7 +240,7 @@
     display: none !important;
 }
 .search-filters input[type=checkbox]:checked ~ label:last-child {
-    display: block !important;
+    display: inline-block !important;
 }
 .search-filters div.checkbox {
     display: none;
