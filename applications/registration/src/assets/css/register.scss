@@ -224,7 +224,10 @@ input:checked ~ .checkbox-replacement::after {
   position: absolute;
   left:-9999px;
 }
-
+#accessRightSelector span {
+    font-weight: normal;
+    cursor: pointer;
+}
 .caret-right {
     border-bottom: 7px solid transparent;
     border-top: 7px solid transparent;
