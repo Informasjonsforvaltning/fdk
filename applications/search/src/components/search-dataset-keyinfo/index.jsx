@@ -70,11 +70,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           href={item.uri}
         >
           {
-            item.prefLabel[this.props.selectedLanguageCode]
+            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
-            || localization.dataset.distribution.standard
+            : localization.dataset.legalBasisForRestrictionDefaultText
           }
           <i className="fa fa-external-link fdk-fa-right" />
         </a>
@@ -89,11 +89,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           href={item.uri}
         >
           {
-            item.prefLabel[this.props.selectedLanguageCode]
+            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
-            || localization.dataset.distribution.standard
+            : localization.dataset.legalBasisForProcessingDefaultText
           }
           <i className="fa fa-external-link fdk-fa-right" />
         </a>
@@ -108,11 +108,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           href={item.uri}
         >
           {
-            item.prefLabel[this.props.selectedLanguageCode]
+            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
-            || localization.dataset.distribution.standard
+            : localization.dataset.leagalBasisForAccessDefaultText
           }
           <i className="fa fa-external-link fdk-fa-right" />
         </a>
@@ -225,10 +225,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
         href={item.uri}
       >
         {
-          item.prefLabel[this.props.selectedLanguageCode]
-          || item.prefLabel.nb
-          || item.prefLabel.nn
-          || item.prefLabel.en
+          item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            : localization.dataset.informationModelDefaultText
         }
         <i className="fa fa-external-link fdk-fa-right" />
       </a>

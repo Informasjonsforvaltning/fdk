@@ -183,10 +183,7 @@
       },
       "legalBasisForRestriction": [
         {
-          "uri": "https://lovdata.no/dokument/NL/lov/1992-12-04-126",
-          "prefLabel": {
-            "nb": "Lov om arkiv [arkivlova]"
-          }
+          "uri": "https://lovdata.no/dokument/NL/lov/1992-12-04-126"
         },
         {
           "uri": "http://lovdata/paragraph/20",
@@ -331,6 +328,17 @@
       "admsIdentifier": [
         "http://adms.identifier.no/scheme/42"
       ],
+      "conformsTo" : [ {
+        "uri" : "https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret",
+        "extraType" : "http://purl.org/dc/terms/Standard"
+      } ],
+      "informationModel" : [ {
+        "uri" : "https://confluence.brreg.no/display/DBNPUB/Informasjonsmodell+for+Enhetsregisteret+og+Foretaksregisteret",
+        "prefLabel" : {
+          "nb" : "Informasjonsmodell for Enhetsregisteret og Foretaksregisteret "
+        },
+        "extraType" : "http://purl.org/dc/terms/Standard"
+      } ],
       "type": "Kodeliste"
     }
   ]

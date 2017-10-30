@@ -30,7 +30,7 @@
   },
   "about": {
     "about": "Om Felles datakatalog",
-    "title": "Om Felles datakatalog",
+    "title": "Felles datakatalog",
     "titleSub": "\n",
     "ingress": "Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.",
     "maintext": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang.<br><br> Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
@@ -78,10 +78,10 @@
   },
   "sort": {
     "by": "Sorter på",
-    "by.relevance": "Relevans",
-    "by.title": "Tittel",
-    "by.publisher": "Utgiver",
-    "by.modified": "Sist endret"
+    "relevance": "relevans",
+    "title": "tittel",
+    "publisher": "utgiver",
+    "modified": "sist endret"
   },
   "search_hit": {
     "owned": "Eies av",
@@ -96,6 +96,7 @@
     "type": "Type",
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
+    "informationModelDefaultText": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
       "description": "Beskrivelse",
@@ -144,8 +145,11 @@
       "organizationUnit": "Ta kontakt med"
     },
     "legalBasisForRestriction": "Skjermingshjemmel",
+    "legalBasisForRestrictionDefaultText": "Hjemmel",
     "legalBasisForProcessing": "Behandlingsgrunnlag",
+    "legalBasisForProcessingDefaultText": "Grunnlag",
     "legalBasisForAccess": "Utleveringshjemmel",
+    "leagalBasisForAccessDefaultText": "Hjemmel",
     "accessRights": {
       "authorityCode": {
         "public": "Offentlig",
