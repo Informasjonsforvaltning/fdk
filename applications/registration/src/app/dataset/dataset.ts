@@ -3,6 +3,7 @@ import {Publisher} from "./publisher";
 import {Distribution} from "./distribution/distribution";
 import {PeriodOfTime} from "./temporal/periodoftime";
 import {Skoscode} from './skoscode';
+import {Reference} from './reference'
 /**
  * WARNING pluralize arrays will append s to array name if singular and overwrite with an empty array.
  */
@@ -34,7 +35,7 @@ export interface Dataset {
     [language: string]:string
   };
   themes?: {uri:string, title:{"nb":string}}[];
-  catalog: string;
+  catalogId: string;
   accrualPeriodicity?: {uri:string, prefLabel:{"no": string}};
   provenance?: {uri:string, prefLabel:{"nb":string}};
 
@@ -75,6 +76,8 @@ export interface Dataset {
   hasCurrentnessAnnotation?:any;
   hasAvailabilityAnnotation?:any;
   hasRelevanceAnnotation?:any;
+
+  references?:Reference[];
 
   _lastModified: string;
 
