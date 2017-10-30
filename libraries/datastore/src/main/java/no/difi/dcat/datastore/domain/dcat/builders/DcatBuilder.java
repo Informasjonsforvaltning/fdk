@@ -484,21 +484,13 @@ public class DcatBuilder {
         return this;
     }
 
+    public DcatBuilder addSubjects(Resource resource, Property property, List<Subject> subjects) {
+        if (subjects != null) {
+            for (Subject subject : subjects) {
+                if (subject.getUri() != null && !subject.getUri().isEmpty()) {
+                    Resource r = model.createResource(subject.getUri());
 
-    public DcatBuilder addSubjects(Resource resource, Property property, List<Subject> concepts) {
-        if (concepts != null) {
-            for (Subject concept : concepts) {
-                if (concept.getUri() != null && !concept.getUri().isEmpty()) {
-                    Resource r = model.createResource(concept.getUri());
-
-                    if (hasContent(concept.getPrefLabel())) {
-                        r.addProperty(RDF.type, SKOS.Concept);
-
-                        addLiterals(r, SKOS.prefLabel, concept.getPrefLabel());
-                        addLiterals(r, SKOS.definition, concept.getDefinition());
-                        addLiterals(r, SKOS.note, concept.getNote());
-                        addLiteral(r, DCTerms.source, concept.getSource());
-                    }
+                    addSubjectContent(subject, r);
 
                     resource.addProperty(DCTerms.subject, r);
                 }
@@ -506,6 +498,17 @@ public class DcatBuilder {
             }
         }
         return this;
+    }
+
+    public void addSubjectContent(Subject subject, Resource resource) {
+        if (subject.getPrefLabel() != null) {
+            resource.addProperty(RDF.type, SKOS.Concept);
+
+            addLiterals(resource, SKOS.prefLabel, subject.getPrefLabel());
+            addLiterals(resource, SKOS.definition, subject.getDefinition());
+            addLiterals(resource, SKOS.note, subject.getNote());
+            addLiteral(resource, DCTerms.source, subject.getSource());
+        }
     }
 
     public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts, Resource type) {

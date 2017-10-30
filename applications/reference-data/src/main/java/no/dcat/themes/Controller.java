@@ -100,11 +100,13 @@ public class Controller {
     @CrossOrigin
     @RequestMapping(value = "/subjects",  method = RequestMethod.GET)
     public Subject getRemoteResourceForSubject(@RequestParam String uri) throws MalformedURLException {
-        logger.debug(uri);
+        logger.info("Request for subject with uri <{}>", uri);
         try {
-            return subjectsService.addSubject(uri);
+            Subject subject = subjectsService.addSubject(uri);
+            logger.info("Return subject: {}", subject);
+            return subject;
         }catch (Exception e){
-            logger.error("URI was: "+uri);
+            logger.error("Unable to find subject with URI <{}>. Reason {}",uri, e.getLocalizedMessage());
             throw e;
         }
     }
