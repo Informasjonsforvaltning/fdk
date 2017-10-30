@@ -1,6 +1,7 @@
 package no.difi.dcat.datastore.domain.dcat;
 
 import no.dcat.shared.Catalog;
+import no.dcat.shared.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
@@ -43,17 +44,27 @@ public class RdfMessageConverter extends AbstractHttpMessageConverter<Object> {
         if (o instanceof Catalog) {
             Catalog catalog = (Catalog) o;
 
-            MediaType media = outputMessage.getHeaders().getContentType();
-            String format = "TURTLE";
-            if (APPLICATION.equals(media.getType())) {
-                if ("rdf+xml".equals(media.getSubtype())) {
-                    format = "RDF/XML";
-                } else if ("ld+json".equals(media.getSubtype())) {
-                    format = "JSONLD";
-                }
-            }
+            String format = format(outputMessage);
 
             outputMessage.getBody().write(DcatBuilder.transform(catalog, format).getBytes());
+        } else if (o instanceof Dataset) {
+            Dataset dataset = (Dataset) o;
+
+            outputMessage.getBody().write(DcatBuilder.transform(dataset, format(outputMessage)).getBytes());
         }
+
+    }
+
+    private String format(HttpOutputMessage outputMessage) {
+        MediaType media = outputMessage.getHeaders().getContentType();
+        String format = "TURTLE";
+        if (APPLICATION.equals(media.getType())) {
+            if ("rdf+xml".equals(media.getSubtype())) {
+                format = "RDF/XML";
+            } else if ("ld+json".equals(media.getSubtype())) {
+                format = "JSONLD";
+            }
+        }
+        return format;
     }
 }

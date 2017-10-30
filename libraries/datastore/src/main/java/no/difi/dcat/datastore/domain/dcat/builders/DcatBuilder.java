@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +97,14 @@ public class DcatBuilder {
         DcatBuilder builder = new DcatBuilder();
         builder.addCatalog(catalog);
 
-        OutputStream out = new ByteArrayOutputStream();
-        builder.model.write(out, outputFormat);
-        return out.toString();
+        return builder.getDcatOutput(outputFormat);
+    }
+
+    public static String transform(Dataset dataset, String outputFormat) {
+        DcatBuilder builder = new DcatBuilder();
+        builder.addDataset(dataset);
+
+        return builder.getDcatOutput(outputFormat);
     }
 
     public String getDcatOutput(String outputFormat) {
@@ -119,6 +125,13 @@ public class DcatBuilder {
         addPublisher(catRes, catalog.getPublisher());
 
         addDatasets(catRes, catalog.getDataset());
+
+        return this;
+    }
+
+    public DcatBuilder addDataset(Dataset dataset) {
+        Resource dataRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
+        addDatasets(dataRes, Arrays.asList(dataset));
 
         return this;
     }
