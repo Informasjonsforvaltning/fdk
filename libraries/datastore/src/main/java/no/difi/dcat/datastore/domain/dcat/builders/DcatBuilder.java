@@ -423,7 +423,7 @@ public class DcatBuilder {
                     (contact.getOrganizationName() != null && !contact.getOrganizationName().isEmpty()) ||
                     (contact.getOrganizationUnit() != null && !contact.getOrganizationUnit().isEmpty())) {
 
-                if (contact.getUri() == null || !contact.getUri().isEmpty()) {
+                if (contact.getUri() != null && !contact.getUri().isEmpty()) {
                     contactRes = model.createResource(contact.getUri());
                 } else {
                     contactRes = model.createResource(UUID.randomUUID().toString());
