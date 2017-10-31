@@ -162,8 +162,40 @@ export class QualityComponent implements OnInit {
     }
 
     fetchFrequencies() {
-        this.codesService.fetchCodes('frequencies', 'no').then( frequencies =>
-            this.frequencies = frequencies);
+        this.codesService.fetchCodes('frequencies', 'no').then((frequencies) => {
+            this.frequencies = [];
+            let frequenciesInCorrectOrder = [
+              'Kontinuerlig',
+              'To ganger per dag',
+              'Daglig',
+              'Tre ganger i uken',
+              'To ganger i uken',
+              'Ukentlig',
+              'Tre ganger i måneden',
+              'Hver fjortende dag',
+              'To ganger i måneden',
+              'Månedlig',
+              'Annenhver måned',
+              'Kvartalsvis',
+              'Tre ganger per år',
+              'Halvårlig',
+              'Årlig',
+              'Annethvert år',
+              'Hvert tredje år',
+              'Uregelmessig',
+              'Aldri',
+              'Annet',
+              'Ukjent'
+            ];
+            frequenciesInCorrectOrder.forEach((f)=>{
+              frequencies.forEach((frequency)=>{
+                if(frequency.label && f.toLowerCase() === frequency.label.toLowerCase()) {
+                  frequency.label = f;
+                  this.frequencies.push(frequency);
+                }
+              });
+            });
+        });
     }
 
     fetchProvenances() {
