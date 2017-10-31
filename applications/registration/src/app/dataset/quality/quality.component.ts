@@ -195,6 +195,17 @@ export class QualityComponent implements OnInit {
                 }
               });
             });
+          frequencies.forEach((originalFrequency) => {
+            let found = false;
+             this.frequencies.forEach((builtFrequency) => {
+               if(originalFrequency === builtFrequency) {
+                 found = true;
+               }
+             });
+             if(!found) {
+               this.frequencies.push(originalFrequency);
+             }
+          });
         });
     }
 
