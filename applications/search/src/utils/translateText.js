@@ -12,7 +12,7 @@ export function getTranslateText(textObj, selectedLanguage) {
     || textObj.no
     || textObj.nn
     || textObj.en
-    : null
+    || null
   );
 }
 

@@ -43,6 +43,7 @@ export class DatasetComponent implements OnInit {
     availableLanguages: any;
     summaries: any = {};
     legalBasis: any[];
+    setChecked: boolean;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -140,6 +141,8 @@ export class DatasetComponent implements OnInit {
       this.dataset.informationModels = this.dataset.informationModels || [];
       this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
       this.dataset.references = this.dataset.references || [];
+
+      this.setChecked = this.dataset.title[this.language] === '';
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 

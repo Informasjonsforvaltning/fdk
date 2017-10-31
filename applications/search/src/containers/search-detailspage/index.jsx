@@ -159,15 +159,15 @@ export default class DetailsPage extends React.Component {
       hasRelevanceAnnotation,
       hasCompletenessAnnotation,
       hasAccuracyAnnotation,
-      hasAvailabilityAnnotations
+      hasAvailabilityAnnotation
     } = this.state.dataset;
-    if (hasRelevanceAnnotation || hasCompletenessAnnotation || hasAccuracyAnnotation || hasAvailabilityAnnotations) {
+    if (hasRelevanceAnnotation || hasCompletenessAnnotation || hasAccuracyAnnotation || hasAvailabilityAnnotation) {
       return (
         <DatasetQuality
           relevanceAnnotation={hasRelevanceAnnotation ? getTranslateText(hasRelevanceAnnotation.hasBody, this.props.selectedLanguageCode) : null }
           completenessAnnotation={hasCompletenessAnnotation ? getTranslateText(hasCompletenessAnnotation.hasBody, this.props.selectedLanguageCode) : null }
           accuracyAnnotation={hasAccuracyAnnotation ? getTranslateText(hasAccuracyAnnotation.hasBody, this.props.selectedLanguageCode) : null }
-          availabilityAnnotations={hasAvailabilityAnnotations ? getTranslateText(hasAvailabilityAnnotations.hasBody, this.props.selectedLanguageCode) : null }
+          availabilityAnnotations={hasAvailabilityAnnotation ? getTranslateText(hasAvailabilityAnnotation.hasBody, this.props.selectedLanguageCode) : null }
         />
       );
     }

@@ -49,7 +49,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       return (
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
           <i className={accessRightClass} />
-          {localization.dataset.accessRight} {accessRights.prefLabel.nb.toLowerCase()}
+          {localization.dataset.accessRight} {getTranslateText(accessRights.prefLabel, this.props.selectedLanguageCode).toLowerCase()}
         </div>
       );
     }
@@ -173,15 +173,11 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     }
     const heading = localization.dataset.type;
     return (
-      <div className={`${this.state.colClass} fdk-padding-no`}>
-        <div className="fdk-container-detail">
-          <div>
-            <h5>{heading}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-no">
-              {type}
-            </p>
-          </div>
-        </div>
+      <div className={`${this.state.colClass} fdk-container-detail`}>
+        <h5>{heading}</h5>
+        <p className="fdk-ingress fdk-margin-bottom-no">
+          {type}
+        </p>
       </div>
     );
   }
@@ -201,16 +197,12 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
       return (
         <div
-          className={`${this.state.colClass} fdk-padding-no`}
+          className={`${this.state.colClass} fdk-container-detail`}
         >
-          <div className="fdk-container-detail">
-            <div>
-              <h5>{header}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                { children(conformsTo) }
-              </p>
-            </div>
-          </div>
+          <h5>{header}</h5>
+          <p className="fdk-ingress fdk-margin-bottom-no">
+            { children(conformsTo) }
+          </p>
         </div>
       );
     }
@@ -237,16 +229,12 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (informationModel && informationModel.length > 0) {
       return (
         <div
-          className={`${this.state.colClass} fdk-padding-no`}
+          className={`${this.state.colClass} fdk-container-detail`}
         >
-          <div className="fdk-container-detail">
-            <div>
-              <h5>{localization.dataset.informationModel}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                { children(informationModel) }
-              </p>
-            </div>
-          </div>
+          <h5>{localization.dataset.informationModel}</h5>
+          <p className="fdk-ingress fdk-margin-bottom-no">
+            { children(informationModel) }
+          </p>
         </div>
       );
     }
@@ -259,6 +247,8 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
         { this._renderHeader() }
         <div className="row fdk-row">
           {this._renderLegalBasis()}
+        </div>
+        <div className="row-eq-height">
           {this._renderType()}
           {this._renderInformationModel()}
           {this._renderConformsTo()}
