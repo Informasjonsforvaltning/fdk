@@ -173,11 +173,11 @@ export class CatalogComponent implements OnInit {
   registrationStatus: { [key: string]: { [key: string]: string } } = {
     "DRAFT": {
       nb: "Utkast",
-      color: "var(--color3)"
+      color: "#646E78" // Hardcoded for MVP.
     },
     "PUBLISH": {
       nb: "Publisert",
-      color: "var(--color-cta)"
+      color: "#00B4E6" // Hardcoded for MVP.
     }
   };
 
