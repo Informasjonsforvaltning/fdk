@@ -22,7 +22,7 @@ export class TitleUriFormComponent implements OnInit {
     public titleUri: TitleUri;
 
     @Input('titleUriIndex')
-    public titleUriIndex: number;
+    public titleUriIndex: number = 0;
 
     @Input('titleUriType')
     public titleUriType: string;
