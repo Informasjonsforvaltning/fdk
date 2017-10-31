@@ -232,7 +232,6 @@
       <div class="expanded-content">
         <content [dataset]="dataset"
                  (onSave)="onSave($event)">
-
         </content>
       </div>
 
@@ -294,7 +293,7 @@
     </div>
   </div>
 </div>
-  
+
     <div class="row justify-content-md-center" *ngIf="dataset">
         <label for="distributions-toggle" class="col-md-push-1 col-md-2 section-title">
             Distribusjoner<b class="caret-right"></b>
@@ -309,7 +308,7 @@
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="distribution.type === 'Feed'"></i>
-                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>
                                     <i class="fa fa-cogs" *ngIf="distribution.type === 'API'"></i>
                                     {{distribution.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
@@ -347,12 +346,12 @@
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="sample.type === 'Feed'"></i>
-                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>
                                     <i class="fa fa-cogs" *ngIf="sample.type === 'API'"></i>
                                     {{sample.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
                             </span>
-                        </div>                            
+                        </div>
                         <span *ngIf="!sample || !sample.format || sample.format.length === 0">
                             Klikk for å fylle ut
                         </span>

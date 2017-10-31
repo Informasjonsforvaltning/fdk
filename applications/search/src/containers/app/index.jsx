@@ -109,6 +109,7 @@ export default class App extends React.Component {
               <div className="col-md-4 fdk-header-right">
                 <div className="fdk-float-right">
                   <DropdownButton
+                    tabIndex="0"
                     id="search-menu-dropdown-1"
                     bsStyle="default"
                     className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
@@ -124,6 +125,7 @@ export default class App extends React.Component {
                 <div className="fdk-header-padding">
                   <div className="fdk-float-right fdk-margin-right-double">
                     <DropdownButton
+                      tabIndex="0"
                       id="search-language-dropdown-1"
                       bsStyle="default"
                       className="dropdown-toggle fdk-button-language"
@@ -182,4 +184,3 @@ export default class App extends React.Component {
 App.propTypes = {
   children: PropTypes.node.isRequired
 };
-
