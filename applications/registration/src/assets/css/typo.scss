@@ -1,0 +1,138 @@
+/*  T Y P O G R A P H Y  */
+@import './colors.scss';
+
+h1 {
+    color: $color1;
+    font-size: 3.0rem;
+    line-height: 3.6rem;
+    font-weight: 500;
+    margin: 8px 0 0 0;
+}
+
+h2 {
+    color: $color1;
+    font-size: 2.625rem;
+    line-height: 3.15rem;
+    font-weight: 500;
+}
+
+h2.fdk-page-not-found { /* 404 */
+    font-size: 160px;
+    line-height: 160px;
+    color: $color4;
+    text-align: center;
+    margin: 0;
+}
+
+h3 {
+    color: $color1;
+    font-size: 2.25rem;
+    line-height: 2.7rem;
+    font-weight: 500;
+    margin: 0px;
+}
+
+h4 {
+    color: $color1;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 500;
+    margin: 0px;
+}
+
+h5 {
+    color: $color1;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    font-weight: 600;
+}
+
+p {
+    margin: 0 0 2.1rem 0;
+}
+
+.fdk-ingress {
+    font-size: 1.875rem;
+    line-height: 2.625rem;
+    font-weight: 400;
+    margin: 0 0 2.1rem 0;
+}
+
+a {
+    color: $color1;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+    color: $color1;
+}
+
+.fdk-p-header {
+    font-size: 3rem;
+    line-height: 3rem;
+    padding-bottom: 8px;
+    margin: 0px;
+}
+
+.fdk-p-header-sub {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    padding: 0px;
+    margin: 0px;
+}
+
+.fdk-header-beta > a {
+    color: #fff;
+}
+
+.fdk-textregular {
+    font-weight: 400;
+}
+
+.fdk-text-white {
+    color: #fff;
+}
+
+.fdk-text-right {
+    text-align: right;
+}
+
+.fdk-text-center {
+    text-align: center;
+}
+
+.fdk-text-regular {
+    font-weight: 400;
+}
+
+
+
+/*  F O N T   A W E S O M E  */
+
+.fdk-fa-right {
+    margin-left: 5px;
+}
+
+.fdk-fa-left {
+    margin-right: 5px;
+}
+
+.fdk-fa-big {
+    font-size: 1.875rem !important;
+    line-height: 1.875rem !important;
+    position: relative;
+    top: 2px;
+}
+
+.fdk-lLabel-neutral:active > .fdk-fa-arrow-left {
+    color: #fff;
+}
+
+.fdk-label-default:hover > .fdk-fa-button { /* Hovering for labels with font awesome icons */
+    color: $color1;
+}
+
+.fdk-label-default:active > .fdk-fa-button { /* Hovering for labels with font awesome icons */
+    color: #fff;
+}

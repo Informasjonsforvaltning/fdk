@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.DatasetSortRankingCreator;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
@@ -10,12 +11,16 @@ import no.dcat.harvester.validation.ValidationError;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
@@ -23,7 +28,6 @@ import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.shared.JenaException;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,13 +42,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+
 public class CrawlerJob implements Runnable {
-    
+
     private List<CrawlerResultHandler> handlers;
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;
@@ -54,8 +61,10 @@ public class CrawlerJob implements Runnable {
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
+    private SubjectCrawler subjectCrawler = new SubjectCrawler();
 
     public List<String> getValidationResult() {return validationResult;}
+    private Set<String> illegalUris = new HashSet<>();
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
@@ -182,6 +191,7 @@ public class CrawlerJob implements Runnable {
     }
 
     Model loadModelAndValidate(URL url) {
+
         Dataset dataset = RDFDataMgr.loadDataset(url.toString());
         Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
         Iterator<String> stringIterator = dataset.listNames();
@@ -189,6 +199,12 @@ public class CrawlerJob implements Runnable {
         while (stringIterator.hasNext()) {
             union = ModelFactory.createUnion(union, dataset.getNamedModel(stringIterator.next()));
         }
+
+        // remember the base url
+
+        Resource o = ResourceFactory.createResource(url.toString());
+        union.add(DCATCrawler.ImportResource, DCATCrawler.source_url, o);
+
         verifyModelByParsing(union);
 
         //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
@@ -199,6 +215,10 @@ public class CrawlerJob implements Runnable {
         // Checks if publisher is registrered in BRREG Enhetsregistret
         BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
         brregAgentConverter.collectFromModel(union);
+
+        // Checks subjects and resolve definitions
+        Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
+        union = modelWithSubjects;
 
         return union;
     }
@@ -343,15 +363,18 @@ public class CrawlerJob implements Runnable {
             Resource resource = locIter.next();
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
             try {
-                URL locUrl = new URL(locUri);
-                HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
-                locConnection.setRequestMethod("GET");
-                if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    //Remove non-resolvable location from dataset
-                    resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
-                    resultMsg.append("\n");
-                    model.removeAll(resource,DCTerms.spatial,null);
-                    logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}",locUri);
+                if (!illegalUris.contains(locUri)) {
+                    URL locUrl = new URL(locUri);
+                    HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
+                    locConnection.setRequestMethod("GET");
+                    if (locConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                        //Remove non-resolvable location from dataset
+                        resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
+                        resultMsg.append("\n");
+                        model.removeAll(resource, DCTerms.spatial, null);
+                        logger.warn("DCTerms.spatial URI cannot be resolved. Location removed form dataset: {}", locUri);
+                        illegalUris.add(locUri);
+                    }
                 }
             } catch (MalformedURLException | ClassCastException e) {
                 logger.error("URL not valid: {} ", locUri,e);

@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Norwegian Data Catalog",
+    "title": "The National Data Directory",
     "titleSub": "Datasets from publishers in Norway.",
     "publisher": "Choose by publisher",
     "menu": "Menu",
@@ -29,10 +29,11 @@
     "title": "Log in"
   },
   "about": {
-    "about": "Om Felles datakatalog",
-    "title": "Overordnet tekst FDK",
-    "ingress": "Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.",
-    "maintext": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang. Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
+    "about": "About The National Data Directory",
+    "title": "The National Data Directory",
+    "titleSub": "\n",
+    "ingress": "The National Data Directory is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Directory makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes.",
+    "maintext": "In Digital Agenda, the government states that the users should only have to provide public administration with the same information once. The various agencies within the administration must then share the necessary information with each other. The National Data Directory is the first step in order to reach this goal.<br><br> The cooperative body SKATE (Managing and coordinating services in electronic administration) has described the ambition for information management as a process of three levels. The National Data Directory being the first level, providing a common overview of data and a shared understanding of information in the shape of terms. The next level focuses on the availability of information in a common API catalogue. In the third level, everything should be set for reuse of data being the main rule and for the use of the principle of reporting information only once.<br><br> The Government's circular on digitalisation (emphasizes that all public agencies must have an overview of which data they process, what the data mean, what they can be used for, which processes they are included in and who are allowed to use the data (information management). The Agency for Public Management and e-Government (Difi) works out a common framework with standardized methods and principles, which will make it easier for the agencies in the process of getting started with terminology work.",
     "help": "Help",
     "status":"Status implementation",
     "standard":"The DCAT-AP-NO 1.1 standard",
@@ -51,21 +52,23 @@
     "nosearch.descriptions":"datasettbeskrivelser"
   },
   "facet": {
-    "organisation":"ORGANISATION",
-    "theme":"THEME",
+    "organisation":"Organization",
+    "theme":"Theme",
     "accessRight":"Access",
     "concept":"Concept",
     "legal":"Legal",
     "spatial":"Spatial",
     "temporal":"Temporal",
-    "standard":"Standard"
+    "standard":"Standard",
+    "showmore":"Show more",
+    "showfewer":"Show fewer"
   },
   "result": {
     "dataset":"Dataset",
     "waiting":"Fetching data ..."
   },
   "noHits": {
-    "error": "Ingen datasett funnet"
+    "error": "No datasets are found"
   },
   "footer": {
     "organisation.number": "Organisation number:",
@@ -77,29 +80,37 @@
   },
   "sort": {
     "by": "Sort by",
-    "by.relevance": "relevance",
-    "by.title": "title",
-    "by.publisher": "publisher",
-    "by.modified": "modified"
+    "relevance": "relevance",
+    "title": "title",
+    "publisher": "publisher",
+    "modified": "modified"
   },
   "search_hit": {
     "owned": "Eies av",
-    "public": "Offentlig",
-    "sample": "Eksempeldata tilgjengelig"
+    "Public": "Public",
+    "Restricted": "Restricted",
+    "Ukjent": "Unknown",
+    "sample": "Sample data are available"
   },
   "dataset": {
-    "title": "Datasett",
+    "accessRight": "Dataset is",
+    "title": "Dataset",
     "type": "Type",
-    "conformsTo": "Innholdsstandard",
-    "informationModel": "Informasjonsmodell",
+    "conformsTo": "Conforms to",
+    "informationModel": "Information model",
+    "informationModelDefaultText": "Information model",
     "distribution": {
-      "title": "Distribusjon",
-      "description": "Beskrivelse",
-      "format": "Tilgjengelige format",
-      "accessUrl": "TilgangsURL",
-      "license": "Innholdsstandard",
-      "page": "Mer informasjon om denne distribusjonen",
-      "standard": "Standard"
+      "title": "Distribution",
+      "description": "Description",
+      "format": "Format",
+      "accessUrl": "AccessURL",
+      "license": "License",
+      "licenseLinkDefault": "License",
+      "conformsTo": "Conforms to",
+      "page": "More information about this distribution",
+      "standard": "Standard",
+      "referenceDefaultCode": "Other relations",
+      "referenceDefault": "Relation"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",
@@ -110,37 +121,45 @@
     "created": "Opprettet",
     "modified": "Sist endret",
     "language": "Språk",
-    "theme": "Tema",
-    "periodFrom": "Gjelder fra",
-    "periodTo": "Gjelder til",
+    "theme": "Theme",
+    "periodFrom": "From",
+    "periodTo": "To",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
     "keyword": "Søkeord",
-    "subject": "Begrep",
-    "restrictions": "Restriksjoner",
-    "comments": "Kommentar",
-    "objective": "Formål",
-    "related": "Relaterte",
-    "relates": "Relatert",
-    "restriction": "Restriksjon",
-    "downloadText": "Last ned DCAT-beskrivelse:",
-    "isPartOf": "Datasettet er en del av",
-    "relevanceAnnotation": "Relevans",
-    "completenessAnnotation": "Kompletthet",
-    "accuracyAnnotation": "Nøyaktighet",
-    "availabilityAnnotations": "Tilgjengelighet",
+    "subject": "Subject",
+    "restrictions": "Restrictions",
+    "comments": "Comments",
+    "objective": "Objective",
+    "related": "Related",
+    "relates": "Relates",
+    "restriction": "Restriction",
+    "downloadText": "Download DCAT-description:",
+    "isPartOf": "Dataset is part of",
+    "relevanceAnnotation": "Relevance",
+    "completenessAnnotation": "Completeness",
+    "accuracyAnnotation": "Accuracy",
+    "availabilityAnnotations": "Availability",
     "contactPoint": {
-      "background": "Bakgrunnsinformasjon om datasettet",
-      "organizationUnit": "Ta kontakt med"
+      "email": "E-mail",
+      "telephone": "Telephone",
+      "background": "Background",
+      "organizationUnit": "Contact"
     },
+    "legalBasisForRestriction": "Legal basis for restriction",
+    "legalBasisForRestrictionDefaultText": "Legal basis for restriction",
+    "legalBasisForProcessing": "Legal basis for processing",
+    "legalBasisForProcessingDefaultText": "Legal basis for processing",
+    "legalBasisForAccess": "Legal basis for access",
+    "leagalBasisForAccessDefaultText": "Legal basis for access",
     "accessRights": {
       "authorityCode": {
         "public": "Public",
         "restricted": "Restricted",
         "nonPublic": "Non public"
       }
-    }
+    },
+    "sample": "Sample data"
   }
 
 }
-

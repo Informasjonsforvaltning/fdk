@@ -1,5 +1,5 @@
 <div *ngIf="titleUriForm && titleUriForm.controls.prefLabel">
-    <div class="form-group titleUri-form sub-form-group" 
+    <div class="titleUri-form" 
         [formGroup]="titleUriForm">
         <div class="row form-group">
             <h4 (click)="toggleForm()">
@@ -12,24 +12,30 @@
                     </span>
                 </div>
             </h4>
-            <div class="form sub-form">
-                <div class="fdk-input-container">
-                    <div *ngIf="titleUriForm.controls.prefLabel" class="col-md-5">
-                        <p class="fdk-input-label">
-                            Tittel på {{titleUriType}}
-                        </p>
-                        <input formControlName="prefLabel" class="fdk-input ng-touched" type="text" />
-                    </div>
-                    <div *ngIf="titleUriForm.controls.uri" class="col-md-5">
-                        <p class="fdk-input-label">
-                            Lenke til {{titleUriType}}
-                        </p>
-                        <input formControlName="uri" class="fdk-input ng-touched" type="text" />
-                    </div>
+            <div class="fdk-input-container" *ngIf="titleUriIndex===0">
+                <div class="col-md-5">
+                    <p class="fdk-input-label">
+                        Tittel på {{titleUriType}}
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <p class="fdk-input-label">
+                        Lenke til {{titleUriType}}
+                    </p>
+                </div>
+            </div>            
+            <div class="fdk-input-container">
+                <div *ngIf="titleUriForm.controls.prefLabel" class="col-md-5">                    
+                    <input formControlName="prefLabel" class="fdk-input ng-touched" type="text"/>
+                </div>
+                <div *ngIf="titleUriForm.controls.uri" class="col-md-5">                    
+                    <input formControlName="uri" class="fdk-input ng-touched" type="text" trim/>
+                </div>
+                <div class="col-md-2">
                     <span class="delete-titleUri-wrapper" *ngIf="showDelete">
-                        <a href="" class="delete-titleUri-button" 
+                        <a href="" class="delete-titleUri-button"
                             (click)="removeTitleUri(titleUriIndex)">
-                            <i class="fa fa-trash fdk-color-icon-cta fdk-fa-right"></i>Slett
+                            <i class="fa fa-trash fdk-color-icon-cta fdk-fa-left"></i>Slett
                         </a>
                     </span>
                 </div>

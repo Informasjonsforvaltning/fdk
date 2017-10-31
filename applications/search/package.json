@@ -75,6 +75,7 @@
     "mocha": "^3.5.3",
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.6",
+    "postcss-variables-loader": "^4.0.0",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",

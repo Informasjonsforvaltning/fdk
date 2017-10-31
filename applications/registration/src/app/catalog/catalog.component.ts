@@ -13,7 +13,7 @@ import {LocalStorage, LocalStorageService} from 'ngx-webstorage';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.css']
+  styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
   title = 'Registrer katalog';
@@ -126,7 +126,7 @@ export class CatalogComponent implements OnInit {
       id: "",
       _lastModified: "",
       title: {nb: "Laster ..."},
-      catalog: "",
+      catalogId: "",
       "identifiers": [""]
     });
     this.datasetService.create(this.catalog.id)
@@ -173,11 +173,11 @@ export class CatalogComponent implements OnInit {
   registrationStatus: { [key: string]: { [key: string]: string } } = {
     "DRAFT": {
       nb: "Utkast",
-      color: "var(--color3)"
+      color: "#646E78" // Hardcoded for MVP.
     },
     "PUBLISH": {
       nb: "Publisert",
-      color: "var(--color-cta)"
+      color: "#00B4E6" // Hardcoded for MVP.
     }
   };
 

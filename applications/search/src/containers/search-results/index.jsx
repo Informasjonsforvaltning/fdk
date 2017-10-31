@@ -1,20 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   SearchkitManager,
   SearchkitProvider,
   RefinementListFilter,
   Hits,
   HitsStats,
-  NoHits,
   Pagination,
   SortingSelector,
   TopBar
 } from 'searchkit';
-import {
-  createHistory as createHistoryFn,
-  useQueries
-} from 'history';
-
 
 import { RefinementOptionThemes } from '../../components/search-refinementoption-themes';
 import { RefinementOptionPublishers } from '../../components/search-refinementoption-publishers';
@@ -23,9 +18,9 @@ import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../../components/localization';
 import SearchHitItem from '../../components/search-results-hit-item';
 import SelectDropdown from '../../components/search-results-selector-dropdown';
+import { CustomHitsStats } from '../../components/search-result-custom-hitstats';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
-import {CustomHitsStats} from '../../components/search-result-custom-hitstats';
 
 const qs = require('qs');
 const sa = require('superagent');
@@ -51,7 +46,12 @@ searchkit.translateFunction = (key) => {
     'reset.clear_all': localization.page.resetfilters,
     'hitstats.results_found': `${localization.page['result.summary']} ` + ' {numberResults}' + ` ${localization.page.dataset}`,
     'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.'
+    'NoHits.ResetSearch': '.',
+    'sort.by': localization.sort.by,
+    'sort.relevance': localization.sort.relevance,
+    'sort.title': localization.sort.title,
+    'sort.publisher': localization.sort.publisher,
+    'sort.modified': localization.sort.modified
   };
   return translations[key];
 };
@@ -59,7 +59,6 @@ searchkit.translateFunction = (key) => {
 export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    const that = this;
     this.queryObj = qs.parse(window.location.search.substr(1));
     if (!window.themes) {
       window.themes = [];
@@ -68,17 +67,12 @@ export default class SearchPage extends React.Component {
         .end((err, res) => {
           if (!err && res) {
             res.body.forEach((hit) => {
-              if (this.queryObj.lang === 'en') {
-                if (hit.title.en) {
-                  const obj = {};
-                  obj[hit.code] = hit.title.en;
-                  themes.push(obj);
-                }
-              } else if (hit.title.nb) {
                 const obj = {};
-                obj[hit.code] = hit.title.nb;
-                themes.push(obj);
-              }
+                obj[hit.code] = {};
+                obj[hit.code].nb = hit.title.nb;
+                obj[hit.code].nn = hit.title.nb;
+                obj[hit.code].en = hit.title.en;
+                window.themes.push(obj);
             });
           }
         });
@@ -121,23 +115,53 @@ export default class SearchPage extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats}/>
+                <HitsStats component={CustomHitsStats} />
               </div>
             </div>
             <section id="resultPanel">
-              <div className="container-fluid">
-                <div className="row" />
+              <div className="container-fluidxx">
                 <div className="row">
-                  <div className="col-sm-4 flex-move-first-item-to-bottom">
+                  <div className="col-md-4 col-md-offset-8">
+                    <div className="pull-right">
+                      <SortingSelector
+                        options={[
+                          {
+                            label: 'sort.relevance',
+                            field: '_score',
+                            order: 'asc',
+                            defaultOption: true
+                          },
+                          {
+                            label: `sort.title`,
+                            field: 'title',
+                            order: 'asc'
+                          },
+                          {
+                            label: `sort.modified`,
+                            field: 'modified',
+                            order: 'desc'
+                          },
+                          {
+                            label: `sort.publisher`,
+                            field: 'publisher.name',
+                            order: 'asc'
+                          }
+                        ]}
+                        listComponent={selectDropdownWithProps}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                     <RefinementListFilter
                       id="theme"
                       title={localization.facet.theme}
                       field="theme.code.raw"
                       operator="AND"
-                      size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                      size={5}
                       itemComponent={RefinementOptionThemes}
                     />
-                    {this._renderPublisherRefinementListFilter()}
                     <RefinementListFilter
                       id="accessRight"
                       title={localization.facet.accessRight}
@@ -146,40 +170,9 @@ export default class SearchPage extends React.Component {
                       size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                       itemComponent={RefinementOptionPublishers}
                     />
+                    {this._renderPublisherRefinementListFilter()}
                   </div>
                   <div id="datasets" className="col-sm-8">
-                    <div className="row">
-                      <div className="col-md-4 col-md-offset-8">
-                        <div className="pull-right">
-                          <SortingSelector
-                            options={[
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.relevance']}`,
-                                field: '_score',
-                                order: 'asc',
-                                defaultOption: true
-                              },
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.title']}`,
-                                field: 'title',
-                                order: 'asc'
-                              },
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.modified']}`,
-                                field: 'modified',
-                                order: 'desc'
-                              },
-                              {
-                                label: `${localization.sort.by} ${localization.sort['by.publisher']}`,
-                                field: 'publisher.name',
-                                order: 'asc'
-                              }
-                            ]}
-                            listComponent={selectDropdownWithProps}
-                          />
-                        </div>
-                      </div>
-                    </div>
                     <Hits
                       mod="sk-hits-grid"
                       hitsPerPage={50}
@@ -199,3 +192,11 @@ export default class SearchPage extends React.Component {
     );
   }
 }
+
+SearchPage.defaultProps = {
+  selectedLanguageCode: null
+};
+
+SearchPage.propTypes = {
+  selectedLanguageCode: PropTypes.string
+};

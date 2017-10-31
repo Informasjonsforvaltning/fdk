@@ -391,7 +391,7 @@ then
         createOpenshiftService nginx-search
 
         #create route for registration gui
-        oc create route --service=nginx-search --hostname=$searchGuiExternalAddress --port=8080
+        oc create route edge --service=nginx-search --hostname=$searchGuiExternalAddress --port=8080
         oc label route nginx-search --overwrite=true \
             environmentTag=$environmentTag \
             environmentDate=$dateTag

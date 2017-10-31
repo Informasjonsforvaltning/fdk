@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse } from 'react-bootstrap';
-import cx from 'classnames';
 
+import BegrepCollapse from '../search-dataset-begrep-collapse';
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetBegrep extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -18,43 +18,44 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
     this.setState({ detailed: !this.state.detailed });
   }
 
-  _renderHeader() {
-    return (
-      <div className="fdk-container-detail fdk-container-detail-header">
-        <i className="fa fa-book fdk-fa-left fdk-color-cta" />
-        {localization.dataset.subject}
-      </div>
-    );
-  }
   _renderBegrep() {
-    return (
-      <div className="fdk-ingress fdk-margin-bottom-no" onClick={this.toggle}>
-        <strong className="pull-left">Jordsmonn:&nbsp;</strong>
-        <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
-        {!this.state.detailed &&
+    const { subject, selectedLanguageCode } = this.props;
+    const children = items => items.map(item => {
+      if (item.prefLabel && item.definition) {
+        return (
+          <BegrepCollapse
+            key={item.uri}
+            prefLabel={item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : null}
+            definition={item.definition ? getTranslateText(item.definition, selectedLanguageCode) : null}
+            note={item.note ? getTranslateText(item.note, selectedLanguageCode) : null}
+            source={item.source}
+          />
+        );
+      }
+    });
+    if (subject) {
+      return (
         <div>
-          {this.props.description.substr(0, 30)}...
-        </div>
-        }
-
-        <Collapse in={this.state.detailed}>
-          <div>
-            {this.props.description}
+          <div className="fdk-container-detail fdk-container-detail-header">
+            <i className="fa fa-book fdk-fa-left fdk-color-cta" />
+            {localization.dataset.subject}
           </div>
-        </Collapse>
-      </div>
-    );
+          { children(subject) }
+        </div>
+      );
+    }
+    return null;
   }
 
   _renderKeyword() {
-    const { keyword } = this.props;
+    const { keyword, selectedLanguageCode } = this.props;
     const children = items => items.map((item, index) => {
       if (index > 0) {
         return (
           <span
             key={`dataset-begrep-search-${index}`}
           >
-            {`, ${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
+            {`, ${getTranslateText(item, selectedLanguageCode)}`}
           </span>
         );
       }
@@ -62,7 +63,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
         <span
           key={`dataset-begrep-search-${index}`}
         >
-          {`${item[this.props.selectedLanguageCode] || item.nb || item.nn || item.en}`}
+          {getTranslateText(item, selectedLanguageCode)}
         </span>
       );
     });
@@ -85,24 +86,21 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
   render() {
     return (
       <div>
-
+        { this._renderBegrep() }
         { this._renderKeyword() }
-
       </div>
     );
   }
 }
 
 DatasetBegrep.defaultProps = {
-  title: null,
-  description: null,
+  subject: null,
   keyword: null,
-  selectedLanguageCode: null
+  selectedLanguageCode: ''
 };
 
 DatasetBegrep.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
+  subject: PropTypes.array,
   keyword: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

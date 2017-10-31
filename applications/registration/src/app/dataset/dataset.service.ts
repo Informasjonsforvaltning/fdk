@@ -17,7 +17,7 @@ const TEST_DATASETS: Dataset[] = [
     "keywords": [{'nb': 'keyword1'}],
     "subjects": [{"uri":"https://data-david.github.io/Begrep/begrep/Hovedenhet","prefLabel":{"no":"hovedenhet"}}],
     "themes": [],
-    "catalog": "974760673",
+    "catalogId": "974760673",
     "landingPages": ["http://www.brreg.no", "http://www.difi.no"],
     "identifiers": ["http://brreg.no/identifier/1009"],
     "spatials": [{'uri': 'http://sws.geonames.org/3144096/', 'prefLabel': {'nb': 'Norge'}}],
@@ -53,7 +53,7 @@ export class DatasetService {
 
 
 
-  get(catId: string, datasetId: string): Promise<Dataset> {
+  get(catId: string, datasetId: string): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
     return this.http.get(datasetUrl)
       .toPromise()
@@ -65,13 +65,18 @@ export class DatasetService {
       ;
   }
 
-  save(catId: string, dataset: Dataset): Promise<Dataset> {
+  save(catId: string, dataset: Dataset): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}/`;
     let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
-
+    //special treatment for field dcat:references
+    // - it is spelled "plural-like" and is unintentionally singularized
+    //it therfore has to be changed back to its correct form
+    payload = payload.replace('"reference":', '"references":');
+    payload = payload.replace(/,"referenceTypeForm":(["'])(?:(?=(\\?))\2.)*?\1/, '');    
+    payload = payload.replace(/,"sourceForm":(["'])(?:(?=(\\?))\2.)*?\1/, '');
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()
@@ -80,7 +85,7 @@ export class DatasetService {
       ;
   }
 
-  delete(catId: string, dataset: Dataset): Promise<Dataset> {
+  delete(catId: string, dataset: Dataset): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
 
     let authorization: string = localStorage.getItem("authorization");

@@ -80,7 +80,7 @@ public class DistributionBuilder extends AbstractBuilder {
 
             dist.setConformsTo(extractSkosConcept(distResource, DCTerms.conformsTo));
             dist.setPage(extractSkosConcept(distResource, FOAF.page));
-            dist.setFormat(extractMultipleStrings(distResource, DCTerms.format));
+            dist.setFormat(extractMultipleStringsExcludeBaseUri(distResource, DCTerms.format));
 
             dist.setType(extractAsString(distResource, DCTerms.type));
 

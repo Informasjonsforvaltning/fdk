@@ -108,6 +108,11 @@
     "react/jsx-indent-props": [
       2,
       2
-    ]
+    ],
+    "no-plusplus": "off",
+    "react/prop-types": 0,
+    "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "react/no-array-index-key": "off"
   }
 }

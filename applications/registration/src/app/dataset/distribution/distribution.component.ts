@@ -91,7 +91,6 @@ export class DistributionFormComponent implements OnInit {
                                 distribution.conformsTo[0].uri : '',
             page: (distribution.page && distribution.page[0]) ? distribution.page[0].uri : ''
         });
-        console.log(this.componentTitle + ".formGroup: ", )
         return formGroup;
     }
 
@@ -114,7 +113,6 @@ export class DistributionFormComponent implements OnInit {
     }
 
     public static setDistributions(distributions: any[]): any[] {
-        console.log('samples before setDistributions: ', distributions);
         if (distributions) {
             distributions.forEach(distribution => {
                 distribution.id = distribution.id || Math.floor(Math.random() * 1000000).toString();
@@ -147,8 +145,6 @@ export class DistributionFormComponent implements OnInit {
 
             });
         }
-
-        console.log('samples after setDistributions: ', distributions);
         return distributions;
     }
 }

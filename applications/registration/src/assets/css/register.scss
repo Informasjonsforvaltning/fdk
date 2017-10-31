@@ -1,0 +1,333 @@
+/*  C O N T A I N E R S  */
+@import './colors.scss';
+
+.fdk-input-reg-space {
+    margin-top: 10px;
+}
+
+/*  T A B L E  */
+
+.fdk-table-reg {
+    color: $color0;
+    border-radius: 3px;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 0px 0px 4px 0px;
+}
+
+.fdk-table-reg-header {
+    background-color: $color1;
+}
+/*  D I V I D E R  */
+
+
+.fdk-reg-divider-left {
+    width: 40px;
+    border-top: 1px solid $color5;
+    margin: 0px 0px 40px -40px;
+    float: left;
+}
+
+.fdk-reg-divider-center {
+    width: 100%;
+    border-top: 1px solid $color5;
+    margin: 0px 0px 40px 0px;
+    float: left;
+}
+
+.fdk-reg-divider-right {
+    width: 40px;
+    border-top: 1px solid $color5;
+    margin: 0px -40px 40px 0px;
+    float: left;
+}
+
+
+
+/*  I N P U T  */
+
+.fdk-input-reg-string {
+    width: 100%;
+    padding: 6px 8px;
+    margin: 0px 0px 50px 0px;
+    background-color: $color0;
+    color: $color1;
+    border: 2px solid $color5;
+    border-radius: 4px;
+    font-size: 1.875rem;
+    line-height: 1.875rem;
+    font-weight: 300;
+}
+
+.fdk-input-reg-string:hover {
+    border: 2px solid $color-cta2;
+}
+
+.fdk-input-on-grey {
+    background-color: $color0;
+}
+
+.fdk-input-big {
+    font-size: 2rem;
+}
+
+.fdk-label-register {
+    background-color: $color1;
+    color: $color0 !important;
+    font-weight: 300;
+    border: none;
+    padding: 8px 9px 7px 11px;
+    margin: 0px 2px 0px 0px;
+    border-radius: 3px;
+}
+
+/*fonts*/
+.fdk-label-register > a > i.fdk-fa-right {
+    color: $color0;
+}
+
+/*  F O N T S  */
+
+.fdk-input-label {
+    line-height: 1.7rem;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: $color-cta3;
+    margin: 0px 0px 4px 0px;
+    padding: 0px;
+}
+
+.fdk-input-helptext {
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    font-weight: 300;
+    color: $color3;
+    padding: 0px;
+    margin: 0px 0px 8px 0px;
+}
+
+.fdk-input-helptext > a {
+    color: $color3;
+    text-decoration: underline;
+    font-weight: 300;
+}
+
+.fdk-input-helptext > a:hover {
+    color: $color3;
+    text-decoration: none;
+}
+
+.more-help-checkbox:checked ~ .flere-anbefalinger {
+	display: inline;
+}
+.flere-anbefalinger, .more-help-checkbox:checked ~ .toggle-help-button, .more-help-checkbox:checked ~ .faerre-anbefalinger {
+	display: none;
+}
+
+.more-help-checkbox {
+   position: absolute;
+   left: -9999px;
+}
+p.fdk-input-heading {
+    line-height: 1.6rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: $color1;
+    margin: 0px 0px 2px 0px;
+    padding: 0px;
+}
+
+.fdk-obligatorisk {
+    font-size: 1.2rem;
+    color: $color0;
+    margin-left: 5px;
+    background-color: $color2;
+    padding: 1px 6px;
+    border-radius: 2px;
+    position: relative;
+    top: -2px;
+}
+
+.fdk-container-reg-empty {
+    color: $color3;
+}
+
+.fdk-container-reg-collapsed > .fdk-fa-right {
+    font-size: 1.875rem !important;
+    line-height: 2.1rem !important;
+    position: relative;
+    float: right;
+}
+
+.fdk-padding-delete {
+    padding-top: 10px;
+}
+
+
+
+/*  S P A C E  */
+
+.fdk-margin-top-no {
+    margin-top: 0px;
+}
+
+.fdk-margin-top {
+    margin-top: 20px;
+}
+
+.fdk-margin-top-double {
+    margin-top: 40px;
+}
+
+.fdk-margin-top-triple {
+    margin-top: 40px;
+}
+
+.fdk-margin-bottom-no {
+    margin-bottom: 0px;
+}
+
+.fdk-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.fdk-margin-bottom-double {
+    margin-bottom: 40px;
+}
+
+.fdk-margin-bottom-triple {
+    margin-bottom: 60px;
+}
+
+.checkbox-replacement {
+    height: 18px;
+    width: 18px;
+    border: 1px solid #2D3741;
+    border-radius: 3px;
+}
+.checkbox label {
+  padding-left:0;
+}
+input:checked ~ .checkbox-replacement::after {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #2D3741;
+    left: 3px;
+    top: 4px;
+    border-radius: 3px;
+		content:'';
+}
+.checkbox .expand-checkbox,
+.dataset-tema input[type="checkbox"],
+.language-checkbox input {
+  position: absolute;
+  left:-9999px;
+}
+
+.caret-right {
+    border-bottom: 7px solid transparent;
+    border-top: 7px solid transparent;
+    border-left: 7px solid #D7DDE3;
+    display: inline-block;
+    height: 0;
+    opacity: 1;
+    vertical-align: top;
+    width: 0;
+    position: absolute;
+    right:-7px;
+    top:13px;
+}
+.section-title {
+  cursor: pointer;
+  color:#2D3741;
+  background-color:#D7DDE3;
+  padding: 10px;
+  text-align:center;
+  position:relative;
+  margin: 0 0 11px 0;
+}
+.expanded-content {
+  display:none;
+  background: #fff;
+  padding: 5px 30px 25px 30px;
+  margin-bottom:30px;
+}
+.expanded-content label {
+
+}
+.expanded-content > .row {
+  margin-bottom:20px;
+}
+.expand-checkbox {
+  position: absolute;
+  left:-9999px;
+}
+.expand-label {
+  cursor: pointer;
+  text-decoration: none;
+}
+.expand-checkbox:checked ~ .expanded-content  {
+  display: block;
+}
+.expand-checkbox:checked ~ .collapsed-content  {
+  display: none;
+}
+
+.collapsed-content {
+      background: #fff;
+      padding: 5px;
+      line-height: 1.7;
+      display: block;
+      font-weight: normal;
+}
+rl-tag-input {
+  padding: 0px 0px 2px 8px !important;
+  display: block !important;
+  box-shadow: none !important;
+}
+rl-tag-input-item {
+    font-size: 13px !important;
+    height: 28px !important;
+    line-height: 29px !important;
+    background: #2D3741 !important;
+    padding: 0 8px !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+}
+.ng2-tag-input-remove {
+  background: transparent !important;
+  margin-left:0 !important;
+}
+.temporal-list {
+  margin-bottom:20px;
+}
+.delete-temporal-button {
+  line-height: 2;
+  text-decoration: none;
+}
+.language-checkbox {
+  margin-left:5px;
+}
+.language-checkbox .checkbox-replacement {
+  position:relative;
+  left:-5px;
+  top:8px;
+}
+.language-checkbox input:checked ~ .checkbox-replacement::after {
+  top:2px;
+  left:2px;
+}
+.summary-subject::after {
+  content:',';
+  display:inline;
+  margin-left:-3px;
+}
+.summary-subject:last-child::after {
+  content:'';
+  display:inline;
+}
+
+.modal-dialog {
+  z-index: 1050;
+}

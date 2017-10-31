@@ -4,8 +4,168 @@ import cx from 'classnames';
 import './index.scss';
 
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = {
+      colClass: 'col-md-12'
+    };
+  }
+
+  componentWillMount() {
+    const { type, informationModel, conformsTo } = this.props;
+    let countClasses = 0;
+    if (type) {
+      countClasses = countClasses + 1;
+    }
+    if (informationModel && informationModel.length > 0) {
+      countClasses = countClasses + 1;
+    }
+    if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
+      countClasses = countClasses + 1;
+    }
+    if (countClasses > 0) {
+      const colWidht = 12 / countClasses;
+      const colClass = `col-md-${colWidht}`;
+      this.state = {
+        colClass: colClass
+      };
+    }
+  }
+
+  _renderHeader() {
+    const { accessRights } = this.props;
+    if (accessRights) {
+      const accessRightClass = cx(
+        'fa fdk-fa-left',
+        {
+          'fdk-color-red fa-lock': accessRights.code === 'NON_PUBLIC',
+          'fa-unlock-alt fdk-color-yellow': accessRights.code === 'RESTRICTED',
+          'fa-unlock fdk-color-green': accessRights.code === 'PUBLIC'
+        }
+      );
+      return (
+        <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
+          <i className={accessRightClass} />
+          {localization.dataset.accessRight} {getTranslateText(accessRights.prefLabel, this.props.selectedLanguageCode).toLowerCase()}
+        </div>
+      );
+    }
+    return null;
+  }
+  _renderLegalBasis() {
+    const {
+      legalBasisForRestriction,
+      legalBasisForProcessing,
+      legalBasisForAccess
+    } = this.props;
+
+    const childrenLegalBasisForRestriction = items => items.map(item => (
+      <div
+        key={item.uri}
+      >
+        <a
+          href={item.uri}
+        >
+          {
+            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            : localization.dataset.legalBasisForRestrictionDefaultText
+          }
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      </div>
+    ));
+
+    const childrenLegalBasisForProcessing = items => items.map(item => (
+      <div
+        key={item.uri}
+      >
+        <a
+          href={item.uri}
+        >
+          {
+            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            : localization.dataset.legalBasisForProcessingDefaultText
+          }
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      </div>
+    ));
+
+    const childrenLegalBasisForAccess = items => items.map(item => (
+      <div
+        key={item.uri}
+      >
+        <a
+          href={item.uri}
+        >
+          {
+            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            : localization.dataset.leagalBasisForAccessDefaultText
+          }
+          <i className="fa fa-external-link fdk-fa-right" />
+        </a>
+      </div>
+    ));
+
+    if (legalBasisForProcessing || legalBasisForRestriction || legalBasisForAccess) {
+      return (
+        <div
+          className="col-md-12 fdk-padding-no"
+        >
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-institution" />
+            </div>
+
+            <div className="fdk-detail-text">
+
+              {legalBasisForRestriction &&
+              <div>
+                <h5>{localization.dataset.legalBasisForRestriction}</h5>
+                <div className="fdk-ingress">
+                  { childrenLegalBasisForRestriction(legalBasisForRestriction) }
+                </div>
+              </div>
+              }
+
+              {legalBasisForProcessing &&
+              <div>
+                <h5>{localization.dataset.legalBasisForProcessing}</h5>
+                <div className="fdk-ingress">
+                  { childrenLegalBasisForProcessing(legalBasisForProcessing) }
+                </div>
+              </div>
+              }
+
+              {legalBasisForAccess &&
+              <div>
+                <h5>{localization.dataset.legalBasisForAccess}</h5>
+                <div className="fdk-ingress">
+                  { childrenLegalBasisForAccess(legalBasisForAccess) }
+                </div>
+              </div>
+              }
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  }
+
   _renderType() {
     const { type } = this.props;
     if (!type) {
@@ -13,136 +173,82 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     }
     const heading = localization.dataset.type;
     return (
-      <div className="col-md-4 fdk-padding-no">
-        <div className="fdk-container-detail">
-          <div className="fdk-detail-icon">
-            <i className="fa fa-upload" />
-          </div>
-          <div className="fdk-detail-text">
-            <h5>{heading}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-no">
-              {type}
-            </p>
-          </div>
-        </div>
+      <div className={`${this.state.colClass} fdk-container-detail`}>
+        <h5>{heading}</h5>
+        <p className="fdk-ingress fdk-margin-bottom-no">
+          {type}
+        </p>
       </div>
     );
   }
 
   _renderConformsTo() {
-    let conformsToNodes = null;
-    const { conformsTo } = this.props;
+    const { conformsTo, selectedLanguageCode } = this.props;
     const header = localization.dataset.conformsTo;
+    const children = items => items.map(item => (
+      <a
+        key={item.uri}
+        href={item.uri}
+      >
+        {item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : localization.dataset.distribution.standard}
+        <i className="fa fa-external-link fdk-fa-right" />
+      </a>
+    ));
     if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
-      conformsToNodes = conformsTo.map((item, index) => (
+      return (
         <div
-          key={`dataset-keyinfo-${index}`}
-          className="col-md-12 fdk-padding-no"
+          className={`${this.state.colClass} fdk-container-detail`}
         >
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-refresh" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{header}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                <a href={item.uri}>
-                  {
-                    item.prefLabel[this.props.selectedLanguageCode]
-                    || item.prefLabel.nb
-                    || item.prefLabel.nn
-                    || item.prefLabel.en
-                    || localization.dataset.distribution.standard
-                  }
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
-              </p>
-            </div>
-          </div>
+          <h5>{header}</h5>
+          <p className="fdk-ingress fdk-margin-bottom-no">
+            { children(conformsTo) }
+          </p>
         </div>
-      ));
-      return conformsToNodes;
+      );
     }
     return null;
   }
 
   _renderInformationModel() {
-    let informationModelNodes = null;
     const { informationModel } = this.props;
+    const children = items => items.map(item => (
+      <a
+        key={item.uri}
+        href={item.uri}
+      >
+        {
+          item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
+            || item.prefLabel.nb
+            || item.prefLabel.nn
+            || item.prefLabel.en
+            : localization.dataset.informationModelDefaultText
+        }
+        <i className="fa fa-external-link fdk-fa-right" />
+      </a>
+    ));
     if (informationModel && informationModel.length > 0) {
-      informationModelNodes = informationModel.map((item, index) => (
+      return (
         <div
-          key={`dataset-keyinfo-${index}`}
-          className="col-md-4 fdk-padding-no"
+          className={`${this.state.colClass} fdk-container-detail`}
         >
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-refresh" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.informationModel}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                <a
-
-                  href={item.uri}
-                >
-                  {
-                    item.prefLabel[this.props.selectedLanguageCode]
-                    || item.prefLabel.nb
-                    || item.prefLabel.nn
-                    || item.prefLabel.en
-                  }
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
-              </p>
-            </div>
-          </div>
+          <h5>{localization.dataset.informationModel}</h5>
+          <p className="fdk-ingress fdk-margin-bottom-no">
+            { children(informationModel) }
+          </p>
         </div>
-      ));
-      return informationModelNodes;
+      );
     }
     return null;
   }
 
   render() {
-    let distributionNonPublic = false;
-    let distributionRestricted = false;
-    let distributionPublic = false;
-    let authorityCode = '';
-
-    if (this.props.authorityCode) {
-      authorityCode = this.props.authorityCode;
-    }
-
-    if (authorityCode === 'NON_PUBLIC') {
-      distributionNonPublic = true;
-    } else if (authorityCode === 'RESTRICTED') {
-      distributionRestricted = true;
-    } else if (authorityCode === 'PUBLIC') {
-      distributionPublic = true;
-    } else { // antar public hvis authoritycode mangler
-      distributionPublic = true;
-    }
-
-    const accessRightClass = cx(
-      'fa fdk-fa-left',
-      {
-        'fdk-color-green fa-unlock': distributionPublic,
-        'fa-unlock-alt fdk-color-yellow': distributionRestricted,
-        'fa-lock fdk-color-red': distributionNonPublic
-      }
-    );
-
     return (
       <div>
-        <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
-          <i className={accessRightClass} />
-          Datasettet er {distributionPublic ? 'offentlig' : ''}
-          {distributionRestricted ? 'begrenset for offentligheten' : ''}
-          {distributionNonPublic ? 'skjermet for offentligheten' : ''}
-        </div>
-
+        { this._renderHeader() }
         <div className="row fdk-row">
+          {this._renderLegalBasis()}
+        </div>
+        <div className="row-eq-height">
           {this._renderType()}
           {this._renderInformationModel()}
           {this._renderConformsTo()}
@@ -153,15 +259,21 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 }
 
 DatasetKeyInfo.defaultProps = {
-  authorityCode: 'PUBLIC',
-  selectedLanguageCode: null,
+  accessRights: null,
+  legalBasisForRestriction: null,
+  legalBasisForProcessing: null,
+  legalBasisForAccess: null,
   type: null,
   conformsTo: null,
-  informationModel: null
+  informationModel: null,
+  selectedLanguageCode: ''
 };
 
 DatasetKeyInfo.propTypes = {
-  authorityCode: PropTypes.string,
+  accessRights: PropTypes.object,
+  legalBasisForRestriction: PropTypes.array,
+  legalBasisForProcessing: PropTypes.array,
+  legalBasisForAccess: PropTypes.array,
   type: PropTypes.string,
   conformsTo: PropTypes.array,
   informationModel: PropTypes.array,

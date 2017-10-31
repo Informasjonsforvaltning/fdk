@@ -5,9 +5,8 @@ import _sortBy from 'lodash/sortBy';
 import cx from 'classnames';
 
 import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 import './index.scss';
-
-const noTextToShow = '—';
 
 export default class DatasetInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   _renderSpatial() {
@@ -56,9 +55,16 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   }
 
   _renderTemporal() {
-    const { temporal } = this.props;
+    const { temporal, language } = this.props;
     const headerFrom = localization.dataset.periodFrom;
     const headerTo = localization.dataset.periodTo;
+    const temporalClass = cx(
+      'fdk-container-detail',
+      {
+        'col-md-8': (language && typeof language !== 'undefined' && language.length > 0),
+        'col-md-12': !(language && typeof language !== 'undefined' && language.length > 0)
+      }
+    );
 
     const children = items => items.map((item, index) => {
       if (item.startDate && item.endDate) {
@@ -66,8 +72,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
+            className="clearfix mb-1"
           >
-            <div className="dataset-temporal-date">
+            <div className="col-md-6 dataset-temporal-date">
               <h5>{ headerFrom }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -75,8 +82,8 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
                 </Moment>
               </p>
             </div>
-            <div className="dataset-temporal-date pull-right">
-                <h5>{ headerTo }</h5>
+            <div className="col-md-6 dataset-temporal-date">
+              <h5>{ headerTo }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
                   {item.endDate}
@@ -90,8 +97,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
+            className="clearfix mb-1"
           >
-            <div className="dataset-temporal-date">
+            <div className="col-md-6 dataset-temporal-date">
               <h5>{ headerFrom }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -106,8 +114,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
           <div
             key={`dataset-info-temporal-${index}`}
             id={`dataset-info-temporal-${index}`}
+            className="clearfix"
           >
-            <div className="dataset-temporal-date">
+            <div className="col-md-6 col-md-offset-6 dataset-temporal-date">
               <h5>{ headerTo }</h5>
               <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                 <Moment format="DD.MM.YYYY">
@@ -122,14 +131,12 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
     if (temporal && temporal.length > 0) {
       return (
-        <div className="col-md-8 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-calendar" />
-            </div>
-            <div id="dataset-info-temporal" className="fdk-detail-text">
-              { children(temporal) }
-            </div>
+        <div className={temporalClass}>
+          <div className="fdk-detail-icon">
+            <i className="fa fa-calendar" />
+          </div>
+          <div id="dataset-info-temporal" className="fdk-detail-text">
+            { children(temporal) }
           </div>
         </div>
       );
@@ -139,13 +146,12 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   }
 
   _renderLanguage() {
-    const { language, temporal } = this.props;
-    const isTemporal = (temporal && temporal.length > 0) || false;
+    const { language, temporal, selectedLanguageCode } = this.props;
     const languageClass = cx(
-      'fdk-padding-no',
+      'fdk-container-detail',
       {
-        'col-md-4': isTemporal,
-        'col-md-12': !isTemporal
+        'col-md-4': (temporal && temporal.length > 0),
+        'col-md-12': !(temporal && temporal.length > 0)
       }
     );
     const children = items => items.map((item, index) => {
@@ -156,23 +162,22 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
             id={`dataset-info-language-${index}`}
             className="fdk-ingress fdk-margin-bottom-no"
           >
-            {item.prefLabel[this.props.selectedLanguageCode] || item.prefLabel.nb || item.prefLabel.nn || item.prefLabel.en}
+            {getTranslateText(item.prefLabel, selectedLanguageCode)}
           </p>
         );
       }
+      return null;
     });
 
     if (language && typeof language !== 'undefined' && language.length > 0) {
       return (
         <div className={languageClass}>
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-flag" />
-            </div>
-            <div id="dataset-info-language" className="fdk-detail-text">
-              <h5>{localization.dataset.language}</h5>
-              { children(language) }
-            </div>
+          <div className="fdk-detail-icon">
+            <i className="fa fa-flag" />
+          </div>
+          <div id="dataset-info-language" className="fdk-detail-text">
+            <h5>{localization.dataset.language}</h5>
+            { children(language) }
           </div>
         </div>
       );
@@ -182,82 +187,55 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
   _renderReferences() {
     let referencesNodes;
-    const { references } = this.props;
-    if (typeof references !== 'undefined' && references.length > 0) {
-      let groupReferences = references;
-      groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
+    const { references, selectedLanguageCode } = this.props;
 
-      let referenceTypeCode = '';
-      referencesNodes = groupReferences.map((item, index) => {
-        if (item.referenceType.code !== referenceTypeCode) {
-          referenceTypeCode = item.referenceType.code;
-          return (
-            <div key={`dataset-${index}`} className="col-md-12 fdk-padding-no">
-              <div className="fdk-container-detail">
-                <div className="fdk-detail-icon">
-                  <i className="fa fa-link" />
-                </div>
-                <div className="fdk-detail-text refer">
-                  <h5>
-                    {
-                      item.referenceType.prefLabel[this.props.selectedLanguageCode]
-                      || item.referenceType.prefLabel.nb
-                      || item.referenceType.prefLabel.nn
-                      || item.referenceType.prefLabel.en
-                    }
-                  </h5>
-                  <p className="fdk-ingress">
-                    <a
-                      href={item.source.uri}
-                    >
-                      {
-                        item.source.title[this.props.selectedLanguageCode]
-                        || item.source.title.nb
-                        || item.source.title.nn
-                        || item.source.title.en
-                      }
-                      <i className="fa fa-external-link fdk-fa-right" />
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        }
+    let referenceTypeCode;
+    const children = items => items.map((item, index) => {
+      if (item.referenceType.code !== referenceTypeCode) {
+        referenceTypeCode = item.referenceType.code;
         return (
-          <div key={`dataset-${index}`} className="col-md-12 fdk-padding-no">
-            <div className="fdk-container-detail">
-              <div className="fdk-detail-icon">
-                <i className="fa fa-link" />
-              </div>
-              <div className="fdk-detail-text refer">
-                <h5>
-                  {
-                    item.referenceType.prefLabel[this.props.selectedLanguageCode]
-                    || item.referenceType.prefLabel.nb
-                    || item.referenceType.prefLabel.nn
-                    || item.referenceType.prefLabel.en
-                  }
-                </h5>
-                <p className="fdk-ingress">
-                  <a
-                    href={item.source.uri}
-                  >
-                    {
-                      item.source.title[this.props.selectedLanguageCode]
-                      || item.source.title.nb
-                      || item.source.title.nn
-                      || item.source.title.en
-                    }
-                    <i className="fa fa-external-link fdk-fa-right" />
-                  </a>
-                </p>
-              </div>
-            </div>
+          <div key={`dataset-reference-${index}`} className="fdk-detail-text refer">
+            <h5>
+              {item.referenceType.prefLabel ? getTranslateText(item.referenceType.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefaultCode}
+            </h5>
+            <p className="fdk-ingress">
+              <a
+                href={item.source.uri}
+              >
+                {item.source.prefLabel ? getTranslateText(item.source.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefault}
+                <i className="fa fa-external-link fdk-fa-right" />
+              </a>
+            </p>
           </div>
         );
-      });
-      return referencesNodes;
+      }
+      return (
+        <div key={`dataset-reference-${index}`} className="fdk-detail-text refer">
+          <p className="fdk-ingress">
+            <a
+              href={item.source.uri}
+            >
+              {item.source.prefLabel ? getTranslateText(item.source.prefLabel, selectedLanguageCode) : localization.dataset.distribution.referenceDefault}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          </p>
+        </div>
+      );
+    });
+
+    if (references && typeof references !== 'undefined' && references.length > 0) {
+      let groupReferences = references;
+      groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
+      return (
+        <div className="col-md-12 fdk-padding-no">
+          <div className="fdk-container-detail">
+            <div className="fdk-detail-icon">
+              <i className="fa fa-link" />
+            </div>
+            { children(groupReferences) }
+          </div>
+        </div>
+      );
     }
     return null;
   }
@@ -270,8 +248,8 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
       hasCurrentnessAnnotation
     } = this.props;
 
-    const isIssued = issued ? true : false;
-    const isAccrualPeriodicity = accrualPeriodicity ? true : false;
+    const isIssued = !!issued;
+    const isAccrualPeriodicity = !!accrualPeriodicity;
 
     const issuedClass = cx(
       'fdk-padding-no',
@@ -292,9 +270,9 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     return (
       <div
         id="dataset-info"
-        className="row fdk-row fdk-margin-top-triple"
+        className="fdk-margin-top-triple"
       >
-
+        <div className="row fdk-row ">
         {issued &&
         <div className={issuedClass}>
           <div className="fdk-container-detail">
@@ -317,21 +295,13 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className={accrualPeriodicityClass}>
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-refresh"/>
+              <i className="fa fa-refresh" />
             </div>
-
             <div className="fdk-detail-text">
               <h5>{localization.dataset.frequency}</h5>
-              {accrualPeriodicity &&
               <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
                 {accrualPeriodicity.charAt(0).toUpperCase()}{accrualPeriodicity.substr(1)}
               </p>
-              }
-              {!accrualPeriodicity &&
-              <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
-                <span>{noTextToShow}</span>
-              </p>
-              }
             </div>
           </div>
         </div>
@@ -341,7 +311,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-user"/>
+              <i className="fa fa-user" />
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.provenance}</h5>
@@ -357,26 +327,26 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
-              <i className="fa fa-certificate"/>
+              <i className="fa fa-certificate" />
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.currentness}</h5>
               <p id="dataset-info-currentnessAnnotation" className="fdk-ingress fdk-margin-bottom-no">
-                {hasCurrentnessAnnotation || noTextToShow}
+                {hasCurrentnessAnnotation}
               </p>
             </div>
           </div>
         </div>
         }
-
         { this._renderSpatial() }
-
+        </div>
+        <div className="row fdk-row row-eq-height">
         { this._renderTemporal() }
-
         { this._renderLanguage() }
-
-        {this._renderReferences()}
-
+        </div>
+        <div className="row fdk-row">
+        { this._renderReferences() }
+        </div>
       </div>
     );
   }
@@ -384,17 +354,18 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
 
 DatasetInfo.defaultProps = {
   issued: null,
-  accrualPeriodicity: null,
-  provenance: null,
-  hasCurrentnessAnnotation: null,
+  accrualPeriodicity: '',
+  provenance: '',
+  hasCurrentnessAnnotation: '',
   spatial: null,
   temporal: null,
   language: null,
-  selectedLanguageCode: null
+  references: null,
+  selectedLanguageCode: ''
 };
 
 DatasetInfo.propTypes = {
-  issued: PropTypes.string,
+  issued: PropTypes.number,
   accrualPeriodicity: PropTypes.string,
   provenance: PropTypes.string,
   hasCurrentnessAnnotation: PropTypes.string,

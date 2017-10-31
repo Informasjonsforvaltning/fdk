@@ -2,10 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
-import { Link } from 'react-router';
 
 import DistributionFormat from '../search-dataset-format';
 import localization from '../../components/localization';
+import { getTranslateText, getLanguageFromUrl } from '../../utils/translateText';
 import './index.scss';
 
 export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -25,49 +25,42 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   _renderFormats(source, code) {
     let formatNodes;
     const distribution = source.distribution;
+
+    const children = (items, code) => items.map((item) => {
+      if (item !== null) {
+        const formatArray = item.trim().split(',');
+        return formatArray.map((item, index) => {
+          if (item === null) {
+            return null;
+          }
+          return (
+            <DistributionFormat
+              key={`dataset-distribution-format${index}`}
+              code={code}
+              text={item}
+            />
+          );
+        });
+      }
+      return null;
+    });
+
     if (distribution && _.isArray(Object.keys(distribution))) {
       formatNodes = Object.keys(distribution).map((key) => {
         if (distribution[key].format) {
-          let formatArray = distribution[key].format;
-          formatArray = _.isString(formatArray) ? [formatArray] : formatArray;
-          const nodes = formatArray.map((item, index) => (
-            <DistributionFormat
-              code={code}
-              key={`dataset-distribution-format${index}`}
-              text={item}
-            />
-          ));
-          return nodes;
+          return distribution[key].format[0];
         }
         return null;
       });
+      if (formatNodes && formatNodes[0] !== null) {
+        return (
+          <div>
+            { children(formatNodes, code) }
+          </div>
+        );
+      }
     }
-    return formatNodes;
-  }
-
-  _renderFormats2(source, authoriyCode) {
-    const distribution = source.distribution;
-    let formatNodes;
-    if (distribution) {
-      formatNodes = Object.keys(distribution).map((key) => {
-        if (distribution[key].format) {
-          const formatArray = distribution[key].format.trim().split(',');
-          const nodes = Object.keys(formatArray).map((key) => {
-            if (formatArray[key] !== null) {
-              return (
-                <DistributionFormat
-                  authorityCode={authoriyCode}
-                  text={formatArray[key]}
-                />
-              );
-            }
-          });
-          return nodes;
-        }
-        return null;
-      });
-    }
-    return formatNodes;
+    return null;
   }
 
   _renderPublisher(source) {
@@ -77,7 +70,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <span>
           {localization.search_hit.owned}&nbsp;
           <span id="search-hit-publisher-text">
-            { (source.publisher && source.publisher.name) ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase() : ''}
+            {
+              (source.publisher && source.publisher.name)
+                ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase()
+                : ''
+            }
           </span>
         </span>
       );
@@ -95,7 +92,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           id={`dataset-description-theme-${index}`}
           className="fdk-label"
         >
-          {singleTheme.title[this.props.selectedLanguageCode] || singleTheme.title.nb || singleTheme.title.nn || singleTheme.title.en}
+          {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
         </div>
       ));
     }
@@ -118,16 +115,31 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   render() {
     const language = this.props.selectedLanguageCode;
+    let langCode = getLanguageFromUrl();
+    let langParam = langCode ? `?lang=${langCode}` : '';
     const result = this.state.result;
     const source = _.extend({}, result._source, result.highlight);
 
     // Read fields from search-hit, use correct language field if specified.
     const hitId = encodeURIComponent(source.id);
     const hitElementId = `search-hit-${hitId}`;
-    const title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
-    let description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+    let { title, description, objective } = source;
+    if (title) {
+      title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
+    }
+    if (description) {
+      description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+    }
+    if (objective) {
+      objective = objective[language] || objective.nb || objective.nn || objective.en;
+    }
+
     if (description.length > 220) {
       description = `${description.substr(0, 220)}...`;
+    } else if (description.length < 150 && objective) {
+      const freeLength = 200 - description.length;
+      const objectiveLength = objective.length;
+      description = `${description} ${objective.substr(0, (200 - freeLength))} ${(objectiveLength > freeLength ? '...' : '')}`;
     }
     const link = `/datasets/${hitId}`;
 
@@ -150,14 +162,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     } else if (source.accessRights && authorityCode === 'PUBLIC') {
       distributionPublic = true;
       accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
-    } else if (!source.accessRights) { // antar public hvis authoritycode mangler
-      distributionPublic = true;
-      accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
     }
 
     const distributionClass = cx(
-      'fdk-container-distributions',
       {
+        'fdk-container-distributions': (distributionNonPublic || distributionRestricted || distributionPublic),
         'fdk-distributions-red': distributionNonPublic,
         'fdk-distributions-yellow': distributionRestricted,
         'fdk-distributions-green': distributionPublic
@@ -169,7 +178,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        href={link}
+        href={`${link}${langParam}`}
       >
         <div className="fdk-container fdk-container-search-hit">
           <h2 id="search-hit-title">{title}</h2>
@@ -182,9 +191,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           >
             {description}
           </p>
+
           <div className={distributionClass}>
             <strong>{accessRightsLabel}</strong>
-            <br />
             {this._renderFormats(source, authorityCode)}
             {this._renderSample(source)}
           </div>

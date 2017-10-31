@@ -6,24 +6,22 @@ import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BrregAgentConverter {
 
@@ -31,6 +29,7 @@ public class BrregAgentConverter {
     public static final String ORGANISASJONSLEDD = "ORGL";
     private final XmlToRdfAdvancedJena xmlToRdfObject;
     private final LoadingCache<URL, String> brregCache;
+    private HashMap<String, String> canonicalNames = new HashMap<>();
 
     private static final Logger logger = LoggerFactory.getLogger(BrregAgentConverter.class);
 
@@ -45,6 +44,20 @@ public class BrregAgentConverter {
                 .renameElement("http://data.brreg.no/meta/navn", FOAF.name.getURI())
                 .renameElement("http://data.brreg.no/meta/enhet", FOAF.Agent.getURI()).build();
         logger.debug("end ");
+
+        org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("kanoniske.csv");
+        Reader in = null;
+        Iterable<CSVRecord> records = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(canonicalNamesFile.getInputStream()));
+            records = CSVFormat.EXCEL.parse(in);
+        } catch (IOException e) {
+            logger.error("Could not read canonical names: {}", e.getMessage());
+        }
+        for (CSVRecord line : records) {
+            canonicalNames.put(line.get(0), line.get(1));
+        }
+        logger.debug("Read {} canonical names from file.", canonicalNames.size());
     }
 
     private Model convert(InputStream inputStream) {
@@ -88,25 +101,17 @@ public class BrregAgentConverter {
     public void collectFromModel(Model model) {
         NodeIterator orgiterator = model.listObjectsOfProperty(DCTerms.publisher);
 
-
         while (orgiterator.hasNext()) {
             RDFNode next = orgiterator.next();
             if (next.isURIResource()) {
                 Resource orgresource = next.asResource();
                 if (orgresource.getURI().contains("data.brreg.no")) {
-                    collectFromUri(orgresource.getURI(), model);
+                    collectFromUri(orgresource.getURI(), model, orgresource);
                 } else {
-                    NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
-                    // TODO: deal with the possibility of multiple dct:identifiers?
-                    if (identiterator.hasNext()) {
-                        String orgnr = identiterator.next().asLiteral().getValue().toString();
-                        orgnr = orgnr.replaceAll("\\s", "");
-                        String url = "http://data.brreg.no/enhetsregisteret/enhet/" + orgnr + ".xml";
-                        logger.trace("Used dct:identifier to collect from {}", url);
-                        collectFromUri(url, model);
-                    } else {
-                        logger.debug("Found no identifier for {}", orgresource.getURI());
-                    }
+                    String orgnr = getOrgnrFromIdentifier(model, orgresource);
+                    String url = String.format(publisherIdURI, orgnr, ".xml");
+                    logger.info("Used dct:identifier to lookup publisher {} from {}", orgresource.getURI(), url);
+                    collectFromUri(url, model, orgresource);
                 }
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
@@ -118,16 +123,19 @@ public class BrregAgentConverter {
 
     /* For each organisation, transform the RDF to match what we expect from it */
 
-    protected void collectFromUri(String uri, Model model) {
+    protected void collectFromUri(String uri, Model model, Resource publisherResource) {
+
         if (!uri.endsWith(".xml")) {
             if(uri.endsWith(".json")) {
                 uri = uri.replaceAll(".json",".xml");
             } else {
                 uri = uri.concat(".xml");
             }
-
         }
 
+        String masterPublisherUri = uri.substring(0, uri.length() - ".xml".length());
+
+        logger.debug("Collecting from URL {} using subject URI {}", uri, publisherResource.toString());
         try {
             if (brregCache != null) {
 
@@ -135,35 +143,83 @@ public class BrregAgentConverter {
                 logger.trace("[model_before_conversion] {}", content);
 
                 InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
-                Model incomingModel = convert(inputStream);
+                Model masterDataModel = convert(inputStream);
 
-                logger.trace("[model_after_conversion] {}", incomingModel);
-                removeDuplicateProperties(model, incomingModel, FOAF.name); //TODO: remove all duplicate properties?
-                processBlankNodes(incomingModel, uri);
+                removeDuplicateProperties(model, masterDataModel, FOAF.name); //TODO: remove all duplicate properties?
 
-                ResIterator subjects = incomingModel.listSubjectsWithProperty(EnhetsregisteretRDF.organisasjonsform);
+                String organisationNumber = getOrgnrFromIdentifier(model, publisherResource);
 
-                while (subjects.hasNext()) {
-                    Resource subject = subjects.next();
-                    String organisasjonsform =  subject.getProperty(EnhetsregisteretRDF.organisasjonsform).getString();
-                    Statement overordnetEnhet = subject.getProperty(EnhetsregisteretRDF.overordnetEnhet);
+                if (organisationNumber == null) {
+                    organisationNumber = getOrgnrFromUri(uri);
+                }
 
-                    if (organisasjonsform.equals(ORGANISASJONSLEDD) && overordnetEnhet != null) {
+                if (organisationNumber == null) {
+                    logger.warn("Publisher does not have a organisation number [{}]", uri);
+                }
 
-                        logger.trace("Found superior publisher: {}", overordnetEnhet.getObject());
-                        collectFromUri(String.format(publisherIdURI, overordnetEnhet.getObject().toString()), model);
+                String organizationName = null;
+
+                if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
+                    organizationName = canonicalNames.get(organisationNumber);
+                } else if (publisherResource.getURI() != null && !publisherResource.getURI().equals(masterPublisherUri)) {
+                    Resource masterPublisherResource = masterDataModel.getResource(masterPublisherUri);
+                    if (masterPublisherResource != null && masterPublisherResource.getProperty(FOAF.name) != null) {
+                        organizationName = masterPublisherResource.getProperty(FOAF.name).getString();
                     }
                 }
-                logger.trace(incomingModel.toString());
-                model.add(incomingModel);
+
+                lookupPublisherHierarchy(model, masterDataModel);
+                processBlankNodes(masterDataModel, uri);
+
+                logger.debug("Adding {} triples to the model for {}", masterDataModel.size(), uri);
+
+                // add master data to model. The model will only be updated if model and master have same publisher uri.
+                model.add(masterDataModel);
+
+                if (organizationName != null) {
+                    logger.info("Rename publisher {} to {}", organisationNumber, organizationName);
+                    model.removeAll(publisherResource, FOAF.name, null);
+                    model.add(publisherResource, FOAF.name, model.createLiteral(organizationName));
+                }
+
             } else {
-                logger.warn("Unable to look up publisher {} - cache is not initiatilized.", uri);
+                logger.warn("Unable to lookup publisher {} - cache is not initiatilized.", uri);
             }
 
 
         } catch (Exception e) {
-            logger.warn("Failed to look up publisher: {} reason {}", uri, e.getMessage(),e);
+            logger.warn("Failed to lookup publisher: {} reason {}", uri, e.getMessage(),e);
         }
+    }
+
+    private void lookupPublisherHierarchy(Model model, Model masterRegistryModel) {
+        ResIterator subjects = masterRegistryModel.listSubjectsWithProperty(EnhetsregisteretRDF.organisasjonsform);
+
+        while (subjects.hasNext()) {
+            Resource subject = subjects.next();
+            String organisasjonsform =  subject.getProperty(EnhetsregisteretRDF.organisasjonsform).getString();
+            Statement overordnetEnhet = subject.getProperty(EnhetsregisteretRDF.overordnetEnhet);
+
+            if (organisasjonsform.equals(ORGANISASJONSLEDD) && overordnetEnhet != null) {
+
+                logger.trace("Found superior publisher: {}", overordnetEnhet.getObject());
+                String supOrgUri = String.format(publisherIdURI, overordnetEnhet.getObject().toString());
+                collectFromUri(supOrgUri, model, model.createResource(supOrgUri));
+            }
+        }
+    }
+
+    // http://data.brreg.no/enhetsregisteret/enhet/974760983
+
+    String getOrgnrFromUri(String uri) {
+        Pattern p = Pattern.compile("(enhetsregisteret/enhet/)(\\d+)");
+        Matcher m = p.matcher(uri);
+        String orgnr = null;
+
+        if (m.find()) {
+            orgnr = m.group(2);
+        }
+        return orgnr;
     }
 
     /**
@@ -250,4 +306,18 @@ public class BrregAgentConverter {
     protected void setPublisherIdURI(String publisherIdURI) {
         this.publisherIdURI = publisherIdURI;
     }
+
+    private String getOrgnrFromIdentifier(Model model, Resource orgresource) {
+        NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
+        // TODO: deal with the possibility of multiple dct:identifiers?
+        if (identiterator.hasNext()) {
+            String orgnr = identiterator.next().asLiteral().getValue().toString();
+            return orgnr.replaceAll("\\s", "");
+        } else {
+            logger.debug("Found no identifier for {}", orgresource.getURI());
+        }
+        return null;
+    }
+
+    
 }
