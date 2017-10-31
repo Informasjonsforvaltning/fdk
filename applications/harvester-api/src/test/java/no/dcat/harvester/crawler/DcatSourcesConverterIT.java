@@ -58,6 +58,8 @@ public class DcatSourcesConverterIT {
             for (Contact contact : dataset.getContactPoint()) {
                 if (contact != null) {
                     contactCount[0]++;
+
+                    logger.info(contact.getEmail());
                 }
 
             }

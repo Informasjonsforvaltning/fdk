@@ -426,7 +426,7 @@ public class DcatBuilder {
                 if (contact.getUri() == null || !contact.getUri().isEmpty()) {
                     contactRes = model.createResource(contact.getUri());
                 } else {
-                    contactRes = model.createResource();
+                    contactRes = model.createResource(UUID.randomUUID().toString());
                 }
 
                 contactRes.addProperty(RDF.type, VCARD4.Organization);
