@@ -415,30 +415,44 @@ public class DcatBuilder {
 
     void createContactPoint(Resource datRes, Contact contact) {
         if (contact != null) {
-            addProperty(datRes, DCAT.contactPoint, contact.getUri());
+            Resource contactRes = null;
 
-            Resource contactRes = createResource(contact, contact.getUri(), VCARD4.Organization);
+            if (    (contact.getEmail() != null && !contact.getEmail().isEmpty()) ||
+                    (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) ||
+                    (contact.getHasURL() != null && !contact.getHasURL().isEmpty()) ||
+                    (contact.getOrganizationName() != null && !contact.getOrganizationName().isEmpty()) ||
+                    (contact.getOrganizationUnit() != null && !contact.getOrganizationUnit().isEmpty())) {
 
-            addLiteral(contactRes, VCARD4.fn, contact.getFullname());
-            addProperty(contactRes, VCARD4.hasURL, contact.getHasURL());
-            addLiteral(contactRes, VCARD4.organization_name, contact.getOrganizationName());
-            addLiteral(contactRes, VCARD4.organization_unit, contact.getOrganizationUnit());
-
-            if (contact.getEmail() != null && !contact.getEmail().isEmpty()) {
-                String email = contact.getEmail().replaceAll("\\s", "");
-                if (email.startsWith("mailto:")) {
-                    addProperty(contactRes, VCARD4.hasEmail, email);
+                if (contact.getUri() == null || !contact.getUri().isEmpty()) {
+                    contactRes = model.createResource(contact.getUri());
                 } else {
-                    addProperty(contactRes, VCARD4.hasEmail, "mailto:" + email);
+                    contactRes = model.createResource();
                 }
-            }
 
-            if (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) {
-                String telephone = contact.getHasTelephone().replaceAll("\\s", "");
-                if (telephone.startsWith("tel:")) {
-                    addProperty(contactRes, VCARD4.hasTelephone, telephone);
-                } else {
-                    addProperty(contactRes, VCARD4.hasTelephone, "tel:" + telephone);
+                contactRes.addProperty(RDF.type, VCARD4.Organization);
+                datRes.addProperty(DCAT.contactPoint, contactRes);
+
+                addLiteral(contactRes, VCARD4.fn, contact.getFullname());
+                addProperty(contactRes, VCARD4.hasURL, contact.getHasURL());
+                addLiteral(contactRes, VCARD4.organization_name, contact.getOrganizationName());
+                addLiteral(contactRes, VCARD4.organization_unit, contact.getOrganizationUnit());
+
+                if (contact.getEmail() != null && !contact.getEmail().isEmpty()) {
+                    String email = contact.getEmail().replaceAll("\\s", "");
+                    if (email.startsWith("mailto:")) {
+                        addProperty(contactRes, VCARD4.hasEmail, email);
+                    } else {
+                        addProperty(contactRes, VCARD4.hasEmail, "mailto:" + email);
+                    }
+                }
+
+                if (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) {
+                    String telephone = contact.getHasTelephone().replaceAll("\\s", "");
+                    if (telephone.startsWith("tel:")) {
+                        addProperty(contactRes, VCARD4.hasTelephone, telephone);
+                    } else {
+                        addProperty(contactRes, VCARD4.hasTelephone, "tel:" + telephone);
+                    }
                 }
             }
         }

@@ -343,7 +343,8 @@ public abstract class AbstractBuilder {
                 return null;
             }
 
-            final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            //final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            final Resource object = property.getObject().asResource();
 
             contact.setUri(object.getURI());
             final String fn = extractAsString(object, Vcard.fn);
