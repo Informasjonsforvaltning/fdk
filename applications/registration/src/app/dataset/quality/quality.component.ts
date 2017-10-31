@@ -42,17 +42,17 @@ export class QualityComponent implements OnInit {
 
       this.provenancesModel = [
         {
-          id: 3,
+          id: 1,
           label: 'Vedtak',
           uri: 'http://data.brreg.no/datakatalog/provinens/vedtak'
         },
         {
-          id: 1,
+          id: 2,
           label: 'Brukerinnsamlede data',
           uri: 'http://data.brreg.no/datakatalog/provinens/bruker'
         },
         {
-          id: 2,
+          id: 3,
           label: 'Tredjepart',
           uri: 'http://data.brreg.no/datakatalog/provinens/tredjepart'
         }
@@ -159,7 +159,6 @@ export class QualityComponent implements OnInit {
 
     codifySkosCodes(code, lang) {
         return {value: code['uri'], label: code['prefLabel'][lang]}
-
     }
 
     fetchFrequencies() {
@@ -191,4 +190,9 @@ export class QualityComponent implements OnInit {
         }
       })
     }
+    public labelClicked(context, event, provenanceId) {
+          if(context.dataset.provenance.uri === this.provenancesModel[provenanceId-1].uri) {
+            this.qualityForm.controls.provenance.patchValue({uri:"", prefLabel:{nb:""}});
+          }
+        }
 }
