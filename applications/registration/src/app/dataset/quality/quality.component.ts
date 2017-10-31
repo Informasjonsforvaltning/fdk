@@ -202,7 +202,7 @@ export class QualityComponent implements OnInit {
                  found = true;
                }
              });
-             if(!found) {
+             if(!found && originalFrequency.label) {
                this.frequencies.push(originalFrequency);
              }
           });
