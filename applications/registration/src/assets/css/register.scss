@@ -246,16 +246,16 @@ input:checked ~ .checkbox-replacement::after {
   cursor: pointer;
   color:#2D3741;
   background-color:#D7DDE3;
-  padding: 10px;
-  text-align:center;
+  padding: 15px 20px 15px 20px;
+  text-align:left;
   position:relative;
-  margin: 0 0 11px 0;
+  margin: 0 0 10px 0;
 }
 .expanded-content {
   display:none;
   background: #fff;
-  padding: 5px 30px 25px 30px;
-  margin-bottom:30px;
+  padding: 15px 20px 15px 20px;
+  margin-bottom:10px;
 }
 .expanded-content label {
 
@@ -280,8 +280,8 @@ input:checked ~ .checkbox-replacement::after {
 
 .collapsed-content {
       background: #fff;
-      padding: 5px;
-      line-height: 1.7;
+      padding: 15px 20px 15px 20px;
+      margin: 0 0 10px 0;
       display: block;
       font-weight: normal;
 }
