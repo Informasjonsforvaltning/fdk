@@ -15,6 +15,7 @@ import {IMyDpOptions} from 'mydatepicker';
 import {AccessRightsService} from "./accessRights/accessRights.service";
 import {SkosConcept} from "./skosConcept";
 import {DistributionFormComponent} from "./distribution/distribution.component";
+import {Validate} from "./validate";
 
 @Component({
     selector: 'app-dataset',
@@ -36,6 +37,7 @@ export class DatasetComponent implements OnInit {
     datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
     saveDelay: number = 1000;
     datasetForm: FormGroup = new FormGroup({});
+    datasetSave: Dataset;
     myDatePickerOptions: IMyDpOptions = {
         //dateFormat: 'dd.mm.yyyy',//'yyyy.mm.dd',
         showClearDateBtn: false
@@ -336,6 +338,9 @@ export class DatasetComponent implements OnInit {
 
     save(): void {
         this.datasetSavingEnabled = false;
+        this.datasetSave = JSON.parse(JSON.stringify(this.dataset));
+        this.datasetSave = Validate.validateDataset(this.datasetSave);
+        console.log('datasetSave: ', this.datasetSave);
         this.service.save(this.catId, this.dataset)
             .then(() => {
                 this.saved = true;
