@@ -13,10 +13,10 @@ import java.util.List;
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-    @Override
+    /*@Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         RdfMessageConverter converter = new RdfMessageConverter();
         converters.add(0, new RdfMessageConverter());
         super.extendMessageConverters(converters);
-    }
+    }*/
 }
