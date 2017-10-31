@@ -78,7 +78,6 @@ public class CodesService extends BaseServiceWithFraming {
 
         return getCode(locationUri);
 
-
     }
 
     public SkosCode getCode(String uri){

@@ -1,8 +1,8 @@
-package no.dcat.service;
+package no.dcat.harvester.service;
 
-import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
+import no.difi.dcat.datastore.domain.dcat.client.BasicAuthRestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 
 @Service
-public class ReferenceDataService {
-
-    private static Logger logger = LoggerFactory.getLogger(ReferenceDataService.class);
-
+public class ReferenceDataSubjectService {
+    private static Logger logger = LoggerFactory.getLogger(ReferenceDataSubjectService.class);
 
     @Value("${application.httpUsername}")
     private String httpUsername;
@@ -23,9 +21,8 @@ public class ReferenceDataService {
     @Value("${application.httpPassword}")
     private String httpPassword;
 
-    @Value("${application.themesServiceUrl}")
+    @Value("${application.themesHostname}")
     private String referenceDataUrl;
-
 
     @PostConstruct
     public void postConstruct() {
@@ -36,13 +33,15 @@ public class ReferenceDataService {
     public Subject getSubject(String uri) {
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
+        logger.info("harvest request for subject {}", uri);
+
         String referenceDataUri = UriComponentsBuilder
                 .fromHttpUrl(referenceDataUrl + "/subjects")
                 .queryParam("uri", uri)
                 .toUriString();
 
         Subject forObject = template.getForObject(referenceDataUri, Subject.class);
-        logger.debug(forObject.toString());
         return forObject;
     }
 }
+

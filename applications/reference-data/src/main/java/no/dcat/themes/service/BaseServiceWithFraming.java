@@ -1,6 +1,7 @@
 package no.dcat.themes.service;
 
 import no.dcat.themes.database.TDBConnection;
+import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.JsonLDWriteContext;
@@ -26,7 +27,6 @@ abstract class BaseServiceWithFraming {
 
     static private final Logger logger = LoggerFactory.getLogger(BaseServiceWithFraming.class);
 
-
     @Autowired
     public BaseServiceWithFraming(TDBConnection tdbConnection) {
         this.tdbConnection = tdbConnection;
@@ -51,9 +51,10 @@ abstract class BaseServiceWithFraming {
     }
 
     // get model, trying multiple syntaxes
-    Model getRemoteModel(URL uri) throws MalformedURLException {
+    Model getRemoteModel(URL uri) throws MalformedURLException, HttpException {
+        logger.info("get remote model for subject {}", uri);
 
-       if (uri.getProtocol().equals("http") || uri.getProtocol().equals("https")) {
+        if (uri.getProtocol().equals("http") || uri.getProtocol().equals("https")) {
 
             String syntax[] = {null, RDFLanguages.strLangTurtle, RDFLanguages.strLangJSONLD, RDFLanguages.strLangN3};
 
@@ -65,15 +66,14 @@ abstract class BaseServiceWithFraming {
                         return FileManager.get().loadModel(uri.toString());
                     }
                 } catch (RiotException e) {
-                    logger.info("URI <{}> caused syntax error", uri, e);
+                    logger.info("URI <{}> caused syntax error. Tried format {}", uri, s);
                 }
             }
-        }else{
-           throw new MalformedURLException("Protocol not supported");
-       }
+        } else {
+            throw new MalformedURLException("Protocol not supported");
+        }
 
         return null;
     }
-
 
 }

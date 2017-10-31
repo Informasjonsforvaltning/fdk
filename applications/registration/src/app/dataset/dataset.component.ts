@@ -43,6 +43,7 @@ export class DatasetComponent implements OnInit {
     availableLanguages: any;
     summaries: any = {};
     legalBasis: any[];
+    setChecked: boolean;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -113,6 +114,7 @@ export class DatasetComponent implements OnInit {
 
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
+      this.dataset.catalogId = dataset.catalogId || this.catId || "";
       this.dataset.title = this.dataset.title || {"nb": ""};
       this.dataset.description = this.dataset.description || {"nb": ""};
       this.dataset.objective = this.dataset.objective || {"nb": ""};
@@ -138,6 +140,9 @@ export class DatasetComponent implements OnInit {
       this.dataset.legalBasisForAccesses = this.dataset.legalBasisForAccesses || [];
       this.dataset.informationModels = this.dataset.informationModels || [];
       this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
+      this.dataset.references = this.dataset.references || [];
+
+      this.setChecked = this.dataset.title[this.language] === '';
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
@@ -202,7 +207,7 @@ export class DatasetComponent implements OnInit {
           var that = this;
           this.delay(() => {
             if (this.datasetSavingEnabled) {
-              that.save.call(that);
+             that.save.call(that);
             }
           }, this.saveDelay);
         });
@@ -213,7 +218,26 @@ export class DatasetComponent implements OnInit {
     this.buildProvenanceSummary();
     this.buildInformationModelSummary();
     this.buildAccessRightsSummary();
+    this.buildReferencesSummary();
   }
+
+    buildReferencesSummary(): void {
+        let anyValue = false;
+        this.dataset.references.forEach(reference => {
+            if (reference.source && reference.referenceType) {
+                if (reference.source.uri && reference.referenceType.uri) {
+                    anyValue = true;
+                }
+            }
+        });
+        if (this.dataset.references.length > 1 && anyValue) {
+            this.summaries.references = this.dataset.references.length + " relasjoner";            
+        } else if (this.dataset.references.length == 1 && anyValue) {
+            this.summaries.references = "1 relasjon";
+        } else {
+            this.summaries.references = "Klikk for å fylle ut";
+        }
+    }
 
     buildInformationModelSummary(): void {
         // Add informationModel to summary if exists.
@@ -385,7 +409,7 @@ export class DatasetComponent implements OnInit {
     }
 
 
-    private getDatasett(): Promise<Dataset> {
+    private getDatasett(): Promise<Dataset | void> {
         // Insert mock object here.  Likely provided via a resolver in a
         // real world scenario
         let datasetId = this.route.snapshot.params['dataset_id'];
@@ -478,7 +502,7 @@ export class DatasetComponent implements OnInit {
     const formGroup = this.formBuilder.group({
 
       description: [data.description],
-      catalog: [data.catalog],
+      catalogId: [data.catalogId],
       landingPages: [data.landingPages],
       publisher: [data.publisher],
       contactPoints: this.formBuilder.array([]),
@@ -486,6 +510,7 @@ export class DatasetComponent implements OnInit {
       temporals: this.formBuilder.array([]),
       issued: [DatasetComponent.getDateObjectFromUnixTimestamp(data.issued)],
       samples: this.formBuilder.array([]),
+      references: this.formBuilder.array([]),
       checkboxArray: this.formBuilder.array(this.availableLanguages.map(s => {
         return this.formBuilder.control(s.selected)
       })),

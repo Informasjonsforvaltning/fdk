@@ -7,7 +7,7 @@
       Tittel og beskrivelse<b class="caret-right"></b>
     </label>
     <div *ngIf="dataset.title" class="col-md-push-1 col-md-8 collapsed">
-      <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox"/>
+      <input type="checkbox" id="title-and-description-toggle" class="expand-checkbox" [checked]="setChecked"/>
       <label for="title-and-description-toggle" class="collapsed-content expand-label">{{dataset.title[language] ||
         'Klikk for å fylle ut'}}</label>
       <div class="expanded-content">
@@ -173,7 +173,6 @@
                         <div class="col-md-4">
                             <my-date-picker
                                 id="issued"
-                                placeholder="Opprettet dato"
                                 name="issued"
                                 [options]="myDatePickerOptions"
                                 locale="no"
@@ -264,18 +263,40 @@
     </div>
 
 
-  <div class="row justify-content-md-center" *ngIf="dataset">
-    <label for="relations-toggle" class="col-md-push-1 col-md-2 section-title">
-      Relasjoner<b class="caret-right"></b>
-    </label>
-    <div class="col-md-push-1 col-md-8 collapsed">
-      <input type="checkbox" id="relations-toggle" class="expand-checkbox"/>
-      <label for="relations-toggle" class="collapsed-content expand-label">Klikk for å fylle ut</label>
-      <div class="expanded-content">
-        Relasjoner
-      </div>
+    <div class="row justify-content-md-center" *ngIf="dataset">
+        <label for="relations-toggle" class="col-md-push-1 col-md-2 section-title">
+        Relasjoner<b class="caret-right"></b>
+        </label>
+        <div class="col-md-push-1 col-md-8 collapsed">
+            <input type="checkbox" id="relations-toggle" class="expand-checkbox"/>
+            <label for="relations-toggle" class="collapsed-content expand-label">{{summaries.references || "Klikk for å fylle ut"}}</label>
+            <div class="expanded-content">
+                <div class="fdk-input-container">
+                    <helptext
+                        text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
+                        moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
+                        name="dataset.references">
+                    </helptext>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="fdk-input-label">Relasjonstype</p>
+                        </div>
+                        <div class="col-md-5">
+                            <p class="fdk-input-label">Relatert datasett</p>
+                        </div>
+                    </div>
+                    <referencelist
+                        title="Relaterte datasett"
+                        [datasetForm]="datasetForm"
+                        [referencesFormArray]="datasetForm.controls.references"
+                        [references]="dataset.references"
+                        [dataset]="dataset"
+                        (onSave)="onSave($event)">
+                    </referencelist>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
 
 <div class="row justify-content-md-center" *ngIf="dataset">

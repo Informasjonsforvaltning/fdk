@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.DatasetSortRankingCreator;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
@@ -16,7 +17,6 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
@@ -49,6 +49,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 public class CrawlerJob implements Runnable {
 
     private List<CrawlerResultHandler> handlers;
@@ -60,6 +61,7 @@ public class CrawlerJob implements Runnable {
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
+    private SubjectCrawler subjectCrawler = new SubjectCrawler();
 
     public List<String> getValidationResult() {return validationResult;}
     private Set<String> illegalUris = new HashSet<>();
@@ -189,8 +191,6 @@ public class CrawlerJob implements Runnable {
     }
 
     Model loadModelAndValidate(URL url) {
-        //Model union = ModelFactory.createDefaultModel();
-        //RDFDataMgr.read(union, url.toString(),"http://base", null);
 
         Dataset dataset = RDFDataMgr.loadDataset(url.toString());
         Model union = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -215,6 +215,10 @@ public class CrawlerJob implements Runnable {
         // Checks if publisher is registrered in BRREG Enhetsregistret
         BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
         brregAgentConverter.collectFromModel(union);
+
+        // Checks subjects and resolve definitions
+        Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
+        union = modelWithSubjects;
 
         return union;
     }
