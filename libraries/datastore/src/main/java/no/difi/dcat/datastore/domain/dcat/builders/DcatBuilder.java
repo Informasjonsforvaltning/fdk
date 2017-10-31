@@ -109,7 +109,9 @@ public class DcatBuilder {
 
     public String getDcatOutput(String outputFormat) {
         OutputStream out = new ByteArrayOutputStream();
-        return model.write(out, outputFormat).toString();
+        model.write(out, outputFormat);
+
+        return out.toString();
     }
 
     public Model getModel() {
@@ -153,7 +155,6 @@ public class DcatBuilder {
 
                         addContactPoints(datRes, dataset.getContactPoint());
                         addKeywords(datRes, dataset.getKeyword());
-                        addUriProperty(datRes, DCTerms.publisher, dataset.getPublisher());
 
                         addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
                         addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
@@ -353,16 +354,30 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
+        String publisherId = "";
+
         if (publisher != null) {
             try {
-                addProperty(resource, DCTerms.publisher, publisher.getUri());
+                Resource publisherResource = null;
+                if (publisher.getUri() != null && !publisher.getUri().isEmpty()) {
+                    publisherId = publisher.getUri();
+                     publisherResource = model.createResource(publisher.getUri());
+                } else {
+                    if (publisher.getId() != null && !publisher.getId().isEmpty()){
+                        publisherId = publisher.getId();
+                        publisherResource = model.createResource(publisher.getId());
+                    } else {
+                        publisherResource = model.createResource();
+                    }
+                }
 
-                Resource pubRes = createResource(publisher, publisher.getUri(), FOAF.Agent);
+                resource.addProperty(DCTerms.publisher, publisherResource);
+                publisherResource.addProperty(RDF.type, FOAF.Agent);
 
-                addLiteral(pubRes, FOAF.name, publisher.getName());
-                addLiteral(pubRes, DCTerms.identifier, publisher.getId());
+                addLiteral(publisherResource, FOAF.name, publisher.getName());
+                addLiteral(publisherResource, DCTerms.identifier, publisher.getIdentifier());
             } catch (Exception e) {
-                logger.error("Unable to export publisher {}. Reason {}", publisher.getUri(), e.getLocalizedMessage(), e);
+                logger.error("Unable to export publisher {}. Reason {}", publisherId, e.getLocalizedMessage(), e);
             }
         }
         return this;

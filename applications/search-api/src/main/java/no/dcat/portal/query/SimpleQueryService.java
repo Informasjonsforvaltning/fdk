@@ -34,7 +34,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
-import java.util.Map;
 
 
 /**
@@ -326,18 +325,33 @@ public class SimpleQueryService {
         logger.info("request sucess for {}", id);
 
         String acceptHeader = request.getHeader("Accept");
-        if (acceptHeader != null && !acceptHeader.isEmpty()) {
-            if (acceptHeader.contains("text/turtle")) {
+        if (acceptHeader != null && !acceptHeader.isEmpty() && !acceptHeader.contains("application/json")) {
+            try {
+                String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
 
-                String x = response.getHits().getAt(0).getSourceAsString();
-
-                Dataset d = new Gson().fromJson(x, Dataset.class);
-                String rdfResponse = DcatBuilder.transform(d, "TURTLE");
-                return new ResponseEntity<>(rdfResponse, HttpStatus.OK);
+                ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
+                if (rdfResponse != null) return rdfResponse;
+            } catch (Exception e) {
+                logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
             }
         }
 
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    ResponseEntity<String> getRdfResponse(String datasetAsJson, String acceptHeader) {
+
+        Dataset d = new Gson().fromJson(datasetAsJson, Dataset.class);
+
+        if (acceptHeader.contains("text/turtle")) {
+            return new ResponseEntity<>(DcatBuilder.transform(d, "TURTLE"), HttpStatus.OK);
+        } else if (acceptHeader.contains("application/ld+json")) {
+            return new ResponseEntity<>(DcatBuilder.transform(d, "JSON-LD"), HttpStatus.OK);
+        } else if (acceptHeader.contains("application/rdf+xml")) {
+            return new ResponseEntity<>(DcatBuilder.transform(d, "RDF/XML"), HttpStatus.OK);
+        }
+
+        return null;
     }
 
     String extractIdentifier(HttpServletRequest request) {
