@@ -224,7 +224,8 @@ input:checked ~ .checkbox-replacement::after {
   position: absolute;
   left:-9999px;
 }
-#accessRightSelector span {
+
+#provenanceSelector span {
     font-weight: normal;
     cursor: pointer;
 }
