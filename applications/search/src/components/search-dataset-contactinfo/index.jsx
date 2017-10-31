@@ -20,7 +20,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     }
 
     const emailClass = cx(
-      'fdk-padding-no',
+      'fdk-container-detail',
       {
         'col-md-8': hasTelephone,
         'col-md-12': !hasTelephone
@@ -28,7 +28,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     );
 
     const telephoneClass = cx(
-      'fdk-padding-no',
+      'fdk-container-detail',
       {
         'col-md-4': email,
         'col-md-12': !email
@@ -36,7 +36,8 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     );
 
     return (
-      <div id="dataset-contactinfo" className="row fdk-row fdk-margin-top-triple">
+      <div id="dataset-contactinfo" className="fdk-margin-top-triple">
+        <div className="row fdk-row">
 
         {this.props.landingPage && this.props.landingPage[0] &&
         <div className="col-md-12 fdk-padding-no">
@@ -85,10 +86,11 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
             </div>
           </div>
         }
+        </div>
+        <div className="row fdk-row row-eq-height">
 
         {email &&
         <div className={emailClass}>
-          <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-envelope" />
             </div>
@@ -106,13 +108,11 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
                 </a>
               </p>
             </div>
-          </div>
         </div>
         }
 
         {hasTelephone &&
         <div className={telephoneClass}>
-          <div className="fdk-container-detail">
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-phone" />
             </div>
@@ -122,10 +122,10 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
                 {hasTelephone}
               </p>
             </div>
-          </div>
         </div>
         }
 
+        </div>
       </div>
     );
   }
