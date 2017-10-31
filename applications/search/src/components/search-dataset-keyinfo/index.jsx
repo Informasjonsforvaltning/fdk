@@ -49,7 +49,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       return (
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
           <i className={accessRightClass} />
-          {localization.dataset.accessRight} {accessRights.prefLabel.nb.toLowerCase()}
+          {localization.dataset.accessRight} {getTranslateText(accessRights.prefLabel, this.props.selectedLanguageCode).toLowerCase()}
         </div>
       );
     }
