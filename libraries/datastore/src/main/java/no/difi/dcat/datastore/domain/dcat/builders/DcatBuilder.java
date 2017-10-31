@@ -132,8 +132,8 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addDataset(Dataset dataset) {
-        Resource dataRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
-        addDatasets(dataRes, Arrays.asList(dataset));
+
+        addDatasets(null, Arrays.asList(dataset));
 
         return this;
     }
@@ -143,7 +143,9 @@ public class DcatBuilder {
             for (Dataset dataset : datasets) {
                 if (dataset != null) {
                     try {
-                        addProperty(catRes, DCAT.dataset, dataset.getUri());
+                        if (catRes != null) {
+                            addProperty(catRes, DCAT.dataset, dataset.getUri());
+                        }
 
                         Resource datRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
 
