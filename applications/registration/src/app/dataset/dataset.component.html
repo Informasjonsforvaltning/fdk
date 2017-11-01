@@ -14,7 +14,8 @@
         <div class="fdk-input-container" *ngIf="dataset.title">
           <p class="fdk-input-label">Tittel <span class="fdk-obligatorisk">Obligatorisk</span></p>
           <helptext
-            name="Dataset_title"></helptext>
+            name="Dataset_title">
+          </helptext>
           <input autofocus class="fdk-input" id="dataset-title" (keyup)="valuechange($event)" type="text"
                  [(ngModel)]="dataset.title[language]"/>
         </div>
@@ -22,7 +23,8 @@
       <div class="fdk-input-container" *ngIf="dataset.description">
         <p class="fdk-input-label">Beskrivelse av datasettet <span class="fdk-obligatorisk">Obligatorisk</span></p>
         <helptext
-        name="Dataset_description"></helptext>
+          name="Dataset_description">
+        </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
         (ngModelChange)="valuechange(this)"
         [(ngModel)]='dataset.description[language]'></textarea>
@@ -31,7 +33,8 @@
       <div class="fdk-input-container">
         <label for="dataset-objective" class="fdk-input-label">Formålet med datasettet</label>
         <helptext
-        name="Dataset_objective"></helptext>
+          name="Dataset_objective">
+        </helptext>
         <textarea class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
         (ngModelChange)="valuechange(this)"
         [(ngModel)]='dataset.objective[language]'></textarea>
@@ -40,7 +43,8 @@
         <div class="fdk-input-container" *ngIf="dataset.landingPages">
           <label for="dataset-landingpage" class="fdk-input-label">Lenke til mer informasjon om datasettet</label>
           <helptext
-            name="Dataset_landingpage"></helptext>
+            name="Dataset_landingpage">
+          </helptext>
           <input class="fdk-input" id="dataset-landingpage" (keyup)="valuechange($event)" type="url"
                  [(ngModel)]="dataset.landingPages[0]" trim/>
         </div>
@@ -163,9 +167,7 @@
                         <div class="col-md-8">
                             <p class="fdk-input-label">Utgivelsesdato</p>
                             <helptext
-                                text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-                                moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-                                name="utgivelse">
+                              name="Dataset_issued"
                             </helptext>
                         </div>
                     </div>
@@ -273,9 +275,7 @@
             <div class="expanded-content">
                 <div class="fdk-input-container">
                     <helptext
-                        text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-                        moretext="Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen -  populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910” Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets). Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terreng Modell 10m oppløsning (DTM10)” . Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-                        name="dataset.references">
+                        name="Dataset_relation">
                     </helptext>
                     <div class="row">
                         <div class="col-md-5">
@@ -315,7 +315,7 @@
     </div>
   </div>
 </div>
-  
+
     <div class="row justify-content-md-center" *ngIf="dataset">
         <label for="distributions-toggle" class="col-md-push-1 col-md-2 section-title">
             Distribusjoner<b class="caret-right"></b>
@@ -330,7 +330,7 @@
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="distribution.type === 'Feed'"></i>
-                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>
                                     <i class="fa fa-cogs" *ngIf="distribution.type === 'API'"></i>
                                     {{distribution.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
@@ -368,12 +368,12 @@
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="sample.type === 'Feed'"></i>
-                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>
                                     <i class="fa fa-cogs" *ngIf="sample.type === 'API'"></i>
                                     {{sample.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
                             </span>
-                        </div>                            
+                        </div>
                         <span *ngIf="!sample || !sample.format || sample.format.length === 0">
                             Klikk for å fylle ut
                         </span>

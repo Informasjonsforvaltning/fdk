@@ -340,7 +340,7 @@ Er opplysninger om “oppdateringsfrekvens” og “sist oppdatert” alltid gyl
     dct:abstract """Referanse til andre datasett som gir supplerende informasjon om innholdet, f.eks. et kodeverk."""@no ;
     dct:description """En generell relasjon som peker til ressurser som er relatert til datasettet.
 
-Angi referanser til andre datasett som gir supplerende informasjon om innholdet. Kan f.eks. være å relatere til et kodeverk."""@no .  
+* Angi referanser til andre datasett som gir supplerende informasjon om innholdet. Kan f.eks. være å relatere til et kodeverk."""@no .
 
 
 # Agent_name (Enhet enhetsnavn)
