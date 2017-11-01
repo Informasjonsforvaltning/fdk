@@ -4,8 +4,8 @@ import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
-import no.dcat.shared.Publisher;
 import no.dcat.service.CatalogRepository;
+import no.dcat.shared.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -80,6 +81,12 @@ public class CatalogController {
 
         Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
+        if (catalogs.getTotalElements() == 0) {
+            createCatalogsIfNeeded(validCatalogs);
+
+            catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
+        }
+
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
 
@@ -119,10 +126,10 @@ public class CatalogController {
     private Publisher getPublisher(Catalog catalog) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
-        Enhet enhet = null;
+        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() ;
+        Enhet enhet;
         try {
-            enhet = restTemplate.getForObject(uri, Enhet.class);
+            enhet = restTemplate.getForObject(uri + ".json", Enhet.class);
         } catch (Exception e) {
             logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
 
@@ -156,6 +163,11 @@ public class CatalogController {
     public HttpEntity<Catalog> updateCatalog(@PathVariable("id") String id,
                                              @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
+
+        Catalog existingCatalog = catalogRepository.findOne(id);
+        if (existingCatalog == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         if (!catalog.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -209,4 +221,31 @@ public class CatalogController {
         }
         return new ResponseEntity<>(catalog, OK);
     }
+
+
+    private void createCatalogsIfNeeded(Collection<String> organizations) {
+        organizations.forEach(this::createCatalogIfNotExists);
+    }
+
+    private Catalog createCatalogIfNotExists(String orgnr) {
+        if (! orgnr.matches("\\d{9}")) {
+            return null;
+        }
+
+        Catalog catalog = catalogRepository.findOne(orgnr);
+        if (catalog == null) {
+            logger.info("Create catalog for {} ", orgnr);
+            Catalog newCatalog = new Catalog(orgnr);
+
+            String organizationName = entityNameService.getOrganizationName(orgnr);
+            if (organizationName != null) {
+                newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
+            }
+            createCatalog(newCatalog);
+
+            return newCatalog;
+        }
+        return catalog;
+    }
+
 }
