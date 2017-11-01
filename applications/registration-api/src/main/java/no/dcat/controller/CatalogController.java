@@ -113,7 +113,7 @@ public class CatalogController {
         return new ResponseEntity<>(savedCatalog, OK);
     }
 
-    protected Catalog saveCatalog(Catalog catalog) {
+    Catalog saveCatalog(Catalog catalog) {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
@@ -123,7 +123,7 @@ public class CatalogController {
         return catalogRepository.save(catalog);
     }
 
-    private Publisher getPublisher(Catalog catalog) {
+    Publisher getPublisher(Catalog catalog) {
 
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() ;
@@ -186,7 +186,6 @@ public class CatalogController {
         return new ResponseEntity<>(savedCatalog, OK);
     }
 
-
     /**
      * Deletes a catalog
      *
@@ -223,11 +222,11 @@ public class CatalogController {
     }
 
 
-    private void createCatalogsIfNeeded(Collection<String> organizations) {
+    void createCatalogsIfNeeded(Collection<String> organizations) {
         organizations.forEach(this::createCatalogIfNotExists);
     }
 
-    private Catalog createCatalogIfNotExists(String orgnr) {
+    Catalog createCatalogIfNotExists(String orgnr) {
         if (! orgnr.matches("\\d{9}")) {
             return null;
         }
@@ -241,7 +240,10 @@ public class CatalogController {
             if (organizationName != null) {
                 newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
             }
-            createCatalog(newCatalog);
+            HttpEntity<Catalog> response = createCatalog(newCatalog);
+            if (response.getBody() == null) {
+                return null;
+            }
 
             return newCatalog;
         }

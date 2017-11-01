@@ -77,7 +77,7 @@ public class CatalogControllerIT {
                                 .post("/catalogs", catalog)
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"no\":\"test\"},\"description\":{\"no\":\"test\"},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"no\":\"test\"},\"description\":{\"no\":\"test\"},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
                 .andExpect(status().isOk());
 
     }
@@ -105,7 +105,7 @@ public class CatalogControllerIT {
                         "        \"no\" : \"test\"\n" +
                         "      },\n" +
                         "      \"publisher\" : {\n" +
-                        "        \"uri\" : \"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\n" +
+                        "        \"uri\" : \"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\n" +
                         "        \"name\" : \"RAMSUND OG ROGNAN REVISJON\"\n" +
                         "      }\n" +
                         "    } ]\n" +
@@ -162,7 +162,7 @@ public class CatalogControllerIT {
                                 .post("/catalogs", catalog)
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"no\":\"test\"},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"no\":\"test\"},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -181,7 +181,7 @@ public class CatalogControllerIT {
                                 .post("/catalogs", catalog)
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132.json\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
                 .andExpect(status().isOk());
 
     }
