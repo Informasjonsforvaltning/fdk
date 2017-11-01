@@ -3,6 +3,9 @@
     <div >
       <div class="">
         <div class="form-group">
+          <helptext
+            name="Catalog_title">
+          </helptext>
           <h1>
             <input id="tittel-datakatalog" (ngModelChange)="valuechange()" type="text" class="fdk-register-h1" placeholder="Tittel" [(ngModel)]="catalog.title[language]"/>
           </h1>
@@ -16,7 +19,9 @@
       </div>
       <div class="fdk-container fdk-container-expanded" style="margin-top:20px" [hidden]="!descriptionExpanded">
         <label class="fdk-input-label">Beskrivelse <span class="fdk-obligatorisk">Obligatorisk</span></label>
-        <p class="fdk-input-helptext">Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte. Flere anbefalinger.</p>
+        <helptext
+          name="Catalog_description">
+        </helptext>
         <textarea class="" (blur)="descriptionExpanded = !descriptionExpanded" (ngModelChange)="valuechange()" rows="5" id="beskrivelse-datakatalog" placeholder="Beskrivelse" [(ngModel)]='catalog.description[language]'></textarea>
       </div>
 

@@ -3,14 +3,9 @@
     <div class="fdk-input-container">
       <div class="form-group">
 
-      <helptext
-                name="Dataset_accruralPeriodicity">
-
-      </helptext>
-
         <div class="fdk-input-container">
             <helptext
-                name="geoavgrensning">
+                name="Dataset_conformsTo">
             </helptext>
             <titleUri
                 [titleUri]="standard"
@@ -27,7 +22,7 @@
       <div class="form-group">
         <p class="fdk-input-label">Relevans</p>
         <helptext
-          name="dataset.hasRelevanceAnnotation">
+          name="Dataset_hasQualityAnnotation_relevance">
         </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="relevance-annotation"
                   formControlName="relevance"></textarea>
@@ -38,7 +33,7 @@
       <div class="form-group">
         <p class="fdk-input-label">Kompletthet</p>
         <helptext
-          name="dataset.hasCompletnessAnnotation">
+          name="Dataset_hasQualityAnnotation_completeness">
         </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="completeness-annotation"
                   formControlName="completeness"></textarea>
@@ -49,7 +44,7 @@
       <div class="form-group">
         <p class="fdk-input-label">Nøyaktighet</p>
         <helptext
-          name="dataset.hasAccuracyAnnotation">
+          name="Dataset_hasQualityAnnotation_accuracy">
         </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="accuracy-annotation"
                   formControlName="accuracy"></textarea>
@@ -60,7 +55,7 @@
       <div class="form-group">
         <p class="fdk-input-label">Tilgjengelighet</p>
         <helptext
-          name="dataset.hasAvailabilityAnnotation">
+          name="Dataset_hasQualityAnnotation_availability">
         </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="availability-annotation"
                   formControlName="availability"></textarea>

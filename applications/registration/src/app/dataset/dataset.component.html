@@ -167,7 +167,7 @@
                         <div class="col-md-8">
                             <p class="fdk-input-label">Utgivelsesdato</p>
                             <helptext
-                              name="Dataset_issued"
+                              name="Dataset_issued">
                             </helptext>
                         </div>
                     </div>
@@ -343,6 +343,9 @@
                 </div>
             </div>
             <div *ngIf="dataset.distributions" class="expanded-content">
+              <helptext
+                name="Dataset_distribution">
+              </helptext>
                 <distributions
                     [datasetForm]="datasetForm"
                     [distributionsFormArray]="datasetForm.controls.distributions"
@@ -381,6 +384,9 @@
                 </div>
             </div>
             <div *ngIf="dataset.samples" class="expanded-content">
+                <helptext
+                  name="Dataset_example">
+                </helptext>
                 <distributions
                     [datasetForm]="datasetForm"
                     [distributionsFormArray]="datasetForm.controls.samples"

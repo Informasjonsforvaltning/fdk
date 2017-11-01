@@ -3,9 +3,7 @@
     <div class="fdk-input-container">
       <p class="fdk-input-label">Opphav</p>
       <helptext
-        text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
-        moretext="Lang tekst ...."
-        name="dataset.provenanceStatement">
+        name="Dataset_provenance">
       </helptext>
       <div id="provenanceSelector">
         <label class="checkbox" (click)="labelClicked(this, $event, provenance.id)" *ngFor="let provenance of provenancesModel">
@@ -25,10 +23,8 @@
 
       <div (click)="fetchFrequencies()" class="form-group">
         <p class="fdk-input-label">Oppdateringsfrekvens</p>
-        <helptext id="Dataset.accrualPeriodicity"
-                  text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
-                  moretext="Lang tekst ...."
-                  name="dataset.accrualPeriodicity">
+        <helptext
+          name="Dataset_accruralPeriodicity">
         </helptext>
         <div style="width: 40%">
           <ng-select id="quality-frequency"
@@ -44,9 +40,7 @@
       <div>
         <p class="fdk-input-label">Sist oppdatert</p>
         <helptext
-          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
-          moretext="Lang tekst ...."
-          name="dataset.modfied">
+          name="Dataset_modified">
         </helptext>
         <div style="width: 30%">
           <my-date-picker id="issued" name="modified" [options]="myDatePickerOptions"
@@ -59,9 +53,7 @@
       <div>
         <p class="fdk-input-label">Aktualitet</p>
         <helptext
-          text="Hjelpetekst som beskriver hvordan feltene skal fylles ut på en god måte."
-          moretext="Lang tekst ...."
-          name="dataset.hasActualityAnnotation">
+          name="Dataset_hasQualityAnnotation_currentness">
         </helptext>
         <textarea class="fdk-input fdk-input-h3-2" rows="5" id="aktualitet-annotation"
                   formControlName="currentness"></textarea>

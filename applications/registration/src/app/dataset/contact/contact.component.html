@@ -1,28 +1,35 @@
 <div class="" *ngIf="contactForm">
   <div [formGroup]="contactForm" class="form-group">
     <div class="fdk-input-container">
+      <helptext
+        name="Dataset_contactPoint">
+      </helptext>
       <p class="fdk-input-label">Kontaktpunkt</p>
       <helptext
-        name="Dataset_contactPoint"></helptext>
+        name="ContactPoint_organizational-unit">
+      </helptext>
       <input id="contact-avdeling" type="text" formControlName="organizationUnit" class="fdk-input"/>
     </div>
     <div class="fdk-input-container">
       <p class="fdk-input-label">Kontaktskjema</p>
       <helptext
-        name="contact"></helptext>
+        name="ContactPoint_hasURL">
+      </helptext>
       <input id="contact-url" type="url" formControlName="hasURL" class="fdk-input" trim/>
     </div>
     <div class="fdk-input-container">
       <p class="fdk-input-label">E-post</p>
       <helptext
-        name="contact"></helptext>
+        name="ContactPoint_hasEmail">
+      </helptext>
       <input id="contact-email" type="email" formControlName="email"
       title="Angi epostadresse" class="fdk-input" trim/>
     </div>
     <div class="fdk-input-container">
       <p class="fdk-input-label">Telefon</p>
       <helptext
-        name="contact"></helptext>
+        name="ContactPoint_hasTelephone">
+      </helptext>
       <input id="contact-telephone" type="telephone" formControlName="hasTelephone"
         class="fdk-input" trim/>
     </div>
