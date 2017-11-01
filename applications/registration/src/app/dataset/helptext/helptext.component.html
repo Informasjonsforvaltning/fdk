@@ -1,6 +1,6 @@
 <p class="fdk-input-helptext">
-  <input type="checkbox" class="more-help-checkbox" id="{{name}}-more-help-button" />
-  <span class="faerre-anbefalinger" [innerHTML]="resolvedShortDesc ? resolvedShortDesc : 'Hjelpetekst er ikke klar for dette feltet'">
+  <input type="checkbox" class="more-help-checkbox" id="{{name}}-more-help-button" tabindex="0" *ngIf=resolvedDescription />
+  <span class="faerre-anbefalinger" tabindex="-1" [innerHTML]="resolvedShortDesc ? resolvedShortDesc : 'Hjelpetekst er ikke klar for dette feltet'">
   </span>
   <!-- To avoid whitespace between "Flere anbefalinger" and the . at the end,
   some tags below don't have whitespace between the closing tag and the next
