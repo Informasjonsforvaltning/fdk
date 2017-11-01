@@ -58,10 +58,12 @@ export class DatasetComponent implements OnInit {
         private formBuilder: FormBuilder,
         private cdr: ChangeDetectorRef,
         private accessRightsService: AccessRightsService) {
+            console.log("constructor");
     }
 
 
   ngOnInit() {
+    console.log("ngOnInit");
     this.language = 'nb';
     this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
       {
@@ -101,8 +103,11 @@ export class DatasetComponent implements OnInit {
 
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
+    
+    console.log("before service.get");
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       console.log('dataset from api: ', dataset);
+      this.dataset = null;
       this.dataset = dataset;
       if (this.dataset.languages) {
         this.availableLanguages.forEach((language, languageIndex, languageArray) => {
@@ -113,7 +118,8 @@ export class DatasetComponent implements OnInit {
           })
         })
       }
-
+      
+      console.log("this.dataset = ... list");
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
       this.dataset.catalogId = dataset.catalogId || this.catId || "";
@@ -143,18 +149,29 @@ export class DatasetComponent implements OnInit {
       this.dataset.informationModels = this.dataset.informationModels || [];
       this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
       this.dataset.references = this.dataset.references || [];
+      this.dataset.issued = this.dataset.issued || "";
+      this.dataset.modified = this.dataset.modified || "";
+      this.summaries = {};
 
-      this.setChecked = this.dataset.title[this.language] === '';
+      this.setChecked = !this.dataset.title[this.language];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
+
+      
+      console.log("buildSummaries");
 
       this.buildSummaries();
 
       this.datasetSavingEnabled = false;
+      
+      console.log("setTimeout");
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
+      
+      console.log("before subscribe");
       this.datasetForm.valueChanges // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-
+            
+            console.log("subscribe dataset: " , dataset);
           // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
@@ -214,6 +231,8 @@ export class DatasetComponent implements OnInit {
           }, this.saveDelay);
         });
     })
+    
+    console.log("after service.get");
   }
   buildSummaries() {
     this.buildGeoTimeSummaries();
@@ -339,23 +358,30 @@ export class DatasetComponent implements OnInit {
     save(): void {
         this.datasetSavingEnabled = false;
         this.datasetSave = JSON.parse(JSON.stringify(this.dataset));
-        this.datasetSave = Validate.validateDataset(this.datasetSave);
-        console.log('datasetSave: ', this.datasetSave);
-        this.service.save(this.catId, this.dataset)
-            .then(() => {
-                this.saved = true;
-                var d = new Date();
-                this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
-                this.datasetSavingEnabled = true;
-            })
-          .catch(error => {
-            console.log(error);
-            this.showModal(
-              `Error: ${error.status}`,
-              `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
-              false
-            );
-          });
+        
+        console.log('dataset: ', this.dataset);
+        console.log('original: ', this.datasetSave);
+        //this.datasetSave = Validate.validateDataset(this.datasetSave);
+        console.log('validated: ', this.datasetSave);
+        if (this.datasetSave) {
+            this.service.save(this.catId, this.datasetSave)
+                .then(() => {
+                    this.saved = true;
+                    var d = new Date();
+                    this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+                    this.datasetSavingEnabled = true;
+                    console.log("return: ", this);
+                })
+            .catch(error => {
+                console.log(error);
+                this.showModal(
+                    `Error: ${error.status}`,
+                    `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
+                    false
+                );
+            });
+        }
+        //this.dataset = _.merge(this.dataset, this.datasetSave);
     }
 
     valuechange(): void {

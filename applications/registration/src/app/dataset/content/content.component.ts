@@ -65,7 +65,7 @@ export class ContentComponent implements OnInit {
     this.contentForm.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
       quality => {
 
-        if (quality.relevance) {
+        if (quality.relevance != null) {
           this.dataset.hasRelevanceAnnotation = {
             inDimension: "iso:Relevance",
             motivatedBy: "dqv:qualityAssessment",
@@ -73,7 +73,7 @@ export class ContentComponent implements OnInit {
           }
         }
 
-        if (quality.completeness) {
+        if (quality.completeness != null) {
           this.dataset.hasCompletenessAnnotation = {
             inDimension: "iso:Completeness",
             motivatedBy: "dqv:qualityAssessment",
@@ -81,7 +81,7 @@ export class ContentComponent implements OnInit {
           }
         }
 
-        if (quality.accuracy) {
+        if (quality.accuracy != null) {
           this.dataset.hasAccuracyAnnotation = {
             inDimension: "iso:Accuracy",
             motivatedBy: "dqv:qualityAssessment",
@@ -89,7 +89,7 @@ export class ContentComponent implements OnInit {
           }
         }
 
-        if (quality.availability) {
+        if (quality.availability != null) {
           this.dataset.hasAvailabilityAnnotation = {
             inDimension: "iso:Availability",
             motivatedBy: "dqv:qualityAssessment",

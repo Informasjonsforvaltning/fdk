@@ -104,7 +104,7 @@ export class QualityComponent implements OnInit {
                     };
                 }
 
-                if (quality.accrualPeriodicity) {
+                if (quality.accrualPeriodicity != null) {
 
                     this.dataset.accrualPeriodicity = {
                         uri: quality.accrualPeriodicity,
@@ -126,7 +126,7 @@ export class QualityComponent implements OnInit {
                   this.dataset.modified = null;
                 }
 
-              if (quality.currentness) {
+              if (quality.currentness != null) {
                   this.dataset.hasCurrentnessAnnotation = {
                     inDimension: "iso:Currentness",
                     motivatedBy: "dqv:qualityAssessment",
