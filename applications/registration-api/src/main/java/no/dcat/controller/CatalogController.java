@@ -81,11 +81,9 @@ public class CatalogController {
 
         Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
-        if (catalogs.getTotalElements() == 0) {
-            createCatalogsIfNeeded(validCatalogs);
+        createCatalogsIfNeeded(validCatalogs);
 
-            catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
-        }
+        catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }

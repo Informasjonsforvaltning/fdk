@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,26 +21,31 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 
 @ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
 public class CatalogControllerIT {
-
+    private static Logger logger = LoggerFactory.getLogger(CatalogControllerIT.class);
 
     @Autowired
     private MockMvc mockMvc;
-
 
     @Autowired
     private CatalogRepository catalogRepository;
@@ -45,6 +53,37 @@ public class CatalogControllerIT {
     @Before
     public void before() {
         catalogRepository.deleteAll();
+    }
+
+    @Test
+    @WithUserDetails("01066800187")
+    public void expectTwoCatalogsWhenSteinLogsIn() throws Exception {
+
+        MvcResult result = mockMvc
+                .perform(MockMvcRequestBuilders.get("/catalogs", String.class))
+                .andExpect(content().string(containsString("/catalogs")))
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        Iterable<Catalog> catalogs = catalogRepository.findAll();
+
+        int count = 0;
+        List<String> ids = new ArrayList<>();
+
+        Iterator<Catalog> cats = catalogs.iterator();
+        while (cats.hasNext()) {
+            Catalog cat = cats.next();
+            count++;
+            ids.add(cat.getId());
+        }
+        ids.sort(String::compareTo);
+
+        String[] excpectedIds = {"1", "2"};
+
+        assertThat(count, is(2));
+        assertThat(ids.toArray(), is(excpectedIds) );
+
     }
 
     @Test
