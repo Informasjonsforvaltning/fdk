@@ -101,7 +101,7 @@ public class CatalogController {
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
 
-        logger.info("Add catalog: " + catalog.toString());
+        logger.info("Create catalog: {}. Details {}", catalog.getId(), catalog.toString() );
         if (catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -231,7 +231,7 @@ public class CatalogController {
 
         Catalog catalog = catalogRepository.findOne(orgnr);
         if (catalog == null) {
-            logger.info("Create catalog for {} ", orgnr);
+
             Catalog newCatalog = new Catalog(orgnr);
 
             String organizationName = entityNameService.getOrganizationName(orgnr);
