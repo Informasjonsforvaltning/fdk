@@ -1,6 +1,9 @@
 package no.dcat.portal.query;
 
 
+import com.google.gson.Gson;
+import no.dcat.shared.Dataset;
+import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -13,7 +16,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
-import org.elasticsearch.search.aggregations.bucket.missing.Missing;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
 
@@ -99,7 +103,7 @@ public class SimpleQueryService {
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
      * @param theme         Narrows the search to the specified theme. ex. GOVE
      * @param publisher     Narrows the search to the specified publisher. ex. UTDANNINGSDIREKTORATET
-     * @param accessRight   Narrows the search to the specified theme. ex. RESTRICTED
+     * @param accessRights   Narrows the search to the specified theme. ex. RESTRICTED
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
@@ -289,13 +293,18 @@ public class SimpleQueryService {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @RequestMapping(value = "/datasets/**", produces = "application/json")
+    @RequestMapping(value = "/datasets/**", produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> detail(HttpServletRequest request) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
         String id = extractIdentifier(request);
 
         logger.info("request for {}", id);
+        try {
+            id = URLDecoder.decode(id, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.warn("id could not be decoded {}. Reason {}",id, e.getLocalizedMessage());
+        }
 
         QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
 
@@ -315,7 +324,34 @@ public class SimpleQueryService {
 
         logger.info("request sucess for {}", id);
 
+        String acceptHeader = request.getHeader("Accept");
+        if (acceptHeader != null && !acceptHeader.isEmpty() && !acceptHeader.contains("application/json")) {
+            try {
+                String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
+
+                ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
+                if (rdfResponse != null) return rdfResponse;
+            } catch (Exception e) {
+                logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
+            }
+        }
+
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    ResponseEntity<String> getRdfResponse(String datasetAsJson, String acceptHeader) {
+
+        Dataset d = new Gson().fromJson(datasetAsJson, Dataset.class);
+
+        if (acceptHeader.contains("text/turtle")) {
+            return new ResponseEntity<>(DcatBuilder.transform(d, "TURTLE"), HttpStatus.OK);
+        } else if (acceptHeader.contains("application/ld+json")) {
+            return new ResponseEntity<>(DcatBuilder.transform(d, "JSON-LD"), HttpStatus.OK);
+        } else if (acceptHeader.contains("application/rdf+xml")) {
+            return new ResponseEntity<>(DcatBuilder.transform(d, "RDF/XML"), HttpStatus.OK);
+        }
+
+        return null;
     }
 
     String extractIdentifier(HttpServletRequest request) {
