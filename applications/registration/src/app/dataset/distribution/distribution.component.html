@@ -22,21 +22,21 @@
                 <helptext
                     name="Distribution_accessURL">
                 </helptext>
-                <input autofocus class="fdk-input" id="access-url" type="text" formControlName="accessURL" trim/>
+                <input autofocus class="fdk-input fdk-input-reg-string" id="access-url" type="text" formControlName="accessURL" trim/>
             </div>
 
             <label for="format" class="fdk-input-label">Format</label>
             <helptext
               name="Distribution_format">
             </helptext>
-            <rl-tag-input class="fdk-input" (click)="focus($event)" id="format" formControlName="format" placeholder=""></rl-tag-input>
+            <rl-tag-input class="fdk-input fdk-input-reg-string" (click)="focus($event)" id="format" formControlName="format" placeholder=""></rl-tag-input>
 
             <div class="fdk-input-container">
                 <p class="fdk-input-label">Lisens</p>
                 <helptext
                     name="Distribution_license">
                 </helptext>
-                <input autofocus class="fdk-input" id="license" type="text" formControlName="license" trim/>
+                <input autofocus class="fdk-input fdk-input-reg-string" id="license" type="text" formControlName="license" trim/>
             </div>
 
             <div class="fdk-input-container">
@@ -44,7 +44,7 @@
                 <helptext
                   name="Distribution_description">
                 </helptext>
-                <textarea class="fdk-input fdk-input-h3-2" rows="2" id="description" formControlName="description"></textarea>
+                <textarea class="fdk-input fdk-input-reg-string fdk-input-h3-2" rows="2" id="description" formControlName="description"></textarea>
             </div>
 
             <div class="fdk-input-container">
@@ -52,7 +52,7 @@
                 <helptext
                     name="Distribution_documentation">
                 </helptext>
-                <input autofocus class="fdk-input" id="page" type="text" formControlName="page" trim/>
+                <input autofocus class="fdk-input fdk-input-reg-string" id="page" type="text" formControlName="page" trim/>
             </div>
 
             <br>
@@ -63,11 +63,11 @@
                 <div class="row">
                     <div class="col-md-5">
                         <p class="fdk-input-label">Tittel på standard</p>
-                        <input formControlName="conformsToPrefLabel" class="fdk-input ng-touched" type="text"/>
+                        <input formControlName="conformsToPrefLabel" class="fdk-input fdk-input-reg-string ng-touched" type="text"/>
                     </div>
                     <div class="col-md-7">
                         <p class="fdk-input-label">Lenke til standard</p>
-                        <input formControlName="conformsToUri" class="fdk-input ng-touched" type="text" trim/>
+                        <input formControlName="conformsToUri" class="fdk-input fdk-input-reg-string ng-touched" type="text" trim/>
                     </div>
                 </div>
             </div>

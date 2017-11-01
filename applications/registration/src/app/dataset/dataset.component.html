@@ -16,7 +16,7 @@
           <helptext
             name="Dataset_title">
           </helptext>
-          <input autofocus class="fdk-input" id="dataset-title" (keyup)="valuechange($event)" type="text"
+          <input autofocus class="fdk-input fdk-input-reg-string" id="dataset-title" (keyup)="valuechange($event)" type="text"
                  [(ngModel)]="dataset.title[language]"/>
         </div>
 
@@ -25,7 +25,7 @@
         <helptext
           name="Dataset_description">
         </helptext>
-        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
+        <textarea class="fdk-input fdk-input-reg-string fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
         (ngModelChange)="valuechange(this)"
         [(ngModel)]='dataset.description[language]'></textarea>
       </div>
@@ -35,7 +35,7 @@
         <helptext
           name="Dataset_objective">
         </helptext>
-        <textarea class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
+        <textarea class="fdk-input fdk-input-reg-string fdk-register-h3-2" rows="5" id="dataset-objective"
         (ngModelChange)="valuechange(this)"
         [(ngModel)]='dataset.objective[language]'></textarea>
       </div>
@@ -45,7 +45,7 @@
           <helptext
             name="Dataset_landingpage">
           </helptext>
-          <input class="fdk-input" id="dataset-landingpage" (keyup)="valuechange($event)" type="url"
+          <input class="fdk-input fdk-input-reg-string" id="dataset-landingpage" (keyup)="valuechange($event)" type="url"
                  [(ngModel)]="dataset.landingPages[0]" trim/>
         </div>
       </div>
@@ -321,7 +321,7 @@
             Distribusjoner<b class="caret-right"></b>
         </label>
         <div class="col-md-push-1 col-md-8 collapsed">
-            <input type="checkbox" id="distributions-toggle" class="expand-checkbox"/>
+            <input type="checkbox" id="distributions-toggle" class="expand-checkbox" tabindex="0" />
             <div *ngIf="dataset.distributions">
                 <div *ngFor="let distribution of dataset.distributions">
                     <label for="distributions-toggle" class="expand-label collapsed-content" style="display:block;">

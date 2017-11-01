@@ -1,5 +1,5 @@
 <div *ngIf="titleUriForm && titleUriForm.controls.prefLabel">
-    <div class="titleUri-form" 
+    <div class="titleUri-form"
         [formGroup]="titleUriForm">
         <div class="row form-group">
             <h4 (click)="toggleForm()">
@@ -23,13 +23,13 @@
                         Lenke til {{titleUriType}}
                     </p>
                 </div>
-            </div>            
+            </div>
             <div class="fdk-input-container">
-                <div *ngIf="titleUriForm.controls.prefLabel" class="col-md-5">                    
-                    <input formControlName="prefLabel" class="fdk-input ng-touched" type="text"/>
+                <div *ngIf="titleUriForm.controls.prefLabel" class="col-md-5">
+                    <input formControlName="prefLabel" class="fdk-input fdk-input-reg-string ng-touched" type="text"/>
                 </div>
-                <div *ngIf="titleUriForm.controls.uri" class="col-md-5">                    
-                    <input formControlName="uri" class="fdk-input ng-touched" type="text" trim/>
+                <div *ngIf="titleUriForm.controls.uri" class="col-md-5">
+                    <input formControlName="uri" class="fdk-input fdk-input-reg-string ng-touched" type="text" trim/>
                 </div>
                 <div class="col-md-2">
                     <span class="delete-titleUri-wrapper" *ngIf="showDelete">
