@@ -238,28 +238,56 @@ public class DcatBuilder {
         return true;
     }
 
+    boolean isNullOrEmpty(String value) {
+        if (value == null) return true;
+
+        if (value.isEmpty()) return true;
+
+        return false;
+    }
+
     private void addReferences(Resource datRes, List<Reference> references) {
         if (references != null && references.size() > 0) {
             references.forEach(reference -> {
-                if (reference != null && reference.getReferenceType() != null &&
-                        reference.getSource() != null && reference.getSource().getUri() != null) {
+                if (reference != null) {
 
-                    Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
+                    SkosCode referenceType = reference.getReferenceType();
+                    SkosConcept source = reference.getSource();
 
-                    Map<String, String> prefLabel = reference.getSource().getPrefLabel();
+                    if (referenceType == null && source == null) {
+                        return;
+                    }
+
+                    if (isNullOrEmpty(referenceType.getUri()) && isNullOrEmpty(referenceType.getCode())) {
+                        return;
+                    }
+
+                    if (isNullOrEmpty(source.getUri())) {
+                        return;
+                    }
+
+                    String referencePropertyUri;
+                    if (!isNullOrEmpty(referenceType.getUri())) {
+                        referencePropertyUri = referenceType.getUri();
+                    } else {
+                        referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
+                    }
+
+                    Property referenceProperty = model.createProperty(referencePropertyUri);
+
+                    Map<String, String> prefLabel = source.getPrefLabel();
                     if (hasContent(prefLabel)) {
                         Resource r = model.createResource();
                         r.addProperty(RDF.type, DCAT.Dataset);
                         addLiterals(r, SKOS.prefLabel, prefLabel);
-                        r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
+                        r.addProperty(DCTerms.source, model.createResource(source.getUri()));
                         datRes.addProperty(referenceProperty, r);
 
                     } else {
-                        Resource r = model.createResource(reference.getSource().getUri());
+                        Resource r = model.createResource(source.getUri());
                         datRes.addProperty(referenceProperty, r);
                     }
                 }
-
             });
         }
     }
