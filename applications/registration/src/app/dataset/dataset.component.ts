@@ -142,7 +142,7 @@ export class DatasetComponent implements OnInit {
       this.dataset.informationModels[0] = this.dataset.informationModels[0] || {uri: '', prefLabel: {'nb' : ''}};
       this.dataset.references = this.dataset.references || [];
 
-      this.setChecked = this.dataset.title[this.language] === '';
+      this.setChecked = !this.dataset.title[this.language];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
 
