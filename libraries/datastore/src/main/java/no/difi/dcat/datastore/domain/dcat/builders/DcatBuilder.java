@@ -52,18 +52,10 @@ public class DcatBuilder {
 
     public static final Model mod = ModelFactory.createDefaultModel();
 
-    public static final String TIME = "http://www.w3.org/TR/owl-time/";
-
     public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
-
-    public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
-    public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
-    public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
-    public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
 
     static Property schema_startDate = mod.createProperty("http://schema.org/startDate");
     static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
-
 
     private final Model model;
 
@@ -73,7 +65,6 @@ public class DcatBuilder {
         model.setNsPrefix("dcat", DCAT.NS);
         model.setNsPrefix("foaf", FOAF.NS);
         model.setNsPrefix("vcard", VCARD4.NS);
-        model.setNsPrefix("time", TIME);
         model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS.NS);
@@ -238,29 +229,61 @@ public class DcatBuilder {
         return true;
     }
 
+    boolean isNullOrEmpty(String value) {
+        if (value == null) return true;
+
+        if (value.isEmpty()) return true;
+
+        return false;
+    }
+
     private void addReferences(Resource datRes, List<Reference> references) {
         if (references != null && references.size() > 0) {
             references.forEach(reference -> {
-                if (reference != null && reference.getReferenceType() != null &&
-                        reference.getSource() != null && reference.getSource().getUri() != null) {
-
-                    Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
-
-                    Map<String, String> prefLabel = reference.getSource().getPrefLabel();
-                    if (hasContent(prefLabel)) {
-                        Resource r = model.createResource();
-                        r.addProperty(RDF.type, DCAT.Dataset);
-                        addLiterals(r, SKOS.prefLabel, prefLabel);
-                        r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
-                        datRes.addProperty(referenceProperty, r);
-
-                    } else {
-                        Resource r = model.createResource(reference.getSource().getUri());
-                        datRes.addProperty(referenceProperty, r);
-                    }
-                }
-
+                addReference(datRes, reference);
             });
+        }
+    }
+
+    private void addReference(Resource datRes, Reference reference) {
+        if (reference != null) {
+
+            SkosCode referenceType = reference.getReferenceType();
+            SkosConcept source = reference.getSource();
+
+            if (referenceType == null || source == null) {
+                return;
+            }
+
+            if (isNullOrEmpty(referenceType.getUri()) && isNullOrEmpty(referenceType.getCode())) {
+                return;
+            }
+
+            if (isNullOrEmpty(source.getUri())) {
+                return;
+            }
+
+            String referencePropertyUri;
+            if (!isNullOrEmpty(referenceType.getUri())) {
+                referencePropertyUri = referenceType.getUri();
+            } else {
+                referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
+            }
+
+            Property referenceProperty = model.createProperty(referencePropertyUri);
+
+            Map<String, String> prefLabel = source.getPrefLabel();
+            if (hasContent(prefLabel)) {
+                Resource r = model.createResource();
+                r.addProperty(RDF.type, DCAT.Dataset);
+                addLiterals(r, SKOS.prefLabel, prefLabel);
+                r.addProperty(DCTerms.source, model.createResource(source.getUri()));
+                datRes.addProperty(referenceProperty, r);
+
+            } else {
+                Resource r = model.createResource(source.getUri());
+                datRes.addProperty(referenceProperty, r);
+            }
         }
     }
 
