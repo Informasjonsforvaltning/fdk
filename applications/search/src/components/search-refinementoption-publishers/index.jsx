@@ -31,10 +31,11 @@ export class RefinementOptionPublishers extends React.Component {
     const textLabel = localization.search_hit[optionLabel] ? localization.search_hit[optionLabel] : optionLabel;
     return (
       <div className="checkbox">
-        <label htmlFor={id}>
+        <label onKeyPress={onClick} tabIndex="1" htmlFor={id}>
           <input
             type="checkbox"
             id={id}
+            tabIndex="-1"
             checked={active}
             onChange={onClick}
             className={`${bemBlocks.option().state({ active }).mix(bemBlocks.container('item'))

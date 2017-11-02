@@ -32,10 +32,11 @@ export class RefinementOptionThemes extends React.Component {
     const id = encodeURIComponent((itemKey + Math.random()));
     return (
       <div className="checkbox">
-        <label htmlFor={id}>
+        <label onKeyPress={onClick} tabIndex="1" htmlFor={id}>
           <input
             type="checkbox"
             id={id}
+            tabIndex="-1"
             checked={active}
             onChange={onClick}
             className={`${bemBlocks.option().state({ active })} list-group-item fdk-label fdk-label-default`}

@@ -164,6 +164,10 @@ input:checked ~ .checkbox-replacement::after {
   margin-top: 7px;
 }
 
+.fdk-button-language:focus {
+	outline: auto !important;
+}
+
 /*
 EQUAL COLUMNS
  */
