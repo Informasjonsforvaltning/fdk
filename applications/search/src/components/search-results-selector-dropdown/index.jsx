@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import localization from '../localization';
-
 export default class Select extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +15,6 @@ export default class Select extends React.Component {
   onChange(e) {
     const key = e.key;
     this.props.setItems([key]);
-    const text = this.props.translate(e.label || e.title || e.key);
     this.setState({
       selectedValue: e.label || e.title || e.key
     });

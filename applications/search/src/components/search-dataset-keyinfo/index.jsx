@@ -18,19 +18,19 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     const { type, informationModel, conformsTo } = this.props;
     let countClasses = 0;
     if (type) {
-      countClasses = countClasses + 1;
+      countClasses += 1;
     }
     if (informationModel && informationModel.length > 0) {
-      countClasses = countClasses + 1;
+      countClasses += 1;
     }
     if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
-      countClasses = countClasses + 1;
+      countClasses += 1;
     }
     if (countClasses > 0) {
       const colWidht = 12 / countClasses;
       const colClass = `col-md-${colWidht}`;
       this.state = {
-        colClass: colClass
+        colClass
       };
     }
   }
@@ -74,7 +74,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
-            : localization.dataset.legalBasisForRestrictionDefaultText
+              : localization.dataset.legalBasisForRestrictionDefaultText
           }
           <i className="fa fa-external-link fdk-fa-right" />
         </a>
@@ -93,7 +93,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
-            : localization.dataset.legalBasisForProcessingDefaultText
+              : localization.dataset.legalBasisForProcessingDefaultText
           }
           <i className="fa fa-external-link fdk-fa-right" />
         </a>
@@ -112,7 +112,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
             || item.prefLabel.nb
             || item.prefLabel.nn
             || item.prefLabel.en
-            : localization.dataset.leagalBasisForAccessDefaultText
+              : localization.dataset.leagalBasisForAccessDefaultText
           }
           <i className="fa fa-external-link fdk-fa-right" />
         </a>

@@ -18,7 +18,7 @@ import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../../components/localization';
 import SearchHitItem from '../../components/search-results-hit-item';
 import SelectDropdown from '../../components/search-results-selector-dropdown';
-import { CustomHitsStats } from '../../components/search-result-custom-hitstats';
+import CustomHitsStats from '../../components/search-result-custom-hitstats';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
 
@@ -44,7 +44,7 @@ searchkit.translateFunction = (key) => {
     'facets.view_all': localization.page.seeall,
     'facets.view_less': localization.page.seefewer,
     'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} ` + ' {numberResults}' + ` ${localization.page.dataset}`,
+    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
     'NoHits.Error': localization.noHits.error,
     'NoHits.ResetSearch': '.',
     'sort.by': localization.sort.by,
@@ -67,12 +67,12 @@ export default class SearchPage extends React.Component {
         .end((err, res) => {
           if (!err && res) {
             res.body.forEach((hit) => {
-                const obj = {};
-                obj[hit.code] = {};
-                obj[hit.code].nb = hit.title.nb;
-                obj[hit.code].nn = hit.title.nb;
-                obj[hit.code].en = hit.title.en;
-                window.themes.push(obj);
+              const obj = {};
+              obj[hit.code] = {};
+              obj[hit.code].nb = hit.title.nb;
+              obj[hit.code].nn = hit.title.nb;
+              obj[hit.code].en = hit.title.en;
+              window.themes.push(obj);
             });
           }
         });

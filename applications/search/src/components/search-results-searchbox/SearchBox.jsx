@@ -1,4 +1,4 @@
-'use strict';
+
 
 const __extends = (this && this.__extends) || function(d, b) {
   for (const p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
