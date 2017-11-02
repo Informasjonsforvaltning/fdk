@@ -42,7 +42,7 @@ public class BackgroundPage extends CommonPage {
         stopDriver();
     }
 
-    @Given("^I clean elastic search\\.$")
+    @Given("^I start with empty elasticsearch index\\.$")
     public void cleanElasticSearch() throws Throwable {
         String hostname = "localhost";
         int port = 9300;

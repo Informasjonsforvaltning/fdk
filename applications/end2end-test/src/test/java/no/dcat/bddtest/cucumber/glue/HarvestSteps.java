@@ -22,11 +22,14 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by dask on 16.12.2016.
  */
-public class GdocCatalogSteps extends CommonPage {
+public class HarvestSteps extends CommonPage {
+
+    //TODO: Refaktorer i harvest og portalsteg. Se også på backgroundpage og commonpage.
+    //TODO: slett ubrukte stegdefinisjoenr
 
     //  private final WebDriver driver = WebDriverFactory.createWebDriver();
 
-    private static Logger logger = LoggerFactory.getLogger(GdocCatalogSteps.class);
+    private static Logger logger = LoggerFactory.getLogger(HarvestSteps.class);
 
 
     public static String PORTAL_URL = "http://localhost:8080"; // = "http://fdk-por-fellesdatakatalog-ut1.ose-npc.brreg.no/"; //"http://portal-fdk.tt1.brreg.no";
@@ -128,7 +131,7 @@ public class GdocCatalogSteps extends CommonPage {
 
     }
 
-    @Then("^the following dataset detail pages shall exist:$")
+    @Then("^the following dataset detail pages shall exist in search portal:$")
     public void norwegianProperties(DataTable datasets) throws Throwable {
 
 
