@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
