@@ -26,7 +26,9 @@ export default class About extends React.Component {
               </p>
             </div>
             <div className="fdk-textregular">
-              <p dangerouslySetInnerHTML={this.createMainTextMarkup()} />
+              {
+                // eslint-disable-next-line react/no-danger
+              }<p dangerouslySetInnerHTML={this.createMainTextMarkup()} />
             </div>
           </div>
         </div>

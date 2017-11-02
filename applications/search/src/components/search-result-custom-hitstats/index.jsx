@@ -1,18 +1,18 @@
-const qs = require('qs');
-const React = require('react');
+import React from 'react'; // const React = require('react');
+import qs from 'qs'; // const qs = require('qs');
 
 import localization from '../localization';
 
-export const CustomHitsStats = (props) => {
-  const { resultsFoundLabel, bemBlocks, hitsCount, timeTaken } = props;
+const CustomHitsStats = (props) => {
+  const { hitsCount, timeTaken } = props;
   const queryObj = qs.parse(window.location.search.substr(1));
   let requestCompleted = true;
-  if(timeTaken === window['timeTaken']) {
+  if(timeTaken === window.timeTaken) {
     requestCompleted =  false;
   }
-  window['timeTaken'] = timeTaken;
+  window.timeTaken = timeTaken;
   const filteringOrTextSearchPerformed = queryObj ? Object.keys(queryObj).length > 1 || (Object.keys(queryObj).length === 1 && !queryObj.lang) : false;
-  const hitsCountInt = hitsCount ? parseInt(hitsCount) : 0;
+  const hitsCountInt = hitsCount ? parseInt(hitsCount, 10) : 0;
 
   if (requestCompleted && filteringOrTextSearchPerformed) { // it's a search
     return (
@@ -33,3 +33,5 @@ export const CustomHitsStats = (props) => {
   }
   return null;
 };
+
+export default CustomHitsStats;

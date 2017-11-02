@@ -31,7 +31,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
             source={item.source}
           />
         );
-      }
+      } return null;
     });
     if (subject) {
       return (

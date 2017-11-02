@@ -9,13 +9,13 @@ export class RefinementOptionThemes extends React.Component {
       if (label === 'Ukjent') {
         themeLabel = label;
       } else {
-        let lang = localization.getLanguage();
+        const lang = localization.getLanguage();
         if(_.find(window.themes, label.substr(-4))) {
           themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)][lang];
         } else if(label === 'showmorelabel') {
           themeLabel = label;
           return (
-              <label htmlFor="showAllThemesToggle" >{localization.facet.showmore}</label>
+            <label htmlFor="showAllThemesToggle" >{localization.facet.showmore}</label>
           )
         } else if(label === 'showfewerlabel') {
           return (
@@ -23,7 +23,7 @@ export class RefinementOptionThemes extends React.Component {
           )
         } else if(label === 'showmoreinput') {
           return (
-            <input type="checkbox" id="showAllThemesToggle" ></input>
+            <input type="checkbox" id="showAllThemesToggle"  />
           )
 
         }
