@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -96,14 +97,21 @@ public class DcatBuilder {
         DcatBuilder builder = new DcatBuilder();
         builder.addCatalog(catalog);
 
-        OutputStream out = new ByteArrayOutputStream();
-        builder.model.write(out, outputFormat);
-        return out.toString();
+        return builder.getDcatOutput(outputFormat);
+    }
+
+    public static String transform(Dataset dataset, String outputFormat) {
+        DcatBuilder builder = new DcatBuilder();
+        builder.addDataset(dataset);
+
+        return builder.getDcatOutput(outputFormat);
     }
 
     public String getDcatOutput(String outputFormat) {
         OutputStream out = new ByteArrayOutputStream();
-        return model.write(out, outputFormat).toString();
+        model.write(out, outputFormat);
+
+        return out.toString();
     }
 
     public Model getModel() {
@@ -123,12 +131,21 @@ public class DcatBuilder {
         return this;
     }
 
+    public DcatBuilder addDataset(Dataset dataset) {
+
+        addDatasets(null, Arrays.asList(dataset));
+
+        return this;
+    }
+
     public DcatBuilder addDatasets(Resource catRes, List<Dataset> datasets) {
         if (datasets != null) {
             for (Dataset dataset : datasets) {
                 if (dataset != null) {
                     try {
-                        addProperty(catRes, DCAT.dataset, dataset.getUri());
+                        if (catRes != null) {
+                            addProperty(catRes, DCAT.dataset, dataset.getUri());
+                        }
 
                         Resource datRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
 
@@ -140,7 +157,6 @@ public class DcatBuilder {
 
                         addContactPoints(datRes, dataset.getContactPoint());
                         addKeywords(datRes, dataset.getKeyword());
-                        addUriProperty(datRes, DCTerms.publisher, dataset.getPublisher());
 
                         addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
                         addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
@@ -340,16 +356,30 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
+        String publisherId = "";
+
         if (publisher != null) {
             try {
-                addProperty(resource, DCTerms.publisher, publisher.getUri());
+                Resource publisherResource = null;
+                if (publisher.getUri() != null && !publisher.getUri().isEmpty()) {
+                    publisherId = publisher.getUri();
+                     publisherResource = model.createResource(publisher.getUri());
+                } else {
+                    if (publisher.getId() != null && !publisher.getId().isEmpty()){
+                        publisherId = publisher.getId();
+                        publisherResource = model.createResource(publisher.getId());
+                    } else {
+                        publisherResource = model.createResource();
+                    }
+                }
 
-                Resource pubRes = createResource(publisher, publisher.getUri(), FOAF.Agent);
+                resource.addProperty(DCTerms.publisher, publisherResource);
+                publisherResource.addProperty(RDF.type, FOAF.Agent);
 
-                addLiteral(pubRes, FOAF.name, publisher.getName());
-                addLiteral(pubRes, DCTerms.identifier, publisher.getId());
+                addLiteral(publisherResource, FOAF.name, publisher.getName());
+                addLiteral(publisherResource, DCTerms.identifier, publisher.getIdentifier());
             } catch (Exception e) {
-                logger.error("Unable to export publisher {}. Reason {}", publisher.getUri(), e.getLocalizedMessage(), e);
+                logger.error("Unable to export publisher {}. Reason {}", publisherId, e.getLocalizedMessage(), e);
             }
         }
         return this;
