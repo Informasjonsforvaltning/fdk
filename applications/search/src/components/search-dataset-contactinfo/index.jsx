@@ -10,12 +10,14 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     let uri,
       email,
       organizationUnit,
+      hasURL,
       hasTelephone = null;
 
     if (contactPoint) {
       uri = contactPoint.uri;
       email = contactPoint.email;
       organizationUnit = contactPoint.organizationUnit;
+      hasURL = contactPoint.hasURL;
       hasTelephone = contactPoint.hasTelephone;
     }
 
@@ -36,34 +38,10 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     );
 
     return (
-      <div id="dataset-contactinfo" className="fdk-margin-top-triple">
+      <div className="dataset-contactinfo">
         <div className="row fdk-row">
 
-        {this.props.landingPage && this.props.landingPage[0] &&
-        <div className="col-md-12 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon fdk-padding-no">
-              <i className="fa fa-info fdk-detail-icon-oneline" />
-            </div>
-            <div className="fdk-detail-text">
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                <a
-                  id="dataset-contact-uri"
-                  title={localization.dataset.contactPoint.background}
-                  href={this.props.landingPage[0]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {localization.dataset.contactPoint.background}
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-        }
-
-        {organizationUnit && uri &&
+        {organizationUnit &&
           <div className="col-md-12 fdk-padding-no">
             <div className="fdk-container-detail">
               <div className="fdk-detail-icon fdk-padding-no">
@@ -71,16 +49,21 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
               </div>
               <div className="fdk-detail-text">
                 <p className="fdk-ingress fdk-margin-bottom-no">
+                  {hasURL &&
                   <a
-                    id="dataset-contact-url"
+                    className="dataset-contact-url"
                     title={`${localization.dataset.contactPoint.organizationUnit} ${organizationUnit}`}
-                    href={uri || null}
+                    href={hasURL || null}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     {localization.dataset.contactPoint.organizationUnit} {organizationUnit}
-                    <i className="fa fa-external-link fdk-fa-right" />
+                    <i className="fa fa-external-link fdk-fa-right"/>
                   </a>
+                  }
+                  {!hasURL &&
+                   `${localization.dataset.contactPoint.organizationUnit} ${organizationUnit}`
+                  }
                 </p>
               </div>
             </div>
@@ -132,11 +115,9 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
 }
 
 DatasetContactInfo.defaultProps = {
-  contactPoint: null,
-  landingPage: null
+  contactPoint: null
 };
 
 DatasetContactInfo.propTypes = {
-  contactPoint: PropTypes.object,
-  landingPage: PropTypes.array
+  contactPoint: PropTypes.object
 };
