@@ -1,10 +1,10 @@
 logging:
   level.: ERROR
-  level.no.brreg: DEBUG
+  level.no.brreg: ERROR
   level.no.difi: ERROR
-  level.no.dcat: DEBUG
+  level.no.dcat: INFO
   level.org.springframework: WARN
-  level.org.springframework.web: ERROR
+  level.org.springframework.web: INFO
 server:
   compression:
     enabled: true

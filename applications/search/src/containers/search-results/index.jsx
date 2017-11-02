@@ -124,6 +124,7 @@ export default class SearchPage extends React.Component {
                   <div className="col-md-4 col-md-offset-8">
                     <div className="pull-right">
                       <SortingSelector
+                        tabIndex="1"
                         options={[
                           {
                             label: 'sort.relevance',
