@@ -8,6 +8,7 @@ import DatasetDistribution from '../../components/search-dataset-distribution';
 import DatasetInfo from '../../components/search-dataset-info';
 import DatasetQuality from '../../components/search-dataset-quality-content';
 import DatasetBegrep from '../../components/search-dataset-begrep';
+import DatasetLandingPage from '../../components/search-dataset-landingpage';
 import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
@@ -174,18 +175,36 @@ export default class DetailsPage extends React.Component {
     return null;
   }
 
-  _renderContactInfo() {
+  _renderLandingPageAndContactInfo() {
     const { contactPoint, landingPage } = this.state.dataset;
-    if (!contactPoint) {
+    if (!(contactPoint || landingPage)) {
       return null;
     }
-    return contactPoint.map(item => (
+    const contactPoints = (items) => items.map(item => (
       <DatasetContactInfo
         key={item.uri}
         landingPage={landingPage}
         contactPoint={item}
       />
     ));
+
+    const landingPages = (items) => items.map((item, index) => (
+      <DatasetLandingPage
+        id={`dataset-contactpoint-${index}`}
+        landingPage={item}
+      />
+    ));
+
+    return (
+      <div className="fdk-margin-top-triple">
+        {landingPage &&
+        landingPages(landingPage)
+        }
+        {contactPoint &&
+        contactPoints(contactPoint)
+        }
+      </div>
+    );
   }
 
   _renderBegrep() {
@@ -216,7 +235,7 @@ export default class DetailsPage extends React.Component {
               {this._renderDatasetInfo()}
               {this._renderQuality()}
               {this._renderBegrep()}
-              {this._renderContactInfo()}
+              {this._renderLandingPageAndContactInfo()}
             </div>
           </div>
         </div>

@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,18 +52,10 @@ public class DcatBuilder {
 
     public static final Model mod = ModelFactory.createDefaultModel();
 
-    public static final String TIME = "http://www.w3.org/TR/owl-time/";
-
     public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
-
-    public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
-    public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
-    public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
-    public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
 
     static Property schema_startDate = mod.createProperty("http://schema.org/startDate");
     static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
-
 
     private final Model model;
 
@@ -72,7 +65,6 @@ public class DcatBuilder {
         model.setNsPrefix("dcat", DCAT.NS);
         model.setNsPrefix("foaf", FOAF.NS);
         model.setNsPrefix("vcard", VCARD4.NS);
-        model.setNsPrefix("time", TIME);
         model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS.NS);
@@ -96,14 +88,21 @@ public class DcatBuilder {
         DcatBuilder builder = new DcatBuilder();
         builder.addCatalog(catalog);
 
-        OutputStream out = new ByteArrayOutputStream();
-        builder.model.write(out, outputFormat);
-        return out.toString();
+        return builder.getDcatOutput(outputFormat);
+    }
+
+    public static String transform(Dataset dataset, String outputFormat) {
+        DcatBuilder builder = new DcatBuilder();
+        builder.addDataset(dataset);
+
+        return builder.getDcatOutput(outputFormat);
     }
 
     public String getDcatOutput(String outputFormat) {
         OutputStream out = new ByteArrayOutputStream();
-        return model.write(out, outputFormat).toString();
+        model.write(out, outputFormat);
+
+        return out.toString();
     }
 
     public Model getModel() {
@@ -123,12 +122,21 @@ public class DcatBuilder {
         return this;
     }
 
+    public DcatBuilder addDataset(Dataset dataset) {
+
+        addDatasets(null, Arrays.asList(dataset));
+
+        return this;
+    }
+
     public DcatBuilder addDatasets(Resource catRes, List<Dataset> datasets) {
         if (datasets != null) {
             for (Dataset dataset : datasets) {
                 if (dataset != null) {
                     try {
-                        addProperty(catRes, DCAT.dataset, dataset.getUri());
+                        if (catRes != null) {
+                            addProperty(catRes, DCAT.dataset, dataset.getUri());
+                        }
 
                         Resource datRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
 
@@ -140,7 +148,6 @@ public class DcatBuilder {
 
                         addContactPoints(datRes, dataset.getContactPoint());
                         addKeywords(datRes, dataset.getKeyword());
-                        addUriProperty(datRes, DCTerms.publisher, dataset.getPublisher());
 
                         addDateTimeLiteral(datRes, DCTerms.issued, dataset.getIssued());
                         addDateLiteral(datRes, DCTerms.modified, dataset.getModified());
@@ -222,29 +229,61 @@ public class DcatBuilder {
         return true;
     }
 
+    boolean isNullOrEmpty(String value) {
+        if (value == null) return true;
+
+        if (value.isEmpty()) return true;
+
+        return false;
+    }
+
     private void addReferences(Resource datRes, List<Reference> references) {
         if (references != null && references.size() > 0) {
             references.forEach(reference -> {
-                if (reference != null && reference.getReferenceType() != null &&
-                        reference.getSource() != null && reference.getSource().getUri() != null) {
-
-                    Property referenceProperty = model.createProperty(DCTerms.getURI(), reference.getReferenceType().getCode());
-
-                    Map<String, String> prefLabel = reference.getSource().getPrefLabel();
-                    if (hasContent(prefLabel)) {
-                        Resource r = model.createResource();
-                        r.addProperty(RDF.type, DCAT.Dataset);
-                        addLiterals(r, SKOS.prefLabel, prefLabel);
-                        r.addProperty(DCTerms.source, model.createResource(reference.getSource().getUri()));
-                        datRes.addProperty(referenceProperty, r);
-
-                    } else {
-                        Resource r = model.createResource(reference.getSource().getUri());
-                        datRes.addProperty(referenceProperty, r);
-                    }
-                }
-
+                addReference(datRes, reference);
             });
+        }
+    }
+
+    private void addReference(Resource datRes, Reference reference) {
+        if (reference != null) {
+
+            SkosCode referenceType = reference.getReferenceType();
+            SkosConcept source = reference.getSource();
+
+            if (referenceType == null || source == null) {
+                return;
+            }
+
+            if (isNullOrEmpty(referenceType.getUri()) && isNullOrEmpty(referenceType.getCode())) {
+                return;
+            }
+
+            if (isNullOrEmpty(source.getUri())) {
+                return;
+            }
+
+            String referencePropertyUri;
+            if (!isNullOrEmpty(referenceType.getUri())) {
+                referencePropertyUri = referenceType.getUri();
+            } else {
+                referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
+            }
+
+            Property referenceProperty = model.createProperty(referencePropertyUri);
+
+            Map<String, String> prefLabel = source.getPrefLabel();
+            if (hasContent(prefLabel)) {
+                Resource r = model.createResource();
+                r.addProperty(RDF.type, DCAT.Dataset);
+                addLiterals(r, SKOS.prefLabel, prefLabel);
+                r.addProperty(DCTerms.source, model.createResource(source.getUri()));
+                datRes.addProperty(referenceProperty, r);
+
+            } else {
+                Resource r = model.createResource(source.getUri());
+                datRes.addProperty(referenceProperty, r);
+            }
         }
     }
 
@@ -340,16 +379,30 @@ public class DcatBuilder {
     }
 
     public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
+        String publisherId = "";
+
         if (publisher != null) {
             try {
-                addProperty(resource, DCTerms.publisher, publisher.getUri());
+                Resource publisherResource = null;
+                if (publisher.getUri() != null && !publisher.getUri().isEmpty()) {
+                    publisherId = publisher.getUri();
+                     publisherResource = model.createResource(publisher.getUri());
+                } else {
+                    if (publisher.getId() != null && !publisher.getId().isEmpty()){
+                        publisherId = publisher.getId();
+                        publisherResource = model.createResource(publisher.getId());
+                    } else {
+                        publisherResource = model.createResource();
+                    }
+                }
 
-                Resource pubRes = createResource(publisher, publisher.getUri(), FOAF.Agent);
+                resource.addProperty(DCTerms.publisher, publisherResource);
+                publisherResource.addProperty(RDF.type, FOAF.Agent);
 
-                addLiteral(pubRes, FOAF.name, publisher.getName());
-                addLiteral(pubRes, DCTerms.identifier, publisher.getId());
+                addLiteral(publisherResource, FOAF.name, publisher.getName());
+                addLiteral(publisherResource, DCTerms.identifier, publisher.getIdentifier());
             } catch (Exception e) {
-                logger.error("Unable to export publisher {}. Reason {}", publisher.getUri(), e.getLocalizedMessage(), e);
+                logger.error("Unable to export publisher {}. Reason {}", publisherId, e.getLocalizedMessage(), e);
             }
         }
         return this;

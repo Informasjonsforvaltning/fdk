@@ -22,7 +22,11 @@ application:
 ---
 #Utv-miljø lokalt på egen PC
 spring:
-  profiles: develop
+  profiles: develop, unit-integration
+application:
+  elasticsearchHost: localhost
+  elasticsearchPort: 9300
+  clusterName: elasticsearch
 logging:
   level.: ERROR
   level.no.brreg: DEBUG
