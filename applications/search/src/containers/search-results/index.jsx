@@ -11,8 +11,8 @@ import {
   TopBar
 } from 'searchkit';
 
-import { RefinementOptionThemes } from '../../components/search-refinementoption-themes';
-import { RefinementOptionPublishers } from '../../components/search-refinementoption-publishers';
+import RefinementOptionThemes from '../../components/search-refinementoption-themes';
+import RefinementOptionPublishers from '../../components/search-refinementoption-publishers';
 import { SearchBox } from '../../components/search-results-searchbox';
 import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../../components/localization';
