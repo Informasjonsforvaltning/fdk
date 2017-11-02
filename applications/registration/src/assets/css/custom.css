@@ -3,6 +3,6 @@ input.more-help-checkbox:focus + span + label + span label,
 input[type=checkbox]:focus + label.checkbox-replacement,
 input[type=checkbox]:focus + label.expand-label
 {
-  outline: 1px dotted #197DAF;
+  outline: 1px dotted #197DAF !important;
   outline: -webkit-focus-ring-color auto 5px;
 }
