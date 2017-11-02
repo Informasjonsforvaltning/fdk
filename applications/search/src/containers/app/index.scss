@@ -163,3 +163,7 @@ input:checked ~ .checkbox-replacement::after {
 .sk-hits-grid {
   margin-top: 7px;
 }
+
+.fdk-button-language:focus {
+	outline: auto !important;
+}
