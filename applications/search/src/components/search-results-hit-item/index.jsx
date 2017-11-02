@@ -114,7 +114,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   }
 
   render() {
-    console.log("test");
     const language = this.props.selectedLanguageCode;
     const langCode = getLanguageFromUrl();
     const langParam = langCode ? `?lang=${langCode}` : '';

@@ -20,7 +20,7 @@
       }
     ],
     */
-
+    "no-console": ["error", { "allow": ["warn"] }],
     "indent": [
       2,
       2,
