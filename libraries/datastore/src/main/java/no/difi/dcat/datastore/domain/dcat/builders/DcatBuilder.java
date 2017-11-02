@@ -249,46 +249,50 @@ public class DcatBuilder {
     private void addReferences(Resource datRes, List<Reference> references) {
         if (references != null && references.size() > 0) {
             references.forEach(reference -> {
-                if (reference != null) {
-
-                    SkosCode referenceType = reference.getReferenceType();
-                    SkosConcept source = reference.getSource();
-
-                    if (referenceType == null && source == null) {
-                        return;
-                    }
-
-                    if (isNullOrEmpty(referenceType.getUri()) && isNullOrEmpty(referenceType.getCode())) {
-                        return;
-                    }
-
-                    if (isNullOrEmpty(source.getUri())) {
-                        return;
-                    }
-
-                    String referencePropertyUri;
-                    if (!isNullOrEmpty(referenceType.getUri())) {
-                        referencePropertyUri = referenceType.getUri();
-                    } else {
-                        referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
-                    }
-
-                    Property referenceProperty = model.createProperty(referencePropertyUri);
-
-                    Map<String, String> prefLabel = source.getPrefLabel();
-                    if (hasContent(prefLabel)) {
-                        Resource r = model.createResource();
-                        r.addProperty(RDF.type, DCAT.Dataset);
-                        addLiterals(r, SKOS.prefLabel, prefLabel);
-                        r.addProperty(DCTerms.source, model.createResource(source.getUri()));
-                        datRes.addProperty(referenceProperty, r);
-
-                    } else {
-                        Resource r = model.createResource(source.getUri());
-                        datRes.addProperty(referenceProperty, r);
-                    }
-                }
+                addReference(datRes, reference);
             });
+        }
+    }
+
+    private void addReference(Resource datRes, Reference reference) {
+        if (reference != null) {
+
+            SkosCode referenceType = reference.getReferenceType();
+            SkosConcept source = reference.getSource();
+
+            if (referenceType == null || source == null) {
+                return;
+            }
+
+            if (isNullOrEmpty(referenceType.getUri()) && isNullOrEmpty(referenceType.getCode())) {
+                return;
+            }
+
+            if (isNullOrEmpty(source.getUri())) {
+                return;
+            }
+
+            String referencePropertyUri;
+            if (!isNullOrEmpty(referenceType.getUri())) {
+                referencePropertyUri = referenceType.getUri();
+            } else {
+                referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
+            }
+
+            Property referenceProperty = model.createProperty(referencePropertyUri);
+
+            Map<String, String> prefLabel = source.getPrefLabel();
+            if (hasContent(prefLabel)) {
+                Resource r = model.createResource();
+                r.addProperty(RDF.type, DCAT.Dataset);
+                addLiterals(r, SKOS.prefLabel, prefLabel);
+                r.addProperty(DCTerms.source, model.createResource(source.getUri()));
+                datRes.addProperty(referenceProperty, r);
+
+            } else {
+                Resource r = model.createResource(source.getUri());
+                datRes.addProperty(referenceProperty, r);
+            }
         }
     }
 
