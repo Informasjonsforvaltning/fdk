@@ -52,18 +52,10 @@ public class DcatBuilder {
 
     public static final Model mod = ModelFactory.createDefaultModel();
 
-    public static final String TIME = "http://www.w3.org/TR/owl-time/";
-
     public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
-
-    public static final Resource TIME_INSTANT = mod.createResource(TIME + "Instant");
-    public static final Property time_hasBeginning = mod.createProperty(TIME, "hasBeginning");
-    public static final Property time_hasEnd = mod.createProperty(TIME, "hasEnd");
-    public static final Property time_inXSDDateTime = mod.createProperty(TIME, "inXSDDateTime");
 
     static Property schema_startDate = mod.createProperty("http://schema.org/startDate");
     static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
-
 
     private final Model model;
 
@@ -73,7 +65,6 @@ public class DcatBuilder {
         model.setNsPrefix("dcat", DCAT.NS);
         model.setNsPrefix("foaf", FOAF.NS);
         model.setNsPrefix("vcard", VCARD4.NS);
-        model.setNsPrefix("time", TIME);
         model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS.NS);

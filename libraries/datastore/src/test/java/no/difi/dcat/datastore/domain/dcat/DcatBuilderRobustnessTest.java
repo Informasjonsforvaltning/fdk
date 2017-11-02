@@ -10,6 +10,7 @@ import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -24,10 +25,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+
 
 public class DcatBuilderRobustnessTest {
 
@@ -82,17 +87,21 @@ public class DcatBuilderRobustnessTest {
 
     @Test
     public void loadJoachimsDatasetThatBreaksRDFXML() throws Throwable {
-        DcatBuilder builderSpy = builder ; //spy(builder);
+        DcatBuilder builderSpy = new DcatBuilder();
+
         ClassPathResource resource = new ClassPathResource("ramsund.json");
         String datasetJson = CharStreams.toString(new InputStreamReader(resource.getInputStream(),"utf-8"));
         Dataset dataset = new Gson().fromJson(datasetJson, Dataset.class);
 
         builderSpy.addDataset(dataset);
 
-        String out = builderSpy.getDcatOutput("TURTLE");
-        logger.info(out);
-        assertThat(out, is(notNullValue()));
+        String actual = builderSpy.getDcatOutput("RDFXML");
 
+        logger.debug(actual);
 
+        assertThat("rdf/xml now works", actual, is(notNullValue()));
+        assertThat(actual, startsWith("<rdf:RDF"));
+        assertThat(actual, containsString("<dct:title xml:lang=\"nb\">Ramsunds begrepsregister</dct:title>"));
+        //assertThat(actual, endsWith("</rdf:RDF>"));
     }
 }
