@@ -6,6 +6,7 @@ const __extends = (this && this.__extends) || function(d, b) {
   d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 const React = require('react');
+const PropTypes = require('prop-types');
 const searchkit_1 = require('searchkit');
 const defaults = require('lodash/defaults');
 const throttle = require('lodash/throttle');
@@ -139,18 +140,18 @@ SearchBox.defaultProps = {
   blurAction: 'search'
 };
 SearchBox.propTypes = defaults({
-  id: React.PropTypes.string,
-  searchOnChange: React.PropTypes.bool,
-  searchThrottleTime: React.PropTypes.number,
-  queryBuilder: React.PropTypes.func,
-  queryFields: React.PropTypes.arrayOf(React.PropTypes.string),
-  autofocus: React.PropTypes.bool,
-  queryOptions: React.PropTypes.object,
-  prefixQueryFields: React.PropTypes.arrayOf(React.PropTypes.string),
-  prefixQueryOptions: React.PropTypes.object,
+  id: PropTypes.string,
+  searchOnChange: PropTypes.bool,
+  searchThrottleTime: PropTypes.number,
+  queryBuilder: PropTypes.func,
+  queryFields: PropTypes.arrayOf(PropTypes.string),
+  autofocus: PropTypes.bool,
+  queryOptions: PropTypes.object,
+  prefixQueryFields: PropTypes.arrayOf(PropTypes.string),
+  prefixQueryOptions: PropTypes.object,
   translations: searchkit_1.SearchkitComponent.translationsPropType(SearchBox.translations),
-  mod: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  blurAction: React.PropTypes.string
+  mod: PropTypes.string,
+  placeholder: PropTypes.string,
+  blurAction: PropTypes.string
 }, searchkit_1.SearchkitComponent.propTypes);
 exports.SearchBox = SearchBox;
