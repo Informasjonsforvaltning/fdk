@@ -9,8 +9,24 @@ export class RefinementOptionThemes extends React.Component {
       if (label === 'Ukjent') {
         themeLabel = label;
       } else {
-        let lang = localization.getLanguage();
-        themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)][lang];
+        const lang = localization.getLanguage();
+        if(_.find(window.themes, label.substr(-4))) {
+          themeLabel = _.find(window.themes, label.substr(-4))[label.substr(-4)][lang];
+        } else if(label === 'showmorelabel') {
+          themeLabel = label;
+          return (
+            <label htmlFor="showAllThemesToggle" >{localization.facet.showmore}</label>
+          )
+        } else if(label === 'showfewerlabel') {
+          return (
+            <label htmlFor="showAllThemesToggle" >{localization.facet.showfewer}</label>
+          )
+        } else if(label === 'showmoreinput') {
+          return (
+            <input type="checkbox" id="showAllThemesToggle"  />
+          )
+
+        }
       }
     }
     const id = encodeURIComponent((itemKey + Math.random()));

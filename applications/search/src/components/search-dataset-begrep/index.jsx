@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse } from 'react-bootstrap';
 
 import BegrepCollapse from '../search-dataset-begrep-collapse';
 import localization from '../../components/localization';
@@ -32,7 +31,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
             source={item.source}
           />
         );
-      }
+      } return null;
     });
     if (subject) {
       return (

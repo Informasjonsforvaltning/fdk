@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Felles datakatalog",
+    "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
     "publisher": "Virksomhet",
     "menu": "Meny",
@@ -29,7 +29,7 @@
     "title": "Logg inn"
   },
   "about": {
-    "about": "Om Felles datakatalog",
+    "about": "Om Felles Datakatalog",
     "title": "Felles datakatalog",
     "titleSub": "\n",
     "ingress": "Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.",
@@ -59,7 +59,9 @@
     "legal":"Hjemmel",
     "spatial":"Geografi",
     "temporal":"Tidsperiode",
-    "standard":"Standard"
+    "standard":"Standard",
+    "showmore":"Vis flere",
+    "showfewer":"Vis færre"
   },
   "result": {
     "dataset":"Datasett",

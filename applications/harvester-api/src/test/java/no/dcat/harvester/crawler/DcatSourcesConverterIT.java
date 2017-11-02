@@ -1,6 +1,7 @@
 package no.dcat.harvester.crawler;
 
 import no.dcat.shared.Catalog;
+import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
@@ -30,6 +31,42 @@ public class DcatSourcesConverterIT {
 
     public DcatReader setupReader(Model model) {
         return new DcatReader(model, "http://localhost:8100", "user", "password");
+    }
+
+    @Test
+    public void readNAVRegistrationAPI() throws Throwable {
+
+        Model model = RDFDataMgr.loadModel("nav-2017-10-31.ttl");
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        assertThat(datasets.size(), is(42));
+
+    }
+
+    @Test
+    public void readRamsundContactInfoOK() throws Throwable {
+
+        Model model = RDFDataMgr.loadModel("ramsund.ttl");
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+        int[] contactCount = {0};
+        datasets.forEach(dataset ->{
+            if (dataset.getContactPoint() != null)
+            for (Contact contact : dataset.getContactPoint()) {
+                if (contact != null) {
+                    contactCount[0]++;
+
+                    logger.info(contact.getEmail());
+                }
+
+            }
+        });
+        assertThat(contactCount[0], is(3));
+        assertThat(datasets.size(), is(4));
+
     }
 
     @Test

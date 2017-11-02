@@ -8,8 +8,8 @@ import lombok.ToString;
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Reference {
-    SkosCode referenceType;
-    SkosConcept  source; // link to Dataset
+    private SkosCode referenceType;
+    private SkosConcept source; // link to Dataset
 
     // needed for Jackson to parse
     public Reference() {
@@ -19,4 +19,5 @@ public class Reference {
         this.referenceType = referenceType;
         this.source = source;
     }
+
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
@@ -26,7 +26,7 @@ export default class App extends React.Component {
       localization.setLanguage(langCode)
       const selectedLanguage = localization.lang[langCode]
       this.state = {
-        selectedLanguage: selectedLanguage,
+        selectedLanguage,
         selectedLanguageCode: langCode
       }
     }
@@ -68,8 +68,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    let langCode = getLanguageFromUrl();
-    let langParam = langCode ? `?lang=${langCode}` : '';
+    const langCode = getLanguageFromUrl();
+    const langParam = langCode ? `?lang=${langCode}` : '';
 
     const childWithProp =
       React.Children.map(this.props.children, child => React.cloneElement(child, {

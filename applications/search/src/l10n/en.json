@@ -48,8 +48,8 @@
     "prev": "Previous page",
     "result.summary": "",
     "dataset":"results",
-    "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser"
+    "nosearch.summary":"Search among ",
+    "nosearch.descriptions":"dataset descriptions"
   },
   "facet": {
     "organisation":"Organization",
@@ -59,7 +59,9 @@
     "legal":"Legal",
     "spatial":"Spatial",
     "temporal":"Temporal",
-    "standard":"Standard"
+    "standard":"Standard",
+    "showmore":"Show more",
+    "showfewer":"Show fewer"
   },
   "result": {
     "dataset":"Dataset",

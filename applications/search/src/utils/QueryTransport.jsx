@@ -1,22 +1,15 @@
-
 import {AxiosESTransport} from "searchkit";
 const defaults = require("lodash/defaults");
 import * as axios from "axios";
 const qs = require('qs');
 
 export class QueryTransport extends AxiosESTransport {
-  constructor(host, options){
+  constructor(host, options) {
     super()
     this.options = defaults(options, {
       headers:{},
-      //searchUrlPath: window.fdkSettings.queryUrl + "/search"
-        // TODO MAKE THIS GENERIC
-        searchUrlPath: "/datasets"
+      searchUrlPath: "/datasets"
     })
-    if(this.options.basicAuth){
-      this.options.headers["Authorization"] = (
-        "Basic " + btoa(this.options.basicAuth))
-    }
     this.axios = axios.create({
       baseURL:this.host,
       timeout:AxiosESTransport.timeout,
@@ -83,8 +76,6 @@ export class QueryTransport extends AxiosESTransport {
         sortdirection = "desc";
       } else if (_.has(querySortObj,'publisher.name')) {
         sortfield= "publisher.name";
-      } else {
-        console.log('other! (should not happen)');
       }
     }
 
@@ -115,7 +106,14 @@ export class QueryTransport extends AxiosESTransport {
             aggregations[rawName] = {};
             aggregations[rawName].size = '5';
             aggregations[rawName][rawNameShort] = aggregations[name];
-            aggregations[rawName][rawNameShort].buckets = aggregations[rawName][rawNameShort].buckets.slice(0,100);
+            if(aggregations[rawName][rawNameShort].buckets.length > 5) {
+              aggregations[rawName][rawNameShort].buckets.splice(5, 0, {key:'showmoreinput'});
+              aggregations[rawName][rawNameShort].buckets.splice(6, 0, {key:'showmorelabel'});
+              aggregations[rawName][rawNameShort].buckets.splice(100, 0, {key:'showfewerlabel'});
+            }
+            aggregations[rawName][rawNameShort].buckets = aggregations[rawName][rawNameShort].buckets.slice(0,101);
+            aggregations[rawName][rawNameShort].doc_count_error_upper_bound = 1000;
+            aggregations[rawName][rawNameShort].sum_other_doc_count = 1000;
             delete aggregations[name];
         }
       })

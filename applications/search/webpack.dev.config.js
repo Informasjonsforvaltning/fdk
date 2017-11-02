@@ -1,14 +1,14 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool:"eval",
   context:path.join(__dirname),
   entry: [
-//    'webpack-hot-middleware/client?reload=true',
+    //    'webpack-hot-middleware/client?reload=true',
     "babel-polyfill",
     './src/index.jsx'
   ],
@@ -35,25 +35,48 @@ module.exports = {
     extensions:[".js", ".jsx", ".webpack.js", ".web.js"]
   },
   resolveLoader: {
-    //root: path.join(__dirname, "node_modules")
+    // root: path.join(__dirname, "node_modules")
     modules: [__dirname, 'node_modules']
   },
   module: {
+    /*
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        include: [
+          path.resolve(__dirname, 'start.js'),
+          path.resolve('src')
+        ],
+        exclude: /node_modules/,
+        options: {
+          configFile: path.resolve('./.eslintrc.json')
+        },
+        loader: 'eslint-loader'
+      }
+    ],
+    */
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'react']
+          presets: ['env', 'react']
         }
       },
       {
         test: /\.scss$/,
-        //loaders: ["style", "css", "sass"]
-        use: ExtractTextPlugin.extract({  
-          fallback: 'style-loader',  
-          use: ['css-loader', 'sass-loader']  
+        // loaders: ["style", "css", "sass"]
+        use: ExtractTextPlugin.extract({
+
+
+          fallback: 'style-loader',
+
+
+          use: ['css-loader', 'sass-loader']
+
+
         })
       },
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },

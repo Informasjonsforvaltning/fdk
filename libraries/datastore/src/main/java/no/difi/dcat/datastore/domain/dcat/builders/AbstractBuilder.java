@@ -193,18 +193,7 @@ public abstract class AbstractBuilder {
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
 
-            Subject subject = new Subject();
-            if (statement.getObject().isURIResource()) {
-                subject.setUri(statement.getObject().toString());
-
-                Resource subjectResource = statement.getObject().asResource();
-                if (subjectResource != null) {
-                    subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
-                    subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
-                    subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
-                    subject.setSource(extractAsString(subjectResource, DCTerms.source));
-                }
-            }
+            Subject subject = extractSubject(statement);
 
             result.add(subject);
         }
@@ -214,6 +203,22 @@ public abstract class AbstractBuilder {
         }
 
         return null;
+    }
+
+    public static Subject extractSubject(Statement statement) {
+        Subject subject = new Subject();
+        if (statement.getObject().isURIResource()) {
+            subject.setUri(statement.getObject().toString());
+
+            Resource subjectResource = statement.getObject().asResource();
+            if (subjectResource != null) {
+                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
+                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
+                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
+                subject.setSource(extractAsString(subjectResource, DCTerms.source));
+            }
+        }
+        return subject;
     }
 
 
@@ -262,8 +267,6 @@ public abstract class AbstractBuilder {
 
         return null;
     }
-
-
 
 
     public static Map<String, String> extractLanguageLiteral(Resource resource, Property property) {
@@ -343,7 +346,8 @@ public abstract class AbstractBuilder {
                 return null;
             }
 
-            final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            //final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            final Resource object = property.getObject().asResource();
 
             contact.setUri(object.getURI());
             final String fn = extractAsString(object, Vcard.fn);

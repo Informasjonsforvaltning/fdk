@@ -42,17 +42,17 @@ export class QualityComponent implements OnInit {
 
       this.provenancesModel = [
         {
-          id: 3,
+          id: 1,
           label: 'Vedtak',
           uri: 'http://data.brreg.no/datakatalog/provinens/vedtak'
         },
         {
-          id: 1,
+          id: 2,
           label: 'Brukerinnsamlede data',
           uri: 'http://data.brreg.no/datakatalog/provinens/bruker'
         },
         {
-          id: 2,
+          id: 3,
           label: 'Tredjepart',
           uri: 'http://data.brreg.no/datakatalog/provinens/tredjepart'
         }
@@ -159,12 +159,54 @@ export class QualityComponent implements OnInit {
 
     codifySkosCodes(code, lang) {
         return {value: code['uri'], label: code['prefLabel'][lang]}
-
     }
 
     fetchFrequencies() {
-        this.codesService.fetchCodes('frequencies', 'no').then( frequencies =>
-            this.frequencies = frequencies);
+        this.codesService.fetchCodes('frequencies', 'no').then((frequencies) => {
+            this.frequencies = [];
+            let frequenciesInCorrectOrder = [
+              'Kontinuerlig',
+              'To ganger per dag',
+              'Daglig',
+              'Tre ganger i uken',
+              'To ganger i uken',
+              'Ukentlig',
+              'Tre ganger i måneden',
+              'Hver fjortende dag',
+              'To ganger i måneden',
+              'Månedlig',
+              'Annenhver måned',
+              'Kvartalsvis',
+              'Tre ganger per år',
+              'Halvårlig',
+              'Årlig',
+              'Annethvert år',
+              'Hvert tredje år',
+              'Uregelmessig',
+              'Aldri',
+              'Annet',
+              'Ukjent'
+            ];
+            frequenciesInCorrectOrder.forEach((f)=>{
+              frequencies.forEach((frequency)=>{
+                if(frequency.label && f.toLowerCase() === frequency.label.toLowerCase()) {
+                  frequency.label = f;
+                  this.frequencies.push(frequency);
+                }
+              });
+            });
+          frequencies.forEach((originalFrequency) => {
+            let found = false;
+             this.frequencies.forEach((builtFrequency) => {
+               if(originalFrequency === builtFrequency) {
+                 found = true;
+               }
+             });
+             if(!found && originalFrequency.label) {
+               this.frequencies.push(originalFrequency);
+             }
+          });
+        });
     }
 
     fetchProvenances() {
@@ -191,4 +233,9 @@ export class QualityComponent implements OnInit {
         }
       })
     }
+    public labelClicked(context, event, provenanceId) {
+          if(context.dataset.provenance.uri === this.provenancesModel[provenanceId-1].uri) {
+            this.qualityForm.controls.provenance.patchValue({uri:"", prefLabel:{nb:""}});
+          }
+        }
 }

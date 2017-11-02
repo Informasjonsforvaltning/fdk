@@ -7,10 +7,10 @@ import localization from '../../components/localization';
 export default class DatasetContactInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const { contactPoint = null } = this.props;
-    let uri,
-      email,
-      organizationUnit,
-      hasTelephone = null;
+    let uri;
+    let email;
+    let organizationUnit;
+    let hasTelephone = null;
 
     if (contactPoint) {
       uri = contactPoint.uri;
@@ -20,7 +20,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     }
 
     const emailClass = cx(
-      'fdk-padding-no',
+      'fdk-container-detail',
       {
         'col-md-8': hasTelephone,
         'col-md-12': !hasTelephone
@@ -28,7 +28,7 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     );
 
     const telephoneClass = cx(
-      'fdk-padding-no',
+      'fdk-container-detail',
       {
         'col-md-4': email,
         'col-md-12': !email
@@ -36,33 +36,34 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
     );
 
     return (
-      <div id="dataset-contactinfo" className="row fdk-row fdk-margin-top-triple">
+      <div id="dataset-contactinfo" className="fdk-margin-top-triple">
+        <div className="row fdk-row">
 
-        {this.props.landingPage && this.props.landingPage[0] &&
-        <div className="col-md-12 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon fdk-padding-no">
-              <i className="fa fa-info fdk-detail-icon-oneline" />
-            </div>
-            <div className="fdk-detail-text">
-              <p className="fdk-ingress fdk-margin-bottom-no">
-                <a
-                  id="dataset-contact-uri"
-                  title={localization.dataset.contactPoint.background}
-                  href={this.props.landingPage[0]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {localization.dataset.contactPoint.background}
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
-              </p>
+          {this.props.landingPage && this.props.landingPage[0] &&
+          <div className="col-md-12 fdk-padding-no">
+            <div className="fdk-container-detail">
+              <div className="fdk-detail-icon fdk-padding-no">
+                <i className="fa fa-info fdk-detail-icon-oneline" />
+              </div>
+              <div className="fdk-detail-text">
+                <p className="fdk-ingress fdk-margin-bottom-no">
+                  <a
+                    id="dataset-contact-uri"
+                    title={localization.dataset.contactPoint.background}
+                    href={this.props.landingPage[0]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {localization.dataset.contactPoint.background}
+                    <i className="fa fa-external-link fdk-fa-right" />
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        }
+          }
 
-        {organizationUnit && uri &&
+          {organizationUnit && uri &&
           <div className="col-md-12 fdk-padding-no">
             <div className="fdk-container-detail">
               <div className="fdk-detail-icon fdk-padding-no">
@@ -84,11 +85,12 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
               </div>
             </div>
           </div>
-        }
+          }
+        </div>
+        <div className="row fdk-row row-eq-height">
 
-        {email &&
-        <div className={emailClass}>
-          <div className="fdk-container-detail">
+          {email &&
+          <div className={emailClass}>
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-envelope" />
             </div>
@@ -107,12 +109,10 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
               </p>
             </div>
           </div>
-        </div>
-        }
+          }
 
-        {hasTelephone &&
-        <div className={telephoneClass}>
-          <div className="fdk-container-detail">
+          {hasTelephone &&
+          <div className={telephoneClass}>
             <div className="fdk-detail-icon fdk-detail-icon-oneline">
               <i className="fa fa-phone" />
             </div>
@@ -123,9 +123,9 @@ export default class DatasetContactInfo extends React.Component { // eslint-disa
               </p>
             </div>
           </div>
-        </div>
-        }
+          }
 
+        </div>
       </div>
     );
   }
