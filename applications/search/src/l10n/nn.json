@@ -90,6 +90,7 @@
     "Public": "Offentlig",
     "Restricted": "Begrenset",
     "Ukjent": "Ukjent",
+    "NON_PUBLIC": "Unntatt offentlighet",
     "sample": "Eksempeldata tilgjengelig"
   },
   "dataset": {
