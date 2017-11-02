@@ -79,7 +79,7 @@ public class CatalogControllerIT {
         }
         ids.sort(String::compareTo);
 
-        String[] excpectedIds = {"910244132", "910258028"};
+        String[] excpectedIds = {"910244132", "910244999"};
 
         assertThat(count, is(2));
         assertThat(ids.toArray(), is(excpectedIds) );
