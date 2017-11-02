@@ -163,3 +163,13 @@ input:checked ~ .checkbox-replacement::after {
 .sk-hits-grid {
   margin-top: 7px;
 }
+
+/*
+EQUAL COLUMNS
+ */
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}

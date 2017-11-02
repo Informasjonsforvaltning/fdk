@@ -1,0 +1,865 @@
+@prefix schema: <http://schema.org/> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix dqv:   <http://www.w3.org/ns/dqvNS#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix time:  <http://www.w3.org/TR/owl-time/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://brreg.no/catalogs/974761076/datasets/489c51ee-679e-4986-87bc-3e8c2f0a07df>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description   "Offentlige myndigheter skal skal levere opplysninger til Skatteetaten om skattefrie utbetalinger. Opplysningene kan innrapporteres løpende per måned eller samlet. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret"@nb ;
+        dct:identifier    "100" ;
+        dct:language      <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title         "Offentlige myndigheter - skattefrie utbetalinger"@nb ;
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/fc8e42e8-c50f-4206-a2c4-710a29a61848>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/fagforeningskontingent/v1_0_2/filformat-for-fagforeningskontingent-v1_0_2_20161104.pdf"
+                                ] ;
+        dct:description         "Fagforeningskontingent som medlemmene har innbetalt direkte til fagforeningen skal innrapporteres til Skatteetaten fra og med inntektsåret 2016. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret."@nb ;
+        dct:identifier          "89" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Fagforeningskontigent"@nb ;
+        dcat:keyword            "fagforeningskontigent"@nb , "grunnlagsdata"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/ea9acf84-0612-45ab-83e9-4fd16b012a7b>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/kop/v2_1_2/filformat-for-kjop-fra-primarnaring-tilskudd-v2_1_2_20161005.pdf"
+                                ] ;
+        dct:description         "Offentlige myndigheter som utbetaler tilskudd innen landbruk, Reindriftsforvaltningen og Garantikassen for fiskere plikter å innrapportere kontrolloppgaver til Skatteetaten"@nb ;
+        dct:identifier          "93" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Offentlige tilskudd innen landbruk"@nb ;
+        dcat:keyword            "Garantikassen"@nb , "kontrolloppgaver"@nb , "tilskudd"@nb , "Reindriftsforvaltningen"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-12>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:brukerstotte.datasamarbeid@skatteetaten.no> ;
+        vcard:organization-unit  "Skatteetaten - Regionavdelingen - Innsats" , "Skatteetaten" .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/45badd46-bcc3-4d0a-a0d0-bb6de7ecb705>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/drosjesentraler/v1_0_3/filformat-for-drosje-v1_0_3_20161005.pdf"
+                                ] ;
+        dct:description         "Drosjesentraler skal årlig gi Skatteetaten opplysninger om drosjeløyvene som er tilknyttet sentralen. Opplysningene er i all hovedsak de samme som i \"skiftlappen\". Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret.\n\nDrosjesentralene skal årlig levere summerte tall for skiftelappene for drosjeløyvene som er tilknyttet sentralen. Det som skal innrapporteres er kontantomsetning, kredittomsetning, kjørte kilometer og besatte kilometer. Dette tilsvarer de dataene løyvehaver innrapporterer til myndighetene på andre områder. Dermed vil Skatteetaten bedre kunne kontrollere at løyvehaverne og drosjesjåførene følger skatte- og avgiftsreglene."@nb ;
+        dct:identifier          "86" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Drosjesentraler"@nb ;
+        dcat:keyword            "kontrollopplysninger"@nb , "kredittomsetning"@nb , "drosjeløyve"@nb , "kontantomsetning"@nb , "Drosjesentral"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/8de3decf-c5f2-4d26-aac7-81464be21ab5>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description   "Rapportering av tredjepartsopplysninger om betalinger til selvstendig næringsdrivende.\n\nAlle næringsdrivende oppdragsgivere som har kjøpt tjenester fra selvstendig næringsdrivende uten fast forretningssted i inntektsåret omfattes av opplysningsplikten og skal innrapportere det fakturerte beløpet. \n\nInnrapporteringen av utbetaling til selvstendig næringsdrivende vil være med på å avgjøre om den som utfører tjenesten og mottar vederlag (oppdragstakeren) skal ha selvangivelse for næringsdrivende. Fra 1. januar 2017 skal selvangivelse hete \"skattemelding\" (Når driften er for liten til å anses som næringsvirksomhet, får oppdragstakeren i stedet skattemelding for lønnstaker). Opplysningene vil bli forhåndsutfylt i skattemeldingen til den næringsdrivende og benyttes også til kontrollformål. Det er derfor viktig at innleveringsfristen 15. februar overholdes, og at feil som oppdages rettes opp så snart som mulig.\n"@nb ;
+        dct:identifier    "97" ;
+        dct:language      <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title         "Betalinger til selvstendig næringsdrivende"@nb ;
+        dcat:keyword      "skattemelding"@nb , "selvstendig næringsdrivende"@nb , "fast forretningssted"@nb ;
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/ea29742f-d7ab-4de0-93f2-f1be891325cb>
+        a                               dcat:Dataset ;
+        dcatno:legalBasisForAccess      [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2012-06-22-43/§8" ;
+                                          skos:prefLabel  "Tilgang til opplysningene"@nb
+                                        ] ;
+        dcatno:legalBasisForProcessing  [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2012-06-22-43/§6" ;
+                                          skos:prefLabel  "Ansvar for fellestjenester og behandlingsansvar"@nb
+                                        ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/lov/2012-06-22-43/§7" ;
+                  skos:prefLabel  "Taushetsplikt ved drift og forvaltning"@nb
+                ] ;
+        dcatno:objective                "Å legge til rette for at arbeidsgivere mv. effektivt kan oppfylle sine plikter til å gi opplysninger om enkeltpersoners (inntektsmottakeres) inntekts- og arbeidsforhold og skattetrekkopplysninger, og å gi offentlige etater tilgang til opplysningene innrapportert fra arbeidsgiver."@nb ;
+        dct:accessRights                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity          <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description                 "Rapportering av lønns- og ansettelsesforhold til Skatteetaten, NAV og Statistisk sentralbyrå (SSB) er samlet i a-meldingen og sendes inn hver måned av alle som utbetaler lønn, pensjon og andre ytelser. A-meldingen innholder opplysninger om lønn ytelser, i tillegg til status på alle arbeidsforhold."@nb ;
+        dct:identifier                  "56" ;
+        dct:language                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher                   <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:spatial                     <http://sws.geonames.org/3144096/> ;
+        dct:title                       "A-meldingen"@nb ;
+        dcat:contactPoint               <http://data.brreg.no/datakatalog/kontaktpunkt/a-11> ;
+        dcat:keyword                    "lønn"@nb , "arbeidsforhold"@nb , "ytelser"@nb , "pensjon"@nb ;
+        dcat:landingPage                <http://www.skatteetaten.no/no/Om-skatteetaten/Kontakt-oss/E-post/Send-ny-epost/Skatt-og-avgift/a-ordningen/> ;
+        dcat:theme                      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/f553d731-076d-4562-b193-b574a4edf739>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Register over upersonlige skattytere"@nb ;
+        dct:identifier     "32" ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title          "Register over upersonlige skattytere"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/5153ed0d-73cb-4388-89b5-86ae57fd1eb0>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/saldo_og_renter/v3_0_2/filformat-for-innskudd-utlan-og-renter-v3_0_2_20161019.pdf"
+                                ] ;
+        dct:description         "Rapportering fra banker, forsikringsselskaper mv. som har penger til forvaltning eller driver utlånsvirksomhet  om innskudd, utlån og renter. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret.\n"@nb ;
+        dct:identifier          "81" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Innskudd, utlån og renter"@nb ;
+        dcat:keyword            "inntekt"@nb , "grunnlagsdata"@nb , "utlån"@nb , "renter"@nb , "innskudd"@nb , "formue"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/4b14acc0-508e-4110-a908-1052b19db3b6>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:description         "Skatteetatens datasamarbeid for Eiendom er en tjeneste som tilbyr utlevering av boligverdier til kommuner som benytter Skatteetatens formuesgrunnlag for bolig som utgangspunkt for fastsetting av eiendomsskatt."@nb ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Portal Datasamarbeid (Eiendom)"@nb ;
+        dcat:keyword            "eiendomsskatt"@nb , "SSB's beregningsmodell for boligverdier"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/514bddb9-fd71-445c-907c-6218a8574445>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:description   "Eiendomsregister (SERG) er et landsdekkende register, som gir oversikt over alle skattyteres eiendommer i Norge uavhengig av hvilken kommune eiendommen tilhører. "@nb ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title         "Sentralt eiendomsregister (SERG)"@nb ;
+        dcat:keyword      "matrikkel"@nb , "eiendomsregister"@nb , "eiendom"@nb ;
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/3564129c-3cd4-44bc-9f9a-8fdf7b0ed601>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/andre_finansprodukter/v2_1_1/filformat-for-andre-finansprodukter-v2_1_1_20161111.pdf"
+                                ] ;
+        dct:description         "Virksomheter omfattet av CRS/FATCA-reglene, og som ikke er omfattet av opplysningsplikt for Innskudd, utlån og renter, Livsforsikring eller Verdipapirfond, skal levere opplysninger til Skatteetaten om utenlandske kontohavere i ordningen Andre finansprodukter. \n\nOpplysningsplikten omfatter alle kontohavere som er fysiske personer skattemessig bosatt i utlandet. En person kan være skattemessig bosatt i flere land, og opplysningsplikten vil da gjelde for hvert av de aktuelle landene. Opplysningsplikten omfatter også amerikanske statsborgere uavhengig av hvor de er bosatt.\n\nOpplysningsplikten omfatter kontohavere som er selskap mv. skattemessig hjemmehørende i utlandet. Et selskap mv. kan være skattemessig hjemmehørende i flere land, og opplysningsplikten vil da omfatte hvert av landene.\n\nOpplysningsplikten omfatter reelle rettighetshavere skattemessig bosatt i utlandet og/eller som er amerikanske statsborgere. En reell rettighetshaver kan være skattemessig bosatt i flere land, og opplysningsplikten vil da gjelde for hvert av de aktuelle landene. Opplysninger om reelle rettighetshavere skattemessig bosatt i Norge, skal gis fra inntektsåret 2018. Opplysningsplikten omfatter reelle rettighetshavere i selskap mv. som omtalt i \"rettledning om internasjonal rapportering av finansielle konti – CRS/FATCA \"."@nb ;
+        dct:identifier          "76" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance          <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Andre finansprodukter"@nb ;
+        dcat:keyword            "inntekt"@nb , "formue"@nb , "verdipapir"@nb , "grunnlagsdata"@nb , "CRS"@nb , "informasjonsutveksling"@nb , "FATCA"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten - datasamarbeid"
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/97796b56-3b2d-4819-aa90-271989f490a2>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/Skjemaer/2016/RF-1087B.pdf"
+                                ] ;
+        dct:description         "Alle norske aksje- og allmennaksjeselskap, samt sparebanker med egenkapitalbevis, skal hvert år levere en aksjonærregisteroppave til Skatteetatens aksjonærregister. I registeret samles informasjon om alle hendelser og transaksjoner i selskapene.\n\nOpplysninger fra selskapene gir Skatteetaten grunnlag til å produsere og sende ut Aksjer og egenkapitalbevis til aksjonærene. Oppgaven skal hjelpe aksjonærene til å levere rett skattemelding. Den danner også grunnlag for forhåndsutfylling av skattepliktige beløp i skattemelding. "@nb ;
+        dct:identifier          "75" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Aksjonærregisteroppgaven"@nb ;
+        dcat:keyword            "inntekt"@nb , "aksjer"@nb , "grunnlagsdata"@nb , "skattemeding"@nb , "formue"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/de28508c-89e3-4342-88f0-0c5cf378e318>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.oecd.org/tax/oecd-releases-standardised-electronic-format-for-the-exchange-of-beps-country-by-country-reports.htm"
+                                ] ;
+        dct:description         "Store flernasjonale konsern må fra 2017 rapportere overordnet informasjon om aktiviteten i alle land de har virksomhet.   \n\nI 2013 vedtok OECD- og G20-landene en felles handlingsplan; OECD Action Plan on Base Erosion and Profit Shifting. I planen er det forslag til 15 tiltak for å motvirke overskuddsflytting og uthuling av landenes skattegrunnlag.\n\nTiltakspunkt 13 i handlingsplanen gjelder forslag om revisjon av OECDs retningslinjer for internprising og innføring av land-for-land-rapportering for flernasjonale konsern med konsolidert inntekt over 6,5 milliarder kroner i året. Det er i utgangspunktet konsernets toppselskap som skal forestå rapporteringen om alle selskapene i konsernet.\n\nRapporten vil inneholde overordnede opplysninger om fordeling av blant annet inntekter og skatt i de landene der konsernet har foretak, samt beskrivelse av den økonomiske aktiviteten i hvert foretak i konsernet.\n"@nb ;
+        dct:identifier          "95" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Land-for-land-rapportering for store flernasjonale konsern"@nb ;
+        dcat:keyword            "base erosion and pricing shifting (BEPS)"@nb , "flernasjonale konsern"@nb , "internprising"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten - Regionavdelingen - Innsats"
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/81755c74-7691-4c74-9086-8035c31efa9b>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/pass_og_stell_barn/v2_0_3/filformat-for-pass-og-stell-av-barn-v2_0_3_20161005.pdf"
+                                ] ;
+        dct:description         "Barnehager og skolefritidsordninger skal levere opplysninger til Skatteetaten om kostnader foreldrene har hatt til pass og stell av barn. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret.\n"@nb ;
+        dct:identifier          "85" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance          <http://data.brreg.no/datakatalog/provinens/tredjepart> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Barnehager og fritidsordninger"@nb ;
+        dcat:keyword            "skattefradrag"@nb , "skolefritidsordninger"@nb , "grunnlagsdata"@nb , "Barnehage"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata"
+] .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-11>
+        a                        vcard:Organization ;
+        vcard:organization-unit  "Skatteetaten, EFF" .
+
+<http://brreg.no/catalogs/974761076/datasets/5180c34c-28ab-4e9b-8b89-43870848e55f>
+        a                       dcat:Dataset ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven taushetsplikt#KAPITTEL_3" ;
+                  skos:prefLabel  "Taushetsplikt"@nb
+                ] ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/QUARTERLY> ;
+        dct:description         "System for analyse av gassavtaler (SAGA) inneholder  opplysninger om avtale- og salgsvilkår ved realisasjon av naturgass fra norsk sokkel (innrapportert fra oljeselskapene)samt salgsdata/markedsdata."@nb ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "SAGA - Gassomsetningsoppgave"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/19d33e57-8f0e-4513-bbdf-6ec89cdb5b29>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene danner grunnlag for forhåndsutfylling av skattepliktige beløp i skattemelding. "@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/ip/v1_0_1/filformat-individuelle-pensjonsordninger-v1_0_1_20161005.pdf"
+                                ] ;
+        dct:description         "Livsforsikringsselskaper, pensjonskasser, banker mv. skal årlig levere opplysninger til Skatteetaten om innbetalinger vedrørende individuelle pensjonsordninger. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret. Utbetalinger skal innrapporteres månedlig i a-meldingen.\n"@nb ;
+        dct:identifier          "80" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Individuelle pensjonsordninger"@nb ;
+        dcat:keyword            "grunnlagsdata"@nb , "individuelle pensjonsordninger"@nb , "formue"@nb , "IPA"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/5e54487b-6a5f-4c4b-a197-3bac968d8327>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Næringsdrivende som selger merverdiavgiftspliktige varer eller tjenester ihht merverdiavgiftsloven er forpliktet til å registrere seg i et eget register. Dette er kombinert med at de da plikter å innrapportere omsetning mv."@nb ;
+        dct:identifier     "31" ;
+        dct:provenance     <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title          "MVA registeret"@nb ;
+        dcat:contactPoint  <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:keyword       "siste termin"@nb , "hvem som innfordrer"@nb , "forretningsadresse"@nb , "hovednæring"@nb , "hvem som har roller i firmaet og knytninger til regnskapsfører/revisor"@nb , "startetdato"@nb , "mva-status (aktiv"@nb , "organisasjonsform"@nb , "stiftelsesdato"@nb , "postadresse"@nb , "kontonr"@nb , "evt om forhåndsregistrert"@nb , "registreringsdato for mva"@nb , "firmanavn"@nb , "kommunenr"@nb , "org.nr"@nb , "første termin"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/30938240-d63b-4fcc-b73d-5748086b2249>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene benyttes ikke i produksjonen av skattemeldingen, men benyttes av Skatteetaten til kontrollformål "@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "file:///home/1000/dcat/mapper/Legg%20evt%20inn%20lenke%20til%20de%208%20forskjellige%20formatbeskrivelsene%20hvis%20denne%20skal%20brytes%20ned%20per%20definerte%20landbruksprodukt"
+                                ] ;
+        dct:description         "Rapportering av næringsdrivende som kjøper og omsetter landbruksprodukter. De plikter å gi opplysninger om all omsetning med produsentene til Skatteetaten.\n"@nb ;
+        dct:identifier          "92" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Kontrolloppgaver primærnæring - kjøp av landbruksprodukter"@nb ;
+        dcat:keyword            "kontrolloppgaver"@nb , "landbruksprodukter"@nb , "primærnæring"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/7eb588ae-38e3-4223-8dce-94c9d6828246>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:description         "Forhåndsgodkjente frivillige organisasjoner og tros- og livssynssamfunn skal levere opplysninger til Skatteetaten om mottatte gaver som gir giveren rett til fradrag. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret.\n"@nb ;
+        dct:identifier          "91" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Gaver til visse frivillige organisasjoner og tros- og livsynsamfunn"@nb ;
+        dcat:keyword            "grunnlagsdata"@nb , "frivillige organisasjoner"@nb , "gaver"@nb , "skattefradrag"@nb , "tros- og livsynssamfunn"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076>
+        a              dcat:Catalog ;
+        dct:publisher  <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title      "Datakatalog for SKATTEETATEN"@nb ;
+        dcat:dataset   <http://brreg.no/catalogs/974761076/datasets/8de3decf-c5f2-4d26-aac7-81464be21ab5> , <http://brreg.no/catalogs/974761076/datasets/de28508c-89e3-4342-88f0-0c5cf378e318> , <http://brreg.no/catalogs/974761076/datasets/5153ed0d-73cb-4388-89b5-86ae57fd1eb0> , <http://brreg.no/catalogs/974761076/datasets/f048803e-ebde-45e4-904c-94f491c8fd75> , <http://brreg.no/catalogs/974761076/datasets/4b14acc0-508e-4110-a908-1052b19db3b6> , <http://brreg.no/catalogs/974761076/datasets/205d4ded-e385-40d2-9ace-c62753b1c2ef> , <http://brreg.no/catalogs/974761076/datasets/c6e862a0-9155-43af-9f1e-0d08d155f30f> , <http://brreg.no/catalogs/974761076/datasets/19d33e57-8f0e-4513-bbdf-6ec89cdb5b29> , <http://brreg.no/catalogs/974761076/datasets/30938240-d63b-4fcc-b73d-5748086b2249> , <http://brreg.no/catalogs/974761076/datasets/de8e88f8-83f1-4f3f-9392-5c81ebbdbf0b> , <http://brreg.no/catalogs/974761076/datasets/c92d4b3c-3706-40ab-a120-ade2f9eb7127> , <http://brreg.no/catalogs/974761076/datasets/5180c34c-28ab-4e9b-8b89-43870848e55f> , <http://brreg.no/catalogs/974761076/datasets/5e54487b-6a5f-4c4b-a197-3bac968d8327> , <http://brreg.no/catalogs/974761076/datasets/518ffdb5-65ee-4659-9746-f5b4b849aae5> , <http://brreg.no/catalogs/974761076/datasets/7eb588ae-38e3-4223-8dce-94c9d6828246> , <http://brreg.no/catalogs/974761076/datasets/514bddb9-fd71-445c-907c-6218a8574445> , <http://brreg.no/catalogs/974761076/datasets/ea9acf84-0612-45ab-83e9-4fd16b012a7b> , <http://brreg.no/catalogs/974761076/datasets/5c302bb9-f1c0-4ae0-abfd-9b6d8344f277> , <http://brreg.no/catalogs/974761076/datasets/27b01149-aa7a-4948-ab11-46c89595cf96> , <http://brreg.no/catalogs/974761076/datasets/a68fa544-19d1-4db6-9d7d-c7fb7cd4eed5> , <http://brreg.no/catalogs/974761076/datasets/45badd46-bcc3-4d0a-a0d0-bb6de7ecb705> , <http://brreg.no/catalogs/974761076/datasets/3564129c-3cd4-44bc-9f9a-8fdf7b0ed601> , <http://brreg.no/catalogs/974761076/datasets/f553d731-076d-4562-b193-b574a4edf739> , <http://brreg.no/catalogs/974761076/datasets/aecb8c91-c866-4fa0-a14a-0725ce3abd96> , <http://brreg.no/catalogs/974761076/datasets/97796b56-3b2d-4819-aa90-271989f490a2> , <http://brreg.no/catalogs/974761076/datasets/4810857f-3cd1-474d-80ab-7d12bd9f4795> , <http://brreg.no/catalogs/974761076/datasets/941addfb-6d9d-48de-8dfe-eed616c6e16a> , <http://brreg.no/catalogs/974761076/datasets/ea29742f-d7ab-4de0-93f2-f1be891325cb> , <http://brreg.no/catalogs/974761076/datasets/98b5a586-f7dd-4429-b297-f745cc615ab3> , <http://brreg.no/catalogs/974761076/datasets/e3fc94e4-cc7e-4290-b479-4e0c99dc6caa> , <http://brreg.no/catalogs/974761076/datasets/d70c2642-863f-4ca2-8f3e-740983cb4a95> , <http://brreg.no/catalogs/974761076/datasets/81755c74-7691-4c74-9086-8035c31efa9b> , <http://brreg.no/catalogs/974761076/datasets/12183f89-33e1-4036-ba61-f399eddfbe42> , <http://brreg.no/catalogs/974761076/datasets/fc8e42e8-c50f-4206-a2c4-710a29a61848> , <http://brreg.no/catalogs/974761076/datasets/34577090-f06b-4d15-adf4-a0f1f2498dda> , <http://brreg.no/catalogs/974761076/datasets/8fa472d1-ff0a-48b5-97ca-7bb9a8237d88> , <http://brreg.no/catalogs/974761076/datasets/489c51ee-679e-4986-87bc-3e8c2f0a07df> , <http://brreg.no/catalogs/974761076/datasets/84fe467b-e18d-46a1-abef-d24ff877a27e> , <http://brreg.no/catalogs/974761076/datasets/9005f83d-5ace-499b-bcdf-1499582aec3c> , <http://brreg.no/catalogs/974761076/datasets/8efc1269-d8c8-434a-a146-ff6ae178b5c0> , <http://brreg.no/catalogs/974761076/datasets/5bbe446a-1141-4e75-ae9a-2962a8c1c053> , <http://brreg.no/catalogs/974761076/datasets/0a9de1bf-bea3-42d5-a3dc-df9a78377ae6> .
+
+<http://brreg.no/catalogs/974761076/datasets/8efc1269-d8c8-434a-a146-ff6ae178b5c0>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:description         "Offentlige myndigheter og innretninger som utbetaler erstatninger, tilskudd, bidrag, trygder, stønad mv. til enkeltpersoner, er pålagt å levere oppgave med opplysninger om utbetalingene. Opplysningsplikten gjelder beløp som er utbetalt i inntektsåret og som ikke er innrapporteringspliktig etter annen bestemmelse i skatteforvaltningsloven."@nb ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Skattefrie utbetalinger"@nb ;
+        dcat:keyword            "kontrolloppgaver"@nb , "grunnlagsdata"@nb , "skattefrie utbetalinger"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/e3fc94e4-cc7e-4290-b479-4e0c99dc6caa>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Folkeregisteret omfatter nøkkelopplysninger om alle personer som er eller har vært bosatt i Norge. Registeret danner grunnlaget for blant annet skattemanntallet, valgmanntallet og befolkningsstatistikken. Et korrekt folkeregister er en forutsetning for at alle borgere skal motta informasjon fra offentlige myndigheter, og at deres rettigheter og plikter blir ivaretatt."@nb ;
+        dct:identifier          "55" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance          <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Det sentrale folkeregisteret"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-10> ;
+        dcat:keyword            "fødselsnummer"@nb , "statsborgerskap"@nb , "navnevalg"@nb , "adresseendring"@nb , "bostedsadresse"@nb , "personopplysninger"@nb , "sivilstand"@nb , "innflytting"@nb , "d-nummer"@nb , "dødsfall"@nb , "ekteskap"@nb , "familierelasjon"@nb , "utflytting"@nb , "flytting"@nb , "fødsel"@nb , "mor"@nb , "farskap"@nb , "foreldreansvar"@nb , "navn"@nb , "identitetsforvaltning"@nb ;
+        dcat:landingPage        <http://www.skatteetaten.no/no/Person/Folkeregister/> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/4810857f-3cd1-474d-80ab-7d12bd9f4795>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "file:///home/1000/dcat/mapper/Det%20er%20laget%20Retningslinjer%20for%20rapportering%20til%20Valutaregisteret%20som%20ikke%20er%20tilgjengelig%20på%20skatteetaten.no,%20men%20som%20tilgjengeliggjøres%20direkte%20til%20de%20rapporteringspliktige"
+                                ] ;
+        dct:description         "Valutaregisteret inneholder opplysninger om valutaveksling og overføring av betalingsmidler inn og ut av Norge. Dette gjelder blant annet kortbruk i utlandet, og kontanter du tar med deg inn eller ut av Norge som du har deklarert til Tolletaten.\n\nBanker, finansinstitusjoner og betalingsforetak i Norge som har fått konsesjon eller tillatelse fra Finanstilsynet er rapporteringspliktige til Valutaregisteret"@nb ;
+        dct:identifier          "84" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance          <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Valutaregister"@nb ;
+        dcat:keyword            "kontanter"@nb , "kortbruk"@nb , "valutaregister"@nb , "valutaveksling"@nb , "valuta"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/205d4ded-e385-40d2-9ace-c62753b1c2ef>
+        a                       dcat:Dataset ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven taushetsplikt#KAPITTEL_3" ;
+                  skos:prefLabel  "Taushetsplikt"@nb
+                ] ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:description         "Underholdsbidrag som er fradragsberettiget etter skatteloven § 6-52. Dette gjelder bidrag som innkreves av NAV Innkreving, dvs. bidrag innbetalt direkte av bidragspliktige selv, innbetalt av arbeidsgiver etter lønnstrekk og gjennom skattemotregning mv."@nb ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Underholdsbidrag"@nb ;
+        dcat:keyword            "underholdsbidrag"@nb , "grunnlagsdata"@nb , "fradrag"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-10>
+        a                        vcard:Organization ;
+        vcard:organization-unit  "Skatteetaten – Regionavdelingen - Folkeregister" .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974761076.json>
+        a               foaf:Agent ;
+        dct:identifier  "974761076" ;
+        foaf:name       "SKATTEETATEN" .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/distribusjon/27>
+        a                dcat:Distribution ;
+        dct:description  "Beregningsgrunnlag Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dct:type         "API" ;
+        dcat:accessURL   <https://api.skatteetaten.no> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/distribusjon/21>
+        a                dcat:Distribution ;
+        dct:description  "Skattegrunnlag Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dct:type         "API" ;
+        dcat:accessURL   <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/reference_skattegrunnlag.html> .
+
+<http://brreg.no/catalogs/974761076/datasets/98b5a586-f7dd-4429-b297-f745cc615ab3>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Registerinfo er en informasjons- og serviceenhet for byggenæringen.\n\nRegisterinfo gir byggenæringen tilgang til følgende opplysninger om aktuelle kontraktspartnere: \n•om en eventuell kontraktspartner er registrert i Enhetsregisteret og Foretaksregisteret, samt Skatteetatens merverdiavgiftsregister. \n•om merverdiavgiftsoppgaver er levert for de 3 siste terminene\n•om terminoppgaver arbeidsgiveravgift er levert for de 3 siste terminene\n•om en eventuell kontraktspartner ikke har betalt skatt, skattetrekk, arbeidsgiveravgift og merverdiavgift, framskaffet via skatteattest.\n•om bedriften har hatt utenlandske arbeidstakere eller oppdrag siste 6 mnd. \n\nOpplysningene er taushetsbelagte og kan bare gis dersom oppdragstakeren har gitt oppdragsgiveren fullmakt til å innhente opplysningene.\n"@nb ;
+        dct:identifier          "98" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Registerinfo (Byggenæringsregister)"@nb ;
+        dcat:keyword            "skatt"@nb , "skatteattest"@nb , "registerinfo"@nb , "kontraktspartner"@nb , "merverdiavgift"@nb , "byggenæringen"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/5bbe446a-1141-4e75-ae9a-2962a8c1c053>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om skattyters overholdelse av oppgaveplikten"@nb ;
+        dct:identifier          "62" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Oppgaveinnlevering"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/25> ;
+        dcat:keyword            "mva"@nb ;
+        dcat:landingPage        <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/de8e88f8-83f1-4f3f-9392-5c81ebbdbf0b>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "https://aurora/wiki/display/im/Konstruksjonsmodell+Skattegrunnlag"
+                                ] ;
+        dct:description         "Detaljert informasjon om skattepliktiges formue, inntekt, gjeld og fradrag"@nb ;
+        dct:identifier          "59" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:spatial             <http://sws.geonames.org/3144096/> ;
+        dct:title               "Skattegrunnlag"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/21> ;
+        dcat:keyword            "inntekt"@nb , "gjeld fradrag"@nb , "formue"@nb ;
+        dcat:landingPage        <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/reference_skattegrunnlag.html> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/a68fa544-19d1-4db6-9d7d-c7fb7cd4eed5>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/boligselskap/v2_1_1/filformat-for-boligselskap-v2_1_1_20161005.pdf"
+                                ] ;
+        dct:description         "Boligselskap skal levere opplysninger til Skatteetaten om andelshavers/aksjonærs andel av inntekter, utgifter, formue og gjeld. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret.\n"@nb ;
+        dct:identifier          "88" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Boligselskap"@nb ;
+        dcat:keyword            "boligselskap"@nb , "grunnlagsdata"@nb , "inntekt"@nb , "formue"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/19>
+        a                dcat:Distribution ;
+        dct:description  "a-melding per innteksmottaker"@nb ;
+        dct:format       "text/json, text/xml" ;
+        dct:type         "API" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/inntektsmottaker/version/personidentifkator/inntekt> .
+
+<http://brreg.no/catalogs/974761076/datasets/f048803e-ebde-45e4-904c-94f491c8fd75>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/boligsameie/v2_1_1/filformat-for-boligsameie-v2_1_1_20161005.pdf"
+                                ] ;
+        dct:description         "Boligsameier med 9 eller flere eierseksjoner skal levere opplysninger til Skatteetaten om sameiers andel av felles inntekter, utgifter, formue og gjeld. Innleveringsfrist for ordinære oppgaver er 31. januar året etter inntektsåret.\n"@nb ;
+        dct:identifier          "87" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Boligsameie"@nb ;
+        dcat:keyword            "boligsameie"@nb , "formue"@nb , "inntekt"@nb , "grunnlagsdata"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/518ffdb5-65ee-4659-9746-f5b4b849aae5>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene danner grunnlag for forhåndsutfylling av skattepliktige beløp i skattemelding. "@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/bsu/v1_1_1/filformat-for-boligsparing-for-ungdom-v1_1_1_20170616.pdf"
+                                ] ;
+        dct:description         "Banker, samvirkelag og spareforeninger skal levere opplysninger til Skatteetaten om konti for boligsparing for ungdom. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret \n"@nb ;
+        dct:identifier          "79" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:provenance          <http://data.brreg.no/datakatalog/provinens/tredjepart> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Boligsparing for ungdom (BSU)"@nb ;
+        dcat:keyword            "grunnlagsdata"@nb , "BSU"@nb , "boligsparing"@nb , "formue"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/27b01149-aa7a-4948-ab11-46c89595cf96>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om fordringer Skatteetaten har mot skattyter"@nb ;
+        dct:identifier          "61" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Restanser"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/24> ;
+        dcat:keyword            "forfalt og ubetalt"@nb , "renter og gebyrer"@nb , "organisasjonsnummer"@nb ;
+        dcat:landingPage        <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/0a9de1bf-bea3-42d5-a3dc-df9a78377ae6>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/tilskudd/v2_0_3/filformat-for-tilskudd-til-vitenskapelig-forskning-eller-yrkesopplaring-v2_0_3_20161005.pdf"
+                                ] ;
+        dct:description         "Forhåndsgodkjente institutter skal levere opplysninger til Skatteetaten om tilskudd til vitenskapelig forskning eller yrkesopplæring som gir rett til fradrag for giver. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier          "90" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Tilskudd til vitenskapelig forskning eller yrkesopplæring"@nb ;
+        dcat:keyword            "vitenskapelig forskning"@nb , "grunnlagsdata"@nb , "inntekt"@nb , "yrkesopplæring"@nb , "tilskudd"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/distribusjon/26>
+        a                dcat:Distribution ;
+        dct:description  "Innrapportert inntekt Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dct:type         "API" ;
+        dcat:accessURL   <https://api.skatteetaten.no/api/innrapportert/inntektsmottaker/personidentifikator/oppgave/inntekt?fraOgMed=YYYY-MM&tilOgMed=YYYY-MM> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        a               dct:LinguisticSystem ;
+        <http://publications.europa.eu/ontology/authority/authority-code>
+                "NOR" ;
+        skos:prefLabel  "Norsk"@nb .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten - Regionavdelingen - Registre og Grunnlagsdata"
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/8fa472d1-ff0a-48b5-97ca-7bb9a8237d88>
+        a                 dcat:Dataset ;
+        dcatno:objective  "Foretak som mottar støtte i form av skatte og/eller avgiftsreduksjon må rapportere dette til Skatteetaten. Registeret skal bidra til at opplysningene om offentlig støtte er offentlig tilgjengelig, og slik sikre et konkurransedyktig indre marked."@nb ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description   "Norge har gjennom EØS-avtalen forpliktet seg til å opprette et nasjonalt register for offentlig støtte for tildelinger over 500 000 euro. Skatte og avgiftslettelser er å anse som offentlig støtte og Skatteetaten oppfattes som støttegiver for disse skatte- og avgiftslettelser."@nb ;
+        dct:identifier    "101" ;
+        dct:language      <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title         "Offentlig støtte"@nb ;
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/c6e862a0-9155-43af-9f1e-0d08d155f30f>
+        a                               dcat:Dataset ;
+        dcatno:legalBasisForAccess      [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2012-06-22-43/§8" ;
+                                          skos:prefLabel  "Tilgang til opplysningene"@nb
+                                        ] ;
+        dcatno:legalBasisForProcessing  [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2012-06-22-43/§6" ;
+                                          skos:prefLabel  "Ansvar for fellestjenester og behandlingsansvar"@nb
+                                        ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/lov/2012-06-22-43/§7" ;
+                  skos:prefLabel  "Taushetsplikt ved drift og forvaltning"@nb
+                ] ;
+        dcatno:objective                "Å legge til rette for at arbeidsgivere mv. effektivt kan oppfylle sine plikter til å gi opplysninger om enkeltpersoners (inntektsmottakeres) inntekts- og arbeidsforhold og skattetrekkopplysninger, og å gi offentlige etater tilgang til opplysningene innrapportert fra arbeidsgiver."@nb ;
+        dct:accessRights                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity          <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description                 "a-melding per innteksmottaker"@nb ;
+        dct:identifier                  "57" ;
+        dct:language                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher                   <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:spatial                     <http://sws.geonames.org/3144096/> ;
+        dct:title                       "A-melding per innteksmottaker"@nb ;
+        dcat:contactPoint               <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution               <http://data.brreg.no/datakatalog/distribusjon/19> ;
+        dcat:theme                      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://data.brreg.no/datakatalog/distribusjon/20>
+        a                dcat:Distribution ;
+        dct:description  "a-melding data per arbeidsgiver"@nb ;
+        dct:format       "text/json, text/xml" ;
+        dct:type         "API" ;
+        dcat:accessURL   <http://api.skatteetaten.no/datasamarbeid/arbeidsgiver/version/organisasjonsnummer> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/84fe467b-e18d-46a1-abef-d24ff877a27e>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "I dokumentet lagres inntektsinformasjon pr skattyter innunder vår hjemmel. 6-8 eksterne aktører med hjemmelgrunnlag benytter innsynsløsning til dataene."@nb ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "SKE-dokument "@nb ;
+        dcat:keyword            "inntekt"@nb , "forskudd"@nb , "skattetrekk"@nb , "ytelser"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/aecb8c91-c866-4fa0-a14a-0725ce3abd96>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/livsforsikring/v1_2_1/filformat-for-livsforsikring-v1_2_1_20161005.pdf"
+                                ] ;
+        dct:description         "Rapportering fra livsforsikringsselskaper som skal levere opplysninger til Skatteetaten om livsforsikringer og kapitalforsikring med sparing. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier          "82" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Livsforsikring"@nb ;
+        dcat:keyword            "livsforsikring"@nb , "inntekt"@nb , "formue"@nb , "grunnlagsdata"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/d70c2642-863f-4ca2-8f3e-740983cb4a95>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene som leveres i tredjepartsopplysningene benyttes til produksjon av skattemeldingen"@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/skadeforsikring/v1_0_1/filformat-for-skadeforsikring-v1_0_1_20161005.pdf"
+                                ] ;
+        dct:description         "Forsikringsselskaper skal levere opplysninger til Skatteetaten om utbetalinger på skadeforsikringer. Innleveringsfrist for ordinære oppgaver er 20. januar året etter inntektsåret."@nb ;
+        dct:identifier          "83" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Skadeforsikring"@nb ;
+        dcat:keyword            "skadeforsikring"@nb , "inntekt"@nb , "formue"@nb , "grunnlagsdata"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/distribusjon/25>
+        a                dcat:Distribution ;
+        dct:description  "Oppgaveinnlevering Skatteetaten"@nb ;
+        dct:format       "application/xml, application/json" ;
+        dct:type         "API" ;
+        dcat:accessURL   <https://api.skatteetaten.no> .
+
+<http://brreg.no/catalogs/974761076/datasets/941addfb-6d9d-48de-8dfe-eed616c6e16a>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene danner grunnlag for forhåndsutfylling av skattepliktige beløp i skattemelding. "@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/livsforsikring/v1_2_1/filformat-for-livsforsikring-v1_2_1_20161005.pdf"
+                                ] ;
+        dct:description         "Verdipapirsentralen skal levere opplysninger til Skatteetaten over investors finansielle instrumenter. Innleveringsfrist for ordinære oppgaver er 1. februar året etter inntektsåret for beholdningsoppgaver og 20. februar året etter inntektsåret for transaksjonsoppgaver. "@nb ;
+        dct:identifier          "77" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Finansielle instrumenter"@nb ;
+        dcat:keyword            "formue"@nb , "verdipapir"@nb , "finansielle instrumenter"@nb , "inntekt"@nb , "grunnlagsdata"@nb , "Verdipapirsentralen (VPS)"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/kontaktpunkt/a-13>
+        a                        vcard:Organization ;
+        vcard:hasEmail           <mailto:brukerstotte.datasamarbeid@skatteetaten.no> ;
+        vcard:organization-unit  "Skatteetaten, datasamarbeid" .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://brreg.no/catalogs/974761076/datasets/9005f83d-5ace-499b-bcdf-1499582aec3c>
+        a                       dcat:Dataset ;
+        dcatno:objective        "Opplysningene danner grunnlag for forhåndsutfylling av skattepliktige beløp i skattemelding. "@nb ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:conformsTo          [ a           dct:Standard , skos:Concept ;
+                                  dct:source  "http://www.skatteetaten.no/globalassets/likningsoppgaver/mag/verdipapirfond/v1_0_1/filformat-for-verdipapirfond-v1_0_1_20161005.pdf"
+                                ] ;
+        dct:description         "Rapportering av opplysninger om andelseiers beholdning av andeler og alle årets transaksjoner, herunder erverv, eierskifter, avkastning, utbytte og andre forhold som har betydning for skattleggingen, herunder skjermingsgrunnlag og aksjeandel. "@nb ;
+        dct:identifier          "78" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Verdipapirfond"@nb ;
+        dcat:keyword            "grunnlagsdata"@nb , "transaksjoner"@nb , "verdipapir"@nb , "utbytte"@nb , "verdipapirfond"@nb , "inntekt"@nb , "formue"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/5c302bb9-f1c0-4ae0-abfd-9b6d8344f277>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Overordnet informasjon om skattyters formue og inntekt. Ligger til grunn for selve skatteberegningen"@nb ;
+        dct:identifier          "64" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Beregningsgrunnlag"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/27> ;
+        dcat:keyword            "skatteberegningsgrunnlag"@nb , "gjeld og fradrag"@nb , "formue"@nb , "inntekt"@nb ;
+        dcat:landingPage        <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/34577090-f06b-4d15-adf4-a0f1f2498dda>
+        a                       dcat:Dataset ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/dokument/NL/lov/2016-05-27-14?q=skatteforvaltningsloven taushetsplikt#KAPITTEL_3" ;
+                  skos:prefLabel  "Taushetsplikt"@nb
+                ] ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
+        dct:description         "ENOVA skal gi en melding per mottaker av tilskudd som skal gis som avregningsfradrag for ENØK-tiltak på egen bolig for skattleggingsperioden."@nb ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "ENOVA-tilskuddet"@nb ;
+        dcat:keyword            "Enova"@nb , "enøk"@nb , "tilskudd"@nb , "grunnlagsdata"@nb ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+[ a                        vcard:Organization ;
+  vcard:organization-unit  "Skatteetaten – Regionavdelingen – Registre og grunnlagsdata "
+] .
+
+<http://data.brreg.no/datakatalog/distribusjon/24>
+        a                dcat:Distribution ;
+        dct:description  "Restanser Skatteetaten"@nb ;
+        dct:type         "API" ;
+        dcat:accessURL   <https://api.skatteetaten.no/ws/innkreving/restanser/v1> .
+
+<http://brreg.no/catalogs/974761076/datasets/12183f89-33e1-4036-ba61-f399eddfbe42>
+        a                       dcat:Dataset ;
+        dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity  <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description         "Informasjon om innrapportert inntekt"@nb ;
+        dct:identifier          "63" ;
+        dct:language            <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher           <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:title               "Innrapportert inntekt"@nb ;
+        dcat:contactPoint       <http://data.brreg.no/datakatalog/kontaktpunkt/a-13> ;
+        dcat:distribution       <http://data.brreg.no/datakatalog/distribusjon/26> ;
+        dcat:keyword            "grunnlagsdata"@nb , "formue"@nb , "inntekt"@nb , "gjeld og fradrag"@nb ;
+        dcat:landingPage        <https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html> ;
+        dcat:theme              <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
+
+<http://brreg.no/catalogs/974761076/datasets/c92d4b3c-3706-40ab-a120-ade2f9eb7127>
+        a                               dcat:Dataset ;
+        dcatno:legalBasisForAccess      [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2012-06-22-43/§8" ;
+                                          skos:prefLabel  "Tilgang til opplysningene"@nb
+                                        ] ;
+        dcatno:legalBasisForProcessing  [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2012-06-22-43/§6" ;
+                                          skos:prefLabel  "Ansvar for fellestjenester og behandlingsansvar"@nb
+                                        ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/lov/2012-06-22-43/§7" ;
+                  skos:prefLabel  "Taushetsplikt ved drift og forvaltning"@nb
+                ] ;
+        dcatno:objective                "Å legge til rette for at arbeidsgivere mv. effektivt kan oppfylle sine plikter til å gi opplysninger om enkeltpersoners (inntektsmottakeres) inntekts- og arbeidsforhold og skattetrekkopplysninger, og å gi offentlige etater tilgang til opplysningene innrapportert fra arbeidsgiver."@nb ;
+        dct:accessRights                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity          <http://publications.europa.eu/resource/authority/frequency/CONT> ;
+        dct:description                 "a-melding data per arbeidsgiver"@nb ;
+        dct:identifier                  "58" ;
+        dct:language                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:publisher                   <http://data.brreg.no/enhetsregisteret/enhet/974761076.json> ;
+        dct:spatial                     <http://sws.geonames.org/3144096/> ;
+        dct:title                       "A-melding data per arbeidsgiver"@nb ;
+        dcat:contactPoint               <http://data.brreg.no/datakatalog/kontaktpunkt/a-12> ;
+        dcat:distribution               <http://data.brreg.no/datakatalog/distribusjon/20> ;
+        dcat:theme                      <http://publications.europa.eu/resource/authority/data-theme/GOVE> .

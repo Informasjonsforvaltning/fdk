@@ -15,7 +15,7 @@
           <p class="fdk-input-label">Tittel <span class="fdk-obligatorisk">Obligatorisk</span></p>
           <helptext
             name="Dataset_title"></helptext>
-          <input autofocus class="fdk-input" id="dataset-title" (keyup)="valuechange($event)" type="text"
+          <input autofocus class="fdk-input fdk-input-reg-string" id="dataset-title" (keyup)="valuechange($event)" type="text"
                  [(ngModel)]="dataset.title[language]"/>
         </div>
 
@@ -23,7 +23,7 @@
         <p class="fdk-input-label">Beskrivelse av datasettet <span class="fdk-obligatorisk">Obligatorisk</span></p>
         <helptext
         name="Dataset_description"></helptext>
-        <textarea class="fdk-input fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
+        <textarea class="fdk-input fdk-input-reg-string fdk-input-h3-2" rows="5" id="beskrivelse-datasett"
         (ngModelChange)="valuechange(this)"
         [(ngModel)]='dataset.description[language]'></textarea>
       </div>
@@ -32,7 +32,7 @@
         <label for="dataset-objective" class="fdk-input-label">Formålet med datasettet</label>
         <helptext
         name="Dataset_objective"></helptext>
-        <textarea class="fdk-input fdk-register-h3-2" rows="5" id="dataset-objective"
+        <textarea class="fdk-input fdk-input-reg-string fdk-register-h3-2" rows="5" id="dataset-objective"
         (ngModelChange)="valuechange(this)"
         [(ngModel)]='dataset.objective[language]'></textarea>
       </div>
@@ -41,7 +41,7 @@
           <label for="dataset-landingpage" class="fdk-input-label">Lenke til mer informasjon om datasettet</label>
           <helptext
             name="Dataset_landingpage"></helptext>
-          <input class="fdk-input" id="dataset-landingpage" (keyup)="valuechange($event)" type="url"
+          <input class="fdk-input fdk-input-reg-string" id="dataset-landingpage" (keyup)="valuechange($event)" type="url"
                  [(ngModel)]="dataset.landingPages[0]" trim/>
         </div>
       </div>
@@ -173,7 +173,6 @@
                         <div class="col-md-4">
                             <my-date-picker
                                 id="issued"
-                                placeholder="Opprettet dato"
                                 name="issued"
                                 [options]="myDatePickerOptions"
                                 locale="no"
@@ -316,13 +315,13 @@
     </div>
   </div>
 </div>
-  
+
     <div class="row justify-content-md-center" *ngIf="dataset">
         <label for="distributions-toggle" class="col-md-push-1 col-md-2 section-title">
             Distribusjoner<b class="caret-right"></b>
         </label>
         <div class="col-md-push-1 col-md-8 collapsed">
-            <input type="checkbox" id="distributions-toggle" class="expand-checkbox"/>
+            <input type="checkbox" id="distributions-toggle" class="expand-checkbox" tabindex="0" />
             <div *ngIf="dataset.distributions">
                 <div *ngFor="let distribution of dataset.distributions">
                     <label for="distributions-toggle" class="expand-label collapsed-content" style="display:block;">
@@ -331,7 +330,7 @@
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="distribution.type === 'Feed'"></i>
-                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-download" *ngIf="distribution.type === 'Nedlastbar fil'"></i>
                                     <i class="fa fa-cogs" *ngIf="distribution.type === 'API'"></i>
                                     {{distribution.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
@@ -369,12 +368,12 @@
                                 <div *ngIf="idx < 5" style="display: inline">
                                     {{singleFormat}}
                                     <i class="fa fa-rss" *ngIf="sample.type === 'Feed'"></i>
-                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>                                    
+                                    <i class="fa fa-download" *ngIf="sample.type === 'Nedlastbar fil'"></i>
                                     <i class="fa fa-cogs" *ngIf="sample.type === 'API'"></i>
                                     {{sample.format.length !== idx+1 ? '&nbsp;' : '' }}
                                 </div>
                             </span>
-                        </div>                            
+                        </div>
                         <span *ngIf="!sample || !sample.format || sample.format.length === 0">
                             Klikk for å fylle ut
                         </span>
