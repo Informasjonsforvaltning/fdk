@@ -71,10 +71,35 @@ export class DatasetService {
     this.headers.append("Authorization", "Basic " + authorization);
     let datasetCopy = JSON.parse(JSON.stringify(dataset));
     let payload = JSON.stringify(singularizeObjectKeys(datasetCopy));
-    //special treatment for field dcat:references
-    // - it is spelled "plural-like" and is unintentionally singularized
-    //it therfore has to be changed back to its correct form
-    payload = payload.replace('"reference":', '"references":');
+    /* 
+    special treatment for field dcat:references
+    - it is spelled "plural-like" and is unintentionally singularized
+    it therfore has to be changed back to its correct form
+
+    singularize does not singularize plurals of null object.
+    Any list that has a plural name, but has null value will not have its name singularized.
+    Therefore all plural names 
+    */
+    payload = payload.replace('"reference":', '"references":');    
+    payload = payload.replace('"identifiers":', '"identifier":');
+    payload = payload.replace('"samples":', '"sample":');    
+    payload = payload.replace('"distributions":', '"distribution":');    
+    payload = payload.replace('"contactPoints":', '"contactPoint":');        
+    payload = payload.replace('"accessRightsComments":', '"accessRightsComment":');             
+    payload = payload.replace('"conformsTos":', '"conformsTo":');             
+    payload = payload.replace('"informationModels":', '"informationModel":');         
+    payload = payload.replace('"keywords":', '"keyword":');         
+    payload = payload.replace('"accessRight":', '"accessRights":');         
+    payload = payload.replace('"landingPages":', '"landingPage":');         
+    payload = payload.replace('"languages":', '"language":');         
+    payload = payload.replace('"legalBasisForAccesses":', '"legalBasisForAccess":');         
+    payload = payload.replace('"legalBasisForProcessings":', '"legalBasisForProcessing":');         
+    payload = payload.replace('"legalBasisForRestrictions":', '"legalBasisForRestriction":');         
+    payload = payload.replace('"reference":', '"references":');         
+    payload = payload.replace('"spatials":', '"spatial":');         
+    payload = payload.replace('"subjects":', '"subject":');         
+    payload = payload.replace('"temporals":', '"temporal":');         
+    payload = payload.replace('"themes":', '"theme":');
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()

@@ -37,7 +37,6 @@ export class DatasetComponent implements OnInit {
     datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
     saveDelay: number = 1000;
     datasetForm: FormGroup = new FormGroup({});
-    datasetSave: Dataset;
     myDatePickerOptions: IMyDpOptions = {
         //dateFormat: 'dd.mm.yyyy',//'yyyy.mm.dd',
         showClearDateBtn: false
@@ -58,12 +57,10 @@ export class DatasetComponent implements OnInit {
         private formBuilder: FormBuilder,
         private cdr: ChangeDetectorRef,
         private accessRightsService: AccessRightsService) {
-            console.log("constructor");
     }
 
 
   ngOnInit() {
-    console.log("ngOnInit");
     this.language = 'nb';
     this.availableLanguages = [ // this should be delivered from the server together with index.html (for example)
       {
@@ -104,7 +101,6 @@ export class DatasetComponent implements OnInit {
     let datasetId = this.route.snapshot.params['dataset_id'];
     this.catalogService.get(this.catId).then((catalog: Catalog) => this.catalog = catalog);
     
-    console.log("before service.get");
     this.service.get(this.catId, datasetId).then((dataset: Dataset) => {
       console.log('dataset from api: ', dataset);
       this.dataset = null;
@@ -119,7 +115,6 @@ export class DatasetComponent implements OnInit {
         })
       }
       
-      console.log("this.dataset = ... list");
       // Make sure all arrays are set or empty
       // catalog and publisher is set by api
       this.dataset.catalogId = dataset.catalogId || this.catId || "";
@@ -156,23 +151,11 @@ export class DatasetComponent implements OnInit {
       this.setChecked = !this.dataset.title[this.language];
       // construct controller
       this.datasetForm = this.toFormGroup(this.dataset);
-
-      
-      console.log("buildSummaries");
-
       this.buildSummaries();
-
-      this.datasetSavingEnabled = false;
-      
-      console.log("setTimeout");
+      this.datasetSavingEnabled = false;      
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
-
-      
-      console.log("before subscribe");
       this.datasetForm.valueChanges.distinctUntilChanged() // when fetching back data, de-flatten the object
         .subscribe(dataset => {
-            
-            console.log("subscribe dataset: " , dataset);
           // converting attributes for saving
           this.dataset.languages = [];
           dataset.checkboxArray.forEach((checkbox, checkboxIndex) => {
@@ -232,9 +215,8 @@ export class DatasetComponent implements OnInit {
           }, this.saveDelay);
         });
     })
-    
-    console.log("after service.get");
   }
+
   buildSummaries() {
     this.buildGeoTimeSummaries();
     this.buildProvenanceSummary();
@@ -362,19 +344,14 @@ export class DatasetComponent implements OnInit {
 
     save(): void {
         this.datasetSavingEnabled = false;
-        this.datasetSave = JSON.parse(JSON.stringify(this.dataset));
-        
-        console.log('dataset: ', this.dataset);
-        console.log('original: ', this.datasetSave);
-        this.datasetSave = Validate.validateDataset(this.datasetSave);
-        console.log('validated: ', this.datasetSave);
-        this.service.save(this.catId, this.datasetSave)
+        let datasetSave = JSON.parse(JSON.stringify(this.dataset));        
+        datasetSave = Validate.validateDataset(datasetSave);
+        this.service.save(this.catId, datasetSave)
             .then(() => {
                 this.saved = true;
                 var d = new Date();
                 this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
                 this.datasetSavingEnabled = true;
-                console.log("return: ", this);
             })
         .catch(error => {
             console.log(error);
@@ -384,7 +361,6 @@ export class DatasetComponent implements OnInit {
                 false
             );
         });
-        //this.dataset = _.merge(this.dataset, this.datasetSave);
     }
 
     valuechange(): void {

@@ -5,7 +5,8 @@ export class Validate {
 
     public static validateDataset(dataset: Dataset): Dataset {
         dataset = Validate.validateObject(dataset);
-        dataset.distributions = Validate.distribution(dataset.distributions, ["id", "type"]);
+        dataset.distributions = Validate.distribution(dataset.distributions, ["id", "type"]);        
+        dataset.samples = Validate.distribution(dataset.samples, ["id", "type"]);
         dataset = Validate.content(dataset);
         dataset = Validate.quality(dataset);
         dataset = Validate.remove(dataset);
@@ -83,11 +84,29 @@ export class Validate {
     }
     
     private static remove(dataset: any): Dataset {
-        delete dataset.checkboxArray;
+        delete dataset.checkboxArray;        
+        delete dataset.published;
         if (dataset.references) {
             for (let i=0; i<dataset.references.length; i++) {
                 delete dataset.references[i].referenceTypeForm;                
                 delete dataset.references[i].sourceForm;
+            }
+        }
+        if (dataset.languages) {            
+            for (let i=0; i<dataset.languages.length; i++) {
+                delete dataset.languages[i].selected;
+            }
+        }
+        if (dataset.distributions) {            
+            for (let i=0; i<dataset.distributions.length; i++) {
+                delete dataset.distributions[i].conformsToPrefLabel;
+                delete dataset.distributions[i].conformsToUri;
+            }
+        }
+        if (dataset.samples) {            
+            for (let i=0; i<dataset.samples.length; i++) {
+                delete dataset.samples[i].conformsToPrefLabel;                
+                delete dataset.samples[i].conformsToUri;
             }
         }
         return dataset;
