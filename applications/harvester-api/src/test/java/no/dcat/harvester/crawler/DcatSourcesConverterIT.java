@@ -70,27 +70,6 @@ public class DcatSourcesConverterIT {
 
     }
 
-    @Test
-    public void readGdocAndConvertBackToTurtleGivesUniqueContacts() {
-        Model model = RDFDataMgr.loadModel("gdoc-2017-11-03.ttl");
-
-        DcatReader reader = setupReader(model);
-        List<Dataset> datasets = reader.getDatasets();
-
-        logger.info("{}", datasets.size());
-
-        List<Dataset> brregDatasets = datasets.stream().filter(dataset -> "974760673".equals(dataset.getCatalog().getId())).collect(Collectors.toList());
-        logger.info("BRREGS {}", brregDatasets.size());
-
-        Catalog c = new Catalog();
-        c.setId("974760673");
-        c.setDataset(brregDatasets);
-
-        String output = DcatBuilder.transform(c, "TURTLE");
-
-        logger.info(output);
-
-    }
 
 
     @Test

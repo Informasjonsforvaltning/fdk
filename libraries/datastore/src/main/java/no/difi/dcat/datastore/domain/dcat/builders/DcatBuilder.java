@@ -477,7 +477,8 @@ public class DcatBuilder {
         if (contact != null) {
             Resource contactRes = null;
 
-            if (    (contact.getEmail() != null && !contact.getEmail().isEmpty()) ||
+            if (    (contact.getFullname() != null && !contact.getFullname().isEmpty()) ||
+                    (contact.getEmail() != null && !contact.getEmail().isEmpty()) ||
                     (contact.getHasTelephone() != null && !contact.getHasTelephone().isEmpty()) ||
                     (contact.getHasURL() != null && !contact.getHasURL().isEmpty()) ||
                     (contact.getOrganizationName() != null && !contact.getOrganizationName().isEmpty()) ||
@@ -491,7 +492,7 @@ public class DcatBuilder {
 
                 // contact has same uri as one that has been exported before, force a new one
                 if (exportedContacsUriMap.containsKey(contact.getUri()) && contact != exportedContacsUriMap.get(contact.getUri())) {
-                    contact.setUri("http://fellesdatakatal.no/contact/"+ UUID.randomUUID().toString());
+                    contact.setUri("http://datakatalog.no/contact/export/"+ UUID.randomUUID().toString());
                 }
 
                 contactRes = model.createResource(contact.getUri());

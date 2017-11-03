@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class AbstractBuilder {
 
@@ -335,87 +336,99 @@ public abstract class AbstractBuilder {
 
 
     /**
-     * Extracts contactInformation from RDF as a vcard:Kind. If no attributes are found it returns null.
+     * Extracts contactInformation objects from RDF as a vcard:Kind/Organization.
+     *
+     * If no contacts is found. It only creates contacts if it has attributes.
      *
      * @param resource the resource which contains the contact point resource
-     * @return a instantiated Contact object.
+     * @return a list of instantiated Contact object.
      */
-    public static Contact extractContact(Resource resource) {
+    public static List<Contact> extractContacts(Resource resource) {
         try {
-            Contact contact = new Contact();
-            boolean hasAttributes = false;
+            List<Contact> result = new ArrayList<>();
+            StmtIterator iterator = resource.listProperties(DCAT.contactPoint);
+            while (iterator.hasNext()) {
+                Contact contact = new Contact();
+                boolean hasAttributes = false;
 
-            final Statement property = resource.getProperty(DCAT.contactPoint);
+                final Statement property = iterator.next();
 
-            if (property == null) {
-                logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
-                return null;
-            }
-
-            final Resource object = property.getObject().asResource();
-
-            if (object.getURI() != null && !object.getURI().isEmpty()) {
-                if (contactMap.containsKey(object.getURI())) {
-                    return contactMap.get(object.getURI());
+                if (property == null) {
+                    logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
+                    continue;
                 }
 
-                contact.setUri(object.getURI());
-            }
+                final Resource object = property.getObject().asResource();
 
-            final String fn = extractAsString(object, Vcard.fn);
-            if (fn != null) {
-                hasAttributes = true;
-                contact.setFullname(fn);
-            }
-
-            final String email = extractAsString(object, Vcard.hasEmail);
-            if (email != null) {
-                hasAttributes = true;
-                if (email.startsWith("mailto:")){
-                    contact.setEmail(email.substring("mailto:".length(), email.length()));
+                if (object.getURI() != null && !object.getURI().isEmpty()) {
+                    contact.setUri(object.getURI());
                 } else {
-                    contact.setEmail(email);
+                    contact.setUri("http://dataktalog.no/contact/import/" + UUID.randomUUID().toString());
                 }
-            }
 
-            final String telephone = extractAsString(object, Vcard.hasTelephone);
-            if (telephone != null) {
-                hasAttributes = true;
-                if (telephone.startsWith("tel:")) {
-                    contact.setHasTelephone(telephone.substring("tel:".length(),telephone.length()));
-                } else {
-                    contact.setHasTelephone(telephone);
+                // reuse existing contact
+                if (contactMap.containsKey(contact.getUri())) {
+                    result.add(contactMap.get(contact.getUri()));
+                    continue;
                 }
-            }
 
-            final String organizationName = extractAsString(object, Vcard.organizationName);
-            if (organizationName != null) {
-                hasAttributes = true;
-                contact.setOrganizationName(organizationName);
-            }
+                contactMap.put(contact.getUri(), contact);
 
-            final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
-            if (organizationUnit != null) {
-                hasAttributes = true;
-                contact.setOrganizationUnit(organizationUnit);
-            }
+                final String fn = extractAsString(object, Vcard.fn);
+                if (fn != null) {
+                    hasAttributes = true;
+                    contact.setFullname(fn);
+                }
 
-            final String hasURL = extractAsString(object, Vcard.hasURL);
-            if (hasURL != null) {
-                hasAttributes = true;
-                contact.setHasURL(hasURL);
-            }
+                final String email = extractAsString(object, Vcard.hasEmail);
+                if (email != null) {
+                    hasAttributes = true;
+                    if (email.startsWith("mailto:")) {
+                        contact.setEmail(email.substring("mailto:".length(), email.length()));
+                    } else {
+                        contact.setEmail(email);
+                    }
+                }
 
-            if (hasAttributes) {
-                if (contact.getUri() != null) {
+                final String telephone = extractAsString(object, Vcard.hasTelephone);
+                if (telephone != null) {
+                    hasAttributes = true;
+                    if (telephone.startsWith("tel:")) {
+                        contact.setHasTelephone(telephone.substring("tel:".length(), telephone.length()));
+                    } else {
+                        contact.setHasTelephone(telephone);
+                    }
+                }
+
+                final String organizationName = extractAsString(object, Vcard.organizationName);
+                if (organizationName != null) {
+                    hasAttributes = true;
+                    contact.setOrganizationName(organizationName);
+                }
+
+                final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
+                if (organizationUnit != null) {
+                    hasAttributes = true;
+                    contact.setOrganizationUnit(organizationUnit);
+                }
+
+                final String hasURL = extractAsString(object, Vcard.hasURL);
+                if (hasURL != null) {
+                    hasAttributes = true;
+                    contact.setHasURL(hasURL);
+                }
+
+                if (hasAttributes) {
                     contactMap.put(contact.getUri(), contact);
+                    result.add(contact);
                 }
-                return contact;
-            } else {
-                return null;
             }
+
+            return result;
+
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}. Reason {}", DCAT.contactPoint, resource.getURI(), e.getLocalizedMessage());
+            logger.warn("Error when extracting property {} from resource {}. Reason {}",
+                    DCAT.contactPoint, resource.getURI(), e.getLocalizedMessage());
         }
 
         return null;
