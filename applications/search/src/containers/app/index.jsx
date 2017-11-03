@@ -165,7 +165,7 @@ export default class App extends React.Component {
               <div className="col-md-3 text-right">
                 <p className="fdk-p-footer">
                   <a
-                    href="mailto:felleskatalog@brreg.no"
+                    href="mailto:fellesdatakatalog@brreg.no"
                   >
                     {localization.footer.contact}<br />
                     {localization.footer.mail}
