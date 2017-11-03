@@ -29,7 +29,9 @@ const RefinementOptionPublishers = (props) => {
   const textLabel = localization.search_hit[optionLabel] ? localization.search_hit[optionLabel] : optionLabel;
   return (
     <div className="checkbox">
-      <label onKeyPress={onClick} tabIndex="1" htmlFor={id}>
+      {
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+      }<label onKeyPress={onClick} tabIndex="0" htmlFor={id} role="button">
         <input
           type="checkbox"
           id={id}
