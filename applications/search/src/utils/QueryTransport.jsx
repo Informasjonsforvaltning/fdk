@@ -96,7 +96,6 @@ export class QueryTransport extends AxiosESTransport {
   }
 
   getData(response) {
-    console.log('response is ', response);
     response.data.aggregations['accessRightsCount'].buckets.forEach((bucket)=>{
       if(bucket.key==='PUBLIC') {
         bucket.key = 'NON_PUBLIC'
