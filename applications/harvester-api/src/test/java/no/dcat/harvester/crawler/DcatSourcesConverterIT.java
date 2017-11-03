@@ -20,6 +20,7 @@ import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -68,6 +69,29 @@ public class DcatSourcesConverterIT {
         assertThat(datasets.size(), is(4));
 
     }
+
+    @Test
+    public void readGdocAndConvertBackToTurtleGivesUniqueContacts() {
+        Model model = RDFDataMgr.loadModel("gdoc-2017-11-03.ttl");
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        logger.info("{}", datasets.size());
+
+        List<Dataset> brregDatasets = datasets.stream().filter(dataset -> "974760673".equals(dataset.getCatalog().getId())).collect(Collectors.toList());
+        logger.info("BRREGS {}", brregDatasets.size());
+
+        Catalog c = new Catalog();
+        c.setId("974760673");
+        c.setDataset(brregDatasets);
+
+        String output = DcatBuilder.transform(c, "TURTLE");
+
+        logger.info(output);
+
+    }
+
 
     @Test
     public void readDifiData() throws Throwable {

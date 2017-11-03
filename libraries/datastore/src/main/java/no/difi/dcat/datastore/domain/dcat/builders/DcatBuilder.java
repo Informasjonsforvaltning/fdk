@@ -476,11 +476,8 @@ public class DcatBuilder {
                     (contact.getOrganizationName() != null && !contact.getOrganizationName().isEmpty()) ||
                     (contact.getOrganizationUnit() != null && !contact.getOrganizationUnit().isEmpty())) {
 
-                if (contact.getUri() != null && !contact.getUri().isEmpty()) {
-                    contactRes = model.createResource(contact.getUri());
-                } else {
-                    contactRes = model.createResource(UUID.randomUUID().toString());
-                }
+                // force generation of unique contact resource since we have decided to not share contacts
+                contactRes = model.createResource("http://fellesdatakatal.no/contact/"+ UUID.randomUUID().toString());
 
                 contactRes.addProperty(RDF.type, VCARD4.Organization);
                 datRes.addProperty(DCAT.contactPoint, contactRes);

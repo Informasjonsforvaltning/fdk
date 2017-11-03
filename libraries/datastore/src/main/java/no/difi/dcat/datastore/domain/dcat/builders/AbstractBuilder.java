@@ -346,10 +346,11 @@ public abstract class AbstractBuilder {
                 return null;
             }
 
-            //final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
             final Resource object = property.getObject().asResource();
 
-            contact.setUri(object.getURI());
+            // should perhaps handle sharing of contact, but this is not supported. Therefore we are ignoring contact uris
+            //contact.setUri(object.getURI());
+
             final String fn = extractAsString(object, Vcard.fn);
             if (fn != null) {
                 hasAttributes = true;
