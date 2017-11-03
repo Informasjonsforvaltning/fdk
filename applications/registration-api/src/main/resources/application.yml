@@ -85,11 +85,11 @@ spring:
       clusterName: fellesdatakatalog
 logging:
   level.: ERROR
-  level.no.brreg: DEBUG
-  level.no.dcat: DEBUG
+  level.no.brreg: INFO
+  level.no.dcat: INFO
   level.org.springframework: INFO
   level.org.springframework.web: WARN
-  level.org.opensaml: DEBUG
+  level.org.opensaml: INFO
 health:
   config:
     enabled: false
