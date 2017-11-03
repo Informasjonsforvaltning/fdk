@@ -56,7 +56,5 @@ const CustomHitsStats = (props) => {
   }
   return null;
 };
-/*
-*/
 
 export default CustomHitsStats;
