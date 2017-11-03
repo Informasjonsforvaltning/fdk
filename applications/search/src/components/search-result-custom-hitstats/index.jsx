@@ -36,7 +36,6 @@ const CustomHitsStats = (props) => {
       filteringOrTextSearchPerformed &&
       previousState !== 'initialCountSummaryShown'
     ) { // it's a search
-    lastupdated = Date.now();
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
@@ -46,7 +45,6 @@ const CustomHitsStats = (props) => {
     );
   } else if (requestCompleted && hitsCountInt) {
     return (
-      lastupdated = Date.now();
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info nosearch" data-qa="info">
           <span>{localization.page['nosearch.summary']}</span> <span>{hitsCount}</span> {localization.page['nosearch.descriptions']}

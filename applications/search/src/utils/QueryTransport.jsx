@@ -35,7 +35,7 @@ export class QueryTransport extends AxiosESTransport {
     ];
   }
 
-  search(query){
+  search(query) {
     this.filters.forEach((filter)=> {
       // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
       filter.query = '';
@@ -95,8 +95,13 @@ export class QueryTransport extends AxiosESTransport {
       .then((response)=>this.getData.call(this, response))
   }
 
-
   getData(response) {
+    console.log('response is ', response);
+    response.data.aggregations['accessRightsCount'].buckets.forEach((bucket)=>{
+      if(bucket.key==='PUBLIC') {
+        bucket.key = 'NON_PUBLIC'
+      }
+    });
     let aggregations = response.data.aggregations;
       this.filters.forEach((filter, index)=>{
         let rawName = filter.key + (index + 3); // why 3? seems the first 2-3 are internal searchkit stuff
