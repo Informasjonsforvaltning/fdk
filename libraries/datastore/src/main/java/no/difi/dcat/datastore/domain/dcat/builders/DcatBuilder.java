@@ -38,8 +38,11 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -56,6 +59,9 @@ public class DcatBuilder {
 
     static Property schema_startDate = mod.createProperty("http://schema.org/startDate");
     static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
+
+    Map<String, Contact> exportedContacsUriMap = new HashMap<>();
+    Set<Contact> exportedContacts = new HashSet<>();
 
     private final Model model;
 
@@ -466,6 +472,7 @@ public class DcatBuilder {
         return this;
     }
 
+
     void createContactPoint(Resource datRes, Contact contact) {
         if (contact != null) {
             Resource contactRes = null;
@@ -476,8 +483,18 @@ public class DcatBuilder {
                     (contact.getOrganizationName() != null && !contact.getOrganizationName().isEmpty()) ||
                     (contact.getOrganizationUnit() != null && !contact.getOrganizationUnit().isEmpty())) {
 
-                // force generation of unique contact resource since we have decided to not share contacts
-                contactRes = model.createResource("http://fellesdatakatal.no/contact/"+ UUID.randomUUID().toString());
+                // contact already exported?
+                if (exportedContacts.contains(contact)) {
+                    return;
+                }
+                exportedContacts.add(contact);
+
+                // contact has same uri as one that has been exported before, force a new one
+                if (exportedContacsUriMap.containsKey(contact.getUri()) && contact != exportedContacsUriMap.get(contact.getUri())) {
+                    contact.setUri("http://fellesdatakatal.no/contact/"+ UUID.randomUUID().toString());
+                }
+
+                contactRes = model.createResource(contact.getUri());
 
                 contactRes.addProperty(RDF.type, VCARD4.Organization);
                 datRes.addProperty(DCAT.contactPoint, contactRes);
@@ -504,6 +521,9 @@ public class DcatBuilder {
                         addProperty(contactRes, VCARD4.hasTelephone, "tel:" + telephone);
                     }
                 }
+
+                // remember uri for contact
+                exportedContacsUriMap.put(contact.getUri(), contact);
             }
         }
     }

@@ -40,6 +40,11 @@ public abstract class AbstractBuilder {
     static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
 
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
+    static Map<String, Contact> contactMap;
+
+    public AbstractBuilder() {
+        contactMap = new HashMap<>();
+    }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
         List<String> result = new ArrayList<>();
@@ -328,6 +333,7 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+
     /**
      * Extracts contactInformation from RDF as a vcard:Kind. If no attributes are found it returns null.
      *
@@ -348,8 +354,13 @@ public abstract class AbstractBuilder {
 
             final Resource object = property.getObject().asResource();
 
-            // should perhaps handle sharing of contact, but this is not supported. Therefore we are ignoring contact uris
-            //contact.setUri(object.getURI());
+            if (object.getURI() != null && !object.getURI().isEmpty()) {
+                if (contactMap.containsKey(object.getURI())) {
+                    return contactMap.get(object.getURI());
+                }
+
+                contact.setUri(object.getURI());
+            }
 
             final String fn = extractAsString(object, Vcard.fn);
             if (fn != null) {
@@ -396,6 +407,9 @@ public abstract class AbstractBuilder {
             }
 
             if (hasAttributes) {
+                if (contact.getUri() != null) {
+                    contactMap.put(contact.getUri(), contact);
+                }
                 return contact;
             } else {
                 return null;

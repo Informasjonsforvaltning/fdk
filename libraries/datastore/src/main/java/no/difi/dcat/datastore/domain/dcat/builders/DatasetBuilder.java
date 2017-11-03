@@ -25,6 +25,8 @@ public class DatasetBuilder extends AbstractBuilder {
 
     public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
                           Map<String, DataTheme> dataThemes) {
+        super();
+
         this.model = model;
         this.locations = locations;
         this.codes = codes;
