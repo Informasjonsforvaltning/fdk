@@ -5,12 +5,10 @@ export class Validate {
 
     public static validateDataset(dataset: Dataset): Dataset {
         dataset = Validate.validateObject(dataset);
-        if (dataset.title == null || dataset.description == null || dataset.accessRights == null || dataset.themes == null) {
-            return null;
-        } 
         dataset.distributions = Validate.distribution(dataset.distributions, ["id", "type"]);
         dataset = Validate.content(dataset);
         dataset = Validate.quality(dataset);
+        dataset = Validate.remove(dataset);
         return dataset;
     }
 
@@ -76,11 +74,21 @@ export class Validate {
         }
         return dataset;
     }
-
     
     private static quality(dataset: Dataset): Dataset {
         if (dataset.hasCurrentnessAnnotation && dataset.hasCurrentnessAnnotation.hasBody == null) {
             dataset.hasCurrentnessAnnotation = null;
+        }
+        return dataset;
+    }
+    
+    private static remove(dataset: any): Dataset {
+        delete dataset.checkboxArray;
+        if (dataset.references) {
+            for (let i=0; i<dataset.references.length; i++) {
+                delete dataset.references[i].referenceTypeForm;                
+                delete dataset.references[i].sourceForm;
+            }
         }
         return dataset;
     }

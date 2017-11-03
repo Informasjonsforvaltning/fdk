@@ -75,8 +75,6 @@ export class DatasetService {
     // - it is spelled "plural-like" and is unintentionally singularized
     //it therfore has to be changed back to its correct form
     payload = payload.replace('"reference":', '"references":');
-    payload = payload.replace(/,"referenceTypeForm":(["'])(?:(?=(\\?))\2.)*?\1/, '');    
-    payload = payload.replace(/,"sourceForm":(["'])(?:(?=(\\?))\2.)*?\1/, '');
     return this.http
       .put(datasetUrl, payload, {headers: this.headers})
       .toPromise()

@@ -166,9 +166,10 @@ export class DatasetComponent implements OnInit {
       
       console.log("setTimeout");
       setTimeout(() => this.datasetSavingEnabled = true, this.saveDelay + 2000);
+
       
       console.log("before subscribe");
-      this.datasetForm.valueChanges // when fetching back data, de-flatten the object
+      this.datasetForm.valueChanges.distinctUntilChanged() // when fetching back data, de-flatten the object
         .subscribe(dataset => {
             
             console.log("subscribe dataset: " , dataset);
@@ -351,8 +352,12 @@ export class DatasetComponent implements OnInit {
     }
 
     onSave(ok: boolean): void {
-
-        this.save();
+        var that = this;
+        this.delay(() => {
+            if (this.datasetSavingEnabled) {
+                that.save.call(that);
+            }
+        }, this.saveDelay);
     }
 
     save(): void {
@@ -361,26 +366,24 @@ export class DatasetComponent implements OnInit {
         
         console.log('dataset: ', this.dataset);
         console.log('original: ', this.datasetSave);
-        //this.datasetSave = Validate.validateDataset(this.datasetSave);
+        this.datasetSave = Validate.validateDataset(this.datasetSave);
         console.log('validated: ', this.datasetSave);
-        if (this.datasetSave) {
-            this.service.save(this.catId, this.datasetSave)
-                .then(() => {
-                    this.saved = true;
-                    var d = new Date();
-                    this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
-                    this.datasetSavingEnabled = true;
-                    console.log("return: ", this);
-                })
-            .catch(error => {
-                console.log(error);
-                this.showModal(
-                    `Error: ${error.status}`,
-                    `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
-                    false
-                );
-            });
-        }
+        this.service.save(this.catId, this.datasetSave)
+            .then(() => {
+                this.saved = true;
+                var d = new Date();
+                this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
+                this.datasetSavingEnabled = true;
+                console.log("return: ", this);
+            })
+        .catch(error => {
+            console.log(error);
+            this.showModal(
+                `Error: ${error.status}`,
+                `Det har skjedd en feil ved lagring av data til registration-api. Vennligst prøv igjen senere`,
+                false
+            );
+        });
         //this.dataset = _.merge(this.dataset, this.datasetSave);
     }
 
