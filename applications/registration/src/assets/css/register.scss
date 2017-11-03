@@ -59,7 +59,7 @@
     font-weight: 300;
 }
 
-.fdk-input-reg-string:hover {
+.fdk-input-reg-string:hover, .fdk-input-reg-string:focus {
     border: 2px solid $color-cta2;
 }
 

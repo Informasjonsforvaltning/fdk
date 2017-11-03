@@ -1,0 +1,165 @@
+{
+  "id": "f4a29e1c-c789-44a7-8cc2-31dc6ff8d9c0",
+  "uri": "http://brreg.no/catalogs/910244132/datasets/f4a29e1c-c789-44a7-8cc2-31dc6ff8d9c0",
+  "title": {
+    "nb": "Ramsunds begrepsregister"
+  },
+  "description": {},
+  "objective": {},
+  "contactPoint": [{
+    "email": "",
+    "organizationUnit": "",
+    "hasURL": "",
+    "hasTelephone": ""
+  }
+  ],
+  "keyword": [],
+  "publisher": {
+    "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132.json",
+    "id": "910244132",
+    "name": "RAMSUND OG ROGNAN REVISJON"
+  },
+  "language": [],
+  "landingPage": [],
+  "theme": [],
+  "distribution": [{
+    "id": "483560",
+    "uri": "",
+    "title": {
+      "nb": ""
+    },
+    "description": {
+      "nb": ""
+    },
+    "downloadURL": [],
+    "accessURL": [],
+    "license": {
+      "uri": "",
+      "prefLabel": {
+        "nb": ""
+      },
+      "extraType": null
+    },
+    "conformsTo": [{
+      "uri": "",
+      "prefLabel": {
+        "nb": ""
+      },
+      "extraType": null
+    }
+    ],
+    "page": [],
+    "format": [],
+    "type": "API"
+  }
+  ],
+  "sample": [{
+    "id": "387684",
+    "uri": "",
+    "title": {
+      "nb": ""
+    },
+    "description": {
+      "nb": ""
+    },
+    "downloadURL": [],
+    "accessURL": [],
+    "license": {
+      "uri": "",
+      "prefLabel": {
+        "nb": ""
+      },
+      "extraType": null
+    },
+    "conformsTo": [{
+      "uri": "",
+      "prefLabel": {
+        "nb": ""
+      },
+      "extraType": null
+    }
+    ],
+    "page": [],
+    "format": [],
+    "type": "API"
+  }
+  ],
+  "temporal": [{}
+  ],
+  "spatial": [],
+  "accessRights": {
+    "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+    "prefLabel": {}
+  },
+  "accessRightsComment": [],
+  "legalBasisForRestriction": [],
+  "legalBasisForProcessing": [],
+  "legalBasisForAccess": [],
+  "references": [{
+    "referenceType": {
+      "uri": "",
+      "code": "",
+      "prefLabel": {
+        "nb": ""
+      }
+    },
+    "source": {
+      "uri": "",
+      "prefLabel": {
+        "nb": ""
+      },
+      "extraType": null
+    }
+  }
+  ],
+  "provenance": {
+    "uri": "",
+    "prefLabel": {
+      "nb": ""
+    }
+  },
+  "identifier": [],
+  "accrualPeriodicity": {
+    "uri": "",
+    "prefLabel": {
+      "no": ""
+    }
+  },
+  "subject": [{
+    "uri": "https://data-david.github.io/Begrep/begrep/Hovedenhet",
+    "prefLabel": {
+      "no": "hovedenhet"
+    },
+    "definition": {
+      "no": "enhet på øverste nivå i registreringsstrukturen i Enhetsregisteret"
+    },
+    "note": {
+      "no": "Enkeltpersonforetak, foreninger, selskap, sameier og andre som er registrert i Enhetsregisteret. Identifiseres med organisasjonsnummer."
+    },
+    "source": "https://jira.brreg.no/browse/BEGREP-226"
+  }, {
+    "uri": "https://data-david.github.io/Begrep/begrep/Foretaksnavn",
+    "prefLabel": {
+      "no": "Foretaksnavn"
+    },
+    "definition": {
+      "no": "Foretaksnavn er…"
+    },
+    "note": null,
+    "source": null
+  }
+  ],
+  "conformsTo": [],
+  "informationModel": [{
+    "uri": "",
+    "prefLabel": {
+      "nb": ""
+    },
+    "extraType": null
+  }
+  ],
+  "type": "",
+  "catalogId": "910244132",
+  "_lastModified": "2017-11-01T13:27:15.284+0000",
+  "registrationStatus": "PUBLISH"
+}

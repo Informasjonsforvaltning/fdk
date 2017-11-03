@@ -3,15 +3,21 @@
   "version": "0.2.4-SNAPSHOT",
   "description": "Search",
   "scripts": {
+    "precommit": "lint-staged",
     "start": "node start.js",
+    "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
-    "buildx": "ng build --prod --aot=false",
-    "ng": "ng",
-    "servexxx": "ng serve --host=0.0.0.0 --live-reload-client http://localhost:3000 --disable-host-check=true",
     "test": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
     "tdd": "npm test -- --watch",
-    "lint": "eslint ./src --ext=.js,.jsx --fix",
-    "e2e": "ng e2e --progress false"
+    "lint": "eslint ./src --ext=.js,.jsx --fix"
+  },
+  "lint-staged": {
+    "gitDir": "../../",
+    "linters": {
+      "*.{js,jsx}": [
+        "lint"
+      ]
+    }
   },
   "authors": [
     {
@@ -54,7 +60,9 @@
   },
   "devDependencies": {
     "babel-core": "^6.3.17",
+    "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "chai": "^4.1.2",
@@ -63,19 +71,24 @@
     "enzyme-adapter-react-15": "^1.0.0",
     "eslint": "^4.8.0",
     "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-prettier": "^2.7.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
     "ignore-styles": "^5.0.1",
     "imports-loader": "^0.7.1",
     "jsdom": "^11.2.0",
+    "lint-staged": "^4.3.0",
     "mocha": "^3.5.3",
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.6",
     "postcss-variables-loader": "^4.0.0",
+    "prettier": "^1.7.4",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",

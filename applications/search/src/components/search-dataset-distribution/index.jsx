@@ -102,12 +102,12 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
   _renderConformsTo() {
     const { conformsTo, selectedLanguageCode } = this.props;
 
-    const children = items => items.map((item, index) => (
+    const children = items => items.map(item => (
       <a
         key={item.uri}
         href={item.uri}
       >
-       {item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : localization.dataset.distribution.standard}
+        {item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : localization.dataset.distribution.standard}
         <i className="fa fa-external-link fdk-fa-right" />
       </a>
     ));

@@ -1,25 +1,38 @@
 package no.difi.dcat.datastore.domain.dcat;
 
+import com.google.common.io.CharStreams;
+import com.google.gson.Gson;
 import no.dcat.shared.Catalog;
+import no.dcat.shared.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.core.io.ClassPathResource;
+import sun.misc.IOUtils;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+
 
 public class DcatBuilderRobustnessTest {
 
@@ -70,5 +83,25 @@ public class DcatBuilderRobustnessTest {
         String actual = builderSpy.addCatalog(catalog).getDcatOutput("TURTLE");
 
         assertThat(actual, is(notNullValue()));
+    }
+
+    @Test
+    public void loadJoachimsDatasetThatBreaksRDFXML() throws Throwable {
+        DcatBuilder builderSpy = new DcatBuilder();
+
+        ClassPathResource resource = new ClassPathResource("ramsund.json");
+        String datasetJson = CharStreams.toString(new InputStreamReader(resource.getInputStream(),"utf-8"));
+        Dataset dataset = new Gson().fromJson(datasetJson, Dataset.class);
+
+        builderSpy.addDataset(dataset);
+
+        String actual = builderSpy.getDcatOutput("RDFXML");
+
+        logger.debug(actual);
+
+        assertThat("rdf/xml now works", actual, is(notNullValue()));
+        assertThat(actual, startsWith("<rdf:RDF"));
+        assertThat(actual, containsString("<dct:title xml:lang=\"nb\">Ramsunds begrepsregister</dct:title>"));
+        //assertThat(actual, endsWith("</rdf:RDF>"));
     }
 }

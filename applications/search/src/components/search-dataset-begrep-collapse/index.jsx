@@ -23,7 +23,7 @@ export default class BegrepCollapse extends React.Component { // eslint-disable-
         <div className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep" role="button" tabIndex={0} onClick={this.toggle}>
           <strong className="pull-left">{this.props.prefLabel}:&nbsp;</strong>
           {this.props.note &&
-          <i className="fa fa-chevron-down fdk-fa-right fdk-float-right"/>
+          <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
           }
           <div>
             {this.props.definition}
@@ -42,13 +42,11 @@ export default class BegrepCollapse extends React.Component { // eslint-disable-
 BegrepCollapse.defaultProps = {
   prefLabel: '',
   definition: '',
-  note: '',
-  source: ''
+  note: ''
 };
 
 BegrepCollapse.propTypes = {
   prefLabel: PropTypes.string,
   definition: PropTypes.string,
-  note: PropTypes.string,
-  source: PropTypes.string
+  note: PropTypes.string
 };

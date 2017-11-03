@@ -76,8 +76,6 @@ export class QueryTransport extends AxiosESTransport {
         sortdirection = "desc";
       } else if (_.has(querySortObj,'publisher.name')) {
         sortfield= "publisher.name";
-      } else {
-        console.log('other! (should not happen)');
       }
     }
 
@@ -119,7 +117,6 @@ export class QueryTransport extends AxiosESTransport {
             delete aggregations[name];
         }
       })
-      console.log('response.data is ', response.data);
     return response.data
   }
 }

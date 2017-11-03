@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
@@ -12,19 +12,19 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   constructor(props) {
     super(props);
     this.state = {
-      result: props.result
+      source: _.extend({}, props.result._source)
     };
   }
 
   componentDidUpdate() {
     this.state = {
-      result: this.props.result
+      source: _.extend({}, this.props.result._source)
     };
   }
 
-  _renderFormats(source, code) {
+  _renderFormats(code) {
     let formatNodes;
-    const distribution = source.distribution;
+    const { distribution } = this.state.source;
 
     const children = (items, code) => items.map((item) => {
       if (item !== null) {
@@ -63,16 +63,16 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return null;
   }
 
-  _renderPublisher(source) {
-    const { publisher } = source;
+  _renderPublisher() {
+    const { publisher } = this.state.source;
     if (publisher && publisher.name) {
       return (
         <span>
           {localization.search_hit.owned}&nbsp;
           <span id="search-hit-publisher-text">
             {
-              (source.publisher && source.publisher.name)
-                ? source.publisher.name.charAt(0) + source.publisher.name.substring(1).toLowerCase()
+              (publisher && publisher.name)
+                ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase()
                 : ''
             }
           </span>
@@ -82,9 +82,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return null;
   }
 
-  _renderThemes(source) {
+  _renderThemes() {
     let themeNodes;
-    const { theme } = source;
+    const { theme } = this.state.source;
     if (theme) {
       themeNodes = theme.map((singleTheme, index) => (
         <div
@@ -99,8 +99,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     return themeNodes;
   }
 
-  _renderSample(source) {
-    const { sample } = source;
+  _renderSample() {
+    const { sample } = this.state.source;
     if (sample) {
       if (sample.length > 0) {
         return (
@@ -115,10 +115,9 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
   render() {
     const language = this.props.selectedLanguageCode;
-    let langCode = getLanguageFromUrl();
-    let langParam = langCode ? `?lang=${langCode}` : '';
-    const result = this.state.result;
-    const source = _.extend({}, result._source, result.highlight);
+    const langCode = getLanguageFromUrl();
+    const langParam = langCode ? `?lang=${langCode}` : '';
+    const { source } = this.state;
 
     // Read fields from search-hit, use correct language field if specified.
     const hitId = encodeURIComponent(source.id);
@@ -183,8 +182,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         <div className="fdk-container fdk-container-search-hit">
           <h2 id="search-hit-title">{title}</h2>
           <div>
-            {this._renderPublisher(source)}
-            {this._renderThemes(source)}
+            {this._renderPublisher()}
+            {this._renderThemes()}
           </div>
           <p
             className="fdk-p-search-hit block-with-textx"
@@ -194,8 +193,8 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
           <div className={distributionClass}>
             <strong>{accessRightsLabel}</strong>
-            {this._renderFormats(source, authorityCode)}
-            {this._renderSample(source)}
+            {this._renderFormats(authorityCode)}
+            {this._renderSample()}
           </div>
         </div>
       </a>

@@ -4,9 +4,7 @@
             <div class="row">
                 <div class="col-md-12" >
                     <helptext
-                        text="Datasettet har en tittel slik at det bl.a. kan vises i lister."
-                        moretext="Tittelen skal den man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler. Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"
-                        name="temporal-to-{{temporalIndex}}">
+                        name="Dataset_temporal">
                     </helptext>
                 </div>
             </div>
@@ -20,7 +18,7 @@
             </div>
             <br>
         </div>
-        
+
         <div class="row">
             <div class="col-md-4">
                 <my-date-picker name="startDate" [options]="myDatePickerOptions" locale="no"
@@ -32,7 +30,7 @@
             </div>
             <div class="col-md-4">
                 <span class="delete-temporal-wrapper" *ngIf="showDelete">
-                    <a href="" class="delete-temporal-button" 
+                    <a href="" class="delete-temporal-button"
                         (click)="removeTemporal(temporalIndex)">
                         <i class="fa fa-trash fdk-color-icon-cta fdk-fa-left"></i>Slett
                     </a>

@@ -62,16 +62,6 @@ public class LoginController {
 
         logger.info("User {} logged in with authorizations: {}", user.getName(), authentication.getAuthorities().toString());
 
-        List<String> catalogs= authentication.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(catalog -> catalog.matches("\\d{9}"))
-                .collect(toList());
-
-        if (!catalogs.isEmpty()) {
-            createCatalogsIfNeeded(catalogs);
-        }
-
         if (authentication.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals(ROLE_USER))) {
             return new ResponseEntity<>(user, OK);
         } else {
@@ -113,27 +103,6 @@ public class LoginController {
     }
 
 
-    private void createCatalogsIfNeeded(Collection<String> organizations) {
-        organizations.forEach(this::createCatalogIfNotExists);
-    }
 
-    private Optional<Catalog> createCatalogIfNotExists(String orgnr) {
-        if (! orgnr.matches("\\d{9}")) {
-            return Optional.empty();
-        }
-
-        HttpEntity<Catalog> catalogResponse = catalogController.getCatalog(orgnr);
-        if (!((ResponseEntity) catalogResponse).getStatusCode().equals(HttpStatus.OK)) {
-            logger.info("Create catalog for {} ", orgnr);
-            Catalog catalog = new Catalog(orgnr);
-
-            String organizationName = entityNameService.getOrganizationName(orgnr);
-            if (organizationName != null) {
-                catalog.getTitle().put("nb", "Datakatalog for " + organizationName);
-            }
-            return Optional.of(catalogController.createCatalog(catalog).getBody());
-        }
-        return Optional.empty();
-    }
 
 }

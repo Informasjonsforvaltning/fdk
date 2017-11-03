@@ -1,13 +1,27 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../../utils/translateText';
 import './index.scss';
+
+const getLangUrl = (langCode) => {
+  const href = window.location.search;
+  const queryObj = qs.parse(window.location.search.substr(1));
+  if (langCode === 'nb') {
+    return addOrReplaceParam(href, 'lang', '');
+  } else if (href.indexOf('lang=') === -1) {
+    return href.indexOf('?') === -1 ? `${href}?lang=${langCode}` : `${href}&lang=${langCode}`;
+  } else if (langCode !== queryObj.lang) {
+    const replacedUrl = addOrReplaceParam(href, 'lang', langCode);
+    return replacedUrl.substring(replacedUrl.indexOf('?'));
+  }
+  return href;
+}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +31,6 @@ export default class App extends React.Component {
       selectedLanguageCode: 'nb'
     };
     this.onChangeLanguage = this.onChangeLanguage.bind(this);
-    this.getLangUrl = this.getLangUrl.bind(this);
   }
 
   componentWillMount() {
@@ -26,7 +39,7 @@ export default class App extends React.Component {
       localization.setLanguage(langCode)
       const selectedLanguage = localization.lang[langCode]
       this.state = {
-        selectedLanguage: selectedLanguage,
+        selectedLanguage,
         selectedLanguageCode: langCode
       }
     }
@@ -34,7 +47,7 @@ export default class App extends React.Component {
 
   onChangeLanguage(e) {
     const langCode = e;
-    const langUrl = this.getLangUrl(langCode);
+    const langUrl = getLangUrl(langCode);
     const nextUrl = `${location.pathname}${langUrl}`;
     browserHistory.push(nextUrl);
 
@@ -53,23 +66,9 @@ export default class App extends React.Component {
     localization.setLanguage(langCode);
   }
 
-  getLangUrl(langCode) {
-    const href = window.location.search;
-    const queryObj = qs.parse(window.location.search.substr(1));
-    if (langCode === 'nb') {
-      return addOrReplaceParam(href, 'lang', '');
-    } else if (href.indexOf('lang=') === -1) {
-      return href.indexOf('?') === -1 ? `${href}?lang=${langCode}` : `${href}&lang=${langCode}`;
-    } else if (langCode !== queryObj.lang) {
-      const replacedUrl = addOrReplaceParam(href, 'lang', langCode);
-      return replacedUrl.substring(replacedUrl.indexOf('?'));
-    }
-    return href;
-  }
-
   render() {
-    let langCode = getLanguageFromUrl();
-    let langParam = langCode ? `?lang=${langCode}` : '';
+    const langCode = getLanguageFromUrl();
+    const langParam = langCode ? `?lang=${langCode}` : '';
 
     const childWithProp =
       React.Children.map(this.props.children, child => React.cloneElement(child, {
@@ -109,6 +108,7 @@ export default class App extends React.Component {
               <div className="col-md-4 fdk-header-right">
                 <div className="fdk-float-right">
                   <DropdownButton
+                    tabIndex="0"
                     id="search-menu-dropdown-1"
                     bsStyle="default"
                     className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
@@ -124,6 +124,7 @@ export default class App extends React.Component {
                 <div className="fdk-header-padding">
                   <div className="fdk-float-right fdk-margin-right-double">
                     <DropdownButton
+                      tabIndex="0"
                       id="search-language-dropdown-1"
                       bsStyle="default"
                       className="dropdown-toggle fdk-button-language"
@@ -164,7 +165,7 @@ export default class App extends React.Component {
               <div className="col-md-3 text-right">
                 <p className="fdk-p-footer">
                   <a
-                    href="mailto:felleskatalog@brreg.no"
+                    href="mailto:fellesdatakatalog@brreg.no"
                   >
                     {localization.footer.contact}<br />
                     {localization.footer.mail}
@@ -182,4 +183,3 @@ export default class App extends React.Component {
 App.propTypes = {
   children: PropTypes.node.isRequired
 };
-

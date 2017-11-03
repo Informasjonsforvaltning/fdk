@@ -186,7 +186,6 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
   }
 
   _renderReferences() {
-    let referencesNodes;
     const { references, selectedLanguageCode } = this.props;
 
     let referenceTypeCode;
@@ -273,79 +272,79 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         className="fdk-margin-top-triple"
       >
         <div className="row fdk-row ">
-        {issued &&
-        <div className={issuedClass}>
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-upload" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.issued}</h5>
-              <p id="dataset-info-issued" className="fdk-ingress fdk-margin-bottom-no text-nowrap">
-                {issued &&
-                <Moment format="DD.MM.YYYY">{issued}</Moment>
-                }
-              </p>
+          {issued &&
+          <div className={issuedClass}>
+            <div className="fdk-container-detail">
+              <div className="fdk-detail-icon">
+                <i className="fa fa-upload" />
+              </div>
+              <div className="fdk-detail-text">
+                <h5>{localization.dataset.issued}</h5>
+                <p id="dataset-info-issued" className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+                  {issued &&
+                  <Moment format="DD.MM.YYYY">{issued}</Moment>
+                  }
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        }
+          }
 
-        {accrualPeriodicity &&
-        <div className={accrualPeriodicityClass}>
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-refresh" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.frequency}</h5>
-              <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
-                {accrualPeriodicity.charAt(0).toUpperCase()}{accrualPeriodicity.substr(1)}
-              </p>
+          {accrualPeriodicity &&
+          <div className={accrualPeriodicityClass}>
+            <div className="fdk-container-detail">
+              <div className="fdk-detail-icon">
+                <i className="fa fa-refresh" />
+              </div>
+              <div className="fdk-detail-text">
+                <h5>{localization.dataset.frequency}</h5>
+                <p id="dataset-info-accrualPeriodicity" className="fdk-ingress fdk-margin-bottom-no">
+                  {accrualPeriodicity.charAt(0).toUpperCase()}{accrualPeriodicity.substr(1)}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        }
+          }
 
-        {provenance &&
-        <div className="col-md-12 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-user" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.provenance}</h5>
-              <p id="dataset-info-provenance" className="fdk-ingress fdk-margin-bottom-no">
-                {provenance}
-              </p>
+          {provenance &&
+          <div className="col-md-12 fdk-padding-no">
+            <div className="fdk-container-detail">
+              <div className="fdk-detail-icon">
+                <i className="fa fa-user" />
+              </div>
+              <div className="fdk-detail-text">
+                <h5>{localization.dataset.provenance}</h5>
+                <p id="dataset-info-provenance" className="fdk-ingress fdk-margin-bottom-no">
+                  {provenance}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        }
+          }
 
-        {hasCurrentnessAnnotation &&
-        <div className="col-md-12 fdk-padding-no">
-          <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-certificate" />
-            </div>
-            <div className="fdk-detail-text">
-              <h5>{localization.dataset.currentness}</h5>
-              <p id="dataset-info-currentnessAnnotation" className="fdk-ingress fdk-margin-bottom-no">
-                {hasCurrentnessAnnotation}
-              </p>
+          {hasCurrentnessAnnotation &&
+          <div className="col-md-12 fdk-padding-no">
+            <div className="fdk-container-detail">
+              <div className="fdk-detail-icon">
+                <i className="fa fa-certificate" />
+              </div>
+              <div className="fdk-detail-text">
+                <h5>{localization.dataset.currentness}</h5>
+                <p id="dataset-info-currentnessAnnotation" className="fdk-ingress fdk-margin-bottom-no">
+                  {hasCurrentnessAnnotation}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        }
-        { this._renderSpatial() }
+          }
+          { this._renderSpatial() }
         </div>
         <div className="row fdk-row row-eq-height">
-        { this._renderTemporal() }
-        { this._renderLanguage() }
+          { this._renderTemporal() }
+          { this._renderLanguage() }
         </div>
         <div className="row fdk-row">
-        { this._renderReferences() }
+          { this._renderReferences() }
         </div>
       </div>
     );
