@@ -117,7 +117,7 @@ public class ReferenceTest {
         assertThat(actual.getReferences().size(), is (1));
 
         Reference actualRef = actual.getReferences().get(0);
-        assertThat(actualRef.getSource().getUri(), is("614a1c83-6fcd-4712-bcfa-fdcbccbc0a72"));
+        assertThat(actualRef.getSource().getUri(), containsString("614a1c83-6fcd-4712-bcfa-fdcbccbc0a72"));
         assertThat(actualRef.getSource().getPrefLabel().get("nb"), is("Medlemsliste Berlevågs mannskor"));
 
     }
