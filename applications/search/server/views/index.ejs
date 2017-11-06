@@ -21,18 +21,14 @@
 </head>
 
 <body>
-  <!--[if IE]>
-		<h1 style="text-align:center">Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( </h1>
-  <![endif]-->
 	<script type="text/javascript">
-	    var isIE10 = false;
-	    /*@cc_on
-	        if (/^10/.test(@_jscript_version)) {
-	            isIE10 = true;
-	        }
-	    @*/
-			if(isIE10) document.write('<h1 style="text-align:center">Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( </h1>');
-		</script>
+			if(!!window.ActiveXObject;) // is ie 10 or lower 
+			document.write('\
+				<h1 style="text-align:center">\
+				Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( \
+				</h1>\
+			');
+	</script>
 	<div id='root'></div>
 	<script src="/static/bundle.js"></script>
 </body>
