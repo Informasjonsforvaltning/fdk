@@ -68,7 +68,7 @@ export class ReferencesComponent implements OnInit {
         this.referencesForm = this.toFormGroup(this.reference);
         this.referencesFormArray.push(this.referencesForm);
 
-        this.referencesForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe( 
+        this.referencesForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
             refs => {
                 if ( this.referenceTypes.length > 0 ) {
                 if (refs.referenceTypeForm) {
@@ -90,7 +90,7 @@ export class ReferencesComponent implements OnInit {
                     };
                 }
             }
-            
+
             if ( this.sources.length > 0 ) {
                 if (refs.sourceForm) {
                     let source = this.sources.find( src => src.value === refs.sourceForm);
@@ -133,7 +133,7 @@ export class ReferencesComponent implements OnInit {
         this.codesService.fetchCodes('referencetypess', 'nb')
             .then( referenceTypes => {
                 referenceTypes = _.sortBy(referenceTypes, [reference => reference.label || ""]);
-                this.referenceTypes = referenceTypes; 
+                this.referenceTypes = referenceTypes;
             }
         );
     }
@@ -141,17 +141,17 @@ export class ReferencesComponent implements OnInit {
     fetchSources() {
         let catalogId = this.dataset.catalogId;
         let sources = [];
-        this.datasetService.getAll(catalogId)  
+        this.datasetService.getAll(catalogId)
             .then((datasets: Dataset[]) => {
                 datasets.forEach( dataset => {
                     let source = {
-                        value: dataset.id,
+                        value: dataset.uri,
                         label: dataset.title["nb"]
                     }
                     if (!source.label) {
                         source.label = "Ukjent tittel";
                     }
-                    if (source.value !== this.dataset.id) {
+                    if (source.value !== this.dataset.uri) {
                         sources.push(source);
                     }
                 });

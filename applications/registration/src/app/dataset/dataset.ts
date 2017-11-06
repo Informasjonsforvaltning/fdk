@@ -11,6 +11,8 @@ import {Reference} from './reference'
 
 export interface Dataset {
   id: string;
+  uri: string;
+
   title?: {
     [language: string]:string
   };
