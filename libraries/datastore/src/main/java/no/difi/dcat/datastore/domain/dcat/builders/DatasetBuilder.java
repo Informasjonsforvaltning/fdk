@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.singletonList;
-
 public class DatasetBuilder extends AbstractBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DatasetBuilder.class);
 
@@ -25,6 +23,8 @@ public class DatasetBuilder extends AbstractBuilder {
 
     public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
                           Map<String, DataTheme> dataThemes) {
+        super();
+
         this.model = model;
         this.locations = locations;
         this.codes = codes;
@@ -90,7 +90,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setDescription(extractLanguageLiteral(resource, DCTerms.description));
             ds.setObjective(extractLanguageLiteral(resource, DCATNO.objective));
 
-            ds.setContactPoint(asList(extractContact(resource)));
+            ds.setContactPoint(extractContacts(resource));
             ds.setKeyword(extractKeywords(resource, DCAT.keyword));
             ds.setPublisher(extractPublisher(resource));
 
