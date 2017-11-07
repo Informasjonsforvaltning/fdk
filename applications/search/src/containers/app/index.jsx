@@ -119,6 +119,11 @@ export default class App extends React.Component {
                       eventKey="menu-1"
                       href="/about"
                     >{localization.about.about}</MenuItem>
+                    <MenuItem
+                      key="menu-2"
+                      eventKey="menu-2"
+                      href="/about-registration"
+                    >Registrere datasett</MenuItem>
                   </DropdownButton>
                 </div>
                 <div className="fdk-header-padding">
