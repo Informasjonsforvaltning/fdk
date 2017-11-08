@@ -21,6 +21,7 @@ import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
+import ResultsTabs from '../search-results-tabs';
 
 const host = '/dcat';
 
@@ -114,6 +115,9 @@ export default class ResultsDataset extends React.Component {
                 <HitsStats component={CustomHitsStats} />
               </div>
             </div>
+            <section>
+              <ResultsTabs onSelectView={this.props.onSelectView} />
+            </section>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
@@ -193,5 +197,6 @@ ResultsDataset.defaultProps = {
 };
 
 ResultsDataset.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  onSelectView: PropTypes.func.isRequired
 };
