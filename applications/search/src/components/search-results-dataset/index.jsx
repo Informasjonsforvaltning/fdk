@@ -25,14 +25,14 @@ import ResultsTabs from '../search-results-tabs';
 
 const host = '/dcat';
 
-const searchkit = new SearchkitManager(
+const searchkit1 = new SearchkitManager(
   host,
   {
     transport: new QueryTransport()
   }
 );
 
-searchkit.translateFunction = (key) => {
+searchkit1.translateFunction = (key) => {
   const translations = {
     'pagination.previous': localization.page.prev,
     'pagination.next': localization.page.next,
@@ -98,7 +98,7 @@ export default class ResultsDataset extends React.Component {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
     return (
-      <SearchkitProvider searchkit={searchkit}>
+      <SearchkitProvider searchkit={searchkit1}>
         <div>
           <div className="container">
             <div className="row mb-60">
