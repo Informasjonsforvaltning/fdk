@@ -6,10 +6,15 @@ import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -18,6 +23,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@ActiveProfiles(value = "unit-integration")
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DcatSourcesConverterIT {
     private static Logger logger = LoggerFactory.getLogger(DcatSourcesConverterIT.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,7 +46,15 @@ public class DcatSourcesConverterIT {
 
     }
 
-        @Test
+    @Test
+    public void readRamsundSubjectHarvest() throws Throwable {
+        Resource r = new ClassPathResource("ramsund.ttl");
+        Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
+
+        model.write(System.out, "TURTLE");
+    }
+
+    @Test
     public void readRamsundContactInfoOK() throws Throwable {
 
         Model model = RDFDataMgr.loadModel("ramsund.ttl");

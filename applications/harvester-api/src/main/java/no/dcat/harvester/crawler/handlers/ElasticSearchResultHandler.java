@@ -101,7 +101,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
 
         List<Subject> subjects = reader.getSubjects();
-        List<Subject> filteredSubjects = subjects.stream().filter(s -> s.getPrefLabel()!= null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty()).collect(Collectors.toList());;
+        List<Subject> filteredSubjects = subjects.stream().filter(s -> s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty()).collect(Collectors.toList());;
         logger.info("Total number of unique subject uris {} in dcat source {}.", subjects.size(), dcatSource.getId());
         logger.info("Adding {} subjects with prefLabel and definition to elastic", filteredSubjects.size());
 

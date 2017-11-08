@@ -40,13 +40,22 @@ public class DatasetBuilder extends AbstractBuilder {
     }
 
     public List<Subject> getSubjects() {
+        if (subjects.isEmpty()) {
+            build();
+        }
         return new ArrayList(subjects.values());
     }
     public List<Dataset> getDataset() {
+        if (datasets.isEmpty()) {
+            build();
+        }
+
         return datasets;
     }
 
     public DatasetBuilder build() {
+
+        datasets.clear();
 
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
         while (catalogIterator.hasNext()) {
@@ -229,8 +238,9 @@ public class DatasetBuilder extends AbstractBuilder {
     }
 
     public static Subject extractSubject(Statement statement) {
-        Subject subject = new Subject();
         if (statement.getObject().isURIResource()) {
+            Subject subject = new Subject();
+
             subject.setUri(statement.getObject().toString());
 
             Resource subjectResource = statement.getObject().asResource();
@@ -243,8 +253,9 @@ public class DatasetBuilder extends AbstractBuilder {
                 subject.setSource(extractAsString(subjectResource, DCTerms.source));
 
             }
+            return subject;
         }
-        return subject;
+        return null;
     }
 
 

@@ -5,6 +5,7 @@ import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Before;
@@ -20,7 +21,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles(value = "unit-integration")
@@ -77,6 +82,15 @@ public class SubjectCrawlerTestIT {
         Model actual = subjectCrawler.annotateSubjects(model);
 
         actual.write(System.out, "TURTLE");
+
+        DcatReader reader = new DcatReader(model);
+        List<Subject> actualSubjects = reader.getSubjects();
+
+        assertThat(actualSubjects.size(), is(3));
+
+        actualSubjects.forEach(subject -> {
+            assertThat(subject.getPrefLabel().get("no"), is(notNullValue()));
+        });
 
     }
 }

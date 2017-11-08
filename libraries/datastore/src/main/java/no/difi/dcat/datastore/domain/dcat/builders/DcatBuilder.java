@@ -590,6 +590,7 @@ public class DcatBuilder {
             resource.addProperty(RDF.type, SKOS.Concept);
 
             addLiterals(resource, SKOS.prefLabel, subject.getPrefLabel());
+            addLiterals(resource, SKOS.altLabel, subject.getAltLabel());
             addLiterals(resource, SKOS.definition, subject.getDefinition());
             addLiterals(resource, SKOS.note, subject.getNote());
             addLiteral(resource, DCTerms.source, subject.getSource());
