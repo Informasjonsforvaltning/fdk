@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.shared.Dataset;
+import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.Distribution;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -24,11 +26,8 @@ import java.util.List;
 public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     public static final String DCAT_INDEX = "dcat";
-    public static final String THEME_INDEX = "theme";
-    public static final String DISTRIBUTION_TYPE = "distribution";
+    public static final String SUBJECT_TYPE = "subject";
     public static final String DATASET_TYPE = "dataset";
-    public static final String THEME_TYPE = "data-theme";
-    public static final String DATA_THEME_URL = "http://publications.europa.eu/mdr/resource/authority/data-theme/skos/data-theme-skos.rdf";
     private final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
 
     String hostename;
@@ -101,14 +100,17 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
 
-        List<Distribution> distributions = reader.getDistributions();
-        logger.info("Number of distribution documents {} for dcat source {}", distributions.size(), dcatSource.getId());
-        for (Distribution distribution : distributions) {
+        List<Subject> subjects = reader.getSubjects();
+        List<Subject> filteredSubjects = subjects.stream().filter(s -> s.getPrefLabel()!= null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty()).collect(Collectors.toList());;
+        logger.info("Total number of unique subject uris {} in dcat source {}.", subjects.size(), dcatSource.getId());
+        logger.info("Adding {} subjects with prefLabel and definition to elastic", filteredSubjects.size());
 
-            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DISTRIBUTION_TYPE, distribution.getId());
-            indexRequest.source(gson.toJson(distribution));
+        for (Subject subject : filteredSubjects) {
 
-            logger.debug("Add distribution document {} to bulk request", distribution.getId());
+            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, SUBJECT_TYPE, subject.getUri());
+            indexRequest.source(gson.toJson(subject));
+
+            logger.debug("Add subject document {} to bulk request", subject.getUri());
             bulkRequest.add(indexRequest);
         }
 

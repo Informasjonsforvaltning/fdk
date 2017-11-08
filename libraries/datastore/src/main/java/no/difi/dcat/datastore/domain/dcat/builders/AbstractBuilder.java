@@ -43,6 +43,7 @@ public abstract class AbstractBuilder {
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
     static Map<String, Contact> contactMap;
 
+
     public AbstractBuilder() {
         contactMap = new HashMap<>();
     }
@@ -193,39 +194,6 @@ public abstract class AbstractBuilder {
     }
 
 
-    public static List<Subject> extractSubjects(Resource resource, Property property) {
-        List<Subject> result = new ArrayList<>();
-        StmtIterator iterator = resource.listProperties(property);
-        while (iterator.hasNext()) {
-            Statement statement = iterator.next();
-
-            Subject subject = extractSubject(statement);
-
-            result.add(subject);
-        }
-
-        if (result.size() > 0) {
-            return result;
-        }
-
-        return null;
-    }
-
-    public static Subject extractSubject(Statement statement) {
-        Subject subject = new Subject();
-        if (statement.getObject().isURIResource()) {
-            subject.setUri(statement.getObject().toString());
-
-            Resource subjectResource = statement.getObject().asResource();
-            if (subjectResource != null) {
-                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
-                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
-                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
-                subject.setSource(extractAsString(subjectResource, DCTerms.source));
-            }
-        }
-        return subject;
-    }
 
 
     public static List<Reference> extractReferences(Resource resource, Map<String,SkosCode> referenceTypes) {

@@ -38,7 +38,7 @@ public class DcatSourcesConverterIT {
 
     }
 
-    @Test
+        @Test
     public void readRamsundContactInfoOK() throws Throwable {
 
         Model model = RDFDataMgr.loadModel("ramsund.ttl");
@@ -61,6 +61,7 @@ public class DcatSourcesConverterIT {
         assertThat(datasets.size(), is(4));
 
     }
+
 
     @Test
     public void readDifiData() throws Throwable {
