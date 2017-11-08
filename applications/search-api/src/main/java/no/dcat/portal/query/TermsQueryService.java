@@ -42,31 +42,16 @@ import java.net.UnknownHostException;
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class SimpleQueryService {
+  public class TermsQueryService {
     public static final String INDEX_DCAT = "dcat";
 
-    public static final String TYPE_DATA_PUBLISHER = "publisher";
-    public static final String TYPE_DATASET = "dataset";
-
-    public static final String FIELD_THEME_CODE = "theme.code";
-    public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
-    public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
-
-    public static final String TERMS_THEME_COUNT = "theme_count";
-    public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
-    public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
-
-    private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
     protected Client client = null;
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     /* api names */
-    public static final String QUERY_SEARCH = "/datasets";
-    public static final String QUERY_THEME_COUNT = "/themecount";
-    public static final String QUERY_PUBLISHER = "/publisher";
-    public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
-
+    public static final String QUERY_SEARCH = "/terms";
 
     @Value("${application.elasticsearchHost}")
     private String elasticsearchHost;
@@ -80,7 +65,6 @@ public class SimpleQueryService {
 
     @Value("${application.clusterName}")
     private String clusterName;
-
 
     @PostConstruct
     void validate(){
@@ -100,10 +84,7 @@ public class SimpleQueryService {
      *
      * @param query         The search query to be executed as defined in
      *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
-     *                      The search is performed on the fileds titel, keyword, description and publisher.name.
-     * @param theme         Narrows the search to the specified theme. ex. GOVE
-     * @param publisher     Narrows the search to the specified publisher. ex. UTDANNINGSDIREKTORATET
-     * @param accessRights   Narrows the search to the specified theme. ex. RESTRICTED
+     *                      The search is performed on the fields title and definition
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
@@ -114,34 +95,22 @@ public class SimpleQueryService {
     @CrossOrigin
     @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
-                                         @RequestParam(value = "theme", defaultValue = "") String theme,
-                                         @RequestParam(value = "publisher", defaultValue = "") String publisher,
-                                         @RequestParam(value = "accessrights", defaultValue = "") String accessRights,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
-                                         @RequestParam(value = "lang", defaultValue = "nb") String lang,
-                                         @RequestParam(value = "sortfield", defaultValue = "source") String sortfield,
-                                         @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection) {
+                                         @RequestParam(value = "lang", defaultValue = "nb") String lang) {
 
 
         StringBuilder loggMsg = new StringBuilder()
                 .append("query: \"").append(query)
                 .append("\" from:").append(from)
                 .append(" size:").append(size)
-                .append(" lang:").append(lang)
-                .append(" sortfield:").append(sortfield)
-                .append(" sortdirection:").append(sortdirection)
-                .append(" theme:").append(theme)
-                .append(" publisher:").append(publisher)
-                .append(" accessRights:").append(accessRights);
+                .append(" lang:").append(lang);
 
         logger.debug(loggMsg.toString());
 
-        String themeLanguage = "*";
         String analyzerLang = "norwegian";
 
         if ("en".equals(lang)) {
-            //themeLanguage="en";
             analyzerLang = "english";
         }
         lang = "*"; // hardcode to search in all language fields
@@ -160,29 +129,19 @@ public class SimpleQueryService {
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
-                    .field("keyword" + "." + lang)
-                    .field("theme.title" + "." + themeLanguage)
-                    .field("description" + "." + lang)
-                    .field("publisher.name")
-                    .field("accessRights.code");
+                    .field("definition" + "." + lang);
         }
 
         logger.trace(search.toString());
 
-        // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search);
-
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
                 .setTypes("dataset")
-                .setQuery(boolQuery)
+                .setQuery(search)
                 .setFrom(from)
-                .setSize(size)
-                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
-                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
-                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"));
+                .setSize(size);
 
-        addSort(sortfield, sortdirection, searchBuilder);
+        //addSort(sortfield, sortdirection, searchBuilder);
 
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
@@ -229,61 +188,6 @@ public class SimpleQueryService {
         return size;
     }
 
-
-    /**
-     * Adds theme filter to query. Multiple themes can be specified. It should return only those datasets that have
-     * all themes. To get an exact match we ned to use Elasticsearch tag count trick.
-     *
-     * @param theme  comma separated list of theme codes
-     * @param search the search object
-     * @return a new bool query with the added filter.
-     */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search) {
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
-                .must(search);
-
-        BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
-
-        // theme can contain multiple themes, example: AGRI,HEAL
-        if (!StringUtils.isEmpty(theme)) {
-
-            for (String t : theme.split(",")) {
-              if(t.equals("Ukjent")) {
-                boolFilter.must(QueryBuilders.missingQuery("theme.code"));
-              } else {
-                boolFilter.must(QueryBuilders.termQuery("theme.code", t));
-              }
-            }
-
-            boolQuery.filter(boolFilter);
-        }
-
-        if (!StringUtils.isEmpty(publisher)) {
-            BoolQueryBuilder boolFilter2 = QueryBuilders.boolQuery();
-            if(publisher.equals("Ukjent")) {
-              boolFilter2.must(QueryBuilders.missingQuery("publisher.name.raw"));
-            } else {
-              boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
-            }
-
-            boolQuery.filter(boolFilter2);
-        }
-
-        if (!StringUtils.isEmpty(accessRights)) {
-            BoolQueryBuilder boolFilter3 = QueryBuilders.boolQuery();
-            if(accessRights.equals("Ukjent")) {
-              boolFilter3.must(QueryBuilders.missingQuery("accessRights.code.raw"));
-            } else {
-              boolFilter3.must(QueryBuilders.termQuery("accessRights.code.raw", accessRights));
-            }
-
-            boolQuery.filter(boolFilter3);
-        }
-
-        return boolQuery;
-    }
-
-
     /**
      * Retrieves the dataset record identified by the provided id. The complete dataset, as defined in elasticsearch,
      * is returned on Json-format.
@@ -293,7 +197,7 @@ public class SimpleQueryService {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @RequestMapping(value = "/datasets/**", produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
+    @RequestMapping(value = "/terms/**", produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> detail(HttpServletRequest request) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
@@ -355,121 +259,12 @@ public class SimpleQueryService {
     }
 
     String extractIdentifier(HttpServletRequest request) {
-        String id = request.getServletPath().replaceFirst("/datasets/","");
+        String id = request.getServletPath().replaceFirst("/terms/","");
         id = id.replaceFirst(":/", "://");
 
         return id;
     }
 
-
-    /**
-     * Return a count of the number of data sets for each theme code
-     * The query will not return the data sets themselves, only the counts.
-     * If no parameter is specified, the result will be a set of counts for
-     * all used theme codes.
-     * For each theme, the result will include the theme code and an integer
-     * representing the number of data sets with this theme code.
-     * If the optional themecode parameter is specified, only the theme code
-     * and number of data sets for this code is returned
-     *
-     * @param themecode optional parameter specifiying which theme should be counted
-     * @return json containing theme code and integer count of number of data sets
-     */
-    @CrossOrigin
-    @RequestMapping(value = QUERY_THEME_COUNT, produces = "application/json")
-    public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "") String themecode) {
-        return aggregateOnField(FIELD_THEME_CODE, themecode, TERMS_THEME_COUNT, "Ukjent");
-    }
-
-    /**
-     * Returns a list of publishers and the total number of dataset for each of them.
-     * <p/>
-     * The returnlist will consist of the defined publisher or for all publishers, registered in
-     * elastic search, if no publisher is defined.
-     * <p/>
-     *
-     * @param publisher optional parameter specifiying which publisher should be counted
-     * @return json containing publishers and integer count of number of data sets
-     */
-    @CrossOrigin
-    @RequestMapping(value = QUERY_PUBLISHER_COUNT, produces = "application/json")
-    public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "") String publisher) {
-        return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT, "Ukjent");
-    }
-
-    /**
-     * Finds all publisher loaded into elasticsearch.
-     * <p/>
-     *
-     * @return The complete elasticsearch response on Json-fornat is returned..
-     */
-    @CrossOrigin
-    @RequestMapping(value = QUERY_PUBLISHER, produces = "application/json")
-    public ResponseEntity<String> publishers() {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-
-        QueryBuilder search = QueryBuilders.matchAllQuery();
-
-        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
-        SearchResponse responseSize = searchQuery.execute().actionGet();
-
-        int totNrOfPublisher = (int) responseSize.getHits().getTotalHits();
-        logger.debug("Found total number of publisher: {}", totNrOfPublisher);
-
-        SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
-        logger.debug("Found publisher: {}", responsePublisher);
-
-        if (jsonError != null) {
-            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
-            return jsonError;
-        }
-
-        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
-    }
-
-    private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term, String missing) {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-
-        QueryBuilder search;
-
-        if (StringUtils.isEmpty(fieldValue)) {
-            logger.debug(String.format("Count datasets for all %s", field));
-            search = QueryBuilders.matchAllQuery();
-            /*JSON: {
-                "match_all" : { }
-             }*/
-        } else {
-            logger.debug(String.format("Count datasets for %s of type %s.", fieldValue, field));
-            search = QueryBuilders.simpleQueryStringQuery(fieldValue)
-                    .field(field);
-
-            /*JSON: {
-                "query": {
-                    "match": {"theme.code" : "GOVE"}
-                }
-            }*/
-        }
-
-        //Create the aggregation object that counts the datasets
-        AggregationBuilder aggregation = createAggregation(term, field, missing);
-
-        SearchResponse response = client.prepareSearch(INDEX_DCAT)
-                .setQuery(search)
-                .setSize(NO_HITS)  //only the aggregation should be returned
-                .setTypes(TYPE_DATASET)
-                .addAggregation(aggregation)
-                .execute().actionGet();
-
-        logger.debug(aggregation.toString());
-
-        logger.trace(String.format("Dataset count for field %s: %s", field, response.toString()));
-
-        if (jsonError != null) {
-            return jsonError;
-        }
-
-        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
-    }
 
     /**
      * Create aggregation object that counts the number of
@@ -528,9 +323,7 @@ public class SimpleQueryService {
             // TODO: throw exception.
             logger.error(e.toString(), e);
         }
-
         logger.debug("Transport client to elasticsearch created: " + client);
         return client;
-
     }
 }

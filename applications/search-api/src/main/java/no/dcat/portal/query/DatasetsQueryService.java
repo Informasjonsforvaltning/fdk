@@ -42,7 +42,7 @@ import java.net.UnknownHostException;
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class SimpleQueryServiceCopy {
+public class DatasetsQueryService {
     public static final String INDEX_DCAT = "dcat";
 
     public static final String TYPE_DATA_PUBLISHER = "publisher";
@@ -56,16 +56,16 @@ public class SimpleQueryServiceCopy {
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
     public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
 
-    private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
     protected Client client = null;
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     /* api names */
-    public static final String QUERY_SEARCH = "/terms";
-    public static final String QUERY_THEME_COUNT = "/themecount2";
-    public static final String QUERY_PUBLISHER = "/publisher2";
-    public static final String QUERY_PUBLISHER_COUNT = "/publishercount2";
+    public static final String QUERY_SEARCH = "/datasets";
+    public static final String QUERY_THEME_COUNT = "/themecount";
+    public static final String QUERY_PUBLISHER = "/publisher";
+    public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
 
 
     @Value("${application.elasticsearchHost}")
@@ -293,7 +293,7 @@ public class SimpleQueryServiceCopy {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @RequestMapping(value = "/terms/**", produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
+    @RequestMapping(value = "/datasets/**", produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> detail(HttpServletRequest request) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
@@ -355,7 +355,7 @@ public class SimpleQueryServiceCopy {
     }
 
     String extractIdentifier(HttpServletRequest request) {
-        String id = request.getServletPath().replaceFirst("/terms/","");
+        String id = request.getServletPath().replaceFirst("/datasets/","");
         id = id.replaceFirst(":/", "://");
 
         return id;

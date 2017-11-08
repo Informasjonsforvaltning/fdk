@@ -35,17 +35,17 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing detail resr API in SimpleQueryService.
+ * Class for testing detail resr API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleQueryServicePublishercountTest {
+public class DatasetsQueryServicePublishercountTest {
 
-    SimpleQueryService sqs;
+    DatasetsQueryService sqs;
     Client client;
 
     @Before
     public void setUp() {
-        sqs = new SimpleQueryService();
+        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
         sqs.client = client;

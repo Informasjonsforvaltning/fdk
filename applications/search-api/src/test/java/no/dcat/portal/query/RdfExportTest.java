@@ -264,11 +264,11 @@ public class RdfExportTest {
             "        }\n" +
             "      }";
 
-    private SimpleQueryService queryService;
+    private DatasetsQueryService queryService;
 
     @Before
     public void mockQuery() {
-        queryService = new SimpleQueryService();
+        queryService = new DatasetsQueryService();
     }
 
     @Test

@@ -30,16 +30,16 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing detail rest-API in SimpleQueryService.
+ * Class for testing detail rest-API in DatasetsQueryService.
  */
-public class SimpleQueryServiceDetailTest {
-    SimpleQueryService sqs;
+public class DatasetsQueryServiceDetailTest {
+    DatasetsQueryService sqs;
     Client client;
     SearchResponse response;
 
     @Before
     public void setUp() {
-        sqs = new SimpleQueryService();
+        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
         sqs.client = client;
