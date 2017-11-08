@@ -237,7 +237,7 @@ public abstract class AbstractBuilder {
                 DCTerms.references, DCTerms.isReferencedBy,
                 DCTerms.replaces, DCTerms.isReplacedBy,
                 DCTerms.requires, DCTerms.isRequiredBy,
-                DCTerms.relation
+                DCTerms.relation, DCTerms.source
         };
 
         for (Property property : propertyList) {

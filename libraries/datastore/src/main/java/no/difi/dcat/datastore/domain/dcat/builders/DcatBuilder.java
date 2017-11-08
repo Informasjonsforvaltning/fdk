@@ -270,10 +270,10 @@ public class DcatBuilder {
             }
 
             String referencePropertyUri;
-            if (!isNullOrEmpty(referenceType.getUri())) {
-                referencePropertyUri = referenceType.getUri();
-            } else {
+            if (!isNullOrEmpty(referenceType.getCode())){
                 referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
+            } else {
+                referencePropertyUri = referenceType.getUri();
             }
 
             Property referenceProperty = model.createProperty(referencePropertyUri);

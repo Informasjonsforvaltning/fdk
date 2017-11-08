@@ -35,7 +35,7 @@ export class QueryTransport extends AxiosESTransport {
     ];
   }
 
-  search(query){
+  search(query) {
     this.filters.forEach((filter)=> {
       // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
       filter.query = '';
@@ -100,7 +100,6 @@ export class QueryTransport extends AxiosESTransport {
       .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
       .then((response)=>this.getData.call(this, response))
   }
-
 
   getData(response) {
     let aggregations = response.data.aggregations;
