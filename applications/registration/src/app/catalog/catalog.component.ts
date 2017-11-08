@@ -124,6 +124,7 @@ export class CatalogComponent implements OnInit {
   newDataset(): boolean {
     this.datasets.unshift(<Dataset>{
       id: "",
+      uri: "",
       _lastModified: "",
       title: {nb: "Laster ..."},
       catalogId: "",
