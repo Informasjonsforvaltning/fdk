@@ -96,11 +96,6 @@ export class QueryTransport extends AxiosESTransport {
   }
 
   getData(response) {
-    response.data.aggregations['accessRightsCount'].buckets.forEach((bucket)=>{
-      if(bucket.key==='PUBLIC') {
-        bucket.key = 'NON_PUBLIC'
-      }
-    });
     let aggregations = response.data.aggregations;
       this.filters.forEach((filter, index)=>{
         let rawName = filter.key + (index + 3); // why 3? seems the first 2-3 are internal searchkit stuff
