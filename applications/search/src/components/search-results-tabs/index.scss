@@ -1,0 +1,19 @@
+.search-results-tabs {
+  border-bottom: 2px solid ;
+
+  li {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    float: none;
+    display: inline-block;
+    margin-right: 1em;
+    background-color: #000;
+    color: #FFF;
+    padding: 1em 4em;
+
+    button {
+      background: none;
+      border: 0;
+    }
+  }
+}
