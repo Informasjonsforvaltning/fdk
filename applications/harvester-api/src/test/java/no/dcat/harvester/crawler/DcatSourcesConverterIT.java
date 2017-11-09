@@ -1,8 +1,10 @@
 package no.dcat.harvester.crawler;
 
 import no.dcat.harvester.service.ReferenceDataSubjectService;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
+import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
@@ -32,7 +34,7 @@ public class DcatSourcesConverterIT {
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
-    ReferenceDataSubjectService referenceDataSubjectService;
+    SubjectCrawler subjectCrawler;
 
     public DcatReader setupReader(Model model) {
         return new DcatReader(model, "http://localhost:8100", "user", "password");
@@ -53,9 +55,17 @@ public class DcatSourcesConverterIT {
     @Test
     public void readDcatWithSubjectReference() throws Throwable {
         Resource r = new ClassPathResource("begrepHarvest.ttl");
-        //Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
-        Model model = crawlerJob.loadModelAndValidate(r.getURL());
+        Model model = new CrawlerJob(null,null,null,subjectCrawler).loadModelAndValidate(r.getURL());
+
         model.write(System.out, "TURTLE");
+
+        DcatReader reader = setupReader(model);
+        List<Subject> actualSubjects = reader.getSubjects();
+
+        assertThat(actualSubjects.size(), is(1));
+        Subject actualSubject = actualSubjects.get(0);
+
+        assertThat(actualSubject.getPrefLabel().get("no"), is("enhet") );
     }
 
     @Test
@@ -110,7 +120,7 @@ public class DcatSourcesConverterIT {
     public void readCompleteDifiData() throws Throwable {
 
         Resource r = new ClassPathResource("difi-complete-2017-10-25.jsonld");
-        Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
+        Model model = new CrawlerJob(null,null,null, subjectCrawler).loadModelAndValidate(r.getURL());
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();

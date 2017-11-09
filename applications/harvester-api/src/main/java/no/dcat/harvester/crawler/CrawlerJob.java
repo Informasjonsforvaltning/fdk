@@ -223,8 +223,12 @@ public class CrawlerJob implements Runnable {
         brregAgentConverter.collectFromModel(union);
 
         // Checks subjects and resolve definitions
-        Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
-        union = modelWithSubjects;
+        if (subjectCrawler != null) {
+            Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
+            union = modelWithSubjects;
+        } else {
+            logger.warn("Could not annotate subjects. Reason subject crawler is not initialized!");
+        }
 
         return union;
     }

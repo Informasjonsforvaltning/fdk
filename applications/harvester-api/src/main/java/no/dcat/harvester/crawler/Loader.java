@@ -71,7 +71,7 @@ public class Loader {
             CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(hostname,port, elasticsearchCluster);
 
             LoadingCache<URL, String> brregCach = HarvesterApplication.getBrregCache();
-            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, esHandler, publisherHandler);
+            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, null, esHandler, publisherHandler);
 
 
             Thread crawlerThread = new Thread(job);

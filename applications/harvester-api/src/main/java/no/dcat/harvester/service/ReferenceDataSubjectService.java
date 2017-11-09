@@ -5,7 +5,6 @@ import no.difi.dcat.datastore.domain.dcat.client.BasicAuthRestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,7 +34,10 @@ public class ReferenceDataSubjectService {
 
 
     public Subject getSubject(String uri) {
-        assert referenceDataUrl != null;
+        if (referenceDataUrl == null || httpUsername == null || httpPassword == null) {
+            logger.error("Unable to look up subjects via Reference data service. Service url, username or password is not set. application.themesHostname|httpUsername|httpPassword");
+            return null;
+        }
 
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
@@ -47,11 +49,15 @@ public class ReferenceDataSubjectService {
                 .toUriString();
 
         try {
-            Subject forObject = template.getForObject(referenceDataUri, Subject.class);
-
-            return forObject;
+            Subject subject = template.getForObject(referenceDataUri, Subject.class);
+            if (subject == null) {
+                logger.warn("harvest of subject uri {} failed", uri);
+            } else {
+                logger.info("successful reference data lookup of subject {}", subject.toString());
+            }
+            return subject;
         } catch (Exception e) {
-            logger.warn("Request for subject with uri {} failed. Reason {}",uri, e.getLocalizedMessage());
+            logger.warn("Request for subject with uri {} failed. Reason {}", uri, e.getLocalizedMessage());
         }
 
         return null;
