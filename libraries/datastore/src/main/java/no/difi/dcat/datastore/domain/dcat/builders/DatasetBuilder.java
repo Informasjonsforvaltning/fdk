@@ -1,8 +1,23 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
-import no.dcat.shared.*;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.*;
-import org.apache.jena.rdf.model.*;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.Dataset;
+import no.dcat.shared.Distribution;
+import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
+import no.dcat.shared.Types;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
@@ -11,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +52,14 @@ public class DatasetBuilder extends AbstractBuilder {
         this.subjects = new HashMap<>();
     }
 
+    public DatasetBuilder(Model model) {
+        super();
+        this.model = model;
+        this.locations = new HashMap<>();
+        this.codes = new HashMap<>();
+        this.dataThemes = new HashMap<>();
+    }
+
     public List<Subject> getSubjects() {
         if (subjects.isEmpty()) {
             build();
@@ -52,7 +73,6 @@ public class DatasetBuilder extends AbstractBuilder {
 
         return datasets;
     }
-
     public DatasetBuilder build() {
 
         datasets.clear();

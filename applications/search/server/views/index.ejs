@@ -1,16 +1,9 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="no"> <![endif]-->
-<!--[if IE 7 ]> <html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="no"> <![endif]-->
-<!--[if IE 8 ]> <html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="no"> <![endif]-->
-<!--[if IE 9 ]> <html class="ie ie9 ie-lt10 no-js" lang="no"> <![endif]-->
-<!--[if gt IE 9]><!--><html class="no-js" lang="no"><!--<![endif]-->
-<!-- the "no-js" class is for Modernizr. -->
+<html class="no-js" lang="no">
 <head>
 	<base href="/" />
-	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="author" content="Brønnøysundregistrene" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<meta property="og:url"                content="https://brreg.no" />
 	<meta property="og:type"               content="website" />
@@ -28,6 +21,14 @@
 </head>
 
 <body>
+	<script type="text/javascript">
+			if(!!window.ActiveXObject) // is ie 10 or lower 
+			document.write('\
+				<h1 style="text-align:center">\
+				Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( \
+				</h1>\
+			');
+	</script>
 	<div id='root'></div>
 	<script src="/static/bundle.js"></script>
 </body>
