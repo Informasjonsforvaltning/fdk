@@ -4,7 +4,7 @@ logging:
   level.no.difi: ERROR
   level.no.dcat: INFO
   level.org.springframework: WARN
-  level.org.springframework.web: INFO
+  level.org.springframework.web: WARN
 server:
   compression:
     enabled: true

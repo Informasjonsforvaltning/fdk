@@ -99,7 +99,9 @@ export default class ResultsConcepts extends React.Component {
               </div>
             </div>
             <section>
-              <ResultsTabs onSelectView={this.props.onSelectView} />
+              <ResultsTabs 
+                onSelectView={this.props.onSelectView} 
+                isSelected={this.props.isSelected}/>
             </section>
             <section id="resultPanel">
               <div className="row">
@@ -157,10 +159,12 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: ''
+  selectedLanguageCode: '',
+  isSelected: false
 };
 
 ResultsConcepts.propTypes = {
   onSelectView: PropTypes.func.isRequired,
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  isSelected: PropTypes.bool
 };
