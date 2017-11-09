@@ -56,6 +56,7 @@ public class DatasetBuilder extends AbstractBuilder {
     public DatasetBuilder build() {
 
         datasets.clear();
+        subjects.clear();
 
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
         while (catalogIterator.hasNext()) {
