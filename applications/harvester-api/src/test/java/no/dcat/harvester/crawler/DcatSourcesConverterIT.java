@@ -1,5 +1,6 @@
 package no.dcat.harvester.crawler;
 
+import no.dcat.harvester.service.ReferenceDataSubjectService;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
@@ -9,8 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,10 +26,13 @@ import static org.junit.Assert.assertThat;
 
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class DcatSourcesConverterIT {
     private static Logger logger = LoggerFactory.getLogger(DcatSourcesConverterIT.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Autowired
+    ReferenceDataSubjectService referenceDataSubjectService;
 
     public DcatReader setupReader(Model model) {
         return new DcatReader(model, "http://localhost:8100", "user", "password");
@@ -47,10 +51,10 @@ public class DcatSourcesConverterIT {
     }
 
     @Test
-    public void readRamsundSubjectHarvest() throws Throwable {
-        Resource r = new ClassPathResource("ramsund.ttl");
-        Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
-
+    public void readDcatWithSubjectReference() throws Throwable {
+        Resource r = new ClassPathResource("begrepHarvest.ttl");
+        //Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
+        Model model = crawlerJob.loadModelAndValidate(r.getURL());
         model.write(System.out, "TURTLE");
     }
 

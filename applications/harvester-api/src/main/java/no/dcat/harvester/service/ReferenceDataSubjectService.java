@@ -1,11 +1,11 @@
 package no.dcat.harvester.service;
 
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.client.BasicAuthRestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,11 +26,17 @@ public class ReferenceDataSubjectService {
 
     @PostConstruct
     public void postConstruct() {
-        logger.info("Connect to reference-data subject service with user: {}, password: {}", httpUsername, httpPassword);
+        assert referenceDataUrl != null;
+        assert httpUsername != null;
+        assert httpPassword != null;
+
+        logger.info("Connect to reference-data service {} with user: {}, password: {}", referenceDataUrl, httpUsername, httpPassword);
     }
 
 
     public Subject getSubject(String uri) {
+        assert referenceDataUrl != null;
+
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
         logger.info("harvest request for subject {}", uri);
@@ -40,8 +46,15 @@ public class ReferenceDataSubjectService {
                 .queryParam("uri", uri)
                 .toUriString();
 
-        Subject forObject = template.getForObject(referenceDataUri, Subject.class);
-        return forObject;
+        try {
+            Subject forObject = template.getForObject(referenceDataUri, Subject.class);
+
+            return forObject;
+        } catch (Exception e) {
+            logger.warn("Request for subject with uri {} failed. Reason {}",uri, e.getLocalizedMessage());
+        }
+
+        return null;
     }
 }
 

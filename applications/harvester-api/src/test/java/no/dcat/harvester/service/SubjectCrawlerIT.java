@@ -1,6 +1,5 @@
-package no.dcat.harvester;
+package no.dcat.harvester.service;
 
-import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
@@ -31,8 +30,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class SubjectCrawlerTestIT {
-    private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerTestIT.class);
+public class SubjectCrawlerIT {
+    private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerIT.class);
 
     @Autowired
     private SubjectCrawler subjectCrawler;

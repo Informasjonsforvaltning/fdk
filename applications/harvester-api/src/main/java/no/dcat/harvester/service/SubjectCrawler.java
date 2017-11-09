@@ -1,8 +1,6 @@
 package no.dcat.harvester.service;
 
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.apache.jena.rdf.model.Model;
@@ -32,10 +30,6 @@ public class SubjectCrawler {
     @Autowired
     public SubjectCrawler(ReferenceDataSubjectService referenceDataSubjectService) {
         this.referenceDataService = referenceDataSubjectService;
-    }
-
-    public SubjectCrawler() {
-        this.referenceDataService = new ReferenceDataSubjectService();
     }
 
 

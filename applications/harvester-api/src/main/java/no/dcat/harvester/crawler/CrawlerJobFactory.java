@@ -4,6 +4,8 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
+import no.dcat.harvester.service.ReferenceDataSubjectService;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.settings.ApplicationSettings;
 import no.dcat.harvester.settings.FusekiSettings;
 import no.difi.dcat.datastore.AdminDataStore;
@@ -29,6 +31,9 @@ public class CrawlerJobFactory {
 	
 	@Autowired
 	private LoadingCache<URL, String> brregCache;
+
+	@Autowired
+	private SubjectCrawler subjectCrawler;
 	
 	private AdminDataStore adminDataStore;
 	private DcatDataStore dcatDataStore;
@@ -49,14 +54,19 @@ public class CrawlerJobFactory {
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
 
-		logger.debug("applicationsettings.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
-		logger.debug("applicationsettings.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
-		logger.debug("applicationsettings.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
-
+		logger.debug("application.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
+		logger.debug("application.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
+		logger.debug("application.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
+		logger.debug("application.themesHostname: " + applicationSettings.getThemesHostname());
+		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
+		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
 
 		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHost(),applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
 		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster(), applicationSettings.getThemesHostname(), applicationSettings.getHttpUsername(), applicationSettings.getHttpPassword());
-		return new CrawlerJob(dcatSource, adminDataStore, brregCache, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
+
+		ReferenceDataSubjectService referenceService = new ReferenceDataSubjectService();
+
+		return new CrawlerJob(dcatSource, adminDataStore, brregCache, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}
 
 }
