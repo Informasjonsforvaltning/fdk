@@ -21,17 +21,18 @@ import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
+import ResultsTabs from '../search-results-tabs';
 
 const host = '/dcat';
 
-const searchkit = new SearchkitManager(
+const searchkit1 = new SearchkitManager(
   host,
   {
     transport: new QueryTransport()
   }
 );
 
-searchkit.translateFunction = (key) => {
+searchkit1.translateFunction = (key) => {
   const translations = {
     'pagination.previous': localization.page.prev,
     'pagination.next': localization.page.next,
@@ -97,7 +98,7 @@ export default class ResultsDataset extends React.Component {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
     return (
-      <SearchkitProvider searchkit={searchkit}>
+      <SearchkitProvider searchkit={searchkit1}>
         <div>
           <div className="container">
             <div className="row mb-60">
@@ -114,6 +115,9 @@ export default class ResultsDataset extends React.Component {
                 <HitsStats component={CustomHitsStats} />
               </div>
             </div>
+            <section>
+              <ResultsTabs onSelectView={this.props.onSelectView} />
+            </section>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
@@ -193,5 +197,6 @@ ResultsDataset.defaultProps = {
 };
 
 ResultsDataset.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  onSelectView: PropTypes.func.isRequired
 };
