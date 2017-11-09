@@ -1,8 +1,7 @@
 package no.dcat.harvester.service;
 
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.builders.AbstractBuilder;
+import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
@@ -33,10 +32,6 @@ public class SubjectCrawler {
         this.referenceDataService = referenceDataSubjectService;
     }
 
-    public SubjectCrawler() {
-        this.referenceDataService = new ReferenceDataSubjectService();
-    }
-
 
     /**
      * Runs through all subject predicates in the model.
@@ -56,7 +51,7 @@ public class SubjectCrawler {
         while(statementIterator.hasNext()) {
             Statement statement = statementIterator.nextStatement();
 
-            Subject subjectInModel = AbstractBuilder.extractSubject(statement);
+            Subject subjectInModel = DatasetBuilder.extractSubject(statement);
             if (subjectInModel != null && subjectInModel.getUri() != null && !foundSubjects.containsKey(subjectInModel.getUri())) {
                 Resource subjectResource = statement.getObject().asResource();
 

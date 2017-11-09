@@ -47,7 +47,7 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
             String referer = request.getHeaders("referer").nextElement();
             URL url1 = new URL(referer);
             String port = url1.getPort() != -1 ? ":" + url1.getPort() : "";
-            referer = url1.getProtocol() + "://" + url1.getHost() + port + "/index.html";
+            referer = url1.getProtocol() + "://" + url1.getHost() + port + "/";
             logger.debug("loginSuccessRedirect: {}", referer);
             response.sendRedirect(referer);
         });
@@ -63,7 +63,7 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
             String referer = request.getHeaders("referer").nextElement();
             URL url1 = new URL(referer);
             String port = url1.getPort() != -1 ? ":" + url1.getPort() : "";
-            referer = url1.getProtocol() + "://" + url1.getHost() + port + "/index.html";
+            referer = url1.getProtocol() + "://" + url1.getHost() + port + "/";
             logger.debug("logoutSuccessRedirect: {}", referer);
             response.sendRedirect(referer);
         });

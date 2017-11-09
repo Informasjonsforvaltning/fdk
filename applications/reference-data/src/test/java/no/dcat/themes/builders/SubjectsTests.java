@@ -9,6 +9,8 @@ import no.dcat.themes.service.SubjectsService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,6 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Test class for CodeBuildersTest
  */
 public class SubjectsTests {
+    private static Logger logger = LoggerFactory.getLogger(SubjectsTests.class);
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
@@ -53,12 +56,12 @@ public class SubjectsTests {
     }
 
     private void checkSubject(TDBConnection tdbConnection, String uri, String prefLabel) throws MalformedURLException {
-        System.out.println(uri);
+        logger.debug("lookup uri: {}", uri);
         Subject subject = new SubjectsService(tdbConnection).addSubject(uri);
 
         assertEquals(prefLabel, subject.getPrefLabel().get("no"));
-        System.out.println(subject.toString());
-    }
 
+        logger.debug(subject.toString());
+    }
 
 }
