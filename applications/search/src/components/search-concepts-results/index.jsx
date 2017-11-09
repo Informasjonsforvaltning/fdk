@@ -5,7 +5,6 @@ import sa from 'superagent';
 import {
   SearchkitManager,
   SearchkitProvider,
-  RefinementListFilter,
   Hits,
   HitsStats,
   Pagination,
@@ -15,10 +14,8 @@ import {
 
 import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../localization';
-import RefinementOptionThemes from '../search-refinementoption-themes';
-import RefinementOptionPublishers from '../search-refinementoption-publishers';
 import { SearchBox } from '../search-results-searchbox';
-import SearchHitItem from '../search-results-hit-item';
+import ConceptsHitItem from '../search-concepts-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
@@ -75,26 +72,12 @@ export default class ResultsConcepts extends React.Component {
     }
   }
 
-  _renderPublisherRefinementListFilter() {
-    this.publisherFilter =
-      (<RefinementListFilter
-        id="publisher"
-        title={localization.facet.organisation}
-        field="publisher.name.raw"
-        operator="AND"
-        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-        itemComponent={RefinementOptionPublishers}
-      />);
-
-    return this.publisherFilter;
-  }
-
   render() {
     const selectDropdownWithProps = React.createElement(SelectDropdown, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
 
-    const searchHitItemWithProps = React.createElement(SearchHitItem, {
+    const conceptsHitItemWithProps = React.createElement(ConceptsHitItem, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
     return (
@@ -153,30 +136,11 @@ export default class ResultsConcepts extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
-                  <RefinementListFilter
-                    id="theme"
-                    title={localization.facet.theme}
-                    field="theme.code.raw"
-                    operator="AND"
-                    size={5}
-                    itemComponent={RefinementOptionThemes}
-                  />
-                  <RefinementListFilter
-                    id="accessRight"
-                    title={localization.facet.accessRight}
-                    field="accessRights.authorityCode.raw"
-                    operator="AND"
-                    size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                    itemComponent={RefinementOptionPublishers}
-                  />
-                  {this._renderPublisherRefinementListFilter()}
-                </div>
-                <div id="datasets" className="col-sm-8">
+                <div id="datasets" className="col-sm-8 col-sm-offset-4">
                   <Hits
                     mod="sk-hits-grid"
                     hitsPerPage={50}
-                    itemComponent={searchHitItemWithProps}
+                    itemComponent={conceptsHitItemWithProps}
                     sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
                   />
                   <Pagination
