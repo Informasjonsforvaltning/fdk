@@ -106,7 +106,7 @@ public class DatasetConverterTest {
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/ENVI", envi);
 
         DatasetBuilder builder = new DatasetBuilder(model, locations,codes,dataThemeMap);
-        List<Dataset> dataset = builder.build();
+        List<Dataset> dataset = builder.getDataset();
         actualDataset = dataset.get(0); //DatasetBuilder.create(model.getResource(datasetUri), catalogResource , locations, codes, dataThemeMap);
 
         logger.info("java: {}", actualDataset.toString());

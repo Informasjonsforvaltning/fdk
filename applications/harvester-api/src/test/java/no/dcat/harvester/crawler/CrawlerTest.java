@@ -31,7 +31,7 @@ public class CrawlerTest {
 		FusekiResultHandler fHandler = new FusekiResultHandler(dcatDataStore, null);
 		ElasticSearchResultHandler eHandler = new ElasticSearchResultHandler("",0, "elasticsearch", "http://localhost:8100", "user", "password");
 		
-		List<CrawlerJob> crawlerJobs = dcatSources.stream().map(dcatSource -> new CrawlerJob(dcatSource, adminDataStore, null, fHandler, eHandler)).collect(Collectors.<CrawlerJob>toList());
+		List<CrawlerJob> crawlerJobs = dcatSources.stream().map(dcatSource -> new CrawlerJob(dcatSource, adminDataStore, null, null, fHandler, eHandler)).collect(Collectors.<CrawlerJob>toList());
 		
 		Crawler crawler = new Crawler();
 		crawler.initialize();

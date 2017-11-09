@@ -51,7 +51,7 @@ public class LoadExampleData {
 
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, esHandler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, esHandler);
 
         job.run();
 

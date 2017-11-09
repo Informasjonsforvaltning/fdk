@@ -3,11 +3,13 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.DatasetSortRankingCreator;
-import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
+import no.dcat.harvester.service.ReferenceDataSubjectService;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
 import no.dcat.harvester.validation.ValidationError;
+import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.AdminDataStore;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.DifiMeta;
@@ -30,6 +32,8 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -61,21 +65,23 @@ public class CrawlerJob implements Runnable {
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
-    private SubjectCrawler subjectCrawler = new SubjectCrawler();
+    private SubjectCrawler subjectCrawler;
 
     public List<String> getValidationResult() {return validationResult;}
     private Set<String> illegalUris = new HashSet<>();
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
-     protected CrawlerJob(DcatSource dcatSource,
+    protected CrawlerJob(DcatSource dcatSource,
                          AdminDataStore adminDataStore,
                          LoadingCache<URL, String> brregCaache,
+                         SubjectCrawler subjectCrawler,
                          CrawlerResultHandler... handlers) {
         this.handlers = Arrays.asList(handlers);
         this.dcatSource = dcatSource;
         this.adminDataStore = adminDataStore;
         this.brregCache = brregCaache;
+        this.subjectCrawler = subjectCrawler;
     }
 
     public String getDcatSourceId() {
@@ -217,8 +223,12 @@ public class CrawlerJob implements Runnable {
         brregAgentConverter.collectFromModel(union);
 
         // Checks subjects and resolve definitions
-        Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
-        union = modelWithSubjects;
+        if (subjectCrawler != null) {
+            Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
+            union = modelWithSubjects;
+        } else {
+            logger.warn("Could not annotate subjects. Reason subject crawler is not initialized!");
+        }
 
         return union;
     }
