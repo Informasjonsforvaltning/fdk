@@ -67,11 +67,13 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     if (publisher && publisher.name) {
       return (
         <span className="inline-block">
-          {
-            (publisher && publisher.name)
-              ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase()
-              : ''
-          }
+          <strong>
+            {
+              (publisher && publisher.name)
+                ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase()
+                : ''
+            }
+          </strong>
         </span>
       );
     }
@@ -110,29 +112,21 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
   }
 
   render() {
-    const language = this.props.selectedLanguageCode;
     const { source } = this.state;
 
     // Read fields from search-hit, use correct language field if specified.
     const hitId = encodeURIComponent(source.id);
     const hitElementId = `concepts-hit-${hitId}`;
-    let { title, description, objective } = source;
+    let { title, description } = source;
     if (title) {
-      title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
+      title = getTranslateText(source.title, this.props.selectedLanguageCode);
     }
     if (description) {
-      description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
-    }
-    if (objective) {
-      objective = objective[language] || objective.nb || objective.nn || objective.en;
+      description = getTranslateText(source.description, this.props.selectedLanguageCode);
     }
 
     if (description.length > 220) {
       description = `${description.substr(0, 220)}...`;
-    } else if (description.length < 150 && objective) {
-      const freeLength = 200 - description.length;
-      const objectiveLength = objective.length;
-      description = `${description} ${objective.substr(0, (200 - freeLength))} ${(objectiveLength > freeLength ? '...' : '')}`;
     }
 
     return (
@@ -142,9 +136,9 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         title={`${localization.result.dataset}: ${title}`}
       >
         <div className="fdk-container fdk-container-search-hit">
-          <h2 className="inline-block">{title}</h2>
+          <h2 className="inline-block mr-2">{title}</h2>
           {this._renderPublisher()}
-          <div>
+          <div className="mt-3">
             {this._renderThemes()}
           </div>
           <p
@@ -152,6 +146,17 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           >
             {description}
           </p>
+          <div>
+            <span className="fa-stack fdk-fa-left fdk-fa-circle">
+              <i className="fa fa-book fa-stack-1x fdk-color0" />
+            </span>
+            <a
+              href="https://lovdata.no"
+            >
+              Skatteloven $5 (https://lovdata.no)
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          </div>
         </div>
       </div>
     );
