@@ -110,7 +110,7 @@ public class ReferenceTest {
         Model m = ModelFactory.createDefaultModel();
         m.read(new ByteArrayInputStream(dcat.getBytes(Charsets.UTF_8)), null, "TTL");
         DatasetBuilder db = new DatasetBuilder(m);
-        List<Dataset> datasets = db.build();
+        List<Dataset> datasets = db.build().getDataset();
 
         assertThat(datasets.size(), is(1));
         Dataset actual = datasets.get(0);

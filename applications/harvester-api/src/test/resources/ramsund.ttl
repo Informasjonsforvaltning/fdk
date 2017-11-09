@@ -94,7 +94,7 @@
         dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description   "Test av oppslag på begrep og lagring av begrep. Foretaksnavn."@nb ;
         dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/910244132.json> ;
-        dct:subject       <https://data-david.github.io/Begrep/begrep/Foretaksnavn> ;
+        dct:subject       <https://data-david.github.io/Begrep/begrep/Enhet>;
         dct:title         "Datasett med begrep"@nb .
 
 <5863b508-e039-4fd1-9d2f-850210d82cb7>

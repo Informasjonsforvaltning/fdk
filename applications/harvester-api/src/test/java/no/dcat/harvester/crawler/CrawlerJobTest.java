@@ -41,7 +41,7 @@ public class CrawlerJobTest {
 
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
 
 
         job.run();
@@ -63,7 +63,7 @@ public class CrawlerJobTest {
 
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
 
         CrawlerJob spyJob = Mockito.spy(job);
         Mockito.doReturn(job.loadModelAndValidate(resource.getURL())).when(spyJob).prepareModelForValidation();
@@ -91,7 +91,7 @@ public class CrawlerJobTest {
 
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
 
 
         job.run();
@@ -123,7 +123,7 @@ public class CrawlerJobTest {
 
         handler.process(dcatSource, ModelFactory.createDefaultModel());
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
         job.run();
     }
 
@@ -150,7 +150,7 @@ public class CrawlerJobTest {
         }).when(handler).process(Mockito.anyObject(), Mockito.any());
 
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
         job.run();
 
         assertTrue("The entryscape file was invalid. Should have been enriched and validated, so that the handler would run.", didRun[0]);
@@ -177,7 +177,7 @@ public class CrawlerJobTest {
         }).when(handler).process(Mockito.anyObject(), Mockito.any());
 
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
         job.run();
 
         assertTrue("The Vegvesenet file was invalid. Should have been enriched and validated, so that the handler would run.", didRun[0]);
@@ -191,7 +191,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(null, null, null, handler);
+        CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
         job.verifyModelByParsing(FileManager.get().loadModel(file.getCanonicalPath()));
         job.run();
 
@@ -205,7 +205,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(null, null, null, handler);
+        CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
 
         job.verifyModelByParsing(FileManager.get().loadModel(file.getCanonicalPath()));
 

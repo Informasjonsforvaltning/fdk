@@ -1,5 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.difi.dcat.datastore.domain.dcat.client.RetrieveCodes;
 import no.difi.dcat.datastore.domain.dcat.client.RetrieveDataThemes;
@@ -21,6 +22,7 @@ public class DcatReader {
     Map<String, SkosCode> locations;
     Map<String, Map<String, SkosCode>> codes;
     Model model;
+    DatasetBuilder builder;
 
     public DcatReader(Model model, String codeServiceHost, String httpUsername, String httpPassword) {
         this.model = model;
@@ -33,6 +35,8 @@ public class DcatReader {
         LoadLocations loadLocations = new LoadLocations(codeServiceHost, httpUsername, httpPassword);
         loadLocations.addLocationsToThemes(model);
         locations = loadLocations.getLocations();
+
+        builder = new DatasetBuilder(model, locations, codes, dataThemes);
     }
 
     public DcatReader(Model model) {
@@ -40,6 +44,8 @@ public class DcatReader {
         dataThemes = new HashMap<>();
         codes = new HashMap<>();
         locations = new HashMap<>();
+
+        builder = new DatasetBuilder(model, locations, codes, dataThemes);
     }
 
     public List<no.difi.dcat.datastore.domain.dcat.Distribution> getDistributions() {
@@ -47,7 +53,13 @@ public class DcatReader {
     }
 
     public List<Dataset> getDatasets() {
-        return new DatasetBuilder(model, locations, codes, dataThemes).build();
+        return builder.build().getDataset();
     }
+
+    public List<Subject> getSubjects() {
+        return builder.build().getSubjects();
+    }
+
+
 
 }
