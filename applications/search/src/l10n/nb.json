@@ -18,6 +18,9 @@
     "norwegian-nn": "Norsk (nynorsk)",
     "english-en": "Engelsk"
   },
+  "menu": {
+    "aboutRegistration": "Registrere datasett"
+  },
   "feedback": {
     "title": "Tilbakemelding"
   },

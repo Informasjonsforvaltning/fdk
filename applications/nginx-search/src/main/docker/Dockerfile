@@ -13,6 +13,7 @@ RUN chmod 775 -R /var/run
 RUN chmod 775 -R /var/log/nginx
 
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY google4ccb17746cf8ee55.html /etc/nginx/data/google4ccb17746cf8ee55.html
 
 EXPOSE 8080
 

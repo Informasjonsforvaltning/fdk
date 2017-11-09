@@ -1,24 +1,17 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.util.FileManager;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
