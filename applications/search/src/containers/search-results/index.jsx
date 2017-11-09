@@ -70,13 +70,15 @@ export default class SearchPage extends React.Component {
         <div className={showDatasets}>
           <ResultsDataset
             onSelectView={this.handleSelectView}
+            isSelected={this.state.showDatasets}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
         </div>
 
         <div className={showConcepts}>
           <ResultsConcepts
-            onSelectView={this.handleSelectView}
+            onSelectView={this.handleSelectView}            
+            isSelected={this.state.showConcepts}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
         </div>
