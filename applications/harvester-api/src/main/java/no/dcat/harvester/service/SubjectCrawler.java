@@ -56,7 +56,7 @@ public class SubjectCrawler {
                 try {
                     for (Subject harvestedSubject : loadSubjects(subjectInModel.getUri())) {
 
-                        if (harvestedSubject != null) {
+                        if (harvestedSubject != null && harvestedSubject.getUri() != null) {
                             foundSubjects.put(harvestedSubject.getUri(), harvestedSubject);
 
                             logger.info("found subject: {}", harvestedSubject);
@@ -105,8 +105,6 @@ public class SubjectCrawler {
 
 
     public List<Subject> loadSubjects(String uri) {
-        // check if uri resolves HEAD
-
             // load model
             try {
                 Model model = loadModel(uri);
