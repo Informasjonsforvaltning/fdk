@@ -8,9 +8,7 @@ const RefinementOptionPublishers = (props) => {
   } = props;
   let optionLabel;
   const toggleId = 'toggle-more-publishers';
-  if (props.label === 'Ukjent') {
-    optionLabel = props.label;
-  }  else if(label === 'showmorelabel') {
+  if(label === 'showmorelabel') {
     return (
       <label htmlFor={toggleId} >{localization.facet.showmore}</label>
     )
@@ -26,7 +24,7 @@ const RefinementOptionPublishers = (props) => {
     optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
   }
   const id = encodeURIComponent((itemKey + Math.random()));
-  const textLabel = localization.search_hit[optionLabel] ? localization.search_hit[optionLabel] : optionLabel;
+  const textLabel = localization.search_hit[optionLabel.toLowerCase()] ? localization.search_hit[optionLabel.toLowerCase()] : optionLabel;
   return (
     <div className="checkbox">
       {
