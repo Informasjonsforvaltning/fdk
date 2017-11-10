@@ -4,8 +4,8 @@ import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
-import no.dcat.shared.Publisher;
 import no.dcat.service.CatalogRepository;
+import no.dcat.shared.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -80,6 +81,10 @@ public class CatalogController {
 
         Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
+        createCatalogsIfNeeded(validCatalogs);
+
+        catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
+
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
 
@@ -96,7 +101,7 @@ public class CatalogController {
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
 
-        logger.info("Add catalog: " + catalog.toString());
+        logger.info("Create catalog: {}. Details {}", catalog.getId(), catalog.toString() );
         if (catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -106,7 +111,7 @@ public class CatalogController {
         return new ResponseEntity<>(savedCatalog, OK);
     }
 
-    protected Catalog saveCatalog(Catalog catalog) {
+    Catalog saveCatalog(Catalog catalog) {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
@@ -116,13 +121,13 @@ public class CatalogController {
         return catalogRepository.save(catalog);
     }
 
-    private Publisher getPublisher(Catalog catalog) {
+    Publisher getPublisher(Catalog catalog) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() + ".json";
-        Enhet enhet = null;
+        String uri = "http://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() ;
+        Enhet enhet;
         try {
-            enhet = restTemplate.getForObject(uri, Enhet.class);
+            enhet = restTemplate.getForObject(uri + ".json", Enhet.class);
         } catch (Exception e) {
             logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
 
@@ -157,6 +162,11 @@ public class CatalogController {
                                              @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
 
+        Catalog existingCatalog = catalogRepository.findOne(id);
+        if (existingCatalog == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         if (!catalog.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -173,7 +183,6 @@ public class CatalogController {
 
         return new ResponseEntity<>(savedCatalog, OK);
     }
-
 
     /**
      * Deletes a catalog
@@ -209,4 +218,34 @@ public class CatalogController {
         }
         return new ResponseEntity<>(catalog, OK);
     }
+
+
+    void createCatalogsIfNeeded(Collection<String> organizations) {
+        organizations.forEach(this::createCatalogIfNotExists);
+    }
+
+    Catalog createCatalogIfNotExists(String orgnr) {
+        if (! orgnr.matches("\\d{9}")) {
+            return null;
+        }
+
+        Catalog catalog = catalogRepository.findOne(orgnr);
+        if (catalog == null) {
+
+            Catalog newCatalog = new Catalog(orgnr);
+
+            String organizationName = entityNameService.getOrganizationName(orgnr);
+            if (organizationName != null) {
+                newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
+            }
+            HttpEntity<Catalog> response = createCatalog(newCatalog);
+            if (response.getBody() == null) {
+                return null;
+            }
+
+            return newCatalog;
+        }
+        return catalog;
+    }
+
 }

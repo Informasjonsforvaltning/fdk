@@ -1,14 +1,15 @@
 package no.dcat.shared;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Data
+@ToString(includeFieldNames = false)
 public class Catalog {
-
     private String id;
     private String uri;
     private Map<String, String> title;

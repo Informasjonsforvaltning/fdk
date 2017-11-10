@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class AbstractBuilder {
 
@@ -40,6 +41,12 @@ public abstract class AbstractBuilder {
     static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
 
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
+    static Map<String, Contact> contactMap;
+
+
+    public AbstractBuilder() {
+        contactMap = new HashMap<>();
+    }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
         List<String> result = new ArrayList<>();
@@ -187,39 +194,6 @@ public abstract class AbstractBuilder {
     }
 
 
-    public static List<Subject> extractSubjects(Resource resource, Property property) {
-        List<Subject> result = new ArrayList<>();
-        StmtIterator iterator = resource.listProperties(property);
-        while (iterator.hasNext()) {
-            Statement statement = iterator.next();
-
-            Subject subject = extractSubject(statement);
-
-            result.add(subject);
-        }
-
-        if (result.size() > 0) {
-            return result;
-        }
-
-        return null;
-    }
-
-    public static Subject extractSubject(Statement statement) {
-        Subject subject = new Subject();
-        if (statement.getObject().isURIResource()) {
-            subject.setUri(statement.getObject().toString());
-
-            Resource subjectResource = statement.getObject().asResource();
-            if (subjectResource != null) {
-                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
-                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
-                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
-                subject.setSource(extractAsString(subjectResource, DCTerms.source));
-            }
-        }
-        return subject;
-    }
 
 
     public static List<Reference> extractReferences(Resource resource, Map<String,SkosCode> referenceTypes) {
@@ -231,7 +205,7 @@ public abstract class AbstractBuilder {
                 DCTerms.references, DCTerms.isReferencedBy,
                 DCTerms.replaces, DCTerms.isReplacedBy,
                 DCTerms.requires, DCTerms.isRequiredBy,
-                DCTerms.relation
+                DCTerms.relation, DCTerms.source
         };
 
         for (Property property : propertyList) {
@@ -328,79 +302,101 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+
     /**
-     * Extracts contactInformation from RDF as a vcard:Kind. If no attributes are found it returns null.
+     * Extracts contactInformation objects from RDF as a vcard:Kind/Organization.
+     *
+     * If no contacts is found. It only creates contacts if it has attributes.
      *
      * @param resource the resource which contains the contact point resource
-     * @return a instantiated Contact object.
+     * @return a list of instantiated Contact object.
      */
-    public static Contact extractContact(Resource resource) {
+    public static List<Contact> extractContacts(Resource resource) {
         try {
-            Contact contact = new Contact();
-            boolean hasAttributes = false;
+            List<Contact> result = new ArrayList<>();
+            StmtIterator iterator = resource.listProperties(DCAT.contactPoint);
+            while (iterator.hasNext()) {
+                Contact contact = new Contact();
+                boolean hasAttributes = false;
 
-            final Statement property = resource.getProperty(DCAT.contactPoint);
+                final Statement property = iterator.next();
 
-            if (property == null) {
-                logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
-                return null;
-            }
+                if (property == null) {
+                    logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
+                    continue;
+                }
 
-            //final Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
-            final Resource object = property.getObject().asResource();
+                final Resource object = property.getObject().asResource();
 
-            contact.setUri(object.getURI());
-            final String fn = extractAsString(object, Vcard.fn);
-            if (fn != null) {
-                hasAttributes = true;
-                contact.setFullname(fn);
-            }
-
-            final String email = extractAsString(object, Vcard.hasEmail);
-            if (email != null) {
-                hasAttributes = true;
-                if (email.startsWith("mailto:")){
-                    contact.setEmail(email.substring("mailto:".length(), email.length()));
+                if (object.getURI() != null && !object.getURI().isEmpty()) {
+                    contact.setUri(object.getURI());
                 } else {
-                    contact.setEmail(email);
+                    contact.setUri("http://dataktalog.no/contact/import/" + UUID.randomUUID().toString());
+                }
+
+                // reuse existing contact
+                if (contactMap.containsKey(contact.getUri())) {
+                    result.add(contactMap.get(contact.getUri()));
+                    continue;
+                }
+
+                contactMap.put(contact.getUri(), contact);
+
+                final String fn = extractAsString(object, Vcard.fn);
+                if (fn != null) {
+                    hasAttributes = true;
+                    contact.setFullname(fn);
+                }
+
+                final String email = extractAsString(object, Vcard.hasEmail);
+                if (email != null) {
+                    hasAttributes = true;
+                    if (email.startsWith("mailto:")) {
+                        contact.setEmail(email.substring("mailto:".length(), email.length()));
+                    } else {
+                        contact.setEmail(email);
+                    }
+                }
+
+                final String telephone = extractAsString(object, Vcard.hasTelephone);
+                if (telephone != null) {
+                    hasAttributes = true;
+                    if (telephone.startsWith("tel:")) {
+                        contact.setHasTelephone(telephone.substring("tel:".length(), telephone.length()));
+                    } else {
+                        contact.setHasTelephone(telephone);
+                    }
+                }
+
+                final String organizationName = extractAsString(object, Vcard.organizationName);
+                if (organizationName != null) {
+                    hasAttributes = true;
+                    contact.setOrganizationName(organizationName);
+                }
+
+                final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
+                if (organizationUnit != null) {
+                    hasAttributes = true;
+                    contact.setOrganizationUnit(organizationUnit);
+                }
+
+                final String hasURL = extractAsString(object, Vcard.hasURL);
+                if (hasURL != null) {
+                    hasAttributes = true;
+                    contact.setHasURL(hasURL);
+                }
+
+                if (hasAttributes) {
+                    contactMap.put(contact.getUri(), contact);
+                    result.add(contact);
                 }
             }
 
-            final String telephone = extractAsString(object, Vcard.hasTelephone);
-            if (telephone != null) {
-                hasAttributes = true;
-                if (telephone.startsWith("tel:")) {
-                    contact.setHasTelephone(telephone.substring("tel:".length(),telephone.length()));
-                } else {
-                    contact.setHasTelephone(telephone);
-                }
-            }
+            return result;
 
-            final String organizationName = extractAsString(object, Vcard.organizationName);
-            if (organizationName != null) {
-                hasAttributes = true;
-                contact.setOrganizationName(organizationName);
-            }
-
-            final String organizationUnit = extractAsString(object, Vcard.organizationUnit);
-            if (organizationUnit != null) {
-                hasAttributes = true;
-                contact.setOrganizationUnit(organizationUnit);
-            }
-
-            final String hasURL = extractAsString(object, Vcard.hasURL);
-            if (hasURL != null) {
-                hasAttributes = true;
-                contact.setHasURL(hasURL);
-            }
-
-            if (hasAttributes) {
-                return contact;
-            } else {
-                return null;
-            }
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}. Reason {}", DCAT.contactPoint, resource.getURI(), e.getLocalizedMessage());
+            logger.warn("Error when extracting property {} from resource {}. Reason {}",
+                    DCAT.contactPoint, resource.getURI(), e.getLocalizedMessage());
         }
 
         return null;

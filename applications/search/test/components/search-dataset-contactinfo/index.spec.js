@@ -5,13 +5,13 @@ describe('DatasetContactInfo', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<DatasetContactInfo/>);
+    wrapper = shallow(<DatasetContactInfo />);
   });
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('#dataset-contactinfo')).to.have.length(1);
   });
+
 
   it ('should render uri href', () => {
     wrapper.setProps({
@@ -25,6 +25,7 @@ describe('DatasetContactInfo', () => {
           "hasTelephone": "22306022"
         }
     });
-    expect(wrapper.find('#dataset-contact-url')).to.have.length(1);
+    expect(wrapper.find('.dataset-contactinfo')).to.have.length(1);
+    expect(wrapper.find('.dataset-contact-url')).to.have.length(1);
   });
 });

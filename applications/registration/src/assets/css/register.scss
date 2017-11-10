@@ -59,7 +59,7 @@
     font-weight: 300;
 }
 
-.fdk-input-reg-string:hover {
+.fdk-input-reg-string:hover, .fdk-input-reg-string:focus {
     border: 2px solid $color-cta2;
 }
 
@@ -75,10 +75,13 @@
     background-color: $color1;
     color: $color0 !important;
     font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
     border: none;
-    padding: 8px 9px 7px 11px;
-    margin: 0px 2px 0px 0px;
+    padding: 6px 8px 6px 8px;
+    margin: 3px 2px 3px 0px;
     border-radius: 3px;
+    display: inline-block;
 }
 
 /*fonts*/
@@ -277,31 +280,51 @@ input:checked ~ .checkbox-replacement::after {
 .expand-checkbox:checked ~ .collapsed-content  {
   display: none;
 }
-
 .collapsed-content {
-      background: #fff;
-      padding: 15px 20px 15px 20px;
-      margin: 0 0 10px 0;
-      display: block;
-      font-weight: normal;
+  background: #fff;
+  padding: 15px 20px 15px 20px;
+  margin: 0 0 10px 0;
+  display: block;
+  font-weight: normal;
 }
-rl-tag-input {
-  padding: 0px 0px 2px 8px !important;
+rl-tag-input {  
+  font-size: 1.875rem !important;
+  padding: 6px 8px !important;
   display: block !important;
   box-shadow: none !important;
 }
 rl-tag-input-item {
-    font-size: 13px !important;
-    height: 28px !important;
-    line-height: 29px !important;
-    background: #2D3741 !important;
-    padding: 0 8px !important;
-    border-radius: 2px !important;
-    color: #fff !important;
+  background-color: $color1 !important;
+  color: $color0 !important;
+  font-weight: 300 !important;
+  font-size: 1.5rem !important;
+  line-height: 1.5rem !important;
+  border: none !important;
+  padding: 6px 8px 6px 8px !important;
+  margin: 3px 2px 3px 0px !important;
+  border-radius: 3px !important;
+  display: inline-block !important;
 }
 .ng2-tag-input-remove {
+  text-indent: 9999px;
+  position: relative;
   background: transparent !important;
   margin-left:0 !important;
+}
+.ng2-tag-input-remove::after {
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+  content: '+';  
+  text-indent: 0px;
+  color: #ffffff;
+  font-weight: 1000;
+  font-size: 2.2rem;
+  display: inline;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  left: -1px;
 }
 .temporal-list {
   margin-bottom:20px;

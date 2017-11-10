@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
@@ -9,6 +9,20 @@ import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../../utils/translateText';
 import './index.scss';
 
+const getLangUrl = (langCode) => {
+  const href = window.location.search;
+  const queryObj = qs.parse(window.location.search.substr(1));
+  if (langCode === 'nb') {
+    return addOrReplaceParam(href, 'lang', '');
+  } else if (href.indexOf('lang=') === -1) {
+    return href.indexOf('?') === -1 ? `${href}?lang=${langCode}` : `${href}&lang=${langCode}`;
+  } else if (langCode !== queryObj.lang) {
+    const replacedUrl = addOrReplaceParam(href, 'lang', langCode);
+    return replacedUrl.substring(replacedUrl.indexOf('?'));
+  }
+  return href;
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +31,6 @@ export default class App extends React.Component {
       selectedLanguageCode: 'nb'
     };
     this.onChangeLanguage = this.onChangeLanguage.bind(this);
-    this.getLangUrl = this.getLangUrl.bind(this);
   }
 
   componentWillMount() {
@@ -34,7 +47,7 @@ export default class App extends React.Component {
 
   onChangeLanguage(e) {
     const langCode = e;
-    const langUrl = this.getLangUrl(langCode);
+    const langUrl = getLangUrl(langCode);
     const nextUrl = `${location.pathname}${langUrl}`;
     browserHistory.push(nextUrl);
 
@@ -51,20 +64,6 @@ export default class App extends React.Component {
       selectedLanguageCode: `${langCode}`
     });
     localization.setLanguage(langCode);
-  }
-
-  getLangUrl(langCode) {
-    const href = window.location.search;
-    const queryObj = qs.parse(window.location.search.substr(1));
-    if (langCode === 'nb') {
-      return addOrReplaceParam(href, 'lang', '');
-    } else if (href.indexOf('lang=') === -1) {
-      return href.indexOf('?') === -1 ? `${href}?lang=${langCode}` : `${href}&lang=${langCode}`;
-    } else if (langCode !== queryObj.lang) {
-      const replacedUrl = addOrReplaceParam(href, 'lang', langCode);
-      return replacedUrl.substring(replacedUrl.indexOf('?'));
-    }
-    return href;
   }
 
   render() {
@@ -119,7 +118,16 @@ export default class App extends React.Component {
                       key="menu-1"
                       eventKey="menu-1"
                       href="/about"
-                    >{localization.about.about}</MenuItem>
+                    >
+                      {localization.about.about}
+                    </MenuItem>
+                    <MenuItem
+                      key="menu-2"
+                      eventKey="menu-2"
+                      href="/about-registration"
+                    >
+                      {localization.menu.aboutRegistration}
+                    </MenuItem>
                   </DropdownButton>
                 </div>
                 <div className="fdk-header-padding">
@@ -166,7 +174,7 @@ export default class App extends React.Component {
               <div className="col-md-3 text-right">
                 <p className="fdk-p-footer">
                   <a
-                    href="mailto:felleskatalog@brreg.no"
+                    href="mailto:fellesdatakatalog@brreg.no"
                   >
                     {localization.footer.contact}<br />
                     {localization.footer.mail}

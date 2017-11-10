@@ -30,13 +30,13 @@ import static org.hamcrest.Matchers.*;
  */
 public class UrlEncodedIdWorksTest {
     Logger logger = LoggerFactory.getLogger(UrlEncodedIdWorksTest.class);
-    SimpleQueryService sqs;
+    DatasetsQueryService sqs;
     Client client;
     SearchResponse response;
 
     @Before
     public void setUp() throws Throwable {
-        sqs = new SimpleQueryService();
+        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
         sqs.client = client;

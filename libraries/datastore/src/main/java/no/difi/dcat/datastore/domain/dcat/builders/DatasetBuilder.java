@@ -1,19 +1,34 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
-import no.dcat.shared.*;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.*;
-import org.apache.jena.rdf.model.*;
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.Dataset;
+import no.dcat.shared.Distribution;
+import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.Subject;
+import no.dcat.shared.Types;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.ADMS;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DQV;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.OA;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Collections.singletonList;
 
 public class DatasetBuilder extends AbstractBuilder {
     private final static Logger logger = LoggerFactory.getLogger(DatasetBuilder.class);
@@ -22,18 +37,46 @@ public class DatasetBuilder extends AbstractBuilder {
     protected final Map<String, SkosCode> locations;
     protected final Map<String, Map<String, SkosCode>> codes;
     protected final Map<String, DataTheme> dataThemes;
+    static Map<String, Subject> subjects;
+    List<Dataset> datasets = new ArrayList<>();
 
     public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
                           Map<String, DataTheme> dataThemes) {
+        super();
+
         this.model = model;
         this.locations = locations;
         this.codes = codes;
         this.dataThemes = dataThemes;
+
+        this.subjects = new HashMap<>();
     }
 
-    public List<Dataset> build() {
+    public DatasetBuilder(Model model) {
+        super();
+        this.model = model;
+        this.locations = new HashMap<>();
+        this.codes = new HashMap<>();
+        this.dataThemes = new HashMap<>();
+    }
 
-        List<Dataset> datasets = new ArrayList<>();
+    public List<Subject> getSubjects() {
+        if (subjects.isEmpty()) {
+            build();
+        }
+        return new ArrayList(subjects.values());
+    }
+    public List<Dataset> getDataset() {
+        if (datasets.isEmpty()) {
+            build();
+        }
+
+        return datasets;
+    }
+    public DatasetBuilder build() {
+
+        datasets.clear();
+        subjects.clear();
 
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
         while (catalogIterator.hasNext()) {
@@ -51,7 +94,7 @@ public class DatasetBuilder extends AbstractBuilder {
             }
         }
 
-        return datasets;
+        return this;
     }
 
     private List<Distribution> getDistributions(Resource resource, Property property) {
@@ -90,7 +133,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setDescription(extractLanguageLiteral(resource, DCTerms.description));
             ds.setObjective(extractLanguageLiteral(resource, DCATNO.objective));
 
-            ds.setContactPoint(asList(extractContact(resource)));
+            ds.setContactPoint(extractContacts(resource));
             ds.setKeyword(extractKeywords(resource, DCAT.keyword));
             ds.setPublisher(extractPublisher(resource));
 
@@ -193,5 +236,48 @@ public class DatasetBuilder extends AbstractBuilder {
         }
         return result;
     }
+
+    public static List<Subject> extractSubjects(Resource resource, Property property) {
+        List<Subject> result = new ArrayList<>();
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+
+            Subject subject = extractSubject(statement);
+
+            if (subject != null) {
+                result.add(subject);
+                subjects.put(subject.getUri(), subject);
+            }
+        }
+
+        if (result.size() > 0) {
+            return result;
+        }
+
+        return null;
+    }
+
+    public static Subject extractSubject(Statement statement) {
+        if (statement.getObject().isURIResource()) {
+            Subject subject = new Subject();
+
+            subject.setUri(statement.getObject().toString());
+
+            Resource subjectResource = statement.getObject().asResource();
+            if (subjectResource != null) {
+                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
+                subject.setAltLabel(extractLanguageLiteral(subjectResource, SKOS.altLabel));
+
+                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
+                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
+                subject.setSource(extractAsString(subjectResource, DCTerms.source));
+
+            }
+            return subject;
+        }
+        return null;
+    }
+
 
 }

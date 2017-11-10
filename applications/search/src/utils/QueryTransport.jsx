@@ -35,7 +35,7 @@ export class QueryTransport extends AxiosESTransport {
     ];
   }
 
-  search(query){
+  search(query) {
     this.filters.forEach((filter)=> {
       // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
       filter.query = '';
@@ -78,11 +78,17 @@ export class QueryTransport extends AxiosESTransport {
         sortfield= "publisher.name";
       }
     }
+    let hasSingleWord = false;
+    if(query.query) {
+      let q = query.query.simple_query_string.query;
+      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+    }
 
     let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
+      (hasSingleWord ? '*' : '') + // if there is a single word, we perform an assterix search
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +
@@ -94,7 +100,6 @@ export class QueryTransport extends AxiosESTransport {
       .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
       .then((response)=>this.getData.call(this, response))
   }
-
 
   getData(response) {
     let aggregations = response.data.aggregations;

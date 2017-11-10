@@ -2,30 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-export default class DistributionFormat extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    const formatClass = cx(
-      'fdk-label-distribution',
-      {
-        'fdk-label-distribution-offentlig': this.props.code === 'PUBLIC',
-        'fdk-label-distribution-begrenset': this.props.code === 'RESTRICTED',
-        'fdk-label-distribution-skjermet': this.props.code === 'NON-PUBLIC'
+const DistributionFormat  = (props) => {
+  const { code, type, text } = props;
+  const formatClass = cx(
+    'fdk-label-distribution',
+    {
+      'fdk-label-distribution-offentlig': code === 'PUBLIC',
+      'fdk-label-distribution-begrenset': code === 'RESTRICTED',
+      'fdk-label-distribution-skjermet': code === 'NON-PUBLIC'
+    });
+
+  return (
+    <div className={formatClass}>
+      {type &&
+      <span>
+        <i className="fa fa-cogs fdk-fa-left" />
+        <strong className="fdk-distribution-format">
+          {type}
+        </strong>
+      </span>
       }
-    );
-    return (
-      <div className={formatClass}>
-        {this.props.type &&
-        <span>
-          <i className="fa fa-cogs fdk-fa-left" />
-          <strong className="fdk-distribution-format">
-            {this.props.type}
-          </strong>
-        </span>
-        }
-        {this.props.text}
-      </div>
-    );
-  }
+      {text}
+    </div>
+  );
+
 }
 
 DistributionFormat.defaultProps = {
@@ -39,3 +39,5 @@ DistributionFormat.propTypes = {
   type: PropTypes.string,
   text: PropTypes.string
 };
+
+export default DistributionFormat;

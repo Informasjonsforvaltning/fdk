@@ -1,33 +1,40 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.shared.Catalog;
+import no.dcat.harvester.service.ReferenceDataSubjectService;
+import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.util.FileManager;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@ActiveProfiles(value = "unit-integration")
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class DcatSourcesConverterIT {
     private static Logger logger = LoggerFactory.getLogger(DcatSourcesConverterIT.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Autowired
+    SubjectCrawler subjectCrawler;
 
     public DcatReader setupReader(Model model) {
         return new DcatReader(model, "http://localhost:8100", "user", "password");
@@ -43,6 +50,22 @@ public class DcatSourcesConverterIT {
 
         assertThat(datasets.size(), is(42));
 
+    }
+
+    @Test
+    public void readDcatWithSubjectReference() throws Throwable {
+        Resource r = new ClassPathResource("begrepHarvest.ttl");
+        Model model = new CrawlerJob(null,null,null,subjectCrawler).loadModelAndValidate(r.getURL());
+
+        model.write(System.out, "TURTLE");
+
+        DcatReader reader = setupReader(model);
+        List<Subject> actualSubjects = reader.getSubjects();
+
+        assertThat(actualSubjects.size(), is(1));
+        Subject actualSubject = actualSubjects.get(0);
+
+        assertThat(actualSubject.getPrefLabel().get("no"), is("enhet") );
     }
 
     @Test
@@ -68,6 +91,7 @@ public class DcatSourcesConverterIT {
         assertThat(datasets.size(), is(4));
 
     }
+
 
     @Test
     public void readDifiData() throws Throwable {
@@ -96,7 +120,7 @@ public class DcatSourcesConverterIT {
     public void readCompleteDifiData() throws Throwable {
 
         Resource r = new ClassPathResource("difi-complete-2017-10-25.jsonld");
-        Model model = new CrawlerJob(null,null,null).loadModelAndValidate(r.getURL());
+        Model model = new CrawlerJob(null,null,null, subjectCrawler).loadModelAndValidate(r.getURL());
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();

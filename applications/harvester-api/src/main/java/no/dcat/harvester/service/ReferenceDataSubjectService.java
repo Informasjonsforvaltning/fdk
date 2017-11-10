@@ -1,6 +1,5 @@
 package no.dcat.harvester.service;
 
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.client.BasicAuthRestTemplate;
 import org.slf4j.Logger;
@@ -26,11 +25,20 @@ public class ReferenceDataSubjectService {
 
     @PostConstruct
     public void postConstruct() {
-        logger.info("Connect to reference-data subject service with user: {}, password: {}", httpUsername, httpPassword);
+        assert referenceDataUrl != null;
+        assert httpUsername != null;
+        assert httpPassword != null;
+
+        logger.info("Connect to reference-data service {} with user: {}, password: {}", referenceDataUrl, httpUsername, httpPassword);
     }
 
 
     public Subject getSubject(String uri) {
+        if (referenceDataUrl == null || httpUsername == null || httpPassword == null) {
+            logger.error("Unable to look up subjects via Reference data service. Service url, username or password is not set. application.themesHostname|httpUsername|httpPassword");
+            return null;
+        }
+
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
         logger.info("harvest request for subject {}", uri);
@@ -40,8 +48,19 @@ public class ReferenceDataSubjectService {
                 .queryParam("uri", uri)
                 .toUriString();
 
-        Subject forObject = template.getForObject(referenceDataUri, Subject.class);
-        return forObject;
+        try {
+            Subject subject = template.getForObject(referenceDataUri, Subject.class);
+            if (subject == null) {
+                logger.warn("harvest of subject uri {} failed", uri);
+            } else {
+                logger.info("successful reference data lookup of subject {}", subject.toString());
+            }
+            return subject;
+        } catch (Exception e) {
+            logger.warn("Request for subject with uri {} failed. Reason {}", uri, e.getLocalizedMessage());
+        }
+
+        return null;
     }
 }
 

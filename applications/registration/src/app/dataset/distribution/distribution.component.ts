@@ -78,7 +78,7 @@ export class DistributionFormComponent implements OnInit {
         const formGroup = this.fb.group({
             id: distribution.id || Math.random().toString().substr(2),
             uri: [ distribution.uri || '', Validators.required ],
-            type: distribution.type || this.typeModel[this.selectedTypeId].label,
+            type: distribution.type || this.typeModel[this.selectedTypeId].label || "",
             title: distribution.title || '',
             description: distribution.description['nb'] || '',
             accessURL: distribution.accessURL || [] as string[],
@@ -124,23 +124,23 @@ export class DistributionFormComponent implements OnInit {
                                             distribution.description : {"nb": distribution.description};
 
                 distribution.downloadURL = (distribution.downloadURL instanceof Array) ?
-                                            distribution.downloadURL : (distribution.downloadURL) ?
+                                            distribution.downloadURL : (distribution.downloadURL != null) ?
                                                 [distribution.downloadURL] : [] as string[];
 
                 distribution.accessURL = (distribution.accessURL instanceof Array) ?
-                                            distribution.accessURL : (distribution.accessURL) ?
+                                            distribution.accessURL : (distribution.accessURL != null) ?
                                                 [distribution.accessURL] : [] as string[];
 
                 distribution.format = distribution.format || [] as string[];
 
                 distribution.license = (distribution.license instanceof SkosConcept) ?
-                                        distribution.license : ((distribution.license) ?
+                                        distribution.license : ((distribution.license != null) ?
                                             new SkosConcept(distribution.license, {"nb": ""}) : new SkosConcept());
 
                 distribution.conformsTo = [new SkosConcept(distribution.conformsToUri, {'nb': distribution.conformsToPrefLabel})] || [] as SkosConcept[];
 
                 distribution.page = (distribution.page instanceof Array) ?
-                                        distribution.page : ((distribution.page) ?
+                                        distribution.page : ((distribution.page != null) ?
                                             [new SkosConcept(distribution.page, {"nb": ""})] : [] as SkosConcept[]);
 
             });
