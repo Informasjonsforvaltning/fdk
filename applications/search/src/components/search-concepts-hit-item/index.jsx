@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 
-import DistributionFormat from '../search-dataset-format';
-import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 import './index.scss';
 
@@ -66,7 +64,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     const hitId = encodeURIComponent(source.id);
     const hitElementId = `concepts-hit-${hitId}`;
 
-    let { prefLabel, definition, note  } = source;
+    const { prefLabel, definition, note  } = source;
     if (prefLabel) {
       termTitle = getTranslateText(prefLabel, this.props.selectedLanguageCode);
     }
