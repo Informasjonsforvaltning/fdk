@@ -3,16 +3,23 @@ package no.dcat.harvester.service;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import org.apache.http.HttpResponse;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
@@ -21,14 +28,6 @@ import java.util.*;
 public class SubjectCrawler {
     private static Logger logger = LoggerFactory.getLogger(SubjectCrawler.class);
     private final DcatBuilder builder = new DcatBuilder();
-
-    private final ReferenceDataSubjectService referenceDataService;
-
-    @Autowired
-    public SubjectCrawler(ReferenceDataSubjectService referenceDataSubjectService) {
-        this.referenceDataService = referenceDataSubjectService;
-    }
-
 
     /**
      * Runs through all subject predicates in the model.
@@ -81,13 +80,16 @@ public class SubjectCrawler {
 
     public List<Subject> loadSubjects(String uri) {
         // check if uri resolves HEAD
-        if (uriExists(uri)) {
+
             // load model
             try {
-                Model model = RDFDataMgr.loadModel(uri);
+                Model model = loadModel(uri);
+
+                if (model == null) {
+                    return null;
+                }
 
                 List<Subject> result = new ArrayList<>();
-
                 ResIterator subjectIterator = model.listResourcesWithProperty(RDF.type, SKOS.Concept);
                 while (subjectIterator.hasNext()) {
                     Resource r = subjectIterator.nextResource();
@@ -98,26 +100,42 @@ public class SubjectCrawler {
                 return result;
 
             } catch (Exception e) {
-                logger.warn("Subject {} could not be read. Reason {}",e.getLocalizedMessage());
+                logger.warn("Subject {} could not be read. Reason {}", e.getLocalizedMessage());
             }
-        }
 
         return null;
     }
 
-    public static boolean uriExists(String URLName){
+    public Model loadModel(String URLName){
+        Exception jenaException = null;
+        Model model;
         try {
-            HttpURLConnection.setFollowRedirects(false);
-            // note : you may also need
-            //        HttpURLConnection.setInstanceFollowRedirects(false)
-            HttpURLConnection con =
-                    (HttpURLConnection) new URL(URLName).openConnection();
-            con.setRequestMethod("HEAD");
-            return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+            model = FileManager.get().loadModel(URLName, "TURTLE");
+            return model;
         }
         catch (Exception e) {
-            logger.warn("URI {} could not be resolved. Reason {}", URLName, e.getLocalizedMessage());
-            return false;
+            jenaException = e;
         }
+
+        try {
+            model = FileManager.get().loadModel(URLName, "RDFXML");
+            return model;
+        }
+        catch (Exception e) {
+            jenaException = e;
+        }
+
+        try {
+            model = FileManager.get().loadModel(URLName, "JSONLD");
+            return model;
+        }
+        catch (Exception e) {
+            jenaException = e;
+
+        }
+
+        logger.warn("URI {} could not be resolved. Have tried all TURTLE, RDFXML and JSONLD. Last exception {}", URLName, jenaException.getLocalizedMessage());
+
+        return null;
     }
 }

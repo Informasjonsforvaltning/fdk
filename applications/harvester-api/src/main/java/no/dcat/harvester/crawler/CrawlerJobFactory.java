@@ -4,7 +4,6 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
-import no.dcat.harvester.service.ReferenceDataSubjectService;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.settings.ApplicationSettings;
 import no.dcat.harvester.settings.FusekiSettings;
