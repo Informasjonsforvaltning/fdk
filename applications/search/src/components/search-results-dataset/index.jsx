@@ -13,7 +13,7 @@ import {
   TopBar
 } from 'searchkit';
 
-import { QueryTransport } from '../../utils/QueryTransport';
+import { DatasetsQueryTransport } from '../../utils/DatasetsQueryTransport';
 import localization from '../localization';
 import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
@@ -28,7 +28,7 @@ const host = '/dcat';
 const searchkitDataset = new SearchkitManager(
   host,
   {
-    transport: new QueryTransport()
+    transport: new DatasetsQueryTransport()
   }
 );
 

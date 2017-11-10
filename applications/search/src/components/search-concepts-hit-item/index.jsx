@@ -125,7 +125,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
       description = getTranslateText(source.description, this.props.selectedLanguageCode);
     }
 
-    if (description.length > 220) {
+    if (description && description.length > 220) {
       description = `${description.substr(0, 220)}...`;
     }
 

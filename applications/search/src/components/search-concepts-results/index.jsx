@@ -12,7 +12,7 @@ import {
   TopBar
 } from 'searchkit';
 
-import { QueryTransport } from '../../utils/QueryTransport';
+import { TermsQueryTransport } from '../../utils/TermsQueryTransport';
 import localization from '../localization';
 import { SearchBox } from '../search-results-searchbox';
 import ConceptsHitItem from '../search-concepts-hit-item';
@@ -25,7 +25,7 @@ const host = '/dcat';
 const searchkitConcepts = new SearchkitManager(
   host,
   {
-    transport: new QueryTransport()
+    transport: new TermsQueryTransport()
   }
 );
 
@@ -99,8 +99,8 @@ export default class ResultsConcepts extends React.Component {
               </div>
             </div>
             <section>
-              <ResultsTabs 
-                onSelectView={this.props.onSelectView} 
+              <ResultsTabs
+                onSelectView={this.props.onSelectView}
                 isSelected={this.props.isSelected}
               />
             </section>
