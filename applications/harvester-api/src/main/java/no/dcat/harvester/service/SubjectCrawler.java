@@ -3,22 +3,19 @@ package no.dcat.harvester.service;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 
 @Service
 public class SubjectCrawler {
@@ -51,21 +48,21 @@ public class SubjectCrawler {
         while(statementIterator.hasNext()) {
             Statement statement = statementIterator.nextStatement();
 
-            Subject subjectInModel = DatasetBuilder.extractSubject(statement);
+            Subject subjectInModel = DatasetBuilder.extractSubject(statement.getResource().asResource());
             if (subjectInModel != null && subjectInModel.getUri() != null && !foundSubjects.containsKey(subjectInModel.getUri())) {
                 Resource subjectResource = statement.getObject().asResource();
 
-                Subject harvestedSubject = null;
                 try {
-                    harvestedSubject = referenceDataService.getSubject(subjectInModel.getUri());
+                    for (Subject harvestedSubject : loadSubjects(subjectInModel.getUri())) {
 
-                    if (harvestedSubject != null) {
-                        foundSubjects.put(subjectInModel.getUri(), harvestedSubject);
+                        if (harvestedSubject != null) {
+                            foundSubjects.put(harvestedSubject.getUri(), harvestedSubject);
 
-                        logger.info("found subject: {}", harvestedSubject);
-                        builder.addSubjectContent(harvestedSubject, subjectResource);
-                        // TODO delete existing prefLabel, definition, note and source?!
-
+                            logger.info("found subject: {}", harvestedSubject);
+                            model.createResource(harvestedSubject.getUri());
+                            builder.addSubjectContent(harvestedSubject, subjectResource);
+                            // TODO delete existing prefLabel, definition, note and source?!
+                        }
                     }
                 } catch (Exception e) {
                     excludedSubjects.add(subjectInModel.getUri());
@@ -80,5 +77,47 @@ public class SubjectCrawler {
 
 
         return model;
+    }
+
+    public List<Subject> loadSubjects(String uri) {
+        // check if uri resolves HEAD
+        if (uriExists(uri)) {
+            // load model
+            try {
+                Model model = RDFDataMgr.loadModel(uri);
+
+                List<Subject> result = new ArrayList<>();
+
+                ResIterator subjectIterator = model.listResourcesWithProperty(RDF.type, SKOS.Concept);
+                while (subjectIterator.hasNext()) {
+                    Resource r = subjectIterator.nextResource();
+                    Subject s = DatasetBuilder.extractSubject(r);
+                    result.add(s);
+                }
+
+                return result;
+
+            } catch (Exception e) {
+                logger.warn("Subject {} could not be read. Reason {}",e.getLocalizedMessage());
+            }
+        }
+
+        return null;
+    }
+
+    public static boolean uriExists(String URLName){
+        try {
+            HttpURLConnection.setFollowRedirects(false);
+            // note : you may also need
+            //        HttpURLConnection.setInstanceFollowRedirects(false)
+            HttpURLConnection con =
+                    (HttpURLConnection) new URL(URLName).openConnection();
+            con.setRequestMethod("HEAD");
+            return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        }
+        catch (Exception e) {
+            logger.warn("URI {} could not be resolved. Reason {}", URLName, e.getLocalizedMessage());
+            return false;
+        }
     }
 }
