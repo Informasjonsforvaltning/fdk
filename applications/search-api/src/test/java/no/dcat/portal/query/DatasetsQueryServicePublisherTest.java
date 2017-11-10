@@ -20,20 +20,20 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing publisher rest-API in SimpleQueryService.
+ * Class for testing publisher rest-API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleQueryServicePublisherTest {
+public class DatasetsQueryServicePublisherTest {
     public static final String INDEX = "dcat";
     public static final String TYPE = "publisher";
     public static final int NR_OF_HITS = 12;
-    SimpleQueryService sqs;
+    DatasetsQueryService sqs;
     Client client;
     SearchResponse response;
 
     @Before
     public void setUp() {
-        sqs = new SimpleQueryService();
+        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
         sqs.client = client;
