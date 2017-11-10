@@ -90,10 +90,10 @@
   },
   "search_hit": {
     "owned": "Eies av",
-    "Public": "Public",
-    "Restricted": "Restricted",
-    "Ukjent": "Unknown",
-    "NON_PUBLIC": "Non public",
+    "public": "Public",
+    "restricted": "Restricted",
+    "ukjent": "Unknown",
+    "non_public": "Non public",
     "sample": "Sample data are available"
   },
   "dataset": {
