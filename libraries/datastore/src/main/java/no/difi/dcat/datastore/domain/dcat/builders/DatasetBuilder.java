@@ -58,6 +58,8 @@ public class DatasetBuilder extends AbstractBuilder {
         this.locations = new HashMap<>();
         this.codes = new HashMap<>();
         this.dataThemes = new HashMap<>();
+
+        this.subjects = new HashMap<>();
     }
 
     public List<Subject> getSubjects() {
@@ -243,7 +245,7 @@ public class DatasetBuilder extends AbstractBuilder {
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
 
-            Subject subject = extractSubject(statement);
+            Subject subject = extractSubject(statement.getObject().asResource());
 
             if (subject != null) {
                 result.add(subject);
@@ -258,13 +260,13 @@ public class DatasetBuilder extends AbstractBuilder {
         return null;
     }
 
-    public static Subject extractSubject(Statement statement) {
-        if (statement.getObject().isURIResource()) {
+    public static Subject extractSubject(Resource resource) {
+        if (resource.isURIResource()) {
             Subject subject = new Subject();
 
-            subject.setUri(statement.getObject().toString());
+            subject.setUri(resource.toString());
 
-            Resource subjectResource = statement.getObject().asResource();
+            Resource subjectResource = resource;
             if (subjectResource != null) {
                 subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
                 subject.setAltLabel(extractLanguageLiteral(subjectResource, SKOS.altLabel));

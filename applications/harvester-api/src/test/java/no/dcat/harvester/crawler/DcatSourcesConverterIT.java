@@ -1,6 +1,5 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.service.ReferenceDataSubjectService;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
