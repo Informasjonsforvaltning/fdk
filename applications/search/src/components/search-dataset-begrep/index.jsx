@@ -54,6 +54,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
         return (
           <span
             key={`dataset-begrep-search-${index}`}
+            className="keyword"
           >
             {`, ${getTranslateText(item, selectedLanguageCode)}`}
           </span>
@@ -62,6 +63,7 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
       return (
         <span
           key={`dataset-begrep-search-${index}`}
+          className="keyword"
         >
           {getTranslateText(item, selectedLanguageCode)}
         </span>

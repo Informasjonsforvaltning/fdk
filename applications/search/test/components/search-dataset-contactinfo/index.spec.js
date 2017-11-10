@@ -10,7 +10,6 @@ describe('DatasetContactInfo', () => {
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('.dataset-contactinfo')).to.have.length(1);
   });
 
 
