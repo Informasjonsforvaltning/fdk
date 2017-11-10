@@ -6,7 +6,7 @@
   li {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-color: color3;
+    border-color: $color3;
     vertical-align: bottom;
     float: none;
     display: inline-block;
@@ -25,10 +25,6 @@
   }
 
   .li-active {    
-    font-size: 2rem;
-  }
-
-  :hover {
     font-size: 2rem;
   }
 }

@@ -46,6 +46,8 @@ public class SubjectCrawlerIT {
 
         Subject subject2 = new Subject();
         subject2.setUri("https://data-david.github.io/Begrep/begrep/Enhet");
+        subject2.setPrefLabel(new HashMap<>());
+        subject2.getPrefLabel().put("no", "enheiten");
 
         Subject subject3 = new Subject();
         subject3.setUri("https://data-david.github.io/Begrep/begrep/Organisasjonsnummer");
