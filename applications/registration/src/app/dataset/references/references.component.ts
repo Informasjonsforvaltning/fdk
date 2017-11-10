@@ -54,59 +54,61 @@ export class ReferencesComponent implements OnInit {
         if (this.reference) {
             if (this.reference.referenceType) {
                 this.referenceTypes.push({
-                    value: this.reference.referenceType.uri,
-                    label: this.reference.referenceType.prefLabel.nb
+                    value: (this.reference.referenceType.uri)? this.reference.referenceType.uri : "",
+                    label: (this.reference.referenceType.prefLabel && this.reference.referenceType.prefLabel.nb)? 
+                      this.reference.referenceType.prefLabel.nb : ""
                 });
             }
             if (this.reference.source) {
                 this.sources.push({
-                    value: this.reference.source.uri,
-                    label: this.reference.source.prefLabel.nb || "Ukjent tittel"
+                    value: (this.reference.source.uri)? this.reference.source.uri : "",
+                    label: (this.reference.source.prefLabel && this.reference.source.prefLabel.nb)? 
+                      this.reference.source.prefLabel.nb : "Ukjent tittel"
                 });
             }
-        }
+        }        
         this.referencesForm = this.toFormGroup(this.reference);
         this.referencesFormArray.push(this.referencesForm);
 
         this.referencesForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
-            refs => {
-                if ( this.referenceTypes.length > 0 ) {
-                if (refs.referenceTypeForm) {
-                    let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
-                    this.reference.referenceType = {
-                            uri: referenceType.value,
-                            code: referenceType.value.match(/[^/]+$/).toString() || "",
-                            prefLabel: {
-                                "nb": referenceType.label || ""
-                            }
-                        };
-                } else {
-                    this.reference.referenceType = {
-                        uri: "",
-                        code: "",
-                        prefLabel: {
-                            "nb": ""
-                        }
-                    };
-                }
-            }
+          refs => {
+            if ( this.referenceTypes.length > 0 ) {
+              if (refs.referenceTypeForm) {
+                let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
+                this.reference.referenceType = {
+                  uri: referenceType.value,
+                  code: referenceType.value.match(/[^/]+$/).toString() || "",
+                  prefLabel: {
+                    "nb": referenceType.label || ""
+                  }
+                };
+              } else {
+                  this.reference.referenceType = {
+                    uri: "",
+                    code: "",
+                    prefLabel: {
+                      "nb": ""
+                    }
+                  };
+              }
+          }
 
-            if ( this.sources.length > 0 ) {
-                if (refs.sourceForm) {
-                    let source = this.sources.find( src => src.value === refs.sourceForm);
-                    this.reference.source = new SkosConcept(
-                        source.value,
-                        {
-                            "nb" : (source.label === "Ukjent tittel") ? "" : source.label
-                        }
-                    );
-                } else {
-                    this.reference.source = new SkosConcept();
+          if ( this.sources.length > 0 ) {
+            if (refs.sourceForm) {
+              let source = this.sources.find( src => src.value === refs.sourceForm);
+              this.reference.source = new SkosConcept(
+                source.value,
+                {
+                  "nb" : (source.label === "Ukjent tittel") ? "" : source.label
                 }
+              );
+            } else {
+              this.reference.source = new SkosConcept();
             }
-                this.cdr.detectChanges();
-                this.onSave.emit(true);
-            }
+          }
+          this.cdr.detectChanges();
+          this.onSave.emit(true);
+          }
         );
     }
 
@@ -123,8 +125,8 @@ export class ReferencesComponent implements OnInit {
 
     private toFormGroup(reference: Reference) {
         return this.fb.group({
-            sourceForm: [ reference.source.uri || '' ],
-            referenceTypeForm: [ reference.referenceType.uri || '' ]
+            sourceForm: [ (reference.source && reference.source.uri) ? reference.source.uri : '' ],
+            referenceTypeForm: [ (reference.referenceType && reference.referenceType.uri) ? reference.referenceType.uri : '' ]
         });
     }
 

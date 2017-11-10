@@ -3,8 +3,9 @@ export class SkosConcept {
     prefLabel: {
         [language: string]: string
     };
+    extraType?: string;
 
-    constructor(uri?: string, prefLabel?: {[language: string]: string}) {
+    constructor(uri?: string, prefLabel?: {[language: string]: string}, extraType?: string) {
         if (uri) {
             this.uri = uri;
         } else {
@@ -14,6 +15,11 @@ export class SkosConcept {
             this.prefLabel = prefLabel;
         } else {
             this.prefLabel = { 'nb': '' };
+        }
+        if (extraType) {
+          this.extraType = extraType;
+        } else {
+          this.extraType = '';
         }
     }
 }

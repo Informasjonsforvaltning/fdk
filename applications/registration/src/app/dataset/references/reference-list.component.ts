@@ -29,8 +29,6 @@ export class ReferenceListComponent implements OnInit {
 
     showDelete: boolean = false;
 
-    reference: Reference;
-
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit() {

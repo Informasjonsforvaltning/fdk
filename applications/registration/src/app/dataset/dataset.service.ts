@@ -81,7 +81,6 @@ export class DatasetService {
     Any list that has a plural name, but has null value will not have its name singularized.
     Therefore all plural names
     */
-    payload = payload.replace('"reference":', '"references":');
     payload = payload.replace('"identifiers":', '"identifier":');
     payload = payload.replace('"samples":', '"sample":');
     payload = payload.replace('"distributions":', '"distribution":');
