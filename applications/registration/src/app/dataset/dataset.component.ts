@@ -226,21 +226,26 @@ export class DatasetComponent implements OnInit {
   }
 
     buildReferencesSummary(): void {
+      this.summaries.references == "";
+      if (this.dataset.references) {
         let anyValue = false;
         this.dataset.references.forEach(reference => {
-            if (reference.source && reference.referenceType) {
-                if (reference.source.uri && reference.referenceType.uri) {
-                    anyValue = true;
-                }
+          if (reference.source && reference.referenceType) {
+            if (reference.source.uri && reference.referenceType.uri) {
+              anyValue = true;
             }
+          }
         });
         if (this.dataset.references.length > 1 && anyValue) {
-            this.summaries.references = this.dataset.references.length + " relasjoner";            
+          this.summaries.references = this.dataset.references.length + " relasjoner";            
         } else if (this.dataset.references.length == 1 && anyValue) {
-            this.summaries.references = "1 relasjon";
+          this.summaries.references = "1 relasjon";
         } else {
-            this.summaries.references = "Klikk for å fylle ut";
+          this.summaries.references = "Klikk for å fylle ut";
         }
+      } else {
+        this.summaries.references = "Klikk for å fylle ut";
+      }
     }
 
     buildInformationModelSummary(): void {

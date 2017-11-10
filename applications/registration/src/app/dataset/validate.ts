@@ -28,6 +28,12 @@ export class Validate {
             }            
             count++;
         }
+        if (obj instanceof Array) {
+          obj = obj.filter(Boolean);
+        }
+        if (obj instanceof Array && obj.length == 0) {
+          obj = null;
+        }
         if (count > nullCount) {
             return obj;
         }
