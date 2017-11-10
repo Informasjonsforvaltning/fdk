@@ -24,17 +24,17 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing detail rest-API in SimpleQueryService.
+ * Class for testing detail rest-API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleQueryServiceSearchTest {
+public class DatasetsQueryServiceSearchTest {
 
-    SimpleQueryService sqs;
+    DatasetsQueryService sqs;
     Client client;
 
     @Before
     public void setUp() {
-        sqs = new SimpleQueryService();
+        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
         sqs.client = client;

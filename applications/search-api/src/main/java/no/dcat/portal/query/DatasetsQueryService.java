@@ -42,7 +42,7 @@ import java.net.UnknownHostException;
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class SimpleQueryService {
+public class DatasetsQueryService {
     public static final String INDEX_DCAT = "dcat";
 
     public static final String TYPE_DATA_PUBLISHER = "publisher";
@@ -56,7 +56,7 @@ public class SimpleQueryService {
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
     public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
 
-    private static Logger logger = LoggerFactory.getLogger(SimpleQueryService.class);
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
     protected Client client = null;
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned

@@ -18,19 +18,19 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing theme rest-API in SimpleQueryService.
+ * Class for testing theme rest-API in DatasetsQueryService.
  */
-public class SimpleQueryServiceThemeTest {
+public class DatasetsQueryServiceThemeTest {
 //    public static final String INDEX = "theme";
 //    public static final String TYPE = "data-theme";
 //    public static final int NR_OF_HITS = 12;
-//    SimpleQueryService sqs;
+//    DatasetsQueryService sqs;
 //    Client client;
 //    SearchResponse response;
 //
 //    @Before
 //    public void setUp() {
-//        sqs = new SimpleQueryService();
+//        sqs = new DatasetsQueryService();
 //        client = mock(Client.class);
 //        populateMock();
 //        sqs.client = client;
