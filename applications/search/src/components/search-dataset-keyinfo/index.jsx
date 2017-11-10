@@ -5,6 +5,7 @@ import './index.scss';
 
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
+import LinkExternal from '../search-link-external';
 
 export default class DatasetKeyInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -59,63 +60,48 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     const {
       legalBasisForRestriction,
       legalBasisForProcessing,
-      legalBasisForAccess
+      legalBasisForAccess,
+      selectedLanguageCode
     } = this.props;
 
     const childrenLegalBasisForRestriction = items => items.map(item => (
-      <div
-        key={item.uri}
-      >
-        <a
-          href={item.uri}
-        >
-          {
-            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
-            || item.prefLabel.nb
-            || item.prefLabel.nn
-            || item.prefLabel.en
-              : localization.dataset.legalBasisForRestrictionDefaultText
+      <div key={item.uri}>
+        <LinkExternal
+          key={item.uri}
+          uri={item.uri}
+          prefLabel={
+            item.prefLabel ?
+              getTranslateText(item.prefLabel, selectedLanguageCode) :
+              localization.dataset.legalBasisForRestrictionDefaultText
           }
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
+        />
       </div>
     ));
 
     const childrenLegalBasisForProcessing = items => items.map(item => (
-      <div
-        key={item.uri}
-      >
-        <a
-          href={item.uri}
-        >
-          {
-            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
-            || item.prefLabel.nb
-            || item.prefLabel.nn
-            || item.prefLabel.en
-              : localization.dataset.legalBasisForProcessingDefaultText
+      <div key={item.uri}>
+        <LinkExternal
+          key={item.uri}
+          uri={item.uri}
+          prefLabel={
+            item.prefLabel ?
+              getTranslateText(item.prefLabel, selectedLanguageCode) :
+              localization.dataset.legalBasisForProcessingDefaultText
           }
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
+        />
       </div>
     ));
 
     const childrenLegalBasisForAccess = items => items.map(item => (
-      <div
-        key={item.uri}
-      >
-        <a
-          href={item.uri}
-        >
-          {
-            item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
-            || item.prefLabel.nb
-            || item.prefLabel.nn
-            || item.prefLabel.en
-              : localization.dataset.leagalBasisForAccessDefaultText
+      <div key={item.uri}>
+        <LinkExternal
+          uri={item.uri}
+          prefLabel={
+            item.prefLabel ?
+              getTranslateText(item.prefLabel, selectedLanguageCode) :
+              localization.dataset.leagalBasisForAccessDefaultText
           }
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
+        />
       </div>
     ));
 
@@ -186,13 +172,15 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     const { conformsTo, selectedLanguageCode } = this.props;
     const header = localization.dataset.conformsTo;
     const children = items => items.map(item => (
-      <a
+      <LinkExternal
         key={item.uri}
-        href={item.uri}
-      >
-        {item.prefLabel ? getTranslateText(item.prefLabel, selectedLanguageCode) : localization.dataset.distribution.standard}
-        <i className="fa fa-external-link fdk-fa-right" />
-      </a>
+        uri={item.uri}
+        prefLabel={
+          item.prefLabel ?
+            getTranslateText(item.prefLabel, selectedLanguageCode) :
+            localization.dataset.distribution.standard
+        }
+      />
     ));
     if (conformsTo && typeof conformsTo !== 'undefined' && conformsTo.length > 0) {
       return (
@@ -210,21 +198,17 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
   }
 
   _renderInformationModel() {
-    const { informationModel } = this.props;
+    const { informationModel, selectedLanguageCode } = this.props;
     const children = items => items.map(item => (
-      <a
+      <LinkExternal
         key={item.uri}
-        href={item.uri}
-      >
-        {
-          item.prefLabel ? item.prefLabel[this.props.selectedLanguageCode]
-            || item.prefLabel.nb
-            || item.prefLabel.nn
-            || item.prefLabel.en
-            : localization.dataset.informationModelDefaultText
+        uri={item.uri}
+        prefLabel={
+          item.prefLabel ?
+            getTranslateText(item.prefLabel, selectedLanguageCode) :
+            localization.dataset.informationModelDefaultText
         }
-        <i className="fa fa-external-link fdk-fa-right" />
-      </a>
+      />
     ));
     if (informationModel && informationModel.length > 0) {
       return (
