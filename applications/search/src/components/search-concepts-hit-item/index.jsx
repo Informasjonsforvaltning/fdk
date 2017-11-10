@@ -21,47 +21,6 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     };
   }
 
-  _renderFormats(code) {
-    let formatNodes;
-    const { distribution } = this.state.source;
-
-    const children = (items, code) => items.map((item) => {
-      if (item !== null) {
-        const formatArray = item.trim().split(',');
-        return formatArray.map((item, index) => {
-          if (item === null) {
-            return null;
-          }
-          return (
-            <DistributionFormat
-              key={`dataset-distribution-format${index}`}
-              code={code}
-              text={item}
-            />
-          );
-        });
-      }
-      return null;
-    });
-
-    if (distribution && _.isArray(Object.keys(distribution))) {
-      formatNodes = Object.keys(distribution).map((key) => {
-        if (distribution[key].format) {
-          return distribution[key].format[0];
-        }
-        return null;
-      });
-      if (formatNodes && formatNodes[0] !== null) {
-        return (
-          <div>
-            { children(formatNodes, code) }
-          </div>
-        );
-      }
-    }
-    return null;
-  }
-
   _renderPublisher() {
     const { publisher } = this.state.source;
     if (publisher && publisher.name) {
@@ -97,55 +56,47 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     return themeNodes;
   }
 
-  _renderSample() {
-    const { sample } = this.state.source;
-    if (sample) {
-      if (sample.length > 0) {
-        return (
-          <div id="search-hit-sample">
-            {localization.search_hit.sample}
-          </div>
-        );
-      }
-    }
-    return null;
-  }
-
   render() {
     const { source } = this.state;
+    let termTitle;
+    let termDescription;
+    let termNote;
 
     // Read fields from search-hit, use correct language field if specified.
     const hitId = encodeURIComponent(source.id);
     const hitElementId = `concepts-hit-${hitId}`;
-    let { title, description } = source;
-    if (title) {
-      title = getTranslateText(source.title, this.props.selectedLanguageCode);
-    }
-    if (description) {
-      description = getTranslateText(source.description, this.props.selectedLanguageCode);
-    }
 
-    if (description && description.length > 220) {
-      description = `${description.substr(0, 220)}...`;
+    let { prefLabel, definition, note  } = source;
+    if (prefLabel) {
+      termTitle = getTranslateText(prefLabel, this.props.selectedLanguageCode);
+    }
+    if (definition) {
+      termDescription = getTranslateText(definition, this.props.selectedLanguageCode);
+    }
+    if (note) {
+      termNote = getTranslateText(note, this.props.selectedLanguageCode);
     }
 
     return (
       <div
         id={hitElementId}
         className="fdk-a-search-hit"
-        title={`${localization.result.dataset}: ${title}`}
+        title={`Begrep: ${termTitle}`}
       >
         <div className="fdk-container fdk-container-search-hit">
-          <h2 className="inline-block mr-2">{title}</h2>
+          <h2 className="inline-block mr-2">{termTitle}</h2>
           {this._renderPublisher()}
+
           <div className="mt-3">
             {this._renderThemes()}
           </div>
+
           <p
             className="fdk-p-search-hit"
           >
-            {description}
+            {termDescription}
           </p>
+
           <div>
             <span className="fa-stack fdk-fa-left fdk-fa-circle">
               <i className="fa fa-book fa-stack-1x fdk-color0" />
@@ -153,10 +104,18 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
             <a
               href="https://lovdata.no"
             >
-              Skatteloven $5 (https://lovdata.no)
+              HARDKODET TEKST (https://lovdata.no)
               <i className="fa fa-external-link fdk-fa-right" />
             </a>
           </div>
+
+          <hr />
+
+          <p
+            className="fdk-p-search-hit"
+          >
+            {termNote}
+          </p>
         </div>
       </div>
     );
