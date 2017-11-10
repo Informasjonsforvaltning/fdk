@@ -47,26 +47,31 @@ export class TypeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.typeForm = this.toFormGroup(this.dataset);
-        if(!this.dataset.type) {
-            this.dataset.type = "";
-        }
-        this.typeModel
-            .filter(entry => entry.label == this.dataset.type)
-            .forEach(entry => this.selectedTypeIdx = entry.id)
+      this.typeForm = this.toFormGroup(this.dataset);
+      if(!this.dataset.type) {
+        this.dataset.type = "";
+      }
+      this.typeModel
+        .filter(entry => entry.label == this.dataset.type)
+        .forEach(entry => this.selectedTypeIdx = entry.id)
 
-        this.typeForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
-            accessLevel => {
-                if (accessLevel) {
-                    this.typeModel.forEach(entry => {
-                        if (entry.id == accessLevel.type) {
-                            this.dataset.type = entry.label;
-                        }
-                    });
+      this.typeForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
+        typeForm => {
+          if (typeForm) {
+            let match = false;
+            this.typeModel.forEach(entry => {
+                if (entry.id === typeForm.type) {
+                    this.dataset.type = entry.label;
+                    match = true;
                 }
-                this.onSave.emit(true);
+            });
+            if (!match) {
+              this.dataset.type = "";
             }
-        );
+          }
+          this.onSave.emit(true);
+        }
+      );
     }
 
     private toFormGroup(data: Dataset) {
@@ -75,4 +80,9 @@ export class TypeComponent implements OnInit {
         });
     }
 
+    public labelClicked(context, event, typeId) {
+      if(context.dataset.type === this.typeModel[typeId-1].label) {
+        this.typeForm.controls.type.patchValue({});
+      }
+    }
 }
