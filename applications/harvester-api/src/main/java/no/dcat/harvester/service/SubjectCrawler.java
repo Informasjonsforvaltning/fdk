@@ -3,26 +3,28 @@ package no.dcat.harvester.service;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import org.apache.http.HttpResponse;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.ByteArrayInputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class SubjectCrawler {
@@ -47,7 +49,7 @@ public class SubjectCrawler {
         while(statementIterator.hasNext()) {
             Statement statement = statementIterator.nextStatement();
 
-            Subject subjectInModel = DatasetBuilder.extractSubject(statement.getResource().asResource());
+            Subject subjectInModel = DatasetBuilder.extractSubject(statement.getObject().asResource());
             if (subjectInModel != null && subjectInModel.getUri() != null && !foundSubjects.containsKey(subjectInModel.getUri())) {
                 Resource subjectResource = statement.getObject().asResource();
 
@@ -58,9 +60,14 @@ public class SubjectCrawler {
                             foundSubjects.put(harvestedSubject.getUri(), harvestedSubject);
 
                             logger.info("found subject: {}", harvestedSubject);
-                            model.createResource(harvestedSubject.getUri());
+
+                            if (harvestedSubject.getUri().equals(subjectInModel.getUri())) {
+                                removeDuplicatedProperties(harvestedSubject, subjectResource);
+                            } else {
+                                subjectResource = model.createResource(harvestedSubject.getUri());
+                            }
+
                             builder.addSubjectContent(harvestedSubject, subjectResource);
-                            // TODO delete existing prefLabel, definition, note and source?!
                         }
                     }
                 } catch (Exception e) {
@@ -77,6 +84,25 @@ public class SubjectCrawler {
 
         return model;
     }
+
+    public void removeDuplicatedProperties(Subject subject, Resource resource) {
+
+        removeProperty(subject.getPrefLabel(), resource, SKOS.prefLabel);
+        removeProperty(subject.getAltLabel(), resource, SKOS.altLabel);
+        removeProperty(subject.getDefinition(), resource, SKOS.definition);
+        removeProperty(subject.getNote(), resource, SKOS.note);
+        // TODO more attributes? source, date...
+    }
+
+    private void removeProperty(Map<String,String> label, Resource resource, Property property) {
+        Statement stmnt = resource.getProperty(property);
+        if (stmnt != null && label != null) {
+            if (stmnt.getObject().isLiteral() && !label.isEmpty()) {
+                resource.removeAll(property);
+            }
+        }
+    }
+
 
     public List<Subject> loadSubjects(String uri) {
         // check if uri resolves HEAD
