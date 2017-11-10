@@ -136,7 +136,7 @@ import java.net.UnknownHostException;
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
-                .setTypes("dataset")
+                .setTypes("subject")
                 .setQuery(search)
                 .setFrom(from)
                 .setSize(size);
