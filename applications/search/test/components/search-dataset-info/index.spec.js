@@ -12,7 +12,6 @@ describe('DatasetInfo', () => {
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('#dataset-info')).to.have.length(1);
   });
 
   it ('should render issued', () => {

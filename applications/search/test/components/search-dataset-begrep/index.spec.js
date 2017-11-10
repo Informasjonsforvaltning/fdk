@@ -6,7 +6,7 @@ describe('Begrep', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Begrep/>);
+    wrapper = shallow(<Begrep/>);
   });
 
   it('should render', () => {
@@ -47,7 +47,7 @@ describe('Begrep', () => {
         }
       ]
     });
-    expect(wrapper.find(BegrepCollapse).length).to.equal(1);
-    expect(wrapper.find('.keyword').length).to.equal(4);
+    expect(wrapper.find(BegrepCollapse)).to.have.length(1);
+    expect(wrapper.find('.keyword')).to.have.length(4);
   });
 });
