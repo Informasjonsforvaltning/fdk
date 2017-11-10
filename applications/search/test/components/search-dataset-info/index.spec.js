@@ -12,7 +12,6 @@ describe('DatasetInfo', () => {
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('#dataset-info')).to.have.length(1);
   });
 
   it ('should render issued', () => {
@@ -22,9 +21,6 @@ describe('DatasetInfo', () => {
   });
 
   it ('should render accrualPeriodicity, provenance and hasCurrentnessAnnotation', () => {
-    //expect(wrapper.find('#dataset-info-accrualPeriodicity').text()).to.equal('—');
-    //expect(wrapper.find('#dataset-info-provenance').text()).to.equal('—');
-    //expect(wrapper.find('#dataset-info-currentnessAnnotation').text()).to.equal('—');
     wrapper.setProps({
       "accrualPeriodicity": "årlig",
       "provenance": "Vedtak",
@@ -69,7 +65,6 @@ describe('DatasetInfo', () => {
   });
 
   it ('should render temporal', () => {
-    //expect(wrapper.find('#dataset-info-temporal').text()).to.equal('—');
     wrapper.setProps({
       "temporal": [
         {

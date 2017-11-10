@@ -4,7 +4,7 @@ import { Collapse } from 'react-bootstrap';
 
 import './index.scss';
 
-export default class BegrepCollapse extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class BegrepCollapse extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

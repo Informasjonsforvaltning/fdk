@@ -35,20 +35,20 @@ import static org.hamcrest.Matchers.*;
  */
 public class CodeRestCallTests {
 
-//    SimpleQueryService sqs;
+//    DatasetsQueryService sqs;
 //    Client client;
 //    SearchResponse response;
 //
 //    @Before
 //    public void setUp() {
-//        sqs = new SimpleQueryService();
+//        sqs = new DatasetsQueryService();
 //        client = mock(Client.class);
 //        sqs.client = client;
 //    }
 //
 //    @Test
 //    public void getCodeTypesOK() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        List<String> mockTypes = new ArrayList<>();
 //        mockTypes.add("type1");
@@ -64,7 +64,7 @@ public class CodeRestCallTests {
 //
 //    @Test
 //    public void getCodeTypesElasticConnectionError() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        doReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)).when(spy).initializeElasticsearchTransportClient();
 //
@@ -75,7 +75,7 @@ public class CodeRestCallTests {
 //
 //    @Test
 //    public void getCodeTypesNoDataInElastic() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        doReturn(null).when(spy).initializeElasticsearchTransportClient();
 //        doReturn(null).when(spy).getTypes(anyString());
@@ -88,7 +88,7 @@ public class CodeRestCallTests {
 //
 //    @Test
 //    public void getCodes() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        doReturn(new ResponseEntity<>(HttpStatus.OK)).when(spy).initializeElasticsearchTransportClient();
 //        doReturn(exampleCodeStrings()).when(spy).extractCodeStrings(anyString());
@@ -102,7 +102,7 @@ public class CodeRestCallTests {
 //
 //    @Test
 //    public void getCodesNoElasticContact() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        doReturn(new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR)).when(spy).initializeElasticsearchTransportClient();
 //
@@ -113,7 +113,7 @@ public class CodeRestCallTests {
 //
 //    @Test
 //    public void getCodesFilterLabels() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        doReturn(null).when(spy).initializeElasticsearchTransportClient();
 //        doReturn(exampleCodeStrings()).when(spy).extractCodeStrings(anyString());
@@ -125,7 +125,7 @@ public class CodeRestCallTests {
 //
 //    @Test
 //    public void getCodesNullResult() throws Throwable {
-//        SimpleQueryService spy = spy(sqs);
+//        DatasetsQueryService spy = spy(sqs);
 //
 //        doReturn(null).when(spy).initializeElasticsearchTransportClient();
 //        doReturn(null).when(spy).extractCodeStrings(anyString());
