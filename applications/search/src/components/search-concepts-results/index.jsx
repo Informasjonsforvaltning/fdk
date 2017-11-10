@@ -101,7 +101,8 @@ export default class ResultsConcepts extends React.Component {
             <section>
               <ResultsTabs 
                 onSelectView={this.props.onSelectView} 
-                isSelected={this.props.isSelected}/>
+                isSelected={this.props.isSelected}
+              />
             </section>
             <section id="resultPanel">
               <div className="row">
