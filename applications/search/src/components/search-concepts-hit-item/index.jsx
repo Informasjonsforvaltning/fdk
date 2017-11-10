@@ -56,15 +56,13 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
 
   render() {
     const { source } = this.state;
+    const hitElementId = `concepts-hit-${encodeURIComponent(source.uri)}`;
+    const { prefLabel, definition, note  } = source;
+
     let termTitle;
     let termDescription;
     let termNote;
 
-    // Read fields from search-hit, use correct language field if specified.
-    const hitId = encodeURIComponent(source.id);
-    const hitElementId = `concepts-hit-${hitId}`;
-
-    const { prefLabel, definition, note  } = source;
     if (prefLabel) {
       termTitle = getTranslateText(prefLabel, this.props.selectedLanguageCode);
     }
