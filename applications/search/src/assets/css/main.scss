@@ -138,7 +138,8 @@ SEARCHPAGE SORTING DROPDOWN
 .btn-group {
     .dropdown-toggle {
         &:focus, &:active, &:hover {
-            background-color: $color-cta4;
+            color: $color0;
+            background-color: $color1;
             border-color: transparent;
             box-shadow: none;
         }
@@ -146,7 +147,8 @@ SEARCHPAGE SORTING DROPDOWN
 }
 
 .open>.dropdown-toggle.btn-default {
-    background-color: $color-cta4;
+    color: $color0;
+    background-color: $color1;
     border-color: transparent;
     box-shadow: none;
 }

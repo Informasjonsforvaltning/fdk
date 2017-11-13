@@ -54,10 +54,6 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     return themeNodes;
   }
 
-  addToComparison() {
-    console.log('addToComparison run');
-  }
-
   render() {
     const { source } = this.state;
     const hitElementId = `concepts-hit-${encodeURIComponent(source.uri)}`;
@@ -116,7 +112,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           >
             {termNote}
           </p>
-          <button onClick={() => this.this.addToComparison(hitElementId)} type="button">+ Legg til sammenligning</button>
+          <button className="fdk-button fdk-button-default" type="button">+ Legg til sammenligning</button>
         </div>
       </div>
     );
