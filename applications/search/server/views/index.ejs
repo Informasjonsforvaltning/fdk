@@ -9,25 +9,24 @@
 	<meta property="og:type"               content="website" />
 	<meta property="og:title"              content="Felles datakatalog" />
 	<meta property="og:description"        content="Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål." />
-	<meta property="og:image"              content="https://${context.domain.label}/static/img/fdk-logo@2x.png" />
 
 	<title>Felles datakatalog</title>
-	<!--<link href="https://cdn.jsdelivr.net/searchkit/0.9.0/theme.css" rel="stylesheet" />-->
 	<link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
-	<link media="screen" rel="stylesheet" type="text/css" id="fontStyle" href="/static/bootstrap.min.css">
-	<link media="screen" rel="stylesheet" type="text/css" id="fontStyle" href="/static/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700,800,900">
-	<link media="screen" rel="stylesheet" type="text/css" id="fontStyle" href="/static/styles.css">
+	<link media="screen" rel="stylesheet" type="text/css" href="/static/bootstrap.min.css">
+	<link media="screen" rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css">
+	<link media="screen" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700,800,900">
+	<link media="screen" rel="stylesheet" type="text/css" href="/static/styles.css">
 </head>
 
 <body>
 	<script type="text/javascript">
-			if(!!window.ActiveXObject) // is ie 10 or lower 
-			document.write('\
-				<h1 style="text-align:center">\
-				Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( \
-				</h1>\
-			');
+			if (navigator.userAgent.indexOf("MSIE") >= 0) {
+				document.write('\
+					<h1 style="text-align:center">\
+					Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( \
+					</h1>\
+				');
+			}
 	</script>
 	<div id='root'></div>
 	<script src="/static/bundle.js"></script>
