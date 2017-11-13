@@ -1,0 +1,12 @@
+@import '../../assets/css/colors';
+
+.fdk-a-search-hit {
+  text-decoration: none;
+}
+
+.fdk-fa-circle {
+  background-color: $color1;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
