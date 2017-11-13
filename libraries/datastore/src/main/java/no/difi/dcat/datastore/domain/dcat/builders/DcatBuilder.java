@@ -590,7 +590,7 @@ public class DcatBuilder {
             resource.addProperty(RDF.type, SKOS.Concept);
 
             addLiterals(resource, SKOS.prefLabel, subject.getPrefLabel());
-            addLiterals(resource, SKOS.altLabel, subject.getAltLabel());
+            addLiteralsMultipleLabels(resource, SKOS.altLabel, subject.getAltLabel());
             addLiterals(resource, SKOS.definition, subject.getDefinition());
             addLiterals(resource, SKOS.note, subject.getNote());
             addLiteral(resource, DCTerms.source, subject.getSource());
@@ -669,6 +669,17 @@ public class DcatBuilder {
             }
         }
 
+        return this;
+    }
+
+    public DcatBuilder addLiteralsMultipleLabels(Resource resource, Property property, List<Map<String, String>> languageMaps) {
+        if (languageMaps != null && !languageMaps.isEmpty()) {
+
+            languageMaps.forEach( languageMap -> {
+                addLiterals(resource, property, languageMap);
+            });
+
+        }
         return this;
     }
 

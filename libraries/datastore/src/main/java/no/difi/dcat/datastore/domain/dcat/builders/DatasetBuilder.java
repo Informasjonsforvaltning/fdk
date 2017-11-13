@@ -269,7 +269,7 @@ public class DatasetBuilder extends AbstractBuilder {
             Resource subjectResource = resource;
             if (subjectResource != null) {
                 subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
-                subject.setAltLabel(extractLanguageLiteral(subjectResource, SKOS.altLabel));
+                subject.setAltLabel(extractMultipleLanguageLiterals(subjectResource, SKOS.altLabel));
 
                 subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
                 subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));

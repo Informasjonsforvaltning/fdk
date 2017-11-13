@@ -6,6 +6,7 @@ import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.SubjectsService;
+import org.apache.jena.vocabulary.SKOS;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -34,12 +35,11 @@ public class SubjectsTests {
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
+        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Organisasjonsummer", "Organisasjonsnummer");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Enhet", "enhet");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Hovedenhet", "hovedenhet");
-        //checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Organisasjonsummer", "Organisasjonsnummer");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Foretaksnavn", "Foretaksnavn");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Underenhet", "underenhet");
-
     }
 
 
