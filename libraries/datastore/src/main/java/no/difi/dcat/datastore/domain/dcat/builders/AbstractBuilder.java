@@ -275,6 +275,9 @@ public abstract class AbstractBuilder {
             }
             if (statement.getString() != null && ! statement.getString().isEmpty()) {
                 List<String> x = map.get(language);
+                if (x == null) {
+                    x = new ArrayList<>();
+                }
                 x.add(statement.getString());
             }
         }

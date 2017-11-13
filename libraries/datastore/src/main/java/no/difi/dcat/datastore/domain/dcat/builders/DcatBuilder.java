@@ -594,6 +594,8 @@ public class DcatBuilder {
             addLiterals(resource, SKOS.definition, subject.getDefinition());
             addLiterals(resource, SKOS.note, subject.getNote());
             addLiteral(resource, DCTerms.source, subject.getSource());
+
+            //resource.addProperty(SKOS.inScheme, "vocabular", "Befolkning");
         }
     }
 

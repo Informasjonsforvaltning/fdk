@@ -20,6 +20,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
@@ -268,12 +269,17 @@ public class DatasetBuilder extends AbstractBuilder {
 
             Resource subjectResource = resource;
             if (subjectResource != null) {
+                subject.setIdentifier(extractAsString(subjectResource, DCTerms.identifier));
+
                 subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
                 subject.setAltLabel(extractMultipleLanguageLiterals(subjectResource, SKOS.altLabel));
 
                 subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
                 subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
                 subject.setSource(extractAsString(subjectResource, DCTerms.source));
+
+                //subject.setOwner(extractAsString(subjectResource, DCTerms.po));
+                subject.setInScheme(extractAsString(subjectResource, SKOS.inScheme));
 
             }
             return subject;

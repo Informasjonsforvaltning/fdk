@@ -15,7 +15,6 @@ import java.util.Map;
 public class Subject implements Serializable{
     private String uri;
     private String identifier;
-    private String created;
     private Map<String, String> prefLabel;
     private List<Map<String, String>> altLabel;
     private Map<String,String> definition;
