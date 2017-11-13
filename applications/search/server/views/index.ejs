@@ -22,12 +22,13 @@
 
 <body>
 	<script type="text/javascript">
-			if(!!window.ActiveXObject) // is ie 10 or lower 
-			document.write('\
-				<h1 style="text-align:center">\
-				Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( \
-				</h1>\
-			');
+			if (navigator.userAgent.indexOf("MSIE") >= 0) {
+				document.write('\
+					<h1 style="text-align:center">\
+					Beklager, men din versjon av Internet Explorer støttes ikke. Du kan forsøke å bruke denne nettsiden, men vi kan ikke garantere at alt fungerer :( \
+					</h1>\
+				');
+			}
 	</script>
 	<div id='root'></div>
 	<script src="/static/bundle.js"></script>
