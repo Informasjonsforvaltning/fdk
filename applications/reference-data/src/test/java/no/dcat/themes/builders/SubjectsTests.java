@@ -39,7 +39,7 @@ public class SubjectsTests {
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Enhet", "enhet");
-        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Organisasjonsnummer", "Organisasjonsnummer");
+        checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Organisasjonsnummer", "organisasjonsnummer");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Hovedenhet", "hovedenhet");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Foretaksnavn", "Foretaksnavn");
         checkSubject(tdbConnection, "https://data-david.github.io/Begrep/begrep/Underenhet", "underenhet");

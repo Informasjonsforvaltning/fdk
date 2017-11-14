@@ -1,16 +1,20 @@
 package no.dcat.themes.service;
 
 import com.google.gson.Gson;
-import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
+import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,13 +69,20 @@ public class SubjectsService extends BaseServiceWithFraming {
     public Subject getSubject(String uri) {
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Dataset dataset = DatasetFactory.create(connection.describeWithInference(uri));
-            String json = frame(dataset, frame);
-            logger.trace("json= {}",json);
+
+            ResIterator resIterator = dataset.getDefaultModel().listResourcesWithProperty(RDF.type, SKOS.Concept);
+
+            Resource resource = resIterator.nextResource();
+            if (resource.getURI().equals(uri)) {
+
+                Subject result = DatasetBuilder.extractSubject(resource);
+
+                dataset.close();
+                return result;
+            }
+
             dataset.close();
-
-            List<Subject> subjects = new Gson().fromJson(json, FramedSubject.class).getGraph();
-
-            return subjects.get(0);
+            return null;
         });
     }
 }

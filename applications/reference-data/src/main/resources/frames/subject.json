@@ -27,7 +27,7 @@
         },
         "altLabel": {
           "@id": "skos:altLabel",
-          "@container": "@language"
+          "@container": "@set"
         }
     },
     "@explicit": false,
