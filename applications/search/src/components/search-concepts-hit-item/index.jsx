@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 
+import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 import './index.scss';
 
@@ -55,6 +56,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
   }
 
   render() {
+    const { onAddTerm } = this.props;
     const { source } = this.state;
     const hitElementId = `concepts-hit-${encodeURIComponent(source.uri)}`;
     const { prefLabel, definition, note  } = source;
@@ -73,13 +75,19 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
       termNote = getTranslateText(note, this.props.selectedLanguageCode);
     }
 
+    let toBeCompared = false;
+    if (this.props.terms) {
+      toBeCompared = _.some(this.props.terms, (term) => term.uri === source.uri);
+    }
+
     return (
       <div
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`Begrep: ${termTitle}`}
       >
-        <div className="fdk-container fdk-container-search-hit">
+        <div className={`fdk-container fdk-container-search-hit ${toBeCompared ? 'toBeCompared' : ''}`}>
+          <button className={`fdk-button ${toBeCompared ? 'fdk-button-inactive' : 'fdk-button-default'} pull-right mt-3`} onClick={() => { if (!toBeCompared) {onAddTerm(source)}}} type="button">+ {localization.terms.addCompare}</button>
           <h2 className="inline-block mr-2">{termTitle}</h2>
           {this._renderPublisher()}
 
@@ -112,7 +120,6 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           >
             {termNote}
           </p>
-          <button className="fdk-button fdk-button-default" type="button">+ Legg til sammenligning</button>
         </div>
       </div>
     );
@@ -121,10 +128,13 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
 
 ConceptsHitItem.defaultProps = {
   result: null,
+  terms: null,
   selectedLanguageCode: 'nb'
 };
 
 ConceptsHitItem.propTypes = {
   result: PropTypes.shape({}),
+  terms: PropTypes.array,
+  onAddTerm: PropTypes.func.isRequired,
   selectedLanguageCode: PropTypes.string
 };

@@ -19,6 +19,7 @@ import ConceptsHitItem from '../search-concepts-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
+import CompareTerms from '../search-concepts-compare';
 
 const host = '/dcat';
 
@@ -52,6 +53,11 @@ searchkitConcepts.translateFunction = (key) => {
 export default class ResultsConcepts extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      terms: []
+    }
+
     this.queryObj = qs.parse(window.location.search.substr(1));
     if (!window.themes) {
       window.themes = [];
@@ -70,14 +76,57 @@ export default class ResultsConcepts extends React.Component {
           }
         });
     }
+    this.handleAddTerm = this.handleAddTerm.bind(this);
+    this.handleDeleteTerm = this.handleDeleteTerm.bind(this);
+  }
+
+  handleAddTerm(term) {
+    this.setState({
+      terms: [...this.state.terms, term]
+    });
+  }
+
+  handleDeleteTerm(termIndex) {
+    const terms = this.state.terms;
+    terms.splice(termIndex, 1);
+    this.setState({
+      terms
+    });
+  }
+
+  _renderCompareTerms() {
+    const { terms } = this.state;
+    const children = items => items.map((item, index) => (
+      <CompareTerms
+        key={item.uri}
+        prefLabel={item.prefLabel}
+        publisher={item.publisher}
+        onDeleteTerm={this.handleDeleteTerm}
+        termIndex={index}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    ));
+
+    if (terms && terms.length > 0) {
+      return (
+        <div>
+          <h3 className="mb-2">
+            {localization.terms.compareTerms}
+          </h3>
+          {children(terms)}
+        </div>
+      )
+    }
+    return null;
   }
 
   render() {
     const selectDropdownWithProps = React.createElement(SelectDropdown, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
-
     const conceptsHitItemWithProps = React.createElement(ConceptsHitItem, {
+      terms: this.state.terms,
+      onAddTerm: this.handleAddTerm,
       selectedLanguageCode: this.props.selectedLanguageCode
     });
     return (
@@ -139,7 +188,10 @@ export default class ResultsConcepts extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div id="datasets" className="col-sm-8 col-sm-offset-4">
+                <div className="col-sm-4">
+                  { this._renderCompareTerms() }
+                </div>
+                <div id="datasets" className="col-sm-8">
                   <Hits
                     mod="sk-hits-grid"
                     hitsPerPage={50}
