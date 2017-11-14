@@ -267,6 +267,7 @@ public abstract class AbstractBuilder {
     public static List<Map<String, String>> extractMultipleLanguageLiterals(Resource resource, Property property) {
         Map<String, List<String>> map = new HashMap<>();
         StmtIterator iterator = resource.listProperties(property);
+
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
             String language = statement.getLanguage();
@@ -277,6 +278,7 @@ public abstract class AbstractBuilder {
                 List<String> x = map.get(language);
                 if (x == null) {
                     x = new ArrayList<>();
+                    map.put(language, x);
                 }
                 x.add(statement.getString());
             }

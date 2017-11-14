@@ -99,6 +99,12 @@ public class TestCompleteCatalog {
         subject.setNote(map("no", "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."));
         subject.setSource("https://jira.brreg.no/browse/BEGREP-208");
         subject.setUri("https://data-david.github.io/Begrep/begrep/Enhet");
+        subject.setInScheme(Arrays.asList("befolking", "samfunn"));
+        subject.setCreator("http://data.brreg.no/enhet/123");
+        List<Map<String, String>> alts = new ArrayList<>();
+        alts.add(map("no", "orgnr"));
+        alts.add(map("en", "orgzip"));
+        subject.setAltLabel(alts);
         dataset.setSubject(Collections.singletonList(
                 subject
         ));

@@ -163,6 +163,9 @@ public class DatasetConverterTest {
         assertThat(actualSubject.getDefinition(), is(expectedSubject.getDefinition()));
         assertThat(actualSubject.getNote(), is(expectedSubject.getNote()));
         assertThat(actualSubject.getSource(), is(expectedSubject.getSource()));
+        assertThat(actualSubject.getCreator(), is(expectedSubject.getCreator()));
+        assertThat(actualSubject.getIdentifier(), is(expectedSubject.getIdentifier()));
+        assertThat(actualSubject.getInScheme(), is(expectedSubject.getInScheme()));
     }
 
 

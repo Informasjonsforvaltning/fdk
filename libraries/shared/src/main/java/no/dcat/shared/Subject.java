@@ -20,8 +20,8 @@ public class Subject implements Serializable{
     private Map<String,String> definition;
     private Map<String,String> note;
     private String source;
-    private String owner;
-    private String inScheme;
+    private String creator;
+    private List<String> inScheme;
 
     public Subject() {
     }

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 @Service
 public class SubjectsService extends BaseServiceWithFraming {
@@ -68,7 +69,9 @@ public class SubjectsService extends BaseServiceWithFraming {
             logger.trace("json= {}",json);
             dataset.close();
 
-            return new Gson().fromJson(json, FramedSubject.class).getGraph().get(0);
+            List<Subject> subjects = new Gson().fromJson(json, FramedSubject.class).getGraph();
+
+            return subjects.get(0);
         });
     }
 }

@@ -18,4 +18,20 @@ dcatno/search: [Apache License, version 2.0](http://www.apache.org/licenses/LICE
 
   * dcatno/elasticsearch
   * dcatno/fuseki
+  
+# Search API
+
+Example `/datasets?q=enhet&from=2`
+
+Query parameters
+- `q=enhet` (query for spesifik words (wildcard * is allowed))
+- `theme=GOVE,SOCI` (datasets that have theme GOVE and SOCI)
+- `publisher=DIFI` (datasets from a publisher)
+- `accessRight=PUBLIC` (datasets that have accessRights: PUBLIC, )
+- `from=0` (show page 0)
+- `size=50` (number of hits per page, page size)
+- `lang=nb` (filter language)
+- `sortfield=title` (sort datasets by title, publisher or modified)
+- `sortdirection=asc` (sort direction: asc or desc)
+
 

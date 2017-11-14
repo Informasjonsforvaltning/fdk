@@ -589,13 +589,17 @@ public class DcatBuilder {
         if (subject.getPrefLabel() != null) {
             resource.addProperty(RDF.type, SKOS.Concept);
 
+            addLiteral(resource, DCTerms.identifier, subject.getIdentifier());
+
             addLiterals(resource, SKOS.prefLabel, subject.getPrefLabel());
             addLiteralsMultipleLabels(resource, SKOS.altLabel, subject.getAltLabel());
+
             addLiterals(resource, SKOS.definition, subject.getDefinition());
             addLiterals(resource, SKOS.note, subject.getNote());
             addLiteral(resource, DCTerms.source, subject.getSource());
 
-            //resource.addProperty(SKOS.inScheme, "vocabular", "Befolkning");
+            addProperty(resource, DCTerms.creator, subject.getCreator());
+            addLiterals(resource, SKOS.inScheme, subject.getInScheme());
         }
     }
 

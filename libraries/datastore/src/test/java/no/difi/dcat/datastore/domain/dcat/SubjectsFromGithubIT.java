@@ -29,7 +29,7 @@ public class SubjectsFromGithubIT {
     @Test
     public void testDataFromGithub() throws IOException {
 
-        checkSubject("https://data-david.github.io/Begrep/begrep/Organisasjonsummer", "organisasjonsnummer");
+        checkSubject("https://data-david.github.io/Begrep/begrep/Organisasjonsnummer", "organisasjonsnummer");
         checkSubject("https://data-david.github.io/Begrep/begrep/Enhet", "enhet");
         checkSubject("https://data-david.github.io/Begrep/begrep/Hovedenhet", "hovedenhet");
         checkSubject("https://data-david.github.io/Begrep/begrep/Foretaksnavn", "Foretaksnavn");

@@ -278,8 +278,8 @@ public class DatasetBuilder extends AbstractBuilder {
                 subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
                 subject.setSource(extractAsString(subjectResource, DCTerms.source));
 
-                //subject.setOwner(extractAsString(subjectResource, DCTerms.po));
-                subject.setInScheme(extractAsString(subjectResource, SKOS.inScheme));
+                subject.setCreator(extractAsString(subjectResource, DCTerms.creator));
+                subject.setInScheme(extractMultipleStrings(subjectResource, SKOS.inScheme));
 
             }
             return subject;

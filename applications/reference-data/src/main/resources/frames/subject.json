@@ -5,7 +5,10 @@
         "uri": "@id",
         "type": "@type",
         "@language": null,
-
+        "created": "dct:created",
+        "identifier": {
+          "@id": "dct:identifier"
+        },
         "definition": {
             "@id": "skos:definition",
             "@container": "@language"
