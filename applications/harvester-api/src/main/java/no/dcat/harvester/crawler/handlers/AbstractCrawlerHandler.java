@@ -7,6 +7,8 @@ import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * Topclass for Handles of harvesting of data sources, and saving them into elasticsearch
  */
@@ -24,7 +26,7 @@ public abstract class AbstractCrawlerHandler implements CrawlerResultHandler {
      * @param model      RDF model containing the data catalog
      */
     @Override
-    public void process(DcatSource dcatSource, Model model) {
+    public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.debug("Processing results Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {

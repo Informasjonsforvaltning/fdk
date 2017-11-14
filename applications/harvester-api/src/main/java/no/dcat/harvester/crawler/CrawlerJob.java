@@ -57,7 +57,7 @@ public class CrawlerJob implements Runnable {
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
-//    private List<ValidationError> validationErrors = new ArrayList<>();
+
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
@@ -107,7 +107,7 @@ public class CrawlerJob implements Runnable {
                 Model rankedUnion = rankingCreator.rankDatasets(union, dcatSource.getUrl());
 
                 for (CrawlerResultHandler handler : handlers) {
-                    handler.process(dcatSource, rankedUnion);
+                    handler.process(dcatSource, rankedUnion, validationResult);
                 }
             }
 

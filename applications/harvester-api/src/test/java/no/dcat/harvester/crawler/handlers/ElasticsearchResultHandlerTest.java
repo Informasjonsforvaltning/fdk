@@ -130,7 +130,7 @@ public class ElasticsearchResultHandlerTest {
 				"123456789");
 
 		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch", "http://localhost:8100", "user", "password");
-		handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client));
+		handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client),null);
 
 		//prevent race condition where elasticsearch is still indexing!!!
 		try {

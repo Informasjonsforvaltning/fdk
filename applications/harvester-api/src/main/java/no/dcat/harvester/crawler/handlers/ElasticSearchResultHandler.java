@@ -2,8 +2,10 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.dcat.harvester.CatalogHarvestRecord;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.DatasetHarvestRecord;
+import no.dcat.harvester.crawler.ValidationStatus;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.Elasticsearch;
@@ -70,12 +72,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param model RDF model containing the data catalog
      */
     @Override
-    public void process(DcatSource dcatSource, Model model) {
+    public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.debug("Processing results Elasticsearch: " + this.hostename +":" + this.port + " cluster: "+ this.clustername);
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {
             logger.trace("Start indexing");
-            indexWithElasticsearch(dcatSource, model, elasticsearch);
+            indexWithElasticsearch(dcatSource, model, elasticsearch, validationResults);
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);
             throw e;
@@ -89,7 +91,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param model RDF model containing the data catalog
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
-    void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch) {
+    void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
         if (!elasticsearch.indexExists(DCAT_INDEX)) {
@@ -97,7 +99,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             elasticsearch.createIndex(DCAT_INDEX);
         }else{
             logger.debug("Index exists: " + DCAT_INDEX);
-
         }
 
         logger.debug("Preparing bulkRequest");
@@ -106,7 +107,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
 
         List<Subject> subjects = reader.getSubjects();
-        List<Subject> filteredSubjects = subjects.stream().filter(s -> s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty()).collect(Collectors.toList());;
+        List<Subject> filteredSubjects = subjects.stream().filter(s ->
+                s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty())
+                .collect(Collectors.toList());;
         logger.info("Total number of unique subject uris {} in dcat source {}.", subjects.size(), dcatSource.getId());
         logger.info("Adding {} subjects with prefLabel and definition to elastic", filteredSubjects.size());
 
@@ -119,8 +122,25 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             bulkRequest.add(indexRequest);
         }
 
-
         Date harvestTime = new Date();
+
+        IndexRequest catalogCrawlRequest = new IndexRequest("harvest", "catalog");
+        CatalogHarvestRecord catalogRecord = new CatalogHarvestRecord();
+        dcatSource.getLastHarvest().ifPresent(harvest -> {
+            catalogRecord.setMessage(harvest.getMessage());
+            catalogRecord.setStatus(harvest.getStatus().toString());
+        });
+        List<String> catalogValidationMessages = validationResults.stream().filter(m ->
+                m.contains("classname='Catalog'")).collect(Collectors.toList());
+
+        catalogRecord.setHarvestUrl(dcatSource.getUrl());
+        catalogRecord.setDataSourceId(dcatSource.getId());
+        catalogRecord.setDate(harvestTime);
+        catalogRecord.setValidationMessages(catalogValidationMessages);
+
+        catalogCrawlRequest.source(gson.toJson(catalogRecord));
+        bulkRequest.add(catalogCrawlRequest);
+
         List<Dataset> datasets = reader.getDatasets();
         logger.info("Number of dataset documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
@@ -129,10 +149,22 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             indexRequest.source(gson.toJson(dataset));
 
             DatasetHarvestRecord record = new DatasetHarvestRecord();
-            record.setDatasetId(dataset.getId()); // todo fix datasetid
+            record.setDatasetId(dataset.getId()); // todo fix datasetid?
             record.setDatasetUri(dataset.getUri());
+            record.setCatalogHarvestRecordId(dcatSource.getId());
             record.setDataset(dataset);
             record.setDate(harvestTime);
+
+            List<String> messages = validationResults.stream().filter(m ->
+                    m.contains(dataset.getUri()) && m.contains("classname='Dataset'")).collect(Collectors.toList());
+
+            if (messages != null && !messages.isEmpty()) {
+                ValidationStatus vs = new ValidationStatus();
+                vs.setWarnings((int) messages.stream().filter(m -> m.contains("validation_warning")).count());
+                vs.setErrors((int) messages.stream().filter(m -> m.contains("validation_error")).count());
+                vs.setValidationMessages(messages);
+                record.setValidationStatus(vs);
+            }
 
             IndexRequest indexHarvestRequest = new IndexRequest("harvest", "dataset");
             indexHarvestRequest.source(gson.toJson(record));
