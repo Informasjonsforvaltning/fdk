@@ -164,6 +164,11 @@
       }
     },
     "sample": "Eksempeldata"
+  },
+  "terms": {
+    "compareTerms": "Sammenlign begrep",
+    "removeTerms": "Fjern",
+    "addCompare": "Legg til i sammenligning"
   }
 
 }
