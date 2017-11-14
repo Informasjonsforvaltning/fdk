@@ -76,11 +76,6 @@ export default class ResultsConcepts extends React.Component {
           }
         });
     }
-    /*
-    let removalFn = searchkitConcepts.addResultsListener((results)=>{
-      console.log(JSON.stringify(results));
-    })
-    */
     this.handleAddTerm = this.handleAddTerm.bind(this);
     this.handleDeleteTerm = this.handleDeleteTerm.bind(this);
   }
