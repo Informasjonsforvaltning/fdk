@@ -147,12 +147,12 @@ services:
 #    networks:
 #      logging:
 
-#  kibana:
-#    image: kibana:2.4.1
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      logging:
+  kibana:
+    image: kibana:4.6
+    depends_on:
+      - elasticsearch
+    networks:
+      platform:
 
 networks:
   platform:
