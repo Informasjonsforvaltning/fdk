@@ -1,11 +1,9 @@
 package no.dcat.themes.service;
 
-import com.google.gson.Gson;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
 import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
-import org.apache.commons.io.IOUtils;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
@@ -21,25 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 @Service
 public class SubjectsService extends BaseServiceWithFraming {
 
     static private final Logger logger = LoggerFactory.getLogger(SubjectsService.class);
-
-    private static final String frame;
-
-    static {
-        try {
-            frame = IOUtils.toString(BaseServiceWithFraming.class.getClassLoader().getResourceAsStream("frames/subject.json"), "utf-8");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Autowired
     public SubjectsService(TDBConnection tdbConnection) {
@@ -62,7 +48,6 @@ public class SubjectsService extends BaseServiceWithFraming {
 
             return getSubject(uri);
         }
-
 
     }
 
