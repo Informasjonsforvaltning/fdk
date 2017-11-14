@@ -134,7 +134,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             record.setDataset(dataset);
             record.setDate(harvestTime);
 
-            IndexRequest indexHarvestRequest = new IndexRequest(DCAT_INDEX, "datasetHarvestRecord");
+            IndexRequest indexHarvestRequest = new IndexRequest("harvest", "dataset");
             indexHarvestRequest.source(gson.toJson(record));
 
             logger.debug("Add dataset document {} to bulk request", dataset.getId());
