@@ -164,6 +164,11 @@
       }
     },
     "sample": "Sample data"
+  },
+  "terms": {
+    "compareTerms": "Compare terms",
+    "removeTerms": "Delete",
+    "addCompare": "Add to compare"
   }
 
 }

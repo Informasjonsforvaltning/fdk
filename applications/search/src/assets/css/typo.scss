@@ -7,7 +7,7 @@ h1 {
     color: $color1;
     font-size: 3.0rem;
     line-height: 3.6rem;
-    font-weight: 500;
+    font-weight: 600;
     margin: 8px 0 0 0;
 }
 
@@ -15,7 +15,7 @@ h2 {
     color: $color1;
     font-size: 2.625rem;
     line-height: 3.15rem;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 h2.fdk-page-not-found { /* 404 */
@@ -30,7 +30,7 @@ h3 {
     color: $color1;
     font-size: 2.25rem;
     line-height: 2.7rem;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0px;
 }
 
@@ -38,7 +38,7 @@ h4 {
     color: $color1;
     font-size: 1.875rem;
     line-height: 2.25rem;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0px;
 }
 
@@ -46,7 +46,7 @@ h5 {
     color: $color3;
     font-size: 1.4rem;
     line-height: 1.8rem;
-    font-weight: 400;
+    font-weight: 600;
     padding: 0px;
     margin: 0px 0px 4px 0px;
 }
@@ -67,6 +67,11 @@ p {
     padding: 0px;
 }
 
+.fdk-list {
+    margin-bottom: 2.05rem;
+    color: $color-cta;
+}
+
 a {
     color: $color1;
     text-decoration: underline;
@@ -74,7 +79,15 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: $color1;
+    color: var(--color1);
+}
+
+.fdk-link-internal {
+    color: $color-cta2;
+}
+
+.fdk-link-internal:hover {
+    color: $color-cta2;
 }
 
 .fdk-p-header {
@@ -85,8 +98,8 @@ a:hover {
 }
 
 .fdk-p-header-sub {
-    font-size: 1.7rem;
-    line-height: 1.7rem;
+    font-size: 1.6rem;
+    line-height: 1.8rem;
     text-align: center;
     padding: 1.3rem 0px 0px 0px;
     margin: 0px;
@@ -130,7 +143,7 @@ a:hover {
 }
 
 .fdk-strong-virksomhet {
-    color: $color-cta3;
+    color: $color-cta;
     font-weight: 600;
     letter-spacing: 0.03rem;
     margin-right: 10px;
@@ -187,5 +200,5 @@ a:hover {
 .fdk-fa-path {
     color: $color3;
     margin: 0px 8px;
-    font-size: 0.8rem !important;
+    font-size: 1.4rem !important;
 }
