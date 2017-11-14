@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
+import no.dcat.harvester.crawler.DatasetHarvestRecord;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.Elasticsearch;
@@ -16,6 +17,10 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,6 +120,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
 
+        Date harvestTime = new Date();
         List<Dataset> datasets = reader.getDatasets();
         logger.info("Number of dataset documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
@@ -122,9 +128,20 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DATASET_TYPE, dataset.getId());
             indexRequest.source(gson.toJson(dataset));
 
+            DatasetHarvestRecord record = new DatasetHarvestRecord();
+            record.setDatasetId(dataset.getId()); // todo fix datasetid
+            record.setDatasetUri(dataset.getUri());
+            record.setDate(harvestTime);
+
+            IndexRequest indexHarvestRequest = new IndexRequest(DCAT_INDEX, "datasetHarvestRecord");
+            indexHarvestRequest.source(gson.toJson(record));
+
             logger.debug("Add dataset document {} to bulk request", dataset.getId());
             bulkRequest.add(indexRequest);
+            bulkRequest.add(indexHarvestRequest);
         }
+
+
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {

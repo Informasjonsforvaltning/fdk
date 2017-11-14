@@ -123,7 +123,7 @@ public class ElasticsearchResultHandlerTest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("npolar.jsonld").getFile(), "tester",
