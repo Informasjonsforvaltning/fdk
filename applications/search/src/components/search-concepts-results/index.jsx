@@ -110,7 +110,7 @@ export default class ResultsConcepts extends React.Component {
     if (terms && terms.length > 0) {
       return (
         <div>
-          <h3>
+          <h3 className="mb-2">
             {localization.terms.compareTerms}
           </h3>
           {children(terms)}
