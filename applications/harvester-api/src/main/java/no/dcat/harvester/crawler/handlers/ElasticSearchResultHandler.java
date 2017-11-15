@@ -2,7 +2,7 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.harvester.CatalogHarvestRecord;
+import no.dcat.harvester.crawler.CatalogHarvestRecord;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.DatasetHarvestRecord;
 import no.dcat.harvester.crawler.ValidationStatus;
@@ -10,7 +10,6 @@ import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.Distribution;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -19,9 +18,6 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -152,7 +148,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             DatasetHarvestRecord record = new DatasetHarvestRecord();
             record.setDatasetId(dataset.getId()); // todo fix datasetid?
             record.setDatasetUri(dataset.getUri());
-            record.setCatalogHarvestRecordId(dcatSource.getId());
+            record.setDatasourceId(dcatSource.getId());
             record.setDataset(dataset);
             record.setDate(harvestTime);
 

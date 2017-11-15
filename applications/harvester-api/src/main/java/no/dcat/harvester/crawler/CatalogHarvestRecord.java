@@ -1,4 +1,4 @@
-package no.dcat.harvester;
+package no.dcat.harvester.crawler;
 
 import lombok.Data;
 
