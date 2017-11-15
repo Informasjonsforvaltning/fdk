@@ -4,6 +4,7 @@ import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class PublisherBuilder extends AbstractBuilder {
     }
 
     private void addPublisher(List<Publisher> publishers, Resource dataset, Model model) {
-        Publisher publisherObj = extractPublisher(dataset);
+        Publisher publisherObj = extractPublisher(dataset, DCTerms.publisher);
 
         if (publisherObj == null) {
             return;

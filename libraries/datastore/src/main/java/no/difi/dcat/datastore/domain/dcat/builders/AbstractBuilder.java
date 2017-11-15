@@ -264,6 +264,42 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+    public static List<Map<String, String>> extractMultipleLanguageLiterals(Resource resource, Property property) {
+        Map<String, List<String>> map = new HashMap<>();
+        StmtIterator iterator = resource.listProperties(property);
+
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            String language = statement.getLanguage();
+            if (language == null || language.isEmpty()) {
+                language = "no";
+            }
+            if (statement.getString() != null && ! statement.getString().isEmpty()) {
+                List<String> x = map.get(language);
+                if (x == null) {
+                    x = new ArrayList<>();
+                    map.put(language, x);
+                }
+                x.add(statement.getString());
+            }
+        }
+
+        if (map.keySet().size() > 0) {
+            List<Map<String,String>> result = new ArrayList<>();
+
+            for (String language : map.keySet()) {
+                for (String value : map.get(language)) {
+                    Map<String, String> x = new HashMap<>();
+                    x.put(language, value);
+                    result.add(x);
+                }
+            }
+            return result;
+        }
+
+        return null;
+    }
+
     // input: dcat:keyword "beate"@nb, "poteter"@nb, "potatoes"@en, "tomater"@nn
     //
     public static List<Map<String, String>> extractKeywords(Resource resource, Property property) {
@@ -465,12 +501,12 @@ public abstract class AbstractBuilder {
     }
 
 
-    public static Publisher extractPublisher(Resource resource) {
+    public static Publisher extractPublisher(Resource resource, Property property) {
         try {
             Publisher publisher = new Publisher();
-            Statement property = resource.getProperty(DCTerms.publisher);
-            if (property != null) {
-                Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            Statement propertyStmnt = resource.getProperty(property);
+            if (propertyStmnt != null) {
+                Resource object = resource.getModel().getResource(propertyStmnt.getObject().asResource().getURI());
                 extractPublisherFromStmt(publisher, object);
 
                 return publisher;
@@ -483,7 +519,7 @@ public abstract class AbstractBuilder {
     }
 
     protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
-        publisher.setId(object.getURI());
+        publisher.setUri(object.getURI());
         publisher.setName(extractAsString(object, FOAF.name));
 
         Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
