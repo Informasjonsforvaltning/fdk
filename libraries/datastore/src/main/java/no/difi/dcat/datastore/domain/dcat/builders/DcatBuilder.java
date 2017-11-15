@@ -121,7 +121,7 @@ public class DcatBuilder {
         addLiterals(catRes, DCTerms.title, catalog.getTitle());
         addLiterals(catRes, DCTerms.description, catalog.getDescription());
 
-        addPublisher(catRes, catalog.getPublisher());
+        addPublisher(catRes, DCTerms.publisher, catalog.getPublisher());
 
         addDatasets(catRes, catalog.getDataset());
 
@@ -146,7 +146,7 @@ public class DcatBuilder {
 
                         Resource datRes = createResource(dataset, dataset.getUri(), DCAT.Dataset);
 
-                        addPublisher(datRes, dataset.getPublisher());
+                        addPublisher(datRes, DCTerms.publisher, dataset.getPublisher());
 
                         addLiterals(datRes, DCTerms.title, dataset.getTitle());
                         addLiterals(datRes, DCTerms.description, dataset.getDescription());
@@ -384,7 +384,7 @@ public class DcatBuilder {
         return this;
     }
 
-    public DcatBuilder addPublisher(Resource resource, Publisher publisher) {
+    public DcatBuilder addPublisher(Resource resource, Property property, Publisher publisher) {
         String publisherId = "";
 
         if (publisher != null) {
@@ -392,7 +392,7 @@ public class DcatBuilder {
                 Resource publisherResource = null;
                 if (publisher.getUri() != null && !publisher.getUri().isEmpty()) {
                     publisherId = publisher.getUri();
-                     publisherResource = model.createResource(publisher.getUri());
+                    publisherResource = model.createResource(publisher.getUri());
                 } else {
                     if (publisher.getId() != null && !publisher.getId().isEmpty()){
                         publisherId = publisher.getId();
@@ -402,11 +402,11 @@ public class DcatBuilder {
                     }
                 }
 
-                resource.addProperty(DCTerms.publisher, publisherResource);
+                resource.addProperty(property, publisherResource);
                 publisherResource.addProperty(RDF.type, FOAF.Agent);
 
                 addLiteral(publisherResource, FOAF.name, publisher.getName());
-                addLiteral(publisherResource, DCTerms.identifier, publisher.getIdentifier());
+                addLiteral(publisherResource, DCTerms.identifier, publisher.getId());
             } catch (Exception e) {
                 logger.error("Unable to export publisher {}. Reason {}", publisherId, e.getLocalizedMessage(), e);
             }
@@ -598,7 +598,8 @@ public class DcatBuilder {
             addLiterals(resource, SKOS.note, subject.getNote());
             addLiteral(resource, DCTerms.source, subject.getSource());
 
-            addProperty(resource, DCTerms.creator, subject.getCreator());
+            addPublisher(resource, DCTerms.creator, subject.getCreator());
+
             addLiterals(resource, SKOS.inScheme, subject.getInScheme());
         }
     }

@@ -501,12 +501,12 @@ public abstract class AbstractBuilder {
     }
 
 
-    public static Publisher extractPublisher(Resource resource) {
+    public static Publisher extractPublisher(Resource resource, Property property) {
         try {
             Publisher publisher = new Publisher();
-            Statement property = resource.getProperty(DCTerms.publisher);
-            if (property != null) {
-                Resource object = resource.getModel().getResource(property.getObject().asResource().getURI());
+            Statement propertyStmnt = resource.getProperty(property);
+            if (propertyStmnt != null) {
+                Resource object = resource.getModel().getResource(propertyStmnt.getObject().asResource().getURI());
                 extractPublisherFromStmt(publisher, object);
 
                 return publisher;
@@ -519,7 +519,7 @@ public abstract class AbstractBuilder {
     }
 
     protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
-        publisher.setId(object.getURI());
+        publisher.setUri(object.getURI());
         publisher.setName(extractAsString(object, FOAF.name));
 
         Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);

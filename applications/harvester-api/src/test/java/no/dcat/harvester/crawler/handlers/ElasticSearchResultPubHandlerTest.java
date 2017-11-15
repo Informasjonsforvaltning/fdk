@@ -7,17 +7,14 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Class for testing ElasticSearchResultPubHandler.
  */
 public class ElasticSearchResultPubHandlerTest {
-    private static String result = "index {[dcat][publisher][http://data.brreg.no/enhetsregisteret/enhet/983887457], source[{\n" +
-            "  \"overordnetEnhet\": \"814716872\",\n" +
-            "  \"organisasjonsform\": \"ORGL\",\n" +
-            "  \"id\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n" +
-            "  \"name\": \"BR\"\n" +
-            "}]}";
+    private static String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
     @Test
     public void test() {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
@@ -32,10 +29,11 @@ public class ElasticSearchResultPubHandlerTest {
         publisher.setOrganisasjonsform(organisasjonsform);
         publisher.setOverordnetEnhet(overordnetEnhet);
         publisher.setName(name);
-        publisher.setId(pudlisherUri);
+        publisher.setUri(pudlisherUri);
+        publisher.setId("983887457");
 
-        IndexRequest index = handler.addPublisherToIndex(gson, publisher);
+        IndexRequest actual = handler.addPublisherToIndex(gson, publisher);
 
-        assertEquals(result, index.toString());
+        assertThat(actual.toString(), is(expected));
     }
 }

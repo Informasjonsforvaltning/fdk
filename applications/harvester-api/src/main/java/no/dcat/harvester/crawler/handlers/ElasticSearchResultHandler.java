@@ -98,9 +98,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
-        DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
 
+        DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
+        List<Dataset> datasets = reader.getDatasets();
         List<Subject> subjects = reader.getSubjects();
+
+        if (datasets == null || datasets.isEmpty()) {
+            throw new RuntimeException("No datasets to index");
+        }
+
         List<Subject> filteredSubjects = subjects.stream().filter(s -> s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty()).collect(Collectors.toList());;
         logger.info("Total number of unique subject uris {} in dcat source {}.", subjects.size(), dcatSource.getId());
         logger.info("Adding {} subjects with prefLabel and definition to elastic", filteredSubjects.size());
@@ -115,7 +121,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
 
-        List<Dataset> datasets = reader.getDatasets();
+
         logger.info("Number of dataset documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
 

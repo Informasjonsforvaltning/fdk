@@ -100,7 +100,7 @@ public class TestCompleteCatalog {
         subject.setSource("https://jira.brreg.no/browse/BEGREP-208");
         subject.setUri("https://data-david.github.io/Begrep/begrep/Enhet");
         subject.setInScheme(Arrays.asList("befolking", "samfunn"));
-        subject.setCreator("http://data.brreg.no/enhet/123");
+        subject.setCreator(new Publisher("987654321", "http://data.brreg.no/enhetsregisteret/enhet/987654321"));
         List<Map<String, String>> alts = new ArrayList<>();
         alts.add(map("no", "orgnr"));
         alts.add(map("en", "orgzip"));

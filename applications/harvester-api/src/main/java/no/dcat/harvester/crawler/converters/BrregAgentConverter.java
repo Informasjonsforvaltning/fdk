@@ -99,7 +99,12 @@ public class BrregAgentConverter {
     }
 
     public void collectFromModel(Model model) {
-        NodeIterator orgiterator = model.listObjectsOfProperty(DCTerms.publisher);
+        processAgents(model, DCTerms.publisher);
+        processAgents(model, DCTerms.creator);
+    }
+
+    private void processAgents(Model model, Property agentProperty) {
+        NodeIterator orgiterator = model.listObjectsOfProperty(agentProperty);
 
         while (orgiterator.hasNext()) {
             RDFNode next = orgiterator.next();
@@ -117,8 +122,6 @@ public class BrregAgentConverter {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
             }
         }
-
-
     }
 
     /* For each organisation, transform the RDF to match what we expect from it */

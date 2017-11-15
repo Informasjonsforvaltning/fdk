@@ -138,7 +138,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
             ds.setContactPoint(extractContacts(resource));
             ds.setKeyword(extractKeywords(resource, DCAT.keyword));
-            ds.setPublisher(extractPublisher(resource));
+            ds.setPublisher(extractPublisher(resource, DCTerms.publisher));
 
             ds.setIssued(extractDate(resource, DCTerms.issued));
             ds.setModified(extractDate(resource, DCTerms.modified));
@@ -278,7 +278,7 @@ public class DatasetBuilder extends AbstractBuilder {
                 subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
                 subject.setSource(extractAsString(subjectResource, DCTerms.source));
 
-                subject.setCreator(extractAsString(subjectResource, DCTerms.creator));
+                subject.setCreator(extractPublisher(subjectResource, DCTerms.creator));
                 subject.setInScheme(extractMultipleStrings(subjectResource, SKOS.inScheme));
 
             }
