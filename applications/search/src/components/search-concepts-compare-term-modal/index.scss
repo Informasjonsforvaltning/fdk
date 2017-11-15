@@ -7,6 +7,8 @@
 .modal-header {  
   background-color: $color1; 
   color: $color0;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
   h4 {    
     color: inherit;
   }
@@ -17,7 +19,14 @@
 .modal-body {
   background-color: $color0; 
   color: $color1;
+  padding: 40px !important;
   h5 {
     color: inherit;
   }
+}
+.modal-footer {  
+  padding: 40px !important;
+}
+.fdk-modal-button {
+  font-weight: 600;
 }

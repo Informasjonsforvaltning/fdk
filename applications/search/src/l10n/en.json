@@ -177,6 +177,7 @@
     "note": "Description",
     "altLabel": "Also known as",
     "hideCompare": "Hide comparison",
-    "openCompare": "Compare"
+    "openCompare": "Show comparison",
+    "remove": "Remove term"
   }
 }

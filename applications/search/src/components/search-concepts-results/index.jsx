@@ -110,6 +110,7 @@ export default class ResultsConcepts extends React.Component {
     const compareButton = (
       <CompareTermModal 
         terms={terms}
+        handleDeleteTerm={this.handleDeleteTerm}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     );

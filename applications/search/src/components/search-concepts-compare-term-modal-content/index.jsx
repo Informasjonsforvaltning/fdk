@@ -4,22 +4,10 @@ import { getTranslateText } from '../../utils/translateText';
 import localization from '../../components/localization';
 
 const CompareTermModalContent = (props) => {
-  let {terms, selectedLanguageCode} = props; 
+  let {terms, selectedLanguageCode, cols} = props; 
   terms = (terms && terms.length > 0) ? terms : CompareTermModalContent.defaultProps.terms;
-  selectedLanguageCode = (selectedLanguageCode) || CompareTermModalContent.defaultProps.selectedLanguageCode;
-  let cols = 'col-md-';
-
-  switch ((12 / terms.length)) {
-    case 6:
-      cols += '6';
-      break;
-    case 4:
-      cols += '4';
-      break;
-    default: 
-      cols += '6';
-      break;
-  }
+  selectedLanguageCode = (selectedLanguageCode) ? selectedLanguageCode : CompareTermModalContent.defaultProps.selectedLanguageCode;  
+  cols = (cols) ? cols : CompareTermModalContent.defaultProps.cols;
 
   const title = items => items.map( (item, index) => (
     <div className={cols} key={`title-${  index  }${item.uri}`}>
@@ -167,7 +155,8 @@ CompareTermModalContent.defaultProps = {
       inScheme: ['']
     }
   ],
-  selectedLanguageCode: 'nb'
+  selectedLanguageCode: 'nb',
+  cols: 'col-md-6'
 };
 
 CompareTermModalContent.propTypes = {
@@ -183,7 +172,8 @@ CompareTermModalContent.propTypes = {
       inScheme: PropTypes.array
     })
   ),
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  cols: PropTypes.string
 };
     
 export default CompareTermModalContent;

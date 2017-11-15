@@ -177,6 +177,7 @@
     "note": "Beskrivelse",
     "altLabel": "Også kjent som",
     "hideCompare": "Skjul sammenligning",    
-    "openCompare": "Sammenligne"
+    "openCompare": "Vis sammenligning",
+    "remove": "Fjern begrep"
   }
 }
