@@ -30,7 +30,6 @@ public class ElasticsearchResultHandlerTest {
 	private static final String HOME_DIR = "src/test/resources/elasticsearch";
 	private static final String DCAT_INDEX = "dcat";
 	public static final String DATASET_TYPE = "dataset";
-	public static final String DISTRIBUTION_TYPE = "distribution";
 
 	private final Logger logger = LoggerFactory.getLogger(ElasticsearchResultHandlerTest.class);
 
@@ -113,11 +112,8 @@ public class ElasticsearchResultHandlerTest {
 	 * Tests if indexWithElasticsearch.
 	 */
 	@Test
-	@Ignore
 	public void testCrawlingIndexesToElasticsearchIT() {
-//		elasticsearch.createIndex(RetrieveDataThemes.INDEX_THEME);
-//		elasticsearch.indexDocument(RetrieveDataThemes.INDEX_THEME, RetrieveDataThemes.TYPE_DATA_THEME, "t1", theme1);
-
+		//prevent race condition where elasticsearch is still indexing!!!
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -126,7 +122,7 @@ public class ElasticsearchResultHandlerTest {
 
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("npolar.jsonld").getFile(), "tester",
+		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("ramsund-elastic.ttl").getFile(), "tester",
 				"123456789");
 
 		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch", "http://localhost:8100", "user", "password");
@@ -141,10 +137,7 @@ public class ElasticsearchResultHandlerTest {
 
 		assertTrue("dcat index exists", elasticsearch.indexExists(DCAT_INDEX));
 
-		SearchRequestBuilder srb_distribution = client.prepareSearch(DCAT_INDEX).setTypes(DISTRIBUTION_TYPE).setQuery(QueryBuilders.matchAllQuery());
-		SearchResponse sr_distribution = null;
-		sr_distribution = srb_distribution.execute().actionGet();
-		assertTrue("Distribution document(s) exist", sr_distribution.getHits().getTotalHits() > 0);
+		assertTrue("harvest index exists", elasticsearch.indexExists("harvest"));
 
 		SearchRequestBuilder srb_dataset = client.prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
 		SearchResponse sr_dataset = null;

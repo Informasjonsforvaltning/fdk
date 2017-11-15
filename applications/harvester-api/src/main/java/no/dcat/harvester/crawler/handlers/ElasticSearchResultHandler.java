@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CatalogHarvestRecord;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.DatasetHarvestRecord;
+import no.dcat.harvester.crawler.DatasetLookup;
 import no.dcat.harvester.crawler.ValidationStatus;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
@@ -14,12 +15,15 @@ import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -90,12 +94,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
-        if (!elasticsearch.indexExists(DCAT_INDEX)) {
-            logger.warn("Creating index: " + DCAT_INDEX);
-            elasticsearch.createIndex(DCAT_INDEX);
-        }else{
-            logger.debug("Index exists: " + DCAT_INDEX);
-        }
+        createIndexIfNotExists(elasticsearch, DCAT_INDEX);
+        createIndexIfNotExists(elasticsearch, "harvest");
 
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
@@ -133,8 +133,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             catalogRecord.setMessage(harvest.getMessage());
             catalogRecord.setStatus(harvest.getStatus().toString());
         });
-        List<String> catalogValidationMessages = validationResults.stream().filter(m ->
-                m.contains("classname='Catalog'")).collect(Collectors.toList());
+        List<String> catalogValidationMessages = null;
+        if (validationResults != null) {
+            catalogValidationMessages = validationResults.stream().filter(m ->
+                    m.contains("classname='Catalog'")).collect(Collectors.toList());
+        }
 
         catalogRecord.setHarvestUrl(dcatSource.getUrl());
         catalogRecord.setDataSourceId(dcatSource.getId());
@@ -144,22 +147,44 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         catalogCrawlRequest.source(gson.toJson(catalogRecord));
         bulkRequest.add(catalogCrawlRequest);
 
-
         logger.info("Number of dataset documents {} for dcat source {}", datasets.size(), dcatSource.getId());
         for (Dataset dataset : datasets) {
+
+            GetResponse response = elasticsearch.getClient().prepareGet("harvest", "lookup", dataset.getId()).get();
+            String datasetId = null;
+            DatasetLookup lookupEntry = null;
+            if (response.isExists()){
+                datasetId = (String) response.getField("datasetId").getValue();
+            } else {
+                IndexRequest lookupRequest = new IndexRequest("harvest", "lookup", dataset.getId());
+                datasetId = UUID.randomUUID().toString();
+
+                lookupEntry = new DatasetLookup();
+                lookupEntry.setHarvestUri(dataset.getUri());
+                lookupEntry.setDatasetId(datasetId);
+                lookupRequest.source(gson.toJson(lookupEntry));
+
+                bulkRequest.add(lookupRequest);
+            }
+            if (datasetId != null) {
+                dataset.setId(datasetId);
+            }
 
             IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, DATASET_TYPE, dataset.getId());
             indexRequest.source(gson.toJson(dataset));
 
             DatasetHarvestRecord record = new DatasetHarvestRecord();
-            record.setDatasetId(dataset.getId()); // todo fix datasetid?
+            record.setDatasetId(dataset.getId());
             record.setDatasetUri(dataset.getUri());
             record.setDatasourceId(dcatSource.getId());
             record.setDataset(dataset);
             record.setDate(harvestTime);
 
-            List<String> messages = validationResults.stream().filter(m ->
-                    m.contains(dataset.getUri()) && m.contains("classname='Dataset'")).collect(Collectors.toList());
+            List<String> messages = null;
+            if (validationResults != null) {
+                messages = validationResults.stream().filter(m ->
+                        m.contains(dataset.getUri()) && m.contains("classname='Dataset'")).collect(Collectors.toList());
+            }
 
             if (messages != null && !messages.isEmpty()) {
                 ValidationStatus vs = new ValidationStatus();
@@ -180,6 +205,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
+        }
+    }
+
+    private void createIndexIfNotExists(Elasticsearch elasticsearch, String indexName) {
+        if (!elasticsearch.indexExists(indexName)) {
+            logger.warn("Creating index: " + indexName);
+            elasticsearch.createIndex(indexName);
+        }else{
+            logger.debug("Index exists: " + indexName);
         }
     }
 
