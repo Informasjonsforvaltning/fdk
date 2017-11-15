@@ -104,7 +104,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<Subject> subjects = reader.getSubjects();
 
         if (datasets == null || datasets.isEmpty()) {
-            throw new RuntimeException("No datasets to index");
+            throw new RuntimeException("No valid datasets to index");
         }
 
         List<Subject> filteredSubjects = subjects.stream().filter(s -> s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty()).collect(Collectors.toList());;
