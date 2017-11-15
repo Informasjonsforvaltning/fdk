@@ -169,6 +169,14 @@
     "compareTerms": "Compare terms",
     "removeTerms": "Delete",
     "addCompare": "Add to compare"
+  },
+  "compare": {
+    "definition": "Definition",
+    "inScheme": "Domain / application",
+    "source": "Source",
+    "note": "Description",
+    "altLabel": "Also known as",
+    "hideCompare": "Hide comparison",
+    "openCompare": "Compare"
   }
-
 }

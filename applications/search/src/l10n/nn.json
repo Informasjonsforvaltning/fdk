@@ -169,6 +169,14 @@
     "compareTerms": "Sammenlign begrep",
     "removeTerms": "Fjern",
     "addCompare": "Legg til i sammenligning"
+  },
+  "compare": {
+    "definition": "Definisjon",
+    "inScheme": "Fagområde / bruksområde",
+    "source": "Kjelde",
+    "note": "Beskriving",
+    "altLabel": "Også kjend som",
+    "hideCompare": "Skjul samanlikning",    
+    "openCompare": "Samanlikne"
   }
-
 }

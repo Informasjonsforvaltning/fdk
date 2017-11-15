@@ -1,0 +1,23 @@
+@import '../../assets/css/colors';
+
+.fdk-modal {
+  width: 90% !important;
+  top: 10%;
+}
+.modal-header {  
+  background-color: $color1; 
+  color: $color0;
+  h4 {    
+    color: inherit;
+  }
+  h4:hover {
+    cursor: pointer
+  }
+}
+.modal-body {
+  background-color: $color0; 
+  color: $color1;
+  h5 {
+    color: inherit;
+  }
+}
