@@ -128,8 +128,9 @@ import java.net.UnknownHostException;
         } else {
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
-                    .field("title" + "." + lang)
-                    .field("definition" + "." + lang);
+                    .field("prefLabel" + "." + lang)
+                    .field("definition" + "." + lang)
+                    .field("note" + "." + lang);
         }
 
         logger.trace(search.toString());

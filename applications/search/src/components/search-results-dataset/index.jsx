@@ -13,7 +13,7 @@ import {
   TopBar
 } from 'searchkit';
 
-import { QueryTransport } from '../../utils/QueryTransport';
+import { DatasetsQueryTransport } from '../../utils/DatasetsQueryTransport';
 import localization from '../localization';
 import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
@@ -21,17 +21,18 @@ import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
+import ResultsTabs from '../search-results-tabs';
 
 const host = '/dcat';
 
-const searchkit = new SearchkitManager(
+const searchkitDataset = new SearchkitManager(
   host,
   {
-    transport: new QueryTransport()
+    transport: new DatasetsQueryTransport()
   }
 );
 
-searchkit.translateFunction = (key) => {
+searchkitDataset.translateFunction = (key) => {
   const translations = {
     'pagination.previous': localization.page.prev,
     'pagination.next': localization.page.next,
@@ -97,7 +98,7 @@ export default class ResultsDataset extends React.Component {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
     return (
-      <SearchkitProvider searchkit={searchkit}>
+      <SearchkitProvider searchkit={searchkitDataset}>
         <div>
           <div className="container">
             <div className="row mb-60">
@@ -114,6 +115,9 @@ export default class ResultsDataset extends React.Component {
                 <HitsStats component={CustomHitsStats} />
               </div>
             </div>
+            <section>
+              <ResultsTabs onSelectView={this.props.onSelectView} />
+            </section>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
@@ -193,5 +197,6 @@ ResultsDataset.defaultProps = {
 };
 
 ResultsDataset.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  onSelectView: PropTypes.func.isRequired
 };
