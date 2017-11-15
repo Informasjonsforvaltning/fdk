@@ -6,8 +6,8 @@ import localization from '../../components/localization';
 const CompareTermModalContent = (props) => {
   let {terms, selectedLanguageCode, cols} = props; 
   terms = (terms && terms.length > 0) ? terms : CompareTermModalContent.defaultProps.terms;
-  selectedLanguageCode = (selectedLanguageCode) ? selectedLanguageCode : CompareTermModalContent.defaultProps.selectedLanguageCode;  
-  cols = (cols) ? cols : CompareTermModalContent.defaultProps.cols;
+  selectedLanguageCode = (selectedLanguageCode) || CompareTermModalContent.defaultProps.selectedLanguageCode;  
+  cols = (cols) || CompareTermModalContent.defaultProps.cols;
 
   const title = items => items.map( (item, index) => (
     <div className={cols} key={`title-${  index  }${item.uri}`}>
