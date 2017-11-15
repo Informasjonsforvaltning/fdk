@@ -104,6 +104,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
+        // todo extract logs form reader and insert into elastic
         DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
 
         List<Subject> subjects = reader.getSubjects();

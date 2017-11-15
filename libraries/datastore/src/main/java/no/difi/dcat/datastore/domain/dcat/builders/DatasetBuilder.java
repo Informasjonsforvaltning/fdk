@@ -42,6 +42,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
     public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
                           Map<String, DataTheme> dataThemes) {
+
         super();
 
         this.model = model;
@@ -68,6 +69,7 @@ public class DatasetBuilder extends AbstractBuilder {
         }
         return new ArrayList(subjects.values());
     }
+
     public List<Dataset> getDataset() {
         if (datasets.isEmpty()) {
             build();
@@ -75,6 +77,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
         return datasets;
     }
+
     public DatasetBuilder build() {
 
         datasets.clear();
@@ -152,17 +155,17 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setTemporal(extractPeriodOfTime(resource));
             ds.setSpatial(getCodes(resource.getModel(), locations, extractMultipleStrings(resource, DCTerms.spatial)));
 
-            ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()),extractAsString(resource, DCTerms.accessRights)));
+            ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()), extractAsString(resource, DCTerms.accessRights)));
             ds.setAccessRightsComment(extractMultipleStrings(resource, DCATNO.accessRightsComment));
             ds.setLegalBasisForAccess(extractSkosConcept(resource, DCATNO.legalBasisForAccess));
             ds.setLegalBasisForProcessing(extractSkosConcept(resource, DCATNO.legalBasisForProcessing));
             ds.setLegalBasisForRestriction(extractSkosConcept(resource, DCATNO.legalBasisForRestriction));
 
-            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Accuracy));
-            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Availability));
-            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Completeness));
-            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Currentness));
-            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Relevance));
+            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Accuracy));
+            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Availability));
+            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Completeness));
+            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Currentness));
+            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Relevance));
 
             ds.setReferences(extractReferences(resource, codes.get(Types.referencetypes.getType())));
             ds.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(resource, DCTerms.provenance)));
@@ -185,7 +188,6 @@ public class DatasetBuilder extends AbstractBuilder {
 
         return ds;
     }
-
 
 
     public static QualityAnnotation extractQualityAnnotation(Resource resource, String dimensionUri) {
