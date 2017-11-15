@@ -108,7 +108,7 @@ public class ReferenceTest {
         System.out.println(dcat);
 
         Model m = ModelFactory.createDefaultModel();
-        m.read(new ByteArrayInputStream(dcat.getBytes(Charsets.UTF_8)), null, "TTL");
+        m.read(new ByteArrayInputStream(dcat.getBytes()), null, "TTL");
         DatasetBuilder db = new DatasetBuilder(m);
         List<Dataset> datasets = db.build().getDataset();
 
