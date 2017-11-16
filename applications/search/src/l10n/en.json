@@ -170,21 +170,18 @@
   "terms": {
     "compareTerms": "Compare concepts",
     "removeTerms": "Remove",
-    "addCompare": "Add to compare"
+    "altLabel": "Også kjent som:"
   },
   "compare": {
     "definition": "Definition",
     "inScheme": "Domain / application",
     "source": "Source",
     "note": "Description",
-    "altLabel": "Also known as",
     "hideCompare": "Hide comparison",
     "openCompare": "Show comparison",
     "remove": "Remove concept",
     "added": "You have added ",
     "toCompare": " concepts to comparison - click to show",
-    "compareTerms": "Compare terms",
-    "removeTerms": "Delete",
     "addCompare": "Add to compare",
     "altLabel": "Known as:"
   }

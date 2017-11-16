@@ -119,7 +119,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         title={`Begrep: ${termTitle}`}
       >
         <div className={`fdk-container fdk-container-search-hit ${toBeCompared ? 'toBeCompared' : ''}`}>
-          <button className={`fdk-button ${toBeCompared ? 'fdk-button-inactive' : 'fdk-button-default'} pull-right mt-3`} onClick={() => { if (!toBeCompared) {onAddTerm(source)}}} type="button">+ {localization.terms.addCompare}</button>
+          <button className={`fdk-button ${toBeCompared ? 'fdk-button-inactive' : 'fdk-button-default'} pull-right mt-3`} onClick={() => { if (!toBeCompared) {onAddTerm(source)}}} type="button">+ {localization.compare.addCompare}</button>
           <h2 className="inline-block mr-2">{termTitle}</h2>
           {this._renderPublisher()}
 
@@ -152,9 +152,8 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           >
             {termNote}
           </p>
-          <p>
-            { this._renderAltLabel() }
-          </p>
+
+          { this._renderAltLabel() }
 
         </div>
       </div>
