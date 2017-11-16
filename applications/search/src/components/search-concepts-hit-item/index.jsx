@@ -55,6 +55,38 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     return themeNodes;
   }
 
+  _renderAltLabel() {
+    const { altLabel } = this.state.source;
+    const { selectedLanguageCode } = this.props;
+    const children = items => items.map((item, index) => {
+      if (index > 0) {
+        return (
+          <span
+            key={`concepts-altlabel-${index}`}
+          >
+            {`, ${getTranslateText(item, selectedLanguageCode)}`}
+          </span>
+        );
+      }
+      return (
+        <span
+          key={`concepts-altlabel-${index}`}
+        >
+          {`${getTranslateText(item, selectedLanguageCode)}`}
+        </span>
+      );
+    });
+    if (altLabel) {
+      return (
+        <p>
+          <strong>{localization.terms.altLabel} </strong>
+          { children(altLabel) }
+        </p>
+      );
+    }
+    return null;
+  }
+
   render() {
     const { onAddTerm } = this.props;
     const { source } = this.state;
@@ -120,6 +152,8 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           >
             {termNote}
           </p>
+
+
         </div>
       </div>
     );

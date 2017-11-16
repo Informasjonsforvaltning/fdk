@@ -168,7 +168,8 @@
   "terms": {
     "compareTerms": "Sammenlign begrep",
     "removeTerms": "Fjern",
-    "addCompare": "Legg til i sammenligning"
+    "addCompare": "Legg til i sammenligning",
+    "altLabel": "Også kjent som:"
   }
 
 }

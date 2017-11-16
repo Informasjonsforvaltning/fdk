@@ -168,7 +168,8 @@
   "terms": {
     "compareTerms": "Compare terms",
     "removeTerms": "Delete",
-    "addCompare": "Add to compare"
+    "addCompare": "Add to compare",
+    "altLabel": "Known as:"
   }
 
 }
