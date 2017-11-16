@@ -52,7 +52,9 @@
     "result.summary": "Søket ga ",
     "dataset":"treff",
     "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser"
+    "nosearch.descriptions":"datasettbeskrivelser",
+    "datasetTab": "Datasett",
+    "termTab": "Begrep"
   },
   "facet": {
     "organisation":"Virksomhet",

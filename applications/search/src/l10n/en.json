@@ -52,7 +52,9 @@
     "result.summary": "",
     "dataset":"results",
     "nosearch.summary":"Search among ",
-    "nosearch.descriptions":"dataset descriptions"
+    "nosearch.descriptions":"dataset descriptions",
+    "datasetTab": "Dataset",
+    "termTab": "Term"
   },
   "facet": {
     "organisation":"Organization",
