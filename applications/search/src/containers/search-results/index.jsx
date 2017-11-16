@@ -48,7 +48,8 @@ export default class SearchPage extends React.Component {
           }
         });
     }
-    this.handleSelectView = this.handleSelectView.bind(this)
+    this.handleSelectView = this.handleSelectView.bind(this);
+    this.handleHistoryListen = this.handleHistoryListen.bind(this);
   }
 
   componentWillMount() {
@@ -82,6 +83,28 @@ export default class SearchPage extends React.Component {
     }
   }
 
+  handleHistoryListen(history, location) {
+    if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
+      let nextUrl = "";
+      if (location.search.indexOf('?') === -1) {
+        nextUrl = `${location.search}?lang=${   this.props.selectedLanguageCode}`
+      } else {
+        nextUrl = `${location.search}&lang=${   this.props.selectedLanguageCode}`
+      }
+      history.push(nextUrl);
+    }
+
+    if (location.search.indexOf('tab=') === -1 && this.state.showConcepts) {
+      let nextUrl = "";
+      if (location.search.indexOf('?') === -1 && this.state.showConcepts) {
+        nextUrl = `${location.search}?tab=concepts`
+      } else {
+        nextUrl = `${location.search}&tab=concepts`
+      }
+      history.push(nextUrl);
+    }
+  }
+
   render() {
     const showDatasets = cx(
       {
@@ -99,16 +122,18 @@ export default class SearchPage extends React.Component {
       <div>
         <div className={showDatasets}>
           <ResultsDataset
+            onHistoryListen={this.handleHistoryListen}
             onSelectView={this.handleSelectView}
-            isSelected={this.state.showDatasets}
+            isSelected={!this.state.showConcepts}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
         </div>
 
         <div className={showConcepts}>
           <ResultsConcepts
-            onSelectView={this.handleSelectView}            
+            onSelectView={this.handleSelectView}
             isSelected={this.state.showConcepts}
+            onHistoryListen={this.handleHistoryListen}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
         </div>

@@ -60,7 +60,7 @@ export default class CompareTermModal extends React.Component {
     const bottomModalLabel = (
       <div>
         <button className="bottom-modal-label fdk-button fdk-button-default fdk-modal-button" onClick={this.open}>
-        <i className="fa fa-chevron-up fdk-color0" />
+          <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
           {localization.compare.added + this.props.terms.length + localization.compare.toCompare}
         </button>

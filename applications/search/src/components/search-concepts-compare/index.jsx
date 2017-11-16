@@ -8,7 +8,7 @@ const CompareTerms = (props) => {
   return (
     <div className="fdk-container p-3">
       <button className="fdk-button fdk-button-cta pull-right" onClick={() => { onDeleteTerm(termIndex)}}>
-        <i className="fa fa-times"/>
+        <i className="fa fa-times" />
         &nbsp;
         {localization.terms.removeTerms}
       </button>
