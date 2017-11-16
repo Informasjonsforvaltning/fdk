@@ -33,6 +33,7 @@ export default class SearchPage extends React.Component {
     this.queryObj = qs.parse(window.location.search.substr(1));
     if (!window.themes) {
       window.themes = [];
+
       sa.get('/reference-data/themes')
         .end((err, res) => {
           if (!err && res) {
@@ -86,9 +87,19 @@ export default class SearchPage extends React.Component {
     if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
       let nextUrl = "";
       if (location.search.indexOf('?') === -1) {
-        nextUrl = `${location.search  }?lang=${   this.props.selectedLanguageCode}`
+        nextUrl = `${location.search}?lang=${   this.props.selectedLanguageCode}`
       } else {
-        nextUrl = `${location.search  }&lang=${   this.props.selectedLanguageCode}`
+        nextUrl = `${location.search}&lang=${   this.props.selectedLanguageCode}`
+      }
+      history.push(nextUrl);
+    }
+
+    if (location.search.indexOf('tab=') === -1 && this.state.showConcepts) {
+      let nextUrl = "";
+      if (location.search.indexOf('?') === -1 && this.state.showConcepts) {
+        nextUrl = `${location.search}?tab=concepts`
+      } else {
+        nextUrl = `${location.search}&tab=concepts`
       }
       history.push(nextUrl);
     }
@@ -113,6 +124,7 @@ export default class SearchPage extends React.Component {
           <ResultsDataset
             onHistoryListen={this.handleHistoryListen}
             onSelectView={this.handleSelectView}
+            isSelected={!this.state.showConcepts}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
         </div>

@@ -40,7 +40,6 @@ export default class ResultsDataset extends React.Component {
       {
         transport: new DatasetsQueryTransport(),
         createHistory: ()=> history
-
       }
     );
     searchkitDataset.translateFunction = (key) => {
