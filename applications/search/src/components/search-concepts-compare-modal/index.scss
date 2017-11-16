@@ -30,3 +30,14 @@
 .fdk-modal-button {
   font-weight: 600;
 }
+
+.bottom-modal-label {
+  position: fixed !important;
+  width: 76%;
+  height: 50px;
+  left: 12%;
+  bottom: 0;
+  z-index: 100;
+  margin-bottom: 0 !important;
+  border-bottom: 0 !important;
+}

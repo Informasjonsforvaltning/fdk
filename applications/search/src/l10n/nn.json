@@ -180,6 +180,8 @@
     "altLabel": "Også kjend som",
     "hideCompare": "Skjul samanlikning",    
     "openCompare": "Vis samanlikning",
-    "remove": "Fjern omgrep"
+    "remove": "Fjern omgrep",
+    "added": "Du har lagt ",
+    "toCompare": " omgrep til samanlikning - klikk for å vise"
   }
 }

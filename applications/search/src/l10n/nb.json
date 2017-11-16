@@ -180,6 +180,8 @@
     "altLabel": "Også kjent som",
     "hideCompare": "Skjul sammenligning",    
     "openCompare": "Vis sammenligning",
-    "remove": "Fjern begrep"
+    "remove": "Fjern begrep",
+    "added": "Du har lagt ",
+    "toCompare": " begrep til sammenligning - klikk for å vise"
   }
 }

@@ -20,7 +20,7 @@ import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
 import CompareTerms from '../search-concepts-compare';
-import CompareTermModal from '../search-concepts-compare-term-modal';
+import CompareTermModal from '../search-concepts-compare-modal';
 
 const host = '/dcat';
 

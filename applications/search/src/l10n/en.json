@@ -54,7 +54,7 @@
     "nosearch.summary":"Search among ",
     "nosearch.descriptions":"dataset descriptions",
     "datasetTab": "Dataset",
-    "termTab": "Term"
+    "termTab": "Concept"
   },
   "facet": {
     "organisation":"Organization",
@@ -168,7 +168,7 @@
     "sample": "Sample data"
   },
   "terms": {
-    "compareTerms": "Compare terms",
+    "compareTerms": "Compare concepts",
     "removeTerms": "Remove",
     "addCompare": "Add to compare"
   },
@@ -180,6 +180,8 @@
     "altLabel": "Also known as",
     "hideCompare": "Hide comparison",
     "openCompare": "Show comparison",
-    "remove": "Remove term"
+    "remove": "Remove concept",
+    "added": "You have added ",
+    "toCompare": " concepts to comparison - click to show"
   }
 }

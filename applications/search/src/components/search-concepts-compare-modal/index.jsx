@@ -1,25 +1,36 @@
 import React from 'react';
 import {Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
 import localization from '../../components/localization';
-import CompareTermModalContent from '../search-concepts-compare-term-modal-content';
+import CompareTermModalContent from '../search-concepts-compare-modal-content';
 import './index.scss';
 
 export default class CompareTermModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
+      showModal: false,
+      showBar: true
     }
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
   }
 
   close() {
-    this.setState({ showModal: false });
+    this.setState(
+      { 
+        showModal: false,
+        showBar: true
+      }
+    );
   }
 
   open() {
-    this.setState({ showModal: true });
+    this.setState(
+      { 
+        showModal: true,
+        showBar: false
+      }
+    );
   }
 
   render() {
@@ -45,6 +56,16 @@ export default class CompareTermModal extends React.Component {
         </button>
       </div>
     ));
+
+    const bottomModalLabel = (
+      <div>
+        <button className="bottom-modal-label fdk-button fdk-button-default fdk-modal-button" onClick={this.open}>
+        <i className="fa fa-chevron-up fdk-color0" />
+          &nbsp;
+          {localization.compare.added + this.props.terms.length + localization.compare.toCompare}
+        </button>
+      </div>
+    );
 
     return (
       <div>
@@ -77,6 +98,7 @@ export default class CompareTermModal extends React.Component {
             </div>
           </ModalBody>
         </Modal>
+        {(this.state.showBar && this.props.terms.length > 0) ? bottomModalLabel : null}
       </div>
     );
   }
