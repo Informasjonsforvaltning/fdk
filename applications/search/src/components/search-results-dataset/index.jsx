@@ -24,13 +24,7 @@ import ResultsTabs from '../search-results-tabs';
 
 const host = '/dcat';
 
-const searchkitDataset = new SearchkitManager(
-  host,
-  {
-    transport: new DatasetsQueryTransport()
-  }
-);
-let searchkit;
+let searchkitDataset;
 
 export default class ResultsDataset extends React.Component {
   constructor(props) {
@@ -41,57 +35,15 @@ export default class ResultsDataset extends React.Component {
       this.props.onHistoryListen(history, location);
     });
 
-    searchkit = new SearchkitManager(
+    searchkitDataset = new SearchkitManager(
       host,
       {
-        transport: new QueryTransport(),
+        transport: new DatasetsQueryTransport(),
         createHistory: ()=> history
 
       }
     );
-
-searchkitDataset.translateFunction = (key) => {
-  const translations = {
-    'pagination.previous': localization.page.prev,
-    'pagination.next': localization.page.next,
-    'facets.view_more': localization.page.viewmore,
-    'facets.view_all': localization.page.seeall,
-    'facets.view_less': localization.page.seefewer,
-    'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
-    'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.',
-    'sort.by': localization.sort.by,
-    'sort.relevance': localization.sort.relevance,
-    'sort.title': localization.sort.title,
-    'sort.publisher': localization.sort.publisher,
-    'sort.modified': localization.sort.modified
-  };
-  return translations[key];
-};
-
-export default class ResultsDataset extends React.Component {
-  constructor(props) {
-    super(props);
-    this.queryObj = qs.parse(window.location.search.substr(1));
-    if (!window.themes) {
-      window.themes = [];
-
-      sa.get('/reference-data/themes')
-        .end((err, res) => {
-          if (!err && res) {
-            res.body.forEach((hit) => {
-              const obj = {};
-              obj[hit.code] = {};
-              obj[hit.code].nb = hit.title.nb;
-              obj[hit.code].nn = hit.title.nb;
-              obj[hit.code].en = hit.title.en;
-              window.themes.push(obj);
-            });
-          }
-        });
-    }
-    searchkit.translateFunction = (key) => {
+    searchkitDataset.translateFunction = (key) => {
       const translations = {
         'pagination.previous': localization.page.prev,
         'pagination.next': localization.page.next,
@@ -235,5 +187,6 @@ ResultsDataset.defaultProps = {
 
 ResultsDataset.propTypes = {
   selectedLanguageCode: PropTypes.string,
-  onSelectView: PropTypes.func.isRequired
+  onSelectView: PropTypes.func.isRequired,
+  onHistoryListen: PropTypes.func.isRequired
 };
