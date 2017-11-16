@@ -152,7 +152,9 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           >
             {termNote}
           </p>
-
+          <p>
+            { this._renderAltLabel() }
+          </p>
 
         </div>
       </div>
