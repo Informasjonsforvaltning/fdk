@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import sa from 'superagent';
 import {
   SearchkitManager,
   SearchkitProvider,
@@ -12,6 +10,7 @@ import {
   SortingSelector,
   TopBar
 } from 'searchkit';
+import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
 
 import { QueryTransport } from '../../utils/QueryTransport';
 import localization from '../localization';
@@ -21,106 +20,48 @@ import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
-import createHistory from 'history/createBrowserHistory'
-import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
+
 const host = '/dcat';
 
-
-const history = createHistory()
-//history.push();
-//history.replace();
-console.log('history is ', history);
-history.default = () => {
-  console.log('default func?');
-}
-//history.replace(path, [state])
-
-
-const searchkit = new SearchkitManager(
-  host,
-  {
-    transport: new QueryTransport(),
-    createHistory: ()=> {
-      console.log('create history runs now');
-      return history;
-    }
-
-  }
-);
-function getURLParameters(paramName)
-{
-    var sURL = window.location.search.toString();
-    console.log('sURL is ', sURL);
-    if (sURL.indexOf("?") > 0)
-    {
-        var arrParams = sURL.split("?");
-        var arrURLParams = arrParams[1].split("&");
-        var arrParamNames = new Array(arrURLParams.length);
-        var arrParamValues = new Array(arrURLParams.length);
-
-        var i = 0;
-        for (i = 0; i<arrURLParams.length; i++)
-        {
-            var sParam =  arrURLParams[i].split("=");
-            arrParamNames[i] = sParam[0];
-            if (sParam[1] != "")
-                arrParamValues[i] = unescape(sParam[1]);
-            else
-                arrParamValues[i] = "No Value";
-        }
-
-        for (i=0; i<arrURLParams.length; i++)
-        {
-            if (arrParamNames[i] == paramName)
-            {
-                //alert("Parameter:" + arrParamValues[i]);
-                return arrParamValues[i];
-            }
-        }
-        return "No Parameters Found";
-    }
-}
-searchkit.translateFunction = (key) => {
-  const translations = {
-    'pagination.previous': localization.page.prev,
-    'pagination.next': localization.page.next,
-    'facets.view_more': localization.page.viewmore,
-    'facets.view_all': localization.page.seeall,
-    'facets.view_less': localization.page.seefewer,
-    'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
-    'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.',
-    'sort.by': localization.sort.by,
-    'sort.relevance': localization.sort.relevance,
-    'sort.title': localization.sort.title,
-    'sort.publisher': localization.sort.publisher,
-    'sort.modified': localization.sort.modified
-  };
-  return translations[key];
-};
+let searchkit;
 
 export default class ResultsDataset extends React.Component {
   constructor(props) {
     super(props);
-    this.queryObj = qs.parse(window.location.search.substr(1));
-    if (!window.themes) {
-      window.themes = [];
 
-      sa.get('/reference-data/themes')
-        .end((err, res) => {
-          if (!err && res) {
-            res.body.forEach((hit) => {
-              const obj = {};
-              obj[hit.code] = {};
-              obj[hit.code].nb = hit.title.nb;
-              obj[hit.code].nn = hit.title.nb;
-              obj[hit.code].en = hit.title.en;
-              window.themes.push(obj);
-            });
-          }
-        });
-    }
+    const history = createHistory();
+    history.listen( location => {
+      this.props.onHistoryListen(history, location);
+    });
+
+    searchkit = new SearchkitManager(
+      host,
+      {
+        transport: new QueryTransport(),
+        createHistory: ()=> history
+
+      }
+    );
+
+    searchkit.translateFunction = (key) => {
+      const translations = {
+        'pagination.previous': localization.page.prev,
+        'pagination.next': localization.page.next,
+        'facets.view_more': localization.page.viewmore,
+        'facets.view_all': localization.page.seeall,
+        'facets.view_less': localization.page.seefewer,
+        'reset.clear_all': localization.page.resetfilters,
+        'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
+        'NoHits.Error': localization.noHits.error,
+        'NoHits.ResetSearch': '.',
+        'sort.by': localization.sort.by,
+        'sort.relevance': localization.sort.relevance,
+        'sort.title': localization.sort.title,
+        'sort.publisher': localization.sort.publisher,
+        'sort.modified': localization.sort.modified
+      };
+      return translations[key];
+    };
   }
 
   _renderPublisherRefinementListFilter() {
@@ -144,23 +85,6 @@ export default class ResultsDataset extends React.Component {
 
     const searchHitItemWithProps = React.createElement(SearchHitItem, {
       selectedLanguageCode: this.props.selectedLanguageCode
-    });
-
-    history.listen((location, action)=> {
-        console.log(action, location);
-        /*
-          location = {pathname: "/", search: "?theme[0]=Ukjent", hash: "", state: undefined, key: "tk0fqa"}
-        */
-
-        if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
-          let nextUrl = "";
-          if (location.search.indexOf('?') === -1) {
-            nextUrl = location.search + '?lang=' +  this.props.selectedLanguageCode
-          } else {
-            nextUrl = location.search + '&lang=' +  this.props.selectedLanguageCode
-          }
-          history.push(nextUrl);
-        }
     });
     return (
       <SearchkitProvider searchkit={searchkit}>

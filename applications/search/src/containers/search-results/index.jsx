@@ -20,7 +20,6 @@ export default class SearchPage extends React.Component {
     this.queryObj = qs.parse(window.location.search.substr(1));
     if (!window.themes) {
       window.themes = [];
-
       sa.get('/reference-data/themes')
         .end((err, res) => {
           if (!err && res) {
@@ -35,7 +34,8 @@ export default class SearchPage extends React.Component {
           }
         });
     }
-    this.handleSelectView = this.handleSelectView.bind(this)
+    this.handleSelectView = this.handleSelectView.bind(this);
+    this.handleHistoryListen = this.handleHistoryListen.bind(this);
   }
 
   handleSelectView(chosenView) {
@@ -49,6 +49,18 @@ export default class SearchPage extends React.Component {
         showDatasets: false,
         showConcepts: true
       });
+    }
+  }
+
+  handleHistoryListen(history, location) {
+    if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
+      let nextUrl = "";
+      if (location.search.indexOf('?') === -1) {
+        nextUrl = `${location.search  }?lang=${   this.props.selectedLanguageCode}`
+      } else {
+        nextUrl = `${location.search  }&lang=${   this.props.selectedLanguageCode}`
+      }
+      history.push(nextUrl);
     }
   }
 
@@ -69,6 +81,7 @@ export default class SearchPage extends React.Component {
       <div>
         <div className={showDatasets}>
           <ResultsDataset
+            onHistoryListen={this.handleHistoryListen}
             onSelectView={this.handleSelectView}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
@@ -76,6 +89,7 @@ export default class SearchPage extends React.Component {
 
         <div className={showConcepts}>
           <ResultsConcepts
+            onHistoryListen={this.handleHistoryListen}
             onSelectView={this.handleSelectView}
             selectedLanguageCode={this.props.selectedLanguageCode}
           />
