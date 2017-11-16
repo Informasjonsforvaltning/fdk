@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import sa from 'superagent';
 import {
   SearchkitManager,
   SearchkitProvider,
@@ -11,6 +9,7 @@ import {
   SortingSelector,
   TopBar
 } from 'searchkit';
+import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
 
 import { TermsQueryTransport } from '../../utils/TermsQueryTransport';
 import localization from '../localization';
@@ -20,35 +19,11 @@ import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
 import CompareTerms from '../search-concepts-compare';
+import CompareTermModal from '../search-concepts-compare-modal';
 
 const host = '/dcat';
+let searchkitConcepts;
 
-const searchkitConcepts = new SearchkitManager(
-  host,
-  {
-    transport: new TermsQueryTransport()
-  }
-);
-
-searchkitConcepts.translateFunction = (key) => {
-  const translations = {
-    'pagination.previous': localization.page.prev,
-    'pagination.next': localization.page.next,
-    'facets.view_more': localization.page.viewmore,
-    'facets.view_all': localization.page.seeall,
-    'facets.view_less': localization.page.seefewer,
-    'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
-    'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.',
-    'sort.by': localization.sort.by,
-    'sort.relevance': localization.sort.relevance,
-    'sort.title': localization.sort.title,
-    'sort.publisher': localization.sort.publisher,
-    'sort.modified': localization.sort.modified
-  };
-  return translations[key];
-};
 
 export default class ResultsConcepts extends React.Component {
   constructor(props) {
@@ -58,24 +33,39 @@ export default class ResultsConcepts extends React.Component {
       terms: []
     }
 
-    this.queryObj = qs.parse(window.location.search.substr(1));
-    if (!window.themes) {
-      window.themes = [];
+    const history = createHistory();
+    history.listen( location => {
+      this.props.onHistoryListen(history, location);
+    });
 
-      sa.get('/reference-data/themes')
-        .end((err, res) => {
-          if (!err && res) {
-            res.body.forEach((hit) => {
-              const obj = {};
-              obj[hit.code] = {};
-              obj[hit.code].nb = hit.title.nb;
-              obj[hit.code].nn = hit.title.nb;
-              obj[hit.code].en = hit.title.en;
-              window.themes.push(obj);
-            });
-          }
-        });
-    }
+    searchkitConcepts = new SearchkitManager(
+      host,
+      {
+        transport: new TermsQueryTransport(),
+        createHistory: ()=> history
+      }
+    );
+
+    searchkitConcepts.translateFunction = (key) => {
+      const translations = {
+        'pagination.previous': localization.page.prev,
+        'pagination.next': localization.page.next,
+        'facets.view_more': localization.page.viewmore,
+        'facets.view_all': localization.page.seeall,
+        'facets.view_less': localization.page.seefewer,
+        'reset.clear_all': localization.page.resetfilters,
+        'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
+        'NoHits.Error': localization.noHits.error,
+        'NoHits.ResetSearch': '.',
+        'sort.by': localization.sort.by,
+        'sort.relevance': localization.sort.relevance,
+        'sort.title': localization.sort.title,
+        'sort.publisher': localization.sort.publisher,
+        'sort.modified': localization.sort.modified
+      };
+      return translations[key];
+    };
+
     this.handleAddTerm = this.handleAddTerm.bind(this);
     this.handleDeleteTerm = this.handleDeleteTerm.bind(this);
   }
@@ -106,6 +96,13 @@ export default class ResultsConcepts extends React.Component {
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
+    const compareButton = (
+      <CompareTermModal
+        terms={terms}
+        handleDeleteTerm={this.handleDeleteTerm}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    );
 
     if (terms && terms.length > 0) {
       return (
@@ -114,6 +111,7 @@ export default class ResultsConcepts extends React.Component {
             {localization.terms.compareTerms}
           </h3>
           {children(terms)}
+          {compareButton}
         </div>
       )
     }

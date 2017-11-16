@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import localization from '../../components/localization';
 
 import './index.scss';
 
@@ -15,7 +16,7 @@ const ResultsTabs  = (props) => {
                 onSelectView('datasets')
               }}
             >
-              Datasett
+              {localization.page.datasetTab}
             </button>
           </li>
           <li className={(isSelected) ? 'li-active' : ''}>
@@ -23,7 +24,7 @@ const ResultsTabs  = (props) => {
               onSelectView('concepts')
             }}
             >
-              Begrep
+              {localization.page.termTab}
             </button>
           </li>
         </ul>

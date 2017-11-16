@@ -68,13 +68,13 @@ public class DatasetTest {
     public void publisherExists() {
         no.dcat.shared.Publisher actual = data.getPublisher();
         Publisher expected = new Publisher();
-        expected.setId("http://data.brreg.no/enhetsregisteret/enhet/974760673");
+        expected.setUri("http://data.brreg.no/enhetsregisteret/enhet/974760673");
         expected.setName("Brønnøysundregistrene");
 
-        logger.debug(actual.getId());
+        logger.debug(actual.getUri());
         logger.debug(actual.getName());
 
-        Assert.assertEquals("Expects uri", expected.getId(), actual.getId());
+        Assert.assertEquals("Expects uri", expected.getUri(), actual.getUri());
         Assert.assertEquals("Expects name", expected.getName(), actual.getName());
     }
 

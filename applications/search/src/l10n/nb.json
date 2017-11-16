@@ -52,7 +52,9 @@
     "result.summary": "Søket ga ",
     "dataset":"treff",
     "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser"
+    "nosearch.descriptions":"datasettbeskrivelser",
+    "datasetTab": "Datasett",
+    "termTab": "Begrep"
   },
   "facet": {
     "organisation":"Virksomhet",
@@ -168,8 +170,20 @@
   "terms": {
     "compareTerms": "Sammenlign begrep",
     "removeTerms": "Fjern",
+    "addCompare": "Legg til i sammenligning"
+  },
+  "compare": {
+    "definition": "Definisjon",
+    "inScheme": "Fagområde / bruksområde",
+    "source": "Kilde",
+    "note": "Beskrivelse",
+    "altLabel": "Også kjent som",
+    "hideCompare": "Skjul sammenligning",
+    "openCompare": "Vis sammenligning",
+    "remove": "Fjern begrep",
+    "added": "Du har lagt ",
+    "toCompare": " begrep til sammenligning - klikk for å vise"
     "addCompare": "Legg til i sammenligning",
     "altLabel": "Også kjent som:"
   }
-
 }
