@@ -1,0 +1,43 @@
+@import '../../assets/css/colors';
+
+.fdk-modal {
+  width: 90% !important;
+  top: 10%;
+}
+.modal-header {  
+  background-color: $color1; 
+  color: $color0;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  h4 {    
+    color: inherit;
+  }
+  h4:hover {
+    cursor: pointer
+  }
+}
+.modal-body {
+  background-color: $color0; 
+  color: $color1;
+  padding: 40px !important;
+  h5 {
+    color: inherit;
+  }
+}
+.modal-footer {  
+  padding: 40px !important;
+}
+.fdk-modal-button {
+  font-weight: 600;
+}
+
+.bottom-modal-label {
+  position: fixed !important;
+  width: 76%;
+  height: 50px;
+  left: 12%;
+  bottom: 0;
+  z-index: 100;
+  margin-bottom: 0 !important;
+  border-bottom: 0 !important;
+}

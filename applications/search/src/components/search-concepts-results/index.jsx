@@ -20,6 +20,7 @@ import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
 import CompareTerms from '../search-concepts-compare';
+import CompareTermModal from '../search-concepts-compare-modal';
 
 const host = '/dcat';
 
@@ -106,6 +107,13 @@ export default class ResultsConcepts extends React.Component {
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
+    const compareButton = (
+      <CompareTermModal 
+        terms={terms}
+        handleDeleteTerm={this.handleDeleteTerm}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    );
 
     if (terms && terms.length > 0) {
       return (
@@ -114,6 +122,7 @@ export default class ResultsConcepts extends React.Component {
             {localization.terms.compareTerms}
           </h3>
           {children(terms)}
+          {compareButton}
         </div>
       )
     }

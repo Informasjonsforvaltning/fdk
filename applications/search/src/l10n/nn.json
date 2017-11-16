@@ -52,7 +52,9 @@
     "result.summary": "Søket gav ",
     "dataset":"treff",
     "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser"
+    "nosearch.descriptions":"datasettbeskrivelser",
+    "datasetTab": "Datasett",
+    "termTab": "Omgrep"
   },
   "facet": {
     "organisation":"Verksemd",
@@ -131,7 +133,7 @@
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
     "keyword": "Emneord",
-    "subject": "Begrep",
+    "subject": "Omgrep",
     "restrictions": "Restriksjoner",
     "comments": "Kommentar",
     "objective": "Formål",
@@ -166,9 +168,20 @@
     "sample": "Eksempeldata"
   },
   "terms": {
-    "compareTerms": "Sammenlign begrep",
+    "compareTerms": "Sammenlign omgrep",
     "removeTerms": "Fjern",
     "addCompare": "Legg til i sammenligning"
+  },
+  "compare": {
+    "definition": "Definisjon",
+    "inScheme": "Fagområde / bruksområde",
+    "source": "Kjelde",
+    "note": "Beskriving",
+    "altLabel": "Også kjend som",
+    "hideCompare": "Skjul samanlikning",    
+    "openCompare": "Vis samanlikning",
+    "remove": "Fjern omgrep",
+    "added": "Du har lagt ",
+    "toCompare": " omgrep til samanlikning - klikk for å vise"
   }
-
 }
