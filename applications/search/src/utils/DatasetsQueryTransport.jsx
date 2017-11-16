@@ -3,7 +3,7 @@ const defaults = require("lodash/defaults");
 import * as axios from "axios";
 const qs = require('qs');
 
-export class QueryTransport extends AxiosESTransport {
+export class DatasetsQueryTransport extends AxiosESTransport {
   constructor(host, options) {
     super()
     this.options = defaults(options, {

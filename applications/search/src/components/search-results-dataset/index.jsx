@@ -12,7 +12,7 @@ import {
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
 
-import { QueryTransport } from '../../utils/QueryTransport';
+import { DatasetsQueryTransport } from '../../utils/DatasetsQueryTransport';
 import localization from '../localization';
 import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
@@ -20,9 +20,16 @@ import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
+import ResultsTabs from '../search-results-tabs';
 
 const host = '/dcat';
 
+const searchkitDataset = new SearchkitManager(
+  host,
+  {
+    transport: new DatasetsQueryTransport()
+  }
+);
 let searchkit;
 
 export default class ResultsDataset extends React.Component {
@@ -43,6 +50,47 @@ export default class ResultsDataset extends React.Component {
       }
     );
 
+searchkitDataset.translateFunction = (key) => {
+  const translations = {
+    'pagination.previous': localization.page.prev,
+    'pagination.next': localization.page.next,
+    'facets.view_more': localization.page.viewmore,
+    'facets.view_all': localization.page.seeall,
+    'facets.view_less': localization.page.seefewer,
+    'reset.clear_all': localization.page.resetfilters,
+    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
+    'NoHits.Error': localization.noHits.error,
+    'NoHits.ResetSearch': '.',
+    'sort.by': localization.sort.by,
+    'sort.relevance': localization.sort.relevance,
+    'sort.title': localization.sort.title,
+    'sort.publisher': localization.sort.publisher,
+    'sort.modified': localization.sort.modified
+  };
+  return translations[key];
+};
+
+export default class ResultsDataset extends React.Component {
+  constructor(props) {
+    super(props);
+    this.queryObj = qs.parse(window.location.search.substr(1));
+    if (!window.themes) {
+      window.themes = [];
+
+      sa.get('/reference-data/themes')
+        .end((err, res) => {
+          if (!err && res) {
+            res.body.forEach((hit) => {
+              const obj = {};
+              obj[hit.code] = {};
+              obj[hit.code].nb = hit.title.nb;
+              obj[hit.code].nn = hit.title.nb;
+              obj[hit.code].en = hit.title.en;
+              window.themes.push(obj);
+            });
+          }
+        });
+    }
     searchkit.translateFunction = (key) => {
       const translations = {
         'pagination.previous': localization.page.prev,
@@ -87,7 +135,7 @@ export default class ResultsDataset extends React.Component {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
     return (
-      <SearchkitProvider searchkit={searchkit}>
+      <SearchkitProvider searchkit={searchkitDataset}>
         <div>
           <div className="container">
             <div className="row mb-60">
@@ -104,6 +152,9 @@ export default class ResultsDataset extends React.Component {
                 <HitsStats component={CustomHitsStats} />
               </div>
             </div>
+            <section>
+              <ResultsTabs onSelectView={this.props.onSelectView} />
+            </section>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
@@ -183,5 +234,6 @@ ResultsDataset.defaultProps = {
 };
 
 ResultsDataset.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  onSelectView: PropTypes.func.isRequired
 };

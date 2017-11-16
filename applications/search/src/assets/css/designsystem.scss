@@ -150,12 +150,7 @@
 
 .designsystemColorGreen {
     background-color: $color-green;
-    color: $color1;
-}
-
-.designsystemColorGreen2 {
-    background-color: $color-green2;
-    color: $color1;
+    color: var(--color1);
 }
 
 .designsystemColorYellow {
@@ -163,18 +158,8 @@
     color: $color1;
 }
 
-.designsystemColorYellow2 {
-    background-color: $color-yellow2;
-    color: $color1;
-}
-
 .designsystemColorRed {
     background-color: $color-red;
-    color: $color1;
-}
-
-.designsystemColorRed2 {
-    background-color: $color-red2;
     color: $color1;
 }
 

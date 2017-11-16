@@ -4,3 +4,5 @@ src/utils
 src/l10n
 src/ts
 test
+webpack.dev.config.js
+webpack.prod.config.js
