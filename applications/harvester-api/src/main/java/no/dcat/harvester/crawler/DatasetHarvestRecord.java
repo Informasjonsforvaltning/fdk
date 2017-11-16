@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class DatasetHarvestRecord {
     private Date date;
-    private String datasourceId;
+    private String dcatSourceId;
     private String datasetUri;
     private String datasetId;
     private ValidationStatus validationStatus;

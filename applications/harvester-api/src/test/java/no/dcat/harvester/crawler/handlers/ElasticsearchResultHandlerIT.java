@@ -16,7 +16,6 @@ import org.elasticsearch.node.NodeBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,27 +24,27 @@ import java.io.File;
 
 import static org.junit.Assert.assertTrue;
 
-public class ElasticsearchResultHandlerTest {
+public class ElasticsearchResultHandlerIT {
 
-	private static final String HOME_DIR = "src/test/resources/elasticsearch";
+	private static final String DATA_DIR = "target/elasticsearch";
 	private static final String DCAT_INDEX = "dcat";
 	public static final String DATASET_TYPE = "dataset";
 
-	private final Logger logger = LoggerFactory.getLogger(ElasticsearchResultHandlerTest.class);
+	private final Logger logger = LoggerFactory.getLogger(ElasticsearchResultHandlerIT.class);
 
 	Node node;
 	Client client;
 	Elasticsearch elasticsearch;
 
-	private File homeDir = null;
+	private File dataDir = null;
 
 	@Before
 	public void setUp() throws Exception {
 
-		homeDir = new File("src/test/resources/elasticsearch");
+		dataDir = new File(DATA_DIR);
 		 Settings settings = Settings.settingsBuilder()
 				.put("http.enabled", "false")
-				.put("path.home", homeDir.toString())
+				.put("path.home", dataDir.toString())
 				.build();
 
 		node = NodeBuilder.nodeBuilder()
@@ -70,8 +69,8 @@ public class ElasticsearchResultHandlerTest {
 		if (node != null) {
 			node.close();
 		}
-		if (homeDir != null && homeDir.exists()) {
-			FileUtils.forceDelete(homeDir);
+		if (dataDir != null && dataDir.exists()) {
+			FileUtils.forceDelete(dataDir);
 		}
 
 		node = null;
@@ -130,7 +129,7 @@ public class ElasticsearchResultHandlerTest {
 
 		//prevent race condition where elasticsearch is still indexing!!!
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

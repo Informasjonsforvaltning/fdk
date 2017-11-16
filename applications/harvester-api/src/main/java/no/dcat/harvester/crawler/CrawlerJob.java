@@ -429,7 +429,7 @@ public class CrawlerJob implements Runnable {
      * Prepare status summary message for non valid datasets, if any exists
      * The message contains a list of datasets IDs that will not be imported
      * due to validation failure.
-     * The message is created from contents of global variable nonValidDatasets
+     * The message is created from contents of global variable nonValidDatasetUris
      *
      * @return String containing validation summary message
      */
