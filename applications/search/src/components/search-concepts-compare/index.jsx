@@ -5,14 +5,16 @@ import { getTranslateText } from '../../utils/translateText';
 
 const CompareTerms = (props) => {
   const { prefLabel, publisher, onDeleteTerm, termIndex, selectedLanguageCode} = props;
+  let title = getTranslateText(prefLabel, selectedLanguageCode);
+  title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
     <div className="fdk-container p-3">
-      <button className="fdk-button fdk-button-cta pull-right" onClick={() => { onDeleteTerm(termIndex)}}>
+      <button className="fdk-button fdk-button-cta pull-right fdk-button-on-white" onClick={() => { onDeleteTerm(termIndex)}}>
         <i className="fa fa-times" />
         &nbsp;
         {localization.terms.removeTerms}
       </button>
-      <h4>{getTranslateText(prefLabel, selectedLanguageCode)}</h4>
+      <h4>{ title }</h4>
       <p>{publisher}</p>
     </div>
   );
