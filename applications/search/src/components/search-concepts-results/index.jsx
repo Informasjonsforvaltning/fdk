@@ -90,7 +90,7 @@ export default class ResultsConcepts extends React.Component {
       <CompareTerms
         key={item.uri}
         prefLabel={item.prefLabel}
-        publisher={item.publisher}
+        creator={item.creator.name}
         onDeleteTerm={this.handleDeleteTerm}
         termIndex={index}
         selectedLanguageCode={this.props.selectedLanguageCode}

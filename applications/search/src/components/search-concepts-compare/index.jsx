@@ -4,7 +4,7 @@ import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 
 const CompareTerms = (props) => {
-  const { prefLabel, publisher, onDeleteTerm, termIndex, selectedLanguageCode} = props;
+  const { prefLabel, creator, onDeleteTerm, termIndex, selectedLanguageCode} = props;
   let title = getTranslateText(prefLabel, selectedLanguageCode);
   title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
@@ -15,7 +15,7 @@ const CompareTerms = (props) => {
         {localization.terms.removeTerms}
       </button>
       <h4>{ title }</h4>
-      <p>{publisher}</p>
+      <div className="mt-2">{ creator }</div>
     </div>
   );
 }

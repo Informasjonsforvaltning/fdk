@@ -26,7 +26,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
       return (
         <span className="inline-block">
           <strong>
-            { creator.name.charAt(0) + creator.name.substring(1).toLowerCase() }
+            { creator.name }
           </strong>
         </span>
       );
