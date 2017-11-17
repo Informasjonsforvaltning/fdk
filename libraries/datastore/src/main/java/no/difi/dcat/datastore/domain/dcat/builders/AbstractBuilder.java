@@ -531,6 +531,20 @@ public abstract class AbstractBuilder {
         if (hasProperty != null) {
             publisher.setOverordnetEnhet(extractAsString(object, EnhetsregisteretRDF.overordnetEnhet));
         }
+
+        hasProperty = object.getProperty(EnhetsregisteretRDF.naeringskode);
+        if (hasProperty != null) {
+            Resource naceResource = hasProperty.getResource().asResource();
+            SkosCode naceCode = new SkosCode();
+            String beskrivelse = extractAsString(naceResource, EnhetsregisteretRDF.beskrivelse);
+            String kode = extractAsString(naceResource, EnhetsregisteretRDF.kode);
+            naceCode.setUri("http://www.ssb.no/nace/sn2007/" + kode);
+            naceCode.setCode(kode);
+            Map<String,String> languageString = new HashMap<>();
+            languageString.put("no", beskrivelse);
+            naceCode.setPrefLabel(languageString);
+            publisher.setNaeringskode(naceCode);
+        }
     }
 
     protected static SkosCode getCode(Map<String, SkosCode> codes, String locUri) {

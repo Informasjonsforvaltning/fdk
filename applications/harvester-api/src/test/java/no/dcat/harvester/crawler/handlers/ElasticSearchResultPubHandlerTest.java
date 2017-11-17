@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 public class ElasticSearchResultPubHandlerTest {
     private static String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
     @Test
-    public void test() {
+    public void addPublisherToIndexOK() {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
         ElasticSearchResultPubHandler handler = new ElasticSearchResultPubHandler(null, 0, null);
 

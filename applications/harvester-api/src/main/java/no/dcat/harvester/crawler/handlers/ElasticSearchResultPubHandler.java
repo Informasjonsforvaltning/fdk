@@ -62,7 +62,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     }
 
     protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
         logger.debug("Preparing bulkRequest for Publishers.");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
