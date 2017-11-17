@@ -22,6 +22,7 @@ public class PublisherBuilder extends AbstractBuilder {
         this.model = model;
     }
 
+    // assumes that publishers have been resolved as FOAF.Agents
     public List<Publisher> build() {
         List<Publisher> publishers = new ArrayList<>();
 

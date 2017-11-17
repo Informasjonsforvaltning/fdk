@@ -14,7 +14,9 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for loading the complete publisher-hieararchi.
@@ -68,6 +70,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         List<Publisher> publishers = new PublisherBuilder(model).build();
+        generateOrganizationPath(elasticsearch, publishers);
         for (Publisher publisher: publishers) {
 
             IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
@@ -79,6 +82,16 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
             logger.error("Load of publisher has error: {}", bulkResponse.buildFailureMessage());
             //TODO: process failures by iterating through each bulk response item?
         }
+    }
+
+    void generateOrganizationPath(Elasticsearch elasticsearch, List<Publisher> publishers) {
+
+        final Map<String, Publisher> publisherMap = new HashMap<>();
+        publishers.forEach(publisher -> publisherMap.put(publisher.getId(), publisher));
+
+        Publisher stat, fylke, kommune, privat;
+        
+
     }
 
     protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
