@@ -135,8 +135,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         catalogRecord.setDataSourceId(dcatSource.getId());
         catalogRecord.setDate(harvestTime);
         catalogRecord.setValidDatasetUris(new HashSet<>());
-        catalogRecord.setNonValidDatasetUris(new HashSet<>());
-        catalogRecord.getNonValidDatasetUris().addAll(datasetsInSource);
 
         logger.info("Number of dataset documents {} for dcat source {}", validDatasets.size(), dcatSource.getId());
 
@@ -146,9 +144,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
         }
 
-        deletePreviousDatasetsNotPresentInThisHarvest(elasticsearch, gson, catalogRecord, stats);
-
+        catalogRecord.setNonValidDatasetUris(new HashSet<>());
+        catalogRecord.getNonValidDatasetUris().addAll(datasetsInSource);
         catalogRecord.getNonValidDatasetUris().removeAll(catalogRecord.getValidDatasetUris());
+
+        deletePreviousDatasetsNotPresentInThisHarvest(elasticsearch, gson, catalogRecord, stats);
         catalogRecord.setChangeInformation(stats);
 
         saveCatalogHarvestRecord(dcatSource, validationResults, gson, bulkRequest, harvestTime, catalogRecord);
