@@ -22,7 +22,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 
 public class ElasticsearchResultHandlerIT {
 
@@ -91,21 +95,6 @@ public class ElasticsearchResultHandlerIT {
 		assertTrue(healthResponse.getStatus() != null);
 	}
 
-	private String theme1 = "{\n" +
-			"  \"id\": \"http://publications.europa.eu/resource/authority/data-theme/SOCI\",\n" +
-			"  \"code\": \"SOCI\",\n" +
-			"  \"startUse\": \"2015-10-01\",\n" +
-			"  \"title\": {\n" +
-			"    \"nb\": \"Befolkning og samfunn\",\n" +
-			"    \"en\": \"Population and society\"\n" +
-			"  },\n" +
-			"  \"conceptSchema\": {\n" +
-			"    \"id\": \"http://publications.europa.eu/resource/authority/data-theme\",\n" +
-			"    \"title\": \"Dataset types Named Authority List\",\n" +
-			"    \"versioninfo\": \"20160921-0\",\n" +
-			"    \"versionnumber\": \"20160921-0\"\n" +
-			"  }\n" +
-			"}";
 
 	/**
 	 * Tests if indexWithElasticsearch.
@@ -121,28 +110,55 @@ public class ElasticsearchResultHandlerIT {
 
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("ramsund-elastic.ttl").getFile(), "tester",
+        // First harvest of ramsun, file contains one dataset
+		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test",
+                classLoader.getResource("ramsund-elastic.ttl").getFile(), "tester",
 				"123456789");
+        harvestSource(dcatSource);
 
-		ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch", "http://localhost:8100", "user", "password");
-		handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client),null);
-
-		//prevent race condition where elasticsearch is still indexing!!!
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		assertTrue("dcat index exists", elasticsearch.indexExists(DCAT_INDEX));
-
+        assertTrue("dcat index exists", elasticsearch.indexExists(DCAT_INDEX));
 		assertTrue("harvest index exists", elasticsearch.indexExists("harvest"));
 
 		SearchRequestBuilder srb_dataset = client.prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
-		SearchResponse sr_dataset = null;
-		sr_dataset = srb_dataset.execute().actionGet();
-		assertTrue("Dataset document(s) exist", sr_dataset.getHits().getTotalHits() > 0);
+		SearchResponse searchResponse = null;
+		searchResponse = srb_dataset.execute().actionGet();
+		assertTrue("Dataset document(s) exist", searchResponse.getHits().getTotalHits() > 0);
 
-	}
+		// index second time
+        harvestSource(dcatSource);
 
+
+        srb_dataset = client.prepareSearch("harvest").setTypes("catalog").setQuery(QueryBuilders.matchAllQuery());
+		SearchResponse catalogHarvestRecordResponse = srb_dataset.execute().actionGet();
+
+		assertThat("Should have 2 or mor catalogHarvestRecords", catalogHarvestRecordResponse.getHits().getTotalHits(), greaterThanOrEqualTo(2l));
+
+        // Third harvest of ramsund but with previous dataset deleted, (new one added)
+        dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("ramsund-elastic2.ttl").getFile(), "tester",
+                "123456789");
+        harvestSource(dcatSource);
+
+
+        srb_dataset = client.prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
+        searchResponse = srb_dataset.execute().actionGet();
+        assertThat("Old dataset should be deleted and new inserted total of 1", searchResponse.getHits().getTotalHits(), is(1l));
+
+    }
+
+
+    private void sleep() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void harvestSource(DcatSource dcatSource) {
+        ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", 0, "elasticsearch","http://localhost:8100", "user", "password");
+        handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(client),null);
+
+        //prevent race condition where elasticsearch is still indexing!!!
+        sleep();
+    }
 }

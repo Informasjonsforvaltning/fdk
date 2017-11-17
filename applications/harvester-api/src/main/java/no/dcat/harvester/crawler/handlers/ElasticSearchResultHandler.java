@@ -107,7 +107,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
         createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
@@ -146,31 +146,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
         }
 
-        // TODO : delete datasets no longer harvested
-        //deleteDatasetsNotHarvested(dcatSource, elasticsearch, validDatasets, harvestTime, stats);
-        MatchQueryBuilder mathcQuery = QueryBuilders.matchQuery("harvestUrl", catalogRecord.getHarvestUrl());
-
-        SearchResponse lastCatalogRecordResponse = elasticsearch.getClient()
-                .prepareSearch(HARVEST_INDEX).setTypes("catalog")
-                .setQuery(mathcQuery)
-                .addSort("date", SortOrder.DESC)
-                .setSize(1).get();
-
-        if (lastCatalogRecordResponse.getHits().getTotalHits() == 1) {
-            CatalogHarvestRecord lastCatalogRecord = gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
-            Set<String> missingUris = lastCatalogRecord.getValidDatasetUris();
-            missingUris.removeAll(catalogRecord.getValidDatasetUris());
-
-            for (String uri : missingUris) {
-                DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
-                if (lookup != null && lookup.getDatasetId() != null) {
-                    elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
-                    logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
-                    stats.setDeletes(stats.getDeletes() + 1);
-                }
-            }
-
-        }
+        deletePreviousDatasetsNotPresentInThisHarvest(elasticsearch, gson, catalogRecord, stats);
 
         catalogRecord.getNonValidDatasetUris().removeAll(catalogRecord.getValidDatasetUris());
         catalogRecord.setChangeInformation(stats);
@@ -184,6 +160,35 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             //TODO: process failures by iterating through each bulk response item?
         }
 
+    }
+
+    private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson, CatalogHarvestRecord catalogRecord, ChangeInformation stats) {
+        MatchQueryBuilder mathcQuery = QueryBuilders.matchQuery("harvestUrl", catalogRecord.getHarvestUrl());
+
+        SearchResponse lastCatalogRecordResponse = elasticsearch.getClient()
+                .prepareSearch(HARVEST_INDEX).setTypes("catalog")
+                .setQuery(mathcQuery)
+                .addSort("date", SortOrder.DESC)
+                .setSize(1).get();
+
+        if (lastCatalogRecordResponse.getHits().getTotalHits() > 0) {
+            CatalogHarvestRecord lastCatalogRecord = gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
+
+            logger.debug("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
+
+            Set<String> missingUris = lastCatalogRecord.getValidDatasetUris();
+            missingUris.removeAll(catalogRecord.getValidDatasetUris());
+
+            for (String uri : missingUris) {
+                DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
+                if (lookup != null && lookup.getDatasetId() != null) {
+                    elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
+                    logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
+                    stats.setDeletes(stats.getDeletes() + 1);
+                }
+            }
+
+        }
     }
 
     private Set<String> getSourceDatasetUris(Model model) {
@@ -295,7 +300,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<Subject> filteredSubjects = subjects.stream().filter(s ->
                 s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty())
                 .collect(Collectors.toList());
-        ;
 
         logger.info("Total number of unique subject uris {} in dcat source {}.", subjects.size(), dcatSource.getId());
         logger.info("Adding {} subjects with prefLabel and definition to elastic", filteredSubjects.size());
