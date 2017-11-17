@@ -214,10 +214,6 @@ public class CrawlerJob implements Runnable {
         Model enrichedUnion = enricher.enrichData(union);
         union = enrichedUnion;
 
-        // Checks if publisher is registrered in BRREG Enhetsregistret
-        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-        brregAgentConverter.collectFromModel(union);
-
         // Checks subjects and resolve definitions
         if (subjectCrawler != null) {
             Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
@@ -225,6 +221,11 @@ public class CrawlerJob implements Runnable {
         } else {
             logger.warn("Could not annotate subjects. Reason subject crawler is not initialized!");
         }
+
+        // Checks publisher and resolve according to registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
+
 
         return union;
     }
