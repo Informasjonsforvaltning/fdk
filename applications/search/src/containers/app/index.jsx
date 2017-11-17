@@ -136,7 +136,7 @@ export default class App extends React.Component {
                       tabIndex="0"
                       id="search-language-dropdown-1"
                       bsStyle="default"
-                      className="dropdown-toggle fdk-button-language"
+                      className="fdk-button-language"
                       title={localization.lang.chosenLanguage}
                       onSelect={this.onChangeLanguage}
                     >

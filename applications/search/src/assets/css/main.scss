@@ -68,6 +68,7 @@ $sk-border-radius: 3px !default;
         background-image: none;
         text-decoration: underline;
         &:focus, &:active, &:hover {
+            color: $color2 !important;
             background-color: transparent !important;
             border-color: transparent !important;
         }
@@ -146,7 +147,7 @@ SEARCHPAGE SORTING DROPDOWN
 .btn-group {
     .dropdown-toggle {
         &:focus, &:active, &:hover {
-            color: $color1;
+            color: $color0;
             background-color: $color1;
             border-color: transparent;
             box-shadow: none;
@@ -155,7 +156,7 @@ SEARCHPAGE SORTING DROPDOWN
 }
 
 .open>.dropdown-toggle.btn-default {
-    color: $color1;
+    color: $color0;
     background-color: $color1;
     border-color: transparent;
     box-shadow: none;

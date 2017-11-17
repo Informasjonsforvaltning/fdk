@@ -170,18 +170,19 @@
   "terms": {
     "compareTerms": "Sammenlign begrep",
     "removeTerms": "Fjern",
-    "addCompare": "Legg til i sammenligning"
+    "altLabel": "Også kjent som:"
   },
   "compare": {
     "definition": "Definisjon",
     "inScheme": "Fagområde / bruksområde",
     "source": "Kilde",
     "note": "Beskrivelse",
-    "altLabel": "Også kjent som",
-    "hideCompare": "Skjul sammenligning",    
+    "hideCompare": "Skjul sammenligning",
     "openCompare": "Vis sammenligning",
     "remove": "Fjern begrep",
     "added": "Du har lagt ",
-    "toCompare": " begrep til sammenligning - klikk for å vise"
+    "toCompare": " begrep til sammenligning - klikk for å vise",
+    "addCompare": "Legg til i sammenligning",
+    "altLabel": "Også kjent som:"
   }
 }
