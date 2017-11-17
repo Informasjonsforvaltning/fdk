@@ -74,7 +74,7 @@ public class CrawlerResultHandlerTest {
 
 		FusekiResultHandler crawlerResultHandler = new FusekiResultHandler(dcatDataStore, adminDataStore);
 
-		crawlerResultHandler.process(new DcatSource("", "", "", "", ""), ModelFactory.createDefaultModel());
+		crawlerResultHandler.process(new DcatSource("", "", "", "", ""), ModelFactory.createDefaultModel(), null);
 
 	}
 
@@ -100,7 +100,7 @@ public class CrawlerResultHandlerTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("validation-test-data/test-perfect.rdf").getFile());
 		Model model = FileManager.get().loadModel(file.getCanonicalPath());
-		crawlerResultHandler.process(new DcatSource("", "", "", "", ""), model);
+		crawlerResultHandler.process(new DcatSource("", "", "", "", ""), model,null);
 
 	}
 

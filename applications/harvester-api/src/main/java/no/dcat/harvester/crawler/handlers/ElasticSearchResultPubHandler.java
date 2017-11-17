@@ -48,12 +48,12 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
      * @param model - The modellel on rdf-formatt that shall conatin the publishers.
      */
     @Override
-    public void process(DcatSource dcatSource, Model model) {
+    public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.trace("Processing results Elasticsearch");
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
             logger.trace("Start indexing");
-            indexWithElasticsearch(model, elasticsearch);
+            indexWithElasticsearch(model, elasticsearch, null);
         } catch (Exception e) {
             logger.error("Exception occurred while loading publisher: {}", e.getMessage());
             throw e;
@@ -61,7 +61,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         logger.trace("finished");
     }
 
-    protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch) {
+    protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch, List<String> validationResults) {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
 
         logger.debug("Preparing bulkRequest for Publishers.");

@@ -184,15 +184,14 @@ services:
 #    networks:
 #      logging:
 
-#  kibana:
-#    ports:
-#      - 5601:5601
-#    environment:
-#      - ELASTICSEARCH_URL=http://elasticsearch:9200
-#    #volumes:
-#    #      - ./data/kibana/config/:/opt/kibana/config/
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      logging:
+  kibana:
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    #volumes:
+    #      - ./data/kibana/config/:/opt/kibana/config/
+    depends_on:
+      - elasticsearch
+
 

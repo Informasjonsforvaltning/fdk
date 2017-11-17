@@ -60,7 +60,7 @@ public class CrawlerPublisherJob implements Runnable {
         brregAgentConverter.collectFromModel(modelDataset);
 
         for (CrawlerResultHandler handler : handlers) {
-            handler.process(dcatSource, modelDataset);
+            handler.process(dcatSource, modelDataset, null);
         }
     }
 }

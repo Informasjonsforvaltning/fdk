@@ -16,6 +16,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -30,7 +31,7 @@ import java.util.Map;
  */
 public class Elasticsearch implements AutoCloseable {
 
-    private static final String DCAT_INDEX_SETUP_FILENAME = "index_setup.json";
+    private static final String DCAT_INDEX_SETUP_FILENAME = "dcat_dataset_mapping.json";
     private static final String CLUSTER_NAME = "cluster.name";
     private final Logger logger = LoggerFactory.getLogger(Elasticsearch.class);
 
@@ -162,30 +163,49 @@ public class Elasticsearch implements AutoCloseable {
      */
     public void createIndex(String index) {
         //Set mapping for correct language stemming and indexing
+        if (index != null && index.equals("harvest")) {
+            Resource r = new ClassPathResource("harvest_catalog_mapping.json");
+            Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
+            try {
+                createElasticsearchIndex("harvest");
 
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        try {
-            Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETUP_FILENAME);
-
-            for (Resource r : resources) {
-
-                InputStream is = r.getInputStream();
-
-                String mappingJson = IOUtils.toString(is, "UTF-8");
-
-
-                logger.debug("[createIndex] mappingJson prepared: " + mappingJson);
-
-                client.admin().indices().prepareCreate(index).execute().actionGet();
-                logger.debug("[createIndex] before preparePutMapping");
-                client.admin().indices().preparePutMapping(index).setType("dataset").setSource(mappingJson).execute().actionGet();
-                logger.debug("[createIndex] after preparePutMapping");
-                client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-                logger.debug("[createIndex] after prepareHealth");
+                createMapping(index, "catalog", r.getInputStream());
+                createMapping(index, "dataset", r2.getInputStream());
+            } catch (IOException e) {
+                logger.error("Unable to create index for {}", index);
             }
-        } catch (IOException e) {
-            logger.error("Unable to create index for Elasticsearch " + e.getMessage());
+        } else {
+
+            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            try {
+                Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETUP_FILENAME);
+
+                for (Resource r : resources) {
+
+                    InputStream is = r.getInputStream();
+                    createElasticsearchIndex(index);
+                    createMapping(index, "dataset", is);
+                }
+            } catch (IOException e) {
+                logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
+            }
         }
+    }
+
+    private void createElasticsearchIndex(String index) throws IOException {
+        client.admin().indices().prepareCreate(index).execute().actionGet();
+        logger.debug("[createIndex] {}", index);
+        client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        logger.debug("[createIndex] after prepareHealth");
+    }
+
+    private void createMapping(String index, String type, InputStream is) throws IOException {
+        String mappingJson = IOUtils.toString(is, "UTF-8");
+
+        client.admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
+        logger.debug("[createIndex] after preparePutMapping");
+        client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        logger.debug("[createIndex] after prepareHealth");
     }
 
 
