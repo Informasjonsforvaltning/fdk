@@ -21,16 +21,12 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
   }
 
   _renderPublisher() {
-    const { publisher } = this.state.source;
-    if (publisher && publisher.name) {
+    const { creator } = this.state.source;
+    if (creator && creator.name) {
       return (
         <span className="inline-block">
           <strong>
-            {
-              (publisher && publisher.name)
-                ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase()
-                : ''
-            }
+            { creator.name }
           </strong>
         </span>
       );
@@ -39,45 +35,116 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
   }
 
   _renderThemes() {
-    let themeNodes;
-    const { theme } = this.state.source;
-    if (theme) {
-      themeNodes = theme.map((singleTheme, index) => (
+    const { inScheme } = this.state.source;
+    const children = items => items.map((item, index) => {
+      const subItem = item.substring(item.lastIndexOf('/') + 1)
+      return (
         <span
-          key={`dataset-description-theme-${index}`}
-          id={`dataset-description-theme-${index}`}
-          className="fdk-label"
+          key={`dataset-description-inScheme-${index}`}
+          id={`dataset-description-inScheme-${index}`}
+          className="fdk-label ml-2"
         >
-          {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
+          {subItem}
         </span>
-      ));
+      );
+    });
+    if (inScheme) {
+      return (
+        <div className="mt-3">
+          { children(inScheme) }
+        </div>
+      );
     }
-    return themeNodes;
+    return null;
+  }
+
+  _renderLaw() {
+    const { source } = this.state.source;
+    if (source) {
+      return (
+        <div>
+          <span className="fa-stack fdk-fa-left fdk-fa-circle">
+            <i className="fa fa-book fa-stack-1x fdk-color0" />
+          </span>
+          <a
+            href={source}
+          >
+            {source}
+            <i className="fa fa-external-link fdk-fa-right" />
+          </a>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  _renderNote() {
+    const { note } = this.state.source;
+    const { selectedLanguageCode } = this.props;
+    if (note) {
+      return (
+        <p
+          className="fdk-p-search-hit"
+        >
+          {getTranslateText(note, selectedLanguageCode)}
+        </p>
+      );
+    }
+    return null;
+  }
+
+  _renderAltLabel() {
+    const { altLabel } = this.state.source;
+    const { selectedLanguageCode } = this.props;
+    const children = items => items.map((item, index) => {
+      if (index > 0) {
+        return (
+          <span
+            key={`concepts-altlabel-${index}`}
+          >
+            {`, ${getTranslateText(item, selectedLanguageCode)}`}
+          </span>
+        );
+      }
+      return (
+        <span
+          key={`concepts-altlabel-${index}`}
+        >
+          {`${getTranslateText(item, selectedLanguageCode)}`}
+        </span>
+      );
+    });
+    if (altLabel) {
+      return (
+        <div>
+          <strong>{localization.terms.altLabel} </strong>
+          { children(altLabel) }
+        </div>
+      );
+    }
+    return null;
   }
 
   render() {
-    const { onAddTerm } = this.props;
+    const { onAddTerm, selectedLanguageCode } = this.props;
     const { source } = this.state;
-    const hitElementId = `concepts-hit-${encodeURIComponent(source.uri)}`;
-    const { prefLabel, definition, note  } = source;
+    const { prefLabel, definition, uri  } = source;
+    const hitElementId = `concepts-hit-${encodeURIComponent(uri)}`;
 
     let termTitle;
     let termDescription;
-    let termNote;
 
     if (prefLabel) {
-      termTitle = getTranslateText(prefLabel, this.props.selectedLanguageCode);
+      termTitle = getTranslateText(prefLabel, selectedLanguageCode);
+      termTitle = termTitle.charAt(0).toUpperCase() + termTitle.substring(1).toLowerCase();
     }
     if (definition) {
-      termDescription = getTranslateText(definition, this.props.selectedLanguageCode);
-    }
-    if (note) {
-      termNote = getTranslateText(note, this.props.selectedLanguageCode);
+      termDescription = getTranslateText(definition, selectedLanguageCode);
     }
 
     let toBeCompared = false;
     if (this.props.terms) {
-      toBeCompared = _.some(this.props.terms, (term) => term.uri === source.uri);
+      toBeCompared = _.some(this.props.terms, (term) => term.uri === uri);
     }
 
     return (
@@ -87,13 +154,16 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         title={`Begrep: ${termTitle}`}
       >
         <div className={`fdk-container fdk-container-search-hit ${toBeCompared ? 'toBeCompared' : ''}`}>
-          <button className={`fdk-button ${toBeCompared ? 'fdk-button-inactive' : 'fdk-button-default'} pull-right mt-3`} onClick={() => { if (!toBeCompared) {onAddTerm(source)}}} type="button">+ {localization.terms.addCompare}</button>
+
+          {!toBeCompared &&
+          <button className='fdk-button fdk-button-default pull-right mt-3' onClick={() => {onAddTerm(source)}} type="button">+ {localization.compare.addCompare}</button>
+          }
+
           <h2 className="inline-block mr-2">{termTitle}</h2>
+
           {this._renderPublisher()}
 
-          <div className="mt-3">
-            {this._renderThemes()}
-          </div>
+          {this._renderThemes()}
 
           <p
             className="fdk-p-search-hit"
@@ -101,25 +171,14 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
             {termDescription}
           </p>
 
-          <div>
-            <span className="fa-stack fdk-fa-left fdk-fa-circle">
-              <i className="fa fa-book fa-stack-1x fdk-color0" />
-            </span>
-            <a
-              href="https://lovdata.no"
-            >
-              HARDKODET TEKST (https://lovdata.no)
-              <i className="fa fa-external-link fdk-fa-right" />
-            </a>
-          </div>
+          { this._renderLaw() }
 
           <hr />
 
-          <p
-            className="fdk-p-search-hit"
-          >
-            {termNote}
-          </p>
+          { this._renderNote() }
+
+          { this._renderAltLabel() }
+
         </div>
       </div>
     );

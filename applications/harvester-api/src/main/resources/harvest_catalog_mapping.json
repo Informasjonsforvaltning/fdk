@@ -1,0 +1,10 @@
+{
+  "catalog": {
+    "properties": {
+      "date": {
+        "type": "date",
+        "format": "yyyy-MM-dd'T'HH:mm:ssZ"
+      }
+    }
+  }
+}

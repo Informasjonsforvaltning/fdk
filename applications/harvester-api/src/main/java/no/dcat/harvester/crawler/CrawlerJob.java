@@ -57,7 +57,7 @@ public class CrawlerJob implements Runnable {
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
-//    private List<ValidationError> validationErrors = new ArrayList<>();
+
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
@@ -107,7 +107,7 @@ public class CrawlerJob implements Runnable {
                 Model rankedUnion = rankingCreator.rankDatasets(union, dcatSource.getUrl());
 
                 for (CrawlerResultHandler handler : handlers) {
-                    handler.process(dcatSource, rankedUnion);
+                    handler.process(dcatSource, rankedUnion, validationResult);
                 }
             }
 
@@ -214,10 +214,6 @@ public class CrawlerJob implements Runnable {
         Model enrichedUnion = enricher.enrichData(union);
         union = enrichedUnion;
 
-        // Checks if publisher is registrered in BRREG Enhetsregistret
-        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-        brregAgentConverter.collectFromModel(union);
-
         // Checks subjects and resolve definitions
         if (subjectCrawler != null) {
             Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
@@ -225,6 +221,11 @@ public class CrawlerJob implements Runnable {
         } else {
             logger.warn("Could not annotate subjects. Reason subject crawler is not initialized!");
         }
+
+        // Checks publisher and resolve according to registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
+
 
         return union;
     }
@@ -429,7 +430,7 @@ public class CrawlerJob implements Runnable {
      * Prepare status summary message for non valid datasets, if any exists
      * The message contains a list of datasets IDs that will not be imported
      * due to validation failure.
-     * The message is created from contents of global variable nonValidDatasets
+     * The message is created from contents of global variable nonValidDatasetUris
      *
      * @return String containing validation summary message
      */

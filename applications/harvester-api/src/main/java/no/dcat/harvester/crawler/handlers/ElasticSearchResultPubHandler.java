@@ -3,6 +3,7 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
+import no.dcat.harvester.crawler.DatasetLookup;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
@@ -10,7 +11,9 @@ import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +53,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
      * @param model - The modellel on rdf-formatt that shall conatin the publishers.
      */
     @Override
-    public void process(DcatSource dcatSource, Model model) {
+    public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.trace("Processing results Elasticsearch");
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
@@ -70,7 +73,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         List<Publisher> publishers = new PublisherBuilder(model).build();
-        generateOrganizationPath(elasticsearch, publishers);
+        generateOrganizationPath(elasticsearch, publishers, gson);
         for (Publisher publisher: publishers) {
 
             IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
@@ -84,15 +87,64 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         }
     }
 
-    void generateOrganizationPath(Elasticsearch elasticsearch, List<Publisher> publishers) {
+    void generateOrganizationPath(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
 
         final Map<String, Publisher> publisherMap = new HashMap<>();
         publishers.forEach(publisher -> publisherMap.put(publisher.getId(), publisher));
 
-        Publisher stat, fylke, kommune, privat;
-        
+        String[] topDomains = {"STAT", "FYLKE", "KOMMUNE", "PRIVAT"};
+        for (String domain : topDomains) {
+            Publisher topPub = lookupPublisher(elasticsearch.getClient(), domain, gson);
+            if (topPub == null) {
+                topPub = new Publisher();
+                topPub.setOverordnetEnhet("/");
+                topPub.setName(domain);
+                publisherMap.put(domain, topPub);
+            }
+        }
 
+        publishers.forEach( p -> {
+            p.setOrgPath(extractOrganizationPath(p, publisherMap));
+        });
     }
+
+    String extractOrganizationPath(Publisher p, Map<String, Publisher> publisherMap) {
+
+        if (p.getOverordnetEnhet() != null) {
+            Publisher overordnetEnhet = publisherMap.get(p.getOverordnetEnhet());
+            return extractOrganizationPath(overordnetEnhet, publisherMap) + "/" + p.getId();
+        }
+
+        if (p.getOrganisasjonsform() != null) {
+            String orgForm = p.getOrganisasjonsform();
+
+            if ("STAT".equals(orgForm)) {
+                return "/STAT";
+            }
+
+            if ("FYLKE".equals(orgForm)) {
+                return "/FYLKE";
+            }
+
+            if ("KOMM".equals(orgForm)) {
+                return "/KOMMUNE";
+            }
+        }
+
+        return "/PRIVAT";
+    }
+
+    Publisher lookupPublisher(Client client, String id, Gson gson) {
+        GetResponse response = client.prepareGet("dcat", "publisher", id).get();
+
+        if (response.isExists()) {
+            Publisher lookup = gson.fromJson(response.getSourceAsString(), Publisher.class);
+            return lookup;
+        }
+
+        return null;
+    }
+
 
     protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
         logger.debug("Add publisher {} to index.", publisher.getId());
