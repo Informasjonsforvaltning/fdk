@@ -86,16 +86,22 @@ export default class ResultsConcepts extends React.Component {
 
   _renderCompareTerms() {
     const { terms } = this.state;
-    const children = items => items.map((item, index) => (
-      <CompareTerms
-        key={item.uri}
-        prefLabel={item.prefLabel}
-        creator={item.creator.name}
-        onDeleteTerm={this.handleDeleteTerm}
-        termIndex={index}
-        selectedLanguageCode={this.props.selectedLanguageCode}
-      />
-    ));
+    const children = items => items.map((item, index) => {
+      let creator;
+      if (item.creator && item.creator.name) {
+        creator = item.creator.name;
+      }
+      return (
+        <CompareTerms
+          key={item.uri}
+          prefLabel={item.prefLabel}
+          creator={creator}
+          onDeleteTerm={this.handleDeleteTerm}
+          termIndex={index}
+          selectedLanguageCode={this.props.selectedLanguageCode}
+        />
+      );
+    });
     const compareButton = (
       <CompareTermModal
         terms={terms}

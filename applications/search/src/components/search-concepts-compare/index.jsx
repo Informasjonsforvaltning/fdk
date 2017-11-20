@@ -14,8 +14,10 @@ const CompareTerms = (props) => {
         &nbsp;
         {localization.terms.removeTerms}
       </button>
-      <h4>{ title }</h4>
-      <div className="mt-2">{ creator }</div>
+      <h4 className="clearfix">{ title }</h4>
+      {creator &&
+      <div>{ creator }</div>
+      }
     </div>
   );
 }
