@@ -7,6 +7,7 @@ import SearchPage from './containers/search-results';
 import DetailsPage from './containers/search-detailspage';
 import AboutPage from './containers/search-about';
 import GetStartedPage from './containers/search-getstarted-article';
+import ReportsPage from './containers/reports';
 import App from './containers/app';
 // import getStarted from '../static/getStarted.json';
 
@@ -28,6 +29,7 @@ const routes =
       <Route path="/datasets/(:id)" component={DetailsPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/about-registration" component={GetStartedPage} />
+      <Route path="/reports" component={ReportsPage} />
     </Route>
   );
 

@@ -43,6 +43,7 @@ import java.net.UnknownHostException;
  */
 @RestController
 public class DatasetsQueryService {
+
     public static final String INDEX_DCAT = "dcat";
 
     public static final String TYPE_DATA_PUBLISHER = "publisher";
@@ -51,10 +52,12 @@ public class DatasetsQueryService {
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
     public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
+    public static final String FIELD_SUBJECTS_PREFLABEL = "subject.code.raw";
 
     public static final String TERMS_THEME_COUNT = "theme_count";
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
     public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
+    public static final String TERMS_SUBJECTS_COUNT = "subjectsCount";
 
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
     protected Client client = null;
@@ -178,6 +181,7 @@ public class DatasetsQueryService {
                 .setQuery(boolQuery)
                 .setFrom(from)
                 .setSize(size)
+                .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"));

@@ -14,13 +14,14 @@ import {
 } from 'searchkit';
 
 import { QueryTransport } from '../../utils/QueryTransport';
+import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
 import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
-import CustomHitsStats from '../search-result-custom-hitstats';
+import CustomHitsStats2 from '../search-result-custom-hitstats2';
 import createHistory from 'history/createBrowserHistory'
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 
@@ -39,7 +40,7 @@ history.default = () => {
 const searchkit = new SearchkitManager(
   host,
   {
-    transport: new QueryTransport(),
+    transport: new QueryTransport2(),
     createHistory: ()=> {
       console.log('create history runs now');
       return history;
@@ -100,27 +101,10 @@ searchkit.translateFunction = (key) => {
   return translations[key];
 };
 
-export default class ResultsDataset extends React.Component {
+export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
     super(props);
     this.queryObj = qs.parse(window.location.search.substr(1));
-    if (!window.themes) {
-      window.themes = [];
-
-      sa.get('/reference-data/themes')
-        .end((err, res) => {
-          if (!err && res) {
-            res.body.forEach((hit) => {
-              const obj = {};
-              obj[hit.code] = {};
-              obj[hit.code].nb = hit.title.nb;
-              obj[hit.code].nn = hit.title.nb;
-              obj[hit.code].en = hit.title.en;
-              window.themes.push(obj);
-            });
-          }
-        });
-    }
   }
 
   _renderPublisherRefinementListFilter() {
@@ -177,73 +161,29 @@ export default class ResultsDataset extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats} />
+                <HitsStats component={CustomHitsStats2} />
+                <RefinementListFilter
+                  id="publisher"
+                  title="aaaaaaa"
+                  field="subject.no.raw"
+                  operator="AND"
+                  size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                  itemComponent={RefinementOptionPublishers}
+                />
               </div>
             </div>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
                   <div className="pull-right">
-                    <SortingSelector
-                      tabIndex="0"
-                      options={[
-                        {
-                          label: 'sort.relevance',
-                          field: '_score',
-                          order: 'asc',
-                          defaultOption: true
-                        },
-                        {
-                          label: `sort.title`,
-                          field: 'title',
-                          order: 'asc'
-                        },
-                        {
-                          label: `sort.modified`,
-                          field: 'modified',
-                          order: 'desc'
-                        },
-                        {
-                          label: `sort.publisher`,
-                          field: 'publisher.name',
-                          order: 'asc'
-                        }
-                      ]}
-                      listComponent={selectDropdownWithProps}
-                    />
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
-                  <RefinementListFilter
-                    id="theme"
-                    title={localization.facet.theme}
-                    field="theme.code.raw"
-                    operator="AND"
-                    size={5}
-                    itemComponent={RefinementOptionThemes}
-                  />
-                  <RefinementListFilter
-                    id="accessRight"
-                    title={localization.facet.accessRight}
-                    field="accessRights.authorityCode.raw"
-                    operator="AND"
-                    size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                    itemComponent={RefinementOptionPublishers}
-                  />
                   {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-sm-8">
-                  <Hits
-                    mod="sk-hits-grid"
-                    hitsPerPage={50}
-                    itemComponent={searchHitItemWithProps}
-                    sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
-                  />
-                  <Pagination
-                    showNumbers
-                  />
                 </div>
               </div>
             </section>
@@ -254,10 +194,10 @@ export default class ResultsDataset extends React.Component {
   }
 }
 
-ResultsDataset.defaultProps = {
+ResultsDatasetsReport.defaultProps = {
   selectedLanguageCode: null
 };
 
-ResultsDataset.propTypes = {
+ResultsDatasetsReport.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
