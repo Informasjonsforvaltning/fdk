@@ -154,6 +154,9 @@ public class BrregAgentConverter {
 
                 if (organisationNumber == null) {
                     organisationNumber = getOrgnrFromUri(uri);
+                    if (organisationNumber != null) {
+                        model.add(publisherResource, DCTerms.identifier, organisationNumber);
+                    }
                 }
 
                 if (organisationNumber == null) {
@@ -203,7 +206,7 @@ public class BrregAgentConverter {
             String organisasjonsform =  subject.getProperty(EnhetsregisteretRDF.organisasjonsform).getString();
             Statement overordnetEnhet = subject.getProperty(EnhetsregisteretRDF.overordnetEnhet);
 
-            if (organisasjonsform.equals(ORGANISASJONSLEDD) && overordnetEnhet != null) {
+            if (overordnetEnhet != null) {
 
                 logger.trace("Found superior publisher: {}", overordnetEnhet.getObject());
                 String supOrgUri = String.format(publisherIdURI, overordnetEnhet.getObject().toString());

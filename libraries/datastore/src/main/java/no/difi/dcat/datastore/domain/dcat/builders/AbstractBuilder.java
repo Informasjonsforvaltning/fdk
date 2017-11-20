@@ -520,6 +520,7 @@ public abstract class AbstractBuilder {
 
     protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
         publisher.setUri(object.getURI());
+        publisher.setId(extractAsString(object,DCTerms.identifier));
         publisher.setName(extractAsString(object, FOAF.name));
 
         Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
@@ -534,17 +535,28 @@ public abstract class AbstractBuilder {
 
         hasProperty = object.getProperty(EnhetsregisteretRDF.naeringskode);
         if (hasProperty != null) {
-            Resource naceResource = hasProperty.getResource().asResource();
-            SkosCode naceCode = new SkosCode();
-            String beskrivelse = extractAsString(naceResource, EnhetsregisteretRDF.beskrivelse);
-            String kode = extractAsString(naceResource, EnhetsregisteretRDF.kode);
-            naceCode.setUri("http://www.ssb.no/nace/sn2007/" + kode);
-            naceCode.setCode(kode);
-            Map<String,String> languageString = new HashMap<>();
-            languageString.put("no", beskrivelse);
-            naceCode.setPrefLabel(languageString);
-            publisher.setNaeringskode(naceCode);
+            publisher.setNaeringskode(extractBRCode(hasProperty, "http://www.ssb.no/nace/sn2007/"));
         }
+
+        hasProperty = object.getProperty(EnhetsregisteretRDF.institusjonellSektorkode);
+        if (hasProperty != null) {
+            publisher.setSektorkode(extractBRCode(hasProperty, "http://www.brreg.no/sektorkode/"));
+        }
+    }
+
+    private static SkosCode extractBRCode(Statement hasProperty, String codeUri) {
+
+        Resource codeResource = hasProperty.getResource().asResource();
+        SkosCode skosCode = new SkosCode();
+        String beskrivelse = extractAsString(codeResource, EnhetsregisteretRDF.beskrivelse);
+        String kode = extractAsString(codeResource, EnhetsregisteretRDF.kode);
+        skosCode.setUri(codeUri + kode);
+        skosCode.setCode(kode);
+        Map<String,String> languageString = new HashMap<>();
+        languageString.put("no", beskrivelse);
+        skosCode.setPrefLabel(languageString);
+
+        return skosCode;
     }
 
     protected static SkosCode getCode(Map<String, SkosCode> codes, String locUri) {

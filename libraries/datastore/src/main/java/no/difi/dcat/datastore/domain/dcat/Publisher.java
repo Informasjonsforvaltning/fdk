@@ -16,6 +16,8 @@ public class Publisher extends no.dcat.shared.Publisher {
     private String overordnetEnhet;
     private String organisasjonsform;
     private SkosCode naeringskode;
+    private SkosCode sektorkode;
+
     // private List<Publisher> underPublishers;
     // private Publisher superierPublishers;
 

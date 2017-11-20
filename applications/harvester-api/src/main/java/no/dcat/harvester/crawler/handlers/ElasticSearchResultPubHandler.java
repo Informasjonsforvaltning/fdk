@@ -87,12 +87,12 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         }
     }
 
-    void generateOrganizationPath(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
+    public void generateOrganizationPath(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
 
         final Map<String, Publisher> publisherMap = new HashMap<>();
         publishers.forEach(publisher -> publisherMap.put(publisher.getId(), publisher));
 
-        String[] topDomains = {"STAT", "FYLKE", "KOMMUNE", "PRIVAT"};
+        String[] topDomains = {"STAT", "FYLKE", "KOMMUNE", "PRIVAT", "ANNET"};
         for (String domain : topDomains) {
             Publisher topPub = lookupPublisher(elasticsearch.getClient(), domain, gson);
             if (topPub == null) {
@@ -109,32 +109,37 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     }
 
     String extractOrganizationPath(Publisher p, Map<String, Publisher> publisherMap) {
+        String prefix = "";
+        if (p != null) {
+            if (p.getOverordnetEnhet() != null) {
+                Publisher overordnetEnhet = publisherMap.get(p.getOverordnetEnhet());
+                prefix = extractOrganizationPath(overordnetEnhet, publisherMap) ;
+            } else {
+                if (p.getOrganisasjonsform() != null) {
+                    String orgForm = p.getOrganisasjonsform();
 
-        if (p.getOverordnetEnhet() != null) {
-            Publisher overordnetEnhet = publisherMap.get(p.getOverordnetEnhet());
-            return extractOrganizationPath(overordnetEnhet, publisherMap) + "/" + p.getId();
+                    if ("STAT".equals(orgForm)) {
+                        prefix = "/STAT";
+                    }
+
+                    if ("FYLK".equals(orgForm)) {
+                        prefix = "/FYLKE";
+                    }
+
+                    if ("KOMM".equals(orgForm)) {
+                        prefix = "/KOMMUNE";
+                    }
+                } else {
+                    prefix = "/PRIVAT";
+                }
+            }
+            return prefix + "/" + p.getId();
         }
 
-        if (p.getOrganisasjonsform() != null) {
-            String orgForm = p.getOrganisasjonsform();
-
-            if ("STAT".equals(orgForm)) {
-                return "/STAT";
-            }
-
-            if ("FYLKE".equals(orgForm)) {
-                return "/FYLKE";
-            }
-
-            if ("KOMM".equals(orgForm)) {
-                return "/KOMMUNE";
-            }
-        }
-
-        return "/PRIVAT";
+        return "/ANNET";
     }
 
-    Publisher lookupPublisher(Client client, String id, Gson gson) {
+    public Publisher lookupPublisher(Client client, String id, Gson gson) {
         GetResponse response = client.prepareGet("dcat", "publisher", id).get();
 
         if (response.isExists()) {
