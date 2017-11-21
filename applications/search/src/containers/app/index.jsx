@@ -111,7 +111,7 @@ export default class App extends React.Component {
                     tabIndex="0"
                     id="search-menu-dropdown-1"
                     bsStyle="default"
-                    className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
+                    className="fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
                     title={localization.app.menu}
                   >
                     <MenuItem
