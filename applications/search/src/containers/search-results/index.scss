@@ -65,6 +65,32 @@
 }
 */
 
+.search-filters .sk-item-list > input[type=checkbox] {
+  position: absolute;
+  left:-9999px;
+}
+.search-filters .sk-item-list > label {
+  cursor: pointer;
+}
+.search-filters .sk-item-list > label:last-child {
+  display: none;
+}
+.search-filters div.checkbox:nth-child(-n+5) {
+  display: block;
+}
+.search-filters input[type=checkbox]:checked ~ div {
+  display: block !important;
+}
+.search-filters input[type=checkbox]:checked ~ label {
+  display: none !important;
+}
+.search-filters input[type=checkbox]:checked ~ label:last-child {
+  display: inline-block !important;
+}
+.search-filters div.checkbox {
+  display: none;
+}
+
 /*  SEARCHPAGE PAGINATION  */
 
 .sk-pagination-navigation .sk-toggle-option:first-child,
@@ -73,7 +99,6 @@
 }
 
 .sk-pagination-navigation {
-  width:300px;
   margin:10px auto;
 }
 
@@ -84,34 +109,28 @@
 
 .sk-toggle {
   display: flex;
+  justify-content: center;
 }
 .sk-toggle-option {
   cursor: pointer;
   white-space: nowrap;
   font-size: 1.5rem;
   line-height: 1.5rem;
-  border-radius: 6px;
-  border: 3px solid $color6;
   padding: 11px 12px 10px 12px;
-  margin: 0px 2px 6px 0px;
-  display: inline-block;
-  background-image: none;
-  text-shadow: none;
+  margin: 0px 0px 6px 0px;
+  //display: inline-block;
+  //background-image: none;
+  //text-shadow: none;
   text-align: center;
-  box-shadow: none;
-  background-color: $color5;
-  border-color: $color6;
+  text-decoration: underline;
   &:hover {
-    border-radius: 3px;
-    border: 3px solid $color5;
     background-color: $color5;
+    text-decoration: none;
   }
 }
 
 .sk-toggle-option.sk-toggle__item.is-disabled {
   color: $color4;
-  border-radius: 4px;
-  margin: 0px 6px 6px 0px;
 }
 
 
@@ -134,18 +153,13 @@
   color: #ddd;
 }
 .sk-toggle-option:first-child {
-  border-radius: 3px 0 0 3px;
 }
 .sk-toggle-option:last-child {
-  border-radius: 0 3px 3px 0;
-  border-right: 1px solid #ccc;
 }
 .sk-toggle-option.is-active {
   background-color: $color1;
   color: $color0;
-  &:hover {
-    border-color: $color1;
-  }
+  text-decoration: none;
 }
 
 /* SEARCHPAGE REFINEMENT FILTER */
