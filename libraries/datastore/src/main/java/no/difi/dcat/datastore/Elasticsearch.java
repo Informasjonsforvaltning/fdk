@@ -163,31 +163,30 @@ public class Elasticsearch implements AutoCloseable {
      */
     public void createIndex(String index) {
         //Set mapping for correct language stemming and indexing
-        if (index != null && index.equals("harvest")) {
-            Resource r = new ClassPathResource("harvest_catalog_mapping.json");
-            Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
-            try {
-                createElasticsearchIndex("harvest");
+        if (index != null) {
+            if (index.equals("harvest")) {
+                Resource r = new ClassPathResource("harvest_catalog_mapping.json");
+                Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
+                try {
+                    createElasticsearchIndex("harvest");
 
-                createMapping(index, "catalog", r.getInputStream());
-                createMapping(index, "dataset", r2.getInputStream());
-            } catch (IOException e) {
-                logger.error("Unable to create index for {}", index);
-            }
-        } else {
-
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            try {
-                Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETUP_FILENAME);
-
-                for (Resource r : resources) {
-
-                    InputStream is = r.getInputStream();
-                    createElasticsearchIndex(index);
-                    createMapping(index, "dataset", is);
+                    createMapping(index, "catalog", r.getInputStream());
+                    createMapping(index, "dataset", r2.getInputStream());
+                } catch (IOException e) {
+                    logger.error("Unable to create index for {}. Reason {}", index, e.getLocalizedMessage());
                 }
-            } catch (IOException e) {
-                logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
+            } else if (index.equals("dcat")) {
+
+                try {
+                    Resource r = new ClassPathResource(DCAT_INDEX_SETUP_FILENAME);
+
+                    createElasticsearchIndex(index);
+                    createMapping(index, "dataset", r.getInputStream());
+
+                } catch (IOException e) {
+                    logger.error("Unable to create index [{}]" +
+                            ". Reason {} ", index, e.getLocalizedMessage());
+                }
             }
         }
     }
