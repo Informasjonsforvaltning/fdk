@@ -29,4 +29,6 @@ public class DCATNO {
     public static final Property legalBasisForRestriction = model.createProperty(NS, "legalBasisForRestriction");
     public static final Property legalBasisForAccess = model.createProperty(NS, "legalBasisForAccess");
     public static final Property informationModel = model.createProperty(NS, "informationModel");
+
+    public static final Property organizationPath = model.createProperty(NS, "organizationPath");
 }

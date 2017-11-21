@@ -11,6 +11,7 @@ public class Publisher {
     private String uri;
     private String id;
     private String name;
+    private String orgPath;
 
     public Publisher(String orgnr) {
         this.id = orgnr;

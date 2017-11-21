@@ -9,6 +9,7 @@ import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.Model;
@@ -105,9 +106,23 @@ public abstract class AbstractBuilder {
             String x = getStringFromStatement(statement);
             if (x != null) return x;
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getMessage());
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getLocalizedMessage());
         }
         return null;
+    }
+
+    public static boolean extractAsBoolean(Resource resource, Property property) {
+        try {
+            Statement statement = resource.getProperty(property);
+            boolean result  = statement.getObject().asLiteral().getBoolean();
+
+            return result;
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getLocalizedMessage());
+
+        }
+
+        return false;
     }
 
 
@@ -520,7 +535,10 @@ public abstract class AbstractBuilder {
 
     protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
         publisher.setUri(object.getURI());
+        publisher.setId(extractAsString(object,DCTerms.identifier));
         publisher.setName(extractAsString(object, FOAF.name));
+        publisher.setValid(extractAsBoolean(object, DCTerms.valid));
+        publisher.setOrgPath(extractAsString(object, DCATNO.organizationPath));
 
         Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
         if (hasProperty != null) {
@@ -531,6 +549,31 @@ public abstract class AbstractBuilder {
         if (hasProperty != null) {
             publisher.setOverordnetEnhet(extractAsString(object, EnhetsregisteretRDF.overordnetEnhet));
         }
+
+        hasProperty = object.getProperty(EnhetsregisteretRDF.naeringskode);
+        if (hasProperty != null) {
+            publisher.setNaeringskode(extractBRCode(hasProperty, "http://www.ssb.no/nace/sn2007/"));
+        }
+
+        hasProperty = object.getProperty(EnhetsregisteretRDF.institusjonellSektorkode);
+        if (hasProperty != null) {
+            publisher.setSektorkode(extractBRCode(hasProperty, "http://www.brreg.no/sektorkode/"));
+        }
+    }
+
+    private static SkosCode extractBRCode(Statement hasProperty, String codeUri) {
+
+        Resource codeResource = hasProperty.getResource().asResource();
+        SkosCode skosCode = new SkosCode();
+        String beskrivelse = extractAsString(codeResource, EnhetsregisteretRDF.beskrivelse);
+        String kode = extractAsString(codeResource, EnhetsregisteretRDF.kode);
+        skosCode.setUri(codeUri + kode);
+        skosCode.setCode(kode);
+        Map<String,String> languageString = new HashMap<>();
+        languageString.put("no", beskrivelse);
+        skosCode.setPrefLabel(languageString);
+
+        return skosCode;
     }
 
     protected static SkosCode getCode(Map<String, SkosCode> codes, String locUri) {
