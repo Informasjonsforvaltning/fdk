@@ -86,33 +86,16 @@
 	padding-left: 10px;
 }
 
-.fdk-label-distribution {
-	padding: 10px 12px;
-	margin: 6px 2px 0px 0px;
-	color: $color1;
-	border: 2px solid;
-	border-radius: 5px;
-	size: 1.4rem;
-	line-height: 1.4rem;
-	size: auto;
-	display: inline-block;
-	border: 2px solid;
+.fdk-distributions-green {
+	border-left: 10px solid $color-green;
 }
 
-.fdk-label-distribution-offentlig {
-	border-color: $color-green;
+.fdk-distributions-yellow {
+	border-left: 10px solid $color-yellow;
 }
 
-.fdk-label-distribution-begrenset {
-	border-color: $color-yellow;
-}
-
-.fdk-label-distribution-skjermet {
-	border-color: $color-red;
-}
-
-.fdk-label-distribution-testdata {
-	border-style: dashed;
+.fdk-distributions-red {
+	border-left: 10px solid $color-red;
 }
 
 

@@ -152,6 +152,13 @@ SEARCHPAGE SORTING DROPDOWN
             box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
         }
     }
+    .fdk-button-dropdown {
+        &:focus, &:active, &:hover {
+            background-color: $color0;
+            border-color: transparent;
+            box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
+        }
+    }
 
 }
 
@@ -161,7 +168,13 @@ SEARCHPAGE SORTING DROPDOWN
         border-color: transparent;
         box-shadow: none;
     }
-
+    .fdk-button-dropdown {
+        &:focus, &:active, &:hover {
+            background-color: $color0;
+            border-color: transparent;
+            box-shadow: none;
+        }
+    }
 }
 
     /*
