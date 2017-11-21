@@ -27,10 +27,11 @@ public class UploadSubjectsToElastic {
     @Test
     @Ignore
     public void uploadSubjects() throws Throwable {
+        final String lok = "http://localhost:9200";
         final String ut1 = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no";
         final String st2 = "http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
 
-        postSubjects(st2);
+        postSubjects(ut1);
 
     }
 
