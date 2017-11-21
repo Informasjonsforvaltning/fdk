@@ -28,5 +28,8 @@
         dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/974760673> ; #BRREG
         dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/940155223>;  #Gjøvik
         dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/961382335>; #OPPLAND
-        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/981522427>. #Fylkeskommunalt
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/981522427>; #Fylkeskommunalt
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/919781513> ; # Slem eiendom privat
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/984291922>; # IKS
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/875265172>.
 

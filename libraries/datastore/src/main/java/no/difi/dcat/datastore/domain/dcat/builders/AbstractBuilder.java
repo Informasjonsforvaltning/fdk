@@ -9,6 +9,7 @@ import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import org.apache.jena.rdf.model.Model;
@@ -105,9 +106,23 @@ public abstract class AbstractBuilder {
             String x = getStringFromStatement(statement);
             if (x != null) return x;
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getMessage());
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getLocalizedMessage());
         }
         return null;
+    }
+
+    public static boolean extractAsBoolean(Resource resource, Property property) {
+        try {
+            Statement statement = resource.getProperty(property);
+            boolean result  = statement.getObject().asLiteral().getBoolean();
+
+            return result;
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getLocalizedMessage());
+
+        }
+
+        return false;
     }
 
 
@@ -522,6 +537,8 @@ public abstract class AbstractBuilder {
         publisher.setUri(object.getURI());
         publisher.setId(extractAsString(object,DCTerms.identifier));
         publisher.setName(extractAsString(object, FOAF.name));
+        publisher.setValid(extractAsBoolean(object, DCTerms.valid));
+        publisher.setOrgPath(extractAsString(object, DCATNO.organizationPath));
 
         Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
         if (hasProperty != null) {

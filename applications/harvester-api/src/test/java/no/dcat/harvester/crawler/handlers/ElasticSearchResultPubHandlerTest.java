@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 public class ElasticSearchResultPubHandlerTest {
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchResultPubHandlerTest.class);
 
-    private static String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
+    private static String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"valid\": false,\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
 
     @Test
     public void addPublisherToIndexOK() {

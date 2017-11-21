@@ -6,20 +6,27 @@ import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
+import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,14 +67,9 @@ public class BrregAgentConverter {
         logger.debug("Read {} canonical names from file.", canonicalNames.size());
     }
 
-    private Model convert(InputStream inputStream) {
-        try {
-            PostProcessingJena postProcessingJena = xmlToRdfObject.convertForPostProcessing(inputStream);
-            return convert(postProcessingJena);
-        } catch (Exception e) {
-            logger.error("Error converting InputStream", e);
-            return ModelFactory.createDefaultModel();
-        }
+    private Model convert(InputStream inputStream) throws IOException, SAXException, ParserConfigurationException {
+        PostProcessingJena postProcessingJena = xmlToRdfObject.convertForPostProcessing(inputStream);
+        return convert(postProcessingJena);
     }
 
     /**
@@ -80,7 +82,7 @@ public class BrregAgentConverter {
         Model extractedModel = ModelFactory.createDefaultModel();
         try {
 
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader(); 
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
             extractedModel = postProcessing
                     .mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00001.qr"), new Object())
@@ -101,6 +103,8 @@ public class BrregAgentConverter {
     public void collectFromModel(Model model) {
         processAgents(model, DCTerms.publisher);
         processAgents(model, DCTerms.creator);
+
+        processAgentHierarchy(model);
     }
 
     private void processAgents(Model model, Property agentProperty) {
@@ -124,13 +128,65 @@ public class BrregAgentConverter {
         }
     }
 
+    void processAgentHierarchy(Model model) {
+        List<Publisher> publishers = new PublisherBuilder(model).build();
+
+        final Map<String, Publisher> publisherMap = new HashMap<>();
+        publishers.forEach(publisher -> publisherMap.put(publisher.getId(), publisher));
+
+        publishers.forEach( p -> {
+            p.setOrgPath(extractOrganizationPath(p, publisherMap));
+            Resource r = model.getResource(p.getUri());
+            r.addProperty(DCATNO.organizationPath, p.getOrgPath());
+        });
+    }
+
+    String extractOrganizationPath(Publisher p, Map<String, Publisher> publisherMap) {
+        String prefix = "";
+        if (p != null) {
+            if (p.getOverordnetEnhet() != null && !p.getOverordnetEnhet().isEmpty() && !"/".equals(p.getOverordnetEnhet())) {
+                Publisher overordnetEnhet = publisherMap.get(p.getOverordnetEnhet());
+                prefix = extractOrganizationPath(overordnetEnhet, publisherMap) ;
+            } else {
+                if (p.isValid()) {
+                    if (p.getOrganisasjonsform() != null) {
+                        String orgForm = p.getOrganisasjonsform();
+
+                        if ("STAT".equals(orgForm)) {
+                            prefix = "/STAT";
+                        } else if ("FYLK".equals(orgForm)) {
+                            prefix = "/FYLKE";
+                        } else if ("KOMM".equals(orgForm)) {
+                            prefix = "/KOMMUNE";
+                        } else if ("IKS".equals(orgForm)) {
+                            prefix = "/ANNET";
+                        } else {
+                            prefix = "/PRIVAT";
+                        }
+                    } else {
+                        prefix = "/ANNET";
+                    }
+                } else {
+                    prefix = "/ANNET";
+                }
+            }
+            String id = p.getId();
+            if (id == null || id.isEmpty()) {
+                id = p.getName();
+            }
+            return prefix + "/" + id;
+        }
+
+        return null;
+    }
+
     /* For each organisation, transform the RDF to match what we expect from it */
 
     protected void collectFromUri(String uri, Model model, Resource publisherResource) {
 
         if (!uri.endsWith(".xml")) {
-            if(uri.endsWith(".json")) {
-                uri = uri.replaceAll(".json",".xml");
+            if (uri.endsWith(".json")) {
+                uri = uri.replaceAll(".json", ".xml");
             } else {
                 uri = uri.concat(".xml");
             }
@@ -141,14 +197,6 @@ public class BrregAgentConverter {
         logger.debug("Collecting from URL {} using subject URI {}", uri, publisherResource.toString());
         try {
             if (brregCache != null) {
-
-                String content = brregCache.get(new URL(uri));
-                logger.trace("[model_before_conversion] {}", content);
-
-                InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
-                Model masterDataModel = convert(inputStream);
-
-                removeDuplicateProperties(model, masterDataModel, FOAF.name); //TODO: remove all duplicate properties?
 
                 String organisationNumber = getOrgnrFromIdentifier(model, publisherResource);
 
@@ -162,6 +210,14 @@ public class BrregAgentConverter {
                 if (organisationNumber == null) {
                     logger.warn("Publisher does not have a organisation number [{}]", uri);
                 }
+
+                String content = brregCache.get(new URL(uri));
+                logger.trace("[model_before_conversion] {}", content);
+
+                InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+                Model masterDataModel = convert(inputStream);
+
+                removeDuplicateProperties(model, masterDataModel, FOAF.name); //TODO: remove all duplicate properties?
 
                 String organizationName = null;
 
@@ -188,13 +244,16 @@ public class BrregAgentConverter {
                     model.add(publisherResource, FOAF.name, model.createLiteral(organizationName));
                 }
 
+                model.addLiteral(publisherResource, DCTerms.valid, true);
+
+
             } else {
                 logger.warn("Unable to lookup publisher {} - cache is not initiatilized.", uri);
             }
 
-
         } catch (Exception e) {
-            logger.warn("Failed to lookup publisher: {} reason {}", uri, e.getMessage(),e);
+            model.addLiteral(publisherResource, DCTerms.valid, false);
+            logger.warn("Failed to lookup publisher: {}. Reason {}", uri, e.getMessage());
         }
     }
 
@@ -203,7 +262,7 @@ public class BrregAgentConverter {
 
         while (subjects.hasNext()) {
             Resource subject = subjects.next();
-            String organisasjonsform =  subject.getProperty(EnhetsregisteretRDF.organisasjonsform).getString();
+            String organisasjonsform = subject.getProperty(EnhetsregisteretRDF.organisasjonsform).getString();
             Statement overordnetEnhet = subject.getProperty(EnhetsregisteretRDF.overordnetEnhet);
 
             if (overordnetEnhet != null) {
@@ -242,10 +301,10 @@ public class BrregAgentConverter {
         };
 
         if (resourceURI.endsWith(".xml")) {
-            resourceURI = resourceURI.substring(0,resourceURI.indexOf(".xml"));
+            resourceURI = resourceURI.substring(0, resourceURI.indexOf(".xml"));
         }
 
-        for (String localName : properties ) {
+        for (String localName : properties) {
 
             Property property = model.getProperty(namespace, localName);
             NodeIterator nodes = model.listObjectsOfProperty(property);
@@ -254,8 +313,8 @@ public class BrregAgentConverter {
                 if (blankNode.isResource() && blankNode.isAnon()) {
                     Resource resource = blankNode.asResource();
                     String newUri = resourceURI + "/" + localName;
-                    logger.debug("Renames {} blank node {} to {}",resourceURI, resource.getId(), newUri);
-                    ResourceUtils.renameResource(resource, newUri );
+                    logger.debug("Renames {} blank node {} to {}", resourceURI, resource.getId(), newUri);
+                    ResourceUtils.renameResource(resource, newUri);
                 }
             }
 
@@ -276,7 +335,7 @@ public class BrregAgentConverter {
         while (incomingModelIterator.hasNext()) {
             // was
             /*
-			Resource existingResource = existingModel.getResource(incomingModelIterator.next().getURI());
+            Resource existingResource = existingModel.getResource(incomingModelIterator.next().getURI());
 			existingResource.removeAll(property);
 			*/
 
@@ -325,5 +384,5 @@ public class BrregAgentConverter {
         return null;
     }
 
-    
+
 }

@@ -3,7 +3,6 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.dcat.harvester.crawler.DatasetLookup;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
@@ -17,9 +16,8 @@ import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class for loading the complete publisher-hieararchi.
@@ -73,7 +71,8 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         List<Publisher> publishers = new PublisherBuilder(model).build();
-        generateOrganizationPath(elasticsearch, publishers, gson);
+        publishers.addAll(getTopAgentsNotIndexed(elasticsearch, publishers, gson));
+
         for (Publisher publisher: publishers) {
 
             IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
@@ -87,10 +86,8 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         }
     }
 
-    public void generateOrganizationPath(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
-
-        final Map<String, Publisher> publisherMap = new HashMap<>();
-        publishers.forEach(publisher -> publisherMap.put(publisher.getId(), publisher));
+    public List<Publisher> getTopAgentsNotIndexed(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
+        List<Publisher> result = new ArrayList<>();
 
         String[] topDomains = {"STAT", "FYLKE", "KOMMUNE", "PRIVAT", "ANNET"};
         for (String domain : topDomains) {
@@ -98,45 +95,15 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
             if (topPub == null) {
                 topPub = new Publisher();
                 topPub.setOverordnetEnhet("/");
+                topPub.setOrgPath("/"+ domain);
+                topPub.setId(domain);
                 topPub.setName(domain);
-                publisherMap.put(domain, topPub);
+
+                result.add (topPub);
             }
         }
 
-        publishers.forEach( p -> {
-            p.setOrgPath(extractOrganizationPath(p, publisherMap));
-        });
-    }
-
-    String extractOrganizationPath(Publisher p, Map<String, Publisher> publisherMap) {
-        String prefix = "";
-        if (p != null) {
-            if (p.getOverordnetEnhet() != null) {
-                Publisher overordnetEnhet = publisherMap.get(p.getOverordnetEnhet());
-                prefix = extractOrganizationPath(overordnetEnhet, publisherMap) ;
-            } else {
-                if (p.getOrganisasjonsform() != null) {
-                    String orgForm = p.getOrganisasjonsform();
-
-                    if ("STAT".equals(orgForm)) {
-                        prefix = "/STAT";
-                    }
-
-                    if ("FYLK".equals(orgForm)) {
-                        prefix = "/FYLKE";
-                    }
-
-                    if ("KOMM".equals(orgForm)) {
-                        prefix = "/KOMMUNE";
-                    }
-                } else {
-                    prefix = "/PRIVAT";
-                }
-            }
-            return prefix + "/" + p.getId();
-        }
-
-        return "/ANNET";
+        return result;
     }
 
     public Publisher lookupPublisher(Client client, String id, Gson gson) {
@@ -149,7 +116,6 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
 
         return null;
     }
-
 
     protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
         logger.debug("Add publisher {} to index.", publisher.getId());

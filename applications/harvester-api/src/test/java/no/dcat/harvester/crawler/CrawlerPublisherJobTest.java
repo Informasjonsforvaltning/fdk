@@ -89,7 +89,7 @@ public class CrawlerPublisherJobTest {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
 
-        handlerSpy.generateOrganizationPath(elasticsearch, publishers, gson);
+        handlerSpy.getTopAgentsNotIndexed(elasticsearch, publishers, gson);
 
         publishers.forEach(publisher -> {
             logger.info("orgnr: {} -> {}, {} {}", publisher.getId(), publisher.getOrgPath(), publisher.getName(), publisher.getNaeringskode());
