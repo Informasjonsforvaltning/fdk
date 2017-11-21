@@ -48,6 +48,7 @@ const CustomHitsStats2 = (props) => {
         <div className="sk-hits-stats__info nosearch" data-qa="info">
           <span>{hitsCount}</span> dataset totalt
         </div>
+        <pre>{JSON.stringify(props, null, 2) }</pre>
       </div>
     );
   }

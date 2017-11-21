@@ -23,7 +23,7 @@ export default class ReportsPage extends React.Component {
         <ResultsDatasetsReport
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
-        <h1>aaaa</h1>
+        <pre>{JSON.stringify(this.state, null, 2) }</pre>
       </div>
 
     );

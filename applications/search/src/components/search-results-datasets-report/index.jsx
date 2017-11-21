@@ -164,27 +164,28 @@ export default class ResultsDatasetsReport extends React.Component {
                 <HitsStats component={CustomHitsStats2} />
                 <RefinementListFilter
                   id="publisher"
-                  title="aaaaaaa"
+                  title=""
                   field="subject.no.raw"
                   operator="AND"
                   size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                   itemComponent={RefinementOptionPublishers}
                 />
+                <pre>
+                  {JSON.stringify(this.props, null, 2) }
+                </pre>
               </div>
             </div>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
-                  <div className="pull-right">
-                  </div>
+                  <div className="pull-right" />
                 </div>
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                   {this._renderPublisherRefinementListFilter()}
                 </div>
-                <div id="datasets" className="col-sm-8">
-                </div>
+                <div id="datasets" className="col-sm-8" />
               </div>
             </section>
           </div>
