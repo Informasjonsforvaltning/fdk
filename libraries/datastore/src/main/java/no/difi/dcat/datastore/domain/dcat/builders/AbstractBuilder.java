@@ -114,11 +114,13 @@ public abstract class AbstractBuilder {
     public static boolean extractAsBoolean(Resource resource, Property property) {
         try {
             Statement statement = resource.getProperty(property);
-            boolean result  = statement.getObject().asLiteral().getBoolean();
+            if (statement != null) {
+                boolean result = statement.getObject().asLiteral().getBoolean();
 
-            return result;
+                return result;
+            }
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}. Reason {}", property, resource.getURI(), e.getLocalizedMessage());
+            logger.warn("Error when extracting boolean {} from resource {}. Reason {}", property, resource.getURI(), e.getLocalizedMessage());
 
         }
 
