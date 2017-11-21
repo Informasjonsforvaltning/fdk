@@ -4,7 +4,6 @@ package no.dcat.harvester.crawler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.HarvesterApplication;
-import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.difi.dcat.datastore.Elasticsearch;
 import no.difi.dcat.datastore.domain.DcatSource;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
@@ -24,15 +23,14 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Class for testing CrawlerPublisherJob.
@@ -40,18 +38,6 @@ import static org.mockito.Mockito.when;
 public class CrawlerPublisherJobTest {
     private static Logger logger = LoggerFactory.getLogger(CrawlerPublisherJobTest.class);
 
-
-    @Mock
-    Elasticsearch elasticsearch;
-
-    @Mock
-    Client client;
-
-    @Mock
-    BulkRequestBuilder bulkRequestBuilder;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Test
     public void testThatHandlerIsInvoked() {
@@ -68,33 +54,6 @@ public class CrawlerPublisherJobTest {
         j.run();
 
         verify(handler).process(anyObject(), anyObject(), anyObject());
-    }
-
-    @Test
-    public void orgPathOK () throws Throwable {
-        Resource r = new ClassPathResource("organizations.ttl");
-        ElasticSearchResultPubHandler handler = new ElasticSearchResultPubHandler(null, 0, null);
-        when(elasticsearch.getClient()).thenReturn(client);
-        when(client.prepareBulk()).thenReturn(bulkRequestBuilder);
-        ElasticSearchResultPubHandler handlerSpy = spy(handler);
-        //when(handlerSpy.lookupPublisher(any(), anyString(), any())).thenReturn(null);
-        doReturn(null).when(handlerSpy).lookupPublisher(any(), anyString(), any());
-
-        Model model = new CrawlerJob(null,null,HarvesterApplication.getBrregCache(), null).loadModelAndValidate(r.getURL());
-
-        model.write(System.out, "TURTLE");
-
-
-        List<Publisher> publishers = new PublisherBuilder(model).build();
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
-
-
-        handlerSpy.getTopAgentsNotIndexed(elasticsearch, publishers, gson);
-
-        publishers.forEach(publisher -> {
-            logger.info("orgnr: {} -> {}, {} {}", publisher.getId(), publisher.getOrgPath(), publisher.getName(), publisher.getNaeringskode());
-        });
-
     }
 
 }
