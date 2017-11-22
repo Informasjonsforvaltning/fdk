@@ -4,6 +4,8 @@ import localization from '../../components/localization';
 import CompareTermModalContent from '../search-concepts-compare-modal-content';
 import './index.scss';
 
+const ReactGA = require('react-ga');
+
 export default class CompareTermModal extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ export default class CompareTermModal extends React.Component {
 
   close() {
     this.setState(
-      { 
+      {
         showModal: false,
         showBar: true
       }
@@ -25,8 +27,9 @@ export default class CompareTermModal extends React.Component {
   }
 
   open() {
+    ReactGA.modalview('/concepts/compare');
     this.setState(
-      { 
+      {
         showModal: true,
         showBar: false
       }
@@ -34,7 +37,7 @@ export default class CompareTermModal extends React.Component {
   }
 
   render() {
-    let cols = 'col-md-';    
+    let cols = 'col-md-';
     switch ((12 / this.props.terms.length)) {
       case 6:
         cols += '6';
@@ -42,7 +45,7 @@ export default class CompareTermModal extends React.Component {
       case 4:
         cols += '4';
         break;
-      default: 
+      default:
         cols += '6';
         break;
     }
@@ -74,14 +77,14 @@ export default class CompareTermModal extends React.Component {
           &nbsp;
           {localization.compare.openCompare}
         </button>
-        <Modal 
-          show={this.state.showModal} 
+        <Modal
+          show={this.state.showModal}
           onHide={this.close}
           bsSize="large"
           dialogClassName="fdk-modal"
         >
           <ModalHeader>
-            <ModalTitle onClick={this.close}>     
+            <ModalTitle onClick={this.close}>
               <i className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0" />
               &nbsp;
               {localization.compare.hideCompare}
@@ -92,7 +95,7 @@ export default class CompareTermModal extends React.Component {
               terms={this.props.terms}
               selectedLanguageCode={this.props.selectedLanguageCode}
               cols={cols}
-            />            
+            />
             <div className="row">
               {removeTerms(this.props.terms)}
             </div>

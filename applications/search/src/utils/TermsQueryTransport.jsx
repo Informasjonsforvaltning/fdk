@@ -2,6 +2,7 @@ import {AxiosESTransport} from "searchkit";
 const defaults = require("lodash/defaults");
 import * as axios from "axios";
 const qs = require('qs');
+const ReactGA = require('react-ga');
 
 export class TermsQueryTransport extends AxiosESTransport {
   constructor(host, options) {
@@ -67,6 +68,14 @@ export class TermsQueryTransport extends AxiosESTransport {
     if(query.query) {
       let q = query.query.simple_query_string.query;
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+    }
+
+    if (hasSingleWord) {
+      ReactGA.event({
+        category: 'Søk',
+        action: 'Søk i begrep',
+        label: query.query.simple_query_string.query
+      });
     }
 
     let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters
