@@ -105,47 +105,42 @@ export default class App extends React.Component {
                 </p>
               </div>
 
-              <div className="col-md-4 fdk-header-right">
-                <div className="fdk-float-right">
-                  <DropdownButton
-                    tabIndex="0"
-                    id="search-menu-dropdown-1"
-                    bsStyle="default"
-                    className="dropdown-toggle fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
-                    title={localization.app.menu}
+              <div className="col-sm-12 col-md-4 fdk-header-flex">
+                <DropdownButton
+                  tabIndex="0"
+                  id="search-language-dropdown-1"
+                  bsStyle="default"
+                  className="fdk-button-language"
+                  title={localization.lang.chosenLanguage}
+                  onSelect={this.onChangeLanguage}
+                >
+                  <MenuItem key="1" eventKey="nb">{localization.lang['norwegian-nb']}</MenuItem>
+                  <MenuItem key="2" eventKey="nn">{localization.lang['norwegian-nn']}</MenuItem>
+                  <MenuItem key="3" eventKey="en">{localization.lang['english-en']}</MenuItem>
+                </DropdownButton>
+
+                <DropdownButton
+                  tabIndex="0"
+                  id="search-menu-dropdown-1"
+                  bsStyle="default"
+                  className="fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
+                  title={localization.app.menu}
+                >
+                  <MenuItem
+                    key="menu-1"
+                    eventKey="menu-1"
+                    href="/about"
                   >
-                    <MenuItem
-                      key="menu-1"
-                      eventKey="menu-1"
-                      href="/about"
-                    >
-                      {localization.about.about}
-                    </MenuItem>
-                    <MenuItem
-                      key="menu-2"
-                      eventKey="menu-2"
-                      href="/about-registration"
-                    >
-                      {localization.menu.aboutRegistration}
-                    </MenuItem>
-                  </DropdownButton>
-                </div>
-                <div className="fdk-header-padding">
-                  <div className="fdk-float-right fdk-margin-right-double">
-                    <DropdownButton
-                      tabIndex="0"
-                      id="search-language-dropdown-1"
-                      bsStyle="default"
-                      className="fdk-button-language"
-                      title={localization.lang.chosenLanguage}
-                      onSelect={this.onChangeLanguage}
-                    >
-                      <MenuItem key="1" eventKey="nb">{localization.lang['norwegian-nb']}</MenuItem>
-                      <MenuItem key="2" eventKey="nn">{localization.lang['norwegian-nn']}</MenuItem>
-                      <MenuItem key="3" eventKey="en">{localization.lang['english-en']}</MenuItem>
-                    </DropdownButton>
-                  </div>
-                </div>
+                    {localization.about.about}
+                  </MenuItem>
+                  <MenuItem
+                    key="menu-2"
+                    eventKey="menu-2"
+                    href="/about-registration"
+                  >
+                    {localization.menu.aboutRegistration}
+                  </MenuItem>
+                </DropdownButton>
               </div>
             </div>
           </div>

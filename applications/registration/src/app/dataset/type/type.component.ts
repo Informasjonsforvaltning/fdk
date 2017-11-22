@@ -20,69 +20,83 @@ export class TypeComponent implements OnInit {
     public typeForm: FormGroup;
     public selectedTypeIdx = 0;
     private typeModel = [];
+    private uncheckedClass = 'checkbox-replacement';    
+    private checkedClass = 'checkbox-replacement-checked';
+    private typeId = 0;
 
     constructor(private fb: FormBuilder) {
         this.typeModel = [
             {
                 id: 1,
-                label: 'Data'
+                label: 'Data',
+                class: this.uncheckedClass
             },
             {
                 id: 2,
-                label: 'Kodelister'
+                label: 'Kodelister',
+                class: this.uncheckedClass
             },
             {
                 id: 3,
-                label: 'Tesauri'
+                label: 'Tesauri',
+                class: this.uncheckedClass
             },
             {
                 id: 4,
-                label: 'Taksonomi'
+                label: 'Taksonomi',
+                class: this.uncheckedClass
             },
             {
                 id: 5,
-                label: 'Testdata'
+                label: 'Testdata',
+                class: this.uncheckedClass
             }
         ];
     }
 
     ngOnInit() {
-      this.typeForm = this.toFormGroup(this.dataset);
-      if(!this.dataset.type) {
-        this.dataset.type = "";
-      }
       this.typeModel
         .filter(entry => entry.label == this.dataset.type)
-        .forEach(entry => this.selectedTypeIdx = entry.id)
-
-      this.typeForm.valueChanges.debounceTime(40).distinctUntilChanged().subscribe(
-        typeForm => {
-          if (typeForm) {
-            let match = false;
-            this.typeModel.forEach(entry => {
-                if (entry.id === typeForm.type) {
-                    this.dataset.type = entry.label;
-                    match = true;
-                }
-            });
-            if (!match) {
-              this.dataset.type = "";
-            }
-          }
-          this.onSave.emit(true);
+        .forEach(entry => this.typeId = entry.id);
+      
+      this.typeForm = this.toFormGroup(this.typeId);
+      let selectedTypeLabel = "";
+      this.typeModel.forEach( type => {
+        if (type.id == this.typeId) {
+          type.class = this.checkedClass;
+          selectedTypeLabel = type.label;
+        } else {
+          type.class = this.uncheckedClass;
         }
-      );
+      });
+      this.dataset.type = selectedTypeLabel;
     }
 
-    private toFormGroup(data: Dataset) {
-        return this.fb.group({
-            type : [ data.type || {}]
-        });
+    private toFormGroup(typeId: number) {
+      return this.fb.group({
+          type : [ typeId || 0 ]
+      });
     }
 
-    public labelClicked(context, event, typeId) {
-      if(context.dataset.type === this.typeModel[typeId-1].label) {
-        this.typeForm.controls.type.patchValue({});
+    public labelClicked(typeId) {      
+      if (this.typeId == typeId) {
+        this.typeId = 0;
+      } else {
+        this.typeId = typeId;
       }
+
+      let selectedTypeLabel = "";
+      this.typeModel.forEach( type => {
+        if (type.id == this.typeId) {
+          type.class = this.checkedClass;
+          selectedTypeLabel = type.label;
+        } else {
+          type.class = this.uncheckedClass;
+        }
+      });
+
+      this.dataset.type = selectedTypeLabel;
+      this.typeForm.controls.type.setValue(this.typeId);
+      this.onSave.emit();
     }
 }

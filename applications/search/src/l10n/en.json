@@ -54,7 +54,8 @@
     "nosearch.summary":"Search among ",
     "nosearch.descriptions":"dataset descriptions",
     "datasetTab": "Dataset",
-    "termTab": "Concept"
+    "termTab": "Concept",
+    "nosearch.concepts":"begreper"
   },
   "facet": {
     "organisation":"Organization",

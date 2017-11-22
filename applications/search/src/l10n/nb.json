@@ -54,7 +54,8 @@
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
-    "termTab": "Begrep"
+    "termTab": "Begrep",
+    "nosearch.concepts":"begreper"
   },
   "facet": {
     "organisation":"Virksomhet",
