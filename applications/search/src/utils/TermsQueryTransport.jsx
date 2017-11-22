@@ -65,7 +65,8 @@ export class TermsQueryTransport extends AxiosESTransport {
       }
     }
 
-    if (hasSingleWord) {
+    if (query.query) {
+      console.log(query.query.simple_query_string.query);
       ReactGA.event({
         category: 'Søk',
         action: 'Søk i begrep',
