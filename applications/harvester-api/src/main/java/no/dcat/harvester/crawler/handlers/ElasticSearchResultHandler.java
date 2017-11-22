@@ -27,12 +27,16 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.ConstantScoreQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +54,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String SUBJECT_TYPE = "subject";
     public static final String DATASET_TYPE = "dataset";
     public static final String HARVEST_INDEX = "harvest";
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
     private final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
 
     String hostename;
@@ -107,7 +114,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat(DATE_FORMAT).create();
 
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
         createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
@@ -139,6 +146,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         logger.info("Number of dataset documents {} for dcat source {}", validDatasets.size(), dcatSource.getId());
 
         ChangeInformation stats = new ChangeInformation();
+        logger.debug("stats: " + stats.toString());
         for (Dataset dataset : validDatasets) {
             catalogRecord.getValidDatasetUris().add(dataset.getUri());
             saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
@@ -162,32 +170,39 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     }
 
-    private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson, CatalogHarvestRecord catalogRecord, ChangeInformation stats) {
-        MatchQueryBuilder mathcQuery = QueryBuilders.matchQuery("harvestUrl", catalogRecord.getHarvestUrl());
+    private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson, CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
+        logger.debug("Find catalog harvest record for {}", thisCatalogRecord.getHarvestUrl());
+
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("harvestUrl", thisCatalogRecord.getHarvestUrl());
+        ConstantScoreQueryBuilder csQueryBuilder = QueryBuilders.constantScoreQuery(termQueryBuilder);
+
+        logger.debug("query: {}", csQueryBuilder.toString());
 
         SearchResponse lastCatalogRecordResponse = elasticsearch.getClient()
                 .prepareSearch(HARVEST_INDEX).setTypes("catalog")
-                .setQuery(mathcQuery)
+                .setQuery(csQueryBuilder)
                 .addSort("date", SortOrder.DESC)
                 .setSize(1).get();
 
         if (lastCatalogRecordResponse.getHits().getTotalHits() > 0) {
             CatalogHarvestRecord lastCatalogRecord = gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
+            if (lastCatalogRecord.getHarvestUrl().equals(thisCatalogRecord.getHarvestUrl())) {
+                logger.info("Last harvest for {} was {}", lastCatalogRecord.getHarvestUrl(), dateFormat.format(lastCatalogRecord.getDate()));
+                logger.trace("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
 
-            logger.debug("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
+                Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
+                missingUris.removeAll(thisCatalogRecord.getValidDatasetUris());
+                logger.info("There are {} datasets that were not harvested this time", missingUris.size());
 
-            Set<String> missingUris = lastCatalogRecord.getValidDatasetUris();
-            missingUris.removeAll(catalogRecord.getValidDatasetUris());
-
-            for (String uri : missingUris) {
-                DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
-                if (lookup != null && lookup.getDatasetId() != null) {
-                    elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
-                    logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
-                    stats.setDeletes(stats.getDeletes() + 1);
+                for (String uri : missingUris) {
+                    DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
+                    if (lookup != null && lookup.getDatasetId() != null) {
+                        elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
+                        logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
+                        stats.setDeletes(stats.getDeletes() + 1);
+                    }
                 }
             }
-
         }
     }
 
@@ -213,13 +228,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     private void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch, List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest, Date harvestTime, Dataset dataset, ChangeInformation stats) {
+        logger.debug("validationREsults: {}", validationResults.toString());
         String datasetId = null;
         DatasetLookup lookupEntry = lookupDataset(elasticsearch.getClient(), dataset.getUri(), gson);
         if (lookupEntry != null){
             datasetId = lookupEntry.getDatasetId();
             stats.setUpdates(stats.getUpdates() + 1);
         } else {
-            IndexRequest lookupRequest = new IndexRequest(HARVEST_INDEX, "lookup", dataset.getId());
+            IndexRequest lookupRequest = new IndexRequest(HARVEST_INDEX, "lookup", dataset.getUri());
             datasetId = UUID.randomUUID().toString();
             stats.setInserts(stats.getInserts() + 1);
             logger.info("new dataset {} with harvestUri {}", datasetId, dataset.getUri());
@@ -245,12 +261,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<String> messages = null;
         if (validationResults != null) {
             messages = validationResults.stream().filter(m ->
-                    m.contains(dataset.getUri()) && m.contains("classname='Dataset'")).collect(Collectors.toList());
+                    m.contains(dataset.getUri()) && m.contains("className='Dataset'")).collect(Collectors.toList());
             logger.debug("messages: {}", messages.toString());
             if (dataset.getDistribution() != null) {
                 for (Distribution distribution : dataset.getDistribution()) {
                     List<String> distMessages = validationResults.stream().filter(m ->
-                            m.contains(distribution.getUri()) && m.contains("classname='Distribution'")).collect(Collectors.toList());
+                            m.contains(distribution.getUri()) && m.contains("className='Distribution'")).collect(Collectors.toList());
                     messages.addAll(distMessages);
                 }
             }
@@ -286,7 +302,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<String> catalogValidationMessages = null;
         if (validationResults != null) {
             catalogValidationMessages = validationResults.stream().filter(m ->
-                    m.contains("classname='Catalog'")).collect(Collectors.toList());
+                    m.contains("className='Catalog'")).collect(Collectors.toList());
         }
 
         catalogRecord.setValidationMessages(catalogValidationMessages);

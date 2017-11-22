@@ -2,7 +2,7 @@ logging:
   level.: ERROR
   level.no.brreg: ERROR
   level.no.difi: INFO
-  level.no.dcat: INFO
+  level.no.dcat: DEBUG
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
 server:
