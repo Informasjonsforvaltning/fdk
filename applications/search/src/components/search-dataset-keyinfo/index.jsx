@@ -111,10 +111,6 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           className="col-md-12 fdk-padding-no"
         >
           <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-institution" />
-            </div>
-
             <div className="fdk-detail-text">
 
               {legalBasisForRestriction &&

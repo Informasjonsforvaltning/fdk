@@ -54,7 +54,8 @@
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
-    "termTab": "Omgrep"
+    "termTab": "Omgrep",
+    "nosearch.concepts":"omgrep"
   },
   "facet": {
     "organisation":"Verksemd",

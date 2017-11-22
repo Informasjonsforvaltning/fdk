@@ -64,11 +64,6 @@ export class TermsQueryTransport extends AxiosESTransport {
         sortfield= "publisher.name";
       }
     }
-    let hasSingleWord = false;
-    if(query.query) {
-      let q = query.query.simple_query_string.query;
-      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
-    }
 
     if (hasSingleWord) {
       ReactGA.event({
@@ -82,7 +77,6 @@ export class TermsQueryTransport extends AxiosESTransport {
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
-      (hasSingleWord ? '*' : '') + // if there is a single word, we perform an assterix search
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +

@@ -203,11 +203,29 @@ p.fdk-input-heading {
 }
 
 .checkbox-replacement {
-    height: 18px;
-    width: 18px;
-    border: 1px solid #2D3741;
-    border-radius: 3px;
+  height: 18px;
+  width: 18px;
+  border: 1px solid #2D3741;
+  border-radius: 3px;
 }
+.checkbox-replacement-checked {
+  height: 18px;
+  width: 18px;
+  border: 1px solid #2D3741;
+  border-radius: 3px;
+}
+
+.checkbox-replacement-checked::after {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #2D3741;
+  left: 3px;
+  top: 4px;
+  border-radius: 3px;
+  content:'';
+}
+
 .checkbox label {
   padding-left:0;
 }

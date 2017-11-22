@@ -5,18 +5,22 @@ import com.google.gson.GsonBuilder;
 import no.difi.dcat.datastore.domain.dcat.Publisher;
 import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Class for testing ElasticSearchResultPubHandler.
  */
 public class ElasticSearchResultPubHandlerTest {
-    private static String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
+    private static Logger logger = LoggerFactory.getLogger(ElasticSearchResultPubHandlerTest.class);
+
+    private static String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"valid\": false,\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
+
     @Test
-    public void test() {
+    public void addPublisherToIndexOK() {
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
         ElasticSearchResultPubHandler handler = new ElasticSearchResultPubHandler(null, 0, null);
 
@@ -36,4 +40,6 @@ public class ElasticSearchResultPubHandlerTest {
 
         assertThat(actual.toString(), is(expected));
     }
+
+
 }

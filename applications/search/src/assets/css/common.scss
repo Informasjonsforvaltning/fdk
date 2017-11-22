@@ -10,6 +10,7 @@ body {
 }
 
 
+
 /*  C O N T A I N E R   &   H E A D E R   &   F O O T E R   */
 
 .fdk-container {
@@ -73,46 +74,74 @@ body {
 .fdk-button {
 	font-size: 1.5rem;
     line-height: 1.5rem;
-    border-radius: 6px;
-    border: 3px solid $color6;
-    padding: 11px 12px 10px 12px;
-    margin: 0px 2px 6px 0px;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(45,55,65,0.20);
+    padding: 14px 16px 13px 16px;
+    margin: 3px 2px 5px 3px;
     display: inline-block;
     background-image: none;
     text-shadow: none;
-    box-shadow: none;
     text-align: center;
 }
 
 .fdk-button-default {
-    background-color: $color1;
-    border-color: $color6;
-    color: $color0;
+    background-color: $color-cta4;
+    color: $color1;
 }
 
-.fdk-button-default:hover, .fdk-button-default:focus .fdk-button-default:active .open>.fdk-button-default {
+.fdk-button-default:hover, .fdk-button-default:focus .fdk-button-default:active .open >.fdk-button-default {
     border-radius: 3px;
-    border: 3px solid $color1;
+    border: 3px solid $color-cta4;
+    margin: 0px -1px 2px 0px;
+    box-shadow: 0 4px 8px rgba(45,55,65,0.20);
 }
 
 .fdk-button-cta {
-    background-color: $color-cta;
-    border: 3px solid $color6;
+    background-color: $color1;
+    border: 3px solid $color0;
 }
 
 .fdk-button-cta:hover {
     border-radius: 3px;
-    background-color: $color-cta;
-    border: 3px solid $color-cta;
+    background-color: $color1;
+    border: 3px solid $color1;
+    margin: 0px -1px 2px 0px;
+    box-shadow: 0 4px 8px rgba(45,55,65,0.20);
 }
 
+.fdk-button-dropdown {
+    background-color: $color0;
+    color: $color1;
+}
+
+.fdk-button-dropdown:hover {
+    border-radius: 3px;
+    border: 3px solid var(--color0);
+    // margin: 0px -1px 2px 0px; // FJERNET AV OIS
+	box-shadow: 0 4px 8px rgba(45,55,65,0.20);
+}
+
+
 .fdk-button-inactive {
-    background-color: $color5;
-    color: $color4;
+    border: 1px dashed $color3;
+    color: $color3;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+
+.fdk-button-pressed, .fdk-button-pressed:hover {
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    margin: 3px 2px 5px 3px;
+    border: none;
 }
 
 .fdk-button-on-white {
     border-color: $color0;
+}
+
+.fdk-button-color1 {
+    background-color: $color1;
+    color: $color0;
 }
 
 
@@ -121,14 +150,14 @@ body {
 
 a > .fdk-button {
     text-decoration: none;
-    font-weight: 300;
-    color: $color0;
+    font-weight: 400;
+    color: $color1;
 }
 
 a > .fdk-button-cta {
     text-decoration: none;
     font-weight: 400;
-    color: $color1;
+    color: $color0;
 }
 
 .fdk-button-format > i {
@@ -144,7 +173,7 @@ a > .fdk-button-cta {
 /* * * * *   L A B E L S   * * * * */
 
 .fdk-label {
-    background-color: $color5;
+    background-color: $color4;
     color: $color1;
     font-size: 1.4rem;
     font-weight: 400;

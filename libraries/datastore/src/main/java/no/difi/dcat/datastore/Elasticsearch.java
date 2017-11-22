@@ -163,31 +163,32 @@ public class Elasticsearch implements AutoCloseable {
      */
     public void createIndex(String index) {
         //Set mapping for correct language stemming and indexing
-        if (index != null && index.equals("harvest")) {
-            Resource r = new ClassPathResource("harvest_catalog_mapping.json");
-            Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
-            try {
-                createElasticsearchIndex("harvest");
+        if (index != null) {
+            if (index.equals("harvest")) {
+                Resource r = new ClassPathResource("harvest_catalog_mapping.json");
+                Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
+                try {
+                    createElasticsearchIndex("harvest");
 
-                createMapping(index, "catalog", r.getInputStream());
-                createMapping(index, "dataset", r2.getInputStream());
-            } catch (IOException e) {
-                logger.error("Unable to create index for {}", index);
-            }
-        } else {
-
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            try {
-                Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETUP_FILENAME);
-
-                for (Resource r : resources) {
-
-                    InputStream is = r.getInputStream();
-                    createElasticsearchIndex(index);
-                    createMapping(index, "dataset", is);
+                    createMapping(index, "catalog", r.getInputStream());
+                    createMapping(index, "dataset", r2.getInputStream());
+                } catch (IOException e) {
+                    logger.error("Unable to create index for {}. Reason {}", index, e.getLocalizedMessage());
                 }
-            } catch (IOException e) {
-                logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
+            } else if (index.equals("dcat")) {
+
+                try {
+                    Resource r = new ClassPathResource(DCAT_INDEX_SETUP_FILENAME);
+                    Resource r2 = new ClassPathResource("dcat_subject_mapping.json");
+
+                    createElasticsearchIndex(index);
+                    createMapping(index, "dataset", r.getInputStream());
+                    createMapping(index, "subject", r2.getInputStream());
+
+                } catch (IOException e) {
+                    logger.error("Unable to create index [{}]" +
+                            ". Reason {} ", index, e.getLocalizedMessage());
+                }
             }
         }
     }
@@ -203,9 +204,8 @@ public class Elasticsearch implements AutoCloseable {
         String mappingJson = IOUtils.toString(is, "UTF-8");
 
         client.admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
-        logger.debug("[createIndex] after preparePutMapping");
+        logger.info("Create mapping {}/{}. Mapping file contains {} characters", index, type, mappingJson.length());
         client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-        logger.debug("[createIndex] after prepareHealth");
     }
 
 
