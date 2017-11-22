@@ -10,11 +10,16 @@ import lombok.ToString;
 public class Publisher {
     private String uri;
     private String id;
-    private String identifier;
     private String name;
+    private String orgPath;
 
     public Publisher(String orgnr) {
         this.id = orgnr;
+    }
+
+    public Publisher(String orgnr, String uri) {
+       this.id = orgnr;
+       this.uri = uri;
     }
 
     public Publisher() {

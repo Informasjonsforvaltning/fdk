@@ -1,19 +1,30 @@
+@import '../../assets/css/colors.scss';
+
 .search-results-tabs {
   border-bottom: 2px solid ;
 
   li {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    border-color: $color3;
+    vertical-align: bottom;
     float: none;
     display: inline-block;
-    margin-right: 1em;
-    background-color: #000;
-    color: #FFF;
-    padding: 1em 4em;
+    margin-right: 0.5em;    
+    margin-left: 0.5em;
+    background-color: $color1;
+    color: $color0;
 
     button {
       background: none;
       border: 0;
+      box-sizing: border-box;
+      padding: 1em 4em;
+      font-weight: 500;      
     }
+  }
+
+  .li-active {    
+    font-size: 2rem;
   }
 }

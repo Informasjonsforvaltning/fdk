@@ -20,6 +20,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
     public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
                           Map<String, DataTheme> dataThemes) {
+
         super();
 
         this.model = model;
@@ -68,6 +70,7 @@ public class DatasetBuilder extends AbstractBuilder {
         }
         return new ArrayList(subjects.values());
     }
+
     public List<Dataset> getDataset() {
         if (datasets.isEmpty()) {
             build();
@@ -75,6 +78,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
         return datasets;
     }
+
     public DatasetBuilder build() {
 
         datasets.clear();
@@ -137,7 +141,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
             ds.setContactPoint(extractContacts(resource));
             ds.setKeyword(extractKeywords(resource, DCAT.keyword));
-            ds.setPublisher(extractPublisher(resource));
+            ds.setPublisher(extractPublisher(resource, DCTerms.publisher));
 
             ds.setIssued(extractDate(resource, DCTerms.issued));
             ds.setModified(extractDate(resource, DCTerms.modified));
@@ -152,17 +156,17 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setTemporal(extractPeriodOfTime(resource));
             ds.setSpatial(getCodes(resource.getModel(), locations, extractMultipleStrings(resource, DCTerms.spatial)));
 
-            ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()),extractAsString(resource, DCTerms.accessRights)));
+            ds.setAccessRights(getCode(codes.get(Types.rightsstatement.getType()), extractAsString(resource, DCTerms.accessRights)));
             ds.setAccessRightsComment(extractMultipleStrings(resource, DCATNO.accessRightsComment));
             ds.setLegalBasisForAccess(extractSkosConcept(resource, DCATNO.legalBasisForAccess));
             ds.setLegalBasisForProcessing(extractSkosConcept(resource, DCATNO.legalBasisForProcessing));
             ds.setLegalBasisForRestriction(extractSkosConcept(resource, DCATNO.legalBasisForRestriction));
 
-            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Accuracy));
-            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Availability));
-            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Completeness));
-            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Currentness));
-            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource,QualityAnnotation.Relevance));
+            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Accuracy));
+            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Availability));
+            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Completeness));
+            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Currentness));
+            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Relevance));
 
             ds.setReferences(extractReferences(resource, codes.get(Types.referencetypes.getType())));
             ds.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(resource, DCTerms.provenance)));
@@ -185,7 +189,6 @@ public class DatasetBuilder extends AbstractBuilder {
 
         return ds;
     }
-
 
 
     public static QualityAnnotation extractQualityAnnotation(Resource resource, String dimensionUri) {
@@ -268,12 +271,17 @@ public class DatasetBuilder extends AbstractBuilder {
 
             Resource subjectResource = resource;
             if (subjectResource != null) {
+                subject.setIdentifier(extractAsString(subjectResource, DCTerms.identifier));
+
                 subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
-                subject.setAltLabel(extractLanguageLiteral(subjectResource, SKOS.altLabel));
+                subject.setAltLabel(extractMultipleLanguageLiterals(subjectResource, SKOS.altLabel));
 
                 subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
                 subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
                 subject.setSource(extractAsString(subjectResource, DCTerms.source));
+
+                subject.setCreator(extractPublisher(subjectResource, DCTerms.creator));
+                subject.setInScheme(extractMultipleStrings(subjectResource, SKOS.inScheme));
 
             }
             return subject;

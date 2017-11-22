@@ -45,6 +45,7 @@
     "lodash": "^4.17.4",
     "method-override": "2.3.9",
     "moment": "^2.18.1",
+    "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
     "qs": "^6.3.0",
     "react": "^15.6.2",

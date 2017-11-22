@@ -108,7 +108,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, adminDataStore);
 
-        handler.process(dcatSource, ModelFactory.createDefaultModel());
+        handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
     }
 
 
@@ -121,7 +121,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
-        handler.process(dcatSource, ModelFactory.createDefaultModel());
+        handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
         job.run();
@@ -147,7 +147,7 @@ public class CrawlerJobTest {
         Mockito.doAnswer(invocationOnMock -> {
             didRun[0] = true;
             return null;
-        }).when(handler).process(Mockito.anyObject(), Mockito.any());
+        }).when(handler).process(Mockito.anyObject(), Mockito.any(), Mockito.any());
 
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
@@ -174,7 +174,7 @@ public class CrawlerJobTest {
         Mockito.doAnswer(invocationOnMock -> {
             didRun[0] = true;
             return null;
-        }).when(handler).process(Mockito.anyObject(), Mockito.any());
+        }).when(handler).process(Mockito.anyObject(), Mockito.any(), Mockito.any());
 
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);

@@ -65,6 +65,7 @@ public class DcatSourcesConverterIT {
         Subject actualSubject = actualSubjects.get(0);
 
         assertThat(actualSubject.getPrefLabel().get("no"), is("enhet") );
+        assertThat(actualSubject.getCreator().getUri(), is("http://data.brreg.no/enhetsregisteret/enhet/974760673"));
     }
 
     @Test

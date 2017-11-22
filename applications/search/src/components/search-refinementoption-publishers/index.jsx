@@ -6,7 +6,6 @@ const RefinementOptionPublishers = (props) => {
     bemBlocks, onClick, active, itemKey,
     label
   } = props;
-  let optionLabel;
   const toggleId = 'toggle-more-publishers';
   if(label === 'showmorelabel') {
     return (
@@ -21,7 +20,7 @@ const RefinementOptionPublishers = (props) => {
       <input type="checkbox" id={toggleId}  />
     )
   }
-  optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
+  const optionLabel = `${props.label.charAt(0)}${props.label.substring(1).toLowerCase()}`;
 
   const id = encodeURIComponent((itemKey + Math.random()));
   const textLabel = localization.search_hit[optionLabel.toLowerCase()] ? localization.search_hit[optionLabel.toLowerCase()] : optionLabel;

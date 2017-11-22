@@ -170,9 +170,6 @@ export default class ResultsDatasetsReport extends React.Component {
                   size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                   itemComponent={RefinementOptionPublishers}
                 />
-                <pre>
-                  {JSON.stringify(this.props, null, 2) }
-                </pre>
               </div>
             </div>
             <section id="resultPanel">

@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router';
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../../utils/translateText';
-import './index.scss';
+import '../../assets/css/main.scss';
 
 const getLangUrl = (langCode) => {
   const href = window.location.search;
@@ -136,7 +136,7 @@ export default class App extends React.Component {
                       tabIndex="0"
                       id="search-language-dropdown-1"
                       bsStyle="default"
-                      className="dropdown-toggle fdk-button-language"
+                      className="fdk-button-language"
                       title={localization.lang.chosenLanguage}
                       onSelect={this.onChangeLanguage}
                     >
