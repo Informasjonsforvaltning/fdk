@@ -10,7 +10,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,9 +86,7 @@ import java.net.UnknownHostException;
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
-     * @param sortfield     Defines that field that the search result shall be sorted on. Default is source
-     * @param sortdirection Defines the direction of the sort, ascending or descending.
-     * @return List of  elasticsearch records.
+      * @return List of  elasticsearch records.
      */
     @CrossOrigin
     @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
@@ -106,14 +102,14 @@ import java.net.UnknownHostException;
                 .append(" size:").append(size)
                 .append(" lang:").append(lang);
 
-        logger.debug(loggMsg.toString());
+        logger.info(loggMsg.toString());
 
         String analyzerLang = "norwegian";
 
         if ("en".equals(lang)) {
             analyzerLang = "english";
         }
-        lang = "*"; // hardcode to search in all language fields
+        lang = "no"; // hardcode to search in all language fields
 
         from = checkAndAdjustFrom(from);
         size = checkAndAdjustSize(size);
@@ -128,8 +124,11 @@ import java.net.UnknownHostException;
         } else {
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
-                    .field("prefLabel" + "." + lang)
-                    .field("definition" + "." + lang)
+                    .field("prefLabel" + "." + lang).boost(15)
+                    .field("altLabel" + "." + lang).boost(5)
+                    .field("definition" + "." + lang).boost(3)
+                    .field("creator.name").boost(2)
+                    .field("inScheme")
                     .field("note" + "." + lang);
         }
 
@@ -147,7 +146,7 @@ import java.net.UnknownHostException;
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
 
-        logger.trace("Search response: " + response.toString());
+        logger.trace("Search response: {}", response.toString());
 
         // return response
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);

@@ -31,7 +31,7 @@ public class UploadSubjectsToElastic {
         final String ut1 = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no";
         final String st2 = "http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
 
-        postSubjects(ut1);
+        postSubjects(lok);
 
     }
 

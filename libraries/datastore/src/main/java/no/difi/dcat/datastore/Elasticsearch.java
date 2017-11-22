@@ -179,9 +179,11 @@ public class Elasticsearch implements AutoCloseable {
 
                 try {
                     Resource r = new ClassPathResource(DCAT_INDEX_SETUP_FILENAME);
+                    Resource r2 = new ClassPathResource("dcat_subject_mapping.json");
 
                     createElasticsearchIndex(index);
                     createMapping(index, "dataset", r.getInputStream());
+                    createMapping(index, "subject", r2.getInputStream());
 
                 } catch (IOException e) {
                     logger.error("Unable to create index [{}]" +
@@ -202,9 +204,8 @@ public class Elasticsearch implements AutoCloseable {
         String mappingJson = IOUtils.toString(is, "UTF-8");
 
         client.admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
-        logger.debug("[createIndex] after preparePutMapping");
+        logger.info("Create mapping {}/{}. Mapping file contains {} characters", index, type, mappingJson.length());
         client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-        logger.debug("[createIndex] after prepareHealth");
     }
 
 
