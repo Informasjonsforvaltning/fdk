@@ -26,6 +26,8 @@ import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +101,7 @@ public class DatasetBuilder extends AbstractBuilder {
                 datasets.add(datasetObject);
             }
         }
+
 
         return this;
     }
@@ -282,6 +285,17 @@ public class DatasetBuilder extends AbstractBuilder {
 
                 subject.setCreator(extractPublisher(subjectResource, DCTerms.creator));
                 subject.setInScheme(extractMultipleStrings(subjectResource, SKOS.inScheme));
+                if (subject.getInScheme() != null) {
+                    List<String> encodedResult = new ArrayList<>();
+                    for (String domain :subject.getInScheme()) {
+                        try {
+                            encodedResult.add(URLDecoder.decode(domain, "UTF-8"));
+                        } catch (UnsupportedEncodingException e) {
+                            encodedResult.add(domain);
+                        }
+                    }
+                    subject.setInScheme(encodedResult);
+                }
 
             }
             return subject;

@@ -16,7 +16,7 @@ logs/
 tdb
 catalog-v001.xml
 
-
+/conf/subjects/
 /conf/idporten/
 /conf/altinn/
 /conf/config.sh
