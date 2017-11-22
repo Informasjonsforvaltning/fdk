@@ -142,7 +142,7 @@ export default class App extends React.Component {
                   >
                     {localization.menu.aboutRegistration}
                   </MenuItem>
-                </DropdownButton>g
+                </DropdownButton>
               </div>
             </div>
           </div>
