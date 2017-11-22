@@ -139,6 +139,12 @@ $sk-border-radius: 3px !default;
     right: 0;
 }
 
+.fdk-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 /*
 SEARCHPAGE SORTING DROPDOWN
 */

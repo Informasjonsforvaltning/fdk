@@ -153,8 +153,32 @@
   color: #ddd;
 }
 .sk-toggle-option:first-child {
+  .sk-toggle-option__text {
+    &:before {
+      content: "\F060";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: .5em;
+    }
+  }
 }
 .sk-toggle-option:last-child {
+  .sk-toggle-option__text {
+    &:after {
+      content: "\F061";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-left: .5em;
+    }
+  }
 }
 .sk-toggle-option.is-active {
   background-color: $color1;
