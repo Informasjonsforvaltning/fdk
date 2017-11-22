@@ -27,7 +27,7 @@ const About = () => {
           <div className="fdk-textregular">
             {
               // eslint-disable-next-line react/no-danger
-            }<p dangerouslySetInnerHTML={{__html: localization.about.maintext}}/>
+            }<p dangerouslySetInnerHTML={{__html: localization.about.maintext}} />
             <a href="/about-registration" title="Link">Hjelp til å komme i gang med å registrere datasett</a>
           </div>
         </div>

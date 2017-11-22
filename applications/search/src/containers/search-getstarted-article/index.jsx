@@ -204,8 +204,8 @@ const Article = () => {
             <p>
               <span>N&aring;r du har f&aring;tt tilgang, kan du logge inn p&aring; registreringsl&oslash;sningen:&nbsp;</span>
               <span>
-              <a href="https://registrering-fdk.ppe.brreg.no/">https://registrering-fdk.ppe.brreg.no/</a>
-            </span>
+                <a href="https://registrering-fdk.ppe.brreg.no/">https://registrering-fdk.ppe.brreg.no/</a>
+              </span>
               <span>, og din virksomhets datakatalog vil v&aelig;re tilgjengelig (Om du logger inn i dag, kan det hende at du f&aring;r se flere virksomheter (private, frivillige&hellip;) enn forventet. Vi jobber med &aring; filtrere bort alt som ikke er offentlige virksomheter.)</span>
             </p>
             <p><span>&nbsp;</span></p>

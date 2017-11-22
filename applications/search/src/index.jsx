@@ -13,11 +13,11 @@ const ReactGA = require('react-ga');
 
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
-  ReactGA.initialize('UA-110098477-1'); //prod
+  ReactGA.initialize('UA-110098477-1'); // prod
 } else if (window.location.hostname.indexOf('fellesdatakatalog-st2') !== -1) {
-  ReactGA.initialize('UA-110098477-2'); //st2
+  ReactGA.initialize('UA-110098477-2'); // st2
 } else if (window.location.hostname.indexOf('localhost') !== -1) {
-  ReactGA.initialize('UA-41886511-1'); //localhost
+  ReactGA.initialize('UA-41886511-1'); // localhost
 }
 
 
