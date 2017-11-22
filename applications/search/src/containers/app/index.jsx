@@ -106,7 +106,7 @@ export default class App extends React.Component {
               </div>
 
               <div className="col-sm-12 col-md-4 fdk-header-flex">
-                <div className="fdk-btn-languagex">
+                <div className="fdk-btn-language-div">
                   <DropdownButton
                     tabIndex="0"
                     id="search-language-dropdown-1"
