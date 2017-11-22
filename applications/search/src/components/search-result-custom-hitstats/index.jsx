@@ -5,7 +5,7 @@ import localization from '../localization';
 
 const state = {}
 const CustomHitsStats = (props) => {
-  const { hitsCount, timeTaken } = props;
+  const { hitsCount, timeTaken, prefLabel } = props;
   const queryObj = qs.parse(window.location.search.substr(1));
   const language = localization.getLanguage();
   const locationHref = window.location.href;
@@ -46,7 +46,7 @@ const CustomHitsStats = (props) => {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info nosearch" data-qa="info">
-          <span>{localization.page['nosearch.summary']}</span> <span>{hitsCount}</span> {localization.page['nosearch.descriptions']}
+          <span>{localization.page['nosearch.summary']}</span> <span>{hitsCount}</span> {prefLabel}
         </div>
       </div>
     );

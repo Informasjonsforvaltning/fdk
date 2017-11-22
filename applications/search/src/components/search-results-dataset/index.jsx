@@ -85,6 +85,10 @@ export default class ResultsDataset extends React.Component {
     const searchHitItemWithProps = React.createElement(SearchHitItem, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
+
+    const datasetsHitStatsWithProps = React.createElement(CustomHitsStats, {
+      prefLabel: localization.page['nosearch.descriptions']
+    });
     return (
       <SearchkitProvider searchkit={searchkitDataset}>
         <div>
@@ -100,7 +104,7 @@ export default class ResultsDataset extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats} />
+                <HitsStats component={datasetsHitStatsWithProps} />
               </div>
             </div>
             <section>
@@ -167,9 +171,11 @@ export default class ResultsDataset extends React.Component {
                     itemComponent={searchHitItemWithProps}
                     sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
                   />
-                  <Pagination
-                    showNumbers
-                  />
+                  <div className="col-md-8 col-md-offset-2">
+                    <Pagination
+                      showNumbers
+                    />
+                  </div>
                 </div>
               </div>
             </section>

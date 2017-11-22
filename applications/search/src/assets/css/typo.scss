@@ -43,7 +43,7 @@ h4 {
 }
 
 h5 {
-    color: $color3;
+    color: $color1;
     font-size: 1.4rem;
     line-height: 1.8rem;
     font-weight: 600;
@@ -79,7 +79,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: var(--color1);
+    color: $color1;
 }
 
 .fdk-link-internal {
@@ -143,7 +143,7 @@ a:hover {
 }
 
 .fdk-strong-virksomhet {
-    color: $color-cta;
+    color: $color1;
     font-weight: 600;
     letter-spacing: 0.03rem;
     margin-right: 10px;
@@ -201,4 +201,9 @@ a:hover {
     color: $color3;
     margin: 0px 8px;
     font-size: 1.4rem !important;
+}
+
+.fdk-fa-link {
+    margin-right: 5px;
+    color: $color1;
 }

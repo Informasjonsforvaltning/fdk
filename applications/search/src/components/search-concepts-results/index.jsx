@@ -134,6 +134,11 @@ export default class ResultsConcepts extends React.Component {
       onDeleteTerm: this.handleDeleteTerm,
       selectedLanguageCode: this.props.selectedLanguageCode
     });
+
+    const conceptsHitStatsWithProps = React.createElement(CustomHitsStats, {
+      prefLabel: localization.page['nosearch.concepts']
+    });
+
     return (
       <SearchkitProvider searchkit={searchkitConcepts}>
         <div>
@@ -149,7 +154,7 @@ export default class ResultsConcepts extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats} />
+                <HitsStats component={conceptsHitStatsWithProps} />
               </div>
             </div>
             <section>

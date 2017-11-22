@@ -24,10 +24,8 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     const { creator } = this.state.source;
     if (creator && creator.name) {
       return (
-        <span className="inline-block">
-          <strong>
-            { creator.name }
-          </strong>
+        <span className="inline-block fdk-strong-virksomhet">
+          { creator.name }
         </span>
       );
     }
