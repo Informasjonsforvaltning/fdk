@@ -106,6 +106,7 @@ export default class App extends React.Component {
               </div>
 
               <div className="col-sm-12 col-md-4 fdk-header-flex">
+                <div className="fdk-btn-language">
                   <DropdownButton
                     tabIndex="0"
                     id="search-language-dropdown-1"
@@ -118,29 +119,30 @@ export default class App extends React.Component {
                     <MenuItem key="2" eventKey="nn">{localization.lang['norwegian-nn']}</MenuItem>
                     <MenuItem key="3" eventKey="en">{localization.lang['english-en']}</MenuItem>
                   </DropdownButton>
+                </div>
 
-                  <DropdownButton
-                    tabIndex="0"
-                    id="search-menu-dropdown-1"
-                    bsStyle="default"
-                    className="fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
-                    title={localization.app.menu}
+                <DropdownButton
+                  tabIndex="0"
+                  id="search-menu-dropdown-1"
+                  bsStyle="default"
+                  className="fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
+                  title={localization.app.menu}
+                >
+                  <MenuItem
+                    key="menu-1"
+                    eventKey="menu-1"
+                    href="/about"
                   >
-                    <MenuItem
-                      key="menu-1"
-                      eventKey="menu-1"
-                      href="/about"
-                    >
-                      {localization.about.about}
-                    </MenuItem>
-                    <MenuItem
-                      key="menu-2"
-                      eventKey="menu-2"
-                      href="/about-registration"
-                    >
-                      {localization.menu.aboutRegistration}
-                    </MenuItem>
-                  </DropdownButton>
+                    {localization.about.about}
+                  </MenuItem>
+                  <MenuItem
+                    key="menu-2"
+                    eventKey="menu-2"
+                    href="/about-registration"
+                  >
+                    {localization.menu.aboutRegistration}
+                  </MenuItem>
+                </DropdownButton>g
               </div>
             </div>
           </div>
