@@ -325,11 +325,11 @@ describe('SearchHitItem', () => {
   });
 
   it ('should render publisher', () => {
-    expect(wrapper.find('#search-hit-publisher-text')).to.have.length(1);
+    expect(wrapper.find('.fdk-strong-virksomhet')).to.have.length(1);
   });
 
   it ('should render themes', () => {
-    expect(wrapper.find('#dataset-description-theme-0')).to.have.length(1);
+    expect(wrapper.find('.fdk-dataset-themes > .fdk-label')).to.have.length(2);
   });
 
   it ('should render restricted', () => {

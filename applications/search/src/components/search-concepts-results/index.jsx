@@ -163,7 +163,7 @@ export default class ResultsConcepts extends React.Component {
                 isSelected={this.props.isSelected}
               />
             </section>
-            <section id="resultPanel">
+            <section id="conceptsPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
                   <div className="pull-right">
@@ -201,7 +201,7 @@ export default class ResultsConcepts extends React.Component {
                 <div className="col-sm-4">
                   { this._renderCompareTerms() }
                 </div>
-                <div id="datasets" className="col-sm-8">
+                <div id="concepts" className="col-sm-8">
                   <Hits
                     mod="sk-hits-grid"
                     hitsPerPage={50}
