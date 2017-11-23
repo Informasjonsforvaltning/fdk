@@ -78,6 +78,11 @@ export class DatasetsQueryTransport extends AxiosESTransport {
         sortfield= "publisher.name";
       }
     }
+    let hasSingleWord = false;
+    if(query.query) {
+      let q = query.query.simple_query_string.query;
+      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+    }
 
     if (query.query) {
       ReactGA.event({
@@ -91,7 +96,8 @@ export class DatasetsQueryTransport extends AxiosESTransport {
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
-      '&from=' +
+      (hasSingleWord ? ' ' + query.query.simple_query_string.query + '*' : '') + // if there is a single word, we add keyword with a trailing assterix
+			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +
       query.size +
