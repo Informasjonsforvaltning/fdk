@@ -10,6 +10,7 @@ import ResultsConcepts from '../../components/search-concepts-results';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
 
+const ReactGA = require('react-ga');
 const sa = require('superagent');
 
 const getTabUrl = (tab) => {
@@ -56,10 +57,12 @@ export default class SearchPage extends React.Component {
     const tabCode = getParamFromUrl('tab');
     if (tabCode !== null) {
       if (tabCode === 'datasets') {
+        ReactGA.modalview('/datasets');
         this.setState({
           showConcepts: false
         });
       } else if (tabCode === 'concepts') {
+        ReactGA.modalview('/concepts');
         this.setState({
           showConcepts: true
         });
@@ -73,10 +76,12 @@ export default class SearchPage extends React.Component {
     browserHistory.push(nextUrl);
 
     if (chosenView === 'datasets') {
+      ReactGA.modalview('/datasets');
       this.setState({
         showConcepts: false
       });
     } else if (chosenView === 'concepts') {
+      ReactGA.modalview('/concepts');
       this.setState({
         showConcepts: true
       });

@@ -2,6 +2,7 @@ import {AxiosESTransport} from "searchkit";
 const defaults = require("lodash/defaults");
 import * as axios from "axios";
 const qs = require('qs');
+const ReactGA = require('react-ga');
 
 export class TermsQueryTransport extends AxiosESTransport {
   constructor(host, options) {
@@ -49,19 +50,12 @@ export class TermsQueryTransport extends AxiosESTransport {
     let sortfield = "_score";
     let sortdirection = "asc";
 
-    let querySortObj = query.sort[0]; // assume that only one sort field is possible
-    if (querySortObj) { // there is a sort code
-      if (_.has(querySortObj, '_score')) {
-        sortfield = "_score";
-        sortdirection = "asc";
-      } else if (_.has(querySortObj, 'title')) {
-        sortfield= "title.nb";
-      } else if (_.has(querySortObj, 'modified')) {
-        sortfield= "modified";
-        sortdirection = "desc";
-      } else if (_.has(querySortObj,'publisher.name')) {
-        sortfield= "publisher.name";
-      }
+    if (query.query) {
+      ReactGA.event({
+        category: 'Søk',
+        action: 'Søk i begrep',
+        label: query.query.simple_query_string.query
+      });
     }
 
     let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters

@@ -2,6 +2,7 @@ import {AxiosESTransport} from "searchkit";
 const defaults = require("lodash/defaults");
 import * as axios from "axios";
 const qs = require('qs');
+const ReactGA = require('react-ga');
 
 export class DatasetsQueryTransport extends AxiosESTransport {
   constructor(host, options) {
@@ -37,7 +38,6 @@ export class DatasetsQueryTransport extends AxiosESTransport {
 
   search(query) {
     this.filters.forEach((filter)=> {
-      // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
       filter.query = '';
       let multiple = false;
       if(query.post_filter) { // there is an aggregation post_filter
@@ -82,6 +82,13 @@ export class DatasetsQueryTransport extends AxiosESTransport {
     if(query.query) {
       let q = query.query.simple_query_string.query;
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+    }
+    if (hasSingleWord) {
+      ReactGA.event({
+        category: 'Søk',
+        action: 'Søk i datasett',
+        label: query.query.simple_query_string.query
+      });
     }
 
     let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters

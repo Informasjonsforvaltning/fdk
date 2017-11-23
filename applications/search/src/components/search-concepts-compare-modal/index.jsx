@@ -4,6 +4,8 @@ import localization from '../../components/localization';
 import CompareTermModalContent from '../search-concepts-compare-modal-content';
 import './index.scss';
 
+const ReactGA = require('react-ga');
+
 export default class CompareTermModal extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,21 @@ export default class CompareTermModal extends React.Component {
     );
   }
 
-  open() {
+  open(type) {
+    if (type === 'BOTTOM') {
+      ReactGA.event({
+        category: 'Begrep',
+        action: 'Sammenligningsvindu',
+        label: 'Sticky button'
+      });
+    } else {
+      ReactGA.event({
+        category: 'Begrep',
+        action: 'Sammenligningsvindu',
+        label: 'Left menu button'
+      });
+    }
+    ReactGA.modalview('/concepts/compare');
     this.setState(
       {
         showModal: true,
@@ -59,7 +75,7 @@ export default class CompareTermModal extends React.Component {
 
     const bottomModalLabel = (
       <div>
-        <button className="bottom-modal-label fdk-button fdk-button-color1 fdk-modal-button" onClick={this.open}>
+        <button className="bottom-modal-label fdk-button fdk-button-color1 fdk-modal-button" onClick={() => {this.open('BOTTOM')}}>
           <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
           {localization.compare.added + this.props.terms.length + localization.compare.toCompare}

@@ -8,9 +8,25 @@ import DetailsPage from './containers/search-detailspage';
 import AboutPage from './containers/search-about';
 import GetStartedPage from './containers/search-getstarted-article';
 import App from './containers/app';
-// import getStarted from '../static/getStarted.json';
+
+const ReactGA = require('react-ga');
+
+
+if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
+  ReactGA.initialize('UA-110098477-1'); // prod
+} else if (window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1) {
+  ReactGA.initialize('UA-110098477-2'); // tt1
+} else if (window.location.hostname.indexOf('localhost') !== -1) {
+  ReactGA.initialize('UA-41886511-1'); // localhost
+}
+
 
 function handleUpdate() {
+  if ( (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) || (window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1) || (window.location.hostname.indexOf('localhost') !== -1)) {
+    ReactGA.set({page: window.location.pathname});
+    ReactGA.pageview(window.location.pathname);
+  }
+
   const {
     action
   } = this.state.location;
