@@ -1,22 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import sa from 'superagent';
 import {
   SearchkitManager,
   SearchkitProvider,
   RefinementListFilter,
-  Hits,
   HitsStats,
-  Pagination,
-  SortingSelector,
   TopBar
 } from 'searchkit';
-
-import { QueryTransport } from '../../utils/QueryTransport';
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
-import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
 import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
@@ -24,6 +17,7 @@ import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats2 from '../search-result-custom-hitstats2';
 import createHistory from 'history/createBrowserHistory'
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
+import ReportStats from '../search-results-dataset-report-stats';
 
 const host = '/dcat';
 
@@ -36,11 +30,33 @@ history.default = () => {
 }
 // history.replace(path, [state])
 
+/**
+ * THESE ARE TEST DATA DELETE
+ */
+const stats = {
+  total: 743,
+  public: 544,
+  restricted: 172,
+  nonPublic: 24,
+  unknown: 3,
+  newLastWeek: 14,
+  deletedLastWeek: 0,
+  newLastMonth: 38,
+  deletedLastMonth: 4,
+  newLastYear: 641,
+  deletedLastYear: 21,
+  concepts: 98,
+  distributions: 211
+}
 
+const entity = 'alle virksomheter tilsammen';
+
+const transportRef = new QueryTransport2();
+console.log('transportref is ', transportRef);
 const searchkit = new SearchkitManager(
   host,
   {
-    transport: new QueryTransport2(),
+    transport: transportRef,
     createHistory: ()=> {
       console.log('create history runs now');
       return history;
@@ -150,31 +166,6 @@ export default class ResultsDatasetsReport extends React.Component {
       <SearchkitProvider searchkit={searchkit}>
         <div>
           <div className="container">
-            <div className="row mb-60">
-              <div className="col-md-12">
-                <TopBar>
-                  <SearchBox
-                    autofocus
-                    searchOnChange={false}
-                    placeholder={localization.query.intro}
-                  />
-                </TopBar>
-              </div>
-              <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats2} />
-                <RefinementListFilter
-                  id="publisher"
-                  title=""
-                  field="subject.no.raw"
-                  operator="AND"
-                  size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                  itemComponent={RefinementOptionPublishers}
-                />
-                <pre>
-                  {JSON.stringify(this.props, null, 2) }
-                </pre>
-              </div>
-            </div>
             <section id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
@@ -185,7 +176,12 @@ export default class ResultsDatasetsReport extends React.Component {
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                   {this._renderPublisherRefinementListFilter()}
                 </div>
-                <div id="datasets" className="col-sm-8" />
+                <div id="datasets" className="col-sm-8">
+                  <ReportStats
+                    stats={stats}
+                    entity={entity}
+                  />
+                </div>
               </div>
             </section>
           </div>
