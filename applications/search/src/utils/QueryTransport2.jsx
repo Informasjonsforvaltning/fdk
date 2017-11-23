@@ -8,7 +8,7 @@ export class QueryTransport2 extends AxiosESTransport {
     super()
     this.options = defaults(options, {
       headers:{},
-      searchUrlPath: "/datasets"
+      searchUrlPath: "/datasets" // harvest(s?)
     })
     this.axios = axios.create({
       baseURL:this.host,
@@ -28,7 +28,7 @@ export class QueryTransport2 extends AxiosESTransport {
       }
     ];
   }
-
+  
   search(query) {
     this.filters.forEach((filter)=> {
       // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
@@ -98,6 +98,7 @@ export class QueryTransport2 extends AxiosESTransport {
             delete aggregations[name];
         }
       })
+    this.responseData = response.data;
     return response.data
   }
 }

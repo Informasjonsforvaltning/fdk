@@ -52,9 +52,7 @@
     "result.summary": "Søket gav ",
     "dataset":"treff",
     "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser",
-    "datasetTab": "Datasett",
-    "termTab": "Omgrep"
+    "nosearch.descriptions":"datasettbeskrivelser"
   },
   "facet": {
     "organisation":"Verksemd",
@@ -133,7 +131,7 @@
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
     "keyword": "Emneord",
-    "subject": "Omgrep",
+    "subject": "Begrep",
     "restrictions": "Restriksjoner",
     "comments": "Kommentar",
     "objective": "Formål",
@@ -167,22 +165,24 @@
     },
     "sample": "Eksempeldata"
   },
-  "terms": {
-    "compareTerms": "Sammenlign omgrep",
-    "removeTerms": "Fjern",
-    "altLabel": "Også kjent som:"
-  },
-  "compare": {
-    "definition": "Definisjon",
-    "inScheme": "Fagområde / bruksområde",
-    "source": "Kjelde",
-    "note": "Beskriving",
-    "hideCompare": "Skjul samanlikning",
-    "openCompare": "Vis samanlikning",
-    "remove": "Fjern omgrep",
-    "added": "Du har lagt ",
-    "toCompare": " omgrep til samanlikning - klikk for å vise",
-    "addCompare": "Legg til i sammenligning",
-    "altLabel": "Også kjent som:"
+  "report": {
+    "title": "Visar tall for ",
+    "total": "datasett totalt",
+    "accessLevel": "Tilgangsnivå",    
+    "public": "Datasett som er offentleg",
+    "restricted": "Datasett med avgrensa offentleghet",
+    "nonPublic": "Datasett som er unntatt offentleghet",
+    "unknown": "Datasett med ukjend tilgangsnivå",
+    "changesLastWeek": "Endring siste 7 dager",
+    "changesLastMonth": "Endring siste 30 dager",
+    "changesLastYear": "Endring siste 365 dager",
+    "newDatasets": "Nye datasett",
+    "deletedDatasets": "Slettede datasett",
+    "concepts": "Bruk av omgrep",
+    "withConcepts": "Datasett som benytter omgrep",
+    "withoutConcepts": "Datasett som ikkje benytter omgrep",
+    "distributions": "Distribusjoner",
+    "withDistributions": "Offentlege datasett med distribusjoner",
+    "withoutDistributions": "Offentlege datasett utan distribusjoner"
   }
 }
