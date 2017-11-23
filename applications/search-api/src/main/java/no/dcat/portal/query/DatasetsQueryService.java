@@ -184,7 +184,8 @@ public class DatasetsQueryService {
                 .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
-                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"));
+                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
+                .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"));
 
         addSort(sortfield, sortdirection, searchBuilder);
 
@@ -491,6 +492,8 @@ public class DatasetsQueryService {
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
                 .order(Order.count(false));
     }
+
+
 
     ResponseEntity<String> initializeElasticsearchTransportClient() {
         String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
