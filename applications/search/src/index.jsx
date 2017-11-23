@@ -15,14 +15,14 @@ const ReactGA = require('react-ga');
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
 } else if (window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1) {
-  ReactGA.initialize('UA-110098477-2'); // st2
+  ReactGA.initialize('UA-110098477-2'); // tt1
 } else if (window.location.hostname.indexOf('localhost') !== -1) {
   ReactGA.initialize('UA-41886511-1'); // localhost
 }
 
 
 function handleUpdate() {
-  if ( (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) || (window.location.hostname.indexOf('fellesdatakatalog-st2') !== -1) || (window.location.hostname.indexOf('localhost') !== -1)) {
+  if ( (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) || (window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1) || (window.location.hostname.indexOf('localhost') !== -1)) {
     ReactGA.set({page: window.location.pathname});
     ReactGA.pageview(window.location.pathname);
   }
