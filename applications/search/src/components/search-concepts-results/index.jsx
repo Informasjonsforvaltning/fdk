@@ -6,7 +6,6 @@ import {
   Hits,
   HitsStats,
   Pagination,
-  SortingSelector,
   TopBar
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
@@ -15,7 +14,6 @@ import { TermsQueryTransport } from '../../utils/TermsQueryTransport';
 import localization from '../localization';
 import { SearchBox } from '../search-results-searchbox';
 import ConceptsHitItem from '../search-concepts-hit-item';
-import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
 import CompareTerms from '../search-concepts-compare';
@@ -125,9 +123,6 @@ export default class ResultsConcepts extends React.Component {
   }
 
   render() {
-    const selectDropdownWithProps = React.createElement(SelectDropdown, {
-      selectedLanguageCode: this.props.selectedLanguageCode
-    });
     const conceptsHitItemWithProps = React.createElement(ConceptsHitItem, {
       terms: this.state.terms,
       onAddTerm: this.handleAddTerm,
@@ -164,39 +159,6 @@ export default class ResultsConcepts extends React.Component {
               />
             </section>
             <section id="conceptsPanel">
-              <div className="row">
-                <div className="col-md-4 col-md-offset-8">
-                  <div className="pull-right">
-                    <SortingSelector
-                      tabIndex="0"
-                      options={[
-                        {
-                          label: 'sort.relevance',
-                          field: '_score',
-                          order: 'asc',
-                          defaultOption: true
-                        },
-                        {
-                          label: `sort.title`,
-                          field: 'title',
-                          order: 'asc'
-                        },
-                        {
-                          label: `sort.modified`,
-                          field: 'modified',
-                          order: 'desc'
-                        },
-                        {
-                          label: `sort.publisher`,
-                          field: 'publisher.name',
-                          order: 'asc'
-                        }
-                      ]}
-                      listComponent={selectDropdownWithProps}
-                    />
-                  </div>
-                </div>
-              </div>
               <div className="row">
                 <div className="col-sm-4">
                   { this._renderCompareTerms() }

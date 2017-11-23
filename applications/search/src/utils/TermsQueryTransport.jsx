@@ -50,21 +50,6 @@ export class TermsQueryTransport extends AxiosESTransport {
     let sortfield = "_score";
     let sortdirection = "asc";
 
-    let querySortObj = query.sort[0]; // assume that only one sort field is possible
-    if (querySortObj) { // there is a sort code
-      if (_.has(querySortObj, '_score')) {
-        sortfield = "_score";
-        sortdirection = "asc";
-      } else if (_.has(querySortObj, 'title')) {
-        sortfield= "title.nb";
-      } else if (_.has(querySortObj, 'modified')) {
-        sortfield= "modified";
-        sortdirection = "desc";
-      } else if (_.has(querySortObj,'publisher.name')) {
-        sortfield= "publisher.name";
-      }
-    }
-
     if (query.query) {
       ReactGA.event({
         category: 'Søk',
