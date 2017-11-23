@@ -5,6 +5,7 @@ logging:
   level.no.dcat: INFO
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
+  level.org.elasticsearch: WARN
 server:
   port: 8080
 management:
