@@ -55,7 +55,7 @@
     "nosearch.descriptions":"dataset descriptions",
     "datasetTab": "Dataset",
     "termTab": "Concept",
-    "nosearch.concepts":"begreper"
+    "nosearch.concepts":"begreper",
     "nosearch.descriptions":"dataset descriptions"
   },
   "facet": {
