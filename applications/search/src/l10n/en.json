@@ -52,6 +52,10 @@
     "result.summary": "",
     "dataset":"results",
     "nosearch.summary":"Search among ",
+    "nosearch.descriptions":"dataset descriptions",
+    "datasetTab": "Dataset",
+    "termTab": "Concept",
+    "nosearch.concepts":"begreper"
     "nosearch.descriptions":"dataset descriptions"
   },
   "facet": {
@@ -165,10 +169,28 @@
     },
     "sample": "Sample data"
   },
+  "terms": {
+    "compareTerms": "Compare concepts",
+    "removeTerms": "Remove",
+    "altLabel": "Også kjent som:"
+  },
+  "compare": {
+    "definition": "Definition",
+    "inScheme": "Domain / application",
+    "source": "Source",
+    "note": "Description",
+    "hideCompare": "Hide comparison",
+    "openCompare": "Show comparison",
+    "remove": "Remove concept",
+    "added": "You have added ",
+    "toCompare": " concepts to comparison - click to show",
+    "addCompare": "Add to compare",
+    "altLabel": "Also known as:"
+  },
   "report": {
     "title": "Showing numbers for ",
     "total": "datasets in total",
-    "accessLevel": "Accesslevel",    
+    "accessLevel": "Accesslevel",
     "public": "Datasets that are public",
     "restricted": "Datasets with restricted access",
     "nonPublic": "Datasets that are not public",

@@ -6,7 +6,6 @@ import {
   Hits,
   HitsStats,
   Pagination,
-  SortingSelector,
   TopBar
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
@@ -15,7 +14,6 @@ import { TermsQueryTransport } from '../../utils/TermsQueryTransport';
 import localization from '../localization';
 import { SearchBox } from '../search-results-searchbox';
 import ConceptsHitItem from '../search-concepts-hit-item';
-import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
 import CompareTerms from '../search-concepts-compare';
@@ -125,15 +123,17 @@ export default class ResultsConcepts extends React.Component {
   }
 
   render() {
-    const selectDropdownWithProps = React.createElement(SelectDropdown, {
-      selectedLanguageCode: this.props.selectedLanguageCode
-    });
     const conceptsHitItemWithProps = React.createElement(ConceptsHitItem, {
       terms: this.state.terms,
       onAddTerm: this.handleAddTerm,
       onDeleteTerm: this.handleDeleteTerm,
       selectedLanguageCode: this.props.selectedLanguageCode
     });
+
+    const conceptsHitStatsWithProps = React.createElement(CustomHitsStats, {
+      prefLabel: localization.page['nosearch.concepts']
+    });
+
     return (
       <SearchkitProvider searchkit={searchkitConcepts}>
         <div>
@@ -149,7 +149,7 @@ export default class ResultsConcepts extends React.Component {
                 </TopBar>
               </div>
               <div className="col-md-12 text-center">
-                <HitsStats component={CustomHitsStats} />
+                <HitsStats component={conceptsHitStatsWithProps} />
               </div>
             </div>
             <section>
@@ -158,45 +158,12 @@ export default class ResultsConcepts extends React.Component {
                 isSelected={this.props.isSelected}
               />
             </section>
-            <section id="resultPanel">
-              <div className="row">
-                <div className="col-md-4 col-md-offset-8">
-                  <div className="pull-right">
-                    <SortingSelector
-                      tabIndex="0"
-                      options={[
-                        {
-                          label: 'sort.relevance',
-                          field: '_score',
-                          order: 'asc',
-                          defaultOption: true
-                        },
-                        {
-                          label: `sort.title`,
-                          field: 'title',
-                          order: 'asc'
-                        },
-                        {
-                          label: `sort.modified`,
-                          field: 'modified',
-                          order: 'desc'
-                        },
-                        {
-                          label: `sort.publisher`,
-                          field: 'publisher.name',
-                          order: 'asc'
-                        }
-                      ]}
-                      listComponent={selectDropdownWithProps}
-                    />
-                  </div>
-                </div>
-              </div>
+            <section id="conceptsPanel">
               <div className="row">
                 <div className="col-sm-4">
                   { this._renderCompareTerms() }
                 </div>
-                <div id="datasets" className="col-sm-8">
+                <div id="concepts" className="col-sm-8">
                   <Hits
                     mod="sk-hits-grid"
                     hitsPerPage={50}

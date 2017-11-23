@@ -164,60 +164,45 @@ public class Elasticsearch implements AutoCloseable {
      */
     public void createIndex(String index) {
         //Set mapping for correct language stemming and indexing
-        if (index != null && index.equals("harvest")) {
-            Resource r = new ClassPathResource("harvest_catalog_mapping.json");
-            Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
-            try {
-                createElasticsearchIndex("harvest", "");
+        if (index != null) {
+            if (index.equals("harvest")) {
+                Resource r = new ClassPathResource("harvest_catalog_mapping.json");
+                Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
+                try {
+                    createElasticsearchIndex("harvest");
 
-                createMapping(index, "catalog", r.getInputStream());
-                createMapping(index, "dataset", r2.getInputStream());
-            } catch (IOException e) {
-                logger.error("Unable to create index for {}", index);
-            }
-        } else {
+                    createMapping(index, "catalog", r.getInputStream());
+                    createMapping(index, "dataset", r2.getInputStream());
+                } catch (IOException e) {
+                    logger.error("Unable to create index for {}. Reason {}", index, e.getLocalizedMessage());
+                }
+            } else if (index.equals("dcat")) {
 
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            try {
-                Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETTINGS_FILENAME);
-                Resource r2 = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
+                PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+                try {
+                    Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
+                    Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
+                    Resource subjectMappingResource = new ClassPathResource("dcat_subject_mapping.json");
 
-                for (Resource r : resources) {
-
-                    InputStream is = r.getInputStream();
 
                     client.admin().indices().prepareCreate(index)
-                            .setSettings(IOUtils.toString(is, "UTF-8"))
-                            .addMapping("dataset", IOUtils.toString(r2.getInputStream(), "UTF-8"))
+                            .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
+                            .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
+                            .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
                             .execute().actionGet();
 
                     logger.debug("[createIndex] {}", index);
                     client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
 
-
-
-
-
+                } catch (IOException e) {
+                    logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
                 }
-            } catch (IOException e) {
-                logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
-            }
-            try {
-                Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_MAPPING_FILENAME);
-
-                for (Resource r : resources) {
-
-                    InputStream is = r.getInputStream();
-                    createMapping(index, "dataset", is);
-                }
-            } catch (IOException e) {
-                logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
             }
         }
     }
 
-    private void createElasticsearchIndex(String index, String settings) throws IOException {
-        client.admin().indices().prepareCreate(index).setSettings(settings).execute().actionGet();
+    private void createElasticsearchIndex(String index) throws IOException {
+        client.admin().indices().prepareCreate(index).execute().actionGet();
         logger.debug("[createIndex] {}", index);
         client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
         logger.debug("[createIndex] after prepareHealth");
@@ -227,9 +212,8 @@ public class Elasticsearch implements AutoCloseable {
         String mappingJson = IOUtils.toString(is, "UTF-8");
 
         client.admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
-        logger.debug("[createIndex] after preparePutMapping");
+        logger.info("Create mapping {}/{}. Mapping file contains {} characters", index, type, mappingJson.length());
         client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-        logger.debug("[createIndex] after prepareHealth");
     }
 
 

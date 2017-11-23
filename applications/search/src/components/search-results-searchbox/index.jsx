@@ -108,9 +108,7 @@ const SearchBox = (function(_super) {
     return (
       <div className={block().state({ focused: this.state.focused })}>
         <form onSubmit={this.onSubmit.bind(this)}>
-
-
-          <span id="dosearch" className="glyphicon-search-frontpage glyphicon glyphicon-search" />
+          <span className="glyphicon-search-frontpage glyphicon glyphicon-search" />
           <input
             type="search"
             data-qa="query"
