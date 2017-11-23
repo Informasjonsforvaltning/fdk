@@ -153,7 +153,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         saveCatalogHarvestRecord(dcatSource, validationResults, gson, bulkRequest, harvestTime, catalogRecord);
 
-        logger.info("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
+        logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
