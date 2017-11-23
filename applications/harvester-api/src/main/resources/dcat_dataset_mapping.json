@@ -359,7 +359,7 @@
           },
           "orgPath": {
             "type": "string",
-            "index_analyzer": "path-analyzer",
+            "analyzer": "path-analyzer",
             "search_analyzer": "keyword"
           }
         }

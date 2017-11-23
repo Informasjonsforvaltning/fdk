@@ -168,7 +168,7 @@ public class Elasticsearch implements AutoCloseable {
             Resource r = new ClassPathResource("harvest_catalog_mapping.json");
             Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
             try {
-                createElasticsearchIndex("harvest");
+                createElasticsearchIndex("harvest", "");
 
                 createMapping(index, "catalog", r.getInputStream());
                 createMapping(index, "dataset", r2.getInputStream());
@@ -180,12 +180,24 @@ public class Elasticsearch implements AutoCloseable {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             try {
                 Resource[] resources = resolver.getResources("classpath*:" + DCAT_INDEX_SETTINGS_FILENAME);
+                Resource r2 = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
 
                 for (Resource r : resources) {
 
                     InputStream is = r.getInputStream();
-                    createElasticsearchIndex(index);
-                    createSettings(index, is);
+
+                    client.admin().indices().prepareCreate(index)
+                            .setSettings(IOUtils.toString(is, "UTF-8"))
+                            .addMapping("dataset", IOUtils.toString(r2.getInputStream(), "UTF-8"))
+                            .execute().actionGet();
+
+                    logger.debug("[createIndex] {}", index);
+                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+
+
+
+
+
                 }
             } catch (IOException e) {
                 logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
@@ -204,8 +216,8 @@ public class Elasticsearch implements AutoCloseable {
         }
     }
 
-    private void createElasticsearchIndex(String index) throws IOException {
-        client.admin().indices().prepareCreate(index).execute().actionGet();
+    private void createElasticsearchIndex(String index, String settings) throws IOException {
+        client.admin().indices().prepareCreate(index).setSettings(settings).execute().actionGet();
         logger.debug("[createIndex] {}", index);
         client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
         logger.debug("[createIndex] after prepareHealth");
