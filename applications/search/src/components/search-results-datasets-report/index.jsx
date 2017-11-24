@@ -8,6 +8,8 @@ import {
   HitsStats,
   TopBar
 } from 'searchkit';
+import * as axios from "axios";
+
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
@@ -122,6 +124,21 @@ export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
     super(props);
     this.queryObj = qs.parse(window.location.search.substr(1));
+    this.getAggregateDatasets = this.getAggregateDatasets.bind(this);
+    this.getAggregateDatasets();
+  }
+
+  getAggregateDatasets() {
+    console.log("getAgg");
+    return axios.get(`http://localhost:8083/aggregateDataset?q=/STAT`)
+      .then((response) => {
+        const hits = response.data;
+        /*
+        let nodes;
+        nodes = hits.map(item => item._source);
+        return { options: nodes }
+        */
+      });
   }
 
   _renderPublisherRefinementListFilter() {
