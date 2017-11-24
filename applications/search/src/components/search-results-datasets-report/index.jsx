@@ -18,6 +18,7 @@ import CustomHitsStats2 from '../search-result-custom-hitstats2';
 import createHistory from 'history/createBrowserHistory'
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import ReportStats from '../search-results-dataset-report-stats';
+import SearchPublishers from '../search-results-dataset-report-publisher';
 
 const host = '/dcat';
 
@@ -174,6 +175,7 @@ export default class ResultsDatasetsReport extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
+                  <SearchPublishers />
                   {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-sm-8">
