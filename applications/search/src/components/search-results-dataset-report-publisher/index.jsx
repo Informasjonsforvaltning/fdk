@@ -26,7 +26,7 @@ export default class SearchPublishers extends React.Component {
 
   onChange (value) {
     this.setState({
-      value: value,
+      value,
     });
   }
 
@@ -36,12 +36,10 @@ export default class SearchPublishers extends React.Component {
     }
 
     return axios.get(`/publisher?q=${input}`)
-      .then(function(response) {
-        let hits = response.data.hits.hits;
+      .then((response) => {
+        const hits = response.data.hits.hits;
         let nodes;
-        nodes = hits.map(item => {
-          return item._source;
-        });
+        nodes = hits.map(item => item._source);
         return { options: nodes }
       });
   }
