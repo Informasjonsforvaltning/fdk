@@ -187,6 +187,7 @@ public class DatasetsQueryService {
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"));
 
+
         addSort(sortfield, sortdirection, searchBuilder);
 
         // Execute search
