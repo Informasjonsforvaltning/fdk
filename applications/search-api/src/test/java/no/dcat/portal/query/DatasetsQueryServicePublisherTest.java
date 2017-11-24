@@ -27,13 +27,13 @@ public class DatasetsQueryServicePublisherTest {
     public static final String INDEX = "dcat";
     public static final String TYPE = "publisher";
     public static final int NR_OF_HITS = 12;
-    DatasetsQueryService sqs;
+    PublisherQueryService sqs;
     Client client;
     SearchResponse response;
 
     @Before
     public void setUp() {
-        sqs = new DatasetsQueryService();
+        sqs = new PublisherQueryService();
         client = mock(Client.class);
         populateMock();
         sqs.client = client;
