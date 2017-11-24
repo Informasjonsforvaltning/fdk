@@ -123,21 +123,22 @@ searchkit.translateFunction = (key) => {
 export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      aggregateDataset: {}
+    }
     this.queryObj = qs.parse(window.location.search.substr(1));
     this.getAggregateDatasets = this.getAggregateDatasets.bind(this);
     this.getAggregateDatasets();
   }
 
-  getAggregateDatasets() {
-    console.log("getAgg");
-    return axios.get(`http://localhost:8083/aggregateDataset?q=/STAT`)
+  getAggregateDatasets(orgPath) {
+    const query = orgPath ? orgPath : '';
+    return axios.get(`http://localhost:8083/aggregateDataset?q=${query}`)
       .then((response) => {
         const hits = response.data;
-        /*
-        let nodes;
-        nodes = hits.map(item => item._source);
-        return { options: nodes }
-        */
+        this.setState({
+          aggregateDataset: hits
+        });
       });
   }
 
@@ -192,11 +193,14 @@ export default class ResultsDatasetsReport extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
-                  <SearchPublishers />
+                  <SearchPublishers
+                    onSearch={this.getAggregateDatasets}
+                  />
                   {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
+                    aggregateDataset={this.state.aggregateDataset}
                     stats={stats}
                     entity={entity}
                   />

@@ -4,10 +4,11 @@ import localization from '../localization';
 
 const ReportStats = (props) => {
   const {
-    stats, 
+    aggregateDataset,
+    stats,
     entity
   } = props;
-  
+
   const title = (
     <div className="row">
       <div className="fdk-container fdk-container-stats">
@@ -19,14 +20,14 @@ const ReportStats = (props) => {
   const total = (
     <div className="row">
       <div className="fdk-container fdk-container-stats fdk-container-stats-total">
-        <h1><strong>{stats.total}</strong></h1>
+        <h1><strong>{aggregateDataset.hits && aggregateDataset.hits.total}</strong></h1>
         <h1>{localization.report.total}</h1>
       </div>
     </div>
   );
 
   const accessLevel = (
-    <div className="row">      
+    <div className="row">
       <div className="fdk-container fdk-container-stats fdk-container-stats-accesslevel-title">
         <h2>{localization.report.accessLevel}</h2>
         <div className="row">

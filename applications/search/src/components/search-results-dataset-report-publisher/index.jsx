@@ -25,9 +25,7 @@ export default class SearchPublishers extends React.Component {
   }
 
   onChange (value) {
-    this.setState({
-      value,
-    });
+    this.props.onSearch(value.orgPath);
   }
 
   getPublishers (input) {
