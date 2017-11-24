@@ -150,6 +150,12 @@ $sk-border-radius: 3px !default;
     justify-content: flex-end;
 }
 
+.fdk-header-menu {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
 /*
 SEARCHPAGE SORTING DROPDOWN
 */
