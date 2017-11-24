@@ -6,20 +6,17 @@ import no.dcat.shared.Dataset;
 import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountAggregator;
+import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -28,12 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
 import java.net.URLDecoder;
-import java.net.UnknownHostException;
 
 
 /**
@@ -42,11 +36,11 @@ import java.net.UnknownHostException;
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class DatasetsQueryService {
+public class DatasetsQueryService extends ElasticsearchService {
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
 
     public static final String INDEX_DCAT = "dcat";
 
-    public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String TYPE_DATASET = "dataset";
 
     public static final String FIELD_THEME_CODE = "theme.code";
@@ -58,43 +52,16 @@ public class DatasetsQueryService {
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
     public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
     public static final String TERMS_SUBJECTS_COUNT = "subjectsCount";
+    public static final String AGGREGATE_DATASET = "/aggregateDataset";
 
-    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
-    protected Client client = null;
     private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
 
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
     public static final String QUERY_THEME_COUNT = "/themecount";
-    public static final String QUERY_PUBLISHER = "/publisher";
+
     public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
-
-
-    @Value("${application.elasticsearchHost}")
-    private String elasticsearchHost;
-
-    public void setElasticsearchHost(String host) {
-        elasticsearchHost = host;
-    }
-
-    @Value("${application.elasticsearchPort}")
-    private int elasticsearchPort;
-
-    @Value("${application.clusterName}")
-    private String clusterName;
-
-
-    @PostConstruct
-    void validate(){
-        assert elasticsearchHost != null;
-        assert elasticsearchPort > 0;
-        assert clusterName != null;
-    }
-
-    public void setClusterName(String cn) {
-        clusterName = cn;
-    }
 
 
     /**
@@ -176,7 +143,7 @@ public class DatasetsQueryService {
         BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search);
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
                 .setTypes("dataset")
                 .setQuery(boolQuery)
                 .setFrom(from)
@@ -315,7 +282,7 @@ public class DatasetsQueryService {
         QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
 
         logger.debug(String.format("Get dataset with id: %s", id));
-        SearchResponse response = client.prepareSearch(INDEX_DCAT).setQuery(search).execute().actionGet();
+        SearchResponse response = getClient().prepareSearch(INDEX_DCAT).setQuery(search).execute().actionGet();
 
         if (response.getHits().getTotalHits() == 0) {
             logger.error(String.format("Found no dataset with id: %s", id));
@@ -403,35 +370,7 @@ public class DatasetsQueryService {
         return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT, "Ukjent");
     }
 
-    /**
-     * Finds all publisher loaded into elasticsearch.
-     * <p/>
-     *
-     * @return The complete elasticsearch response on Json-fornat is returned..
-     */
-    @CrossOrigin
-    @RequestMapping(value = QUERY_PUBLISHER, produces = "application/json")
-    public ResponseEntity<String> publishers() {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
-        QueryBuilder search = QueryBuilders.matchAllQuery();
-
-        SearchRequestBuilder searchQuery = client.prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
-        SearchResponse responseSize = searchQuery.execute().actionGet();
-
-        int totNrOfPublisher = (int) responseSize.getHits().getTotalHits();
-        logger.debug("Found total number of publisher: {}", totNrOfPublisher);
-
-        SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
-        logger.debug("Found publisher: {}", responsePublisher);
-
-        if (jsonError != null) {
-            logger.error("Error occured while establishing connection with elastic search. {}", jsonError);
-            return jsonError;
-        }
-
-        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
-    }
 
     private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term, String missing) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
@@ -459,7 +398,7 @@ public class DatasetsQueryService {
         //Create the aggregation object that counts the datasets
         AggregationBuilder aggregation = createAggregation(term, field, missing);
 
-        SearchResponse response = client.prepareSearch(INDEX_DCAT)
+        SearchResponse response = getClient().prepareSearch(INDEX_DCAT)
                 .setQuery(search)
                 .setSize(NO_HITS)  //only the aggregation should be returned
                 .setTypes(TYPE_DATASET)
@@ -495,50 +434,55 @@ public class DatasetsQueryService {
     }
 
 
-
-    ResponseEntity<String> initializeElasticsearchTransportClient() {
-        String jsonError = "{\"error\": \"Query service is not properly initialized. Unable to connect to database (ElasticSearch)\"}";
-
-        logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
-        if (client == null) {
-            if (elasticsearchHost == null) {
-                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
-                return new ResponseEntity<String>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-            createElasticsearchTransportClient(elasticsearchHost, elasticsearchPort);
-        }
-        return null;
-    }
-
-
     /**
-     * Create transport client for communication with elasticsearch database
+     * Aggregation based on orgPath.
      *
-     * @param host Hostname of elasticsearch database
-     * @param port Port number where elasticsearch service can be reached. Usually 9300
-     * @return Transport client object
+     * @param query the first part or complete orgPath
+     * @return the aggregations of datasets with terms, accessRights, subjects, publishers, orgPath and distributions
      */
-    public final Client createElasticsearchTransportClient(final String host, final int port) {
-        client = null;
-        try {
-            InetAddress inetaddress = InetAddress.getByName(host);
-            InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
 
-            //TODO: Gjør cluster name til en property
-            Settings settings = Settings.builder()
-                    .put("cluster.name", clusterName).build();
+    @CrossOrigin
+    @RequestMapping(value = AGGREGATE_DATASET, produces = "application/json")
+    public ResponseEntity<String> aggregateDatasets(@RequestParam(value = "q", defaultValue = "") String query) {
 
-            client = TransportClient.builder().settings(settings).build()
-                    .addTransportAddress(address);
-            logger.debug("Client returns! " + address.toString());
-        } catch (UnknownHostException e) {
-            // TODO: throw exception.
-            logger.error(e.toString(), e);
+        logger.info("{} of {}", AGGREGATE_DATASET, query);
+
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+        if (jsonError != null) return jsonError;
+
+        QueryBuilder search;
+
+        if ("".equals(query)) {
+            search = QueryBuilders.matchAllQuery();
+        } else {
+            search = QueryBuilders.termQuery("publisher.orgPath", query);
         }
 
-        logger.debug("Transport client to elasticsearch created: " + client);
-        return client;
+        logger.trace(search.toString());
 
+        ValueCountBuilder b = AggregationBuilders.count("hasDistribution2").field("distribution");
+
+        // set up search query with aggregations
+        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
+                .setTypes("dataset")
+                .setQuery(search)
+                .setSize(0)
+                .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, "Ukjent"))
+                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
+                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
+                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
+                .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
+                .addAggregation(createAggregation("hasDistribution","distribution", "Ukjent"))
+                .addAggregation(b);
+
+
+                // Execute search
+        SearchResponse response = searchBuilder.execute().actionGet();
+
+        logger.trace("Search response: " + response.toString());
+
+        // return response
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
+
 }
