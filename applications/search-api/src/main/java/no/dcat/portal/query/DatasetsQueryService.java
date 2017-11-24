@@ -461,6 +461,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         logger.trace(search.toString());
 
         ValueCountBuilder b = AggregationBuilders.count("hasDistribution2").field("distribution");
+        logger.info("b {}", b.toString());
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")

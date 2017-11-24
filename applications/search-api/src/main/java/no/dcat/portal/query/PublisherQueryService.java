@@ -10,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class PublisherQueryService extends ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(PublisherQueryService.class);
     public static final String INDEX_DCAT = "dcat";
@@ -21,17 +24,23 @@ public class PublisherQueryService extends ElasticsearchService {
      * Finds all publisher loaded into elasticsearch.
      * <p/>
      *
-     * @return The complete elasticsearch response on Json-fornat is returned..
+     * @return The complete elasticsearch response on Json-format is returned..
      */
     @CrossOrigin
     @RequestMapping(value = QUERY_PUBLISHER, produces = "application/json")
-    public ResponseEntity<String> publishers() {
-        logger.info("/publisher query");
+    public ResponseEntity<String> publishers(@RequestParam(value = "q", defaultValue = "") String query) {
+        logger.info("/publisher query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
 
-        QueryBuilder search = QueryBuilders.matchAllQuery();
+        QueryBuilder search;
+
+        if ("".equals(query)) {
+            search = QueryBuilders.matchAllQuery();
+        } else {
+            search = QueryBuilders.matchPhrasePrefixQuery("name", query);
+        }
 
         SearchRequestBuilder searchQuery = getClient().prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
         SearchResponse responseSize = searchQuery.execute().actionGet();

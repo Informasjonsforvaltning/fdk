@@ -44,7 +44,7 @@ public class DatasetsQueryServicePublisherTest {
      */
     @Test
     public void testValidGetAllPublisher() {
-        ResponseEntity<String> actual = sqs.publishers();
+        ResponseEntity<String> actual = sqs.publishers("");
 
         verify(client.prepareSearch(INDEX).setTypes(TYPE)).setQuery(any(QueryBuilder.class));
         //Denne feiler når man bygger ned maven, finner ikke ut hvorfor.
