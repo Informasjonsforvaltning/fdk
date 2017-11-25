@@ -460,7 +460,9 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace(search.toString());
 
-        ValueCountBuilder b = AggregationBuilders.count("hasDistribution2").field("distribution");
+        QueryBuilder existsDistribution = QueryBuilders.existsQuery("distribution");
+
+        AggregationBuilder b = AggregationBuilders.filter("distfilter").filter(existsDistribution);  //count("hasDistribution2").field("distribution");
         logger.info("b {}", b.toString());
 
         // set up search query with aggregations
@@ -473,7 +475,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
-                .addAggregation(createAggregation("hasDistribution","distribution", "Ukjent"))
+                //.addAggregation(createAggregation("hasDistribution","distribution", "Ukjent"))
                 .addAggregation(b);
 
 
