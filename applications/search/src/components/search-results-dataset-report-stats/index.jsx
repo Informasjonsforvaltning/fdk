@@ -5,14 +5,34 @@ import localization from '../localization';
 const ReportStats = (props) => {
   const {
     aggregateDataset,
-    stats,
     entity
   } = props;
+
+  const stats = {
+    total: (aggregateDataset.hits) ? aggregateDataset.hits.total : 0,
+    public: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'PUBLIC')) ? 
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'PUBLIC').doc_count : 0,
+    restricted: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'RESTRICTED')) ? 
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'PUBLIC').doc_count : 0,
+    nonPublic: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'NONPUBLIC')) ? 
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'NONPUBLIC').doc_count : 0,
+    unknown: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT')) ? 
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT').doc_count : 0,
+    newLastWeek: 0,
+    deletedLastWeek: 0,
+    newLastMonth: 0,
+    deletedLastMonth: 0,
+    newLastYear: 0,
+    deletedLastYear: 0,
+    withoutConcepts: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT')) ? 
+      aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT').doc_count : 0,
+    distributions: (aggregateDataset.aggregations && aggregateDataset.aggregations.distfilter.doc_count) ? aggregateDataset.aggregations.distfilter.doc_count : 0 
+  }; 
 
   const title = (
     <div className="row">
       <div className="fdk-container fdk-container-stats">
-        <h2>{localization.report.title}<strong>{entity}</strong></h2>
+        <h2>{localization.report.title}<strong>{(entity && entity.length > 0) ? entity : localization.report.allEntities}</strong></h2>
       </div>
     </div>
   );
@@ -20,7 +40,7 @@ const ReportStats = (props) => {
   const total = (
     <div className="row">
       <div className="fdk-container fdk-container-stats fdk-container-stats-total">
-        <h1><strong>{aggregateDataset.hits && aggregateDataset.hits.total}</strong></h1>
+        <h1><strong>{stats.total}</strong></h1>
         <h1>{localization.report.total}</h1>
       </div>
     </div>
@@ -108,11 +128,11 @@ const ReportStats = (props) => {
         <h2>{localization.report.concepts}</h2>
         <div className="row fdk-container-stats-concepts">
           <div className="col-md-6 fdk-container-stats-vr">
-            <p><strong>{stats.concepts}</strong></p>
+            <p><strong>{stats.total - stats.withoutConcepts}</strong></p>
             <p>{localization.report.withConcepts}</p>
           </div>
           <div className="col-md-6">
-            <p><strong>{stats.total - stats.concepts}</strong></p>
+            <p><strong>{stats.withoutConcepts}</strong></p>
             <p>{localization.report.withoutConcepts}</p>
           </div>
         </div>

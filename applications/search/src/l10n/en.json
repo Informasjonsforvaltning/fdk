@@ -189,6 +189,7 @@
   },
   "report": {
     "title": "Showing numbers for ",
+    "allEntities": "all entities",
     "total": "datasets in total",
     "accessLevel": "Accesslevel",
     "public": "Datasets that are public",

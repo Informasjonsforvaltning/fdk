@@ -188,6 +188,7 @@
   },
   "report": {
     "title": "Viser tall for ",
+    "allEntities": "alle virksomheter tilsammen",
     "total": "datasett totalt",
     "accessLevel": "Tilgangsnivå",
     "public": "Datasett som er offentlig",
