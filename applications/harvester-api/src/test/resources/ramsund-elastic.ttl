@@ -35,7 +35,6 @@
         dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description   "beskrivelse"@nb ;
         dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/910888447> ;
-        dct:spatial       <https://data-david.github.io/Begrep/begrep/Enhet> ;
         dct:subject       <https://data-david.github.io/Begrep/begrep/Enhet> ;
         dct:title         "Badebøya"@nb ;
         dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/AGRI> .
