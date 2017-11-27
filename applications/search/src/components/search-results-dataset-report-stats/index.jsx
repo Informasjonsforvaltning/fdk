@@ -8,8 +8,6 @@ const ReportStats = (props) => {
     entity
   } = props;
 
-  console.log(JSON.stringify(aggregateDataset));
-
   const stats = {
     total: (aggregateDataset.hits) ? aggregateDataset.hits.total : 0,
     public: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'PUBLIC')) ?

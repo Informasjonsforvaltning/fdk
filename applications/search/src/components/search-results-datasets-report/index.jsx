@@ -80,7 +80,7 @@ export default class ResultsDatasetsReport extends React.Component {
       .then((response) => {
         const hits = response.data;
         this.setState({
-          entity: name || 'alle virksomheter tilsammen',
+          entity: name || localization.report.allEntities,
           aggregateDataset: hits
         });
       });
@@ -141,8 +141,7 @@ export default class ResultsDatasetsReport extends React.Component {
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
                     aggregateDataset={this.state.aggregateDataset}
-                    entity={this.state.entity} // Get from state (?) when choosing or searching from entity menu.
-                    stats={this.stateaggregateDataset}
+                    entity={this.state.entity}
                   />
                 </div>
               </div>
