@@ -7,6 +7,19 @@ import localization from '../localization';
 import './index.scss';
 
 export default class SearchPublishers extends React.Component {
+  static getPublishers (input) {
+    if (!input) {
+      return Promise.resolve({ options: [] });
+    }
+
+    return axios.get(`/publisher?q=${input}`)
+      .then((response) => {
+        const hits = response.data.hits.hits;
+        const nodes = hits.map(item => item._source);
+        return { options: nodes }
+      });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +34,7 @@ export default class SearchPublishers extends React.Component {
       baseURL:this.host,
       headers:this.options.headers
     });
-    this.getPublishers = this.getPublishers.bind(this);
+    // this.getPublishers = this.getPublishers.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -34,19 +47,6 @@ export default class SearchPublishers extends React.Component {
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
-  }
-
-  getPublishers (input) {
-    if (!input) {
-      return Promise.resolve({ options: [] });
-    }
-
-    return axios.get(`/publisher?q=${input}`)
-      .then((response) => {
-        const hits = response.data.hits.hits;
-        const nodes = hits.map(item => item._source);
-        return { options: nodes }
-      });
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class SearchPublishers extends React.Component {
           onChange={this.onChange}
           valueKey="orgPath"
           labelKey="name"
-          loadOptions={this.getPublishers}
+          loadOptions={SearchPublishers.getPublishers}
           backspaceRemoves={this.state.backspaceRemoves}
         />
       </div>
