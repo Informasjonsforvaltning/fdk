@@ -124,19 +124,21 @@ export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchPublisher: '',
       aggregateDataset: {}
     }
     this.queryObj = qs.parse(window.location.search.substr(1));
-    this.getAggregateDatasets = this.getAggregateDatasets.bind(this);
-    this.getAggregateDatasets();
+    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
+    this.handleOnPublisherSearch();
   }
 
-  getAggregateDatasets(orgPath) {
-    const query = orgPath ? orgPath : '';
+  handleOnPublisherSearch(name, orgPath) {
+    const query = orgPath || '';
     return axios.get(`http://localhost:8083/aggregateDataset?q=${query}`)
       .then((response) => {
         const hits = response.data;
         this.setState({
+          searchPublisher: name || entity,
           aggregateDataset: hits
         });
       });
@@ -194,7 +196,7 @@ export default class ResultsDatasetsReport extends React.Component {
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                   <SearchPublishers
-                    onSearch={this.getAggregateDatasets}
+                    onSearch={this.handleOnPublisherSearch}
                   />
                   {this._renderPublisherRefinementListFilter()}
                 </div>
@@ -202,7 +204,7 @@ export default class ResultsDatasetsReport extends React.Component {
                   <ReportStats
                     aggregateDataset={this.state.aggregateDataset}
                     stats={stats}
-                    entity={entity}
+                    entity={this.state.searchPublisher}
                   />
                 </div>
               </div>

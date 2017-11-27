@@ -5,6 +5,8 @@ import * as axios from "axios";
 import defaults from 'lodash/defaults';
 import './index.scss';
 
+import localization from '../localization';
+
 export default class SearchPublishers extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,14 @@ export default class SearchPublishers extends React.Component {
   }
 
   onChange (value) {
-    this.props.onSearch(value.orgPath);
+    this.setState({
+      value,
+    });
+    if (!value) {
+      this.props.onSearch(null, '');
+    } else {
+      this.props.onSearch(value.name, value.orgPath);
+    }
   }
 
   getPublishers (input) {
@@ -43,15 +52,13 @@ export default class SearchPublishers extends React.Component {
   }
 
   render() {
-    const AsyncComponent = this.state.creatable
-      ? Select.AsyncCreatable
-      : Select.Async;
     return (
       <div className="section sk-panel">
-        <div className="sk-panel__header mb-2">Velg virksomhet</div>
-        <AsyncComponent
-          placeholder="Søk på virksomhetsnavn..."
-          searchPromptText="Skriv for å søke"
+        <div className="sk-panel__header mb-2">{localization.report.searchPublisher}</div>
+        <Select.Async
+          ignoreAccents={false}
+          placeholder={localization.report.searchPublisherPlaceholder}
+          searchPromptText={localization.report.typeToSearch}
           multi={this.state.multi}
           value={this.state.value}
           onChange={this.onChange}
