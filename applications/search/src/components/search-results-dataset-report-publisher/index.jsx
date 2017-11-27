@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Select from 'react-select';
 import * as axios from "axios";
 import defaults from 'lodash/defaults';
-import './index.scss';
 
 import localization from '../localization';
+import './index.scss';
 
 export default class SearchPublishers extends React.Component {
   constructor(props) {
@@ -45,8 +44,7 @@ export default class SearchPublishers extends React.Component {
     return axios.get(`/publisher?q=${input}`)
       .then((response) => {
         const hits = response.data.hits.hits;
-        let nodes;
-        nodes = hits.map(item => item._source);
+        const nodes = hits.map(item => item._source);
         return { options: nodes }
       });
   }

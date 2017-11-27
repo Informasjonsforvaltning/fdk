@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import ResultsDatasetsReport from '../../components/search-results-datasets-report';
-import ResultsConcepts from '../../components/search-concepts-results';
 import './index.scss';
 import '../../components/search-results-searchbox/index.scss';
-
-const qs = require('qs');
-const sa = require('superagent');
 
 export default class ReportsPage extends React.Component {
   constructor(props) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import './index.scss';
 import localization from '../localization';
 
@@ -11,22 +10,22 @@ const ReportStats = (props) => {
 
   const stats = {
     total: (aggregateDataset.hits) ? aggregateDataset.hits.total : 0,
-    public: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'PUBLIC')) ?
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'PUBLIC').doc_count : 0,
-    restricted: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'RESTRICTED')) ?
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'RESTRICTED').doc_count : 0,
-    nonPublic: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'NONPUBLIC')) ?
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'NONPUBLIC').doc_count : 0,
-    unknown: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT')) ?
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT').doc_count : 0,
+    public: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'PUBLIC')) ?
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'PUBLIC').doc_count : 0,
+    restricted: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'RESTRICTED')) ?
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'RESTRICTED').doc_count : 0,
+    nonPublic: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NONPUBLIC')) ?
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NONPUBLIC').doc_count : 0,
+    unknown: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT')) ?
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT').doc_count : 0,
     newLastWeek: 0,
     deletedLastWeek: 0,
     newLastMonth: 0,
     deletedLastMonth: 0,
     newLastYear: 0,
     deletedLastYear: 0,
-    withoutConcepts: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT')) ?
-      aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() == 'UKJENT').doc_count : 0,
+    withoutConcepts: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT')) ?
+      aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT').doc_count : 0,
     distributions: (aggregateDataset.aggregations && aggregateDataset.aggregations.distfilter && aggregateDataset.aggregations.distfilter.doc_count) ? aggregateDataset.aggregations.distfilter.doc_count : 0
   };
 
