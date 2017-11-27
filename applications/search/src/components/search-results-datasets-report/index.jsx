@@ -4,41 +4,25 @@ import qs from 'qs';
 import {
   SearchkitManager,
   SearchkitProvider,
-  RefinementListFilter,
-  HitsStats,
-  TopBar
+  RefinementListFilter
 } from 'searchkit';
 import * as axios from "axios";
+import createHistory from 'history/createBrowserHistory'
 
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
-import { SearchBox } from '../search-results-searchbox';
-import SearchHitItem from '../search-results-hit-item';
-import SelectDropdown from '../search-results-selector-dropdown';
-import CustomHitsStats2 from '../search-result-custom-hitstats2';
-import createHistory from 'history/createBrowserHistory'
-import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import ReportStats from '../search-results-dataset-report-stats';
 import SearchPublishers from '../search-results-dataset-report-publisher';
 
 const host = '/dcat';
-
 const history = createHistory();
-console.log('history is ', history);
-history.default = () => {
-  console.log('default func?');
-};
 const transportRef = new QueryTransport2();
 const searchkit = new SearchkitManager(
   host,
   {
     transport: transportRef,
-    createHistory: ()=> {
-      console.log('create history runs now');
-      return history;
-    }
-
+    createHistory: ()=> history
   }
 );
 
@@ -101,16 +85,7 @@ export default class ResultsDatasetsReport extends React.Component {
   }
 
   render() {
-    const selectDropdownWithProps = React.createElement(SelectDropdown, {
-      selectedLanguageCode: this.props.selectedLanguageCode
-    });
-
-    const searchHitItemWithProps = React.createElement(SearchHitItem, {
-      selectedLanguageCode: this.props.selectedLanguageCode
-    });
-
-    history.listen((location, action)=> {
-      console.log(action, location);
+    history.listen((location)=> {
       if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
         let nextUrl = "";
         if (location.search.indexOf('?') === -1) {
