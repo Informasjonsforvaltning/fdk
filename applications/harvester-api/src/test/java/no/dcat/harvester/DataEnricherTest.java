@@ -255,4 +255,24 @@ public class DataEnricherTest {
         assertThat(foundString, is("Dataset with english \n description."));
     }
 
+
+    @Test
+    public void datanorgeDistributionLicensesShouldHaveSourceProperty()  throws IOException {
+
+        //Prepare test code
+        Model model = loadTestModel("distribution-licenseformat-difi.jsonld");
+
+        //Do the actual enricments. This is the code that is being tested
+        DataEnricher enricher = new DataEnricher();
+        Model enriched = enricher.enrichData(model);
+
+        //Find license where dct:source should have been added
+        Resource distributionRes = model.getResource("http://data.norge.no/node/967");
+        RDFNode license = distributionRes.getProperty(DCTerms.license).getObject();
+
+        assertEquals(
+                license.asResource().getProperty(DCTerms.source).getLiteral().toString(),
+                "http://data.norge.no/nlod/");
+    }
+
 }

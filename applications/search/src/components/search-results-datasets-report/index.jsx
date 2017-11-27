@@ -24,38 +24,12 @@ import SearchPublishers from '../search-results-dataset-report-publisher';
 
 const host = '/dcat';
 
-const history = createHistory()
-// history.push();
-// history.replace();
+const history = createHistory();
 console.log('history is ', history);
 history.default = () => {
   console.log('default func?');
-}
-// history.replace(path, [state])
-
-/**
- * THESE ARE TEST DATA DELETE
- */
-const stats = {
-  total: 743,
-  public: 544,
-  restricted: 172,
-  nonPublic: 24,
-  unknown: 3,
-  newLastWeek: 14,
-  deletedLastWeek: 0,
-  newLastMonth: 38,
-  deletedLastMonth: 4,
-  newLastYear: 641,
-  deletedLastYear: 21,
-  concepts: 98,
-  distributions: 211
-}
-
-const entity = 'alle virksomheter tilsammen';
-
+};
 const transportRef = new QueryTransport2();
-console.log('transportref is ', transportRef);
 const searchkit = new SearchkitManager(
   host,
   {
@@ -67,39 +41,7 @@ const searchkit = new SearchkitManager(
 
   }
 );
-function getURLParameters(paramName)
-{
-  const sURL = window.location.search.toString();
-  console.log('sURL is ', sURL);
-  if (sURL.indexOf("?") > 0)
-  {
-    const arrParams = sURL.split("?");
-    const arrURLParams = arrParams[1].split("&");
-    const arrParamNames = new Array(arrURLParams.length);
-    const arrParamValues = new Array(arrURLParams.length);
 
-    let i = 0;
-    for (i = 0; i<arrURLParams.length; i++)
-    {
-      const sParam =  arrURLParams[i].split("=");
-      arrParamNames[i] = sParam[0];
-      if (sParam[1] != "")
-        arrParamValues[i] = unescape(sParam[1]);
-      else
-        arrParamValues[i] = "No Value";
-    }
-
-    for (i=0; i<arrURLParams.length; i++)
-    {
-      if (arrParamNames[i] == paramName)
-      {
-        // alert("Parameter:" + arrParamValues[i]);
-        return arrParamValues[i];
-      }
-    }
-    return "No Parameters Found";
-  }
-}
 searchkit.translateFunction = (key) => {
   const translations = {
     'pagination.previous': localization.page.prev,
@@ -124,7 +66,7 @@ export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchPublisher: '',
+      entity: '',
       aggregateDataset: {}
     }
     this.queryObj = qs.parse(window.location.search.substr(1));
@@ -138,7 +80,7 @@ export default class ResultsDatasetsReport extends React.Component {
       .then((response) => {
         const hits = response.data;
         this.setState({
-          searchPublisher: name || entity,
+          entity: name || 'alle virksomheter tilsammen',
           aggregateDataset: hits
         });
       });
@@ -169,10 +111,6 @@ export default class ResultsDatasetsReport extends React.Component {
 
     history.listen((location, action)=> {
       console.log(action, location);
-      /*
-          location = {pathname: "/", search: "?theme[0]=Ukjent", hash: "", state: undefined, key: "tk0fqa"}
-        */
-
       if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
         let nextUrl = "";
         if (location.search.indexOf('?') === -1) {
@@ -203,8 +141,8 @@ export default class ResultsDatasetsReport extends React.Component {
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
                     aggregateDataset={this.state.aggregateDataset}
-                    stats={stats}
-                    entity={this.state.searchPublisher}
+                    entity={this.state.entity} // Get from state (?) when choosing or searching from entity menu.
+                    stats={this.stateaggregateDataset}
                   />
                 </div>
               </div>
