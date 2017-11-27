@@ -141,6 +141,13 @@ export default class App extends React.Component {
                     >
                       {localization.menu.aboutRegistration}
                     </MenuItem>
+                    <MenuItem
+                      key="menu-3"
+                      eventKey="menu-3"
+                      href="/reports"
+                    >
+                      {localization.menu.reports}
+                    </MenuItem>
                   </DropdownButton>
                 </div>
               </div>

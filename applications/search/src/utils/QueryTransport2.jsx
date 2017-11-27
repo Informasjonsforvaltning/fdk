@@ -2,14 +2,13 @@ import {AxiosESTransport} from "searchkit";
 const defaults = require("lodash/defaults");
 import * as axios from "axios";
 const qs = require('qs');
-const ReactGA = require('react-ga');
 
-export class DatasetsQueryTransport extends AxiosESTransport {
+export class QueryTransport2 extends AxiosESTransport {
   constructor(host, options) {
     super()
     this.options = defaults(options, {
       headers:{},
-      searchUrlPath: "/datasets"
+      searchUrlPath: "/datasets" // harvest(s?)
     })
     this.axios = axios.create({
       baseURL:this.host,
@@ -17,16 +16,10 @@ export class DatasetsQueryTransport extends AxiosESTransport {
       headers:this.options.headers
     })
     this.filters = [
-      {key: 'sort.selector'},
       {
-        key: 'theme.code.raw',
-        paramName: 'theme',
-        name: 'theme_count'
-      },
-      {
-        key: 'accessRights.authorityCode.raw',
-        paramName: 'accessrights',
-        name: 'accessRightsCount'
+        key: 'subject.no.raw',
+        paramName: 'subject',
+        name: 'subjectCount',
       },
       {
         key: 'publisher.name.raw',
@@ -35,9 +28,10 @@ export class DatasetsQueryTransport extends AxiosESTransport {
       }
     ];
   }
-
+  
   search(query) {
     this.filters.forEach((filter)=> {
+      // http://localhost:8083/search?q=test&from=0&size=10&lang=nb&publisher=AKERSHUS%20FYLKESKOMMUNE
       filter.query = '';
       let multiple = false;
       if(query.post_filter) { // there is an aggregation post_filter
@@ -61,49 +55,23 @@ export class DatasetsQueryTransport extends AxiosESTransport {
       filter.query = filter.query.replace(/,\s*$/, "");
     })
 
-    let sortfield = "_score";
-    let sortdirection = "asc";
-
-    let querySortObj = query.sort[0]; // assume that only one sort field is possible
-    if (querySortObj) { // there is a sort code
-      if (_.has(querySortObj, '_score')) {
-        sortfield = "_score";
-        sortdirection = "asc";
-      } else if (_.has(querySortObj, 'title')) {
-        sortfield= "title.nb";
-      } else if (_.has(querySortObj, 'modified')) {
-        sortfield= "modified";
-        sortdirection = "desc";
-      } else if (_.has(querySortObj,'publisher.name')) {
-        sortfield= "publisher.name";
-      }
-    }
     let hasSingleWord = false;
     if(query.query) {
       let q = query.query.simple_query_string.query;
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
     }
 
-    if (query.query) {
-      ReactGA.event({
-        category: 'Søk',
-        action: 'Søk i datasett',
-        label: query.query.simple_query_string.query
-      });
-    }
-
     let filtersUrlFragment = this.filters.map(filter=>filter.query).join(''); // build url fragment from list of filters
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
-      (hasSingleWord ? ' ' + query.query.simple_query_string.query + '*' : '') + // if there is a single word, we add keyword with a trailing assterix
+      (hasSingleWord ? '*' : '') + // if there is a single word, we perform an assterix search
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +
       query.size +
       '&lang=nb' +
-      filtersUrlFragment +
-      (sortfield !== "_score" ? '&sortfield='+sortfield+'&sortdirection='+ sortdirection : '')
+      filtersUrlFragment
 		)
       .then(x => new Promise(resolve => setTimeout(() => resolve(x), 50)))
       .then((response)=>this.getData.call(this, response))
@@ -130,6 +98,7 @@ export class DatasetsQueryTransport extends AxiosESTransport {
             delete aggregations[name];
         }
       })
+    this.responseData = response.data;
     return response.data
   }
 }

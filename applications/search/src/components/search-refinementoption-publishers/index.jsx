@@ -44,5 +44,4 @@ const RefinementOptionPublishers = (props) => {
     </div>
   );
 }
-
 export default RefinementOptionPublishers;
