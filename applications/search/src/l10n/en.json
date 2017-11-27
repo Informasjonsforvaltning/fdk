@@ -19,7 +19,8 @@
     "english-en": "English"
   },
   "menu": {
-    "aboutRegistration": "Registrere datasett"
+    "aboutRegistration": "Registrere datasett",    
+    "reports": "Reports"
   },
   "feedback": {
     "title": "Feedback"
