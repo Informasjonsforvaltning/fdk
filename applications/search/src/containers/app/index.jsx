@@ -84,7 +84,7 @@ export default class App extends React.Component {
           <div className="container">
             <div className="row">
 
-              <div className="col-md-4">
+              <div className="col-sm-12 col-md-4">
                 <a
                   title="Link til Felles datakatalog"
                   href={`/${langParam}`}
@@ -93,7 +93,7 @@ export default class App extends React.Component {
                 </a>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-sm-12 col-md-5">
                 <p className="fdk-p-header-sub">
                   {localization.app.titleSub} {localization.app.readMore}
                   <a
@@ -105,7 +105,7 @@ export default class App extends React.Component {
                 </p>
               </div>
 
-              <div className="col-sm-12 col-md-4 fdk-header-flex">
+              <div className="col-sm-12 col-md-3 fdk-header-flex">
                 <DropdownButton
                   tabIndex="0"
                   id="search-language-dropdown-1"
@@ -119,28 +119,30 @@ export default class App extends React.Component {
                   <MenuItem key="3" eventKey="en">{localization.lang['english-en']}</MenuItem>
                 </DropdownButton>
 
-                <DropdownButton
-                  tabIndex="0"
-                  id="search-menu-dropdown-1"
-                  bsStyle="default"
-                  className="fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
-                  title={localization.app.menu}
-                >
-                  <MenuItem
-                    key="menu-1"
-                    eventKey="menu-1"
-                    href="/about"
+                <div className="fdk-header-menu">
+                  <DropdownButton
+                    tabIndex="0"
+                    id="search-menu-dropdown-1"
+                    bsStyle="default"
+                    className="fdk-button fdk-button-default fdk-button-on-white fdk-button-menu"
+                    title={localization.app.menu}
                   >
-                    {localization.about.about}
-                  </MenuItem>
-                  <MenuItem
-                    key="menu-2"
-                    eventKey="menu-2"
-                    href="/about-registration"
-                  >
-                    {localization.menu.aboutRegistration}
-                  </MenuItem>
-                </DropdownButton>
+                    <MenuItem
+                      key="menu-1"
+                      eventKey="menu-1"
+                      href="/about"
+                    >
+                      {localization.about.about}
+                    </MenuItem>
+                    <MenuItem
+                      key="menu-2"
+                      eventKey="menu-2"
+                      href="/about-registration"
+                    >
+                      {localization.menu.aboutRegistration}
+                    </MenuItem>
+                  </DropdownButton>
+                </div>
               </div>
             </div>
           </div>

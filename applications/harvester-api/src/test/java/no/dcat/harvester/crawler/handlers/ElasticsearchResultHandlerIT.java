@@ -114,15 +114,16 @@ public class ElasticsearchResultHandlerIT {
 			e.printStackTrace();
 		}
 
+		// copy catalog info to temporary file to have a stable url for multipleharvests
 		Resource catalogResource = new ClassPathResource("ramsund-elastic.ttl");
 		File f = File.createTempFile("ramsund-elastic", ".ttl");
 		f.deleteOnExit();
-
 		FileOutputStream out = new FileOutputStream(f);
 		IOUtils.copy(catalogResource.getInputStream(),out);
+		out.close();
 
 		String ramsundUrl = f.toURI().toURL().toString();
-		logger.debug("file: ", ramsundUrl);
+		logger.debug("stable harvest url: ", ramsundUrl);
 
         // First harvest of ramsun, file contains one dataset
 		DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test",
@@ -140,11 +141,11 @@ public class ElasticsearchResultHandlerIT {
 
 		assertThat("Dataset document(s) exist", searchResponse.getHits().getTotalHits(), is(1l));
 
-		// index second time
+
+		// Second harvest, no changes
         harvestSource(dcatSource);
         searchResponse = srb_dataset.execute().actionGet();
         logDatasets(searchResponse);
-
 
         srb_dataset = client.prepareSearch("harvest").setTypes("catalog").setQuery(QueryBuilders.matchAllQuery());
 		SearchResponse catalogHarvestRecordResponse = srb_dataset.execute().actionGet();
@@ -153,10 +154,11 @@ public class ElasticsearchResultHandlerIT {
 				catalogHarvestRecordResponse.getHits().getTotalHits(), greaterThanOrEqualTo(2l));
 
 
+		// Update file with new dataset and removed old
 		Resource updatedCatalogResource = new ClassPathResource("ramsund-elastic2.ttl");
 		out = new FileOutputStream(f);
 		IOUtils.copy(updatedCatalogResource.getInputStream(),out);
-
+		out.close();
 
         // Third harvest of ramsund but with previous dataset deleted, (new one added)
         dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", ramsundUrl, "tester",
@@ -180,7 +182,7 @@ public class ElasticsearchResultHandlerIT {
 	}
 
 
-    private void sleep() {
+	private void sleep() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

@@ -189,6 +189,7 @@
   },
   "report": {
     "title": "Showing numbers for ",
+    "allEntities": "all entities",
     "total": "datasets in total",
     "accessLevel": "Accesslevel",
     "public": "Datasets that are public",
@@ -205,6 +206,9 @@
     "withoutConcepts": "Datasets without concepts",
     "distributions": "Distributions",
     "withDistributions": "Public datasets with distributions",
-    "withoutDistributions": "Public datasets without distributions"
+    "withoutDistributions": "Public datasets without distributions",
+    "searchPublisher": "Choose publisher",
+    "searchPublisherPlaceholder": "Search publisher...",
+    "typeToSearch": "Type to search"
   }
 }

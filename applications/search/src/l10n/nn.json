@@ -188,6 +188,7 @@
   },
   "report": {
     "title": "Visar tall for ",
+    "allEntities": "alle virksemder tilsaman",
     "total": "datasett totalt",
     "accessLevel": "Tilgangsnivå",
     "public": "Datasett som er offentleg",
@@ -204,6 +205,9 @@
     "withoutConcepts": "Datasett som ikkje benytter omgrep",
     "distributions": "Distribusjoner",
     "withDistributions": "Offentlege datasett med distribusjoner",
-    "withoutDistributions": "Offentlege datasett utan distribusjoner"
+    "withoutDistributions": "Offentlege datasett utan distribusjoner",
+    "searchPublisher": "Velg virksomhet",
+    "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
+    "typeToSearch": "Skriv for å søke"
   }
 }

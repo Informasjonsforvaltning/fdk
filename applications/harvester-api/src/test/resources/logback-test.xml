@@ -6,4 +6,5 @@
     <logger name="org.apache.jena" level="ERROR"/>
   	<logger name="no.difi.dcat" level="INFO" />
     <logger name="no.dcat" level="INFO" />
+    <logger name="org.elasticsearch" level="WARN" />
 </configuration>
