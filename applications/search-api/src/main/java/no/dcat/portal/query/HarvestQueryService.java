@@ -10,6 +10,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.metrics.MetricsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.sum.SumBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,47 +39,48 @@ public class HarvestQueryService extends ElasticsearchService {
      */
     @CrossOrigin
     @RequestMapping(value = "/harvest/catalog", produces = "application/json")
-    public ResponseEntity<String> catalogHarvests(@RequestParam(value = "q", defaultValue = "") String query) {
+    public ResponseEntity<String> listCatalogHarvestRecords(@RequestParam(value = "q", defaultValue = "") String query) {
         logger.info("/harvest query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
 
-        SumBuilder agg1 = AggregationBuilders.sum("inserts").field("changeInformation.inserts");
-        SumBuilder agg2 = AggregationBuilders.sum("updates").field("changeInformation.updates");
-        SumBuilder agg3 = AggregationBuilders.sum("deletes").field("changeInformation.deletes");
+        MetricsAggregationBuilder agg1 = AggregationBuilders.sum("inserts").field("changeInformation.inserts");
+        MetricsAggregationBuilder agg2 = AggregationBuilders.sum("updates").field("changeInformation.updates");
+        MetricsAggregationBuilder agg3 = AggregationBuilders.sum("deletes").field("changeInformation.deletes");
 
-        //AggregationBuilder aggBuilder = AggregationBuilders.
+        AggregationBuilder aggBuilder = AggregationBuilders.filter("filter");
+
 
         long now = new Date().getTime();
         long DAY_IN_MS = 1000 * 3600 *24;
-        RangeQueryBuilder range1 = QueryBuilders.rangeQuery("last7").from(now - 7*DAY_IN_MS).to(now);
+        RangeQueryBuilder range1 = QueryBuilders.rangeQuery("date").from(now - 7*DAY_IN_MS).to(now).format("epoch_millis");
         RangeQueryBuilder range2 = QueryBuilders.rangeQuery("last30").from(now - 30*DAY_IN_MS).to(now);
         RangeQueryBuilder range3 = QueryBuilders.rangeQuery("last365").from(now - 365*DAY_IN_MS).to(now);
 
         BoolQueryBuilder bool = QueryBuilders.boolQuery();
         bool.must(range1);
 
-        QueryBuilder search = QueryBuilders.queryStringQuery("_type:catalog");
-
-
-
-
+        QueryBuilder search = QueryBuilders.matchAllQuery(); //queryStringQuery("_type:catalog");
 
         SearchRequestBuilder searchQuery = getClient()
                 .prepareSearch("harvest").setTypes("catalog")
-                .setQuery(search)
-                //.setAggregations(agg1)
+                .setQuery(bool)
+                .addAggregation(agg1)
+                .addAggregation(agg2)
+                .addAggregation(agg3)
+
+                .setSize(3)
                 ;
-        SearchResponse responseSize = searchQuery.execute().actionGet();
 
-        int totNrOfPublisher = (int) responseSize.getHits().getTotalHits();
-        logger.debug("Found total number of publisher: {}", totNrOfPublisher);
+        logger.info("SEARCH: {}", searchQuery.toString());
+        SearchResponse response = searchQuery.execute().actionGet();
 
-        SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
-        logger.debug("Found publisher: {}", responsePublisher);
+        int totNumberOfCatalogRecords = (int) response.getHits().getTotalHits();
+        logger.debug("Found total number of catalog records: {}", totNumberOfCatalogRecords);
 
-        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+
+        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
     String query = "{\n" +

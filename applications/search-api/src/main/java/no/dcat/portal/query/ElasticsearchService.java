@@ -40,6 +40,7 @@ public class ElasticsearchService {
     public void setClusterName(String cn) {
         clusterName = cn;
     }
+    public void setPort(int port) { elasticsearchPort = port; }
 
 
     Client client;
@@ -51,6 +52,7 @@ public class ElasticsearchService {
 
     public final Client createElasticsearchTransportClient(final String host, final int port) {
         client = null;
+
         try {
             InetAddress inetaddress = InetAddress.getByName(host);
             InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
