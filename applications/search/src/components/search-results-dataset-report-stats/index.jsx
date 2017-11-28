@@ -31,7 +31,7 @@ const ReportStats = (props) => {
 
   const title = (
     <div className="row">
-      <div className="fdk-container fdk-container-stats">
+      <div className="fdk-container-stats">
         <h2>{localization.report.title}<strong>{(entity && entity.length > 0) ? entity : localization.report.allEntities}</strong></h2>
       </div>
     </div>
@@ -39,7 +39,7 @@ const ReportStats = (props) => {
 
   const total = (
     <div className="row">
-      <div className="fdk-container fdk-container-stats fdk-container-stats-total">
+      <div className="fdk-container-stats fdk-container-stats-total">
         <h1><strong>{stats.total}</strong></h1>
         <h1>{localization.report.total}</h1>
       </div>
@@ -48,7 +48,7 @@ const ReportStats = (props) => {
 
   const accessLevel = (
     <div className="row">
-      <div className="fdk-container fdk-container-stats fdk-container-stats-accesslevel-title">
+      <div className="fdk-container-stats fdk-container-stats-accesslevel-title">
         <h2>{localization.report.accessLevel}</h2>
         <div className="row">
           <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
@@ -75,7 +75,7 @@ const ReportStats = (props) => {
   const changes = (
     <div className="row">
       <div className="col-md-4 fdk-container-stats-changes-left">
-        <div className="fdk-container fdk-container-stats fdk-container-stats-changes">
+        <div className="fdk-container-stats fdk-container-stats-changes">
           <h2>{localization.report.changesLastWeek}</h2>
           <div className="row">
             <div className="col-sm-6">
@@ -90,7 +90,7 @@ const ReportStats = (props) => {
         </div>
       </div>
       <div className="col-md-4 fdk-container-stats-changes-middle">
-        <div className="fdk-container fdk-container-stats fdk-container-stats-changes">
+        <div className="fdk-container-stats fdk-container-stats-changes">
           <h2>{localization.report.changesLastMonth}</h2>
           <div className="row">
             <div className="col-sm-6">
@@ -105,7 +105,7 @@ const ReportStats = (props) => {
         </div>
       </div>
       <div className="col-md-4 fdk-container-stats-changes-right">
-        <div className="fdk-container fdk-container-stats fdk-container-stats-changes">
+        <div className="fdk-container-stats fdk-container-stats-changes">
           <h2>{localization.report.changesLastYear}</h2>
           <div className="row">
             <div className="col-sm-6">
@@ -124,7 +124,7 @@ const ReportStats = (props) => {
 
   const concepts = (
     <div className="row">
-      <div className="fdk-container fdk-container-stats fdk-container-stats-concepts-title">
+      <div className="fdk-container-stats fdk-container-stats-concepts-title">
         <h2>{localization.report.concepts}</h2>
         <div className="row fdk-container-stats-concepts">
           <div className="col-md-6 fdk-container-stats-vr">
@@ -142,7 +142,7 @@ const ReportStats = (props) => {
 
   const distributions = (
     <div className="row">
-      <div className="fdk-container fdk-container-stats fdk-container-stats-concepts-title">
+      <div className="fdk-container-stats fdk-container-stats-concepts-title">
         <h2>{localization.report.distributions}</h2>
         <div className="row fdk-container-stats-concepts">
           <div className="col-md-6 fdk-container-stats-vr">
