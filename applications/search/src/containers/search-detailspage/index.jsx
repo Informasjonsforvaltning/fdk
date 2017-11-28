@@ -18,7 +18,7 @@ export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {}, //api.dataset[0],
+      dataset: {}, // api.dataset[0],
       loading: false
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
