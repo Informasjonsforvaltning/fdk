@@ -52,15 +52,15 @@ const ReportStats = (props) => {
         <h2>{localization.report.accessLevel}</h2>
         <div className="row">
           <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
-            <p><strong><i className="fa fdk-fa-left fa-unlock fdk-color-green" />{stats.public}</strong></p>
+            <p><strong><i className="fa fdk-fa-left fa-unlock fdk-color-offentlig" />{stats.public}</strong></p>
             <p>{localization.report.public}</p>
           </div>
           <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
-            <p><strong> <i className="fa fdk-fa-left fa-unlock-alt fdk-color-yellow" />{stats.restricted}</strong></p>
+            <p><strong> <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />{stats.restricted}</strong></p>
             <p>{localization.report.restricted}</p>
           </div>
           <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
-            <p><strong><i className="fa fdk-fa-left fa-lock fdk-color-red" />{stats.nonPublic}</strong></p>
+            <p><strong><i className="fa fdk-fa-left fa-lock fdk-color-unntatt" />{stats.nonPublic}</strong></p>
             <p>{localization.report.nonPublic}</p>
           </div>
           <div className="col-md-3 fdk-container-stats-accesslevel">

@@ -7,20 +7,20 @@ h1 {
     color: $color1;
     font-size: 3.0rem;
     line-height: 3.6rem;
-    font-weight: 600;
+    font-weight: 300;
     margin: 8px 0 0 0;
 }
 
 h2 {
     color: $color1;
-    font-size: 2.625rem;
-    line-height: 3.15rem;
+    font-size: 2.56rem;
+    line-height: 3.072rem;
     font-weight: 600;
 }
 
 h2.fdk-page-not-found { /* 404 */
-    font-size: 160px;
-    line-height: 160px;
+    font-size: 16rem;
+    line-height: 16rem;
     color: $color4;
     text-align: center;
     margin: 0;
@@ -28,38 +28,38 @@ h2.fdk-page-not-found { /* 404 */
 
 h3 {
     color: $color1;
-    font-size: 2.25rem;
-    line-height: 2.7rem;
+    font-size: 2.24rem;
+    line-height: 2.688rem;
     font-weight: 600;
     margin: 0px;
 }
 
 h4 {
     color: $color1;
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    font-size: 1.92rem;
+    line-height: 2.304rem;
     font-weight: 600;
     margin: 0px;
 }
 
 h5 {
-    color: $color1;
-    font-size: 1.4rem;
-    line-height: 1.8rem;
-    font-weight: 600;
+    color: $color3;
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+    font-weight: 400;
     padding: 0px;
     margin: 0px 0px 4px 0px;
 }
 
 p {
-    margin: 0 0 2.1rem 0;
+    margin: 0 0 2.3rem 0;
 }
 
 .fdk-ingress {
-    font-size: 1.875rem;
-    line-height: 2.625rem;
+    font-size: 2rem;
+    line-height: 2.8rem;
     font-weight: 400;
-    margin: 0 0 2.1rem 0;
+    margin: 0 0 2.8rem 0;
 }
 
 .fdk-ingress-detail {
@@ -73,13 +73,29 @@ p {
 }
 
 a {
-    color: $color1;
+    color: $color-cta2;
     text-decoration: underline;
 }
 
 a:hover {
     text-decoration: none;
+    color: $color-cta2;
+}
+
+a.fdk-btn {
     color: $color1;
+}
+
+a.fdk-btn:hover {
+    color: $color1;
+}
+
+a.fdk-btn-danger {
+    color: $color-red3;
+}
+
+a.fdk-btn-danger:hover {
+    color: $color-red3;
 }
 
 .fdk-link-internal {
@@ -205,5 +221,15 @@ a:hover {
 
 .fdk-fa-link {
     margin-right: 5px;
+    color: $color-cta2;
+}
+
+.fdk-fa-btn {
+    margin-right: 3px;
     color: $color1;
+}
+
+.fdk-fa-btn-danger {
+    margin-right: 3px;
+    color: $color-red3;
 }

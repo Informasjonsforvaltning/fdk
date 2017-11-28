@@ -4,8 +4,8 @@ body {
     background-color: $color6 !important;
     font-family: "heebo", "helvetica", sans-serif;
     font-weight: 400;
-    font-size: 1.5rem;
-    line-height: 2.1rem;
+    font-size: 1.6rem;
+    line-height: 2.3rem;
     color: $color1;
 }
 
@@ -77,7 +77,7 @@ body {
     border-radius: 3px;
     border: none;
     box-shadow: 0 2px 4px rgba(45,55,65,0.20);
-    padding: 14px 16px 13px 16px;
+    padding: 11px 13px 11px 13px;
     margin: 3px 2px 5px 3px;
     display: inline-block;
     background-image: none;
@@ -99,7 +99,8 @@ body {
 
 .fdk-button-cta {
     background-color: $color1;
-    border: 3px solid $color0;
+    color: $color0;
+    box-shadow: 0 2px 4px rgba(45,55,65,0.30);
 }
 
 .fdk-button-cta:hover {
@@ -111,15 +112,15 @@ body {
 }
 
 .fdk-button-dropdown {
-    background-color: $color0;
+    background-color: $color-cta4;
     color: $color1;
 }
 
 .fdk-button-dropdown:hover {
     border-radius: 3px;
-    border: 3px solid var(--color0);
+    border: 3px solid var(--color-cta4);
     // margin: 0px -1px 2px 0px; // FJERNET AV OIS
-	box-shadow: 0 4px 8px rgba(45,55,65,0.20);
+    box-shadow: 0 4px 8px rgba(45,55,65,0.20);
 }
 
 
@@ -139,6 +140,7 @@ body {
     border-color: $color0;
 }
 
+// ADDED BY OIS
 .fdk-button-color1 {
     background-color: $color1;
     color: $color0;
@@ -173,13 +175,13 @@ a > .fdk-button-cta {
 /* * * * *   L A B E L S   * * * * */
 
 .fdk-label {
-    background-color: $color4;
+    background-color: $color5;
     color: $color1;
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.4rem;
     border-radius: 2px;
-    padding: 6px 8px 5px 8px;
+    padding: 5px 7px 4px 7px;
     display: inline-block;
     margin: -1px 0px -1px 2px;
 }
@@ -196,6 +198,37 @@ a > .fdk-label {
     color: $color1;
     text-decoration: none;
     font-size: 1.4rem
+}
+
+
+
+/*  A L E R T S  */
+
+.fdk-alert {
+	border: 1px solid;
+	background-image: none;
+	box-shadow: none;
+    color: $color1;
+    padding: 15px 20px;
+    margin: 0px 0px 20px 0px;
+}
+
+.fdk-alert-default {
+	background-color: $color-yellow2;
+	border-color: $color-yellow;
+    color: $color1;
+}
+
+.fdk-alert-success {
+	background-color: $color-green2;
+	border-color: $color-green;
+    color: $color1;
+}
+
+.fdk-alert-danger {
+	background-color: $color-red2;
+	border-color: $color-red;
+    color: $color1;
 }
 
 
@@ -267,6 +300,10 @@ a > .fdk-label {
 
 .fdk-margin-bottom-triple {
     margin-bottom: 60px;
+}
+
+.fdk-margin-left {
+    margin-left: 10px;
 }
 
 

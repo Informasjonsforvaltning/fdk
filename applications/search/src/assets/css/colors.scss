@@ -3,19 +3,27 @@ $color0: #ffffff; /* hvit */
 $color1: #2D3741; /* mørkest blågrå – heading */
 $color2: #4B555F; /* mørk blågrå – tekst */
 $color3: #646E78; /* medium blågrå – lysere tekst */
-$color4: #CDD2D7; /* mellomlys blågrå –  */
-$color5: #DADFE4; /* lys blågrå – inputfelter */
+$color4: #D2D7DC; /* mellomlys blågrå –  */
+$color5: #DEE3E8; /* bakgrunn til filter */
 $color6: #EEF0F2; /* lys blågrå – bakgrunner */
-$color7: #F6F8FA; /* ultralys blågrå – inputfelter */
-$color-cta: #00C3FF; /* blå themefarge – call to actions og "krydder" */
-$color-cta2: #007CBE; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
-$color-cta3: #009BD7; /* blå themefarge mot lys bakgrunn - for økt kontrast på fargede ikoner */
-$color-cta4: #AAE6FF; /* lys blå themefarge */
-$color-green: #00F5C8; /* grønn */
-$color-yellow: #FFDC64; /* gul */
-$color-red: #FF4682; /* rød */
-$color-shadow: rgba(35, 55, 65, 0.55);
+$color7: #A0A5AA; /* medium blågrå – store ikoner */
 
+$color-cta: #00C3FF; /* blå themefarge */
+$color-cta2: #0069A5; /* blå for liten tekst */
+$color-cta3: #009BD7; /* blå for stor tekst */
+$color-cta4: #AAE6FF; /* lys blå */
+
+$color-green: #00CD96; /* grønn */
+$color-green2: #D7FAF0; /* lys grønn*/
+
+$color-yellow: #FFC800; /* gul */
+$color-yellow2: #FFFAE1; /* lys gul */
+
+$color-red: #FF4682; /* rød */
+$color-red2: #FFE1EB; /* lys rød */
+$color-red3: #C80041; /* mørk rød */
+
+$color-shadow: rgba(35, 55, 65, 0.55);
 
 .fdk-color0 {
     color: $color0;
@@ -58,6 +66,22 @@ $color-shadow: rgba(35, 55, 65, 0.55);
 
 .fdk-color-cta4 {
     color: $color-cta4;
+}
+
+.fdk-color-offentlig {
+    color: $color-green !important;
+}
+
+.fdk-color-begrenset {
+    color: $color-yellow !important;
+}
+
+.fdk-color-unntatt {
+    color: $color-red !important;
+}
+
+.fdk-color-unknown {
+    color: $color7 !important;
 }
 
 .fdk-color-green {

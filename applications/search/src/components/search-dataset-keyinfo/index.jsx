@@ -42,9 +42,9 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       const accessRightClass = cx(
         'fa fdk-fa-left',
         {
-          'fdk-color-red fa-lock': accessRights.code === 'NON_PUBLIC',
-          'fa-unlock-alt fdk-color-yellow': accessRights.code === 'RESTRICTED',
-          'fa-unlock fdk-color-green': accessRights.code === 'PUBLIC'
+          'fdk-color-unntatt fa-lock': accessRights.code === 'NON_PUBLIC',
+          'fa-unlock-alt fdk-color-begrenset': accessRights.code === 'RESTRICTED',
+          'fa-unlock fdk-color-offentlig': accessRights.code === 'PUBLIC'
         }
       );
       return (
