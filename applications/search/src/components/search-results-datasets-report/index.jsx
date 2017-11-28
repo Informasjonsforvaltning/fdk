@@ -4,99 +4,28 @@ import qs from 'qs';
 import {
   SearchkitManager,
   SearchkitProvider,
-  RefinementListFilter,
-  HitsStats,
-  TopBar
+  RefinementListFilter
 } from 'searchkit';
+import * as axios from "axios";
+import createHistory from 'history/createBrowserHistory'
+
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
-import { SearchBox } from '../search-results-searchbox';
-import SearchHitItem from '../search-results-hit-item';
-import SelectDropdown from '../search-results-selector-dropdown';
-import CustomHitsStats2 from '../search-result-custom-hitstats2';
-import createHistory from 'history/createBrowserHistory'
-import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import ReportStats from '../search-results-dataset-report-stats';
+import SearchPublishers from '../search-results-dataset-report-publisher';
 
 const host = '/dcat';
-
-const history = createHistory()
-// history.push();
-// history.replace();
-console.log('history is ', history);
-history.default = () => {
-  console.log('default func?');
-}
-// history.replace(path, [state])
-
-/**
- * THESE ARE TEST DATA DELETE
- */
-const stats = {
-  total: 743,
-  public: 544,
-  restricted: 172,
-  nonPublic: 24,
-  unknown: 3,
-  newLastWeek: 14,
-  deletedLastWeek: 0,
-  newLastMonth: 38,
-  deletedLastMonth: 4,
-  newLastYear: 641,
-  deletedLastYear: 21,
-  concepts: 98,
-  distributions: 211
-}
-
-const entity = 'alle virksomheter tilsammen';
-
+const history = createHistory();
 const transportRef = new QueryTransport2();
-console.log('transportref is ', transportRef);
 const searchkit = new SearchkitManager(
   host,
   {
     transport: transportRef,
-    createHistory: ()=> {
-      console.log('create history runs now');
-      return history;
-    }
-
+    createHistory: ()=> history
   }
 );
-function getURLParameters(paramName)
-{
-  const sURL = window.location.search.toString();
-  console.log('sURL is ', sURL);
-  if (sURL.indexOf("?") > 0)
-  {
-    const arrParams = sURL.split("?");
-    const arrURLParams = arrParams[1].split("&");
-    const arrParamNames = new Array(arrURLParams.length);
-    const arrParamValues = new Array(arrURLParams.length);
 
-    let i = 0;
-    for (i = 0; i<arrURLParams.length; i++)
-    {
-      const sParam =  arrURLParams[i].split("=");
-      arrParamNames[i] = sParam[0];
-      if (sParam[1] != "")
-        arrParamValues[i] = unescape(sParam[1]);
-      else
-        arrParamValues[i] = "No Value";
-    }
-
-    for (i=0; i<arrURLParams.length; i++)
-    {
-      if (arrParamNames[i] == paramName)
-      {
-        // alert("Parameter:" + arrParamValues[i]);
-        return arrParamValues[i];
-      }
-    }
-    return "No Parameters Found";
-  }
-}
 searchkit.translateFunction = (key) => {
   const translations = {
     'pagination.previous': localization.page.prev,
@@ -120,7 +49,25 @@ searchkit.translateFunction = (key) => {
 export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      entity: '',
+      aggregateDataset: {}
+    }
     this.queryObj = qs.parse(window.location.search.substr(1));
+    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
+    this.handleOnPublisherSearch();
+  }
+
+  handleOnPublisherSearch(name, orgPath) {
+    const query = orgPath || '';
+    return axios.get(`/aggregateDataset?q=${query}`)
+      .then((response) => {
+        const hits = response.data;
+        this.setState({
+          entity: name || localization.report.allEntities,
+          aggregateDataset: hits
+        });
+      });
   }
 
   _renderPublisherRefinementListFilter() {
@@ -138,20 +85,7 @@ export default class ResultsDatasetsReport extends React.Component {
   }
 
   render() {
-    const selectDropdownWithProps = React.createElement(SelectDropdown, {
-      selectedLanguageCode: this.props.selectedLanguageCode
-    });
-
-    const searchHitItemWithProps = React.createElement(SearchHitItem, {
-      selectedLanguageCode: this.props.selectedLanguageCode
-    });
-
-    history.listen((location, action)=> {
-      console.log(action, location);
-      /*
-          location = {pathname: "/", search: "?theme[0]=Ukjent", hash: "", state: undefined, key: "tk0fqa"}
-        */
-
+    history.listen((location)=> {
       if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
         let nextUrl = "";
         if (location.search.indexOf('?') === -1) {
@@ -174,12 +108,15 @@ export default class ResultsDatasetsReport extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
+                  <SearchPublishers
+                    onSearch={this.handleOnPublisherSearch}
+                  />
                   {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
-                    stats={stats}
-                    entity={entity}
+                    aggregateDataset={this.state.aggregateDataset}
+                    entity={this.state.entity}
                   />
                 </div>
               </div>

@@ -4,5 +4,5 @@
     <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.apache.http.wire" level="WARN"/>
     <logger name="org.apache.jena" level="ERROR"/>
-    <logger name="no.dcat" level="INFO"/>
+    <logger name="no.dcat" level="DEBUG"/>
 </configuration>

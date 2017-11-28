@@ -17,4 +17,5 @@ public class CatalogHarvestRecord {
     private Set<String> nonValidDatasetUris;
     private ChangeInformation changeInformation;
     private String status;
+
 }
