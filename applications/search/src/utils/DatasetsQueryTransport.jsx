@@ -32,6 +32,11 @@ export class DatasetsQueryTransport extends AxiosESTransport {
         key: 'publisher.name.raw',
         paramName: 'publisher',
         name: 'publisherCount',
+      },
+      {
+        key: 'publisher.orgPath.raw',
+        paramName: 'orgpath',
+        name: 'orgPath',
       }
     ];
   }
@@ -109,24 +114,39 @@ export class DatasetsQueryTransport extends AxiosESTransport {
       .then((response)=>this.getData.call(this, response))
   }
 
-  getData(response) {
+  getData(response) { // this response is not the raw response from the ajax request. It's been modified.
+    console.log('response is ', response);
     let aggregations = response.data.aggregations;
       this.filters.forEach((filter, index)=>{
-        let rawName = filter.key + (index + 3); // why 3? seems the first 2-3 are internal searchkit stuff
         let name = filter.name;
-        let rawNameShort = rawName.substr(0, rawName.length-1);
+        let key = filter.key;
+        let numberedKey = filter.key + (index + 3); // why 3? seems the first 2-3 are internal searchkit stuff
         if (aggregations && aggregations.hasOwnProperty(name)) {
-            aggregations[rawName] = {};
-            aggregations[rawName].size = '5';
-            aggregations[rawName][rawNameShort] = aggregations[name];
-            if(aggregations[rawName][rawNameShort].buckets.length > 5) {
-              aggregations[rawName][rawNameShort].buckets.splice(5, 0, {key:'showmoreinput'});
-              aggregations[rawName][rawNameShort].buckets.splice(6, 0, {key:'showmorelabel'});
-              aggregations[rawName][rawNameShort].buckets.splice(100, 0, {key:'showfewerlabel'});
+          aggregations[numberedKey] = {};
+          let aggregation = aggregations[numberedKey];
+            aggregation.size = '5';
+            aggregation[key] = aggregations[name];
+            if(aggregation[key].buckets.length > 5 && name !== 'orgPath') {
+              aggregation[key].buckets.splice(5, 0, {key:'showmoreinput'});
+              aggregation[key].buckets.splice(6, 0, {key:'showmorelabel'});
+              aggregation[key].buckets.splice(100, 0, {key:'showfewerlabel'});
             }
-            aggregations[rawName][rawNameShort].buckets = aggregations[rawName][rawNameShort].buckets.slice(0,101);
-            aggregations[rawName][rawNameShort].doc_count_error_upper_bound = 1000;
-            aggregations[rawName][rawNameShort].sum_other_doc_count = 1000;
+            aggregation[key].buckets.sort(function(a, b) {
+              var keyA = a.key.toUpperCase(); // ignore upper and lowercase
+              var keyB = b.key.toUpperCase(); // ignore upper and lowercase
+              if (keyA < keyB) {
+                return -1;
+              }
+              if (keyA > keyB) {
+                return 1;
+              }
+
+              // keys must be equal
+              return 0;
+            });
+            aggregation[key].buckets = aggregations[numberedKey][key].buckets.slice(0,101);
+            aggregation[key].doc_count_error_upper_bound = 1000;
+            aggregation[key].sum_other_doc_count = 1000;
             delete aggregations[name];
         }
       })
