@@ -19,7 +19,8 @@
     "english-en": "Engelsk"
   },
   "menu": {
-    "aboutRegistration": "Registrere datasett"
+    "aboutRegistration": "Registrere datasett",
+    "reports": "Rapporter"
   },
   "feedback": {
     "title": "Tilbakemelding"
@@ -185,5 +186,30 @@
     "toCompare": " begrep til sammenligning - klikk for å vise",
     "addCompare": "Legg til i sammenligning",
     "altLabel": "Også kjent som:"
+  },
+  "report": {
+    "title": "Viser tall for ",
+    "allEntities": "alle virksomheter tilsammen",
+    "total": "datasett totalt",
+    "accessLevel": "Tilgangsnivå",
+    "public": "Datasett som er offentlig",
+    "restricted": "Datasett med begrenset offentlighet",
+    "nonPublic": "Datasett som er unntatt offentlighet",
+    "unknown": "Datasett med ukjent tilgangsnivå",
+    "changesLastWeek": "Endring siste 7 dager",
+    "changesLastMonth": "Endring siste 30 dager",
+    "changesLastYear": "Endring siste 365 dager",
+    "newDatasets": "Nye datasett",
+    "deletedDatasets": "Slettede datasett",
+    "concepts": "Bruk av begrep",
+    "withConcepts": "Datasett som benytter begrep",
+    "withoutConcepts": "Datasett som ikke benytter begrep",
+    "distributions": "Distribusjoner",
+    "withDistributions": "Offentlige datasett med distribusjoner",
+    "withoutDistributions": "Offentlige datasett uten distribusjoner",
+    "searchPublisher": "Velg virksomhet",
+    "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
+    "typeToSearch": "Skriv for å søke"
+
   }
 }

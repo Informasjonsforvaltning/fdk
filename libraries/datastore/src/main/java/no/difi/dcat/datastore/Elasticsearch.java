@@ -31,7 +31,8 @@ import java.util.Map;
  */
 public class Elasticsearch implements AutoCloseable {
 
-    private static final String DCAT_INDEX_SETUP_FILENAME = "dcat_dataset_mapping.json";
+    private static final String DCAT_INDEX_MAPPING_FILENAME = "dcat_dataset_mapping.json";
+    private static final String DCAT_INDEX_SETTINGS_FILENAME = "dcat_settings.json";
     private static final String CLUSTER_NAME = "cluster.name";
     private final Logger logger = LoggerFactory.getLogger(Elasticsearch.class);
 
@@ -157,7 +158,7 @@ public class Elasticsearch implements AutoCloseable {
     /**
      * Creates new dcat and theme indexes on Elasticsearch cluster
      * The indexes are set up correct indexing fields and language stemming
-     * Configuration of the indexes is specified in DCAT_INDEX_SETUP_FILEMAME
+     * Configuration of the indexes is specified in DCAT_INDEX_MAPPING_FILENAME
      *
      * @param index Name of index to be created
      */
@@ -177,17 +178,24 @@ public class Elasticsearch implements AutoCloseable {
                 }
             } else if (index.equals("dcat")) {
 
+                PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
                 try {
-                    Resource r = new ClassPathResource(DCAT_INDEX_SETUP_FILENAME);
-                    Resource r2 = new ClassPathResource("dcat_subject_mapping.json");
+                    Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
+                    Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
+                    Resource subjectMappingResource = new ClassPathResource("dcat_subject_mapping.json");
 
-                    createElasticsearchIndex(index);
-                    createMapping(index, "dataset", r.getInputStream());
-                    createMapping(index, "subject", r2.getInputStream());
+
+                    client.admin().indices().prepareCreate(index)
+                            .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
+                            .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
+                            .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
+                            .execute().actionGet();
+
+                    logger.debug("[createIndex] {}", index);
+                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
 
                 } catch (IOException e) {
-                    logger.error("Unable to create index [{}]" +
-                            ". Reason {} ", index, e.getLocalizedMessage());
+                    logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
                 }
             }
         }
@@ -208,6 +216,14 @@ public class Elasticsearch implements AutoCloseable {
         client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
     }
 
+
+    private void createSettings(String index, InputStream is) throws IOException {
+        String settingsJson = IOUtils.toString(is, "UTF-8");
+        client.admin().indices().prepareUpdateSettings(index).setSettings(settingsJson).execute().actionGet();
+        logger.debug("[createIndex] after prepareUpdateSettings");
+        client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        logger.debug("[createIndex] after prepareHealth");
+    }
 
     /**
      * Puts a new Json document into specified index

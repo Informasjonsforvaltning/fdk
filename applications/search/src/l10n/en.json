@@ -19,7 +19,8 @@
     "english-en": "English"
   },
   "menu": {
-    "aboutRegistration": "Registrere datasett"
+    "aboutRegistration": "Registrere datasett",    
+    "reports": "Reports"
   },
   "feedback": {
     "title": "Feedback"
@@ -55,7 +56,8 @@
     "nosearch.descriptions":"dataset descriptions",
     "datasetTab": "Dataset",
     "termTab": "Concept",
-    "nosearch.concepts":"begreper"
+    "nosearch.concepts":"begreper",
+    "nosearch.descriptions":"dataset descriptions"
   },
   "facet": {
     "organisation":"Organization",
@@ -185,5 +187,29 @@
     "toCompare": " concepts to comparison - click to show",
     "addCompare": "Add to compare",
     "altLabel": "Also known as:"
+  },
+  "report": {
+    "title": "Showing numbers for ",
+    "allEntities": "all entities",
+    "total": "datasets in total",
+    "accessLevel": "Accesslevel",
+    "public": "Datasets that are public",
+    "restricted": "Datasets with restricted access",
+    "nonPublic": "Datasets that are not public",
+    "unknown": "Datasets with unknown accesslevel",
+    "changesLastWeek": "Changes last 7 days",
+    "changesLastMonth": "Changes last 30 days",
+    "changesLastYear": "Changes last 365 days",
+    "newDatasets": "New datasets",
+    "deletedDatasets": "Deleted datasets",
+    "concepts": "Use of concepts",
+    "withConcepts": "Datasets that use concepts",
+    "withoutConcepts": "Datasets without concepts",
+    "distributions": "Distributions",
+    "withDistributions": "Public datasets with distributions",
+    "withoutDistributions": "Public datasets without distributions",
+    "searchPublisher": "Choose publisher",
+    "searchPublisherPlaceholder": "Search publisher...",
+    "typeToSearch": "Type to search"
   }
 }

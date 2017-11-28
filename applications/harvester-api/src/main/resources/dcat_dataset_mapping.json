@@ -356,6 +356,11 @@
                 "index": "not_analyzed"
               }
             }
+          },
+          "orgPath": {
+            "type": "string",
+            "analyzer": "path-analyzer",
+            "search_analyzer": "keyword"
           }
         }
       },
