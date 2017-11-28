@@ -19,5 +19,9 @@ public class HarvestQueryTest {
 
         logger.info(response.getBody());
 
+        response = service.listCatalogHarvestRecords("/STAT/912660680");
+
+        logger.info(response.getBody());
+
     }
 }

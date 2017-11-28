@@ -166,13 +166,19 @@ public class Elasticsearch implements AutoCloseable {
         //Set mapping for correct language stemming and indexing
         if (index != null) {
             if (index.equals("harvest")) {
-                Resource r = new ClassPathResource("harvest_catalog_mapping.json");
-                Resource r2 = new ClassPathResource("harvest_dataset_mapping.json");
+                Resource harvestCatalogResource = new ClassPathResource("harvest_catalog_mapping.json");
+                Resource harvestDatasetResource = new ClassPathResource("harvest_dataset_mapping.json");
+                Resource settingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                 try {
-                    createElasticsearchIndex("harvest");
+                    client.admin().indices().prepareCreate("harvest")
+                            .setSettings(IOUtils.toString(settingsResource.getInputStream(),"UTF-8"))
+                            .addMapping("catalog", IOUtils.toString(harvestCatalogResource.getInputStream(), "UTF-8"))
+                            .addMapping("dataset", IOUtils.toString(harvestDatasetResource.getInputStream(), "UTF-8"))
+                            .execute().actionGet();
 
-                    createMapping(index, "catalog", r.getInputStream());
-                    createMapping(index, "dataset", r2.getInputStream());
+                    logger.debug("[createIndex] {}", "harvest");
+                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+
                 } catch (IOException e) {
                     logger.error("Unable to create index for {}. Reason {}", index, e.getLocalizedMessage());
                 }
@@ -183,7 +189,6 @@ public class Elasticsearch implements AutoCloseable {
                     Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                     Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
                     Resource subjectMappingResource = new ClassPathResource("dcat_subject_mapping.json");
-
 
                     client.admin().indices().prepareCreate(index)
                             .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))

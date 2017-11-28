@@ -19,9 +19,6 @@ public class Publisher extends no.dcat.shared.Publisher {
     private SkosCode sektorkode;
     private boolean valid;
 
-    // private List<Publisher> underPublishers;
-    // private Publisher superierPublishers;
-
     // All Publisher first level below.
     private List<Publisher> subPublisher;
     private Publisher superiorPublisher;

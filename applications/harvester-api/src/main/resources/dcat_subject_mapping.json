@@ -43,7 +43,8 @@
           },
           "orgPath": {
             "type": "string",
-            "index": "not_analyzed"
+            "analyzer": "path-analyzer",
+            "search_analyzer": "keyword"
           },
           "organisasjonsform": {
             "type": "string"

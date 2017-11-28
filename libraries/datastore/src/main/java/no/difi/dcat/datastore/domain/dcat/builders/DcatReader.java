@@ -1,5 +1,6 @@
 package no.difi.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.shared.Catalog;
 import no.dcat.shared.Subject;
 import no.difi.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.difi.dcat.datastore.domain.dcat.client.RetrieveCodes;
@@ -7,10 +8,15 @@ import no.difi.dcat.datastore.domain.dcat.client.RetrieveDataThemes;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
+import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +60,20 @@ public class DcatReader {
 
     public List<Dataset> getDatasets() {
         return builder.build().getDataset();
+    }
+
+    public List<Catalog> getCatalogs() {
+        List<Catalog> result = new ArrayList<>();
+
+        ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
+        while (catalogIterator.hasNext()) {
+            Resource catalogResource = catalogIterator.next();
+
+            Catalog catalog = CatalogBuilder.create(catalogResource);
+            result.add(catalog);
+        }
+
+        return result;
     }
 
     public List<Subject> getSubjects() {
