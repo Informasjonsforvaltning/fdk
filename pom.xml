@@ -42,10 +42,12 @@
 
 		<!-- Used for spesifying tests as integration tests. Override in child pom if different -->
 		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
+		<end2end.test.pattern>**/*E2E.java</end2end.test.pattern>
 
 		<!-- Tells weather we should skipIntegrationTests. Note: If this is overwritten
             in child pom it will also override setting in profiles -->
 		<skipIntegrationTests>true</skipIntegrationTests>
+
 		<maven.exec.skip>false</maven.exec.skip> <!-- default -->
 	</properties>
 
@@ -327,6 +329,7 @@
 				<configuration>
 					<excludes>
 						<exclude>${integration.test.pattern}</exclude>
+						<exclude>${end2end.test.pattern}</exclude>
 					</excludes>
 					<argLine> -Dfile.encoding=${java.encoding}</argLine>
 				</configuration>
@@ -435,7 +438,8 @@
 			<id>all-tests</id>
 			<properties>
 				<build.profile.id>all-tests</build.profile.id>
-				<!-- All tests are run. -->
+				<!-- All tests are run. unit, integration and end-to-end-->
+				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java, **/*E2E.java</integration.test.pattern>
 				<skipIntegrationTests>false</skipIntegrationTests>
 				<skipTests>false</skipTests>
 			</properties>
@@ -448,6 +452,22 @@
 			<properties>
 				<!-- Used to locate the profile specific configuration file. -->
 				<build.profile.id>integration-test</build.profile.id>
+				<!-- Unit and integration tests are run. -->
+				<skipIntegrationTests>false</skipIntegrationTests>
+				<skipTests>false</skipTests>
+			</properties>
+		</profile>
+		<profile>
+			<id>end-to-end-test</id>
+			<properties>
+				<!-- Used to locate the profile specific configuration file. -->
+				<build.profile.id>end-to-end-test</build.profile.id>
+
+				<!-- Maven has no distnct phase for end-to-end tests
+				     and Surefire does not distinguish between integration
+				     and end to end tests by default. Therefore distinguish
+				     with naming conventinon E2E for end-to-end tests -->
+				<integration.test.pattern>**/*E2E.java</integration.test.pattern>
 				<!-- Only integration tests are run. -->
 				<skipIntegrationTests>false</skipIntegrationTests>
 				<skipTests>true</skipTests>
