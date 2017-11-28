@@ -67,7 +67,7 @@ $sk-border-radius: 3px !default;
         background-image: none;
         text-decoration: underline;
         &:focus, &:active, &:hover {
-            color: $color2 !important;
+            color: $color1 !important;
             background-color: transparent !important;
             border-color: transparent !important;
         }
