@@ -14,7 +14,7 @@ Systemet er basert på en norsk profil DCAT-AP-NO 1.1 av en Europeisk og W3C sta
 for utveksling av datasettbeskrivelser, se https://doc.difi.no/dcat-ap-no/. 
 Systemet bygger videre på kode som ble utviklet i DIFIs pilotprosjekt: 
 Nasjonal infrastruktur for felles datakatalog (våren 2016). 
-
+ 
 # Docker module
 
 Used for starting containers locally with docker compose. You need docker installed 
