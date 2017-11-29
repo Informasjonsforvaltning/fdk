@@ -78,7 +78,7 @@ function gitTag {
 
   # tag checked-out commit with ***_latest tag
   # if all components are deployed, omit component name
-  if [ "$component" == "all"] ; then
+  if [ "$component" == "all" ] ; then
     git tag ${toEnvironment}_latest
     git tag ${toEnvironment}_${DATETIME}
   else
