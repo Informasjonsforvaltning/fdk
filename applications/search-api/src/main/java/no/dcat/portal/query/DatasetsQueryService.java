@@ -128,10 +128,12 @@ public class DatasetsQueryService extends ElasticsearchService {
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
+                    .field("objective" + "." + lang)
                     .field("keyword" + "." + lang)
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
                     .field("publisher.name")
+                    .field("accessRights.prefLabel" + "." + lang)
                     .field("accessRights.code");
         }
 
