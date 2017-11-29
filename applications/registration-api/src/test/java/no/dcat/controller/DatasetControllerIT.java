@@ -10,6 +10,8 @@ import no.dcat.service.DatasetRepository;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +21,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.*;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -44,10 +47,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class DatasetControllerIT {
     private static Logger logger = LoggerFactory.getLogger(DatasetControllerIT.class);
-//    @Autowired
-//    private TestRestTemplate authorizedRestTemplate;
-//
-//    private TestRestTemplate unathorizedRestTemplate = new TestRestTemplate();
+
+    @Autowired
+    private TestRestTemplate authorizedRestTemplate;
+
+    private TestRestTemplate unathorizedRestTemplate = new TestRestTemplate();
 
     @Autowired
     private MockMvc mockMvc;
@@ -57,6 +61,8 @@ public class DatasetControllerIT {
 
     @Autowired
     private DatasetRepository datasetRepository;
+
+    private HttpHeaders headers = new HttpHeaders();
 
     @Before
     public void before() {
@@ -206,7 +212,7 @@ public class DatasetControllerIT {
 //        assertThat(getResponse.getStatusCode(), is(HttpStatus.NOT_FOUND));
 //
 //    }
-//
+
 //    @Test
 //    @WithUserDetails("03096000854")
 //    public void createDatasetInUnknownCatalogFails() throws Throwable {
@@ -218,6 +224,7 @@ public class DatasetControllerIT {
 //
 //        ResponseEntity<Dataset> result = authorizedRestTemplate.exchange(url, HttpMethod.POST, request, Dataset.class);
 //
+//        //TODO: Returnerer 302 found. Hvorfor?
 //        assertThat(result.getStatusCode(), is(HttpStatus.FORBIDDEN));
 //    }
 

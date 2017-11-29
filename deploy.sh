@@ -6,6 +6,26 @@ set -e
 # UT1 -> ST1 -> PPE (idporten authorisation)
 
 
+# some input validation
+if [ -z "$1" ]
+then
+    echo "component must be specified: search, registration, search-api etc..."
+    echo "correct usage: ./deploy.sh <component> <environment>"
+    echo "example: ./deploy.sh search st2"
+    echo "use all to deploy all components. Example: ./deploy.sh all st2"
+    exit 1
+fi
+
+if [ -z "$2" ]
+then
+    echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
+    echo "correct usage: ./deploy.sh <component> <environment>"
+    echo "example: ./deploy.sh harvester-api tt1"
+    exit 1
+fi
+component=$1
+environment=$2
+
 git fetch
 
 GIT_STATUS=`git status | grep "Your branch is"`
@@ -45,9 +65,9 @@ function dockerTag {
 }
 
 function gitTag {
-  fromEnvironment=$1
-  toEnvironment=$2
-
+  component=$1
+  fromEnvironment=$2
+  toEnvironment=$3
 
   # checkout commit for tag that we are using as the base to tag on top of
   git checkout tags/${fromEnvironment}_latest
@@ -56,9 +76,15 @@ function gitTag {
   git push --delete origin ${toEnvironment}_latest || true
   git tag --delete ${toEnvironment}_latest || true
 
-   # tag checked-out commit with ***_latest tag
-   git tag ${toEnvironment}_latest
-   git tag ${toEnvironment}_${DATETIME}
+  # tag checked-out commit with ***_latest tag
+  # if all components are deployed, omit component name
+  if [ "$component" == "all"] ; then
+    git tag ${toEnvironment}_latest
+    git tag ${toEnvironment}_${DATETIME}
+  else
+    git tag ${toEnvironment}_latest_${component}
+    git tag ${toEnvironment}_${DATETIME}_${component}
+  fi
 
   # don't forget to checkout develop again, don't want any surprises later
   git checkout develop
@@ -78,66 +104,80 @@ function gitTag {
 
 
 
-if [ "$1" == "st1" ] ; then
+if [ "$environment" == "st1" ] ; then
 
-  for i in $components
-  do
-    dockerTag ${i} ut1 st1
-  done
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+        dockerTag ${i} ut1 st1
+    done
+  else
+    dockerTag ${component} ut1 st1
+  fi
 
-  gitTag ut1 st1
-
-
-elif [ "$1" == "st2" ] ; then
-
-  for i in $components
-  do
-    dockerTag ${i} ut1 st2
-  done
-
-  gitTag ut1 st2
+  gitTag ${component} ut1 st1
 
 
-elif [ "$1" == "tt1" ] ; then
+elif [ "$environment" == "st2" ] ; then
 
-  for i in $components
-  do
-    dockerTag ${i} st2 tt1
-  done
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+      dockerTag ${i} ut1 st2
+    done
+  else
+    dockerTag ${component} ut1 st2
+  fi
 
-  gitTag st2 tt1
-
-
-elif [ "$1" == "ppe" ] ; then
-  for i in $components
-  do
-    dockerTag ${i} st1 ppe
-  done
-
-  gitTag st1 ppe
+  gitTag ${component} ut1 st2
 
 
+elif [ "$environment" == "tt1" ] ; then
+
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+      dockerTag ${i} st2 tt1
+    done
+  else
+    dockerTag ${component} st2 tt1
+  fi
+
+  gitTag ${component} st2 tt1
 
 
-elif [ "$1" == "prod" ] ; then
+elif [ "$environment" == "ppe" ] ; then
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+      dockerTag ${i} st1 ppe
+    done
+  else
+    dockerTag ${component} st1 ppe
+  fi
 
-  for i in $components
-  do
-    dockerTag ${i} ppe prod
-  done
+  gitTag ${component} st1 ppe
 
-  gitTag ppe prod
 
-  #todo: sjekk om prod-navnet er prd eller prod
-#  openshiftDeploy prod ${toEnvironment}_${DATETIME}
+elif [ "$environment" == "prod" ] ; then
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+      dockerTag ${i} ppe prod
+    done
+  else
+    dockerTag ${component} ppe prod
+  fi
+
+  gitTag ${component} ppe prod
+
 
 else
 
   echo "####################################"
   echo "####################################"
   echo ""
-  echo "First argument expect to be the name of an environment"
-  echo "Eg. ./deploy.sh st1"
+  echo "Non-valid environment specified"
   echo ""
   echo "####################################"
   echo "####################################"

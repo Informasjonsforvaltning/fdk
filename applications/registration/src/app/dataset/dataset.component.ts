@@ -35,7 +35,7 @@ export class DatasetComponent implements OnInit {
     lastSaved: string;
     identifiersForm: FormGroup;
     datasetSavingEnabled: boolean = false; // upon page init, saving is disabled
-    saveDelay: number = 1000;
+    saveDelay: number = 500;
     datasetForm: FormGroup = new FormGroup({});
     myDatePickerOptions: IMyDpOptions = {
         //dateFormat: 'dd.mm.yyyy',//'yyyy.mm.dd',
@@ -347,11 +347,12 @@ export class DatasetComponent implements OnInit {
         }, this.saveDelay);
     }
 
-    save(): void {
+    save(): Promise<void> {
+      if (this.datasetSavingEnabled) {
         this.datasetSavingEnabled = false;
         let datasetSave = JSON.parse(JSON.stringify(this.dataset));        
         datasetSave = Validate.validateDataset(datasetSave);
-        this.service.save(this.catId, datasetSave)
+        return this.service.save(this.catId, datasetSave)
             .then(() => {
                 this.saved = true;
                 var d = new Date();
@@ -366,6 +367,7 @@ export class DatasetComponent implements OnInit {
                 false
             );
         });
+      }
     }
 
     valuechange(): void {
@@ -384,7 +386,9 @@ export class DatasetComponent implements OnInit {
     }
 
     back(): void {
-        this.router.navigate(['/catalogs', this.catId]);
+      this.save().then(() => 
+        this.router.navigate(['/catalogs', this.catId])
+      );
     }
 
     delete(): void {
