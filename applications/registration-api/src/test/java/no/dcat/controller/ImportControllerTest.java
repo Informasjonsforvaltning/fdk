@@ -1,10 +1,9 @@
 package no.dcat.controller;
 
 
-import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.shared.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
@@ -13,7 +12,6 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

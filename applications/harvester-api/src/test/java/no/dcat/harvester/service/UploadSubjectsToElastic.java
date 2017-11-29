@@ -3,7 +3,7 @@ package no.dcat.harvester.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.util.FileManager;

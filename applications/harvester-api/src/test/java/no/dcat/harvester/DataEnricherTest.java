@@ -1,8 +1,7 @@
 package no.dcat.harvester;
 
-import no.dcat.harvester.DataEnricher;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;

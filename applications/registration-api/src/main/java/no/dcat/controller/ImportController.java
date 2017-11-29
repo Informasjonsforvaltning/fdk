@@ -11,7 +11,7 @@ import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;

@@ -3,7 +3,7 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import no.dcat.shared.Dataset;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -12,8 +12,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
-import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountAggregator;
-import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,10 +128,12 @@ public class DatasetsQueryService extends ElasticsearchService {
             search = QueryBuilders.simpleQueryStringQuery(query)
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang)
+                    .field("objective" + "." + lang)
                     .field("keyword" + "." + lang)
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
                     .field("publisher.name")
+                    .field("accessRights.prefLabel" + "." + lang)
                     .field("accessRights.code");
         }
 

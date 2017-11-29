@@ -2,7 +2,7 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.datastore.domain.dcat.Publisher;
 import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Test;
 import org.slf4j.Logger;
