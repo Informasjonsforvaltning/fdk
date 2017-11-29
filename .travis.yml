@@ -7,6 +7,9 @@ matrix:
       node_js:
       - "lts/8"
 
+notifications:
+    slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
+
 services:
   - docker # enable docker support in travis
 
