@@ -75,15 +75,16 @@ function gitTag {
   # remove ***_latest tag from github and locally
   git push --delete origin ${toEnvironment}_latest || true
   git tag --delete ${toEnvironment}_latest || true
+  #if only one component is deployed, also remove latest label for that component
+  if [ "$component" != "all" ] ; then
+    git push --delete origin ${toEnvironment}_latest_${component} || true
+    git tag --delete ${toEnvironment}_latest_${component} || true
+  fi
 
   # tag checked-out commit with ***_latest tag
-  # if all components are deployed, omit component name
-  if [ "$component" == "all" ] ; then
-    git tag ${toEnvironment}_latest
-    git tag ${toEnvironment}_${DATETIME}
-  else
-    git tag ${toEnvironment}_latest
-    git tag ${toEnvironment}_${DATETIME}
+  git tag ${toEnvironment}_latest
+  git tag ${toEnvironment}_${DATETIME}
+  if [ "$component" != "all" ] ; then
     # if only one component is deployed, also label it with component name
     git tag ${toEnvironment}_latest_${component}
     git tag ${toEnvironment}_${DATETIME}_${component}
