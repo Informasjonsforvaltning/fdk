@@ -45,7 +45,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", "", "", 1, 10, "nb", "tema.nb", "ascending");
+        ResponseEntity<String> actual = sqs.search("query", "", "", "", "", 1, 10, "nb", "tema.nb", "ascending");
 
         verify(client.prepareSearch("dcat")
                 .setTypes("dataset")
@@ -60,7 +60,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithDefaultSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query","",  "", "", 1, 10, "nb","", "");
+        ResponseEntity<String> actual = sqs.search("query","",  "", "", "", 1, 10, "nb","", "");
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10), never()).addSort("", SortOrder.ASC);
@@ -72,7 +72,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithTema() {
-        ResponseEntity<String> actual = sqs.search("query", "GOVE", "", "", 1, 10, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("query", "GOVE", "", "", "", 1, 10, "nb", "", "");
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -83,7 +83,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithPublisher() {
-        ResponseEntity<String> actual = sqs.search("query", "", "REGISTERENHETEN I BRØNNØYSUND", "", 1, 10, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("query", "", "REGISTERENHETEN I BRØNNØYSUND", "", "", 1, 10, "nb", "", "");
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -94,7 +94,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void return200IfFromIsBelowZero() {
-        ResponseEntity<String> actual = sqs.search("", "", "", "", -10, 1000, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("", "", "", "", "", -10, 1000, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
@@ -104,7 +104,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void return200IfSizeIsLargerThan100() {
-        ResponseEntity<String> actual = sqs.search("", "", "", "", 10, 101, "nb", "", "");
+        ResponseEntity<String> actual = sqs.search("", "", "", "", "", 10, 101, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 

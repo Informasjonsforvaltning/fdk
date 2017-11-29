@@ -23,12 +23,18 @@ const RefinementOptionOrgPath = (props) => {
   const id = encodeURIComponent((itemKey + Math.random()));
   const textLabel = props.label.substr(props.label.lastIndexOf('/')+1);
   const level = (props.label.match(/\//g) || []).length;
-
+  const params = window.location.search
+  .substring(1)
+  .split("&")
+  .map(v => v.split("="))
+  .reduce((map, [key, value]) => map.set(key, decodeURIComponent(value)), new Map());
+  const orgPathValue = params.get("orgPath[0]") || '';
+  const expandedState = props.label.indexOf(orgPathValue) === -1 ? '' : 'expanded';
   return (
     <div className="checkbox">
       {
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-      }<label className={'level'+level} onKeyPress={onClick} tabIndex="0" htmlFor={id} role="button">
+      }<label className={'level'+level+ ' ' + expandedState} onKeyPress={onClick} tabIndex="0" htmlFor={id} role="button">
         <input
           type="checkbox"
           id={id}

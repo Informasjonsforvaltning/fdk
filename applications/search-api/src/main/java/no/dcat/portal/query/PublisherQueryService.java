@@ -19,7 +19,7 @@ public class PublisherQueryService extends ElasticsearchService {
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
-
+    public static final String QUERY_PUBLISHER_NAMES = "/publisher-names";
     /**
      * Finds all publisher loaded into elasticsearch.
      * <p/>
@@ -52,5 +52,47 @@ public class PublisherQueryService extends ElasticsearchService {
         logger.debug("Found publisher: {}", responsePublisher);
 
         return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+    }
+
+
+    /**
+     * Finds all publisher loaded into elasticsearch.
+     * <p/>
+     *
+     * @return The complete elasticsearch response on Json-format is returned..
+     */
+    @CrossOrigin
+    @RequestMapping(value = QUERY_PUBLISHER_NAMES, produces = "application/json")
+    public ResponseEntity<List<Hit>> publisherNames(@RequestParam(value = "q", defaultValue = "") String query) {
+        logger.info("/publisher query: {}", query);
+
+        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+        if (jsonError != null) return jsonError;
+
+        QueryBuilder search;
+
+        search = QueryBuilders.matchAllQuery();
+/*
+        String[] includeFields = new String[] {"orgPath", "name"};
+        String[] excludeFields = new String[] {"_type"};
+        sourceBuilder.fetchSource(includeFields, excludeFields);*/
+        SearchRequestBuilder searchQuery = getClient().prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search).addFields("orgPath", "name");
+
+        SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
+        logger.debug("Found publisher: {}", responsePublisher);
+
+        ArrayList<Hit> hits = new ArrayList<Hit>();
+        responsePublisher.getHits().forEach(hit -> hits.add( new Hit(hit.fields.orgPath, hit.fields.name)));
+
+        return new ResponseEntity<List<Hit>>(hits, HttpStatus.OK);
+    }
+
+    private class Hit {
+      String orgPath, name;
+
+      public Hit(String orgPath, String name) {
+        this.orgPath = orgPath;
+        this.name = name;
+      }
     }
 }
