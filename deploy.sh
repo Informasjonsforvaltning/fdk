@@ -84,7 +84,7 @@ function gitTag {
   else
     git tag ${toEnvironment}_latest
     git tag ${toEnvironment}_${DATETIME}
-    # if onl
+    # if only one component is deployed, also label it with component name
     git tag ${toEnvironment}_latest_${component}
     git tag ${toEnvironment}_${DATETIME}_${component}
   fi
