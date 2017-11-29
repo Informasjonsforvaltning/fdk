@@ -82,6 +82,9 @@ function gitTag {
     git tag ${toEnvironment}_latest
     git tag ${toEnvironment}_${DATETIME}
   else
+    git tag ${toEnvironment}_latest
+    git tag ${toEnvironment}_${DATETIME}
+    # if onl
     git tag ${toEnvironment}_latest_${component}
     git tag ${toEnvironment}_${DATETIME}_${component}
   fi
