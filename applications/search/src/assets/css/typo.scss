@@ -5,39 +5,35 @@
 
 h1 {
     color: $color1;
-    font-size: 3.0rem;
-    line-height: 3.6rem;
+    font-size: 2.8rem;
+    line-height: 3.36rem;
     font-weight: 300;
     margin: 8px 0 0 0;
 }
 
 h2 {
     color: $color1;
-    font-size: 2.56rem;
-    line-height: 3.072rem;
+    font-size: 2.4rem;
+    line-height: 2.88rem;
     font-weight: 600;
 }
 
-h2.fdk-page-not-found { /* 404 */
-    font-size: 16rem;
-    line-height: 16rem;
-    color: $color4;
-    text-align: center;
-    margin: 0;
+.fdk-container-search-hit > h2 {
+    margin: 0 0 10px 0;
 }
 
 h3 {
     color: $color1;
-    font-size: 2.24rem;
-    line-height: 2.688rem;
+    font-size: 2rem;
+    line-height: 2.4rem;
     font-weight: 600;
     margin: 0px;
 }
 
 h4 {
     color: $color1;
-    font-size: 1.92rem;
-    line-height: 2.304rem;
+    font-size: 1.6rem;
+    line-height: 1.92rem;
     font-weight: 600;
     margin: 0px;
 }
@@ -48,7 +44,7 @@ h5 {
     line-height: 1.9rem;
     font-weight: 400;
     padding: 0px;
-    margin: 0px 0px 4px 0px;
+    margin: 0px 0px .4rem 0px;
 }
 
 p {
@@ -68,21 +64,16 @@ p {
 }
 
 .fdk-list {
-    margin-bottom: 2.05rem;
-    color: $color-cta;
+    padding-bottom: 2.3rem;
 }
 
-/*
-a {
-    color: $color1;
-    text-decoration: underline;
+.fdk-list-short {
+    padding-bottom: 1.15rem;
 }
 
-a:hover {
-    text-decoration: none;
-    color: $color1;
+.fdk-list-number {
+    list-style-type: decimal;
 }
-*/
 
 a {
     color: $color-cta2;
@@ -91,31 +82,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: $color-cta2;
-}
-
-a.fdk-btn {
-    color: $color1;
-}
-
-a.fdk-btn:hover {
-    color: $color1;
-}
-
-a.fdk-btn-danger {
-    color: $color-red3;
-}
-
-a.fdk-btn-danger:hover {
-    color: $color-red3;
-}
-
-.fdk-link-internal {
-    color: $color-cta2;
-}
-
-.fdk-link-internal:hover {
-    color: $color-cta2;
+    color: var(--color-cta2);
 }
 
 .fdk-p-header {
@@ -171,7 +138,7 @@ a.fdk-btn-danger:hover {
 }
 
 .fdk-strong-virksomhet {
-    color: $color1;
+    color: $color-cta;
     font-weight: 600;
     letter-spacing: 0.03rem;
     margin-right: 10px;
@@ -234,14 +201,4 @@ a.fdk-btn-danger:hover {
 .fdk-fa-link {
     margin-right: 5px;
     color: $color-cta2;
-}
-
-.fdk-fa-btn {
-    margin-right: 3px;
-    color: $color1;
-}
-
-.fdk-fa-btn-danger {
-    margin-right: 3px;
-    color: $color-red3;
 }

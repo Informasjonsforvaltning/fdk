@@ -59,15 +59,23 @@
 }
 
 
+
 /*  S E A R C H   R E S U L T  */
 
 
 .fdk-container-search-hit {
-  background-color: $color0;
+	background-color: $color0;
+	color: $color1;
 	border: 1px solid $color6;
-  margin: 0 0 10px 0;
-  padding: 5px 30px 27px 30px;
-  border-radius: 5px;
+	margin: 0 0 10px 0;
+	padding: 25px 30px 30px 30px;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+a > .fdk-container-search-hit {
+	color: $color1;
+	text-decoration: none !important;
 }
 
 .fdk-container-access {
@@ -85,7 +93,7 @@
 	line-height: 1.5rem;
 	size: auto;
 	display: inline-block;
-	border: 2px solid $color7;
+	border: 2px solid $color2;
 }
 
 .fdk-container-tilgang {
@@ -151,7 +159,8 @@
 .fdk-container-pagination {
 	margin: auto;
 	margin-top: 30px;
-	display: inline-block;
+	display: block;
+	text-align: center;
 }
 
 .fdk-pagination {

@@ -6,7 +6,7 @@ $color3: #646E78; /* medium blågrå – lysere tekst */
 $color4: #D2D7DC; /* mellomlys blågrå –  */
 $color5: #DEE3E8; /* bakgrunn til filter */
 $color6: #EEF0F2; /* lys blågrå – bakgrunner */
-$color7: #F2F4F6;
+$color7: #F2F4F6; /* ultralys – til bakgrunn på hjelpetekst i nytt designforslag */
 
 $color-cta: #00C3FF; /* blå themefarge */
 $color-cta2: #0069A5; /* blå for liten tekst */
@@ -81,7 +81,7 @@ $color-shadow: rgba(35, 55, 65, 0.55);
 }
 
 .fdk-color-unknown {
-    color: $color7 !important;
+    color: $color2 !important;
 }
 
 .fdk-color-green {
@@ -97,5 +97,5 @@ $color-shadow: rgba(35, 55, 65, 0.55);
 }
 
 .fdk-color-icon-cta {
-    color: $color-cta3;
+    color: $color1;
 }
