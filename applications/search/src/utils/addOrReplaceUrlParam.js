@@ -24,7 +24,7 @@ export function addOrReplaceParam(url, param, value) {
    }
    return a.href;
 }
-function removeParam(key, sourceURL) {
+export function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,
         params_arr = [],
