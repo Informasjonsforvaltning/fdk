@@ -2,8 +2,8 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import no.dcat.shared.Dataset;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.util.FileManager;

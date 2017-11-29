@@ -48,6 +48,9 @@ public class ElasticsearchService {
     public Client getClient() {
         return client;
     };
+    void setClient( Client client) {
+        this.client = client;
+    }
 
 
     public final Client createElasticsearchTransportClient(final String host, final int port) {

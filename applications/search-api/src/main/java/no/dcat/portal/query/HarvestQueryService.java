@@ -1,18 +1,13 @@
 package no.dcat.portal.query;
 
-import org.apache.lucene.queryparser.xml.builders.FilteredQueryBuilder;
-import org.apache.lucene.queryparser.xml.builders.RangeFilterBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.MetricsAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.sum.SumBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Calendar;
 import java.util.Date;
 
 @RestController
@@ -60,6 +54,7 @@ public class HarvestQueryService extends ElasticsearchService {
 
         long now = new Date().getTime();
         long DAY_IN_MS = 1000 * 3600 *24;
+
         RangeQueryBuilder range1 = QueryBuilders.rangeQuery("date").from(now -   7*DAY_IN_MS).to(now).format("epoch_millis");
         RangeQueryBuilder range2 = QueryBuilders.rangeQuery("date").from(now -  30*DAY_IN_MS).to(now).format("epoch_millis");
         RangeQueryBuilder range3 = QueryBuilders.rangeQuery("date").from(now - 365*DAY_IN_MS).to(now).format("epoch_millis");
@@ -74,7 +69,7 @@ public class HarvestQueryService extends ElasticsearchService {
                 .addAggregation(last7)
                 .addAggregation(last30)
                 .addAggregation(last365)
-                .setSize(0)
+                .setSize(20)
                 ;
 
         logger.trace("SEARCH: {}", searchQuery.toString());

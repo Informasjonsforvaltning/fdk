@@ -2,7 +2,7 @@ package no.dcat.harvester.crawler;
 
 
 import no.dcat.harvester.HarvesterApplication;
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.DcatSource;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;

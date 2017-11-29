@@ -1,17 +1,15 @@
 package no.dcat.harvester;
 
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Test;
 
-import javax.validation.constraints.AssertTrue;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;

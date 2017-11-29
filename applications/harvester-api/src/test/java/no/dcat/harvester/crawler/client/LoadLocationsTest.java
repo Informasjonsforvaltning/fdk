@@ -1,7 +1,7 @@
 package no.dcat.harvester.crawler.client;
 
 
-import no.difi.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.Elasticsearch;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.mockito.Mockito;
 

@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import no.dcat.bddtest.cucumber.SpringIntegrationTestConfigIT;
-import no.difi.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.Elasticsearch;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;

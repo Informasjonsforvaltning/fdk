@@ -1,8 +1,8 @@
 package no.dcat.harvester.crawler;
 
 import no.dcat.harvester.HarvesterApplication;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
-import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
+import no.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -1,10 +1,10 @@
 package no.dcat.harvester.crawler.handlers;
 
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.Fuseki;
+import no.dcat.datastore.domain.DcatSource;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

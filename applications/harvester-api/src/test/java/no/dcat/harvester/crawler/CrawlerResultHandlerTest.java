@@ -2,10 +2,10 @@ package no.dcat.harvester.crawler;
 
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.harvester.validation.DcatValidation;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.DifiMeta;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.DifiMeta;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
