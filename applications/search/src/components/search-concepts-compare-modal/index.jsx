@@ -65,7 +65,7 @@ export default class CompareTermModal extends React.Component {
 
     const removeTerms = items => items.map((item, index) => (
       <div className={cols} key={`remove-${  index  }${item.uri}`}>
-        <button className="fdk-button fdk-button-color1 fdk-button-on-white fdk-fullwidth fdk-margin-top-double fdk-modal-button" onClick={() => {this.props.handleDeleteTerm(index)}}>
+        <button className="fdk-buttonx fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button" onClick={() => {this.props.handleDeleteTerm(index)}}>
           <i className="fa fa-times fdk-color0" />
           &nbsp;
           {localization.compare.remove}
@@ -75,7 +75,7 @@ export default class CompareTermModal extends React.Component {
 
     const bottomModalLabel = (
       <div>
-        <button className="bottom-modal-label fdk-button fdk-button-color1 fdk-modal-button" onClick={() => {this.open('BOTTOM')}}>
+        <button className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button" onClick={() => {this.open('BOTTOM')}}>
           <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
           {localization.compare.added + this.props.terms.length + localization.compare.toCompare}
@@ -85,7 +85,7 @@ export default class CompareTermModal extends React.Component {
 
     return (
       <div>
-        <button className="fdk-button fdk-button-color1 fdk-fullwidth" onClick={this.open}>
+        <button className="fdk-button fdk-button-cta fdk-fullwidth" onClick={this.open}>
           <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
           {localization.compare.openCompare}

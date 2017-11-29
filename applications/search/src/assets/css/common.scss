@@ -72,17 +72,47 @@ body {
 /* * * * *   B U T T O N S   * * * * */
 
 .fdk-button {
-	font-size: 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.5rem;
     border-radius: 3px;
     border: none;
     box-shadow: 0 2px 4px rgba(45,55,65,0.20);
-    padding: 11px 13px 11px 13px;
+    padding: 11px 13px;
     margin: 3px 2px 5px 3px;
     display: inline-block;
+    background: none;
+    text-align: center;
+}
+
+.fdk-button-small {
+    line-height: 1.6rem;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.3rem 0 0 0;
+    margin: 0;
+    display: inline-block;
     background-image: none;
+    background: none;
     text-shadow: none;
     text-align: center;
+    color: var(--color1);
+    border: none;
+    border-bottom: 1px solid var(--color1);
+}
+
+.fdk-button-small:hover {
+    border-bottom: none;
+    padding-bottom: 1px;
+}
+
+.fdk-button-small:active {
+    border-bottom: none;
+    padding-bottom: 0px;
+    border-bottom: 1px solid var(--color1);
+}
+
+.fdk-button-danger {
+    color: var(--color-red3);
 }
 
 .fdk-button-default {
@@ -103,12 +133,28 @@ body {
     box-shadow: 0 2px 4px rgba(45,55,65,0.30);
 }
 
+/*
+REMOVED BY OIS
 .fdk-button-cta:hover {
     border-radius: 3px;
     background-color: $color1;
     border: 3px solid $color1;
     margin: 0px -1px 2px 0px;
-    box-shadow: 0 4px 8px rgba(45,55,65,0.20);
+	box-shadow: 0 4px 8px rgba(45,55,65,0.25);
+}
+*/
+
+.fdk-button-big {
+	font-size: 1.875rem;
+    line-height: 1.875rem;
+	box-shadow: 0 2px 4px rgba(45,55,65,0.20);
+    padding: 15px 17px;
+}
+
+.fdk-button:disabled {
+    border: 1px dashed $color3;
+    color: $color3;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 
 .fdk-button-dropdown {
@@ -118,35 +164,35 @@ body {
 
 .fdk-button-dropdown:hover {
     border-radius: 3px;
-    border: 3px solid var(--color-cta4);
+    border: 3px solid $color-cta4;
     // margin: 0px -1px 2px 0px; // FJERNET AV OIS
     box-shadow: 0 4px 8px rgba(45,55,65,0.20);
 }
 
-
-.fdk-button-inactive {
-    border: 1px dashed $color3;
-    color: $color3;
+.fdk-button:active {
     box-shadow: 0 0 0 rgba(0,0,0,0);
-}
-
-.fdk-button-pressed, .fdk-button-pressed:hover {
-    box-shadow: 0 0 0 rgba(0,0,0,0);
+    padding: 11px 13px;
     margin: 3px 2px 5px 3px;
     border: none;
 }
 
-.fdk-button-on-white {
-    border-color: $color0;
+.fdk-button-big:active {
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    padding: 15px 17px;
+    margin: 3px 2px 5px 3px;
+    border: none;
 }
 
-// ADDED BY OIS
-.fdk-button-color1 {
-    background-color: $color1;
-    color: $color0;
+.fdk-button-small:disabled {
+    color: $color2;
+    border: none;
+    padding-bottom: 3px;
 }
 
-
+.fdk-button-danger {
+    color: $color-red3;
+    border-bottom: 1px solid $color-red3;
+}
 
 /* fonts */
 
@@ -166,10 +212,19 @@ a > .fdk-button-cta {
     color: $color0;
 }
 
-.fdk-button-format-inactive > i {
+.fdk-button-small > .fa {
+    margin-right: 3px;
     color: $color1;
+    margin-right: 3px;
 }
 
+.fdk-button-small:disabled > .fa {
+    color: $color2;
+}
+
+.fdk-button-danger > .fa {
+    color: $color-red3;
+}
 
 
 /* * * * *   L A B E L S   * * * * */
@@ -254,6 +309,7 @@ a > .fdk-label {
 .fdk-fullwidth {
     width: 100%;
 }
+
 
 
 /*  S P A C E  */
