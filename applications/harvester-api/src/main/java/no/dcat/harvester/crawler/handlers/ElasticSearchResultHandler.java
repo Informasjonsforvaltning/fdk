@@ -176,7 +176,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson, CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
 
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("catalogUri", thisCatalogRecord.getHarvestUrl());
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("catalogUri", thisCatalogRecord.getCatalogUri());
         ConstantScoreQueryBuilder csQueryBuilder = QueryBuilders.constantScoreQuery(termQueryBuilder);
 
         logger.debug("query: {}", csQueryBuilder.toString());
@@ -191,8 +191,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             CatalogHarvestRecord lastCatalogRecord =
                     gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
 
-            if (lastCatalogRecord.getHarvestUrl().equals(thisCatalogRecord.getHarvestUrl())) {
-                logger.info("Last harvest for {} was {}", lastCatalogRecord.getHarvestUrl(), dateFormat.format(lastCatalogRecord.getDate()));
+            if (lastCatalogRecord.getCatalogUri().equals(thisCatalogRecord.getCatalogUri())) {
+                logger.info("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
                 logger.trace("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
 
                 Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
@@ -232,7 +232,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return null;
     }
 
-    private void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch, List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest, Date harvestTime, Dataset dataset, ChangeInformation stats) {
+    private void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch,
+                                             List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest,
+                                             Date harvestTime, Dataset dataset, ChangeInformation stats) {
         String datasetId = null;
         DatasetLookup lookupEntry = lookupDataset(elasticsearch.getClient(), dataset.getUri(), gson);
         if (lookupEntry != null){
@@ -345,7 +347,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     private void createIndexIfNotExists(Elasticsearch elasticsearch, String indexName) {
         if (!elasticsearch.indexExists(indexName)) {
-            logger.warn("Creating index: " + indexName);
+            logger.info("Creating index: " + indexName);
             elasticsearch.createIndex(indexName);
         }else{
             logger.debug("Index exists: " + indexName);

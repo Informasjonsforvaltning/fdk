@@ -68,7 +68,6 @@ public class ElasticsearchResultHandlerIT {
 		Assert.assertFalse(node.isClosed());
 		Assert.assertNotNull(client);
 		elasticsearch = new Elasticsearch(client);
-
 	}
 
 	@After
