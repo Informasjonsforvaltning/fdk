@@ -1,13 +1,13 @@
 package no.dcat.admin.web.user;
 
 import no.dcat.admin.settings.FusekiSettings;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.AdminDcatDataService;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.Fuseki;
-import no.difi.dcat.datastore.UserAlreadyExistsException;
-import no.difi.dcat.datastore.UserNotFoundException;
-import no.difi.dcat.datastore.domain.User;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.AdminDcatDataService;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.Fuseki;
+import no.dcat.datastore.UserAlreadyExistsException;
+import no.dcat.datastore.UserNotFoundException;
+import no.dcat.datastore.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

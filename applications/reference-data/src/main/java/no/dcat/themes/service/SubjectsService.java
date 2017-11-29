@@ -3,7 +3,7 @@ package no.dcat.themes.service;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
-import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;

@@ -7,7 +7,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
-import no.difi.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
