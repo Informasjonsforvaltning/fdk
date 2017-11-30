@@ -460,24 +460,31 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace(search.toString());
 
-        QueryBuilder existsDistribution = QueryBuilders.existsQuery("distribution");
+        AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount")
+                .filter(QueryBuilders.existsQuery("distribution"));
 
-        AggregationBuilder b = AggregationBuilders.filter("distfilter").filter(existsDistribution);  //count("hasDistribution2").field("distribution");
-        logger.info("b {}", b.toString());
+        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount")
+                .filter(QueryBuilders.boolQuery()
+                        .must(QueryBuilders.existsQuery("distribution"))
+                        .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                );
+
+        AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
+                .filter(QueryBuilders.existsQuery("subject.prefLabel"));
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
                 .setTypes("dataset")
                 .setQuery(search)
                 .setSize(0)
-                .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
-                //.addAggregation(createAggregation("hasDistribution","distribution", "Ukjent"))
-                .addAggregation(b);
-
+                .addAggregation(datasetsWithDistribution)
+                .addAggregation(openDatasetsWithDistribution)
+                .addAggregation(datasetsWithSubject)
+                ;
 
                 // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();

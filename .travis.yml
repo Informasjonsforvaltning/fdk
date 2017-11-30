@@ -7,6 +7,9 @@ matrix:
       node_js:
       - "lts/8"
 
+notifications:
+    slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
+
 services:
   - docker # enable docker support in travis
 
@@ -44,6 +47,7 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and integration tests + generate test coverage report
+      if: type = cron #run only during nightly cron job - time-consuming operation
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
@@ -55,19 +59,19 @@ jobs:
       env:
         - comment=Run regular React unit tests
 
-    - stage: Tests # Run Angular e2e tests
-      if: type = cron #run only during nightly cron job - time-consuming operation
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
-      env:
-        - comment=Run Angular e2e tests
+    #- stage: Tests # Run Angular e2e tests
+    #  if: type = cron #run only during nightly cron job - time-consuming operation
+    #  script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh &&  ./runNodeTests.sh
+    #  env:
+    #    - comment=Run Angular e2e tests
 
-    - stage: Tests # Run end-to-end tests + generate test coverage report
-      if: type = cron #run only during nightly cron job - time-consuming operation
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P end-to-end-test org.jacoco:jacoco-maven-plugin:report
-      after_success:
-        - mvn org.eluder.coveralls:coveralls-maven-plugin:report
-      env:
-        - comment=Run end-to-end (Cucumber) tests
+    #- stage: Tests # Run end-to-end tests + generate test coverage report
+    #  if: type = cron #run only during nightly cron job - time-consuming operation
+    #  script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P end-to-end-test org.jacoco:jacoco-maven-plugin:report
+    #  after_success:
+    #    - mvn org.eluder.coveralls:coveralls-maven-plugin:report
+    #  env:
+    #    - comment=Run end-to-end (Cucumber) tests
 
     - stage: deploy
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;

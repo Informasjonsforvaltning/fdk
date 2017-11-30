@@ -15,8 +15,8 @@ const ReportStats = (props) => {
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'PUBLIC').doc_count : 0,
     restricted: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'RESTRICTED')) ?
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'RESTRICTED').doc_count : 0,
-    nonPublic: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NONPUBLIC')) ?
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NONPUBLIC').doc_count : 0,
+    nonPublic: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NON_PUBLIC')) ?
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NON_PUBLIC').doc_count : 0,
     unknown: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT')) ?
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT').doc_count : 0,
     newLastWeek: catalog.aggregations && catalog.aggregations.last7days.inserts ?
@@ -31,9 +31,10 @@ const ReportStats = (props) => {
       catalog.aggregations && catalog.aggregations.last365days.inserts.value : 0,
     deletedLastYear: catalog.aggregations && catalog.aggregations.last365days.deletes ?
       catalog.aggregations && catalog.aggregations.last365days.deletes.value : 0,
-    withoutConcepts: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT')) ?
-      aggregateDataset.aggregations.subjectsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT').doc_count : 0,
-    distributions: (aggregateDataset.aggregations && aggregateDataset.aggregations.distfilter && aggregateDataset.aggregations.distfilter.doc_count) ? aggregateDataset.aggregations.distfilter.doc_count : 0
+    withoutConcepts: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectsCount && aggregateDataset.aggregations.subjectCount.doc_count) ? aggregateDataset.aggregations.subjectCount.doc_count : 0,
+    distributions: (aggregateDataset.aggregations && aggregateDataset.aggregations.distCount && aggregateDataset.aggregations.distCount.doc_count) ? aggregateDataset.aggregations.distCount.doc_count : 0,
+    distOnPublicAccessCount: (aggregateDataset.aggregations && aggregateDataset.aggregations.distOnPublicAccessCount && aggregateDataset.aggregations.distOnPublicAccessCount.doc_count) ? aggregateDataset.aggregations.distOnPublicAccessCount.doc_count : 0,
+    subjectCount: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectCount && aggregateDataset.aggregations.subjectCount.doc_count) ? aggregateDataset.aggregations.subjectCount.doc_count : 0
   };
 
   const title = (
@@ -135,11 +136,11 @@ const ReportStats = (props) => {
         <h2>{localization.report.concepts}</h2>
         <div className="row fdk-container-stats-concepts">
           <div className="col-md-6 fdk-container-stats-vr">
-            <p><strong>{stats.total - stats.withoutConcepts}</strong></p>
+            <p><strong>{stats.subjectCount}</strong></p>
             <p>{localization.report.withConcepts}</p>
           </div>
           <div className="col-md-6">
-            <p><strong>{stats.withoutConcepts}</strong></p>
+            <p><strong>{stats.total - stats.subjectCount}</strong></p>
             <p>{localization.report.withoutConcepts}</p>
           </div>
         </div>
@@ -153,11 +154,11 @@ const ReportStats = (props) => {
         <h2>{localization.report.distributions}</h2>
         <div className="row fdk-container-stats-concepts">
           <div className="col-md-6 fdk-container-stats-vr">
-            <p><strong>{stats.distributions}</strong></p>
+            <p><strong>{stats.distOnPublicAccessCount}</strong></p>
             <p>{localization.report.withDistributions}</p>
           </div>
           <div className="col-md-6">
-            <p><strong>{stats.public - stats.distributions}</strong></p>
+            <p><strong>{stats.public - stats.distOnPublicAccessCount}</strong></p>
             <p>{localization.report.withoutDistributions}</p>
           </div>
         </div>
