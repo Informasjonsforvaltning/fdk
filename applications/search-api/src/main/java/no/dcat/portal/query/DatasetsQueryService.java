@@ -470,7 +470,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 );
 
         AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
-                .filter(QueryBuilders.existsQuery("subject"));
+                .filter(QueryBuilders.existsQuery("subject.prefLabel"));
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
