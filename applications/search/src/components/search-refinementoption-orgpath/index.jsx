@@ -39,26 +39,17 @@ const RefinementOptionOrgPath = (props) => {
   const orgPathValue = params.get("orgPath[0]") || '';
   const orgPathSecondValue = params.get("orgPath[1]") || '';
 
-  console.log('orgPathSecondValue is ', orgPathSecondValue);
   if(orgPathSecondValue) {
-      //console.log('window.location.href = "/reports?orgPath[0]=" + orgPathSecondValue;');
-      //window.location.href = "/reports?orgPath[0]=" + orgPathSecondValue;
-      //console.log('history.state is ', window.history.state);
-//      window.history.pushState({}, 'Felles Datakatalog', "/reports?orgPath[0]=" + orgPathSecondValue);
   }
   const hasOrgPathValue = props.label.indexOf(orgPathValue) !== -1;
   let expandedState = hasOrgPathValue ? 'expanded' : '';
 
   const navigatedToMinistryLevel = (orgPathValue.match(/\//g) || []).length > 1;
   expandedState = (navigatedToMinistryLevel || level < 3) ? 'expanded' : '';
-  //console.log("my level is : ", level, " and my expandedState is : ", expandedState);
   const onClick2 = () => {
     if(orgPathValue) {
-      console.log('another orgPathValue has been clicked', orgPathValue);
-      console.log('encodeURIComponent(orgPathValue) is ', encodeURIComponent(orgPathValue));
       const orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(orgPathValue));
       if(orgPathValueCheckbox) orgPathValueCheckbox.click();
-//          window.document.getElementByID(orgPathSecondValue).click();
     }
   }
   return (
