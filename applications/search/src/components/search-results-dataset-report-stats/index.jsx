@@ -5,7 +5,8 @@ import localization from '../localization';
 const ReportStats = (props) => {
   const {
     aggregateDataset,
-    entity
+    entity,
+    catalog
   } = props;
 
   const stats = {
@@ -18,12 +19,18 @@ const ReportStats = (props) => {
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NON_PUBLIC').doc_count : 0,
     unknown: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT')) ?
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT').doc_count : 0,
-    newLastWeek: 0,
-    deletedLastWeek: 0,
-    newLastMonth: 0,
-    deletedLastMonth: 0,
-    newLastYear: 0,
-    deletedLastYear: 0,
+    newLastWeek: catalog.aggregations && catalog.aggregations.last7days.inserts ?
+      catalog.aggregations && catalog.aggregations.last7days.inserts.value : 0,
+    deletedLastWeek: catalog.aggregations && catalog.aggregations.last7days.deletes ?
+      catalog.aggregations && catalog.aggregations.last7days.deletes.value : 0,
+    newLastMonth: catalog.aggregations && catalog.aggregations.last30days.inserts ?
+      catalog.aggregations && catalog.aggregations.last30days.inserts.value : 0,
+    deletedLastMonth: catalog.aggregations && catalog.aggregations.last30days.deletes ?
+      catalog.aggregations && catalog.aggregations.last30days.deletes.value : 0,
+    newLastYear: catalog.aggregations && catalog.aggregations.last365days.inserts ?
+      catalog.aggregations && catalog.aggregations.last365days.inserts.value : 0,
+    deletedLastYear: catalog.aggregations && catalog.aggregations.last365days.deletes ?
+      catalog.aggregations && catalog.aggregations.last365days.deletes.value : 0,
     withoutConcepts: (aggregateDataset.aggregations && aggregateDataset.aggregations.subjectsCount && aggregateDataset.aggregations.subjectCount.doc_count) ? aggregateDataset.aggregations.subjectCount.doc_count : 0,
     distributions: (aggregateDataset.aggregations && aggregateDataset.aggregations.distCount && aggregateDataset.aggregations.distCount.doc_count) ? aggregateDataset.aggregations.distCount.doc_count : 0,
     distOnPublicAccessCount: (aggregateDataset.aggregations && aggregateDataset.aggregations.distOnPublicAccessCount && aggregateDataset.aggregations.distOnPublicAccessCount.doc_count) ? aggregateDataset.aggregations.distOnPublicAccessCount.doc_count : 0,
