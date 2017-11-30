@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for loading the complete publisher-hieararchi.
@@ -118,6 +120,19 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     }
 
     protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
+        if (publisher.getId() == null) {
+            Pattern p = Pattern.compile("(enhetsregisteret/enhet/)(\\d+)");
+            Matcher m = p.matcher(publisher.getUri());
+
+            if (m.find()) {
+                publisher.setId(m.group(2));
+            }
+        }
+
+        if (publisher.getId() == null) {
+            publisher.setId(publisher.getUri());
+        }
+
         logger.debug("Add publisher {} to index.", publisher.getId());
 
         IndexRequest indexRequest = new IndexRequest(DCAT, PUBLISHER_TYPE, publisher.getId());
