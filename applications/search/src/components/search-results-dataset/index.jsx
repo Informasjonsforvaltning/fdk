@@ -166,14 +166,6 @@ export default class ResultsDataset extends React.Component {
                     itemComponent={RefinementOptionPublishers}
                   />
                   {this._renderPublisherRefinementListFilter()}
-                  <RefinementListFilter
-                    id="orgPath"
-                    title={localization.facet.organisation}
-                    field="publisher.orgPath.raw"
-                    operator="AND"
-                    size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                    itemComponent={RefinementOptionOrgPath}
-                  />
                   </div>
                 <div id="datasets" className="col-sm-8">
                   <Hits

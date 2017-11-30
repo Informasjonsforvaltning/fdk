@@ -74,10 +74,15 @@ public class PublisherQueryService extends ElasticsearchService {
         QueryBuilder search;
 
         initializeElasticsearchTransportClient();
+
+
         search = QueryBuilders.matchAllQuery();
         SearchRequestBuilder searchQuery = getClient().prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search).addFields("orgPath", "name");
 
-        SearchResponse responsePublisher = searchQuery.execute().actionGet();
+        SearchResponse responseSize = searchQuery.execute().actionGet();
+
+        int totNrOfPublisher = (int) responseSize.getHits().getTotalHits();
+        SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
         logger.debug("Found publisher: {}", responsePublisher);
 
         ArrayList<PublisherHit> publisherHitList = new ArrayList<PublisherHit>();

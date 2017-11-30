@@ -4,7 +4,8 @@ import qs from 'qs';
 import {
   SearchkitManager,
   SearchkitProvider,
-  RefinementListFilter
+  RefinementListFilter,
+  HitsStats
 } from 'searchkit';
 import * as axios from "axios";
 import createHistory from 'history/createBrowserHistory'
@@ -12,6 +13,7 @@ import createHistory from 'history/createBrowserHistory'
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
+import RefinementOptionOrgPath from '../search-refinementoption-orgpath';
 import ReportStats from '../search-results-dataset-report-stats';
 import SearchPublishers from '../search-results-dataset-report-publisher';
 
@@ -22,7 +24,7 @@ const searchkit = new SearchkitManager(
   host,
   {
     transport: transportRef,
-    createHistory: ()=> history
+    createHistory: () => history
   }
 );
 
@@ -56,6 +58,15 @@ export default class ResultsDatasetsReport extends React.Component {
     this.queryObj = qs.parse(window.location.search.substr(1));
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
     this.handleOnPublisherSearch();
+    if (!window.publishers) {
+      axios.get('/publisher-names')
+        .then((res) => {
+          console.log('res is ', res);
+          if (res) {
+            window.publishers = res.data.hits;
+          }
+        });
+    }
   }
 
   handleOnPublisherSearch(name, orgPath) {
@@ -70,19 +81,6 @@ export default class ResultsDatasetsReport extends React.Component {
       });
   }
 
-  _renderPublisherRefinementListFilter() {
-    this.publisherFilter =
-      (<RefinementListFilter
-        id="publisher"
-        title={localization.facet.organisation}
-        field="publisher.name.raw"
-        operator="AND"
-        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-        itemComponent={RefinementOptionPublishers}
-      />);
-
-    return this.publisherFilter;
-  }
 
   render() {
     history.listen((location)=> {
@@ -108,10 +106,18 @@ export default class ResultsDatasetsReport extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
+                <HitsStats />
+                <RefinementListFilter
+                  id="orgPath"
+                  title={localization.facet.organisation}
+                  field="publisher.orgPath.raw"
+                  operator="AND"
+                  size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                  itemComponent={RefinementOptionOrgPath}
+                />
                   <SearchPublishers
                     onSearch={this.handleOnPublisherSearch}
                   />
-                  {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
