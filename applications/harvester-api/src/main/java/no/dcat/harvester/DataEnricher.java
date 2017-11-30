@@ -2,7 +2,7 @@ package no.dcat.harvester;
 
 
 import no.dcat.harvester.clean.HtmlCleaner;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;

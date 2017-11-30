@@ -60,7 +60,7 @@ export default class ResultsDatasetsReport extends React.Component {
 
   handleOnPublisherSearch(name, orgPath) {
     const query = orgPath || '';
-    return axios.get(`http://localhost:8083/aggregateDataset?q=${query}`)
+    return axios.get(`/aggregateDataset?q=${query}`)
       .then((response) => {
         const hits = response.data;
         this.setState({

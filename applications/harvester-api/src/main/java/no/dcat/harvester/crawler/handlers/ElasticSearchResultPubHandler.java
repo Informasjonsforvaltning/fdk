@@ -3,10 +3,10 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
-import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for loading the complete publisher-hieararchi.
@@ -118,6 +120,19 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     }
 
     protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
+        if (publisher.getId() == null) {
+            Pattern p = Pattern.compile("(enhetsregisteret/enhet/)(\\d+)");
+            Matcher m = p.matcher(publisher.getUri());
+
+            if (m.find()) {
+                publisher.setId(m.group(2));
+            }
+        }
+
+        if (publisher.getId() == null) {
+            publisher.setId(publisher.getUri());
+        }
+
         logger.debug("Add publisher {} to index.", publisher.getId());
 
         IndexRequest indexRequest = new IndexRequest(DCAT, PUBLISHER_TYPE, publisher.getId());
