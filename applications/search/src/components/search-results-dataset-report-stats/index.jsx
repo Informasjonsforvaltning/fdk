@@ -51,19 +51,19 @@ const ReportStats = (props) => {
       <div className="fdk-container-stats fdk-container-stats-accesslevel-title">
         <h2>{localization.report.accessLevel}</h2>
         <div className="row">
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
+          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
             <p><strong><i className="fa fdk-fa-left fa-unlock fdk-color-offentlig" />{stats.public}</strong></p>
             <p>{localization.report.public}</p>
           </div>
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
+          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
             <p><strong> <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />{stats.restricted}</strong></p>
             <p>{localization.report.restricted}</p>
           </div>
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr">
+          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
             <p><strong><i className="fa fdk-fa-left fa-lock fdk-color-unntatt" />{stats.nonPublic}</strong></p>
             <p>{localization.report.nonPublic}</p>
           </div>
-          <div className="col-md-3 fdk-container-stats-accesslevel">
+          <div className="col-md-3 fdk-container-stats-accesslevel fdk-padding-no">
             <p><strong><i className="fa fdk-fa-left fa-question fdk-color4" />{stats.unknown}</strong></p>
             <p>{localization.report.unknown}</p>
           </div>
