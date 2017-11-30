@@ -15,7 +15,7 @@ const ReportStats = (props) => {
     restricted: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'RESTRICTED')) ?
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'RESTRICTED').doc_count : 0,
     nonPublic: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NONPUBLIC')) ?
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NONPUBLIC').doc_count : 0,
+      aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'NON_PUBLIC').doc_count : 0,
     unknown: (aggregateDataset.aggregations && aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT')) ?
       aggregateDataset.aggregations.accessRightsCount.buckets.find(bucket => bucket.key.toUpperCase() === 'UKJENT').doc_count : 0,
     newLastWeek: 0,
