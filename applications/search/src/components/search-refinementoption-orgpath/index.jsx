@@ -1,6 +1,5 @@
 import React from 'react';
 import localization from '../../components/localization';
-import _find from 'lodash/find';
 
 const RefinementOptionOrgPath = (props) => {
   const {
@@ -29,23 +28,23 @@ const RefinementOptionOrgPath = (props) => {
   let textLabel = orgPathObject ? orgPathObject.name : '';
   textLabel = (/[a-z]/.test(textLabel) || textLabel.length < 5) ? textLabel : orgPathObject.name.charAt(0).toUpperCase() + orgPathObject.name.substr(1).toLowerCase();
   textLabel = textLabel.replace(' as', ' AS');
+  textLabel = textLabel.replace(' ASa', ' ASA');
 
   const level = (props.label.match(/\//g) || []).length;
   const params = window.location.search
-  .substring(1)
-  .split("&")
-  .map(v => v.split("="))
-  .reduce((map, [key, value]) => map.set(key, decodeURIComponent(value)), new Map());
+    .substring(1)
+    .split("&")
+    .map(v => v.split("="))
+    .reduce((map, [key, value]) => 
+      map.set(key, decodeURIComponent(value)), new Map());
   const orgPathValue = params.get("orgPath[0]") || '';
   const orgPathSecondValue = params.get("orgPath[1]") || '';
-
-  if(orgPathSecondValue) {
-  }
   const hasOrgPathValue = props.label.indexOf(orgPathValue) !== -1;
-  let expandedState = hasOrgPathValue ? 'expanded' : '';
 
   const navigatedToMinistryLevel = (orgPathValue.match(/\//g) || []).length > 1;
-  expandedState = (navigatedToMinistryLevel || level < 3) ? 'expanded' : '';
+  let navigatedOrLevel = (navigatedToMinistryLevel || level < 3) ? 'expanded' : '';
+
+  let expandedState = (hasOrgPathValue && navigatedOrLevel) ? 'expanded' : '';
   const onClick2 = () => {
     if(orgPathValue) {
       const orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(orgPathValue));
@@ -53,10 +52,11 @@ const RefinementOptionOrgPath = (props) => {
     }
   }
   return (
-    <div className="checkbox">
+    <div className={'checkbox ' + ((orgPathValue === orgPathObject.orgPath )? 'checkboxActive' : '')}>
       {
+
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-      }<label className={'level'+level+ ' ' + expandedState} onKeyPress={onClick} tabIndex="0" htmlFor={id} role="button">
+      }<label className={'level' + level + ' ' + expandedState} onKeyPress={onClick} tabIndex="0" htmlFor={id} role="button">
         <input
           type="checkbox"
           id={id}
@@ -64,12 +64,18 @@ const RefinementOptionOrgPath = (props) => {
           onClick={onClick2}
           checked={active}
           onChange={onClick}
-          className={`${bemBlocks.option().state({ active }).mix(bemBlocks.container('item'))
-          } list-group-item fdk-label fdk-label-default`}
+          className={
+            `${bemBlocks.option().state({ active }).mix(bemBlocks.container('item'))} 
+            list-group-item fdk-label fdk-label-default`
+          }
         />
-        <label className="checkbox-replacement" htmlFor={id} />
+        <label className="chevron-checkbox-replacement" htmlFor={id}>
+          <i className="fa fa-chevron-down"></i>          
+          <i className="fa fa-chevron-up"></i>
+        </label>
         {textLabel} ({props.count})
-      </label>
+      </label>      
+      <hr/>
     </div>
   );
 }

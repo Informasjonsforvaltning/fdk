@@ -9,7 +9,7 @@ import {
 } from 'searchkit';
 import * as axios from "axios";
 import createHistory from 'history/createBrowserHistory'
-
+import './index.scss';
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
@@ -27,26 +27,6 @@ const searchkit = new SearchkitManager(
     createHistory: () => history
   }
 );
-
-searchkit.translateFunction = (key) => {
-  const translations = {
-    'pagination.previous': localization.page.prev,
-    'pagination.next': localization.page.next,
-    'facets.view_more': localization.page.viewmore,
-    'facets.view_all': localization.page.seeall,
-    'facets.view_less': localization.page.seefewer,
-    'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
-    'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.',
-    'sort.by': localization.sort.by,
-    'sort.relevance': localization.sort.relevance,
-    'sort.title': localization.sort.title,
-    'sort.publisher': localization.sort.publisher,
-    'sort.modified': localization.sort.modified
-  };
-  return translations[key];
-};
 
 export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
@@ -114,17 +94,16 @@ export default class ResultsDatasetsReport extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
-                <HitsStats />
-                <RefinementListFilter
-                  id="orgPath"
-                  title={localization.facet.organisation}
-                  field="publisher.orgPath.raw"
-                  operator="AND"
-                  size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                  itemComponent={RefinementOptionOrgPath}
-                />
                   <SearchPublishers
                     onSearch={this.handleOnPublisherSearch}
+                  />
+                  <RefinementListFilter
+                    id="orgPath"
+                    title={localization.facet.organisation}
+                    field="publisher.orgPath.raw"
+                    operator="AND"
+                    size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                    itemComponent={RefinementOptionOrgPath}
                   />
                 </div>
                 <div id="datasets" className="col-sm-8">

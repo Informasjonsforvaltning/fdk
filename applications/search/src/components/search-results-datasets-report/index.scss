@@ -1,0 +1,45 @@
+@import '../../assets/css/colors.scss';
+.checkboxActive {
+  color: $color0;
+  background-color: $color1;
+}
+div.checkbox > hr {
+  margin: 7px 0 0 0;
+}
+div.checkbox > label ~ hr {
+  display:none;
+}
+
+div.checkbox > label.expanded ~ hr {
+  display:block;
+}
+.chevron-checkbox-replacement {
+  .fa-chevron-up {
+    display: none;
+  }
+  .fa-chevron-down {
+    display: block;
+  }
+}
+.checkbox label label {
+  background-color: inherit !important;
+}
+input:checked ~ .chevron-checkbox-replacement {
+  .fa-chevron-up {
+    display: block;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+}
+label.expanded > .chevron-checkbox-replacement {
+  .fa-chevron-up {
+    display: block;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+}
+
+label.expanded > .chevron-checkbox-replacement {
+}
