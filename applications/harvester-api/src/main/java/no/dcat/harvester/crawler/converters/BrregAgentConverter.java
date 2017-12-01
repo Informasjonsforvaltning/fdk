@@ -143,36 +143,35 @@ public class BrregAgentConverter {
 
         final Map<String, Publisher> publisherMap = new HashMap<>();
         publishers.forEach(publisher -> {
-            if (publisher.getId() == null) {
-
+            if (publisher.getId() == null || publisher.getId().isEmpty()) {
+                publisher.setId(publisher.getUri());
             } else {
                 if (publisherMap.containsKey(publisher.getId())) {
-                    logger.error("Publisher {} is already registeret (duplicates in data?)", publisher.getId());
+                    logger.error("Publisher {} is already registered and will be overwritten(duplicates in data?)", publisher.getId());
                 }
-                publisherMap.put(publisher.getId(), publisher);
-
             }
+            publisherMap.put(publisher.getId(), publisher);
         });
 
-        publishers.forEach( p -> {
-            p.setOrgPath(extractOrganizationPath(p, publisherMap));
-            Resource r = model.getResource(p.getUri());
-            r.addProperty(DCATNO.organizationPath, p.getOrgPath());
+        publishers.forEach(publisher -> {
+            publisher.setOrgPath(extractOrganizationPath(publisher, publisherMap));
+            Resource publisherResource = model.getResource(publisher.getUri());
+            publisherResource.addProperty(DCATNO.organizationPath, publisher.getOrgPath());
         });
     }
 
-    String extractOrganizationPath(Publisher p, Map<String, Publisher> publisherMap) {
+    String extractOrganizationPath(Publisher publisher, Map<String, Publisher> publisherMap) {
         String prefix = "";
-        if (p != null) {
-            if (p.getOverordnetEnhet() != null && !p.getOverordnetEnhet().isEmpty() && !"/".equals(p.getOverordnetEnhet())) {
-                Publisher overordnetEnhet = publisherMap.get(p.getOverordnetEnhet());
-                prefix = extractOrganizationPath(overordnetEnhet, publisherMap) ;
+        if (publisher != null) {
+            if (publisher.getOverordnetEnhet() != null && !publisher.getOverordnetEnhet().isEmpty() && !"/".equals(publisher.getOverordnetEnhet())) {
+                Publisher overordnetEnhet = publisherMap.get(publisher.getOverordnetEnhet());
+                prefix = extractOrganizationPath(overordnetEnhet, publisherMap);
             } else {
-                if (p.isValid()) {
-                    if (p.getOrganisasjonsform() != null) {
-                        String orgForm = p.getOrganisasjonsform();
+                if (publisher.isValid()) {
+                    if (publisher.getOrganisasjonsform() != null) {
+                        String orgForm = publisher.getOrganisasjonsform();
 
-                        if ("STAT".equals(orgForm) || "SF".equals(orgForm) ) {
+                        if ("STAT".equals(orgForm) || "SF".equals(orgForm)) {
                             prefix = "/STAT";
                         } else if ("FYLK".equals(orgForm)) {
                             prefix = "/FYLKE";
@@ -190,12 +189,8 @@ public class BrregAgentConverter {
                     prefix = "/ANNET";
                 }
             }
-            String id = p.getId();
-            if (id == null || id.isEmpty()) {
 
-                id = p.getName().replaceAll("\\s", "");
-            }
-            return prefix + "/" + id;
+            return prefix + "/" + publisher.getId();
         }
 
         return null;
