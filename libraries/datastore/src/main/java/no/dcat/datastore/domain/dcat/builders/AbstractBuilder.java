@@ -76,6 +76,21 @@ public abstract class AbstractBuilder {
         return null;
     }
 
+    public static String extractStringWithNoBaseUri(Resource resource, Property property) {
+        String valueToStrip = extractAsString(resource, property);
+        if ( valueToStrip != null) {
+            String uri = getStringWithNoBaseImportUri(resource.getModel(), valueToStrip);
+
+            if (uri.startsWith("http://")) {
+                return uri;
+            } else {
+                return "http://" + uri;
+            }
+        }
+
+        return null;
+    }
+
     public static String getStringWithNoBaseImportUri(Model model, String valueToStrip) {
         if (model != null && valueToStrip != null) {
             Resource importInformation = model.getResource(DCATCrawler.ImportResource.getURI());

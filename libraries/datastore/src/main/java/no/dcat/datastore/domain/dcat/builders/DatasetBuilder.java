@@ -149,7 +149,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setModified(extractDate(resource, DCTerms.modified));
 
             ds.setLanguage(asList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
-            ds.setLandingPage(asList(extractAsString(resource, DCAT.landingPage)));
+            ds.setLandingPage(asList(extractStringWithNoBaseUri(resource, DCAT.landingPage)));
             ds.setTheme(extractTheme(resource, DCAT.theme, dataThemes));
 
             // distributions handled externally

@@ -200,14 +200,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
                 missingUris.removeAll(thisCatalogRecord.getValidDatasetUris());
-                logger.info("There are {} datasets that were not harvested this time", missingUris.size());
+                if (missingUris.size() > 0) {
+                    logger.info("There are {} datasets that were not harvested this time", missingUris.size());
 
-                for (String uri : missingUris) {
-                    DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
-                    if (lookup != null && lookup.getDatasetId() != null) {
-                        elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
-                        logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
-                        stats.setDeletes(stats.getDeletes() + 1);
+                    for (String uri : missingUris) {
+                        DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
+                        if (lookup != null && lookup.getDatasetId() != null) {
+                            elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
+                            logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
+                            stats.setDeletes(stats.getDeletes() + 1);
+                        }
                     }
                 }
             }
