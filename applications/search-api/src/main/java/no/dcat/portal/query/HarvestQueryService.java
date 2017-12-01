@@ -69,7 +69,7 @@ public class HarvestQueryService extends ElasticsearchService {
                 .addAggregation(last7)
                 .addAggregation(last30)
                 .addAggregation(last365)
-                .setSize(20)
+                .setSize(0)
                 ;
 
         logger.trace("SEARCH: {}", searchQuery.toString());
