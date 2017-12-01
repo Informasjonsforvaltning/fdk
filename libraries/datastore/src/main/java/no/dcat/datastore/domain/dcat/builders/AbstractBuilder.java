@@ -541,17 +541,10 @@ public abstract class AbstractBuilder {
         publisher.setValid(extractAsBoolean(object, DCTerms.valid));
         publisher.setOrgPath(extractAsString(object, DCATNO.organizationPath));
 
-        Statement hasProperty = object.getProperty(EnhetsregisteretRDF.organisasjonsform);
-        if (hasProperty != null) {
-            publisher.setOrganisasjonsform(extractAsString(object, EnhetsregisteretRDF.organisasjonsform));
-        }
+        publisher.setOrganisasjonsform(extractAsString(object, EnhetsregisteretRDF.organisasjonsform));
+        publisher.setOverordnetEnhet(extractAsString(object, EnhetsregisteretRDF.overordnetEnhet));
 
-        hasProperty = object.getProperty(EnhetsregisteretRDF.overordnetEnhet);
-        if (hasProperty != null) {
-            publisher.setOverordnetEnhet(extractAsString(object, EnhetsregisteretRDF.overordnetEnhet));
-        }
-
-        hasProperty = object.getProperty(EnhetsregisteretRDF.naeringskode);
+        Statement hasProperty = object.getProperty(EnhetsregisteretRDF.naeringskode);
         if (hasProperty != null) {
             publisher.setNaeringskode(extractBRCode(hasProperty, "http://www.ssb.no/nace/sn2007/"));
         }

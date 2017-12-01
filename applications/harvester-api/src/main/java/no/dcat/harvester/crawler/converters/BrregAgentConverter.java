@@ -4,13 +4,20 @@ import com.google.common.cache.LoadingCache;
 import no.acando.xmltordf.Builder;
 import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
-import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
@@ -20,7 +27,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -32,7 +44,6 @@ import java.util.regex.Pattern;
 public class BrregAgentConverter {
 
     public String publisherIdURI = Publisher.PUBLISHERID_ENHETSREGISTERET_URI;
-    public static final String ORGANISASJONSLEDD = "ORGL";
     private final XmlToRdfAdvancedJena xmlToRdfObject;
     private final LoadingCache<URL, String> brregCache;
     private HashMap<String, String> canonicalNames = new HashMap<>();
@@ -131,7 +142,17 @@ public class BrregAgentConverter {
         List<Publisher> publishers = new PublisherBuilder(model).build();
 
         final Map<String, Publisher> publisherMap = new HashMap<>();
-        publishers.forEach(publisher -> publisherMap.put(publisher.getId(), publisher));
+        publishers.forEach(publisher -> {
+            if (publisher.getId() == null) {
+
+            } else {
+                if (publisherMap.containsKey(publisher.getId())) {
+                    logger.error("Publisher {} is already registeret (duplicates in data?)", publisher.getId());
+                }
+                publisherMap.put(publisher.getId(), publisher);
+
+            }
+        });
 
         publishers.forEach( p -> {
             p.setOrgPath(extractOrganizationPath(p, publisherMap));
@@ -151,7 +172,7 @@ public class BrregAgentConverter {
                     if (p.getOrganisasjonsform() != null) {
                         String orgForm = p.getOrganisasjonsform();
 
-                        if ("STAT".equals(orgForm)) {
+                        if ("STAT".equals(orgForm) || "SF".equals(orgForm) ) {
                             prefix = "/STAT";
                         } else if ("FYLK".equals(orgForm)) {
                             prefix = "/FYLKE";
@@ -171,7 +192,8 @@ public class BrregAgentConverter {
             }
             String id = p.getId();
             if (id == null || id.isEmpty()) {
-                id = p.getName();
+
+                id = p.getName().replaceAll("\\s", "");
             }
             return prefix + "/" + id;
         }
