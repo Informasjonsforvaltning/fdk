@@ -3,8 +3,8 @@ package no.dcat.harvester.crawler;
 import com.google.common.cache.LoadingCache;
 
 import no.dcat.harvester.crawler.converters.BrregAgentConverter;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.domain.DcatSource;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;

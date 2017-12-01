@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { browserHistory } from 'react-router';
 import qs from 'qs';
 
-import { addOrReplaceParam, getParamFromUrl } from '../../utils/addOrReplaceUrlParam';
+import { addOrReplaceParam, getParamFromUrl, removeParam } from '../../utils/addOrReplaceUrlParam';
 import ResultsDataset from '../../components/search-results-dataset';
 import ResultsConcepts from '../../components/search-concepts-results';
 import './index.scss';
@@ -71,7 +71,8 @@ export default class SearchPage extends React.Component {
   }
 
   handleSelectView(chosenView) {
-    const tabUrl = getTabUrl(chosenView);
+    let tabUrl = getTabUrl(chosenView);
+    tabUrl = removeParam('p', tabUrl); // remove this parameter when navigating between tabs.
     const nextUrl = `${location.pathname}${tabUrl}`;
     browserHistory.push(nextUrl);
 

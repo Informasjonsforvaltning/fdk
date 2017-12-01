@@ -3,9 +3,9 @@ package no.dcat.harvester.crawler;
 
 
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.domain.DcatSource;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RiotException;
 import org.apache.jena.shared.BadURIException;

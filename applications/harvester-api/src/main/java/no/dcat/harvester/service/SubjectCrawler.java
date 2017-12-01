@@ -1,8 +1,8 @@
 package no.dcat.harvester.service;
 
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;

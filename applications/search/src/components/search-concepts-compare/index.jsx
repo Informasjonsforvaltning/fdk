@@ -9,7 +9,7 @@ const CompareTerms = (props) => {
   title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
     <div className="fdk-container p-3">
-      <button className="pull-right fdk-button-on-white" onClick={() => { onDeleteTerm(termIndex)}}>
+      <button className="pull-right fdk-button-small" onClick={() => { onDeleteTerm(termIndex)}}>
         <i className="fa fa-times" />
         &nbsp;
         {localization.terms.removeTerms}

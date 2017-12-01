@@ -33,7 +33,7 @@ export default class Select extends React.Component {
       <DropdownButton
         bsStyle="default"
         id="search-result-dropdown-1"
-        className="fdk-button fdk-button-dropdown"
+        className="fdk-button fdk-button-default"
         title={`${this.props.translate('sort.by')} ${this.props.translate(this.state.selectedValue)}`}
         onSelect={this.onChange}
       >

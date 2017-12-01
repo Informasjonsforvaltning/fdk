@@ -185,7 +185,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             {this._renderThemes()}
           </div>
           <p
-            className="fdk-p-search-hit block-with-textx"
+            className="fdk-p-search-hit"
           >
             {description}
           </p>

@@ -1,13 +1,11 @@
 package no.dcat.harvester;
 
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Random;
 
 /**
  * Created by bjg on 19.10.2017.

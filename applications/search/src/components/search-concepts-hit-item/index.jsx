@@ -62,7 +62,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
       return (
         <div>
           <span className="fa-stack fdk-fa-left fdk-fa-circle">
-            <i className="fa fa-book fa-stack-1x fdk-color0" />
+            <i className="fa fa-file-text fa-stack-1x fdk-color0" />
           </span>
           <a
             href={source}
