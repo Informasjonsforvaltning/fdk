@@ -6,7 +6,7 @@
     "functions": 99,
     "branches": 99,
     "include": [
-      "src/**/*.js"
+      "src/**/*"
     ],
     "extension": [
       ".jsx"
