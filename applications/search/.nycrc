@@ -1,14 +1,6 @@
 {
-    "check-coverage": true,
-    "per-file": true,
-    "lines": 99,
-    "statements": 99,
-    "functions": 99,
-    "branches": 99,
-    "include": [
-      "src/**/*"
-    ],
     "extension": [
-      ".jsx"
+      ".jsx",
+      ".js"
     ]
 }

@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
     "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "tdd": "npm test -- --watch",
     "lint": "eslint ./src --ext=.js,.jsx --fix"
   },
@@ -70,6 +71,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
     "css-loader": "^0.28.7",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-15": "^1.0.0",
