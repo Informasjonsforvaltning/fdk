@@ -7,7 +7,7 @@
     "start": "node start.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
-    "test": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
+    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
     "tdd": "npm test -- --watch",
     "lint": "eslint ./src --ext=.js,.jsx --fix"
   },
@@ -90,6 +90,7 @@
     "lint-staged": "^4.3.0",
     "mocha": "^3.5.3",
     "node-sass": "^4.5.3",
+    "nyc": "^11.3.0",
     "postcss-loader": "^2.0.6",
     "postcss-variables-loader": "^4.0.0",
     "prettier": "^1.7.4",
