@@ -95,7 +95,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
                 Dataset datasetObject = create(datasetResource, catalog, locations, codes, dataThemes);
                 datasetObject.setDistribution(getDistributions(datasetResource, DCAT.distribution));
-                datasetObject.setSample(getDistributions(datasetResource, DCAT.sample));
+                datasetObject.setSample(getDistributions(datasetResource, ADMS.sample));
 
                 datasets.add(datasetObject);
             }
@@ -149,7 +149,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setModified(extractDate(resource, DCTerms.modified));
 
             ds.setLanguage(asList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
-            ds.setLandingPage(asList(extractAsString(resource, DCAT.landingPage)));
+            ds.setLandingPage(extractUriList(resource, DCAT.landingPage));
             ds.setTheme(extractTheme(resource, DCAT.theme, dataThemes));
 
             // distributions handled externally
@@ -203,9 +203,9 @@ public class DatasetBuilder extends AbstractBuilder {
             Statement statement = iterator.next();
 
             Resource annotation = statement.getResource();
-            Statement dimension = annotation.getProperty(DQV.inDimension);
+            Statement dimension = annotation != null ? annotation.getProperty(DQV.inDimension) : null;
 
-            if (dimension != null && annotation != null) {
+            if (dimension != null) {
                 String actualDimensionUri = dimension.getObject().toString();
                 String expandedDimensionUri = resource.getModel().expandPrefix(actualDimensionUri);
 
@@ -265,38 +265,34 @@ public class DatasetBuilder extends AbstractBuilder {
         return null;
     }
 
-    public static Subject extractSubject(Resource resource) {
-        if (resource.isURIResource()) {
+    public static Subject extractSubject(Resource subjectResource) {
+        if (subjectResource != null && subjectResource.isURIResource()) {
             Subject subject = new Subject();
 
-            subject.setUri(resource.toString());
+            subject.setUri(subjectResource.toString());
+            subject.setIdentifier(extractAsString(subjectResource, DCTerms.identifier));
 
-            Resource subjectResource = resource;
-            if (subjectResource != null) {
-                subject.setIdentifier(extractAsString(subjectResource, DCTerms.identifier));
+            subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
+            subject.setAltLabel(extractMultipleLanguageLiterals(subjectResource, SKOS.altLabel));
 
-                subject.setPrefLabel(extractLanguageLiteral(subjectResource, SKOS.prefLabel));
-                subject.setAltLabel(extractMultipleLanguageLiterals(subjectResource, SKOS.altLabel));
+            subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
+            subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
+            subject.setSource(extractAsString(subjectResource, DCTerms.source));
 
-                subject.setDefinition(extractLanguageLiteral(subjectResource, SKOS.definition));
-                subject.setNote(extractLanguageLiteral(subjectResource, SKOS.note));
-                subject.setSource(extractAsString(subjectResource, DCTerms.source));
-
-                subject.setCreator(extractPublisher(subjectResource, DCTerms.creator));
-                subject.setInScheme(extractMultipleStrings(subjectResource, SKOS.inScheme));
-                if (subject.getInScheme() != null) {
-                    List<String> encodedResult = new ArrayList<>();
-                    for (String domain :subject.getInScheme()) {
-                        try {
-                            encodedResult.add(URLDecoder.decode(domain, "UTF-8"));
-                        } catch (UnsupportedEncodingException e) {
-                            encodedResult.add(domain);
-                        }
+            subject.setCreator(extractPublisher(subjectResource, DCTerms.creator));
+            subject.setInScheme(extractMultipleStrings(subjectResource, SKOS.inScheme));
+            if (subject.getInScheme() != null) {
+                List<String> encodedResult = new ArrayList<>();
+                for (String domain : subject.getInScheme()) {
+                    try {
+                        encodedResult.add(URLDecoder.decode(domain, "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        encodedResult.add(domain);
                     }
-                    subject.setInScheme(encodedResult);
                 }
-
+                subject.setInScheme(encodedResult);
             }
+
             return subject;
         }
         return null;

@@ -203,7 +203,6 @@ public class CrawlerJob implements Runnable {
         }
 
         // remember the base url
-
         Resource o = ResourceFactory.createResource(url.toString());
         union.add(DCATCrawler.ImportResource, DCATCrawler.source_url, o);
 
@@ -211,13 +210,11 @@ public class CrawlerJob implements Runnable {
 
         //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
         DataEnricher enricher = new DataEnricher();
-        Model enrichedUnion = enricher.enrichData(union);
-        union = enrichedUnion;
+        union = enricher.enrichData(union);
 
         // Checks subjects and resolve definitions
         if (subjectCrawler != null) {
-            Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
-            union = modelWithSubjects;
+            union = subjectCrawler.annotateSubjects(union);
         } else {
             logger.warn("Could not annotate subjects. Reason subject crawler is not initialized!");
         }
@@ -225,7 +222,6 @@ public class CrawlerJob implements Runnable {
         // Checks publisher and resolve according to registrered in BRREG Enhetsregistret
         BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
         brregAgentConverter.collectFromModel(union);
-
 
         return union;
     }
@@ -342,7 +338,7 @@ public class CrawlerJob implements Runnable {
      * Remove non-valida datasets from model
      * Non-valid datasets are those with ruleSeverity=error
      * in global variable validationErrors
-     * @param model
+     * @param model the model containing the resources to be removed
      */
     private void removeNonValidDatasets(Model model) {
 
@@ -361,7 +357,7 @@ public class CrawlerJob implements Runnable {
     /**
      * Remove triples containing DCTerms.spatial URLs that cannot be resolved
      *
-     * @param model
+     * @param model the model
      */
     private String removeNonResolvableLocations(Model model) {
         StringBuilder resultMsg = new StringBuilder();
