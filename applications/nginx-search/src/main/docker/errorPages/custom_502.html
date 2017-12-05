@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+    <base href="/" />
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="403 Forbidden">
-    <title>403 Forbidden</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Brønnøysundregistrene" />
+    <meta name="description" content="502">
+    <title>502</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
@@ -17,17 +21,15 @@
             line-height: 2.1rem;
             color: #2D3741;
         }
-        /* Colors */
-        .green {color:#5cb85c;}
-        .orange {color:#f0ad4e;}
-        .red {color:#d9534f;}
 
-        .jumbotron {
-            font-size: 21px;
-            font-weight: 200;
-            line-height: 2.1428571435;
-            color: inherit;
-            padding: 10px 0px;
+        h1 {
+            font-size: 10rem;
+            color: #00C3FF;
+            font-weight: 600;
+        }
+
+        .mt-60 {
+            margin-top: 60px;
         }
 
         .fdk-header-beta {
@@ -38,6 +40,9 @@
             font-size: 1.4rem;
             line-height: 1.4rem;
             color: #ffffff;
+        }
+        .fdk-header-beta > a {
+            color: #fff;
         }
         .fdk-header {
             background-color: #ffffff;
@@ -54,6 +59,10 @@
             border-top: 1px solid #D7DDE3;
             padding: 20px 0px;
             margin: 60px 0px 0px 0px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
         .fdk-p-footer {
             font-size: 1.4rem;
@@ -70,7 +79,6 @@
             display: inline-block;
             font: normal normal normal 14px/1 FontAwesome;
             font-size: inherit;
-            text-rendering: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -78,20 +86,13 @@
             margin-left: 5px;
         }
     </style>
-    <script type="text/javascript">
-      function loadDomain() {
-        var display = document.getElementById("display-domain");
-        display.innerHTML = document.domain;
-      }
-    </script>
 </head>
-<body onload="javascript:loadDomain();">
+<body>
 <!-- Error Page Content -->
 <div class="fdk-header-beta">
     Dette er en beta-versjon. Gi oss gjerne
-    <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
+    <a class="white-link" href="mailto:fellesdatakatalog@brreg.no">tilbakemeldinger</a> om hva du synes!
 </div>
-
 <div class="fdk-header">
     <div class="container">
         <div class="row">
@@ -102,39 +103,21 @@
         </div>
     </div>
 </div>
-
 <div class="container">
-    <div class="jumbotron">
-        <h1><i class="fa fa-ban red"></i> 403 Forbidden</h1>
-        <p class="lead">Sorry! You don't have access permissions for that on <em><span id="display-domain">alexphelps.github.io</span></em>.</p>
-        <p><a onclick="javascript:checkSite();" class="btn btn-default btn-lg green">Take Me To The Homepage</a>
-            <script type="text/javascript">
+    <div class="mt-60 text-center">
+        <h1>502</h1>
+        <p class="lead">
+            Oi, dette er flaut! Det ser ut til at vi har rotet det til for deg...<br />
+            Gå <a href="javascript:history.back();">tilbake der du kom fra</a>, eller helt <a href="javascript:checkSite();">tilbake til forsiden</a>.
+            <script>
               function checkSite(){
                 var currentSite = window.location.hostname;
-                window.location = "http://" + currentSite;
+                return window.location = "http://" + currentSite;
               }
             </script>
         </p>
     </div>
 </div>
-<div class="container">
-    <div class="body-content">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>What happened?</h2>
-                <p class="lead">A 403 error status indicates that you don't have permission to access the file or page. In general, web servers and websites have directories and files that are not open to the public web for security reasons.</p>
-            </div>
-            <div class="col-md-6">
-                <h2>What can I do?</h2>
-                <p class="lead">If you're a site visitor</p>
-                <p>Please use your browsers back button and check that you're in the right place. If you need immediate assistance, please send us an email instead.</p>
-                <p class="lead">If you're the site owner</p>
-                <p>Please check that you're in the right place and get in touch with your website provider if you believe this to be an error.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="fdk-footer">
     <div class="container">
         <div class="row">
@@ -154,11 +137,5 @@
         </div>
     </div>
 </div>
-
-<!-- End Error Page Content -->
-<!--Scripts-->
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
