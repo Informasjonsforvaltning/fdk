@@ -9,9 +9,9 @@ import AboutPage from './containers/search-about';
 import GetStartedPage from './containers/search-getstarted-article';
 import ReportsPage from './containers/reports';
 import App from './containers/app';
+import Error404 from './containers/search-error-404';
 
 const ReactGA = require('react-ga');
-
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
@@ -49,6 +49,7 @@ const routes =
       <Route path="/about" component={AboutPage} />
       <Route path="/about-registration" component={GetStartedPage} />
       <Route path="/reports" component={ReportsPage} />
+      <Route path="*" component={Error404} />
     </Route>
   );
 
