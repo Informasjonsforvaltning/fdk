@@ -107,24 +107,6 @@
   display: none;
 }
 
-.level1 {
-
-}
-.level2.expanded, .level3.expanded, .level4.expanded {
-  display: inline-block;
-}
-.level2 {
-  margin-left: 20px;
-  display: none;
-}
-.level3 {
-  margin-left: 40px;
-  display: none;
-}
-.level4 {
-  margin-left: 60px;
-  display: none;
-}
 /*  SEARCHPAGE PAGINATION  */
 
 .sk-pagination-navigation .sk-toggle-option:first-child,

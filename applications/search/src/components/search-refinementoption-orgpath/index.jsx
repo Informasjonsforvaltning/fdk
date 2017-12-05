@@ -45,16 +45,17 @@ const RefinementOptionOrgPath = (props) => {
   let navigatedOrLevel = (navigatedToMinistryLevel || level < 3) ? 'expanded' : '';
 
   let expandedState = (hasOrgPathValue && navigatedOrLevel) ? 'expanded' : '';
+
   const onClick2 = () => {
     if(orgPathValue) {
       const orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(orgPathValue));
       if(orgPathValueCheckbox) orgPathValueCheckbox.click();
     }
   }
+  const checkboxActive = (orgPathObject && (orgPathValue === orgPathObject.orgPath ))? 'checkboxActive' : '';
   return (
-    <div className={'checkbox ' + ((orgPathValue === orgPathObject.orgPath )? 'checkboxActive' : '')}>
+    <div className={'checkbox ' + checkboxActive}>
       {
-
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
       }<label className={'level' + level + ' ' + expandedState} onKeyPress={onClick} tabIndex="0" htmlFor={id} role="button">
         <input
