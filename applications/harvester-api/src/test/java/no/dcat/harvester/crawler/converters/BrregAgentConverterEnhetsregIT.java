@@ -1,12 +1,14 @@
 package no.dcat.harvester.crawler.converters;
 
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
+import org.apache.jena.vocabulary.DCTerms;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
@@ -143,7 +145,11 @@ public class BrregAgentConverterEnhetsregIT {
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
         converter.collectFromModel(model);
 
-        model.write(System.out, "TURTLE");
+        Resource datasetWithCorrectedPublisher = model.getResource("http://data.brreg.no/datakatalog/dataset/42");
+        String publisherUri = datasetWithCorrectedPublisher.getProperty(DCTerms.publisher).getObject().toString();
+
+        Assert.assertThat(publisherUri, Is.is("http://data.brreg.no/enhetsregisteret/enhet/981544315"));
+
 
     }
 }
