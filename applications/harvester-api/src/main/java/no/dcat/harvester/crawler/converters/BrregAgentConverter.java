@@ -131,7 +131,6 @@ public class BrregAgentConverter {
                     String url = String.format(publisherIdURI, orgnr, ".xml");
                     logger.info("Used dct:identifier to lookup publisher {} from {}", orgresource.getURI(), url);
                     collectFromUri(url, model, orgresource);
-                    //TODO utbytting av uri
                 }
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
@@ -250,15 +249,14 @@ public class BrregAgentConverter {
                             Resource subject = subjects.next();
                             String publisherUri = subject.getProperty(DCTerms.publisher).getObject().asResource().getURI();
                             if(!publisherUri.contains("http://data.brreg.no/enhetsregisteret")) {
-                                logger.debug("Subject (dataset) {} has publisher with incorrect orgnumber URI: {}",
+                                logger.warn("Subject (dataset) {} has publisher with incorrect orgnumber URI: {}",
                                         subject.getURI(), publisherUri);
 
                                 subject.removeAll(DCTerms.publisher);
                                 subject.addProperty(DCTerms.publisher, masterPublisherResource);
 
-                                logger.debug("Subject (dataset) {} substituted orgnumber URI: {}",
+                                logger.info("Subject (dataset) {} substituted orgnumber URI: {}",
                                         subject.getURI(), masterPublisherResource.getURI());
-
                             }
                         }
                     }
