@@ -1,5 +1,6 @@
 package no.dcat.harvester.crawler.converters;
 
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
@@ -134,5 +135,15 @@ public class BrregAgentConverterEnhetsregIT {
         logger.info("name after {}",newName);
 
         Assert.assertThat(newName, Is.is("SSB"));
+    }
+
+    @Test
+    public void testSamePublisherDifferentUri() throws Throwable {
+
+        Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
+        converter.collectFromModel(model);
+
+        model.write(System.out, "TURTLE");
+
     }
 }

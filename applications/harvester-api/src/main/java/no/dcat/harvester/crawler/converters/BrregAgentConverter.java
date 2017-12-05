@@ -131,6 +131,7 @@ public class BrregAgentConverter {
                     String url = String.format(publisherIdURI, orgnr, ".xml");
                     logger.info("Used dct:identifier to lookup publisher {} from {}", orgresource.getURI(), url);
                     collectFromUri(url, model, orgresource);
+                    //TODO utbytting av uri
                 }
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
