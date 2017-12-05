@@ -143,6 +143,7 @@ public class BrregAgentConverterEnhetsregIT {
     public void testSamePublisherDifferentUri() throws Throwable {
 
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
+
         converter.collectFromModel(model);
 
         Resource datasetWithCorrectedPublisher = model.getResource("http://data.brreg.no/datakatalog/dataset/42");

@@ -242,6 +242,27 @@ public class BrregAgentConverter {
                     organizationName = canonicalNames.get(organisationNumber);
                 } else if (publisherResource.getURI() != null && !publisherResource.getURI().equals(masterPublisherUri)) {
                     Resource masterPublisherResource = masterDataModel.getResource(masterPublisherUri);
+
+                    //exchange non-standard uri for organization number with standard one
+                    if (!publisherResource.equals(masterPublisherUri)) {
+                        ResIterator subjects = model.listSubjectsWithProperty(DCTerms.publisher);
+                        while (subjects.hasNext()) {
+                            Resource subject = subjects.next();
+                            String publisherUri = subject.getProperty(DCTerms.publisher).getObject().asResource().getURI();
+                            if(!publisherUri.contains("http://data.brreg.no/enhetsregisteret")) {
+                                logger.debug("Subject (dataset) {} has publisher with incorrect orgnumber URI: {}",
+                                        subject.getURI(), publisherUri);
+
+                                subject.removeAll(DCTerms.publisher);
+                                subject.addProperty(DCTerms.publisher, masterPublisherResource);
+
+                                logger.debug("Subject (dataset) {} substituted orgnumber URI: {}",
+                                        subject.getURI(), masterPublisherResource.getURI());
+
+                            }
+                        }
+                    }
+
                     if (masterPublisherResource != null && masterPublisherResource.getProperty(FOAF.name) != null) {
                         organizationName = masterPublisherResource.getProperty(FOAF.name).getString();
                     }
