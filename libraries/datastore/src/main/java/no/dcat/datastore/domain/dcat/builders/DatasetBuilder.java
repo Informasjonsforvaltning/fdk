@@ -95,7 +95,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
                 Dataset datasetObject = create(datasetResource, catalog, locations, codes, dataThemes);
                 datasetObject.setDistribution(getDistributions(datasetResource, DCAT.distribution));
-                datasetObject.setSample(getDistributions(datasetResource, DCAT.sample));
+                datasetObject.setSample(getDistributions(datasetResource, ADMS.sample));
 
                 datasets.add(datasetObject);
             }
@@ -149,7 +149,7 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setModified(extractDate(resource, DCTerms.modified));
 
             ds.setLanguage(asList(getCode(codes.get(Types.linguisticsystem.getType()), extractAsString(resource, DCTerms.language))));
-            ds.setLandingPage(asList(extractStringWithNoBaseUri(resource, DCAT.landingPage)));
+            ds.setLandingPage(extractUriList(resource, DCAT.landingPage));
             ds.setTheme(extractTheme(resource, DCAT.theme, dataThemes));
 
             // distributions handled externally

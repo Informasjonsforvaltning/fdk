@@ -2,6 +2,7 @@ package no.dcat.datastore.domain.dcat;
 
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
@@ -17,6 +18,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.BeforeClass;
@@ -26,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -33,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 public class DatasetConverterTest {
@@ -42,7 +47,7 @@ public class DatasetConverterTest {
     static Dataset expectedDataset, actualDataset;
 
     @BeforeClass
-    public static void setup() {
+    public static void setup() throws Throwable {
         catalog = TestCompleteCatalog.getCompleteCatalog();
 
         String catalogUri = catalog.getUri();
@@ -58,7 +63,14 @@ public class DatasetConverterTest {
         logger.info("dcat: {} ", dcat);
 
         Model model = ModelFactory.createDefaultModel();
-        model.read(new ByteArrayInputStream(dcat.getBytes()),null, "TTL");
+        model.read(new ByteArrayInputStream(dcat.getBytes()), "", "TTL");
+
+        File file = new File("x");
+        String filePat = file.toURI().toURL().toString();
+        String filePath = filePat.substring(0, filePat.length() - 1);
+
+        Resource r = model.createResource(filePath);
+        model.add(DCATCrawler.ImportResource, DCATCrawler.source_url, r);
 
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
         ResIterator datasetIterator = model.listResourcesWithProperty(RDF.type, DCAT.Dataset);
@@ -77,25 +89,25 @@ public class DatasetConverterTest {
 
         Map<String, Map<String, SkosCode>> codes = new HashMap<>();
         codes.put(Types.provenancestatement.getType(), new HashMap<>());
-        addCode2(codes.get(Types.provenancestatement.getType()),"Vedtak", "Vedtak", "http://data.brreg.no/datakatalog/provenance/vedtak");
+        addCode2(codes.get(Types.provenancestatement.getType()), "Vedtak", "Vedtak", "http://data.brreg.no/datakatalog/provenance/vedtak");
 
         codes.put(Types.linguisticsystem.getType(), new HashMap<>());
         addCode2(codes.get(Types.linguisticsystem.getType()), "Norsk", "NOR", "http://publications.europa.eu/resource/authority/language/NOR");
 
         codes.put(Types.rightsstatement.getType(), new HashMap<>());
-        addCode2(codes.get(Types.rightsstatement.getType()),"Offentlig", "PUBLIC","http://publications.europa.eu/resource/authority/access-right/PUBLIC");
-        addCode2(codes.get(Types.rightsstatement.getType()),"Begrenset", "RESTRICTED","http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
-        addCode2(codes.get(Types.rightsstatement.getType()),"Untatt offentlighet","NON-PUBLIC", "http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC");
+        addCode2(codes.get(Types.rightsstatement.getType()), "Offentlig", "PUBLIC", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+        addCode2(codes.get(Types.rightsstatement.getType()), "Begrenset", "RESTRICTED", "http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
+        addCode2(codes.get(Types.rightsstatement.getType()), "Untatt offentlighet", "NON-PUBLIC", "http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC");
 
         codes.put(Types.frequency.getType(), new HashMap<>());
-        addCode2(codes.get(Types.frequency.getType()), "Årlig", "ANUAL","http://publications.europa.eu/resource/authority/frequency/ANNUAL");
+        addCode2(codes.get(Types.frequency.getType()), "Årlig", "ANUAL", "http://publications.europa.eu/resource/authority/frequency/ANNUAL");
 
         codes.put(Types.referencetypes.getType(), new HashMap<>());
         addCode2(codes.get(Types.referencetypes.getType()), "references", "references", DCTerms.references.getURI());
         addCode2(codes.get(Types.referencetypes.getType()), "Har versjon", "hasVersion", DCTerms.hasVersion.getURI());
         addCode2(codes.get(Types.referencetypes.getType()), "Er del av", "isPartOf", DCTerms.isPartOf.getURI());
 
-        Map<String,DataTheme> dataThemeMap = new HashMap<>();
+        Map<String, DataTheme> dataThemeMap = new HashMap<>();
         DataTheme gove = new DataTheme();
         gove.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
         gove.setCode("GOVE");
@@ -106,7 +118,7 @@ public class DatasetConverterTest {
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/GOVE", gove);
         dataThemeMap.put("http://publications.europa.eu/resource/authority/data-theme/ENVI", envi);
 
-        DatasetBuilder builder = new DatasetBuilder(model, locations,codes,dataThemeMap);
+        DatasetBuilder builder = new DatasetBuilder(model, locations, codes, dataThemeMap);
         List<Dataset> dataset = builder.getDataset();
         actualDataset = dataset.get(0); //DatasetBuilder.create(model.getResource(datasetUri), catalogResource , locations, codes, dataThemeMap);
 
@@ -115,19 +127,19 @@ public class DatasetConverterTest {
 
     @Test
     public void hasAccuracyAnnotation() throws Throwable {
-        assertThat(actualDataset.getHasAccuracyAnnotation(), is (expectedDataset.getHasAccuracyAnnotation()));
+        assertThat(actualDataset.getHasAccuracyAnnotation(), is(expectedDataset.getHasAccuracyAnnotation()));
     }
 
     @Test
     public void hasReferences() throws Throwable {
         logger.info("number of references {}", actualDataset.getReferences().size());
-        assertThat(actualDataset.getReferences(), is (expectedDataset.getReferences()));
+        assertThat(actualDataset.getReferences(), is(expectedDataset.getReferences()));
     }
 
     @Test
     public void hasLanguage() throws Throwable {
         logger.info("number of languages {}", actualDataset.getLanguage().size());
-        assertThat(actualDataset.getLanguage().get(0), is (expectedDataset.getLanguage().get(0)));
+        assertThat(actualDataset.getLanguage().get(0), is(expectedDataset.getLanguage().get(0)));
     }
 
 
@@ -151,6 +163,7 @@ public class DatasetConverterTest {
 
         assertThat(actualDataset.getObjective(), is(expectedDataset.getObjective()));
     }
+
 
     @Test
     public void hasSubject() throws Throwable {
@@ -181,26 +194,26 @@ public class DatasetConverterTest {
 
         Collections.sort(actualDataset.getSpatial(), new SkosCodeComparer());
         Collections.sort(expectedDataset.getSpatial(), new SkosCodeComparer());
-        assertThat("spatial", actualDataset.getSpatial(), is (expectedDataset.getSpatial()));
+        assertThat("spatial", actualDataset.getSpatial(), is(expectedDataset.getSpatial()));
 
         Collections.sort(actualDataset.getTemporal(), new PeriodOfTimeComparer());
         Collections.sort(expectedDataset.getTemporal(), new PeriodOfTimeComparer());
-        assertThat("temporal", actualDataset.getTemporal(), is (expectedDataset.getTemporal()));
+        assertThat("temporal", actualDataset.getTemporal(), is(expectedDataset.getTemporal()));
 
-        assertThat("conformsTo", actualDataset.getConformsTo(), is (expectedDataset.getConformsTo()));
+        assertThat("conformsTo", actualDataset.getConformsTo(), is(expectedDataset.getConformsTo()));
     }
 
     @Test
     public void checkDistribution() throws Throwable {
         Distribution actualDist = actualDataset.getDistribution().get(0);
-        Distribution expectedDist =  expectedDataset.getDistribution().get(0);
+        Distribution expectedDist = expectedDataset.getDistribution().get(0);
 
-        assertThat("description", actualDist.getDescription(), is (expectedDist.getDescription()));
-        assertThat("licence", actualDist.getLicense(), is (expectedDist.getLicense()));
-        assertThat("conformsTo", actualDist.getConformsTo(), is (expectedDist.getConformsTo()));
-        assertThat("format", actualDist.getFormat(), is (expectedDist.getFormat()));
-        assertThat("accessURL", actualDist.getAccessURL(), is (expectedDist.getAccessURL()));
-        assertThat("page", actualDist.getPage(), is (expectedDist.getPage()));
+        assertThat("description", actualDist.getDescription(), is(expectedDist.getDescription()));
+        assertThat("licence", actualDist.getLicense(), is(expectedDist.getLicense()));
+        assertThat("conformsTo", actualDist.getConformsTo(), is(expectedDist.getConformsTo()));
+        assertThat("format", actualDist.getFormat(), is(expectedDist.getFormat()));
+        assertThat("accessURL", actualDist.getAccessURL(), is(expectedDist.getAccessURL()));
+        assertThat("page", actualDist.getPage(), is(expectedDist.getPage()));
 
     }
 
@@ -213,20 +226,43 @@ public class DatasetConverterTest {
         assertThat(actualDataset.getHasCurrentnessAnnotation(), is(expectedDataset.getHasCurrentnessAnnotation()));
     }
 
+
+    @Test
+    public void converterHandleLandingPageWithoutBaseOK() throws Throwable {
+
+        List<String> landingPages = actualDataset.getLandingPage();
+
+        landingPages.forEach(landingPage -> assertThat("should start with protocol", landingPage, startsWith("http")));
+    }
+
+    @Test
+    public void converterHandlesAccessUrlWithoutBaseUri() throws Throwable {
+
+        actualDataset.getDistribution().forEach(distribution ->
+                distribution.getAccessURL().forEach(accessUrl ->
+                    assertThat("should start with protocol", accessUrl, startsWith("http"))
+                ));
+
+        actualDataset.getSample().forEach(sample ->
+            sample.getAccessURL().forEach(accessUrl ->
+                assertThat("should start with protocol", accessUrl, startsWith("http"))
+            ));
+    }
+
     @Test
     public void checkThemes() throws Throwable {
         int count = 0;
         for (DataTheme expectedTheme : expectedDataset.getTheme()) {
 
-            for (DataTheme actualTheme: actualDataset.getTheme()) {
-                if (actualTheme.getUri().equals(expectedTheme.getUri())){
+            for (DataTheme actualTheme : actualDataset.getTheme()) {
+                if (actualTheme.getUri().equals(expectedTheme.getUri())) {
                     count++;
                     break;
                 }
             }
         }
 
-        assertThat(count, is (expectedDataset.getTheme().size()));
+        assertThat(count, is(expectedDataset.getTheme().size()));
     }
 
     @Test
@@ -238,21 +274,21 @@ public class DatasetConverterTest {
     }
 
 
-    public static void addCode(Map<String,SkosCode> codeList, String nbLabel, String uri) {
+    public static void addCode(Map<String, SkosCode> codeList, String nbLabel, String uri) {
         SkosCode code = new SkosCode();
         code.setUri(uri);
-        Map<String,String> prefLabel = new HashMap<>();
-        prefLabel.put("nb", nbLabel );
+        Map<String, String> prefLabel = new HashMap<>();
+        prefLabel.put("nb", nbLabel);
         code.setPrefLabel(prefLabel);
         codeList.put(uri, code);
 
     }
 
-    public static void addCode2(Map<String,SkosCode> codeList, String nbLabel, String codeValue, String uri) {
+    public static void addCode2(Map<String, SkosCode> codeList, String nbLabel, String codeValue, String uri) {
         SkosCode code = new SkosCode();
         code.setUri(uri);
-        Map<String,String> prefLabel = new HashMap<>();
-        prefLabel.put("nb", nbLabel );
+        Map<String, String> prefLabel = new HashMap<>();
+        prefLabel.put("nb", nbLabel);
         code.setPrefLabel(prefLabel);
         code.setCode(codeValue);
         codeList.put(uri, code);

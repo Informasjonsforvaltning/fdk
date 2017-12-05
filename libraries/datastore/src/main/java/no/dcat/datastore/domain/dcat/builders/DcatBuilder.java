@@ -429,6 +429,7 @@ public class DcatBuilder {
                         addLiterals(disRes, DCTerms.title, distribution.getTitle());
                         addLiterals(disRes, DCTerms.description, distribution.getDescription());
                         addProperties(disRes, DCAT.accessURL, distribution.getAccessURL());
+                        addProperties(disRes, DCAT.downloadURL, distribution.getDownloadURL());
                         addSkosConcept(disRes, DCTerms.license, distribution.getLicense(), DCTerms.LicenseDocument);
 
                         addSkosConcepts(disRes, DCTerms.conformsTo, distribution.getConformsTo(), DCTerms.Standard);

@@ -68,7 +68,7 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
             String valueAsResource = statement.getObject().toString();
 
-            result.add(getStringWithNoBaseImportUri(resource.getModel(), valueAsResource));
+            result.add(removeDefaultBaseUri(resource.getModel(), valueAsResource));
         }
         if (result.size() > 0) {
             return result;
@@ -76,10 +76,30 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    public static String extractStringWithNoBaseUri(Resource resource, Property property) {
+    public static List<String> extractUriList(Resource resource, Property property) {
+        List<String> result = new ArrayList<>();
+
+        StmtIterator iterator = resource.listProperties(property);
+        while (iterator.hasNext()){
+            Statement statement = iterator.next();
+
+            String uri = statement.getObject().asResource().toString();
+            String strippedUri = removeDefaultBaseUri(resource.getModel(), uri);
+
+            if (strippedUri.matches("^(http|https|file|ftp)://.*$")) {
+                result.add(strippedUri);
+            } else {
+                result.add("http://" + strippedUri);
+            }
+        }
+
+        return result;
+    }
+
+    public static String extractUri(Resource resource, Property property) {
         String valueToStrip = extractAsString(resource, property);
         if ( valueToStrip != null) {
-            String uri = getStringWithNoBaseImportUri(resource.getModel(), valueToStrip);
+            String uri = removeDefaultBaseUri(resource.getModel(), valueToStrip);
 
             if (uri.startsWith("http://")) {
                 return uri;
@@ -91,16 +111,19 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    public static String getStringWithNoBaseImportUri(Model model, String valueToStrip) {
+    public static String removeDefaultBaseUri(Model model, String valueToStrip) {
         if (model != null && valueToStrip != null) {
             Resource importInformation = model.getResource(DCATCrawler.ImportResource.getURI());
             if (importInformation != null) {
                 Statement sourceStatement = importInformation.getProperty(DCATCrawler.source_url);
                 if (sourceStatement != null) {
                     String baseImportUri = sourceStatement.getObject().asResource().getNameSpace();
+                    if (baseImportUri == null) {
+                        return valueToStrip;
+                    }
 
-                    String valueToStripString = valueToStrip.replaceFirst("(file|http|https):\\/+", "");
-                    baseImportUri = baseImportUri.replaceFirst("(file|http|https):\\/+", "");
+                    String valueToStripString = valueToStrip.replaceFirst("(file|http|ftp|https):\\/+", "");
+                    baseImportUri = baseImportUri.replaceFirst("(file|ftp|http|https):\\/+", "");
 
                     if (valueToStripString.startsWith(baseImportUri)) {
                         return valueToStripString.replace(baseImportUri, "");
@@ -150,7 +173,7 @@ public abstract class AbstractBuilder {
             } else {
                 if (statement.getObject().isResource()) {
                     String x = statement.getObject().asResource().getURI();
-                    return getStringWithNoBaseImportUri(statement.getModel(), x);
+                    return removeDefaultBaseUri(statement.getModel(), x);
                 } else {
                     return statement.getObject().asLiteral().getValue().toString();
                 }
@@ -611,7 +634,7 @@ public abstract class AbstractBuilder {
                 if (locUri == null || locUri.trim().equals("")) {
                     continue;
                 }
-                locUri = getStringWithNoBaseImportUri(model, locUri);
+                locUri = removeDefaultBaseUri(model, locUri);
                 SkosCode locCode = locations.get(locUri);
 
                 if (locCode == null) {

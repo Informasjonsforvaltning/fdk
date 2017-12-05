@@ -24,13 +24,15 @@ public class DCAT {
 	public static final Property Distribution = model.createProperty(NS, "Distribution");
 	
 	public static final Property distribution = model.createProperty(NS, "distribution");
-	public static final Property sample = model.createProperty(NS, "sample");
+
 	public static final Property Catalog = model.createProperty(NS, "Catalog");
 
 	public static final Property themeTaxonomy = model.createProperty(NS, "themeTaxonomy");
 
 	public static final Property accessUrl = model.createProperty(NS, "accessURL");
-	
+
+	public static final Property downloadUrl = model.createProperty(NS, "downloadURL");
+
 	public static final Property landingPage = model.createProperty(NS, "landingPage");
 
 	public static final Property keyword = model.createProperty(NS, "keyword");
