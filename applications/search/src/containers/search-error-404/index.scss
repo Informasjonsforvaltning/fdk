@@ -1,0 +1,14 @@
+@import '../../assets/css/colors';
+
+.error-container {
+  min-height: 64vh;
+  margin-top: -70px;
+  .error {
+    h1 {
+      font-size: 10rem;
+      color: $color-cta;
+      font-weight: 600;
+      line-height: initial;
+    }
+  }
+}
