@@ -42,11 +42,14 @@ export default class ResultsDatasetsReport extends React.Component {
     if (!window.publishers) {
       axios.get('/publisher-names')
         .then((res) => {
-          console.log('res is ', res);
           if (res) {
-            window.publishers = res.data.hits;
+            window.publishers = res.data.hits.sort(function(a, b){
+              if(a.orgPath < b.orgPath) return -1;
+              if(a.orgPath > b.orgPath) return 1;
+              return 0;
+            });
           }
-        });
+      });
     }
   }
 

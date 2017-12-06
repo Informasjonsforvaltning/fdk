@@ -26,7 +26,7 @@ div.checkbox > label.expanded ~ hr {
 }
 input:checked ~ .chevron-checkbox-replacement {
   .fa-chevron-up {
-    display: block;
+    display: inline-block;
   }
   .fa-chevron-down {
     display: none;
@@ -34,13 +34,19 @@ input:checked ~ .chevron-checkbox-replacement {
 }
 label.expanded > .chevron-checkbox-replacement {
   .fa-chevron-up {
-    display: block;
+    display: inline-block;
   }
   .fa-chevron-down {
     display: none;
   }
 }
-label.expanded > .chevron-checkbox-replacement {
+label.expanded > label.showDown {
+  .fa-chevron-up {
+    display: none;
+  }
+  .fa-chevron-down {
+    display: inline-block;
+  }
 }
 .level1 {
 
@@ -59,4 +65,17 @@ label.expanded > .chevron-checkbox-replacement {
 .level4 {
   margin-left: 60px;
   display: none;
+}
+label.expanded > .show-empty { 
+  .fa-chevron-up {
+    display: none;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+  .empty-icon {
+    display: inline-block;
+    width: 1em;
+    content: ' ';
+  }
 }
