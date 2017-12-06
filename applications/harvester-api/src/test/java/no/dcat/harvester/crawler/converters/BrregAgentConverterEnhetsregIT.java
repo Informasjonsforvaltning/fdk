@@ -153,12 +153,27 @@ public class BrregAgentConverterEnhetsregIT {
         model.write(System.out, "TURTLE");
 
         Assert.assertThat(publisherUri, Is.is("http://data.brreg.no/enhetsregisteret/enhet/981544315"));
+    }
+
+    /*
+    @Test
+    public void testDuplicatedPublisherWithWrongUriDeleted() throws Throwable {
+
+        Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
+
+        converter.collectFromModel(model);
+
+        model.write(System.out, "TURTLE");
+
+        Resource deletedPublisher = model.getResource("https://register.geonorge.no/register/organisasjoner/kartverket/landbruksdirektoratet");
+        Assert.assertNull(deletedPublisher.getProperty(FOAF.name));
 
     }
+    */
 
 
     @Test
-    public void correctOrgpathHitraKommune() throws Throwable {
+    public void correctOrgpathKommune() throws Throwable {
 
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
 
@@ -167,19 +182,22 @@ public class BrregAgentConverterEnhetsregIT {
         Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
         String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
 
+        model.write(System.out, "TURTLE");
+
         Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
+
     }
 
 
     @Test
-    public void correctOrgpathLandbruksdirektoratet() throws Throwable {
+    public void correctOrgpathStat() throws Throwable {
 
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
 
         converter.collectFromModel(model);
 
-        Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
-        String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
+        Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
+        String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
 
         Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
     }

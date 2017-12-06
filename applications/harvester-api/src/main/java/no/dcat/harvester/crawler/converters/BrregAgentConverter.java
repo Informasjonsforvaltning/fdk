@@ -10,14 +10,7 @@ import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
@@ -35,6 +28,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +126,7 @@ public class BrregAgentConverter {
                     logger.info("Used dct:identifier to lookup publisher {} from {}", orgresource.getURI(), url);
                     collectFromUri(url, model, orgresource);
                 }
+                //model.addLiteral(orgresource, DCTerms.valid, true);
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
             }
@@ -259,6 +254,9 @@ public class BrregAgentConverter {
 
                 String organizationName = null;
 
+                //TODO: fjern?
+                List<Statement> publisherStatementsToDelete = new ArrayList<>();
+
                 if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
                     organizationName = canonicalNames.get(organisationNumber);
                 } else if (publisherResource.getURI() != null && !publisherResource.getURI().equals(masterPublisherUri)) {
@@ -270,6 +268,7 @@ public class BrregAgentConverter {
                         while (datasetIterator.hasNext()) {
                             Resource dataset = datasetIterator.next().asResource();
                             substitutePublisherResourceIfIncorrectUri(dataset,masterPublisherResource);
+                            model.addLiteral(masterPublisherResource, DCTerms.valid, true);
                         }
                     }
 
