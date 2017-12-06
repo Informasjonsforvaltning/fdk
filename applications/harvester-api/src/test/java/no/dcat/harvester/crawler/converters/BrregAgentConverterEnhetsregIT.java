@@ -149,6 +149,7 @@ public class BrregAgentConverterEnhetsregIT {
         Resource datasetWithCorrectedPublisher = model.getResource("http://data.brreg.no/datakatalog/dataset/42");
         String publisherUri = datasetWithCorrectedPublisher.getProperty(DCTerms.publisher).getObject().toString();
 
+
         Assert.assertThat(publisherUri, Is.is("http://data.brreg.no/enhetsregisteret/enhet/981544315"));
 
 
