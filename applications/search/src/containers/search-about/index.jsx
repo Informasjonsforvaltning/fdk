@@ -1,5 +1,6 @@
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
+import { Link } from 'react-router';
 
 import localization from '../../components/localization';
 
@@ -28,7 +29,17 @@ const About = () => {
             {
               // eslint-disable-next-line react/no-danger
             }<p dangerouslySetInnerHTML={{__html: localization.about.maintext}} />
-            <a href="/about-registration" title="Link">Hjelp til å komme i gang med å registrere datasett</a>
+            {
+              // eslint-disable-next-line react/no-danger
+            }<p dangerouslySetInnerHTML={{__html: localization.about.dataNorgeText}} />
+            <p>
+              <b>{localization.about.register}</b><br />
+              <Link
+                to="/about-registration"
+              >
+                {localization.about.helpToRegister}
+              </Link>
+            </p>
           </div>
         </div>
       </div>
