@@ -48,8 +48,6 @@ const RefinementOptionOrgPath = (props) => {
     .filter(publisher => parentOrgPath === publisher.orgPath.substr(0, publisher.orgPath.lastIndexOf('/')))
     .filter(publisher => publisher.orgPath === orgPath.orgPath).map(p => true);
   let expandedState = ((hasOrgPathInParams && navigatedOrLevel) || parentInOrgPath) ? 'expanded' : '';
-
-  //let siblings = publishers.filter(publisher => parentOrgPath === publisher.orgPath.substr(0, publisher.orgPath.lastIndexOf('/')));
   let myIndex = publishers.indexOf(orgPath) || 0;
   let hideNext = '';
   let showDown = '';
@@ -67,20 +65,16 @@ const RefinementOptionOrgPath = (props) => {
         ((next.indexOf(paramOrgPath) !== -1 
             && ((paramOrgPath.match(/\//g) || []).length > 1
               || (next.match(/\//g) || []).length < 3))
-        //  || publishers
-        //      .filter(publisher => orgPath.orgPath === publisher.orgPath.substr(0, publisher.orgPath.lastIndexOf('/')))
-        //      .filter(publisher => next === orgPath.orgPath).map(p => true)
         ) ? '' : ' showDown';
     }
   } 
-
+  const checkboxActive = (orgPath && (paramOrgPath === orgPath.orgPath ))? 'checkboxActive' : '';
   const onClick2 = () => {
     if(paramOrgPath) {
       const orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(paramOrgPath));
       if(orgPathValueCheckbox) orgPathValueCheckbox.click();
     }
   }
-  const checkboxActive = (orgPath && (paramOrgPath === orgPath.orgPath ))? 'checkboxActive' : '';
   return (
     <div className={'checkbox ' + checkboxActive}>
       {

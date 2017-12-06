@@ -34,11 +34,9 @@ export default class ResultsDatasetsReport extends React.Component {
     this.state = {
       entity: '',
       aggregateDataset: {},
-      catalog: {}
+      catalog: {},
+      param: '',
     }
-    this.queryObj = qs.parse(window.location.search.substr(1));
-    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
-    this.handleOnPublisherSearch();
     if (!window.publishers) {
       axios.get('/publisher-names')
         .then((res) => {
@@ -47,13 +45,41 @@ export default class ResultsDatasetsReport extends React.Component {
               if(a.orgPath < b.orgPath) return -1;
               if(a.orgPath > b.orgPath) return 1;
               return 0;
-            });
+            });            
+            this.getParamsAndDoSearch();
           }
       });
+    }
+    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
+    this.search();
+  }
+
+  getParamsAndDoSearch() {
+    if (window.publishers != null) {
+      let queryParam = window.location.search
+        .substring(1)
+        .split("&")
+        .map(v => v.split("="))
+        .reduce((map, [key, value]) => 
+          map.set(key, decodeURIComponent(value)), new Map())
+        .get('orgPath[0]') || '';
+      if (queryParam != this.state.param) {
+        this.state.param = queryParam;
+        let orgPath = publishers.find(o => o.orgPath === this.state.param) || {orgPath: '', name: ''};
+        this.search(orgPath.name, orgPath.orgPath);
+      }
     }
   }
 
   handleOnPublisherSearch(name, orgPath) {
+    let queryParam = 'reports?orgPath[0]=' + encodeURIComponent(orgPath);
+    history.push(queryParam);
+    let orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(orgPath));
+    if(orgPathValueCheckbox) orgPathValueCheckbox.click();
+    this.getParamsAndDoSearch();
+  }
+
+  search(name, orgPath) {
     const query = orgPath || '';
     axios.get(`/aggregateDataset?q=${query}`)
       .then((response) => {
@@ -72,9 +98,8 @@ export default class ResultsDatasetsReport extends React.Component {
       });
   }
 
-
   render() {
-    history.listen((location)=> {
+    history.listen((location)=> {      
       if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
         let nextUrl = "";
         if (location.search.indexOf('?') === -1) {
@@ -83,7 +108,8 @@ export default class ResultsDatasetsReport extends React.Component {
           nextUrl = `${location.search  }&lang=${   this.props.selectedLanguageCode}`
         }
         history.push(nextUrl);
-      }
+      }      
+      this.getParamsAndDoSearch();          
     });
     return (
       <SearchkitProvider searchkit={searchkit}>
