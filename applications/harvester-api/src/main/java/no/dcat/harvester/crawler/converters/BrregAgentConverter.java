@@ -6,7 +6,6 @@ import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
-import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import org.apache.commons.csv.CSVFormat;
@@ -22,7 +21,6 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.DCTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -162,6 +160,28 @@ public class BrregAgentConverter {
         });
     }
 
+    /**
+     * If publisher of dataset is an organisation, but does not have an URI from Enhetsregisteret
+     * (central coordinating register of legal entities)
+     * then change the uri to point to Actor resource collected from Enhetstregisteret
+     *
+     * @param dataset  the dataset to be examined
+     * @param masterPublisherResource the Actor resource collected from Enhetsregisteret
+     */
+    private void substitutePublisherResourceIfIncorrectUri(Resource dataset, Resource masterPublisherResource) {
+        String publisherUri = dataset.getProperty(DCTerms.publisher).getObject().asResource().getURI();
+        if(!publisherUri.contains("http://data.brreg.no/enhetsregisteret")) {
+            logger.warn("Subject (dataset) {} has publisher with incorrect organisation number URI: {}",
+                    dataset.getURI(), publisherUri);
+
+            dataset.removeAll(DCTerms.publisher);
+            dataset.addProperty(DCTerms.publisher, masterPublisherResource);
+
+            logger.info("Subject (dataset) {} substituted organisation number URI: {}",
+                    dataset.getURI(), masterPublisherResource.getURI());
+        }
+    }
+
     String extractOrganizationPath(Publisher publisher, Map<String, Publisher> publisherMap) {
         String prefix = "";
         if (publisher != null) {
@@ -247,25 +267,11 @@ public class BrregAgentConverter {
                     //exchange non-standard uri for organization number with standard one
                     if (!publisherResource.equals(masterPublisherUri)) {
                         ResIterator datasetIterator = model.listResourcesWithProperty(DCTerms.publisher, publisherResource);
-                        int debugNoOfIterations = 0;
                         while (datasetIterator.hasNext()) {
                             Resource dataset = datasetIterator.next().asResource();
-                            String publisherUri = dataset.getProperty(DCTerms.publisher).getObject().asResource().getURI();
-                            debugNoOfIterations++;
-                            logger.info("iteration: {}", debugNoOfIterations);
-                            if(!publisherUri.contains("http://data.brreg.no/enhetsregisteret")) {
-                                logger.warn("Subject (dataset) {} has publisher with incorrect organisation number URI: {}",
-                                        dataset.getURI(), publisherUri);
-
-                                dataset.removeAll(DCTerms.publisher);
-                                dataset.addProperty(DCTerms.publisher, masterPublisherResource);
-
-                                logger.info("Subject (dataset) {} substituted organisation number URI: {}",
-                                        dataset.getURI(), masterPublisherResource.getURI());
-                            }
+                            substitutePublisherResourceIfIncorrectUri(dataset,masterPublisherResource);
                         }
                     }
-
 
                     if (masterPublisherResource != null && masterPublisherResource.getProperty(FOAF.name) != null) {
                         organizationName = masterPublisherResource.getProperty(FOAF.name).getString();
