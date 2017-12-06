@@ -638,7 +638,7 @@ public abstract class AbstractBuilder {
                 SkosCode locCode = locations.get(locUri);
 
                 if (locCode == null) {
-                    logger.info("Location with uri [{}] does not exist and will be removed.", locUri);
+                    logger.info("Code with uri [{}] does not exist and will be removed.", locUri);
                     continue;
                 }
 
