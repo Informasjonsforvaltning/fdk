@@ -172,6 +172,8 @@ public class BrregAgentConverter {
             dataset.removeAll(DCTerms.publisher);
             dataset.addProperty(DCTerms.publisher, masterPublisherResource);
 
+            //sett masterpublisher sin identifier her
+
             logger.info("Subject (dataset) {} substituted organisation number URI: {}",
                     dataset.getURI(), masterPublisherResource.getURI());
         }
@@ -267,7 +269,7 @@ public class BrregAgentConverter {
                         ResIterator datasetIterator = model.listResourcesWithProperty(DCTerms.publisher, publisherResource);
                         while (datasetIterator.hasNext()) {
                             Resource dataset = datasetIterator.next().asResource();
-                            substitutePublisherResourceIfIncorrectUri(dataset,masterPublisherResource);
+                            substitutePublisherResourceIfIncorrectUri(dataset, masterPublisherResource);
                             model.addLiteral(masterPublisherResource, DCTerms.valid, true);
                         }
                     }

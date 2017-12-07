@@ -185,7 +185,6 @@ public class BrregAgentConverterEnhetsregIT {
         model.write(System.out, "TURTLE");
 
         Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
-
     }
 
 
@@ -201,4 +200,31 @@ public class BrregAgentConverterEnhetsregIT {
 
         Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
     }
+
+    @Test
+    public void correctOrgpathStatFromGeonorge() throws Throwable {
+
+        Model model = FileManager.get().loadModel("publisherFromGeonorge.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
+        String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
+
+        Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
+    }
+
+    @Test
+    public void correctOrgpathKommuneFromGeonorge() throws Throwable {
+
+        Model model = FileManager.get().loadModel("publisherFromGeonorge.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
+        String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
+
+        Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
+    }
+
 }
