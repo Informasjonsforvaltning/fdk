@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
@@ -40,6 +41,10 @@ export default class DetailsPage extends React.Component {
           dataset,
           loading: false
         });
+      })
+      .catch(error => {
+        console.error(error);
+        browserHistory.push('error_404');
       });
   }
 
