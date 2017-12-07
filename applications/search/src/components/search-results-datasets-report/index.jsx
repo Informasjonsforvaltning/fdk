@@ -73,10 +73,8 @@ export default class ResultsDatasetsReport extends React.Component {
   }
 
   handleOnPublisherSearch(name, orgPath) {
-    let reset = window.document.getElementById('reset').childNodes[0].childNodes[0].childNodes[0];
-    if(reset) reset.click();
     let queryParam = 'reports?orgPath[0]=' + encodeURIComponent(orgPath);
-    history.push( queryParam);
+    history.push(queryParam);
     this.getParamsAndDoSearch();
     let orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(orgPath));
     if(orgPathValueCheckbox) orgPathValueCheckbox.click();
@@ -137,9 +135,6 @@ export default class ResultsDatasetsReport extends React.Component {
                     size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                     itemComponent={RefinementOptionOrgPath}
                   />
-                  <div id="reset">
-                  <ResetFilters/>
-                  </div>
                 </div>
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
