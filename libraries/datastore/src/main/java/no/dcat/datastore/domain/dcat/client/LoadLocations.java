@@ -61,7 +61,7 @@ public class LoadLocations {
 
         NodeIterator nodeIterator = model.listObjectsOfProperty(DCTerms.spatial);
         nodeIterator.forEachRemaining(node -> {
-            String uri = AbstractBuilder.getStringWithNoBaseImportUri(model, node.asResource().getURI());
+            String uri = AbstractBuilder.removeDefaultBaseUri(model, node.asResource().getURI());
 
             LocationUri locationUri = new LocationUri(uri);
 

@@ -19,6 +19,8 @@ import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.RDF;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -156,7 +158,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             }
 
             catalogRecord.setNonValidDatasetUris(new HashSet<>());
-            catalogRecord.getNonValidDatasetUris().addAll(datasetsInSource);
+            catalogRecord.getNonValidDatasetUris().addAll(getDatasetsUris(model, catalog.getUri()));
             catalogRecord.getNonValidDatasetUris().removeAll(catalogRecord.getValidDatasetUris());
 
             deletePreviousDatasetsNotPresentInThisHarvest(elasticsearch, gson, catalogRecord, stats);
@@ -174,7 +176,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     }
 
-    private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson, CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
+    private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson,
+                                                               CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
 
         TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("catalogUri", thisCatalogRecord.getCatalogUri());
         ConstantScoreQueryBuilder csQueryBuilder = QueryBuilders.constantScoreQuery(termQueryBuilder);
@@ -197,14 +200,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
                 missingUris.removeAll(thisCatalogRecord.getValidDatasetUris());
-                logger.info("There are {} datasets that were not harvested this time", missingUris.size());
+                if (missingUris.size() > 0) {
+                    logger.info("There are {} datasets that were not harvested this time", missingUris.size());
 
-                for (String uri : missingUris) {
-                    DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
-                    if (lookup != null && lookup.getDatasetId() != null) {
-                        elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
-                        logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
-                        stats.setDeletes(stats.getDeletes() + 1);
+                    for (String uri : missingUris) {
+                        DatasetLookup lookup = lookupDataset(elasticsearch.getClient(), uri, gson);
+                        if (lookup != null && lookup.getDatasetId() != null) {
+                            elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
+                            logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
+                            stats.setDeletes(stats.getDeletes() + 1);
+                        }
                     }
                 }
             }
@@ -219,6 +224,17 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             datasetsInSource.add(r.getURI());
         }
         return datasetsInSource;
+    }
+
+    Set<String> getDatasetsUris(Model model, String catalogUri) {
+        Set<String> datasetsInCatalog = new HashSet<>();
+        Resource catalogResource = model.getResource(catalogUri);
+        StmtIterator iterator = catalogResource.listProperties(DCAT.dataset);
+        while (iterator.hasNext()) {
+            Statement statement = iterator.next();
+            datasetsInCatalog.add(statement.getObject().asResource().getURI());
+        }
+        return datasetsInCatalog;
     }
 
     DatasetLookup lookupDataset(Client client, String uri, Gson gson) {

@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -76,24 +79,26 @@ public class ElasticSearchResultHandlerTest {
     public void setup() {
         resultHandler = new ElasticSearchResultHandler(null, 0, null, null, null, null);
         validationMessages = new Gson().fromJson(msgs, new TypeToken<List<String>>(){}.getType());
-
     }
 
     @Test
-    public void validationMessagesDataset1() {
+    public void validationMessageExtractionDataset1() {
         Dataset dataset = new Dataset();
-        dataset.setUri("http://data.norge.no/node/215");
+        dataset.setUri("http://data.norge.no/node/215/xxx");
+        Distribution distribution = new Distribution();
+        distribution.setUri("http://data.norge.no/node/960");
+        dataset.setDistribution(Arrays.asList(distribution));
+
         List<String> actual = resultHandler.getValidationMessages(validationMessages, dataset);
-
         logger.info(actual.toString());
-
-        assertThat(actual.size(), is(1));
+        assertThat("can extract validation message for distribution in dataset", actual.size(), is(1));
 
         dataset.setUri("http://data.norge.no/node/2121");
-
-        actual = resultHandler.getValidationMessages(validationMessages,dataset);
+        dataset.setDistribution(null);
+        actual = resultHandler.getValidationMessages(validationMessages, dataset);
         logger.info(actual.toString());
 
+        assertThat( "Can extract validation message for dataset", actual.size(), is(1));
     }
 
     @Test
@@ -109,5 +114,16 @@ public class ElasticSearchResultHandlerTest {
 
         logger.info(actual.toString());
 
+        assertThat("Should return 1 validation messages", actual.size(), is(1));
+
+    }
+
+    @Test
+    public void getDatasetUris() throws Throwable {
+        Model model = FileManager.get().loadModel("ramsund.ttl");
+
+        Set<String> actual = resultHandler.getDatasetsUris(model, "http://brreg.no/catalogs/910244132");
+
+        assertThat("Should return 4 dataset uris", actual.size(), is(4));
     }
 }

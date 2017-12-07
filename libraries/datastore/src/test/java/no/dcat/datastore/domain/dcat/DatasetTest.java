@@ -64,6 +64,7 @@ public class DatasetTest {
         return codes;
     }
 
+
     @Test
     public void publisherExists() {
         no.dcat.shared.Publisher actual = data.getPublisher();

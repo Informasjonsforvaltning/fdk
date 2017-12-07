@@ -133,7 +133,7 @@ public class TestCompleteCatalog {
                 "NOR",
                 map("nb", "Norsk"))));
 
-        dataset.setLandingPage(Collections.singletonList("http://testetaten.no/landingsside/nr1"));
+        dataset.setLandingPage(Arrays.asList("http://testetaten.no/landingsside/nr1", "www.this.can.happen/also"));
         DataTheme theme = new DataTheme();
         theme.setUri("http://publications.europa.eu/resource/authority/data-theme/GOVE");
         theme.setCode("GOVE");
@@ -164,7 +164,7 @@ public class TestCompleteCatalog {
 
         sample.setDescription(map("nb", "Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."));
         sample.setFormat(Arrays.asList("application/rdf+xml"));
-        sample.setAccessURL(Arrays.asList("http://www.detteerenlenke.no/til-nedlasting"));
+        sample.setAccessURL(Arrays.asList("http://www.detteerenlenke.no/til-nedlasting", "www.dette.kan.også/hende"));
 
         dataset.setSample(Arrays.asList(sample));
 
