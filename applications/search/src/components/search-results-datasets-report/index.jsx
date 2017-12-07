@@ -5,7 +5,8 @@ import {
   SearchkitManager,
   SearchkitProvider,
   RefinementListFilter,
-  HitsStats
+  HitsStats,
+  ResetFilters
 } from 'searchkit';
 import * as axios from "axios";
 import createHistory from 'history/createBrowserHistory'
@@ -63,7 +64,7 @@ export default class ResultsDatasetsReport extends React.Component {
         .reduce((map, [key, value]) => 
           map.set(key, decodeURIComponent(value)), new Map())
         .get('orgPath[0]') || '';
-      if (queryParam != this.state.param) {
+      if (queryParam !== this.state.param) {
         this.state.param = queryParam;
         let orgPath = publishers.find(o => o.orgPath === this.state.param) || {orgPath: '', name: ''};
         this.search(orgPath.name, orgPath.orgPath);
@@ -72,11 +73,13 @@ export default class ResultsDatasetsReport extends React.Component {
   }
 
   handleOnPublisherSearch(name, orgPath) {
+    let reset = window.document.getElementById('reset').childNodes[0].childNodes[0].childNodes[0];
+    if(reset) reset.click();
     let queryParam = 'reports?orgPath[0]=' + encodeURIComponent(orgPath);
-    history.push(queryParam);
+    history.push( queryParam);
+    this.getParamsAndDoSearch();
     let orgPathValueCheckbox = window.document.getElementById(encodeURIComponent(orgPath));
     if(orgPathValueCheckbox) orgPathValueCheckbox.click();
-    this.getParamsAndDoSearch();
   }
 
   search(name, orgPath) {
@@ -134,6 +137,9 @@ export default class ResultsDatasetsReport extends React.Component {
                     size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                     itemComponent={RefinementOptionOrgPath}
                   />
+                  <div id="reset">
+                  <ResetFilters/>
+                  </div>
                 </div>
                 <div id="datasets" className="col-sm-8">
                   <ReportStats
