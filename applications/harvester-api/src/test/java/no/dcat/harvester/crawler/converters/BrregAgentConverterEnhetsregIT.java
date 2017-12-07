@@ -150,26 +150,8 @@ public class BrregAgentConverterEnhetsregIT {
         Resource datasetWithCorrectedPublisher = model.getResource("http://data.brreg.no/datakatalog/dataset/42");
         String publisherUri = datasetWithCorrectedPublisher.getProperty(DCTerms.publisher).getObject().toString();
 
-        model.write(System.out, "TURTLE");
-
         Assert.assertThat(publisherUri, Is.is("http://data.brreg.no/enhetsregisteret/enhet/981544315"));
     }
-
-    /*
-    @Test
-    public void testDuplicatedPublisherWithWrongUriDeleted() throws Throwable {
-
-        Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
-
-        converter.collectFromModel(model);
-
-        model.write(System.out, "TURTLE");
-
-        Resource deletedPublisher = model.getResource("https://register.geonorge.no/register/organisasjoner/kartverket/landbruksdirektoratet");
-        Assert.assertNull(deletedPublisher.getProperty(FOAF.name));
-
-    }
-    */
 
 
     @Test
@@ -181,8 +163,6 @@ public class BrregAgentConverterEnhetsregIT {
 
         Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
         String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
-
-        model.write(System.out, "TURTLE");
 
         Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
     }
@@ -210,8 +190,6 @@ public class BrregAgentConverterEnhetsregIT {
 
         Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
         String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
-
-        model.write(System.out, "TURTLE");
 
         Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
     }
