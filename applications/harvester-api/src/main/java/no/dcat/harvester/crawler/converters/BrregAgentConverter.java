@@ -172,8 +172,6 @@ public class BrregAgentConverter {
             dataset.removeAll(DCTerms.publisher);
             dataset.addProperty(DCTerms.publisher, masterPublisherResource);
 
-            //sett masterpublisher sin identifier her
-
             logger.info("Subject (dataset) {} substituted organisation number URI: {}",
                     dataset.getURI(), masterPublisherResource.getURI());
         }
@@ -256,9 +254,6 @@ public class BrregAgentConverter {
 
                 String organizationName = null;
 
-                //TODO: fjern?
-                List<Statement> publisherStatementsToDelete = new ArrayList<>();
-
                 if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
                     organizationName = canonicalNames.get(organisationNumber);
                 } else if (publisherResource.getURI() != null && !publisherResource.getURI().equals(masterPublisherUri)) {
@@ -270,7 +265,11 @@ public class BrregAgentConverter {
                         while (datasetIterator.hasNext()) {
                             Resource dataset = datasetIterator.next().asResource();
                             substitutePublisherResourceIfIncorrectUri(dataset, masterPublisherResource);
-                            model.addLiteral(masterPublisherResource, DCTerms.valid, true);
+
+                            //add missing attributes to publisher received from Enhetsregisteret
+                            masterPublisherResource.addLiteral(DCTerms.valid, true);
+                            masterPublisherResource.addProperty(DCTerms.identifier, organisationNumber);
+
                         }
                     }
 

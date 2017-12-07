@@ -211,6 +211,8 @@ public class BrregAgentConverterEnhetsregIT {
         Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
         String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
 
+        model.write(System.out, "TURTLE");
+
         Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
     }
 
