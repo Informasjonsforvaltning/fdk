@@ -128,10 +128,9 @@ public class TestCompleteCatalog {
         dataset.setHasAccuracyAnnotation(createQualityAnnotation(QualityAnnotation.Accuracy, "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."));
         dataset.setHasAvailabilityAnnotation(createQualityAnnotation(QualityAnnotation.Availability, "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."));
 
-        dataset.setLanguage(Collections.singletonList(skosCode(
-                "http://publications.europa.eu/resource/authority/language/NOR",
-                "NOR",
-                map("nb", "Norsk"))));
+        dataset.setLanguage(Arrays.asList(
+                skosCode("http://publications.europa.eu/resource/authority/language/NOR","NOR", map("nb", "Norsk")),
+                skosCode("http://publications.europa.eu/resource/authority/language/ENG", "ENG", map("nb", "Engelsk"))));
 
         dataset.setLandingPage(Arrays.asList("http://testetaten.no/landingsside/nr1", "www.this.can.happen/also"));
         DataTheme theme = new DataTheme();

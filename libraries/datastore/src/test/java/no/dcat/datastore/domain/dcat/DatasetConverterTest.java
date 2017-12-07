@@ -39,6 +39,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class DatasetConverterTest {
     private static Logger logger = LoggerFactory.getLogger(DatasetConverterTest.class);
@@ -93,6 +94,7 @@ public class DatasetConverterTest {
 
         codes.put(Types.linguisticsystem.getType(), new HashMap<>());
         addCode2(codes.get(Types.linguisticsystem.getType()), "Norsk", "NOR", "http://publications.europa.eu/resource/authority/language/NOR");
+        addCode2(codes.get(Types.linguisticsystem.getType()), "Engelsk", "ENG", "http://publications.europa.eu/resource/authority/language/ENG");
 
         codes.put(Types.rightsstatement.getType(), new HashMap<>());
         addCode2(codes.get(Types.rightsstatement.getType()), "Offentlig", "PUBLIC", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
@@ -139,7 +141,9 @@ public class DatasetConverterTest {
     @Test
     public void hasLanguage() throws Throwable {
         logger.info("number of languages {}", actualDataset.getLanguage().size());
-        assertThat(actualDataset.getLanguage().get(0), is(expectedDataset.getLanguage().get(0)));
+        SkosCode firstLanguage = actualDataset.getLanguage().get(0);
+        assertTrue(expectedDataset.getLanguage().contains(firstLanguage));
+        assertThat(actualDataset.getLanguage().size(), is(2));
     }
 
 

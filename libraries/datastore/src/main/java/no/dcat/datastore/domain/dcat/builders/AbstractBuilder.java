@@ -628,20 +628,26 @@ public abstract class AbstractBuilder {
     }
 
     protected static List<SkosCode> getCodes(Model model, Map<String, SkosCode> locations, List<String> locsUri) {
-        List<SkosCode> result = new ArrayList();
+        List<SkosCode> result = new ArrayList<>();
+
+        if (locations == null) {
+            logger.warn("Abort getCodes since no list of approved codes is present");
+            return null;
+        }
+
         if (locsUri != null) {
             for (String locUri : locsUri) {
                 if (locUri == null || locUri.trim().equals("")) {
                     continue;
                 }
                 locUri = removeDefaultBaseUri(model, locUri);
+
                 SkosCode locCode = locations.get(locUri);
 
                 if (locCode == null) {
-                    logger.info("Location with uri [{}] does not exist and will be removed.", locUri);
+                    logger.warn("Code with uri [{}] does not exist in approved codelist and is removed from dataset.", locUri);
                     continue;
                 }
-
                 result.add(locCode);
             }
         }
