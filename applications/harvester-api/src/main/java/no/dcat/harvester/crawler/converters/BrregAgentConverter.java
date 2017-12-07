@@ -10,14 +10,7 @@ import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
@@ -132,6 +125,7 @@ public class BrregAgentConverter {
                     logger.info("Used dct:identifier to lookup publisher {} from {}", orgresource.getURI(), url);
                     collectFromUri(url, model, orgresource);
                 }
+                //model.addLiteral(orgresource, DCTerms.valid, true);
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
             }
@@ -158,6 +152,28 @@ public class BrregAgentConverter {
             Resource publisherResource = model.getResource(publisher.getUri());
             publisherResource.addProperty(DCATNO.organizationPath, publisher.getOrgPath());
         });
+    }
+
+    /**
+     * If publisher of dataset is an organisation, but does not have an URI from Enhetsregisteret
+     * (central coordinating register of legal entities)
+     * then change the uri to point to Actor resource collected from Enhetstregisteret
+     *
+     * @param dataset  the dataset to be examined
+     * @param masterPublisherResource the Actor resource collected from Enhetsregisteret
+     */
+    private void substitutePublisherResourceIfIncorrectUri(Resource dataset, Resource masterPublisherResource) {
+        String publisherUri = dataset.getProperty(DCTerms.publisher).getObject().asResource().getURI();
+        if(!publisherUri.contains("http://data.brreg.no/enhetsregisteret")) {
+            logger.warn("Subject (dataset) {} has publisher with incorrect organisation number URI: {}",
+                    dataset.getURI(), publisherUri);
+
+            dataset.removeAll(DCTerms.publisher);
+            dataset.addProperty(DCTerms.publisher, masterPublisherResource);
+
+            logger.info("Subject (dataset) {} substituted organisation number URI: {}",
+                    dataset.getURI(), masterPublisherResource.getURI());
+        }
     }
 
     String extractOrganizationPath(Publisher publisher, Map<String, Publisher> publisherMap) {
@@ -241,6 +257,21 @@ public class BrregAgentConverter {
                     organizationName = canonicalNames.get(organisationNumber);
                 } else if (publisherResource.getURI() != null && !publisherResource.getURI().equals(masterPublisherUri)) {
                     Resource masterPublisherResource = masterDataModel.getResource(masterPublisherUri);
+
+                    //exchange non-standard uri for organization number with standard one
+                    if (!publisherResource.equals(masterPublisherUri)) {
+                        ResIterator datasetIterator = model.listResourcesWithProperty(DCTerms.publisher, publisherResource);
+                        while (datasetIterator.hasNext()) {
+                            Resource dataset = datasetIterator.next().asResource();
+                            substitutePublisherResourceIfIncorrectUri(dataset, masterPublisherResource);
+
+                            //add missing attributes to publisher received from Enhetsregisteret
+                            masterPublisherResource.addLiteral(DCTerms.valid, true);
+                            masterPublisherResource.addProperty(DCTerms.identifier, organisationNumber);
+
+                        }
+                    }
+
                     if (masterPublisherResource != null && masterPublisherResource.getProperty(FOAF.name) != null) {
                         organizationName = masterPublisherResource.getProperty(FOAF.name).getString();
                     }
