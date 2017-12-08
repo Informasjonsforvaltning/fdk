@@ -8,6 +8,7 @@ import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.datastore.domain.harvest.ValidationStatus;
+import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -168,6 +169,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
         }
+
+        EmailNotificationService notificationService = new EmailNotificationService();
+        notificationService.sendValidationResultNotification(
+                "fdksystembjg@gmail.com",
+                "bjorn.grova@brreg.no",
+                "Test subject",
+                "Test messagetext");
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
