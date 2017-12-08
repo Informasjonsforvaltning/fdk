@@ -76,7 +76,7 @@ application:
   elasticSearchCluster: elasticsearch
   themesHostname: http://localhost:8100
   mail:
-    notificationSenderAddress: fdksystembjg@gmail.com
+      notificationSenderAddress: fdksystembjg@gmai.com
 server:
   port: 8081
 management:
