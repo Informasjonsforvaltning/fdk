@@ -4,9 +4,7 @@ import qs from 'qs';
 import {
   SearchkitManager,
   SearchkitProvider,
-  RefinementListFilter,
-  HitsStats,
-  ResetFilters
+  RefinementListFilter
 } from 'searchkit';
 import * as axios from "axios";
 import createHistory from 'history/createBrowserHistory'

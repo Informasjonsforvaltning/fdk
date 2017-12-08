@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import {
   SearchkitManager,
   SearchkitProvider,
-  HierarchicalMenuFilter,
   RefinementListFilter,
-  HierarchicalRefinementFilter,
   Hits,
   HitsStats,
   Pagination,
@@ -18,7 +16,6 @@ import { DatasetsQueryTransport } from '../../utils/DatasetsQueryTransport';
 import localization from '../localization';
 import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
-import RefinementOptionOrgPath from '../search-refinementoption-orgpath';
 import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
@@ -154,7 +151,7 @@ export default class ResultsDataset extends React.Component {
                     title={localization.facet.theme}
                     field="theme.code.raw"
                     operator="AND"
-                    size={999}
+                    size={5}
                     itemComponent={RefinementOptionThemes}
                   />
                   <RefinementListFilter
@@ -166,7 +163,7 @@ export default class ResultsDataset extends React.Component {
                     itemComponent={RefinementOptionPublishers}
                   />
                   {this._renderPublisherRefinementListFilter()}
-                  </div>
+                </div>
                 <div id="datasets" className="col-sm-8">
                   <Hits
                     mod="sk-hits-grid"

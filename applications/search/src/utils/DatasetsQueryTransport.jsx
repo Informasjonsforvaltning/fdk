@@ -115,7 +115,6 @@ export class DatasetsQueryTransport extends AxiosESTransport {
   }
 
   getData(response) { // this response is not the raw response from the ajax request. It's been modified.
-    console.log('response is ', response);
     let aggregations = response.data.aggregations;
       this.filters.forEach((filter, index)=>{
         let name = filter.name;
