@@ -44,6 +44,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
     public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
+    public static final String FIELD_ORGPATH_PREFLABEL = "publisher.orgPath";
     public static final String FIELD_SUBJECTS_PREFLABEL = "subject.code.raw";
 
     public static final String TERMS_THEME_COUNT = "theme_count";
@@ -85,6 +86,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "theme", defaultValue = "") String theme,
                                          @RequestParam(value = "publisher", defaultValue = "") String publisher,
                                          @RequestParam(value = "accessrights", defaultValue = "") String accessRights,
+                                         @RequestParam(value = "orgpath", defaultValue = "") String orgPath,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -134,13 +136,14 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .field("description" + "." + lang)
                     .field("publisher.name")
                     .field("accessRights.prefLabel" + "." + lang)
-                    .field("accessRights.code");
+                    .field("accessRights.code")
+                    .field("publisher.orgPath");
         }
 
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, orgPath, search);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -211,7 +214,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, String orgPath, QueryBuilder search) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -251,6 +254,17 @@ public class DatasetsQueryService extends ElasticsearchService {
             }
 
             boolQuery.filter(boolFilter3);
+        }
+
+        if (!StringUtils.isEmpty(orgPath)) {
+            BoolQueryBuilder boolFilter4 = QueryBuilders.boolQuery();
+            if(accessRights.equals("Ukjent")) {
+              boolFilter4.must(QueryBuilders.missingQuery("publisher.orgPath"));
+            } else {
+              boolFilter4.must(QueryBuilders.termQuery("publisher.orgPath", orgPath));
+            }
+
+            boolQuery.filter(boolFilter4);
         }
 
         return boolQuery;
@@ -438,7 +452,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * Aggregation based on orgPath.
      *
      * @param query the first part or complete orgPath
-     * @return the aggregations of datasets with terms, accessRights, subjects, publishers, orgPath and distributions
+     * @return the aggregations of datasets with terms, accessRights, orgPath, subjects, publishers, orgPath and distributions
      */
 
     @CrossOrigin

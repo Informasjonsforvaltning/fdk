@@ -39,7 +39,6 @@ function handleUpdate() {
     window.scrollTo(0, 0);
   }
 }
-
 const routes =
   (
     <Route path="/" component={App}>

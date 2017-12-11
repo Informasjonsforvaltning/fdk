@@ -1,0 +1,81 @@
+@import '../../assets/css/colors.scss';
+.checkboxActive {
+  color: $color0;
+  background-color: $color1;
+}
+div.checkbox > hr {
+  margin: 7px 0 0 0;
+}
+div.checkbox > label ~ hr {
+  display:none;
+}
+
+div.checkbox > label.expanded ~ hr {
+  display:block;
+}
+.chevron-checkbox-replacement {
+  .fa-chevron-up {
+    display: none;
+  }
+  .fa-chevron-down {
+    display: block;
+  }
+}
+.checkbox label label {
+  background-color: inherit !important;
+}
+input:checked ~ .chevron-checkbox-replacement {
+  .fa-chevron-up {
+    display: inline-block;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+}
+label.expanded > .chevron-checkbox-replacement {
+  .fa-chevron-up {
+    display: inline-block;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+}
+label.expanded > label.showDown {
+  .fa-chevron-up {
+    display: none;
+  }
+  .fa-chevron-down {
+    display: inline-block;
+  }
+}
+.level1 {
+
+}
+.level2.expanded, .level3.expanded, .level4.expanded {
+  display: inline-block;
+}
+.level2 {
+  margin-left: 20px;
+  display: none;
+}
+.level3 {
+  margin-left: 40px;
+  display: none;
+}
+.level4 {
+  margin-left: 60px;
+  display: none;
+}
+label.expanded > .show-empty { 
+  .fa-chevron-up {
+    display: none;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+  .empty-icon {
+    display: inline-block;
+    width: 1em;
+    content: ' ';
+  }
+}
