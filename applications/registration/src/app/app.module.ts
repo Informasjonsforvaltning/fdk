@@ -49,6 +49,7 @@ import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
 import { ReferencesComponent } from "./dataset/references/references.component";
 import { ReferenceListComponent } from "./dataset/references/reference-list.component";
 import {InputTrimDirective} from './dataset/inputTrimDirective';
+import { TimeoutService } from "app/dataset/timeout.service";
 
 @NgModule({
     declarations: [
@@ -108,6 +109,7 @@ import {InputTrimDirective} from './dataset/inputTrimDirective';
         AccessRightsService,
         AuthGuard,
         AuthenticationService,
+        TimeoutService,
         {
             provide: LOCALE_ID,
             useValue: "no-NO"

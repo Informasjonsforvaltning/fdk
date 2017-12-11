@@ -8,6 +8,7 @@ import {Dataset} from "../dataset/dataset";
 import {ModalComponent} from "../modal/modal.component";
 import * as _ from "lodash";
 import {LocalStorage, LocalStorageService} from 'ngx-webstorage';
+import { TimeoutService } from "app/dataset/timeout.service";
 
 
 @Component({
@@ -34,7 +35,8 @@ export class CatalogComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private service: CatalogService,
-              private datasetService: DatasetService) {
+              private datasetService: DatasetService,
+              private timeoutService: TimeoutService) {
   }
 
   ngOnInit() {
@@ -77,6 +79,7 @@ export class CatalogComponent implements OnInit {
   save(): void {
     this.service.save(this.catalog)
       .then(() => {
+        this.timeoutService.active();
         this.saved = true
         var d = new Date();
         this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);

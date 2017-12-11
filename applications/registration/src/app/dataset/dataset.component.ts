@@ -16,6 +16,7 @@ import {AccessRightsService} from "./accessRights/accessRights.service";
 import {SkosConcept} from "./skosConcept";
 import {DistributionFormComponent} from "./distribution/distribution.component";
 import {Validate} from "./validate";
+import { TimeoutService } from "app/dataset/timeout.service";
 
 @Component({
     selector: 'app-dataset',
@@ -56,7 +57,8 @@ export class DatasetComponent implements OnInit {
         private dialogService: DialogService,
         private formBuilder: FormBuilder,
         private cdr: ChangeDetectorRef,
-        private accessRightsService: AccessRightsService) {
+        private accessRightsService: AccessRightsService,
+        private timeoutService: TimeoutService) {
     }
 
 
@@ -354,6 +356,7 @@ export class DatasetComponent implements OnInit {
         datasetSave = Validate.validateDataset(datasetSave);
         return this.service.save(this.catId, datasetSave)
             .then(() => {
+                this.timeoutService.active();
                 this.saved = true;
                 var d = new Date();
                 this.lastSaved = ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
