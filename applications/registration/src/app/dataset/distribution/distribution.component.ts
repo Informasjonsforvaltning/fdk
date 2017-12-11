@@ -80,7 +80,7 @@ export class DistributionFormComponent implements OnInit {
             uri: [ distribution.uri || '', Validators.required ],
             type: distribution.type || this.typeModel[this.selectedTypeId].label || "",
             title: distribution.title || '',
-            description: distribution.description['nb'] || '',
+            description:(distribution.description) ? distribution.description['nb'] : '',
             accessURL: distribution.accessURL || [] as string[],
             downloadURL: distribution.downloadURL || [] as string[],
             format: [distribution.format || [] as string[]],
