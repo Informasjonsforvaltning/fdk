@@ -5,7 +5,7 @@ FROM node:6.10-alpine
 
 RUN npm init -y
 RUN npm install ejs express method-override body-parser compression --loglevel error
-RUN npm install pm2 -g -s --loglevel error
+RUN npm install pm2 -g --loglevel error
 
 # Create app directory
 RUN mkdir -p /usr/src/app && chmod 777 /usr/src/app
