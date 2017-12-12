@@ -1,3 +1,6 @@
+sudo: required
+dist: trusty
+
 matrix:
   include:
     - language: java
@@ -6,8 +9,6 @@ matrix:
     - language: node_js
       node_js:
       - "lts/8"
-      sudo: required
-      dist: trusty
 
 notifications:
     slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
