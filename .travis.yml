@@ -5,7 +5,9 @@ matrix:
         - oraclejdk8
     - language: node_js
       node_js:
-      - "node"
+      - "lts/8"
+      sudo: false
+      dist: trusty
 
 notifications:
     slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
