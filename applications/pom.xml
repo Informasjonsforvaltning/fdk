@@ -29,7 +29,7 @@
 
         <module>registration-api</module>
        <!-- <module>registration</module>
-       <!-- <module>registration-auth</module>
+        <module>registration-auth</module>
         <module>registration-validator</module>
 
         <module>harvester-api</module>
