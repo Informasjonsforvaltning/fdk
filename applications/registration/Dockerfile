@@ -1,4 +1,4 @@
-FROM node:6.10-alpine
+FROM node:6.11
 
 # to run localhost docker
 #FROM node:boron
