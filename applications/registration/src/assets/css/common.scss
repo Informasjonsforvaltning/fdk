@@ -300,3 +300,41 @@ hr {
     margin: 60px 0px 0px 0px;
 }
 
+.fdk-modal {
+  background-color: $color0;
+  padding: 35px 40px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(45,55,65,0.20);
+  border: 0;
+  margin: 0;
+  .modal-header, .modal-body, .modal-footer {
+    border: 0;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .modal-header {
+    font-size: 1.6rem;
+    line-height: 1.92rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .modal-body {
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 2.3rem;
+    margin-bottom: 20px;
+  }
+}
+.fdk-modal-close-button {
+  border-color: $color0;
+}
+.fdk-modal-ok-button {
+  border-color: $color0;
+}
+.fdk-modal-fa {
+  color: $color-red;    
+  font-size: 4rem !important;
+  margin-bottom: 20px;
+}

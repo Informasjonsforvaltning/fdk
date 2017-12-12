@@ -8,7 +8,7 @@ import {Dataset} from "../dataset/dataset";
 import {ModalComponent} from "../modal/modal.component";
 import * as _ from "lodash";
 import {LocalStorage, LocalStorageService} from 'ngx-webstorage';
-import { TimeoutService } from "app/dataset/timeout.service";
+import { TimeoutService } from "app/timeout/timeout.service";
 
 
 @Component({

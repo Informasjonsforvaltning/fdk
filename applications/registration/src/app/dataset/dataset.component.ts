@@ -16,7 +16,7 @@ import {AccessRightsService} from "./accessRights/accessRights.service";
 import {SkosConcept} from "./skosConcept";
 import {DistributionFormComponent} from "./distribution/distribution.component";
 import {Validate} from "./validate";
-import { TimeoutService } from "app/dataset/timeout.service";
+import { TimeoutService } from "app/timeout/timeout.service";
 
 @Component({
     selector: 'app-dataset',

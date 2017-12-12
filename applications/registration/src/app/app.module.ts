@@ -49,7 +49,9 @@ import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
 import { ReferencesComponent } from "./dataset/references/references.component";
 import { ReferenceListComponent } from "./dataset/references/reference-list.component";
 import {InputTrimDirective} from './dataset/inputTrimDirective';
-import { TimeoutService } from "app/dataset/timeout.service";
+import { TimeoutService } from "./timeout/timeout.service";
+import { TimeoutModalComponent } from "./timeout/timeoutModal.component";
+import { WasTimedOutModalComponent } from "./timeout/wasTimedOutModal.component";
 
 @NgModule({
     declarations: [
@@ -76,7 +78,9 @@ import { TimeoutService } from "app/dataset/timeout.service";
         ContentComponent,
         ReferencesComponent,
         ReferenceListComponent,
-        InputTrimDirective
+        InputTrimDirective,
+        TimeoutModalComponent,
+        WasTimedOutModalComponent
     ],
     imports: [
         BrowserModule,
@@ -97,7 +101,9 @@ import { TimeoutService } from "app/dataset/timeout.service";
         BrowserAnimationsModule
     ],
     entryComponents: [
-        ConfirmComponent
+        ConfirmComponent,
+        TimeoutModalComponent,
+        WasTimedOutModalComponent
     ],
     providers: [
         CatalogService,

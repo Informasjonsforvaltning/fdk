@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
 import {environment} from "../../environments/environment";
 import {User} from "./user";
-import { TimeoutService } from "app/dataset/timeout.service";
+import { TimeoutService } from "app/timeout/timeout.service";
 
 @Injectable()
 export class AuthenticationService {

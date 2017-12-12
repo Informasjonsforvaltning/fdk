@@ -4,7 +4,8 @@ import {Router} from "@angular/router";
 import {User} from "./security/user";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalComponent} from "./modal/modal.component";
-import { TimeoutService } from "app/dataset/timeout.service";
+import { TimeoutService } from "app/timeout/timeout.service";
+import { setTimeout } from "timers";
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,8 @@ export class AppComponent {
     this.authenticationService.user().subscribe(
       user => this.loggedInUser = user,
       err => this.loggedInUser = null);
+    
+    this.timeoutService.wasTimedOut();
   }
 
   isAuthenticated(): boolean {
