@@ -6,7 +6,7 @@ matrix:
     - language: node_js
       node_js:
       - "lts/8"
-      sudo: false
+      sudo: required
       dist: trusty
 
 notifications:
