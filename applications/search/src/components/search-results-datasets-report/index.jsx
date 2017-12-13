@@ -1,50 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import {
-  SearchkitManager,
-  SearchkitProvider,
-  RefinementListFilter
-} from 'searchkit';
 import * as axios from "axios";
-import createHistory from 'history/createBrowserHistory'
-
+import createHistory from 'history/createBrowserHistory';
 import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
 import ReportStats from '../search-results-dataset-report-stats';
 import SearchPublishers from '../search-results-dataset-report-publisher';
+import { addOrReplaceParamWithoutEncoding, removeParam } from '../../utils/addOrReplaceUrlParam';
 
-const host = '/dcat';
 const history = createHistory();
-const transportRef = new QueryTransport2();
-const searchkit = new SearchkitManager(
-  host,
-  {
-    transport: transportRef,
-    createHistory: ()=> history
-  }
-);
-
-searchkit.translateFunction = (key) => {
-  const translations = {
-    'pagination.previous': localization.page.prev,
-    'pagination.next': localization.page.next,
-    'facets.view_more': localization.page.viewmore,
-    'facets.view_all': localization.page.seeall,
-    'facets.view_less': localization.page.seefewer,
-    'reset.clear_all': localization.page.resetfilters,
-    'hitstats.results_found': `${localization.page['result.summary']} {numberResults} ${localization.page.dataset}`,
-    'NoHits.Error': localization.noHits.error,
-    'NoHits.ResetSearch': '.',
-    'sort.by': localization.sort.by,
-    'sort.relevance': localization.sort.relevance,
-    'sort.title': localization.sort.title,
-    'sort.publisher': localization.sort.publisher,
-    'sort.modified': localization.sort.modified
-  };
-  return translations[key];
-};
 
 export default class ResultsDatasetsReport extends React.Component {
   constructor(props) {
@@ -52,20 +17,45 @@ export default class ResultsDatasetsReport extends React.Component {
     this.state = {
       entity: '',
       aggregateDataset: {},
-      catalog: {}
+      catalog: {},
+      publishers: []
     }
-    this.queryObj = qs.parse(window.location.search.substr(1));
+    this.getPublishers();
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
     this.handleOnPublisherSearch();
   }
 
   handleOnPublisherSearch(name, orgPath) {
-    const query = orgPath || '';
+    // Get orgPath from input or try to find from query params.
+    let query = (orgPath) ? orgPath : this.getOrgPath(); 
+    
+    let paramWithRemovedOrgPath = removeParam('orgPath[0]', window.location.href);
+    let replacedUrl = addOrReplaceParamWithoutEncoding(paramWithRemovedOrgPath, 'orgPath[0]', query);
+
+    // Empty query params.
+    let emptyParam = {
+      title: document.title, 
+      url: paramWithRemovedOrgPath
+    };    
+    window.history.pushState(emptyParam, emptyParam.title, emptyParam.url);
+    console.log('emptyparam', window.location.href)
+    // Set new query param if necessary.
+    if (query) {
+      let queryParam = {
+        title: document.title,
+        url: replacedUrl
+      };
+      window.history.pushState(queryParam, queryParam.title, queryParam.url);
+    }
+    console.log('query', window.location.href)
+    // Get entity from input or try to find from publishers using orgPath. 
+    let entity = (name) ? name : this.getName(query);
+
     axios.get(`/aggregateDataset?q=${query}`)
       .then((response) => {
         const data = response.data;
         this.setState({
-          entity: name || localization.report.allEntities,
+          entity: entity,
           aggregateDataset: data
         });
       });
@@ -78,21 +68,51 @@ export default class ResultsDatasetsReport extends React.Component {
       });
   }
 
-  _renderPublisherRefinementListFilter() {
-    this.publisherFilter =
-      (<RefinementListFilter
-        id="publisher"
-        title={localization.facet.organisation}
-        field="publisher.name.raw"
-        operator="AND"
-        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-        itemComponent={RefinementOptionPublishers}
-      />);
+  getPublishers() {
+    let that = this;
+    axios.get('/publisher?q=')
+      .then(response => {        
+        let publishers = response.data.hits.hits
+          .map(item => item._source)
+          .map(hit => 
+            hit = {
+              name: hit.name, 
+              orgPath: hit.orgPath
+            }
+        ); 
+        let entity = this.getName(this.getOrgPath(), publishers);
+        this.setState({ 
+          publishers: publishers,
+          entity: entity
+        });
+      }
+    );    
+  }
 
-    return this.publisherFilter;
+  getName(orgPath, publishersIn) {
+    // Set publishers from state if exists, or input if exists.
+    let publishers = (this.state.publishers.length > 0) ? this.state.publishers : (publishersIn) ? publishersIn : null;
+    if (publishers) {
+      let result = publishers.find(publisher => publisher.orgPath === orgPath);
+      let paramEntity = (result) ? result.name : localization.report.allEntities;
+      return paramEntity;
+    }
+    return localization.report.allEntities;
+  }
+
+  getOrgPath() {
+    let orgPath = window.location.search
+      .substring(1)
+      .split("&")
+      .map(v => v.split("="))
+      .reduce((map, [key, value]) => 
+        map.set(key, decodeURIComponent(value)), new Map())
+      .get('orgPath[0]');
+    return (orgPath) ? orgPath : '';
   }
 
   render() {
+    
     history.listen((location)=> {
       if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
         let nextUrl = "";
@@ -105,34 +125,31 @@ export default class ResultsDatasetsReport extends React.Component {
       }
     });
     return (
-      <SearchkitProvider searchkit={searchkit}>
-        <div>
-          <div className="container">
-            <section id="resultPanel">
-              <div className="row">
-                <div className="col-md-4 col-md-offset-8">
-                  <div className="pull-right" />
-                </div>
+      <div>
+        <div className="container">
+          <section id="resultPanel">
+            <div className="row">
+              <div className="col-md-4 col-md-offset-8">
+                <div className="pull-right" />
               </div>
-              <div className="row">
-                <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
-                  <SearchPublishers
-                    onSearch={this.handleOnPublisherSearch}
-                  />
-                  {this._renderPublisherRefinementListFilter()}
-                </div>
-                <div id="datasets" className="col-sm-8">
-                  <ReportStats
-                    aggregateDataset={this.state.aggregateDataset}
-                    entity={this.state.entity}
-                    catalog={this.state.catalog}
-                  />
-                </div>
+            </div>
+            <div className="row">
+              <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
+                <SearchPublishers
+                  onSearch={this.handleOnPublisherSearch}
+                />
               </div>
-            </section>
-          </div>
+              <div id="datasets" className="col-sm-8">
+                <ReportStats
+                  aggregateDataset={this.state.aggregateDataset}
+                  entity={this.state.entity}
+                  catalog={this.state.catalog}
+                />
+              </div>
+            </div>
+          </section>
         </div>
-      </SearchkitProvider>
+      </div>
     );
   }
 }
