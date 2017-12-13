@@ -3,11 +3,8 @@ import React from 'react';
 import localization from '../localization';
 import { getParamFromUrl} from '../../utils/addOrReplaceUrlParam';
 
-const state = {}
 const CustomHitsStats = (props) => {
   const { hitsCount, timeTaken, prefLabel } = props;
-  const language = localization.getLanguage();
-  const locationHref = window.location.href;
   const hitsCountInt = hitsCount ? parseInt(hitsCount, 10) : 0;
 
   let filteringOrTextSearchPerformed = false;
@@ -15,26 +12,17 @@ const CustomHitsStats = (props) => {
   if (getParamFromUrl('q') || getParamFromUrl('theme') || getParamFromUrl('accessRight') || getParamFromUrl('publisher')) {
     filteringOrTextSearchPerformed = true;
   }
+  const initialCountSummaryShown = hitsCountInt && !filteringOrTextSearchPerformed;
 
-  let requestCompleted = true;
-
-  if(timeTaken === state.timeTaken && language === state.language && locationHref === state.locationHref) {
-    requestCompleted =  false;
+  let requestCompleted = false;
+  if(timeTaken > 0) {
+    requestCompleted =  true;
   }
 
-  const initialCountSummaryShown = requestCompleted && hitsCountInt && !filteringOrTextSearchPerformed;
-
-
-  state.language = language;
-  state.timeTaken = timeTaken;
-  state.locationHref = locationHref;
-  state.initialCountSummaryShown = initialCountSummaryShown;
-  state.hitsCount = hitsCount;
-
   if (
-
+    requestCompleted &&
     filteringOrTextSearchPerformed
-  ) { // it's a search
+  ) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
@@ -42,7 +30,7 @@ const CustomHitsStats = (props) => {
         </div>
       </div>
     );
-  } else if (requestCompleted && hitsCountInt) {
+  } else if (initialCountSummaryShown) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info nosearch" data-qa="info">
