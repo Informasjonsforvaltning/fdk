@@ -1,29 +1,30 @@
-import React from 'react'; // const React = require('react');
-import qs from 'qs'; // const qs = require('qs');
+import React from 'react';
 
 import localization from '../localization';
+import { getParamFromUrl} from '../../utils/addOrReplaceUrlParam';
 
 const state = {}
 const CustomHitsStats = (props) => {
   const { hitsCount, timeTaken, prefLabel } = props;
-  const queryObj = qs.parse(window.location.search.substr(1));
   const language = localization.getLanguage();
   const locationHref = window.location.href;
   const hitsCountInt = hitsCount ? parseInt(hitsCount, 10) : 0;
 
-  const filteringOrTextSearchPerformed = queryObj ? Object.keys(queryObj).length > 1 || (Object.keys(queryObj).length === 1 && !queryObj.lang) : false;
-  let previousState = '';
+  let filteringOrTextSearchPerformed = false;
+
+  if (getParamFromUrl('q') || getParamFromUrl('theme') || getParamFromUrl('accessRight') || getParamFromUrl('publisher')) {
+    filteringOrTextSearchPerformed = true;
+  }
+
   let requestCompleted = true;
-  const initialCountSummaryShown = requestCompleted && hitsCountInt;
 
   if(timeTaken === state.timeTaken && language === state.language && locationHref === state.locationHref) {
     requestCompleted =  false;
   }
-  if(state.initialCountSummaryShown) {
-    previousState = 'initialCountSummaryShown';
-  } else {
-    previousState = 'searchSummaryShown';
-  }
+
+  const initialCountSummaryShown = requestCompleted && hitsCountInt && !filteringOrTextSearchPerformed;
+
+
   state.language = language;
   state.timeTaken = timeTaken;
   state.locationHref = locationHref;
@@ -31,9 +32,8 @@ const CustomHitsStats = (props) => {
   state.hitsCount = hitsCount;
 
   if (
-    requestCompleted &&
-      filteringOrTextSearchPerformed &&
-      previousState !== 'initialCountSummaryShown'
+
+    filteringOrTextSearchPerformed
   ) { // it's a search
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
