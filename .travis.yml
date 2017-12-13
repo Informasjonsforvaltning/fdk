@@ -75,13 +75,13 @@ jobs:
     #  env:
     #    - comment=Run end-to-end (Cucumber) tests
 
-    #- stage: deploy
-    #  script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
-    #  deploy:
-    #    provider: script
-    #    skip_cleanup: true
-    #    script:
-    #      - ./travisPushToDockerHub.sh
-    #    on:
-    #      branch: develop
-    #      condition: $TRAVIS_TAG = ''
+    - stage: deploy
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - ./travisPushToDockerHub.sh
+        on:
+          branch: develop
+          condition: $TRAVIS_TAG = ''
