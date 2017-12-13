@@ -38,8 +38,8 @@ The harvester module is dependent on the following other modules:
         * /api/admin/harvest
             - parameter: id: The id of the data source to be harvested
 * Fuseki
-    * Information about users and data catalogs are stored in Fuseki database dcat/admin
-    * Log information about harvests are retrieved from Fuseki database dcat/admin
+    * Information about users and data catalogs are stored in Fuseki database admin
+    * Log information about harvests are retrieved from Fuseki database admin
 * Elasticsearch
     * 
 * Kibana (optional)

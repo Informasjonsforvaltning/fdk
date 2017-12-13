@@ -23,3 +23,32 @@ The harvester api processes dcat data source (url) which contains a dcat catalog
 8) Populate dcat index with valid datasets
 9) Remove datasets that are no longer exported 
 
+##Technologies/frameworks
+
+* Spring Boot v. 1.5.1
+
+##Architecture
+The harvester-api module consists of xxxx
+
+##Interface
+The harvester-api module exposes a rest api for managing harvests:
+* GET XXXX
+
+##Dependencies
+The harvester module is dependent on the following other modules:
+* Fuseki
+    * Harvested catalogs are stored as graphs in Fuseki database dcat
+    * Log information about harvests are stored in Fuseki database admin
+* Elasticsearch
+    * Harvested catalogs are stored as documents in Elasticsearch index dcat
+    * A record of each harvest is stored in Elasticsearch index harvest
+* Reference-data
+    * The harvester reads and updates reference data during harvest:
+        * Code lists
+        * Terms
+        * xxxx
+
+
+## Use
+
+`docker run -p 8082:8080 dcatno/harvester-api`
