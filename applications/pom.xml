@@ -28,7 +28,7 @@
         <module>search</module>
 
         <module>registration-api</module>
-        <module>registration</module>
+        <!-- <module>registration</module> -->
         <module>registration-auth</module>
         <module>registration-validator</module>
 
