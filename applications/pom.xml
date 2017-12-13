@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!-- <module>fuseki</module>
+        <module>fuseki</module>
         <module>kibana</module>
         <module>logstash</module>
 
@@ -27,9 +27,9 @@
         <module>search-api</module>
         <module>search</module>
 
-        <module>registration-api</module> -->
+        <module>registration-api</module>
         <module>registration</module>
-        <!-- <module>registration-auth</module>
+        <module>registration-auth</module>
         <module>registration-validator</module>
 
         <module>harvester-api</module>
