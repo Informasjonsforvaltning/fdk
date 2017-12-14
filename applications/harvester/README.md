@@ -1,17 +1,19 @@
 # Harvester administration application
 
 Docker image: [dcatno/harvester](https://hub.docker.com/r/dcatno/harvester/)
-Base image: [openjdk:8-jre]()
-Source: [Dockerfile]()
+Base image: [openjdk:8-jre](https://hub.docker.com/_/openjdk/)
+Source: [Dockerfile](https://github.com/Altinn/fdk/blob/master/applications/harvester/src/main/docker/Dockerfile)
 
+## Overview
 The harvester administration application. It allows users to register 
 external data catalogs (data sources) to be harvested at regular intervals.
 
 The harvester currently runs once a day at 1am. Harvests can also be triggered manually.
 
 ##Technologies/frameworks
-
+* Java
 * Spring Boot v. 1.5.1
+* Apache Jena v.3.3.0
 * Thymeleaf for user interface
 
 ##Architecture
@@ -33,17 +35,19 @@ The harvester module consists of to subcomponents:
 
 ##Dependencies
 The harvester module is dependent on the following other modules:
-* Harvester-api
+* Harvester-api (REST api)
     * Harvests are triggered by calling a rest api on the harvester-api module:
         * /api/admin/harvest
             - parameter: id: The id of the data source to be harvested
-* Fuseki
+* Fuseki (REST api)
     * Information about users and data catalogs are stored in Fuseki database admin
     * Log information about harvests are retrieved from Fuseki database admin
-* Elasticsearch
+* Elasticsearch (api)
     * 
-* Kibana (optional)
+* Kibana (optional) (REST api)
     * Visualisation for harvest log information
+* Library: no.dcat.datastore
+    * Provides Java interfaces for communicating with Elasticsearch and Fuseki
 
 
 ## Use

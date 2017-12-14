@@ -1,12 +1,13 @@
 # Harvester api
 
-Docker image: [dcatno/harvester-api](https://hub.docker.com/r/dcatno/harvester/)
-Base image: [frolvlad/alpine-oraclejdk8:slim]()
-Source: [Dockerfile]()
+Docker image: [dcatno/harvester-api](https://hub.docker.com/r/dcatno/harvester-api/)
+Base image: [openjdk:8-jre](https://hub.docker.com/_/openjdk/)
+Source: [Dockerfile](https://github.com/Altinn/fdk/blob/master/applications/harvester-api/src/main/docker/Dockerfile)
 
+##Overview
 The harvester api runs harvests of DCAT-AP-NO 1.1 data at regular intervals.
 
-The harvester currently runs once a day at 1am.
+The harvester currently runs once a day at 1am, or when triggered from harvester gui.
 
 The harvester api processes dcat data source (url) which contains a dcat catalog and number of datasets.
 
@@ -23,31 +24,85 @@ The harvester api processes dcat data source (url) which contains a dcat catalog
 8) Populate dcat index with valid datasets
 9) Remove datasets that are no longer exported 
 
-##Technologies/frameworks
+##Standards
+* DCAT-AP-NO 1.1 https://doc.difi.no/dcat-ap-no/
+    * The standard prescribes how data sets and catalogues should be described
+      using the W3C DCAT vocabulary. The harvester module expects data sources
+      to conform to this standard.
 
+##Technologies/frameworks
+* Java
 * Spring Boot v. 1.5.1
+* Elasticsearch v. 2.4.1
+* Apache Jena v.3.3.0
 
 ##Architecture
-The harvester-api module consists of xxxx
+The harvester-api module consists of a REST interface for triggering harvests,
+and a scheduler that starts harvests of all datasets at 01.00 each day.
+
+Harvesting is handled asynchronically by crawlerjobs.
+Each data source to be harvested gets its own instance of a CrawlerJob.
+The CrawlerJob has the following responsibilities:
+* Read data from data source URI
+* Validate data
+* Enhance data (as specified above)
+* Pass the validated and enhanced data to one or more ResultHandlers
+    * Currently, two ResultHandles are used, one each of the following:
+        * ElasticSearchResultHandler
+            * Writes the data to Elastichsearch index dcat
+            * Writes harvest record to Elasticsearch index dcat
+        * FusekiResultHandler
+            * Writes a RDF graph of the data to fuseki database dcat
+* Trigger a SubjectCrawler to harvest subjects  from URIs encountered in the data
+    * These are passed to the reference-data service for storage
+    * Additionaly, the subjects are added to the dcat index
+* Write log entry to Fuseki database admin
+
 
 ##Interface
 The harvester-api module exposes a rest api for managing harvests:
-* GET XXXX
+* POST /api/admin/load
+    * Load DCAT data file into Fuseki and Elasticsearch. Primarily used for testing.
+    * Parameters: 
+	    * filename: File to be loaded
+	    * data: Base64 encoded DCAT data
+	
+* POST /api/admin/harvest
+    * Start harvest of dataset from data source prescribed in parameter id
+    * Parameters:
+	    * id: id of data source to be harvested
+	
+* POST /api/admin/harvest-all
+    * Start harvest of all data sources
+    * Parameters: None
+
+* GET /api/admin/isIdle
+    * Answers true if the harvester is not harvesting.
 
 ##Dependencies
-The harvester module is dependent on the following other modules:
-* Fuseki
+The harvester module is dependent on the following other modules in project fdk:
+* Fuseki (REST api)
     * Harvested catalogs are stored as graphs in Fuseki database dcat
     * Log information about harvests are stored in Fuseki database admin
-* Elasticsearch
+* Elasticsearch ( api)
     * Harvested catalogs are stored as documents in Elasticsearch index dcat
     * A record of each harvest is stored in Elasticsearch index harvest
-* Reference-data
+* Reference-data (REST api)
     * The harvester reads and updates reference data during harvest:
         * Code lists
-        * Terms
-        * xxxx
+        * Themes
+        * Subjects
+* Library: no.dcat.shared
+    * Provides Java definitions of data structures (models)
+* Library: no.dcat.datastore
+    * Provides Java interfaces for communicating with Elasticsearch and Fuseki
 
+##External service dependencies
+The harvester module depends on the following external services.
+These services are not provided as part of the fdk projedt:
+* http://data.brreg.no/enhetsregisteret
+    * Consumed by harvester. Provides information about the
+      legal structure of organizations in Norway
 
 ## Use
 
