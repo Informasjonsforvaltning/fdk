@@ -11,7 +11,7 @@
     "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "tdd": "npm test -- --watch",
-    "lint": "eslint ./src --ext=.js,.jsx"
+    "lint": "eslint ./src --ext=.js,.jsx --fix"
   },
   "lint-staged": {
     "gitDir": "../../",
