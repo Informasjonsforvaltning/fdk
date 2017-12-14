@@ -228,6 +228,7 @@ public class DatasetConverterTest {
         assertThat(actualDataset.getHasAvailabilityAnnotation(), is(expectedDataset.getHasAvailabilityAnnotation()));
         assertThat(actualDataset.getHasCompletenessAnnotation(), is(expectedDataset.getHasCompletenessAnnotation()));
         assertThat(actualDataset.getHasCurrentnessAnnotation(), is(expectedDataset.getHasCurrentnessAnnotation()));
+        assertThat(actualDataset.getHasRelevanceAnnotation(), is(expectedDataset.getHasRelevanceAnnotation()));
     }
 
 
