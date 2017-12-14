@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -14,7 +13,47 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static'
+    publicPath: '/static/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.s?css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: { limit: 10000 } // Convert images < 10k to base64 strings
+        }]
+      }
+    ]
+  },
+  resolve: {
+    alias: {
+      react: path.resolve('./node_modules/react')
+    },
+    extensions:[".js", ".jsx", ".webpack.js", ".web.js"]
+  },
+  resolveLoader: {
+    modules: [__dirname, 'node_modules']
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -26,57 +65,5 @@ module.exports = {
     ], {
       copyUnmodified: true
     })
-  ],
-  resolve: {
-    alias: {
-      react: path.resolve('./node_modules/react')
-    },
-    extensions:[".js", ".jsx", ".webpack.js", ".web.js"]
-  },
-  resolveLoader: {
-    modules: [__dirname, 'node_modules']
-  },
-  module: {
-    rules: [
-      /*
-       {
-       enforce: 'pre',
-       test: /\.(js|jsx)$/,
-       include: [
-       path.resolve(__dirname, 'start.js'),
-       path.resolve('src')
-       ],
-       exclude: /node_modules/,
-       options: {
-       configFile: path.resolve('./.eslintrc.json')
-       },
-       loader: 'eslint-loader'
-       },
-       */
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['env', 'react']
-        }
-      },
-      {
-        test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
-      },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
-      {
-        test: /\.(png|jpg)$/,
-        use: [{
-          loader: 'url-loader',
-          options: { limit: 10000 } // Convert images < 10k to base64 strings
-        }]
-      }
-    ]
-  }
+  ]
 };
