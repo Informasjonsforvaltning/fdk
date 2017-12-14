@@ -183,21 +183,6 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    public static <T> List<T> asList(T... elements) {
-        List<T> result = new ArrayList<>();
-        for (T el : elements) {
-            if (el != null) {
-                result.add(el);
-            }
-        }
-        if (result.size() > 0 ) {
-            return result;
-        }
-
-        return null;
-    }
-
-
 
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
         List<SkosConcept> result = new ArrayList<>();
@@ -659,21 +644,5 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    protected static Map<String, String> getTitlesOfCode(Map<String, Map<String, SkosCode>> allCodes, String type, String codeKey) {
 
-        Map<String, SkosCode> codesOfType = allCodes.get(type);
-
-        if (codesOfType == null) {
-            logger.info("Codes of type {} does not exist.", type);
-            return null;
-        }
-
-        SkosCode code = codesOfType.get(codeKey);
-        if (code == null) {
-            logger.info("Codes of type {} and key {} does not exist and will be removed.", type, codeKey);
-            return null;
-        }
-
-        return code.getPrefLabel();
-    }
 }
