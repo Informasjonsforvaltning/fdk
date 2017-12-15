@@ -45,7 +45,7 @@ const routes =
     <Route path="/" component={App}>
       <Route path="/datasets" component={SearchPage} />
       <IndexRoute component={SearchPage} />
-      <Route path="/datasets/(:id)" component={DetailsPage} />
+      <Route path="/datasets/:id" component={DetailsPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/about-registration" component={GetStartedPage} />
       <Route path="/reports" component={ReportsPage} />
