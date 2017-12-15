@@ -25,19 +25,47 @@ Systemet er basert på en norsk profil [DCAT-AP-NO 1.1](https://doc.difi.no/dcat
 av en [Europeisk profil](https://joinup.ec.europa.eu/release/dcat-ap-v11) av [W3C Datakatalog standard](https://www.w3.org/TR/vocab-dcat/)
 for utveksling av datasettbeskrivelser. 
 
-# Overview
-The system consists of several modules. 
+# Usage
+
+## Test the search application
+The search application is available [here](https://fellesdatakatalog.brreg.no). The two other applications
+are only available for registered users. 
+Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no)
+
+## Comile
+The system consists of several modules which can be compiled with `mvn clean install`. 
+A successful build results in corresponding docker images. 
+
+## Run from Docker Hub
+The docker images are also available on [Docker Hub](https://hub.docker.com/u/dcatno/). 
+This means that you do not have to compile the project to run it. But you need docker installed on your computer.
+You need to download the following two files [docker-compose.yml](/docker-compose.yml) and
+[docker-compose.override.yml](/docker-compose.override.yml). And then you can run the following command:
+
+        `docker-compose up -d`.
+
+# Modules 
+
 ![Architecture](/images/fdk-architecture-logic.png)
 
+The Registration Application consists of the following main modules:
+  * registration, an Angular 2 application which allow users to log in and edit or register metadata about datasets.
+  * registration-api, a Java Spring Boot service which supports an REST API
+  * registration-db, a Elasticsearch document database
+  
+The Search Application consists of the following modules
+  * search, an React application which allow users to search and view dataset descriptions.
+  * search-api, an Java Spring Boot service whit a REST API 
+  * search-db, an Elasticsearch search and document database
 
-# Docker module
-
-Used for starting containers locally with docker compose. You need docker installed 
-and allow it to share disk.
-
-# Download
-Download the docker-compose.yml and docker-compose.override.yml files to a empty directory. Create a catalog called data. 
-Then start the wanted application (se below) 
+The Harvester Application consist of the following modules
+  * harvester, a Java Spring Boot application which allow users to register which catalogs that should be harvested.
+  * harvester-api, a Java Spring Boot service which checks and harvests data catalogs and inserts them into the search-db
+  * harvester-db, a Fuseki RDF database which stores administration information about harvests and the incoming datasets
+  
+Common Services
+  * reference-data, a shared service which provides code lists, concepts and helptexts.
+  *   
 
 # Usage
 
