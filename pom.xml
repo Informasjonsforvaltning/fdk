@@ -453,6 +453,7 @@
 				<!-- Used to locate the profile specific configuration file. -->
 				<build.profile.id>integration-test</build.profile.id>
 				<!-- Unit and integration tests are run. -->
+				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 				<skipIntegrationTests>false</skipIntegrationTests>
 				<skipTests>false</skipTests>
 			</properties>
