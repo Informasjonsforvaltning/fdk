@@ -1,20 +1,35 @@
 [![Build Status](https://travis-ci.org/Altinn/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
 [![Coverage Status](https://coveralls.io/repos/github/Altinn/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
 
-# Felles datakatalog
+# The National Data Directory (Felles datakatalog)
 
-Dette er den første felleskomponenten som utvikles i regi av 
-Skate (https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate). 
-Felles datakatalog skal tilby en oversikt over hvilke datasett som offentlige
-virksomheter har. Det skal tilbys en søkeløsning (portal) som gjør det mulig å 
-søke og finne relevante datasettbeskrivelser. Prosjektet går over 2 år med 
-oppstart høsten 2016. Forventet ferdig ved utgangen av 2017. 
+This repository contains the source code for the [National Data Directory](https://fellesdatakatalog.brreg.no) of Norway. 
+The work was funded and led by the [Brønnøysund Register Centre](https://www.brreg.no/home/) and the Data Directory was launched November 2017. 
+The Data Directory contains metadata about the datasets that the various Governmental bodies maintain in their data catalogs. 
+We provide a search service that allow users to discover datasets and where they are kept. 
+The data catalogs are formatted according to the Norwegian profile [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/)
+of the [European profile](https://joinup.ec.europa.eu/release/dcat-ap-v11) of [W3C's Data Catalog standard](https://www.w3.org/TR/vocab-dcat/). 
 
-Systemet er basert på en norsk profil DCAT-AP-NO 1.1 av en Europeisk og W3C standard
-for utveksling av datasettbeskrivelser, se https://doc.difi.no/dcat-ap-no/. 
-Systemet bygger videre på kode som ble utviklet i DIFIs pilotprosjekt: 
-Nasjonal infrastruktur for felles datakatalog (våren 2016). 
- 
+Three main applications are developed:
+  1. A Search Application that allow users to search and browse metadata about the datasets.
+  1. A Harvester Application that downloads data catalogs and makes them searchable.
+  1. A Registration Application that allow users to register metadata about their datasets.
+
+Norwegian description:
+> [Felles datakatalog](https://fellesdatakatalog.brreg.no) gir en oversikt over datasett fra virksomheter i Norge. Løsningen er
+utviklet av [Brønnøysundregistrene](https://www.brreg.no/) i perioden 2016 til desember 2017. Løsningen 
+ble lansert i november 2017. Det er en av flere felleskomponenten som
+utvikles i regi av [Skate](https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate) 
+som skal bidra til å bedre integrasjon mellom offentlige virksomheter og bedre tjenester. 
+Systemet er basert på en norsk profil [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/),
+av en [Europeisk profil](https://joinup.ec.europa.eu/release/dcat-ap-v11) av [W3C Datakatalog standard](https://www.w3.org/TR/vocab-dcat/)
+for utveksling av datasettbeskrivelser. 
+
+# Overview
+The system consists of several modules. 
+![Architecture](/images/fdk-architecture-logic.png)
+
+
 # Docker module
 
 Used for starting containers locally with docker compose. You need docker installed 
