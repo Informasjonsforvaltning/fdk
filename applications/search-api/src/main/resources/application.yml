@@ -1,9 +1,9 @@
 logging:
   level.: ERROR
   level.no.difi: ERROR
-  level.no.dcat: DEBUG
+  level.no.dcat: INFO
   level.org.springframework: ERROR
-  level.org.springframework.web: ERROR
+  level.org.springframework.web: WARN
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300

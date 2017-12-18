@@ -42,9 +42,9 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
       const accessRightClass = cx(
         'fa fdk-fa-left',
         {
-          'fdk-color-red fa-lock': accessRights.code === 'NON_PUBLIC',
-          'fa-unlock-alt fdk-color-yellow': accessRights.code === 'RESTRICTED',
-          'fa-unlock fdk-color-green': accessRights.code === 'PUBLIC'
+          'fdk-color-unntatt fa-lock': accessRights.code === 'NON_PUBLIC',
+          'fa-unlock-alt fdk-color-begrenset': accessRights.code === 'RESTRICTED',
+          'fa-unlock fdk-color-offentlig': accessRights.code === 'PUBLIC'
         }
       );
       return (
@@ -111,40 +111,32 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           className="col-md-12 fdk-padding-no"
         >
           <div className="fdk-container-detail">
-            <div className="fdk-detail-icon">
-              <i className="fa fa-institution" />
+            {legalBasisForRestriction &&
+            <div>
+              <h5>{localization.dataset.legalBasisForRestriction}</h5>
+              <div className="fdk-ingress">
+                { childrenLegalBasisForRestriction(legalBasisForRestriction) }
+              </div>
             </div>
+            }
 
-            <div className="fdk-detail-text">
-
-              {legalBasisForRestriction &&
-              <div>
-                <h5>{localization.dataset.legalBasisForRestriction}</h5>
-                <div className="fdk-ingress">
-                  { childrenLegalBasisForRestriction(legalBasisForRestriction) }
-                </div>
+            {legalBasisForProcessing &&
+            <div>
+              <h5>{localization.dataset.legalBasisForProcessing}</h5>
+              <div className="fdk-ingress">
+                { childrenLegalBasisForProcessing(legalBasisForProcessing) }
               </div>
-              }
-
-              {legalBasisForProcessing &&
-              <div>
-                <h5>{localization.dataset.legalBasisForProcessing}</h5>
-                <div className="fdk-ingress">
-                  { childrenLegalBasisForProcessing(legalBasisForProcessing) }
-                </div>
-              </div>
-              }
-
-              {legalBasisForAccess &&
-              <div>
-                <h5>{localization.dataset.legalBasisForAccess}</h5>
-                <div className="fdk-ingress">
-                  { childrenLegalBasisForAccess(legalBasisForAccess) }
-                </div>
-              </div>
-              }
-
             </div>
+            }
+
+            {legalBasisForAccess &&
+            <div>
+              <h5>{localization.dataset.legalBasisForAccess}</h5>
+              <div className="fdk-ingress">
+                { childrenLegalBasisForAccess(legalBasisForAccess) }
+              </div>
+            </div>
+            }
           </div>
         </div>
       );

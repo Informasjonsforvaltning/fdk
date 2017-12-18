@@ -5,61 +5,57 @@
 
 h1 {
     color: $color1;
-    font-size: 3.0rem;
-    line-height: 3.6rem;
-    font-weight: 500;
+    font-size: 2.8rem;
+    line-height: 3.36rem;
+    font-weight: 300;
     margin: 8px 0 0 0;
 }
 
 h2 {
     color: $color1;
-    font-size: 2.625rem;
-    line-height: 3.15rem;
-    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 2.88rem;
+    font-weight: 600;
 }
 
-h2.fdk-page-not-found { /* 404 */
-    font-size: 160px;
-    line-height: 160px;
-    color: $color4;
-    text-align: center;
-    margin: 0;
+.fdk-container-search-hit > h2 {
+    margin: 0 0 10px 0;
 }
 
 h3 {
     color: $color1;
-    font-size: 2.25rem;
-    line-height: 2.7rem;
-    font-weight: 500;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 600;
     margin: 0px;
 }
 
 h4 {
     color: $color1;
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1.92rem;
+    font-weight: 600;
     margin: 0px;
 }
 
 h5 {
     color: $color3;
-    font-size: 1.4rem;
-    line-height: 1.8rem;
+    font-size: 1.5rem;
+    line-height: 1.9rem;
     font-weight: 400;
     padding: 0px;
-    margin: 0px 0px 4px 0px;
+    margin: 0px 0px .4rem 0px;
 }
 
 p {
-    margin: 0 0 2.1rem 0;
+    margin: 0 0 2.3rem 0;
 }
 
 .fdk-ingress {
-    font-size: 1.875rem;
-    line-height: 2.625rem;
+    font-size: 2rem;
+    line-height: 2.8rem;
     font-weight: 400;
-    margin: 0 0 2.1rem 0;
+    margin: 0 0 2.8rem 0;
 }
 
 .fdk-ingress-detail {
@@ -67,14 +63,26 @@ p {
     padding: 0px;
 }
 
+.fdk-list {
+    padding-bottom: 2.3rem;
+}
+
+.fdk-list-short {
+    padding-bottom: 1.15rem;
+}
+
+.fdk-list-number {
+    list-style-type: decimal;
+}
+
 a {
-    color: $color1;
+    color: $color-cta2;
     text-decoration: underline;
 }
 
 a:hover {
     text-decoration: none;
-    color: $color1;
+    color: var(--color-cta2);
 }
 
 .fdk-p-header {
@@ -85,8 +93,8 @@ a:hover {
 }
 
 .fdk-p-header-sub {
-    font-size: 1.7rem;
-    line-height: 1.7rem;
+    font-size: 1.6rem;
+    line-height: 1.8rem;
     text-align: center;
     padding: 1.3rem 0px 0px 0px;
     margin: 0px;
@@ -130,7 +138,7 @@ a:hover {
 }
 
 .fdk-strong-virksomhet {
-    color: $color-cta3;
+    color: $color-cta;
     font-weight: 600;
     letter-spacing: 0.03rem;
     margin-right: 10px;
@@ -187,5 +195,10 @@ a:hover {
 .fdk-fa-path {
     color: $color3;
     margin: 0px 8px;
-    font-size: 0.8rem !important;
+    font-size: 1.4rem !important;
+}
+
+.fdk-fa-link {
+    margin-right: 5px;
+    color: $color-cta2;
 }

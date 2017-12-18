@@ -3,9 +3,9 @@ package no.dcat.harvester.crawler;
 
 
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.DcatDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.domain.DcatSource;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RiotException;
 import org.apache.jena.shared.BadURIException;
@@ -108,7 +108,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, adminDataStore);
 
-        handler.process(dcatSource, ModelFactory.createDefaultModel());
+        handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
     }
 
 
@@ -121,7 +121,7 @@ public class CrawlerJobTest {
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
-        handler.process(dcatSource, ModelFactory.createDefaultModel());
+        handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
         job.run();
@@ -147,7 +147,7 @@ public class CrawlerJobTest {
         Mockito.doAnswer(invocationOnMock -> {
             didRun[0] = true;
             return null;
-        }).when(handler).process(Mockito.anyObject(), Mockito.any());
+        }).when(handler).process(Mockito.anyObject(), Mockito.any(), Mockito.any());
 
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
@@ -174,7 +174,7 @@ public class CrawlerJobTest {
         Mockito.doAnswer(invocationOnMock -> {
             didRun[0] = true;
             return null;
-        }).when(handler).process(Mockito.anyObject(), Mockito.any());
+        }).when(handler).process(Mockito.anyObject(), Mockito.any(), Mockito.any());
 
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);

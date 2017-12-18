@@ -1,0 +1,46 @@
+@prefix schema: <http://schema.org/> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dqv:   <http://www.w3.org/ns/dqvNS#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<https://data-david.github.io/Begrep/begrep/Enhet>
+        a                skos:Concept ;
+        dct:creator      <http://data.brreg.no/enhetsregisteret/enhet/974760673> ;
+        dct:identifier   "https://data-david.github.io/Begrep/begrep/Enhet" ;
+        dct:source       "https://jira.brreg.no/browse/BEGREP-208" ;
+        skos:definition  "alt som er registrert med et organisasjonsnummer "@no ;
+        skos:inScheme    "http://data-david.github.io/vokabular/Befolkning" ;
+        skos:note        "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."@no ;
+        skos:prefLabel   "enhet"@no .
+
+<http://data.brreg.no/enhetsregisteret/enhet/910888447>
+        a               foaf:Agent ;
+        dct:identifier  "910888447" ;
+        foaf:name       "REINLI OG BERLEVÅG REGNSKAP" .
+
+<http://data.brreg.no/enhetsregisteret/enhet/974760673>
+        a       foaf:Agent .
+
+<http://brreg.no/catalogs/910888447/datasets/2>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description   "beskrivelse"@nb ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/910888447> ;
+        dct:subject       <https://data-david.github.io/Begrep/begrep/Enhet> ;
+        dct:title         "Badebøya"@nb ;
+        dcat:theme        <http://publications.europa.eu/resource/authority/data-theme/AGRI> .
+
+<http://brreg.no/catalogs/910888447>
+        a              dcat:Catalog ;
+        dct:publisher  <http://data.brreg.no/enhetsregisteret/enhet/910888447> ;
+        dct:title      "Datakatalog for REINLI OG BERLEVÅG REGNSKAP"@nb ;
+        dcat:dataset   <http://brreg.no/catalogs/910888447/datasets/2> .

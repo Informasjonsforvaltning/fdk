@@ -1,0 +1,336 @@
+{
+	"@context": {
+		"adms": "http:\/\/www.w3.org\/ns\/adms#",
+		"dcat": "http:\/\/www.w3.org\/ns\/dcat#",
+		"dct": "http:\/\/purl.org\/dc\/terms\/",
+		"foaf": "http:\/\/xmlns.com\/foaf\/0.1\/",
+		"owl": "http:\/\/www.w3.org\/2002\/07\/owl#",
+		"rdfs": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#",
+		"schema": "http:\/\/schema.org\/",
+		"skos": "http:\/\/www.w3.org\/2004\/02\/skos\/core#",
+		"spdx": "http:\/\/spdx.org\/rdf\/terms#",
+		"vcard": "http:\/\/www.w3.org\/2006\/vcard\/ns#",
+		"xsd": "http:\/\/www.w3.org\/2001\/XMLSchema#",
+		"dct:issued": {
+			"@type": "http:\/\/www.w3.org\/2001\/XMLSchema#date"
+		},
+		"dct:modified": {
+			"@type": "http:\/\/www.w3.org\/2001\/XMLSchema#date"
+		}
+	},
+	"@graph": [{
+			"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/GOVE",
+			"@type": "skos:Concept",
+			"skos:prefLabel": "Forvaltning og offentlig sektor",
+			"skos:inSchema": {
+				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/"
+			}
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/text\/csv",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/json",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/xml",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/data.norge.no\/node\/967",
+			"@type": "dcat:Distribution",
+			"dcat:accessURL": {
+				"@id": "http:\/\/hotell.difi.no\/?dataset=difi\/oep\/innsynskrav-2010",
+				"@type": "rdfs:Resource"
+			},
+			"dct:license": {
+				"@id": "http:\/\/data.norge.no\/nlod\/"
+			},
+			"dct:format": [{
+					"@id": "http:\/\/www.iana.org\/assignments\/media-types\/text\/csv"
+				}, {
+					"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/json"
+				}, {
+					"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/xml"
+				}
+			],
+			"dct:description": [{
+					"@language": "no",
+					"@value": "REST-API i formatene XML, JSON(P), CSV og YAML, og komplett nedlasting i CSV."
+				}
+			],
+			"dct:conformsTo": "http:\/\/hotell.difi.no\/application.wadl",
+			"dcat:downloadURL": {
+				"@id": "http:\/\/hotell.difi.no\/download\/difi\/oep\/innsynskrav-2010?download",
+				"@type": "rdfs:Resource"
+			}
+		}, {
+			"@id": "http:\/\/data.brreg.no\/enhetsregisteret\/enhet\/991825827",
+			"@type": "foaf:Agent",
+			"foaf:name": {
+				"@language": "no",
+				"@value": "Direktoratet for forvaltning og IKT"
+			},
+			"dct:identifier": "991825827",
+			"dct:type": "Statsforvaltningen"
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/rdf+xml",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/vnd.sealed-xls",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/TRAN",
+			"@type": "skos:Concept",
+			"skos:prefLabel": "Transport",
+			"skos:inSchema": {
+				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/"
+			}
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/flyreiseaktivitet-i-staten-2009-2013\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2009-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2013-12-31"
+			}
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/text\/html",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/REGI",
+			"@type": "skos:Concept",
+			"skos:prefLabel": "Regioner og byer",
+			"skos:inSchema": {
+				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/"
+			}
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/vnd.oasis.opendocument.spreadsheet",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/ECON",
+			"@type": "skos:Concept",
+			"skos:prefLabel": "\u00d8konomi og finans",
+			"skos:inSchema": {
+				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/"
+			}
+		}, {
+			"@id": "http:\/\/tidstyv.difi.no\/",
+			"@type": "foaf:Document"
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/norgeno-digitale-tjenester-fra-det-offentlige\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2015-01-15"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2018-12-31"
+			}
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/norgeno-tjenesteeiere-statlige-virksomheter-kommuner-og\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2015-01-15"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2018-12-31"
+			}
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/text\/xml",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/ld+json",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-nett-resultatliste-2010\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2010-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2010-12-31"
+			}
+		}, {
+			"@id": "https:\/\/kvalitet.difi.no",
+			"@type": "foaf:Document"
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-nett-resultatliste-2011\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2011-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2011-12-31"
+			}
+		}, {
+			"@id": "http:\/\/www.iana.org\/assignments\/media-types\/application\/x-yaml",
+			"@type": "dct:MediaTypeOrExtent"
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-nett-resultatliste-2013\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2013-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2013-12-31"
+			}
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-nett-detaljresultat-2010\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2010-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2010-12-31"
+			}
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-nett-detaljresultat-2011\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2011-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2011-12-31"
+			}
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-nett-detaljresultat-2013\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2013-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2013-12-31"
+			}
+		}, {
+			"@id": "http:\/\/data.norge.no\/data\/direktoratet-forvaltning-og-ikt\/kvalitet-p%C3%A5-digitale-tjenester-detaljresultat-2014\/temporal\/1",
+			"@type": "dct:PeriodOfTime",
+			"schema:startDate": {
+				"@type": "xsd:date",
+				"@value": "2014-01-01"
+			},
+			"schema:endDate": {
+				"@type": "xsd:date",
+				"@value": "2014-12-31"
+			}
+		}, {
+			"@id": "http:\/\/www.difi.no\/rapporter-og-undersokelser\/statistikk-og-undersokelser\/innbyggerundersokelsen-2015",
+			"@type": "foaf:Document"
+		}, {
+			"@id": "http:\/\/data.norge.no\/node\/95",
+			"@type": "dcat:Dataset",
+			"dct:title": [{
+					"@language": "no",
+					"@value": "Postjournalstatistikk (OEP) - Innsynskrav 2010"
+				}
+			],
+			"dct:description": [{
+					"@language": "no",
+					"@value": "\u003Cp\u003EOffentlig elektronisk postjournal (OEP) ble lansert 18. mai 2010 og er en felles publiseringstjeneste for statlige virksomheters postjournaler. Virksomhetene bruker publiseringsl\u00f8sningen til \u00e5 gj\u00f8re sine egne postjournaler tilgjengelig p\u00e5 internett for alle brukere. De ulike postjournalene blir deretter samlet i en felles database som blir gjort s\u00f8kbar for brukerne. Brukerne kan s\u00f8ke etter informasjon gjennom OEP og bestille innsyn i den informasjonen de finner interessant. Denne bestillingen blir sendt til den virksomheten som er ansvarlig for journaloppf\u00f8ringen. Deretter blir bestillingen behandlet av virksomheten som et innsynskrav, og brukeren f\u00e5r svar direkte fra virksomheten.\u003C\/p\u003E\u003Cp\u003EBruksstatistikk for OEP fra og med lanseringsdato mai 2010 til medio september 2011 er publisert p\u00e5 datahotellet. Dataene viser antall innsynskrav fordelt p\u00e5 statlige virksomhetene hver m\u00e5ned.\u003C\/p\u003E\u003Cp\u003EDatasettet vil oppdateres hver m\u00e5ned framover.\u003C\/p\u003E"
+				}
+			],
+			"dct:identifier": "http:\/\/data.norge.no\/node\/95",
+			"dcat:contactPoint": [{
+					"@id": "http:\/\/data.norge.no\/contacts\/kontakt@oep.no",
+					"@type": "vcard:Kind",
+					"vcard:fn": {
+						"@value": "OEP"
+					},
+					"vcard:hasEmail": {
+						"@value": "kontakt@oep.no"
+					}
+				}
+			],
+			"dct:publisher": {
+				"@id": "http:\/\/data.brreg.no\/enhetsregisteret\/enhet\/991825827"
+			},
+			"dcat:distribution": [{
+					"@id": "http:\/\/data.norge.no\/node\/967"
+				}
+			],
+			"dcat:theme": [{
+					"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/GOVE"
+				}
+			],
+			"dct:accessRights": {
+				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/access-right\/PUBLIC"
+			},
+			"dct:relation": [{
+					"@id": "http:\/\/www.oep.no\/"
+				}
+			],
+			"dcat:keyword": [{
+					"@language": "no",
+					"@value": "statistikk"
+				}, {
+					"@language": "no",
+					"@value": "postjournal"
+				}
+			],
+			"dct:spatial": [{
+					"@id": "Norge"
+				}
+			]
+		},
+		[{
+				"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/",
+				"@type": "skos:ConceptScheme",
+				"dct:title": {
+					"@language": "no",
+					"@value": "Kategorier"
+				}
+			}
+		], {
+			"@id": "http:\/\/data.norge.no\/api\/dcat2\/991825827\/data.jsonld",
+			"@type": "dcat:Catalog",
+			"dct:publisher": {
+				"@id": "http:\/\/data.brreg.no\/enhetsregisteret\/enhet\/991825827"
+			},
+			"dct:title": [{
+					"@language": "no",
+					"@value": "Katalog for Direktoratet for forvaltning og IKT"
+				}
+			],
+			"dct:description": [{
+					"@language": "no",
+					"@value": "Datasett fra Direktoratet for forvaltning og IKT"
+				}
+			],
+			"dcat:dataset": [{
+					"@id": "http:\/\/data.norge.no\/node\/95"
+				}
+			],
+			"dct:language": [{
+					"@id": "NOR"
+				}, {
+					"@id": "ENG"
+				}
+			],
+			"dcat:themeTaxonomy": [{
+					"@id": "http:\/\/publications.europa.eu\/resource\/authority\/data-theme\/"
+				}
+			],
+			"foaf:homepage": "http:\/\/www.difi.no\/",
+			"dct:modified": "2015-01-08"
+		}
+	]
+}

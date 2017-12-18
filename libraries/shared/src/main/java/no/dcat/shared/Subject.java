@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,11 +14,14 @@ import java.util.Map;
 @ToString(includeFieldNames = false)
 public class Subject implements Serializable{
     private String uri;
+    private String identifier;
     private Map<String, String> prefLabel;
-    private Map<String, String> altLabel;
+    private List<Map<String, String>> altLabel;
     private Map<String,String> definition;
     private Map<String,String> note;
     private String source;
+    private Publisher creator;
+    private List<String> inScheme;
 
     public Subject() {
     }

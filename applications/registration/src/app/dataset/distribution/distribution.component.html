@@ -2,9 +2,6 @@
     <div class="form-group" style="margin-bottom: 7px;">
         <div class="form sub-form" *ngIf="showForm">
             <div id="distributionTypeSelector-for-{{componentTitle}}-{{distributionIndex}}">
-              <helptext
-                name="Distribution_type">
-              </helptext>
                 <div class="fdk-radio" *ngFor="let type of typeModel">
                     <input
                         type="radio"

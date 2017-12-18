@@ -5,10 +5,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  devtool:"eval",
+  devtool:"cheap-module-eval-source-map",
   context:path.join(__dirname),
   entry: [
-    //    'webpack-hot-middleware/client?reload=true',
     "babel-polyfill",
     './src/index.jsx'
   ],
@@ -19,7 +18,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin("styles.css"),
     new CopyWebpackPlugin([
       { from: './src/assets/css/bootstrap*', to: './', flatten: true },
@@ -35,28 +34,25 @@ module.exports = {
     extensions:[".js", ".jsx", ".webpack.js", ".web.js"]
   },
   resolveLoader: {
-    // root: path.join(__dirname, "node_modules")
     modules: [__dirname, 'node_modules']
   },
   module: {
-    /*
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/,
-        include: [
-          path.resolve(__dirname, 'start.js'),
-          path.resolve('src')
-        ],
-        exclude: /node_modules/,
-        options: {
-          configFile: path.resolve('./.eslintrc.json')
-        },
-        loader: 'eslint-loader'
-      }
-    ],
-    */
-    loaders: [
+      /*
+       {
+       enforce: 'pre',
+       test: /\.(js|jsx)$/,
+       include: [
+       path.resolve(__dirname, 'start.js'),
+       path.resolve('src')
+       ],
+       exclude: /node_modules/,
+       options: {
+       configFile: path.resolve('./.eslintrc.json')
+       },
+       loader: 'eslint-loader'
+       },
+       */
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
@@ -66,17 +62,10 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
-        // loaders: ["style", "css", "sass"]
+        test: /\.s?css$/,
         use: ExtractTextPlugin.extract({
-
-
           fallback: 'style-loader',
-
-
           use: ['css-loader', 'sass-loader']
-
-
         })
       },
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },

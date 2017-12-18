@@ -1,11 +1,15 @@
 package no.dcat.harvester.crawler.converters;
 
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
+import org.apache.jena.vocabulary.DCTerms;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
@@ -135,4 +139,72 @@ public class BrregAgentConverterEnhetsregIT {
 
         Assert.assertThat(newName, Is.is("SSB"));
     }
+
+    @Test
+    public void testSamePublisherDifferentUri() throws Throwable {
+
+        Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource datasetWithCorrectedPublisher = model.getResource("http://data.brreg.no/datakatalog/dataset/42");
+        String publisherUri = datasetWithCorrectedPublisher.getProperty(DCTerms.publisher).getObject().toString();
+
+        Assert.assertThat(publisherUri, Is.is("http://data.brreg.no/enhetsregisteret/enhet/981544315"));
+    }
+
+
+    @Test
+    public void correctOrgpathKommune() throws Throwable {
+
+        Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
+        String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
+
+        Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
+    }
+
+
+    @Test
+    public void correctOrgpathStat() throws Throwable {
+
+        Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
+        String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
+
+        Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
+    }
+
+    @Test
+    public void correctOrgpathStatFromGeonorge() throws Throwable {
+
+        Model model = FileManager.get().loadModel("publisherFromGeonorge.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
+        String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
+
+        Assert.assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
+    }
+
+    @Test
+    public void correctOrgpathKommuneFromGeonorge() throws Throwable {
+
+        Model model = FileManager.get().loadModel("publisherFromGeonorge.ttl");
+
+        converter.collectFromModel(model);
+
+        Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
+        String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
+
+        Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
+    }
+
 }

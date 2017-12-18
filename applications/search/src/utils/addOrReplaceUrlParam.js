@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 /**
 * Add a URL parameter (or modify if already exists)
 * @param {url}   string  url
@@ -22,7 +24,7 @@ export function addOrReplaceParam(url, param, value) {
    }
    return a.href;
 }
-function removeParam(key, sourceURL) {
+export function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,
         params_arr = [],
@@ -40,3 +42,13 @@ function removeParam(key, sourceURL) {
     return rtn;
 }
 
+/**
+ * Returns language code from url parameter "lang", if exists.
+ * @returns {null}
+ */
+export function getParamFromUrl(param) {
+  const queryObj = qs.parse(window.location.search.substr(1));
+  if (queryObj && queryObj[param]) {
+    return queryObj[param];
+  } return null;
+}

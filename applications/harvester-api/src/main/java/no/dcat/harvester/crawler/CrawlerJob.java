@@ -8,10 +8,10 @@ import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
 import no.dcat.harvester.validation.ValidationError;
-import no.difi.dcat.datastore.AdminDataStore;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.DifiMeta;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.DifiMeta;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
@@ -57,7 +57,7 @@ public class CrawlerJob implements Runnable {
     private AdminDataStore adminDataStore;
     private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
-//    private List<ValidationError> validationErrors = new ArrayList<>();
+
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
     private StringBuilder crawlerResultMessage;
     private Resource rdfStatus;
@@ -107,7 +107,7 @@ public class CrawlerJob implements Runnable {
                 Model rankedUnion = rankingCreator.rankDatasets(union, dcatSource.getUrl());
 
                 for (CrawlerResultHandler handler : handlers) {
-                    handler.process(dcatSource, rankedUnion);
+                    handler.process(dcatSource, rankedUnion, validationResult);
                 }
             }
 
@@ -203,7 +203,6 @@ public class CrawlerJob implements Runnable {
         }
 
         // remember the base url
-
         Resource o = ResourceFactory.createResource(url.toString());
         union.add(DCATCrawler.ImportResource, DCATCrawler.source_url, o);
 
@@ -211,20 +210,18 @@ public class CrawlerJob implements Runnable {
 
         //Enrich model with elements missing according to DCAT-AP-NO 1.1 standard
         DataEnricher enricher = new DataEnricher();
-        Model enrichedUnion = enricher.enrichData(union);
-        union = enrichedUnion;
-
-        // Checks if publisher is registrered in BRREG Enhetsregistret
-        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-        brregAgentConverter.collectFromModel(union);
+        union = enricher.enrichData(union);
 
         // Checks subjects and resolve definitions
         if (subjectCrawler != null) {
-            Model modelWithSubjects = subjectCrawler.annotateSubjects(union);
-            union = modelWithSubjects;
+            union = subjectCrawler.annotateSubjects(union);
         } else {
             logger.warn("Could not annotate subjects. Reason subject crawler is not initialized!");
         }
+
+        // Checks publisher and resolve according to registrered in BRREG Enhetsregistret
+        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
+        brregAgentConverter.collectFromModel(union);
 
         return union;
     }
@@ -341,7 +338,7 @@ public class CrawlerJob implements Runnable {
      * Remove non-valida datasets from model
      * Non-valid datasets are those with ruleSeverity=error
      * in global variable validationErrors
-     * @param model
+     * @param model the model containing the resources to be removed
      */
     private void removeNonValidDatasets(Model model) {
 
@@ -360,7 +357,7 @@ public class CrawlerJob implements Runnable {
     /**
      * Remove triples containing DCTerms.spatial URLs that cannot be resolved
      *
-     * @param model
+     * @param model the model
      */
     private String removeNonResolvableLocations(Model model) {
         StringBuilder resultMsg = new StringBuilder();
@@ -429,7 +426,7 @@ public class CrawlerJob implements Runnable {
      * Prepare status summary message for non valid datasets, if any exists
      * The message contains a list of datasets IDs that will not be imported
      * due to validation failure.
-     * The message is created from contents of global variable nonValidDatasets
+     * The message is created from contents of global variable nonValidDatasetUris
      *
      * @return String containing validation summary message
      */

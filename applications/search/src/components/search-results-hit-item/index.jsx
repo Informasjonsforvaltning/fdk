@@ -69,7 +69,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       return (
         <span>
           {localization.search_hit.owned}&nbsp;
-          <span id="search-hit-publisher-text">
+          <span className="fdk-strong-virksomhet">
             {
               (publisher && publisher.name)
                 ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase()
@@ -89,7 +89,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
       themeNodes = theme.map((singleTheme, index) => (
         <div
           key={`dataset-description-theme-${index}`}
-          id={`dataset-description-theme-${index}`}
           className="fdk-label"
         >
           {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
@@ -180,13 +179,13 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         href={`${link}${langParam}`}
       >
         <div className="fdk-container fdk-container-search-hit">
-          <h2 id="search-hit-title">{title}</h2>
-          <div>
+          <h2>{title}</h2>
+          <div className="fdk-dataset-themes">
             {this._renderPublisher()}
             {this._renderThemes()}
           </div>
           <p
-            className="fdk-p-search-hit block-with-textx"
+            className="fdk-p-search-hit"
           >
             {description}
           </p>

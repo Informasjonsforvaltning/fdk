@@ -2,7 +2,7 @@ package no.dcat.harvester;
 
 
 import no.dcat.harvester.clean.HtmlCleaner;
-import no.difi.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
@@ -50,6 +50,10 @@ public class DataEnricher {
         if (isVegvesenet()) {
             enrichForVegvesenet();
         }
+        if (isDatanorge()) {
+            enrichForDatanorge();
+        }
+
         enrichLanguageAndCleanHtml();
 
         //Remove statements marked for deletion
@@ -71,10 +75,20 @@ public class DataEnricher {
 
 
     /**
+     * Check if model is from data.norge.no (Norwegian register for open data)
+     */
+    private boolean isDatanorge() {
+        //detect datanorge data by doing a string match against the uri of a catalog
+        ResIterator resIterator = model.listResourcesWithProperty(RDF.type, model.createResource("http://www.w3.org/ns/dcat#Catalog"));
+        return resIterator.hasNext() && resIterator.nextResource().getURI().contains("data.norge.no");
+    }
+
+
+    /**
      * Check if model is from Vegvesenet (Norwegian state roads authority)
      */
     private boolean isVegvesenet() {
-        //detect entryscape data by doing a string match against the uri of a catalog
+        //detect Vegvesenet data by doing a string match against the uri of a catalog
         ResIterator resIterator = model.listResourcesWithProperty(RDF.type, model.createResource("http://www.w3.org/ns/dcat#Catalog"));
         return resIterator.hasNext() && resIterator.nextResource().getURI().contains("utv.vegvesen.no");
     }
@@ -180,6 +194,23 @@ public class DataEnricher {
 
 
     } //end method enrichForVegvesenet
+
+
+    /**
+     * Add properties to distribution license objects for datasets from datanorge
+     */
+    private void enrichForDatanorge() {
+        // Add dct:LicenseDocument to license, if it is missing
+        NodeIterator licenses = model.listObjectsOfProperty(DCTerms.license);
+        while (licenses.hasNext()) {
+            Resource license = licenses.next().asResource();
+            if(license.getProperty(DCTerms.source) == null) {
+                license.addProperty(RDF.type, model.createResource("http://purl.org/dc/terms#LicenseDocument"));
+                license.addProperty(DCTerms.source, license.getURI());
+            }
+        }
+    }
+
 
     /**
      * Add language tag to dataset title, description and keyword if this is missing

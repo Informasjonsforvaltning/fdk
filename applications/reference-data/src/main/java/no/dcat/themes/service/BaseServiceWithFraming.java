@@ -20,6 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 abstract class BaseServiceWithFraming {
 
@@ -57,6 +61,7 @@ abstract class BaseServiceWithFraming {
         if (uri.getProtocol().equals("http") || uri.getProtocol().equals("https")) {
 
             String syntax[] = {null, RDFLanguages.strLangTurtle, RDFLanguages.strLangJSONLD, RDFLanguages.strLangN3};
+            Map<String,String> noSucessWithSyntax = new HashMap<>();
 
             for (String s : syntax) {
                 try {
@@ -66,9 +71,15 @@ abstract class BaseServiceWithFraming {
                         return FileManager.get().loadModel(uri.toString());
                     }
                 } catch (RiotException e) {
-                    logger.info("URI <{}> caused syntax error. Tried format {}", uri, s);
+                    noSucessWithSyntax.put(s, e.getLocalizedMessage());
                 }
             }
+
+            logger.warn("Couldn't read <{}>. Tried the following formats {}", uri, noSucessWithSyntax.keySet().toString());
+            noSucessWithSyntax.forEach( (key, value) -> {
+                logger.warn("Format {} caused {}", key, value);
+            });
+
         } else {
             throw new MalformedURLException("Protocol not supported");
         }

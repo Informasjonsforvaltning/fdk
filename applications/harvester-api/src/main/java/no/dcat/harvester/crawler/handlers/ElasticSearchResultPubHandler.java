@@ -3,18 +3,23 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
-import no.difi.dcat.datastore.Elasticsearch;
-import no.difi.dcat.datastore.domain.DcatSource;
-import no.difi.dcat.datastore.domain.dcat.Publisher;
-import no.difi.dcat.datastore.domain.dcat.builders.PublisherBuilder;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for loading the complete publisher-hieararchi.
@@ -48,7 +53,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
      * @param model - The modellel on rdf-formatt that shall conatin the publishers.
      */
     @Override
-    public void process(DcatSource dcatSource, Model model) {
+    public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.trace("Processing results Elasticsearch");
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
@@ -62,12 +67,14 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     }
 
     protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
         logger.debug("Preparing bulkRequest for Publishers.");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         List<Publisher> publishers = new PublisherBuilder(model).build();
+        publishers.addAll(getTopAgentsNotIndexed(elasticsearch, publishers, gson));
+
         for (Publisher publisher: publishers) {
 
             IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
@@ -81,7 +88,51 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         }
     }
 
+    public List<Publisher> getTopAgentsNotIndexed(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
+        List<Publisher> result = new ArrayList<>();
+
+        String[] topDomains = {"STAT", "FYLKE", "KOMMUNE", "PRIVAT", "ANNET"};
+        for (String domain : topDomains) {
+            Publisher topPub = lookupPublisher(elasticsearch.getClient(), domain, gson);
+            if (topPub == null) {
+                topPub = new Publisher();
+                topPub.setOverordnetEnhet("/");
+                topPub.setOrgPath("/"+ domain);
+                topPub.setId(domain);
+                topPub.setName(domain);
+
+                result.add (topPub);
+            }
+        }
+
+        return result;
+    }
+
+    public Publisher lookupPublisher(Client client, String id, Gson gson) {
+        GetResponse response = client.prepareGet("dcat", "publisher", id).get();
+
+        if (response.isExists()) {
+            Publisher lookup = gson.fromJson(response.getSourceAsString(), Publisher.class);
+            return lookup;
+        }
+
+        return null;
+    }
+
     protected IndexRequest addPublisherToIndex(Gson gson, Publisher publisher) {
+        if (publisher.getId() == null) {
+            Pattern p = Pattern.compile("(enhetsregisteret/enhet/)(\\d+)");
+            Matcher m = p.matcher(publisher.getUri());
+
+            if (m.find()) {
+                publisher.setId(m.group(2));
+            }
+        }
+
+        if (publisher.getId() == null) {
+            publisher.setId(publisher.getUri());
+        }
+
         logger.debug("Add publisher {} to index.", publisher.getId());
 
         IndexRequest indexRequest = new IndexRequest(DCAT, PUBLISHER_TYPE, publisher.getId());

@@ -168,6 +168,7 @@ services:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   reference-data:
+    restart: always
     ports:
       - 8100:8080
     environment:
@@ -184,15 +185,14 @@ services:
 #    networks:
 #      logging:
 
-#  kibana:
-#    ports:
-#      - 5601:5601
-#    environment:
-#      - ELASTICSEARCH_URL=http://elasticsearch:9200
-#    #volumes:
-#    #      - ./data/kibana/config/:/opt/kibana/config/
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      logging:
+  kibana:
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    #volumes:
+    #      - ./data/kibana/config/:/opt/kibana/config/
+    depends_on:
+      - elasticsearch
+
 

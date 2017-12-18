@@ -1,8 +1,8 @@
 package no.dcat.harvester.service;
 
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.builders.DatasetBuilder;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -88,10 +88,19 @@ public class SubjectCrawler {
     public void removeDuplicatedProperties(Subject subject, Resource resource) {
 
         removeProperty(subject.getPrefLabel(), resource, SKOS.prefLabel);
-        removeProperty(subject.getAltLabel(), resource, SKOS.altLabel);
+        removePropertyList(subject.getAltLabel(), resource, SKOS.altLabel);
         removeProperty(subject.getDefinition(), resource, SKOS.definition);
         removeProperty(subject.getNote(), resource, SKOS.note);
         // TODO more attributes? source, date...
+    }
+
+    private void removePropertyList(List<Map<String,String>> labels, Resource resource, Property property){
+        Statement stmnt = resource.getProperty(property);
+        if (stmnt != null && labels != null && !labels.isEmpty()) {
+            labels.forEach( label -> {
+                removeProperty(label, resource, property);
+            });
+        }
     }
 
     private void removeProperty(Map<String,String> label, Resource resource, Property property) {

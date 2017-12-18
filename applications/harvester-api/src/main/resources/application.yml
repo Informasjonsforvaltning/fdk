@@ -5,6 +5,7 @@ logging:
   level.no.dcat: INFO
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
+  level.org.elasticsearch: WARN
 server:
   port: 8080
 management:
@@ -34,7 +35,7 @@ logging:
   level.: ERROR
   level.no.brreg: ERROR
   level.no.difi: INFO
-  level.no.dcat: DEBUG
+  level.no.dcat: INFO
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
 fuseki:

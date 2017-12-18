@@ -6,16 +6,9 @@
           name="Dataset_type">
         </helptext>
         <div id="typeSelector">
-            <label class="checkbox" (click)="labelClicked(this, $event, type.id)" *ngFor="let type of typeModel">
-              <input
-                type="radio"
-                class="expand-checkbox"
-                id="typeSelector-{{type.id}}"
-                [checked]="type.id === selectedTypeIdx"
-                [value]="type.id"
-                formControlName="type">
-              <label class="checkbox-replacement" for="typeSelector-{{type.id}}"></label>
-                <span>{{type.label}}</span>
+            <label class="checkbox" (click)="labelClicked(type.id)" *ngFor="let type of typeModel">
+              <label class="{{type.class}}" for="typeSelector-{{type.id}}"></label>
+              <span>{{type.label}}</span>
             </label>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DocumentMeta from 'react-document-meta';
 
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
@@ -39,8 +40,13 @@ export default class DatasetDescription extends React.Component { // eslint-disa
   }
 
   render() {
+    const meta = {
+      title: this.props.title,
+      description: this.props.description
+    };
     return (
       <div id="dataset-description">
+        <DocumentMeta {...meta} />
         {this.props.title &&
         <h1 className="fdk-margin-bottom">
           {this.props.title}

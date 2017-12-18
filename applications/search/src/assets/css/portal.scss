@@ -10,6 +10,21 @@
 	padding: 15px 15px 20px 15px;
 }
 
+.fdk-container-compare {
+	margin: 0px 100px 0px 100px;
+	background-color: $color0;
+	padding: 40px;
+}
+
+.fdk-header-compare {
+	margin: 100px 100px 0px 100px;
+	background-color: $color1;
+	color: $color0;
+	padding: 20px 40px;
+	border-radius: 4px 4px 0px 0px;
+}
+
+
 
 /*  I N P U T  */
 
@@ -44,17 +59,52 @@
 }
 
 
+
 /*  S E A R C H   R E S U L T  */
 
 
 .fdk-container-search-hit {
-  background-color: $color0;
+	background-color: $color0;
+	color: $color1;
 	border: 1px solid $color6;
-  margin: 0 0 10px 0;
-  padding: 10px 30px 35px 30px;
-  border-radius: 5px;
+	margin: 0 0 10px 0;
+	padding: 25px 30px 30px 30px;
+	border-radius: 5px;
+	text-decoration: none;
 }
 
+a > .fdk-container-search-hit {
+	color: $color1;
+	text-decoration: none !important;
+}
+
+.fdk-container-access {
+	width: 100%;
+	margin-top: 0px;
+}
+
+
+.fdk-label-distribution {
+	padding: 7px 9px;
+	margin: 6px 2px 0px 0px;
+	color: $color1;
+	border-radius: 5px;
+	size: 1.5rem;
+	line-height: 1.5rem;
+	size: auto;
+	display: inline-block;
+	border: 2px solid $color2;
+}
+
+.fdk-container-tilgang {
+	width: 100%;
+	margin: 0px 20px 10px 0px;
+	vertical-align: middle;
+}
+
+.fdk-container-distr {
+	width: auto;
+}
 
 .fdk-container-distributions {
 	width: 100%;
@@ -74,6 +124,8 @@
 	border-left: 10px solid $color-red;
 }
 
+
+
 .fdk-count {
     float: right;
 }
@@ -82,6 +134,151 @@
 
 .fdk-p-search-hit {
 	margin-top: 20px;
+}
+
+.fdk-icon-tilgangsniva {
+	font-size: 3.5rem !important;
+	line-height: 3.5rem;
+	margin-right: 15px;
+	color: $color2;
+}
+
+.fdk-tilgangsniva {
+	font-weight: 600;
+}
+
+.fdk-distribution-format {
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-right: 6px;
+}
+
+
+/*  P A G I N A T I O N  */
+
+.fdk-container-pagination {
+	margin: auto;
+	margin-top: 30px;
+	display: block;
+	text-align: center;
+}
+
+.fdk-pagination {
+    margin: -2px;
+		padding: 7px 10px;
+    text-align: center;
+    display: inline-block;
+}
+
+.fdk-pagination:active, .fdk-pagination-selected {
+    background-color: $color1;
+		color: $color0;
+}
+
+.fdk-pagination:hover {
+    background-color: $color5;
+}
+
+.fdk-pagination-selected:hover {
+    background-color: $color1;
+		text-decoration: none;
+}
+
+.fdk-pagination-previous {
+    border-radius: 3px 0px 0px 3px;
+}
+
+.fdk-pagination-next {
+    border-radius: 0px 3px 3px 0px;
+}
+
+a > .fdk-pagination {
+	text-decoration: underline;
+}
+
+a > .fdk-pagination:hover {
+	text-decoration: none;
+}
+
+/* fonts */
+
+a > .fdk-pagination {
+	color: $color1;
+}
+
+a > .fdk-pagination:hover {
+	color: $color1;
+}
+
+
+
+/*  F I L T E R  */
+
+.fdk-panel-group {
+	margin-bottom: 10px;
+	background: none;
+	border-radius: 4px;
+}
+
+.fdk-panel {
+	background-color: $color5;
+	border: none;
+	box-shadow: none;
+	margin-bottom: 10px;
+}
+
+.fdk-panel-heading {
+	background-color: $color5;
+	border-radius: 4px;
+	padding: 20px;
+	color: $color1;
+	font-size: 1.875rem;
+	line-height: 1.875rem;
+	font-weight: 400;
+	text-decoration: none;
+	box-shadow: none;
+}
+
+a > .fdk-panel-heading {
+	text-decoration: none !important;
+}
+
+.fdk-panel-collapse {
+	background-color: $color6;
+	border-radius: 0px 0px 4px 4px;
+	box-shadow: none;
+}
+
+.fdk-list-group {
+	box-shadow: none;
+}
+
+.fdk-list-group-item {
+	background-color: $color-cta;
+	padding: 8px 20px;
+	border-top: 1px solid $color4;
+	margin-top: -4px;
+	box-shadow: none;
+}
+
+.fdk-list-group-item:hover {
+	background-color: $color4;
+}
+
+.fdk-list-group-item:first-child {
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+
+.fdk-list-group-item:last-child {
+	border-radius: 0px 0px 4px 4px !important;
+}
+
+
+/* OBS! DENNE MÅ SKRIVES OM!!! */
+.panel-default > .fdk-panel-heading {
+	background-image: none;
+	border: none;
 }
 
 
@@ -192,9 +389,15 @@
 }
 
 
-.fdk-button-page {
-	width: 50px;
+
+/*  C O M P A R E  */
+
+.fdk-container-compare > hr {
+	border-color: var(--color5);
+	margin-top: 25px;
+	margin-bottom: 25px;
 }
+
 
 
 /*  T Y P O G R A P H Y  */
@@ -217,33 +420,38 @@
 	line-height: 1.5rem;
 }
 
+.fdk-icon-distribution {
+	font-size: 3rem !important;
+	line-height: 3rem;
+	margin-right: 20px;
+}
+
 .fdk-distribution-format {
 	font-weight: 700;
 	text-transform: uppercase;
 	margin-right: 6px;
 }
-.search-filters .sk-item-list > input[type=checkbox] {
-	position: absolute;
-	left:-9999px;
+
+.fdk-header-compare > h4 {
+	color: var(--color0);
+	font-weight: 400;
+	margin: 0px;
+	display: inline-block;
 }
-.search-filters .sk-item-list > label {
-	cursor: pointer;
+
+.fdk-header-compare > .fa {
+	font-size: 1.85rem;
+	color: $color0;
 }
-.search-filters .sk-item-list > label:last-child {
-	display: none;
+
+.fdk-container-compare > .fdk-strong-virksomhet {
+	color: $color-cta;
 }
-.search-filters div.checkbox:nth-child(-n+5) {
-    display: block;
+
+.fdk-container-compare > .row > .col-md-6 > p {
+	margin-bottom: 0px;
 }
-.search-filters input[type=checkbox]:checked ~ div {
-    display: block !important;
-}
-.search-filters input[type=checkbox]:checked ~ label {
-    display: none !important;
-}
-.search-filters input[type=checkbox]:checked ~ label:last-child {
-    display: inline-block !important;
-}
-.search-filters div.checkbox {
-    display: none;
+
+.fdk-container-compare > .row > .col-md-6 > h3 {
+	margin-bottom: 6px;
 }

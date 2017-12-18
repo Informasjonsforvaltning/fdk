@@ -4,7 +4,7 @@ import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
-import no.difi.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;
@@ -65,6 +65,7 @@ public class DcatSourcesConverterIT {
         Subject actualSubject = actualSubjects.get(0);
 
         assertThat(actualSubject.getPrefLabel().get("no"), is("enhet") );
+        assertThat(actualSubject.getCreator().getUri(), is("http://data.brreg.no/enhetsregisteret/enhet/974760673"));
     }
 
     @Test

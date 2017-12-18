@@ -1,0 +1,29 @@
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix apf:   <http://jena.apache.org/ARQ/property#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://data.brreg.no/datakatalog/dataset/13>
+        a                  dcat:Dataset ;
+        dct:publisher   <https://register.geonorge.no/register/organisasjoner/kartverket/hitra-kommune> .
+
+<http://data.brreg.no/datakatalog/dataset/42>
+        a           dcat:Dataset;
+        dct:publisher <https://register.geonorge.no/register/organisasjoner/kartverket/landbruksdirektoratet> .
+
+<https://register.geonorge.no/register/organisasjoner/kartverket/landbruksdirektoratet>
+        a       foaf:Agent ;
+        dct:identifier "981544315";
+        foaf:name "Landbruksdirektoratet" .
+
+<https://register.geonorge.no/register/organisasjoner/kartverket/hitra-kommune>
+        a       foaf:Agent ;
+        dct:identifier "938772924";
+        foaf:name "Hitra kommune" .
