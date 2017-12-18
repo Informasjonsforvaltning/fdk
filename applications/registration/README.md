@@ -8,9 +8,7 @@ The registration application provides functionality for end users to create, upd
 and publish Data Catalog descriptions.
 
 # Run
-```
-npm run-script ng serve
-```
+```npm run-script ng serve```
 
 #  Overview
 The registration application allows authorized users to create, update, store and publish Data Catalog descriptions.
@@ -22,19 +20,19 @@ The registration application allows authorized users to create, update, store an
 # Architecture
 The application uses two main components; Catalog and Dataset.
 * Catalog 
-    * catalog.component.ts
+    * ```catalog.component.ts```
         - Allows user to edit description for his catalog.
         - Gives user an overview of the datasets and their status in the catalog.
         - Allows user to import dataset descriptions from external resources or create new dataset descriptions.
-    * catalog.service.ts
+    * ```catalog.service.ts```
         - Handles communication with registration-api.
 * Dataset
-    * dataset.component.ts
+    * ```dataset.component.ts```
         - With child components allows user to edit all dataset description data.
         - Main class for handling data in and out between application and registration-api.        
-    * dataset.service.ts
+    * ```dataset.service.ts```
         - Handles communication with registration-api. 
-    * validate.ts
+    * ```validate.ts```
         - Handles validation to force proper data form before sending to registration-api.
 
 # Dependencies
