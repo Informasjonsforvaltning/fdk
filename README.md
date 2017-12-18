@@ -74,7 +74,11 @@ External Integrations
   * IDPorten, for authentication of users
   * Altinn, for authorization of users
 
-# Running the individual applications
+# Start individual applications
+There is a couple of scripts that automates build and run the various models ondocker. The scripts are:
+  * `./runDocker.sh search-api` to compile, build and run the search-api module on docker
+  * `./runAll.sh` to run compile, build and run all the modules on docker
+  
 
 ## Search application:
 >`docker-compose up -d search`
