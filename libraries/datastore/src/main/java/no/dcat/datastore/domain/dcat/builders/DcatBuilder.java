@@ -55,8 +55,6 @@ public class DcatBuilder {
 
     public static final Model mod = ModelFactory.createDefaultModel();
 
-    public static final Resource QUALITY_ANNOTATION = mod.createResource(DQV.NS + "QualityAnnotation");
-
     static Property schema_startDate = mod.createProperty("http://schema.org/startDate");
     static Property schema_endDate = mod.createProperty("http://schema.org/endDate");
 
@@ -297,18 +295,17 @@ public class DcatBuilder {
     private void addQualityAnnotation(Resource datRes, Property hasQualityAnnotation, QualityAnnotation annotation) {
         if (annotation != null) {
             Resource qualityAnnotation = model.createResource();
-            Resource dimension = model.createResource(annotation.getInDimension());
-            qualityAnnotation.addProperty(RDF.type, QUALITY_ANNOTATION);
 
+            qualityAnnotation.addProperty(RDF.type, DQV.QualityAnnotation);
             datRes.addProperty(hasQualityAnnotation, qualityAnnotation);
 
+            Resource dimension = DQV.resolveDimensionResource(annotation.getInDimension());
             qualityAnnotation.addProperty(DQV.inDimension, dimension);
 
             Resource body = model.createResource();
             addLiterals(body, RDF.value, annotation.getHasBody());
 
             qualityAnnotation.addProperty(OA.hasBody, body);
-
         }
     }
 

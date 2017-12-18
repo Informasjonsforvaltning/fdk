@@ -41,12 +41,8 @@ public abstract class AbstractBuilder {
     static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
 
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
-    static Map<String, Contact> contactMap;
+    static Map<String, Contact> contactMap = new HashMap<>();
 
-
-    public AbstractBuilder() {
-        contactMap = new HashMap<>();
-    }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
         List<String> result = new ArrayList<>();
@@ -182,21 +178,6 @@ public abstract class AbstractBuilder {
         }
         return null;
     }
-
-    public static <T> List<T> asList(T... elements) {
-        List<T> result = new ArrayList<>();
-        for (T el : elements) {
-            if (el != null) {
-                result.add(el);
-            }
-        }
-        if (result.size() > 0 ) {
-            return result;
-        }
-
-        return null;
-    }
-
 
 
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
@@ -398,13 +379,13 @@ public abstract class AbstractBuilder {
      *
      * If no contacts is found. It only creates contacts if it has attributes.
      *
-     * @param resource the resource which contains the contact point resource
+     * @param datasetResource the resource which contains the contact point resource
      * @return a list of instantiated Contact object.
      */
-    public static List<Contact> extractContacts(Resource resource) {
+    public static List<Contact> extractContacts(Resource datasetResource) {
         try {
             List<Contact> result = new ArrayList<>();
-            StmtIterator iterator = resource.listProperties(DCAT.contactPoint);
+            StmtIterator iterator = datasetResource.listProperties(DCAT.contactPoint);
             while (iterator.hasNext()) {
                 Contact contact = new Contact();
                 boolean hasAttributes = false;
@@ -412,7 +393,7 @@ public abstract class AbstractBuilder {
                 final Statement property = iterator.next();
 
                 if (property == null) {
-                    logger.warn("Missing property {} from resource {}", DCAT.contactPoint, resource.getURI());
+                    logger.warn("Missing property {} from resource {}", DCAT.contactPoint, datasetResource.getURI());
                     continue;
                 }
 
@@ -486,7 +467,7 @@ public abstract class AbstractBuilder {
 
         } catch (Exception e) {
             logger.warn("Error when extracting property {} from resource {}. Reason {}",
-                    DCAT.contactPoint, resource.getURI(), e.getLocalizedMessage());
+                    DCAT.contactPoint, datasetResource.getURI(), e.getLocalizedMessage());
         }
 
         return null;
@@ -497,11 +478,11 @@ public abstract class AbstractBuilder {
     /**
      * Extract period of time property from DCAT resource and map to model class.
      *
-     * @param resource DCAT RDF resource
+     * @param datasetResource DCAT RDF resource
      * @return List of period of time objects
      * TODO: implement extraction of time period name
      */
-    public static List<PeriodOfTime> extractPeriodOfTime(Resource resource) {
+    public static List<PeriodOfTime> extractPeriodOfTime(Resource datasetResource) {
 
         List<PeriodOfTime> result = new ArrayList<>();
 
@@ -509,7 +490,7 @@ public abstract class AbstractBuilder {
             //Denne virker av en eller annen grunn ikke. Må i stedet iterere gjennom alle statemts og sjekke predikat
             //StmtIterator iterator = resource.listProperties(DCTerms.temporal);
 
-            StmtIterator iterator = resource.listProperties();
+            StmtIterator iterator = datasetResource.listProperties();
             while (iterator.hasNext()) {
                 Statement stmt = iterator.next();
                 if (stmt.getPredicate().equals(DCTerms.temporal)) {
@@ -545,7 +526,7 @@ public abstract class AbstractBuilder {
                 }
             }
         } catch (Exception e) {
-            logger.warn("Error when extracting property {} from resource {}. Reason {}", DCTerms.temporal, resource.getURI(), e.getLocalizedMessage());
+            logger.warn("Error when extracting property {} from resource {}. Reason {}", DCTerms.temporal, datasetResource.getURI(), e.getLocalizedMessage());
         }
         if (result.size() > 0) {
             return result;
@@ -659,21 +640,5 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-    protected static Map<String, String> getTitlesOfCode(Map<String, Map<String, SkosCode>> allCodes, String type, String codeKey) {
 
-        Map<String, SkosCode> codesOfType = allCodes.get(type);
-
-        if (codesOfType == null) {
-            logger.info("Codes of type {} does not exist.", type);
-            return null;
-        }
-
-        SkosCode code = codesOfType.get(codeKey);
-        if (code == null) {
-            logger.info("Codes of type {} and key {} does not exist and will be removed.", type, codeKey);
-            return null;
-        }
-
-        return code.getPrefLabel();
-    }
 }

@@ -1,7 +1,5 @@
 package no.dcat.harvester.crawler.converters;
 
-import no.dcat.datastore.domain.dcat.builders.DcatReader;
-import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
