@@ -9,6 +9,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
@@ -88,8 +89,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
-                                         @RequestParam(value = "sortfield", defaultValue = "source") String sortfield,
-                                         @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection) {
+                                         @RequestParam(value = "sortfield", defaultValue = "") String sortfield,
+                                         @RequestParam(value = "sortdirection", defaultValue = "") String sortdirection) {
 
 
         StringBuilder loggMsg = new StringBuilder()
@@ -101,7 +102,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" sortdirection:").append(sortdirection)
                 .append(" theme:").append(theme)
                 .append(" publisher:").append(publisher)
-                .append(" accessRights:").append(accessRights);
+                .append(" accessRights:").append(accessRights)
+                ;
 
         logger.debug(loggMsg.toString());
 
@@ -126,15 +128,17 @@ public class DatasetsQueryService extends ElasticsearchService {
             search = QueryBuilders.matchAllQuery();
         } else {
             search = QueryBuilders.simpleQueryStringQuery(query)
+
                     .analyzer(analyzerLang)
-                    .field("title" + "." + lang)
+                    .field("title" + "." + lang).boost(3f)
                     .field("objective" + "." + lang)
-                    .field("keyword" + "." + lang)
+                    .field("keyword" + "." + lang).boost(2f)
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
-                    .field("publisher.name")
+                    .field("publisher.name").boost(3f)
                     .field("accessRights.prefLabel" + "." + lang)
-                    .field("accessRights.code");
+                    .field("accessRights.code")
+                    .defaultOperator(SimpleQueryStringBuilder.Operator.OR);
         }
 
         logger.trace(search.toString());
@@ -154,8 +158,10 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"));
 
-
-        addSort(sortfield, sortdirection, searchBuilder);
+        // Handle attempting to sort on score, because any sorting removes score i.e. relevance from the search.
+        if (sortfield.compareTo("score") != 0) {
+            addSort(sortfield, sortdirection, searchBuilder);
+        }
 
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();

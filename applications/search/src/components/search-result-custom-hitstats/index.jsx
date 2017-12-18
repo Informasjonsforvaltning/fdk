@@ -1,40 +1,28 @@
-import React from 'react'; // const React = require('react');
-import qs from 'qs'; // const qs = require('qs');
+import React from 'react';
 
 import localization from '../localization';
+import { getParamFromUrl} from '../../utils/addOrReplaceUrlParam';
 
-const state = {}
 const CustomHitsStats = (props) => {
   const { hitsCount, timeTaken, prefLabel } = props;
-  const queryObj = qs.parse(window.location.search.substr(1));
-  const language = localization.getLanguage();
-  const locationHref = window.location.href;
   const hitsCountInt = hitsCount ? parseInt(hitsCount, 10) : 0;
 
-  const filteringOrTextSearchPerformed = queryObj ? Object.keys(queryObj).length > 1 || (Object.keys(queryObj).length === 1 && !queryObj.lang) : false;
-  let previousState = '';
-  let requestCompleted = true;
-  const initialCountSummaryShown = requestCompleted && hitsCountInt;
+  let filteringOrTextSearchPerformed = false;
 
-  if(timeTaken === state.timeTaken && language === state.language && locationHref === state.locationHref) {
-    requestCompleted =  false;
+  if (getParamFromUrl('q') || getParamFromUrl('theme') || getParamFromUrl('accessRight') || getParamFromUrl('publisher')) {
+    filteringOrTextSearchPerformed = true;
   }
-  if(state.initialCountSummaryShown) {
-    previousState = 'initialCountSummaryShown';
-  } else {
-    previousState = 'searchSummaryShown';
+  const initialCountSummaryShown = hitsCountInt && !filteringOrTextSearchPerformed;
+
+  let requestCompleted = false;
+  if(timeTaken > 0) {
+    requestCompleted =  true;
   }
-  state.language = language;
-  state.timeTaken = timeTaken;
-  state.locationHref = locationHref;
-  state.initialCountSummaryShown = initialCountSummaryShown;
-  state.hitsCount = hitsCount;
 
   if (
     requestCompleted &&
-      filteringOrTextSearchPerformed &&
-      previousState !== 'initialCountSummaryShown'
-  ) { // it's a search
+    filteringOrTextSearchPerformed
+  ) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
@@ -42,7 +30,7 @@ const CustomHitsStats = (props) => {
         </div>
       </div>
     );
-  } else if (requestCompleted && hitsCountInt) {
+  } else if (initialCountSummaryShown) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info nosearch" data-qa="info">
