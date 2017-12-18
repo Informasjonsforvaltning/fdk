@@ -1,30 +1,84 @@
 [![Build Status](https://travis-ci.org/Altinn/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
 [![Coverage Status](https://coveralls.io/repos/github/Altinn/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
 
-# Felles datakatalog
+# The National Data Directory (Felles datakatalog)
 
-Dette er den første felleskomponenten som utvikles i regi av 
-Skate (https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate). 
-Felles datakatalog skal tilby en oversikt over hvilke datasett som offentlige
-virksomheter har. Det skal tilbys en søkeløsning (portal) som gjør det mulig å 
-søke og finne relevante datasettbeskrivelser. Prosjektet går over 2 år med 
-oppstart høsten 2016. Forventet ferdig ved utgangen av 2017. 
+This repository contains the source code for the [National Data Directory](https://fellesdatakatalog.brreg.no) of Norway. 
+The work was funded and led by the [Brønnøysund Register Centre](https://www.brreg.no/home/) and the Data Directory was launched November 2017. 
+The Data Directory contains metadata about the datasets that the various Governmental bodies maintain in their data catalogs. 
+We provide a search service that allow users to discover datasets and where they are kept. 
+The data catalogs are formatted according to the Norwegian profile [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/)
+of the [European profile](https://joinup.ec.europa.eu/release/dcat-ap-v11) of [W3C's Data Catalog standard](https://www.w3.org/TR/vocab-dcat/). 
 
-Systemet er basert på en norsk profil DCAT-AP-NO 1.1 av en Europeisk og W3C standard
-for utveksling av datasettbeskrivelser, se https://doc.difi.no/dcat-ap-no/. 
-Systemet bygger videre på kode som ble utviklet i DIFIs pilotprosjekt: 
-Nasjonal infrastruktur for felles datakatalog (våren 2016). 
- 
-# Docker module
+Three main applications are developed:
+  1. A Search Application that allow users to search and browse metadata about the datasets.
+  1. A Harvester Application that downloads data catalogs and makes them searchable.
+  1. A Registration Application that allow users to register metadata about their datasets.
 
-Used for starting containers locally with docker compose. You need docker installed 
-and allow it to share disk.
-
-# Download
-Download the docker-compose.yml and docker-compose.override.yml files to a empty directory. Create a catalog called data. 
-Then start the wanted application (se below) 
+Norwegian description:
+> [Felles datakatalog](https://fellesdatakatalog.brreg.no) gir en oversikt over datasett fra virksomheter i Norge. Løsningen er
+utviklet av [Brønnøysundregistrene](https://www.brreg.no/) i perioden 2016 til desember 2017. Løsningen 
+ble lansert i november 2017. Det er en av flere felleskomponenten som
+utvikles i regi av [Skate](https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/skate) 
+som skal bidra til å bedre integrasjon mellom offentlige virksomheter og bedre tjenester. 
+Systemet er basert på en norsk profil [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/),
+av en [Europeisk profil](https://joinup.ec.europa.eu/release/dcat-ap-v11) av [W3C Datakatalog standard](https://www.w3.org/TR/vocab-dcat/)
+for utveksling av datasettbeskrivelser. 
 
 # Usage
+
+## Test the search application
+The search application is available [here](https://fellesdatakatalog.brreg.no). The two other applications
+are only available for registered users. 
+Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no)
+
+## Comile
+The system consists of several modules which can be compiled with `mvn clean install`. 
+A successful build results in corresponding docker images. 
+
+## Run from Docker Hub
+The docker images are also available on [Docker Hub](https://hub.docker.com/u/dcatno/). 
+This means that you do not have to compile the project to run it. But you need docker installed on your computer.
+You need to download the following two files [docker-compose.yml](/docker-compose.yml) and
+[docker-compose.override.yml](/docker-compose.override.yml). And then you can run the following command:
+
+        `docker-compose up -d`.
+
+# Modules 
+
+![Architecture](/images/fdk-architecture-logic.png)
+
+The Registration Application consists of the following main modules:
+  * registration, an Angular 2 application which allow users to log in and edit or register metadata about datasets.
+  * registration-api, a Java Spring Boot service which supports an REST API
+  * registration-db, a Elasticsearch document database
+  * registration-validator, a Java Spring Boot service that can validate inputdata against the DCAT standard. Currently not in use.
+  * registration-auth, A Java Spring Boot service that act as a authentication and authorization service. Used
+  in develop and test to skip IDPorten and Altinn integrations.
+  
+The Search Application consists of the following modules
+  * search, an React application which allow users to search and view dataset descriptions.
+  * search-api, an Java Spring Boot service whit a REST API 
+  * search-db, an Elasticsearch search and document database
+
+The Harvester Application consist of the following modules
+  * harvester, a Java Spring Boot application which allow users to register which catalogs that should be harvested.
+  * harvester-api, a Java Spring Boot service which checks and harvests data catalogs and inserts them into the search-db
+  * harvester-db, a Fuseki RDF database which stores administration information about harvests and the incoming datasets
+  
+Common Services
+  * reference-data, a shared service which provides code lists, concepts and helptexts.
+
+External Integrations
+  * Enhetsregisteret, for checking and collecting information about organizations
+  * IDPorten, for authentication of users
+  * Altinn, for authorization of users
+
+# Start individual applications
+There is a couple of scripts that automates build and run the various models ondocker. The scripts are:
+  * `./runDocker.sh search-api` to compile, build and run the search-api module on docker
+  * `./runAll.sh` to run compile, build and run all the modules on docker
+  
 
 ## Search application:
 >`docker-compose up -d search`
@@ -52,12 +106,6 @@ The application can be accessed on [http://localhost:8099](http://localhost:8099
 The regstration application requires authentication. The following test-user identifiers 
 can be used: (03096000854, 01066800187, 23076102252)
 
-## Google doc DCAT import application
->`docker-compose up -d gdoc`
-
-This starts the Google sheet translation service. It reads a predefined set of google 
-documents (sheets) and translates them to DCAT format. It runs the conversion each hour.
-
 ## Shut down all containers:
 >`docker-compose down`
 
@@ -67,55 +115,10 @@ repository and [data/fuseki](data/fuseki) for the fuseki repository.
   * Elasticsearch stores the data in JSON denormalized for search
   * Fuseki stores the data in RDF/DCAT format
 
-# Logs
-
-
-## Struktur
-
-Applikasjoner
-
-* catalog: søkeløsning 
-* harvester: høster lokale løsninger og legger inn i søkeløsningen
-* registration: lar virksomheter registrere egne datasettbeskrivelser
-
-
-Komponenter
-
-* elasticsearch, kibana og logstash
-* fuseki
-
-## Kompilere
-### Compile:
-mvn clean install
- 
-man kan bruke følgende parametre for å kun kompilere: -DskipTests -DskipDockerBuild 
-
-### Docker:
-#### Start
-cd docker
-docker-compose up -d
-
-#### Stop
-docker-compose down
-
-
-## Kjøre applikasjonene 
-
-Se docker-compose.override.yml for portnummer for de forskjellige tjenestene.
-
-
-## Common Problems
-
-Solution: remove old containers
-bash: docker rm -f $(docker ps -aq)
-
-Remove old images
-bash: docker rmi -f $(docker images -q)
-
 
 ## Travis and Coveralls
 
-Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
+We use Travis for build and Coveralls for code coverage. Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
 run and test the code.
 
  - Travis: https://travis-ci.org/Altinn/fdk
@@ -168,3 +171,10 @@ There is no other configuration of Travis or Coveralls besides what has been men
 
 
  
+## Common Problems
+
+Solution: remove old containers
+bash: docker rm -f $(docker ps -aq)
+
+Remove old images
+bash: docker rmi -f $(docker images -q)
