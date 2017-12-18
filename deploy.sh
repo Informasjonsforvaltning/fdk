@@ -2,8 +2,13 @@
 set -e
 
 # Deployment pipeline (environment order)
-# UT1 -> ST2 -> TT1 (mocked authorisation )
-# UT1 -> ST1 -> PPE (idporten authorisation)
+# UT1 -> ST2 -> TT1 -> ST1 -> PPE
+#
+# UT1: Development environment. Build server continually deploys to this environment
+# ST2: Internal test server with local (mocked) authorisation
+# TT1: Externally accessible test server with local (mocked) authorisation
+# ST1: Internal test servew with Idporten authorisation. Uses Idporten test environment
+# PPE: Pre-production environment. Runs on production cluster. Idporten production authorisation
 
 
 # some input validation
@@ -113,13 +118,13 @@ if [ "$environment" == "st1" ] ; then
   if [ "$component" == "all" ] ; then
     for i in $components
     do
-        dockerTag ${i} ut1 st1
+        dockerTag ${i} tt1 st1
     done
   else
-    dockerTag ${component} ut1 st1
+    dockerTag ${component} tt1 st1
   fi
 
-  gitTag ${component} ut1 st1
+  gitTag ${component} tt1 st1
 
 
 elif [ "$environment" == "st2" ] ; then

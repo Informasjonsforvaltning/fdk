@@ -9,7 +9,6 @@ import AboutPage from './containers/search-about';
 import GetStartedPage from './containers/search-getstarted-article';
 import ReportsPage from './containers/reports';
 import App from './containers/app';
-import Error404 from './containers/search-error-404';
 
 const ReactGA = require('react-ga');
 
@@ -49,7 +48,6 @@ const routes =
       <Route path="/about" component={AboutPage} />
       <Route path="/about-registration" component={GetStartedPage} />
       <Route path="/reports" component={ReportsPage} />
-      <Route path="*" component={Error404} />
     </Route>
   );
 

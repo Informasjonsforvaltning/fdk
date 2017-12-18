@@ -118,21 +118,21 @@ export default class App extends React.Component {
                     <MenuItem
                       key="menu-1"
                       eventKey="menu-1"
-                      href="/about"
+                      href={`/about${langParam}`}
                     >
                       {localization.about.about}
                     </MenuItem>
                     <MenuItem
                       key="menu-2"
                       eventKey="menu-2"
-                      href="/about-registration"
+                      href={`/about-registration${langParam}`}
                     >
                       {localization.menu.aboutRegistration}
                     </MenuItem>
                     <MenuItem
                       key="menu-3"
                       eventKey="menu-3"
-                      href="/reports"
+                      href={`/reports${langParam}`}
                     >
                       {localization.menu.reports}
                     </MenuItem>
