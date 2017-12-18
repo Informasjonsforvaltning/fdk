@@ -52,6 +52,9 @@ The Registration Application consists of the following main modules:
   * registration, an Angular 2 application which allow users to log in and edit or register metadata about datasets.
   * registration-api, a Java Spring Boot service which supports an REST API
   * registration-db, a Elasticsearch document database
+  * registration-validator, a Java Spring Boot service that can validate inputdata against the DCAT standard. Currently not in use.
+  * registration-auth, A Java Spring Boot service that act as a authentication and authorization service. Used
+  in develop and test to skip IDPorten and Altinn integrations.
   
 The Search Application consists of the following modules
   * search, an React application which allow users to search and view dataset descriptions.
@@ -65,9 +68,13 @@ The Harvester Application consist of the following modules
   
 Common Services
   * reference-data, a shared service which provides code lists, concepts and helptexts.
-  *   
 
-# Usage
+External Integrations
+  * Enhetsregisteret, for checking and collecting information about organizations
+  * IDPorten, for authentication of users
+  * Altinn, for authorization of users
+
+# Running the individual applications
 
 ## Search application:
 >`docker-compose up -d search`
@@ -95,12 +102,6 @@ The application can be accessed on [http://localhost:8099](http://localhost:8099
 The regstration application requires authentication. The following test-user identifiers 
 can be used: (03096000854, 01066800187, 23076102252)
 
-## Google doc DCAT import application
->`docker-compose up -d gdoc`
-
-This starts the Google sheet translation service. It reads a predefined set of google 
-documents (sheets) and translates them to DCAT format. It runs the conversion each hour.
-
 ## Shut down all containers:
 >`docker-compose down`
 
@@ -110,55 +111,10 @@ repository and [data/fuseki](data/fuseki) for the fuseki repository.
   * Elasticsearch stores the data in JSON denormalized for search
   * Fuseki stores the data in RDF/DCAT format
 
-# Logs
-
-
-## Struktur
-
-Applikasjoner
-
-* catalog: søkeløsning 
-* harvester: høster lokale løsninger og legger inn i søkeløsningen
-* registration: lar virksomheter registrere egne datasettbeskrivelser
-
-
-Komponenter
-
-* elasticsearch, kibana og logstash
-* fuseki
-
-## Kompilere
-### Compile:
-mvn clean install
- 
-man kan bruke følgende parametre for å kun kompilere: -DskipTests -DskipDockerBuild 
-
-### Docker:
-#### Start
-cd docker
-docker-compose up -d
-
-#### Stop
-docker-compose down
-
-
-## Kjøre applikasjonene 
-
-Se docker-compose.override.yml for portnummer for de forskjellige tjenestene.
-
-
-## Common Problems
-
-Solution: remove old containers
-bash: docker rm -f $(docker ps -aq)
-
-Remove old images
-bash: docker rmi -f $(docker images -q)
-
 
 ## Travis and Coveralls
 
-Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
+We use Travis for build and Coveralls for code coverage. Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
 run and test the code.
 
  - Travis: https://travis-ci.org/Altinn/fdk
@@ -211,3 +167,10 @@ There is no other configuration of Travis or Coveralls besides what has been men
 
 
  
+## Common Problems
+
+Solution: remove old containers
+bash: docker rm -f $(docker ps -aq)
+
+Remove old images
+bash: docker rmi -f $(docker images -q)
