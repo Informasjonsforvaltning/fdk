@@ -312,8 +312,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             logger.debug("messages: {}", messages.toString());
             if (dataset.getDistribution() != null) {
                 for (Distribution distribution : dataset.getDistribution()) {
-                    List<String> distMessages = validationResults.stream().filter(m ->
-                            m.contains(distribution.getUri()) && m.contains("className='Distribution'")).collect(Collectors.toList());
+                    List<String> distMessages = validationResults.stream()
+                            .filter(m ->
+                                distribution != null && m.contains(distribution.getUri()) && m.contains("className='Distribution'"))
+                            .collect(Collectors.toList());
                     messages.addAll(distMessages);
                 }
             }
