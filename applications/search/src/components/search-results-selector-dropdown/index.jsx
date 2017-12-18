@@ -38,7 +38,7 @@ export default class Select extends React.Component {
         onSelect={this.onChange}
       >
         {map(items, (item, idx) => {
-          const { key, label, title, doc_count } = item;
+          const { key, label, title, doc_count } = item; // eslint-disable-line camelcase
           let text = `${translate('sort.by')} ${translate(label || title || key)}`;
           if (showCount && doc_count !== undefined) text += ` (${countFormatter(doc_count)})`; // eslint-disable-line camelcase
           return (

@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as axios from "axios";
 import createHistory from 'history/createBrowserHistory';
-import { QueryTransport2 } from '../../utils/QueryTransport2';
 import localization from '../localization';
-import RefinementOptionPublishers from '../search-refinementoption-publishers';
 import ReportStats from '../search-results-dataset-report-stats';
 import SearchPublishers from '../search-results-dataset-report-publisher';
 import { addOrReplaceParamWithoutEncoding, removeParam } from '../../utils/addOrReplaceUrlParam';
@@ -12,6 +10,17 @@ import { addOrReplaceParamWithoutEncoding, removeParam } from '../../utils/addOr
 const history = createHistory();
 
 export default class ResultsDatasetsReport extends React.Component {
+  static getOrgPath() {
+    const orgPath = window.location.search
+      .substring(1)
+      .split("&")
+      .map(v => v.split("="))
+      .reduce((map, [key, value]) => 
+        map.set(key, decodeURIComponent(value)), new Map())
+      .get('orgPath[0]');
+    return (orgPath) || '';
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,37 +34,68 @@ export default class ResultsDatasetsReport extends React.Component {
     this.handleOnPublisherSearch();
   }
 
+  getPublishers() {
+    axios.get('/publisher?q=')
+      .then(response => {        
+        const publishers = response.data.hits.hits
+          .map(item => item._source)
+          .map(hit => (
+            {
+              name: hit.name, 
+              orgPath: hit.orgPath
+            }
+          )); 
+        const entity = this.getName(ResultsDatasetsReport.getOrgPath(), publishers);
+        this.setState({ 
+          publishers,
+          entity
+        });
+      }
+      );    
+  }
+
+  getName(orgPath, publishersIn) {
+    // Set publishers from state if exists, or input if exists.
+    const publishers = (this.state.publishers.length > 0) ? this.state.publishers : (publishersIn) || null;
+    if (publishers) {
+      const result = publishers.find(publisher => publisher.orgPath === orgPath);
+      const paramEntity = (result) ? result.name : localization.report.allEntities;
+      return paramEntity;
+    }
+    return localization.report.allEntities;
+  }
+  
   handleOnPublisherSearch(name, orgPath) {
     // Get orgPath from input or try to find from query params.
-    let query = (orgPath) ? orgPath : this.getOrgPath(); 
+    const query = (orgPath) || ResultsDatasetsReport.getOrgPath(); 
     
-    let paramWithRemovedOrgPath = removeParam('orgPath[0]', window.location.href);
-    let replacedUrl = addOrReplaceParamWithoutEncoding(paramWithRemovedOrgPath, 'orgPath[0]', query);
+    const paramWithRemovedOrgPath = removeParam('orgPath[0]', window.location.href);
+    const replacedUrl = addOrReplaceParamWithoutEncoding(paramWithRemovedOrgPath, 'orgPath[0]', query);
 
     // Empty query params.
-    let emptyParam = {
+    const emptyParam = {
       title: document.title, 
       url: paramWithRemovedOrgPath
     };    
     window.history.pushState(emptyParam, emptyParam.title, emptyParam.url);
-    console.log('emptyparam', window.location.href)
+    
     // Set new query param if necessary.
     if (query) {
-      let queryParam = {
+      const queryParam = {
         title: document.title,
         url: replacedUrl
       };
       window.history.pushState(queryParam, queryParam.title, queryParam.url);
     }
-    console.log('query', window.location.href)
+    
     // Get entity from input or try to find from publishers using orgPath. 
-    let entity = (name) ? name : this.getName(query);
+    const entity = (name) || this.getName(query);
 
     axios.get(`/aggregateDataset?q=${query}`)
       .then((response) => {
         const data = response.data;
         this.setState({
-          entity: entity,
+          entity,
           aggregateDataset: data
         });
       });
@@ -66,49 +106,6 @@ export default class ResultsDatasetsReport extends React.Component {
           catalog: data
         });
       });
-  }
-
-  getPublishers() {
-    let that = this;
-    axios.get('/publisher?q=')
-      .then(response => {        
-        let publishers = response.data.hits.hits
-          .map(item => item._source)
-          .map(hit => 
-            hit = {
-              name: hit.name, 
-              orgPath: hit.orgPath
-            }
-        ); 
-        let entity = this.getName(this.getOrgPath(), publishers);
-        this.setState({ 
-          publishers: publishers,
-          entity: entity
-        });
-      }
-    );    
-  }
-
-  getName(orgPath, publishersIn) {
-    // Set publishers from state if exists, or input if exists.
-    let publishers = (this.state.publishers.length > 0) ? this.state.publishers : (publishersIn) ? publishersIn : null;
-    if (publishers) {
-      let result = publishers.find(publisher => publisher.orgPath === orgPath);
-      let paramEntity = (result) ? result.name : localization.report.allEntities;
-      return paramEntity;
-    }
-    return localization.report.allEntities;
-  }
-
-  getOrgPath() {
-    let orgPath = window.location.search
-      .substring(1)
-      .split("&")
-      .map(v => v.split("="))
-      .reduce((map, [key, value]) => 
-        map.set(key, decodeURIComponent(value)), new Map())
-      .get('orgPath[0]');
-    return (orgPath) ? orgPath : '';
   }
 
   render() {
