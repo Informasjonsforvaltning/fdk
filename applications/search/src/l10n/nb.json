@@ -215,5 +215,8 @@
     "searchPublisher": "Velg virksomhet",
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
     "typeToSearch": "Skriv for å søke"
+  },
+  "registration": {
+    "title": "Hvordan komme i gang med registrering av datasett"
   }
 }

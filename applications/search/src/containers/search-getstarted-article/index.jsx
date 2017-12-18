@@ -1,6 +1,8 @@
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
 
+import localization from '../../components/localization';
+
 const Article = () => {
   const meta = {
     title: 'Hvordan komme i gang med registrering av datasett'
@@ -11,7 +13,7 @@ const Article = () => {
       <div className="row">
         <div className="col-md-8 col-md-offset-2">
           <h1 className="fdk-margin-bottom">
-            Hvordan komme i gang med registrering av datasett
+            {localization.registration.title}
           </h1>
           <div className="fdk-margin-bottom" />
           <div className="fdk-textregular">
