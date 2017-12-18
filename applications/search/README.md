@@ -35,7 +35,8 @@ To run locally:
   
 Frontend built on React and the SearchKit module. Tests are written with Mocha and Enzyme. ESLint with AirBnB used for linting.
 
-The SearchKit module is a suite of UI components built in React, [Searchkit](http://docs.searchkit.co/stable/)
+Functionality related to searching is based on the SearchKit module. The SearchKit module is a suite of UI components built in React, see documentation here: [Searchkit](http://docs.searchkit.co/stable/).
 
 Most of the SearchKit UI components are extended in this application with custom UI components.
 
+The search application do search by calling the RESTful service from search-api.
