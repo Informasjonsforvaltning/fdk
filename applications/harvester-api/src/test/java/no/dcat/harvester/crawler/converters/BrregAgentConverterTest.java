@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 public class BrregAgentConverterTest {
 	
 	@Test
-	@Ignore
 	public void testConvertBrregFile() throws Exception {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		
@@ -68,7 +67,6 @@ public class BrregAgentConverterTest {
 	}
 
 	@Test
-	@Ignore
 	public void testWrongUrlFiletypeEnding() throws Exception {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 

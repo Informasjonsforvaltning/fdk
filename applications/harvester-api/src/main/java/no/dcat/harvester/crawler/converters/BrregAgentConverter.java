@@ -329,12 +329,12 @@ public class BrregAgentConverter {
     // http://data.brreg.no/enhetsregisteret/enhet/974760983
 
     String getOrgnrFromUri(String uri) {
-        Pattern p = Pattern.compile("(enhetsregisteret/enhet/)(\\d+)");
+        Pattern p = Pattern.compile("(\\d{9})");
         Matcher m = p.matcher(uri);
         String orgnr = null;
 
         if (m.find()) {
-            orgnr = m.group(2);
+            orgnr = m.group(1);
         }
         return orgnr;
     }
