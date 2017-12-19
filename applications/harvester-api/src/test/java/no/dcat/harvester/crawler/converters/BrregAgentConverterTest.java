@@ -9,6 +9,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class BrregAgentConverterTest {
 	
 	@Test
+	@Ignore
 	public void testConvertBrregFile() throws Exception {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 		
@@ -66,6 +68,7 @@ public class BrregAgentConverterTest {
 	}
 
 	@Test
+	@Ignore
 	public void testWrongUrlFiletypeEnding() throws Exception {
 		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
 
