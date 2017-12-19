@@ -118,13 +118,13 @@ if [ "$environment" == "st1" ] ; then
   if [ "$component" == "all" ] ; then
     for i in $components
     do
-        dockerTag ${i} tt1 st1
+        dockerTag ${i} st2 st1
     done
   else
-    dockerTag ${component} tt1 st1
+    dockerTag ${component} st2 st1
   fi
 
-  gitTag ${component} tt1 st1
+  gitTag ${component} st1 st1
 
 
 elif [ "$environment" == "st2" ] ; then
