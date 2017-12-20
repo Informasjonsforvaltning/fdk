@@ -1,28 +1,35 @@
 package no.dcat.harvester.crawler;
 
 
-
-import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.dcat.harvester.HarvesterApplication;
+import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RiotException;
 import org.apache.jena.shared.BadURIException;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
-import org.junit.Ignore;
+import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.util.AssertionErrors.assertTrue;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 
 public class CrawlerJobTest {
     private static Logger logger = LoggerFactory.getLogger(CrawlerJobTest.class);
@@ -30,9 +37,9 @@ public class CrawlerJobTest {
 
     @Test
     public void testBRREGCrawlerJob() throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
+        ClassPathResource resource = new ClassPathResource("brreg.jsonld");
 
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("brreg.jsonld").getFile(), "tester", "123456789");
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
         Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
@@ -43,15 +50,14 @@ public class CrawlerJobTest {
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
 
-
+        job.testMode();
         job.run();
-
 
     }
 
     @Test
     public void testDIFICrawlerJob() throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
+
         ClassPathResource resource = new ClassPathResource("difi-dataset-2017-10-19.jsonld");
 
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
@@ -67,22 +73,21 @@ public class CrawlerJobTest {
 
         CrawlerJob spyJob = Mockito.spy(job);
         Mockito.doReturn(job.loadModelAndValidate(resource.getURL())).when(spyJob).prepareModelForValidation();
-
+        spyJob.testMode();
         spyJob.run();
 
         List<String> report =  spyJob.getValidationResult();
 
         logger.debug("validation report: {}", report);
-
+        assertThat(report.size(), is(66));
     }
 
 
-    @Test
-    public void testCrawlerJob() throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
+    @Test(expected = FileNotFoundException.class)
+    public void testCrawlerJobInvalidUrl() throws IOException {
+        ClassPathResource resource = new ClassPathResource("npolar.json");
 
-
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", classLoader.getResource("npolar.jsonld").getFile(), "tester", "123456789");
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
         Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
@@ -93,15 +98,16 @@ public class CrawlerJobTest {
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
 
-
+        job.testMode();
         job.run();
 
     }
 
 
     @Test
-    public void testCrawlerResultHandlerWithNoException() {
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "src/test/resources/npolar.jsonld", "tester", null);
+    public void testCrawlerResultHandlerWithNoException() throws Throwable {
+        ClassPathResource resource = new ClassPathResource("npolar.jsonld");
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", null);
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
@@ -113,8 +119,9 @@ public class CrawlerJobTest {
 
 
     @Test
-    public void testCrawlerJobWithInvalidDataset() {
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "src/test/resources/dataset-FDK-138-validering.ttl", "tester", "");
+    public void testCrawlerJobWithInvalidDataset() throws Throwable {
+        ClassPathResource resource = new ClassPathResource("dataset-FDK-138-validering.ttl");
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "");
 
         DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
@@ -124,90 +131,70 @@ public class CrawlerJobTest {
         handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        job.testMode();
         job.run();
     }
 
-
-
     @Test
-    @Ignore
-    public void testCrawlerJobFromEntryscape() throws IOException {
+    public void testCrawlingOfRegistrationWithBRREG() throws Throwable {
+        ClassPathResource resource = new ClassPathResource("brreg-from-registration.ttl");
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("entryscape.jsonld").getFile());
+        DcatSource dcatSource = new DcatSource("http://someid", "Test", resource.getURL().toString(), "tester", "123");
 
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", file.getCanonicalPath(), "tester", "");
-
+        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
         AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
 
-        FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
+        FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
+        handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
-        final boolean[] didRun = {false};
-        Mockito.doAnswer(invocationOnMock -> {
-            didRun[0] = true;
-            return null;
-        }).when(handler).process(Mockito.anyObject(), Mockito.any(), Mockito.any());
-
-
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, HarvesterApplication.getBrregCache(), null, handler);
+        job.testMode();
         job.run();
 
-        assertTrue("The entryscape file was invalid. Should have been enriched and validated, so that the handler would run.", didRun[0]);
-    }
+        Model actualModel = job.getModel();
 
-    @Test
-    @Ignore
-    public void testCrawlerJobFromVegesenet() throws IOException {
+        ResIterator iterator = actualModel.listResourcesWithProperty(RDF.type, FOAF.Agent);
+        int count = 0;
+        List<String> orgPats = new ArrayList<>();
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("vegvesenet.xml").getFile());
+        while (iterator.hasNext()) {
+            Resource r = iterator.next();
+            orgPats.add(r.getProperty(DCATNO.organizationPath).getObject().asLiteral().getString());
+            logger.info(r.getURI());
+            count ++;
+        }
 
-        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", file.getCanonicalPath(), "tester", "");
+        assertThat("Dataset should only have two Agents", count, is(2));
 
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
-
-        FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
-
-
-        final boolean[] didRun = {false};
-        Mockito.doAnswer(invocationOnMock -> {
-            didRun[0] = true;
-            return null;
-        }).when(handler).process(Mockito.anyObject(), Mockito.any(), Mockito.any());
+        assertThat(orgPats.contains("/STAT/912660680"), is(true));
+        assertThat(orgPats.contains("/STAT/912660680/974760673"), is(true));
 
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
-        job.run();
-
-        assertTrue("The Vegvesenet file was invalid. Should have been enriched and validated, so that the handler would run.", didRun[0]);
     }
 
     @Test(expected = RiotException.class)
-    public void testCrawlingJsonLdWithSpaceInUri() throws IOException {
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("space-in-uri.jsonld").getFile());
+    public void testCrawlingJsonLdWithSpaceInUri() throws Throwable {
+        ClassPathResource resource = new ClassPathResource("space-in-uri.jsonld");
 
         FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
 
         CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
-        job.verifyModelByParsing(FileManager.get().loadModel(file.getCanonicalPath()));
+        job.verifyModelByParsing(FileManager.get().loadModel(resource.getFile().getCanonicalPath()));
         job.run();
 
     }
 
     @Test(expected = BadURIException.class)
     public void testCrawlingXmlRdfWithSpecialCharacterInUri() throws IOException {
+        ClassPathResource resource = new ClassPathResource("dcat-11.xml");
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("dcat-11.xml").getFile());
 
         FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
 
         CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
 
-        job.verifyModelByParsing(FileManager.get().loadModel(file.getCanonicalPath()));
+        job.verifyModelByParsing(FileManager.get().loadModel(resource.getFile().getCanonicalPath()));
 
     }
 

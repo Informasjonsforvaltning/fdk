@@ -59,7 +59,9 @@ public class BrregAgentConverterEnhetsregIT {
 
         converter.collectFromModel(model);
 
-        String newName = publisherResource.getProperty(FOAF.name).getString();
+        Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/991825827");
+
+        String newName = newPublisherResource.getProperty(FOAF.name).getString();
 
         OutputStream output2 = new ByteArrayOutputStream();
         model.write(output2, "TURTLE");
@@ -81,7 +83,9 @@ public class BrregAgentConverterEnhetsregIT {
 
         converter.collectFromModel(model);
 
-        String newName = publisherResource.getProperty(FOAF.name).getString();
+        Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/971032081");
+
+        String newName = newPublisherResource.getProperty(FOAF.name).getString();
 
         OutputStream output2 = new ByteArrayOutputStream();
         model.write(output2, "TURTLE");
@@ -102,8 +106,9 @@ public class BrregAgentConverterEnhetsregIT {
         logger.info("name before {}",previousName);
 
         converter.collectFromModel(model);
+        Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/870917732");
 
-        String newName = publisherResource.getProperty(FOAF.name).getString();
+        String newName = newPublisherResource.getProperty(FOAF.name).getString();
 
         OutputStream output2 = new ByteArrayOutputStream();
         model.write(output2, "TURTLE");
