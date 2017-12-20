@@ -24,6 +24,11 @@ public class UploadSubjectsToElastic {
     private static Logger logger = LoggerFactory.getLogger(UploadSubjectsToElastic.class);
 
 
+    /**
+     * Should not be run as a test. Hack to upload subjects to elastic
+     * 
+     * @throws Throwable
+     */
     @Test
     @Ignore
     public void uploadSubjects() throws Throwable {
