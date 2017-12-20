@@ -1,0 +1,41 @@
+@import '../../assets/css/colors.scss';
+
+.node {
+  cursor: pointer;
+}
+.tree-view {
+  .tree-view_main {
+    margin-bottom: .5rem;
+    /*
+    &:hover {
+      transition: background-color .5s ease-out;
+      background-color: $color6;
+      color: $color0;
+    }
+    */
+  }
+}
+.tree-view_children {
+  .tree-view_item:first-child {
+
+  }
+  .tree-view_item {
+    border-top: 1px solid $color0;
+    padding: 1rem 0;
+    /*
+    &:hover {
+      transition: background-color .5s ease-out;
+      background-color: $color6;
+      color: $color1;
+    }
+    */
+  }
+}
+
+.tree-item_chosen {
+  //background-color: $color1;
+  //color: $color0;
+  text-decoration: underline;
+  font-style: italic;
+  font-weight: 500;
+}
