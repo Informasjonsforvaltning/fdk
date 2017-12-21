@@ -1,0 +1,46 @@
+{
+  "hits": [
+    {
+      "name": "STAT",
+      "orgPath": "/STAT",
+      "children": [
+        {
+          "name": "STATENS LÅNEKASSE FOR UTDANNING",
+          "orgPath": "/STAT/872417842/960885406"
+        },
+        {
+          "name": "STATENS LÅNEKASSE FOR TRYGDEDE",
+          "orgPath": "/STAT/960885407",
+          "children": [
+            {
+              "name": "TEST1",
+              "orgPath": "/STAT/960885406",
+              "children": [
+                {
+                  "name": "TEST2",
+                  "orgPath": "/STAT/960885406/123"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KOMMUNE",
+      "orgPath": "/KOMMUNE",
+      "children": [
+        {
+          "name": "OSLO FYLKE",
+          "orgPath": "/KOMM/123"
+        }
+      ]
+    },
+    {
+      "name": "ANNET",
+      "orgPath": "/ANNET",
+      "children": [
+      ]
+    }
+  ]
+}
