@@ -72,7 +72,7 @@ public class DcatBuilder {
         model.setNsPrefix("dcatno", DCATNO.NS);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS.NS);
-        model.setNsPrefix("iso", QualityAnnotation.isoNS);
+        model.setNsPrefix("iso", DQV.NS);
         model.setNsPrefix("oa", OA.NS);
         model.setNsPrefix("dqv", DQV.NS);
         model.setNsPrefix("rdf", RDF.uri);
@@ -300,6 +300,10 @@ public class DcatBuilder {
             datRes.addProperty(hasQualityAnnotation, qualityAnnotation);
 
             Resource dimension = DQV.resolveDimensionResource(annotation.getInDimension());
+            if (dimension == null) {
+                logger.warn("Unable to export quality annotation for {} with body {}", annotation.getInDimension(), annotation.getHasBody().toString());
+                return;
+            }
             qualityAnnotation.addProperty(DQV.inDimension, dimension);
 
             Resource body = model.createResource();
