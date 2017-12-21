@@ -40,6 +40,9 @@ export default class DetailsPage extends React.Component {
           dataset,
           loading: false
         });
+      })
+      .catch(error => {
+        console.error(error.response)
       });
   }
 
