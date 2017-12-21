@@ -64,29 +64,6 @@ export default class SearchPublishersTree extends React.Component {
   _renderTree() {
     const { hits } = this.state.source;
 
-    const mainTree = hits => hits.map((node, i) => {
-      const { orgPath } = this.props;
-      console.log('orgPath', orgPath);
-      const chosenClass = cx(
-        'tree-view_main',
-        {
-          'tree-item_chosen': node.orgPath === orgPath
-        }
-      );
-      const collapsed = SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath);
-      const name = node.name;
-      const label = <span className="node" onClick={() => { this.onChange(node)}}><strong>{name}</strong></span>;
-      return (
-        <div key={`panel${i}`} className="section sk-panel">
-          <TreeView key={`${name  }|${  i}`} nodeLabel={label} defaultCollapsed={SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath)} itemClassName={chosenClass}>
-            {node.children && node.children.length > 0 &&
-            subTree(node.children)
-            }
-          </TreeView>
-        </div>
-      );
-    });
-
     const subTree = hits => hits.map((node, i) => {
       const { orgPath } = this.props;
       const chosenClass = cx(
@@ -95,7 +72,7 @@ export default class SearchPublishersTree extends React.Component {
         }
       );
       const name = node.name;
-      const label = <span className="node" onClick={() => { this.onChange(node)}}>{name}</span>;
+      const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0">{name}</span>;
       if (node.children && node.children.length > 0) {
         return (
           <TreeView key={`${name  }|${  i}`} nodeLabel={label} defaultCollapsed={SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath)} itemClassName={chosenClass}>
@@ -103,7 +80,29 @@ export default class SearchPublishersTree extends React.Component {
           </TreeView>
         );
       } return (
-        <div key={`${name  }|${  i}`} className={`node tree-view_item ${node.orgPath === orgPath ? 'tree-item_chosen' : ''}`} onClick={() => { this.onChange(node)}} role="button">{name}</div>
+        <div key={`${name  }|${  i}`} className={`node tree-view_item ${node.orgPath === orgPath ? 'tree-item_chosen' : ''}`} onClick={() => { this.onChange(node)}} role="button" tabIndex="0">{name}</div>
+      );
+    });
+
+    const mainTree = hits => hits.map((node, i) => {
+      const { orgPath } = this.props;
+      const chosenClass = cx(
+        'tree-view_main',
+        {
+          'tree-item_chosen': node.orgPath === orgPath
+        }
+      );
+      const collapsed = SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath);
+      const name = node.name;
+      const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0"><strong>{name}</strong></span>;
+      return (
+        <div key={`panel${i}`} className="section sk-panel">
+          <TreeView key={`${name  }|${  i}`} nodeLabel={label} defaultCollapsed={collapsed} itemClassName={chosenClass}>
+            {node.children && node.children.length > 0 &&
+            subTree(node.children)
+            }
+          </TreeView>
+        </div>
       );
     });
 
