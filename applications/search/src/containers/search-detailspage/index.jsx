@@ -32,7 +32,10 @@ export default class DetailsPage extends React.Component {
   // loads all the info for this dataset
   loadDatasetFromServer() {
     const url = `/datasets/${this.props.params.id}`;
-    axios.get(url)
+    const config = {
+      headers: { Pragma: 'no-cache' }
+    }
+    axios.get(url, config)
       .then((res) => {
         const data = res.data;
         const dataset = data.hits.hits[0]._source;

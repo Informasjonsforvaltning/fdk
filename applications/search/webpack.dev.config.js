@@ -17,19 +17,21 @@ module.exports = {
   },
   module: {
     rules: [
+      /*
        {
-       enforce: 'pre',
-       test: /\.(js|jsx)$/,
-       include: [
-       path.resolve(__dirname, 'start.js'),
-       path.resolve('src')
-       ],
-       exclude: /node_modules/,
-       options: {
-       configFile: path.resolve('./.eslintrc.json')
+         enforce: 'pre',
+         test: /\.(js|jsx)$/,
+         include: [
+         path.resolve(__dirname, 'start.js'),
+         path.resolve('src')
+         ],
+         exclude: /node_modules/,
+         options: {
+         configFile: path.resolve('./.eslintrc.json')
+         },
+         loader: 'eslint-loader'
        },
-       loader: 'eslint-loader'
-       },
+       */
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
