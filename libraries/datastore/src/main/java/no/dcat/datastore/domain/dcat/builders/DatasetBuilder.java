@@ -164,11 +164,11 @@ public class DatasetBuilder extends AbstractBuilder {
             ds.setLegalBasisForProcessing(extractSkosConcept(resource, DCATNO.legalBasisForProcessing));
             ds.setLegalBasisForRestriction(extractSkosConcept(resource, DCATNO.legalBasisForRestriction));
 
-            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Accuracy));
-            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Availability));
-            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Completeness));
-            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Currentness));
-            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource, QualityAnnotation.Relevance));
+            ds.setHasAccuracyAnnotation(extractQualityAnnotation(resource, DQV.Accuracy.getURI()));
+            ds.setHasAvailabilityAnnotation(extractQualityAnnotation(resource, DQV.Availability.getURI()));
+            ds.setHasCompletenessAnnotation(extractQualityAnnotation(resource, DQV.Completeness.getURI()));
+            ds.setHasCurrentnessAnnotation(extractQualityAnnotation(resource, DQV.Currentness.getURI()));
+            ds.setHasRelevanceAnnotation(extractQualityAnnotation(resource, DQV.Relevance.getURI()));
 
             ds.setReferences(extractReferences(resource, codes.get(Types.referencetypes.getType())));
             ds.setProvenance(getCode(codes.get(Types.provenancestatement.getType()), extractAsString(resource, DCTerms.provenance)));
