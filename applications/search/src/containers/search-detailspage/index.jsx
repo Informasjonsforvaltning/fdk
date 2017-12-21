@@ -223,26 +223,22 @@ export default class DetailsPage extends React.Component {
   }
 
   render() {
-    const { loading } = this.state;
-    if (!loading) {
-      return (
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 col-md-offset-2">
-              {this._renderDatasetDescription()}
-              {this._renderKeyInfo()}
-              {this._renderDistribution()}
-              {this._renderSample()}
-              {this._renderDatasetInfo()}
-              {this._renderQuality()}
-              {this._renderBegrep()}
-              {this._renderLandingPageAndContactInfo()}
-            </div>
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 col-md-offset-2">
+            {this._renderDatasetDescription()}
+            {this._renderKeyInfo()}
+            {this._renderDistribution()}
+            {this._renderSample()}
+            {this._renderDatasetInfo()}
+            {this._renderQuality()}
+            {this._renderBegrep()}
+            {this._renderLandingPageAndContactInfo()}
           </div>
         </div>
-      );
-    }
-    return null;
+      </div>
+    );
   }
 }
 
