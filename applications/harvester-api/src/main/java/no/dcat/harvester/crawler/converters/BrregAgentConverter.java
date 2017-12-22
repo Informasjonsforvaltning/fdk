@@ -160,20 +160,19 @@ public class BrregAgentConverter {
      * then change the uri to point to Actor resource collected from Enhetstregisteret
      *
      * @param dataset  the dataset to be examined
+     *
      * @param masterPublisherResource the Actor resource collected from Enhetsregisteret
      */
-    private void substitutePublisherResourceIfIncorrectUri(Resource dataset, Resource masterPublisherResource) {
-        String publisherUri = dataset.getProperty(DCTerms.publisher).getObject().asResource().getURI();
-        if(!publisherUri.contains("http://data.brreg.no/enhetsregisteret")) {
-            logger.warn("Subject (dataset) {} has publisher with incorrect organisation number URI: {}",
-                    dataset.getURI(), publisherUri);
+    private void substitutePublisherResourceInDataset(Resource dataset, Resource nonStandardPublisherResource, Resource masterPublisherResource) {
 
-            dataset.removeAll(DCTerms.publisher);
-            dataset.addProperty(DCTerms.publisher, masterPublisherResource);
+        logger.warn("Subject (dataset) {} has publisher with incorrect organisation number URI: {}",
+                dataset.getURI(), nonStandardPublisherResource.getURI());
 
-            logger.info("Subject (dataset) {} substituted organisation number URI: {}",
-                    dataset.getURI(), masterPublisherResource.getURI());
-        }
+        dataset.removeAll(DCTerms.publisher);
+        dataset.addProperty(DCTerms.publisher, masterPublisherResource);
+
+        logger.info("Subject (dataset) {} substituted organisation number URI: {}",
+                dataset.getURI(), masterPublisherResource.getURI());
     }
 
     String extractOrganizationPath(Publisher publisher, Map<String, Publisher> publisherMap) {
@@ -249,32 +248,33 @@ public class BrregAgentConverter {
                 InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
                 Model masterDataModel = convert(inputStream);
 
-                removeDuplicateProperties(model, masterDataModel, FOAF.name); //TODO: remove all duplicate properties?
+                if (masterPublisherUri.equals(publisherResource.getURI())) {
+                    //later merge of model resulted in publisher having two names, therefore we make sure it is removed
+                    removeDuplicateProperties(model, masterDataModel, FOAF.name); //TODO: remove all duplicate properties?
+                } else {
+                    // replace old uri with masterPublisher uri
 
-                String organizationName = null;
-
-                if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
-                    organizationName = canonicalNames.get(organisationNumber);
-                } else if (publisherResource.getURI() != null && !publisherResource.getURI().equals(masterPublisherUri)) {
                     Resource masterPublisherResource = masterDataModel.getResource(masterPublisherUri);
 
                     //exchange non-standard uri for organization number with standard one
-                    if (!publisherResource.equals(masterPublisherUri)) {
-                        ResIterator datasetIterator = model.listResourcesWithProperty(DCTerms.publisher, publisherResource);
-                        while (datasetIterator.hasNext()) {
-                            Resource dataset = datasetIterator.next().asResource();
-                            substitutePublisherResourceIfIncorrectUri(dataset, masterPublisherResource);
-
-                            //add missing attributes to publisher received from Enhetsregisteret
-                            masterPublisherResource.addLiteral(DCTerms.valid, true);
-                            masterPublisherResource.addProperty(DCTerms.identifier, organisationNumber);
-
-                        }
+                    ResIterator datasetIterator = model.listResourcesWithProperty(DCTerms.publisher, publisherResource);
+                    while (datasetIterator.hasNext()) {
+                        Resource dataset = datasetIterator.next().asResource();
+                        substitutePublisherResourceInDataset(dataset, publisherResource, masterPublisherResource);
                     }
 
-                    if (masterPublisherResource != null && masterPublisherResource.getProperty(FOAF.name) != null) {
-                        organizationName = masterPublisherResource.getProperty(FOAF.name).getString();
-                    }
+                    //add missing attributes to master publisher received from Enhetsregisteret
+                     masterPublisherResource.addProperty(DCTerms.identifier, organisationNumber);
+
+                    //remove no longer used publisher, since it will not produce a valid orgpath
+
+                    // remove statements where resource is subject
+                    model.removeAll(publisherResource, null, (RDFNode) null);
+                    // remove statements where resource is object
+                    model.removeAll(null, null, publisherResource);
+
+                    // make sure we use master publisher as resource from now on
+                    publisherResource = masterPublisherResource;
                 }
 
                 lookupPublisherHierarchy(model, masterDataModel);
@@ -282,19 +282,24 @@ public class BrregAgentConverter {
 
                 logger.debug("Adding {} triples to the model for {}", masterDataModel.size(), uri);
 
-                // add master data to model. The model will only be updated if model and master have same publisher uri.
+                // merge master data into model. The model will only be updated if model and master have same publisher uri.
                 model.add(masterDataModel);
 
-                if (organizationName != null) {
-                    logger.info("Rename publisher {} to {}", organisationNumber, organizationName);
-                    model.removeAll(publisherResource, FOAF.name, null);
-                    model.add(publisherResource, FOAF.name, model.createLiteral(organizationName));
+                // handle name hack. Organisations in canonical names list is renamed
+                if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
+                    String organizationName = canonicalNames.get(organisationNumber);
+
+                    if (organizationName != null) {
+                        logger.info("Rename publisher {} to {}", organisationNumber, organizationName);
+                        model.removeAll(publisherResource, FOAF.name, null);
+                        model.add(publisherResource, FOAF.name, model.createLiteral(organizationName));
+                    }
                 }
 
                 model.addLiteral(publisherResource, DCTerms.valid, true);
 
-
             } else {
+                model.addLiteral(publisherResource, DCTerms.valid, false);
                 logger.warn("Unable to lookup publisher {} - cache is not initiatilized.", uri);
             }
 
@@ -324,12 +329,12 @@ public class BrregAgentConverter {
     // http://data.brreg.no/enhetsregisteret/enhet/974760983
 
     String getOrgnrFromUri(String uri) {
-        Pattern p = Pattern.compile("(enhetsregisteret/enhet/)(\\d+)");
+        Pattern p = Pattern.compile("(\\d{9})");
         Matcher m = p.matcher(uri);
         String orgnr = null;
 
         if (m.find()) {
-            orgnr = m.group(2);
+            orgnr = m.group(1);
         }
         return orgnr;
     }
@@ -380,11 +385,6 @@ public class BrregAgentConverter {
         ResIterator incomingModelIterator = incomingModel.listResourcesWithProperty(property);
 
         while (incomingModelIterator.hasNext()) {
-            // was
-            /*
-            Resource existingResource = existingModel.getResource(incomingModelIterator.next().getURI());
-			existingResource.removeAll(property);
-			*/
 
             Resource incomingResource = incomingModelIterator.next();
             Resource existingResource = existingModel.getResource(incomingResource.getURI());
