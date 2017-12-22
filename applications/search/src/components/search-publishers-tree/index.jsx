@@ -5,7 +5,6 @@ import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 
-import source from '../../utils/publishers.json';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
@@ -35,7 +34,7 @@ export default class SearchPublishersTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      source,
+      source: {},
       backspaceRemoves: true,
       multi: false
     };
@@ -73,7 +72,7 @@ export default class SearchPublishersTree extends React.Component {
     axios.get(url)
       .then((res) => {
         const data = res.data;
-        const source = data.hits;
+        const source = data;
         this.setState({
           source
         });
