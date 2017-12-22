@@ -48,6 +48,11 @@ export default class SearchPublishersTree extends React.Component {
       headers:this.options.headers
     });
     this.onChange = this.onChange.bind(this);
+    this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadDatasetFromServer();
   }
 
   onChange (value) {
@@ -59,6 +64,20 @@ export default class SearchPublishersTree extends React.Component {
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
+  }
+
+  // @params: the function has no param but the query need dataset id from prop
+  // loads all the info for this dataset
+  loadDatasetFromServer() {
+    const url = `/publisher/hierarchy`;
+    axios.get(url)
+      .then((res) => {
+        const data = res.data;
+        const source = data.hits;
+        this.setState({
+          source
+        });
+      });
   }
 
   _renderTree() {
