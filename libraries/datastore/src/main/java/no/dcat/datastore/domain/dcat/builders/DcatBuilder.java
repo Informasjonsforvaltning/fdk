@@ -269,7 +269,17 @@ public class DcatBuilder {
 
             String referencePropertyUri;
             if (!isNullOrEmpty(referenceType.getCode())){
-                referencePropertyUri = DCTerms.getURI() + referenceType.getCode();
+                String code = referenceType.getCode();
+                if (code.startsWith("dct:")) {
+                    // TODO hack to fix error in reference-data/registration
+                    code = code.replaceFirst("dct:", "");
+                }
+
+                if (code.startsWith(DCTerms.NS)) {
+                    referencePropertyUri = code;
+                } else {
+                    referencePropertyUri = DCTerms.getURI() + code;
+                }
             } else {
                 referencePropertyUri = referenceType.getUri();
             }
