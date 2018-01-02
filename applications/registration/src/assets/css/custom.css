@@ -17,8 +17,8 @@ input[type=checkbox]:focus + label.expand-label,
 
 .fdk-header-flex {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  //align-items: center;
+  //justify-content: flex-end;
 }
 
 .fdk-header-menu {
