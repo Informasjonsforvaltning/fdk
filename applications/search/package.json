@@ -7,6 +7,7 @@
     "start": "node start.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
+    "server": "export NODE_ENV=production && node start.js",
     "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "tdd": "npm test -- --watch",
@@ -42,6 +43,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "ejs": "^2.3.4",
     "express": "4.15.4",
+    "extract-text-webpack-plugin": "^3.0.0",
     "history": "^4",
     "lodash": "^4.17.4",
     "method-override": "2.3.9",
@@ -61,7 +63,10 @@
     "react-select": "^1.0.1",
     "searchkit": "2.2.0",
     "searchkit-express": "0.2.1",
-    "superagent": "3.6.0"
+    "superagent": "3.6.0",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.5.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.17",
@@ -78,11 +83,11 @@
     "eslint": "^4.8.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-config-prettier": "^2.7.0",
+    "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.4.0",
-    "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
@@ -105,11 +110,8 @@
     "ts-node": "^3.3.0",
     "typescript": "^2.5.2",
     "url-loader": "^0.5.9",
-    "webpack": "^3.6.0",
     "webpack-config": "^7.4.0",
-    "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^2.8.2",
-    "webpack-hot-middleware": "^2.5.0",
     "xenon": "^0.1.4"
   }
 }

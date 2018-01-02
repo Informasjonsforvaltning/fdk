@@ -1,5 +1,6 @@
 package no.dcat.datastore.domain.dcat.smoke;
 
+import no.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.DataTheme;
@@ -122,11 +123,11 @@ public class TestCompleteCatalog {
                 skosCode("http://www.geonames.org/3141104/royken.html", null, map("nb", "Røyken"))
         ));
 
-        dataset.setHasCurrentnessAnnotation(createQualityAnnotation(QualityAnnotation.Currentness, "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
-        dataset.setHasRelevanceAnnotation(createQualityAnnotation(QualityAnnotation.Relevance, "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."));
-        dataset.setHasCompletenessAnnotation(createQualityAnnotation(QualityAnnotation.Completeness, "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."));
-        dataset.setHasAccuracyAnnotation(createQualityAnnotation(QualityAnnotation.Accuracy, "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."));
-        dataset.setHasAvailabilityAnnotation(createQualityAnnotation(QualityAnnotation.Availability, "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."));
+        dataset.setHasCurrentnessAnnotation(createQualityAnnotation(DQV.Currentness.getURI(), "Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."));
+        dataset.setHasRelevanceAnnotation(createQualityAnnotation(DQV.Relevance.getURI(), "Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."));
+        dataset.setHasCompletenessAnnotation(createQualityAnnotation(DQV.Completeness.getURI(), "Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."));
+        dataset.setHasAccuracyAnnotation(createQualityAnnotation(DQV.Accuracy.getURI(), "Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."));
+        dataset.setHasAvailabilityAnnotation(createQualityAnnotation(DQV.Availability.getURI(), "Denne teksten sier noe om tilgjengeligheten. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum."));
 
         dataset.setLanguage(Arrays.asList(
                 skosCode("http://publications.europa.eu/resource/authority/language/NOR","NOR", map("nb", "Norsk")),

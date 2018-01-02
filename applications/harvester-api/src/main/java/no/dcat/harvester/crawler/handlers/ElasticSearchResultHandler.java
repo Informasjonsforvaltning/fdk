@@ -307,15 +307,20 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     List<String> getValidationMessages(List<String> validationResults, Dataset dataset) {
         List<String> messages = null;
         if (validationResults != null) {
-            messages = validationResults.stream().filter(m ->
-                    m.contains(dataset.getUri()) && m.contains("className='Dataset'")).collect(Collectors.toList());
-            logger.debug("messages: {}", messages.toString());
-            if (dataset.getDistribution() != null) {
-                for (Distribution distribution : dataset.getDistribution()) {
-                    List<String> distMessages = validationResults.stream().filter(m ->
-                            m.contains(distribution.getUri()) && m.contains("className='Distribution'")).collect(Collectors.toList());
-                    messages.addAll(distMessages);
+            try {
+                messages = validationResults.stream().filter(m ->
+                        m.contains(dataset.getUri()) && m.contains("className='Dataset'")).collect(Collectors.toList());
+                logger.debug("messages: {}", messages.toString());
+                if (dataset.getDistribution() != null) {
+                    for (Distribution distribution : dataset.getDistribution()) {
+                        List<String> distMessages = validationResults.stream()
+                                .filter(m -> m.contains(distribution.getUri()) && m.contains("className='Distribution'"))
+                                .collect(Collectors.toList());
+                        messages.addAll(distMessages);
+                    }
                 }
+            } catch (Throwable t) {
+                logger.warn("Unknown error collecting validation messages {}", t.getLocalizedMessage());
             }
         }
         return messages;

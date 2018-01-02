@@ -49,6 +49,9 @@ import {AccessRightsService} from "./dataset/accessRights/accessRights.service";
 import { ReferencesComponent } from "./dataset/references/references.component";
 import { ReferenceListComponent } from "./dataset/references/reference-list.component";
 import {InputTrimDirective} from './dataset/inputTrimDirective';
+import { TimeoutService } from "./timeout/timeout.service";
+import { TimeoutModalComponent } from "./timeout/timeoutModal.component";
+import { WasTimedOutModalComponent } from "./timeout/wasTimedOutModal.component";
 
 @NgModule({
     declarations: [
@@ -75,7 +78,9 @@ import {InputTrimDirective} from './dataset/inputTrimDirective';
         ContentComponent,
         ReferencesComponent,
         ReferenceListComponent,
-        InputTrimDirective
+        InputTrimDirective,
+        TimeoutModalComponent,
+        WasTimedOutModalComponent
     ],
     imports: [
         BrowserModule,
@@ -96,7 +101,9 @@ import {InputTrimDirective} from './dataset/inputTrimDirective';
         BrowserAnimationsModule
     ],
     entryComponents: [
-        ConfirmComponent
+        ConfirmComponent,
+        TimeoutModalComponent,
+        WasTimedOutModalComponent
     ],
     providers: [
         CatalogService,
@@ -108,6 +115,7 @@ import {InputTrimDirective} from './dataset/inputTrimDirective';
         AccessRightsService,
         AuthGuard,
         AuthenticationService,
+        TimeoutService,
         {
             provide: LOCALE_ID,
             useValue: "no-NO"

@@ -34,7 +34,6 @@ export default class SearchPublishers extends React.Component {
       baseURL:this.host,
       headers:this.options.headers
     });
-    // this.getPublishers = this.getPublishers.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
