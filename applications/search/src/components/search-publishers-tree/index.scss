@@ -7,13 +7,6 @@
   .tree-view_main {
     margin-top: .5rem;
     margin-bottom: .5rem;
-    /*
-    &:hover {
-      transition: background-color .5s ease-out;
-      background-color: $color6;
-      color: $color0;
-    }
-    */
   }
 }
 .tree-view_children {
@@ -24,20 +17,10 @@
     margin: 0 .5rem .5rem 0;
     border-top: 1px solid $color0;
     padding: 1rem 0;
-    /*
-    &:hover {
-      transition: background-color .5s ease-out;
-      background-color: $color6;
-      color: $color1;
-    }
-    */
   }
 }
 
 .tree-item_chosen {
-  //background-color: $color1;
-  //color: $color0;
   text-decoration: underline;
   font-style: italic;
-  font-weight: 500;
 }
