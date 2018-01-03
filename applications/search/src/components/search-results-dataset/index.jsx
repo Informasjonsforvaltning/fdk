@@ -114,23 +114,23 @@ export default class ResultsDataset extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <div className="search-filters">
-          <RefinementListFilter
-            id="theme"
-            title={localization.facet.theme}
-            field="theme.code.raw"
-            operator="AND"
-            size={5}
-            itemComponent={RefinementOptionThemes}
-          />
-          <RefinementListFilter
-            id="accessRight"
-            title={localization.facet.accessRight}
-            field="accessRights.authorityCode.raw"
-            operator="AND"
-            size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-            itemComponent={RefinementOptionPublishers}
-          />
-          {this._renderPublisherRefinementListFilterMobile()}
+            <RefinementListFilter
+              id="theme"
+              title={localization.facet.theme}
+              field="theme.code.raw"
+              operator="AND"
+              size={5}
+              itemComponent={RefinementOptionThemes}
+            />
+            <RefinementListFilter
+              id="accessRight"
+              title={localization.facet.accessRight}
+              field="accessRights.authorityCode.raw"
+              operator="AND"
+              size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+              itemComponent={RefinementOptionPublishers}
+            />
+            {this._renderPublisherRefinementListFilterMobile()}
           </div>
         </Modal.Body>
         <Modal.Footer>
