@@ -9,38 +9,34 @@
 
 <section class="fdk-header">
   <div class="container">
-    <div class="row" style="display: flex; align-items: center">
-
+    <div class="row fdk-header-flex">
       <div class="col-md-4">
-        <a href="/">
-          <img class="fdk-logo" src="/assets/img/fdk-logo@2x.png" />
-        </a>
+          <a href="/">
+            <img class="fdk-logo" src="/assets/img/fdk-logo@2x.png" />
+          </a>
       </div>
 
-      <div class="col-md-3 text-center">
-        <span class="">Registrering</span>
+      <div class="col-md-4 text-center fdk-header-title">
+        <span><strong>Registrering</strong></span>
       </div>
 
-      <div class="col-md-5 fdk-header-flex">
-        <div class="" style="display: flex; flex-grow: 1; align-items: center">
-          <div *ngIf="!isAuthenticated()" class="fdk-float-rightx fdk-margin-right-double" style="display: flex; width: 100%;"><a (click)="login()" href="#">Logg inn</a></div>
-          <div *ngIf="isAuthenticated()" style="display: flex; width: 100%;">
-            <div class="fdk-margin-right-double" style="flex-grow: 1;"><i class="fa fa-user fdk-fa-left fdk-color-icon-cta"></i>{{getUsername()}}</div>
+      <div class="col-md-4 fdk-header-flex fdk-header-flex-end">
+          <div *ngIf="!isAuthenticated()" class="fdk-margin-right-double"><a (click)="login()" href="#">Logg inn</a></div>
+          <div *ngIf="isAuthenticated()" class="fdk-header-flex" style="white-space: nowrap">
+            <div class="fdk-margin-right-double"><i class="fa fa-user fdk-fa-left fdk-color-icon-cta"></i>{{getUsername()}}</div>
             <div class="fdk-margin-right-double"><a (click)="logout()" href="#">Logg ut</a></div>
           </div>
-        </div>
-        <div class="dropdown fdk-container-dropdown-menu">
-          <div dropdown class="btn-group dropdown fdk-dropdown-toggle-menu">
-            <div dropdownToggle class="fdk-button fdk-button-default fdk-button-on-white fdk-float-rightx"><i class="fa fa-bars fdk-fa-dark fdk-fa-left"></i> <span>Meny</span></div>
-            <ul *dropdownMenu class="dropdown-menu fdk-dropdown-menu" style="right:0px; left:auto" role="menu" aria-labelledby="dLabel">
-              <li><a href=" https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/" target="_blank">Veileder</a></li>
-              <li><a href="https://doc.difi.no/dcat-ap-no/" target="_blank">Standard</a></li>
-              <li><a href="https://fellesdatakatalog.brreg.no/" target="_blank">Felles datakatalog</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
+        <div dropdown class="btn-group dropdown fdk-dropdown-toggle-menu">
+                <div dropdownToggle class="fdk-button fdk-button-default fdk-button-on-white btn"><i class="fa fa-bars fdk-fa-dark fdk-fa-left"></i> <span>Meny</span></div>
+                <ul *dropdownMenu class="dropdown-menu fdk-dropdown-menu" style="right:0px; left:auto" role="menu" aria-labelledby="dLabel">
+                  <li><a href=" https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/" target="_blank">Veileder</a></li>
+                  <li><a href="https://doc.difi.no/dcat-ap-no/" target="_blank">Standard</a></li>
+                  <li><a href="https://fellesdatakatalog.brreg.no/" target="_blank">Felles datakatalog</a></li>
+                </ul>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>

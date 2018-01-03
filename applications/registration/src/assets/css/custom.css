@@ -9,6 +9,9 @@ input[type=checkbox]:focus + label.expand-label,
 }
 
 
+/*
+HEADER
+ */
 .fdk-logo {
   width: 201px;
   height: 60px;
@@ -17,12 +20,22 @@ input[type=checkbox]:focus + label.expand-label,
 
 .fdk-header-flex {
   display: flex;
-  //align-items: center;
-  //justify-content: flex-end;
+  align-items: center;
 }
 
-.fdk-header-menu {
-  display: flex;
-  flex-grow: 1;
+.fdk-header-title {
+  font-size: 1.8rem;
+}
+
+.fdk-header-flex-end {
   justify-content: flex-end;
 }
+
+.fdk-nowrap {
+  white-space: nowrap;
+}
+
+.fdk-button-default:active {
+  box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
+}
+
