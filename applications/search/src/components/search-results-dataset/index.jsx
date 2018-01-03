@@ -11,11 +11,12 @@ import {
   TopBar
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
-
+import { Modal, Button } from 'react-bootstrap';
 import { DatasetsQueryTransport } from '../../utils/DatasetsQueryTransport';
 import localization from '../localization';
 import RefinementOptionThemes from '../search-refinementoption-themes';
 import RefinementOptionPublishers from '../search-refinementoption-publishers';
+import RefinementOptionPublishersMobile from '../search-refinementoption-publishers-mobile';
 import { SearchBox } from '../search-results-searchbox';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
@@ -29,6 +30,9 @@ let searchkitDataset;
 export default class ResultsDataset extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showModal: false
+    }
 
     const history = createHistory();
     history.listen( location => {
@@ -61,6 +65,9 @@ export default class ResultsDataset extends React.Component {
       };
       return translations[key];
     };
+
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
   }
 
   _renderPublisherRefinementListFilter() {
@@ -75,6 +82,67 @@ export default class ResultsDataset extends React.Component {
       />);
 
     return this.publisherFilter;
+  }
+
+  _renderPublisherRefinementListFilterMobile() {
+    this.publisherFilter =
+      (<RefinementListFilter
+        id="publisher"
+        title={localization.facet.organisation}
+        field="publisher.name.raw"
+        operator="AND"
+        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+        itemComponent={RefinementOptionPublishersMobile}
+      />);
+
+    return this.publisherFilter;
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+
+  _renderFilterModal() {
+    return (
+      <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="search-filters">
+          <RefinementListFilter
+            id="theme"
+            title={localization.facet.theme}
+            field="theme.code.raw"
+            operator="AND"
+            size={5}
+            itemComponent={RefinementOptionThemes}
+          />
+          <RefinementListFilter
+            id="accessRight"
+            title={localization.facet.accessRight}
+            field="accessRights.authorityCode.raw"
+            operator="AND"
+            size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+            itemComponent={RefinementOptionPublishers}
+          />
+          {this._renderPublisherRefinementListFilterMobile()}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="fdk-button-default fdk-button"
+            onClick={this.close}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
   }
 
   render() {
@@ -105,6 +173,19 @@ export default class ResultsDataset extends React.Component {
               </div>
               <div className="col-md-12 text-center">
                 <HitsStats component={datasetsHitStatsWithProps} />
+              </div>
+              <div className="col-xs-12 text-center visible-xs visible-sm">
+                <div className="btn-group btn-group-default">
+                  <Button
+                    className="fdk-button-default fdk-button"
+                    bsStyle="primary"
+                    bsSize="large"
+                    onClick={this.open}
+                  >
+                    Filter
+                  </Button>
+                </div>
+                {this._renderFilterModal()}
               </div>
             </div>
             <section>
