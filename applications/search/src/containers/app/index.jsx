@@ -77,9 +77,12 @@ export default class App extends React.Component {
     return (
       <div>
         <div className="fdk-header-beta">
+          {localization.beta.header}
+          <br className="visible-xs visible-sm" />
           {localization.beta.first}
           <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">{localization.beta.second}</a> {localization.beta.last}
         </div>
+
         <div className="fdk-header">
           <div className="container">
             <div className="row">
