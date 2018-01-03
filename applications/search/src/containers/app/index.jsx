@@ -170,7 +170,41 @@ export default class App extends React.Component {
         </div>
         <div className="fdk-container-path" />
         {childWithProp}
-        <div className="fdk-footer">
+
+        <div className="fdk-footer visible-xs visible-sm">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12 text-center mb-2">
+                <p className="fdk-p-footer">
+                  {localization.footer.information_text}
+                </p>
+              </div>
+              <div className="col-sm-12 text-center mb-2">
+                <p className="fdk-p-footer">
+                  <a
+                    href="https://www.brreg.no/personvernerklaering/"
+                  >
+                    {localization.footer.information}
+                    {localization.footer.privacy}
+                    <i className="fa fa-external-link fdk-fa-right" />
+                  </a>
+                </p>
+              </div>
+
+              <div className="col-sm-12 text-center mb-2">
+                <p className="fdk-p-footer">
+                  <a
+                    href="mailto:fellesdatakatalog@brreg.no"
+                  >
+                    {localization.footer.mail}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="fdk-footer visible-md visible-lg">
           <div className="container">
             <div className="row">
               <div className="col-md-3">
@@ -202,6 +236,7 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
+
       </div>
     );
   }
