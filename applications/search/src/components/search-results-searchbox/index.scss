@@ -7,7 +7,7 @@
   position: absolute !important;
   right: 26px ;
   top: 92px;
-  font-size: 32px ;
+  font-size: 2rem;
   z-index: 1 ;
   color: #213B4C ;
 }
@@ -15,4 +15,18 @@
 .fdk-search {
   margin-bottom: 10px !important;
   box-shadow: 0px 3px 12px $color4;
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .glyphicon-search-frontpage {
+    right: 26px ;
+    top: 92px;
+    font-size: 3rem;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }

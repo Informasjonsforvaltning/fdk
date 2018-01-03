@@ -145,7 +145,7 @@ export default class ResultsDataset extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
+                <div className="search-filters col-sm-4 flex-move-first-item-to-bottom visible-md visible-lg">
                   <RefinementListFilter
                     id="theme"
                     title={localization.facet.theme}

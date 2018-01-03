@@ -86,8 +86,7 @@ export default class App extends React.Component {
         <div className="fdk-header">
           <div className="container">
             <div className="row">
-
-              <div className="col-sm-12 col-md-4">
+              <div className="col-xs-6 col-md-4">
                 <a
                   title="Link til Felles datakatalog"
                   href={`/${langParam}`}
@@ -96,12 +95,12 @@ export default class App extends React.Component {
                 </a>
               </div>
 
-              <div className="col-sm-12 col-md-offset-5 col-md-3 fdk-header-flex">
+              <div className="col-xs-6 col-md-offset-5 col-md-3 fdk-header-flex">
                 <DropdownButton
                   tabIndex="0"
                   id="search-language-dropdown-1"
                   bsStyle="default"
-                  className="fdk-button-language"
+                  className="fdk-button-language visible-md visible-lg"
                   title={localization.lang.chosenLanguage}
                   onSelect={this.onChangeLanguage}
                 >
@@ -138,6 +137,30 @@ export default class App extends React.Component {
                       href={`/reports${langParam}`}
                     >
                       {localization.menu.reports}
+                    </MenuItem>
+                    <MenuItem
+                      className="visible-xs visible-sm"
+                      key="1"
+                      eventKey="nb"
+                      onSelect={this.onChangeLanguage}
+                    >
+                      {localization.lang['norwegian-nb']}
+                    </MenuItem>
+                    <MenuItem
+                      className="visible-xs visible-sm"
+                      key="2"
+                      eventKey="nn"
+                      onSelect={this.onChangeLanguage}
+                    >
+                      {localization.lang['norwegian-nn']}
+                    </MenuItem>
+                    <MenuItem
+                      className="visible-xs visible-sm"
+                      key="3"
+                      eventKey="en"
+                      onSelect={this.onChangeLanguage}
+                    >
+                      {localization.lang['english-en']}
                     </MenuItem>
                   </DropdownButton>
                 </div>
