@@ -492,16 +492,6 @@
 
 	<profiles>
 		<profile>
-			<id>all-tests</id>
-			<properties>
-				<build.profile.id>all-tests</build.profile.id>
-				<!-- All tests are run. unit, integration and end-to-end-->
-				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java, **/*E2E.java</integration.test.pattern>
-				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipUnitTests>false</skipUnitTests>
-			</properties>
-		</profile>
-		<profile>
 			<id>dev</id>
 		</profile>
 		<profile>
