@@ -8,6 +8,7 @@ import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.shared.QualityAnnotation;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.vocabulary.FOAF;
@@ -21,8 +22,10 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
@@ -161,6 +164,31 @@ public class DcatBuilderRobustnessTest {
 
 
 
+    }
+
+    @Test
+    public void checkAccuracyEncoding() throws Throwable {
+
+        Dataset dataset = new Dataset();
+
+        dataset.setUri("http://data.example.org/dataset/1");
+
+        QualityAnnotation qualityAnnotation = new QualityAnnotation();
+        qualityAnnotation.setInDimension("iso:Accuracy");
+        Map<String,String> x = new HashMap<>();
+        x.put("no", "nøyaktighet");
+        qualityAnnotation.setHasBody(x);
+        qualityAnnotation.setMotivatedBy("me self");
+
+        dataset.setHasAccuracyAnnotation(qualityAnnotation);
+
+        Catalog catalog = new Catalog();
+        catalog.setUri("http://data.example.org/catalog/1");
+        catalog.setDataset(Arrays.asList(dataset));
+
+        String result = DcatBuilder.transform(catalog, "TURTLE");
+
+        logger.info(result);
     }
 
 }
