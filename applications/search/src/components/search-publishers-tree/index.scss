@@ -1,0 +1,26 @@
+@import '../../assets/css/colors.scss';
+
+.node {
+  cursor: pointer;
+}
+.tree-view {
+  .tree-view_main {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+  }
+}
+.tree-view_children {
+  .tree-view_item:first-child {
+
+  }
+  .tree-view_item {
+    margin: 0 .5rem .5rem 0;
+    border-top: 1px solid $color0;
+    padding: 1rem 0;
+  }
+}
+
+.tree-item_chosen {
+  text-decoration: underline;
+  font-style: italic;
+}

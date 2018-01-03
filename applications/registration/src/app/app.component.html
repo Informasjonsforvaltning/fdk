@@ -9,49 +9,33 @@
 
 <section class="fdk-header">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="fdk-header-padding pull-left">
-          <span class="fdk-p-header">Registrering i Felles datakatalog</span>
-        </div>
-        <div class="pull-right" style="margin-left:10px">
+    <div class="row fdk-header-flex">
+      <div class="col-md-4">
+          <a href="/">
+            <img class="fdk-logo" src="/assets/img/fdk-logo@2x.png" />
+          </a>
+      </div>
 
+      <div class="col-md-4 text-center fdk-header-title">
+        <span><strong>Registrering</strong></span>
+      </div>
 
-          <a class="pull-right">
+      <div class="col-md-4 fdk-header-flex fdk-header-flex-end">
+          <div *ngIf="!isAuthenticated()" class="fdk-margin-right-double"><a (click)="login()" href="#">Logg inn</a></div>
+          <div *ngIf="isAuthenticated()" class="fdk-header-flex" style="white-space: nowrap">
+            <div class="fdk-margin-right-double"><i class="fa fa-user fdk-fa-left fdk-color-icon-cta"></i>{{getUsername()}}</div>
+            <div class="fdk-margin-right-double"><a (click)="logout()" href="#">Logg ut</a></div>
+          </div>
 
-            <div class="dropdown fdk-container-dropdown-menu">
-              <div dropdown class="btn-group dropdown fdk-dropdown-toggle-menu">
-                <div dropdownToggle class="fdk-button fdk-button-default fdk-button-on-white fdk-float-right"><i class="fa fa-bars fdk-fa-dark fdk-fa-left"></i> <span>Meny</span></div>
+        <div dropdown class="btn-group dropdown fdk-dropdown-toggle-menu">
+                <div dropdownToggle class="fdk-button fdk-button-default fdk-button-on-white btn"><i class="fa fa-bars fdk-fa-dark fdk-fa-left"></i> <span>Meny</span></div>
                 <ul *dropdownMenu class="dropdown-menu fdk-dropdown-menu" style="right:0px; left:auto" role="menu" aria-labelledby="dLabel">
                   <li><a href=" https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/" target="_blank">Veileder</a></li>
                   <li><a href="https://doc.difi.no/dcat-ap-no/" target="_blank">Standard</a></li>
                   <li><a href="https://fellesdatakatalog.brreg.no/" target="_blank">Felles datakatalog</a></li>
                 </ul>
-              </div>
-
-              <!-- Dropdown language
-              <div class="dropdown fdk-container-dropdown-language">
-                <button class="btn btn-default fdk-dropdown-toggle-language" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  <img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu fdk-dropdown-language" aria-labelledby="dropdownMenu1">
-                  <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-england.png"/>English</a></li>
-                  <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Bokmål</a></li>
-                  <li><a href="#"><img class="fdk-dropdown-language-flag" src="/assets/img/flag-norway.png"/>Nynorsk</a></li>
-                </ul>
-              </div>-->
-            </div>
-
-          </a>
-          <div class="fdk-header-padding pull-right">
-            <div *ngIf="!isAuthenticated()" class="fdk-float-right fdk-margin-right-double"><a (click)="login()" href="#">Logg inn</a></div>
-            <div *ngIf="isAuthenticated()">
-              <div class="fdk-float-right fdk-margin-right-double"><a (click)="logout()" href="#">Logg ut</a></div>
-              <div class="fdk-float-right fdk-margin-right-double"><i class="fa fa-user fdk-fa-left fdk-color-icon-cta"></i>{{getUsername()}}</div>
-            </div>
-          </div>
         </div>
+
       </div>
     </div>
   </div>

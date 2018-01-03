@@ -7,3 +7,35 @@ input[type=checkbox]:focus + label.expand-label,
   outline: 2px solid #197DAF !important;
   outline: -webkit-focus-ring-color auto 5px;
 }
+
+
+/*
+HEADER
+ */
+.fdk-logo {
+  width: 201px;
+  height: 60px;
+  margin: -8px 0px;
+}
+
+.fdk-header-flex {
+  display: flex;
+  align-items: center;
+}
+
+.fdk-header-title {
+  font-size: 1.8rem;
+}
+
+.fdk-header-flex-end {
+  justify-content: flex-end;
+}
+
+.fdk-nowrap {
+  white-space: nowrap;
+}
+
+.fdk-button-default:active {
+  box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
+}
+
