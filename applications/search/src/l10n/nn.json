@@ -7,7 +7,8 @@
     "readMore": "Les mer om "
   },
   "beta": {
-    "first": "Dette er ein beta-versjon. Gi oss gjerne ",
+    "header": "Dette er ein beta-versjon. ",
+    "first": "Gi oss gjerne ",
     "second": "tilbakemeldinger",
     "last": "om kva du synast!"
   },

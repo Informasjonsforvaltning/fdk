@@ -77,14 +77,16 @@ export default class App extends React.Component {
     return (
       <div>
         <div className="fdk-header-beta">
+          {localization.beta.header}
+          <br className="visible-xs visible-sm" />
           {localization.beta.first}
           <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">{localization.beta.second}</a> {localization.beta.last}
         </div>
+
         <div className="fdk-header">
           <div className="container">
             <div className="row">
-
-              <div className="col-sm-12 col-md-4">
+              <div className="col-xs-6 col-md-4">
                 <a
                   title="Link til Felles datakatalog"
                   href={`/${langParam}`}
@@ -93,12 +95,12 @@ export default class App extends React.Component {
                 </a>
               </div>
 
-              <div className="col-sm-12 col-md-offset-5 col-md-3 fdk-header-flex">
+              <div className="col-xs-6 col-md-offset-5 col-md-3 fdk-header-flex">
                 <DropdownButton
                   tabIndex="0"
                   id="search-language-dropdown-1"
                   bsStyle="default"
-                  className="fdk-button-language"
+                  className="fdk-button-language visible-md visible-lg"
                   title={localization.lang.chosenLanguage}
                   onSelect={this.onChangeLanguage}
                 >
@@ -136,6 +138,30 @@ export default class App extends React.Component {
                     >
                       {localization.menu.reports}
                     </MenuItem>
+                    <MenuItem
+                      className="visible-xs visible-sm"
+                      key="1"
+                      eventKey="nb"
+                      onSelect={this.onChangeLanguage}
+                    >
+                      {localization.lang['norwegian-nb']}
+                    </MenuItem>
+                    <MenuItem
+                      className="visible-xs visible-sm"
+                      key="2"
+                      eventKey="nn"
+                      onSelect={this.onChangeLanguage}
+                    >
+                      {localization.lang['norwegian-nn']}
+                    </MenuItem>
+                    <MenuItem
+                      className="visible-xs visible-sm"
+                      key="3"
+                      eventKey="en"
+                      onSelect={this.onChangeLanguage}
+                    >
+                      {localization.lang['english-en']}
+                    </MenuItem>
                   </DropdownButton>
                 </div>
               </div>
@@ -144,7 +170,41 @@ export default class App extends React.Component {
         </div>
         <div className="fdk-container-path" />
         {childWithProp}
-        <div className="fdk-footer">
+
+        <div className="fdk-footer visible-xs visible-sm">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12 text-center mb-2">
+                <p className="fdk-p-footer">
+                  {localization.footer.information_text}
+                </p>
+              </div>
+              <div className="col-sm-12 text-center mb-2">
+                <p className="fdk-p-footer">
+                  <a
+                    href="https://www.brreg.no/personvernerklaering/"
+                  >
+                    {localization.footer.information}
+                    {localization.footer.privacy}
+                    <i className="fa fa-external-link fdk-fa-right" />
+                  </a>
+                </p>
+              </div>
+
+              <div className="col-sm-12 text-center mb-2">
+                <p className="fdk-p-footer">
+                  <a
+                    href="mailto:fellesdatakatalog@brreg.no"
+                  >
+                    {localization.footer.mail}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="fdk-footer visible-md visible-lg">
           <div className="container">
             <div className="row">
               <div className="col-md-3">
@@ -176,6 +236,7 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
+
       </div>
     );
   }

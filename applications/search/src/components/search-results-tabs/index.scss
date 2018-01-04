@@ -2,6 +2,7 @@
 
 .search-results-tabs {
   border-bottom: 2px solid ;
+  padding-left: 0;
 
   li {
     border-top-left-radius: 5px;
@@ -19,7 +20,7 @@
       background: none;
       border: 0;
       box-sizing: border-box;
-      padding: 1em 4em;
+      padding: .8em 1.5em;
       font-weight: 500;      
     }
   }
@@ -27,4 +28,24 @@
   .li-active {    
     font-size: 2rem;
   }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .search-results-tabs {
+    li {
+      button {
+        padding: 1em 4em;
+      }
+    }
+
+    .li-active {
+      font-size: 2rem;
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }
