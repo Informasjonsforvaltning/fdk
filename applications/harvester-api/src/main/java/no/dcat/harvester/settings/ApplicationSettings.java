@@ -19,6 +19,8 @@ public class ApplicationSettings {
 	private String httpUsername;
 	private String httpPassword;
 
+	private String notificationMailSenderAddress;
+
 	public String getHttpUsername() {
 		return httpUsername;
 	}
@@ -70,4 +72,8 @@ public class ApplicationSettings {
 	public void setThemesHostname(String themesHostname) {
 		this.themesHostname = themesHostname;
 	}
+
+	public String getNotificationMailSenderAddress() {return notificationMailSenderAddress; }
+
+	public void setNotificationMailSenderAddress(String mailSenderAddress) {this.notificationMailSenderAddress = mailSenderAddress; }
 }

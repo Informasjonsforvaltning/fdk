@@ -1,5 +1,6 @@
 package no.dcat.harvester.crawler.notification;
 
+import no.dcat.harvester.settings.ApplicationSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,16 @@ import org.springframework.stereotype.Component;
 public class EmailNotificationService {
     private final Logger logger = LoggerFactory.getLogger(EmailNotificationService.class);
 
-    @Value("${application.mail.notificationSenderAddress}")
-    private String notificationSenderAddress;
+    @Autowired
+    private ApplicationSettings applicationSettings;
 
     @Autowired
     private JavaMailSender mailSender;
 
 
     public void sendValidationResultNotification(String toAddress, String subjectText, String messageText) {
-        sendValidationResultNotification(notificationSenderAddress, toAddress, subjectText, messageText);
+        sendValidationResultNotification(
+                applicationSettings.getNotificationMailSenderAddress(), toAddress, subjectText, messageText);
     }
 
 

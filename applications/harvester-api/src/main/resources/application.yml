@@ -39,8 +39,7 @@ spring:
             enable: true
 application:
   elasticSearchCluster: fellesdatakatalog
-  mail:
-    notificationSenderAddress: fellesdatakatalog@brreg.no
+  notificationMailSenderAddress: fellesdatakatalog@brreg.no
 
 ---
 spring:
@@ -75,8 +74,7 @@ application:
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
   themesHostname: http://localhost:8100
-  mail:
-      notificationSenderAddress: fdksystembjg@gmai.com
+  notificationMailSenderAddress: fdksystembjg@gmail.com
 server:
   port: 8081
 management:
