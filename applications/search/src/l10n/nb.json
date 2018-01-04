@@ -27,7 +27,8 @@
   },
   "query": {
     "intro": "Søk etter innhold",
-    "do": "Utfør søk"
+    "do": "Utfør søk",
+    "clear": "Nullstill søk"
   },
   "login": {
     "title": "Logg inn"
@@ -215,5 +216,8 @@
     "searchPublisher": "Velg virksomhet",
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
     "typeToSearch": "Skriv for å søke"
+  },
+  "registration": {
+    "title": "Hvordan komme i gang med registrering av datasett"
   }
 }

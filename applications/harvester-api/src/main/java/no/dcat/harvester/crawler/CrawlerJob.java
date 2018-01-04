@@ -30,6 +30,11 @@ import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.DCTerms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+import sun.net.www.protocol.file.FileURLConnection;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -52,6 +57,7 @@ import java.util.stream.Collectors;
 
 public class CrawlerJob implements Runnable {
 
+
     private List<CrawlerResultHandler> handlers;
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;
@@ -65,6 +71,8 @@ public class CrawlerJob implements Runnable {
 
     public List<String> getValidationResult() {return validationResult;}
     private Set<String> illegalUris = new HashSet<>();
+    private boolean test = false;
+    private Model model = null;
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);
 
@@ -82,6 +90,14 @@ public class CrawlerJob implements Runnable {
 
     public String getDcatSourceId() {
         return dcatSource.getId();
+    }
+
+    void testMode() {
+        test = true;
+    }
+
+    Model getModel() {
+        return model;
     }
 
     @Override
@@ -105,12 +121,12 @@ public class CrawlerJob implements Runnable {
                 //add sort ranking to datasets
                 DatasetSortRankingCreator rankingCreator = new DatasetSortRankingCreator();
                 Model rankedUnion = rankingCreator.rankDatasets(union, dcatSource.getUrl());
+                model = rankedUnion;
 
                 for (CrawlerResultHandler handler : handlers) {
                     handler.process(dcatSource, rankedUnion, validationResult);
                 }
             }
-
 
             //Write info about crawl results to store
             String crawlerResultStr = crawlerResultMessage.toString();
@@ -118,7 +134,6 @@ public class CrawlerJob implements Runnable {
 
             LocalDateTime stop = LocalDateTime.now();
             logger.info("[crawler_operations] [success] Finished crawler job: {}", dcatSource.toString() + ", Duration=" + returnCrawlDuration(start, stop));
-
 
         } catch (JenaException e) {
             String message = formatJenaException(e);
@@ -183,7 +198,7 @@ public class CrawlerJob implements Runnable {
     Model prepareModelForValidation() throws MalformedURLException {
         logger.debug("loadDataset: "+ dcatSource.getUrl());
         URL url = new URL(dcatSource.getUrl());
-        if (url.getProtocol().equals("http") || url.getProtocol().equals("https")) {
+        if (url.getProtocol().equals("http") || url.getProtocol().equals("https") || test) {
 
             return loadModelAndValidate(url);
 
@@ -380,9 +395,9 @@ public class CrawlerJob implements Runnable {
                     }
                 }
             } catch (MalformedURLException | ClassCastException e) {
-                logger.error("URL not valid: {} ", locUri,e);
+                logger.error("URL not valid: {}. Reason {}", locUri,e.getLocalizedMessage());
             } catch (IOException e) {
-                logger.error("IOException: {} ", locUri, e);
+                logger.error("IOException: {}. Reason {}", locUri, e.getLocalizedMessage());
             }
 
         }

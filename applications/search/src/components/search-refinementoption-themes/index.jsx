@@ -8,7 +8,7 @@ const RefinementOptionThemes = (props) => {
   let themeLabel = '';
   if (window.themes.length > 0) {
     if (label === 'Ukjent') {
-      themeLabel = label;
+      themeLabel = localization.search_hit.ukjent;
     } else {
       const lang = localization.getLanguage();
       if(_find(window.themes, label.substr(-4))) {

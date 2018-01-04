@@ -93,19 +93,7 @@ export default class App extends React.Component {
                 </a>
               </div>
 
-              <div className="col-sm-12 col-md-5">
-                <p className="fdk-p-header-sub">
-                  {localization.app.titleSub} {localization.app.readMore}
-                  <a
-                    title="Side om"
-                    href={`/about${langParam}`}
-                  >
-                    {localization.app.title}
-                  </a>
-                </p>
-              </div>
-
-              <div className="col-sm-12 col-md-3 fdk-header-flex">
+              <div className="col-sm-12 col-md-offset-5 col-md-3 fdk-header-flex">
                 <DropdownButton
                   tabIndex="0"
                   id="search-language-dropdown-1"
@@ -130,21 +118,21 @@ export default class App extends React.Component {
                     <MenuItem
                       key="menu-1"
                       eventKey="menu-1"
-                      href="/about"
+                      href={`/about${langParam}`}
                     >
                       {localization.about.about}
                     </MenuItem>
                     <MenuItem
                       key="menu-2"
                       eventKey="menu-2"
-                      href="/about-registration"
+                      href={`/about-registration${langParam}`}
                     >
                       {localization.menu.aboutRegistration}
                     </MenuItem>
                     <MenuItem
                       key="menu-3"
                       eventKey="menu-3"
-                      href="/reports"
+                      href={`/reports${langParam}`}
                     >
                       {localization.menu.reports}
                     </MenuItem>

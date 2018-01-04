@@ -1,34 +1,32 @@
-var path = require("path");
-var express = require("express");
-var bodyParser = require("body-parser")
-var methodOverride = require("method-override")
-var compression = require("compression")
-//var _ = require("lodash")
+const path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+const compression = require("compression");
+const webpack = require("webpack");
+const webpackMiddleware = require("webpack-dev-middleware");
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require("../webpack.dev.config.js");
 
 module.exports = {
-  start: function(prodMode) {
-
-    var env = {
+  start() {
+    const env = {
       production: process.env.NODE_ENV === 'production'
     };
 
-    var express = require('express');
-    var app = express();
+    const app = express();
     app.use(compression())
     app.set('view engine', 'ejs');
-    app.set('views', __dirname + '/views');
+    app.set('views', `${__dirname  }/views`);
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
     app.use(methodOverride())
 
-    var port = Number(process.env.PORT || 3000);
+    const port = Number(process.env.PORT || 3000);
+    app.set('port', port);
 
     if (!env.production) {
-      var webpack = require("webpack");
-      var webpackMiddleware = require("webpack-dev-middleware");
-      var webpackHotMiddleware = require('webpack-hot-middleware');
-      var config = require("../webpack.dev.config.js");
-      var compiler = webpack(config);
+      const compiler = webpack(config);
 
       app.use(webpackMiddleware(compiler, {
         publicPath: config.output.publicPath,
@@ -42,22 +40,17 @@ module.exports = {
           modules: false
         }
       }));
-      var dirname = __dirname.substr(0, 69);
       app.use(webpackHotMiddleware(compiler));
-      console.log('__dirname is ', dirname + 'dist');
-      app.use("/static", express.static(dirname + 'dist/'));
-
-
     } else {
-      app.use("/static", express.static(__dirname + '/dist'));
+      app.use("/static", express.static(path.join(__dirname, '/../dist')));
     }
 
-    app.get('*', function(req, res) {
+    app.get('*', (req, res) => {
       res.render('index');
     });
 
-    app.listen(port, function () {
-      console.log('server running at localhost:3000, go refresh and see magic');
+    app.listen(app.get('port'), () => {
+      console.log('FDK-search lytter på', app.get('port')); // eslint-disable-line no-console
     });
   }
 }

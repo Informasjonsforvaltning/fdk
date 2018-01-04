@@ -14,6 +14,7 @@ import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDF;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,7 @@ import java.util.*;
 /**
  * Created by nodavsko on 01.11.2016.
  */
+
 public class DatasetTest {
 
     static private Logger logger = LoggerFactory.getLogger(DatasetTest.class);
@@ -124,7 +126,8 @@ public class DatasetTest {
 
         SkosCode language = new SkosCode("http://publications.europa.eu/resource/authority/language/2", "2", new HashMap<String,String>());
         language.getPrefLabel().put("no", "norsk");
-        expected.setLanguage(Arrays.asList(language));
+        SkosCode language2 = new SkosCode("http://publications.europa.eu/resource/authority/language/3", "3", new HashMap<String,String>());
+        expected.setLanguage(Arrays.asList(language, language2));
 
         SkosCode provinance = new SkosCode("http://data.brreg.no/datakatalog/provinens/vedtak", "vedtak", new HashMap<String, String>());
         provinance.getPrefLabel().put("no", "statlig vedtak");
@@ -145,6 +148,7 @@ public class DatasetTest {
         Assert.assertEquals(expected.getIssued(), data.getIssued());
         Assert.assertEquals(expected.getLandingPage(), data.getLandingPage());
         Assert.assertEquals(expected.getLanguage().get(0).getUri(), data.getLanguage().get(0).getUri());
+        Assert.assertThat(expected.getLanguage().size(), Matchers.is(2));
         Assert.assertEquals(expected.getProvenance().getUri(), data.getProvenance().getUri());
         Assert.assertEquals(expected.getSpatial().get(0).getUri(), data.getSpatial().get(0).getUri());
         Assert.assertEquals(expected.getSpatial().get(0).getPrefLabel().get("no"), data.getSpatial().get(0).getPrefLabel().get("no"));

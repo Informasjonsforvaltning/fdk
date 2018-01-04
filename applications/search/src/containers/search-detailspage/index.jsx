@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { browserHistory } from 'react-router';
 
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
@@ -33,7 +32,10 @@ export default class DetailsPage extends React.Component {
   // loads all the info for this dataset
   loadDatasetFromServer() {
     const url = `/datasets/${this.props.params.id}`;
-    axios.get(url)
+    const config = {
+      headers: { Pragma: 'no-cache' }
+    }
+    axios.get(url, config)
       .then((res) => {
         const data = res.data;
         const dataset = data.hits.hits[0]._source;
@@ -43,8 +45,7 @@ export default class DetailsPage extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error);
-        browserHistory.push('error_404');
+        console.error(error.response)
       });
   }
 
@@ -228,26 +229,22 @@ export default class DetailsPage extends React.Component {
   }
 
   render() {
-    const { loading } = this.state;
-    if (!loading) {
-      return (
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 col-md-offset-2">
-              {this._renderDatasetDescription()}
-              {this._renderKeyInfo()}
-              {this._renderDistribution()}
-              {this._renderSample()}
-              {this._renderDatasetInfo()}
-              {this._renderQuality()}
-              {this._renderBegrep()}
-              {this._renderLandingPageAndContactInfo()}
-            </div>
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 col-md-offset-2">
+            {this._renderDatasetDescription()}
+            {this._renderKeyInfo()}
+            {this._renderDistribution()}
+            {this._renderSample()}
+            {this._renderDatasetInfo()}
+            {this._renderQuality()}
+            {this._renderBegrep()}
+            {this._renderLandingPageAndContactInfo()}
           </div>
         </div>
-      );
-    }
-    return null;
+      </div>
+    );
   }
 }
 

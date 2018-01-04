@@ -24,14 +24,20 @@ public class UploadSubjectsToElastic {
     private static Logger logger = LoggerFactory.getLogger(UploadSubjectsToElastic.class);
 
 
+    /**
+     * Should not be run as a test. Hack to upload subjects to elastic
+     * 
+     * @throws Throwable
+     */
     @Test
     @Ignore
     public void uploadSubjects() throws Throwable {
         final String lok = "http://localhost:9200";
         final String ut1 = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no";
+        final String tt1 = "http://elasticsearch-fellesdatakatalog-tt1.ose-npc.brreg.no";
         final String st2 = "http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
 
-        postSubjects(lok);
+        postSubjects(tt1);
 
     }
 

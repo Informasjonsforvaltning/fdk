@@ -4,13 +4,14 @@ import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
 import {environment} from "../../environments/environment";
 import {User} from "./user";
+import { TimeoutService } from "app/timeout/timeout.service";
 
 @Injectable()
 export class AuthenticationService {
   public authorization : string;
 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private timeoutService: TimeoutService) {
     // var authorization: string;
     // this.token = currentUser && currentUser.token;
   }
@@ -19,6 +20,7 @@ export class AuthenticationService {
     return this.http.get(environment.api +'/innloggetBruker', '', )
       .map((response: Response) => {
         if (response.ok) {
+          this.timeoutService.active();
           return response.json();
         } else {
           return null;

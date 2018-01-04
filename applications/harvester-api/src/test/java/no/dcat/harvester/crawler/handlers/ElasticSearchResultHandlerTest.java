@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;

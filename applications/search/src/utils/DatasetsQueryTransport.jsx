@@ -96,7 +96,7 @@ export class DatasetsQueryTransport extends AxiosESTransport {
     return this.axios.get(
       `${this.options.searchUrlPath}?q=` +
 			(query.query ? encodeURIComponent(query.query.simple_query_string.query) : '') +
-      (hasSingleWord ? ' ' + query.query.simple_query_string.query + '*' : '') + // if there is a single word, we add keyword with a trailing assterix
+      (hasSingleWord ? ' ' + encodeURIComponent(query.query.simple_query_string.query) + '*' : '') + // if there is a single word, we add keyword with a trailing assterix
 			'&from=' +
 			((!query.from) ? '0' : query.from) +
 			'&size=' +

@@ -1,0 +1,241 @@
+@prefix schema: <http://schema.org/> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix dqv:   <http://www.w3.org/ns/dqvNS#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix time:  <http://www.w3.org/TR/owl-time/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://brreg.no/catalogs/910244132>
+        a                dcat:Catalog ;
+        dct:description  "Dette er en helt ny datakatalog "@nb ;
+        dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/910244132.json> ;
+        dct:title        "Datakatalog for RAMSUND OG ROGNAN REVISJON"@nb ;
+        dcat:dataset     <http://brreg.no/catalogs/910244132/datasets/20b77e30-59a0-4410-8e92-55536234cf5b> , <http://brreg.no/catalogs/910244132/datasets/7fef0750-b2e8-4a2e-9d8b-33a4cf9b1b56> , <http://brreg.no/catalogs/910244132/datasets/f5759687-d1e0-47fd-97eb-647759d0e8f4> , <http://brreg.no/catalogs/910244132/datasets/2b33a21e-3da0-4bb8-bf71-03b2602b9e6f> .
+
+<http://brreg.no/catalogs/910244132/datasets/20b77e30-59a0-4410-8e92-55536234cf5b>
+        a                               dcat:Dataset ;
+        dcatno:informationModel         [ a               dct:Standard , skos:Concept ;
+                                          dct:source      "http://www.komplett.no" ;
+                                          skos:prefLabel  "Supermodell"@nb
+                                        ] ;
+        dcatno:legalBasisForAccess      [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2006-05-19-16" ;
+                                          skos:prefLabel  "Oppfentleglova $3"@nb
+                                        ] ;
+        dcatno:legalBasisForProcessing  [ a               dct:RightsStatement , skos:Concept ;
+                                          dct:source      "https://lovdata.no/lov/2006-05-19-16" ;
+                                          skos:prefLabel  "Oppfentleglova $2"@nb
+                                        ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "https://lovdata.no/lov/2006-05-19-16" ;
+                  skos:prefLabel  "Offentleglova §1"@nb
+                ] ;
+        dcatno:objective                "Formålet er å se om ting virker."@nb ;
+        dct:accessRights                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity          <http://publications.europa.eu/resource/authority/frequency/ANNUAL_2> ;
+        dct:conformsTo                  [ a               dct:Standard , skos:Concept ;
+                                          dct:source      "http://www.kartverket.no" ;
+                                          skos:prefLabel  "SOSI"@nb
+                                        ] ;
+        dct:description                 "En kort beskrivelse."@nb ;
+        dct:language                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:modified                    "2017-10-20"^^xsd:date ;
+        dct:provenance                  <http://data.brreg.no/datakatalog/provinens/vedtak> ;
+        dct:publisher                   <http://data.brreg.no/enhetsregisteret/enhet/910244132.json> ;
+        dct:temporal                    [ a                 dct:PeriodOfTime ;
+                                          schema:endDate    "2017-10-31"^^xsd:date ;
+                                          schema:startDate  "2017-10-02"^^xsd:date
+                                        ] ;
+        dct:title                       "Bjørns testdata"@nb ;
+        dct:type                        "Data" ;
+        adms:sample                     <31cf40d6-ecc0-4b37-b5e9-e9b52731f8e6> ;
+        dcat:contactPoint               [ a                        vcard:Organization ;
+                                          vcard:hasEmail           <mailto:bjorn.grova@brreg.no> ;
+                                          vcard:hasTelephone       <tel:95184547> ;
+                                          vcard:hasURL             <http://www.brreg.no/kontaktskjema> ;
+                                          vcard:organization-unit  "Kontaktavdelingen"
+                                        ] ;
+        dcat:distribution               <5863b508-e039-4fd1-9d2f-850210d82cb7> ;
+        dcat:keyword                    "jakt"@nb , "fiske"@nb ;
+        dcat:landingPage                <http://www.brreg.no> ;
+        dcat:theme                      <http://publications.europa.eu/resource/authority/data-theme/AGRI> ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Relevance> ;
+                                          oa:hasBody       [ rdf:value  "Meget relevant"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Currentness> ;
+                                          oa:hasBody       [ rdf:value  "Ekstremt aktuelt datasett."@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Accuracy> ;
+                                          oa:hasBody       [ rdf:value  "Særdeles nøyaktig"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Completeness> ;
+                                          oa:hasBody       [ rdf:value  "Meget komplett"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Availability> ;
+                                          oa:hasBody       [ rdf:value  "Uhyre tilgjengelig"@no ]
+                                        ] .
+
+<http://brreg.no/catalogs/910244132/datasets/2b33a21e-3da0-4bb8-bf71-03b2602b9e6f>
+        a                 dcat:Dataset ;
+        dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description   "Test av oppslag på begrep og lagring av begrep. Foretaksnavn."@nb ;
+        dct:publisher     <http://data.brreg.no/enhetsregisteret/enhet/910244132.json> ;
+        dct:subject       <https://data-david.github.io/Begrep/begrep/Enhet>;
+        dct:title         "Datasett med begrep"@nb .
+
+<5863b508-e039-4fd1-9d2f-850210d82cb7>
+        a                dcat:Distribution ;
+        dct:conformsTo   [ a               dct:Standard , skos:Concept ;
+                           dct:source      "www.iso.org" ;
+                           skos:prefLabel  "Helt standard"@nb
+                         ] ;
+        dct:description  "Nelastbar fil genereres 60 ganger i sekundet"@nb ;
+        dct:format       "csv" ;
+        dct:license      [ a           dct:LicenseDocument , skos:Concept ;
+                           dct:source  "NLOD"
+                         ] ;
+        dct:type         "Nedlastbar fil" ;
+        dcat:accessURL   <http://www.brreg.no/dokumenter/data.csv> ;
+        foaf:page        [ a           foaf:Document , skos:Concept ;
+                           dct:source  "http://www.dagbladet.no"
+                         ] .
+
+<http://brreg.no/catalogs/910244132/datasets/7fef0750-b2e8-4a2e-9d8b-33a4cf9b1b56>
+        a                  dcat:Dataset ;
+        dcatno:objective   "Sjekke om fiksen funker."@nb ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "Tester utlegg av kontaktinfo."@nb ;
+        dct:publisher      <http://data.brreg.no/enhetsregisteret/enhet/910244132.json> ;
+        dct:title          "Test av kontaktinfo"@nb ;
+        dcat:contactPoint  [ a                        vcard:Organization ;
+                             vcard:hasEmail           <mailto:epost@epost.epost> ;
+                             vcard:hasTelephone       <tel:11111111> ;
+                             vcard:hasURL             <http://www.kontaktskjema.no> ;
+                             vcard:organization-unit  "Avdelingen for kontaktinfo"
+                           ] ;
+        dcat:landingPage   <http://www.merinformasjon.no> .
+
+<1afe9153-b082-4a0f-b486-d5746b77f240>
+        a               dcat:Distribution ;
+        dct:conformsTo  [ a           dct:Standard , skos:Concept ;
+                          dct:source  "lenke"
+                        ] ;
+        dct:format      "format2" ;
+        dct:type        "Feed" ;
+        dcat:accessURL  <tilgang> .
+
+<https://data-david.github.io/Begrep/begrep/Foretaksnavn>
+        a               skos:Concept ;
+        skos:prefLabel  "Foretaksnavn"@no .
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        a               dct:LinguisticSystem ;
+        <http://publications.europa.eu/ontology/authority/authority-code>
+                "NOR" ;
+        skos:prefLabel  "Norsk"@nb .
+
+<31cf40d6-ecc0-4b37-b5e9-e9b52731f8e6>
+        a                dcat:Distribution ;
+        dct:conformsTo   [ a               dct:Standard , skos:Concept ;
+                           dct:source      "www.standrd.no" ;
+                           skos:prefLabel  "En standard"@nb
+                         ] ;
+        dct:description  "Fil med tre eksempeldata"@nb ;
+        dct:format       "csv" ;
+        dct:license      [ a           dct:LicenseDocument , skos:Concept ;
+                           dct:source  "NLOD"
+                         ] ;
+        dct:type         "Nedlastbar fil" ;
+        dcat:accessURL   <http://www.brreg.no/eksempel.csv> ;
+        foaf:page        [ a           foaf:Document , skos:Concept ;
+                           dct:source  "http://www.nrk.no"
+                         ] .
+
+<http://brreg.no/catalogs/910244132/datasets/f5759687-d1e0-47fd-97eb-647759d0e8f4>
+        a                               dcat:Dataset ;
+        dcatno:legalBasisForProcessing  [ a           dct:RightsStatement , skos:Concept ;
+                                          dct:source  "lenke"
+                                        ] ;
+        dcatno:legalBasisForRestriction
+                [ a               dct:RightsStatement , skos:Concept ;
+                  dct:source      "lenke" ;
+                  skos:prefLabel  "Skjermes"@nb
+                ] ;
+        dcatno:objective                "Sjekke at det virker"@nb ;
+        dct:accessRights                <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+        dct:accrualPeriodicity          <http://publications.europa.eu/resource/authority/frequency/ANNUAL_2> ;
+        dct:conformsTo                  [ a               dct:Standard , skos:Concept ;
+                                          dct:source      "lenke" ;
+                                          skos:prefLabel  "Ikke en standard"@nb
+                                        ] ;
+        dct:description                 "Test av parfelt uten tittel"@nb ;
+        dct:issued                      "2017-10-31T01:00:00"^^xsd:dateTime ;
+        dct:language                    <http://publications.europa.eu/resource/authority/language/NOR> ;
+        dct:modified                    "2017-10-31"^^xsd:date ;
+        dct:provenance                  <http://data.brreg.no/datakatalog/provinens/bruker> ;
+        dct:publisher                   <http://data.brreg.no/enhetsregisteret/enhet/910244132.json> ;
+        dct:spatial                     <Norge> ;
+        dct:temporal                    [ a                 dct:PeriodOfTime ;
+                                          schema:startDate  "2017-10-31"^^xsd:date
+                                        ] ;
+        dct:title                       "Parfelttest"@nb ;
+        dct:type                        "Taksonomi" ;
+        adms:sample                     <1afe9153-b082-4a0f-b486-d5746b77f240> ;
+        dcat:contactPoint               [ a                        vcard:Organization ;
+                                          vcard:hasEmail           <mailto:epost@epost.no> ;
+                                          vcard:hasTelephone       <tel:11111111> ;
+                                          vcard:hasURL             <hvorblirdenneav> ;
+                                          vcard:organization-unit  "Parfelttestavdelingen"
+                                        ] ;
+        dcat:distribution               <02cf2b4d-cc6f-4a86-896d-5a1a571f749a> ;
+        dcat:keyword                    "to"@nb , "tre"@nb , "en"@nb , "fire"@nb ;
+        dcat:landingPage                <http://www.merinfo.no> ;
+        dcat:theme                      <http://publications.europa.eu/resource/authority/data-theme/INTR> , <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Accuracy> ;
+                                          oa:hasBody       [ rdf:value  "ikke nøyaktig"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Relevance> ;
+                                          oa:hasBody       [ rdf:value  "ikke relevant"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Availability> ;
+                                          oa:hasBody       [ rdf:value  "ikke tilgjengelig"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Currentness> ;
+                                          oa:hasBody       [ rdf:value  "ikke aktuelt"@no ]
+                                        ] ;
+        dqv:hasQualityAnnotation        [ a                dqv:QualityAnnotation ;
+                                          dqv:inDimension  <iso:Completeness> ;
+                                          oa:hasBody       [ rdf:value  "ikke komplett"@no ]
+                                        ] .
+
+<02cf2b4d-cc6f-4a86-896d-5a1a571f749a>
+        a               dcat:Distribution ;
+        dct:conformsTo  [ a           dct:Standard , skos:Concept ;
+                          dct:source  "lenke"
+                        ] ;
+        dct:format      "format" ;
+        dct:type        "Nedlastbar fil" ;
+        dcat:accessURL  <tilgang> .
+
+<http://data.brreg.no/enhetsregisteret/enhet/910244132.json>
+        a               foaf:Agent ;
+        dct:identifier  "910244132" ;
+        foaf:name       "RAMSUND OG ROGNAN REVISJON" .

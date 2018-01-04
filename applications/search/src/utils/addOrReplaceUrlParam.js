@@ -24,6 +24,23 @@ export function addOrReplaceParam(url, param, value) {
    }
    return a.href;
 }
+export function addOrReplaceParamWithoutEncoding(url, param, value) {
+  var r = "([&?]|&amp;)" + param + "\\b(?:=(?:[^&#]*))*";
+  var a = document.createElement('a');
+  var regex = new RegExp(r);
+  var str = param + (value ? "=" + encodeURIComponent(value) : "");
+  a.href = url;
+  var q = a.search.replace(regex, "$1"+str);
+  if (q === a.search) {
+     a.search += (a.search ? "&" : "") + str;
+  } else {
+     a.search = q;
+  }
+  if(value==='') {
+    return removeParam(param, url);
+  }
+  return a.href;
+}
 export function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,

@@ -168,6 +168,7 @@ services:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   reference-data:
+    restart: always
     ports:
       - 8100:8080
     environment:
