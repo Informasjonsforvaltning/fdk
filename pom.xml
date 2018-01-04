@@ -40,7 +40,7 @@
 		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
 
-		<!-- Used for spesifying tests as integration tests. Override in child pom if different -->
+		<!-- Used for specifying tests as integration tests or end-to-end tests. Override in child pom if different -->
 		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 		<end2end.test.pattern>**/*E2E.java</end2end.test.pattern>
 
@@ -48,7 +48,6 @@
             in child pom it will also override setting in profiles -->
 		<skipIntegrationTests>true</skipIntegrationTests>
         <skipUnitTests>true</skipUnitTests>
-
 
 		<maven.exec.skip>false</maven.exec.skip> <!-- default -->
 	</properties>
@@ -248,7 +247,7 @@
 				<version>3.1.1</version>
 				<scope>runtime</scope>
 			</dependency>
-			<!-- Nødvendig for å brukes på openshift-->
+			<!-- Necessary for running on RedHat Openshift-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -325,6 +324,7 @@
 	<build>
 		<plugins>
 			<plugin>
+                <!-- Unit test runner -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
@@ -338,6 +338,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
+                <!-- Integration test runner -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.19.1</version>
@@ -359,6 +360,7 @@
 				</executions>
 			</plugin>
 			<plugin>
+                <!-- Aggregates JaCoCo reports to generate Coveralls statistics -->
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
@@ -368,6 +370,7 @@
                 </configuration>
 			</plugin>
 			<plugin>
+                <!-- Generates coverage reports from unit and integration tests -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.6.201602180812</version>
@@ -419,19 +422,12 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
+                            <!-- Sets the output directory for coverage report. Must be different from unit test report-->
                             <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
-				<!-- <executions>
-					<execution>
-						<id>prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions> -->
 			</plugin>
 		</plugins>
 
@@ -503,7 +499,7 @@
 			<properties>
 				<!-- Used to locate the profile specific configuration file. -->
 				<build.profile.id>integration-test</build.profile.id>
-				<!-- Unit and integration tests are run. -->
+				<!-- Unit and integration tests are run, to get complete tesstcoverage statistics. -->
 				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 				<skipIntegrationTests>false</skipIntegrationTests>
 				<skipUnitTests>false</skipUnitTests>
