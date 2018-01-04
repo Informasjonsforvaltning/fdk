@@ -244,15 +244,15 @@ SEARCHPAGE SORTING DROPDOWN
         outline: auto !important;
     }
 
-    /*
-    EQUAL COLUMNS
-     */
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
     .row-eq-height {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
     }
+}
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
