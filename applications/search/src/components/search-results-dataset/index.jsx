@@ -224,7 +224,7 @@ export default class ResultsDataset extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div className="search-filters col-sm-4 flex-move-first-item-to-bottom visible-md visible-lg">
+                <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
                   <RefinementListFilter
                     id="theme"
                     title={localization.facet.theme}
@@ -243,7 +243,7 @@ export default class ResultsDataset extends React.Component {
                   />
                   {this._renderPublisherRefinementListFilter()}
                 </div>
-                <div id="datasets" className="col-sm-8">
+                <div id="datasets" className="col-xs-12 col-md-8">
                   <Hits
                     mod="sk-hits-grid"
                     hitsPerPage={50}
