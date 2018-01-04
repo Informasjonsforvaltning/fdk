@@ -8,6 +8,11 @@
   margin-bottom: 60px;
 }
 
+.fdk-search-flex {
+  display: flex;
+  align-items: flex-start;
+}
+
 .sk-hits-stats__info {
   color: $color1;
   font-size: 2rem;

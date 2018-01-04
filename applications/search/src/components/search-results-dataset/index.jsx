@@ -162,7 +162,18 @@ export default class ResultsDataset extends React.Component {
         <div>
           <div className="container">
             <div className="row mb-60">
-              <div className="col-md-12">
+              <div className="col-md-12 fdk-search-flex">
+                <div className="btn-group btn-group-default visible-xs visible-sm">
+                  <Button
+                    className="fdk-button-default fdk-button fdk-button-filter"
+                    bsStyle="primary"
+                    bsSize="large"
+                    onClick={this.open}
+                  >
+                    Filter
+                  </Button>
+                  {this._renderFilterModal()}
+                </div>
                 <TopBar>
                   <SearchBox
                     autofocus
@@ -173,19 +184,6 @@ export default class ResultsDataset extends React.Component {
               </div>
               <div className="col-md-12 text-center">
                 <HitsStats component={datasetsHitStatsWithProps} />
-              </div>
-              <div className="col-xs-12 text-center visible-xs visible-sm">
-                <div className="btn-group btn-group-default">
-                  <Button
-                    className="fdk-button-default fdk-button"
-                    bsStyle="primary"
-                    bsSize="large"
-                    onClick={this.open}
-                  >
-                    Filter
-                  </Button>
-                </div>
-                {this._renderFilterModal()}
               </div>
             </div>
             <section>

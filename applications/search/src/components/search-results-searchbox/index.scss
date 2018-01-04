@@ -3,6 +3,10 @@
   top: 20px;
 }
 
+.sk-top-bar {
+  width: 100%;
+}
+
 .glyphicon-search-frontpage {
   position: absolute !important;
   right: 26px ;
@@ -13,13 +17,16 @@
 }
 
 .fdk-search {
+  border-radius: 0 5px 5px 0 !important;
   margin-bottom: 10px !important;
   box-shadow: 0px 3px 12px $color4;
+  width: 100%;
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
   .glyphicon-search-frontpage {
+    border-radius: 5px;
     right: 26px ;
     top: 92px;
     font-size: 3rem;
