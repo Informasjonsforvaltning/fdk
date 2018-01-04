@@ -186,10 +186,10 @@ export default class ResultsDataset extends React.Component {
                 <HitsStats component={datasetsHitStatsWithProps} />
               </div>
             </div>
-            <section>
+            <div>
               <ResultsTabs onSelectView={this.props.onSelectView} />
-            </section>
-            <section id="resultPanel">
+            </div>
+            <div id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
                   <div className="pull-right">
@@ -257,7 +257,7 @@ export default class ResultsDataset extends React.Component {
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
           </div>
         </div>
       </SearchkitProvider>
