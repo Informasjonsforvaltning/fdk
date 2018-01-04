@@ -36,7 +36,7 @@ logging:
   level.no.brreg: ERROR
   level.no.difi: INFO
   level.no.dcat: INFO
-  level.org.springframework: ERROR
+  level.org.springframework: DEBUG
   level.org.springframework.web: ERROR
 fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat

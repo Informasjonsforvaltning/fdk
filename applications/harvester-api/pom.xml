@@ -101,6 +101,12 @@
             <version>1.10.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
     </dependencies>
 
     <!-- Nødvendig for å brukes på openshift-->
