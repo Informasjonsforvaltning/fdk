@@ -194,6 +194,16 @@ SEARCHPAGE SORTING DROPDOWN
     }
 }
 
+/*
+ FILTER BUTTON
+ */
+
+.fdk-button-filter {
+    height: 55px;
+    margin: 0;
+    border-radius: 5px 0 0 5px;
+}
+
     /*
      FILTER CHECKBOX
      */
@@ -234,12 +244,24 @@ SEARCHPAGE SORTING DROPDOWN
         outline: auto !important;
     }
 
-    /*
-    EQUAL COLUMNS
-     */
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
     .row-eq-height {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
     }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .fdk-footer {
+        margin: 60px 0px 0px 0px;
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}

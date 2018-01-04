@@ -269,7 +269,6 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     return (
       <div
         id="dataset-info"
-        className="fdk-margin-top-triple"
       >
         <div className="row fdk-row ">
           {issued &&

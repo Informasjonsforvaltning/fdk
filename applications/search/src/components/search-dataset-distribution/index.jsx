@@ -173,11 +173,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
             {this.props.description}
           </p>
         }
-        { this._renderFormats() }
-        { this._renderTilgangsURL() }
-        { this._renderLicense() }
-        { this._renderConformsTo() }
-        { this._renderDistributionPage() }
+
 
         <div className="fdk-container-detail-text">
           <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>

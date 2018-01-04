@@ -17,8 +17,7 @@ module.exports = {
   },
   module: {
     rules: [
-      /*
-      {
+     /*  {
        enforce: 'pre',
        test: /\.(js|jsx)$/,
        include: [
@@ -30,8 +29,7 @@ module.exports = {
        configFile: path.resolve('./.eslintrc.json')
        },
        loader: 'eslint-loader'
-       },
-       */
+       },*/
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
