@@ -130,6 +130,19 @@ $sk-border-radius: 3px !default;
 .inline         { display: inline; }
 .inline-block   { display: inline-block; }
 
+.uu-invisible {
+    background:0 0;
+    color:transparent;
+    border:0;
+    clip:rect(0 0 0 0);
+    height:1px;
+    width:1px;
+    margin:-1px;
+    padding:0;
+    overflow:hidden;
+    position:absolute!important
+}
+
 /*
  TOP-HEADER
  */
