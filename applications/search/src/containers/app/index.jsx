@@ -91,6 +91,7 @@ export default class App extends React.Component {
                   title="Link til Felles datakatalog"
                   href={`/${langParam}`}
                 >
+                  <span className="uu-invisible" aria-hidden="false">Gå til forside</span>
                   <img className="fdk-logo" src="/static/img/fdk-logo@2x.png" alt="Logo for Felles datakatalog" />
                 </a>
               </div>
@@ -219,6 +220,7 @@ export default class App extends React.Component {
                 </p>
               </div>
               <div className="col-md-6 text-center">
+                <span className="uu-invisible" aria-hidden="false">Felles Datakatalog.</span>
                 <p className="fdk-p-footer">
                   {localization.footer.information_text}
                 </p>
@@ -228,6 +230,7 @@ export default class App extends React.Component {
                   <a
                     href="mailto:fellesdatakatalog@brreg.no"
                   >
+                    <span className="uu-invisible" aria-hidden="false">Mailadresse.</span>
                     {localization.footer.contact}<br />
                     {localization.footer.mail}
                   </a>

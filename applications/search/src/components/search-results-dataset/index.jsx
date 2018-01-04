@@ -251,6 +251,7 @@ export default class ResultsDataset extends React.Component {
                     sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
                   />
                   <div className="col-md-8 col-md-offset-2">
+                    <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
                     <Pagination
                       showNumbers
                     />
