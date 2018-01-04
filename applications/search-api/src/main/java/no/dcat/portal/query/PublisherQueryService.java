@@ -1,5 +1,10 @@
 package no.dcat.portal.query;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import lombok.Data;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -8,10 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class PublisherQueryService extends ElasticsearchService {
@@ -19,6 +24,7 @@ public class PublisherQueryService extends ElasticsearchService {
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
+    public static final String QUERY_PUBLISHER_HIERARCHY = "/publisher/hierarchy";
 
     /**
      * Finds all publisher loaded into elasticsearch.
@@ -52,5 +58,170 @@ public class PublisherQueryService extends ElasticsearchService {
         logger.debug("Found publisher: {}", responsePublisher);
 
         return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+    }
+
+    /**
+     * Finds all publisher loaded into elasticsearch and returns a tree of them.
+     * @return orgPath and name of all publisher with children in a tree as Json-format is returned..
+     */
+    @CrossOrigin
+    @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Hits> publisherNames() {
+        /**
+         * Get publishers from empty query using publishers
+         */
+        ResponseEntity<String> publisherResponseEntity = publishers("");
+        Gson gson = new Gson();
+        JsonObject hits = gson.fromJson(publisherResponseEntity.getBody(), JsonObject.class);
+        JsonArray jsonArray = hits.getAsJsonObject("hits").getAsJsonArray("hits");
+        List<PublisherHit> publisherHitList = new ArrayList<>();
+
+        /**
+         * Build flat list of PublisherHit from jsonArray.
+         */
+        for (JsonElement element : jsonArray) {
+            JsonObject jsonObject = element.getAsJsonObject().get("_source").getAsJsonObject();
+            PublisherHit publisherHit = new PublisherHit();
+            publisherHit.children = new ArrayList<>();
+            publisherHit.name = jsonObject.get("name").getAsString();
+            publisherHit.orgPath = jsonObject.get("orgPath").getAsString();
+            publisherHitList.add(publisherHit);
+        }
+
+        List<PublisherHit> publisherHitListWithChildren = new ArrayList<>();
+
+        /**
+         * Building tree from flat list
+         */
+        for (PublisherHit publisherHit : publisherHitList) {
+            PublisherHit dummyParent = new PublisherHit();
+            dummyParent.orgPath = getParentOrgPath(publisherHit.orgPath);
+            int parentIndex = publisherHitList.indexOf(dummyParent);
+
+            /**
+             * If publisher has parent, need to add it to list, or if already added need to add publisher to parents children.
+             */
+            if (parentIndex >= 0) {
+                PublisherHit parentMatch = publisherHitList.get(parentIndex);
+                int parentAlreadyAdded = publisherHitListWithChildren.indexOf(parentMatch);
+
+                if (parentAlreadyAdded >= 0) {
+                    publisherHitListWithChildren.get(parentAlreadyAdded).children.add(publisherHit);
+                } else {
+                    parentMatch.children.add(publisherHit);
+                    publisherHitListWithChildren.add(parentMatch);
+                }
+            /**
+             * Publisher is a root parent, need to add it to the list in the case where a child has not already done this.
+             */
+            } else {
+                int imAlreadyAdded = publisherHitListWithChildren.indexOf(publisherHit);
+                if (imAlreadyAdded < 0) {
+                    publisherHitListWithChildren.add(publisherHit);
+                }
+            }
+        }
+
+        /**
+         * Removed any potential root duplicates or non root parents added to root level.
+         */
+        List<PublisherHit> result = publisherHitListWithChildren.stream()
+                .filter(publisherHit -> getParentOrgPath(publisherHit.orgPath).compareTo("") == 0)
+                .map(parent -> sortChildren(parent))
+                .collect(Collectors.toList());
+
+        /**
+         * Hardcoded in sorting for root elements.
+         */
+        Hits wrapper = new Hits();
+        wrapper.hits = new ArrayList<>();
+
+        PublisherHit dummyStat = new PublisherHit();
+        dummyStat.orgPath = "/STAT";
+        wrapper.hits.add(result.get(result.indexOf(dummyStat)));
+
+        PublisherHit dummyFylke = new PublisherHit();
+        dummyFylke.orgPath = "/FYLKE";
+        wrapper.hits.add(result.get(result.indexOf(dummyFylke)));
+
+        PublisherHit dummyKommune = new PublisherHit();
+        dummyKommune.orgPath = "/KOMMUNE";
+        wrapper.hits.add(result.get(result.indexOf(dummyKommune)));
+
+        PublisherHit dummyPrivat = new PublisherHit();
+        dummyPrivat.orgPath = "/PRIVAT";
+        wrapper.hits.add(result.get(result.indexOf(dummyPrivat)));
+
+        PublisherHit dummyAnnet = new PublisherHit();
+        dummyAnnet.orgPath = "/ANNET";
+        wrapper.hits.add(result.get(result.indexOf(dummyAnnet)));
+        return new ResponseEntity<>(wrapper, HttpStatus.OK);
+    }
+
+    /**
+     * @param orgPath of publisher.
+     * @return orgPath of publishers parent.
+     */
+    public String getParentOrgPath(String orgPath) {
+        int to = orgPath.lastIndexOf("/");
+        return orgPath.substring(0, (to < 0) ? 0 : to);
+    }
+
+    /**
+     * Recursively sort a parents children (and childrens children.. etc).
+     * @param parent publisher.
+     * @return parent publisher with all its children sorted alphabetically.
+     */
+    public PublisherHit sortChildren(PublisherHit parent) {
+        if (parent.children.size() > 0) {
+            parent.children.sort(PublisherHit::compareTo);
+            parent.children = parent.children.stream().map(child -> sortChildren(child)).collect(Collectors.toList());
+            return parent;
+        } else {
+            return parent;
+        }
+    }
+
+    /**
+     * Wrapper for tree of publishers to return correct form in JSON.
+     */
+    @Data
+    public class Hits {
+        List<PublisherHit> hits;
+    }
+
+    /**
+     * Represents a publisher and its children.
+     */
+    @Data
+    public class PublisherHit implements Comparable<PublisherHit> {
+        String name, orgPath;
+        List<PublisherHit> children;
+
+        /**
+         *  To check on orgPath only.
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (!(o instanceof PublisherHit)) {
+                return false;
+            }
+            PublisherHit user = (PublisherHit) o;
+            return user.orgPath.equals(orgPath);
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * 17 + orgPath.hashCode();
+        }
+
+        /**
+         *  To sort on name only.
+         */
+        @Override
+        public int compareTo(PublisherHit o) {
+            return name.compareTo(o.name);
+        }
     }
 }
