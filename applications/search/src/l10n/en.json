@@ -7,7 +7,8 @@
     "readMore": "Read more about "
   },
   "beta": {
-    "first": "This is a beta version. Please give us ",
+    "header": "This is a beta version. ",
+    "first": "Please give us ",
     "second": "feedback",
     "last": "about the application!"
   },

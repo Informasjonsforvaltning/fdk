@@ -40,7 +40,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         <span
           key={`dataset-description-inScheme-${index}`}
           id={`dataset-description-inScheme-${index}`}
-          className="fdk-label ml-2"
+          className="fdk-label"
         >
           {subItem}
         </span>
@@ -154,7 +154,11 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         <div className={`fdk-container fdk-container-search-hit ${toBeCompared ? 'toBeCompared' : ''}`}>
 
           {!toBeCompared &&
-          <button className='fdk-button fdk-button-default pull-right mt-3' onClick={() => {onAddTerm(source)}} type="button">+ {localization.compare.addCompare}</button>
+          <button className='fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg' onClick={() => {onAddTerm(source)}} type="button">+ {localization.compare.addCompare}</button>
+          }
+
+          {!toBeCompared &&
+          <button className='fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm' onClick={() => {onAddTerm(source)}} type="button">+ {localization.compare.addCompare}</button>
           }
 
           <h2 className="inline-block mr-2">{termTitle}</h2>
