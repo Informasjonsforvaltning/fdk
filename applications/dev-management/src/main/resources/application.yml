@@ -1,6 +1,6 @@
 logging:
   level.: ERROR
-  level.no.brreg: DEBUG
+  level.no.brreg: ERROR
   level.no.difi: ERROR
   level.no.dcat: INFO
   level.org.springframework: ERROR
