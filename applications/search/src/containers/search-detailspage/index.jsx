@@ -12,20 +12,20 @@ import DatasetLandingPage from '../../components/search-dataset-landingpage';
 import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
-// import api from '../../utils/api.json';
+import api from '../../utils/api.json';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {}, // api.dataset[0],
+      dataset: api.dataset[0],
       loading: false
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
 
   componentDidMount() {
-    this.loadDatasetFromServer();
+    // this.loadDatasetFromServer();
   }
 
   // @params: the function has no param but the query need dataset id from prop
@@ -203,14 +203,14 @@ export default class DetailsPage extends React.Component {
     ));
 
     return (
-      <div className="fdk-margin-top-triple">
+      <section className="fdk-margin-top-triple">
         {landingPage &&
         landingPages(landingPage)
         }
         {contactPoint &&
         contactPoints(contactPoint)
         }
-      </div>
+      </section>
     );
   }
 
@@ -232,16 +232,18 @@ export default class DetailsPage extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-8 col-md-offset-2">
-            {this._renderDatasetDescription()}
-            {this._renderKeyInfo()}
-            {this._renderDistribution()}
-            {this._renderSample()}
-            {this._renderDatasetInfo()}
-            {this._renderQuality()}
-            {this._renderBegrep()}
-            {this._renderLandingPageAndContactInfo()}
-          </div>
+          <section className="col-md-8 col-md-offset-2" id="content" role="main" tabIndex="-1">
+            <article>
+              {this._renderDatasetDescription()}
+              {this._renderKeyInfo()}
+              {this._renderDistribution()}
+              {this._renderSample()}
+              {this._renderDatasetInfo()}
+              {this._renderQuality()}
+              {this._renderBegrep()}
+              {this._renderLandingPageAndContactInfo()}
+            </article>
+          </section>
         </div>
       </div>
     );

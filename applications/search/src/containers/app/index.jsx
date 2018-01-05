@@ -76,6 +76,19 @@ export default class App extends React.Component {
       }));
     return (
       <div>
+        <div>
+          <a
+            id="focus-element"
+            className="uu-invisible"
+            href={`${location.pathname}#content`}
+            aria-hidden="true"
+          >
+            Hopp til hovedinnhold
+          </a>
+        </div>
+        <div id="skip-link-wrap">
+          <a id="skip-link" href={`${location.pathname}#content`}>Hopp til hovedinnhold</a>
+        </div>
         <div className="fdk-header-beta">
           {localization.beta.header}
           <br className="visible-xs visible-sm" />

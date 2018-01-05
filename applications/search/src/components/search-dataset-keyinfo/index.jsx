@@ -219,7 +219,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 
   render() {
     return (
-      <div>
+      <section>
         { this._renderHeader() }
         <div className="row fdk-row">
           {this._renderLegalBasis()}
@@ -229,7 +229,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           {this._renderInformationModel()}
           {this._renderConformsTo()}
         </div>
-      </div>
+      </section>
     );
   }
 }

@@ -159,7 +159,7 @@ export default class ResultsDataset extends React.Component {
     });
     return (
       <SearchkitProvider searchkit={searchkitDataset}>
-        <div>
+        <div id="content" role="main" tabIndex="-1">
           <div className="container">
             <div className="row mb-60">
               <div className="col-md-12 fdk-search-flex">

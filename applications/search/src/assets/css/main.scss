@@ -143,6 +143,31 @@ $sk-border-radius: 3px !default;
     position:absolute!important
 }
 
+#skip-link-wrap {
+    a {
+        color: $color-cta2;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+        &:focus, &:active {
+            background-color: lime;
+            position: static;
+            top: 0;
+            left: 0;
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            clip: auto;
+        }
+    }
+}
+
 /*
  TOP-HEADER
  */
