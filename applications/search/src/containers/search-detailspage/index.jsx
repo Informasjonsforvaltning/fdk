@@ -232,7 +232,7 @@ export default class DetailsPage extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <section className="col-md-8 col-md-offset-2" id="content" role="main" tabIndex="-1">
+          <div className="col-md-8 col-md-offset-2" id="content" role="main" tabIndex="-1">
             <article>
               {this._renderDatasetDescription()}
               {this._renderKeyInfo()}
@@ -243,7 +243,7 @@ export default class DetailsPage extends React.Component {
               {this._renderBegrep()}
               {this._renderLandingPageAndContactInfo()}
             </article>
-          </section>
+          </div>
         </div>
       </div>
     );
