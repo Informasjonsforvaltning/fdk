@@ -40,13 +40,14 @@
 		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
 
-		<!-- Used for spesifying tests as integration tests. Override in child pom if different -->
+		<!-- Used for specifying tests as integration tests or end-to-end tests. Override in child pom if different -->
 		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 		<end2end.test.pattern>**/*E2E.java</end2end.test.pattern>
 
 		<!-- Tells weather we should skipIntegrationTests. Note: If this is overwritten
             in child pom it will also override setting in profiles -->
 		<skipIntegrationTests>true</skipIntegrationTests>
+        <skipUnitTests>true</skipUnitTests>
 
 		<maven.exec.skip>false</maven.exec.skip> <!-- default -->
 	</properties>
@@ -246,7 +247,7 @@
 				<version>3.1.1</version>
 				<scope>runtime</scope>
 			</dependency>
-			<!-- Nødvendig for å brukes på openshift-->
+			<!-- Necessary for running on RedHat Openshift-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -323,6 +324,7 @@
 	<build>
 		<plugins>
 			<plugin>
+                <!-- Unit test runner -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
@@ -331,10 +333,12 @@
 						<exclude>${integration.test.pattern}</exclude>
 						<exclude>${end2end.test.pattern}</exclude>
 					</excludes>
-					<argLine> -Dfile.encoding=${java.encoding}</argLine>
+					<argLine>${surefireArgLine} -Dfile.encoding=${java.encoding}</argLine>
+                    <skipTests>${skipUnitTests}</skipTests>
 				</configuration>
 			</plugin>
 			<plugin>
+                <!-- Integration test runner -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.19.1</version>
@@ -344,6 +348,7 @@
 					</includes>
 					<skipTests>${skipIntegrationTests}</skipTests>
 					<encoding>${java.encoding}</encoding>
+                    <argLine>${failsafeArgLine}</argLine>
 				</configuration>
 				<executions>
 					<execution>
@@ -355,22 +360,74 @@
 				</executions>
 			</plugin>
 			<plugin>
+                <!-- Aggregates JaCoCo reports to generate Coveralls statistics -->
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
+                <configuration>
+                    <!-- in addition to jacoco-ut, which is default-->
+                    <relativeReportDirs>jacoco-ut</relativeReportDirs>
+                </configuration>
 			</plugin>
 			<plugin>
+                <!-- Generates coverage reports from unit and integration tests -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.6.201602180812</version>
-				<executions>
-					<execution>
-						<id>prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
+                <executions>
+                    <!--
+                        JaCoCo report for unit tests
+                    -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report for unit tests. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <!--
+                        JaCoCo report for integration tests
+                    -->
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the output directory for coverage report. Must be different from unit test report-->
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
 			</plugin>
 		</plugins>
 
@@ -435,16 +492,6 @@
 
 	<profiles>
 		<profile>
-			<id>all-tests</id>
-			<properties>
-				<build.profile.id>all-tests</build.profile.id>
-				<!-- All tests are run. unit, integration and end-to-end-->
-				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java, **/*E2E.java</integration.test.pattern>
-				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipTests>false</skipTests>
-			</properties>
-		</profile>
-		<profile>
 			<id>dev</id>
 		</profile>
 		<profile>
@@ -452,9 +499,10 @@
 			<properties>
 				<!-- Used to locate the profile specific configuration file. -->
 				<build.profile.id>integration-test</build.profile.id>
-				<!-- Unit and integration tests are run. -->
+				<!-- Unit and integration tests are run, to get complete tesstcoverage statistics. -->
+				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipTests>false</skipTests>
+				<skipUnitTests>false</skipUnitTests>
 			</properties>
 		</profile>
 		<profile>
@@ -463,14 +511,14 @@
 				<!-- Used to locate the profile specific configuration file. -->
 				<build.profile.id>end-to-end-test</build.profile.id>
 
-				<!-- Maven has no distnct phase for end-to-end tests
-				     and Surefire does not distinguish between integration
+				<!-- Maven has no distinct phase for end-to-end tests
+				     and Failsafe does not distinguish between integration
 				     and end to end tests by default. Therefore distinguish
-				     with naming conventinon E2E for end-to-end tests -->
+				     with naming convention E2E for end-to-end tests -->
 				<integration.test.pattern>**/*E2E.java</integration.test.pattern>
 				<!-- Only integration tests are run. -->
 				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipTests>true</skipTests>
+				<skipUnitTests>true</skipUnitTests>
 			</properties>
 		</profile>
 	</profiles>
