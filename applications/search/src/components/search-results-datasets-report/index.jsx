@@ -129,7 +129,7 @@ export default class ResultsDatasetsReport extends React.Component {
         <div className="container">
           <section id="resultPanel">
             <div className="row">
-              <div className="col-md-4 col-md-offset-8">
+              <div className="col-md-4 col-md-offset-8" id="content" role="main" tabIndex="-1">
                 <div className="pull-right" />
               </div>
             </div>

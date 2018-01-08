@@ -130,6 +130,44 @@ $sk-border-radius: 3px !default;
 .inline         { display: inline; }
 .inline-block   { display: inline-block; }
 
+.uu-invisible {
+    background:0 0;
+    color:transparent;
+    border:0;
+    clip:rect(0 0 0 0);
+    height:1px;
+    width:1px;
+    margin:-1px;
+    padding:0;
+    overflow:hidden;
+    position:absolute!important
+}
+
+#skip-link-wrap {
+    a {
+        color: $color-cta2;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+        &:focus, &:active {
+            background-color: lime;
+            position: static;
+            top: 0;
+            left: 0;
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            clip: auto;
+        }
+    }
+}
+
 /*
  TOP-HEADER
  */
@@ -216,7 +254,7 @@ SEARCHPAGE SORTING DROPDOWN
     .checkbox label {
         padding-left:0;
     }
-    .checkbox label label {
+    .checkbox div label {
         margin-right: 4px;
         vertical-align: middle;
         background: #fff;
@@ -232,7 +270,7 @@ SEARCHPAGE SORTING DROPDOWN
         border-radius: 3px;
         content:'';
     }
-    .checkbox label input[type="checkbox"]{
+    .checkbox div input[type="checkbox"]{
         position: absolute;
         left:-9999px;
     }
