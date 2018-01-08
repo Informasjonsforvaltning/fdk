@@ -225,6 +225,7 @@ export default class ResultsDataset extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
+                  <span className="uu-invisible" aria-hidden="false">Filtrering tema</span>
                   <RefinementListFilter
                     id="theme"
                     title={localization.facet.theme}
@@ -233,6 +234,7 @@ export default class ResultsDataset extends React.Component {
                     size={5}
                     itemComponent={RefinementOptionThemes}
                   />
+                  <span className="uu-invisible" aria-hidden="false">Filtrering tilgang</span>
                   <RefinementListFilter
                     id="accessRight"
                     title={localization.facet.accessRight}
@@ -241,6 +243,7 @@ export default class ResultsDataset extends React.Component {
                     size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                     itemComponent={RefinementOptionPublishers}
                   />
+                  <span className="uu-invisible" aria-hidden="false">Filtrering virksomheter</span>
                   {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-xs-12 col-md-8">
