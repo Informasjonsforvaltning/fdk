@@ -47,7 +47,7 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run unit and integration tests + generate test coverage report
-      if: type = cron #run only during nightly cron job - time-consuming operation
+      # if: type = cron #run only during nightly cron job - time-consuming operation
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
@@ -56,7 +56,6 @@ jobs:
 
     - stage: Tests # Run regular React unit tests
       script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
-      if: type = cron #run only during nightly cron job
       after_success: npm run coverage
       env:
         - comment=Run regular React unit tests + generate test coverage report
