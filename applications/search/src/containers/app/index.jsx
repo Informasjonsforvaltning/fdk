@@ -76,6 +76,19 @@ export default class App extends React.Component {
       }));
     return (
       <div>
+        <div>
+          <a
+            id="focus-element"
+            className="uu-invisible"
+            href={`${location.pathname}#content`}
+            aria-hidden="true"
+          >
+            Hopp til hovedinnhold
+          </a>
+        </div>
+        <div id="skip-link-wrap">
+          <a id="skip-link" href={`${location.pathname}#content`}>Hopp til hovedinnhold</a>
+        </div>
         <div className="fdk-header-beta">
           {localization.beta.header}
           <br className="visible-xs visible-sm" />
@@ -91,6 +104,7 @@ export default class App extends React.Component {
                   title="Link til Felles datakatalog"
                   href={`/${langParam}`}
                 >
+                  <span className="uu-invisible" aria-hidden="false">Gå til forside</span>
                   <img className="fdk-logo" src="/static/img/fdk-logo@2x.png" alt="Logo for Felles datakatalog" />
                 </a>
               </div>
@@ -219,6 +233,7 @@ export default class App extends React.Component {
                 </p>
               </div>
               <div className="col-md-6 text-center">
+                <span className="uu-invisible" aria-hidden="false">Felles Datakatalog.</span>
                 <p className="fdk-p-footer">
                   {localization.footer.information_text}
                 </p>
@@ -228,6 +243,7 @@ export default class App extends React.Component {
                   <a
                     href="mailto:fellesdatakatalog@brreg.no"
                   >
+                    <span className="uu-invisible" aria-hidden="false">Mailadresse.</span>
                     {localization.footer.contact}<br />
                     {localization.footer.mail}
                   </a>

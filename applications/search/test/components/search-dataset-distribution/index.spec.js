@@ -11,12 +11,12 @@ describe('DatasetDistribution', () => {
 
   it ('should render', () => {
     expect(wrapper).to.have.length(1);
-    expect(wrapper.find('#dataset-distribution')).to.have.length(1);
+    expect(wrapper.find('.fdk-container-detail')).to.have.length(1);
   });
 
   it ('should render description', () => {
     wrapper.setProps({ description: 'description'});
-    expect(wrapper.find('#dataset-distribution-description')).to.have.length(1);
+    expect(wrapper.find('.fdk-ingress')).to.have.length(1);
   });
 
   it ('should render format', () => {
@@ -28,7 +28,6 @@ describe('DatasetDistribution', () => {
 
   it ('should render access url', () => {
     wrapper.setProps({ accessUrl: ['test-link', 'test-link-2']});
-    expect(wrapper.find('#dataset-distribution-accessurl-0')).to.have.length(1);
-    expect(wrapper.find('#dataset-distribution-accessurl-1')).to.have.length(1);
+    expect(wrapper.find('.dataset-distribution-accessurl')).to.have.length(2);
   });
 });
