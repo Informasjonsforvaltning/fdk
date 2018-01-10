@@ -1,42 +1,46 @@
 package no.dcat.manipulate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
-import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.shared.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
 public class UpdateHarvestHistoryOrgPath {
     public static Logger logger = LoggerFactory.getLogger(UpdateHarvestHistoryOrgPath.class);
-    public static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    public static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     final String elasticUrl = "http://localhost:9200/"; //"http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no"; //"http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
 
     private int numberOfRecordsUpdated;
     List<Publisher> updatedPublishers = new ArrayList<>();
+
+    private ObjectMapper objectMapper = new ObjectMapper().setDateFormat(new SimpleDateFormat(DATE_FORMAT));
+    private RestTemplate restTemplate = createRestTemplate();
 
     public static void main(String... args) {
 
@@ -140,24 +144,39 @@ public class UpdateHarvestHistoryOrgPath {
                         Publisher publisher = record.getPublisher();
                         numberOfRecordsUpdated++;
 
-                        logger.info("{}\t{}\t{}\t{}\t{}\t{}", elasticRecord.get_id(), dateFormat.format(record.getDate()), publisher.getId(), publisher.getUri(), publisher.getOrgPath(), record.getCatalogUri());
+                        logger.info("{}\t{}\t{}\t{}\t{}\t{}", elasticRecord.get_id(),
+                                dateFormat.format(record.getDate()),
+                                publisher.getId(), publisher.getUri(), publisher.getOrgPath(), record.getCatalogUri());
 
                         String url = elasticUrl + "harvest/catalog/" + elasticRecord.get_id();
 
                         // TODO Update bad records
-                        logger.debug("PUT:     {}", url);
-                        logger.debug("payload: {}", record.toString());
+                        logger.info("PUT:     {}", url);
 
-                        restTemplate.put(url, record);
+                        try {
+                            logger.info("payload: {}", objectMapper.writeValueAsString(record));
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+
+                        createRestTemplate().put(url, record);
                     });
                 }
             }
         }
+
     }
 
-    Gson getGson() {
-        return new GsonBuilder().setDateFormat(DATE_FORMAT).create();
+    public RestTemplate createRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        jsonConverter.setObjectMapper(objectMapper);
+        converters.add(jsonConverter);
+        restTemplate.setMessageConverters(converters);
+        return restTemplate;
     }
+
 
     public List<ElasticRecord<CatalogHarvestRecord>> readRecords(String elasticSearchResult) {
 
