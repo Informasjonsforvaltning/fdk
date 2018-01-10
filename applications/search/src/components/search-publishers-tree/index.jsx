@@ -89,7 +89,6 @@ export default class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.orgPath === orgPath
         }
       );
-      // const name = node.name;
       const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
       const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0">{name}</span>;
       const collapsed = SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath)
@@ -113,7 +112,6 @@ export default class SearchPublishersTree extends React.Component {
         }
       );
       const collapsed = SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath);
-      // const name = node.name;
       const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
       const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0"><strong>{name}</strong></span>;
       return (
