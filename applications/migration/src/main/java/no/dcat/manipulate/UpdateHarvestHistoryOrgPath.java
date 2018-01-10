@@ -34,7 +34,8 @@ public class UpdateHarvestHistoryOrgPath {
     public static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-    final String elasticUrl = "http://localhost:9200/"; //"http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no"; //"http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
+    // change this to elastic url
+    final String elasticUrl = "http://localhost:9200/";
 
     private int numberOfRecordsUpdated;
     List<Publisher> updatedPublishers = new ArrayList<>();
