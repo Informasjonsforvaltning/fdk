@@ -349,7 +349,6 @@
 					<skipTests>${skipIntegrationTests}</skipTests>
 					<encoding>${java.encoding}</encoding>
                     <argLine>${failsafeArgLine}docker </argLine>
-					<systemPropertyVariables></systemPropertyVariables>
 				</configuration>
 				<executions>
 					<execution>
