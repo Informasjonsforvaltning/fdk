@@ -159,7 +159,7 @@ export default class ResultsDataset extends React.Component {
     });
     return (
       <SearchkitProvider searchkit={searchkitDataset}>
-        <div>
+        <div id="content" role="main">
           <div className="container">
             <div className="row mb-60">
               <div className="col-md-12 fdk-search-flex">
@@ -186,10 +186,10 @@ export default class ResultsDataset extends React.Component {
                 <HitsStats component={datasetsHitStatsWithProps} />
               </div>
             </div>
-            <section>
+            <div>
               <ResultsTabs onSelectView={this.props.onSelectView} />
-            </section>
-            <section id="resultPanel">
+            </div>
+            <div id="resultPanel">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
                   <div className="pull-right">
@@ -225,6 +225,7 @@ export default class ResultsDataset extends React.Component {
               </div>
               <div className="row">
                 <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
+                  <span className="uu-invisible" aria-hidden="false">Filtrering tema</span>
                   <RefinementListFilter
                     id="theme"
                     title={localization.facet.theme}
@@ -233,6 +234,7 @@ export default class ResultsDataset extends React.Component {
                     size={5}
                     itemComponent={RefinementOptionThemes}
                   />
+                  <span className="uu-invisible" aria-hidden="false">Filtrering tilgang</span>
                   <RefinementListFilter
                     id="accessRight"
                     title={localization.facet.accessRight}
@@ -241,6 +243,7 @@ export default class ResultsDataset extends React.Component {
                     size={5/* NOT IN USE!!! see QueryTransport.jsx */}
                     itemComponent={RefinementOptionPublishers}
                   />
+                  <span className="uu-invisible" aria-hidden="false">Filtrering virksomheter</span>
                   {this._renderPublisherRefinementListFilter()}
                 </div>
                 <div id="datasets" className="col-xs-12 col-md-8">
@@ -251,13 +254,14 @@ export default class ResultsDataset extends React.Component {
                     sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
                   />
                   <div className="col-md-8 col-md-offset-2">
+                    <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
                     <Pagination
                       showNumbers
                     />
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
           </div>
         </div>
       </SearchkitProvider>

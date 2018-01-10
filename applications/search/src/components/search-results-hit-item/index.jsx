@@ -68,6 +68,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (publisher && publisher.name) {
       return (
         <span>
+          <span className="uu-invisible" aria-hidden="false">Datasettet</span>
           {localization.search_hit.owned}&nbsp;
           <span className="fdk-strong-virksomhet">
             {
@@ -91,6 +92,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           key={`dataset-description-theme-${index}`}
           className="fdk-label"
         >
+          <span className="uu-invisible" aria-hidden="false">Datasettets tema.</span>
           {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
         </div>
       ));
@@ -178,6 +180,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         title={`${localization.result.dataset}: ${title}`}
         href={`${link}${langParam}`}
       >
+        <span className="uu-invisible" aria-hidden="false">Søketreff.</span>
         <div className="fdk-container fdk-container-search-hit">
           <h2>{title}</h2>
           <div className="fdk-dataset-themes">
@@ -187,6 +190,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
           <p
             className="fdk-p-search-hit"
           >
+            <span className="uu-invisible" aria-hidden="false">Beskrivelse av datasettet,</span>
             {description}
           </p>
 

@@ -203,14 +203,14 @@ export default class DetailsPage extends React.Component {
     ));
 
     return (
-      <div className="fdk-margin-top-triple">
+      <section className="fdk-margin-top-triple">
         {landingPage &&
         landingPages(landingPage)
         }
         {contactPoint &&
         contactPoints(contactPoint)
         }
-      </div>
+      </section>
     );
   }
 
@@ -232,15 +232,17 @@ export default class DetailsPage extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-8 col-md-offset-2">
-            {this._renderDatasetDescription()}
-            {this._renderKeyInfo()}
-            {this._renderDistribution()}
-            {this._renderSample()}
-            {this._renderDatasetInfo()}
-            {this._renderQuality()}
-            {this._renderBegrep()}
-            {this._renderLandingPageAndContactInfo()}
+          <div className="col-md-8 col-md-offset-2" id="content" role="main" tabIndex="-1">
+            <article>
+              {this._renderDatasetDescription()}
+              {this._renderKeyInfo()}
+              {this._renderDistribution()}
+              {this._renderSample()}
+              {this._renderDatasetInfo()}
+              {this._renderQuality()}
+              {this._renderBegrep()}
+              {this._renderLandingPageAndContactInfo()}
+            </article>
           </div>
         </div>
       </div>

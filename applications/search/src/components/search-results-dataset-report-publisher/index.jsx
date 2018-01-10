@@ -57,8 +57,8 @@ export default class SearchPublishers extends React.Component {
           placeholder={localization.report.searchPublisherPlaceholder}
           searchPromptText={localization.report.typeToSearch}
           multi={this.state.multi}
-          value={this.state.value}
-          onChange={this.onChange}
+          value={this.props.value}
+          onChange={this.props.onChange}
           valueKey="orgPath"
           labelKey="name"
           loadOptions={SearchPublishers.getPublishers}

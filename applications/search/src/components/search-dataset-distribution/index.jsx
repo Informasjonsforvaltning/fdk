@@ -48,7 +48,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
     const children = items => items.map((item, index) => (
       <a
         key={`dataset-distribution-accessurl-${index}`}
-        id={`dataset-distribution-accessurl-${index}`}
+        className="dataset-distribution-accessurl"
         href={item}
       >
         {item}
@@ -166,10 +166,10 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
       }
     );
     return (
-      <div id="dataset-distribution" className={distributionClass}>
+      <section className={distributionClass}>
         <h4 className="fdk-margin-bottom">{title}</h4>
         {this.props.description &&
-          <p id="dataset-distribution-description" className="fdk-ingress">
+          <p className="fdk-ingress">
             {this.props.description}
           </p>
         }
@@ -178,13 +178,7 @@ export default class DatasetDistribution extends React.Component { // eslint-dis
         { this._renderLicense() }
         { this._renderConformsTo() }
         { this._renderDistributionPage() }
-
-        <div className="fdk-container-detail-text">
-          <h5 className="fdk-margin-top-double">{localization.dataset.distribution.created}</h5>
-          <p className="fdk-ingress fdk-ingress-detail" />
-        </div>
-
-      </div>
+      </section>
 
     );
   }
