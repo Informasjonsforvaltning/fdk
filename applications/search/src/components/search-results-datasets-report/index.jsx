@@ -167,7 +167,7 @@ export default class ResultsDatasetsReport extends React.Component {
             <div className="row">
               <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                 <button
-                  className='fdk-button fdk-button-default-no-hover mt-3'
+                  className='fdk-button fdk-button-default-no-hover'
                   onClick={this.handleOnClearSearch}
                   type="button"
                 >
