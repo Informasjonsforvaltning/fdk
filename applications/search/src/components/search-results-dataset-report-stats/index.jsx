@@ -40,7 +40,7 @@ const ReportStats = (props) => {
   const title = (
     <div className="row">
       <div className="fdk-container-stats">
-        <h2>{localization.report.title}<strong>{(entity && entity.length > 0) ? entity : localization.report.allEntities}</strong></h2>
+        <h2>{localization.report.title}<strong>{(entity && entity.length > 0) ? `${entity.charAt(0)}${entity.substring(1).toLowerCase()}` : localization.report.allEntities}</strong></h2>
       </div>
     </div>
   );

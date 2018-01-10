@@ -3,6 +3,13 @@
 .node {
   cursor: pointer;
 }
+.tree-panel {
+  background-color: #DEE3E8;
+  padding: .5rem 2rem;
+  margin: .5em auto;
+  border-radius: 5px;
+}
+
 .tree-view {
   .tree-view_main {
     margin-top: .5rem;
@@ -14,13 +21,26 @@
 
   }
   .tree-view_item {
-    margin: 0 .5rem .5rem 0;
     border-top: 1px solid $color0;
     padding: 1rem 0;
+    outline: none;
+    span {
+      outline: none;
+    }
   }
 }
 
 .tree-item_chosen {
-  text-decoration: underline;
-  font-style: italic;
+  color: $color-cta2;
+  font-weight: 600;
+  margin-left: -16px !important;
+  padding-left: 16px !important;
+}
+
+.tree-view_arrow {
+  font-size: 2rem;
+}
+
+.pre-scrollable {
+  max-height: 1000px !important;
 }
