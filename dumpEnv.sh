@@ -5,6 +5,8 @@ set -e
 # Steps:
 #       1. dump indexes with elasticdump to files
 
+# requires: npm install elasticdump@2.1.0 -g
+
 
 sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no
 
