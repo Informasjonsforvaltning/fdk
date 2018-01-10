@@ -89,11 +89,13 @@ export default class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.orgPath === orgPath
         }
       );
-      const name = node.name;
+      // const name = node.name;
+      const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
       const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0">{name}</span>;
+      const collapsed = SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath)
       if (node.children && node.children.length > 0) {
         return (
-          <TreeView key={`${name  }|${  i}`} nodeLabel={label} defaultCollapsed={SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath)} itemClassName={chosenClass}>
+          <TreeView key={`${name  }|${  i}`} nodeLabel={label} defaultCollapsed={collapsed} itemClassName={chosenClass}>
             {subTree(node.children)}
           </TreeView>
         );
@@ -111,10 +113,11 @@ export default class SearchPublishersTree extends React.Component {
         }
       );
       const collapsed = SearchPublishersTree.isItemCollapsed(node.orgPath, orgPath);
-      const name = node.name;
+      // const name = node.name;
+      const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
       const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0"><strong>{name}</strong></span>;
       return (
-        <div key={`panel${i}`} className="section sk-panel">
+        <div key={`panel${i}`} className="section tree-panel">
           <TreeView key={`${name  }|${  i}`} nodeLabel={label} defaultCollapsed={collapsed} itemClassName={chosenClass}>
             {node.children && node.children.length > 0 &&
             subTree(node.children)
