@@ -136,7 +136,7 @@ export default class SearchPublishersTree extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="pre-scrollable">
         {this._renderTree()}
       </div>
     );
