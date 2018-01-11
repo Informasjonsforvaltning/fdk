@@ -254,7 +254,7 @@ SEARCHPAGE SORTING DROPDOWN
     .checkbox label {
         padding-left:0;
     }
-    .checkbox div label {
+    .checkbox label label {
         margin-right: 4px;
         vertical-align: middle;
         background: #fff;
@@ -270,7 +270,7 @@ SEARCHPAGE SORTING DROPDOWN
         border-radius: 3px;
         content:'';
     }
-    .checkbox div input[type="checkbox"]{
+    .checkbox label input[type="checkbox"]{
         position: absolute;
         left:-9999px;
     }

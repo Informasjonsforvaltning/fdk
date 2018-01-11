@@ -14,6 +14,11 @@
     <artifactId>migration</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <!-- The main class to start by executing java -jar -->
+        <start-class>no.dcat.manipulate.DeleteIndexesAndRecreateEmptyOnes</start-class>
+    </properties>
+
 
     <dependencies>
         <dependency>
@@ -114,6 +119,11 @@
             <groupId>no.dcat</groupId>
             <artifactId>shared</artifactId>
             <version>0.2.4-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
 
     </dependencies>

@@ -28,7 +28,7 @@ const RefinementOptionPublishers = (props) => {
     <div className="checkbox">
       {
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-      }<div onKeyPress={onClick} tabIndex="0" role="button">
+      }<label onKeyPress={onClick} tabIndex="0" role="button" htmlFor={id}>
         <input
           type="checkbox"
           id={id}
@@ -40,7 +40,7 @@ const RefinementOptionPublishers = (props) => {
         />
         <label className="checkbox-replacement" htmlFor={id} />
         {textLabel} ({props.count})
-      </div>
+      </label>
     </div>
   );
 }

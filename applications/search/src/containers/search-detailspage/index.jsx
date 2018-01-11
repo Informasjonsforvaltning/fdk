@@ -12,13 +12,13 @@ import DatasetLandingPage from '../../components/search-dataset-landingpage';
 import DatasetContactInfo from '../../components/search-dataset-contactinfo';
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
-//import api from '../../utils/api.json';
+// import api from '../../utils/api.json';
 
 export default class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {}, //api.dataset[0],
+      dataset: {}, // api.dataset[0],
       loading: false
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);

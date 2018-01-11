@@ -348,7 +348,7 @@
 					</includes>
 					<skipTests>${skipIntegrationTests}</skipTests>
 					<encoding>${java.encoding}</encoding>
-                    <argLine>${failsafeArgLine}</argLine>
+                    <argLine>${failsafeArgLine}docker </argLine>
 				</configuration>
 				<executions>
 					<execution>
