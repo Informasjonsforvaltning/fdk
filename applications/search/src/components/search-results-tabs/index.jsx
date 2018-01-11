@@ -15,14 +15,17 @@ const ResultsTabs  = (props) => {
               onClick={() => {
                 onSelectView('datasets')
               }}
+              aria-label="Link til side for datasett:"
             >
               {localization.page.datasetTab}
             </button>
           </li>
           <li className={(isSelected) ? 'li-active' : ''}>
-            <button onClick={() => {
-              onSelectView('concepts')
-            }}
+            <button
+              onClick={() => {
+                onSelectView('concepts')
+              }}
+              aria-label="Link til side for begrep:"
             >
               {localization.page.termTab}
             </button>

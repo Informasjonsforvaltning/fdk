@@ -87,10 +87,10 @@ export default class DatasetBegrep extends React.Component { // eslint-disable-l
 
   render() {
     return (
-      <div>
+      <section>
         { this._renderBegrep() }
         { this._renderKeyword() }
-      </div>
+      </section>
     );
   }
 }

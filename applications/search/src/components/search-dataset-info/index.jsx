@@ -267,7 +267,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
     );
 
     return (
-      <div
+      <section
         id="dataset-info"
       >
         <div className="row fdk-row ">
@@ -345,7 +345,7 @@ export default class DatasetInfo extends React.Component { // eslint-disable-lin
         <div className="row fdk-row">
           { this._renderReferences() }
         </div>
-      </div>
+      </section>
     );
   }
 }

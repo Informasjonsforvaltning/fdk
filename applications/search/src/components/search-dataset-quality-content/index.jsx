@@ -11,7 +11,7 @@ const DatasetQuality = (props) => {
     availabilityAnnotations
   } = props;
   return (
-    <div>
+    <section>
       <div className="fdk-container-detail fdk-container-detail-header">
         <i className="fa fa-star fdk-fa-left fdk-color-cta" />
         {localization.dataset.quality}
@@ -55,7 +55,7 @@ const DatasetQuality = (props) => {
         </div>
         }
       </div>
-    </div>
+    </section>
   );
 }
 

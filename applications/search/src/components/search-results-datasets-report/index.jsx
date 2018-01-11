@@ -1,14 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import * as axios from "axios";
-import createHistory from 'history/createBrowserHistory';
 import localization from '../localization';
 import ReportStats from '../search-results-dataset-report-stats';
 import SearchPublishers from '../search-results-dataset-report-publisher';
 import SearchPublishersTree from '../search-publishers-tree';
 import { addOrReplaceParamWithoutEncoding, removeParam } from '../../utils/addOrReplaceUrlParam';
-
-const history = createHistory();
 
 export default class ResultsDatasetsReport extends React.Component {
   static getOrgPath() {
@@ -28,10 +24,15 @@ export default class ResultsDatasetsReport extends React.Component {
       entity: '',
       aggregateDataset: {},
       catalog: {},
-      publishers: []
+      publishers: [],
+      searchValue: '',
+      selectedOrgPath: null
     }
-    this.getPublishers();
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
+    this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
+    this.handleOnTreeChange = this.handleOnTreeChange.bind(this);
+    this.handleOnClearSearch = this.handleOnClearSearch.bind(this);
+    this.getPublishers();
     this.handleOnPublisherSearch();
   }
 
@@ -111,8 +112,37 @@ export default class ResultsDatasetsReport extends React.Component {
       });
   }
 
+  handleOnChangeSearchField (value) {
+    this.setState({
+      value: value || null,
+      selectedOrgPath: value ? value.orgPath : null
+
+    });
+    if (!value) {
+      this.handleOnPublisherSearch(null, '');
+    } else {
+      this.handleOnPublisherSearch(value.name, value.orgPath);
+    }
+  }
+
+  handleOnTreeChange(name, orgPath) {
+    this.setState({
+      value: ''
+    });
+    this.handleOnPublisherSearch(name, orgPath);
+  }
+
+  handleOnClearSearch() {
+    this.setState({
+      value: '',
+      selectedOrgPath: Math.random()
+    });
+    this.handleOnPublisherSearch(null, '')
+  }
+
   render() {
 
+    /*
     history.listen((location)=> {
       if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
         let nextUrl = "";
@@ -124,29 +154,33 @@ export default class ResultsDatasetsReport extends React.Component {
         history.push(nextUrl);
       }
     });
+    */
     return (
       <div>
         <div className="container">
           <section id="resultPanel">
             <div className="row">
-              <div className="col-md-4 col-md-offset-8">
+              <div className="col-md-4 col-md-offset-8" id="content" role="main" tabIndex="-1">
                 <div className="pull-right" />
               </div>
             </div>
             <div className="row">
               <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                 <button
-                  className='fdk-button fdk-button-default-no-hover mt-3'
-                  onClick={() => {this.handleOnPublisherSearch(null, '')}}
+                  className='fdk-button fdk-button-default-no-hover'
+                  onClick={this.handleOnClearSearch}
                   type="button"
                 >
                   {localization.query.clear}
                 </button>
                 <SearchPublishers
                   onSearch={this.handleOnPublisherSearch}
+                  onChange={this.handleOnChangeSearchField}
+                  value={this.state.value}
                 />
                 <SearchPublishersTree
-                  onSearch={this.handleOnPublisherSearch}
+                  key={this.state.selectedOrgPath}
+                  onSearch={this.handleOnTreeChange}
                   orgPath={ResultsDatasetsReport.getOrgPath()}
                 />
               </div>
@@ -164,11 +198,3 @@ export default class ResultsDatasetsReport extends React.Component {
     );
   }
 }
-
-ResultsDatasetsReport.defaultProps = {
-  selectedLanguageCode: null
-};
-
-ResultsDatasetsReport.propTypes = {
-  selectedLanguageCode: PropTypes.string
-};
