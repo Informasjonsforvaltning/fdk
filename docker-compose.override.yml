@@ -160,6 +160,20 @@ services:
     depends_on:
      - nginx-ssl
 
+  registration-react:
+    restart: always
+    command: npm start
+    ports:
+      - 127.0.0.1:4300:4300
+    volumes:
+      -   ./applications/registration-react/src:/usr/src/app/src:rw
+    environment:
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - QUERY_SERVICE_URL=/reference-data
+     - VALIDATOR_URL=http://localhost:8086
+    depends_on:
+     - nginx-ssl
+
   registration-auth:
       restart: always
       ports:

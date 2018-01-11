@@ -121,6 +121,13 @@ services:
     networks:
       platform:
 
+  registration-react:
+    image: dcatno/registration-react:latest
+    depends_on:
+      - nginx-ssl
+    networks:
+      platform:
+
   reference-data:
     image: dcatno/reference-data:latest
     networks:
