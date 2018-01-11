@@ -1,4 +1,5 @@
 import React from 'react';
+import sinon from 'sinon';
 
 import ResultsDatasetsReport from '../../../src/components/search-results-datasets-report';
 import SearchPublishers from '../../../src/components/search-results-dataset-report-publisher';
@@ -16,4 +17,14 @@ describe('ResultsDatasetsReport', () => {
     expect(wrapper.find(SearchPublishers)).to.have.length(1);
     expect(wrapper.find(PublisherTree)).to.have.length(1);
   });
+
+  it ('clear button should clear state', () => {
+    wrapper.setProps({
+      value: 'NAV'
+    });
+    wrapper.find('button').simulate('click');
+    expect(wrapper.state().value).to.equal('');
+  });
 });
+
+
