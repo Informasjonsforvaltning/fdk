@@ -8,6 +8,7 @@ import cx from 'classnames';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
+  /*
   static getPublishers (input) {
     if (!input) {
       return Promise.resolve({ options: [] });
@@ -20,6 +21,7 @@ export default class SearchPublishersTree extends React.Component {
         return { options: nodes }
       });
   }
+  */
 
   static isItemCollapsed(itemOrgPath, chosenOrgPath) {
     if (chosenOrgPath && chosenOrgPath !== undefined) {
@@ -76,7 +78,11 @@ export default class SearchPublishersTree extends React.Component {
         this.setState({
           source
         });
+      })
+      .catch(error => {
+        console.error(error.response)
       });
+    ;
   }
 
   _renderTree() {

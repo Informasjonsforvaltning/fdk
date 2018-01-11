@@ -52,8 +52,11 @@ export default class ResultsDatasetsReport extends React.Component {
           publishers,
           entity
         });
-      }
-      );
+      })
+      .catch(error => {
+        console.error(error.response)
+      });
+    ;
   }
 
   getName(orgPath, publishersIn) {
@@ -102,14 +105,23 @@ export default class ResultsDatasetsReport extends React.Component {
           entity,
           aggregateDataset: data
         });
+      })
+      .catch(error => {
+        console.error(error.response)
       });
+    ;
+
     axios.get(`/harvest/catalog?q=${query}`)
       .then((response) => {
         const data = response.data;
         this.setState({
           catalog: data
         });
+      })
+      .catch(error => {
+        console.error(error.response)
       });
+    ;
   }
 
   handleOnChangeSearchField (value) {
