@@ -115,7 +115,7 @@ body {
     color: var(--color-red3);
 }
 
-.fdk-button-default {
+.fdk-button-default, .fdk-button-default-no-hover {
     background-color: $color-cta4;
     color: $color1;
 }
@@ -124,6 +124,13 @@ body {
     border-radius: 3px;
     border: 3px solid $color-cta4;
     margin: 0px -1px 2px 0px;
+    box-shadow: 0 4px 8px rgba(45,55,65,0.20);
+}
+
+.fdk-button-default-no-hover:hover, .fdk-button-default-no-hover:focus, .fdk-button-default-no-hover:active {
+    border-radius: 3px;
+    border: 0 !important;
+    margin: 3px 2px 5px 3px;
     box-shadow: 0 4px 8px rgba(45,55,65,0.20);
 }
 
@@ -233,12 +240,10 @@ a > .fdk-button-cta {
     background-color: $color5;
     color: $color1;
     font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.4rem;
     border-radius: 2px;
     padding: 5px 7px 4px 7px;
     display: inline-block;
-    margin: -1px 0px -1px 2px;
+    margin: 2px 0px 2px 0px;
 }
 
 .fdk-label-on-grey {
@@ -368,4 +373,18 @@ a > .fdk-label {
 
 .btn-default {
 	text-shadow: none;
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .fdk-label {
+        padding: 5px 7px 4px 7px;
+        display: inline-block;
+        margin: -1px 0px -1px 2px;
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }

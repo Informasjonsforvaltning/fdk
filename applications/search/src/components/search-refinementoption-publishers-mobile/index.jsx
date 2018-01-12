@@ -6,7 +6,7 @@ const RefinementOptionPublishers = (props) => {
     bemBlocks, onClick, active, itemKey,
     label
   } = props;
-  const toggleId = 'toggle-more-publishers';
+  const toggleId = 'toggle-more-publishers-mobile';
   if(label === 'showmorelabel') {
     return (
       <label htmlFor={toggleId} >{localization.facet.showmore}</label>

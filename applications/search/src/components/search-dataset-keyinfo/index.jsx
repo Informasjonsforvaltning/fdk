@@ -11,7 +11,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
   constructor(props) {
     super(props);
     this.state = {
-      colClass: 'col-md-12'
+      colClass: 'col-xs-12'
     };
   }
 
@@ -29,7 +29,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     }
     if (countClasses > 0) {
       const colWidht = 12 / countClasses;
-      const colClass = `col-md-${colWidht}`;
+      const colClass = `col-xs-12 col-sm-${colWidht}`;
       this.state = {
         colClass
       };
@@ -108,7 +108,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (legalBasisForProcessing || legalBasisForRestriction || legalBasisForAccess) {
       return (
         <div
-          className="col-md-12 fdk-padding-no"
+          className="col-xs-12 fdk-padding-no"
         >
           <div className="fdk-container-detail">
             {legalBasisForRestriction &&
@@ -219,7 +219,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
 
   render() {
     return (
-      <div>
+      <section>
         { this._renderHeader() }
         <div className="row fdk-row">
           {this._renderLegalBasis()}
@@ -229,7 +229,7 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
           {this._renderInformationModel()}
           {this._renderConformsTo()}
         </div>
-      </div>
+      </section>
     );
   }
 }

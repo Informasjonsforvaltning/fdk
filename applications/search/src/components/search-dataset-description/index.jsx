@@ -45,7 +45,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
       description: this.props.description
     };
     return (
-      <div id="dataset-description">
+      <header id="dataset-description">
         <DocumentMeta {...meta} />
         {this.props.title &&
         <h1 className="fdk-margin-bottom">
@@ -69,8 +69,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
           {this.props.objective}
         </p>
         }
-
-      </div>
+      </header>
     );
   }
 }

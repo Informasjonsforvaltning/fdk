@@ -120,6 +120,7 @@ const SearchBox = (function(_super) {
             ref="queryField"
             autoFocus={this.props.autofocus}
             onInput={this.onChange.bind(this)}
+            aria-label='Skriv tekst for søk'
           />
           <div data-qa="loader" className={block('loader').mix('sk-spinning-loader').state({ hidden: !this.isLoading() })} />
         </form>

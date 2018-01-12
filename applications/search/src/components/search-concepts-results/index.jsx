@@ -152,13 +152,13 @@ export default class ResultsConcepts extends React.Component {
                 <HitsStats component={conceptsHitStatsWithProps} />
               </div>
             </div>
-            <section>
+            <div>
               <ResultsTabs
                 onSelectView={this.props.onSelectView}
                 isSelected={this.props.isSelected}
               />
-            </section>
-            <section id="conceptsPanel">
+            </div>
+            <div id="conceptsPanel">
               <div className="row">
                 <div className="col-sm-4">
                   { this._renderCompareTerms() }
@@ -175,7 +175,7 @@ export default class ResultsConcepts extends React.Component {
                   />
                 </div>
               </div>
-            </section>
+            </div>
           </div>
         </div>
       </SearchkitProvider>

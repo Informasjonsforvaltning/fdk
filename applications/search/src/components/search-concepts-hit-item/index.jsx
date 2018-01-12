@@ -25,6 +25,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     if (creator && creator.name) {
       return (
         <span className="inline-block fdk-strong-virksomhet">
+          <span className="uu-invisible" aria-hidden="false">Utgiver.</span>
           { creator.name }
         </span>
       );
@@ -40,8 +41,9 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         <span
           key={`dataset-description-inScheme-${index}`}
           id={`dataset-description-inScheme-${index}`}
-          className="fdk-label ml-2"
+          className="fdk-label"
         >
+          <span className="uu-invisible" aria-hidden="false">Tema.</span>
           {subItem}
         </span>
       );
@@ -65,8 +67,10 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
             <i className="fa fa-file-text fa-stack-1x fdk-color0" />
           </span>
           <a
+            title="Link til lovhjemmel for begrep"
             href={source}
           >
+            <span className="uu-invisible" aria-hidden="false">Link til lovhjemmel for begrep.</span>
             {source}
             <i className="fa fa-external-link fdk-fa-right" />
           </a>
@@ -115,6 +119,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     if (altLabel) {
       return (
         <div>
+          <span className="uu-invisible" aria-hidden="false">Begrep er</span>
           <strong>{localization.terms.altLabel} </strong>
           { children(altLabel) }
         </div>
@@ -150,13 +155,20 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`Begrep: ${termTitle}`}
+        tabIndex="0" // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
       >
+        <span className="uu-invisible" aria-hidden="false">Søketreff begrep.</span>
         <div className={`fdk-container fdk-container-search-hit ${toBeCompared ? 'toBeCompared' : ''}`}>
 
           {!toBeCompared &&
-          <button className='fdk-button fdk-button-default pull-right mt-3' onClick={() => {onAddTerm(source)}} type="button">+ {localization.compare.addCompare}</button>
+          <button className='fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg' onClick={() => {onAddTerm(source)}} type="button"><span aria-hidden="true">+</span> {localization.compare.addCompare}</button>
           }
 
+          {!toBeCompared &&
+          <button className='fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm' onClick={() => {onAddTerm(source)}} type="button"><span aria-hidden="true">+</span> {localization.compare.addCompare}</button>
+          }
+
+          <span className="uu-invisible" aria-hidden="false">Tittel.</span>
           <h2 className="inline-block mr-2">{termTitle}</h2>
 
           {this._renderPublisher()}
@@ -166,6 +178,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           <p
             className="fdk-p-search-hit"
           >
+            <span className="uu-invisible" aria-hidden="false">Beskrivelse av begrep.</span>
             {termDescription}
           </p>
 

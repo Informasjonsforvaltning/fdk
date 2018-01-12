@@ -36,6 +36,7 @@ export default class Select extends React.Component {
         className="fdk-button fdk-button-default"
         title={`${this.props.translate('sort.by')} ${this.props.translate(this.state.selectedValue)}`}
         onSelect={this.onChange}
+        aria-label={`Sorter søkeresultat, ${this.props.translate('sort.by')} ${this.props.translate(this.state.selectedValue)}`}
       >
         {map(items, (item, idx) => {
           const { key, label, title, doc_count } = item; // eslint-disable-line camelcase

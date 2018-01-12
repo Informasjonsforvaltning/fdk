@@ -55,18 +55,18 @@ export class ReferencesComponent implements OnInit {
             if (this.reference.referenceType) {
                 this.referenceTypes.push({
                     value: (this.reference.referenceType.uri)? this.reference.referenceType.uri : "",
-                    label: (this.reference.referenceType.prefLabel && this.reference.referenceType.prefLabel.nb)? 
+                    label: (this.reference.referenceType.prefLabel && this.reference.referenceType.prefLabel.nb)?
                       this.reference.referenceType.prefLabel.nb : ""
                 });
             }
             if (this.reference.source) {
                 this.sources.push({
                     value: (this.reference.source.uri)? this.reference.source.uri : "",
-                    label: (this.reference.source.prefLabel && this.reference.source.prefLabel.nb)? 
+                    label: (this.reference.source.prefLabel && this.reference.source.prefLabel.nb)?
                       this.reference.source.prefLabel.nb : "Ukjent tittel"
                 });
             }
-        }        
+        }
         this.referencesForm = this.toFormGroup(this.reference);
         this.referencesFormArray.push(this.referencesForm);
 
@@ -77,7 +77,7 @@ export class ReferencesComponent implements OnInit {
                 let referenceType = this.referenceTypes.find( reference => reference.value === refs.referenceTypeForm);
                 this.reference.referenceType = {
                   uri: referenceType.value,
-                  code: referenceType.value.match(/[^/]+$/).toString() || "",
+                  code: referenceType.value.match(/[^:]+$/).toString() || "",
                   prefLabel: {
                     "nb": referenceType.label || ""
                   }
