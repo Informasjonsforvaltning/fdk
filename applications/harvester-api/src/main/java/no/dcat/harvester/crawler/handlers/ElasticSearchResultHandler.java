@@ -1,5 +1,7 @@
 package no.dcat.harvester.crawler.handlers;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
@@ -9,6 +11,7 @@ import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.datastore.domain.harvest.ValidationStatus;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
+import no.dcat.harvester.crawler.notification.LoggerUtils;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -36,6 +39,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.acl.LastOwnerException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -57,7 +61,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-    private final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
+    private LoggerContext logCtx = (LoggerContext) LoggerFactory.getILoggerFactory();
+    private final Logger logger = logCtx.getLogger("main");
+
 
     String hostename;
     int port;
@@ -114,6 +120,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
+        //add file logger
+        String logFileName = "harvest.log"; //todo: lag individuell filnavn for harvest
+
+
+        LoggerUtils.addFileAppender(logger, Level.ERROR, logFileName);
+sl
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat(DATE_FORMAT).create();
 
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
@@ -170,12 +182,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
         }
 
+        //get contents from log file
+
         EmailNotificationService notificationService = new EmailNotificationService();
         notificationService.sendValidationResultNotification(
                 "fdksystembjg@gmail.com",
                 "bjorn.grova@brreg.no",
                 "Test subject",
                 "Test messagetext");
+
+        //delete file appender
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
