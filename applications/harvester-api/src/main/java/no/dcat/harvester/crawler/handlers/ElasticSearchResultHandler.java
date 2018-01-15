@@ -1,6 +1,5 @@
 package no.dcat.harvester.crawler.handlers;
 
-import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,7 +10,6 @@ import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.datastore.domain.harvest.ValidationStatus;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
-import no.dcat.harvester.crawler.notification.LoggerUtils;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -39,7 +37,6 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.security.acl.LastOwnerException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -124,8 +121,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         String logFileName = "harvest.log"; //todo: lag individuell filnavn for harvest
 
 
-        LoggerUtils.addFileAppender(logger, Level.ERROR, logFileName);
-sl
+        //LoggerUtils.addFileAppender(logger, Level.ERROR, logFileName);
+
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat(DATE_FORMAT).create();
 
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
