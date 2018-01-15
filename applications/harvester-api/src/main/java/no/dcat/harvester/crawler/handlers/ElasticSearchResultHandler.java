@@ -10,6 +10,7 @@ import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.datastore.domain.harvest.ValidationStatus;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
+import no.dcat.harvester.crawler.notification.HarvestLogger;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -37,6 +38,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -117,11 +119,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
-        //add file logger
-        String logFileName = "harvest.log"; //todo: lag individuell filnavn for harvest
+        //add special logger for the message that will be sent to dcatsource owner;
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String logFileName = "harvest-" + dcatSource.getOrgnumber() + "-" + timestamp + ".log";
+        HarvestLogger harvestlogger = new HarvestLogger(logFileName);
+        Logger harvestLog = harvestlogger.getLogger();
 
-
-        //LoggerUtils.addFileAppender(logger, Level.ERROR, logFileName);
+        harvestLog.info("Harvest log for datasource ID: " + dcatSource.getId());
 
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat(DATE_FORMAT).create();
 
@@ -139,6 +143,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             throw new RuntimeException(String.format("No valid datasets to index. %d datasets were found at source url %s", datasetsInSource.size(), dcatSource.getUrl()));
         }
         logger.info("Processing {} valid datasets. {} non valid datasets were ignored", validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+        //also route to harvest log - to be mailed to user
+        harvestLog.info("Processing {} valid datasets. {} non valid datasets were ignored", validDatasets.size(), datasetsInSource.size() - validDatasets.size());
 
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
@@ -146,9 +152,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         Date harvestTime = new Date();
         logger.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
+        //also route to harvest log - to be mailed to user
+        harvestLog.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
 
         for (Catalog catalog : catalogs) {
             logger.info("Processing catalog {}", catalog.getUri());
+            //also route to harvest log - to be mailed to user
+            harvestLog.info("Processing catalog {}", catalog.getUri());
 
             CatalogHarvestRecord catalogRecord = new CatalogHarvestRecord();
             catalogRecord.setCatalogUri(catalog.getUri());
@@ -177,16 +187,21 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             saveCatalogHarvestRecord(dcatSource, validationResults, gson, bulkRequest, harvestTime, catalogRecord);
 
             logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
+
+            //add validation results to log to send to datasource owner
+            harvestLog.info("Validation results for catalog " + catalog.getId() + " :");
+            for(String validationResult : validationResults) {
+                harvestLog.info(validationResult);
+            }
         }
 
-        //get contents from log file
-
+        //get contents from harvest log file
         EmailNotificationService notificationService = new EmailNotificationService();
         notificationService.sendValidationResultNotification(
                 "fdksystembjg@gmail.com",
                 "bjorn.grova@brreg.no",
-                "Test subject",
-                "Test messagetext");
+                "Felles datakatalog harvest logg",
+                harvestlogger.getLogContents((ch.qos.logback.classic.Logger) harvestLog));
 
         //delete file appender
 
