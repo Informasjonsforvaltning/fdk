@@ -19,16 +19,7 @@ public class EmailNotificationService {
     private final Logger logger = LoggerFactory.getLogger(EmailNotificationService.class);
 
     @Autowired
-    private ApplicationSettings applicationSettings;
-
-    @Autowired
     private JavaMailSender mailSender;
-
-
-    public void sendValidationResultNotification(String toAddress, String subjectText, String messageText) {
-        sendValidationResultNotification(
-                applicationSettings.getNotificationMailSenderAddress(), toAddress, subjectText, messageText);
-    }
 
 
     public void sendValidationResultNotification(String fromAddress, String toAddress, String subjectText, String messageText) {

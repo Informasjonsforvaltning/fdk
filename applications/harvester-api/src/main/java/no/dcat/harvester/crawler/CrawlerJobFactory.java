@@ -59,9 +59,17 @@ public class CrawlerJobFactory {
 		logger.debug("application.themesHostname: " + applicationSettings.getThemesHostname());
 		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
 		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
+		logger.debug("application.notificationMailSenderAddress" + applicationSettings.getNotificationMailSenderAddress());
 
 		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHost(),applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
-		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster(), applicationSettings.getThemesHostname(), applicationSettings.getHttpUsername(), applicationSettings.getHttpPassword());
+		elasticSearchResultHandler = new ElasticSearchResultHandler(
+				applicationSettings.getElasticSearchHost(),
+				applicationSettings.getElasticSearchPort(),
+				applicationSettings.getElasticSearchCluster(),
+				applicationSettings.getThemesHostname(),
+				applicationSettings.getHttpUsername(),
+				applicationSettings.getHttpPassword(),
+				applicationSettings.getNotificationMailSenderAddress());
 
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}

@@ -58,6 +58,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String DATASET_TYPE = "dataset";
     public static final String HARVEST_INDEX = "harvest";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
+    public static final String HARVESTLOG_DIRECTORY = "harvestlog/";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     private LoggerContext logCtx = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -70,6 +72,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private final String themesHostname;
     String httpUsername;
     String httpPassword;
+    String notificationEmailSender;
 
 
     /**
@@ -80,15 +83,21 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param port port for connection to elasticserach cluster. Usually 9300
      * @param clustername Name of elasticsearch cluster
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
         this.themesHostname = themesHostname;
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
+        this.notificationEmailSender = notifactionEmailSender;
 
         logger.debug("ES clustername: " + this.clustername);
+    }
+
+
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
+        this(hostname, port, clustername, themesHostname, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER);
     }
 
 
@@ -121,7 +130,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
         //add special logger for the message that will be sent to dcatsource owner;
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String logFileName = "harvest-" + dcatSource.getOrgnumber() + "-" + timestamp + ".log";
+        String logFileName = HARVESTLOG_DIRECTORY + "harvest-" + dcatSource.getOrgnumber() + "-" + timestamp + ".log";
         HarvestLogger harvestlogger = new HarvestLogger(logFileName);
         Logger harvestLog = harvestlogger.getLogger();
 
@@ -198,7 +207,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         //get contents from harvest log file
         EmailNotificationService notificationService = new EmailNotificationService();
         notificationService.sendValidationResultNotification(
-                "fdksystembjg@gmail.com",
+                notificationEmailSender,
                 "bjorn.grova@brreg.no",
                 "Felles datakatalog harvest logg",
                 harvestlogger.getLogContents((ch.qos.logback.classic.Logger) harvestLog));
