@@ -219,12 +219,18 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             }
         }
 
-        //get contents from harvest log file
-        notificationService.sendValidationResultNotification(
-                notificationEmailSender,
-                VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
-                VALIDATION_EMAIL_SUBJECT,
-                harvestlogger.getLogContents());
+        if(notificationService != null) {
+            //get contents from harvest log file
+            notificationService.sendValidationResultNotification(
+                    notificationEmailSender,
+                    VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
+                    VALIDATION_EMAIL_SUBJECT,
+                    harvestlogger.getLogContents());
+        } else {
+            logger.warn("email notifcation service not set. Could not send email with validation results");
+        }
+
+
 
         //delete file appender
         harvestlogger.closeLog();
