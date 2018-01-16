@@ -1,5 +1,8 @@
 package no.dcat.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
@@ -150,7 +153,7 @@ public class DatasetController {
         }
 
 
-        //Add metaifnormation about editing
+        //Add metainformation about editing
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
         Dataset savedDataset = datasetRepository.save(dataset);
@@ -173,37 +176,45 @@ public class DatasetController {
 
         //get already saved dataset
         Dataset oldDataset = datasetRepository.findOne(datasetId);
+        logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
 
         //TODO: Blir dette riktig håndtering av et ikke-eksisterende datasett ved patch?
         if (oldDataset == null || !Objects.equals(catalogId, oldDataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        JsonElement datasetJe = new Gson().toJsonTree(oldDataset);
+        JsonObject datasetJo = datasetJe.getAsJsonObject();
+
+
         for(Map.Entry<String, Object> entry : updates.entrySet()) {
             logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
+            JsonElement changedElement = new Gson().toJsonTree(entry.getValue());
+            datasetJo.remove(entry.getKey());
+            datasetJo.add(entry.getKey(), changedElement);
         }
 
+        logger.debug("Changed dataset Jason element: {}", datasetJo.toString());
 
+        //TODO: dette virker unødvendig tungvint
+        Dataset newDataset = new Gson().fromJson(datasetJo.toString(),Dataset.class);
+        newDataset.set_lastModified(Calendar.getInstance().getTime());
 
-        //Add metaifnormation about editing
-        //dataset.set_lastModified(Calendar.getInstance().getTime());
+        Dataset savedDataset = datasetRepository.save(newDataset);
+        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
 
-        //Dataset savedDataset = datasetRepository.save(dataset);
-        //return new ResponseEntity<>(savedDataset, HttpStatus.OK);
-
-        return null;
     }
 
 
-        /**
-         * Return list of all datasets in catalog.
-         * Without parameters, the first 20 datasets are returned
-         * The returned data contains paging hyperlinks.
-         * <p>
-         * @param catalogId the id of the catalog
-         * @param pageable number of datasets returned
-         * @return List of data sets, with hyperlinks to other pages in search result
-         */
+    /**
+     * Return list of all datasets in catalog.
+     * Without parameters, the first 20 datasets are returned
+     * The returned data contains paging hyperlinks.
+     * <p>
+     * @param catalogId the id of the catalog
+     * @param pageable number of datasets returned
+     * @return List of data sets, with hyperlinks to other pages in search result
+     */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
