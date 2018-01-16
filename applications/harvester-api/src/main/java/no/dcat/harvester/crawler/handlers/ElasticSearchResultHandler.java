@@ -149,11 +149,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<Catalog> catalogs = reader.getCatalogs();
 
         if (validDatasets == null || validDatasets.isEmpty()) {
-            throw new RuntimeException(String.format("No valid datasets to index. %d datasets were found at source url %s", datasetsInSource.size(), dcatSource.getUrl()));
+            throw new RuntimeException(
+                    String.format("No valid datasets to index. %d datasets were found at source url %s",
+                            datasetsInSource.size(),
+                            dcatSource.getUrl()));
         }
-        logger.info("Processing {} valid datasets. {} non valid datasets were ignored", validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+        logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
+                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
         //also route to harvest log - to be mailed to user
-        harvestLog.info("Processing {} valid datasets. {} non valid datasets were ignored", validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+        harvestLog.info("Processing {} valid datasets. {} non valid datasets were ignored",
+                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
 
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
@@ -210,7 +215,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 notificationEmailSender,
                 "bjorn.grova@brreg.no",
                 "Felles datakatalog harvest logg",
-                harvestlogger.getLogContents((ch.qos.logback.classic.Logger) harvestLog));
+                harvestlogger.getLogContents());
 
         //delete file appender
 

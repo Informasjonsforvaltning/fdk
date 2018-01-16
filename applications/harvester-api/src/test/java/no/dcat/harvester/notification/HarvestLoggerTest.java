@@ -21,7 +21,7 @@ public class HarvestLoggerTest {
 
         logger.info("test message");
 
-        String actualLogContents = hl.getLogContents(logger);
+        String actualLogContents = hl.getLogContents();
         //cleanup
         hl.closeLog();
 

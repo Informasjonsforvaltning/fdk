@@ -58,7 +58,7 @@ public class HarvestLogger {
     }
 
 
-    public String getLogContents(Logger logger) {
+    public String getLogContents() {
         Resource resource = null;
         try {
             resource = new UrlResource("file:" + this.fileAppender.getFile());
