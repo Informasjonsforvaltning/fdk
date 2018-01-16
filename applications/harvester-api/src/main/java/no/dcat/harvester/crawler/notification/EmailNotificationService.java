@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by bjg on 07.12.2017.
+ * Helper class for sending validation emails.
+ *
  */
 @Component
 public class EmailNotificationService {
@@ -39,6 +41,6 @@ public class EmailNotificationService {
 
 
         logger.info("notification mail with size {} from address: {} to address: {}", messageText.length(), fromAddress, toAddress);
-        logger.trace("notifiation mail sent to {} : {}", toAddress, messageText);
+        logger.trace("notification mail contents {} :}", messageText);
     }
 }
