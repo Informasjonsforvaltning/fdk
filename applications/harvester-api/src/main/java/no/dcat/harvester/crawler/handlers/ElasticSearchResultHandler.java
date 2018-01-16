@@ -59,6 +59,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String HARVEST_INDEX = "harvest";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
+    public static final String VALIDATION_EMAIL_RECEIVER = "bjorn.grova@brreg.no"; //temporary
     public static final String HARVESTLOG_DIRECTORY = "harvestlog/";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
@@ -82,6 +83,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param hostname host name where elasticsearch cluster is found
      * @param port port for connection to elasticserach cluster. Usually 9300
      * @param clustername Name of elasticsearch cluster
+     * @param themesHostname hostname for reference-data service whitch provides themes service
+     * @param httpUsername username used for posting data to reference-data service
+     * @param httpPassword password used for posting data to reference-data service
+     * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
     public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender) {
         this.hostename = hostname;
@@ -126,6 +131,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param dcatSource information about the source/provider of the data catalog
      * @param model RDF model containing the data catalog
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
+     * @param validationResults List of strings with result from validation rules execution
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
         //add special logger for the message that will be sent to dcatsource owner;
@@ -213,7 +219,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         EmailNotificationService notificationService = new EmailNotificationService();
         notificationService.sendValidationResultNotification(
                 notificationEmailSender,
-                "bjorn.grova@brreg.no",
+                VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
                 "Felles datakatalog harvest logg",
                 harvestlogger.getLogContents());
 
