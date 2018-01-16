@@ -60,7 +60,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String HARVEST_INDEX = "harvest";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
-    public static final String VALIDATION_EMAIL_RECEIVER = "bjorn.grova@brreg.no"; //temporary
+    public static final String VALIDATION_EMAIL_RECEIVER = "fellesdatakatalog@brreg.no"; //temporary
     public static final String VALIDATION_EMAIL_SUBJECT = "Felles datakatalog harvestlogg";
     public static final String HARVESTLOG_DIRECTORY = "harvestlog/";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -230,9 +230,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             logger.warn("email notifcation service not set. Could not send email with validation results");
         }
 
-
-
-        //delete file appender
+        //delete file appender and log file
         harvestlogger.closeLog();
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
