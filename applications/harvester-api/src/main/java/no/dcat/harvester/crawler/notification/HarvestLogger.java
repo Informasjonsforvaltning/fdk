@@ -1,5 +1,6 @@
 package no.dcat.harvester.crawler.notification;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.core.FileAppender;
@@ -49,6 +50,7 @@ public class HarvestLogger {
         this.fileAppender.start();
 
         this.logger = logctx.getLogger("HarvesterLog");
+        this.logger.setLevel(Level.ALL);
         this.logger.addAppender(fileAppender);
     }
 
