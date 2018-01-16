@@ -37,6 +37,7 @@ import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -67,6 +68,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private LoggerContext logCtx = (LoggerContext) LoggerFactory.getILoggerFactory();
     private final Logger logger = logCtx.getLogger("main");
 
+    private EmailNotificationService notificationService;
 
     String hostename;
     int port;
@@ -89,7 +91,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param httpPassword password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender, EmailNotificationService emailNotificationService) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
@@ -97,13 +99,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
         this.notificationEmailSender = notifactionEmailSender;
+        this.notificationService = emailNotificationService;
 
         logger.debug("ES clustername: " + this.clustername);
     }
 
 
     public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
-        this(hostname, port, clustername, themesHostname, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER);
+        this(hostname, port, clustername, themesHostname, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
 
@@ -217,7 +220,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
         //get contents from harvest log file
-        EmailNotificationService notificationService = new EmailNotificationService();
         notificationService.sendValidationResultNotification(
                 notificationEmailSender,
                 VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners

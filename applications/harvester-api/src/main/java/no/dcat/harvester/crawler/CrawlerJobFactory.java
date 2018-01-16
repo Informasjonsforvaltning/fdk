@@ -4,6 +4,7 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
+import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.settings.ApplicationSettings;
 import no.dcat.harvester.settings.FusekiSettings;
@@ -33,6 +34,9 @@ public class CrawlerJobFactory {
 
 	@Autowired
 	private SubjectCrawler subjectCrawler;
+
+	@Autowired
+	private EmailNotificationService emailNotificationService;
 	
 	private AdminDataStore adminDataStore;
 	private DcatDataStore dcatDataStore;
@@ -69,7 +73,8 @@ public class CrawlerJobFactory {
 				applicationSettings.getThemesHostname(),
 				applicationSettings.getHttpUsername(),
 				applicationSettings.getHttpPassword(),
-				applicationSettings.getNotificationMailSenderAddress());
+				applicationSettings.getNotificationMailSenderAddress(),
+				emailNotificationService);
 
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}
