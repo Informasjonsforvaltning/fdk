@@ -118,6 +118,70 @@ public class DatasetControllerIT {
 
 
     @Test
+    @WithUserDetails("03096000854")
+    public void patchDatasetFollowedByGetRequestShouldWork() throws Exception {
+        Catalog catalog = new Catalog();
+        String catalogId = "910244132";
+        catalog.setId(catalogId);
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs")
+                                .content(asJsonString(catalog))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+
+        //create dataset to be changed later
+        Dataset dataset = new Dataset();
+
+        Map<String, String> languageTitle = new HashMap<>();
+        languageTitle.put("nb", "Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map<String, String> languangeDescription = new HashMap<>();
+        languangeDescription.put("nb", "test");
+        dataset.setDescription(languangeDescription);
+        dataset.setType("Testdata");
+
+        String datasetResponseJson = mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs/" + catalogId + "/datasets/")
+                                .content(asJsonString(dataset))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Testdata"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+
+        String datasetId = new Gson().fromJson(datasetResponseJson, Dataset.class).getId();
+        Map<String,String> updates = new HashMap<>();
+        updates.put("type", "Kodeverk");
+
+        //change the dataset with patch operation
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                            .patch("/catalogs/" + catalogId + "/datasets/" + datasetId)
+                            .content(asJsonString(updates))
+                            .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        //check that the dataset was actually changed
+        mockMvc
+                .perform(MockMvcRequestBuilders.get("/catalogs/" + catalogId + "/datasets/" + datasetId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Kodeverk"))
+                .andExpect(status().isOk());
+
+
+    }
+
+
+
+    @Test
     public void unauthorizedPostOfDatasetShouldRedirectToLoginPage() throws Exception {
 
 

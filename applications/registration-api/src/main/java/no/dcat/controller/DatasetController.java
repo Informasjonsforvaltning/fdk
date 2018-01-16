@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -35,6 +36,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 
 @Controller
 @RequestMapping("/catalogs/{catalogId}/datasets")
@@ -128,6 +130,7 @@ public class DatasetController {
         return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
     }
 
+
     /**
      * Modify dataset in catalog.
      * @param dataset
@@ -137,7 +140,7 @@ public class DatasetController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
-        logger.info("requestbody dataset: " + dataset.toString());
+        logger.info("PUT requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
         dataset.setCatalogId(catalogId);
 
@@ -154,15 +157,53 @@ public class DatasetController {
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
 
+
     /**
-     * Return list of all datasets in catalog.
-     * Without parameters, the first 20 datasets are returned
-     * The returned data contains paging hyperlinks.
-     * <p>
-     * @param catalogId the id of the catalog
-     * @param pageable number of datasets returned
-     * @return List of data sets, with hyperlinks to other pages in search result
+     * Modify dataset in catalog.
+     * @param updates Objects in datatset to be updated
+     * @return HTTP 200 OK if dataset could be could be updated.
      */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @CrossOrigin
+    @RequestMapping(value = "/{id}", method = PATCH, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Dataset> updateDataset(@PathVariable("catalogId") String catalogId,
+                                             @PathVariable("id") String datasetId,
+                                             @RequestBody Map<String, Object> updates) {
+        logger.info("PATCH requestbody update dataset: " + updates.toString());
+
+        //get already saved dataset
+        Dataset oldDataset = datasetRepository.findOne(datasetId);
+
+        //TODO: Blir dette riktig håndtering av et ikke-eksisterende datasett ved patch?
+        if (oldDataset == null || !Objects.equals(catalogId, oldDataset.getCatalogId())) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        for(Map.Entry<String, Object> entry : updates.entrySet()) {
+            logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
+        }
+
+
+
+        //Add metaifnormation about editing
+        //dataset.set_lastModified(Calendar.getInstance().getTime());
+
+        //Dataset savedDataset = datasetRepository.save(dataset);
+        //return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+
+        return null;
+    }
+
+
+        /**
+         * Return list of all datasets in catalog.
+         * Without parameters, the first 20 datasets are returned
+         * The returned data contains paging hyperlinks.
+         * <p>
+         * @param catalogId the id of the catalog
+         * @param pageable number of datasets returned
+         * @return List of data sets, with hyperlinks to other pages in search result
+         */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
