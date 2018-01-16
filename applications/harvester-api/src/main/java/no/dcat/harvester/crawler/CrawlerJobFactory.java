@@ -4,6 +4,7 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
+import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.settings.ApplicationSettings;
 import no.dcat.harvester.settings.FusekiSettings;
@@ -33,6 +34,9 @@ public class CrawlerJobFactory {
 
 	@Autowired
 	private SubjectCrawler subjectCrawler;
+
+	@Autowired
+	private EmailNotificationService emailNotificationService;
 	
 	private AdminDataStore adminDataStore;
 	private DcatDataStore dcatDataStore;
@@ -59,9 +63,18 @@ public class CrawlerJobFactory {
 		logger.debug("application.themesHostname: " + applicationSettings.getThemesHostname());
 		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
 		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
+		logger.debug("application.notificationMailSenderAddress" + applicationSettings.getNotificationMailSenderAddress());
 
 		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHost(),applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
-		elasticSearchResultHandler = new ElasticSearchResultHandler(applicationSettings.getElasticSearchHost(), applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster(), applicationSettings.getThemesHostname(), applicationSettings.getHttpUsername(), applicationSettings.getHttpPassword());
+		elasticSearchResultHandler = new ElasticSearchResultHandler(
+				applicationSettings.getElasticSearchHost(),
+				applicationSettings.getElasticSearchPort(),
+				applicationSettings.getElasticSearchCluster(),
+				applicationSettings.getThemesHostname(),
+				applicationSettings.getHttpUsername(),
+				applicationSettings.getHttpPassword(),
+				applicationSettings.getNotificationMailSenderAddress(),
+				emailNotificationService);
 
 		return new CrawlerJob(dcatSource, adminDataStore, brregCache, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}

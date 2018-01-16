@@ -25,12 +25,39 @@ fuseki:
 ---
 spring:
   profiles: prod
+  mail:
+    host: smtprelay@brreg.no
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectionTimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          starttls:
+            enable: true
 application:
   elasticSearchCluster: fellesdatakatalog
+  notificationMailSenderAddress: fellesdatakatalog@brreg.no
 
 ---
 spring:
-    profiles: develop, unit-integration
+  profiles: develop, unit-integration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fdksystembjg
+    password: xxxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectionTimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          starttls:
+            enable: true
 logging:
   level.: ERROR
   level.no.brreg: ERROR
@@ -47,6 +74,7 @@ application:
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
   themesHostname: http://localhost:8100
+  notificationMailSenderAddress: fdksystembjg@gmail.com
 server:
   port: 8081
 management:
