@@ -221,6 +221,15 @@ public class PublisherQueryService extends ElasticsearchService {
          */
         @Override
         public int compareTo(PublisherHit o) {
+            boolean lhs_dep = name.toLowerCase().contains("departementet");
+            boolean rhs_dep = o.name.toLowerCase().contains("departementet");
+
+            if (lhs_dep && !rhs_dep) {
+                return -1;
+            } else if (!lhs_dep && rhs_dep) {
+                return 1;
+            }
+
             return name.compareTo(o.name);
         }
     }
