@@ -30,15 +30,15 @@ public class EmailNotificationService {
         message.setTo(toAddress);
         message.setText(messageText);
 
-        /*
+
         try {
             this.mailSender.send(message);
         } catch (MailException mx) {
             logger.error(mx.getMessage());
         }
-        */
 
-        logger.info("notification mail from address: {}", fromAddress);
-        logger.info("notifiation mail sent to {} : {}", toAddress, messageText);
+
+        logger.info("notification mail with size {} from address: {} to address: {}", messageText.length(), fromAddress, toAddress);
+        logger.trace("notifiation mail sent to {} : {}", toAddress, messageText);
     }
 }
