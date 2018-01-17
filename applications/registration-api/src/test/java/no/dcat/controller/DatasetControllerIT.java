@@ -120,43 +120,11 @@ public class DatasetControllerIT {
     @Test
     @WithUserDetails("03096000854")
     public void patchDatasetFollowedByGetRequestShouldWork() throws Exception {
-        Catalog catalog = new Catalog();
+
+        //setup test data
         String catalogId = "910244132";
-        catalog.setId(catalogId);
-        mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs")
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+        String datasetId = createCatalogAndSimpleDataset(catalogId);
 
-
-        //create dataset to be changed later
-        Dataset dataset = new Dataset();
-
-        Map<String, String> languageTitle = new HashMap<>();
-        languageTitle.put("nb", "Test-tittel");
-        dataset.setTitle(languageTitle);
-
-        Map<String, String> languangeDescription = new HashMap<>();
-        languangeDescription.put("nb", "test");
-        dataset.setDescription(languangeDescription);
-        dataset.setType("Testdata");
-
-        String datasetResponseJson = mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs/" + catalogId + "/datasets/")
-                                .content(asJsonString(dataset))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Testdata"))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-
-
-        String datasetId = new Gson().fromJson(datasetResponseJson, Dataset.class).getId();
         Map<String,String> updates = new HashMap<>();
         updates.put("type", "Kodeverk");
 
@@ -175,8 +143,6 @@ public class DatasetControllerIT {
                 .perform(MockMvcRequestBuilders.get("/catalogs/" + catalogId + "/datasets/" + datasetId))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Kodeverk"))
                 .andExpect(status().isOk());
-
-
     }
 
 
@@ -337,6 +303,50 @@ public class DatasetControllerIT {
 
         logger.info(expected.getReferences().toString());
 
+    }
+
+    /**
+     * Helper function to create a catalog and simple dataset
+     * to be used in tests
+     * @param catalogId id of catalog to be created
+     * @return id of created dataset
+     */
+    public String createCatalogAndSimpleDataset(String catalogId) throws Exception {
+        Catalog catalog = new Catalog();
+        catalog.setId(catalogId);
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs")
+                                .content(asJsonString(catalog))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+
+        //create dataset to be changed later
+        Dataset dataset = new Dataset();
+
+        Map<String, String> languageTitle = new HashMap<>();
+        languageTitle.put("nb", "Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map<String, String> languangeDescription = new HashMap<>();
+        languangeDescription.put("nb", "test");
+        dataset.setDescription(languangeDescription);
+        dataset.setType("Testdata");
+
+        String datasetResponseJson = mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs/" + catalogId + "/datasets/")
+                                .content(asJsonString(dataset))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Testdata"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        return new Gson().fromJson(datasetResponseJson, Dataset.class).getId();
     }
 
 }
