@@ -146,6 +146,40 @@ public class DatasetControllerIT {
     }
 
 
+    @Test
+    @WithUserDetails("03096000854")
+    public void patchMultipleAttributesInDatasetShouldWork() throws Exception {
+
+        //setup test data
+        String catalogId = "910244132";
+        String datasetId = createCatalogAndSimpleDataset(catalogId);
+
+        //Update both type and title
+        Map<String,Object> updates = new HashMap<>();
+        updates.put("type", "Kodeverk");
+        Map<String,String> languageTitle = new HashMap<>();
+        languageTitle.put("nb", "Endret tittel");
+        updates.put("title", languageTitle);
+
+        //change the dataset with patch operation
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .patch("/catalogs/" + catalogId + "/datasets/" + datasetId)
+                                .content(asJsonString(updates))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        //check that the dataset was actually changed
+        mockMvc
+                .perform(MockMvcRequestBuilders.get("/catalogs/" + catalogId + "/datasets/" + datasetId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Kodeverk"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title.nb").value("Endret tittel"))
+                .andExpect(status().isOk());
+    }
+
+
 
     @Test
     public void unauthorizedPostOfDatasetShouldRedirectToLoginPage() throws Exception {
