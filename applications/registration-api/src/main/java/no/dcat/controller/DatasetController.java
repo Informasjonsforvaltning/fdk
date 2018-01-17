@@ -180,7 +180,6 @@ public class DatasetController {
         Dataset oldDataset = datasetRepository.findOne(datasetId);
         logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
 
-        //TODO: Blir dette riktig håndtering av et ikke-eksisterende datasett ved patch?
         if (oldDataset == null || !Objects.equals(catalogId, oldDataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
