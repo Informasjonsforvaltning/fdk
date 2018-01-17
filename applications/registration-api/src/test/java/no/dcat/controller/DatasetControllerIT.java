@@ -193,6 +193,7 @@ public class DatasetControllerIT {
         String catalogId = "910244132";
         String datasetId = createCatalogAndSimpleDataset(catalogId);
 
+        Map<String,Object> updates = new HashMap<>();
 
         Map<String,Object> relevanceAnnotaton = new HashMap<>();
         relevanceAnnotaton.put("inDimension", "iso:Relevance");
