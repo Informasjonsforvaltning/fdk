@@ -176,8 +176,6 @@ public class DatasetController {
 
         Gson gson = new Gson();
 
-        //TODO: gjøre en isJson sjekk på updatene
-
         //get already saved dataset
         Dataset oldDataset = datasetRepository.findOne(datasetId);
         logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
