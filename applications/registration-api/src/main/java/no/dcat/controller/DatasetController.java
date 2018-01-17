@@ -174,6 +174,10 @@ public class DatasetController {
                                              @RequestBody Map<String, Object> updates) {
         logger.info("PATCH requestbody update dataset: " + updates.toString());
 
+        Gson gson = new Gson();
+
+        //TODO: gjøre en isJson sjekk på updatene
+
         //get already saved dataset
         Dataset oldDataset = datasetRepository.findOne(datasetId);
         logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
@@ -183,21 +187,20 @@ public class DatasetController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        JsonElement datasetJe = new Gson().toJsonTree(oldDataset);
-        JsonObject datasetJo = datasetJe.getAsJsonObject();
-
+        JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
 
         for(Map.Entry<String, Object> entry : updates.entrySet()) {
             logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
-            JsonElement changedElement = new Gson().toJsonTree(entry.getValue());
-            datasetJo.remove(entry.getKey());
-            datasetJo.add(entry.getKey(), changedElement);
+            JsonElement changes = gson.toJsonTree(entry.getValue());
+            if(oldDatasetJson.has(entry.getKey())) {
+                oldDatasetJson.remove(entry.getKey());
+            }
+            oldDatasetJson.add(entry.getKey(), changes);
         }
 
-        logger.debug("Changed dataset Jason element: {}", datasetJo.toString());
+        logger.debug("Changed dataset Json element: {}", oldDatasetJson.toString());
 
-        //TODO: dette virker unødvendig tungvint
-        Dataset newDataset = new Gson().fromJson(datasetJo.toString(),Dataset.class);
+        Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
         newDataset.set_lastModified(Calendar.getInstance().getTime());
 
         Dataset savedDataset = datasetRepository.save(newDataset);
