@@ -106,6 +106,7 @@
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",
     "sinon": "^4.0.0",
+    "sinon-chai": "^2.14.0",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.7",
     "ts-node": "^3.3.0",

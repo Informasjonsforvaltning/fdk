@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 @SpringBootApplication
-@PropertySource("classpath:swagger.properties")
+@PropertySource({"classpath:swagger.properties"})
 @EnableSwagger2
 public class HarvesterApplication {
     static Logger logger = LoggerFactory.getLogger(HarvesterApplication.class);

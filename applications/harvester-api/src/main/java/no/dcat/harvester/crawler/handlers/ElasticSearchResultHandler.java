@@ -1,5 +1,6 @@
 package no.dcat.harvester.crawler.handlers;
 
+import ch.qos.logback.classic.LoggerContext;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
@@ -8,6 +9,8 @@ import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.datastore.domain.harvest.ValidationStatus;
+import no.dcat.harvester.crawler.notification.EmailNotificationService;
+import no.dcat.harvester.crawler.notification.HarvestLogger;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -34,7 +37,9 @@ import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -54,9 +59,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String DATASET_TYPE = "dataset";
     public static final String HARVEST_INDEX = "harvest";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
+    public static final String VALIDATION_EMAIL_RECEIVER = "fellesdatakatalog@brreg.no"; //temporary
+    public static final String VALIDATION_EMAIL_SUBJECT = "Felles datakatalog harvestlogg";
+    public static final String HARVESTLOG_DIRECTORY = "harvestlog/";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-    private final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
+    private LoggerContext logCtx = (LoggerContext) LoggerFactory.getILoggerFactory();
+    private final Logger logger = logCtx.getLogger("main");
+
+    private EmailNotificationService notificationService;
 
     String hostename;
     int port;
@@ -64,6 +76,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private final String themesHostname;
     String httpUsername;
     String httpPassword;
+    String notificationEmailSender;
 
 
     /**
@@ -73,16 +86,27 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param hostname host name where elasticsearch cluster is found
      * @param port port for connection to elasticserach cluster. Usually 9300
      * @param clustername Name of elasticsearch cluster
+     * @param themesHostname hostname for reference-data service whitch provides themes service
+     * @param httpUsername username used for posting data to reference-data service
+     * @param httpPassword password used for posting data to reference-data service
+     * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender, EmailNotificationService emailNotificationService) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
         this.themesHostname = themesHostname;
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
+        this.notificationEmailSender = notifactionEmailSender;
+        this.notificationService = emailNotificationService;
 
         logger.debug("ES clustername: " + this.clustername);
+    }
+
+
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
+        this(hostname, port, clustername, themesHostname, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
 
@@ -111,8 +135,17 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param dcatSource information about the source/provider of the data catalog
      * @param model RDF model containing the data catalog
      * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
+     * @param validationResults List of strings with result from validation rules execution
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
+        //add special logger for the message that will be sent to dcatsource owner;
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String logFileName = HARVESTLOG_DIRECTORY + "harvest-" + dcatSource.getOrgnumber() + "-" + timestamp + ".log";
+        HarvestLogger harvestlogger = new HarvestLogger(logFileName);
+        Logger harvestLog = harvestlogger.getLogger();
+
+        harvestLog.info("Harvest log for datasource ID: " + dcatSource.getId());
+
         Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat(DATE_FORMAT).create();
 
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
@@ -126,9 +159,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         List<Catalog> catalogs = reader.getCatalogs();
 
         if (validDatasets == null || validDatasets.isEmpty()) {
-            throw new RuntimeException(String.format("No valid datasets to index. %d datasets were found at source url %s", datasetsInSource.size(), dcatSource.getUrl()));
+            throw new RuntimeException(
+                    String.format("No valid datasets to index. %d datasets were found at source url %s",
+                            datasetsInSource.size(),
+                            dcatSource.getUrl()));
         }
-        logger.info("Processing {} valid datasets. {} non valid datasets were ignored", validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+        logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
+                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+        //also route to harvest log - to be mailed to user
+        harvestLog.info("Processing {} valid datasets. {} non valid datasets were ignored",
+                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
 
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
@@ -136,9 +176,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         Date harvestTime = new Date();
         logger.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
+        //also route to harvest log - to be mailed to user
+        harvestLog.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
 
         for (Catalog catalog : catalogs) {
             logger.info("Processing catalog {}", catalog.getUri());
+            //also route to harvest log - to be mailed to user
+            harvestLog.info("Processing catalog {}", catalog.getUri());
 
             CatalogHarvestRecord catalogRecord = new CatalogHarvestRecord();
             catalogRecord.setCatalogUri(catalog.getUri());
@@ -167,7 +211,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             saveCatalogHarvestRecord(dcatSource, validationResults, gson, bulkRequest, harvestTime, catalogRecord);
 
             logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
+
+            //add validation results to log to send to datasource owner
+            harvestLog.info("Validation results for catalog {}:", catalog.getId());
+            if(validationResults != null) {
+                for (String validationResult : validationResults) {
+                    harvestLog.info(validationResult);
+                }
+            } else {
+                harvestLog.info("No validation results found for catalog {}", catalog.getId());
+            }
         }
+
+        if(notificationService != null) {
+            //get contents from harvest log file
+            notificationService.sendValidationResultNotification(
+                    notificationEmailSender,
+                    VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
+                    VALIDATION_EMAIL_SUBJECT,
+                    harvestlogger.getLogContents());
+        } else {
+            logger.warn("email notifcation service not set. Could not send email with validation results");
+        }
+
+        //delete file appender and log file
+        harvestlogger.closeLog();
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {

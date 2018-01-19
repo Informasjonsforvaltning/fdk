@@ -1,5 +1,8 @@
 package no.dcat.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -35,6 +39,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 
 @Controller
 @RequestMapping("/catalogs/{catalogId}/datasets")
@@ -128,6 +133,7 @@ public class DatasetController {
         return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
     }
 
+
     /**
      * Modify dataset in catalog.
      * @param dataset
@@ -137,7 +143,7 @@ public class DatasetController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
-        logger.info("requestbody dataset: " + dataset.toString());
+        logger.info("PUT requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
         dataset.setCatalogId(catalogId);
 
@@ -147,12 +153,58 @@ public class DatasetController {
         }
 
 
-        //Add metaifnormation about editing
+        //Add metainformation about editing
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
         Dataset savedDataset = datasetRepository.save(dataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
     }
+
+
+    /**
+     * Modify dataset in catalog.
+     * @param updates Objects in datatset to be updated
+     * @return HTTP 200 OK if dataset could be could be updated.
+     */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @CrossOrigin
+    @RequestMapping(value = "/{id}", method = PATCH, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<Dataset> updateDataset(@PathVariable("catalogId") String catalogId,
+                                             @PathVariable("id") String datasetId,
+                                             @RequestBody Map<String, Object> updates) {
+        logger.info("PATCH requestbody update dataset: " + updates.toString());
+
+        Gson gson = new Gson();
+
+        //get already saved dataset
+        Dataset oldDataset = datasetRepository.findOne(datasetId);
+        logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
+
+        if (oldDataset == null || !Objects.equals(catalogId, oldDataset.getCatalogId())) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
+
+        for(Map.Entry<String, Object> entry : updates.entrySet()) {
+            logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
+            JsonElement changes = gson.toJsonTree(entry.getValue());
+            if(oldDatasetJson.has(entry.getKey())) {
+                oldDatasetJson.remove(entry.getKey());
+            }
+            oldDatasetJson.add(entry.getKey(), changes);
+        }
+
+        logger.debug("Changed dataset Json element: {}", oldDatasetJson.toString());
+
+        Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
+        newDataset.set_lastModified(Calendar.getInstance().getTime());
+
+        Dataset savedDataset = datasetRepository.save(newDataset);
+        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+
+    }
+
 
     /**
      * Return list of all datasets in catalog.
