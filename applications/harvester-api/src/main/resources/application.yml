@@ -41,7 +41,7 @@ spring:
             enable: true
 application:
   elasticSearchCluster: fellesdatakatalog
-  notificationMailSenderAddress: fellesdatakatalog@brreg.no
+  notificationMailSenderAddress: ${emailSenderAddress}
 
 ---
 spring:
