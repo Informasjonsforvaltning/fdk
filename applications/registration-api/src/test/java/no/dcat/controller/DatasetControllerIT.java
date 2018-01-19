@@ -3,11 +3,14 @@ package no.dcat.controller;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import org.apache.commons.collections.map.HashedMap;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import static org.hamcrest.Matchers.is;
@@ -115,6 +118,110 @@ public class DatasetControllerIT {
 
 
     }
+
+
+    @Test
+    @WithUserDetails("03096000854")
+    public void patchDatasetFollowedByGetRequestShouldWork() throws Exception {
+
+        //setup test data
+        String catalogId = "910244132";
+        String datasetId = createCatalogAndSimpleDataset(catalogId);
+
+        Map<String,String> updates = new HashMap<>();
+        updates.put("type", "Kodeverk");
+
+        //change the dataset with patch operation
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                            .patch("/catalogs/" + catalogId + "/datasets/" + datasetId)
+                            .content(asJsonString(updates))
+                            .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        //check that the dataset was actually changed
+        mockMvc
+                .perform(MockMvcRequestBuilders.get("/catalogs/" + catalogId + "/datasets/" + datasetId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Kodeverk"))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    @WithUserDetails("03096000854")
+    public void patchMultipleAttributesInDatasetShouldWork() throws Exception {
+
+        Gson gson = new Gson();
+
+        //setup test data
+        String catalogId = "910244132";
+        String datasetId = createCatalogAndSimpleDataset(catalogId);
+
+        //Update both type and title
+        Map<String,Object> updates = new HashMap<>();
+        updates.put("type", "Kodeverk");
+        Map<String,String> languageTitle = new HashMap<>();
+        languageTitle.put("nb", "Endret tittel");
+        updates.put("title", languageTitle);
+
+        //change the dataset with patch operation
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .patch("/catalogs/" + catalogId + "/datasets/" + datasetId)
+                                .content(asJsonString(updates))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        //check that the dataset was actually changed
+        mockMvc
+                .perform(MockMvcRequestBuilders.get("/catalogs/" + catalogId + "/datasets/" + datasetId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Kodeverk"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title.nb").value("Endret tittel"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails("03096000854")
+    public void patchDatasetWithComplexElementFollowedByGetRequestShouldWork() throws Exception {
+        Gson gson = new Gson();
+
+        //setup test data
+        String catalogId = "910244132";
+        String datasetId = createCatalogAndSimpleDataset(catalogId);
+
+        Map<String,Object> updates = new HashMap<>();
+
+        Map<String,Object> relevanceAnnotaton = new HashMap<>();
+        relevanceAnnotaton.put("inDimension", "iso:Relevance");
+        relevanceAnnotaton.put("motivatedBy", "dqv:qualityAssessment");
+        Map<String,Object> relevanceText = new HashMap<>();
+        relevanceText.put("no", "ny relevans-tekst");
+        relevanceAnnotaton.put("hasBody", relevanceText);
+
+        updates.put("hasRelevanceAnnotation", relevanceAnnotaton);
+
+        //change the dataset with patch operation
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .patch("/catalogs/" + catalogId + "/datasets/" + datasetId)
+                                .content(asJsonString(updates))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        //check that the dataset was actually changed
+        mockMvc
+                .perform(MockMvcRequestBuilders.get("/catalogs/" + catalogId + "/datasets/" + datasetId))
+                .andExpect(MockMvcResultMatchers.jsonPath(
+                        "$.hasRelevanceAnnotation.hasBody.no").value("ny relevans-tekst"))
+                .andExpect(status().isOk());
+    }
+
 
 
     @Test
@@ -273,6 +380,50 @@ public class DatasetControllerIT {
 
         logger.info(expected.getReferences().toString());
 
+    }
+
+    /**
+     * Helper function to create a catalog and simple dataset
+     * to be used in tests
+     * @param catalogId id of catalog to be created
+     * @return id of created dataset
+     */
+    public String createCatalogAndSimpleDataset(String catalogId) throws Exception {
+        Catalog catalog = new Catalog();
+        catalog.setId(catalogId);
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs")
+                                .content(asJsonString(catalog))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+
+        //create dataset to be changed later
+        Dataset dataset = new Dataset();
+
+        Map<String, String> languageTitle = new HashMap<>();
+        languageTitle.put("nb", "Test-tittel");
+        dataset.setTitle(languageTitle);
+
+        Map<String, String> languangeDescription = new HashMap<>();
+        languangeDescription.put("nb", "test");
+        dataset.setDescription(languangeDescription);
+        dataset.setType("Testdata");
+
+        String datasetResponseJson = mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs/" + catalogId + "/datasets/")
+                                .content(asJsonString(dataset))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("Testdata"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        return new Gson().fromJson(datasetResponseJson, Dataset.class).getId();
     }
 
 }
