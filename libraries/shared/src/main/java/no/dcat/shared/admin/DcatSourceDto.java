@@ -1,4 +1,4 @@
-package no.dcat.admin.web.dcat;
+package no.dcat.shared.admin;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

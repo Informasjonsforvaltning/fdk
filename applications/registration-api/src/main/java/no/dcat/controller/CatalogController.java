@@ -2,10 +2,12 @@ package no.dcat.controller;
 
 import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
+import no.dcat.datastore.domain.DcatSource;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.Publisher;
+import no.dcat.admin.web.dcat.DcatSourceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -107,6 +106,10 @@ public class CatalogController {
         }
 
         Catalog savedCatalog = saveCatalog(catalog);
+
+        //Create harvest entry in Harvester for the new catalog
+        boolean harvestEntryCreated = createHarvestEntry(catalog);
+        logger.info("Harves entry creation successfull: {}", harvestEntryCreated);
 
         return new ResponseEntity<>(savedCatalog, OK);
     }
@@ -197,6 +200,9 @@ public class CatalogController {
     public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.delete(id);
+
+        //TODO: FDK-1024 slett fra harvester hvis den finnes der. OBS miljøer.
+
         return new ResponseEntity<>(OK);
     }
 
@@ -246,6 +252,30 @@ public class CatalogController {
             return newCatalog;
         }
         return catalog;
+    }
+
+    boolean createHarvestEntry(Catalog catalog) {
+        logger.info("Harvest entry created for new catalog: {}", catalog.getId());
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        //TODO: Refaktorere til HarvesterApiService klasse, slik som ReferenceDataService
+        //TODO: Refactorere: Flytte DcatSourceDto fra harvester til library. Nå blir det avhengighetert på tvers
+        //når det har begynt å virke...
+
+        //get existing entries
+        String uri = "http://harvester-api/api/admin/dcat-sources";
+        List<DcatSourceDto> dcatsources = null;
+        try {
+            dcatsources = restTemplate.getForObject(uri, List.class);
+        } catch (Exception e) {
+            logger.error("Failed to get list of dcat sources from harvester-api.", e.getLocalizedMessage());
+        }
+
+        logger.debug("Found dcatsources: {}", dcatsources.toString());
+
+
+        return true;
     }
 
 }
