@@ -1,0 +1,124 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import './designsystem.scss';
+@import './colors.scss';
+@import './register.scss';
+@import './typo.scss';
+@import './common.scss';
+@import '~font-awesome/scss/font-awesome.scss';
+
+
+.uu-invisible {
+  background:0 0;
+  color:transparent;
+  border:0;
+  clip:rect(0 0 0 0);
+  height:1px;
+  width:1px;
+  margin:-1px;
+  padding:0;
+  overflow:hidden;
+  position:absolute!important
+}
+
+#skip-link-wrap {
+  a {
+    color: $color-cta2;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    &:focus, &:active {
+      background-color: lime;
+      position: static;
+      top: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      clip: auto;
+    }
+  }
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+/*****************************************/
+/*********** End of definitions **********/
+/*****************************************/
+
+html {
+  height: 100vh;
+}
+
+body {
+  background: $color6 !important;
+  color: $color1;
+  font-family: "heebo", "helvetica", sans-serif;
+  font-size: 100%;
+}
+
+.breakword {
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -hp-pre-wrap;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+.breakword-word {
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -hp-pre-wrap;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+.visibilityHidden {
+  visibility: hidden;
+}
+
+/*==========  Media Queries  ==========*/
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}/* end min-width : 320px */
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}/* end min-width : 480px */
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+}
+

@@ -1,0 +1,22 @@
+@import '../../assets/style/colors';
+
+.fdk-reg-helptext {
+  background-color: $color6;
+  border-radius: 5px;
+  strong {
+    font-size: 1.1rem;
+  }
+  .fdk-reg-helptext-more {
+    text-decoration: underline;
+  }
+}
+
+.fdk-obligatorisk {
+  font-size: .7rem;
+  color: #ffffff;
+  background-color: #4B555F;
+  padding: .1em .6em;
+  border-radius: 2px;
+  position: relative;
+  top: -2px;
+}

@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
@@ -26,12 +27,56 @@ const routes =
     </Route>
   );
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//ReactDOM.render(<App />, document.getElementById('root'));
 
-/*
+
 ReactDOM.render((
   <Router history={browserHistory} onUpdate={handleUpdate}>
     {routes}
   </Router>
 ), document.getElementById('root'));
 */
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import { reducer as formReducer } from 'redux-form';
+import { BrowserRouter, Route, Switch, Router, Link } from 'react-router-dom'
+
+import configureStore from './store/configureStore';
+import App from './containers/app';
+import Dataset from './containers/dataset';
+import RegDataset from './containers/reg-dataset';
+import Header from './components/app-header';
+import Footer from './components/app-footer';
+
+const store = configureStore();
+
+const App2 = () => (
+  <div>
+    driver å tester
+  </div>
+)
+
+const routes =
+  (
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/react" component={RegDataset} />
+      <Route path="/react2" component={Dataset} />
+      <Route path="/react2" component={Dataset} />
+    </Switch>
+  );
+
+ReactDOM.render((
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>
+        <Header/>
+        {routes}
+      <Footer/>
+      </div>
+    </BrowserRouter>
+  </Provider>
+), document.getElementById('root'))

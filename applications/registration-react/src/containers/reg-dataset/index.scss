@@ -1,0 +1,35 @@
+@import '../../assets/style/colors';
+
+.fdk-reg_collapse {
+  background-color: $color0;
+  margin: .5rem;
+  border-radius: 5px;
+  display: block;
+  padding: 1rem 2rem;
+  button {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.fdk-reg_collapse_open {
+  box-shadow: 0 3px 12px rgba(35,55,65,.55);
+}
+
+.form-group {
+  margin-bottom: 3rem;
+  .fdk-form-label {
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+
+  .fdk-form-field {
+
+  }
+}
+
+.fdk-reg-save-success {
+  &:before {
+    color: $color-green;
+  }
+}

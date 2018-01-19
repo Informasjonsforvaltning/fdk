@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Felles Datakatalog",
+    "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
+    "publisher": "Virksomhet",
+    "menu": "Meny",
+    "readMore": "Les mer om "
+  },
+  "beta": {
+    "header": "Dette er en beta-versjon. ",
+    "first": "Gi oss gjerne ",
+    "second": "tilbakemeldinger",
+    "last": "om hva du synes!"
+  },
+  "lang": {
+    "choose": "Velg språk",
+    "chosenLanguage": "Language",
+    "norwegian-nb": "Norsk (bokmål)",
+    "norwegian-nn": "Norsk (nynorsk)",
+    "english-en": "Engelsk"
+  },
+  "footer": {
+    "organisation.number": "Organisasjonsnummer:",
+    "information": "Informasjonskapsler",
+    "information_text": "Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.",
+    "mail": "fellesdatakatalog@brreg.no",
+    "privacy": " og personvern",
+    "contact": "Kontakt:"
+  }
+}
