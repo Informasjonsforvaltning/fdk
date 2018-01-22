@@ -27,8 +27,10 @@
         <module>search-api</module>
         <module>search</module>
 
+        <module>nginx-registration</module>
         <module>registration-api</module>
         <module>registration</module>
+        <module>registration-react</module>
         <module>registration-auth</module>
         <module>registration-validator</module>
 
