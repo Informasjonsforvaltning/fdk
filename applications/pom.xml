@@ -28,6 +28,7 @@
         <module>search</module>
 
         <module>nginx-registration</module>
+        <module>nginx-registration-ssl</module>
         <module>registration-api</module>
         <module>registration</module>
         <module>registration-react</module>

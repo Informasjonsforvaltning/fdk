@@ -11,8 +11,7 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>nginx-registration</artifactId>
-    <description>nginx router for registration application</description>
+    <artifactId>nginx-registration-ssl</artifactId>
 
 
     <build>
