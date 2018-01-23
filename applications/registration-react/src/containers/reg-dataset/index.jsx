@@ -1,10 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import TitleForm from '../../components/dataset-form-title';
-import FormCode from '../../components/dataset-redux-form-title';
 import { fetchDatasetIfNeeded, fetchHelptextsIfNeeded } from '../../actions/index';
 import FormTemplate from '../../components/reg-form-template';
 import FormTitle from '../../components/reg-form-title';
@@ -19,7 +16,6 @@ class RegDataset extends React.Component {
     }
     this.props.dispatch(fetchDatasetIfNeeded());
     this.props.dispatch(fetchHelptextsIfNeeded());
-    this.handleSave = this.handleSave.bind(this);
   }
 
   fetchDataset() {
@@ -30,15 +26,11 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchHelptextsIfNeeded());
   }
 
-  componentWillMount() {
-  }
-
-  handleSave(e, setTouched, values, errors) {
-
-  }
-
   render() {
     const { helptextItems } = this.props;
+    /*
+
+     */
     return (
       <div className="container-fluid">
         <div className="row">
@@ -50,21 +42,23 @@ class RegDataset extends React.Component {
         <div className="col-md-2">
         </div>
         <div className="col-md-8">
-          <FormTemplate
-            title="Distribusjoner"
-          >
-            {helptextItems &&
-            <FormDistribution
-              helptextItems={helptextItems}
-            />
-            }
-          </FormTemplate>
+
 
           <FormTemplate
             title="Tittel og beskrivelse"
           >
             {helptextItems &&
             <FormTitle
+              helptextItems={helptextItems}
+            />
+            }
+          </FormTemplate>
+
+          <FormTemplate
+            title="Distribusjoner"
+          >
+            {helptextItems &&
+            <FormDistribution
               helptextItems={helptextItems}
             />
             }

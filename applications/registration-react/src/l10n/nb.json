@@ -26,5 +26,9 @@
     "mail": "fellesdatakatalog@brreg.no",
     "privacy": " og personvern",
     "contact": "Kontakt:"
+  },
+  "validation": {
+    "required": "Obligatorisk felt, må fylles ut.",
+    "minTwoChars": "Feltet må ha minimum to tegn."
   }
 }

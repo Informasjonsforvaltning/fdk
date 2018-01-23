@@ -6,7 +6,7 @@ export default class Example extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: true };
+    this.state = { collapse: false };
   }
 
   toggle() {
@@ -31,6 +31,7 @@ export default class Example extends Component {
         "fa-angle-up": this.state.collapse,
       }
     );
+    console.log("render");
     return (
       <div className={collapseClass}>
         <button className="d-flex align-items-center text-left no-padding w-100" onClick={this.toggle}>

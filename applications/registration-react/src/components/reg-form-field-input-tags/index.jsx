@@ -59,13 +59,13 @@ const handleChange = (props, tags) => {
   //const { input, label, type, meta: { touched, error, warning } } = props;
   props.meta.touched.true;
   props.input.onChange(tags);
-  console.log("props touched", JSON.stringify(props));
+  //console.log("props touched", JSON.stringify(props));
   //this.props.input.onChange(tags);
 }
 
 const InputTagsField  = (props) => {
     const { input, label, type, meta: { touched, error, warning } } = props;
-    console.log("props", JSON.stringify(props));
+    //console.log("props", JSON.stringify(props));
     return (
       <div className="pl-2">
         <label className="fdk-form-label">{label}</label>

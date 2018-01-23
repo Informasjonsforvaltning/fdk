@@ -1,9 +1,8 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
-import { Card } from 'reactstrap';
+import { Field, FieldArray, reduxForm, startAsyncValidation } from 'redux-form';
 import { connect } from 'react-redux'
-import axios from 'axios';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
@@ -12,33 +11,95 @@ import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../dataset-redux-form-title/asyncValidate';
 
 const validate = values => {
-  console.log("validate");
+  console.log("validate dist", JSON.stringify(values.distribution));
   const errors = {}
-  const title = (values.title && values.title.nb) ? values.title.nb : null;
 
-  if (!title) {
-    errors.title = {nb: 'Required'}
-  } else if (title.length < 2) {
-    errors.title = {nb: 'Minimum be 2 characters or more'}
+  const { distribution } = values;
+
+  let errorNodes = null;
+
+  if (distribution) {
+    errorNodes = distribution.map((item, index) => {
+      let errors = {}
+      const description = (item.description && item.description.nb) ? item.description.nb : null;
+      const license = (item.license && item.license.uri) ? item.license.uri : null;
+      const page = (item.page && item.page[index].uri) ? item.page[index].uri : null;
+
+      if (license && license.length < 2) {
+        errors.license = { uri: localization.validation.minTwoChars}
+      }
+
+      if (description && description.length < 2) {
+        errors.description = { nb: localization.validation.minTwoChars}
+      }
+
+      if (page && page.length < 2) {
+        errors.page = [{uri: localization.validation.minTwoChars}]
+      }
+
+      return errors;
+    });
   }
-  if (!values.email) {
-    errors.email = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
+
+  console.log("errors dist", JSON.stringify(errorNodes));
+
+  errors.distribution = errorNodes;
+  console.log("errors errors", JSON.stringify(errors));
+
+  /*
+   let themeNodes = null;
+   const { themes, selectedLanguageCode } = this.props;
+   if (themes) {
+   themeNodes = themes.map(singleTheme => (
+   <div
+   key={`dataset-description-theme-${singleTheme.code}`}
+   id={`dataset-description-theme-${singleTheme.code}`}
+   className="fdk-label fdk-label-on-grey"
+   >
+   {getTranslateText(singleTheme.title, selectedLanguageCode)}
+   </div>
+   ));
+   }
+   return themeNodes;
+
+   */
+
+
+  //errors.distribution = {accessURL: localization.validation.minTwoChars}
+
+  /*
+  if (values.distribution.description.length < 2) {
+    errors.distribution.description = localization.validation.minTwoChars
   }
-  if (!values.uri) {
-    errors.uri = 'Required'
-  } else if (values.uri.length < 2) {
-    errors.uri = 'Minimum be 2 characters or more'
+  */
+
+  /*
+  if (values.distribution.accessURL.length < 2) {
+    errors.distribution.accessURL = localization.validation.minTwoChars
   }
+  */
+
   return errors
 }
 
-const renderDistributions = ({ fields, meta: { touched, error, submitFailed } }, helptextItems, onChange) => {
+const renderDistributionLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => {
+  return (
+    <div>
+      {fields.map((item, index) =>
+        <Field
+          name={`${item}.uri`}
+          component={InputField} label="Landingsside"
+        />
+      )}
+    </div>
+  );
+};
 
+const renderDistributions = ({ values, fields, meta: { touched, error, submitFailed }, helptextItems }) => {
   return (
     <div>
       {fields.map((distribution, index) =>
+
         <div key={index}>
           <div className="d-flex">
             <h4>Distribusjon #{index + 1}</h4>
@@ -59,7 +120,7 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } },
           <div className="form-group">
             <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
             <Field
-              name={`${distribution}.accessURL`}
+              name={`${distribution}.accessURL.0`}
               type="text"
               component={InputField}
               label="Tilgangs URL"/>
@@ -87,7 +148,11 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } },
               title="Lenke til dokumentasjon av distribusjonen"
               helptextItems={helptextItems.Distribution_documentation}
             />
-            <Field name={`${distribution}.page[0].uri`} component={InputField} label="Lisens" />
+            <FieldArray
+              name={`${distribution}.page`}
+              component={renderDistributionLandingpage}
+              helptextItems={helptextItems}
+            />
           </div>
 
           <div className="form-group">
@@ -115,10 +180,14 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } },
 }
 
 let FormDistribution = props => {
-  const { handleSubmit, pristine, submitting, helptextItems, onChange } = props;
+  const { handleSubmit, pristine, submitting, helptextItems, asyncValidate } = props;
   return (
     <form onSubmit={ handleSubmit }>
-      <FieldArray name="distribution" component={(props) => (renderDistributions(props, helptextItems, onChange))}/>
+      <FieldArray
+        name="distribution"
+        component={renderDistributions}
+        helptextItems={helptextItems}
+      />
     </form>
   )
 }
@@ -135,14 +204,16 @@ FormDistribution = reduxForm({
   validate,
   asyncValidate,
   //asyncBlurFields: [ ],
-  asyncChangeFields: [],
-  onChange: onChange
+  asyncChangeFields: []
 })(FormDistribution)
 
 // You have to connect() to any reducers that you wish to connect to yourself
 FormDistribution = connect(
   state => ({
-    initialValues: state.dataset.result // pull initial values from dataset reducer
+    //initialValues: state.dataset.result // pull initial values from dataset reducer
+    initialValues: {
+      distribution: state.dataset.result.distribution || null
+    }
   })
 )(FormDistribution)
 

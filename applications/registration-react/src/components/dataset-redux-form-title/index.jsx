@@ -10,7 +10,7 @@ const validate = values => {
 
   const title = (values.title && values.title.nb) ? values.title.nb : null;
 
-  console.log("validate", title);
+  //console.log("validate", title);
 
 
   if (!title) {
@@ -28,7 +28,7 @@ const validate = values => {
   } else if (values.uri.length < 2) {
     errors.uri = 'Minimum be 2 characters or more'
   }
-  console.log(JSON.stringify(errors));
+  //console.log(JSON.stringify(errors));
   return errors
 }
 
