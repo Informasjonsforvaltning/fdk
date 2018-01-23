@@ -156,7 +156,6 @@ services:
      - registrationApi_clientSSLCertificateKeystorePassword=password
      - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
      - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
-     - registrationApi_serverPort:8098
 
 
   registration:
