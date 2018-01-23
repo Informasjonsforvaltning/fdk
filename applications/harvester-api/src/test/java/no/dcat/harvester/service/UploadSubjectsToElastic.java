@@ -2,6 +2,10 @@ package no.dcat.harvester.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Publisher;
@@ -19,6 +23,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.PathResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
@@ -46,10 +52,10 @@ public class UploadSubjectsToElastic {
     final String ut1 = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no";
     final String tt1 = "http://elasticsearch-fellesdatakatalog-tt1.ose-npc.brreg.no";
     final String st2 = "http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
-
+    final String ppe = "http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no";
     /**
      * Should not be run as a test. Hack to upload subjects to elastic.
-     * 
+     *
      * @throws Throwable
      */
     @Test
@@ -61,11 +67,10 @@ public class UploadSubjectsToElastic {
         postSubjectsFromModel(tt1, model);
     }
 
-
     /**
      * Reads subjects from CSV file (exported from JIRA) and extracts subject information from the file.
      * It generates a RDF. Finally it uploads the Subject to the requested elasticsearch server.
-     *
+     * <p>
      * Notice that BRREG's JIRA CSV export generates two identical columns called "Computas sak", one of them must be
      * renamed
      *
@@ -79,7 +84,7 @@ public class UploadSubjectsToElastic {
         Iterable<CSVRecord> records = readCsvRecords(filename);
 
         if (records == null) {
-            throw new IOException("Couldn't read input cvsfile: " +filename);
+            throw new IOException("Couldn't read input cvsfile: " + filename);
         }
 
         // set publisher
@@ -91,8 +96,49 @@ public class UploadSubjectsToElastic {
         Model model = createRDFModel(extractSubjectsFromCSV(records, publisher));
 
         // update elasticsearch instance
-        postSubjectsFromModel(st2, model);
+        postSubjectsFromModel(tt1, model);
+    }
 
+    @Test
+    @Ignore
+    public void deleteSubjectsFromElastic() throws Throwable {
+
+        String host = tt1;
+
+        List<String> identifiersToBeDeleted = getSubjectsToBeDeleted(host);
+        RestTemplate template = new RestTemplate();
+
+        for (String id : identifiersToBeDeleted) {
+            try {
+                if (!id.startsWith("http")) {
+                    template.delete(host + "/dcat/subject/" + id);
+                    logger.info("Successfully deleted: {}", id);
+                }
+            } catch (HttpClientErrorException ex) {
+                logger.info("Unable to delete: {} due to: {}", id, ex.getMessage());
+            }
+        }
+    }
+
+    private List<String> getSubjectsToBeDeleted(String host) {
+
+        List<String> result = new ArrayList<>();
+
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<String> response = template.getForEntity(host + "/dcat/subject/_search?fields=_id&size=50", String.class);
+
+        String json = response.getBody();
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+        JsonArray hitsArray = jsonObject.get("hits").getAsJsonObject().get("hits").getAsJsonArray();
+
+        for (JsonElement element : hitsArray) {
+            String id = element.getAsJsonObject().get("_id").getAsString();
+            logger.debug(id);
+            result.add(id);
+        }
+
+        return result;
     }
 
     private void postSubjectsFromModel(String host, Model model) {
@@ -110,10 +156,10 @@ public class UploadSubjectsToElastic {
         RestTemplate template = new RestTemplate();
 
         subjects.forEach(subject -> {
-            template.postForObject(host +"/dcat/subject", subject, Subject.class );
+            template.postForObject(host + "/dcat/subject/" + subject.getIdentifier(), subject, Subject.class);
         });
 
-        logger.info ("Hurra {} begrep er lastet opp til {}", subjects.size(), host);
+        logger.info("Hurra {} begrep er lastet opp til {}", subjects.size(), host);
     }
 
     private Model createRDFModel(List<Subject> subjects) {
@@ -123,8 +169,8 @@ public class UploadSubjectsToElastic {
         int i = 0;
 
         // add subject resources
-        for (Subject subject : subjects ) {
-            Resource resource = model.createResource(subject.getIdentifier()); //AnonId.create("arkiv" +i));
+        for (Subject subject : subjects) {
+            Resource resource = model.createResource(subject.getUri()); //AnonId.create("arkiv" +i));
             builder.addSubjectContent(subject, resource);
 
             i++;
@@ -150,7 +196,8 @@ public class UploadSubjectsToElastic {
             subject.setCreator(publisher);
 
             // identifier/uri
-            subject.setIdentifier("http://brreg.no/vocabulary/" +record.get("Key"));
+            subject.setUri("http://brreg.no/vocabulary/" + record.get("Key"));
+            subject.setIdentifier(record.get("Key"));
 
             // Alternative term: skos:altLabel
             final String altTerm = record.get("Alternativ term");
@@ -191,6 +238,10 @@ public class UploadSubjectsToElastic {
             // Definition: dct:definition
             subject.setDefinition(new HashMap<>());
             subject.getDefinition().put("no", record.get("Definisjon"));
+
+            // Source: dct:source
+
+            subject.setSource("https://www.arkivverket.no/forvaltning-og-utvikling/noark-standarden");
 
             // Note
             final String note = record.get("Kommentar");
