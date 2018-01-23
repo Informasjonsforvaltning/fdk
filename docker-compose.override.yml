@@ -137,7 +137,7 @@ services:
     image: dcatno/nginx-registration-ssl:latest
     restart: always
     depends_on:
-      - nginx
+      - nginx-registration
     ports:
       - 127.0.0.1:8099:443
     networks:
@@ -166,7 +166,7 @@ services:
     volumes:
       -   ./applications/registration/src:/usr/src/app/src:rw
     environment:
-     - registrationApi_API_URL=https://localhost:8099
+     - registrationApi_API_URL=https://localhost:8098
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
     depends_on:
@@ -183,8 +183,7 @@ services:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
-    depends_on:
-     - nginx-ssl
+
 
   registration-auth:
       restart: always

@@ -133,6 +133,7 @@ services:
     image: dcatno/registration-react:latest
     depends_on:
       - nginx-registration-ssl
+      - registration
     networks:
       platform:
 
