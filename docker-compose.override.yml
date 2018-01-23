@@ -129,7 +129,7 @@ services:
     depends_on:
       - nginx
     ports:
-      - 127.0.0.1:8098:443
+      - 127.0.0.1:8099:443
     networks:
       platform:
 
@@ -139,7 +139,7 @@ services:
     depends_on:
       - nginx-registration
     ports:
-      - 127.0.0.1:8099:443
+      - 127.0.0.1:8098:443
     networks:
       platform:
 
@@ -156,6 +156,7 @@ services:
      - registrationApi_clientSSLCertificateKeystorePassword=password
      - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
      - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
+     - registrationApi_serverPort:8098
 
 
   registration:
@@ -166,7 +167,7 @@ services:
     volumes:
       -   ./applications/registration/src:/usr/src/app/src:rw
     environment:
-     - registrationApi_API_URL=https://localhost:8098
+     - registrationApi_API_URL=https://localhost:8099
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
     depends_on:
