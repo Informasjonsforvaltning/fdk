@@ -10,15 +10,22 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
   console.log("asyncvalidate2", blurredField);
 
   const api = {
-    Authorization: "Basic " + null
+    Authorization: `Basic ${  null}`
   }
 
-  if (blurredField && blurredField.indexOf('remove_') !== -1) {
+  if (blurredField && blurredField.indexOf('remove_temporal_') !== -1) {
     const index = blurredField.split("_").pop();
     values.splice(index,1);
     values = {
       temporal: values
     }
+  } else if (blurredField && blurredField.indexOf('remove_distribution_') !== -1) {
+    const index = blurredField.split("_").pop();
+    values.splice(index,1);
+    values = {
+      distribution: values
+    }
+    console.log("dist values2", JSON.stringify(values));
   }
 
   const values2 = {
@@ -63,6 +70,7 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     issued: "2018-01-20"
   }
 
+
   return axios.patch(
     // '/catalogs/910244132/datasets/e679b150-e69d-444c-bf7f-874d6999c62d/', values, {headers: api}
     postURL, values, {headers: api}
@@ -72,9 +80,9 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     })
     .catch((error) => {
       console.log('feiler2');
-      throw { error: error }
+      throw { error }
     })
-    ;
+  ;
 
 
 }

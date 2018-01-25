@@ -64,32 +64,33 @@ const renderTemporal = (props) => {
   return (
     <div>
       {fields.map((item, index) =>
-        <div className="d-flex" key={index}>
+        (<div className="d-flex" key={index}>
           <div className="w-50">
-        <Field
-          name={`${item}.startDate`}
-          type="text"
-          component={DatepickerField}
-          label="Tidsmessig avgrenset fra"
-        />
+            <Field
+              name={`${item}.startDate`}
+              type="text"
+              component={DatepickerField}
+              label="Tidsmessig avgrenset fra"
+            />
           </div>
           <div className="w-50">
-        <Field
-        name={`${item}.endDate`}
-        type="text"
-        component={DatepickerField}
-        label="Tidsmessig avgrenset til"
-        />
+            <Field
+              name={`${item}.endDate`}
+              type="text"
+              component={DatepickerField}
+              label="Tidsmessig avgrenset til"
+            />
           </div>
           <div className="d-flex align-items-end">
             <button
               type="button"
               title="Remove temporal"
-              onClick={(e) => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_${index}`);}}>
+              onClick={(e) => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_temporal_${index}`);}}
+            >
               <i className="fa fa-trash mr-2" />
             </button>
           </div>
-      </div>
+        </div>)
       )}
       <button type="button" onClick={() => fields.push({})}>
         <i className="fa fa-plus mr-2" />
@@ -101,13 +102,13 @@ const renderTemporal = (props) => {
 
 let FormSpatial = props => {
   const {handleSubmit, pristine, submitting, helptextItems, initialValues, value} = props;
-  //console.log("props", JSON.stringify(props));
+  // console.log("props", JSON.stringify(props));
   const { spatial } = initialValues;
   if (spatial && spatial.length > 0) {
     return (
       <form>
         <div className="form-group">
-          <Helptext title="Geografisk avgrensning" required helptextItems={helptextItems.Dataset_spatial}/>
+          <Helptext title="Geografisk avgrensning" required helptextItems={helptextItems.Dataset_spatial} />
           <Field
             name="spatial"
             type="text"
@@ -117,7 +118,7 @@ let FormSpatial = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Tidsmessig avgrenset til" required helptextItems={helptextItems.Dataset_temporal}/>
+          <Helptext title="Tidsmessig avgrenset til" required helptextItems={helptextItems.Dataset_temporal} />
           <FieldArray
             name="temporal"
             component={renderTemporal}
@@ -125,7 +126,7 @@ let FormSpatial = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Utgivelsesdato" required helptextItems={helptextItems.Dataset_issued}/>
+          <Helptext title="Utgivelsesdato" required helptextItems={helptextItems.Dataset_issued} />
           <Field
             name="issued"
             type="text"
@@ -145,7 +146,7 @@ let FormSpatial = props => {
       </form>
     )
   } return null;
-  //}
+  // }
 }
 
 // Decorate with reduxForm(). It will read the initialValues prop provided by connect()
@@ -153,28 +154,26 @@ FormSpatial = reduxForm({
   form: 'spatial',  // a unique identifier for this form,
   validate,
   asyncValidate,
-  //asyncBlurFields: [],
-  //asyncChangeFields: [],
+  // asyncBlurFields: [],
+  // asyncChangeFields: [],
 })(FormSpatial)
 
 
 
 const formatTemporalUnixDatesToISO = values => {
-  let temporals = values.map(item => {
-    return (
-      {
-        startDate: moment(item.startDate).format('YYYY-MM-DD'),
-        endDate: moment(item.endDate).format('YYYY-MM-DD'),
-      }
-    );
-  })
+  const temporals = values.map(item => (
+    {
+      startDate: moment(item.startDate).format('YYYY-MM-DD'),
+      endDate: moment(item.endDate).format('YYYY-MM-DD'),
+    }
+  ))
   return temporals;
 }
 
 // You have to connect() to any reducers that you wish to connect to yourself
 FormSpatial = connect(
   state => ({
-    //initialValues: state.dataset.result || {} // pull initial values from dataset reducer
+    // initialValues: state.dataset.result || {} // pull initial values from dataset reducer
     initialValues: {
       spatial: state.dataset.result.spatial || {},
       issued: moment(state.dataset.result.issued).format('YYYY-MM-DD') || '',
