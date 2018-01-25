@@ -7,7 +7,7 @@ const RadioField  = ({ input, label, type, meta: { touched, error, warning }, as
   return (
     <div className="form-check fdk-form-check">
       <input {...input} type="radio" className="form-check-input" id={input.value} /*onChange={e => {e.preventDefault(); asyncValidate();}}*/ />
-      <label className="form-check-label fdk-form-check-label" for={input.value}>
+      <label className="form-check-label fdk-form-check-label" htmlFor={input.value}>
         {input.value}
       </label>
     </div>

@@ -15,7 +15,7 @@ function shouldFetchApi(state) {
   return !state.isFetching;
 }
 
-export function fetchDatasetIfNeeded() {
+export function fetchDatasetIfNeeded(datasetURL) {
   return (dispatch, getState) =>
   shouldFetchApi(
     getState().dataset) && dispatch(

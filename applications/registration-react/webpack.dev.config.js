@@ -7,14 +7,13 @@ module.exports = {
   devtool:"cheap-module-eval-source-map",
   context:path.join(__dirname),
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:3000',
-    'webpack/hot/only-dev-server',
+    "babel-polyfill",
     './src/index.jsx'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static'
+    publicPath: '/static/'
   },
   module: {
     rules: [
@@ -79,11 +78,5 @@ module.exports = {
     ], {
       copyUnmodified: true
     })
-  ],
-  devServer: {
-    hot: true,
-    contentBase: './',
-    port: 3000,
-    inline: true
-  }
+  ]
 };

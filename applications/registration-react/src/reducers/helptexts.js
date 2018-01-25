@@ -2,12 +2,12 @@ import { HELPTEXTS_REQUEST, HELPTEXTS_SUCCESS, HELPTEXTS_FAILURE } from '../cons
 import { normalize } from 'normalizr';
 import { helptext } from '../schemas/schemas.js';
 
-export default function dataset(state = { isFetching: false, helptextItems: null }, action) {
+export default function dataset(state = { isFetchingHelptext: false, helptextItems: null }, action) {
   switch (action.type) {
     case HELPTEXTS_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetchingHelptext: true
       };
     case HELPTEXTS_SUCCESS:
       const objFromArray = action.response.data.reduce((accumulator, current) => {
@@ -16,13 +16,13 @@ export default function dataset(state = { isFetching: false, helptextItems: null
       }, {})
       return {
         ...state,
-        isFetching: false,
+        isFetchingHelptext: false,
         helptextItems: objFromArray
       }
     case HELPTEXTS_FAILURE:
       return {
         ...state,
-        isFetching: false,
+        isFetchingHelptext: false,
         helptextItems: null
       };
     default:

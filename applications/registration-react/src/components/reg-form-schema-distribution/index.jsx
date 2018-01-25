@@ -8,7 +8,7 @@ import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
 import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
-import asyncValidate from '../dataset-redux-form-title/asyncValidate';
+import asyncValidate from '../../utils/asyncValidate';
 
 const validate = values => {
   console.log("validate dist", JSON.stringify(values.distribution));
@@ -87,6 +87,7 @@ const renderDistributionLandingpage = ({ fields, meta: { touched, error, submitF
     <div>
       {fields.map((item, index) =>
         <Field
+          key={index}
           name={`${item}.uri`}
           component={InputField} label="Landingsside"
         />

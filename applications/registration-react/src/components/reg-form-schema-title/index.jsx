@@ -6,9 +6,10 @@ import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import TextAreaField from '../reg-form-field-textarea';
-import asyncValidate from '../dataset-redux-form-title/asyncValidate';
+import asyncValidate from '../../utils/asyncValidate';
 
 const validate = values => {
+  console.log("VALIDATE");
   const errors = {}
   const title = (values.title && values.title.nb) ? values.title.nb : null;
   const description = (values.description && values.description.nb) ? values.description.nb : null;
@@ -46,6 +47,7 @@ const renderLandingpage = ({ fields, meta: { touched, error, submitFailed }, hel
     <div>
       {fields.map((item, index) =>
         <Field
+          key={index}
           name={`${item}`}
           component={InputField} label="Landingsside"
         />
@@ -104,12 +106,14 @@ FormTitle = reduxForm({
 FormTitle = connect(
   state => ({
     //initialValues: state.dataset.result // pull initial values from dataset reducer
+
     initialValues: {
-      title: state.dataset.result.title || '',
-      description: state.dataset.result.description || '',
-      objective: state.dataset.result.objective || '',
-      landingPage: state.dataset.result.landingPage || ''
+      title: state.dataset.result.title || null,
+      description: state.dataset.result.description || null,
+      objective: state.dataset.result.objective || null,
+      landingPage: state.dataset.result.landingPage || null
     }
+
   })
 )(FormTitle)
 

@@ -6,7 +6,7 @@ const compression = require("compression");
 const webpack = require("webpack");
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require("../webpack.prod.config.js");
+const config = require("../webpack.dev.config.js");
 
 module.exports = {
   start() {
