@@ -84,18 +84,18 @@ class Dataset extends React.Component {
     const saveValue = e.target.value
     switch (e.target.name) {
       case "title":
-          this.setState({
-            ...this.state,
-            dataset: {
-              title: {
-                nb: `${e.target.value}`
-              }
+        this.setState({
+          ...this.state,
+          dataset: {
+            title: {
+              nb: `${e.target.value}`
             }
+          }
         });
     }
 
     const api = {
-      Authorization: "Basic " + null
+      Authorization: `Basic ${  null}`
     }
     const dataset = this.state.dataset;
     axios.put(
@@ -120,10 +120,11 @@ class Dataset extends React.Component {
             {JSON.stringify(result)}
           </div>
         }
-        <FormCode/>
+        <FormCode />
         <div>Registrering Formik</div>
         <TitleForm
-          title={this.state.dataset.title.nb} onSave={this.handleSave}
+          title={this.state.dataset.title.nb}
+          onSave={this.handleSave}
         />
       </div>
     );
@@ -171,7 +172,7 @@ function mapStateToProps({ dataset }, ownProps) {
     isFetching: false
   }
 
-  //console.log(JSON.stringify(result));
+  // console.log(JSON.stringify(result));
 
   return {
     result,

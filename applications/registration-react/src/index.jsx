@@ -73,9 +73,9 @@ ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Header/>
+        <Header />
         {routes}
-      <Footer/>
+        <Footer />
       </div>
     </BrowserRouter>
   </Provider>

@@ -5,9 +5,7 @@ import '../reg-form-field-input-tags/index.scss';
 
 const handleChange = (props, tags) => {
   let updates = [];
-  updates = tags.map((item) => {
-    return {"uri":item,"prefLabel":{}}
-  })
+  updates = tags.map((item) => ({"uri":item,"prefLabel":{}}))
   props.meta.touched.true;
   props.input.onChange(updates);
 }
@@ -17,12 +15,10 @@ const InputTagsFieldArray  = (props) => {
   let tagNodes = [];
 
   if (input && input.value && input.value.length > 0) {
-    tagNodes = input.value.map((item, index) => {
-      return item.uri
-    })
+    tagNodes = input.value.map((item, index) => item.uri)
   }
-  //console.log("input value", JSON.stringify(input.value));
-  //console.log("tags", JSON.stringify(tagNodes));
+  // console.log("input value", JSON.stringify(input.value));
+  // console.log("tags", JSON.stringify(tagNodes));
 
   return (
     <div className="pl-2">

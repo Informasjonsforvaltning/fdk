@@ -31,17 +31,16 @@ class RegDataset extends React.Component {
   render() {
     const { result, helptextItems, isFetching } = this.props;
 
-      return (
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
+    return (
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12">
               brødsmule-meny kommer her {isFetching ? 'true' : 'false'}
-            </div>
           </div>
-          <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
-            <div className="col-md-2">
-            </div>
-            {!isFetching && helptextItems &&
+        </div>
+        <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
+          <div className="col-md-2" />
+          {!isFetching && helptextItems &&
             <div className="col-md-8">
 
               <FormTemplate
@@ -70,13 +69,12 @@ class RegDataset extends React.Component {
               </FormTemplate>
 
             </div>
-            }
-            <div className="col-md-2">
-            </div>
-          </div>
+          }
+          <div className="col-md-2" />
         </div>
-      );
-    }
+      </div>
+    );
+  }
 }
 
 RegDataset.defaultProps = {
@@ -84,7 +82,7 @@ RegDataset.defaultProps = {
 };
 
 RegDataset.propTypes = {
-  //children: PropTypes.node.isRequired,
+  // children: PropTypes.node.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 

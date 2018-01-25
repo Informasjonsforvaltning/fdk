@@ -1,4 +1,4 @@
-//import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
 import axios from 'axios';
 
 function callApi2(url) {
@@ -24,9 +24,7 @@ function callApi2(url) {
 function callApi(url) {
 
   return axios.get(url)
-    .then((response) => {
-      return response
-    })
+    .then((response) => response)
     .catch((response) => {
       const { error } = response;
       return Promise.reject(error);

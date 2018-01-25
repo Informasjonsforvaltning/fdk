@@ -39,12 +39,12 @@ export default class Example extends Component {
           <h2 className="mb-0">{ title }</h2>
 
         </button>
-          <Collapse
-            className="mt-3"
-            isOpen={this.state.collapse}
-          >
-            {this.props.children}
-          </Collapse>
+        <Collapse
+          className="mt-3"
+          isOpen={this.state.collapse}
+        >
+          {this.props.children}
+        </Collapse>
       </div>
     );
   }

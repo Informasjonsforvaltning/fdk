@@ -10,7 +10,7 @@ const validate = values => {
 
   const title = (values.title && values.title.nb) ? values.title.nb : null;
 
-  //console.log("validate", title);
+  // console.log("validate", title);
 
 
   if (!title) {
@@ -28,7 +28,7 @@ const validate = values => {
   } else if (values.uri.length < 2) {
     errors.uri = 'Minimum be 2 characters or more'
   }
-  //console.log(JSON.stringify(errors));
+  // console.log(JSON.stringify(errors));
   return errors
 }
 
@@ -51,18 +51,20 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } })
       {(touched || submitFailed) && error && <span>{error}</span>}
     </li>
     {fields.map((distribution, index) =>
-      <li key={index}>
+      (<li key={index}>
         <button
           type="button"
           title="Remove Member"
-          onClick={() => fields.remove(index)}/>
+          onClick={() => fields.remove(index)}
+        />
         <h4>Distribution #{index + 1}</h4>
         <Field
           name={`${distribution}.id`}
           type="text"
           component={renderField}
-          label="First Name"/>
-      </li>
+          label="First Name"
+        />
+       </li>)
     )}
   </ul>
 )
@@ -72,7 +74,7 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } })
 let FormCode = props => {
   const { handleSubmit, pristine, submitting } = props;
   return (
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={handleSubmit}>
       <div className="form-group">
         <Field name="title.nb" component={renderField} label="First Name" />
       </div>
@@ -82,7 +84,7 @@ let FormCode = props => {
       <div className="form-group">
         <Field name="email" component={renderField} label="Email" />
       </div>
-      <FieldArray name="distribution" component={renderDistributions}/>
+      <FieldArray name="distribution" component={renderDistributions} />
       <div className="form-group">
         <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Submit</button>
       </div>

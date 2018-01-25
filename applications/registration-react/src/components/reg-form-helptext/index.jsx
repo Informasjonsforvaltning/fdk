@@ -21,27 +21,27 @@ export default class Helptext extends Component {
       'fa',
       'fdk-fa-left',
       {
-      "fa-angle-double-down": !this.state.collapse,
-      "fa-angle-double-up": this.state.collapse,
+        "fa-angle-double-down": !this.state.collapse,
+        "fa-angle-double-up": this.state.collapse,
       }
     )
     const { title, required, helptextItems} = this.props;
     const { id, shortdesc, description, uri} = helptextItems;
 
-    let resolvedDescription = description.nb.replace(new RegExp('\n', 'g'), "<br />");
+    const resolvedDescription = description.nb.replace(new RegExp('\n', 'g'), "<br />");
 
     return (
       <div className="fdk-reg-helptext mb-2 p-2">
         <div className="d-flex align-items-center">
-        <h3>{title}</h3>
-        {required &&
+          <h3>{title}</h3>
+          {required &&
           <span className="badge badge-secondary ml-1">
             Obligatorisk
           </span>
-        }
+          }
         </div>
         <div>
-        <p className="m-0" dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
+          <p className="m-0" dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
 
           <div className="text-left no-padding ml-1 fdk-reg-helptext-more" tabIndex="0" onClick={this.toggle}>
             <i className={collapseClass} />

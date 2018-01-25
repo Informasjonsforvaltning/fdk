@@ -42,43 +42,42 @@ const validate = values => {
   return errors
 }
 
-const renderLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => {
-  return (
-    <div>
-      {fields.map((item, index) =>
-        <Field
-          key={index}
-          name={`${item}`}
-          component={InputField} label="Landingsside"
-        />
-      )}
-    </div>
-  );
-};
+const renderLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => (
+  <div>
+    {fields.map((item, index) =>
+      (<Field
+        key={index}
+        name={`${item}`}
+        component={InputField}
+        label="Landingsside"
+      />)
+    )}
+  </div>
+);
 
 
-//let FormTitle = props => {
+// let FormTitle = props => {
 class FormTitle extends React.Component {
   render() {
     const {handleSubmit, pristine, submitting, helptextItems} = this.props;
-    //console.log(JSON.stringify(props.initialValues));
+    // console.log(JSON.stringify(props.initialValues));
     return (
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <Helptext title="Tittel" required helptextItems={helptextItems.Distribution_modified}/>
-          <Field name="title.nb" component={InputField} label="Tittel"/>
+          <Helptext title="Tittel" required helptextItems={helptextItems.Distribution_modified} />
+          <Field name="title.nb" component={InputField} label="Tittel" />
         </div>
         <div className="form-group">
-          <Helptext title="Beskrivelse av datasettet" required helptextItems={helptextItems.Dataset_description}/>
-          <Field name="description.nb" component={TextAreaField} label="Beskrivelse"/>
+          <Helptext title="Beskrivelse av datasettet" required helptextItems={helptextItems.Dataset_description} />
+          <Field name="description.nb" component={TextAreaField} label="Beskrivelse" />
         </div>
         <div className="form-group">
-          <Helptext title="Formålet med datasettet" helptextItems={helptextItems.Dataset_objective}/>
-          <Field name="objective.nb" component={TextAreaField} label="Formål"/>
+          <Helptext title="Formålet med datasettet" helptextItems={helptextItems.Dataset_objective} />
+          <Field name="objective.nb" component={TextAreaField} label="Formål" />
         </div>
 
         <div className="form-group">
-          <Helptext title="Lenke til mer informasjon om datasettet" helptextItems={helptextItems.Dataset_landingpage}/>
+          <Helptext title="Lenke til mer informasjon om datasettet" helptextItems={helptextItems.Dataset_landingpage} />
           <FieldArray
             name="landingPage"
             component={renderLandingpage}
@@ -95,17 +94,17 @@ FormTitle = reduxForm({
   form: 'title',  // a unique identifier for this form,
   validate,
   asyncValidate,
-  //asyncBlurFields: [ 'title.nb', 'description.nb', 'objective.nb', 'landingPage'],
-  //asyncBlurFields: [],
+  // asyncBlurFields: [ 'title.nb', 'description.nb', 'objective.nb', 'landingPage'],
+  // asyncBlurFields: [],
   asyncChangeFields: [],
-  //destroyOnUnmount: false
+  // destroyOnUnmount: false
 })(FormTitle)
 
 // You have to connect() to any reducers that you wish to connect to yourself
 
 FormTitle = connect(
   state => ({
-    //initialValues: state.dataset.result // pull initial values from dataset reducer
+    // initialValues: state.dataset.result // pull initial values from dataset reducer
 
     initialValues: {
       title: state.dataset.result.title || null,
