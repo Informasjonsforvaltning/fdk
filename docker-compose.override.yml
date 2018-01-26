@@ -120,6 +120,9 @@ services:
   nginx:
     restart: always
 
+  nginx-registration:
+      restart: always
+
   nginx-ssl:
     image: dcatno/nginx-ssl:latest
     restart: always
@@ -130,6 +133,15 @@ services:
     networks:
       platform:
 
+  nginx-registration-ssl:
+    image: dcatno/nginx-registration-ssl:latest
+    restart: always
+    depends_on:
+      - nginx-registration
+    ports:
+      - 127.0.0.1:8098:443
+    networks:
+      platform:
 
   registration-api:
     restart: always
@@ -171,8 +183,7 @@ services:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
-    depends_on:
-     - nginx-ssl
+
 
   registration-auth:
       restart: always
