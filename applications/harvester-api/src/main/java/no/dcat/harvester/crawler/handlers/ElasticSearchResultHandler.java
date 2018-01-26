@@ -213,9 +213,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
 
             //add validation results to log to send to datasource owner
-            harvestLog.info("Validation results for catalog " + catalog.getId() + " :");
-            for(String validationResult : validationResults) {
-                harvestLog.info(validationResult);
+            harvestLog.info("Validation results for catalog {}:", catalog.getId());
+            if(validationResults != null) {
+                for (String validationResult : validationResults) {
+                    harvestLog.info(validationResult);
+                }
+            } else {
+                harvestLog.info("No validation results found for catalog {}", catalog.getId());
             }
         }
 
