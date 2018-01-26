@@ -25,6 +25,13 @@ export default class Helptext extends Component {
         "fa-angle-double-up": this.state.collapse,
       }
     )
+
+    const shortTextClass = cx(
+      'm-0',
+      {
+        'text-ellipsis': !this.state.collapse
+      }
+    );
     const { title, required, helptextItems} = this.props;
     const { id, shortdesc, description, uri} = helptextItems;
 
@@ -40,8 +47,8 @@ export default class Helptext extends Component {
           </span>
           }
         </div>
-        <div>
-          <p className="m-0" dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
+        <div className="d-md-flex">
+          <p className={shortTextClass} dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
 
           <div className="text-left no-padding ml-1 fdk-reg-helptext-more" tabIndex="0" onClick={this.toggle}>
             <i className={collapseClass} />

@@ -3,11 +3,13 @@
 .fdk-reg-helptext {
   background-color: $color6;
   border-radius: 5px;
+  font-size: .9rem;
   strong {
     font-size: 1.1rem;
   }
   .fdk-reg-helptext-more {
     text-decoration: underline;
+    white-space: nowrap;
   }
 }
 
