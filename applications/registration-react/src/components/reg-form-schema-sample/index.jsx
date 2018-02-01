@@ -68,21 +68,21 @@ const validate = values => {
   // errors.distribution = {accessURL: localization.validation.minTwoChars}
 
   /*
-  if (values.distribution.description.length < 2) {
-    errors.distribution.description = localization.validation.minTwoChars
-  }
-  */
+   if (values.distribution.description.length < 2) {
+   errors.distribution.description = localization.validation.minTwoChars
+   }
+   */
 
   /*
-  if (values.distribution.accessURL.length < 2) {
-    errors.distribution.accessURL = localization.validation.minTwoChars
-  }
-  */
+   if (values.distribution.accessURL.length < 2) {
+   errors.distribution.accessURL = localization.validation.minTwoChars
+   }
+   */
 
   return errors
 }
 
-const renderDistributionLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => (
+const renderSampleLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => (
   <div>
     {fields.map((item, index) =>
       (<Field
@@ -95,34 +95,26 @@ const renderDistributionLandingpage = ({ fields, meta: { touched, error, submitF
   </div>
 );
 
-const renderDistributions = (props) => {
+const renderSamples = (props) => {
   const { values, fields, meta: { touched, error, submitFailed }, helptextItems } = props
   return (
     <div>
-      {fields.map((distribution, index) =>
+      {fields.map((sample, index) =>
 
         (<div key={index}>
           <div className="d-flex">
-            <h4>Distribusjon #{index + 1}</h4>
-            <button
-              type="button"
-              title="Remove distribution"
-              onClick={(e) => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_distribution_${index}`);}}
-            >
-              <i className="fa fa-trash mr-2" />
-              Slett distribusjon
-            </button>
+            <h4>Eksempeldata</h4>
           </div>
           <div className="form-group">
-            <Helptext helptextItems={helptextItems.Dataset_distribution} />
-            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="API" label="API" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()}, {}, props, '')}} />
-            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Feed" label="Feed" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()})}} />
-            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
+            <Helptext helptextItems={helptextItems.Dataset_example} />
+            <Field name={`${sample}.type`} component={RadioField} type="radio" value="API" label="API" onChange={(e, value) => {asyncValidate({sample: fields.getAll()}, {}, props, '')}} />
+            <Field name={`${sample}.type`} component={RadioField} type="radio" value="Feed" label="Feed" onChange={(e, value) => {asyncValidate({sample: fields.getAll()})}} />
+            <Field name={`${sample}.type`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
           </div>
           <div className="form-group">
             <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
             <Field
-              name={`${distribution}.accessURL.0`}
+              name={`${sample}.accessURL.0`}
               type="text"
               component={InputField}
               label="Tilgangs URL"
@@ -131,7 +123,7 @@ const renderDistributions = (props) => {
           <div className="form-group">
             <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
             <Field
-              name={`${distribution}.format`}
+              name={`${sample}.format`}
               type="text"
               component={InputTagsField}
               label="Format"
@@ -139,11 +131,11 @@ const renderDistributions = (props) => {
           </div>
           <div className="form-group">
             <Helptext title="Lisens" helptextItems={helptextItems.Distribution_modified} />
-            <Field name={`${distribution}.license.uri`} component={InputField} label="Lisens" />
+            <Field name={`${sample}.license.uri`} component={InputField} label="Lisens" />
           </div>
           <div className="form-group">
             <Helptext title="Beskrivelse" helptextItems={helptextItems.Distribution_description} />
-            <Field name={`${distribution}.description.nb`} component={TextAreaField} label="Beskrivelse" />
+            <Field name={`${sample}.description.nb`} component={TextAreaField} label="Beskrivelse" />
           </div>
 
           <div className="form-group">
@@ -152,8 +144,8 @@ const renderDistributions = (props) => {
               helptextItems={helptextItems.Distribution_documentation}
             />
             <FieldArray
-              name={`${distribution}.page`}
-              component={renderDistributionLandingpage}
+              name={`${sample}.page`}
+              component={renderSampleLandingpage}
               helptextItems={helptextItems}
             />
           </div>
@@ -164,60 +156,45 @@ const renderDistributions = (props) => {
             />
             <div className="d-flex">
               <div className="w-50">
-                <Field name={`${distribution}.conformsTo[0].prefLabel.nb`} component={InputField} label="Tittel på standard" />
+                <Field name={`${sample}.conformsTo[0].prefLabel.nb`} component={InputField} label="Tittel på standard" />
               </div>
               <div className="w-50">
-                <Field name={`${distribution}.conformsTo[0].uri`} component={InputField} label="Lenke til standard" />
+                <Field name={`${sample}.conformsTo[0].uri`} component={InputField} label="Lenke til standard" />
               </div>
             </div>
           </div>
-          <hr />
         </div>)
       )}
-      <button type="button" onClick={() => fields.push({})}>
-        <i className="fa fa-plus mr-2" />
-        Legg til distribusjon
-      </button>
     </div>
   );
 }
 
-let FormDistribution = props => {
+let FormSample = props => {
   const { handleSubmit, pristine, submitting, helptextItems, asyncValidate } = props;
   return (
     <form onSubmit={handleSubmit}>
       <FieldArray
-        name="distribution"
-        component={renderDistributions}
+        name="sample"
+        component={renderSamples}
         helptextItems={helptextItems}
       />
     </form>
   )
 }
 
-
-const onChange = (values) => {
-  // console.log("onChange funksjon", JSON.stringify(values));
-}
-
-
 // Decorate with reduxForm(). It will read the initialValues prop provided by connect()
-FormDistribution = reduxForm({
-  form: 'distribution',  // a unique identifier for this form,
+FormSample = reduxForm({
+  form: 'sample',
   validate,
   asyncValidate,
-  // asyncBlurFields: [ ],
-  // asyncChangeFields: []
-})(FormDistribution)
+})(FormSample)
 
-// You have to connect() to any reducers that you wish to connect to yourself
-FormDistribution = connect(
-  state => ({
-    // initialValues: state.dataset.result // pull initial values from dataset reducer
+const mapStateToProps = ({ dataset }) => (
+  {
     initialValues: {
-      distribution: state.dataset.result.distribution || null
+      sample: dataset.result.sample || null
     }
-  })
-)(FormDistribution)
+  }
+)
 
-export default FormDistribution;
+export default connect(mapStateToProps)(FormSample)

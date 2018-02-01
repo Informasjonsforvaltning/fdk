@@ -6,7 +6,8 @@ import {
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const asyncValidate = (values, dispatch, props, blurredField) => {
-  const { syncErrors } = props;
+  //const { values } = props;
+  console.log("values", JSON.stringify(values));
   const postURL = window.location.pathname.substr(6);
   const api = {
     Authorization: `Basic ${  null}`

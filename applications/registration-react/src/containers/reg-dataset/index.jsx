@@ -12,11 +12,13 @@ import {
 import FormTemplate from '../../components/reg-form-template';
 import FormTitle from '../../components/reg-form-schema-title';
 import FormDistribution from '../../components/reg-form-schema-distribution';
+import FormSample from '../../components/reg-form-schema-sample';
 import FormSpatial from '../../components/reg-form-schema-spatial';
 import FormProvenance from '../../components/reg-form-schema-provenance';
 import FormTheme from '../../components/reg-form-schema-theme';
 import FormType from '../../components/reg-form-schema-type';
 import FormConcept from '../../components/reg-form-schema-concept';
+import FormAccessRights from '../../components/reg-form-schema-accessRights';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
 import './index.scss';
 
@@ -66,9 +68,9 @@ class RegDataset extends React.Component {
             <div className="col-md-8">
 
               <FormTemplate
-                title="Begrep og søkeord"
+                title="Tilgangsnivå"
               >
-                <FormConcept
+                <FormAccessRights
                   helptextItems={helptextItems}
                 />
               </FormTemplate>
@@ -99,6 +101,14 @@ class RegDataset extends React.Component {
               </FormTemplate>
 
               <FormTemplate
+                title="Begrep og søkeord"
+              >
+                <FormConcept
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
                 title="Geografi, tid og språk"
               >
                 <FormSpatial
@@ -118,6 +128,14 @@ class RegDataset extends React.Component {
                 title="Distribusjoner"
               >
                 <FormDistribution
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Eksempeldata"
+              >
+                <FormSample
                   helptextItems={helptextItems}
                 />
               </FormTemplate>
