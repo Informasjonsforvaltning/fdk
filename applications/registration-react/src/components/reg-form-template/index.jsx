@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Collapse } from 'reactstrap';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Collapse } from 'reactstrap';
 
-export default class Example extends Component {
+export default class FormTemplate extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -14,7 +15,8 @@ export default class Example extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, values } = this.props;
+    console.log("values", JSON.stringify(values));
     const collapseClass = cx(
       'fdk-reg_collapse',
       {
@@ -23,7 +25,6 @@ export default class Example extends Component {
     )
     const collapseIconClass = cx(
       'fa',
-      'fdk-fa-left',
       'fa-2x',
       'mr-2',
       {
@@ -31,13 +32,19 @@ export default class Example extends Component {
         "fa-angle-up": this.state.collapse,
       }
     );
-    console.log("render");
     return (
       <div className={collapseClass}>
-        <button className="d-flex align-items-center text-left no-padding w-100" onClick={this.toggle}>
-          <i className={collapseIconClass} />
-          <h2 className="mb-0">{ title }</h2>
-
+        <button className="d-flex flex-column align-items-start text-left no-padding w-100" onClick={this.toggle}>
+          <div className="d-flex">
+            <i className={collapseIconClass} />
+            <h2 className="mb-0">{ title }</h2>
+          </div>
+          {!this.state.collapse && values && values.replace(" ", "").length > 0 &&
+          <div className="d-flex">
+            <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
+            {values}
+          </div>
+          }
         </button>
         <Collapse
           className="mt-3"
@@ -49,3 +56,11 @@ export default class Example extends Component {
     );
   }
 }
+
+FormTemplate.defaultProps = {
+  values: null
+};
+
+FormTemplate.propTypes = {
+  values: PropTypes.string
+};

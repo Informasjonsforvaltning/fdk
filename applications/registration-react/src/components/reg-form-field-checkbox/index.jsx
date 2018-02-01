@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './index.scss';
 
-const handleChange = (props, event) => {
+const handleChangeLang = (props, event) => {
   const { input } = props;
   props.meta.touched.true;
   // Skal fjerne fra array
@@ -66,17 +66,17 @@ const CheckboxField = (props) => {
   return (
     <div>
       <div className="form-check fdk-form-checkbox">
-        <input type="checkbox" name="language" id="ENG" value="ENG"  checked={langCodes.includes('ENG') ? 'checked' : ''} onChange={(e) => handleChange(props, e)} />
+        <input type="checkbox" name="language" id="ENG" value="ENG"  checked={langCodes.includes('ENG') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
         <label className="form-check-label fdk-form-check-label" htmlFor="ENG" />
         <span>Engelsk</span>
       </div>
       <div className="form-check fdk-form-checkbox">
-        <input type="checkbox" name="language" id="NOR" value="NOR"  checked={langCodes.includes('NOR') ? 'checked' : ''} onChange={(e) => handleChange(props, e)} />
+        <input type="checkbox" name="language" id="NOR" value="NOR"  checked={langCodes.includes('NOR') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
         <label className="form-check-label fdk-form-check-label" htmlFor="NOR" />
         <span>Norsk</span>
       </div>
       <div className="form-check fdk-form-checkbox">
-        <input type="checkbox" name="language" id="SMI" value="SMI"  checked={langCodes.includes('SMI') ? 'checked' : ''} onChange={(e) => handleChange(props, e)} />
+        <input type="checkbox" name="language" id="SMI" value="SMI"  checked={langCodes.includes('SMI') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
         <label className="form-check-label fdk-form-check-label" htmlFor="SMI" />
         <span>Samisk</span>
       </div>

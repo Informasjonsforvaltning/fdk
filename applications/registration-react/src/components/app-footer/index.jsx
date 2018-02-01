@@ -1,10 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-// import cx from 'classnames';
 import localization from '../../utils/localization';
 
-const Footer  = (props) => (
-
+const Footer  = () => (
   <footer className="fdk-footer">
     <div className="container">
       <div className="row">
@@ -39,15 +36,6 @@ const Footer  = (props) => (
       </div>
     </div>
   </footer>
-
 )
-
-Footer.defaultProps = {
-
-};
-
-Footer.propTypes = {
-
-};
 
 export default Footer;

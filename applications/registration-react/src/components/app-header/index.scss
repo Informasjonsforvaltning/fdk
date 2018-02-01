@@ -1,0 +1,13 @@
+@import '../../assets/style/colors';
+
+.fdk-header-text_items {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.fdk-auth-link {
+  a {
+    color: $color1;
+    font-size: .9rem;
+  }
+}

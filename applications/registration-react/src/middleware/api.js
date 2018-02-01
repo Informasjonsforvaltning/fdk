@@ -1,4 +1,3 @@
-// import fetch from 'isomorphic-fetch';
 import axios from 'axios';
 
 function callApi2(url) {
@@ -42,7 +41,7 @@ export default () => next => (action) => {
 
   const { types } = callApiOptions;
   const [requestType, successType, failureType] = types;
-  const url = callApiOptions.url;
+  const { url } = callApiOptions;
 
   function actionWith(data) {
     const finalAction = { ...action, ...data };

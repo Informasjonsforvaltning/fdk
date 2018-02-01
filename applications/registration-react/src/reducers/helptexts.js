@@ -1,6 +1,4 @@
 import { HELPTEXTS_REQUEST, HELPTEXTS_SUCCESS, HELPTEXTS_FAILURE } from '../constants/ActionTypes';
-import { normalize } from 'normalizr';
-import { helptext } from '../schemas/schemas.js';
 
 export default function dataset(state = { isFetchingHelptext: false, helptextItems: null }, action) {
   switch (action.type) {

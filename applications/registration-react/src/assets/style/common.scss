@@ -29,7 +29,7 @@ body {
     background-color: $color1;
     text-align: center;
     font-size: .9rem;
-    line-height: 1.4rem;
+    line-height: .88rem;
     color: $color0;
 }
 
@@ -72,8 +72,8 @@ body {
 /* * * * *   B U T T O N S   * * * * */
 
 .fdk-button {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
+    font-size: .95rem;
+    line-height: .95rem;
     border-radius: 3px;
     border: none;
     box-shadow: 0 2px 4px rgba(45,55,65,0.20);
@@ -121,10 +121,10 @@ body {
 }
 
 .fdk-button-default:hover, .fdk-button-default:focus .fdk-button-default:active .open >.fdk-button-default {
-    border-radius: 3px;
-    border: 3px solid $color-cta4;
-    margin: 0px -1px 2px 0px;
-    box-shadow: 0 4px 8px rgba(45,55,65,0.20);
+    //border-radius: 3px;
+    //border: 3px solid $color-cta4;
+    //margin: 0px -1px 2px 0px;
+    //box-shadow: 0 4px 8px rgba(45,55,65,0.20);
 }
 
 .fdk-button-default-no-hover:hover, .fdk-button-default-no-hover:focus, .fdk-button-default-no-hover:active {

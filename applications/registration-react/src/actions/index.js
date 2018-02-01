@@ -31,13 +31,53 @@ export function fetchHelptextsIfNeeded() {
     );
 }
 
-/*
-export function showPublishmode(value) {
+export function fetchProvenanceIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().provenance) && dispatch(
+      fetchApi('/reference-data/codes/provenancestatement', [actions.PROVENANCE_REQUEST, actions.PROVENANCE_SUCCESS, actions.PROVENANCE_FAILURE])
+    );
+}
+
+export function fetchFrequencyIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().frequency) && dispatch(
+      fetchApi('/reference-data/codes/frequency', [actions.FREQUENCY_REQUEST, actions.FREQUENCY_SUCCESS, actions.FREQUENCY_FAILURE])
+    );
+}
+
+export function fetchThemesIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().themes) && dispatch(
+      fetchApi('/reference-data/themes', [actions.THEMES_REQUEST, actions.THEMES_SUCCESS, actions.THEMES_FAILURE])
+    );
+}
+
+export function fetchUserIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().user) && dispatch(
+      fetchApi('/innloggetBruker', [actions.USER_REQUEST, actions.USER_SUCCESS, actions.USER_FAILURE])
+    );
+}
+
+
+export function publishDataset(value) {
   return dispatch =>
     dispatch({
-      type: actions.PUBLISHMODE,
-      publishmodeVisible: value
+      type: actions.PUBLISHDATASET,
+      registrationStatus: value
     });
 }
-*/
+
+export function datasetLastSaved(value) {
+  return dispatch =>
+    dispatch({
+      type: actions.DATASET_LAST_SAVED,
+      lastSaved: value
+    });
+}
+
 

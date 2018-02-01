@@ -64,14 +64,14 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } })
           component={renderField}
           label="First Name"
         />
-       </li>)
+      </li>)
     )}
   </ul>
 )
 
 
 
-let FormCode = props => {
+const FormCode = props => {
   const { handleSubmit, pristine, submitting } = props;
   return (
     <form onSubmit={handleSubmit}>
@@ -91,14 +91,8 @@ let FormCode = props => {
     </form>
   )
 }
-/*
-FormCode = reduxForm({
-  form: 'contact',
-  validate,
-})(FormCode);
-*/
 
-// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
+/*
 FormCode = reduxForm({
   form: 'contact',  // a unique identifier for this form,
   validate,
@@ -107,14 +101,32 @@ FormCode = reduxForm({
   asyncChangeFields: []
 })(FormCode)
 
-// You have to connect() to any reducers that you wish to connect to yourself
+
 FormCode = connect(
   state => ({
     initialValues: state.dataset.result // pull initial values from account reducer
   }),
   { load: 'loadAccount' }               // bind account loading action creator
 )(FormCode)
+*/
+// export default FormCode;
 
-export default FormCode;
+const reduxFormCode = reduxForm({
+  form: 'contact',  // a unique identifier for this form,
+  validate,
+  asyncValidate,
+  asyncBlurFields: [ 'title.nb', 'uri' ],
+  asyncChangeFields: []
+})(FormCode)
+
+function mapStateToProps({ dataset}) {
+  return (
+    {
+      initialValues: dataset.result
+    }
+  )
+}
+
+export default connect(mapStateToProps)(reduxFormCode)
 
 

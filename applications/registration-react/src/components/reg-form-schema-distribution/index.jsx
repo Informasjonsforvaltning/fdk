@@ -115,7 +115,7 @@ const renderDistributions = (props) => {
           </div>
           <div className="form-group">
             <Helptext helptextItems={helptextItems.Dataset_distribution} />
-            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="API" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()})}} />
+            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="API" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()}, {}, props, '')}} />
             <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Feed" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()})}} />
             <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Nedlastbar fil" />
           </div>

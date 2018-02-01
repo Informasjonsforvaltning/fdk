@@ -4,7 +4,8 @@
     "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
     "publisher": "Virksomhet",
     "menu": "Meny",
-    "readMore": "Les mer om "
+    "readMore": "Les mer om ",
+    "lastSaved": "Sist lagret"
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
@@ -29,6 +30,8 @@
   },
   "validation": {
     "required": "Obligatorisk felt, må fylles ut.",
-    "minTwoChars": "Feltet må ha minimum to tegn."
+    "minTwoChars": "Feltet må ha minimum to tegn.",
+    "validateDataset": "Datasettet er ikke validert korrekt!",
+    "validateDatasetBody": "Datasettet kunne ikke publiseres på grunn av ikke alle felter er validert korrekt. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
   }
 }

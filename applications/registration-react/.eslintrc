@@ -32,6 +32,7 @@
     "wrap-iife": 2,
     "react/prop-types": 0,
     "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    //"no-restricted-globals": "off"
   }
 }
