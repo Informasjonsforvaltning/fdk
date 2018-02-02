@@ -2,6 +2,7 @@ package no.dcat.controller;
 
 import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
+import no.dcat.datastore.domain.DcatSource;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
@@ -10,13 +11,12 @@ import no.dcat.shared.admin.DcatSourceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,7 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.util.*;
+
+import org.apache.commons.codec.binary.Base64;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -263,18 +266,48 @@ public class CatalogController {
         //når det har begynt å virke...
 
         //get existing entries
-        String uri = "http://harvester-api/api/admin/dcat-sources";
-        List<DcatSourceDto> dcatsources = null;
+        //TODO: flytt til properties
+        String uri = "http://harvester:8080/api/admin/dcat-sources";
+        String username = "test_admin";
+        String password = "password";
+
+        ResponseEntity<List<DcatSourceDto>> response = null;
         try {
-            dcatsources = restTemplate.getForObject(uri, List.class);
+            response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    new HttpEntity<>(createHeaders(username, password)),
+                    new ParameterizedTypeReference<List<DcatSourceDto>>() {});
         } catch (Exception e) {
-            logger.error("Failed to get list of dcat sources from harvester-api.", e.getLocalizedMessage());
+            logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
+            logger.error("resoonse from harvester: {}", response.toString());
         }
+
+        List<DcatSourceDto> dcatsources = response.getBody();
 
         logger.debug("Found dcatsources: {}", dcatsources.toString());
 
-
         return true;
+    }
+
+
+    /**
+     * helper method to create authorisation header for http request
+     *
+     * @param username
+     * @param password
+     * @return HTTP header containing basic auth and content type application/josn
+     */
+    HttpHeaders createHeaders(String username, String password){
+        return new HttpHeaders() {{
+            String auth = username + ":" + password;
+
+            byte[] encodedAuth = Base64.encodeBase64(
+                    auth.getBytes(Charset.forName("US-ASCII")) );
+            String authHeader = "Basic " + new String( encodedAuth );
+            set( "Authorization", authHeader );
+            set( "Accept", "application/json");
+        }};
     }
 
 }
