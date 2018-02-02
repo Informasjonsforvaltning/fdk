@@ -2,8 +2,11 @@ package no.dcat.portal.query;
 
 
 import com.google.gson.Gson;
+import io.swagger.annotations.ApiOperation;
 import no.dcat.shared.Dataset;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.SkosConcept;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -21,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -81,16 +85,18 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return List of  elasticsearch records.
      */
     @CrossOrigin
-    @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
-    public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
-                                         @RequestParam(value = "theme", defaultValue = "") String theme,
-                                         @RequestParam(value = "publisher", defaultValue = "") String publisher,
-                                         @RequestParam(value = "accessrights", defaultValue = "") String accessRights,
+    @ApiOperation(value = "queries the catalog for datasets",
+            notes = "Returns a list of matching datasets wrapped in a elasticsearch response", response = Dataset.class)
+    @RequestMapping(value = QUERY_SEARCH, method= RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
+                                         @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
+                                         @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
+                                         @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
-                                         @RequestParam(value = "sortfield", defaultValue = "") String sortfield,
-                                         @RequestParam(value = "sortdirection", defaultValue = "") String sortdirection) {
+                                         @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
+                                         @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection) {
 
 
         StringBuilder loggMsg = new StringBuilder()
@@ -272,7 +278,9 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @RequestMapping(value = "/datasets/**", produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
+    @ApiOperation(value = "gets a specific dataset",
+            notes = "You must specify the dataset's identifier", response = Dataset.class)
+    @RequestMapping(value = "/datasets/**", method = RequestMethod.GET, produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> detail(HttpServletRequest request) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
@@ -355,8 +363,10 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return json containing theme code and integer count of number of data sets
      */
     @CrossOrigin
-    @RequestMapping(value = QUERY_THEME_COUNT, produces = "application/json")
-    public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "") String themecode) {
+    @ApiOperation(value = "aggregate dataset count per theme", notes = "Returns a list of themes and the total number of datasets for each of them",
+            response = SkosConcept.class)
+    @RequestMapping(value = QUERY_THEME_COUNT, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "", required = false) String themecode) {
         return aggregateOnField(FIELD_THEME_CODE, themecode, TERMS_THEME_COUNT, "Ukjent");
     }
 
@@ -371,12 +381,12 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return json containing publishers and integer count of number of data sets
      */
     @CrossOrigin
-    @RequestMapping(value = QUERY_PUBLISHER_COUNT, produces = "application/json")
-    public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "") String publisher) {
+    @ApiOperation(value = "aggregate dataset count per publisher",
+            notes = "Returns a list of publishers and the total number of dataset for each of them")
+    @RequestMapping(value = QUERY_PUBLISHER_COUNT, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "", required = false) String publisher) {
         return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT, "Ukjent");
     }
-
-
 
     private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term, String missing) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
@@ -448,7 +458,8 @@ public class DatasetsQueryService extends ElasticsearchService {
      */
 
     @CrossOrigin
-    @RequestMapping(value = AGGREGATE_DATASET, produces = "application/json")
+    @ApiOperation(value = "aggregatds dataset count per organization path")
+    @RequestMapping(value = AGGREGATE_DATASET, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> aggregateDatasets(@RequestParam(value = "q", defaultValue = "") String query) {
 
         logger.info("{} of {}", AGGREGATE_DATASET, query);
