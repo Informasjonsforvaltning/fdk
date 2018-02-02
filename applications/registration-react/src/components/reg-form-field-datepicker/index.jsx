@@ -25,7 +25,7 @@ const DatepickerField  = (props) => {
           locale="nb-no"
           showYearDropdown
           yearDropdownItemNumber={5}
-          selected={input.value ? moment(input.value) : ''}
+          selected={input.value ? moment(input.value): ''}
           onChange={(date) => handleChange(props, date)}
         />
       </div>

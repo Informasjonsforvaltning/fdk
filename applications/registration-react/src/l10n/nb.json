@@ -33,5 +33,21 @@
     "minTwoChars": "Feltet må ha minimum to tegn.",
     "validateDataset": "Datasettet er ikke validert korrekt!",
     "validateDatasetBody": "Datasettet kunne ikke publiseres på grunn av ikke alle felter er validert korrekt. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
+  },
+  "schema": {
+    "accessRights": {
+      "legalBasisForRestriction": {
+        "titleLabel": "Tittel på skjermingshjemmel",
+        "linkLabel": "Lenke til skjermingshjemmel"
+      },
+      "legalBasisForProcessing": {
+        "titleLabel": "Tittel på behandlingsgrunnlag",
+        "linkLabel": "Lenke til behandlingsgrunnlag"
+      },
+      "legalBasisForAccess": {
+        "titleLabel": "Tittel på utleveringshjemmel",
+        "linkLabel": "Lenke til utleveringshjemmel"
+      }
+    }
   }
 }

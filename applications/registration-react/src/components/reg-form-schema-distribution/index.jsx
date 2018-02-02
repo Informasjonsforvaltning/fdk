@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, startAsyncValidation } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux'
 
 import localization from '../../utils/localization';
@@ -11,11 +11,8 @@ import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 
 const validate = values => {
-  console.log("validate dist", JSON.stringify(values.distribution));
   const errors = {}
-
   const { distribution } = values;
-
   let errorNodes = null;
 
   if (distribution) {
@@ -40,11 +37,7 @@ const validate = values => {
       return errors;
     });
   }
-
-  console.log("errors dist", JSON.stringify(errorNodes));
-
   errors.distribution = errorNodes;
-  console.log("errors errors", JSON.stringify(errors));
 
   /*
    let themeNodes = null;
@@ -68,21 +61,21 @@ const validate = values => {
   // errors.distribution = {accessURL: localization.validation.minTwoChars}
 
   /*
-  if (values.distribution.description.length < 2) {
-    errors.distribution.description = localization.validation.minTwoChars
-  }
-  */
+   if (values.distribution.description.length < 2) {
+   errors.distribution.description = localization.validation.minTwoChars
+   }
+   */
 
   /*
-  if (values.distribution.accessURL.length < 2) {
-    errors.distribution.accessURL = localization.validation.minTwoChars
-  }
-  */
+   if (values.distribution.accessURL.length < 2) {
+   errors.distribution.accessURL = localization.validation.minTwoChars
+   }
+   */
 
   return errors
 }
 
-const renderDistributionLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => (
+const renderDistributionLandingpage = ({ fields }) => (
   <div>
     {fields.map((item, index) =>
       (<Field
@@ -96,27 +89,26 @@ const renderDistributionLandingpage = ({ fields, meta: { touched, error, submitF
 );
 
 const renderDistributions = (props) => {
-  const { values, fields, meta: { touched, error, submitFailed }, helptextItems } = props
+  const { fields, helptextItems } = props
   return (
     <div>
-      {fields.map((distribution, index) =>
-
-        (<div key={index}>
+      {fields.map((distribution, index) => (
+        <div key={index}>
           <div className="d-flex">
             <h4>Distribusjon #{index + 1}</h4>
             <button
               type="button"
               title="Remove distribution"
-              onClick={(e) => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_distribution_${index}`);}}
+              onClick={() => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_distribution_${index}`);}}
             >
               <i className="fa fa-trash mr-2" />
-              Slett distribusjon
+                Slett distribusjon
             </button>
           </div>
           <div className="form-group">
             <Helptext helptextItems={helptextItems.Dataset_distribution} />
-            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="API" label="API" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()}, {}, props, '')}} />
-            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Feed" label="Feed" onChange={(e, value) => {asyncValidate({distribution: fields.getAll()})}} />
+            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="API" label="API"  />
+            <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Feed" label="Feed"  />
             <Field name={`${distribution}.type`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
           </div>
           <div className="form-group">
@@ -172,7 +164,8 @@ const renderDistributions = (props) => {
             </div>
           </div>
           <hr />
-        </div>)
+        </div>
+      )
       )}
       <button type="button" onClick={() => fields.push({})}>
         <i className="fa fa-plus mr-2" />
@@ -183,9 +176,9 @@ const renderDistributions = (props) => {
 }
 
 let FormDistribution = props => {
-  const { handleSubmit, pristine, submitting, helptextItems, asyncValidate } = props;
+  const { helptextItems } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <FieldArray
         name="distribution"
         component={renderDistributions}
@@ -195,29 +188,32 @@ let FormDistribution = props => {
   )
 }
 
-
-const onChange = (values) => {
-  // console.log("onChange funksjon", JSON.stringify(values));
-}
-
-
-// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
 FormDistribution = reduxForm({
-  form: 'distribution',  // a unique identifier for this form,
+  form: 'distribution',
   validate,
   asyncValidate,
-  // asyncBlurFields: [ ],
-  // asyncChangeFields: []
 })(FormDistribution)
 
-// You have to connect() to any reducers that you wish to connect to yourself
-FormDistribution = connect(
-  state => ({
-    // initialValues: state.dataset.result // pull initial values from dataset reducer
+const mapStateToProps = ({ dataset }) => (
+  {
     initialValues: {
-      distribution: state.dataset.result.distribution || null
+      distribution: dataset.result.distribution || null
     }
-  })
-)(FormDistribution)
+  }
+)
 
-export default FormDistribution;
+export default connect(mapStateToProps)(FormDistribution)
+
+/*
+ // You have to connect() to any reducers that you wish to connect to yourself
+ FormDistribution = connect(
+ state => ({
+ // initialValues: state.dataset.result // pull initial values from dataset reducer
+ initialValues: {
+ distribution: state.dataset.result.distribution || null
+ }
+ })
+ )(FormDistribution)
+
+ export default FormDistribution;
+ */

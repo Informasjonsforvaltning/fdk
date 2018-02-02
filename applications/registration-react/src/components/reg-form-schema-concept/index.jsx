@@ -1,13 +1,11 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
-import InputField from '../reg-form-field-input';
 import asyncValidate from '../../utils/asyncValidate';
-import { textType, emptyArray } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}
@@ -62,9 +60,9 @@ let FormConcept = (props) => {
 
 FormConcept = reduxForm({
   form: 'concept',
-  //validate,
+  // validate,
   asyncValidate,
-  //asyncChangeFields: [],
+  // asyncChangeFields: [],
 })(FormConcept)
 
 const mapStateToProps = ({ dataset }) => (

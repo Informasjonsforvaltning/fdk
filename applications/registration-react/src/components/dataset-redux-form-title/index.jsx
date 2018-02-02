@@ -1,17 +1,12 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux'
-import axios from 'axios';
 
 import asyncValidate from '../../utils/asyncValidate';
 
 const validate = values => {
   const errors = {}
-
   const title = (values.title && values.title.nb) ? values.title.nb : null;
-
-  // console.log("validate", title);
-
 
   if (!title) {
     errors.title = {nb: 'Required'}
@@ -28,11 +23,8 @@ const validate = values => {
   } else if (values.uri.length < 2) {
     errors.uri = 'Minimum be 2 characters or more'
   }
-  // console.log(JSON.stringify(errors));
   return errors
 }
-
-
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -50,8 +42,8 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } })
       <button type="button" onClick={() => fields.push({})}>Add Distribution</button>
       {(touched || submitFailed) && error && <span>{error}</span>}
     </li>
-    {fields.map((distribution, index) =>
-      (<li key={index}>
+    {fields.map((distribution, index) => (
+      <li key={index}>
         <button
           type="button"
           title="Remove Member"
@@ -64,12 +56,11 @@ const renderDistributions = ({ fields, meta: { touched, error, submitFailed } })
           component={renderField}
           label="First Name"
         />
-      </li>)
+      </li>
+    )
     )}
   </ul>
 )
-
-
 
 const FormCode = props => {
   const { handleSubmit, pristine, submitting } = props;
@@ -92,27 +83,8 @@ const FormCode = props => {
   )
 }
 
-/*
-FormCode = reduxForm({
-  form: 'contact',  // a unique identifier for this form,
-  validate,
-  asyncValidate,
-  asyncBlurFields: [ 'title.nb', 'uri' ],
-  asyncChangeFields: []
-})(FormCode)
-
-
-FormCode = connect(
-  state => ({
-    initialValues: state.dataset.result // pull initial values from account reducer
-  }),
-  { load: 'loadAccount' }               // bind account loading action creator
-)(FormCode)
-*/
-// export default FormCode;
-
 const reduxFormCode = reduxForm({
-  form: 'contact',  // a unique identifier for this form,
+  form: 'contact2',  // a unique identifier for this form,
   validate,
   asyncValidate,
   asyncBlurFields: [ 'title.nb', 'uri' ],

@@ -6,8 +6,6 @@ import {
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const asyncValidate = (values, dispatch, props, blurredField) => {
-  //const { values } = props;
-  console.log("values", JSON.stringify(values));
   const postURL = window.location.pathname.substr(6);
   const api = {
     Authorization: `Basic ${  null}`
@@ -25,6 +23,30 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     values = {
       distribution: values
     }
+  } else if (blurredField && blurredField.indexOf('remove_legalBasisForRestriction_') !== -1) {
+    const index = blurredField.split("_").pop();
+    values.splice(index, 1);
+    values = {
+      legalBasisForRestriction: values
+    }
+  } else if (blurredField && blurredField.indexOf('remove_legalBasisForProcessing_') !== -1) {
+    const index = blurredField.split("_").pop();
+    values.splice(index, 1);
+    values = {
+      legalBasisForProcessing: values
+    }
+  } else if (blurredField && blurredField.indexOf('remove_legalBasisForAccess_') !== -1) {
+    const index = blurredField.split("_").pop();
+    values.splice(index, 1);
+    values = {
+      legalBasisForAccess: values
+    }
+  } else if (blurredField && blurredField.indexOf('remove_references_') !== -1) {
+    const index = blurredField.split("_").pop();
+    values.splice(index, 1);
+    values = {
+      references: values
+    }
   }
 
   return axios.patch(
@@ -32,7 +54,9 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
   )
     .then((response) => {
       console.info("response", JSON.stringify(response.data._lastModified));
-      dispatch(datasetLastSaved(response.data._lastModified));
+      if (dispatch) {
+        dispatch(datasetLastSaved(response.data._lastModified));
+      }
     })
     .catch((error) => {
       throw {error}

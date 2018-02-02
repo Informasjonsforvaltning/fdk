@@ -112,7 +112,6 @@ let FormSpatial = props => {
           <FieldArray
             name="temporal"
             component={renderTemporal}
-
           />
         </div>
         <div className="form-group">

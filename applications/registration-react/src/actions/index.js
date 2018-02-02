@@ -23,6 +23,14 @@ export function fetchDatasetIfNeeded(datasetURL) {
     );
 }
 
+export function fetchReferenceDatasetsIfNeeded(datasetURL) {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().referenceDatasets) && dispatch(
+      fetchApi(datasetURL, [actions.REFERENCEDATASETS_REQUEST, actions.REFERENCEDATASETS_SUCCESS, actions.REFERENCEDATASETS_FAILURE])
+    );
+}
+
 export function fetchHelptextsIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(
@@ -60,6 +68,14 @@ export function fetchUserIfNeeded() {
     shouldFetchApi(
       getState().user) && dispatch(
       fetchApi('/innloggetBruker', [actions.USER_REQUEST, actions.USER_SUCCESS, actions.USER_FAILURE])
+    );
+}
+
+export function fetchReferenceTypesIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().referenceTypes) && dispatch(
+      fetchApi('/reference-data/codes/referencetypes', [actions.REFERENCETYPES_REQUEST, actions.REFERENCETYPES_SUCCESS, actions.REFERENCETYPES_FAILURE])
     );
 }
 

@@ -54,7 +54,7 @@ FormType = reduxForm({
   form: 'type',
   validate,
   asyncValidate,
-  //asyncChangeFields: [],
+  // asyncChangeFields: [],
 })(FormType)
 
 const mapStateToProps = ({ dataset }) => (

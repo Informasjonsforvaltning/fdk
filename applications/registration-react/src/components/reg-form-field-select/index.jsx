@@ -16,7 +16,7 @@ const handleChange = (props, selectedURI) => {
       }
     );
   } else {
-    const selectedFrequencyItem = props.frequencyItems.find(item => item.uri === selectedURI);
+    const selectedFrequencyItem = props.items.find(item => item.uri === selectedURI);
     props.input.onChange(
       selectedFrequencyItem
     );
@@ -24,14 +24,14 @@ const handleChange = (props, selectedURI) => {
 }
 
 const SelectField  = (props) => {
-  const { input, label, type, meta: { touched, error, warning }, frequencyItems } = props;
+  const { input, label, type, meta: { touched, error, warning }, items } = props;
   return (
     <div className="pl-2">
       <label className="fdk-form-label">{label}</label>
       <div>
         <Select
           id="frequency-select"
-          options={frequencyItems}
+          options={items}
           simpleValue
           clearable
           name="selected-state"

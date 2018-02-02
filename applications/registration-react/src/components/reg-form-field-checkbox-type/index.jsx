@@ -15,8 +15,10 @@ const handleChange = (props, event) => {
 }
 
 const types = [
-  { 
-    id: 1, 
+  {
+
+    id: 1,
+
     label: 'Data'
   },
   {
@@ -43,7 +45,7 @@ const CheckboxFieldType = (props) => {
     <div>
       {types.map((type, index) => (
         <div key={index} className="form-check fdk-form-checkbox">
-          <input type="checkbox" name="types" id={type.label} value={type.label} checked={ (input && input.value === type.label) ? 'checked' : ''} onChange={(e) => {handleChange(props, e)}} />
+          <input type="checkbox" name="types" id={type.label} value={type.label} checked={(input && input.value === type.label) ? 'checked' : ''} onChange={(e) => {handleChange(props, e)}} />
           <label className="form-check-label fdk-form-check-label" htmlFor={type.label} />
           <span>{type.label}</span>
         </div>

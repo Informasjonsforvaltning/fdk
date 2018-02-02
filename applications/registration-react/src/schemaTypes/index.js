@@ -18,13 +18,16 @@ export const languageType = {
 
 export const emptyArray = [''];
 
-
-/*
- THEMES
- */
 export const themeType = {
   "title": {
     "nb": ''
   },
   "uri": ''
 }
+
+export const legalBasisType = {
+  uri: '',
+  prefLabel: textType,
+  extraType: null
+}
+

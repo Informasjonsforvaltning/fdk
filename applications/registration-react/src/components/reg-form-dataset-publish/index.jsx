@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { Collapse, Button } from 'reactstrap';
 import moment from 'moment';
 import Moment from 'react-moment';
@@ -19,7 +18,6 @@ export default class DatasetPublish extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      collapse: false,
       showPublishModal: false
     };
     this.toggle = this.toggle.bind(this);
@@ -51,26 +49,24 @@ export default class DatasetPublish extends Component {
         postURL, values, {headers: api}
       )
         .then((response) => {
-          console.info("response", JSON.stringify(response));
           this.props.dispatch(publishDataset(value));
         })
         .catch((error) => {
           throw {error}
         })
-        ;
-    } else {
-      console.log("Datasettet er ikke validert korrekt!");
-      this.setState({
-        showPublishModal: true
-      })
+      ;
     }
+    this.setState({
+      showPublishModal: true
+    })
+    return null;
   }
 
   render() {
-    const { registrationStatus, lastSaved, syncErrors } = this.props;
+    const { registrationStatus, lastSaved } = this.props;
     const calendarStrings = {
       lastDay : '[i går kl.] LT',
-      sameDay : function(now) {return `[for ${moment(lastSaved).fromNow()}]`},
+      sameDay() {return `[for ${moment(lastSaved).fromNow()}]`},
       lastWeek : '[på] dddd [kl.] LT',
       sameElse : 'DD.MM.YYYY'
     };

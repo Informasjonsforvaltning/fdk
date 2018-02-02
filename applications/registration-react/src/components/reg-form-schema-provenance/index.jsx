@@ -84,7 +84,7 @@ let FormProvenance = props => {
           <Field
             name="accrualPeriodicity"
             component={SelectField}
-            frequencyItems={frequencyItems}
+            items={frequencyItems}
           />
         </div>
         <div className="form-group">

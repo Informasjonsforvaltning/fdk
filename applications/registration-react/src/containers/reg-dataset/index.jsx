@@ -7,7 +7,9 @@ import {
   fetchHelptextsIfNeeded,
   fetchProvenanceIfNeeded,
   fetchFrequencyIfNeeded,
-  fetchThemesIfNeeded
+  fetchThemesIfNeeded,
+  fetchReferenceTypesIfNeeded,
+  fetchReferenceDatasetsIfNeeded
 } from '../../actions/index';
 import FormTemplate from '../../components/reg-form-template';
 import FormTitle from '../../components/reg-form-schema-title';
@@ -19,6 +21,7 @@ import FormTheme from '../../components/reg-form-schema-theme';
 import FormType from '../../components/reg-form-schema-type';
 import FormConcept from '../../components/reg-form-schema-concept';
 import FormAccessRights from '../../components/reg-form-schema-accessRights';
+import FormReference from '../../components/reg-form-schema-reference';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
 import './index.scss';
 
@@ -29,11 +32,14 @@ class RegDataset extends React.Component {
     this.state = {
     }
     const datasetURL = window.location.pathname.substr(6);
+    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
     this.props.dispatch(fetchDatasetIfNeeded(datasetURL));
+    this.props.dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL));
     this.props.dispatch(fetchHelptextsIfNeeded());
     this.props.dispatch(fetchProvenanceIfNeeded());
     this.props.dispatch(fetchFrequencyIfNeeded());
     this.props.dispatch(fetchThemesIfNeeded());
+    this.props.dispatch(fetchReferenceTypesIfNeeded());
     // this._titleValues = this._titleValues.bind(this);
   }
 
@@ -68,18 +74,18 @@ class RegDataset extends React.Component {
             <div className="col-md-8">
 
               <FormTemplate
-                title="Tilgangsnivå"
+                title="Tittel og beskrivelse"
+                values={this._titleValues()}
               >
-                <FormAccessRights
+                <FormTitle
                   helptextItems={helptextItems}
                 />
               </FormTemplate>
 
               <FormTemplate
-                title="Tittel og beskrivelse"
-                values={this._titleValues()}
+                title="Tilgangsnivå"
               >
-                <FormTitle
+                <FormAccessRights
                   helptextItems={helptextItems}
                 />
               </FormTemplate>
@@ -125,6 +131,14 @@ class RegDataset extends React.Component {
               </FormTemplate>
 
               <FormTemplate
+                title="Relasjoner"
+              >
+                <FormReference
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
                 title="Distribusjoner"
               >
                 <FormDistribution
@@ -143,8 +157,8 @@ class RegDataset extends React.Component {
               <DatasetPublish
                 dispatch={this.props.dispatch}
                 registrationStatus={(registrationStatus && registrationStatus.length > 0) ? registrationStatus : result.registrationStatus}
-                lastSaved={lastSaved ? lastSaved : result._lastModified}
-                syncErrors={(concept && concept.syncErrors) || (title && title.syncErrors) ? true : false}
+                lastSaved={lastSaved || result._lastModified}
+                syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
               />
             </div>
           }
@@ -163,7 +177,7 @@ RegDataset.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ app, dataset, helptexts, provenance, frequency, themes, form }) {
+function mapStateToProps({ app, dataset, helptexts, provenance, frequency, themes, referenceTypes, referenceDatasets, form }) {
   const { result, isFetching } = dataset || {
     result: null,
     isFetching: false
@@ -185,6 +199,15 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     themesItems: null
   }
 
+  const { referenceTypesItems } = referenceTypes || {
+    referenceTypesItems: null
+  }
+
+  const { referenceDatasetsItems } = referenceDatasets || {
+    referenceDatasetsItems: null
+  }
+
+
   const title = form.title || {
     title: null
   }
@@ -205,6 +228,8 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     provenanceItems,
     frequencyItems,
     themesItems,
+    referenceTypesItems,
+    referenceDatasetsItems,
     title,
     registrationStatus,
     lastSaved,

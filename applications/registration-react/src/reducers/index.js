@@ -7,6 +7,8 @@ import frequency from './frequency';
 import themes from './themes';
 import user from './user';
 import app from './app';
+import referenceTypes from './referenceTypes';
+import referenceDatasets from './referenceDatasets';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
   provenance,
   frequency,
   themes,
-  user
+  user,
+  referenceTypes,
+  referenceDatasets
 });
 
 export default rootReducer;

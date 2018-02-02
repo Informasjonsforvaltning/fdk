@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, startAsyncValidation } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux'
 
 import localization from '../../utils/localization';
@@ -11,11 +11,8 @@ import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 
 const validate = values => {
-  console.log("validate dist", JSON.stringify(values.distribution));
   const errors = {}
-
   const { distribution } = values;
-
   let errorNodes = null;
 
   if (distribution) {
@@ -40,49 +37,10 @@ const validate = values => {
       return errors;
     });
   }
-
-  console.log("errors dist", JSON.stringify(errorNodes));
-
-  errors.distribution = errorNodes;
-  console.log("errors errors", JSON.stringify(errors));
-
-  /*
-   let themeNodes = null;
-   const { themes, selectedLanguageCode } = this.props;
-   if (themes) {
-   themeNodes = themes.map(singleTheme => (
-   <div
-   key={`dataset-description-theme-${singleTheme.code}`}
-   id={`dataset-description-theme-${singleTheme.code}`}
-   className="fdk-label fdk-label-on-grey"
-   >
-   {getTranslateText(singleTheme.title, selectedLanguageCode)}
-   </div>
-   ));
-   }
-   return themeNodes;
-
-   */
-
-
-  // errors.distribution = {accessURL: localization.validation.minTwoChars}
-
-  /*
-   if (values.distribution.description.length < 2) {
-   errors.distribution.description = localization.validation.minTwoChars
-   }
-   */
-
-  /*
-   if (values.distribution.accessURL.length < 2) {
-   errors.distribution.accessURL = localization.validation.minTwoChars
-   }
-   */
-
   return errors
 }
 
-const renderSampleLandingpage = ({ fields, meta: { touched, error, submitFailed }, helptextItems }) => (
+const renderSampleLandingpage = ({ fields }) => (
   <div>
     {fields.map((item, index) =>
       (<Field
@@ -96,12 +54,11 @@ const renderSampleLandingpage = ({ fields, meta: { touched, error, submitFailed 
 );
 
 const renderSamples = (props) => {
-  const { values, fields, meta: { touched, error, submitFailed }, helptextItems } = props
+  const { fields, helptextItems } = props
   return (
     <div>
-      {fields.map((sample, index) =>
-
-        (<div key={index}>
+      {fields.map((sample, index) => (
+        <div key={index}>
           <div className="d-flex">
             <h4>Eksempeldata</h4>
           </div>
@@ -163,16 +120,17 @@ const renderSamples = (props) => {
               </div>
             </div>
           </div>
-        </div>)
+        </div>
+      )
       )}
     </div>
   );
 }
 
 let FormSample = props => {
-  const { handleSubmit, pristine, submitting, helptextItems, asyncValidate } = props;
+  const { helptextItems } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <FieldArray
         name="sample"
         component={renderSamples}
