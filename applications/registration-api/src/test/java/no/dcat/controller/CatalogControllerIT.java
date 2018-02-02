@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
+import no.dcat.shared.admin.DcatSourceDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -249,6 +250,7 @@ public class CatalogControllerIT {
                 .andExpect(status().isOk());
 
     }
+
 
     public static String asJsonString( Object obj) {
         return new Gson().toJson(obj);

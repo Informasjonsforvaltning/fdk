@@ -6,6 +6,7 @@ import no.dcat.datastore.domain.DcatSource;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.HarvesterService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
 import org.slf4j.Logger;
@@ -51,6 +52,8 @@ public class CatalogController {
     private final SpringSecurityContextBean springSecurityContextBean;
 
     private final EntityNameService entityNameService;
+
+    private HarvesterService harvesterService;
 
     @Autowired
     public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
@@ -110,7 +113,9 @@ public class CatalogController {
         Catalog savedCatalog = saveCatalog(catalog);
 
         //Create harvest entry in Harvester for the new catalog
-        boolean harvestEntryCreated = createHarvestEntry(catalog);
+        //TODO se på intialisering av harvesterservicve
+        this.harvesterService = new HarvesterService();
+        boolean harvestEntryCreated = harvesterService.createHarvestEntry(catalog);
         logger.info("Harves entry creation successfull: {}", harvestEntryCreated);
 
         return new ResponseEntity<>(savedCatalog, OK);
@@ -254,60 +259,6 @@ public class CatalogController {
             return newCatalog;
         }
         return catalog;
-    }
-
-    boolean createHarvestEntry(Catalog catalog) {
-        logger.info("Harvest entry created for new catalog: {}", catalog.getId());
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        //TODO: Refaktorere til HarvesterApiService klasse, slik som ReferenceDataService
-        //TODO: Refactorere: Flytte DcatSourceDto fra harvester til library. Nå blir det avhengighetert på tvers
-        //når det har begynt å virke...
-
-        //get existing entries
-        //TODO: flytt til properties
-        String uri = "http://harvester:8080/api/admin/dcat-sources";
-        String username = "test_admin";
-        String password = "password";
-
-        ResponseEntity<List<DcatSourceDto>> response = null;
-        try {
-            response = restTemplate.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    new HttpEntity<>(createHeaders(username, password)),
-                    new ParameterizedTypeReference<List<DcatSourceDto>>() {});
-        } catch (Exception e) {
-            logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
-            logger.error("resoonse from harvester: {}", response.toString());
-        }
-
-        List<DcatSourceDto> dcatsources = response.getBody();
-
-        logger.debug("Found dcatsources: {}", dcatsources.toString());
-
-        return true;
-    }
-
-
-    /**
-     * helper method to create authorisation header for http request
-     *
-     * @param username
-     * @param password
-     * @return HTTP header containing basic auth and content type application/josn
-     */
-    HttpHeaders createHeaders(String username, String password){
-        return new HttpHeaders() {{
-            String auth = username + ":" + password;
-
-            byte[] encodedAuth = Base64.encodeBase64(
-                    auth.getBytes(Charset.forName("US-ASCII")) );
-            String authHeader = "Basic " + new String( encodedAuth );
-            set( "Authorization", authHeader );
-            set( "Accept", "application/json");
-        }};
     }
 
 }
