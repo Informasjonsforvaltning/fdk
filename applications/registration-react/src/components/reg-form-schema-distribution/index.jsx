@@ -107,9 +107,9 @@ const renderDistributions = (props) => {
           </div>
           <div className="form-group">
             <Helptext helptextItems={helptextItems.Dataset_distribution} />
-            <Field name={`${distribution}.type`} radioId={`distribution-api`} component={RadioField} type="radio" value="API" label="API"  />
-            <Field name={`${distribution}.type`} radioId={`distribution-feed`} component={RadioField} type="radio" value="Feed" label="Feed"  />
-            <Field name={`${distribution}.type`} radioId={`distribution-file`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
+            <Field name={`${distribution}.type`} radioId="distribution-api" component={RadioField} type="radio" value="API" label="API"  />
+            <Field name={`${distribution}.type`} radioId="distribution-feed" component={RadioField} type="radio" value="Feed" label="Feed"  />
+            <Field name={`${distribution}.type`} radioId="distribution-file" component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
           </div>
           <div className="form-group">
             <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
