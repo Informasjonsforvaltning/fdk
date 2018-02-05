@@ -12,8 +12,7 @@ const handleChange = (props, tags) => {
 }
 
 const InputTagsFieldArray  = (props) => {
-  const { input, label, type, meta: { touched, error, warning }, fieldLabel } = props;
-  console.log("fieldLabel", fieldLabel);
+  const { input, label, type, meta: { touched, error, warning }, fieldLabel, showLabel } = props;
   let tagNodes = [];
 
   if (input && input.value && input.value.length > 0) {
@@ -21,7 +20,9 @@ const InputTagsFieldArray  = (props) => {
   }
   return (
     <div className="pl-2">
-      <label className="fdk-form-label">{label}</label>
+      {showLabel && (
+        <label className="fdk-form-label">{label}</label>
+      )}
       <div className="d-flex align-items-center">
         <TagsInput
           value={tagNodes}
@@ -36,11 +37,11 @@ const InputTagsFieldArray  = (props) => {
 }
 
 InputTagsFieldArray.defaultProps = {
-
+  showLabel: false
 };
 
 InputTagsFieldArray.propTypes = {
-
+  showLabel: PropTypes.bool
 };
 
 export default InputTagsFieldArray;

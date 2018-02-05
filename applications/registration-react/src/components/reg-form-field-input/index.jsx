@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InputField  = ({ input, label, type, meta: { touched, error, warning } }, width) => (
+const InputField  = ({ input, label, type, meta: { touched, error, warning }, showLabel }) => (
   <div className="pl-2">
-    <label className="fdk-form-label">{label}</label>
+    {showLabel && (
+      <label className="fdk-form-label">{label}</label>
+    )}
     <div className="d-flex align-items-center">
       <input {...input} type={type} className="form-control" />
       {/* {touched && !error && */}
@@ -20,11 +22,11 @@ const InputField  = ({ input, label, type, meta: { touched, error, warning } }, 
 )
 
 InputField.defaultProps = {
-
+  showLabel: false
 };
 
 InputField.propTypes = {
-
+  showLabel: PropTypes.bool
 };
 
 export default InputField;

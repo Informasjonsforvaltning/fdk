@@ -41,7 +41,8 @@ const renderTemporalFields = (item, index, fields, props) => (
         name={`${item}.startDate`}
         type="text"
         component={DatepickerField}
-        label="Tidsmessig avgrenset fra"
+        label="Fra"
+        showLabel
       />
     </div>
     <div className="w-50">
@@ -49,7 +50,8 @@ const renderTemporalFields = (item, index, fields, props) => (
         name={`${item}.endDate`}
         type="text"
         component={DatepickerField}
-        label="Tidsmessig avgrenset til"
+        label="Til"
+        showLabel
       />
     </div>
     <div className="d-flex align-items-end">

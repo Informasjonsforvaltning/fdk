@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TextAreaField  = ({ input, label, type, meta: { touched, error, warning } }) => (
+const TextAreaField  = ({ input, label, type, meta: { touched, error, warning }, showLabel }) => (
   <div className="pl-2">
-    <label className="fdk-form-label">{label}</label>
+    {showLabel && (
+      <label className="fdk-form-label">{label}</label>
+    )}
     <div className="d-flex align-items-center">
       <textarea rows="5" {...input} type={type} className="form-control" />
       {/* {touched && !error && */}
@@ -20,11 +22,11 @@ const TextAreaField  = ({ input, label, type, meta: { touched, error, warning } 
 )
 
 TextAreaField.defaultProps = {
-
+  showLabel: false
 };
 
 TextAreaField.propTypes = {
-
+  showLabel: PropTypes.bool
 };
 
 export default TextAreaField;

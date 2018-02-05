@@ -14,10 +14,12 @@ const handleChange = (props, date) => {
 }
 
 const DatepickerField  = (props) => {
-  const { input, label, type, meta: { touched, error, warning } } = props;
+  const { input, label, type, meta: { touched, error, warning }, showLabel } = props;
   return (
     <div className="pl-2">
-      <label className="fdk-form-label">{label}</label>
+      {showLabel && (
+        <label className="fdk-form-label">{label}</label>
+      )}
       <div className="d-flex align-items-center">
         <DatePicker
           className="fdk-reg-datepicker"
@@ -35,11 +37,11 @@ const DatepickerField  = (props) => {
 }
 
 DatepickerField.defaultProps = {
-
+  showLabel: false
 };
 
 DatepickerField.propTypes = {
-
+  showLabel: PropTypes.bool
 };
 
 export default DatepickerField;
