@@ -24,7 +24,7 @@ const handleChange = (props, selectedURI) => {
 }
 
 const SelectField  = (props) => {
-  const { input, label, type, meta: { touched, error, warning }, items } = props;
+  const { input, label, meta: { touched, error, warning }, items } = props;
   return (
     <div className="pl-2">
       <label className="fdk-form-label">{label}</label>

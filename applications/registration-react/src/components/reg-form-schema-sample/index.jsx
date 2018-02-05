@@ -64,9 +64,9 @@ const renderSamples = (props) => {
           </div>
           <div className="form-group">
             <Helptext helptextItems={helptextItems.Dataset_example} />
-            <Field name={`${sample}.type`} component={RadioField} type="radio" value="API" label="API" onChange={(e, value) => {asyncValidate({sample: fields.getAll()}, {}, props, '')}} />
-            <Field name={`${sample}.type`} component={RadioField} type="radio" value="Feed" label="Feed" onChange={(e, value) => {asyncValidate({sample: fields.getAll()})}} />
-            <Field name={`${sample}.type`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
+            <Field name={`${sample}.type`} radioId={`sample-api`} component={RadioField} type="radio" value="API" label="API" />
+            <Field name={`${sample}.type`} radioId={`sample-feed`} component={RadioField} type="radio" value="Feed" label="Feed" />
+            <Field name={`${sample}.type`} radioId={`sample-file`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
           </div>
           <div className="form-group">
             <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />

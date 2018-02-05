@@ -9,10 +9,11 @@ export default class Helptext extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: false, status: 'Closed' };
+    this.state = { collapse: false };
   }
 
-  toggle() {
+  toggle(e) {
+    e.preventDefault();
     this.setState({ collapse: !this.state.collapse });
   }
 
@@ -33,9 +34,7 @@ export default class Helptext extends Component {
       }
     );
     const { title, required, helptextItems} = this.props;
-    const { id, shortdesc, description, uri} = helptextItems;
-
-    const resolvedDescription = description.nb.replace(new RegExp('\n', 'g'), "<br />");
+    const { shortdesc, description } = helptextItems;
 
     return (
       <div className="fdk-reg-helptext mb-2 p-2">
@@ -48,17 +47,23 @@ export default class Helptext extends Component {
           }
         </div>
         <div className="d-md-flex">
+          {
+            // eslint-disable-next-line react/no-danger
+          }
           <p className={shortTextClass} dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
 
-          <div className="text-left no-padding ml-1 fdk-reg-helptext-more" tabIndex="0" onClick={this.toggle}>
+          <button className="text-left no-padding ml-1 fdk-reg-helptext-more align-self-start" onClick={(e) => this.toggle(e)}>
             <i className={collapseClass} />
             Flere anbefalinger
-          </div>
+          </button>
         </div>
         <Collapse
           className="mt-3"
           isOpen={this.state.collapse}
         >
+          {
+            // eslint-disable-next-line react/no-danger
+          }
           <p dangerouslySetInnerHTML={{__html: (description && description.nb) ? description.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
         </Collapse>
       </div>
@@ -70,9 +75,11 @@ export default class Helptext extends Component {
 Helptext.defaultProps = {
   title: '',
   required: false,
-  helptextItems: {}
+  helptextItems: null
 };
 
 Helptext.propTypes = {
-
+  title: PropTypes.string,
+  required: PropTypes.bool,
+  helptextItems: PropTypes.object
 };

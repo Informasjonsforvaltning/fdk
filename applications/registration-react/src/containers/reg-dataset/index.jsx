@@ -61,7 +61,7 @@ class RegDataset extends React.Component {
   }
 
   render() {
-    const { helptextItems, isFetching, title, registrationStatus, lastSaved, result, concept  } = this.props;
+    const { helptextItems, isFetching, title, registrationStatus, lastSaved, result, concept, referenceTypesItems, referenceDatasetsItems,  } = this.props;
 
     return (
       <div className="container-fluid">
@@ -70,7 +70,7 @@ class RegDataset extends React.Component {
         </div>
         <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
           <div className="col-md-2" />
-          {!isFetching && helptextItems && title &&
+          {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
             <div className="col-md-8">
 
               <FormTemplate

@@ -6,6 +6,7 @@ import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
+import { languageType } from '../../schemaTypes';
 
 
 const validate = values => {
@@ -101,7 +102,7 @@ FormReference = reduxForm({
 const mapStateToProps = ({ dataset, referenceTypes, referenceDatasets }) => (
   {
     initialValues: {
-      references: (dataset.result.references && dataset.result.references.length > 0) ? dataset.result.references : '',
+      references: (dataset.result.references && dataset.result.references.length > 0) ? dataset.result.references : [languageType],
       referenceTypesItems: referenceTypes.referenceTypesItems,
       referenceDatasetsItems: referenceDatasets.referenceDatasetsItems
     }
