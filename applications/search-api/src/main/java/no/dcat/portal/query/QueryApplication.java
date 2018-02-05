@@ -1,5 +1,6 @@
 package no.dcat.portal.query;
 
+import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,12 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.util.UrlPathHelper;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.paths.RelativePathProvider;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 @SpringBootApplication
 @PropertySource("classpath:swagger.properties")
@@ -70,10 +74,20 @@ public class QueryApplication extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
 
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
                 .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo());
+    }
 
-                .build();
+    private ApiInfo apiInfo() {
+        return new ApiInfo(
+                "National Data Directory Search API",
+                "Provides a basic search api against the National Data Directory of Norway",
+                "1.0",
+                "Terms of service",
+                new Contact("Info", "fellesdataktalog.brreg.no", "fellesdatakatalog@brreg.no"),
+                "License of API", "API license URL", Collections.emptyList());
     }
 
 }

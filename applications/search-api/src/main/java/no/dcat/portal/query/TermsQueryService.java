@@ -1,6 +1,10 @@
 package no.dcat.portal.query;
 
 
+import io.swagger.annotations.ApiOperation;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.SkosConcept;
+import no.dcat.shared.Subject;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -15,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,12 +53,13 @@ import org.springframework.web.bind.annotation.RestController;
       * @return List of  elasticsearch records.
      */
     @CrossOrigin
-    @RequestMapping(value = QUERY_SEARCH, produces = "application/json")
-    public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "") String query,
-                                         @RequestParam(value = "from", defaultValue = "0") int from,
-                                         @RequestParam(value = "size", defaultValue = "10") int size,
-                                         @RequestParam(value = "lang", defaultValue = "nb") String lang) {
-
+    @ApiOperation(value = "query for terms (concepts)",
+            notes = "Returns the elasticsearch response with matching terms (dct:subject)", response = Subject.class)
+    @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
+                                         @RequestParam(value = "from", defaultValue = "0", required = false) int from,
+                                         @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+                                         @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang) {
 
         StringBuilder loggMsg = new StringBuilder()
                 .append("query: \"").append(query)
