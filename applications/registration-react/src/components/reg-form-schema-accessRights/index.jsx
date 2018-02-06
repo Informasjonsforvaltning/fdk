@@ -7,7 +7,7 @@ import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
-import { legalBasisType } from '../../schemaTypes';
+import { accessRights, legalBasisType, emptyArray } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}
@@ -102,6 +102,7 @@ let FormAccessRights = (props) => {
         <Helptext title="Tilgangsnivå" helptextItems={helptextItems.Dataset_distribution} />
         <Field
           name="accessRights.uri"
+          radioId="accessRight-public"
           component={RadioField}
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
@@ -109,6 +110,7 @@ let FormAccessRights = (props) => {
         />
         <Field
           name="accessRights.uri"
+          radioId="accessRight-restricted"
           component={RadioField}
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
@@ -116,6 +118,7 @@ let FormAccessRights = (props) => {
         />
         <Field
           name="accessRights.uri"
+          radioId="accessRight-non_public"
           component={RadioField}
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
@@ -181,10 +184,10 @@ FormAccessRights = connect(state => {
 const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
-      accessRights: (dataset.result.accessRights) ? dataset.result.accessRights : '',
-      legalBasisForRestriction: (dataset.result.legalBasisForRestriction && dataset.result.legalBasisForRestriction.length > 0) ? dataset.result.legalBasisForRestriction : legalBasisType,
-      legalBasisForProcessing: (dataset.result.legalBasisForProcessing && dataset.result.legalBasisForProcessing.length > 0) ? dataset.result.legalBasisForProcessing : legalBasisType,
-      legalBasisForAccess: (dataset.result.legalBasisForAccess && dataset.result.legalBasisForAccess.length > 0) ? dataset.result.legalBasisForAccess : legalBasisType
+      accessRights: (dataset.result.accessRights) ? dataset.result.accessRights : accessRights,
+      legalBasisForRestriction: (dataset.result.legalBasisForRestriction && dataset.result.legalBasisForRestriction.length > 0) ? dataset.result.legalBasisForRestriction : [legalBasisType],
+      legalBasisForProcessing: (dataset.result.legalBasisForProcessing && dataset.result.legalBasisForProcessing.length > 0) ? dataset.result.legalBasisForProcessing : [legalBasisType],
+      legalBasisForAccess: (dataset.result.legalBasisForAccess && dataset.result.legalBasisForAccess.length > 0) ? dataset.result.legalBasisForAccess : [legalBasisType]
     }
   }
 )

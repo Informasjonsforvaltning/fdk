@@ -94,7 +94,7 @@ class Header extends React.Component {
           </div>
         </div>
         <div className="fdk-breadcrumb breadcrumb d-flex justify-content-between">
-          <span></span>
+          <span />
           <span>{localization.app.autoSave}</span>
         </div>
       </header>
@@ -110,7 +110,7 @@ Header.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ user }, ownProps) {
+function mapStateToProps({ user }) {
   const { userItem } = user || {
     userItem: null
   }

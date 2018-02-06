@@ -10,6 +10,11 @@ export const uriType = {
   uri: null
 }
 
+export const accessRights = {
+  uri: '',
+  prefLabel: {}
+}
+
 export const languageType = {
   uri: '',
   code: '',
