@@ -12,11 +12,11 @@ const handleChange = (props, tags) => {
 }
 
 const InputTagsFieldArray  = (props) => {
-  const { input, label, type, meta: { touched, error, warning }, fieldLabel, showLabel } = props;
+  const { input, label, fieldLabel, showLabel } = props;
   let tagNodes = [];
 
   if (input && input.value && input.value.length > 0) {
-    tagNodes = input.value.map((item, index) => item[fieldLabel] )
+    tagNodes = input.value.map((item) => item[fieldLabel] )
   }
   return (
     <div className="pl-2">

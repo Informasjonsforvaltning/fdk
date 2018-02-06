@@ -9,7 +9,7 @@ const handleChange = (props, tags) => {
 }
 
 const InputTagsField  = (props) => {
-  const { input, label, type, meta: { touched, error, warning }, showLabel } = props;
+  const { input, label, meta: { touched, error, warning }, showLabel } = props;
   return (
     <div className="pl-2">
       {showLabel && (

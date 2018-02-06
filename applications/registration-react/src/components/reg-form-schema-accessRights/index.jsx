@@ -44,7 +44,7 @@ const renderLegalBasisFields = (item, index, fields, props) => (
         name={`${item}.prefLabel.nb`}
         component={InputField}
         label={props.titleLabel}
-        showLabel="true"
+        showLabel
       />
     </div>
     <div className="w-50">
@@ -52,7 +52,7 @@ const renderLegalBasisFields = (item, index, fields, props) => (
         name={`${item}.uri`}
         component={InputField}
         label={props.linkLabel}
-        showLabel="true"
+        showLabel
       />
     </div>
     <div className="d-flex align-items-end">

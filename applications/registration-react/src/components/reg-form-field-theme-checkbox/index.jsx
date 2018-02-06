@@ -30,7 +30,7 @@ const handleChange = (props, event) => {
 }
 
 const CheckboxFieldTheme = (props) => {
-  const { input, label, type, themesItems } = props;
+  const { input, label, themesItems } = props;
   let themeCodes = [];
   if (input.value && input.value.length > 0) {
     themeCodes = input.value.map(item => item.uri);

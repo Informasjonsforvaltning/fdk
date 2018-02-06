@@ -51,9 +51,7 @@ const handleChangeLang = (props, event) => {
 }
 
 const CheckboxField = (props) => {
-  console.log("INN HER");
-  const { input, label, type, meta: { touched, error, warning }, prefLabel, name, code } = props;
-  console.log("input", JSON.stringify(input));
+  const { input, label } = props;
 
   let langCodes = [];
 
@@ -61,7 +59,6 @@ const CheckboxField = (props) => {
     console.log("codes length", input.value.length);
     langCodes = input.value.map(item => item.code);
   }
-  console.log("langCodes", JSON.stringify(langCodes));
 
   return (
     <div>

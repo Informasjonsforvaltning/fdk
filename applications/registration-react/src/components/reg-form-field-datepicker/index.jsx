@@ -10,11 +10,10 @@ const handleChange = (props, date) => {
   props.meta.touched.true;
   console.log("DATO ER: ", moment(date).format('YYYY-MM-DD'))
   props.input.onChange(moment(date).format('YYYY-MM-DD'));
-  // props.input.onChange(moment(date).valueOf());
 }
 
 const DatepickerField  = (props) => {
-  const { input, label, type, meta: { touched, error, warning }, showLabel } = props;
+  const { input, label, showLabel } = props;
   return (
     <div className="pl-2">
       {showLabel && (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment/locale/nb';
