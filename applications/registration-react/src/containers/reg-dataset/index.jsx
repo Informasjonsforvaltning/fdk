@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import IdleTimer from 'react-idle-timer';
 
+import localization from '../../utils/localization';
 import {
+  fetchUserIfNeeded,
   fetchDatasetIfNeeded,
   fetchHelptextsIfNeeded,
   fetchProvenanceIfNeeded,
@@ -23,6 +26,7 @@ import FormConcept from '../../components/reg-form-schema-concept';
 import FormAccessRights from '../../components/reg-form-schema-accessRights';
 import FormReference from '../../components/reg-form-schema-reference';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
+import TimeoutModal from '../../components/app-timeout-modal';
 import './index.scss';
 
 
@@ -30,6 +34,7 @@ class RegDataset extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showInactiveWarning: false
     }
     const datasetURL = window.location.pathname.substr(6);
     const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
@@ -40,7 +45,9 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchFrequencyIfNeeded());
     this.props.dispatch(fetchThemesIfNeeded());
     this.props.dispatch(fetchReferenceTypesIfNeeded());
-    // this._titleValues = this._titleValues.bind(this);
+    this.onIdle = this.onIdle.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.refreshSession = this.refreshSession.bind(this);
   }
 
   fetchDataset() {
@@ -60,17 +67,53 @@ class RegDataset extends React.Component {
     } return null;
   }
 
+  onIdle() {
+    this.setState({
+      showInactiveWarning: true
+    })
+  }
+
+  toggle() {
+    this.setState({
+      showInactiveWarning: false
+    });
+    window.location.href = `${window.location.origin  }/logout#timed-out`;
+  }
+
+  refreshSession() {
+    this.setState({
+      showInactiveWarning: false
+    });
+    this.props.dispatch(fetchUserIfNeeded());
+  }
+
   render() {
-    const { helptextItems, isFetching, title, registrationStatus, lastSaved, result, concept, referenceTypesItems, referenceDatasetsItems,  } = this.props;
+    const {
+      helptextItems,
+      isFetching,
+      title,
+      registrationStatus,
+      lastSaved,
+      result,
+      concept,
+      referenceTypesItems,
+      referenceDatasetsItems
+    } = this.props;
 
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12" />
-        </div>
-        <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
-          <div className="col-md-2" />
-          {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
+      <IdleTimer
+        element={document}
+        idleAction={this.onIdle}
+        timeout={27.5 * 60 * 1000} // gir idle warning etter 27,5 minutter
+        format="DD.MM.YYYY HH:MM:ss.SSS"
+      >
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12" />
+          </div>
+          <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
+            <div className="col-md-2" />
+            {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
             <div className="col-md-8">
 
               <FormTemplate
@@ -161,10 +204,21 @@ class RegDataset extends React.Component {
                 syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
               />
             </div>
-          }
-          <div className="col-md-2" />
+            }
+            <div className="col-md-2" />
+          </div>
         </div>
-      </div>
+        <TimeoutModal
+          modal={this.state.showInactiveWarning}
+          toggle={this.toggle}
+          refreshSession={this.refreshSession}
+          title={localization.inactiveSessionWarning.title}
+          ingress={localization.inactiveSessionWarning.loggingOut}
+          body={localization.inactiveSessionWarning.stayLoggedIn}
+          buttonConfirm={localization.inactiveSessionWarning.buttonStayLoggedIn}
+          buttonLogout={localization.inactiveSessionWarning.buttonLogOut}
+        />
+      </IdleTimer>
     );
   }
 }

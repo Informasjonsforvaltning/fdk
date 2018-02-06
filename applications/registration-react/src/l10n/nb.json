@@ -49,5 +49,12 @@
         "linkLabel": "Lenke til utleveringshjemmel"
       }
     }
+  },
+  "inactiveSessionWarning": {
+    "title": "Sesjonen blir snart avbrutt",
+    "loggingOut": "Du vil bli logget ut om ",
+    "stayLoggedIn": "Ønsker du å forbli innlogget?",
+    "buttonStayLoggedIn": "Ja, forbli innlogget",
+    "buttonLogOut": "Nei, logg ut"
   }
 }
