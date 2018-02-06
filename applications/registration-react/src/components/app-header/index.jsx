@@ -72,7 +72,7 @@ class Header extends React.Component {
                   </div>
                 }
                 <div className="fdk-margin-right-double fdk-auth-link">
-                  <a href="#">Logg ut</a>
+                  <a href={`${window.location.origin  }/logout`}>{localization.app.logOut}</a>
                 </div>
                 <div>
                   <ButtonDropdown className="btn-group-default" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -92,6 +92,10 @@ class Header extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="fdk-breadcrumb breadcrumb d-flex justify-content-between">
+          <span></span>
+          <span>{localization.app.autoSave}</span>
         </div>
       </header>
     );

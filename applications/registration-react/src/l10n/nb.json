@@ -5,7 +5,9 @@
     "publisher": "Virksomhet",
     "menu": "Meny",
     "readMore": "Les mer om ",
-    "lastSaved": "Sist lagret"
+    "lastSaved": "Sist lagret",
+    "logOut": "Logg ut",
+    "autoSave": "Alle endringer lagres automatisk"
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
