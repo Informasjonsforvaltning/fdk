@@ -56,7 +56,6 @@ const CheckboxField = (props) => {
   let langCodes = [];
 
   if (input.value && input.value.length > 0) {
-    console.log("codes length", input.value.length);
     langCodes = input.value.map(item => item.code);
   }
 

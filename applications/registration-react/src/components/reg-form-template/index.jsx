@@ -16,7 +16,6 @@ export default class FormTemplate extends Component {
 
   render() {
     const { title, values } = this.props;
-    console.log("values", JSON.stringify(values));
     const collapseClass = cx(
       'fdk-reg_collapse',
       {

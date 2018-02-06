@@ -8,7 +8,6 @@ import './index.scss';
 
 const handleChange = (props, date) => {
   props.meta.touched.true;
-  console.log("DATO ER: ", moment(date).format('YYYY-MM-DD'))
   props.input.onChange(moment(date).format('YYYY-MM-DD'));
 }
 
