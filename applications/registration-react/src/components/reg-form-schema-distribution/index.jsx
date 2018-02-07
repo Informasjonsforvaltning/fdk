@@ -9,6 +9,7 @@ import InputTagsField from '../reg-form-field-input-tags';
 import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
+import { textType, licenseType } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}
@@ -20,7 +21,7 @@ const validate = values => {
       const errors = {}
       const description = (item.description && item.description.nb) ? item.description.nb : null;
       const license = (item.license && item.license.uri) ? item.license.uri : null;
-      const page = (item.page && item.page[index].uri) ? item.page[index].uri : null;
+      const page = (item.page && item.page[index] && item.page[index].uri) ? item.page[index].uri : null;
 
       if (license && license.length < 2) {
         errors.license = { uri: localization.validation.minTwoChars}
@@ -89,6 +90,9 @@ const renderDistributionLandingpage = ({ fields }) => (
 );
 
 const renderDistributions = (props) => {
+  /*
+
+   */
   const { fields, helptextItems } = props
   return (
     <div>
@@ -106,10 +110,10 @@ const renderDistributions = (props) => {
             </button>
           </div>
           <div className="form-group">
-            <Helptext helptextItems={helptextItems.Dataset_distribution} />
-            <Field name={`${distribution}.type`} radioId="distribution-api" component={RadioField} type="radio" value="API" label="API"  />
-            <Field name={`${distribution}.type`} radioId="distribution-feed" component={RadioField} type="radio" value="Feed" label="Feed"  />
-            <Field name={`${distribution}.type`} radioId="distribution-file" component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
+            <Helptext title="Type" helptextItems={helptextItems.Dataset_distribution} />
+            <Field name={`${distribution}.type`} radioId={`distribution-api-${index}`} component={RadioField} type="radio" value="API" label="API"  />
+            <Field name={`${distribution}.type`} radioId={`distribution-feed-${index}`}  component={RadioField} type="radio" value="Feed" label="Feed"  />
+            <Field name={`${distribution}.type`} radioId={`distribution-file-${index}`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
           </div>
           <div className="form-group">
             <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
@@ -121,7 +125,7 @@ const renderDistributions = (props) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
+            <Helptext title="Format" helptextItems={helptextItems.Distribution_format} />
             <Field
               name={`${distribution}.format`}
               type="text"
@@ -152,14 +156,15 @@ const renderDistributions = (props) => {
 
           <div className="form-group">
             <Helptext
+              title="Standard"
               helptextItems={helptextItems.Distribution_conformsTo}
             />
             <div className="d-flex">
               <div className="w-50">
-                <Field name={`${distribution}.conformsTo[0].prefLabel.nb`} component={InputField} label="Tittel på standard" />
+                <Field name={`${distribution}.conformsTo[0].prefLabel.nb`} component={InputField} showLabel label="Tittel" />
               </div>
               <div className="w-50">
-                <Field name={`${distribution}.conformsTo[0].uri`} component={InputField} label="Lenke til standard" />
+                <Field name={`${distribution}.conformsTo[0].uri`} component={InputField} showLabel label="Lenke" />
               </div>
             </div>
           </div>
@@ -167,7 +172,19 @@ const renderDistributions = (props) => {
         </div>
       )
       )}
-      <button type="button" onClick={() => fields.push({})}>
+      <button type="button" onClick={() => fields.push(
+        {
+          id: '',
+          description: textType,
+          accessURL: [],
+          license: licenseType,
+          conformsTo: [],
+          page: [licenseType],
+          format: [],
+          type: ''
+        }
+        )}
+      >
         <i className="fa fa-plus mr-2" />
         Legg til distribusjon
       </button>
@@ -194,10 +211,41 @@ FormDistribution = reduxForm({
   asyncValidate,
 })(FormDistribution)
 
+const distributionTypes = values => {
+  console.log("inn i types");
+  let distributions  = null;
+  if (values && values.length > 0) {
+    distributions = values.map(item => (
+      {
+        id: item.id ? item.id : '',
+        description: item.description ? item.description : textType,
+        accessURL: item.accessURL ? item.accessURL : [],
+        license: item.license ? item.license : licenseType,
+        conformsTo: item.conformsTo ? item.conformsTo : [],
+        page: (item.page && item.page.length > 0) ? item.page : [licenseType],
+        format: (item.format) ? item.format : [],
+        type: item.type ? item.type : ''
+      }
+    ))
+  } else {
+    distributions = [{
+      id: '',
+      description: textType,
+      accessURL: [],
+      license: licenseType,
+      conformsTo: [],
+      page: [licenseType],
+      format: [],
+      type: ''
+    }]
+  }
+  return distributions;
+}
+
 const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
-      distribution: dataset.result.distribution || null
+      distribution: distributionTypes(dataset.result.distribution)
     }
   }
 )

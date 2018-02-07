@@ -9,18 +9,19 @@ import InputTagsField from '../reg-form-field-input-tags';
 import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
+import { textType, licenseType } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}
-  const { distribution } = values;
+  const { sample } = values;
   let errorNodes = null;
 
-  if (distribution) {
-    errorNodes = distribution.map((item, index) => {
+  if (sample) {
+    errorNodes = sample.map((item, index) => {
       const errors = {}
       const description = (item.description && item.description.nb) ? item.description.nb : null;
       const license = (item.license && item.license.uri) ? item.license.uri : null;
-      const page = (item.page && item.page[index].uri) ? item.page[index].uri : null;
+      const page = (item.page && item.page[index] && item.page[index].uri) ? item.page[index].uri : null;
 
       if (license && license.length < 2) {
         errors.license = { uri: localization.validation.minTwoChars}
@@ -59,11 +60,8 @@ const renderSamples = (props) => {
     <div>
       {fields.map((sample, index) => (
         <div key={index}>
-          <div className="d-flex">
-            <h4>Eksempeldata</h4>
-          </div>
           <div className="form-group">
-            <Helptext helptextItems={helptextItems.Dataset_example} />
+            <Helptext title="Type" helptextItems={helptextItems.Dataset_example} />
             <Field name={`${sample}.type`} radioId="sample-api" component={RadioField} type="radio" value="API" label="API" />
             <Field name={`${sample}.type`} radioId="sample-feed" component={RadioField} type="radio" value="Feed" label="Feed" />
             <Field name={`${sample}.type`} radioId="sample-file" component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
@@ -78,7 +76,7 @@ const renderSamples = (props) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
+            <Helptext title="Format" helptextItems={helptextItems.Distribution_format} />
             <Field
               name={`${sample}.format`}
               type="text"
@@ -109,14 +107,15 @@ const renderSamples = (props) => {
 
           <div className="form-group">
             <Helptext
+              title="Standard"
               helptextItems={helptextItems.Distribution_conformsTo}
             />
             <div className="d-flex">
               <div className="w-50">
-                <Field name={`${sample}.conformsTo[0].prefLabel.nb`} component={InputField} label="Tittel på standard" />
+                <Field name={`${sample}.conformsTo[0].prefLabel.nb`} component={InputField} showLabel label="Tittel" />
               </div>
               <div className="w-50">
-                <Field name={`${sample}.conformsTo[0].uri`} component={InputField} label="Lenke til standard" />
+                <Field name={`${sample}.conformsTo[0].uri`} component={InputField} showLabel label="Lenke" />
               </div>
             </div>
           </div>
@@ -147,10 +146,40 @@ FormSample = reduxForm({
   asyncValidate,
 })(FormSample)
 
+const sampleTypes = values => {
+  let samples  = null;
+  if (values && values.length > 0) {
+    samples = values.map(item => (
+      {
+        id: item.id ? item.id : '',
+        description: item.description ? item.description : textType,
+        accessURL: item.accessURL ? item.accessURL : [],
+        license: item.license ? item.license : licenseType,
+        conformsTo: item.conformsTo ? item.conformsTo : [],
+        page: (item.page && item.page.length > 0) ? item.page : [{}],
+        format: item.format ? item.format : [],
+        type: item.type ? item.type : ''
+      }
+    ))
+  } else {
+    samples = [{
+      id: '',
+      description: textType,
+      accessURL: [],
+      license: licenseType,
+      conformsTo: [],
+      page: [],
+      format: [],
+      type: ''
+    }]
+  }
+  return samples;
+}
+
 const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
-      sample: dataset.result.sample || null
+      sample: sampleTypes(dataset.result.sample) || [{}]
     }
   }
 )

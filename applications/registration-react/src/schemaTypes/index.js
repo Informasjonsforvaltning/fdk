@@ -36,3 +36,9 @@ export const legalBasisType = {
   extraType: null
 }
 
+export const licenseType = {
+  uri: '',
+  prefLabel: textType,
+  extraType: null
+}
+

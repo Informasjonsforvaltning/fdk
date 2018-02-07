@@ -9,7 +9,7 @@ import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
 import DatepickerField from '../reg-form-field-datepicker';
 import CheckboxField from '../reg-form-field-checkbox';
 import asyncValidate from '../../utils/asyncValidate';
-import { languageType } from '../../schemaTypes';
+import { languageType, emptyArray } from '../../schemaTypes';
 
 
 const validate = values => {
@@ -147,10 +147,10 @@ FormSpatial = reduxForm({
 const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
-      spatial: (dataset.result.spatial && dataset.result.spatial.length > 0) ? dataset.result.spatial : '',
-      temporal: formatTemporalUnixDatesToISO(dataset.result.temporal) || [{startDate: '', endDate: ''}],
+      spatial: (dataset.result.spatial && dataset.result.spatial.length > 0) ? dataset.result.spatial : [],
+      temporal: formatTemporalUnixDatesToISO(dataset.result.temporal) || [{}],
       issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
-      language: (dataset.result.language && dataset.result.language.length > 0) ? dataset.result.language : [languageType],
+      language: (dataset.result.language && dataset.result.language.length > 0) ? dataset.result.language : []
     }
   }
 )

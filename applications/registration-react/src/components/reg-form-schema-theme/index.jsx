@@ -36,8 +36,8 @@ FormThemes = reduxForm({
 const mapStateToProps = ({ dataset, themes }) => (
   {
     initialValues: {
-      themesItems: themes.themesItems,
-      theme: dataset.result.theme || [themeType]
+      theme: dataset.result.theme || [themeType],
+      themesItems: themes.themesItems
     }
   }
 )
