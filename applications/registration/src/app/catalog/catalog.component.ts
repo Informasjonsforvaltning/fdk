@@ -87,7 +87,11 @@ export class CatalogComponent implements OnInit {
   }
 
   selectDataset(catalog, dataset) {
-    this.router.navigate(['/catalogs', catalog.id, 'datasets', dataset.id]);
+    //this.router.navigate(['/catalogs', catalog.id, 'datasets', dataset.id]);
+
+    //dirty trick to route to new react application with help of nginx
+    let currentCatalogUri : String = window.location.href;
+    window.location.href =  currentCatalogUri + '/datasets/' + dataset.id;
   }
 
   deleteDataset(catalog, dataset): void {
