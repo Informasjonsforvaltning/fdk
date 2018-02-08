@@ -1,6 +1,5 @@
 import { CALL_API } from '../middleware/api';
 import * as actions from '../constants/ActionTypes';
-// import * as routing from '../constants/Routing';
 
 function fetchApi(url, types) {
   return {
@@ -95,5 +94,3 @@ export function datasetLastSaved(value) {
       lastSaved: value
     });
 }
-
-

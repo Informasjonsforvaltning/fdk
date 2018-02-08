@@ -172,17 +172,19 @@ const renderDistributions = (props) => {
         </div>
       )
       )}
-      <button type="button" onClick={() => fields.push(
-        {
-          id: '',
-          description: textType,
-          accessURL: [],
-          license: licenseType,
-          conformsTo: [],
-          page: [licenseType],
-          format: [],
-          type: ''
-        }
+      <button
+        type="button"
+        onClick={() => fields.push(
+          {
+            id: '',
+            description: textType,
+            accessURL: [],
+            license: licenseType,
+            conformsTo: [],
+            page: [licenseType],
+            format: [],
+            type: ''
+          }
         )}
       >
         <i className="fa fa-plus mr-2" />

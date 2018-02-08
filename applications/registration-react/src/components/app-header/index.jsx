@@ -84,7 +84,7 @@ class Header extends React.Component {
                       <DropdownItem>Veileder</DropdownItem>
                       <DropdownItem>Standard</DropdownItem>
                       <DropdownItem>
-                        <a href="">Felles datakatalog</a>
+                        <a href="https://fellesdatakatalog.brreg.no">Felles datakatalog</a>
                       </DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
