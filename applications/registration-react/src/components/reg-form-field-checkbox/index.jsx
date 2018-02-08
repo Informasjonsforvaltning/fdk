@@ -5,11 +5,9 @@ import './index.scss';
 
 const handleChangeLang = (props, event) => {
   const { input } = props;
-  props.meta.touched.true;
   // Skal fjerne fra array
   if (!event.target.checked) {
     const newInput = input.value.filter((returnableObjects) => returnableObjects.code !== event.target.value);
-
     input.onChange(newInput);
   }
   // Skal legge til array
@@ -61,21 +59,21 @@ const CheckboxField = (props) => {
 
   return (
     <div>
-      <div className="form-check fdk-form-checkbox">
+      <label className="form-check fdk-form-checkbox" htmlFor="ENG">
         <input type="checkbox" name="language" id="ENG" value="ENG"  checked={langCodes.includes('ENG') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
-        <label className="form-check-label fdk-form-check-label" htmlFor="ENG" />
+        <span className="form-check-label fdk-form-check-label" />
         <span>Engelsk</span>
-      </div>
-      <div className="form-check fdk-form-checkbox">
+      </label>
+      <label className="form-check fdk-form-checkbox" htmlFor="NOR">
         <input type="checkbox" name="language" id="NOR" value="NOR"  checked={langCodes.includes('NOR') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
-        <label className="form-check-label fdk-form-check-label" htmlFor="NOR" />
+        <span className="form-check-label fdk-form-check-label" />
         <span>Norsk</span>
-      </div>
-      <div className="form-check fdk-form-checkbox">
+      </label>
+      <label className="form-check fdk-form-checkbox" htmlFor="SMI">
         <input type="checkbox" name="language" id="SMI" value="SMI"  checked={langCodes.includes('SMI') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
-        <label className="form-check-label fdk-form-check-label" htmlFor="SMI" />
+        <span className="form-check-label fdk-form-check-label" />
         <span>Samisk</span>
-      </div>
+      </label>
     </div>
   );
 }
@@ -87,7 +85,7 @@ CheckboxField.defaultProps = {
 };
 
 CheckboxField.propTypes = {
-
+  input: PropTypes.object
 };
 
 export default CheckboxField;

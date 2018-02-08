@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 const handleChange = (props, event) => {
   const { input } = props;
   const selectedItemLabel = event.target.value;
-  props.meta.touched.true;
-
   // Skal fjerne fra array
   if (!event.target.checked) {
     input.onChange('');
@@ -40,26 +38,22 @@ const types = [
 ]
 
 const CheckboxFieldType = (props) => {
-  const { input, label } = props;
+  const { input } = props;
   return (
     <div>
       {types.map((type, index) => (
-        <div key={index} className="form-check fdk-form-checkbox">
+        <label key={index} className="form-check fdk-form-checkbox" htmlFor={type.label}>
           <input type="checkbox" name="types" id={type.label} value={type.label} checked={(input && input.value === type.label) ? 'checked' : ''} onChange={(e) => {handleChange(props, e)}} />
-          <label className="form-check-label fdk-form-check-label" htmlFor={type.label} />
+          <span className="form-check-label fdk-form-check-label" />
           <span>{type.label}</span>
-        </div>
+        </label>
       ))}
     </div>
   );
 }
 
-CheckboxFieldType.defaultProps = {
-
-};
-
 CheckboxFieldType.propTypes = {
-
+  input: PropTypes.object.isRequired
 };
 
 export default CheckboxFieldType;
