@@ -7,7 +7,11 @@
     "readMore": "Les mer om ",
     "lastSaved": "Sist lagret",
     "logOut": "Logg ut",
-    "autoSave": "Alle endringer lagres automatisk"
+    "autoSave": "Alle endringer lagres automatisk",
+    "notPublished": "Ikke klar for å publisere ennå?",
+    "notPublishedText": "Vi har lagret alt arbeidet ditt som et utkast, kom tilbake når du er klar for å publisere!",
+    "published": "Publisert!",
+    "publishedText": "Datasettbeskrivelsen er nå publisert, og vil være søkbar i Felles datakatalog i løpet av 24 timer."
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",

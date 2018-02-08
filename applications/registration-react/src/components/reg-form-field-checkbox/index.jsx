@@ -81,7 +81,9 @@ const CheckboxField = (props) => {
 }
 
 CheckboxField.defaultProps = {
-
+  input: {
+    value:[]
+  }
 };
 
 CheckboxField.propTypes = {

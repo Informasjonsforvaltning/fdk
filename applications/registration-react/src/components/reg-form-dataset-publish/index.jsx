@@ -41,7 +41,7 @@ export default class DatasetPublish extends Component {
     }
 
     let allowedToPublish = false;
-    if (value === 'DRAFT' || !syncErrors) {
+    if ( (value === 'PUBLISH' && !syncErrors) || value === 'DRAFT') {
       allowedToPublish = true;
     }
     if (allowedToPublish) {
@@ -75,7 +75,8 @@ export default class DatasetPublish extends Component {
         <div className="d-flex align-items-center ml-2 mt-5">
           {registrationStatus === 'DRAFT' &&
           <Button
-            className="w-25 mr-3"
+            id="dataset-setPublish-button"
+            className="fdk-button fdk-button-default w-25 mr-3"
             color="secondary"
             onClick={() => this.handleDatasetStatus('PUBLISH')}
           >
@@ -84,7 +85,8 @@ export default class DatasetPublish extends Component {
           }
           {registrationStatus === 'PUBLISH' &&
           <Button
-            className="w-25 mr-3"
+            id="dataset-setDraft-button"
+            className="fdk-button fdk-button-default w-25 mr-3"
             color="info"
             onClick={() => this.handleDatasetStatus('DRAFT')}
           >
@@ -102,9 +104,23 @@ export default class DatasetPublish extends Component {
         </div>
 
         <div className="ml-2 mt-5">
-          <div className="mt-2 alert alert-success" role="alert">
-            This is a success alert—check it out!
-          </div>
+          {registrationStatus === 'DRAFT' &&
+          (
+            <div>
+              <strong>{localization.app.notPublished}</strong>
+              <div>
+                {localization.app.notPublishedText}
+              </div>
+            </div>
+          )}
+          {registrationStatus === 'PUBLISH' &&
+          (
+            <div className="mt-2 alert alert-success" role="alert">
+              <strong>{localization.app.published}</strong> {localization.app.publishedText}
+            </div>
+          )}
+
+
         </div>
         <Modal
           modal={this.state.showPublishModal}

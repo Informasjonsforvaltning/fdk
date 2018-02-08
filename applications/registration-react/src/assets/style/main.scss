@@ -13,6 +13,10 @@ $danger:        $color-red !default;
 
 @import '~bootstrap/scss/bootstrap';
 
+.alert-success {
+  color: $color1;
+}
+
 /*****************************************/
 /*********** End Bootstrap overrides **********/
 /*****************************************/
