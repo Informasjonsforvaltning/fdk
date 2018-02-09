@@ -28,7 +28,8 @@
   },
   "query": {
     "intro": "Search for datasets...",
-    "do": "search"
+    "do": "search",
+    "clear": "Clear"
   },
   "login": {
     "title": "Log in"

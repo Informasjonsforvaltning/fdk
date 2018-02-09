@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
+import no.dcat.shared.Dataset;
+import no.dcat.shared.Publisher;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -33,8 +36,10 @@ public class PublisherQueryService extends ElasticsearchService {
      * @return The complete elasticsearch response on Json-format is returned..
      */
     @CrossOrigin
-    @RequestMapping(value = QUERY_PUBLISHER, produces = "application/json")
-    public ResponseEntity<String> publishers(@RequestParam(value = "q", defaultValue = "") String query) {
+    @ApiOperation(value = "query a publisher",
+            notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
+    @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> publishers(@RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/publisher query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
@@ -65,6 +70,8 @@ public class PublisherQueryService extends ElasticsearchService {
      * @return orgPath and name of all publisher with children in a tree as Json-format is returned..
      */
     @CrossOrigin
+    @ApiOperation(value = "returns all publisher in a hierary",
+            response = PublisherHit.class)
     @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Hits> publisherNames() {
         /**
