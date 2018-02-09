@@ -87,8 +87,10 @@ let FormInformationModel = (props) => {
               <FieldArray
                 name="informationModel"
                 component={renderInformationModel}
-                titleLabel={localization.schema.informationModel.titleLabel}
-                linkLabel={localization.schema.informationModel.linkLabel}
+                // titleLabel={localization.schema.informationModel.titleLabel}
+                // linkLabel={localization.schema.informationModel.linkLabel}
+                titleLabel="title label"
+                linkLabel="link label"
               />
             </div>
           </div>
