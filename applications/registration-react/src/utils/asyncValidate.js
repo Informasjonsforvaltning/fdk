@@ -53,7 +53,6 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     postURL, values, {headers: api}
   )
     .then((response) => {
-      console.info("response", JSON.stringify(response.data._lastModified));
       if (dispatch) {
         dispatch(datasetLastSaved(response.data._lastModified));
       }

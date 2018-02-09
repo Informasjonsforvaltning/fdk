@@ -9,8 +9,6 @@ import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
 import DatepickerField from '../reg-form-field-datepicker';
 import CheckboxField from '../reg-form-field-checkbox';
 import asyncValidate from '../../utils/asyncValidate';
-import { languageType, emptyArray } from '../../schemaTypes';
-
 
 const validate = values => {
   const errors = {}

@@ -37,6 +37,7 @@ const validate = values => {
 
       return errors;
     });
+    return errorNodes;
   }
   return errors
 }

@@ -50,8 +50,10 @@ class RegDataset extends React.Component {
     this.refreshSession = this.refreshSession.bind(this);
   }
 
-  fetchDataset() {
-    this.props.dispatch(fetchDatasetIfNeeded());
+  onIdle() {
+    this.setState({
+      showInactiveWarning: true
+    })
   }
 
   fetchHelptexts() {
@@ -67,10 +69,8 @@ class RegDataset extends React.Component {
     } return null;
   }
 
-  onIdle() {
-    this.setState({
-      showInactiveWarning: true
-    })
+  fetchDataset() {
+    this.props.dispatch(fetchDatasetIfNeeded());
   }
 
   toggle() {

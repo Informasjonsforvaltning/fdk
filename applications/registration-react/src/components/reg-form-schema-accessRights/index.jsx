@@ -7,7 +7,7 @@ import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
-import { accessRights, legalBasisType, emptyArray } from '../../schemaTypes';
+import { accessRights, legalBasisType } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}

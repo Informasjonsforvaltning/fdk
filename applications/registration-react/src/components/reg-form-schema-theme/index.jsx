@@ -2,7 +2,6 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux'
 
-import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import CheckboxFieldTheme from '../reg-form-field-theme-checkbox';
 import asyncValidate from '../../utils/asyncValidate';

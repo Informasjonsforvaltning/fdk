@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
 const handleChange = (props, selectedURI) => {
-  const { input, meta: { touched }, items } = props;
-  touched.true;
+  const { input, items } = props;
   if (!selectedURI) {
     input.onChange(
       {
@@ -47,13 +45,5 @@ const SelectField  = (props) => {
     </div>
   );
 }
-
-SelectField.defaultProps = {
-
-};
-
-SelectField.propTypes = {
-
-};
 
 export default SelectField;

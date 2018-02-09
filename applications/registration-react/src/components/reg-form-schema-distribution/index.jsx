@@ -214,7 +214,6 @@ FormDistribution = reduxForm({
 })(FormDistribution)
 
 const distributionTypes = values => {
-  console.log("inn i types");
   let distributions  = null;
   if (values && values.length > 0) {
     distributions = values.map(item => (

@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import configureStore from './store/configureStore';
-import App from './containers/app';
 import RegDataset from './containers/reg-dataset';
 import Header from './components/app-header';
 import Footer from './components/app-footer';

@@ -7,6 +7,7 @@ import {
   fetchUserIfNeeded
 } from '../../actions/index';
 import localization from '../../utils/localization';
+import '../../assets/style/main.scss';
 import './index.scss';
 
 class Header extends React.Component {

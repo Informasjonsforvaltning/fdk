@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const handleChange = (props, event) => {
   const { input } = props;
@@ -47,13 +46,5 @@ const CheckboxFieldTheme = (props) => {
     </div>
   );
 }
-
-CheckboxFieldTheme.defaultProps = {
-
-};
-
-CheckboxFieldTheme.propTypes = {
-
-};
 
 export default CheckboxFieldTheme;

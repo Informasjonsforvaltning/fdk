@@ -1,26 +1,5 @@
 import axios from 'axios';
 
-function callApi2(url) {
-  const getHeaders = new Headers();
-  getHeaders.append('pragma', 'no-cache');
-  getHeaders.append('cache-control', 'no-cache');
-  getHeaders.append('Accept', 'application/json');
-
-  const getInit = {
-    method: 'GET',
-    headers: getHeaders,
-    credentials: 'same-origin'
-  };
-
-  return fetch(url, getInit)
-    .then(response => response.json())
-    .then((response) => {
-      const { error } = response;
-      if (error) return Promise.reject(error);
-      return { ...response };
-    });
-}
-
 function callApi(url) {
 
   const getHeaders = new Headers();
@@ -34,7 +13,7 @@ function callApi(url) {
     credentials: 'same-origin'
   };
 
-  return axios.get(url, {headers: {Accept : 'application/json'}})
+  return axios.get(url, getInit)
     .then((response) => response)
     .catch((response) => {
       const { error } = response;
