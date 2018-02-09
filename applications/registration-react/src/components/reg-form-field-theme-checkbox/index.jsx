@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 const handleChange = (props, event) => {
   const { input } = props;
   const selectedItemURI = event.target.value;
-  props.meta.touched.true;
 
   // Skal fjerne fra array
   if (!event.target.checked) {
@@ -39,11 +38,11 @@ const CheckboxFieldTheme = (props) => {
   return (
     <div>
       {themesItems.map((theme, index) => (
-        <div key={index} className="form-check fdk-form-checkbox">
+        <label key={index} className="form-check fdk-form-checkbox" htmlFor={theme.id}>
           <input type="checkbox" name="themes" id={theme.id} value={theme.id} checked={themeCodes.includes(theme.id) ? 'checked' : ''} onChange={(e) => {handleChange(props, e)}} />
-          <label className="form-check-label fdk-form-check-label" htmlFor={theme.id} />
+          <span className="form-check-label fdk-form-check-label" />
           <span>{theme.title.nb}</span>
-        </div>
+        </label>
       ))}
     </div>
   );

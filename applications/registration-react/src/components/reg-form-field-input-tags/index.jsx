@@ -4,7 +4,6 @@ import TagsInput from 'react-tagsinput'
 import './index.scss';
 
 const handleChange = (props, tags) => {
-  props.meta.touched.true;
   props.input.onChange(tags);
 }
 
@@ -12,10 +11,8 @@ const InputTagsField  = (props) => {
   const { input, label, meta: { touched, error, warning }, showLabel } = props;
   return (
     <div className="pl-2">
-      {showLabel && (
-        <label className="fdk-form-label">{label}</label>
-      )}
-      <div className="d-flex align-items-center">
+      <label className="fdk-form-label w-100" htmlFor={input.name}>
+        {showLabel ? label : null}
         <TagsInput
           {...input}
           className="fdk-reg-input-tags"
@@ -23,12 +20,12 @@ const InputTagsField  = (props) => {
           onChange={(tags) => (handleChange(props, tags))}
         />
         {touched && !error &&
-          <i className="fa fa-check-circle fa-lg ml-2 fdk-reg-save-success" />
+        <i className="fa fa-check-circle fa-lg ml-2 fdk-reg-save-success" />
         }
         {!touched &&
-          <i className="fa fa-check-circle fa-lg ml-2 invisible" />
+        <i className="fa fa-check-circle fa-lg ml-2 invisible" />
         }
-      </div>
+      </label>
       {touched && ((error &&
         <div className="alert alert-danger mt-3">{error}</div>) || (warning && <div className="alert alert-warning mt-3">{warning}</div>))
       }
@@ -45,6 +42,3 @@ InputTagsField.propTypes = {
 };
 
 export default InputTagsField;
-
-
-

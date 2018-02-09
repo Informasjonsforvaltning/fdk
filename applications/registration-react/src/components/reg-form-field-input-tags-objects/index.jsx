@@ -7,7 +7,6 @@ const handleChange = (props, tags) => {
   const { fieldLabel } = props;
   let updates = [];
   updates = tags.map((item) => ({[fieldLabel]:item}))
-  props.meta.touched.true;
   props.input.onChange(updates);
 }
 
@@ -20,18 +19,17 @@ const InputTagsFieldArray  = (props) => {
   }
   return (
     <div className="pl-2">
-      {showLabel && (
-        <label className="fdk-form-label">{label}</label>
-      )}
-      <div className="d-flex align-items-center">
-        <TagsInput
-          value={tagNodes}
-          className="fdk-reg-input-tags"
-          inputProps={{placeholder: ''}}
-          onChange={(tags) => (handleChange(props, tags))}
-        />
-      </div>
-
+      <label className="fdk-form-label w-100" htmlFor={input.name}>
+        {showLabel ? label : null}
+        <div className="d-flex align-items-center">
+          <TagsInput
+            value={tagNodes}
+            className="fdk-reg-input-tags"
+            inputProps={{placeholder: ''}}
+            onChange={(tags) => (handleChange(props, tags))}
+          />
+        </div>
+      </label>
     </div>
   );
 }
