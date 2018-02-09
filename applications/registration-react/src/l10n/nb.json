@@ -53,6 +53,10 @@
       "legalBasisForAccess": {
         "titleLabel": "Tittel på utleveringshjemmel",
         "linkLabel": "Lenke til utleveringshjemmel"
+      },
+      "informationModel": {
+        "titleLabel": "Tittel på informasjonsmodell",
+        "linkLabel": "Lenke til informasjonsmodell"
       }
     }
   },

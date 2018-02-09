@@ -42,3 +42,9 @@ export const licenseType = {
   extraType: null
 }
 
+export const informationModelType = {
+  uri: '',
+  prefLabel: textType,
+  extraType: null
+}
+
