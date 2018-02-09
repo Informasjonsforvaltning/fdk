@@ -105,6 +105,14 @@ services:
     networks:
       platform:
 
+  nginx-registration:
+      image: dcatno/nginx-registration:latest
+      depends_on:
+        - registration-api
+        - reference-data
+      networks:
+        platform:
+
   registration-api:
     image: dcatno/registration-api:latest
     depends_on:
@@ -118,6 +126,14 @@ services:
     image: dcatno/registration:latest
     depends_on:
       - nginx-ssl
+    networks:
+      platform:
+
+  registration-react:
+    image: dcatno/registration-react:latest
+    depends_on:
+      - nginx-registration-ssl
+      - registration
     networks:
       platform:
 
