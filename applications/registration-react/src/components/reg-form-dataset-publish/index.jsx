@@ -32,7 +32,7 @@ export default class DatasetPublish extends Component {
 
   handleDatasetStatus(value) {
     const { syncErrors } = this.props;
-    const postURL = window.location.pathname.substr(6);
+    const postURL = window.location.pathname;
     const api = {
       Authorization: `Basic ${  null}`
     }
