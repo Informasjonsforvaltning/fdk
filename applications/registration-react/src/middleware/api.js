@@ -4,6 +4,7 @@ function callApi2(url) {
   const getHeaders = new Headers();
   getHeaders.append('pragma', 'no-cache');
   getHeaders.append('cache-control', 'no-cache');
+  getHeaders.append('Accept', 'application/json');
 
   const getInit = {
     method: 'GET',
@@ -22,7 +23,18 @@ function callApi2(url) {
 
 function callApi(url) {
 
-  return axios.get(url)
+  const getHeaders = new Headers();
+  getHeaders.append('pragma', 'no-cache');
+  getHeaders.append('cache-control', 'no-cache');
+  getHeaders.append('Accept', 'application/json');
+
+  const getInit = {
+    method: 'GET',
+    headers: getHeaders,
+    credentials: 'same-origin'
+  };
+
+  return axios.get(url, {headers: {Accept : 'application/json'}})
     .then((response) => response)
     .catch((response) => {
       const { error } = response;

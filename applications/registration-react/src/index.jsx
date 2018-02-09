@@ -17,7 +17,7 @@ const routes =
     <Switch>
       <Route exact path="/" component={App} />
       <Route path="/react" component={RegDataset} />
-      <Route path="/catalogs/(:catalogId)/datasets/(:id)" component={RegDataset} />
+      <Route path="/catalogs" component={RegDataset} />
     </Switch>
   );
 
