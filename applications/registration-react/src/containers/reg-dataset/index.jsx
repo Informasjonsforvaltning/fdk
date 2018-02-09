@@ -36,7 +36,7 @@ class RegDataset extends React.Component {
     this.state = {
       showInactiveWarning: false
     }
-    const datasetURL = window.location.pathname.substr(6);
+    const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
     this.props.dispatch(fetchDatasetIfNeeded(datasetURL));
     this.props.dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL));
