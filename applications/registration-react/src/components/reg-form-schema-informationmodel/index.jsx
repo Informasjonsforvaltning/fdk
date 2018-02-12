@@ -78,8 +78,6 @@ let FormInformationModel = (props) => {
   return (
     <form>
       <div className="form-group">
-        <Helptext title="Informasjonsmodell" helptextItems={helptextItems.Dataset_informationModel} />
-
         {
           <div className="mt-4">
             <div className="form-group">
@@ -87,10 +85,10 @@ let FormInformationModel = (props) => {
               <FieldArray
                 name="informationModel"
                 component={renderInformationModel}
-                // titleLabel={localization.schema.informationModel.titleLabel}
-                // linkLabel={localization.schema.informationModel.linkLabel}
-                titleLabel="title label"
-                linkLabel="link label"
+                titleLabel={localization.schema.informationModel.titleLabel}
+                linkLabel={localization.schema.informationModel.linkLabel}
+                // titleLabel="title label"
+                // linkLabel="link label"
               />
             </div>
           </div>
