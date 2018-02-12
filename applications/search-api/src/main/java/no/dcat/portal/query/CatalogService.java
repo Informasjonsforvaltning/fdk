@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.query;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -7,7 +7,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
-import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,9 +36,9 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-public class PortalRestController {
+public class CatalogService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PortalRestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CatalogService.class);
     private static final String DATASET_QUERY_FILENAME = "sparql/dataset.sparql";
     private static final String CATALOG_QUERY_FILENAME = "sparql/catalog.sparql";
     private static final String GET_CATALOGS_QUERY_FILENAME = "sparql/allcatalogs.sparql";
