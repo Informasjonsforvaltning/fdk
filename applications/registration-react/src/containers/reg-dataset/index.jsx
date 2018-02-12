@@ -64,7 +64,7 @@ class RegDataset extends React.Component {
     const { values } = this.props.title;
     if (values) {
       return (
-        `${values.title.nb} ${values.description.nb}`
+        `${values.title.nb} ${values.description.nb} ${values.objective.nb}`
       );
     } return null;
   }

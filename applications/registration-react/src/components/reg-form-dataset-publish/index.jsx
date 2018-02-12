@@ -18,7 +18,8 @@ export default class DatasetPublish extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      showPublishModal: false
+      showPublishModal: false,
+      showPublishInfo: false
     };
     this.toggle = this.toggle.bind(this);
     this.handleDatasetStatus = this.handleDatasetStatus.bind(this);
@@ -26,7 +27,7 @@ export default class DatasetPublish extends Component {
 
   toggle() {
     this.setState({
-      showPublishModal: !this.state.showPublishModal
+      showPublishInfo: true
     });
   }
 
@@ -45,6 +46,11 @@ export default class DatasetPublish extends Component {
       allowedToPublish = true;
     }
     if (allowedToPublish) {
+      if (value === 'PUBLISH') {
+        this.setState({
+          showPublishInfo: true
+        })
+      }
       return axios.patch(
         postURL, values, {headers: api}
       )
@@ -113,7 +119,7 @@ export default class DatasetPublish extends Component {
               </div>
             </div>
           )}
-          {registrationStatus === 'PUBLISH' &&
+          {registrationStatus === 'PUBLISH' && this.state.showPublishInfo &&
           (
             <div className="mt-2 alert alert-success" role="alert">
               <strong>{localization.app.published}</strong> {localization.app.publishedText}
