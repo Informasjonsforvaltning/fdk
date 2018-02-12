@@ -2,12 +2,13 @@ import { REFERENCEDATASETS_REQUEST, REFERENCEDATASETS_SUCCESS, REFERENCEDATASETS
 
 export default function referenceDatasets(state = { isFetchingReferenceDatasets: false, referenceDatasetsItems: null }, action) {
   switch (action.type) {
-    case REFERENCEDATASETS_REQUEST:
+    case REFERENCEDATASETS_REQUEST: {
       return {
         ...state,
         isFetchingReferenceDatasets: true
       };
-    case REFERENCEDATASETS_SUCCESS:
+    }
+    case REFERENCEDATASETS_SUCCESS: {
       const referenceDatasetsItems = action.response.data._embedded.datasets.map(item => (
         {
           id: item.id,
@@ -20,12 +21,14 @@ export default function referenceDatasets(state = { isFetchingReferenceDatasets:
         isFetchingReferenceDatasets: false,
         referenceDatasetsItems
       }
-    case REFERENCEDATASETS_FAILURE:
+    }
+    case REFERENCEDATASETS_FAILURE: {
       return {
         ...state,
         isFetchingReferenceDatasets: false,
         referenceDatasetsItems: null
       };
+    }
     default:
       return state;
   }

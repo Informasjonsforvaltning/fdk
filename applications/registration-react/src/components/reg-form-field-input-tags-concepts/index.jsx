@@ -8,8 +8,6 @@ import '../reg-form-field-input-tags/index.scss';
 const updateInput = (updates, props) => {
   const { input } = props;
   let inputValues = input.value;
-  console.log("updateInput", JSON.stringify(inputValues));
-  console.log("value", JSON.stringify(input.value));
   if (!inputValues) {
     inputValues = []
   }
@@ -19,11 +17,11 @@ const updateInput = (updates, props) => {
 
 const handleChange = (props, tags, changed, changedIndexes) => {
   const { input } = props;
-  const user = 'user';
-  const password = 'password';
-  const base64encodedData = new Buffer(user + ':' + password).toString('base64');
+  // const user = 'user';
+  // const password = 'password';
+  // const base64encodedData = new Buffer.from(`${user  }:${  password}`).toString('base64');
   const getHeaders = new Headers();
-  //getHeaders.append('Authorization', `Basic ${base64encodedData}`);
+  // getHeaders.append('Authorization', `Basic ${base64encodedData}`);
   getHeaders.append('Accept', 'application/json');
 
   const getInit = {
@@ -32,12 +30,12 @@ const handleChange = (props, tags, changed, changedIndexes) => {
     credentials: 'same-origin'
   };
 
-  //const url = '/referenceData/subjects?uri=https://data-david.github.io/Begrep/begrep/Enhet';
+  // const url = '/referenceData/subjects?uri=https://data-david.github.io/Begrep/begrep/Enhet';
   const url = `referenceData/subjects?uri=${changed[0]}`
 
   // hvis changedIndex er mindre enn lengden av input.value, da fjerne den indeksen, hvis større så legge til
   const valueLength = input.value.length;
-  let updates = input.value;
+  const updates = input.value;
 
   if (changedIndexes < valueLength) { // skal fjerne en tag på gitt index
     updates.splice(changedIndexes[0], 1);
@@ -45,11 +43,10 @@ const handleChange = (props, tags, changed, changedIndexes) => {
   } else { // skal legge til en ny tag
     axios.get(url, getInit)
       .then((response) => {
-        console.log("axios response", JSON.stringify(response.data));
         updateInput(response.data, props);
       })
       .catch((response) => {
-        //TODO hvis ikke finnes, hvordan lagre denne verdien, som uri?
+        // TODO hvis ikke finnes, hvordan lagre denne verdien, som uri?
         const { error } = response;
         return Promise.reject(error);
       })

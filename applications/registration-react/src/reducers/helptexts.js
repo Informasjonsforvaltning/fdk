@@ -2,12 +2,13 @@ import { HELPTEXTS_REQUEST, HELPTEXTS_SUCCESS, HELPTEXTS_FAILURE } from '../cons
 
 export default function dataset(state = { isFetchingHelptext: false, helptextItems: null }, action) {
   switch (action.type) {
-    case HELPTEXTS_REQUEST:
+    case HELPTEXTS_REQUEST: {
       return {
         ...state,
         isFetchingHelptext: true
       };
-    case HELPTEXTS_SUCCESS:
+    }
+    case HELPTEXTS_SUCCESS: {
       const objFromArray = action.response.data.reduce((accumulator, current) => {
         accumulator[current.id] = current
         return accumulator
@@ -17,12 +18,14 @@ export default function dataset(state = { isFetchingHelptext: false, helptextIte
         isFetchingHelptext: false,
         helptextItems: objFromArray
       }
-    case HELPTEXTS_FAILURE:
+    }
+    case HELPTEXTS_FAILURE: {
       return {
         ...state,
         isFetchingHelptext: false,
         helptextItems: null
       };
+    }
     default:
       return state;
   }
