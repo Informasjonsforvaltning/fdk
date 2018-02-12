@@ -212,7 +212,7 @@ then
             oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4300 NODE_ENV=$environment
 
         else
-            oc env dc/registration-react REG_API_URL=https://reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4300 NODE_ENV=$environment
+            oc env dc/registration-react REG_API_URL=https://reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=/reference-data PORT=4300 NODE_ENV=$environment
         fi
     else
         # deploymentmode = onlyDeployImages
