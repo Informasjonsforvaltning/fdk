@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Helptext from '../reg-form-helptext';
+import InputTagsFieldConcepts from '../reg-form-field-input-tags-concepts';
 import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
 import asyncValidate from '../../utils/asyncValidate';
 
@@ -13,7 +14,13 @@ let FormConcept = (props) => {
     <form>
       <div className="form-group">
         <Helptext title="Begrep" helptextItems={helptextItems.Dataset_content} />
-
+        <Field
+          name="subject"
+          type="text"
+          component={InputTagsFieldConcepts}
+          label="Geografisk avgrensning"
+          fieldLabel="no"
+        />
       </div>
       <div className="form-group">
         <Helptext title="Søkeord" helptextItems={helptextItems.Dataset_keyword} />
@@ -37,6 +44,7 @@ FormConcept = reduxForm({
 const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
+      subject: (dataset.result.subject && dataset.result.subject.length > 0) ? dataset.result.subject : '',
       keyword: (dataset.result.keyword && dataset.result.keyword.length > 0) ? dataset.result.keyword : ''
     }
   }
