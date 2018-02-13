@@ -1,5 +1,3 @@
-const shouldAsyncValidate = params => {
-  return true;
-}
+const shouldAsyncValidate = params => true
 
 export default shouldAsyncValidate;

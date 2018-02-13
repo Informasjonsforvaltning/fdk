@@ -38,11 +38,9 @@ FormType = reduxForm({
   form: 'type',
   validate,
   asyncValidate,
-})(connect(state => {
-  return {
-    syncErrors: getFormSyncErrors("type")(state)
-  }
-})(FormType));
+})(connect(state => ({
+  syncErrors: getFormSyncErrors("type")(state)
+}))(FormType));
 
 const mapStateToProps = ({ dataset }) => (
   {

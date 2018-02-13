@@ -41,11 +41,9 @@ FormThemes = reduxForm({
   form: 'themes',
   validate,
   asyncValidate,
-})(connect(state => {
-  return {
-    syncErrors: getFormSyncErrors("themes")(state)
-  }
-})(FormThemes));
+})(connect(state => ({
+  syncErrors: getFormSyncErrors("themes")(state)
+}))(FormThemes));
 
 const mapStateToProps = ({ dataset, themes }) => (
   {
