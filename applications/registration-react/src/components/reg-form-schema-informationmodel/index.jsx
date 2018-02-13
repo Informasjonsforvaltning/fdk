@@ -65,10 +65,6 @@ const renderInformationModel = (props) => {
       {fields && fields.map((item, index) =>
         renderInformationModelFields(item, index, fields, props)
       )}
-      <button type="button" onClick={() => fields.push({})}>
-        <i className="fa fa-plus mr-2" />
-        Legg til
-      </button>
     </div>
   );
 };
