@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
+import { Field, FieldArray, reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 
 import localization from '../../utils/localization';
@@ -8,32 +8,59 @@ import InputField from '../reg-form-field-input';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 import { accessRights, legalBasisType } from '../../schemaTypes';
+import { validateRequired, validateMinTwoChars} from '../../validation/validation';
 
 const validate = values => {
-  const errors = {}
-  const title = (values.title && values.title.nb) ? values.title.nb : null;
-  const description = (values.description && values.description.nb) ? values.description.nb : null;
-  const objective = (values.objective && values.objective.nb) ? values.objective.nb : null;
-  const landingPage = (values.landingPage && values.landingPage[0]) ? values.landingPage[0] : null;
-  if (!title) {
-    errors.title = {nb: localization.validation.required}
-  } else if (title.length < 2) {
-    errors.title = {nb: localization.validation.minTwoChars}
+  let errors = {}
+  const accessRight = (values.accessRights && values.accessRights.uri) ? values.accessRights.uri : null;
+  const { legalBasisForRestriction, legalBasisForProcessing, legalBasisForAccess } = values;
+  let errorNodes = null;
+
+  errors = validateRequired('accessRight', accessRight, errors);
+
+  if (legalBasisForRestriction) {
+    errorNodes = legalBasisForRestriction.map((item, index) => {
+      let itemErrors = {}
+      const legalBasisForRestrictionPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const legalBasisForRestrictionURI = item.uri ? item.uri : null;
+
+      itemErrors = validateMinTwoChars('prefLabel', legalBasisForRestrictionPrefLabel, itemErrors);
+      itemErrors = validateMinTwoChars('uri', legalBasisForRestrictionURI, itemErrors, false);
+
+      return itemErrors;
+    });
   }
-  if (description && description.length < 2) {
-    errors.description = {nb: localization.validation.minTwoChars}
+  errors.legalBasisForRestriction = errorNodes;
+
+  if (legalBasisForProcessing) {
+    errorNodes = legalBasisForProcessing.map((item, index) => {
+      let itemErrors = {}
+      const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const legalBasisForProcessingURI = item.uri ? item.uri : null;
+
+      itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
+      itemErrors = validateMinTwoChars('uri', legalBasisForProcessingURI, itemErrors, false);
+
+      return itemErrors;
+    });
   }
-  if (objective && objective.length < 2) {
-    errors.objective = {nb: localization.validation.minTwoChars}
+  errors.legalBasisForProcessing = errorNodes;
+
+  if (legalBasisForAccess) {
+    errorNodes = legalBasisForAccess.map((item, index) => {
+      let itemErrors = {}
+      const legalBasisForAccessPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const legalBasisForAccessURI = item.uri ? item.uri : null;
+
+      itemErrors = validateMinTwoChars('prefLabel', legalBasisForAccessPrefLabel, itemErrors);
+      itemErrors = validateMinTwoChars('uri', legalBasisForAccessURI, itemErrors, false);
+
+      return itemErrors;
+    });
   }
-  if (landingPage && landingPage.length < 2) {
-    errors.landingPage = [localization.validation.minTwoChars]
-  }
-  /*
-   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-   errors.email = 'Invalid email address'
-   }
-   */
+  errors.legalBasisForAccess = errorNodes;
+
+
   return errors
 }
 
@@ -95,7 +122,7 @@ const renderLegalBasis = (props) => {
 };
 
 let FormAccessRights = (props) => {
-  const { helptextItems, hasAccessRightsURI } = props;
+  const { syncErrors: { accessRight }, helptextItems, hasAccessRightsURI } = props;
   return (
     <form>
       <div className="form-group">
@@ -124,6 +151,10 @@ let FormAccessRights = (props) => {
           value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
           label="Unntatt offentlighet"
         />
+
+        {accessRight &&
+        <div className="alert alert-danger mt-3">{accessRight.nb}</div>
+        }
 
         {
           (hasAccessRightsURI === 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED' ||
@@ -166,20 +197,20 @@ let FormAccessRights = (props) => {
   )
 }
 
+const selector = formValueSelector('accessRights');
+
 FormAccessRights = reduxForm({
   form: 'accessRights',
   validate,
   asyncValidate,
-})(FormAccessRights)
-
-// Decorate with connect to read form values
-const selector = formValueSelector('accessRights')
-FormAccessRights = connect(state => {
+})(connect(state => {
   const hasAccessRightsURI = selector(state, 'accessRights.uri')
   return {
     hasAccessRightsURI,
+    syncErrors: getFormSyncErrors("accessRights")(state)
   }
-})(FormAccessRights)
+})(FormAccessRights));
+
 
 const mapStateToProps = ({ dataset }) => (
   {
