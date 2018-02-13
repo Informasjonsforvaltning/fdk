@@ -28,7 +28,7 @@ import FormReference from '../../components/reg-form-schema-reference';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
 import TimeoutModal from '../../components/app-timeout-modal';
 import FormInformationModel from '../../components/reg-form-schema-informationmodel';
-import FormContact from '../../components/reg-form-schema-contact';
+import FormContactPoint from '../../components/reg-form-schema-contactPoint';
 import './index.scss';
 
 
@@ -194,7 +194,7 @@ class RegDataset extends React.Component {
               <FormTemplate
                 title="Kontaktinformasjon"
               >
-                <FormContact
+                <FormContactPoint
                   helptextItems={helptextItems}
                 />
               </FormTemplate>
