@@ -96,11 +96,13 @@ public class DcatAdminController {
     @RequestMapping(value = "/admin/harvestDcatSource", method = RequestMethod.GET)
     public ModelAndView harvestDcatSource(@RequestParam("id") String dcatSourceId, ModelMap model) {
         logger.info("Start harvest of dcat source: " + dcatSourceId);
+        String urlString = applicationSettings.getHarvesterUrl() + "/api/admin/harvest?id=" + dcatSourceId;
         try {
-            URL url = new URL(applicationSettings.getHarvesterUrl() + "/api/admin/harvest?id=" + dcatSourceId);
+            URL url = new URL(urlString);
             url.openConnection().getInputStream();
         } catch (Exception e) {
-            logger.error("Unable to open connection to harvester {}", e.getMessage(),e);
+
+            logger.error("Unable to open connection to harvester {} due to {}", urlString, e.getMessage());
 
         }
 

@@ -113,8 +113,8 @@ public class CatalogService {
 
             builder.append("<html>");
             builder.append("<head>");
-            builder.append("<link rel='stylesheet' href='webjars/bootstrap/3.3.7/css/bootstrap.min.css' media='all'/>");
-            builder.append("<link rel='stylesheet' href='css/main.css' media='all'/>");
+            builder.append("<link rel='stylesheet' href='/static/bootstrap.min.css' media='all'/>");
+            builder.append("<link rel='stylesheet' href='/static/styles.css' media='all'/>");
             builder.append("</head>");
             builder.append("<body>");
             builder.append("<h1>Velg katalog for nedlasting</h1>");
