@@ -48,3 +48,10 @@ export const informationModelType = {
   extraType: null
 }
 
+export const contactPointType = {
+  email: '',
+  hasTelephone: '',
+  hasURL: '',
+  organizationUnit: ''
+}
+

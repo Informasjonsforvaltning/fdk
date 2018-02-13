@@ -6,7 +6,7 @@ import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import asyncValidate from '../../utils/asyncValidate';
-import { informationModelType } from '../../schemaTypes';
+import { contactPointType } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}
@@ -43,42 +43,36 @@ let FormContactPoint = (props) => {
     <form>
       <div className="form-group">
         <Helptext title="Kontaktpunkt" helptextItems={"plassholder for hjelpetekst kontaktpunkt"} />
-        <Field name="organizationUnit" component={InputField} label="Kontaktpunkt" />
+        <Field name="contactPoint[0].organizationUnit" component={InputField} label="Kontaktpunkt" />
       </div>
       <div className="form-group">
         <Helptext title="Kontaktskjema" helptextItems={helptextItems.ContactPoint_hasURL} />
-        <Field name="hasURL" component={InputField} label="Kontaktskjema" />
+        <Field name="contactPoint[0].hasURL" component={InputField} label="Kontaktskjema" />
       </div>
       <div className="form-group">
         <Helptext title="E-post" helptextItems={helptextItems.ContactPoint_hasEmail} />
-        <Field name="email" component={InputField} label="E-post" />
+        <Field name="contactPoint[0].email" component={InputField} label="E-post" />
       </div>
       <div className="form-group">
         <Helptext title="Telefon" helptextItems={helptextItems.ContactPoint_hasTelephone} />
-        <Field name="hasTelephone" component={InputField} label="Telefon" />
+        <Field name="contactPoint[0].hasTelephone" component={InputField} label="Telefon" />
       </div>
     </form>
   )
 }
 
 FormContactPoint = reduxForm({
-  form: 'contactPoint',
+  form: 'contactPoint[0]',
   validate,
   asyncValidate,
   asyncChangeFields: [],
 })(FormContactPoint)
 
+
 const mapStateToProps = ({ dataset }) => (
   {
-    initialValues: {
-      organizationUnit: 'organisasjonsenhet',
-      hasURL: 'en url',
-      email: 'en epostadresse',
-      hasTelephone: 'et telefonnummer'
-      //organizationUnit: dataset.result.contactPoint.organizationUnit || '',
-      //hasUrl: dataset.result.contactPoint.hasUrl || '',
-      //email: dataset.result.contactPoint.email || '',
-      //hasTelephone: dataset.result.contactPoint.hasTelephone || '',
+    initalValues: {
+      contactPoint: (dataset.result.contactPoint && dataset.result.contactPoint.length > 0) ? dataset.result.contactPoint : []
     }
   }
 )
