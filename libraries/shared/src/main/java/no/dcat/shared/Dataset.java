@@ -28,6 +28,8 @@ public class Dataset {
     //Norwegian: Beskrivelse
     private Map<String,String> description;
 
+    private Map<String,String> descriptionFormatted;
+
     //dcatno:objective
     //Norwegian: Formål
     private Map<String,String> objective;
