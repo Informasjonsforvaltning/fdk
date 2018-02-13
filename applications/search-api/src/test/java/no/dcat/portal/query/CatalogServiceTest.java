@@ -40,17 +40,17 @@ import static org.mockito.Mockito.spy;
 public class CatalogServiceTest {
     private static Logger logger = LoggerFactory.getLogger(CatalogServiceTest.class);
 
-    private CatalogService portal;
+    private CatalogService catalogService;
 
     @Before
     public void setup() {
-        portal = new CatalogService();
+        catalogService = new CatalogService();
     }
 
 
     @Test
     public void getCatalogsOK() throws Throwable {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         // Load testdatasett in model
         Resource mResource = new ClassPathResource("data.ttl");
@@ -64,7 +64,7 @@ public class CatalogServiceTest {
 
         doReturn(qe).when(spy).getQueryExecution(anyObject());
 
-        ResponseEntity<String> response = spy.getCatalogs("text/html");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getBody().contains("/catalogs?id="), is(true));
 
@@ -72,11 +72,11 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogsFailsOnIOError() throws Throwable {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         doThrow(new IOException("force exception")).when(spy).read(anyObject());
 
-        ResponseEntity<String> response = spy.getCatalogs("text/html");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
 
@@ -84,7 +84,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogsFailsOnNoCatalogsFound() throws Throwable {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         // read modelfile with no catalog in
         Resource mResource = new ClassPathResource("data-no-catalog.ttl");
@@ -98,7 +98,7 @@ public class CatalogServiceTest {
         doReturn(qe).when(spy).getQueryExecution(anyObject());
 
         // do call
-        ResponseEntity<String> response = spy.getCatalogs("text/html");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
 
@@ -107,7 +107,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogDcatOk() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -118,7 +118,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getDatasetDcatFormatsOK() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         final String[] acHeaders = {"application/ld+json", "json", "ld+json", "application/rdf+xml", "rdf", "text/turtle", "turtle"};
@@ -138,7 +138,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogDcatWrongAcceptHeader() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -149,7 +149,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogDcatWrongFormat() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -161,7 +161,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogDcatIdNotFound() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn(null).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -172,7 +172,7 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogDcatIdThrowsNotFound() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doThrow(new NoSuchElementException("NSEE")).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -183,7 +183,7 @@ public class CatalogServiceTest {
 
     @Test
     public void findResourceByIdOK() throws Throwable {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -207,7 +207,7 @@ public class CatalogServiceTest {
 
     @Test
     public void findResourceWithunknownIdReturnsNull() throws Throwable {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -229,7 +229,7 @@ public class CatalogServiceTest {
 
     @Test
     public void exportDatasetFusekiNotFound() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getDatasetDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -240,7 +240,7 @@ public class CatalogServiceTest {
 
     @Test
     public void exportCatalogFusekiNotFound() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -251,7 +251,7 @@ public class CatalogServiceTest {
 
     @Test
     public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
                 null, "application/ld+json", "sparql/nofile.sparql");
@@ -262,7 +262,7 @@ public class CatalogServiceTest {
 
     @Test
     public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(anyObject());
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -273,10 +273,10 @@ public class CatalogServiceTest {
 
     @Test
     public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() {
-        CatalogService spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(anyObject());
 
-        ResponseEntity<String> response = spy.getCatalogs("*/*");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
