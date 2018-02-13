@@ -29,7 +29,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -107,7 +106,7 @@ public class CatalogServiceTest {
 
 
     @Test
-    public void getCatalogDcatOk() throws Throwable {
+    public void getCatalogDcatOk() {
         CatalogService spy = spy(portal);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
@@ -118,7 +117,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void getDatasetDcatFormatsOK() throws Throwable {
+    public void getDatasetDcatFormatsOK() {
         CatalogService spy = spy(portal);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
@@ -138,7 +137,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void getCatalogDcatWrongAcceptHeader() throws Throwable {
+    public void getCatalogDcatWrongAcceptHeader() {
         CatalogService spy = spy(portal);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
@@ -149,7 +148,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void getCatalogDcatWrongFormat() throws Throwable {
+    public void getCatalogDcatWrongFormat() {
         CatalogService spy = spy(portal);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
@@ -161,7 +160,7 @@ public class CatalogServiceTest {
 
 
     @Test
-    public void getCatalogDcatIdNotFound() throws Throwable {
+    public void getCatalogDcatIdNotFound() {
         CatalogService spy = spy(portal);
         doReturn(null).when(spy).findResourceById(anyString(), anyString(), anyString());
 
@@ -172,7 +171,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void getCatalogDcatIdThrowsNotFound() throws Throwable {
+    public void getCatalogDcatIdThrowsNotFound() {
         CatalogService spy = spy(portal);
         doThrow(new NoSuchElementException("NSEE")).when(spy).findResourceById(anyString(), anyString(), anyString());
 
@@ -229,7 +228,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void exportDatasetFusekiNotFound() throws Throwable {
+    public void exportDatasetFusekiNotFound() {
         CatalogService spy = spy(portal);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
@@ -240,7 +239,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void exportCatalogFusekiNotFound() throws Throwable {
+    public void exportCatalogFusekiNotFound() {
         CatalogService spy = spy(portal);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
@@ -251,7 +250,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() throws Throwable {
+    public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() {
         CatalogService spy = spy(portal);
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -262,7 +261,7 @@ public class CatalogServiceTest {
 
 
     @Test
-    public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() throws Throwable {
+    public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() {
         CatalogService spy = spy(portal);
         doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(anyObject());
 
@@ -273,7 +272,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() throws Throwable {
+    public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() {
         CatalogService spy = spy(portal);
         doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(anyObject());
 
