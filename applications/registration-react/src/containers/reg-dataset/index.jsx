@@ -63,9 +63,10 @@ class RegDataset extends React.Component {
   _titleValues() {
     const { values } = this.props.title;
     if (values) {
-      return (
-        `${values.title.nb} ${values.description.nb} ${values.objective.nb}`
-      );
+      const retVal = `${values.title.nb} ${values.description.nb} ${values.objective.nb}`
+      if (retVal.trim().length > 0) {
+        return retVal;
+      }
     } return null;
   }
 
@@ -119,6 +120,7 @@ class RegDataset extends React.Component {
               <FormTemplate
                 title="Tittel og beskrivelse"
                 values={this._titleValues()}
+                syncErrors={title.syncErrors}
               >
                 <FormTitle
                   helptextItems={helptextItems}

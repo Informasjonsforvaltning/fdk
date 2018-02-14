@@ -54,7 +54,7 @@ let FormTitle = (props) => {
   return (
     <form>
       <div className="form-group">
-        <Helptext title="Tittel" required helptextItems={helptextItems.Distribution_modified} />
+        <Helptext title="Tittel" required helptextItems={helptextItems.Dataset_title} />
         <Field name="title.nb" component={InputField} label="Tittel" />
       </div>
       <div className="form-group">

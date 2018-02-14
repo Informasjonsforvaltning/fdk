@@ -15,7 +15,7 @@ export default class FormTemplate extends Component {
   }
 
   render() {
-    const { title, values } = this.props;
+    const { title, values, syncErrors } = this.props;
     const collapseClass = cx(
       'fdk-reg_collapse',
       {
@@ -33,17 +33,25 @@ export default class FormTemplate extends Component {
     );
     return (
       <div className={collapseClass}>
-        <button className="d-flex flex-column align-items-start text-left no-padding w-100" onClick={this.toggle}>
-          <div className="d-flex">
+        <button className="d-flex justify-content-between no-padding w-100" onClick={this.toggle}>
+          <div>
+            <div className="d-flex">
             <i className={collapseIconClass} />
             <h2 className="mb-0">{ title }</h2>
+            </div>
+            {!this.state.collapse && values &&
+            <div className="d-flex">
+              <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
+              {values}
+            </div>
+            }
           </div>
-          {!this.state.collapse && values && values.replace(" ", "").length > 0 &&
-          <div className="d-flex">
-            <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
-            {values}
-          </div>
-          }
+          {syncErrors &&
+          (
+            <div>
+              <i className="fa fa-exclamation-triangle fdk-color-red" />
+            </div>
+          )}
         </button>
         <Collapse
           className="mt-3"
