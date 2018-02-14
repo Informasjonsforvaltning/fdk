@@ -22,7 +22,7 @@ ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
-
+        <Header />
         {routes}
         <Footer />
       </div>

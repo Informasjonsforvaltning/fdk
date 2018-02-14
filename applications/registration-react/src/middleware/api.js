@@ -2,14 +2,16 @@ import axios from 'axios';
 
 function callApi(url) {
 
+  /*
   const getHeaders = new Headers();
   getHeaders.append('pragma', 'no-cache');
   getHeaders.append('cache-control', 'no-cache');
   getHeaders.append('Accept', 'application/json');
+  */
 
   const getInit = {
     method: 'GET',
-    headers: getHeaders,
+    // headers: getHeaders,
     credentials: 'same-origin'
   };
 

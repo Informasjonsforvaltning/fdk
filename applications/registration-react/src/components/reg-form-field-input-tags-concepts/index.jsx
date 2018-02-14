@@ -20,13 +20,14 @@ const handleChange = (props, tags, changed, changedIndexes) => {
   // const user = 'user';
   // const password = 'password';
   // const base64encodedData = new Buffer.from(`${user  }:${  password}`).toString('base64');
-  const getHeaders = new Headers();
-  // getHeaders.append('Authorization', `Basic ${base64encodedData}`);
-  getHeaders.append('Accept', 'application/json');
 
+  /*
+  const getHeaders = new Headers();
+  getHeaders.append('Accept', 'application/json');
+  */
   const getInit = {
     method: 'GET',
-    headers: getHeaders,
+    // headers: getHeaders,
     credentials: 'same-origin'
   };
 
