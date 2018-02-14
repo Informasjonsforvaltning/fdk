@@ -51,11 +51,15 @@ let FormContactPoint = (props) => {
       </div>
       <div className="form-group">
         <Helptext title="E-post" helptextItems={helptextItems.ContactPoint_hasEmail} />
-        <Field name="contactPoint[0].email" component={InputField} label="E-post" />
+        <div className="w-50">
+          <Field name="contactPoint[0].email" component={InputField} label="E-post" />
+        </div>
       </div>
       <div className="form-group">
         <Helptext title="Telefon" helptextItems={helptextItems.ContactPoint_hasTelephone} />
-        <Field name="contactPoint[0].hasTelephone" component={InputField} label="Telefon" />
+        <div className="w-25">
+          <Field name="contactPoint[0].hasTelephone" component={InputField} label="Telefon" />
+        </div>
       </div>
     </form>
   )
