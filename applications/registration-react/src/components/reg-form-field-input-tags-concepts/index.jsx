@@ -21,13 +21,13 @@ const handleChange = (props, tags, changed, changedIndexes) => {
   // const password = 'password';
   // const base64encodedData = new Buffer.from(`${user  }:${  password}`).toString('base64');
 
-  /*
-  const getHeaders = new Headers();
-  getHeaders.append('Accept', 'application/json');
-  */
+  const header = {
+    Accept: 'application/json'
+  }
+
   const getInit = {
     method: 'GET',
-    // headers: getHeaders,
+    headers: header,
     credentials: 'same-origin'
   };
 
@@ -52,28 +52,6 @@ const handleChange = (props, tags, changed, changedIndexes) => {
         return Promise.reject(error);
       })
   }
-  /*
-  updates.push
-  (
-    {
-      uri: "https://data-david.github.io/Begrep/begrep/Enhet",
-      identifier: "https://data-david.github.io/Begrep/begrep/Enhet",
-      prefLabel: {
-        no: changed[0]
-      },
-      altLabel: null,
-      definition: {
-        no: "alt som er registrert med et organisasjonsnummer "
-      },
-      note: {
-        no: "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."
-      },
-      source: "https://jira.brreg.no/browse/BEGREP-208",
-      creator: null,
-      inScheme: null
-    }
-  );
-  */
 }
 
 const InputTagsFieldConcepts  = (props) => {

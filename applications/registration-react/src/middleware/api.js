@@ -9,9 +9,15 @@ function callApi(url) {
   getHeaders.append('Accept', 'application/json');
   */
 
+  const header = {
+    pragma: 'no-cache',
+    ['cache-control']: 'no-cache',
+    Accept: 'application/json'
+  }
+
   const getInit = {
     method: 'GET',
-    // headers: getHeaders,
+    headers: header,
     credentials: 'same-origin'
   };
 
