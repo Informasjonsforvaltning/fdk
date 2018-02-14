@@ -25,7 +25,7 @@ const validate = values => {
       const legalBasisForRestrictionURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars('prefLabel', legalBasisForRestrictionPrefLabel, itemErrors);
-      itemErrors = validateMinTwoChars('uri', legalBasisForRestrictionURI, itemErrors, false);
+      itemErrors = validateMinTwoChars('uri', legalBasisForRestrictionURI, itemErrors, null, false);
 
       return itemErrors;
     });
@@ -39,7 +39,7 @@ const validate = values => {
       const legalBasisForProcessingURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
-      itemErrors = validateMinTwoChars('uri', legalBasisForProcessingURI, itemErrors, false);
+      itemErrors = validateMinTwoChars('uri', legalBasisForProcessingURI, itemErrors, null, false);
 
       return itemErrors;
     });
@@ -53,7 +53,7 @@ const validate = values => {
       const legalBasisForAccessURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars('prefLabel', legalBasisForAccessPrefLabel, itemErrors);
-      itemErrors = validateMinTwoChars('uri', legalBasisForAccessURI, itemErrors, false);
+      itemErrors = validateMinTwoChars('uri', legalBasisForAccessURI, itemErrors, null, false);
 
       return itemErrors;
     });

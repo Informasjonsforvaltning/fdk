@@ -10,6 +10,7 @@ import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
+import { validateMinTwoChars, validateLinkReturnAsSkosType, validateURL } from '../../validation/validation';
 
 const validate = values => {
   const errors = {}
@@ -17,61 +18,36 @@ const validate = values => {
   let errorNodes = null;
 
   if (distribution) {
-    errorNodes = distribution.map((item, index) => {
-      const errors = {}
-      const description = (item.description && item.description.nb) ? item.description.nb : null;
+    errorNodes = distribution.map(item => {
+      let errors = {}
+
+      const accessURL = item.accessURL ? item.accessURL : null;
       const license = (item.license && item.license.uri) ? item.license.uri : null;
-      const page = (item.page && item.page[index] && item.page[index].uri) ? item.page[index].uri : null;
+      const description = (item.description && item.description.nb) ? item.description.nb : null;
+      const page = (item.page && item.page[0] && item.page[0].uri) ? item.page[0].uri : null;
+      const { conformsTo } = item || null;
 
-      if (license && license.length < 2) {
-        errors.license = { uri: localization.validation.minTwoChars}
-      }
+      errors = validateURL('accessURL', accessURL, errors, true);
+      errors = validateMinTwoChars('license', license, errors, 'uri');
+      errors = validateMinTwoChars('description', description, errors);
+      errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
 
-      if (description && description.length < 2) {
-        errors.description = { nb: localization.validation.minTwoChars}
+      if (conformsTo) {
+        errorNodes = conformsTo.map((item, index) => {
+          let itemErrors = {}
+          const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+          const conformsToURI = item.uri ? item.uri : null;
+          itemErrors = validateMinTwoChars('prefLabel', conformsToPrefLabel, itemErrors);
+          itemErrors = validateURL('uri', conformsToURI, itemErrors);
+          return itemErrors;
+        });
       }
-
-      if (page && page.length < 2) {
-        errors.page = [{uri: localization.validation.minTwoChars}]
-      }
+      errors.conformsTo = errorNodes;
 
       return errors;
     });
   }
   errors.distribution = errorNodes;
-
-  /*
-   let themeNodes = null;
-   const { themes, selectedLanguageCode } = this.props;
-   if (themes) {
-   themeNodes = themes.map(singleTheme => (
-   <div
-   key={`dataset-description-theme-${singleTheme.code}`}
-   id={`dataset-description-theme-${singleTheme.code}`}
-   className="fdk-label fdk-label-on-grey"
-   >
-   {getTranslateText(singleTheme.title, selectedLanguageCode)}
-   </div>
-   ));
-   }
-   return themeNodes;
-
-   */
-
-
-  // errors.distribution = {accessURL: localization.validation.minTwoChars}
-
-  /*
-   if (values.distribution.description.length < 2) {
-   errors.distribution.description = localization.validation.minTwoChars
-   }
-   */
-
-  /*
-   if (values.distribution.accessURL.length < 2) {
-   errors.distribution.accessURL = localization.validation.minTwoChars
-   }
-   */
 
   return errors
 }

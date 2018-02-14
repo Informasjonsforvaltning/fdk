@@ -39,7 +39,9 @@
     "required": "Obligatorisk felt, må fylles ut.",
     "minTwoChars": "Feltet må ha minimum to tegn.",
     "validateDataset": "Datasettet er ikke validert korrekt!",
-    "validateDatasetBody": "Datasettet kunne ikke publiseres på grunn av ikke alle felter er validert korrekt. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
+    "validateDatasetBody": "Datasettet kunne ikke publiseres på grunn av ikke alle felter er validert korrekt. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt.",
+    "validateLink": "Feltet er ikke en gyldig URL",
+    "validateEmail": "Ikke gyldig e-post"
   },
   "schema": {
     "accessRights": {

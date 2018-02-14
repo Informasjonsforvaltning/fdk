@@ -4,20 +4,18 @@ import { connect } from 'react-redux'
 import moment from 'moment';
 import _throttle from 'lodash/throttle';
 
-import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import SelectField from '../reg-form-field-select';
 import TextAreaField from '../reg-form-field-textarea';
 import DatepickerField from '../reg-form-field-datepicker';
 import asyncValidate from '../../utils/asyncValidate';
-
+import { validateMinTwoChars } from '../../validation/validation';
 
 const validate = values => {
-  const errors = {}
-  const spatial = (values.spatial && values.spatial.uri) ? values.spatial.uri : null;
-  if (spatial && spatial.length < 2) {
-    errors.spatial = { uri: localization.validation.minTwoChars}
-  }
+  let errors = {}
+  let errorHasCurrentnessAnnotation = {};
+  const hasCurrentnessAnnotation = (values.hasCurrentnessAnnotation && values.hasCurrentnessAnnotation.hasBody) ? values.hasCurrentnessAnnotation.hasBody.no : null;
+  errors.hasCurrentnessAnnotation = validateMinTwoChars('hasBody', hasCurrentnessAnnotation, errorHasCurrentnessAnnotation, 'no');
   return errors
 }
 

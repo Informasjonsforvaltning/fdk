@@ -8,11 +8,10 @@ import TextAreaField from '../reg-form-field-textarea';
 import asyncValidate from '../../utils/asyncValidate';
 import shouldAsyncValidate from '../../utils/shouldAsyncValidate';
 import { textType, emptyArray } from '../../schemaTypes';
-import { validateRequired, validateMinTwoChars} from '../../validation/validation';
+import { validateRequired, validateMinTwoChars, validateURL } from '../../validation/validation';
 
 const validate = values => {
   let errors = {}
-
   const title = (values.title && values.title.nb) ? values.title.nb : null;
   const description = (values.description && values.description.nb) ? values.description.nb : null;
   const objective = (values.objective && values.objective.nb) ? values.objective.nb : null;
@@ -26,12 +25,7 @@ const validate = values => {
 
   errors = validateMinTwoChars('objective', objective, errors);
 
-
-  /*
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(landingPage)) {
-    errors.landingPage = {nb: 'Feiler'}
-  }
-  */
+  errors = validateURL('landingPage', landingPage, errors, true);
 
   return errors
 }
