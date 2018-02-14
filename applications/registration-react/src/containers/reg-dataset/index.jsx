@@ -29,6 +29,7 @@ import DatasetPublish from '../../components/reg-form-dataset-publish';
 import TimeoutModal from '../../components/app-timeout-modal';
 import FormInformationModel from '../../components/reg-form-schema-informationmodel';
 import FormContactPoint from '../../components/reg-form-schema-contactPoint';
+import FormContents from '../../components/reg-form-schema-contents';
 import './index.scss';
 
 
@@ -171,6 +172,14 @@ class RegDataset extends React.Component {
                 title="Opphav og ferskhet"
               >
                 <FormProvenance
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Innhold"
+              >
+                <FormContents
                   helptextItems={helptextItems}
                 />
               </FormTemplate>

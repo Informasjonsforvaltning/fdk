@@ -55,3 +55,32 @@ export const contactPointType = {
   organizationUnit: ''
 }
 
+export const conformsToType = {
+  uri: '',
+  prefLabel: textType,
+  extraType: null
+}
+
+export const relevanceAnnotationType = {
+  inDimension: 'iso:Relevance',
+  motivatedBy: 'dqv:qualityAssessment',
+  hasBody: textType
+}
+
+export const accuracyAnnotationType = {
+  inDimension: 'iso:Accuracy',
+  motivatedBy: 'dqv:qualityAssessment',
+  hasBody: textType
+}
+
+export const completenessAnnotationType = {
+  inDimension: 'iso:Completeness',
+  motivatedBy: 'dqv:qualityAssessment',
+  hasBody: textType
+}
+
+export const availabilityAnnotationType = {
+  inDimension: 'iso:Availability',
+  motivatedBy: 'dqv:qualityAssessment',
+  hasBody: textType
+}

@@ -58,6 +58,10 @@
     "informationModel": {
       "titleLabel": "Tittel på informasjonsmodell",
       "linkLabel": "Lenke til informasjonsmodell"
+    },
+    "conformsTo": {
+      "titleLabel": "Tittel på standard",
+      "linkLabel": "Lenke til standard"
     }
   },
   "inactiveSessionWarning": {

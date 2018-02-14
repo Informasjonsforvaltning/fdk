@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
+import TextAreaField from '../reg-form-field-textarea';
 import asyncValidate from '../../utils/asyncValidate';
-import { informationModelType } from '../../schemaTypes';
+import { conformsToType, relevanceAnnotationType, completenessAnnotationType, accuracyAnnotationType, availabilityAnnotationType } from '../../schemaTypes';
 
 // skal disse være med her - de validerer jo felt et annet sted?
 const validate = values => {
@@ -58,39 +59,56 @@ const renderStandardFields = (item, index, fields, props) => (
   </div>
 );
 
+//At the moment, support only one standard entry
 const renderStandard = (props) => {
   const { fields } = props;
   return (
     <div>
       {fields && fields.map((item, index) =>
-        renderStandard(item, index, fields, props)
+        renderStandardFields(item, index, fields, props)
       )}
     </div>
   );
 };
 
+
 let FormContents = (props) => {
-  const { helptextItems, hasInformationModelUri } = props;
+  const { helptextItems, hasConformsToUri } = props;
   return (
     <form>
       <div className="form-group">
         {
           <div className="mt-4">
             <div className="form-group">
-              <Helptext title="Standard" helptextItems={helptextItems.Dataset_informationModel} />
+              <Helptext title="Standard" helptextItems={helptextItems.Dataset_conformsTo} />
               <FieldArray
-                name="informationModel"
+                name="conformsTo"
                 component={renderStandard}
                 titleLabel={localization.schema.conformsTo.titleLabel}
                 linkLabel={localization.schema.conformsTo.linkLabel}
-                // titleLabel="title label"
-                // linkLabel="link label"
               />
             </div>
           </div>
         }
       </div>
+      <div className="form-group">
+        <Helptext title="Relevans" helptextItems={helptextItems.Dataset_hasQualityAnnotation_relevance} />
+        <Field name="hasRelevanceAnnotation.hasBody.nb" component={TextAreaField} label="Relevans" />
+      </div>
+      <div className="form-group">
+        <Helptext title="Kompletthet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_completeness} />
+        <Field name="hasCompletenessAnnotation.hasBody.nb" component={TextAreaField} label="Kompletthet" />
+      </div>
+      <div className="form-group">
+        <Helptext title="Nøyaktighet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_accuracy} />
+        <Field name="hasAccuracyAnnotation.hasBody.nb" component={TextAreaField} label="Nøyaktighet" />
+      </div>
+      <div className="form-group">
+        <Helptext title="Tilgjengelighet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_availability} />
+        <Field name="hasAvailabilityAnnotation.hasBody.nb" component={TextAreaField} label="Tilgjengelighet" />
+      </div>
     </form>
+
   )
 }
 
@@ -101,18 +119,22 @@ FormContents = reduxForm({
 })(FormContents)
 
 // Decorate with connect to read form values
-const selector = formValueSelector('contents')
+const selector = formValueSelector('conformsTo')
 FormContents = connect(state => {
-  const hasInformationModelUri = selector(state, 'informationModel.uri') //todo: endre
+  const hasConformsToUri = selector(state, 'conformsTo.uri')
   return {
-    hasInformationModelUri,
+    hasConformsToUri,
   }
 })(FormContents)
 
 const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
-      informationModel: (dataset.result.informationModel && dataset.result.informationModel.length > 0) ? dataset.result.informationModel : [informationModelType],
+      conformsTo: (dataset.result.conformsTo && dataset.result.conformsTo.length > 0) ? dataset.result.conformsTo : [conformsToType],
+      hasRelevanceAnnotation: dataset.result.hasRelevanceAnnotation || relevanceAnnotationType,
+      hasCompletenessAnnotation: dataset.result.hasCompletenessAnnotation || completenessAnnotationType,
+      hasAccuracyAnnotation: dataset.result.hasAccuracyAnnotation || accuracyAnnotationType,
+      hasAvailabilityAnnotation: dataset.result.hasAvailabilityAnnotation || availabilityAnnotationType
     }
   }
 )
