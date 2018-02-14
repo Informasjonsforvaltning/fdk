@@ -116,6 +116,7 @@ FormContents = reduxForm({
   form: 'contents',
   validate,
   asyncValidate,
+  asyncChangeFields: [],
 })(FormContents)
 
 // Decorate with connect to read form values
