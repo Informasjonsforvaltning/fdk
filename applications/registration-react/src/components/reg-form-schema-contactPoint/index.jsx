@@ -71,9 +71,8 @@ FormContactPoint = reduxForm({
 
 const mapStateToProps = ({ dataset }) => (
   {
-    initalValues: {
-      contactPoint: dataset.result.contactPoint || [contactPointType]
-      //contactPoint: (dataset.result.contactPoint && dataset.result.contactPoint.length > 0) ? dataset.result.contactPoint : [contactPointType]
+    initialValues: {
+      contactPoint: (dataset.result.contactPoint && dataset.result.contactPoint.length > 0) ? dataset.result.contactPoint : [contactPointType],
     }
   }
 
