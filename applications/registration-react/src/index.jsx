@@ -23,6 +23,7 @@ ReactDOM.render((
     <BrowserRouter>
       <div>
 
+        {routes}
         <Footer />
       </div>
     </BrowserRouter>
