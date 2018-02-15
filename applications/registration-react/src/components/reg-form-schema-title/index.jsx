@@ -1,39 +1,32 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
+import { Field, FieldArray, reduxForm, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 
-import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import TextAreaField from '../reg-form-field-textarea';
 import asyncValidate from '../../utils/asyncValidate';
+import shouldAsyncValidate from '../../utils/shouldAsyncValidate';
 import { textType, emptyArray } from '../../schemaTypes';
+import { validateRequired, validateMinTwoChars, validateURL } from '../../validation/validation';
 
 const validate = values => {
-  const errors = {}
+  let errors = {}
   const title = (values.title && values.title.nb) ? values.title.nb : null;
   const description = (values.description && values.description.nb) ? values.description.nb : null;
   const objective = (values.objective && values.objective.nb) ? values.objective.nb : null;
   const landingPage = (values.landingPage && values.landingPage[0]) ? values.landingPage[0] : null;
-  if (!title) {
-    errors.title = {nb: localization.validation.required}
-  } else if (title.length < 2) {
-    errors.title = {nb: localization.validation.minTwoChars}
-  }
-  if (description && description.length < 2) {
-    errors.description = {nb: localization.validation.minTwoChars}
-  }
-  if (objective && objective.length < 2) {
-    errors.objective = {nb: localization.validation.minTwoChars}
-  }
-  if (landingPage && landingPage.length < 2) {
-    errors.landingPage = [localization.validation.minTwoChars]
-  }
-  /*
-   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-   errors.email = 'Invalid email address'
-   }
-   */
+
+  errors = validateRequired('title', title, errors);
+  errors = validateMinTwoChars('title', title, errors);
+
+  errors = validateRequired('description', description, errors);
+  errors = validateMinTwoChars('description', description, errors);
+
+  errors = validateMinTwoChars('objective', objective, errors);
+
+  errors = validateURL('landingPage', landingPage, errors, true);
+
   return errors
 }
 
@@ -51,11 +44,11 @@ const renderLandingpage = ({ fields }) => (
 );
 
 let FormTitle = (props) => {
-  const { helptextItems } = props;
+  const { syncErrors, helptextItems } = props;
   return (
     <form>
       <div className="form-group">
-        <Helptext title="Tittel" required helptextItems={helptextItems.Distribution_modified} />
+        <Helptext title="Tittel" required helptextItems={helptextItems.Dataset_title} />
         <Field name="title.nb" component={InputField} label="Tittel" />
       </div>
       <div className="form-group">
@@ -79,14 +72,27 @@ let FormTitle = (props) => {
   )
 }
 
+/*
 FormTitle = reduxForm({
   form: 'title',
   validate,
+  shouldAsyncValidate,
   asyncValidate,
   asyncChangeFields: [],
 })(FormTitle)
+*/
 
-const mapStateToProps = ({ dataset }) => (
+FormTitle = reduxForm({
+  form: 'title',
+  validate,
+  shouldAsyncValidate,
+  asyncValidate,
+  asyncChangeFields: [],
+})(connect(state => ({
+  syncErrors: getFormSyncErrors("title")(state)
+}))(FormTitle));
+
+const mapStateToProps = ({ dataset }, state) => (
   {
     initialValues: {
       title: (dataset.result.title && dataset.result.title.nb && dataset.result.title.nb.length > 0) ? dataset.result.title : textType,

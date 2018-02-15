@@ -2,12 +2,13 @@ import { PROVENANCE_REQUEST, PROVENANCE_SUCCESS, PROVENANCE_FAILURE } from '../c
 
 export default function provenance(state = { isFetchingProvenance: false, provenanceItems: null }, action) {
   switch (action.type) {
-    case PROVENANCE_REQUEST:
+    case PROVENANCE_REQUEST: {
       return {
         ...state,
         isFetchingProvenance: true
       };
-    case PROVENANCE_SUCCESS:
+    }
+    case PROVENANCE_SUCCESS: {
       const objFromArray = action.response.data.reduce((accumulator, current) => {
         accumulator[current.code] = current
         return accumulator
@@ -17,12 +18,14 @@ export default function provenance(state = { isFetchingProvenance: false, proven
         isFetchingProvenance: false,
         provenanceItems: objFromArray
       }
-    case PROVENANCE_FAILURE:
+    }
+    case PROVENANCE_FAILURE: {
       return {
         ...state,
         isFetchingProvenance: false,
         provenanceItems: null
       };
+    }
     default:
       return state;
   }

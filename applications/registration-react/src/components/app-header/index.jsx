@@ -67,14 +67,24 @@ class Header extends React.Component {
               </div>
               <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
                 {userItem && userItem.name &&
-                  <div className="fdk-margin-right-double">
-                    <i className="fa fa-user fdk-fa-left fdk-color-cta3" />
-                    {userItem.name}
-                  </div>
-                }
-                <div className="fdk-margin-right-double fdk-auth-link">
-                  <a href={`${window.location.origin  }/logout`}>{localization.app.logOut}</a>
+                <div className="fdk-margin-right-double">
+                  <i className="fa fa-user fdk-fa-left fdk-color-cta3" />
+                  {userItem.name}
                 </div>
+                }
+                {userItem &&
+                (
+                  <div className="fdk-margin-right-double fdk-auth-link">
+                    <a href={`${window.location.origin}/logout`}>{localization.app.logOut}</a>
+                  </div>
+                )}
+                {!userItem &&
+                (
+                  <div className="fdk-margin-right-double fdk-auth-link">
+                    <a href={`${window.location.origin  }/login`}>{localization.app.logIn}</a>
+                  </div>
+                )}
+
                 <div>
                   <ButtonDropdown className="btn-group-default" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle className="fdk-button fdk-button-default fdk-button-menu dropdown-toggle btn-default" caret>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
+import { Field, FieldArray, reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 
 import localization from '../../utils/localization';
@@ -8,32 +8,85 @@ import InputField from '../reg-form-field-input';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 import { accessRights, legalBasisType } from '../../schemaTypes';
+import { validateRequired, validateMinTwoChars, validateURL} from '../../validation/validation';
 
 const validate = values => {
-  const errors = {}
-  const title = (values.title && values.title.nb) ? values.title.nb : null;
-  const description = (values.description && values.description.nb) ? values.description.nb : null;
-  const objective = (values.objective && values.objective.nb) ? values.objective.nb : null;
-  const landingPage = (values.landingPage && values.landingPage[0]) ? values.landingPage[0] : null;
-  if (!title) {
-    errors.title = {nb: localization.validation.required}
-  } else if (title.length < 2) {
-    errors.title = {nb: localization.validation.minTwoChars}
+  let errors = {}
+  const accessRight = (values.accessRights && values.accessRights.uri) ? values.accessRights.uri : null;
+  const { legalBasisForRestriction, legalBasisForProcessing, legalBasisForAccess } = values;
+  let legalBasisForRestrictionNodes = null;
+  let legalBasisForProcessingNodes = null;
+  let legalBasisForAccessNodes = null;
+
+  errors = validateRequired('accessRight', accessRight, errors);
+
+
+  if (legalBasisForRestriction) {
+    legalBasisForRestrictionNodes = legalBasisForRestriction.map((item, index) => {
+      let itemErrors = {};
+      const legalBasisForRestrictionPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const legalBasisForRestrictionURI = item.uri ? item.uri : null;
+
+      itemErrors = validateMinTwoChars('prefLabel', legalBasisForRestrictionPrefLabel, itemErrors);
+      itemErrors = validateURL('uri', legalBasisForRestrictionURI, itemErrors);
+
+      return itemErrors;
+    });
+    let showSyncError = false;
+    legalBasisForRestrictionNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.legalBasisForRestriction = legalBasisForRestrictionNodes;
+    }
   }
-  if (description && description.length < 2) {
-    errors.description = {nb: localization.validation.minTwoChars}
+
+  if (legalBasisForProcessing) {
+    legalBasisForProcessingNodes = legalBasisForProcessing.map((item, index) => {
+      let itemErrors = {}
+      const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const legalBasisForProcessingURI = item.uri ? item.uri : null;
+
+      itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
+      itemErrors = validateURL('uri', legalBasisForProcessingURI, itemErrors);
+
+      return itemErrors;
+    });
+    let showSyncError = false;
+    legalBasisForProcessingNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.legalBasisForProcessing = legalBasisForProcessingNodes;
+    }
   }
-  if (objective && objective.length < 2) {
-    errors.objective = {nb: localization.validation.minTwoChars}
+
+  if (legalBasisForAccess) {
+    legalBasisForAccessNodes = legalBasisForAccess.map((item, index) => {
+      let itemErrors = {}
+      const legalBasisForAccessPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const legalBasisForAccessURI = item.uri ? item.uri : null;
+
+      itemErrors = validateMinTwoChars('prefLabel', legalBasisForAccessPrefLabel, itemErrors);
+      itemErrors = validateURL('uri', legalBasisForAccessURI, itemErrors);
+
+      return itemErrors;
+    });
+    let showSyncError = false;
+    legalBasisForAccessNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.legalBasisForAccess = legalBasisForAccessNodes;
+    }
   }
-  if (landingPage && landingPage.length < 2) {
-    errors.landingPage = [localization.validation.minTwoChars]
-  }
-  /*
-   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-   errors.email = 'Invalid email address'
-   }
-   */
+
   return errors
 }
 
@@ -95,7 +148,7 @@ const renderLegalBasis = (props) => {
 };
 
 let FormAccessRights = (props) => {
-  const { helptextItems, hasAccessRightsURI } = props;
+  const { syncErrors: { accessRight }, helptextItems, hasAccessRightsURI } = props;
   return (
     <form>
       <div className="form-group">
@@ -124,6 +177,10 @@ let FormAccessRights = (props) => {
           value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
           label="Unntatt offentlighet"
         />
+
+        {accessRight &&
+        <div className="alert alert-danger mt-3">{accessRight.nb}</div>
+        }
 
         {
           (hasAccessRightsURI === 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED' ||
@@ -166,20 +223,20 @@ let FormAccessRights = (props) => {
   )
 }
 
+const selector = formValueSelector('accessRights');
+
 FormAccessRights = reduxForm({
   form: 'accessRights',
   validate,
   asyncValidate,
-})(FormAccessRights)
-
-// Decorate with connect to read form values
-const selector = formValueSelector('accessRights')
-FormAccessRights = connect(state => {
+})(connect(state => {
   const hasAccessRightsURI = selector(state, 'accessRights.uri')
   return {
     hasAccessRightsURI,
+    syncErrors: getFormSyncErrors("accessRights")(state)
   }
-})(FormAccessRights)
+})(FormAccessRights));
+
 
 const mapStateToProps = ({ dataset }) => (
   {
