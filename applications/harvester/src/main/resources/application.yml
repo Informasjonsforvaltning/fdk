@@ -3,8 +3,8 @@ logging:
   level.no.brreg: INFO
   level.no.difi: ERROR
   level.no.dcat: INFO
-  level.org.springframework: WARN
-  level.org.springframework.web: WARN
+  level.org.springframework: DEBUG
+  level.org.springframework.web: DEBUG
 spring:
   mvc.view.prefix: /WEB-INF/jsp/
   mvc.view.suffix: .jsp

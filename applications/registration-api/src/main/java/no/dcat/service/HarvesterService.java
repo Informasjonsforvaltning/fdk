@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,13 +39,17 @@ public class HarvesterService {
         String username = "test_admin";
         String password = "password";
 
+        restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor(username,password));
+
         ResponseEntity<String> response = null;
         try {
-            response = restTemplate.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    new HttpEntity<>(createHeaders(username, password)),
-                    String.class);
+            //restTemplate.postForEntity(uri, String.class);
+            response = restTemplate.getForEntity(uri, String.class);
+            //response = restTemplate.exchange(
+            //        uri,
+            //        HttpMethod.GET,
+            //        new HttpEntity<>(createHeaders(username, password)),
+            //        String.class);
         } catch (Exception e) {
             logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
             logger.error("response from harvester: {}", response.toString());
