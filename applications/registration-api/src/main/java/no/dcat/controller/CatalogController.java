@@ -117,13 +117,27 @@ public class CatalogController {
         //Get existing harvester entries from harvester
         List<DcatSourceDto> existingHarvesterDataSources = harvesterService.getHarvestEntries();
 
+
         //check if harvester entry for current catalog exists
+        String currentCatalogUrl = "http://localhost:8092" + "/catalogs/" + catalog.getId();
+        boolean catalogFound = false;
+
+        logger.info("checking if catalog with url {} already exists as data source", currentCatalogUrl);
+
         for (DcatSourceDto datasourceEntry : existingHarvesterDataSources) {
-            logger.debug("Found exisiting dcatsource entry: {}" + datasourceEntry.getUrl() );
+            logger.info("Found exisiting dcatsource entry: {}",  datasourceEntry.getUrl() );
+            if(datasourceEntry.getUrl().equals(currentCatalogUrl)) {
+                logger.info("Catalog already exists as a data source in harvester");
+                catalogFound = true;
+            }
         }
 
-        boolean harvestEntryCreated = harvesterService.createHarvestEntry(catalog);
-        logger.info("Harves entry creation successfull: {}", harvestEntryCreated);
+        //if current catalog does not exist as a dat source, create it
+        if(!catalogFound) {
+            logger.info("Create new datasource for catalog in harvester");
+            boolean harvestEntryCreated = harvesterService.createHarvestEntry(catalog, currentCatalogUrl);
+            logger.info("Harvest entry creation successful: {}", harvestEntryCreated);
+        }
 
         return new ResponseEntity<>(savedCatalog, OK);
     }
