@@ -27,6 +27,9 @@ import FormAccessRights from '../../components/reg-form-schema-accessRights';
 import FormReference from '../../components/reg-form-schema-reference';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
 import TimeoutModal from '../../components/app-timeout-modal';
+import FormInformationModel from '../../components/reg-form-schema-informationmodel';
+import FormContactPoint from '../../components/reg-form-schema-contactPoint';
+import FormContents from '../../components/reg-form-schema-contents';
 import './index.scss';
 
 
@@ -178,9 +181,33 @@ class RegDataset extends React.Component {
               </FormTemplate>
 
               <FormTemplate
+                title="Innhold"
+              >
+                <FormContents
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Informasjonsmodell"
+              >
+                <FormInformationModel
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
                 title="Relasjoner"
               >
                 <FormReference
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Kontaktinformasjon"
+              >
+                <FormContactPoint
                   helptextItems={helptextItems}
                 />
               </FormTemplate>

@@ -237,7 +237,7 @@ public class DataEnricherTest {
     }
 
     @Test
-    public void descriptionShouldRemoveHTMLTags()  throws IOException {
+    public void descriptionShouldRemoveIllegalHTMLTags()  throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -251,7 +251,7 @@ public class DataEnricherTest {
         Literal desc = dcatRes.getProperty(DCTerms.description).getLiteral();
         String foundString = desc.getString();
 
-        assertThat(foundString, is("Dataset with english \n description."));
+        assertThat(foundString, is("Dataset with english description."));
     }
 
 

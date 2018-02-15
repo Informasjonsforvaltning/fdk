@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
+import no.dcat.harvester.clean.HtmlCleaner;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
@@ -37,13 +38,13 @@ import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -197,6 +198,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             for (Dataset dataset : validDatasets) {
                 if (dataset.getCatalog().getUri().equals(catalog.getUri())) {
                     catalogRecord.getValidDatasetUris().add(dataset.getUri());
+
+                    addDisplayFields(dataset);
+
                     saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
                 }
             }
@@ -242,6 +246,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             //TODO: process failures by iterating through each bulk response item?
         }
 
+    }
+
+    /**
+     * Add extra fields to the dataset to help visualization.
+     *
+     * <p>Assume that description contains basic htmltags. Swap description and descriptionFormatted and clean description. </p>
+     *
+     * @param dataset the dataset to enhance.
+     */
+
+    private void addDisplayFields(Dataset dataset) {
+        if (dataset == null || dataset.getDescription() == null)  {
+            return;
+        }
+
+        dataset.setDescriptionFormatted(dataset.getDescription());
+
+        final Map<String, String> descriptionCleaned = new HashMap<>();
+
+        // remove formatting on description
+        dataset.getDescription().forEach( (key, value) -> {
+            descriptionCleaned.put(key, HtmlCleaner.cleanAllHtmlTags(value));
+        });
+
+        dataset.setDescription(descriptionCleaned);
     }
 
     private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson,

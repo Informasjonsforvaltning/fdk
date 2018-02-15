@@ -24,6 +24,13 @@ application:
 
 spring:
   profiles: develop
+logging:
+  level.: ERROR
+  level.no.brreg: INFO
+  level.no.difi: ERROR
+  level.no.dcat: INFO
+  level.org.springframework: DEBUG
+  level.org.springframework.web: DEBUG
 fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin

@@ -1,0 +1,21 @@
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX http: <http://www.w3.org/2011/http#>
+PREFIX fo: <http://www.w3.org/1999/XSL/Format#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix er: <http://data.brreg.no/meta/>
+
+SELECT ?catalog ?cname ?publisher ?pname
+WHERE {
+
+  ?catalog a dcat:Catalog;
+  dct:title ?cname;
+  dct:publisher ?publisher.
+
+  ?publisher foaf:name ?pname.
+}
+ORDER BY ?cname
+
