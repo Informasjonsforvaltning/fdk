@@ -31,7 +31,7 @@ const InputTagsFieldArray  = (props) => {
             value={tagNodes}
             className="fdk-reg-input-tags"
             inputProps={{placeholder: ''}}
-            onChange={(tags) => {alert("test"); handleChange(props, tags)}}
+            onChange={(tags) => (handleChange(props, tags))}
           />
         </div>
       </label>
