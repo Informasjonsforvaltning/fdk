@@ -25,7 +25,7 @@
 
 <http://data.brreg.no/datakatalog/dataset/27>
         a                dcat:Dataset ;
-        dct:description  "Dataset with english <BR/> description."@en ;
+        dct:description  "Dataset with english <image/> description."@en ;
         dct:identifier   "17" ;
         dct:publisher    <http://data.brreg.no/enhetsregisteret/enhet/Brreg> ;
         dct:title        "EnglishData"@en ;

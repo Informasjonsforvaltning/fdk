@@ -59,9 +59,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
         </div>
 
         {this.props.description &&
-        <p className="fdk-ingress">
-          {this.props.description}
-        </p>
+        <p className="fdk-ingress" dangerouslySetInnerHTML={{__html: this.props.descriptionFormatted}} />
         }
 
         {this.props.objective &&
@@ -77,6 +75,7 @@ export default class DatasetDescription extends React.Component { // eslint-disa
 DatasetDescription.defaultProps = {
   title: '',
   description: '',
+  descriptionFormatted: '',
   objective: '',
   publisher: null,
   themes: null,
@@ -86,6 +85,7 @@ DatasetDescription.defaultProps = {
 DatasetDescription.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
+  descriptionFormatted: PropTypes.string,
   objective: PropTypes.string,
   publisher: PropTypes.object,
   themes: PropTypes.array,
