@@ -93,6 +93,7 @@ class RegDataset extends React.Component {
       helptextItems,
       isFetching,
       title,
+      accessRights,
       registrationStatus,
       lastSaved,
       result,
@@ -129,6 +130,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tilgangsnivå"
+                syncErrors={accessRights.syncErrors}
               >
                 <FormAccessRights
                   helptextItems={helptextItems}
@@ -268,13 +270,17 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     title: null
   }
 
-  const { registrationStatus, lastSaved } = app || {
-    registrationStatus: null,
-    lastSaved: null
+  const accessRights = form.accessRights || {
+    accessRights: null
   }
 
   const { concept } = form || {
     concept: null
+  }
+
+  const { registrationStatus, lastSaved } = app || {
+    registrationStatus: null,
+    lastSaved: null
   }
 
   return {
@@ -287,9 +293,10 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     referenceTypesItems,
     referenceDatasetsItems,
     title,
+    accessRights,
+    concept,
     registrationStatus,
-    lastSaved,
-    concept
+    lastSaved
   };
 }
 

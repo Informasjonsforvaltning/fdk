@@ -36,8 +36,8 @@ export default class FormTemplate extends Component {
         <button className="d-flex justify-content-between no-padding w-100" onClick={this.toggle}>
           <div>
             <div className="d-flex">
-            <i className={collapseIconClass} />
-            <h2 className="mb-0">{ title }</h2>
+              <i className={collapseIconClass} />
+              <h2 className="mb-0">{ title }</h2>
             </div>
             {!this.state.collapse && values &&
             <div className="d-flex">

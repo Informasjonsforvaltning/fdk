@@ -12,8 +12,8 @@ import asyncValidate from '../../utils/asyncValidate';
 import { validateMinTwoChars } from '../../validation/validation';
 
 const validate = values => {
-  let errors = {}
-  let errorHasCurrentnessAnnotation = {};
+  const errors = {}
+  const errorHasCurrentnessAnnotation = {};
   const hasCurrentnessAnnotation = (values.hasCurrentnessAnnotation && values.hasCurrentnessAnnotation.hasBody) ? values.hasCurrentnessAnnotation.hasBody.no : null;
   errors.hasCurrentnessAnnotation = validateMinTwoChars('hasBody', hasCurrentnessAnnotation, errorHasCurrentnessAnnotation, 'no');
   return errors

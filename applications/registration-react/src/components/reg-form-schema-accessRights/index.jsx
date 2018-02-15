@@ -8,58 +8,84 @@ import InputField from '../reg-form-field-input';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 import { accessRights, legalBasisType } from '../../schemaTypes';
-import { validateRequired, validateMinTwoChars} from '../../validation/validation';
+import { validateRequired, validateMinTwoChars, validateURL} from '../../validation/validation';
 
 const validate = values => {
   let errors = {}
   const accessRight = (values.accessRights && values.accessRights.uri) ? values.accessRights.uri : null;
   const { legalBasisForRestriction, legalBasisForProcessing, legalBasisForAccess } = values;
-  let errorNodes = null;
+  let legalBasisForRestrictionNodes = null;
+  let legalBasisForProcessingNodes = null;
+  let legalBasisForAccessNodes = null;
 
   errors = validateRequired('accessRight', accessRight, errors);
 
+
   if (legalBasisForRestriction) {
-    errorNodes = legalBasisForRestriction.map((item, index) => {
-      let itemErrors = {}
+    legalBasisForRestrictionNodes = legalBasisForRestriction.map((item, index) => {
+      let itemErrors = {};
       const legalBasisForRestrictionPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const legalBasisForRestrictionURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars('prefLabel', legalBasisForRestrictionPrefLabel, itemErrors);
-      itemErrors = validateMinTwoChars('uri', legalBasisForRestrictionURI, itemErrors, null, false);
+      itemErrors = validateURL('uri', legalBasisForRestrictionURI, itemErrors);
 
       return itemErrors;
     });
+    let showSyncError = false;
+    legalBasisForRestrictionNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.legalBasisForRestriction = legalBasisForRestrictionNodes;
+    }
   }
-  errors.legalBasisForRestriction = errorNodes;
 
   if (legalBasisForProcessing) {
-    errorNodes = legalBasisForProcessing.map((item, index) => {
+    legalBasisForProcessingNodes = legalBasisForProcessing.map((item, index) => {
       let itemErrors = {}
       const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const legalBasisForProcessingURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
-      itemErrors = validateMinTwoChars('uri', legalBasisForProcessingURI, itemErrors, null, false);
+      itemErrors = validateURL('uri', legalBasisForProcessingURI, itemErrors);
 
       return itemErrors;
     });
+    let showSyncError = false;
+    legalBasisForProcessingNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.legalBasisForProcessing = legalBasisForProcessingNodes;
+    }
   }
-  errors.legalBasisForProcessing = errorNodes;
 
   if (legalBasisForAccess) {
-    errorNodes = legalBasisForAccess.map((item, index) => {
+    legalBasisForAccessNodes = legalBasisForAccess.map((item, index) => {
       let itemErrors = {}
       const legalBasisForAccessPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const legalBasisForAccessURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars('prefLabel', legalBasisForAccessPrefLabel, itemErrors);
-      itemErrors = validateMinTwoChars('uri', legalBasisForAccessURI, itemErrors, null, false);
+      itemErrors = validateURL('uri', legalBasisForAccessURI, itemErrors);
 
       return itemErrors;
     });
+    let showSyncError = false;
+    legalBasisForAccessNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.legalBasisForAccess = legalBasisForAccessNodes;
+    }
   }
-  errors.legalBasisForAccess = errorNodes;
-
 
   return errors
 }

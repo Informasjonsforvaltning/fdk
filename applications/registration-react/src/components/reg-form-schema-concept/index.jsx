@@ -57,11 +57,9 @@ FormConcept = reduxForm({
   form: 'concept',
   validate,
   asyncValidate
-})(connect(state => {
-  return {
-    syncErrors: getFormSyncErrors("concept")(state)
-  }
-})(FormConcept));
+})(connect(state => ({
+  syncErrors: getFormSyncErrors("concept")(state)
+}))(FormConcept));
 
 const mapStateToProps = ({ dataset }) => (
   {

@@ -11,7 +11,7 @@ function callApi(url) {
 
   const header = {
     pragma: 'no-cache',
-    ['cache-control']: 'no-cache',
+    'cache-control': 'no-cache',
     Accept: 'application/json'
   }
 
