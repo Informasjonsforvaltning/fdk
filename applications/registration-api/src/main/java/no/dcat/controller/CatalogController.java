@@ -12,6 +12,7 @@ import no.dcat.shared.admin.DcatSourceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,13 +54,14 @@ public class CatalogController {
 
     private final EntityNameService entityNameService;
 
-    private HarvesterService harvesterService;
+    private final HarvesterService harvesterService;
 
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
+    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService) {
         this.catalogRepository = catalogRepository;
         this.springSecurityContextBean = springSecurityContextBean;
         this.entityNameService = entityNameService;
+        this.harvesterService = harvesterService;
     }
 
 
@@ -113,8 +115,6 @@ public class CatalogController {
         Catalog savedCatalog = saveCatalog(catalog);
 
         //Get existing harvester entries from harvester
-        //TODO se på intialisering av harvesterservicve
-        this.harvesterService = new HarvesterService();
         List<DcatSourceDto> existingHarvesterDataSources = harvesterService.getHarvestEntries();
 
         //check if harvester entry for current catalog exists

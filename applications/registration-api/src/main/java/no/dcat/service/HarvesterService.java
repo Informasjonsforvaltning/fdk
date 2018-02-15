@@ -15,6 +15,7 @@ import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -39,14 +40,16 @@ public class HarvesterService {
     @Value("${application.harvesterUrl}")
     private String harvesterUrl;
 
+
     public List<DcatSourceDto> getHarvestEntries() {
 
         RestTemplate restTemplate = new RestTemplate();
 
 
         //get existing entries
-        //TODO: flytt til properties
         String uri = harvesterUrl + "/api/admin/dcat-sources";
+
+        logger.info("harvester uri: {}", uri);
 
 
         ResponseEntity<List<DcatSourceDto>> response = null;
