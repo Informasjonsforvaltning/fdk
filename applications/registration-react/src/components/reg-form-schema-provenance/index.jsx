@@ -13,9 +13,13 @@ import { validateMinTwoChars } from '../../validation/validation';
 
 const validate = values => {
   const errors = {}
-  const errorHasCurrentnessAnnotation = {};
+  let errorHasCurrentnessAnnotation = {};
   const hasCurrentnessAnnotation = (values.hasCurrentnessAnnotation && values.hasCurrentnessAnnotation.hasBody) ? values.hasCurrentnessAnnotation.hasBody.no : null;
-  errors.hasCurrentnessAnnotation = validateMinTwoChars('hasBody', hasCurrentnessAnnotation, errorHasCurrentnessAnnotation, 'no');
+  errorHasCurrentnessAnnotation = validateMinTwoChars('hasBody', hasCurrentnessAnnotation, errorHasCurrentnessAnnotation, 'no');
+
+  if (JSON.stringify(errorHasCurrentnessAnnotation) !== '{}') {
+    errors.hasCurrentnessAnnotation = errorHasCurrentnessAnnotation;
+  }
   return errors
 }
 

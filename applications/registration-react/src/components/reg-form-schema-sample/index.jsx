@@ -16,6 +16,7 @@ const validate = values => {
   const errors = {}
   const { sample } = values;
   let errorNodes = null;
+  let conformsToNodes = null;
 
   if (sample) {
     errorNodes = sample.map(item => {
@@ -33,7 +34,7 @@ const validate = values => {
       errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
 
       if (conformsTo) {
-        errorNodes = conformsTo.map((item, index) => {
+        conformsToNodes = conformsTo.map((item, index) => {
           let itemErrors = {}
           const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
           const conformsToURI = item.uri ? item.uri : null;
@@ -41,13 +42,54 @@ const validate = values => {
           itemErrors = validateURL('uri', conformsToURI, itemErrors);
           return itemErrors;
         });
+        let showSyncError = false;
+        conformsToNodes.map(item => {
+          if (JSON.stringify(item) !== '{}') {
+            showSyncError = true;
+          }
+        });
+        if (showSyncError) {
+          errors.conformsTo = conformsToNodes;
+        }
       }
-      errors.conformsTo = errorNodes;
-
       return errors;
     });
+    let showSyncError = false;
+    errorNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.sample = errorNodes;
+    }
   }
-  errors.sample = errorNodes;
+
+  /*
+   if (legalBasisForProcessing) {
+   legalBasisForProcessingNodes = legalBasisForProcessing.map((item, index) => {
+   let itemErrors = {}
+   const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+   const legalBasisForProcessingURI = item.uri ? item.uri : null;
+
+   itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
+   itemErrors = validateURL('uri', legalBasisForProcessingURI, itemErrors);
+
+   return itemErrors;
+   });
+   let showSyncError = false;
+   legalBasisForProcessingNodes.map(item => {
+   if (JSON.stringify(item) !== '{}') {
+   showSyncError = true;
+   }
+   });
+   if (showSyncError) {
+   errors.legalBasisForProcessing = legalBasisForProcessingNodes;
+   }
+   }
+   */
+
+  //errors.sample = errorNodes;
 
   return errors
 }

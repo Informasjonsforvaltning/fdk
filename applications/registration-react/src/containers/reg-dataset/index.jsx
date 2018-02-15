@@ -97,10 +97,19 @@ class RegDataset extends React.Component {
       isFetching,
       title,
       accessRights,
+      formThemes,
+      type,
+      concept,
+      spatial,
+      formProvenance,
+      contents,
+      informationModel,
+      contactPoint,
+      distribution,
+      sample,
       registrationStatus,
       lastSaved,
       result,
-      concept,
       referenceTypesItems,
       referenceDatasetsItems
     } = this.props;
@@ -142,6 +151,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tema"
+                syncErrors={formThemes.syncErrors}
               >
                 <FormTheme
                   helptextItems={helptextItems}
@@ -150,6 +160,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Type"
+                syncErrors={type.syncErrors}
               >
                 <FormType
                   helptextItems={helptextItems}
@@ -158,6 +169,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Begrep og søkeord"
+                syncErrors={concept.syncErrors}
               >
                 <FormConcept
                   helptextItems={helptextItems}
@@ -166,6 +178,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Geografi, tid og språk"
+                syncErrors={spatial.syncErrors}
               >
                 <FormSpatial
                   helptextItems={helptextItems}
@@ -174,6 +187,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Opphav og ferskhet"
+                syncErrors={formProvenance.syncErrors}
               >
                 <FormProvenance
                   helptextItems={helptextItems}
@@ -182,6 +196,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Innhold"
+                syncErrors={contents.syncErrors}
               >
                 <FormContents
                   helptextItems={helptextItems}
@@ -190,6 +205,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Informasjonsmodell"
+                syncErrors={informationModel.syncErrors}
               >
                 <FormInformationModel
                   helptextItems={helptextItems}
@@ -206,6 +222,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Kontaktinformasjon"
+                syncErrors={contactPoint.syncErrors}
               >
                 <FormContactPoint
                   helptextItems={helptextItems}
@@ -214,6 +231,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Distribusjoner"
+                syncErrors={distribution.syncErrors}
               >
                 <FormDistribution
                   helptextItems={helptextItems}
@@ -222,6 +240,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Eksempeldata"
+                syncErrors={sample.syncErrors}
               >
                 <FormSample
                   helptextItems={helptextItems}
@@ -301,9 +320,45 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     accessRights: null
   }
 
-  const { concept } = form || {
+  const formThemes = form.themes || {
+      formThemes: null
+  }
+
+  const type = form.type || {
+      type: null
+    }
+
+  const concept = form.concept || {
     concept: null
   }
+
+  const spatial = form.spatial || {
+      spatial: null
+    }
+
+  const formProvenance = form.provenance || {
+      formProvenance: null
+    }
+
+  const contents = form.contents || {
+      contents: null
+    }
+
+  const informationModel = form.informationModel || {
+      informationModel: null
+    }
+
+  const contactPoint = form.contactPoint || {
+      contactPoint: null
+    }
+
+  const distribution = form.distribution || {
+      distribution: null
+    }
+
+  const sample = form.sample || {
+      sample: null
+    }
 
   const { registrationStatus, lastSaved } = app || {
     registrationStatus: null,
@@ -321,7 +376,16 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     referenceDatasetsItems,
     title,
     accessRights,
+    formThemes,
+    type,
     concept,
+    spatial,
+    formProvenance,
+    contents,
+    informationModel,
+    contactPoint,
+    distribution,
+    sample,
     registrationStatus,
     lastSaved
   };

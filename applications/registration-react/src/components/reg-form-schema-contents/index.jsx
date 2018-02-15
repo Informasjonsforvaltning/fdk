@@ -8,33 +8,60 @@ import InputField from '../reg-form-field-input';
 import TextAreaField from '../reg-form-field-textarea';
 import asyncValidate from '../../utils/asyncValidate';
 import { conformsToType, relevanceAnnotationType, completenessAnnotationType, accuracyAnnotationType, availabilityAnnotationType } from '../../schemaTypes';
+import { validateMinTwoChars, validateURL } from '../../validation/validation';
 
-// skal disse være med her - de validerer jo felt et annet sted?
 const validate = values => {
   const errors = {}
-  const title = (values.title && values.title.nb) ? values.title.nb : null;
-  const description = (values.description && values.description.nb) ? values.description.nb : null;
-  const objective = (values.objective && values.objective.nb) ? values.objective.nb : null;
-  const landingPage = (values.landingPage && values.landingPage[0]) ? values.landingPage[0] : null;
-  if (!title) {
-    errors.title = {nb: localization.validation.required}
-  } else if (title.length < 2) {
-    errors.title = {nb: localization.validation.minTwoChars}
+  const { conformsTo } = values;
+  let conformsToNodes = null;
+
+  let errorHasRelevanceAnnotation = {};
+  const hasRelevanceAnnotation = (values.hasRelevanceAnnotation && values.hasRelevanceAnnotation.hasBody) ? values.hasRelevanceAnnotation.hasBody.nb : null;
+  errorHasRelevanceAnnotation = validateMinTwoChars('hasBody', hasRelevanceAnnotation, errorHasRelevanceAnnotation);
+  if (JSON.stringify(errorHasRelevanceAnnotation) !== '{}') {
+    errors.hasRelevanceAnnotation = errorHasRelevanceAnnotation;
   }
-  if (description && description.length < 2) {
-    errors.description = {nb: localization.validation.minTwoChars}
+
+  let errorHasCompletenessAnnotation = {};
+  const hasCompletenessAnnotation = (values.hasCompletenessAnnotation && values.hasCompletenessAnnotation.hasBody) ? values.hasCompletenessAnnotation.hasBody.nb : null;
+  errorHasCompletenessAnnotation = validateMinTwoChars('hasBody', hasCompletenessAnnotation, errorHasCompletenessAnnotation);
+  if (JSON.stringify(errorHasCompletenessAnnotation) !== '{}') {
+    errors.hasCompletenessAnnotation = errorHasCompletenessAnnotation;
   }
-  if (objective && objective.length < 2) {
-    errors.objective = {nb: localization.validation.minTwoChars}
+
+  let errorHasAccuracyAnnotation = {};
+  const hasAccuracyAnnotation = (values.hasAccuracyAnnotation && values.hasAccuracyAnnotation.hasBody) ? values.hasAccuracyAnnotation.hasBody.nb : null;
+  errorHasAccuracyAnnotation = validateMinTwoChars('hasBody', hasAccuracyAnnotation, errorHasAccuracyAnnotation);
+  if (JSON.stringify(errorHasAccuracyAnnotation) !== '{}') {
+    errors.hasAccuracyAnnotation = errorHasAccuracyAnnotation;
   }
-  if (landingPage && landingPage.length < 2) {
-    errors.landingPage = [localization.validation.minTwoChars]
+
+  let errorHasAvailabilityAnnotation = {};
+  const hasAvailabilityAnnotation = (values.hasAvailabilityAnnotation && values.hasAvailabilityAnnotation.hasBody) ? values.hasAvailabilityAnnotation.hasBody.nb : null;
+  errorHasAvailabilityAnnotation = validateMinTwoChars('hasBody', hasAvailabilityAnnotation, errorHasAvailabilityAnnotation);
+  if (JSON.stringify(errorHasAvailabilityAnnotation) !== '{}') {
+    errors.hasAvailabilityAnnotation = errorHasAvailabilityAnnotation;
   }
-  /*
-   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-   errors.email = 'Invalid email address'
-   }
-   */
+
+  if (conformsTo) {
+    conformsToNodes = conformsTo.map((item, index) => {
+      let itemErrors = {}
+      const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+      const conformsToURI = item.uri ? item.uri : null;
+      itemErrors = validateMinTwoChars('prefLabel', conformsToPrefLabel, itemErrors);
+      itemErrors = validateURL('uri', conformsToURI, itemErrors);
+      return itemErrors;
+    });
+    let showSyncError = false;
+    conformsToNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.conformsTo = conformsToNodes;
+    }
+  }
   return errors
 }
 

@@ -41,10 +41,16 @@ export const validateLinkReturnAsSkosType = (nameOfObject, value, errors, nameOf
   return errors;
 }
 
-export const validateEmail = (nameOfObject, value, minRequired, errors, useLangField = true) => {
+export const validateEmail = (nameOfObject, value, errors) => {
   if (value && (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))) {
-    errors[`${nameOfObject}`] = useLangField ? {nb: localization.validation.validateEmail} : localization.validation.validateEmail
+    errors[`${nameOfObject}`] = localization.validation.validateEmail
   }
   return errors;
 }
 
+export const validatePhone = (nameOfObject, value, errors) => {
+  if (value && (!/^[\+]?[(]?[0-9]{4,12}$/i.test(value))) {
+    errors[`${nameOfObject}`] = localization.validation.validatePhone
+  }
+  return errors;
+}
