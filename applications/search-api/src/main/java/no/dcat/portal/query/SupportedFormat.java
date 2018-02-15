@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.query;
 
 import org.apache.jena.riot.Lang;
 

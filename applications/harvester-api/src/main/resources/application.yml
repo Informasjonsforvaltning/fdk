@@ -24,6 +24,24 @@ fuseki:
 
 ---
 spring:
+  profiles: docker
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fdksystembjg
+    password: xxxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectionTimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          starttls:
+            enable: true
+
+---
+spring:
   profiles: prod
   mail:
     host: smtprelay@brreg.no

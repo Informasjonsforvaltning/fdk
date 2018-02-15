@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.query;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -7,8 +7,6 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.sparql.algebra.optimize.TransformOrderByDistinctApplication;
-import org.apache.jena.sparql.engine.QueryEngineFactory;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +29,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -40,20 +37,20 @@ import static org.mockito.Mockito.spy;
 /**
  * Created by dask on 20.03.2017.
  */
-public class PortalRestControllerTest {
-    private static Logger logger = LoggerFactory.getLogger(PortalRestControllerTest.class);
+public class CatalogServiceTest {
+    private static Logger logger = LoggerFactory.getLogger(CatalogServiceTest.class);
 
-    private PortalRestController portal;
+    private CatalogService catalogService;
 
     @Before
     public void setup() {
-        portal = new PortalRestController();
+        catalogService = new CatalogService();
     }
 
 
     @Test
     public void getCatalogsOK() throws Throwable {
-        PortalRestController spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         // Load testdatasett in model
         Resource mResource = new ClassPathResource("data.ttl");
@@ -67,7 +64,7 @@ public class PortalRestControllerTest {
 
         doReturn(qe).when(spy).getQueryExecution(anyObject());
 
-        ResponseEntity<String> response = spy.getCatalogs("text/html");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getBody().contains("/catalogs?id="), is(true));
 
@@ -75,11 +72,11 @@ public class PortalRestControllerTest {
 
     @Test
     public void getCatalogsFailsOnIOError() throws Throwable {
-        PortalRestController spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         doThrow(new IOException("force exception")).when(spy).read(anyObject());
 
-        ResponseEntity<String> response = spy.getCatalogs("text/html");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
 
@@ -87,7 +84,7 @@ public class PortalRestControllerTest {
 
     @Test
     public void getCatalogsFailsOnNoCatalogsFound() throws Throwable {
-        PortalRestController spy = spy(portal);
+        CatalogService spy = spy(catalogService);
 
         // read modelfile with no catalog in
         Resource mResource = new ClassPathResource("data-no-catalog.ttl");
@@ -101,7 +98,7 @@ public class PortalRestControllerTest {
         doReturn(qe).when(spy).getQueryExecution(anyObject());
 
         // do call
-        ResponseEntity<String> response = spy.getCatalogs("text/html");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
 
@@ -109,8 +106,8 @@ public class PortalRestControllerTest {
 
 
     @Test
-    public void getCatalogDcatOk() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getCatalogDcatOk() {
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -120,8 +117,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void getDatasetDcatFormatsOK() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getDatasetDcatFormatsOK() {
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         final String[] acHeaders = {"application/ld+json", "json", "ld+json", "application/rdf+xml", "rdf", "text/turtle", "turtle"};
@@ -140,8 +137,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void getCatalogDcatWrongAcceptHeader() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getCatalogDcatWrongAcceptHeader() {
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -151,8 +148,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void getCatalogDcatWrongFormat() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getCatalogDcatWrongFormat() {
+        CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -163,8 +160,8 @@ public class PortalRestControllerTest {
 
 
     @Test
-    public void getCatalogDcatIdNotFound() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getCatalogDcatIdNotFound() {
+        CatalogService spy = spy(catalogService);
         doReturn(null).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -174,8 +171,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void getCatalogDcatIdThrowsNotFound() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getCatalogDcatIdThrowsNotFound() {
+        CatalogService spy = spy(catalogService);
         doThrow(new NoSuchElementException("NSEE")).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -186,7 +183,7 @@ public class PortalRestControllerTest {
 
     @Test
     public void findResourceByIdOK() throws Throwable {
-        PortalRestController spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -210,7 +207,7 @@ public class PortalRestControllerTest {
 
     @Test
     public void findResourceWithunknownIdReturnsNull() throws Throwable {
-        PortalRestController spy = spy(portal);
+        CatalogService spy = spy(catalogService);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -231,8 +228,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void exportDatasetFusekiNotFound() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void exportDatasetFusekiNotFound() {
+        CatalogService spy = spy(catalogService);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getDatasetDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -242,8 +239,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void exportCatalogFusekiNotFound() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void exportCatalogFusekiNotFound() {
+        CatalogService spy = spy(catalogService);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -253,8 +250,8 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() {
+        CatalogService spy = spy(catalogService);
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
                 null, "application/ld+json", "sparql/nofile.sparql");
@@ -264,8 +261,8 @@ public class PortalRestControllerTest {
 
 
     @Test
-    public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() {
+        CatalogService spy = spy(catalogService);
         doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(anyObject());
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -275,11 +272,11 @@ public class PortalRestControllerTest {
     }
 
     @Test
-    public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() throws Throwable {
-        PortalRestController spy = spy(portal);
+    public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() {
+        CatalogService spy = spy(catalogService);
         doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(anyObject());
 
-        ResponseEntity<String> response = spy.getCatalogs("*/*");
+        ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }

@@ -1,12 +1,9 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.query;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 
 import java.io.ByteArrayOutputStream;
-
-import static no.dcat.portal.webapp.SupportedFormat.RDF_XML;
-import static no.dcat.portal.webapp.SupportedFormat.getFormat;
 
 /**
  * Created by mgs on 25.01.2017.
@@ -14,7 +11,7 @@ import static no.dcat.portal.webapp.SupportedFormat.getFormat;
 public class ModelFormatter {
 
     private Model model;
-    private static final SupportedFormat DEFAULT_FORMAT = RDF_XML;
+    private static final SupportedFormat DEFAULT_FORMAT = SupportedFormat.RDF_XML;
 
     public ModelFormatter(Model model) {
         this.model = model;
@@ -37,7 +34,7 @@ public class ModelFormatter {
      * @return model converted into accepted format
      */
     public String format(String accept) {
-        return format(getFormat(accept).orElse(DEFAULT_FORMAT));
+        return format(SupportedFormat.getFormat(accept).orElse(DEFAULT_FORMAT));
     }
 
 

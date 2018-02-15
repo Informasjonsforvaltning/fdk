@@ -1,4 +1,4 @@
-package no.dcat.portal.webapp;
+package no.dcat.portal.query;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -7,7 +7,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
-import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,9 +36,9 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-public class PortalRestController {
+public class CatalogService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PortalRestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CatalogService.class);
     private static final String DATASET_QUERY_FILENAME = "sparql/dataset.sparql";
     private static final String CATALOG_QUERY_FILENAME = "sparql/catalog.sparql";
     private static final String GET_CATALOGS_QUERY_FILENAME = "sparql/allcatalogs.sparql";
@@ -52,7 +51,7 @@ public class PortalRestController {
         assert fusekiService != null;
     }
 
-    protected String getFusekiService() {
+    String getFusekiService() {
         return fusekiService;
     }
 
@@ -69,7 +68,7 @@ public class PortalRestController {
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getCatalogDcat(
-            @RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "id") String id,
             @RequestParam(value = "format", required = false) String format,
             @RequestHeader(value = "Accept") String acceptHeader) {
 
@@ -85,14 +84,14 @@ public class PortalRestController {
     /**
      * Lists catalogs in a simple html format
      *
-     * @param acceptHeader
+
      * @return html list of catalogs
      */
     @CrossOrigin
     @RequestMapping(value = "/catalogs",
             method = GET,
             produces = "text/html")
-    public ResponseEntity<String> getCatalogs(@RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
+    public ResponseEntity<String> getCatalogs() {
         String queryString;
 
         // fail early
@@ -114,11 +113,12 @@ public class PortalRestController {
 
             builder.append("<html>");
             builder.append("<head>");
-            builder.append("<link rel='stylesheet' href='webjars/bootstrap/3.3.7/css/bootstrap.min.css' media='all'/>");
-            builder.append("<link rel='stylesheet' href='css/main.css' media='all'/>");
+            builder.append("<link rel='stylesheet' href='/static/bootstrap.min.css' media='all'/>");
+            builder.append("<link rel='stylesheet' href='/static/styles.css' media='all'/>");
             builder.append("</head>");
             builder.append("<body>");
             builder.append("<h1>Velg katalog for nedlasting</h1>");
+            builder.append("<p>Du kan velge mellom følgende formater: turtle, json-ld eller rdf/xml. Bruk accept header (text/turtle, application/ld+json, application/rdf+xml) i restkallet eller format parameter format=(ttl, json, rdf)</p>");
 
             while (resultset.hasNext()) {
                 count++;
@@ -128,7 +128,10 @@ public class PortalRestController {
                 String publisherName = qs.get("pname").asLiteral().getString();
                 String publisherUri = qs.get("publisher").asResource().getURI();
 
-                builder.append("<a class='fdk-label fdk-label-default' href='" + "/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n");
+                builder.append("<div class=\"fdk-label-distribution fdk-label-distribution-offentlig\">\n");
+                builder.append("<i class=\"fa fa-download fdk-fa-left\"></i>\n");
+                builder.append("<a class='fdk-distribution-format' href='" + "/catalogs?id=" + catalogUri + "&format=ttl'>" + catalogName + "</a>\n");
+                builder.append(("</div>\n"));
             }
 
             builder.append("</body>");
@@ -160,7 +163,7 @@ public class PortalRestController {
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetDcat(
-            @RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "id") String id,
             @RequestParam(value = "format", required = false) String format,
             @RequestHeader(value = "Accept", defaultValue = "*/*") String acceptHeader) {
 

@@ -151,6 +151,7 @@ public class Fuseki {
 				.forEach((key) -> p.setLiteral(key, map.get(key)));
 
 		Query query = QueryFactory.create(p.toString());
+		logger.debug("describe: {} --> {}", serviceUri, query.toString());
 
 		return QueryExecutionFactory.sparqlService(serviceUri, query).execDescribe();
 	}
