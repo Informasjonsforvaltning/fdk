@@ -5,6 +5,7 @@ import no.dcat.shared.admin.DcatSourceDto;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,16 @@ import java.util.List;
 @Service
 public class HarvesterService {
     private static Logger logger = LoggerFactory.getLogger(HarvesterService.class);
+
+    @Value("${application.harvesterUsername}")
+    private String harvesterUsername;
+
+    @Value("${application.harvesterPassword}")
+    private String harvesterPassword;
+
+    @Value("${application.harvesterUrl}")
+    private String harvesterUrl;
+
     public List<DcatSourceDto> getHarvestEntries() {
 
         RestTemplate restTemplate = new RestTemplate();
@@ -35,16 +46,15 @@ public class HarvesterService {
 
         //get existing entries
         //TODO: flytt til properties
-        String uri = "http://harvester:8080/api/admin/dcat-sources";
-        String username = "test_admin";
-        String password = "password";
+        String uri = harvesterUrl + "/api/admin/dcat-sources";
+
 
         ResponseEntity<List<DcatSourceDto>> response = null;
         try {
             response = restTemplate.exchange(
                     uri,
                     HttpMethod.GET,
-                    new HttpEntity<>(createHeaders(username, password)),
+                    new HttpEntity<>(createHeaders(harvesterUsername, harvesterPassword)),
                     new ParameterizedTypeReference<List<DcatSourceDto>>() {});
         } catch (Exception e) {
             logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
