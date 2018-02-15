@@ -118,6 +118,20 @@ server:
 
 ---
 spring:
+  profiles: docker
+  data:
+    elasticsearch:
+      clusterNodes: localhost:9300
+server:
+  port: ${registrationApi_serverPort:8099}
+  ssl:
+    key-store: conf/idporten/ssldevelop.p12
+    key-store-password: changeit
+    key-store-type: PKCS12
+    key-alias: tomcat
+
+---
+spring:
   profiles: unit-integration
   data:
     elasticsearch:

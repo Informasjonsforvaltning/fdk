@@ -35,32 +35,25 @@ public class HarvesterService {
 
         //get existing entries
         //TODO: flytt til properties
-        String uri = "http://localhost:8082/api/admin/dcat-sources";
+        String uri = "http://harvester:8080/api/admin/dcat-sources";
         String username = "test_admin";
         String password = "password";
 
-        restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor(username,password));
-
-        ResponseEntity<String> response = null;
+        ResponseEntity<List<DcatSourceDto>> response = null;
         try {
-            //restTemplate.postForEntity(uri, String.class);
-            response = restTemplate.getForEntity(uri, String.class);
-            //response = restTemplate.exchange(
-            //        uri,
-            //        HttpMethod.GET,
-            //        new HttpEntity<>(createHeaders(username, password)),
-            //        String.class);
+            response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    new HttpEntity<>(createHeaders(username, password)),
+                    new ParameterizedTypeReference<List<DcatSourceDto>>() {});
         } catch (Exception e) {
             logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
             logger.error("response from harvester: {}", response.toString());
         }
 
-       //List<DcatSourceDto> dcatsources = response.getBody();
-
         logger.info("response status code: {}", response.getStatusCode());
-        logger.info("Response body: {}", response.getBody());
 
-        return null;
+        return response.getBody();
     }
 
 

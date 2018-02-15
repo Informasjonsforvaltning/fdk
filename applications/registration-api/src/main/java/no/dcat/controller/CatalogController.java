@@ -112,9 +112,16 @@ public class CatalogController {
 
         Catalog savedCatalog = saveCatalog(catalog);
 
-        //Create harvest entry in Harvester for the new catalog
+        //Get existing harvester entries from harvester
         //TODO se på intialisering av harvesterservicve
         this.harvesterService = new HarvesterService();
+        List<DcatSourceDto> existingHarvesterDataSources = harvesterService.getHarvestEntries();
+
+        //check if harvester entry for current catalog exists
+        for (DcatSourceDto datasourceEntry : existingHarvesterDataSources) {
+            logger.debug("Found exisiting dcatsource entry: {}" + datasourceEntry.getUrl() );
+        }
+
         boolean harvestEntryCreated = harvesterService.createHarvestEntry(catalog);
         logger.info("Harves entry creation successfull: {}", harvestEntryCreated);
 
