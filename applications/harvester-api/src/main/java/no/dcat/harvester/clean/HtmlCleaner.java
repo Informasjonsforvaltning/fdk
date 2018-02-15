@@ -12,23 +12,38 @@ public class HtmlCleaner {
 
 
     /**
-     * Remove all html elements from text. Replaces html line breaks with java java line breaks
+     * Remove all unsafe html elements from text. Only keep basic elements from whitelist.
+     *
      * @param textToClean text with possible html elements
      *
-     * @return text without html elements
+     * @return text without unsafe elements
      */
     public static String clean(String textToClean) {
         if (textToClean == null) {
             return null;
         }
+        return cleanString(textToClean, Whitelist.basic());
+    }
+
+
+    public static String cleanAllHtmlTags(String textToClean) {
+        if (textToClean == null) {
+            return null;
+        }
+
+        return cleanString(textToClean, Whitelist.none());
+
+    }
+
+    private static String cleanString(String textToClean, Whitelist whitelist) {
         Document document = Jsoup.parse(textToClean);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));
-        document.select("br").append("\\n");
-        document.select("p").prepend("\\n\\n");
-        String tempString = document.html()
+
+        String preprosessedString = document.html()
                 .replaceAll("\\\\n", "\n")
                 .replaceAll("&nbsp;", " ");
-        String soupCleanedString = Jsoup.clean(tempString, "",  Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+
+        String soupCleanedString = Jsoup.clean(preprosessedString, "", whitelist, new Document.OutputSettings().prettyPrint(false));
 
         return soupCleanedString.replaceAll(" {2,}", " ");
     }

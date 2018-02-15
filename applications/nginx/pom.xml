@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>nginx</artifactId>
+    <description>router to old registration component. To be replaced by nginx-registration</description>
 
 
     <build>

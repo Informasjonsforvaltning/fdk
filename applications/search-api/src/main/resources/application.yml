@@ -3,11 +3,12 @@ logging:
   level.no.difi: ERROR
   level.no.dcat: INFO
   level.org.springframework: ERROR
-  level.org.springframework.web: WARN
+  level.org.springframework.web: ERROR
 application:
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
   clusterName: elasticsearch
+  fusekiService: http://fuseki:8080/fuseki
 server:
   port: 8080
 management:
@@ -27,6 +28,7 @@ application:
   elasticsearchHost: localhost
   elasticsearchPort: 9300
   clusterName: elasticsearch
+  fusekiService: http://localhost:3030/fuseki
 logging:
   level.: ERROR
   level.no.brreg: DEBUG

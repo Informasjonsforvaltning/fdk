@@ -119,7 +119,11 @@ else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1
     cluster=ose-npc
 
-    registrationGuiExternalAddress=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+    #old registration-gui build with angular (to be removed later)
+    oldRegistrationGuiExternalAddress=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
+
+    #new registration-gui build with react
+    registrationGuiExternalAddress=reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no
     searchGuiExternalAddress=fellesdatakatalog-$environment.$cluster.brreg.no
 
     #point to Altinn test environnment
@@ -190,6 +194,29 @@ then
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage registration
+    fi
+
+elif [ $service = registration-react ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService registration-react
+        oc expose dc/registration-react --port=4300
+
+        if [ $environment = ppe ]
+        then
+            oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4300 NODE_ENV=$environment
+        elif [ $environment = tt1 ]
+        then
+            oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4300 NODE_ENV=$environment
+
+        else
+            oc env dc/registration-react REG_API_URL=https://reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=/reference-data PORT=4300 NODE_ENV=$environment
+        fi
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage registration-react
     fi
 
 elif [ $service = reference-data ]
@@ -300,13 +327,15 @@ then
     if [ $deploymode = recreateServices ]
     then
         profile=prod
-        createOpenshiftService search-old
-        oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$environment.$cluster.brreg.no search_queryServiceExternal=https://search-api-fellesdatakatalog-$environment.$cluster.brreg.no
-        exposeService search-old
-        oc expose dc/search-old --port=8080
+        #delete search-old
+        oc delete all -l search-old
+        #createOpenshiftService search-old
+        ##oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$environment.$cluster.brreg.no search_queryServiceExternal=https://search-api-fellesdatakatalog-$environment.$cluster.brreg.no
+        #exposeService search-old
+        #oc expose dc/search-old --port=8080
     else
         # deploymentmode = onlyDeployImages
-        deployNewDockerImage search-old
+        #deployNewDockerImage search-old
     fi
 
 elif [ $service = search ]
@@ -371,7 +400,7 @@ then
         createOpenshiftService nginx
 
         #create secure route for registration gui
-        oc create route edge --service=nginx --hostname=$registrationGuiExternalAddress --port=8080
+        oc create route edge --service=nginx --hostname=$oldRegistrationGuiExternalAddress --port=8080
         oc label route nginx --overwrite=true \
             environmentTag=$environmentTag \
             nginx environmentDate=$dateTag
@@ -381,6 +410,26 @@ then
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx
+    fi
+
+elif [ $service = nginx-registration ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService nginx-registration
+
+        #create secure route for registration gui
+        oc create route edge --service=nginx-registration --hostname=$registrationGuiExternalAddress --port=8080
+        oc label route nginx-registration --overwrite=true \
+            environmentTag=$environmentTag \
+            nginx environmentDate=$dateTag
+
+        #todo: should be automated
+        echo "Remember: Container port 80 must be deleted"
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage nginx-registration
     fi
 
 elif [ $service = nginx-search ]

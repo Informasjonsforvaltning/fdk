@@ -1,0 +1,51 @@
+@import '../../assets/style/colors';
+
+.fdk-reg-input-tags {
+  display: block;
+  width: 100%;
+  padding: .05rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+  .react-tagsinput--focused {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
+
+  .react-tagsinput-tag {
+    background-color: $color4;
+    border-radius: 2px;
+    color: $color1;
+    display: inline-block;
+    font-weight: 400;
+    margin-right: 5px;
+    padding: 1px 5px;
+  }
+
+  .react-tagsinput-remove {
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .react-tagsinput-tag a::before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f00d";
+    margin-left: 5px;
+  }
+
+  .react-tagsinput-input {
+    background: transparent;
+    border: 0;
+    margin-top: 1px;
+    outline: none;
+    padding: 5px;
+    width: 80px;
+  }
+}

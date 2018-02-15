@@ -10,15 +10,6 @@ services:
     networks:
       platform:
 
-  search-old:
-    image: dcatno/search-old:latest
-    depends_on:
-      - search-api
-      - fuseki
-      - reference-data
-    networks:
-      platform:
-
   search-api:
     image: dcatno/search-api:latest
     depends_on:
@@ -31,7 +22,6 @@ services:
     depends_on:
       - search
       - search-api
-      - search-old
     networks:
       platform:
 
@@ -62,7 +52,6 @@ services:
       logging:
     depends_on:
      - elasticsearch
-    depends_on:
      - fuseki
      - harvester-api
 
@@ -105,6 +94,14 @@ services:
     networks:
       platform:
 
+  nginx-registration:
+      image: dcatno/nginx-registration:latest
+      depends_on:
+        - registration-api
+        - reference-data
+      networks:
+        platform:
+
   registration-api:
     image: dcatno/registration-api:latest
     depends_on:
@@ -118,6 +115,14 @@ services:
     image: dcatno/registration:latest
     depends_on:
       - nginx-ssl
+    networks:
+      platform:
+
+  registration-react:
+    image: dcatno/registration-react:latest
+    depends_on:
+      - nginx-registration-ssl
+      - registration
     networks:
       platform:
 

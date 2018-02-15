@@ -33,13 +33,13 @@ export class DatasetService {
   }
 
   private catalogsUrl = environment.api + "/catalogs"
-  private datasetPath = "/datasets/"
+  private datasetPath = "datasets/"
 
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json'});
 
   getAll(catId: String): Promise<any> {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}?size=1000&page=0`;
-    return this.http.get(datasetUrl)
+    return this.http.get(datasetUrl,  {headers: this.headers})
       .toPromise()
       .then(response => {
         if (response.json()._embedded) {
@@ -56,7 +56,7 @@ export class DatasetService {
 
   get(catId: string, datasetId: string): Promise<Dataset | void> {
     const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${datasetId}/`;
-    return this.http.get(datasetUrl)
+    return this.http.get(datasetUrl, {headers: this.headers})
       .toPromise()
       .then((response) => {
         const dataset = pluralizeObjectKeys(response.json());
@@ -109,7 +109,7 @@ export class DatasetService {
   }
 
   delete(catId: string, dataset: Dataset): Promise<Dataset | void> {
-    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}${dataset.id}`;
+    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}${dataset.id}`;
 
     let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
@@ -128,7 +128,7 @@ export class DatasetService {
     let authorization: string = localStorage.getItem("authorization");
     this.headers.append("Authorization", "Basic " + authorization);
 
-    const datasetUrl = `${this.catalogsUrl}/${catId}${this.datasetPath}`;
+    const datasetUrl = `${this.catalogsUrl}/${catId}/${this.datasetPath}`;
     return this.http
       .post(datasetUrl, {}, {headers: this.headers})
       .toPromise()

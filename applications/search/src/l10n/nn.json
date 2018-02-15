@@ -28,7 +28,8 @@
   },
   "query": {
     "intro": "Søk etter innhold",
-    "do": "Utføre søk"
+    "do": "Utføre søk",
+    "clear": "Nullstille søk"
   },
   "login": {
     "title": "Logg inn"

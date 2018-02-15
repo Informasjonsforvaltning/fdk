@@ -1,0 +1,6 @@
+node_modules
+//src/utils
+//src/l10n
+test
+webpack.dev.config.js
+webpack.prod.config.js

@@ -6,6 +6,7 @@
     <logger name="org.apache.jena" level="ERROR"/>
 	<logger name="org.elasticsearch" level ="WARN"/>
 	<logger name="no.difi.dcat" level ="INFO"/>
+	<logger name="no.dcat" level = "DEBUG"/>
 
 
     <timestamp key="datetime" datePattern="yyyy-MM-dd HH:mm:ss"/>
@@ -25,9 +26,6 @@
 	</appender>
 	-->
 
-	<logger name="no.dcat" level="INFO">
-		<appender-ref ref="harvester-logger" />
-		<!-- <appender-ref ref="harvestresult-file-logger" /> -->
-	</logger>
+
 
 </configuration>

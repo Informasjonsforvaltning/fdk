@@ -1,5 +1,7 @@
 package no.dcat.portal.query;
 
+import io.swagger.annotations.ApiOperation;
+import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,14 +30,12 @@ public class HarvestQueryService extends ElasticsearchService {
     public static final String QUERY_PUBLISHER = "/publisher";
 
     /**
-     * Finds all harvest catalog records for a given orgpath
-     * <p/>
-     *
      * @return The complete elasticsearch response on Json-format is returned..
      */
     @CrossOrigin
-    @RequestMapping(value = "/harvest/catalog", produces = "application/json")
-    public ResponseEntity<String> listCatalogHarvestRecords(@RequestParam(value = "q", defaultValue = "") String query) {
+    @ApiOperation(value = "Finds all harvest catalog records for a given orgpath")
+    @RequestMapping(value = "/harvest/catalog", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> listCatalogHarvestRecords(@RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/harvest query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();

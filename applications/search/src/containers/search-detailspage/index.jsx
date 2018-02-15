@@ -56,6 +56,7 @@ export default class DetailsPage extends React.Component {
         <DatasetDescription
           title={dataset.title ? getTranslateText(dataset.title, this.props.selectedLanguageCode) : null}
           description={dataset.description ? getTranslateText(dataset.description, this.props.selectedLanguageCode) : null}
+          descriptionFormatted={dataset.descriptionFormatted ? getTranslateText(dataset.descriptionFormatted, this.props.selectedLanguageCode) : null}
           objective={dataset.objective ? getTranslateText(dataset.objective, this.props.selectedLanguageCode) : null}
           publisher={dataset.publisher}
           themes={dataset.theme}
