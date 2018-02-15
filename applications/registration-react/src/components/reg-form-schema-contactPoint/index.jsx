@@ -41,7 +41,7 @@ let FormContactPoint = (props) => {
   return (
     <form>
       <div className="form-group">
-        <Helptext title="Kontaktpunkt" helptextItems={"plassholder for hjelpetekst kontaktpunkt"} />
+        <Helptext title="Kontaktpunkt" helptextItems={helptextItems['ContactPoint_organizational-unit']} />
         <Field name="contactPoint[0].organizationUnit" component={InputField} label="Kontaktpunkt" />
       </div>
       <div className="form-group">
@@ -76,7 +76,6 @@ const mapStateToProps = ({ dataset }) => (
       contactPoint: (dataset.result.contactPoint && dataset.result.contactPoint.length > 0) ? dataset.result.contactPoint : [contactPointType],
     }
   }
-
 )
 
 export default connect(mapStateToProps)(FormContactPoint)

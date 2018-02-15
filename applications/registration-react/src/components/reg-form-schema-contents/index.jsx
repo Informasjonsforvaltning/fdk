@@ -86,7 +86,7 @@ const renderStandardFields = (item, index, fields, props) => (
   </div>
 );
 
-//At the moment, support only one standard entry
+// At the moment, support only one standard entry
 const renderStandard = (props) => {
   const { fields } = props;
   return (

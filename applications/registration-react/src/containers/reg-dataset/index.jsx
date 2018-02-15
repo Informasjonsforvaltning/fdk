@@ -321,44 +321,44 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
   }
 
   const formThemes = form.themes || {
-      formThemes: null
+    formThemes: null
   }
 
   const type = form.type || {
-      type: null
-    }
+    type: null
+  }
 
   const concept = form.concept || {
     concept: null
   }
 
   const spatial = form.spatial || {
-      spatial: null
-    }
+    spatial: null
+  }
 
   const formProvenance = form.provenance || {
-      formProvenance: null
-    }
+    formProvenance: null
+  }
 
   const contents = form.contents || {
-      contents: null
-    }
+    contents: null
+  }
 
   const informationModel = form.informationModel || {
-      informationModel: null
-    }
+    informationModel: null
+  }
 
   const contactPoint = form.contactPoint || {
-      contactPoint: null
-    }
+    contactPoint: null
+  }
 
   const distribution = form.distribution || {
-      distribution: null
-    }
+    distribution: null
+  }
 
   const sample = form.sample || {
-      sample: null
-    }
+    sample: null
+  }
 
   const { registrationStatus, lastSaved } = app || {
     registrationStatus: null,
