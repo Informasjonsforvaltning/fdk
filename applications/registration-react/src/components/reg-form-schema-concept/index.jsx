@@ -27,7 +27,7 @@ let FormConcept = (props) => {
   return (
     <form>
       <div className="form-group">
-        <Helptext title="Begrep" helptextItems={helptextItems.Dataset_content} />
+
         <Field
           name="subject"
           type="text"
@@ -37,7 +37,7 @@ let FormConcept = (props) => {
         />
       </div>
       <div className="form-group">
-        <Helptext title="Søkeord" helptextItems={helptextItems.Dataset_keyword} />
+
         <Field
           name="keyword"
           type="text"
