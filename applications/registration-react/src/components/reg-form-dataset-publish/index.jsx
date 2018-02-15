@@ -27,7 +27,7 @@ export default class DatasetPublish extends Component {
 
   toggle() {
     this.setState({
-      showPublishInfo: true
+      showPublishModal: !this.state.showPublishModal
     });
   }
 

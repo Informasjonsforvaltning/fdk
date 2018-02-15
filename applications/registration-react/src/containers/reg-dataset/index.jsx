@@ -251,7 +251,23 @@ class RegDataset extends React.Component {
                 dispatch={this.props.dispatch}
                 registrationStatus={(registrationStatus && registrationStatus.length > 0) ? registrationStatus : result.registrationStatus}
                 lastSaved={lastSaved || result._lastModified}
-                syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
+                //syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
+                syncErrors={
+                  !!(
+                    (title && title.syncErrors)
+                    || (accessRights && accessRights.syncErrors)
+                    || (formThemes && formThemes.syncErrors)
+                    || (type && type.syncErrors)
+                    || (concept && concept.syncErrors)
+                    || (spatial && spatial.syncErrors)
+                    || (formProvenance && formProvenance.syncErrors)
+                    || (contents && contents.syncErrors)
+                    || (informationModel && informationModel.syncErrors)
+                    || (contactPoint && contactPoint.syncErrors)
+                    || (distribution && distribution.syncErrors)
+                    || (sample && sample.syncErrors)
+                  )
+                }
               />
             </div>
             }
