@@ -121,11 +121,119 @@ class RegDataset extends React.Component {
             {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
             <div className="col-md-8">
 
+              <FormTemplate
+                title="Tittel og beskrivelse"
+                values={this._titleValues()}
+                syncErrors={title.syncErrors}
+              >
+                <FormTitle
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
 
+              <FormTemplate
+                title="Tilgangsnivå"
+                syncErrors={accessRights.syncErrors}
+              >
+                <FormAccessRights
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Tema"
+              >
+                <FormTheme
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Type"
+              >
+                <FormType
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Begrep og søkeord"
+              >
                 <FormConcept
                   helptextItems={helptextItems}
                 />
+              </FormTemplate>
 
+              <FormTemplate
+                title="Geografi, tid og språk"
+              >
+                <FormSpatial
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Opphav og ferskhet"
+              >
+                <FormProvenance
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Innhold"
+              >
+                <FormContents
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Informasjonsmodell"
+              >
+                <FormInformationModel
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Relasjoner"
+              >
+                <FormReference
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Kontaktinformasjon"
+              >
+                <FormContactPoint
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Distribusjoner"
+              >
+                <FormDistribution
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Eksempeldata"
+              >
+                <FormSample
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <DatasetPublish
+                dispatch={this.props.dispatch}
+                registrationStatus={(registrationStatus && registrationStatus.length > 0) ? registrationStatus : result.registrationStatus}
+                lastSaved={lastSaved || result._lastModified}
+                syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
+              />
             </div>
             }
             <div className="col-md-2" />
