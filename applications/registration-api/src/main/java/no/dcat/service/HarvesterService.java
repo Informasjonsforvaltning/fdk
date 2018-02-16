@@ -1,6 +1,5 @@
 package no.dcat.service;
 
-import no.dcat.datastore.domain.DcatSource;
 import no.dcat.model.Catalog;
 import no.dcat.shared.admin.DcatSourceDto;
 import org.apache.commons.codec.binary.Base64;
@@ -16,8 +15,7 @@ import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
-import java.security.Principal;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -82,44 +80,37 @@ public class HarvesterService {
      */
     public boolean createHarvestEntry(Catalog catalog, String endpoint) {
 
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = harvesterUrl + "/api/admin/dcat-source";
-        logger.debug("harvester uri: {}", uri);
-
-        //prepare Principal object for dcat source owner
-        Principal datasourceOwner = new Principal() {
-            @Override
-            public String getName() {
-                //Currently, test_admin owns all data sources in harvester
-                return "test_admin";
-            }
-        }
-
         //prepare DTO for new harvest entry
         DcatSourceDto datasource = new DcatSourceDto(
                 catalog.getId(),
                 catalog.getTitle().get("nb"), //use norwegian title of catalog as description
-                catalog.getUri(),
+                endpoint,
                 harvesterUsername,
                 catalog.getId());
 
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add(
+                new BasicAuthorizationInterceptor(harvesterUsername,harvesterPassword)
+        );
+        String uri = harvesterUrl + "/api/admin/dcat-source";
+        logger.debug("harvester uri: {}", uri);
+
         ResponseEntity<String> response = null;
+        boolean harvestEntryCreated;
+
         try {
-            response = restTemplate.exchange(
-                    uri,
-                    HttpMethod.POST,
-                    new HttpEntity<>(createHeaders(harvesterUsername, harvesterPassword)),
-                    datasource,
-                    datasourceOwner);
+            //TODO få et result der statuskoden kan leses
+            URI result = restTemplate.postForLocation(uri, datasource);
+            harvestEntryCreated = true;
         } catch (Exception e) {
             logger.error("Failed to POST new data source to harvester: {}", e.getLocalizedMessage());
             logger.error("response from harvester: {}", response.toString());
+            harvestEntryCreated = false;
         }
 
-        return true;
+        return harvestEntryCreated;
     }
-
-
 
 
     /**
