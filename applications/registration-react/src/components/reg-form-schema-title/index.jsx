@@ -44,7 +44,7 @@ const renderLandingpage = ({ fields }) => (
 );
 
 let FormTitle = (props) => {
-  const { syncErrors, helptextItems } = props;
+  const { helptextItems } = props;
   return (
     <form>
       <div className="form-group">
@@ -82,7 +82,7 @@ FormTitle = reduxForm({
   syncErrors: getFormSyncErrors("title")(state)
 }))(FormTitle));
 
-const mapStateToProps = ({ dataset }, state) => (
+const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
       title: (dataset.result.title && dataset.result.title.nb && dataset.result.title.nb.length > 0) ? dataset.result.title : textType,

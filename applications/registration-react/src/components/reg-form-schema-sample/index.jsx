@@ -3,7 +3,6 @@ import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import _throttle from 'lodash/throttle';
 
-import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
@@ -35,7 +34,7 @@ const validate = values => {
       errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
 
       if (conformsTo) {
-        conformsToNodes = conformsTo.map((item, index) => {
+        conformsToNodes = conformsTo.map(item => {
           let itemErrors = {}
           const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
           const conformsToURI = item.uri ? item.uri : null;
@@ -44,11 +43,7 @@ const validate = values => {
           return itemErrors;
         });
         let showSyncError = false;
-        conformsToNodes.map(item => {
-          if (JSON.stringify(item) !== '{}') {
-            showSyncError = true;
-          }
-        });
+        showSyncError = (conformsToNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
         if (showSyncError) {
           errors.conformsTo = conformsToNodes;
         }
@@ -56,42 +51,11 @@ const validate = values => {
       return errors;
     });
     let showSyncError = false;
-    errorNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (errorNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.sample = errorNodes;
     }
   }
-
-  /*
-   if (legalBasisForProcessing) {
-   legalBasisForProcessingNodes = legalBasisForProcessing.map((item, index) => {
-   let itemErrors = {}
-   const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
-   const legalBasisForProcessingURI = item.uri ? item.uri : null;
-
-   itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
-   itemErrors = validateURL('uri', legalBasisForProcessingURI, itemErrors);
-
-   return itemErrors;
-   });
-   let showSyncError = false;
-   legalBasisForProcessingNodes.map(item => {
-   if (JSON.stringify(item) !== '{}') {
-   showSyncError = true;
-   }
-   });
-   if (showSyncError) {
-   errors.legalBasisForProcessing = legalBasisForProcessingNodes;
-   }
-   }
-   */
-
-  // errors.sample = errorNodes;
-
   return errors
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import localization from '../../utils/localization';
@@ -14,7 +14,7 @@ const validate = values => {
   const { informationModel } = values;
   let informationModelNodes = null;
   if (informationModel) {
-    informationModelNodes = informationModel.map((item, index) => {
+    informationModelNodes = informationModel.map(item => {
       let itemErrors = {}
       const informationModelPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const informationModelURI = item.uri ? item.uri : null;
@@ -23,11 +23,7 @@ const validate = values => {
       return itemErrors;
     });
     let showSyncError = false;
-    informationModelNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (informationModelNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.informationModel = informationModelNodes;
     }
@@ -68,7 +64,7 @@ const renderInformationModel = (props) => {
 };
 
 let FormInformationModel = (props) => {
-  const { helptextItems, hasInformationModelUri } = props;
+  const { helptextItems } = props;
   return (
     <form>
       <div className="form-group">
@@ -95,15 +91,6 @@ FormInformationModel = reduxForm({
   validate,
   asyncValidate,
   asyncChangeFields: [],
-})(FormInformationModel)
-
-// Decorate with connect to read form values
-const selector = formValueSelector('informationModel')
-FormInformationModel = connect(state => {
-  const hasInformationModelUri = selector(state, 'informationModel.uri')
-  return {
-    hasInformationModelUri,
-  }
 })(FormInformationModel)
 
 const mapStateToProps = ({ dataset }) => (

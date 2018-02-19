@@ -19,8 +19,8 @@ export const titleValues = values => {
     }
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
-  }
+    }
+  } return null;
 }
 
 export const accessRightsValues = values => {
@@ -37,29 +37,17 @@ export const accessRightsValues = values => {
 
     let hasLegalBasisForRestriction = false;
     if (legalBasisForRestriction) {
-      legalBasisForRestriction.map(item => {
-        if (item.uri !== '') {
-          hasLegalBasisForRestriction = true;
-        }
-      })
+      hasLegalBasisForRestriction = (legalBasisForRestriction.filter(item => (item && item.uri && item.uri !== '')).length > 0);
     }
 
     let hasLegalBasisForProcessing = false;
     if (legalBasisForProcessing) {
-      legalBasisForProcessing.map(item => {
-        if (item.uri !== '') {
-          hasLegalBasisForProcessing = true;
-        }
-      })
+      hasLegalBasisForProcessing = (legalBasisForProcessing.filter(item => (item && item.uri && item.uri !== '')).length > 0);
     }
 
     let hasLegalBasisForAccess = false;
     if (legalBasisForAccess) {
-      legalBasisForAccess.map(item => {
-        if (item.uri !== '') {
-          hasLegalBasisForAccess = true;
-        }
-      })
+      hasLegalBasisForAccess = (legalBasisForAccess.filter(item => (item && item.uri && item.uri !== '')).length > 0);
     }
 
     const retVal = `${accessRightsPrefLabel} ${hasLegalBasisForRestriction ? `${localization.schema.accessRights.legalBasisForRestriction.heading}.` : ''} ${hasLegalBasisForProcessing ? `${localization.schema.accessRights.legalBasisForProcessing.heading}.` : ''} ${hasLegalBasisForAccess ? `${localization.schema.accessRights.legalBasisForAccess.heading}.` : ''}`

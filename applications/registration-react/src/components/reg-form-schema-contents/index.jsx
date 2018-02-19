@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import localization from '../../utils/localization';
@@ -44,7 +44,7 @@ const validate = values => {
   }
 
   if (conformsTo) {
-    conformsToNodes = conformsTo.map((item, index) => {
+    conformsToNodes = conformsTo.map(item => {
       let itemErrors = {}
       const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const conformsToURI = item.uri ? item.uri : null;
@@ -53,11 +53,7 @@ const validate = values => {
       return itemErrors;
     });
     let showSyncError = false;
-    conformsToNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (conformsToNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.conformsTo = conformsToNodes;
     }
@@ -100,7 +96,7 @@ const renderStandard = (props) => {
 
 
 let FormContents = (props) => {
-  const { helptextItems, hasConformsToUri } = props;
+  const { helptextItems } = props;
   return (
     <form>
       <div className="form-group">
@@ -144,15 +140,6 @@ FormContents = reduxForm({
   validate,
   asyncValidate,
   asyncChangeFields: [],
-})(FormContents)
-
-// Decorate with connect to read form values
-const selector = formValueSelector('conformsTo')
-FormContents = connect(state => {
-  const hasConformsToUri = selector(state, 'conformsTo.uri')
-  return {
-    hasConformsToUri,
-  }
 })(FormContents)
 
 const mapStateToProps = ({ dataset }) => (

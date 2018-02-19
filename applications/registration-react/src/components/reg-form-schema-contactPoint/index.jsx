@@ -1,8 +1,7 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import asyncValidate from '../../utils/asyncValidate';
@@ -23,11 +22,7 @@ const validate = values => {
       return itemErrors;
     });
     let showSyncError = false;
-    contactPointNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (contactPointNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.contactPoint = contactPointNodes;
     }

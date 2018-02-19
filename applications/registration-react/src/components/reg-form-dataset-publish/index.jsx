@@ -5,7 +5,6 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment/locale/nb';
 import axios from 'axios';
-import { withRouter  } from 'react-router-dom';
 
 import Modal from '../app-modal';
 import AppDeleteModal from '../app-delete-modal';
@@ -60,7 +59,7 @@ export default class DatasetPublish extends Component {
       return axios.patch(
         postURL, values, {headers: api}
       )
-        .then((response) => {
+        .then(() => {
           this.props.dispatch(publishDataset(value));
         })
         .catch((error) => {
@@ -96,7 +95,7 @@ export default class DatasetPublish extends Component {
     }
     return axios.delete(
       datasetURL, {headers: api}
-    ).then((response) => {
+    ).then(() => {
       window.location.replace(catalogDatasetsURL);
     }).catch((error) => {
       throw {error}
