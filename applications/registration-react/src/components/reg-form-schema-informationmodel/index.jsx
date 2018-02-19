@@ -94,6 +94,7 @@ FormInformationModel = reduxForm({
   form: 'informationModel',
   validate,
   asyncValidate,
+  asyncChangeFields: [],
 })(FormInformationModel)
 
 // Decorate with connect to read form values

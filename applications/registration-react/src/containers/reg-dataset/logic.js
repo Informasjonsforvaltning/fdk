@@ -1,5 +1,5 @@
 import localization from '../../utils/localization';
-import { getTranslateText } from '../../utils/translateText';
+import getTranslateText from '../../utils/translateText';
 
 export const titleValues = values => {
   if (values) {
@@ -65,23 +65,24 @@ export const accessRightsValues = values => {
     const retVal = `${accessRightsPrefLabel} ${hasLegalBasisForRestriction ? `${localization.schema.accessRights.legalBasisForRestriction.heading}.` : ''} ${hasLegalBasisForProcessing ? `${localization.schema.accessRights.legalBasisForProcessing.heading}.` : ''} ${hasLegalBasisForAccess ? `${localization.schema.accessRights.legalBasisForAccess.heading}.` : ''}`
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
-  }
+    }
+  } return null;
 }
 
 export const themesValues = values => {
   if (values) {
     const { theme } = values;
     let retVal = '';
-    theme.map(item => {
+    retVal += theme.map(item => {
       if (item.title && item.title.nb !== '') {
-        retVal = `${retVal} ${getTranslateText(item.title)}.`
+        return `${getTranslateText(item.title)}.`
       }
+      return '';
     });
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
-  }
+    }
+  } return null;
 }
 
 export const typeValues = values => {
@@ -93,8 +94,8 @@ export const typeValues = values => {
     }
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
-  }
+    }
+  } return null;
 }
 
 export const conceptValues = values => {
@@ -102,24 +103,25 @@ export const conceptValues = values => {
     let retVal = '';
     const {subject, keyword} = values;
     if (subject) {
-      subject.map(item => {
+      retVal += subject.map(item => {
         if (item.prefLabel && item.prefLabel.no !== '') {
-          retVal = `${retVal} ${getTranslateText(item.prefLabel)}.`
+          return `${getTranslateText(item.prefLabel)}.`
         }
+        return '';
       });
     }
     if (keyword) {
-      keyword.map(item => {
+      retVal += keyword.map(item => {
         if (item && item[localization.getLanguage()] !== '') {
-          retVal = `${retVal} ${getTranslateText(item)}.`
+          return `${getTranslateText(item)}.`
         }
+        return '';
       });
       if (retVal.trim().length > 0) {
         return retVal;
       }
-      return null;
     }
-  }
+  } return null;
 }
 
 export const spatialValues = values => {
@@ -127,19 +129,16 @@ export const spatialValues = values => {
     let retVal = '';
     const { spatial, temporal, issued, language } = values;
     if (spatial) {
-      spatial.map(item => {
+      retVal += spatial.map(item => {
         if (item.uri && item.uri !== '') {
-          retVal = `${retVal} ${item.uri}.`
+          return `${item.uri}. `
         }
+        return '';
       });
     }
     if (temporal) {
       let showTemporal = false;
-      spatial.map(item => {
-        if (item && JSON.stringify(item) !== '{}') {
-          showTemporal = true;
-        }
-      });
+      showTemporal = (temporal.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
       if (showTemporal) {
         retVal = `${retVal} Tidsmessig avgrenset.`
       }
@@ -148,14 +147,13 @@ export const spatialValues = values => {
       retVal = `${retVal} ${issued}.`
     }
     if (language) {
-      language.map(item => {
-        retVal = `${retVal} ${item.code}.`
-      });
+      retVal += language.map(item => `${item.code}. `);
     }
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
-  }
+    }
+
+  } return null;
 }
 
 export const provenanceValues = values => {
@@ -174,15 +172,14 @@ export const provenanceValues = values => {
       retVal = `${retVal} ${modified}.`
     }
     if (hasCurrentnessAnnotation) {
-      let showCurrentnessAnnotation = false;
       if (hasCurrentnessAnnotation.hasBody && hasCurrentnessAnnotation.hasBody.no !== '') {
         retVal = `${retVal} Aktualitet.`
       }
     }
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
-  }
+    }
+  } return null;
 }
 
 export const contentsValues = values => {
@@ -190,10 +187,11 @@ export const contentsValues = values => {
     let retVal = '';
     const { conformsTo, hasRelevanceAnnotation, hasCompletenessAnnotation, hasAccuracyAnnotation, hasAvailabilityAnnotation } = values;
     if (conformsTo) {
-      conformsTo.map(item => {
+      retVal += conformsTo.map(item => {
         if (item.prefLabel) {
-          retVal = `${retVal} ${getTranslateText(item.prefLabel) ? `${getTranslateText(item.prefLabel)}.` : ''}`
+          return `${getTranslateText(item.prefLabel) ? `${getTranslateText(item.prefLabel)}.` : ''}`
         }
+        return '';
       })
     }
     if (hasRelevanceAnnotation && hasRelevanceAnnotation.hasBody && hasRelevanceAnnotation.hasBody.nb !== '') {
@@ -204,7 +202,7 @@ export const contentsValues = values => {
       retVal = `${retVal} Kompletthet.`
     }
 
-    if (hasCompletenessAnnotation && hasCompletenessAnnotation.hasBody && hasCompletenessAnnotation.hasBody.nb !== '') {
+    if (hasAccuracyAnnotation && hasAccuracyAnnotation.hasBody && hasAccuracyAnnotation.hasBody.nb !== '') {
       retVal = `${retVal} Nøyaktighet.`
     }
 
@@ -214,8 +212,9 @@ export const contentsValues = values => {
 
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
+    }
   }
+  return null;
 }
 
 export const informationModelValues = values => {
@@ -223,16 +222,18 @@ export const informationModelValues = values => {
     let retVal = '';
     const { informationModel } = values;
     if (informationModel) {
-      informationModel.map(item => {
+      retVal += informationModel.map(item => {
         if (item.prefLabel && item.prefLabel[localization.getLanguage()] !== '') {
-          retVal = `${retVal} ${getTranslateText(item.prefLabel)}.`
+          return `${getTranslateText(item.prefLabel)}.`
         }
+        return '';
       })
     }
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
+    }
   }
+  return null;
 }
 
 export const referenceValues = values => {
@@ -240,16 +241,13 @@ export const referenceValues = values => {
     let countReferences = 0;
     const { references } = values;
     if (references) {
-      references.map(item => {
-        if (item.source && item.source.uri !== null) {
-          countReferences = countReferences + 1;
-        }
-      })
+      countReferences = references.filter(item => (item.source && item.source.uri !== null)).length;
     }
     if (countReferences > 0) {
       return `${countReferences} relasjoner`;
     } return null;
   }
+  return null;
 }
 
 export const contactPointValues = values => {
@@ -257,25 +255,28 @@ export const contactPointValues = values => {
     let retVal = '';
     const { contactPoint } = values;
     if (contactPoint) {
-      contactPoint.map(item => {
+      retVal += contactPoint.map(item => {
+        let concatString = '';
         if (item.organizationUnit && item.organizationUnit !== '') {
-          retVal = `${retVal} Kontaktpunkt.`
+          concatString = `${concatString} Kontaktpunkt.`
         }
         if (item.hasURL && item.hasURL !== '') {
-          retVal = `${retVal} Kontaktskjema.`
+          concatString = `${concatString} Kontaktskjema.`
         }
         if (item.email && item.email !== '') {
-          retVal = `${retVal} E-post.`
+          concatString = `${concatString} E-post.`
         }
         if (item.hasTelephone && item.hasTelephone !== '') {
-          retVal = `${retVal} Telefon.`
+          concatString = `${concatString} Telefon.`
         }
+        return concatString;
       })
     }
     if (retVal.trim().length > 0) {
       return retVal;
-    } return null;
+    }
   }
+  return null;
 }
 
 export const distributionValues = values => {
@@ -283,16 +284,13 @@ export const distributionValues = values => {
     let countDistributions = 0;
     const { distribution } = values;
     if (distribution) {
-      distribution.map(item => {
-        if (item.accessURL && item.accessURL[0] !== '') {
-          countDistributions = countDistributions + 1;
-        }
-      })
+      countDistributions = distribution.filter(item => (item.accessURL && item.accessURL[0] !== '')).length;
     }
     if (countDistributions > 0) {
       return `${countDistributions} distribusjoner`;
-    } return null;
+    }
   }
+  return null;
 }
 
 export const sampleValues = values => {
@@ -300,14 +298,11 @@ export const sampleValues = values => {
     let countSamples = 0;
     const { sample } = values;
     if (sample) {
-      sample.map(item => {
-        if (item.accessURL && item.accessURL[0] !== '') {
-          countSamples = countSamples + 1;
-        }
-      })
+      countSamples = sample.filter(item => (item.accessURL && item.accessURL[0] !== '')).length;
     }
     if (countSamples > 0) {
       return `${countSamples} eksempeldata`;
-    } return null;
+    }
   }
+  return null;
 }

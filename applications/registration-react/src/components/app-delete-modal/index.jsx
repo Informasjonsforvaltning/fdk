@@ -14,9 +14,7 @@ const AppDeleteModal  = (props) => (
         <Button color="danger" onClick={() => props.handleAction()}>Ja, slett datasettet</Button>
         <Button color="primary" onClick={props.toggle}>Nei, behold datasettet</Button>
       </ModalFooter>
-      <ModalFooter>
-
-      </ModalFooter>
+      <ModalFooter />
     </Modal>
   </div>
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
+import _throttle from 'lodash/throttle';
 
 import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
@@ -228,7 +229,7 @@ const selector = formValueSelector('accessRights');
 FormAccessRights = reduxForm({
   form: 'accessRights',
   validate,
-  asyncValidate,
+  asyncValidate: _throttle(asyncValidate, 250),
 })(connect(state => {
   const hasAccessRightsURI = selector(state, 'accessRights.uri')
   return {

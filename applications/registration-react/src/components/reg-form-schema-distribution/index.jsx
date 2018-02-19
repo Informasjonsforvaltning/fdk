@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import _throttle from 'lodash/throttle';
 
 import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
@@ -201,7 +202,7 @@ let FormDistribution = props => {
 FormDistribution = reduxForm({
   form: 'distribution',
   validate,
-  asyncValidate,
+  asyncValidate: _throttle(asyncValidate, 250),
 })(FormDistribution)
 
 const distributionTypes = values => {
