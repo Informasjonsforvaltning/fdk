@@ -1,4 +1,4 @@
-export function getTranslateText(textObj, selectedLanguage = 'nb') {
+export default function getTranslateText(textObj, selectedLanguage = 'nb') {
   return (
     textObj[selectedLanguage]
     || textObj.nb

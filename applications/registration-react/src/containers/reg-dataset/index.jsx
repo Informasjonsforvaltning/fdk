@@ -269,7 +269,7 @@ class RegDataset extends React.Component {
                 dispatch={this.props.dispatch}
                 registrationStatus={(registrationStatus && registrationStatus.length > 0) ? registrationStatus : result.registrationStatus}
                 lastSaved={lastSaved || result._lastModified}
-                //syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
+                // syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
                 syncErrors={
                   !!(
                     (title && title.syncErrors)
@@ -383,8 +383,8 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
   }
 
   const reference = form.reference || {
-      reference: null
-    }
+    reference: null
+  }
 
   const contactPoint = form.contactPoint || {
     contactPoint: null
