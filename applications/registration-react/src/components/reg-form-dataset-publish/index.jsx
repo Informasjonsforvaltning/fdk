@@ -5,13 +5,15 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment/locale/nb';
 import axios from 'axios';
+import { Redirect  } from 'react-router-dom';
 
 import Modal from '../app-modal';
-
+import AppDeleteModal from '../app-delete-modal';
 import localization from '../../utils/localization';
 import {
   publishDataset
 } from '../../actions/index';
+import './index.scss';
 
 export default class DatasetPublish extends Component {
   constructor(props) {
@@ -19,10 +21,14 @@ export default class DatasetPublish extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       showPublishModal: false,
-      showPublishInfo: false
+      showPublishInfo: false,
+      showDeleteModal: false
     };
     this.toggle = this.toggle.bind(this);
     this.handleDatasetStatus = this.handleDatasetStatus.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.handleDatasetDelete = this.handleDatasetDelete.bind(this);
   }
 
   toggle() {
@@ -66,6 +72,34 @@ export default class DatasetPublish extends Component {
       showPublishModal: true
     })
     return null;
+  }
+
+  showDeleteModal() {
+    this.setState({
+      showDeleteModal: true
+    });
+  }
+
+  closeDeleteModal() {
+    this.setState({
+      showDeleteModal: false
+    });
+  }
+
+  handleDatasetDelete() {
+    this.closeDeleteModal();
+    const datasetURL = window.location.pathname;
+    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
+    const api = {
+      Authorization: `Basic user:password`
+    }
+    return axios.delete(
+      datasetURL, {headers: api}
+    ).then((response) => {
+      console.log("datasett slettet");
+    }).catch((error) => {
+      throw {error}
+    });
   }
 
   render() {
@@ -126,11 +160,26 @@ export default class DatasetPublish extends Component {
             </div>
           )}
 
+          <div className="mt-2 ">
+            <button className="fdk-dataset-delete text-left no-padding" onClick={this.showDeleteModal}>
+              <i className="mr-1 fa fa-trash fdk-color-red" />
+              Slette datasett
+            </button>
+          </div>
+
 
         </div>
         <Modal
           modal={this.state.showPublishModal}
           toggle={this.toggle}
+          title={localization.validation.validateDataset}
+          body={localization.validation.validateDatasetBody}
+        />
+
+        <AppDeleteModal
+          modal={this.state.showDeleteModal}
+          handleAction={this.handleDatasetDelete}
+          toggle={this.closeDeleteModal}
           title={localization.validation.validateDataset}
           body={localization.validation.validateDatasetBody}
         />

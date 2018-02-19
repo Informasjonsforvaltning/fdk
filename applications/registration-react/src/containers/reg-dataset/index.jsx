@@ -30,6 +30,21 @@ import TimeoutModal from '../../components/app-timeout-modal';
 import FormInformationModel from '../../components/reg-form-schema-informationmodel';
 import FormContactPoint from '../../components/reg-form-schema-contactPoint';
 import FormContents from '../../components/reg-form-schema-contents';
+import {
+  titleValues,
+  accessRightsValues,
+  themesValues,
+  typeValues,
+  conceptValues,
+  spatialValues,
+  provenanceValues,
+  contentsValues,
+  informationModelValues,
+  referenceValues,
+  contactPointValues,
+  distributionValues,
+  sampleValues
+} from './logic';
 import './index.scss';
 
 
@@ -63,16 +78,6 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchHelptextsIfNeeded());
   }
 
-  _titleValues() {
-    const { values } = this.props.title;
-    if (values) {
-      const retVal = `${values.title.nb} ${values.description.nb} ${values.objective.nb}`
-      if (retVal.trim().length > 0) {
-        return retVal;
-      }
-    } return null;
-  }
-
   fetchDataset() {
     this.props.dispatch(fetchDatasetIfNeeded());
   }
@@ -104,6 +109,7 @@ class RegDataset extends React.Component {
       formProvenance,
       contents,
       informationModel,
+      reference,
       contactPoint,
       distribution,
       sample,
@@ -132,7 +138,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tittel og beskrivelse"
-                values={this._titleValues()}
+                values={titleValues(title.values)}
                 syncErrors={title.syncErrors}
               >
                 <FormTitle
@@ -142,6 +148,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tilgangsnivå"
+                values={accessRightsValues(accessRights.values)}
                 syncErrors={accessRights.syncErrors}
               >
                 <FormAccessRights
@@ -151,6 +158,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tema"
+                values={themesValues(formThemes.values)}
                 syncErrors={formThemes.syncErrors}
               >
                 <FormTheme
@@ -160,6 +168,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Type"
+                values={typeValues(type.values)}
                 syncErrors={type.syncErrors}
               >
                 <FormType
@@ -169,6 +178,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Begrep og søkeord"
+                values={conceptValues(concept.values)}
                 syncErrors={concept.syncErrors}
               >
                 <FormConcept
@@ -178,6 +188,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Geografi, tid og språk"
+                values={spatialValues(spatial.values)}
                 syncErrors={spatial.syncErrors}
               >
                 <FormSpatial
@@ -187,6 +198,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Opphav og ferskhet"
+                values={provenanceValues(formProvenance.values)}
                 syncErrors={formProvenance.syncErrors}
               >
                 <FormProvenance
@@ -196,6 +208,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Innhold"
+                values={contentsValues(contents.values)}
                 syncErrors={contents.syncErrors}
               >
                 <FormContents
@@ -205,6 +218,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Informasjonsmodell"
+                values={informationModelValues(informationModel.values)}
                 syncErrors={informationModel.syncErrors}
               >
                 <FormInformationModel
@@ -214,6 +228,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Relasjoner"
+                values={referenceValues(reference.values)}
               >
                 <FormReference
                   helptextItems={helptextItems}
@@ -222,6 +237,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Kontaktinformasjon"
+                values={contactPointValues(contactPoint.values)}
                 syncErrors={contactPoint.syncErrors}
               >
                 <FormContactPoint
@@ -231,6 +247,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Distribusjoner"
+                values={distributionValues(distribution.values)}
                 syncErrors={distribution.syncErrors}
               >
                 <FormDistribution
@@ -240,6 +257,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Eksempeldata"
+                values={sampleValues(sample.values)}
                 syncErrors={sample.syncErrors}
               >
                 <FormSample
@@ -364,6 +382,10 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     informationModel: null
   }
 
+  const reference = form.reference || {
+      reference: null
+    }
+
   const contactPoint = form.contactPoint || {
     contactPoint: null
   }
@@ -399,6 +421,7 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     formProvenance,
     contents,
     informationModel,
+    reference,
     contactPoint,
     distribution,
     sample,

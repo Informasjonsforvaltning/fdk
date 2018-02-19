@@ -40,7 +40,7 @@ export default class FormTemplate extends Component {
               <h2 className="mb-0">{ title }</h2>
             </div>
             {!this.state.collapse && values &&
-            <div className="d-flex">
+            <div className="d-flex text-left fdk-text-size-small fdk-color3">
               <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
               {values}
             </div>

@@ -188,7 +188,7 @@ let FormAccessRights = (props) => {
           ) && (
             <div className="mt-4">
               <div className="form-group">
-                <Helptext title="Skjermingshjemmel" helptextItems={helptextItems.Dataset_legalBasisForRestriction} />
+                <Helptext title={localization.schema.accessRights.legalBasisForRestriction.heading} helptextItems={helptextItems.Dataset_legalBasisForRestriction} />
                 <FieldArray
                   name="legalBasisForRestriction"
                   component={renderLegalBasis}
@@ -198,7 +198,7 @@ let FormAccessRights = (props) => {
               </div>
 
               <div className="form-group">
-                <Helptext title="Skjermingshjemmel" helptextItems={helptextItems.Dataset_legalBasisForProcessing} />
+                <Helptext title={localization.schema.accessRights.legalBasisForProcessing.heading} helptextItems={helptextItems.Dataset_legalBasisForProcessing} />
                 <FieldArray
                   name="legalBasisForProcessing"
                   component={renderLegalBasis}
@@ -208,7 +208,7 @@ let FormAccessRights = (props) => {
               </div>
 
               <div className="form-group">
-                <Helptext title="Skjermingshjemmel" helptextItems={helptextItems.Dataset_legalBasisForAccess} />
+                <Helptext title={localization.schema.accessRights.legalBasisForAccess.heading} helptextItems={helptextItems.Dataset_legalBasisForAccess} />
                 <FieldArray
                   name="legalBasisForAccess"
                   component={renderLegalBasis}

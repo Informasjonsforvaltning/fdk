@@ -47,14 +47,17 @@
   "schema": {
     "accessRights": {
       "legalBasisForRestriction": {
+        "heading": "Skjermingshjemmel",
         "titleLabel": "Tittel på skjermingshjemmel",
         "linkLabel": "Lenke til skjermingshjemmel"
       },
       "legalBasisForProcessing": {
+        "heading": "Behandlingsgrunnlag",
         "titleLabel": "Tittel på behandlingsgrunnlag",
         "linkLabel": "Lenke til behandlingsgrunnlag"
       },
       "legalBasisForAccess": {
+        "heading": "Utleveringshjemmel",
         "titleLabel": "Tittel på utleveringshjemmel",
         "linkLabel": "Lenke til utleveringshjemmel"
       }
