@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import _throttle from 'lodash/throttle';
 
 import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
@@ -10,35 +11,87 @@ import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
+import { validateMinTwoChars, validateLinkReturnAsSkosType, validateURL } from '../../validation/validation';
 
 const validate = values => {
   const errors = {}
   const { sample } = values;
   let errorNodes = null;
+  let conformsToNodes = null;
 
   if (sample) {
-    errorNodes = sample.map((item, index) => {
-      const errors = {}
-      const description = (item.description && item.description.nb) ? item.description.nb : null;
+    errorNodes = sample.map(item => {
+      let errors = {}
+
+      const accessURL = item.accessURL ? item.accessURL : null;
       const license = (item.license && item.license.uri) ? item.license.uri : null;
-      const page = (item.page && item.page[index] && item.page[index].uri) ? item.page[index].uri : null;
+      const description = (item.description && item.description.nb) ? item.description.nb : null;
+      const page = (item.page && item.page[0] && item.page[0].uri) ? item.page[0].uri : null;
+      const { conformsTo } = item || null;
 
-      if (license && license.length < 2) {
-        errors.license = { uri: localization.validation.minTwoChars}
+      errors = validateURL('accessURL', accessURL, errors, true);
+      errors = validateMinTwoChars('license', license, errors, 'uri');
+      errors = validateMinTwoChars('description', description, errors);
+      errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
+
+      if (conformsTo) {
+        conformsToNodes = conformsTo.map((item, index) => {
+          let itemErrors = {}
+          const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+          const conformsToURI = item.uri ? item.uri : null;
+          itemErrors = validateMinTwoChars('prefLabel', conformsToPrefLabel, itemErrors);
+          itemErrors = validateURL('uri', conformsToURI, itemErrors);
+          return itemErrors;
+        });
+        let showSyncError = false;
+        conformsToNodes.map(item => {
+          if (JSON.stringify(item) !== '{}') {
+            showSyncError = true;
+          }
+        });
+        if (showSyncError) {
+          errors.conformsTo = conformsToNodes;
+        }
       }
-
-      if (description && description.length < 2) {
-        errors.description = { nb: localization.validation.minTwoChars}
-      }
-
-      if (page && page.length < 2) {
-        errors.page = [{uri: localization.validation.minTwoChars}]
-      }
-
       return errors;
     });
-    return errorNodes;
+    let showSyncError = false;
+    errorNodes.map(item => {
+      if (JSON.stringify(item) !== '{}') {
+        showSyncError = true;
+      }
+    });
+    if (showSyncError) {
+      errors.sample = errorNodes;
+    }
   }
+
+  /*
+   if (legalBasisForProcessing) {
+   legalBasisForProcessingNodes = legalBasisForProcessing.map((item, index) => {
+   let itemErrors = {}
+   const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+   const legalBasisForProcessingURI = item.uri ? item.uri : null;
+
+   itemErrors = validateMinTwoChars('prefLabel', legalBasisForProcessingPrefLabel, itemErrors);
+   itemErrors = validateURL('uri', legalBasisForProcessingURI, itemErrors);
+
+   return itemErrors;
+   });
+   let showSyncError = false;
+   legalBasisForProcessingNodes.map(item => {
+   if (JSON.stringify(item) !== '{}') {
+   showSyncError = true;
+   }
+   });
+   if (showSyncError) {
+   errors.legalBasisForProcessing = legalBasisForProcessingNodes;
+   }
+   }
+   */
+
+  // errors.sample = errorNodes;
+
   return errors
 }
 
@@ -144,7 +197,7 @@ let FormSample = props => {
 FormSample = reduxForm({
   form: 'sample',
   validate,
-  asyncValidate,
+  asyncValidate: _throttle(asyncValidate, 250),
 })(FormSample)
 
 const sampleTypes = values => {

@@ -2,12 +2,13 @@ import { REFERENCETYPES_REQUEST, REFERENCETYPES_SUCCESS, REFERENCETYPES_FAILURE 
 
 export default function referenceTypes(state = { isFetchingReferenceTypes: false, referenceTypesItems: null }, action) {
   switch (action.type) {
-    case REFERENCETYPES_REQUEST:
+    case REFERENCETYPES_REQUEST: {
       return {
         ...state,
         isFetchingReferenceTypes: true
       };
-    case REFERENCETYPES_SUCCESS:
+    }
+    case REFERENCETYPES_SUCCESS: {
       const referenceTypesItems = action.response.data.map(item => (
         {
           uri: item.uri,
@@ -21,12 +22,14 @@ export default function referenceTypes(state = { isFetchingReferenceTypes: false
         isFetchingReferenceTypes: false,
         referenceTypesItems
       }
-    case REFERENCETYPES_FAILURE:
+    }
+    case REFERENCETYPES_FAILURE: {
       return {
         ...state,
         isFetchingReferenceTypes: false,
         referenceTypesItems: null
       };
+    }
     default:
       return state;
   }

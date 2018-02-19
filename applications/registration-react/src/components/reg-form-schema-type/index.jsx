@@ -1,13 +1,23 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Helptext from '../reg-form-helptext';
 import CheckBoxFieldType from '../reg-form-field-checkbox-type';
 import asyncValidate from '../../utils/asyncValidate';
+import { validateRequired} from '../../validation/validation';
+
+const validate = values => {
+  let errors = {}
+  const { type } = values;
+
+  errors = validateRequired('errorType', type, errors, false);
+
+  return errors
+}
 
 let FormType = (props) => {
-  const { helptextItems } = props;
+  const { syncErrors: { errorType }, helptextItems } = props;
   return (
     <form>
       <div className="form-group">
@@ -16,6 +26,9 @@ let FormType = (props) => {
           name="type"
           component={CheckBoxFieldType}
         />
+        {errorType &&
+        <div className="alert alert-danger mt-3">{errorType}</div>
+        }
       </div>
     </form>
   )
@@ -23,9 +36,11 @@ let FormType = (props) => {
 
 FormType = reduxForm({
   form: 'type',
+  validate,
   asyncValidate,
-  // asyncChangeFields: [],
-})(FormType)
+})(connect(state => ({
+  syncErrors: getFormSyncErrors("type")(state)
+}))(FormType));
 
 const mapStateToProps = ({ dataset }) => (
   {

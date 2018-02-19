@@ -15,6 +15,7 @@ const routes =
     <Switch>
       <Route path="/react" component={RegDataset} />
       <Route path="/catalogs/:catalogId/datasets/:id" component={RegDataset} />
+      <Route path="/react" component={RegDataset} />
     </Switch>
   );
 

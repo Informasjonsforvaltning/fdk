@@ -7,7 +7,7 @@ export default function provenance(state = { isFetchingFrequency: false, frequen
         ...state,
         isFetchingFrequency: true
       };
-    case FREQUENCY_SUCCESS:
+    case FREQUENCY_SUCCESS: {
       const frequencyItems = action.response.data.map(item => (
         {
           uri: item.uri,
@@ -21,12 +21,14 @@ export default function provenance(state = { isFetchingFrequency: false, frequen
         isFetchingFrequency: false,
         frequencyItems
       }
-    case FREQUENCY_FAILURE:
+    }
+    case FREQUENCY_FAILURE: {
       return {
         ...state,
         isFetchingFrequency: false,
         frequencyItems: null
       };
+    }
     default:
       return state;
   }

@@ -27,6 +27,24 @@ import FormAccessRights from '../../components/reg-form-schema-accessRights';
 import FormReference from '../../components/reg-form-schema-reference';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
 import TimeoutModal from '../../components/app-timeout-modal';
+import FormInformationModel from '../../components/reg-form-schema-informationmodel';
+import FormContactPoint from '../../components/reg-form-schema-contactPoint';
+import FormContents from '../../components/reg-form-schema-contents';
+import {
+  titleValues,
+  accessRightsValues,
+  themesValues,
+  typeValues,
+  conceptValues,
+  spatialValues,
+  provenanceValues,
+  contentsValues,
+  informationModelValues,
+  referenceValues,
+  contactPointValues,
+  distributionValues,
+  sampleValues
+} from './logic';
 import './index.scss';
 
 
@@ -60,15 +78,6 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchHelptextsIfNeeded());
   }
 
-  _titleValues() {
-    const { values } = this.props.title;
-    if (values) {
-      return (
-        `${values.title.nb} ${values.description.nb}`
-      );
-    } return null;
-  }
-
   fetchDataset() {
     this.props.dispatch(fetchDatasetIfNeeded());
   }
@@ -92,10 +101,21 @@ class RegDataset extends React.Component {
       helptextItems,
       isFetching,
       title,
+      accessRights,
+      formThemes,
+      type,
+      concept,
+      spatial,
+      formProvenance,
+      contents,
+      informationModel,
+      reference,
+      contactPoint,
+      distribution,
+      sample,
       registrationStatus,
       lastSaved,
       result,
-      concept,
       referenceTypesItems,
       referenceDatasetsItems
     } = this.props;
@@ -118,7 +138,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tittel og beskrivelse"
-                values={this._titleValues()}
+                values={titleValues(title.values)}
+                syncErrors={title.syncErrors}
               >
                 <FormTitle
                   helptextItems={helptextItems}
@@ -127,6 +148,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tilgangsnivå"
+                values={accessRightsValues(accessRights.values)}
+                syncErrors={accessRights.syncErrors}
               >
                 <FormAccessRights
                   helptextItems={helptextItems}
@@ -135,6 +158,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tema"
+                values={themesValues(formThemes.values)}
+                syncErrors={formThemes.syncErrors}
               >
                 <FormTheme
                   helptextItems={helptextItems}
@@ -143,6 +168,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Type"
+                values={typeValues(type.values)}
+                syncErrors={type.syncErrors}
               >
                 <FormType
                   helptextItems={helptextItems}
@@ -151,6 +178,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Begrep og søkeord"
+                values={conceptValues(concept.values)}
+                syncErrors={concept.syncErrors}
               >
                 <FormConcept
                   helptextItems={helptextItems}
@@ -159,6 +188,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Geografi, tid og språk"
+                values={spatialValues(spatial.values)}
+                syncErrors={spatial.syncErrors}
               >
                 <FormSpatial
                   helptextItems={helptextItems}
@@ -167,6 +198,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Opphav og ferskhet"
+                values={provenanceValues(formProvenance.values)}
+                syncErrors={formProvenance.syncErrors}
               >
                 <FormProvenance
                   helptextItems={helptextItems}
@@ -174,7 +207,28 @@ class RegDataset extends React.Component {
               </FormTemplate>
 
               <FormTemplate
+                title="Innhold"
+                values={contentsValues(contents.values)}
+                syncErrors={contents.syncErrors}
+              >
+                <FormContents
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
+                title="Informasjonsmodell"
+                values={informationModelValues(informationModel.values)}
+                syncErrors={informationModel.syncErrors}
+              >
+                <FormInformationModel
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
                 title="Relasjoner"
+                values={referenceValues(reference.values)}
               >
                 <FormReference
                   helptextItems={helptextItems}
@@ -182,7 +236,19 @@ class RegDataset extends React.Component {
               </FormTemplate>
 
               <FormTemplate
+                title="Kontaktinformasjon"
+                values={contactPointValues(contactPoint.values)}
+                syncErrors={contactPoint.syncErrors}
+              >
+                <FormContactPoint
+                  helptextItems={helptextItems}
+                />
+              </FormTemplate>
+
+              <FormTemplate
                 title="Distribusjoner"
+                values={distributionValues(distribution.values)}
+                syncErrors={distribution.syncErrors}
               >
                 <FormDistribution
                   helptextItems={helptextItems}
@@ -191,6 +257,8 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Eksempeldata"
+                values={sampleValues(sample.values)}
+                syncErrors={sample.syncErrors}
               >
                 <FormSample
                   helptextItems={helptextItems}
@@ -201,7 +269,23 @@ class RegDataset extends React.Component {
                 dispatch={this.props.dispatch}
                 registrationStatus={(registrationStatus && registrationStatus.length > 0) ? registrationStatus : result.registrationStatus}
                 lastSaved={lastSaved || result._lastModified}
-                syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
+                // syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
+                syncErrors={
+                  !!(
+                    (title && title.syncErrors)
+                    || (accessRights && accessRights.syncErrors)
+                    || (formThemes && formThemes.syncErrors)
+                    || (type && type.syncErrors)
+                    || (concept && concept.syncErrors)
+                    || (spatial && spatial.syncErrors)
+                    || (formProvenance && formProvenance.syncErrors)
+                    || (contents && contents.syncErrors)
+                    || (informationModel && informationModel.syncErrors)
+                    || (contactPoint && contactPoint.syncErrors)
+                    || (distribution && distribution.syncErrors)
+                    || (sample && sample.syncErrors)
+                  )
+                }
               />
             </div>
             }
@@ -266,13 +350,57 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     title: null
   }
 
+  const accessRights = form.accessRights || {
+    accessRights: null
+  }
+
+  const formThemes = form.themes || {
+    formThemes: null
+  }
+
+  const type = form.type || {
+    type: null
+  }
+
+  const concept = form.concept || {
+    concept: null
+  }
+
+  const spatial = form.spatial || {
+    spatial: null
+  }
+
+  const formProvenance = form.provenance || {
+    formProvenance: null
+  }
+
+  const contents = form.contents || {
+    contents: null
+  }
+
+  const informationModel = form.informationModel || {
+    informationModel: null
+  }
+
+  const reference = form.reference || {
+    reference: null
+  }
+
+  const contactPoint = form.contactPoint || {
+    contactPoint: null
+  }
+
+  const distribution = form.distribution || {
+    distribution: null
+  }
+
+  const sample = form.sample || {
+    sample: null
+  }
+
   const { registrationStatus, lastSaved } = app || {
     registrationStatus: null,
     lastSaved: null
-  }
-
-  const { concept } = form || {
-    concept: null
   }
 
   return {
@@ -285,9 +413,20 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     referenceTypesItems,
     referenceDatasetsItems,
     title,
+    accessRights,
+    formThemes,
+    type,
+    concept,
+    spatial,
+    formProvenance,
+    contents,
+    informationModel,
+    reference,
+    contactPoint,
+    distribution,
+    sample,
     registrationStatus,
-    lastSaved,
-    concept
+    lastSaved
   };
 }
 
