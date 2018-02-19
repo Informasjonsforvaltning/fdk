@@ -82,10 +82,10 @@ public class HarvesterService {
 
         //prepare DTO for new harvest entry
         DcatSourceDto datasource = new DcatSourceDto(
-                catalog.getId(),
+                catalog.getUri(),
                 catalog.getTitle().get("nb"), //use norwegian title of catalog as description
                 endpoint,
-                harvesterUsername,
+                harvesterUsername, //for now, all new harvester entries are owned by test_user
                 catalog.getId());
 
 
