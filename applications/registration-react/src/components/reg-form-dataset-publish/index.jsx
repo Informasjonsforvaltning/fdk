@@ -5,7 +5,7 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment/locale/nb';
 import axios from 'axios';
-import { Redirect  } from 'react-router-dom';
+import { withRouter  } from 'react-router-dom';
 
 import Modal from '../app-modal';
 import AppDeleteModal from '../app-delete-modal';
@@ -89,14 +89,15 @@ export default class DatasetPublish extends Component {
   handleDatasetDelete() {
     this.closeDeleteModal();
     const datasetURL = window.location.pathname;
-    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
+    // find catalog url, remove all from second last slash
+    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/' ,datasetURL.lastIndexOf("/")-1));
     const api = {
       Authorization: `Basic user:password`
     }
     return axios.delete(
       datasetURL, {headers: api}
     ).then((response) => {
-      console.log("datasett slettet");
+      window.location.replace(catalogDatasetsURL);
     }).catch((error) => {
       throw {error}
     });
