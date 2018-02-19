@@ -72,16 +72,6 @@ let FormTitle = (props) => {
   )
 }
 
-/*
-FormTitle = reduxForm({
-  form: 'title',
-  validate,
-  shouldAsyncValidate,
-  asyncValidate,
-  asyncChangeFields: [],
-})(FormTitle)
-*/
-
 FormTitle = reduxForm({
   form: 'title',
   validate,

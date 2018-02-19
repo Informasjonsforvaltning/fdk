@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import _throttle from 'lodash/throttle';
 
 import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
@@ -196,7 +197,7 @@ let FormSample = props => {
 FormSample = reduxForm({
   form: 'sample',
   validate,
-  asyncValidate,
+  asyncValidate: _throttle(asyncValidate, 250),
 })(FormSample)
 
 const sampleTypes = values => {
