@@ -1,30 +1,19 @@
 package no.dcat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.admin.DcatSourceDto;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -160,14 +149,6 @@ public class CatalogControllerIT {
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
-
-        //check that data source hva been created in harvester
-        //HttpUriRequest request = new HttpGet( "http://localhost:8082/api/admin/dcat-sources" );
-        //HttpResponse response = HttpClientBuilder.create().build().execute( request );
-        //HttpEntity entity = response.getEntity();
-        //String content = EntityUtils.toString(entity);
-
-        //assertThat(content, containsString("New catalog"));
 
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://localhost:8082/api/admin/dcat-sources";
