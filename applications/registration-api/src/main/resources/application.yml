@@ -138,6 +138,7 @@ application:
   altinnServiceCode: 1234
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij
+  harvesterUrl: http://localhost:8082
 
 
 

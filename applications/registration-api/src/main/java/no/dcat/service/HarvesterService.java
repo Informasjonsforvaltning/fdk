@@ -32,20 +32,13 @@ public class HarvesterService {
     private static Logger logger = LoggerFactory.getLogger(HarvesterService.class);
 
     @Value("${application.harvesterUsername}")
-    private String harvesterUsername;
+    public String harvesterUsername;
 
     @Value("${application.harvesterPassword}")
-    private String harvesterPassword;
+    public String harvesterPassword;
 
     @Value("${application.harvesterUrl}")
-    private String harvesterUrl;
-
-
-    public HarvesterService(String url, String username, String password) {
-        this.harvesterUrl = url;
-        this.harvesterUsername = username;
-        this.harvesterPassword = password;
-    }
+    public String harvesterUrl;
 
 
     /**

@@ -29,7 +29,10 @@ public class HarvesterServiceTest {
     @Test
     public void getHarvestEntriesReturnsCorrectNumberOFEntries() throws Exception {
 
-        HarvesterService hs = new HarvesterService("http://localhost:" + wireMockRule.port(), "testuser", "testpasword");
+        HarvesterService hs = new HarvesterService();
+        hs.harvesterUrl = "http://localhost:" + wireMockRule.port();
+        hs.harvesterUsername = "testuser";
+        hs.harvesterPassword = "testpasword";
 
         harvesterResponseGetDcatSourcesWireMockStub();
 
@@ -42,7 +45,10 @@ public class HarvesterServiceTest {
     @Test
     public void harvestEntryContainsCorrectUri() throws Exception {
 
-        HarvesterService hs = new HarvesterService("http://localhost:" + wireMockRule.port(), "testuser", "testpasword");
+        HarvesterService hs = new HarvesterService();
+        hs.harvesterUrl = "http://localhost:" + wireMockRule.port();
+        hs.harvesterUsername = "testuser";
+        hs.harvesterPassword = "testpasword";
 
         harvesterResponseGetDcatSourcesWireMockStub();
 
@@ -55,7 +61,10 @@ public class HarvesterServiceTest {
     @Test
     public void createHarvestEntryWorks() throws Exception {
 
-        HarvesterService hs = new HarvesterService("http://localhost:" + wireMockRule.port(), "testuser", "testpasword");
+        HarvesterService hs = new HarvesterService();
+        hs.harvesterUrl = "http://localhost:" + wireMockRule.port();
+        hs.harvesterUsername = "testuser";
+        hs.harvesterPassword = "testpasword";
 
         harvesterResponsePostDcatSourceWireMockStub();
 
