@@ -41,6 +41,13 @@ public class HarvesterService {
     private String harvesterUrl;
 
 
+    public HarvesterService(String url, String username, String password) {
+        this.harvesterUrl = url;
+        this.harvesterUsername = username;
+        this.harvesterPassword = password;
+    }
+
+
     /**
      * List existing data source entries registered in harvester
      *
