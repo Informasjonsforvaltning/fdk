@@ -86,7 +86,9 @@ public class DatasetsQueryService extends ElasticsearchService {
      */
     @CrossOrigin
     @ApiOperation(value = "queries the catalog for datasets",
-            notes = "Returns a list of matching datasets wrapped in a elasticsearch response", response = Dataset.class)
+            notes = "Returns a list of matching datasets wrapped in a elasticsearch response. " +
+                    "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
+                    "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = QUERY_SEARCH, method= RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
                                          @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
