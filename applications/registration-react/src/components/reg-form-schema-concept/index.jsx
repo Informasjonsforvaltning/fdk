@@ -6,7 +6,6 @@ import Helptext from '../reg-form-helptext';
 import InputTagsFieldConcepts from '../reg-form-field-input-tags-concepts';
 import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
 import asyncValidate from '../../utils/asyncValidate';
-import { emptyArray } from '../../schemaTypes';
 import { validateMinTwoChars } from '../../validation/validation';
 
 const validate = values => {
@@ -14,7 +13,7 @@ const validate = values => {
   const { keyword } = values;
 
   if (keyword) {
-    keyword.map((item, index) => {
+    keyword.forEach(item => {
       errors = validateMinTwoChars('keyword', item.nb, errors);
     });
   }

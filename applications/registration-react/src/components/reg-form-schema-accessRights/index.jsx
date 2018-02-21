@@ -23,7 +23,7 @@ const validate = values => {
 
 
   if (legalBasisForRestriction) {
-    legalBasisForRestrictionNodes = legalBasisForRestriction.map((item, index) => {
+    legalBasisForRestrictionNodes = legalBasisForRestriction.map(item => {
       let itemErrors = {};
       const legalBasisForRestrictionPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const legalBasisForRestrictionURI = item.uri ? item.uri : null;
@@ -34,18 +34,14 @@ const validate = values => {
       return itemErrors;
     });
     let showSyncError = false;
-    legalBasisForRestrictionNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (legalBasisForRestrictionNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.legalBasisForRestriction = legalBasisForRestrictionNodes;
     }
   }
 
   if (legalBasisForProcessing) {
-    legalBasisForProcessingNodes = legalBasisForProcessing.map((item, index) => {
+    legalBasisForProcessingNodes = legalBasisForProcessing.map(item => {
       let itemErrors = {}
       const legalBasisForProcessingPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const legalBasisForProcessingURI = item.uri ? item.uri : null;
@@ -56,18 +52,14 @@ const validate = values => {
       return itemErrors;
     });
     let showSyncError = false;
-    legalBasisForProcessingNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (legalBasisForProcessingNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.legalBasisForProcessing = legalBasisForProcessingNodes;
     }
   }
 
   if (legalBasisForAccess) {
-    legalBasisForAccessNodes = legalBasisForAccess.map((item, index) => {
+    legalBasisForAccessNodes = legalBasisForAccess.map(item => {
       let itemErrors = {}
       const legalBasisForAccessPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
       const legalBasisForAccessURI = item.uri ? item.uri : null;
@@ -78,11 +70,7 @@ const validate = values => {
       return itemErrors;
     });
     let showSyncError = false;
-    legalBasisForAccessNodes.map(item => {
-      if (JSON.stringify(item) !== '{}') {
-        showSyncError = true;
-      }
-    });
+    showSyncError = (legalBasisForAccessNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
     if (showSyncError) {
       errors.legalBasisForAccess = legalBasisForAccessNodes;
     }
