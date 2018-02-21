@@ -1,0 +1,13 @@
+@import '../../assets/style/colors';
+
+.fdk-datasets-list-item {
+  background-color: $color0;
+  margin-bottom: .2rem;
+  border-radius: 3px;
+  padding: .2rem 0.8rem;
+
+  a {
+    text-decoration: none;
+    color: $color1;
+  }
+}

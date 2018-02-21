@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import configureStore from './store/configureStore';
+import RegDatasetsList from './containers/reg-datasets-list';
 import RegDataset from './containers/reg-dataset';
 import Header from './components/app-header';
 import Footer from './components/app-footer';
@@ -13,9 +14,8 @@ const store = configureStore();
 const routes =
   (
     <Switch>
-      <Route path="/react" component={RegDataset} />
+      <Route path="/react/catalogs/:catalogId" component={RegDatasetsList} />
       <Route path="/catalogs/:catalogId/datasets/:id" component={RegDataset} />
-      <Route path="/react" component={RegDataset} />
     </Switch>
   );
 

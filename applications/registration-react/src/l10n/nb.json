@@ -12,7 +12,9 @@
     "notPublished": "Ikke klar for å publisere ennå?",
     "notPublishedText": "Vi har lagret alt arbeidet ditt som et utkast, kom tilbake når du er klar for å publisere!",
     "published": "Publisert!",
-    "publishedText": "Datasettbeskrivelsen er nå publisert, og vil være søkbar i Felles datakatalog i løpet av 24 timer."
+    "publishedText": "Datasettbeskrivelsen er nå publisert, og vil være søkbar i Felles datakatalog i løpet av 24 timer.",
+    "cancel": "Avbryt",
+    "import": "Importer"
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
@@ -77,5 +79,23 @@
     "stayLoggedIn": "Ønsker du å forbli innlogget?",
     "buttonStayLoggedIn": "Ja, forbli innlogget",
     "buttonLogOut": "Nei, logg ut"
+  },
+  "datasets": {
+    "list": {
+      "btnNewDataset": "Legg til ny datasettbeskrivelse",
+      "btnImportDataset": "Importer datasett",
+      "header": {
+        "title": "Tittel på datasett",
+        "status": "Status"
+      },
+      "missingTitle": "Mangler tittel",
+      "statusPublished": "Publisert",
+      "statusDraft": "Utkast"
+    },
+    "import": {
+      "title": "Importer datasett fra DCAT RDF ressurs.",
+      "body": "DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert.",
+      "setURL": "Angi url til DCAT ressurs:"
+    }
   }
 }

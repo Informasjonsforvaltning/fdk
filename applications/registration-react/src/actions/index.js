@@ -78,6 +78,22 @@ export function fetchReferenceTypesIfNeeded() {
     );
 }
 
+export function fetchCatalogIfNeeded(catalogURL) {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().catalog) && dispatch(
+      fetchApi(catalogURL, [actions.CATALOG_REQUEST, actions.CATALOG_SUCCESS, actions.CATALOG_FAILURE])
+    );
+}
+
+export function fetchDatasetsIfNeeded(catalogURL) {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().datasets) && dispatch(
+      fetchApi(catalogURL, [actions.DATASETS_REQUEST, actions.DATASETS_SUCCESS, actions.DATASETS_FAILURE])
+    );
+}
+
 
 export function publishDataset(value) {
   return dispatch =>
