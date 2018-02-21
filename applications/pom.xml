@@ -17,7 +17,7 @@
         <module>kibana</module>
         <module>logstash</module>
 
-        <!-- <module>nginx</module> deactivated to research build problems on travis -->
+        <module>nginx</module>
         <module>nginx-ssl</module>
 
         <module>reference-data</module>
