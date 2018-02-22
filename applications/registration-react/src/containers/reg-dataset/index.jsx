@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
+import { Link } from 'react-router-dom';
 
 import localization from '../../utils/localization';
 import {
@@ -119,7 +120,9 @@ class RegDataset extends React.Component {
       referenceTypesItems,
       referenceDatasetsItems
     } = this.props;
-
+    const datasetURL = window.location.pathname;
+    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
+    const catalogURL = catalogDatasetsURL.substring(0, catalogDatasetsURL.lastIndexOf('/'));
     return (
       <IdleTimer
         element={document}
@@ -127,9 +130,12 @@ class RegDataset extends React.Component {
         timeout={27.5 * 60 * 1000} // gir idle warning etter 27,5 minutter
         format="DD.MM.YYYY HH:MM:ss.SSS"
       >
-        <div className="container-fluid">
+        <div className="container">
           <div className="row mb-2 mb-md-5">
-            <div className="col-md-2" />
+            <div className="col-md-2">
+              <i className="fa fa-arrow-left mr-2" />
+              <a className="fdk-text-size-small fdk-color1 font-weight-light" href={catalogURL}>Tilbake til katalogen</a>
+            </div>
             {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
             <div className="col-md-8">
 
