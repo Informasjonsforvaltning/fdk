@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import localization from '../../utils/localization';
 import getTranslateText from '../../utils/translateText';
 
@@ -8,14 +10,14 @@ export const titleValues = values => {
     if (title) {
       retVal = `${retVal} ${getTranslateText(title) ? `${getTranslateText(title)}.` : ''}`
     }
-    if (description && description.nb !== '') {
-      retVal = `${retVal} Beskrivelse.`
+    if (description) {
+      retVal = `${retVal} ${getTranslateText(description) ? `${getTranslateText(description)}.` : ''}`
     }
-    if (objective && objective.nb !== '') {
-      retVal = `${retVal} Formål.`
+    if (objective) {
+      retVal = `${retVal} ${getTranslateText(objective) ? `${getTranslateText(objective)}.` : ''}`
     }
     if (landingPage && landingPage[0]) {
-      retVal = `${retVal} Lenke til mer informasjon.`
+      retVal = `${retVal} ${landingPage[0]}`
     }
     if (retVal.trim().length > 0) {
       return retVal;
@@ -25,32 +27,45 @@ export const titleValues = values => {
 
 export const accessRightsValues = values => {
   if (values) {
+    let retVal = '';
     const { accessRights, legalBasisForRestriction, legalBasisForProcessing, legalBasisForAccess } = values;
-    let accessRightsPrefLabel = '';
     if (accessRights.uri === 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED') {
-      accessRightsPrefLabel = 'Begrenset tilgang.'
+      retVal += 'Begrenset tilgang. '
     } else if (accessRights.uri === 'http://publications.europa.eu/resource/authority/access-right/PUBLIC') {
-      accessRightsPrefLabel = 'Offentlig.'
+      retVal += 'Offentlig. '
     } else if (accessRights.uri === 'http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC') {
-      accessRightsPrefLabel = 'Unntatt offentlighet.'
+      retVal += 'Unntatt offentlighet. '
     }
 
-    let hasLegalBasisForRestriction = false;
     if (legalBasisForRestriction) {
-      hasLegalBasisForRestriction = (legalBasisForRestriction.filter(item => (item && item.uri && item.uri !== '')).length > 0);
+      legalBasisForRestriction.filter(item => (item && item.uri && item.uri !== '')).forEach(item => {
+        if (item.prefLabel && item.prefLabel.nb) {
+          retVal += `${getTranslateText(item.prefLabel)} - `;
+        }
+        retVal += `${item.uri} `;
+      });
+
     }
 
-    let hasLegalBasisForProcessing = false;
     if (legalBasisForProcessing) {
-      hasLegalBasisForProcessing = (legalBasisForProcessing.filter(item => (item && item.uri && item.uri !== '')).length > 0);
+      legalBasisForProcessing.filter(item => (item && item.uri && item.uri !== '')).forEach(item => {
+        if (item.prefLabel && item.prefLabel.nb) {
+          retVal += `${getTranslateText(item.prefLabel)} - `;
+        }
+        retVal += `${item.uri} `;
+      });
+
     }
 
-    let hasLegalBasisForAccess = false;
     if (legalBasisForAccess) {
-      hasLegalBasisForAccess = (legalBasisForAccess.filter(item => (item && item.uri && item.uri !== '')).length > 0);
-    }
+      legalBasisForAccess.filter(item => (item && item.uri && item.uri !== '')).forEach(item => {
+        if (item.prefLabel && item.prefLabel.nb) {
+          retVal += `${getTranslateText(item.prefLabel)} - `;
+        }
+        retVal += `${item.uri} `;
+      });
 
-    const retVal = `${accessRightsPrefLabel} ${hasLegalBasisForRestriction ? `${localization.schema.accessRights.legalBasisForRestriction.heading}.` : ''} ${hasLegalBasisForProcessing ? `${localization.schema.accessRights.legalBasisForProcessing.heading}.` : ''} ${hasLegalBasisForAccess ? `${localization.schema.accessRights.legalBasisForAccess.heading}.` : ''}`
+    }
     if (retVal.trim().length > 0) {
       return retVal;
     }
@@ -61,11 +76,10 @@ export const themesValues = values => {
   if (values) {
     const { theme } = values;
     let retVal = '';
-    retVal += theme.map(item => {
+    theme.forEach(item => {
       if (item.title && item.title.nb !== '') {
-        return `${getTranslateText(item.title)}.`
+        retVal += `${getTranslateText(item.title)}. `
       }
-      return '';
     });
     if (retVal.trim().length > 0) {
       return retVal;
@@ -91,23 +105,21 @@ export const conceptValues = values => {
     let retVal = '';
     const {subject, keyword} = values;
     if (subject) {
-      retVal += subject.map(item => {
+      subject.forEach(item => {
         if (item.prefLabel && item.prefLabel.no !== '') {
-          return `${getTranslateText(item.prefLabel)}.`
+          retVal += `${getTranslateText(item.prefLabel)}. `
         }
-        return '';
-      });
+      })
     }
     if (keyword) {
-      retVal += keyword.map(item => {
+      keyword.forEach(item => {
         if (item && item[localization.getLanguage()] !== '') {
-          return `${getTranslateText(item)}.`
+          retVal += `${getTranslateText(item)}. `
         }
-        return '';
-      });
-      if (retVal.trim().length > 0) {
-        return retVal;
-      }
+      })
+    }
+    if (retVal.trim().length > 0) {
+      return retVal;
     }
   } return null;
 }
@@ -117,30 +129,31 @@ export const spatialValues = values => {
     let retVal = '';
     const { spatial, temporal, issued, language } = values;
     if (spatial) {
-      retVal += spatial.map(item => {
+      spatial.forEach(item => {
         if (item.uri && item.uri !== '') {
-          return `${item.uri}. `
+          retVal += `${item.uri}. `
         }
-        return '';
-      });
+      })
     }
     if (temporal) {
-      let showTemporal = false;
-      showTemporal = (temporal.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
-      if (showTemporal) {
-        retVal = `${retVal} Tidsmessig avgrenset.`
-      }
+      temporal.filter(item => (item && JSON.stringify(item) !== '{}')).forEach(item => {
+        if (item.startDate) {
+          retVal += `${moment(item.startDate).format('DD.MM.YYYY')} - `;
+        }
+        retVal += `${moment(item.endDate).format('DD.MM.YYYY')} `;
+      });
     }
     if (issued && issued !== '') {
-      retVal = `${retVal} ${issued}.`
+      retVal += `${moment(issued).format('DD.MM.YYYY')}. `
     }
     if (language) {
-      retVal += language.map(item => `${item.code}. `);
+      language.forEach(item => {
+        retVal += `${localization.lang[item.code]}. `
+      });
     }
     if (retVal.trim().length > 0) {
       return retVal;
     }
-
   } return null;
 }
 
@@ -150,18 +163,18 @@ export const provenanceValues = values => {
     const { provenance, modified, hasCurrentnessAnnotation, accrualPeriodicity } = values;
     if (provenance) {
       if (provenance.prefLabel) {
-        retVal = `${retVal} ${getTranslateText(provenance.prefLabel)}.`
+        retVal += `${getTranslateText(provenance.prefLabel)}. `
       }
     }
     if (accrualPeriodicity && accrualPeriodicity.code) {
-      retVal = `${retVal} ${accrualPeriodicity.code}.`
+      retVal += `${localization.schema.provenance.accrualPeriodicity[accrualPeriodicity.code]}. `
     }
     if (modified) {
-      retVal = `${retVal} ${modified}.`
+      retVal += `${moment(modified).format('DD.MM.YYYY')}. `
     }
     if (hasCurrentnessAnnotation) {
       if (hasCurrentnessAnnotation.hasBody && hasCurrentnessAnnotation.hasBody.no !== '') {
-        retVal = `${retVal} Aktualitet.`
+        retVal += `${getTranslateText(hasCurrentnessAnnotation.hasBody)}. `
       }
     }
     if (retVal.trim().length > 0) {
@@ -182,20 +195,21 @@ export const contentsValues = values => {
         return '';
       })
     }
+
     if (hasRelevanceAnnotation && hasRelevanceAnnotation.hasBody && hasRelevanceAnnotation.hasBody.nb !== '') {
-      retVal = `${retVal} Relevans.`
+      retVal += `${getTranslateText(hasRelevanceAnnotation.hasBody)}. `;
     }
 
     if (hasCompletenessAnnotation && hasCompletenessAnnotation.hasBody && hasCompletenessAnnotation.hasBody.nb !== '') {
-      retVal = `${retVal} Kompletthet.`
+      retVal += `${getTranslateText(hasCompletenessAnnotation.hasBody)}. `;
     }
 
     if (hasAccuracyAnnotation && hasAccuracyAnnotation.hasBody && hasAccuracyAnnotation.hasBody.nb !== '') {
-      retVal = `${retVal} Nøyaktighet.`
+      retVal += `${getTranslateText(hasAccuracyAnnotation.hasBody)}. `;
     }
 
     if (hasAvailabilityAnnotation && hasAvailabilityAnnotation.hasBody && hasAvailabilityAnnotation.hasBody.nb !== '') {
-      retVal = `${retVal} Tilgjengelighet.`
+      retVal += `${getTranslateText(hasAvailabilityAnnotation.hasBody)}. `;
     }
 
     if (retVal.trim().length > 0) {
@@ -210,11 +224,13 @@ export const informationModelValues = values => {
     let retVal = '';
     const { informationModel } = values;
     if (informationModel) {
-      retVal += informationModel.map(item => {
+      informationModel.forEach(item => {
         if (item.prefLabel && item.prefLabel[localization.getLanguage()] !== '') {
-          return `${getTranslateText(item.prefLabel)}.`
+          retVal += `${getTranslateText(item.prefLabel)}`
         }
-        return '';
+        if (item.uri) {
+          retVal += ` - ${item.uri}.`
+        }
       })
     }
     if (retVal.trim().length > 0) {
@@ -243,21 +259,19 @@ export const contactPointValues = values => {
     let retVal = '';
     const { contactPoint } = values;
     if (contactPoint) {
-      retVal += contactPoint.map(item => {
-        let concatString = '';
+      contactPoint.forEach(item => {
         if (item.organizationUnit && item.organizationUnit !== '') {
-          concatString = `${concatString} Kontaktpunkt.`
+          retVal += `${item.organizationUnit}. `
         }
         if (item.hasURL && item.hasURL !== '') {
-          concatString = `${concatString} Kontaktskjema.`
+          retVal += `${item.hasURL}. `
         }
         if (item.email && item.email !== '') {
-          concatString = `${concatString} E-post.`
+          retVal += `${item.email}. `
         }
         if (item.hasTelephone && item.hasTelephone !== '') {
-          concatString = `${concatString} Telefon.`
+          retVal += `${item.hasTelephone}. `
         }
-        return concatString;
       })
     }
     if (retVal.trim().length > 0) {

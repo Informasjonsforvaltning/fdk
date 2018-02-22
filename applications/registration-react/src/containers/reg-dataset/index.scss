@@ -1,7 +1,7 @@
 @import '../../assets/style/colors';
 
 .fdk-reg_collapse {
-  background-color: $color0;
+  //background-color: $color0;
   margin: .5rem;
   border-radius: 5px;
   display: block;
@@ -10,6 +10,14 @@
     background-color: transparent;
     border: none;
   }
+}
+
+.fdk-reg_backgroundDefault {
+  background-color: $color0;
+}
+
+.fdk-reg_backgroundBlue {
+  background-color: $color-cta4;
 }
 
 .fdk-reg_collapse_open {

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
+import localization from '../../utils/localization';
+import './index.scss';
+
 export default class FormTemplate extends Component {
   constructor(props) {
     super(props);
@@ -15,10 +18,12 @@ export default class FormTemplate extends Component {
   }
 
   render() {
-    const { title, values, syncErrors } = this.props;
+    const { title, backgroundBlue, values, syncErrors, required } = this.props;
     const collapseClass = cx(
       'fdk-reg_collapse',
       {
+        'fdk-reg_backgroundDefault': !backgroundBlue,
+        'fdk-reg_backgroundBlue': backgroundBlue,
         'fdk-reg_collapse_open': this.state.collapse
       }
     )
@@ -33,25 +38,30 @@ export default class FormTemplate extends Component {
     );
     return (
       <div className={collapseClass}>
-        <button className="d-flex justify-content-between no-padding w-100" onClick={this.toggle}>
-          <div>
-            <div className="d-flex">
-              <i className={collapseIconClass} />
-              <h2 className="mb-0">{ title }</h2>
-            </div>
-            {!this.state.collapse && values &&
-            <div className="d-flex text-left fdk-text-size-small fdk-color3">
-              <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
-              {values}
-            </div>
+        <button className="d-flex-x justify-content-between-x no-padding w-100" onClick={this.toggle}>
+          <div className="d-flex align-items-center">
+            <i className={collapseIconClass} />
+            <h2 className="mb-0 text-ellipsis">{ title }</h2>
+            {required &&
+            <span className="fdk-badge badge badge-secondary ml-2">
+                {localization.helptext.required}
+              </span>
             }
+            {syncErrors &&
+            (
+              <div className="d-flex justify-content-end fdk-syncError-icon">
+                <i className="fa fa-exclamation-triangle fdk-color-red ml-2" />
+              </div>
+            )}
           </div>
-          {syncErrors &&
-          (
-            <div>
-              <i className="fa fa-exclamation-triangle fdk-color-red" />
-            </div>
-          )}
+          {!this.state.collapse && values &&
+          <div className="d-flex text-left fdk-text-size-small fdk-color3">
+            <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
+            <span className="text-ellipsis">
+              {values}
+            </span>
+          </div>
+          }
         </button>
         <Collapse
           className="mt-3"

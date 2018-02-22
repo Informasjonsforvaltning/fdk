@@ -24,8 +24,8 @@ const formatTemporalUnixDatesToISO = values => {
   if (values && values.length > 0) {
     temporals = values.map(item => (
       {
-        startDate: moment(item.startDate).format('YYYY-MM-DD'),
-        endDate: moment(item.endDate).format('YYYY-MM-DD'),
+        startDate: item.startDate ? moment(item.startDate).format('YYYY-MM-DD') : null,
+        endDate: item.endDate ? moment(item.endDate).format('YYYY-MM-DD') : null
       }
     ))
   }
@@ -33,7 +33,7 @@ const formatTemporalUnixDatesToISO = values => {
 }
 
 const renderTemporalFields = (item, index, fields, props) => (
-  <div className="d-flex" key={index}>
+  <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
         name={`${item}.startDate`}
@@ -147,7 +147,8 @@ const mapStateToProps = ({ dataset }) => (
     initialValues: {
       spatial: (dataset.result.spatial && dataset.result.spatial.length > 0) ? dataset.result.spatial : [],
       temporal: formatTemporalUnixDatesToISO(dataset.result.temporal) || [{}],
-      issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
+      //issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
+      issued: dataset.result.issued ? moment(dataset.result.issued).format('YYYY-MM-DD') : null,
       language: (dataset.result.language && dataset.result.language.length > 0) ? dataset.result.language : []
     }
   }

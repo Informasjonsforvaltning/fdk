@@ -25,7 +25,10 @@
     "chosenLanguage": "Language",
     "norwegian-nb": "Norsk (bokmål)",
     "norwegian-nn": "Norsk (nynorsk)",
-    "english-en": "Engelsk"
+    "english-en": "Engelsk",
+    "ENG": "Engelsk",
+    "NOR": "Norsk",
+    "SMI": "Samisk"
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
@@ -38,37 +41,71 @@
   "validation": {
     "required": "Obligatorisk felt, må fylles ut.",
     "minTwoChars": "Feltet må ha minimum to tegn.",
-    "validateDataset": "Datasettet er ikke validert korrekt!",
-    "validateDatasetBody": "Datasettet kunne ikke publiseres på grunn av ikke alle felter er validert korrekt. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt.",
+    "validateDataset": "Datasettet inneholder feil!",
+    "validateDatasetBody": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt.",
     "validateLink": "Feltet er ikke en gyldig URL",
     "validateEmail": "Ikke gyldig e-post",
     "validatePhone": "Ikke gyldig telefonnummer"
+  },
+  "deleteDataset": {
+    "title": "Vil du virkerlig slette datasettet?",
+    "body": "Alle registrerte data slettes og kan ikke hentes tilbake. Bekreft eller avkreft sletting."
+  },
+  "helptext": {
+    "required": "Obligatorisk",
+    "more": "Flere anbefalinger"
   },
   "schema": {
     "accessRights": {
       "legalBasisForRestriction": {
         "heading": "Skjermingshjemmel",
-        "titleLabel": "Tittel på skjermingshjemmel",
-        "linkLabel": "Lenke til skjermingshjemmel"
+        "titleLabel": "Tittel",
+        "linkLabel": "Lenke"
       },
       "legalBasisForProcessing": {
         "heading": "Behandlingsgrunnlag",
-        "titleLabel": "Tittel på behandlingsgrunnlag",
-        "linkLabel": "Lenke til behandlingsgrunnlag"
+        "titleLabel": "Tittel",
+        "linkLabel": "Lenke"
       },
       "legalBasisForAccess": {
         "heading": "Utleveringshjemmel",
-        "titleLabel": "Tittel på utleveringshjemmel",
-        "linkLabel": "Lenke til utleveringshjemmel"
+        "titleLabel": "Tittel",
+        "linkLabel": "Lenke"
+      }
+    },
+    "provenance": {
+      "accrualPeriodicity": {
+        "ANNUAL": "årlig",
+        "ANNUAL2": "halvårlig",
+        "ANNUAL_3": "tre ganger per år",
+        "BIENNIAL": "annethvert år",
+        "BIMONTHLY": "annenhver måned",
+        "BIWEEKLY": "hver fjortende dag",
+        "CONT": "kontinuerlig",
+        "DAILY": "daglig",
+        "DAILY_2": "to ganger per dag",
+        "IRREG": "uregelmessig",
+        "MONTHLY": "månedlig",
+        "MONTHLY_2": "to ganger i måneden",
+        "MONTHLY_3": "tre ganger i måneden",
+        "NEVER": "aldri",
+        "OTHER": "annet",
+        "QUARTERLY": "kvartalsvis",
+        "TRIENNIAL": "hvert tredje år",
+        "UNKNOWN": "ukjent",
+        "UPDATE_CONT": "kontinuerlig oppdatert",
+        "WEEKLY": "ukentlig",
+        "WEEKLY_2": "to ganger i uken",
+        "WEEKLY_3": "tre ganger i uken"
       }
     },
     "informationModel": {
-      "titleLabel": "Tittel på informasjonsmodell",
-      "linkLabel": "Lenke til informasjonsmodell"
+      "titleLabel": "Tittel",
+      "linkLabel": "Lenke"
     },
     "conformsTo": {
-      "titleLabel": "Tittel på standard",
-      "linkLabel": "Lenke til standard"
+      "titleLabel": "Tittel",
+      "linkLabel": "Lenke"
     }
   },
   "inactiveSessionWarning": {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
+import localization from '../../utils/localization';
 import './index.scss';
 
 export default class Helptext extends Component {
@@ -41,8 +42,8 @@ export default class Helptext extends Component {
         <div className="d-flex align-items-center">
           <h3>{title}</h3>
           {required &&
-          <span className="badge badge-secondary ml-1">
-            Obligatorisk
+          <span className="fdk-badge badge badge-secondary ml-2">
+            {localization.helptext.required}
           </span>
           }
         </div>
@@ -54,7 +55,7 @@ export default class Helptext extends Component {
 
           <button className="text-left no-padding ml-1 fdk-reg-helptext-more align-self-start" onClick={(e) => this.toggle(e)}>
             <i className={collapseClass} />
-            Flere anbefalinger
+            {localization.helptext.more}
           </button>
         </div>
         <Collapse

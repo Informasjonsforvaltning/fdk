@@ -37,7 +37,7 @@ export default class DatasetPublish extends Component {
   }
 
   handleDatasetStatus(value) {
-    const { syncErrors } = this.props;
+    const { syncErrors, distributionErrors } = this.props;
     const postURL = window.location.pathname;
     const api = {
       Authorization: `Basic ${  null}`
@@ -46,8 +46,20 @@ export default class DatasetPublish extends Component {
       registrationStatus: value
     }
 
+    let foundDistributionErrors = false;
+    if (distributionErrors) {
+      const { distribution } = distributionErrors;
+      if (distribution) {
+        distribution.forEach(item => {
+          if (JSON.stringify(item) !== '{}') {
+            foundDistributionErrors = true;
+          }
+        });
+      }
+    }
+
     let allowedToPublish = false;
-    if ( (value === 'PUBLISH' && !syncErrors) || value === 'DRAFT') {
+    if ( (value === 'PUBLISH' && !syncErrors && !foundDistributionErrors) || value === 'DRAFT') {
       allowedToPublish = true;
     }
     if (allowedToPublish) {
@@ -180,8 +192,8 @@ export default class DatasetPublish extends Component {
           modal={this.state.showDeleteModal}
           handleAction={this.handleDatasetDelete}
           toggle={this.closeDeleteModal}
-          title={localization.validation.validateDataset}
-          body={localization.validation.validateDatasetBody}
+          title={localization.deleteDataset.title}
+          body={localization.deleteDataset.body}
         />
 
       </div>
@@ -195,5 +207,6 @@ DatasetPublish.defaultProps = {
 
 DatasetPublish.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  registrationStatus: PropTypes.string
+  registrationStatus: PropTypes.string,
+  syncErrors: PropTypes.bool.isRequired
 };

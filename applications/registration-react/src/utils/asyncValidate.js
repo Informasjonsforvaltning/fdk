@@ -23,6 +23,13 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     values = {
       distribution: values
     }
+  } else if (blurredField && blurredField.indexOf('remove_sample_') !== -1) {
+    console.log("asyncValidate remove sample");
+    const index = blurredField.split("_").pop();
+    values.splice(index, 1);
+    values = {
+      sample: values
+    }
   } else if (blurredField && blurredField.indexOf('remove_legalBasisForRestriction_') !== -1) {
     const index = blurredField.split("_").pop();
     values.splice(index, 1);

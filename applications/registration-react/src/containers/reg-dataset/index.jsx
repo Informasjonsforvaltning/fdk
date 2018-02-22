@@ -128,16 +128,14 @@ class RegDataset extends React.Component {
         format="DD.MM.YYYY HH:MM:ss.SSS"
       >
         <div className="container-fluid">
-          <div className="row">
-            <div className="col-12" />
-          </div>
-          <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
+          <div className="row mb-2 mb-md-5">
             <div className="col-md-2" />
             {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
             <div className="col-md-8">
 
               <FormTemplate
                 title="Tittel og beskrivelse"
+                required
                 values={titleValues(title.values)}
                 syncErrors={title.syncErrors}
               >
@@ -148,6 +146,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tilgangsnivå"
+                required
                 values={accessRightsValues(accessRights.values)}
                 syncErrors={accessRights.syncErrors}
               >
@@ -158,6 +157,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tema"
+                required
                 values={themesValues(formThemes.values)}
                 syncErrors={formThemes.syncErrors}
               >
@@ -168,6 +168,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Type"
+                required
                 values={typeValues(type.values)}
                 syncErrors={type.syncErrors}
               >
@@ -247,8 +248,9 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Distribusjoner"
+                backgroundBlue
                 values={distributionValues(distribution.values)}
-                syncErrors={distribution.syncErrors}
+                syncErrors={(distribution.syncErrors && distribution.syncErrors.distribution && JSON.stringify(distribution.syncErrors.distribution) !== '{}') ? distribution.syncErrors.distribution : null}
               >
                 <FormDistribution
                   helptextItems={helptextItems}
@@ -257,8 +259,9 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Eksempeldata"
+                backgroundBlue
                 values={sampleValues(sample.values)}
-                syncErrors={sample.syncErrors}
+                syncErrors={(sample.syncErrors && sample.syncErrors.sample && sample.syncErrors.sample.length > 0) ? sample.syncErrors.sample : null}
               >
                 <FormSample
                   helptextItems={helptextItems}
@@ -282,10 +285,10 @@ class RegDataset extends React.Component {
                     || (contents && contents.syncErrors)
                     || (informationModel && informationModel.syncErrors)
                     || (contactPoint && contactPoint.syncErrors)
-                    || (distribution && distribution.syncErrors)
-                    || (sample && sample.syncErrors)
+                    || (sample && sample.syncErrors && sample.syncErrors.sample && sample.syncErrors.sample.length > 0)
                   )
                 }
+                distributionErrors={(distribution && distribution.syncErrors) ? distribution.syncErrors : null}
               />
             </div>
             }
