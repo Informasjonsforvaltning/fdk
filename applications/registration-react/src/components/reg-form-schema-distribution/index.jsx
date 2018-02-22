@@ -28,7 +28,7 @@ const validate = values => {
       const page = (item.page && item.page[0] && item.page[0].uri) ? item.page[0].uri : null;
       const { conformsTo } = item || null;
 
-      errors = validateURL('accessURL', accessURL, errors, true);
+      errors = validateURL('accessURL', accessURL[0], errors, true);
       errors = validateMinTwoChars('license', license, errors, 'uri');
       errors = validateMinTwoChars('description', description, errors);
       errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
@@ -212,6 +212,7 @@ const distributionTypes = values => {
       }
     ))
   } else {
+    /*
     distributions = [{
       id: '',
       description: textType,
@@ -222,6 +223,8 @@ const distributionTypes = values => {
       format: [],
       type: ''
     }]
+    */
+    distributions = []
   }
   return distributions;
 }

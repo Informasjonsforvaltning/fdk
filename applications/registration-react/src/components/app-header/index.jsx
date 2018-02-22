@@ -92,10 +92,35 @@ class Header extends React.Component {
                       <span>Meny</span>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>Veileder</DropdownItem>
-                      <DropdownItem>Standard</DropdownItem>
                       <DropdownItem>
-                        <a href="https://fellesdatakatalog.brreg.no">Felles datakatalog</a>
+                        <a
+                          title="Veileder"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
+                        >
+                          Veileder
+                        </a>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <a
+                          title="Standard"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://doc.difi.no/dcat-ap-no/"
+                        >
+                          Standard
+                        </a>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <a
+                          title="Felles datakatalog"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://fellesdatakatalog.brreg.no"
+                        >
+                          Felles datakatalog
+                        </a>
                       </DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
@@ -104,7 +129,7 @@ class Header extends React.Component {
             </div>
           </div>
         </div>
-        <div className="fdk-breadcrumb breadcrumb d-flex justify-content-between">
+        <div className="container fdk-breadcrumb d-flex justify-content-between">
           <span />
           <span>{localization.app.autoSave}</span>
         </div>

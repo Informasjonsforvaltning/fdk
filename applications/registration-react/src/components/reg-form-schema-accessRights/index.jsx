@@ -80,7 +80,7 @@ const validate = values => {
 }
 
 const renderLegalBasisFields = (item, index, fields, props) => (
-  <div className="d-flex mb-5" key={index}>
+  <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
         name={`${item}.prefLabel.nb`}

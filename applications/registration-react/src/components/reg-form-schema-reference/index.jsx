@@ -19,7 +19,7 @@ const validate = values => {
 }
 
 const renderReferenceFields = (item, index, fields, props, referenceTypesItems, referenceDatasetsItems) => (
-  <div className="d-flex" key={index}>
+  <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
         name={`${item}.referenceType`}

@@ -9,7 +9,7 @@ const AppModal  = (props) => (
         {props.body}
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" onClick={props.toggle}>Cancel</Button>
+        <Button color="danger" onClick={props.toggle}>Ok</Button>
       </ModalFooter>
     </Modal>
   </div>

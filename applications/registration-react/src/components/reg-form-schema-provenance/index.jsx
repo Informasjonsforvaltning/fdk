@@ -69,8 +69,8 @@ const renderProvenance = (props) => {
 
 let FormProvenance = props => {
   const { helptextItems, initialValues} = props;
-  const { modified, provenanceItems, frequencyItems } = initialValues;
-  if (modified) {
+  const { provenance, provenanceItems, frequencyItems } = initialValues;
+  if (provenance) {
     return (
       <form>
         <div className="form-group">
@@ -119,7 +119,8 @@ const mapStateToProps = ({ dataset, frequency, provenance }) => (
       frequencyItems: frequency.frequencyItems,
       provenanceItems: provenance.provenanceItems,
       provenance: dataset.result.provenance || {},
-      modified: moment(dataset.result.modified).format('YYYY-MM-DD') || '',
+      //modified: moment(dataset.result.modified).format('YYYY-MM-DD') || '',
+      modified: dataset.result.modified ? moment(dataset.result.modified).format('YYYY-MM-DD') : null,
       hasCurrentnessAnnotation: dataset.result.hasCurrentnessAnnotation,
       accrualPeriodicity: dataset.result.accrualPeriodicity
     }

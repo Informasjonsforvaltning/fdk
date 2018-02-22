@@ -12,9 +12,22 @@
   }
 }
 
+.dropdown-menu {
+  button.dropdown-item {
+    &:focus, &:active {
+      background-color: $color0;
+    }
+    a {
+      &:hover {
+        color: $color-cta2;
+      }
+    }
+  }
+}
+
 .fdk-breadcrumb {
   color: $color1;
   font-size: .9rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
 }
