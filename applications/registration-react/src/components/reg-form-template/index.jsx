@@ -57,8 +57,8 @@ export default class FormTemplate extends Component {
             <h2 className="mb-0 text-ellipsis">{ title }</h2>
             {required &&
             <span className="fdk-badge badge badge-secondary ml-2">
-                {localization.helptext.required}
-              </span>
+              {localization.helptext.required}
+            </span>
             }
             {syncErrors &&
             (

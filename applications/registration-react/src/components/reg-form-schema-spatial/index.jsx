@@ -147,7 +147,7 @@ const mapStateToProps = ({ dataset }) => (
     initialValues: {
       spatial: (dataset.result.spatial && dataset.result.spatial.length > 0) ? dataset.result.spatial : [],
       temporal: formatTemporalUnixDatesToISO(dataset.result.temporal) || [{}],
-      //issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
+      // issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
       issued: dataset.result.issued ? moment(dataset.result.issued).format('YYYY-MM-DD') : null,
       language: (dataset.result.language && dataset.result.language.length > 0) ? dataset.result.language : []
     }

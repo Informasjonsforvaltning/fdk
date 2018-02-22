@@ -166,7 +166,7 @@ const renderSamples = (props) => {
             }
           )}
         >
-          <i className="fa fa-plus mr-2"/>
+          <i className="fa fa-plus mr-2" />
           Legg til eksempeldata
         </button>
       }
