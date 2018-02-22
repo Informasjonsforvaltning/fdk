@@ -26,7 +26,14 @@ export default class FormTemplate extends Component {
         'fdk-reg_backgroundBlue': backgroundBlue,
         'fdk-reg_collapse_open': this.state.collapse
       }
-    )
+    );
+    const buttonClass = cx(
+      'fdk-collapseButton',
+      'w-100',
+      {
+        'no-padding': !backgroundBlue
+      }
+    );
     const collapseIconClass = cx(
       'fa',
       'fa-2x',
@@ -36,9 +43,15 @@ export default class FormTemplate extends Component {
         "fa-angle-up": this.state.collapse,
       }
     );
+    const collapseContentClass = cx(
+      'mt-3',
+      {
+        'fdk-collapseContent': backgroundBlue
+      }
+    )
     return (
       <div className={collapseClass}>
-        <button className="d-flex-x justify-content-between-x no-padding w-100" onClick={this.toggle}>
+        <button className={buttonClass} onClick={this.toggle}>
           <div className="d-flex align-items-center">
             <i className={collapseIconClass} />
             <h2 className="mb-0 text-ellipsis">{ title }</h2>
@@ -64,7 +77,7 @@ export default class FormTemplate extends Component {
           }
         </button>
         <Collapse
-          className="mt-3"
+          className={collapseContentClass}
           isOpen={this.state.collapse}
         >
           {this.props.children}
