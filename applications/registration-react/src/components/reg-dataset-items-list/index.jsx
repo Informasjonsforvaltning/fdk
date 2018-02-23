@@ -7,7 +7,6 @@ import DatasetItemsListItem from '../reg-dataset-items-list-item';
 import ImportModal from '../app-import-modal';
 import './index.scss';
 
-//const DatasetItemsList  = (props) => {
 class DatasetItemsList extends React.Component {
   constructor(props) {
     super(props);
@@ -88,11 +87,7 @@ class DatasetItemsList extends React.Component {
 
   _renderDatasetItems() {
     let {datasetItems: {_embedded: {datasets}}} = this.props;
-
-
-    //if (datasetItems && datasetItems._embedded && datasetItems._embedded.datasets) {
     if (datasets) {
-
       if (this.state.sortField === 'title') {
         datasets = orderBy(datasets, 'title.nb', [this.state.sortType]);
       } else if (this.state.sortField === 'registrationStatus') {
@@ -105,12 +100,17 @@ class DatasetItemsList extends React.Component {
             item={item}
           />
     ));
-    } return null;
+    } else {
+      return (
+        <div className="fdk-datasets-list-item d-flex">
+          <span className="fdk-text-size-small fdk-color2">{localization.datasets.list.missingItems}</span>
+        </div>
+      );
+    }
   }
 
 
   render() {
-
     return (
       <div>
         <div className="d-flex mb-3">

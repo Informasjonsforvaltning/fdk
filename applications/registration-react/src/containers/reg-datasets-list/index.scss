@@ -1,0 +1,7 @@
+@import '../../assets/style/typo';
+
+.fdk-reg-datasets-list {
+  button {
+    @extend .fdk-text-size-small;
+  }
+}

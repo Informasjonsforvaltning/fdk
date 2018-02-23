@@ -10,6 +10,7 @@ import {
 } from '../../actions/index';
 import FormCatalog from '../../components/reg-form-schema-catalog';
 import DatasetItemsList from '../../components/reg-dataset-items-list';
+import './index.scss';
 
 class RegDatasetsList extends React.Component {
   constructor(props) {
@@ -21,17 +22,6 @@ class RegDatasetsList extends React.Component {
     this.props.dispatch(fetchHelptextsIfNeeded());
     this.props.dispatch(fetchCatalogIfNeeded(catalogURL));
     this.props.dispatch(fetchDatasetsIfNeeded(datasetsURL));
-    /*
-    this.props.dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL));
-    this.props.dispatch(fetchHelptextsIfNeeded());
-    this.props.dispatch(fetchProvenanceIfNeeded());
-    this.props.dispatch(fetchFrequencyIfNeeded());
-    this.props.dispatch(fetchThemesIfNeeded());
-    this.props.dispatch(fetchReferenceTypesIfNeeded());
-    this.onIdle = this.onIdle.bind(this);
-    this.toggle = this.toggle.bind(this);
-    this.refreshSession = this.refreshSession.bind(this);
-    */
   }
 
   _renderDatasets() {
@@ -60,7 +50,7 @@ class RegDatasetsList extends React.Component {
         <div className="row mb-2 mb-md-5">
           <div className="col-md-2" />
           {helptextItems && !isFetchingCatalog && catalogItem && datasetItems &&
-          <div className="col-md-8">
+          <div className="col-md-8 fdk-reg-datasets-list">
             <FormCatalog
               helptextItems={helptextItems}
             />

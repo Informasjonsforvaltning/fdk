@@ -60,6 +60,7 @@ class FormCatalog extends React.Component {
 
     const collapseClass = cx(
       'fdk-reg_collapse',
+      'fdk-reg_backgroundDefault',
       'fdk-datasets-description',
       {
         'fdk-reg_collapse_open': this.state.collapse
@@ -93,7 +94,7 @@ class FormCatalog extends React.Component {
         }
 
         <div className={collapseClass}>
-          <button className="d-flex justify-content-between no-padding w-100" onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
+          <a className="d-flex justify-content-between no-padding w-100" onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
             <div>
               <div className="d-flex">
                 <div className="d-flex text-left fdk-color1">
@@ -102,12 +103,12 @@ class FormCatalog extends React.Component {
               </div>
 
             </div>
-          </button>
+          </a>
           <Collapse
             className="mt-3"
             isOpen={this.state.collapse}
           >
-            <div className="form-group fdk-datasets-description-x">
+            <div className="form-group">
               <Helptext title="Beskrivelse" required helptextItems={helptextItems.Catalog_title} />
               <Field name="description.nb" component={TextAreaField} label="Beskrivelse" />
             </div>

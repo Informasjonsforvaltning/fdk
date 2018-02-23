@@ -125,6 +125,7 @@
         "title": "Tittel på datasett",
         "status": "Status"
       },
+      "missingItems": "Ingen datasettbeskrivelse registrert",
       "missingTitle": "Mangler tittel",
       "statusPublished": "Publisert",
       "statusDraft": "Utkast"
