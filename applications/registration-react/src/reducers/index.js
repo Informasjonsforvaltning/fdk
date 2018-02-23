@@ -10,7 +10,8 @@ import app from './app';
 import referenceTypes from './referenceTypes';
 import referenceDatasets from './referenceDatasets';
 import catalog from './catalog';
-import datasets from './datasets'
+import datasets from './datasets';
+import catalogs from './catalogs';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   referenceTypes,
   referenceDatasets,
   catalog,
-  datasets
+  datasets,
+  catalogs
 });
 
 export default rootReducer;

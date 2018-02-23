@@ -25,7 +25,6 @@ h2 {
 h3 {
     color: $color1;
     font-size: 1.25rem;
-    //line-height: 2.4rem;
     font-weight: 600;
     margin: 0px;
 }
@@ -39,12 +38,11 @@ h4 {
 }
 
 h5 {
-    color: $color3;
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-    font-weight: 400;
-    padding: 0px;
-    margin: 0px 0px .4rem 0px;
+    color: $color1;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0px;
+    line-height: 1.5rem;
 }
 
 .fdk-ingress {
