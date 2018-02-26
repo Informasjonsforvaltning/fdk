@@ -8,14 +8,8 @@ export default class AppImportModal extends React.Component {
       url: null,
       errorMsg: null
     };
-    this.handleChangeURL = this.handleChangeURL.bind(this);
     this.onBtnConfirm = this.onBtnConfirm.bind(this);
-  }
-
-  handleChangeURL(e) {
-    this.setState({
-      url: e.target.value
-    });
+    this.handleChangeURL = this.handleChangeURL.bind(this);
   }
 
   onBtnConfirm() {
@@ -41,6 +35,12 @@ export default class AppImportModal extends React.Component {
       errorMsg: null
     });
     toggle();
+  }
+
+  handleChangeURL(e) {
+    this.setState({
+      url: e.target.value
+    });
   }
 
   render() {

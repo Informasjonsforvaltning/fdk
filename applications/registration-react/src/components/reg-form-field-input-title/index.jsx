@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './index.scss';
 
-//const InputTitleField  = ({ input, label, type, meta: { touched, error, warning }, showLabel, onToggleTitle }) => (
+// const InputTitleField  = ({ input, label, type, meta: { touched, error, warning }, showLabel, onToggleTitle }) => (
 export default class InputTitleField extends React.Component {
   constructor(props) {
     super(props);
@@ -30,10 +30,10 @@ export default class InputTitleField extends React.Component {
             </div>
           }
           {!hideInput &&
-          < button className="fdk-edit ml-2 mt-2 nowrap" onClick={(e) => {e.preventDefault(); onToggleTitle();}}>
+          <button className="fdk-edit ml-2 mt-2 nowrap" onClick={(e) => {e.preventDefault(); onToggleTitle();}}>
             <i className="fa fa-pencil mr-2" />
             Rediger tittel
-            </button>
+          </button>
           }
         </div>
         {touched && ((error &&

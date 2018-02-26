@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
+import axios from 'axios';
 
 import localization from '../../utils/localization';
 import DatasetItemsListItem from '../reg-dataset-items-list-item';
@@ -17,6 +18,7 @@ class DatasetItemsList extends React.Component {
     };
     this.onSortField = this.onSortField.bind(this);
     this.toggleImportModal = this.toggleImportModal.bind(this);
+    this.handleCreateDataset = this.handleCreateDataset.bind(this);
     this.handleImportDataset = this.handleImportDataset.bind(this);
   }
 
@@ -49,7 +51,6 @@ class DatasetItemsList extends React.Component {
   }
 
   handleImportDataset(url) {
-    console.log("handleImportDataset", url);
     this.setState({
       showImportModal: false
     });
@@ -94,19 +95,19 @@ class DatasetItemsList extends React.Component {
         datasets = orderBy(datasets, 'title.nb', [this.state.sortType]);
       }
 
-        return datasets.map(item => (
-          <DatasetItemsListItem
-            key={item.id}
-            item={item}
-          />
-    ));
-    } else {
-      return (
-        <div className="fdk-datasets-list-item d-flex">
-          <span className="fdk-text-size-small fdk-color2">{localization.datasets.list.missingItems}</span>
-        </div>
-      );
+      return datasets.map(item => (
+        <DatasetItemsListItem
+          key={item.id}
+          item={item}
+        />
+      ));
     }
+    return (
+      <div className="fdk-datasets-list-item d-flex">
+        <span className="fdk-text-size-small fdk-color2">{localization.datasets.list.missingItems}</span>
+      </div>
+    );
+
   }
 
 
@@ -115,14 +116,14 @@ class DatasetItemsList extends React.Component {
       <div>
         <div className="d-flex mb-3">
           <button className="fdk-button fdk-button-cta">
-            <i className="fa fa-plus fdk-color0 mr-2"/>
+            <i className="fa fa-plus fdk-color0 mr-2" />
             {localization.datasets.list.btnNewDataset}
           </button>
           <button
             className="ml-2 transparentButton"
             onClick={this.toggleImportModal}
           >
-            <i className="fa fa-plus fdk-color1 mr-2"/>
+            <i className="fa fa-plus fdk-color1 mr-2" />
             {localization.datasets.list.btnImportDataset}
           </button>
         </div>
@@ -133,33 +134,33 @@ class DatasetItemsList extends React.Component {
               {localization.datasets.list.header.title}
             </span>
             <div className="d-flex">
-            <button
-              name="titleAsc"
-              className="sortButton transparentButton"
-              onClick={() => this.onSortField('title', 'asc')}
-              title="Stigende"
-            >
-              {this.state.sortField === 'title' && this.state.sortType === 'asc' &&
-              <i className="fa fa-sort-up fdk-color0"/>
-              }
-              {(this.state.sortField !== 'title' || this.state.sortType !== 'asc') &&
-              <i className="fa fa-sort-up fdk-color0"/>
-              }
-            </button>
+              <button
+                name="titleAsc"
+                className="sortButton transparentButton"
+                onClick={() => this.onSortField('title', 'asc')}
+                title="Stigende"
+              >
+                {this.state.sortField === 'title' && this.state.sortType === 'asc' &&
+                <i className="fa fa-sort-up fdk-color0" />
+                }
+                {(this.state.sortField !== 'title' || this.state.sortType !== 'asc') &&
+                <i className="fa fa-sort-up fdk-color0" />
+                }
+              </button>
 
-            <button
-              name="titleDesc"
-              className="sortButton transparentButton"
-              onClick={() => this.onSortField('title', 'desc')}
-              title="Synkende"
-            >
-              {this.state.sortField === 'title' && this.state.sortType === 'desc' &&
-              <i className="fa fa-sort-down fdk-color0"/>
-              }
-              {(this.state.sortField !== 'title' || this.state.sortType !== 'desc') &&
-              <i className="fa fa-sort-down fdk-color0"/>
-              }
-            </button>
+              <button
+                name="titleDesc"
+                className="sortButton transparentButton"
+                onClick={() => this.onSortField('title', 'desc')}
+                title="Synkende"
+              >
+                {this.state.sortField === 'title' && this.state.sortType === 'desc' &&
+                <i className="fa fa-sort-down fdk-color0" />
+                }
+                {(this.state.sortField !== 'title' || this.state.sortType !== 'desc') &&
+                <i className="fa fa-sort-down fdk-color0" />
+                }
+              </button>
             </div>
 
           </div>
@@ -175,10 +176,10 @@ class DatasetItemsList extends React.Component {
                 title="Stigende"
               >
                 {this.state.sortField === 'registrationStatus' && this.state.sortType === 'asc' &&
-                <i className="fa fa-sort-up fdk-color0"/>
+                <i className="fa fa-sort-up fdk-color0" />
                 }
                 {(this.state.sortField !== 'registrationStatus' || this.state.sortType !== 'asc') &&
-                <i className="fa fa-sort-up fdk-color0"/>
+                <i className="fa fa-sort-up fdk-color0" />
                 }
               </button>
 
@@ -189,10 +190,10 @@ class DatasetItemsList extends React.Component {
                 title="Synkende"
               >
                 {this.state.sortField === 'registrationStatus' && this.state.sortType === 'desc' &&
-                <i className="fa fa-sort-down fdk-color0"/>
+                <i className="fa fa-sort-down fdk-color0" />
                 }
                 {(this.state.sortField !== 'registrationStatus' || this.state.sortType !== 'desc') &&
-                <i className="fa fa-sort-down fdk-color0"/>
+                <i className="fa fa-sort-down fdk-color0" />
                 }
               </button>
             </div>

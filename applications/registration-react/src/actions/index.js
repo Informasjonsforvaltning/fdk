@@ -96,10 +96,10 @@ export function fetchDatasetsIfNeeded(datasetsURL) {
 
 export function fetchCatalogsIfNeeded(catalogsURL) {
   return (dispatch, getState) =>
-  shouldFetchApi(
-    getState().catalogs) && dispatch(
-    fetchApi(catalogsURL, [actions.CATALOGS_REQUEST, actions.CATALOGS_SUCCESS, actions.CATALOGS_FAILURE])
-  );
+    shouldFetchApi(
+      getState().catalogs) && dispatch(
+      fetchApi(catalogsURL, [actions.CATALOGS_REQUEST, actions.CATALOGS_SUCCESS, actions.CATALOGS_FAILURE])
+    );
 }
 
 export function publishDataset(value) {

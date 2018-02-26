@@ -1,16 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CardGroup, CardDeck, Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { CardGroup, Card, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import localization from '../../utils/localization';
 import {
   fetchCatalogsIfNeeded
 } from '../../actions/index';
-import FormCatalog from '../../components/reg-form-schema-catalog';
-import DatasetItemsList from '../../components/reg-dataset-items-list';
 import './index.scss';
 
 class RegCatalogs extends React.Component {
@@ -26,26 +23,25 @@ class RegCatalogs extends React.Component {
     const { catalogItems } = this.props;
 
     if (catalogItems && catalogItems._embedded && catalogItems._embedded.catalogs) {
-      return catalogItems._embedded.catalogs.map((item, index) => (
+      return catalogItems._embedded.catalogs.map(item => (
 
         <div
           key={item.uri}
           className="col-md-4 pl-0"
         >
           <Link className="card-link" to={`/react/catalogs/${item.id}`}>
-          <Card>
+            <Card>
+              <CardBody>
+                <CardTitle>{item.title.nb}</CardTitle>
+                <hr />
+                <CardText className="fdk-catalog-text fdk-text-size-small fdk-color1">{item.description.nb}</CardText>
+              </CardBody>
 
-            <CardBody>
-              <CardTitle>{item.title.nb}</CardTitle>
-              <hr />
-              <CardText className="fdk-catalog-text fdk-text-size-small fdk-color1">{item.description.nb}</CardText>
-            </CardBody>
-
-          </Card>
+            </Card>
           </Link>
         </div>
       ));
-    }
+    } return null;
   }
   render() {
     const {
@@ -55,9 +51,7 @@ class RegCatalogs extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div>
-
-          </div>
+          <div />
         </div>
         <div className="row mb-2 mb-md-5">
           <div className="col-md-2" />

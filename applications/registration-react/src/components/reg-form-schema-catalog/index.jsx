@@ -1,16 +1,15 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, getFormSyncErrors } from 'redux-form';
+import { Field, reduxForm, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
 import Helptext from '../reg-form-helptext';
-import InputField from '../reg-form-field-input';
 import InputTitleField from '../reg-form-field-input-title';
 import TextAreaField from '../reg-form-field-textarea';
 import asyncValidate from '../../utils/asyncValidate';
 import shouldAsyncValidate from '../../utils/shouldAsyncValidate';
-import { textType, emptyArray } from '../../schemaTypes';
+import { textType } from '../../schemaTypes';
 import { validateRequired, validateMinTwoChars, validateURL } from '../../validation/validation';
 import './index.scss';
 
@@ -34,7 +33,7 @@ const validate = values => {
   return errors
 }
 
-//let FormCatalog = (props) => {
+// let FormCatalog = (props) => {
 class FormCatalog extends React.Component {
   constructor(props) {
     super(props);
@@ -94,7 +93,7 @@ class FormCatalog extends React.Component {
         }
 
         <div className={collapseClass}>
-          <a className="d-flex justify-content-between no-padding w-100" onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
+          <button className="d-flex justify-content-between no-padding w-100" onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
             <div>
               <div className="d-flex">
                 <div className="d-flex text-left fdk-color1">
@@ -103,7 +102,7 @@ class FormCatalog extends React.Component {
               </div>
 
             </div>
-          </a>
+          </button>
           <Collapse
             className="mt-3"
             isOpen={this.state.collapse}

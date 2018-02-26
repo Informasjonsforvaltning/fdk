@@ -24,13 +24,13 @@ const DatasetItemsListItem  = (props) => {
             <span className="d-flex w-25">
               {item.registrationStatus === 'PUBLISH' &&
               <span>
-                <i className="fa fa-circle fdk-color-cta mr-2"/>
+                <i className="fa fa-circle fdk-color-cta mr-2" />
                 <span>{localization.datasets.list.statusPublished}</span>
               </span>
               }
               {item.registrationStatus === 'DRAFT' &&
               <span>
-                <i className="fa fa-circle fdk-color3 mr-2"/>
+                <i className="fa fa-circle fdk-color3 mr-2" />
                 <span>{localization.datasets.list.statusDraft}</span>
               </span>
               }
