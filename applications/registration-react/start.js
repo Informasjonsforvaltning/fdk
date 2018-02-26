@@ -1,4 +1,5 @@
-var server = require("./server/server.js")
+const server = require("./server/server.js")
+
 server.start();
 
 // const express = require('express');

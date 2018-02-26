@@ -8,6 +8,7 @@ import no.dcat.datastore.Fuseki;
 import no.dcat.datastore.UserAlreadyExistsException;
 import no.dcat.datastore.UserNotFoundException;
 import no.dcat.datastore.domain.User;
+import no.dcat.shared.admin.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

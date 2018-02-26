@@ -63,7 +63,7 @@ application:
 
 ---
 spring:
-  profiles: develop, unit-integration
+  profiles: develop, unit-integration, docker
   mail:
     host: smtp.gmail.com
     port: 587
