@@ -49,14 +49,16 @@ class RegDatasetsList extends React.Component {
         </div>
         <div className="row mb-2 mb-md-5">
           <div className="col-md-2" />
-          {helptextItems && !isFetchingCatalog && catalogItem && datasetItems &&
+          {helptextItems && !isFetchingCatalog && catalogItem &&
           <div className="col-md-8 fdk-reg-datasets-list">
             <FormCatalog
               helptextItems={helptextItems}
             />
+            {datasetItems &&
             <DatasetItemsList
               datasetItems={datasetItems}
             />
+            }
           </div>
           }
         </div>
