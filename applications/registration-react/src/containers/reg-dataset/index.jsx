@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
+import { Link } from 'react-router-dom';
 
 import localization from '../../utils/localization';
 import {
@@ -119,7 +120,9 @@ class RegDataset extends React.Component {
       referenceTypesItems,
       referenceDatasetsItems
     } = this.props;
-
+    const datasetURL = window.location.pathname;
+    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
+    const catalogURL = catalogDatasetsURL.substring(0, catalogDatasetsURL.lastIndexOf('/'));
     return (
       <IdleTimer
         element={document}
@@ -127,17 +130,18 @@ class RegDataset extends React.Component {
         timeout={27.5 * 60 * 1000} // gir idle warning etter 27,5 minutter
         format="DD.MM.YYYY HH:MM:ss.SSS"
       >
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12" />
-          </div>
-          <div className="row mt-2 mt-md-5 mb-2 mb-md-5">
-            <div className="col-md-2" />
+        <div className="container">
+          <div className="row mb-2 mb-md-5">
+            <div className="col-md-2">
+              <i className="fa fa-arrow-left mr-2" />
+              <a className="fdk-text-size-small fdk-color1 font-weight-light" href={catalogURL}>Tilbake til katalogen</a>
+            </div>
             {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
             <div className="col-md-8">
 
               <FormTemplate
                 title="Tittel og beskrivelse"
+                required
                 values={titleValues(title.values)}
                 syncErrors={title.syncErrors}
               >
@@ -148,6 +152,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tilgangsnivå"
+                required
                 values={accessRightsValues(accessRights.values)}
                 syncErrors={accessRights.syncErrors}
               >
@@ -158,6 +163,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Tema"
+                required
                 values={themesValues(formThemes.values)}
                 syncErrors={formThemes.syncErrors}
               >
@@ -168,6 +174,7 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Type"
+                required
                 values={typeValues(type.values)}
                 syncErrors={type.syncErrors}
               >
@@ -247,8 +254,9 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Distribusjoner"
+                backgroundBlue
                 values={distributionValues(distribution.values)}
-                syncErrors={distribution.syncErrors}
+                syncErrors={(distribution.syncErrors && distribution.syncErrors.distribution && JSON.stringify(distribution.syncErrors.distribution) !== '{}') ? distribution.syncErrors.distribution : null}
               >
                 <FormDistribution
                   helptextItems={helptextItems}
@@ -257,8 +265,9 @@ class RegDataset extends React.Component {
 
               <FormTemplate
                 title="Eksempeldata"
+                backgroundBlue
                 values={sampleValues(sample.values)}
-                syncErrors={sample.syncErrors}
+                syncErrors={(sample.syncErrors && sample.syncErrors.sample && sample.syncErrors.sample.length > 0) ? sample.syncErrors.sample : null}
               >
                 <FormSample
                   helptextItems={helptextItems}
@@ -282,10 +291,10 @@ class RegDataset extends React.Component {
                     || (contents && contents.syncErrors)
                     || (informationModel && informationModel.syncErrors)
                     || (contactPoint && contactPoint.syncErrors)
-                    || (distribution && distribution.syncErrors)
-                    || (sample && sample.syncErrors)
+                    || (sample && sample.syncErrors && sample.syncErrors.sample && sample.syncErrors.sample.length > 0)
                   )
                 }
+                distributionErrors={(distribution && distribution.syncErrors) ? distribution.syncErrors : null}
               />
             </div>
             }

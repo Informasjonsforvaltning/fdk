@@ -28,7 +28,7 @@ const validate = values => {
       const page = (item.page && item.page[0] && item.page[0].uri) ? item.page[0].uri : null;
       const { conformsTo } = item || null;
 
-      errors = validateURL('accessURL', accessURL, errors, true);
+      errors = validateURL('accessURL', accessURL[0], errors, true);
       errors = validateMinTwoChars('license', license, errors, 'uri');
       errors = validateMinTwoChars('description', description, errors);
       errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
@@ -78,6 +78,16 @@ const renderSamples = (props) => {
     <div>
       {fields.map((sample, index) => (
         <div key={index}>
+          <div className="d-flex">
+            <button
+              type="button"
+              title="Remove distribution"
+              onClick={() => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_sample_${index}`);}}
+            >
+              <i className="fa fa-trash mr-2" />
+              Slett eksempeldata
+            </button>
+          </div>
           <div className="form-group">
             <Helptext title="Type" helptextItems={helptextItems.Dataset_example} />
             <Field name={`${sample}.type`} radioId="sample-api" component={RadioField} type="radio" value="API" label="API" />
@@ -140,6 +150,26 @@ const renderSamples = (props) => {
         </div>
       )
       )}
+      {fields && fields.length === 0 &&
+        <button
+          type="button"
+          onClick={() => fields.push(
+            {
+              id: '',
+              description: textType,
+              accessURL: [],
+              license: licenseType,
+              conformsTo: [],
+              page: [licenseType],
+              format: [],
+              type: ''
+            }
+          )}
+        >
+          <i className="fa fa-plus mr-2"/>
+          Legg til eksempeldata
+        </button>
+      }
     </div>
   );
 }
@@ -180,6 +210,7 @@ const sampleTypes = values => {
       }
     ))
   } else {
+    /*
     samples = [{
       id: '',
       description: textType,
@@ -190,6 +221,8 @@ const sampleTypes = values => {
       format: [],
       type: ''
     }]
+    */
+    samples = []
   }
   return samples;
 }

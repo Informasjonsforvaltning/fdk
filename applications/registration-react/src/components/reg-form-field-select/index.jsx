@@ -38,6 +38,7 @@ const SelectField  = (props) => {
         onChange={(selectedURI) => (handleChange(props, selectedURI))}
         rtl={false}
         searchable
+        placeholder="Velg"
       />
       {touched && ((error &&
       <div className="alert alert-danger mt-3">{error}</div>) || (warning && <div className="alert alert-warning mt-3">{warning}</div>))
