@@ -93,16 +93,15 @@ class FormCatalog extends React.Component {
         }
 
         <div className={collapseClass}>
-          <button className="d-flex justify-content-between no-padding w-100" onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
-            <div>
-              <div className="d-flex">
-                <div className="d-flex text-left fdk-color1">
-                  {description.nb}
-                </div>
-              </div>
-
+          <div className="d-flex justify-content-between w-100">
+            <div className="d-flex fdk-color1">
+              {description.nb}
             </div>
-          </button>
+            <button onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
+              <i className="fa fa-pencil mr-2" />
+              Rediger beskrivelse
+            </button>
+          </div>
           <Collapse
             className="mt-3"
             isOpen={this.state.collapse}
@@ -113,8 +112,6 @@ class FormCatalog extends React.Component {
             </div>
           </Collapse>
         </div>
-
-
       </form>
     )
   }

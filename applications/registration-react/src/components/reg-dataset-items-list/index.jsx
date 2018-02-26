@@ -44,7 +44,7 @@ class DatasetItemsList extends React.Component {
     return axios.post(
       `${catalogURL}/${datasetPath}`, {headers: api}
     ).then((response) => {
-      console.log(response);
+      window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
     }).catch((error) => {
       throw {error}
     });
