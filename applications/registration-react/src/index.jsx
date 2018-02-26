@@ -24,9 +24,11 @@ const routes =
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
-      <div>
+      <div className="d-flex flex-column site">
         <Header />
-        {routes}
+        <div className="site-content">
+          {routes}
+        </div>
         <Footer />
       </div>
     </BrowserRouter>

@@ -127,6 +127,16 @@ body {
 }
 
 /*
+SITE
+ */
+.site {
+  min-height: 100vh;
+  .site-content {
+    flex: 1;
+  }
+}
+
+/*
 FDK-BUTTON
 */
 

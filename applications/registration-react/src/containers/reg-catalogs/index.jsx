@@ -5,6 +5,7 @@ import { CardGroup, CardDeck, Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+import localization from '../../utils/localization';
 import {
   fetchCatalogsIfNeeded
 } from '../../actions/index';
@@ -23,28 +24,28 @@ class RegCatalogs extends React.Component {
 
   _renderCatalogs() {
     const { catalogItems } = this.props;
+
     if (catalogItems && catalogItems._embedded && catalogItems._embedded.catalogs) {
       return catalogItems._embedded.catalogs.map((item, index) => (
 
         <div
           key={item.uri}
-          className="col-md-4"
+          className="col-md-4 pl-0"
         >
-
+          <Link className="card-link" to={`/react/catalogs/${item.id}`}>
           <Card>
-            <Link to={`/react/catalogs/${item.id}`}>
+
             <CardBody>
               <CardTitle>{item.title.nb}</CardTitle>
               <hr />
-              <CardText className="fdk-catalog-text fdk-text-size-small">{item.description.nb}</CardText>
+              <CardText className="fdk-catalog-text fdk-text-size-small fdk-color1">{item.description.nb}</CardText>
             </CardBody>
-            </Link>
-          </Card>
 
+          </Card>
+          </Link>
         </div>
       ));
     }
-    return null;
   }
   render() {
     const {
@@ -54,21 +55,38 @@ class RegCatalogs extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12" />
+          <div>
+
+          </div>
         </div>
         <div className="row mb-2 mb-md-5">
           <div className="col-md-2" />
           {!isFetchingCatalogs && catalogItems &&
           <div className="col-md-8">
-
-              <CardGroup>
-            {this._renderCatalogs()}
-            {this._renderCatalogs()}
-                {this._renderCatalogs()}
-                {this._renderCatalogs()}
-
-              </CardGroup>
-
+            <div>
+              <h1 className="fdk-text-strong mb-4">Dine kataloger</h1>
+            </div>
+            <CardGroup>
+              {this._renderCatalogs()}
+            </CardGroup>
+          </div>
+          }
+          {!isFetchingCatalogs && !catalogItems &&
+          <div>
+            <h1 className="fdk-text-strong">{localization.catalogs.missingCatalogs.title}</h1>
+            <div className="mt-2 mb-2">
+              {localization.catalogs.missingCatalogs.ingress}
+            </div>
+            <div className="fdk-text-size-small">
+              <strong>{localization.catalogs.missingCatalogs.accessTitle}</strong>
+              <p>
+                {localization.catalogs.missingCatalogs.accessText}
+              </p>
+              <strong>{localization.catalogs.missingCatalogs.assignAccessTitle}</strong>
+              <p>
+                {localization.catalogs.missingCatalogs.assignAccessText}
+              </p>
+            </div>
           </div>
           }
         </div>
