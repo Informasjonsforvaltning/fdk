@@ -12,12 +12,23 @@ import Footer from './components/app-footer';
 
 const store = configureStore();
 
+/*
 const routes =
   (
     <Switch>
-      <Route path="/react/custom" component={RegCatalogs} />
+      <Route path="/react2" component={RegCatalogs} />
       <Route path="/react/catalogs/:catalogId" component={RegDatasetsList} />
-      <Route path="/catalogs/:catalogId/datasets/:id" component={RegDataset} />
+      <Route path="/react/catalogs/:catalogId/datasets/:id" component={RegDataset} />
+    </Switch>
+  );
+*/
+
+const routes =
+  (
+    <Switch>
+      <Route exact path="/" component={RegCatalogs} />
+      <Route exact path="/catalogs/:catalogId" component={RegDatasetsList} />
+      <Route exact path="/catalogs/:catalogId/datasets/:id" component={RegDataset} />
     </Switch>
   );
 

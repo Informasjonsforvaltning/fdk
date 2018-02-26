@@ -17,7 +17,7 @@ class RegDatasetsList extends React.Component {
     super(props);
     this.state = {
     }
-    const catalogURL = window.location.pathname.substring(6);
+    const catalogURL = window.location.pathname;//.substring(6);
     const datasetsURL = `${catalogURL}/datasets?size=1000&page=0`;
     this.props.dispatch(fetchHelptextsIfNeeded());
     this.props.dispatch(fetchCatalogIfNeeded(catalogURL));

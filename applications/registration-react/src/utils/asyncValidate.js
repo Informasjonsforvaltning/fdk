@@ -7,8 +7,10 @@ import {
 
 const asyncValidate = (values, dispatch, props, blurredField) => {
   const postURL = window.location.pathname;
+  //const postURL = `${window.location.pathname}/`
+
   const api = {
-    Authorization: `Basic ${  null}`
+    Authorization: `Basic user:password`
   }
 
   if (blurredField && blurredField.indexOf('remove_temporal_') !== -1) {
@@ -56,6 +58,7 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     }
   }
 
+  //return axios.patch(
   return axios.patch(
     postURL, values, {headers: api}
   )

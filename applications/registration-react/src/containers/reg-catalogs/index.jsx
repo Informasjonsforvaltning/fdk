@@ -29,7 +29,7 @@ class RegCatalogs extends React.Component {
           key={item.uri}
           className="col-md-4 pl-0"
         >
-          <Link className="card-link" to={`/react/catalogs/${item.id}`}>
+          <Link className="card-link" to={`/catalogs/${item.id}`}>
             <Card>
               <CardBody>
                 <CardTitle>{item.title.nb}</CardTitle>

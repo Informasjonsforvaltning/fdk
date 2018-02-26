@@ -115,7 +115,7 @@ class DatasetItemsList extends React.Component {
     return (
       <div>
         <div className="d-flex mb-3">
-          <button className="fdk-button fdk-button-cta">
+          <button className="fdk-button fdk-button-cta" onClick={this.handleCreateDataset}>
             <i className="fa fa-plus fdk-color0 mr-2" />
             {localization.datasets.list.btnNewDataset}
           </button>
