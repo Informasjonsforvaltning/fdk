@@ -368,6 +368,7 @@
                     <!-- in addition to jacoco-ut, which is default-->
                     <relativeReportDirs>jacoco-ut</relativeReportDirs>
 					<relativeReportDirs>jacoco-it</relativeReportDirs>
+					<relativeReportDirs>../../coverage</relativeReportDirs>
                 </configuration>
 			</plugin>
 			<plugin>
@@ -429,38 +430,6 @@
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                         </configuration>
                     </execution>
-
-					<!-- merge results -->
-					<!--execution>
-						<id>merge-results</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>merge</goal>
-						</goals>
-						<configuration>
-							<fileSets>
-								<fileSet>
-									<directory>${project.build.directory}/coverage-reports</directory>
-									<includes>
-										<include>*.exec</include>
-									</includes>
-								</fileSet>
-							</fileSets>
-							<destFile>${project.build.directory}/coverage-reports/aggregate.exec</destFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>post-merge-report</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<dataFile>${project.build.directory}/coverage-reports/aggregate.exec</dataFile>
-							<outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
-						</configuration>
-					</execution-->
-
                 </executions>
 			</plugin>
 		</plugins>
