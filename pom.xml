@@ -367,7 +367,7 @@
                 <configuration>
                     <!-- in addition to jacoco-it, which is default-->
                     <relativeReportDirs>jacoco-ut</relativeReportDirs>
-					<relativeReportDirs>../../coverage</relativeReportDirs>
+					<coberturaReports>${project.basedir}/coverage/cobertura-coverage.xml</coberturaReports>
                 </configuration>
 			</plugin>
 			<plugin>
