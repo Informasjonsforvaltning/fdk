@@ -367,8 +367,13 @@
                 <configuration>
                     <!-- in addition to jacoco-ut, which is default-->
                     <relativeReportDirs>jacoco-ut</relativeReportDirs>
-					<relativeReportDirs>jacoco-it</relativeReportDirs>
-					<relativeReportDirs>../../coverage</relativeReportDirs>
+                    <relativeReportDirs>jacoco-it</relativeReportDirs>
+					<coberturaReports>${project.basedir}/coverage/cobertura-coverage.xml</coberturaReports>
+					<sourceDirectories>
+						<sourceDirectory>{project.basedir}/src</sourceDirectory>
+						<sourceDirectory>{project.basedir}/src/main/java</sourceDirectory>
+					</sourceDirectories>
+					<scanForSources>true</scanForSources>
                 </configuration>
 			</plugin>
 			<plugin>
@@ -402,7 +407,6 @@
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                         </configuration>
                     </execution>
-
 
                     <!--
                         JaCoCo report for integration tests
