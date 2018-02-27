@@ -368,6 +368,7 @@
                     <!-- in addition to jacoco-it, which is default-->
                     <relativeReportDirs>jacoco-ut</relativeReportDirs>
 					<coberturaReports>${project.basedir}/coverage/cobertura-coverage.xml</coberturaReports>
+					<scanForSources>true</scanForSources>
                 </configuration>
 			</plugin>
 			<plugin>
