@@ -348,7 +348,7 @@
 					</includes>
 					<skipTests>${skipIntegrationTests}</skipTests>
 					<encoding>${java.encoding}</encoding>
-                    <argLine>${failsafeArgLine}docker </argLine>
+                    <argLine>${failsafeArgLine}</argLine>
 				</configuration>
 				<executions>
 					<execution>
@@ -365,8 +365,9 @@
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
                 <configuration>
-                    <!-- in addition to jacoco-ut, which is default-->
+                    <!-- in addition to jacoco-it, which is default-->
                     <relativeReportDirs>jacoco-ut</relativeReportDirs>
+					<relativeReportDirs>../../coverage</relativeReportDirs>
                 </configuration>
 			</plugin>
 			<plugin>
