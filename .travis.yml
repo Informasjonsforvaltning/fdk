@@ -58,7 +58,7 @@ jobs:
       script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test && npm run coverage
       #if: type = cron #run only during nightly cron job
       after_success:
-        - mvn org.eluder.coveralls:coveralls-maven-plugin:report
+        - mvn clean cobertura:cobertura coveralls:report
       env:
         - comment=Run regular React unit tests + generate test coverage report
 
