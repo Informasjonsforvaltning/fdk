@@ -9,6 +9,9 @@ application:
   clientSSLCertificateKeystorePassword: ${registrationApi_clientSSLCertificateKeystorePassword:password}
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
+  harvesterUsername: ${registrationApi_harvesterUsername}
+  harvesterPassword: ${registrationApi_harvesterPassword}
+  harvesterUrl: http://harvester:8080
 
 spring:
   hateoas:
@@ -93,7 +96,6 @@ logging:
 health:
   config:
     enabled: false
-application:
 management:
   port: 8181
 server:
@@ -115,6 +117,8 @@ server:
     key-store-password: changeit
     key-store-type: PKCS12
     key-alias: tomcat
+application:
+  harvesterUrl: http://localhost:8082
 
 ---
 spring:
@@ -134,6 +138,7 @@ application:
   altinnServiceCode: 1234
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij
+  harvesterUrl: http://localhost:8082
 
 
 

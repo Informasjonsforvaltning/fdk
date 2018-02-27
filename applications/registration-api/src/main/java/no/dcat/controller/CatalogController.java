@@ -5,17 +5,18 @@ import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.HarvesterService;
 import no.dcat.shared.Publisher;
+import no.dcat.shared.admin.DcatSourceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,10 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -51,11 +49,23 @@ public class CatalogController {
 
     private final EntityNameService entityNameService;
 
+    private final HarvesterService harvesterService;
+
+    @Value("${saml.sso.context-provider.lb.server-name}")
+    private String serverName;
+
+    @Value("${saml.sso.context-provider.lb.server-port}")
+    private String serverPort;
+
+    @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
+    private boolean includeServerPortInUrl;
+
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
+    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService) {
         this.catalogRepository = catalogRepository;
         this.springSecurityContextBean = springSecurityContextBean;
         this.entityNameService = entityNameService;
+        this.harvesterService = harvesterService;
     }
 
 
@@ -107,6 +117,7 @@ public class CatalogController {
         }
 
         Catalog savedCatalog = saveCatalog(catalog);
+        createDatasourceInHarvester(catalog);
 
         return new ResponseEntity<>(savedCatalog, OK);
     }
@@ -197,6 +208,9 @@ public class CatalogController {
     public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.delete(id);
+
+        //TODO: FDK-1024 slett fra harvester hvis den finnes der. OBS miljøer.
+
         return new ResponseEntity<>(OK);
     }
 
@@ -246,6 +260,55 @@ public class CatalogController {
             return newCatalog;
         }
         return catalog;
+    }
+
+
+    /**
+     * Create a new data source for the catalog in harvester,
+     * if it does not already exist
+     *
+     * @param catalog
+     */
+    public void createDatasourceInHarvester(Catalog catalog) {
+        //Get existing harvester entries from harvester
+        List<DcatSourceDto> existingHarvesterDataSources = harvesterService.getHarvestEntries();
+
+        String catalogHarvestEndpoint = getRegistrationBaseUrl() + "/catalogs/" + catalog.getId();
+        boolean catalogFound = false;
+
+        logger.info("checking if catalog with url {} already exists as data source", catalogHarvestEndpoint);
+
+        for (DcatSourceDto datasourceEntry : existingHarvesterDataSources) {
+            logger.debug("Found exisiting dcatsource entry: {}",  datasourceEntry.getUrl() );
+            if(datasourceEntry.getUrl().equals(catalogHarvestEndpoint)) {
+                logger.info("Catalog already exists as a data source in harvester");
+                catalogFound = true;
+            }
+        }
+
+        //if current catalog does not exist as a dat source, create it
+        if(!catalogFound) {
+            logger.info("Harvest entry not found - create new datasource for catalog in harvester");
+            boolean harvestEntryCreated = harvesterService.createHarvestEntry(catalog, catalogHarvestEndpoint);
+            logger.info("Harvest entry creation successful: {}", harvestEntryCreated);
+        }
+    }
+
+
+    /**
+     * Helper method to generate the base uri for the registration api
+     *
+     * @return String containing base uri
+     */
+    public String getRegistrationBaseUrl() {
+        StringBuilder host = new StringBuilder();
+        String protocol = "https://";
+        host.append(protocol);
+        host.append(serverName);
+        if (includeServerPortInUrl) {
+            host.append(":").append(serverPort);
+        }
+        return host.toString();
     }
 
 }

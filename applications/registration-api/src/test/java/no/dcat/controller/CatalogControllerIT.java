@@ -1,29 +1,32 @@
 package no.dcat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
-import org.junit.Assert;
+import no.dcat.shared.admin.DcatSourceDto;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -120,6 +123,58 @@ public class CatalogControllerIT {
                 .andExpect(status().isOk());
 
     }
+
+
+    @Test
+    @WithUserDetails("03096000854")
+    public void catalogAddedAndHarvesterDatasourceIsCreated() throws Exception {
+        Catalog catalog = new Catalog();
+        String id = "910244132";
+        catalog.setId(id);
+        catalog.setUri("http://brreg.no/catalogs/910244132");
+
+        Map<String, String> description = new HashMap<>();
+        description.put("no", "New catalog");
+        catalog.setDescription(description);
+
+        Map<String, String> title = new HashMap<>();
+        title.put("no", "test");
+        catalog.setTitle(title);
+
+        //create new cacalog
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post("/catalogs", catalog)
+                                .content(asJsonString(catalog))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://localhost:8082/api/admin/dcat-sources";
+        logger.debug("harvester uri: {}", uri);
+
+        ResponseEntity<List<DcatSourceDto>> response = null;
+        try {
+            response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    new org.springframework.http.HttpEntity<>(createHeaders("test_admin", "password")),
+                    new ParameterizedTypeReference<List<DcatSourceDto>>() {});
+        } catch (Exception e) {
+            logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
+            logger.error("response from harvester: {}", response.toString());
+        }
+
+        logger.debug("response status code: {}", response.getStatusCode());
+        List<DcatSourceDto> datasources = response.getBody();
+
+        assertTrue(datasources.stream().filter(
+                ds -> ds.getId().equals("http://brreg.no/catalogs/910244132")).findFirst().isPresent());
+
+    }
+
+
 
     @Test
     @WithUserDetails("03096000854")
@@ -250,8 +305,27 @@ public class CatalogControllerIT {
 
     }
 
+
     public static String asJsonString( Object obj) {
         return new Gson().toJson(obj);
 
+    }
+
+    /**
+     * helper method to create authorisation header for http request
+     *
+     * @param username
+     * @param password
+     * @return HTTP header containing basic auth and content type application/josn
+     */
+    private HttpHeaders createHeaders(String username, String password){
+        return new HttpHeaders() {{
+            String auth = username + ":" + password;
+
+            byte[] encodedAuth = Base64.encodeBase64(
+                    auth.getBytes(Charset.forName("US-ASCII")) );
+            String authHeader = "Basic " + new String( encodedAuth );
+            set( "Authorization", authHeader );
+        }};
     }
 }
