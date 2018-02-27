@@ -9,8 +9,8 @@ application:
   clientSSLCertificateKeystorePassword: ${registrationApi_clientSSLCertificateKeystorePassword:password}
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
-  harvesterUsername: ${registrationApi_harvesterUsername}
-  harvesterPassword: ${registrationApi_harvesterPassword}
+  harvesterUsername: ${registrationApi_harvesterUsername:test_admin}
+  harvesterPassword: ${registrationApi_harvesterPassword:password}
   harvesterUrl: http://harvester:8080
 
 spring:
