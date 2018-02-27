@@ -37,12 +37,17 @@ class DatasetItemsList extends React.Component {
     const catalogURL = window.location.pathname;
     const datasetPath = 'datasets/';
 
-    const api = {
-      Authorization: `Basic user:password`
+    const header = {
+      Accept: 'application/json'
+    }
+
+    const getInit = {
+      headers: header,
+      credentials: 'same-origin'
     };
 
     return axios.post(
-      `${catalogURL}/${datasetPath}`, {headers: api}
+      `${catalogURL}/${datasetPath}`, getInit
     ).then((response) => {
       window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
     }).catch((error) => {
@@ -54,6 +59,24 @@ class DatasetItemsList extends React.Component {
     this.setState({
       showImportModal: false
     });
+
+    const header = {
+      Accept: 'application/json'
+    }
+
+    const getInit = {
+      headers: header,
+      credentials: 'same-origin'
+    };
+
+    return axios.post(
+      `${catalogURL}`, url, getInit
+    ).then((response) => {
+      window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
+    }).catch((error) => {
+      throw {error}
+    });
+
     /*
      this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
      modal.hide();
@@ -69,7 +92,6 @@ class DatasetItemsList extends React.Component {
      console.error(error);
      }
      });
-
 
      import(catalog: Catalog, url: string) : Promise<Catalog> {
      const postUrl = `${this.catalogsUrl}/${catalog.id}/import`;

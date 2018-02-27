@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm, getFormSyncErrors } from 'redux-form';
+import { Field, reduxForm, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
@@ -55,7 +55,7 @@ class FormCatalog extends React.Component {
   }
 
   render() {
-    const { helptextItems, initialValues } = this.props;
+    const { helptextItems, initialValues, values } = this.props;
     const { id, title, description, publisher } = initialValues;
 
     const collapseClass = cx(
@@ -99,7 +99,7 @@ class FormCatalog extends React.Component {
         <div className={collapseClass}>
           <div className="d-flex justify-content-between w-100">
             <div className="d-flex fdk-color1">
-              {description.nb}
+              {values.description.nb}
             </div>
             <button onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
               <i className="fa fa-pencil mr-2" />
@@ -128,7 +128,7 @@ FormCatalog = reduxForm({
   asyncValidate,
   asyncChangeFields: [],
 })(connect(state => ({
-  syncErrors: getFormSyncErrors("title")(state)
+  values: getFormValues('catalog')(state)
 }))(FormCatalog));
 
 const mapStateToProps = ({ catalog }) => (
