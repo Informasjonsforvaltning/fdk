@@ -365,8 +365,15 @@
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
                 <configuration>
-                    <!-- in addition to jacoco-it, which is default-->
+                    <!-- in addition to jacoco-ut, which is default-->
                     <relativeReportDirs>jacoco-ut</relativeReportDirs>
+                    <relativeReportDirs>jacoco-it</relativeReportDirs>
+					<coberturaReports>${project.basedir}/coverage/cobertura-coverage.xml</coberturaReports>
+					<sourceDirectories>
+						<sourceDirectory>{project.basedir}/src</sourceDirectory>
+						<sourceDirectory>{project.basedir}/src/main/java</sourceDirectory>
+					</sourceDirectories>
+					<scanForSources>true</scanForSources>
                 </configuration>
 			</plugin>
 			<plugin>
