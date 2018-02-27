@@ -372,6 +372,7 @@
 						<sourceDirectory>{project.basedir}/src</sourceDirectory>
 						<sourceDirectory>{project.basedir}/src/main/java</sourceDirectory>
 					</sourceDirectories>
+					<scanForSources>true</scanForSources>
                 </configuration>
 			</plugin>
 			<plugin>
