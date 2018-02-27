@@ -9,6 +9,7 @@ matrix:
 
 notifications:
     slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
+    webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
 
 services:
   - docker # enable docker support in travis
@@ -22,6 +23,7 @@ apt:
 before_install:
 
 install:
+  - export COVERALLS_PARALLEL=true # ensure coverage results are merged after all parallell jobs have finished
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
   - export DISPLAY=:99.0
@@ -36,23 +38,23 @@ branches:
     - /ppe_.*/
 jobs:
   include:
-    #- stage: Build # First build the project to look for syntax/build problems
-    #  script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
-    #  env:
-    #    - comment=First build the project to look for syntax/build problems
+    - stage: Build # First build the project to look for syntax/build problems
+      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
+      env:
+        - comment=First build the project to look for syntax/build problems
 
-    #- stage: Tests # Run regular unit tests
-      #script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
-      #env:
-      #  - comment=Run regular unit tests
+    - stage: Tests # Run regular unit tests
+      script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
+      env:
+        - comment=Run regular unit tests
 
-   # - stage: Tests # Run unit and integration tests + generate test coverage report
-      #if: type = cron #run only during nightly cron job - time-consuming operation
-      #script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
-      #after_success:
-      #  - mvn org.eluder.coveralls:coveralls-maven-plugin:report
-      #env:
-      #  - comment=Run unit and integration tests + generate test coverage report
+    - stage: Tests # Run unit and integration tests + generate test coverage report
+      if: type = cron #run only during nightly cron job - time-consuming operation
+      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
+      after_success:
+        - mvn org.eluder.coveralls:coveralls-maven-plugin:report
+      env:
+        - comment=Run unit and integration tests + generate test coverage report
 
     - stage: Tests # Run regular React unit tests
       script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test && npm run coverage
