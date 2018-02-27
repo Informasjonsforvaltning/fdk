@@ -5,9 +5,10 @@ import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
 import Helptext from '../reg-form-helptext';
+import InputField from '../reg-form-field-input';
 import InputTitleField from '../reg-form-field-input-title';
 import TextAreaField from '../reg-form-field-textarea';
-import asyncValidate from '../../utils/asyncValidate';
+import asyncValidate from '../../utils/asyncValidatePut';
 import shouldAsyncValidate from '../../utils/shouldAsyncValidate';
 import { textType } from '../../schemaTypes';
 import { validateRequired, validateMinTwoChars, validateURL } from '../../validation/validation';
@@ -55,7 +56,7 @@ class FormCatalog extends React.Component {
 
   render() {
     const { helptextItems, initialValues } = this.props;
-    const { title, description, publisher } = initialValues;
+    const { id, title, description, publisher } = initialValues;
 
     const collapseClass = cx(
       'fdk-reg_collapse',
@@ -75,6 +76,9 @@ class FormCatalog extends React.Component {
 
     return (
       <form className="mb-5 fdk-reg-catalogs">
+        <div className="visibilityHidden">
+          <Field name="id" component={InputField} label="Beskrivelse" />
+        </div>
         <div className="d-flex align-items-center justify-content-between">
           {title && title.nb && !this.state.collapseTitle &&
           <h1 className="w-75 fdk-text-strong">
@@ -130,6 +134,7 @@ FormCatalog = reduxForm({
 const mapStateToProps = ({ catalog }) => (
   {
     initialValues: {
+      id: (catalog.catalogItem.id && catalog.catalogItem.id.length > 0) ? catalog.catalogItem.id : '',
       title: (catalog.catalogItem.title && catalog.catalogItem.title.nb && catalog.catalogItem.title.nb.length > 0) ? catalog.catalogItem.title : textType,
       description: (catalog.catalogItem.description && catalog.catalogItem.description.nb && catalog.catalogItem.description.nb.length > 0) ? catalog.catalogItem.description : textType,
       publisher: catalog.catalogItem.publisher
