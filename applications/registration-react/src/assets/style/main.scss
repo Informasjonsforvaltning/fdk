@@ -1,5 +1,5 @@
 @import './colors.scss';
-/*****************************************/
+/***************  **************************/
 /*********** Bootstrap overrides **********/
 /*****************************************/
 $primary:       $color1 !default;
@@ -14,6 +14,12 @@ $danger:        $color-red !default;
 @import '~bootstrap/scss/bootstrap';
 
 .alert-success {
+  background-color: $color-green2;
+  color: $color1;
+}
+
+.alert-warning {
+  background-color: $color-yellow2;
   color: $color1;
 }
 

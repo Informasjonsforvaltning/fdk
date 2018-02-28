@@ -1,0 +1,46 @@
+@import '../../assets/style/colors';
+
+.login-dialog-wrapper {
+  background-color: $color-cta4;
+  flex: 1;
+  .fdk-button {
+    text-decoration: none;
+    &:hover {
+      color: $color0;
+    }
+  }
+}
+
+/*==========  Media Queries  ==========*/
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}/* end min-width : 320px */
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}/* end min-width : 480px */
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .login-dialog-wrapper {
+    background-image: url(../../assets/img/illustration-login.svg);
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 50%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .login-dialog-wrapper {
+    background-size: contain;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+}
+

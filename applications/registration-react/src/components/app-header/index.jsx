@@ -129,10 +129,6 @@ class Header extends React.Component {
             </div>
           </div>
         </div>
-        <div className="container fdk-breadcrumb d-flex justify-content-between">
-          <span />
-          <span>{localization.app.autoSave}</span>
-        </div>
       </header>
     );
   }

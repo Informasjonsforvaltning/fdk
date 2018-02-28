@@ -13,12 +13,15 @@ class App extends Component {
     this.props.dispatch(fetchUserIfNeeded());
   }
   render () {
+    const { userItem } = this.props;
     return (
-      <div className="col-12">
-        test3
+      <div className="site-content">
         {this.props.children}
+        {!userItem &&
+        <div>Logg inn</div>
+        }
       </div>
-    );
+    )
   }
 }
 

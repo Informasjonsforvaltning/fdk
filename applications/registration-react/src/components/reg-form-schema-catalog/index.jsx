@@ -76,7 +76,7 @@ class FormCatalog extends React.Component {
 
     return (
       <form className="mb-5 fdk-reg-catalogs">
-        <div className="visibilityHidden">
+        <div className="d-none">
           <Field name="id" component={InputField} label="Beskrivelse" />
         </div>
         <div className="d-flex align-items-center justify-content-between">

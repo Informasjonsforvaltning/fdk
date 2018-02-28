@@ -1,4 +1,4 @@
-import { PUBLISHDATASET, DATASET_LAST_SAVED } from '../constants/ActionTypes';
+import { PUBLISHDATASET, DATASET_LAST_SAVED, USER_LOGGED_OUT } from '../constants/ActionTypes';
 
 export default function app(state = { registrationStatus: null, lastSaved: null }, action) {
   switch (action.type) {
