@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import {
+  resetUser
+} from '../../actions/index';
 import localization from '../../utils/localization';
 import './index.scss';
 
@@ -11,19 +14,13 @@ import './index.scss';
 class LoginDialog extends React.Component {
   componentWillMount() {
     if(this.props.loggedOut) {
-      return axios.get('/logout')
-        .then((response) => response)
-        .catch((response) => {
-          const { error } = response;
-          return Promise.reject(error);
+      axios.get('/logout', getInit)
+        .then((response) => {
+          this.props.dispatch(resetUser());
         })
-
-      return axios.get(
-        '/logout'
-      ).then((response) => {
-      }).catch((error) => {
-        throw {error}
-      });
+        .catch((error) => {
+          this.props.dispatch(resetUser());
+        })
     }
   }
   render() {
@@ -78,4 +75,24 @@ class LoginDialog extends React.Component {
   }
 }
 
-export default LoginDialog;
+LoginDialog.defaultProps = {
+
+};
+
+LoginDialog.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps({ user }) {
+  const { userItem, isFetchingUser } = user || {
+    userItem: null,
+    isFetchingUser: false
+  }
+  return {
+    userItem,
+    isFetchingUser
+  };
+}
+
+export default connect(mapStateToProps)(LoginDialog);
+
