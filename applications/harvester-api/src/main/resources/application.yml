@@ -81,7 +81,7 @@ server:
   port: 8081
 management:
   port: 8991
-  
+
 ---
 spring:
   profiles: docker

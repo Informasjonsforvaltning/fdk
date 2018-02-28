@@ -154,6 +154,9 @@ public class CatalogControllerIT {
         String uri = "http://localhost:8082/api/admin/dcat-sources";
         logger.debug("harvester uri: {}", uri);
 
+        // sleep long
+        Thread.sleep(5000);
+
         ResponseEntity<List<DcatSourceDto>> response = null;
         try {
             response = restTemplate.exchange(
