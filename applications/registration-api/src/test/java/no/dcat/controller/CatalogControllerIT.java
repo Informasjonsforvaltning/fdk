@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -34,11 +35,12 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 
 @ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
@@ -53,6 +55,9 @@ public class CatalogControllerIT {
     @Autowired
     private CatalogRepository catalogRepository;
 
+    @Autowired
+    private CatalogController catalogController;
+
     @Before
     public void before() {
         catalogRepository.deleteAll();
@@ -61,13 +66,7 @@ public class CatalogControllerIT {
     @Test
     @WithUserDetails("01066800187")
     public void expectTwoCatalogsWhenSteinLogsIn() throws Exception {
-
-        MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/catalogs", String.class))
-                .andExpect(content().string(containsString("/catalogs")))
-                .andReturn();
-
-        String content = result.getResponse().getContentAsString();
+        listCatalogToCreateCatalogs();
 
         Iterable<Catalog> catalogs = catalogRepository.findAll();
 
@@ -92,70 +91,26 @@ public class CatalogControllerIT {
     @Test
     @WithUserDetails("03096000854")
     public void webserviceIsRunning() throws Exception {
-        mockMvc
-                .perform(MockMvcRequestBuilders.get("/catalogs", String.class))
-                .andExpect(content().string(containsString("/catalogs")));
+        listCatalogToCreateCatalogs();
 
     }
 
-    @Test
-    @WithUserDetails("03096000854")
-    public void catalogAddedBecomesAvailable() throws Exception {
-        Catalog catalog = new Catalog();
-        String id = "910244132";
-        catalog.setId(id);
-
-        Map<String, String> description = new HashMap<>();
-        description.put("no", "test");
-        catalog.setDescription(description);
-
-        Map<String, String> title = new HashMap<>();
-        title.put("no", "test");
-        catalog.setTitle(title);
-
+    private void listCatalogToCreateCatalogs() throws Exception {
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"no\":\"test\"},\"description\":{\"no\":\"test\"},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
-                .andExpect(status().isOk());
-
+                .perform(MockMvcRequestBuilders.get("/catalogs", String.class))
+                .andExpect(content().string(containsString("/catalogs")));
     }
 
 
     @Test
     @WithUserDetails("03096000854")
     public void catalogAddedAndHarvesterDatasourceIsCreated() throws Exception {
-        Catalog catalog = new Catalog();
-        String id = "910244132";
-        catalog.setId(id);
-        catalog.setUri("http://brreg.no/catalogs/910244132");
-
-        Map<String, String> description = new HashMap<>();
-        description.put("no", "New catalog");
-        catalog.setDescription(description);
-
-        Map<String, String> title = new HashMap<>();
-        title.put("no", "test");
-        catalog.setTitle(title);
-
-        //create new cacalog
-        mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+        // catalogs are only created when first listed
+        listCatalogToCreateCatalogs();
 
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://localhost:8082/api/admin/dcat-sources";
         logger.debug("harvester uri: {}", uri);
-
-        // sleep long
-        Thread.sleep(5000);
 
         ResponseEntity<List<DcatSourceDto>> response = null;
         try {
@@ -172,6 +127,8 @@ public class CatalogControllerIT {
         logger.debug("response status code: {}", response.getStatusCode());
         List<DcatSourceDto> datasources = response.getBody();
 
+        logger.info("response: {}", response.getBody().size());
+
         assertTrue(datasources.stream().filter(
                 ds -> ds.getId().equals("http://brreg.no/catalogs/910244132")).findFirst().isPresent());
 
@@ -183,7 +140,7 @@ public class CatalogControllerIT {
     @WithUserDetails("03096000854")
     public void listCatalogs() throws Throwable {
 
-        catalogAddedBecomesAvailable();
+        listCatalogToCreateCatalogs();
 
         mockMvc
                 .perform(
@@ -196,11 +153,9 @@ public class CatalogControllerIT {
                         "      \"id\" : \"910244132\",\n" +
                         "      \"uri\" : \"http://brreg.no/catalogs/910244132\",\n" +
                         "      \"title\" : {\n" +
-                        "        \"no\" : \"test\"\n" +
+                        "        \"nb\" : \"Datakatalog for RAMSUND OG ROGNAN REVISJON\"\n" +
                         "      },\n" +
-                        "      \"description\" : {\n" +
-                        "        \"no\" : \"test\"\n" +
-                        "      },\n" +
+                        "      \"description\" : { },\n" +
                         "      \"publisher\" : {\n" +
                         "        \"uri\" : \"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\n" +
                         "        \"name\" : \"RAMSUND OG ROGNAN REVISJON\"\n" +
@@ -221,56 +176,20 @@ public class CatalogControllerIT {
                         "}"))
                 .andExpect(status().isOk());
 
-
-    }
-
-    @Test
-    @WithUserDetails("03096000854")
-    public void createCatalogWithNoIdFails() throws Exception {
-
-        Catalog catalog = new Catalog();
-        catalog.setId(null);
-
-        mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isForbidden());
-
     }
 
 
     @Test
     @WithUserDetails("03096000854")
     public void updateCatalogRunsOK() throws Exception {
-        Catalog catalog = new Catalog();
-        catalog.setId("910244132");
+        listCatalogToCreateCatalogs();
 
-        Map<String, String> title = new HashMap<>();
-        title.put("no", "test");
-        catalog.setTitle(title);
-
-
-        String contentAsString = mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"no\":\"test\"},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-
-        catalog = new Gson().fromJson(contentAsString, Catalog.class);
-
+        Catalog catalog = catalogRepository.findOne("910244132");
 
         // change title
         Map<String, String> title2 = new HashMap<>();
         title2.put("en", "aTest");
         catalog.setTitle(title2);
-
 
         mockMvc
                 .perform(
@@ -286,24 +205,10 @@ public class CatalogControllerIT {
     @Test
     @WithUserDetails("03096000854")
     public void deleteCatalogRunsOK() throws Exception {
-        String catalogId = "910244132";
-        Map<String, String> title = new HashMap<>();
-        title.put("no", "test");
-
-        Catalog catalog = new Catalog();
-        catalog.setId(catalogId);
-        catalog.setTitle(title);
+        listCatalogToCreateCatalogs();
 
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
-
-        mockMvc
-                .perform(MockMvcRequestBuilders.delete("/catalogs/" + catalogId))
+                .perform(MockMvcRequestBuilders.delete("/catalogs/" + "910244132"))
                 .andExpect(status().isOk());
 
     }
@@ -317,8 +222,6 @@ public class CatalogControllerIT {
     /**
      * helper method to create authorisation header for http request
      *
-     * @param username
-     * @param password
      * @return HTTP header containing basic auth and content type application/josn
      */
     private HttpHeaders createHeaders(String username, String password){

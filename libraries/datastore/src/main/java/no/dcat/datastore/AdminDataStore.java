@@ -36,14 +36,12 @@ public class AdminDataStore {
 	 */
 	public List<DcatSource> getDcatSources() {
 		logger.trace("Listing all dcat sources");
-		List<DcatSource> dcatSources = new ArrayList<DcatSource>();
+		List<DcatSource> dcatSources = new ArrayList<>();
 
 		Map<String, String> map = new HashMap<>();
 
 		String query = String.join("\n", "describe ?a ?user where {", "	?user difiMeta:dcatSource ?a.", "}");
 		Model dcatModel = fuseki.describe(query, map);
-
-		System.out.println(DifiMeta.DcatSource);
 
 		List<DcatSource> ret = new ArrayList<>();
 
@@ -52,8 +50,9 @@ public class AdminDataStore {
 		while (resIterator.hasNext()) {
 			String uri = resIterator.nextResource().getURI();
 			ret.add(new DcatSource(dcatModel, uri));
-
 		}
+
+		logger.info("returning {} datasources", ret.size());
 
 		return ret;
 
@@ -117,10 +116,7 @@ public class AdminDataStore {
 		return Optional.of(new DcatSource(dcatModel, dcatSourceId));
 	}
 
-	/**
-	 * @param dcatSourceId
-	 * @return
-	 */
+
 	public Optional<DcatSource> getDcatSourceByGraph(String graphName) {
 
 		logger.trace("Getting dcat source by graph {}", graphName);
@@ -271,13 +267,13 @@ public class AdminDataStore {
 			map.put("role", user.getRole());
 			map.put("password", user.getPassword());
 			map.put("email", user.getEmail());
+
 			if (fuseki.ask("ask { ?user foaf:accountName ?username}", map)) {
-				logger.error("[user_admin] [fail] Error adding user: {}", user.toString());
+				throw new UserAlreadyExistsException(user.getUsername());
 			} else {
 				logger.info("[user_admin] [success] Added user: {}", user.toString());
+				fuseki.sparqlUpdate(query, map);
 			}
-
-			fuseki.sparqlUpdate(query, map);
 
 		} else {
 			// update exisiting user
@@ -329,8 +325,9 @@ public class AdminDataStore {
 		if (fuseki.ask("ask { <" + user.getId() + "> ?b ?c}")) {
 			return user;
 		} else {
-			throw new UserAlreadyExistsException(user.getUsername());
+			logger.error("[user_admin] [fail] Error adding user: {}", user.toString());
 		}
+		return null;
 	}
 
 	/**

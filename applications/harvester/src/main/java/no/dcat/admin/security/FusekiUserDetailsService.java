@@ -3,6 +3,7 @@ package no.dcat.admin.security;
 import no.dcat.admin.settings.FusekiSettings;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.Fuseki;
+import no.dcat.datastore.UserAlreadyExistsException;
 import no.dcat.datastore.UserNotFoundException;
 import no.dcat.datastore.domain.User;
 import org.slf4j.Logger;
@@ -58,8 +59,12 @@ public class FusekiUserDetailsService implements UserDetailsService {
         try {
             User user = new User(null, username, passwordEncoder.encode(password), username + "@example.org", role);
             adminDataStore.addUser(user);
+        } catch (UserAlreadyExistsException e) {
+            if (!username.equals("test_user") && !username.equals("test_admin")) {
+                logger.warn(e.getMessage());
+            }
         } catch (Exception e) {
-            logger.warn(e.getMessage(),e);
+            logger.warn(e.getMessage());
         }
     }
 }
