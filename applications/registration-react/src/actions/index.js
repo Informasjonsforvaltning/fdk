@@ -119,7 +119,6 @@ export function datasetLastSaved(value) {
 }
 
 export function resetUser() {
-  console.log("INN FDSFSDFDSFSDFSDFSDFSDFSDFS");
   return dispatch =>
     dispatch({
       type: actions.USER_FAILURE

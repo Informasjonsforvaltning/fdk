@@ -14,7 +14,7 @@ import './index.scss';
 class LoginDialog extends React.Component {
   componentWillMount() {
     if(this.props.loggedOut) {
-      axios.get('/logout', getInit)
+      axios.get('/logout')
         .then((response) => {
           this.props.dispatch(resetUser());
         })
