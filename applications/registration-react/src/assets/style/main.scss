@@ -138,6 +138,7 @@ SITE
 .site {
   min-height: 100vh;
   .site-content {
+    //flex: 1;
     flex: 1;
   }
 }
@@ -151,7 +152,7 @@ FDK-BUTTON
   right: 0 !important;
 }
 
-.btn-group {
+.btn-group, .dropdown {
   .fdk-button-default {
     &:focus, &:active, &:hover {
       color: $color1 !important;
@@ -171,8 +172,9 @@ FDK-BUTTON
 
 }
 
-.show.btn-group {
+.show.btn-group, .show.dropdown {
   .fdk-button-default {
+    color: $color1;
     background-color: $color-cta4 !important;
     border-color: transparent !important;
     box-shadow: none !important;

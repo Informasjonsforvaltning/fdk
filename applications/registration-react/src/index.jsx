@@ -38,7 +38,7 @@ ReactDOM.render((
     <BrowserRouter>
       <div className="d-flex flex-column site">
         <Header />
-        <div className="site-content d-flex flex-column">
+        <div className="site-content d-flex-x flex-column-x">
           {routes}
         </div>
         <Footer />
