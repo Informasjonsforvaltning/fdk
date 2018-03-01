@@ -2,7 +2,7 @@
 
 .login-dialog-wrapper {
   background-color: $color-cta4;
-  flex: 1;
+  flex-grow: 1;
   .fdk-button {
     text-decoration: none;
     &:hover {
