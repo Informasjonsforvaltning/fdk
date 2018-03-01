@@ -25,6 +25,10 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
+  html.ie .login-dialog-wrapper {
+    background-image: none;
+  }
+
   .login-dialog-wrapper {
     background-image: url(../../assets/img/illustration-login.svg);
     background-repeat: no-repeat;
