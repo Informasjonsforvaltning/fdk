@@ -84,6 +84,7 @@ const renderDistributions = (props) => {
           <div className="d-flex">
             <h4>Distribusjon #{index + 1}</h4>
             <button
+              className="fdk-btn-no-border"
               type="button"
               title="Remove distribution"
               onClick={() => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_distribution_${index}`);}}
@@ -156,6 +157,7 @@ const renderDistributions = (props) => {
       )
       )}
       <button
+        className="fdk-btn-no-border"
         type="button"
         onClick={() => fields.push(
           {
@@ -212,18 +214,6 @@ const distributionTypes = values => {
       }
     ))
   } else {
-    /*
-    distributions = [{
-      id: '',
-      description: textType,
-      accessURL: [],
-      license: licenseType,
-      conformsTo: [],
-      page: [licenseType],
-      format: [],
-      type: ''
-    }]
-    */
     distributions = []
   }
   return distributions;
@@ -238,17 +228,3 @@ const mapStateToProps = ({ dataset }) => (
 )
 
 export default connect(mapStateToProps)(FormDistribution)
-
-/*
- // You have to connect() to any reducers that you wish to connect to yourself
- FormDistribution = connect(
- state => ({
- // initialValues: state.dataset.result // pull initial values from dataset reducer
- initialValues: {
- distribution: state.dataset.result.distribution || null
- }
- })
- )(FormDistribution)
-
- export default FormDistribution;
- */

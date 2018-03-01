@@ -29,6 +29,7 @@ export default class FormTemplate extends Component {
     );
     const buttonClass = cx(
       'fdk-collapseButton',
+      'fdk-btn-no-border',
       'w-100',
       {
         'no-padding': !backgroundBlue

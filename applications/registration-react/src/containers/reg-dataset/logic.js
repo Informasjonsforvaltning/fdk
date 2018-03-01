@@ -138,9 +138,14 @@ export const spatialValues = values => {
     if (temporal) {
       temporal.filter(item => (item && JSON.stringify(item) !== '{}')).forEach(item => {
         if (item.startDate) {
-          retVal += `${moment(item.startDate).format('DD.MM.YYYY')} - `;
+          retVal += `${moment(item.startDate).format('DD.MM.YYYY')} `;
         }
-        retVal += `${moment(item.endDate).format('DD.MM.YYYY')} `;
+        if (item.startDate && item.endDate) {
+          retVal += '- ';
+        }
+        if (item.endDate) {
+          retVal += `${moment(item.endDate).format('DD.MM.YYYY')} `;
+        }
       });
     }
     if (issued && issued !== '') {
@@ -162,7 +167,7 @@ export const provenanceValues = values => {
     let retVal = '';
     const { provenance, modified, hasCurrentnessAnnotation, accrualPeriodicity } = values;
     if (provenance) {
-      if (provenance.prefLabel) {
+      if (provenance.prefLabel && provenance.prefLabel[localization.getLanguage()] && provenance.prefLabel[localization.getLanguage()] !== '') {
         retVal += `${getTranslateText(provenance.prefLabel)}. `
       }
     }

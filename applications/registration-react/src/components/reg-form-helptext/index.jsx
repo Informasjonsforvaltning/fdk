@@ -53,7 +53,7 @@ export default class Helptext extends Component {
           }
           <p className={shortTextClass} dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
 
-          <button className="text-left no-padding ml-1 fdk-reg-helptext-more align-self-start" onClick={(e) => this.toggle(e)}>
+          <button className="fdk-btn-no-border text-left no-padding ml-1 fdk-reg-helptext-more align-self-start" onClick={(e) => this.toggle(e)}>
             <i className={collapseClass} />
             {localization.helptext.more}
           </button>
