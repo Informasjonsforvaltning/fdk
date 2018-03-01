@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector, getFormSyncErrors, change } from 'redux-form';
+import { Field, FieldArray, reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import _throttle from 'lodash/throttle';
 

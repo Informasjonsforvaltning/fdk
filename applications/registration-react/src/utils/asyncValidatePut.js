@@ -17,7 +17,7 @@ const asyncValidatePut = (values, dispatch) => {
     .catch((error) => {
       throw {error}
     })
-    ;
+  ;
 }
 
 export default asyncValidatePut;

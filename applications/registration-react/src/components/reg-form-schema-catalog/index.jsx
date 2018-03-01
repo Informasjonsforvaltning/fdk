@@ -56,7 +56,7 @@ class FormCatalog extends React.Component {
 
   render() {
     const { helptextItems, initialValues, values } = this.props;
-    const { id, title, description, publisher } = initialValues;
+    const { title, publisher } = initialValues;
 
     const collapseClass = cx(
       'fdk-reg_collapse',

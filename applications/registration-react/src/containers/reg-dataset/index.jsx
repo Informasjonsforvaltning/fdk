@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import IdleTimer from 'react-idle-timer';
 import { Link } from 'react-router-dom';
 
-import localization from '../../utils/localization';
 import {
   fetchUserIfNeeded,
   fetchDatasetIfNeeded,
@@ -27,7 +25,6 @@ import FormConcept from '../../components/reg-form-schema-concept';
 import FormAccessRights from '../../components/reg-form-schema-accessRights';
 import FormReference from '../../components/reg-form-schema-reference';
 import DatasetPublish from '../../components/reg-form-dataset-publish';
-import TimeoutModal from '../../components/app-timeout-modal';
 import FormInformationModel from '../../components/reg-form-schema-informationmodel';
 import FormContactPoint from '../../components/reg-form-schema-contactPoint';
 import FormContents from '../../components/reg-form-schema-contents';
@@ -52,9 +49,6 @@ import './index.scss';
 class RegDataset extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showInactiveWarning: false
-    }
     const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
     this.props.dispatch(fetchDatasetIfNeeded(datasetURL));
@@ -69,12 +63,6 @@ class RegDataset extends React.Component {
     this.refreshSession = this.refreshSession.bind(this);
   }
 
-  onIdle() {
-    this.setState({
-      showInactiveWarning: true
-    })
-  }
-
   fetchHelptexts() {
     this.props.dispatch(fetchHelptextsIfNeeded());
   }
@@ -83,17 +71,7 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchDatasetIfNeeded());
   }
 
-  toggle() {
-    this.setState({
-      showInactiveWarning: false
-    });
-    window.location.href = `${window.location.origin  }/logout#timed-out`;
-  }
-
   refreshSession() {
-    this.setState({
-      showInactiveWarning: false
-    });
     this.props.dispatch(fetchUserIfNeeded());
   }
 
@@ -339,56 +317,56 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
 
 
   const title = form.title || {
-      title: null
-    }
+    title: null
+  }
 
   const accessRights = form.accessRights || {
-      accessRights: null
-    }
+    accessRights: null
+  }
 
   const formThemes = form.themes || {
-      formThemes: null
-    }
+    formThemes: null
+  }
 
   const type = form.type || {
-      type: null
-    }
+    type: null
+  }
 
   const concept = form.concept || {
-      concept: null
-    }
+    concept: null
+  }
 
   const spatial = form.spatial || {
-      spatial: null
-    }
+    spatial: null
+  }
 
   const formProvenance = form.provenance || {
-      formProvenance: null
-    }
+    formProvenance: null
+  }
 
   const contents = form.contents || {
-      contents: null
-    }
+    contents: null
+  }
 
   const informationModel = form.informationModel || {
-      informationModel: null
-    }
+    informationModel: null
+  }
 
   const reference = form.reference || {
-      reference: null
-    }
+    reference: null
+  }
 
   const contactPoint = form.contactPoint || {
-      contactPoint: null
-    }
+    contactPoint: null
+  }
 
   const distribution = form.distribution || {
-      distribution: null
-    }
+    distribution: null
+  }
 
   const sample = form.sample || {
-      sample: null
-    }
+    sample: null
+  }
 
   const { registrationStatus, lastSaved } = app || {
     registrationStatus: null,

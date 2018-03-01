@@ -16,7 +16,7 @@ const updateInput = (updates, props) => {
 }
 
 const handleChange = (props, tags, changed, changedIndexes) => {
-  const { input, meta } = props;
+  const { input } = props;
 
   const header = {
     Accept: 'application/json'
@@ -43,7 +43,7 @@ const handleChange = (props, tags, changed, changedIndexes) => {
       .then((response) => {
         updateInput(response.data, props);
       })
-      .catch((response) => {
+      .catch(() => {
         // TODO handle error
       })
   }
@@ -56,7 +56,6 @@ const InputTagsFieldConcepts  = (props) => {
   if (input && input.value && input.value.length > 0) {
     tagNodes = input.value.map((item) => item.prefLabel[fieldLabel] )
   }
-  console.log("meta", JSON.stringify(error));
   return (
     <div className="pl-2">
       <label className="fdk-form-label w-100" htmlFor={input.name}>

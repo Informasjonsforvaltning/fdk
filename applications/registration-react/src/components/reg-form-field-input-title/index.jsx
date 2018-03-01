@@ -5,10 +5,6 @@ import './index.scss';
 
 // const InputTitleField  = ({ input, label, type, meta: { touched, error, warning }, showLabel, onToggleTitle }) => (
 export default class InputTitleField extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleOnBlur() {
     const { onToggleTitle } = this.props;
     onToggleTitle();

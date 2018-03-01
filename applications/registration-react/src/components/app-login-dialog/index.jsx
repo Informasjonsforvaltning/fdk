@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -15,10 +14,10 @@ class LoginDialog extends React.Component {
   componentWillMount() {
     if(this.props.loggedOut) {
       axios.get('/logout')
-        .then((response) => {
+        .then(() => {
           this.props.dispatch(resetUser());
         })
-        .catch((error) => {
+        .catch(() => {
           this.props.dispatch(resetUser());
         })
     }

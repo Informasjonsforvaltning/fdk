@@ -56,6 +56,9 @@ class DatasetItemsList extends React.Component {
   }
 
   handleImportDataset(url) {
+    const catalogURL = window.location.pathname;
+    const datasetPath = 'datasets/';
+
     this.setState({
       showImportModal: false
     });
@@ -240,13 +243,6 @@ class DatasetItemsList extends React.Component {
 }
 
 DatasetItemsList.defaultProps = {
-  /*
-  datasetItems: PropTypes.shape({
-    _embedded: PropTypes.shape({
-      datasets: null
-    })
-  })
-  */
 };
 
 DatasetItemsList.propTypes = {

@@ -16,9 +16,6 @@ class ProtectedRoute extends React.Component {
     this.state = {
       showInactiveWarning: false
     }
-    const datasetURL = window.location.pathname;
-    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
-
     this.onIdle = this.onIdle.bind(this);
     this.toggle = this.toggle.bind(this);
     this.refreshSession = this.refreshSession.bind(this);
