@@ -58,8 +58,6 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchFrequencyIfNeeded());
     this.props.dispatch(fetchThemesIfNeeded());
     this.props.dispatch(fetchReferenceTypesIfNeeded());
-    this.onIdle = this.onIdle.bind(this);
-    this.toggle = this.toggle.bind(this);
     this.refreshSession = this.refreshSession.bind(this);
   }
 
