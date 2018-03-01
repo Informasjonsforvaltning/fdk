@@ -137,8 +137,9 @@ SITE
  */
 .site {
   min-height: 100vh;
+  height: 0;
   .site-content {
-    //flex: 1;
+    flex-grow: 1;
   }
 }
 
