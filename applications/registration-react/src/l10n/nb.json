@@ -12,7 +12,9 @@
     "notPublished": "Ikke klar for å publisere ennå?",
     "notPublishedText": "Vi har lagret alt arbeidet ditt som et utkast, kom tilbake når du er klar for å publisere!",
     "published": "Publisert!",
-    "publishedText": "Datasettbeskrivelsen er nå publisert, og vil være søkbar i Felles datakatalog i løpet av 24 timer."
+    "publishedText": "Datasettbeskrivelsen er nå publisert, og vil være søkbar i Felles datakatalog i løpet av 24 timer.",
+    "cancel": "Avbryt",
+    "import": "Importer"
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
@@ -114,5 +116,40 @@
     "stayLoggedIn": "Ønsker du å forbli innlogget?",
     "buttonStayLoggedIn": "Ja, forbli innlogget",
     "buttonLogOut": "Nei, logg ut"
+  },
+  "datasets": {
+    "list": {
+      "btnNewDataset": "Legg til ny datasettbeskrivelse",
+      "btnImportDataset": "Importer datasett",
+      "header": {
+        "title": "Tittel på datasett",
+        "status": "Status"
+      },
+      "missingItems": "Ingen datasettbeskrivelse registrert",
+      "missingTitle": "Mangler tittel",
+      "statusPublished": "Publisert",
+      "statusDraft": "Utkast"
+    },
+    "import": {
+      "title": "Importer datasett fra DCAT RDF ressurs.",
+      "body": "DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert.",
+      "setURL": "Angi url til DCAT ressurs:"
+    }
+  },
+  "catalogs": {
+    "missingCatalogs": {
+      "title": "Hei",
+      "ingress": "Det ser ikke ut til at du har fått tilgang til noen kataloger.",
+      "accessTitle": "Trenger du tilgang?",
+      "accessText": "Kontakt din leder for å få tilgang til å registrere datasett.",
+      "assignAccessTitle": "Skal du gi andre tilgang?",
+      "assignAccessText": "Du kan gi andre tilgang til å redigere datasett for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang."
+    }
+  },
+  "loginDialog": {
+    "title": "Velkommen til registrering i felles datakatalog",
+    "ingress": "Her kan du registrere og administrere datasettbeskrivelser for din virksomhet. For å få tilgang må du være innlogget.",
+    "loggedOutMsgPart1": "Du har blitt logget ut. ",
+    "loggedOutMsgPart2": "Sesjonen ble tidsavbrutt, men vi har tatt vare på alle endringene du har gjort. Logg inn på nytt for å fortsette å jobbe med registreringen."
   }
 }

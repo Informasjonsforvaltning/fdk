@@ -21,7 +21,6 @@ const validate = values => {
 
   errors = validateRequired('accessRight', accessRight, errors);
 
-
   if (legalBasisForRestriction) {
     legalBasisForRestrictionNodes = legalBasisForRestriction.map(item => {
       let itemErrors = {};
@@ -79,6 +78,15 @@ const validate = values => {
   return errors
 }
 
+/*
+ Resets fields when radio button "Offentlig" is chosen.
+ */
+const resetFields = (props) => {
+  props.change('legalBasisForRestriction', [legalBasisType]);
+  props.change('legalBasisForProcessing', [legalBasisType]);
+  props.change('legalBasisForAccess', [legalBasisType]);
+}
+
 const renderLegalBasisFields = (item, index, fields, props) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
@@ -99,6 +107,7 @@ const renderLegalBasisFields = (item, index, fields, props) => (
     </div>
     <div className="d-flex align-items-end">
       <button
+        className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
         onClick={
@@ -128,7 +137,7 @@ const renderLegalBasis = (props) => {
       {fields && fields.map((item, index) =>
         renderLegalBasisFields(item, index, fields, props)
       )}
-      <button type="button" onClick={() => fields.push({})}>
+      <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
         <i className="fa fa-plus mr-2" />
         Legg til
       </button>
@@ -149,6 +158,7 @@ let FormAccessRights = (props) => {
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
           label="Offentlig"
+          onChange={() => resetFields(props)}
         />
         <Field
           name="accessRights.uri"

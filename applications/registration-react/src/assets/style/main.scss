@@ -1,5 +1,5 @@
 @import './colors.scss';
-/*****************************************/
+/***************  **************************/
 /*********** Bootstrap overrides **********/
 /*****************************************/
 $primary:       $color1 !default;
@@ -14,6 +14,12 @@ $danger:        $color-red !default;
 @import '~bootstrap/scss/bootstrap';
 
 .alert-success {
+  background-color: $color-green2;
+  color: $color1;
+}
+
+.alert-warning {
+  background-color: $color-yellow2;
   color: $color1;
 }
 
@@ -127,6 +133,16 @@ body {
 }
 
 /*
+SITE
+ */
+.site {
+  min-height: 100vh;
+  .site-content {
+    flex-grow: 1;
+  }
+}
+
+/*
 FDK-BUTTON
 */
 
@@ -135,7 +151,7 @@ FDK-BUTTON
   right: 0 !important;
 }
 
-.btn-group {
+.btn-group, .dropdown {
   .fdk-button-default {
     &:focus, &:active, &:hover {
       color: $color1 !important;
@@ -155,8 +171,9 @@ FDK-BUTTON
 
 }
 
-.show.btn-group {
+.show.btn-group, .show.dropdown {
   .fdk-button-default {
+    color: $color1;
     background-color: $color-cta4 !important;
     border-color: transparent !important;
     box-shadow: none !important;

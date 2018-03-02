@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 import {
   fetchUserIfNeeded
@@ -86,52 +86,47 @@ class Header extends React.Component {
                 )}
 
                 <div>
-                  <ButtonDropdown className="btn-group-default" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                  <Dropdown className="btn-group-default" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle className="fdk-button fdk-button-default fdk-button-menu dropdown-toggle btn-default" caret>
                       <i className="fa fa-bars fdk-fa-dark fdk-fa-left" />
                       <span>Meny</span>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>
-                        <a
-                          title="Veileder"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
-                        >
-                          Veileder
-                        </a>
-                      </DropdownItem>
-                      <DropdownItem>
-                        <a
-                          title="Standard"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://doc.difi.no/dcat-ap-no/"
-                        >
-                          Standard
-                        </a>
-                      </DropdownItem>
-                      <DropdownItem>
-                        <a
-                          title="Felles datakatalog"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://fellesdatakatalog.brreg.no"
-                        >
-                          Felles datakatalog
-                        </a>
-                      </DropdownItem>
+                      <a
+                        className="dropdown-item"
+                        title="Veileder"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
+                      >
+                        Veileder
+                      </a>
+
+
+                      <a
+                        className="dropdown-item"
+                        title="Standard"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://doc.difi.no/dcat-ap-no/"
+                      >
+                        Standard
+                      </a>
+                      <a
+                        className="dropdown-item"
+                        title="Felles datakatalog"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://fellesdatakatalog.brreg.no"
+                      >
+                        Felles datakatalog
+                      </a>
                     </DropdownMenu>
-                  </ButtonDropdown>
+                  </Dropdown>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="container fdk-breadcrumb d-flex justify-content-between">
-          <span />
-          <span>{localization.app.autoSave}</span>
         </div>
       </header>
     );
