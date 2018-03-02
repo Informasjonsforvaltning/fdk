@@ -331,22 +331,6 @@ then
         deployNewDockerImage registration-api
     fi
 
-elif [ $service = search-old ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        #delete search-old
-        oc delete all -l search-old
-        #createOpenshiftService search-old
-        ##oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$environment.$cluster.brreg.no search_queryServiceExternal=https://search-api-fellesdatakatalog-$environment.$cluster.brreg.no
-        #exposeService search-old
-        #oc expose dc/search-old --port=8080
-    else
-        # deploymentmode = onlyDeployImages
-        #deployNewDockerImage search-old
-    fi
-
 elif [ $service = search ]
 then
     if [ $deploymode = recreateServices ]
