@@ -45,6 +45,8 @@ jobs:
 
     - stage: Tests # Run regular unit tests
       script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
+      after_success:
+        - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
         - comment=Run regular unit tests
 
