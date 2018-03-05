@@ -53,11 +53,10 @@ class RegDatasetsList extends React.Component {
             <FormCatalog
               helptextItems={helptextItems}
             />
-            {datasetItems &&
             <DatasetItemsList
+              catalogId={catalogItem.id}
               datasetItems={datasetItems}
             />
-            }
           </div>
           }
         </div>

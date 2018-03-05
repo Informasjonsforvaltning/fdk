@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CardGroup, Card, CardText, CardBody, CardTitle } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { CardGroup } from 'reactstrap';
 
 import localization from '../../utils/localization';
 import {
   fetchCatalogsIfNeeded
 } from '../../actions/index';
+import CatalogItem from '../../components/reg-catalogs-item';
 import './index.scss';
 
 class RegCatalogs extends React.Component {
@@ -24,22 +24,10 @@ class RegCatalogs extends React.Component {
 
     if (catalogItems && catalogItems._embedded && catalogItems._embedded.catalogs) {
       return catalogItems._embedded.catalogs.map(item => (
-
-        <div
+        <CatalogItem
           key={item.uri}
-          className="col-md-4 pl-0"
-        >
-          <Link className="card-link" to={`/catalogs/${item.id}`}>
-            <Card>
-              <CardBody>
-                <CardTitle>{item.title.nb}</CardTitle>
-                <hr />
-                <CardText className="fdk-catalog-text fdk-text-size-small fdk-color1">{item.description.nb}</CardText>
-              </CardBody>
-
-            </Card>
-          </Link>
-        </div>
+          item={item}
+        />
       ));
     } return null;
   }
@@ -58,7 +46,7 @@ class RegCatalogs extends React.Component {
           {!isFetchingCatalogs && catalogItems &&
           <div className="col-md-8">
             <div>
-              <h1 className="fdk-text-strong mb-4">Dine kataloger</h1>
+              <h1 className="fdk-text-strong mb-4">{localization.catalogs.title}</h1>
             </div>
             <CardGroup>
               {this._renderCatalogs()}
@@ -66,7 +54,7 @@ class RegCatalogs extends React.Component {
           </div>
           }
           {!isFetchingCatalogs && !catalogItems &&
-          <div>
+          <div id="no-catalogs">
             <h1 className="fdk-text-strong">{localization.catalogs.missingCatalogs.title}</h1>
             <div className="mt-2 mb-2">
               {localization.catalogs.missingCatalogs.ingress}
