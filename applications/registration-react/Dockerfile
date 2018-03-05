@@ -21,7 +21,7 @@ RUN npm run build
 
 #RUN npm test
 
-#ENV NODE_ENV production; just for local test purpose, variable set by OpenShift
+#ENV NODE_ENV production
 
 EXPOSE 4300
 
