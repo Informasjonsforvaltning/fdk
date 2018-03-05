@@ -7,7 +7,7 @@ import localization from '../../utils/localization';
 import './index.scss';
 
 const DatasetItemsListItem  = (props) => {
-  const { item } = props;
+  const { catalogId, item } = props;
   const itemClass = cx(
     'w-75',
     'fdk-text-size-small',
