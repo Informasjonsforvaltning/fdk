@@ -366,8 +366,10 @@
 				<version>4.3.0</version>
                 <configuration>
                     <!-- in addition to jacoco-ut, which is default-->
-                    <relativeReportDirs>jacoco-ut</relativeReportDirs>
-                    <relativeReportDirs>jacoco-it</relativeReportDirs>
+					<jacocoReports>
+						<jacocoReport>${project.reporting.outputDirectory}/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>${project.reporting.outputDirectory}/jacoco-ut/jacoco.xml</jacocoReport>
+					</jacocoReports>
                 </configuration>
 			</plugin>
 			<plugin>
