@@ -37,14 +37,13 @@ class RegCatalogs extends React.Component {
       catalogItems
     } = this.props;
     return (
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
           <div />
         </div>
         <div className="row mb-2 mb-md-5">
-          <div className="col-md-2" />
           {!isFetchingCatalogs && catalogItems &&
-          <div className="col-md-8">
+          <div className="col-12">
             <div>
               <h1 className="fdk-text-strong mb-4">{localization.catalogs.title}</h1>
             </div>

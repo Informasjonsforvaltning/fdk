@@ -144,7 +144,6 @@ class RegDataset extends React.Component {
 
             <FormTemplate
               title="Type"
-              required
               values={typeValues(type.values)}
               syncErrors={type.syncErrors}
             >

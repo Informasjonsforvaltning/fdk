@@ -7,6 +7,7 @@ import CheckBoxFieldType from '../reg-form-field-checkbox-type';
 import asyncValidate from '../../utils/asyncValidate';
 import { validateRequired} from '../../validation/validation';
 
+/*
 const validate = values => {
   let errors = {}
   const { type } = values;
@@ -15,6 +16,7 @@ const validate = values => {
 
   return errors
 }
+*/
 
 let FormType = (props) => {
   const { syncErrors: { errorType }, helptextItems } = props;
@@ -36,7 +38,6 @@ let FormType = (props) => {
 
 FormType = reduxForm({
   form: 'type',
-  validate,
   asyncValidate,
 })(connect(state => ({
   syncErrors: getFormSyncErrors("type")(state)
