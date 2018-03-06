@@ -101,6 +101,7 @@ deploymode=$5
 environmentTag=$2_latest
 openshiftProject=fellesdatakatalog-$environment
 
+
 #configuration that differs between nonprod and prod clusters
 if [ $environment = ppe ] || [ $environment = prd ]
 then
@@ -115,6 +116,9 @@ then
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
     clientCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN-I-BRONNOYSUND-serienummer13439118435479952733750626-2017-05-10.p12"
     registrationApiIdportenMetadatafile="conf/idporten/idporten.difi.no-v3-prod-meta_sign.xml"
+
+    registrationApiHarvesterUserName=changeme
+    registrationApiHarvesterPassword=changeme
 else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1
     cluster=ose-npc
@@ -134,6 +138,9 @@ else
     sslKeystoreLocation=conf/idporten/ssldevelop.p12
     clientCertificateKeystoreLocation="conf/altinn/Buypass ID-REGISTERENHETEN I BROENNOEYSUND-serienummer1544700822686643554309384-2017-05-31.p12"
     registrationApiIdportenMetadatafile="conf/idporten/idporten-ver2.difi.no-v3_signed_meta.xml"
+
+    registrationApiHarvesterUserName=changeme
+    registrationApiHarvesterPassword=changeme
 fi
 
 host=$environment.$cluster.brreg.no
@@ -310,7 +317,9 @@ then
             registrationApi_ipStorePassword=changeit \
             registrationApi_sslKeyPassword=changeit \
             registrationApi_sslKeystoreLocation=$sslKeystoreLocation \
-            registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile
+            registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile \
+            registrationApi_harvesterUsername=$registrationApiHarvesterUserName \
+            registrationApi_harvesterPassword=$registrationApiHarvesterPassword
 
         echo "Registration-api: Keystore password environment variables must be set manually"
         echo "Registration-api: Remember to mount /conf volume"
@@ -320,22 +329,6 @@ then
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage registration-api
-    fi
-
-elif [ $service = search-old ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        #delete search-old
-        oc delete all -l search-old
-        #createOpenshiftService search-old
-        ##oc env dc/search-old search_referenceDataExternalUrl=https://reference-data-fellesdatakatalog-$environment.$cluster.brreg.no search_queryServiceExternal=https://search-api-fellesdatakatalog-$environment.$cluster.brreg.no
-        #exposeService search-old
-        #oc expose dc/search-old --port=8080
-    else
-        # deploymentmode = onlyDeployImages
-        #deployNewDockerImage search-old
     fi
 
 elif [ $service = search ]
