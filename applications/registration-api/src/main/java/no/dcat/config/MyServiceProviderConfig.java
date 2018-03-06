@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 import javax.annotation.PostConstruct;
 
 @Configuration
-@Profile( {"prod"})
+@Profile( {"prod", "st2"})
 public class MyServiceProviderConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(MyServiceProviderConfig.class);
