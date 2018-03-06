@@ -301,6 +301,10 @@ public class CatalogController {
      * @return String containing base uri
      */
     public String getRegistrationBaseUrl() {
+
+        /*
+        Temporary: use internal url instead of external one due to routing issues
+
         StringBuilder host = new StringBuilder();
         String protocol = "https://";
         host.append(protocol);
@@ -309,6 +313,8 @@ public class CatalogController {
             host.append(":").append(serverPort);
         }
         return host.toString();
+        */
+        return "http://registration-api:8080";
     }
 
 }
