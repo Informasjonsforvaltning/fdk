@@ -104,7 +104,12 @@ class RegDataset extends React.Component {
         <div className="row mb-2 mb-md-5">
           <div className="col-md-2">
             <i className="fa fa-arrow-left mr-2" />
-            <Link className="fdk-text-size-small fdk-color1 font-weight-light" to={catalogURL}>Tilbake til katalogen</Link>
+            <Link
+              className="fdk-text-size-small fdk-color1 font-weight-light"
+              to={catalogURL}
+            >
+              Tilbake til katalogen
+            </Link>
           </div>
           {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
           <div className="col-md-8">

@@ -14,8 +14,9 @@ const asyncValidatePut = (values, dispatch) => {
         dispatch(datasetLastSaved(response.data._lastModified));
       }
     })
-    .catch((error) => {
-      throw {error}
+    .catch((response) => {
+      const { error } = response;
+      return Promise.reject(error);
     })
   ;
 }

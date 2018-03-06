@@ -1,3 +1,4 @@
+/* eslint-disable no-class-assign */
 import React from 'react';
 import { Field, reduxForm, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
@@ -34,7 +35,6 @@ const validate = values => {
   return errors
 }
 
-// let FormCatalog = (props) => {
 class FormCatalog extends React.Component {
   constructor(props) {
     super(props);
@@ -143,3 +143,4 @@ const mapStateToProps = ({ catalog }) => (
 )
 
 export default connect(mapStateToProps)(FormCatalog)
+/* eslint-enable no-class-assign */

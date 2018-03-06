@@ -3,11 +3,9 @@ import {
   datasetLastSaved
 } from '../actions'
 
-// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
+/* eslint-disable no-param-reassign */
 const asyncValidate = (values, dispatch, props, blurredField) => {
   const postURL = window.location.pathname;
-  // const postURL = `${window.location.pathname}/`
 
   const api = {
     Authorization: `Basic user:password`
@@ -26,7 +24,6 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
       distribution: values
     }
   } else if (blurredField && blurredField.indexOf('remove_sample_') !== -1) {
-    console.log("asyncValidate remove sample");
     const index = blurredField.split("_").pop();
     values.splice(index, 1);
     values = {
@@ -58,7 +55,6 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     }
   }
 
-  // return axios.patch(
   return axios.patch(
     postURL, values, {headers: api}
   )
@@ -67,10 +63,12 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
         dispatch(datasetLastSaved(response.data._lastModified));
       }
     })
-    .catch((error) => {
-      throw {error}
+    .catch((response) => {
+      const { error } = response;
+      return Promise.reject(error);
     })
   ;
 }
+/* eslint-enable no-param-reassign */
 
 export default asyncValidate;

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Helptext from '../reg-form-helptext';
 import CheckBoxFieldType from '../reg-form-field-checkbox-type';
 import asyncValidate from '../../utils/asyncValidate';
-import { validateRequired} from '../../validation/validation';
 
 /*
 const validate = values => {

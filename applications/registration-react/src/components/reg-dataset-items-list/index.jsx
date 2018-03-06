@@ -6,19 +6,42 @@ import axios from 'axios';
 import localization from '../../utils/localization';
 import DatasetItemsListItem from '../reg-dataset-items-list-item';
 import ImportModal from '../app-import-modal';
+import SortButtons from '../app-sort-button';
 import './index.scss';
+
+const handleCreateDataset = () => {
+  const catalogURL = window.location.pathname;
+  const datasetPath = 'datasets/';
+
+  const header = {
+    Accept: 'application/json'
+  }
+
+  const getInit = {
+    headers: header,
+    credentials: 'same-origin'
+  };
+
+  return axios.post(
+    `${catalogURL}/${datasetPath}`, getInit
+  ).then((response) => {
+    window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
+  }).catch((response) => {
+    const { error } = response;
+    return Promise.reject(error);
+  });
+}
 
 class DatasetItemsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortField: 'title',
-      sortType: 'asc',
+      sortField: '',
+      sortType: '',
       showImportModal: false
     };
     this.onSortField = this.onSortField.bind(this);
     this.toggleImportModal = this.toggleImportModal.bind(this);
-    this.handleCreateDataset = this.handleCreateDataset.bind(this);
     this.handleImportDataset = this.handleImportDataset.bind(this);
   }
 
@@ -31,28 +54,6 @@ class DatasetItemsList extends React.Component {
 
   toggleImportModal() {
     this.setState({ showImportModal: !this.state.showImportModal });
-  }
-
-  handleCreateDataset() {
-    const catalogURL = window.location.pathname;
-    const datasetPath = 'datasets/';
-
-    const header = {
-      Accept: 'application/json'
-    }
-
-    const getInit = {
-      headers: header,
-      credentials: 'same-origin'
-    };
-
-    return axios.post(
-      `${catalogURL}/${datasetPath}`, getInit
-    ).then((response) => {
-      window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
-    }).catch((error) => {
-      throw {error}
-    });
   }
 
   handleImportDataset(url) {
@@ -76,8 +77,9 @@ class DatasetItemsList extends React.Component {
       `${catalogURL}`, url, getInit
     ).then((response) => {
       window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
-    }).catch((error) => {
-      throw {error}
+    }).catch((response) => {
+      const { error } = response;
+      return Promise.reject(error);
     });
 
     /*
@@ -115,9 +117,20 @@ class DatasetItemsList extends React.Component {
     const { catalogId, datasetItems } = this.props;
     if (datasetItems && datasetItems._embedded && datasetItems._embedded.datasets) {
       if (this.state.sortField === 'title') {
-        datasetItems._embedded.datasets = orderBy(datasetItems._embedded.datasets, 'title.nb', [this.state.sortType]);
+        // order by title and ignore case
+        datasetItems._embedded.datasets = orderBy(
+          datasetItems._embedded.datasets,
+          [item => {
+            const { nb } = item.title;
+            if (nb) {
+              return nb.toLowerCase();
+            }
+            return null;
+          }],
+          [this.state.sortType]
+        );
       } else if (this.state.sortField === 'registrationStatus') {
-        datasetItems._embedded.datasets = orderBy(datasetItems._embedded.datasets, 'title.nb', [this.state.sortType]);
+        datasetItems._embedded.datasets = orderBy(datasetItems._embedded.datasets, 'registrationStatus', [this.state.sortType]);
       }
 
       return datasetItems._embedded.datasets.map(item => (
@@ -136,12 +149,12 @@ class DatasetItemsList extends React.Component {
 
   }
 
-
   render() {
+    const { sortField, sortType} = this.state;
     return (
       <div>
         <div className="d-flex mb-3">
-          <button className="fdk-button fdk-button-cta" onClick={this.handleCreateDataset}>
+          <button className="fdk-button fdk-button-cta" onClick={handleCreateDataset}>
             <i className="fa fa-plus fdk-color0 mr-2" />
             {localization.datasets.list.btnNewDataset}
           </button>
@@ -155,79 +168,32 @@ class DatasetItemsList extends React.Component {
         </div>
 
         <div className="fdk-datasets-list-header d-flex">
+
           <div className="d-flex align-items-center w-75">
             <span className="header-item mr-1">
               {localization.datasets.list.header.title}
             </span>
-            <div className="d-flex">
-              <button
-                name="titleAsc"
-                className="sortButton transparentButton"
-                onClick={() => this.onSortField('title', 'asc')}
-                title="Stigende"
-              >
-                {this.state.sortField === 'title' && this.state.sortType === 'asc' &&
-                <i className="fa fa-sort-up fdk-color0" />
-                }
-                {(this.state.sortField !== 'title' || this.state.sortType !== 'asc') &&
-                <i className="fa fa-sort-up fdk-color0" />
-                }
-              </button>
-
-              <button
-                name="titleDesc"
-                className="sortButton transparentButton"
-                onClick={() => this.onSortField('title', 'desc')}
-                title="Synkende"
-              >
-                {this.state.sortField === 'title' && this.state.sortType === 'desc' &&
-                <i className="fa fa-sort-down fdk-color0" />
-                }
-                {(this.state.sortField !== 'title' || this.state.sortType !== 'desc') &&
-                <i className="fa fa-sort-down fdk-color0" />
-                }
-              </button>
-            </div>
-
+            <SortButtons
+              field="title"
+              sortField={sortField}
+              sortType={sortType}
+              onSortField={this.onSortField}
+            />
           </div>
+
           <div className="d-flex align-items-center w-25">
             <span className="header-item mr-1">
               {localization.datasets.list.header.status}
             </span>
-            <div className="d-flex">
-              <button
-                name="titleAsc"
-                className="sortButton transparentButton"
-                onClick={() => this.onSortField('registrationStatus', 'asc')}
-                title="Stigende"
-              >
-                {this.state.sortField === 'registrationStatus' && this.state.sortType === 'asc' &&
-                <i className="fa fa-sort-up fdk-color0" />
-                }
-                {(this.state.sortField !== 'registrationStatus' || this.state.sortType !== 'asc') &&
-                <i className="fa fa-sort-up fdk-color0" />
-                }
-              </button>
-
-              <button
-                name="titleDesc"
-                className="sortButton transparentButton"
-                onClick={() => this.onSortField('registrationStatus', 'desc')}
-                title="Synkende"
-              >
-                {this.state.sortField === 'registrationStatus' && this.state.sortType === 'desc' &&
-                <i className="fa fa-sort-down fdk-color0" />
-                }
-                {(this.state.sortField !== 'registrationStatus' || this.state.sortType !== 'desc') &&
-                <i className="fa fa-sort-down fdk-color0" />
-                }
-              </button>
-            </div>
+            <SortButtons
+              field="registrationStatus"
+              sortField={sortField}
+              sortType={sortType}
+              onSortField={this.onSortField}
+            />
           </div>
         </div>
-
         {this._renderDatasetItems()}
-
         <ImportModal
           modal={this.state.showImportModal}
           handleAction={this.handleImportDataset}

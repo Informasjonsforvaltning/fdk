@@ -47,10 +47,8 @@ export default class Helptext extends Component {
           </span>
           }
         </div>
+        {/* eslint-disable react/no-danger */}
         <div className="d-md-flex">
-          {
-            // eslint-disable-next-line react/no-danger
-          }
           <p className={shortTextClass} dangerouslySetInnerHTML={{__html: (shortdesc && shortdesc.nb) ? shortdesc.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
 
           <button className="fdk-btn-no-border text-left no-padding ml-1 fdk-reg-helptext-more align-self-start" onClick={(e) => this.toggle(e)}>
@@ -62,11 +60,9 @@ export default class Helptext extends Component {
           className="mt-3"
           isOpen={this.state.collapse}
         >
-          {
-            // eslint-disable-next-line react/no-danger
-          }
           <p dangerouslySetInnerHTML={{__html: (description && description.nb) ? description.nb.replace(new RegExp('\n', 'g'), "<br />") : ''}} />
         </Collapse>
+        {/* eslint-enable react/no-danger */}
       </div>
     );
   }

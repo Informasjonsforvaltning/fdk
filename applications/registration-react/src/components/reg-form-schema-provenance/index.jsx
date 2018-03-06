@@ -25,7 +25,6 @@ const validate = values => {
 
 const handleProvenanceChange = (props, event, provenanceItem) => {
   const { input } = props;
-  props.meta.touched.true;
 
   // Skal fjerne fra array
   if (!event.target.checked) {
@@ -57,7 +56,9 @@ const renderProvenance = (props) => {
               checked={(input.value && input.value.uri && input.value.uri.includes(`${provenanceItems[key].uri}`)) ? 'checked' : ''}
               onChange={(e) => handleProvenanceChange(props, e, provenanceItems[code] )}
             />
+            {/* eslint-disable jsx-a11y/label-has-for */}
             <label className="form-check-label fdk-form-check-label" htmlFor={provenanceItems[key].code} />
+            {/* eslint-enable jsx-a11y/label-has-for */}
             <span>{provenanceItems[key].prefLabel.no || provenanceItems[key].prefLabel.nb}</span>
           </div>
         );

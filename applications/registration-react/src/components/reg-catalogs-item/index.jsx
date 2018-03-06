@@ -23,6 +23,10 @@ const CatalogItem  = (props) => {
   );
 }
 
+CatalogItem.defaultProps = {
+  item: null
+}
+
 CatalogItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string,
