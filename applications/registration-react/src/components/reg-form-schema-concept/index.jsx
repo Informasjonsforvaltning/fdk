@@ -64,7 +64,7 @@ const mapStateToProps = ({ dataset }) => (
   {
     initialValues: {
       subject: (dataset.result.subject && dataset.result.subject.length > 0) ? dataset.result.subject : [],
-      keyword: (dataset.result.keyword && dataset.result.keyword.length > 0) ? dataset.result.keyword : ''
+      keyword: (dataset.result.keyword && dataset.result.keyword.length > 0) ? dataset.result.keyword : []
     }
   }
 )

@@ -80,6 +80,7 @@ const renderSamples = (props) => {
         <div key={index}>
           <div className="d-flex">
             <button
+              className="fdk-btn-no-border"
               type="button"
               title="Remove distribution"
               onClick={() => {fields.remove(index); asyncValidate(fields.getAll(), null, props, `remove_sample_${index}`);}}
@@ -152,6 +153,7 @@ const renderSamples = (props) => {
       )}
       {fields && fields.length === 0 &&
         <button
+          className="fdk-btn-no-border"
           type="button"
           onClick={() => fields.push(
             {
@@ -166,7 +168,7 @@ const renderSamples = (props) => {
             }
           )}
         >
-          <i className="fa fa-plus mr-2"/>
+          <i className="fa fa-plus mr-2" />
           Legg til eksempeldata
         </button>
       }
@@ -210,18 +212,6 @@ const sampleTypes = values => {
       }
     ))
   } else {
-    /*
-    samples = [{
-      id: '',
-      description: textType,
-      accessURL: [],
-      license: licenseType,
-      conformsTo: [],
-      page: [],
-      format: [],
-      type: ''
-    }]
-    */
     samples = []
   }
   return samples;

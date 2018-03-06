@@ -54,6 +54,7 @@ const renderTemporalFields = (item, index, fields, props) => (
     </div>
     <div className="d-flex align-items-end">
       <button
+        className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
         onClick={
@@ -84,7 +85,7 @@ const renderTemporal = (props) => {
       {fields && fields.map((item, index) =>
         renderTemporalFields(item, index, fields, props)
       )}
-      <button type="button" onClick={() => fields.push({})}>
+      <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
         <i className="fa fa-plus mr-2" />
         Legg til tidsperiode
       </button>
@@ -147,7 +148,7 @@ const mapStateToProps = ({ dataset }) => (
     initialValues: {
       spatial: (dataset.result.spatial && dataset.result.spatial.length > 0) ? dataset.result.spatial : [],
       temporal: formatTemporalUnixDatesToISO(dataset.result.temporal) || [{}],
-      //issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
+      // issued: moment(dataset.result.issued).format('YYYY-MM-DD') || null,
       issued: dataset.result.issued ? moment(dataset.result.issued).format('YYYY-MM-DD') : null,
       language: (dataset.result.language && dataset.result.language.length > 0) ? dataset.result.language : []
     }

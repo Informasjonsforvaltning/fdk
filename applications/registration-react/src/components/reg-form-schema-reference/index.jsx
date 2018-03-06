@@ -36,6 +36,7 @@ const renderReferenceFields = (item, index, fields, props, referenceTypesItems, 
     </div>
     <div className="d-flex align-items-end">
       <button
+        className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
         onClick={
@@ -65,7 +66,7 @@ const renderReference = (props) => {
       {fields && fields.map((item, index) =>
         renderReferenceFields(item, index, fields, props, referenceTypesItems, referenceDatasetsItems)
       )}
-      <button type="button" onClick={() => fields.push({})}>
+      <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
         <i className="fa fa-plus mr-2" />
         Legg til relaterte datasett
       </button>

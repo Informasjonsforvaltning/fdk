@@ -119,7 +119,7 @@ const mapStateToProps = ({ dataset, frequency, provenance }) => (
       frequencyItems: frequency.frequencyItems,
       provenanceItems: provenance.provenanceItems,
       provenance: dataset.result.provenance || {},
-      //modified: moment(dataset.result.modified).format('YYYY-MM-DD') || '',
+      // modified: moment(dataset.result.modified).format('YYYY-MM-DD') || '',
       modified: dataset.result.modified ? moment(dataset.result.modified).format('YYYY-MM-DD') : null,
       hasCurrentnessAnnotation: dataset.result.hasCurrentnessAnnotation,
       accrualPeriodicity: dataset.result.accrualPeriodicity

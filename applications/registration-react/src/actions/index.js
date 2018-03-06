@@ -78,6 +78,29 @@ export function fetchReferenceTypesIfNeeded() {
     );
 }
 
+export function fetchCatalogIfNeeded(catalogURL) {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().catalog) && dispatch(
+      fetchApi(catalogURL, [actions.CATALOG_REQUEST, actions.CATALOG_SUCCESS, actions.CATALOG_FAILURE])
+    );
+}
+
+export function fetchDatasetsIfNeeded(datasetsURL) {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().datasets) && dispatch(
+      fetchApi(datasetsURL, [actions.DATASETS_REQUEST, actions.DATASETS_SUCCESS, actions.DATASETS_FAILURE])
+    );
+}
+
+export function fetchCatalogsIfNeeded(catalogsURL) {
+  return (dispatch, getState) =>
+    shouldFetchApi(
+      getState().catalogs) && dispatch(
+      fetchApi(catalogsURL, [actions.CATALOGS_REQUEST, actions.CATALOGS_SUCCESS, actions.CATALOGS_FAILURE])
+    );
+}
 
 export function publishDataset(value) {
   return dispatch =>
@@ -92,5 +115,12 @@ export function datasetLastSaved(value) {
     dispatch({
       type: actions.DATASET_LAST_SAVED,
       lastSaved: value
+    });
+}
+
+export function resetUser() {
+  return dispatch =>
+    dispatch({
+      type: actions.USER_FAILURE
     });
 }

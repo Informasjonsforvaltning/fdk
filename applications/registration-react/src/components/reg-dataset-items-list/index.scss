@@ -1,0 +1,25 @@
+@import '../../assets/style/colors';
+
+.fdk-datasets-list-header {
+  background-color: $color3;
+  color: $color0;
+  margin-bottom: .2rem;
+  border-radius: 3px;
+  padding: .2rem 0.8rem;
+
+  .header-item {
+    font-size: .9rem;
+    font-weight: 500;
+  }
+  .sortButton {
+    padding: 0 .2em;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+.transparentButton {
+  background-color: transparent;
+  border: none;
+}

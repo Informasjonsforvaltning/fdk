@@ -13,7 +13,7 @@
 }
 
 .dropdown-menu {
-  button.dropdown-item {
+  .dropdown-item {
     &:focus, &:active {
       background-color: $color0;
     }

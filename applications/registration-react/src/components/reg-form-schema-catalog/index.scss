@@ -1,0 +1,36 @@
+@import '../../assets/style/colors';
+
+.fdk-reg-catalogs {
+  h1 {
+    margin: 0 !important;
+    label {
+      margin-bottom: 0;
+    }
+  }
+  button {
+    background-color: transparent;
+    border: none;
+  }
+  .fdk-title-input {
+    input {
+      border: none;
+      border-radius: 5px;
+      padding: .5rem;
+      width: 100%;
+    }
+  }
+  .fdk-edit {
+    text-decoration: underline;
+  }
+
+  .fdk-reg-datasets-publisher {
+    font-size: 1.2rem;
+  }
+
+  .fdk-datasets-description {
+    margin: 0 !important;
+    &:focus, &:active, &:hover {
+      box-shadow: 0 3px 12px rgba(35, 55, 65, 0.55);
+    }
+  }
+}

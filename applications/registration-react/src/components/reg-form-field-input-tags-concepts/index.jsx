@@ -17,9 +17,6 @@ const updateInput = (updates, props) => {
 
 const handleChange = (props, tags, changed, changedIndexes) => {
   const { input } = props;
-  // const user = 'user';
-  // const password = 'password';
-  // const base64encodedData = new Buffer.from(`${user  }:${  password}`).toString('base64');
 
   const header = {
     Accept: 'application/json'
@@ -31,7 +28,7 @@ const handleChange = (props, tags, changed, changedIndexes) => {
     credentials: 'same-origin'
   };
 
-  // const url = '/referenceData/subjects?uri=https://data-david.github.io/Begrep/begrep/Enhet';
+  // https://data-david.github.io/Begrep/begrep/Enhet';
   const url = `referenceData/subjects?uri=${changed[0]}`
 
   // hvis changedIndex er mindre enn lengden av input.value, da fjerne den indeksen, hvis større så legge til
@@ -46,16 +43,14 @@ const handleChange = (props, tags, changed, changedIndexes) => {
       .then((response) => {
         updateInput(response.data, props);
       })
-      .catch((response) => {
-        // TODO hvis ikke finnes, hvordan lagre denne verdien, som uri?
-        const { error } = response;
-        return Promise.reject(error);
+      .catch(() => {
+        // TODO handle error
       })
   }
 }
 
 const InputTagsFieldConcepts  = (props) => {
-  const { input, label, fieldLabel, showLabel } = props;
+  const { input, label, meta: { error, warning }, fieldLabel, showLabel } = props;
   let tagNodes = [];
 
   if (input && input.value && input.value.length > 0) {
@@ -74,6 +69,9 @@ const InputTagsFieldConcepts  = (props) => {
           />
         </div>
       </label>
+      {(error &&
+      <div className="alert alert-danger mt-3">{error}</div>) || (warning && <div className="alert alert-warning mt-3">{warning}</div>)
+      }
     </div>
   );
 }
