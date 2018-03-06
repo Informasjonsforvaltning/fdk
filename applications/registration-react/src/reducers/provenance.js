@@ -10,7 +10,7 @@ export default function provenance(state = { isFetchingProvenance: false, proven
     }
     case PROVENANCE_SUCCESS: {
       const objFromArray = action.response.data.reduce((accumulator, current) => {
-        accumulator[current.code] = current
+        accumulator[current.code] = current // eslint-disable-line no-param-reassign
         return accumulator
       }, {});
       return {

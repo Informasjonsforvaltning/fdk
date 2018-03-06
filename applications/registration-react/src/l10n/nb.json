@@ -137,6 +137,7 @@
     }
   },
   "catalogs": {
+    "title": "Dine kataloger",
     "missingCatalogs": {
       "title": "Hei",
       "ingress": "Det ser ikke ut til at du har fått tilgang til noen kataloger.",
