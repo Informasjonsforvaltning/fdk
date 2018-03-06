@@ -529,7 +529,7 @@
 				<!-- Unit and integration tests are run, to get complete tesstcoverage statistics. -->
 				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipUnitTests>false</skipUnitTests>
+				<skipUnitTests>true</skipUnitTests>
 			</properties>
 		</profile>
 		<profile>
