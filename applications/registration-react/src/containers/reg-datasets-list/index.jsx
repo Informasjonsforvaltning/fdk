@@ -42,22 +42,20 @@ class RegDatasetsList extends React.Component {
       datasetItems
     } = this.props;
     return (
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
           <div className="col-12" />
         </div>
         <div className="row mb-2 mb-md-5">
-          <div className="col-md-2" />
           {helptextItems && !isFetchingCatalog && catalogItem &&
-          <div className="col-md-8 fdk-reg-datasets-list">
+          <div className="col-12 fdk-reg-datasets-list">
             <FormCatalog
               helptextItems={helptextItems}
             />
-            {datasetItems &&
             <DatasetItemsList
+              catalogId={catalogItem.id}
               datasetItems={datasetItems}
             />
-            }
           </div>
           }
         </div>
