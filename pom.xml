@@ -365,10 +365,10 @@
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
                 <configuration>
-                    <!-- in addition to jacoco-ut, which is default xxxx-->
+                    <!-- in addition to jacoco-ut, which is default -->
 					<jacocoReports>
-						<jacocoReport>${project.reporting.outputDirectory}/jacoco-it/jacoco.xml</jacocoReport>
-						<jacocoReport>${project.reporting.outputDirectory}/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-api/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-api/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 					</jacocoReports>
                 </configuration>
 			</plugin>
