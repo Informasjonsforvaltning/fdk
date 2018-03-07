@@ -334,7 +334,7 @@
 						<exclude>${end2end.test.pattern}</exclude>
 					</excludes>
 					<argLine>${surefireArgLine} -Dfile.encoding=${java.encoding}</argLine>
-                    <skipTests>${skipUnitTests}</skipTests>
+                    <skipTests>false</skipTests>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -348,7 +348,7 @@
 					</includes>
 					<skipTests>${skipIntegrationTests}</skipTests>
 					<encoding>${java.encoding}</encoding>
-                    <argLine>${failsafeArgLine}docker </argLine>
+                    <argLine>${failsafeArgLine}</argLine>
 				</configuration>
 				<executions>
 					<execution>
@@ -365,8 +365,35 @@
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
                 <configuration>
-                    <!-- in addition to jacoco-ut, which is default-->
-                    <relativeReportDirs>jacoco-ut</relativeReportDirs>
+                    <!-- specify jacoco output files for all java applications explicitly,
+                         due to files being generated in sub-modules.
+                         Reason: see https://github.com/trautonen/coveralls-maven-plugin/issues/64
+                         Note: Javascript modules (registration-react, search) report their
+                         code coverage differently, defined inn package.json -->
+					<jacocoReports>
+						<jacocoReport>applications/end2end-test/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/end2end-test/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/gdoc/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/gdoc/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/harvester/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/harvester/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/harvester-api/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/harvester-api/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/migration/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/migration/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-api/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-api/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-auth/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-auth/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-validator/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/registration-validator/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/search-api/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>applications/search-api/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>libraries/datastore/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>libraries/datastore/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>libraries/shared/target/site/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>libraries/shared/target/site/jacoco-ut/jacoco.xml</jacocoReport>
+					</jacocoReports>
                 </configuration>
 			</plugin>
 			<plugin>
@@ -502,7 +529,7 @@
 				<!-- Unit and integration tests are run, to get complete tesstcoverage statistics. -->
 				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
 				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipUnitTests>false</skipUnitTests>
+				<skipUnitTests>true</skipUnitTests>
 			</properties>
 		</profile>
 		<profile>
