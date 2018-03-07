@@ -2,7 +2,7 @@
 set -e
 
 
-components="fuseki harvester harvester-api nginx nginx-search nginx-registration reference-data registration registration-react registration-api registration-auth registration-validator search search-api"
+components="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-react registration-api registration-auth registration-validator search search-api"
 toEnvironment=ut1
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
