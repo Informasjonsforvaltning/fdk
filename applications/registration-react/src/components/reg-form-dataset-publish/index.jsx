@@ -74,8 +74,9 @@ export default class DatasetPublish extends Component {
         .then(() => {
           this.props.dispatch(publishDataset(value));
         })
-        .catch((error) => {
-          throw {error}
+        .catch((response) => {
+          const { error } = response;
+          return Promise.reject(error);
         })
       ;
     }
@@ -109,8 +110,9 @@ export default class DatasetPublish extends Component {
       datasetURL, {headers: api}
     ).then(() => {
       window.location.replace(catalogDatasetsURL);
-    }).catch((error) => {
-      throw {error}
+    }).catch((response) => {
+      const { error } = response;
+      return Promise.reject(error);
     });
   }
 

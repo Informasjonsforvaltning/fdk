@@ -10,7 +10,7 @@ export default function dataset(state = { isFetchingHelptext: false, helptextIte
     }
     case HELPTEXTS_SUCCESS: {
       const objFromArray = action.response.data.reduce((accumulator, current) => {
-        accumulator[current.id] = current
+        accumulator[current.id] = current // eslint-disable-line no-param-reassign
         return accumulator
       }, {})
       return {
