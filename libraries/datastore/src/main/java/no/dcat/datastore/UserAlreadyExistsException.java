@@ -10,6 +10,7 @@ public class UserAlreadyExistsException extends Exception {
 	private static final long serialVersionUID = 50816983706152072L;
 
 	public UserAlreadyExistsException(String username) {
+		super(username);
 
 	}
 }

@@ -105,7 +105,6 @@ public class HarvesterService {
             harvestEntryCreated = true;
         } catch (Exception e) {
             logger.error("Failed to POST new data source to harvester: {}", e.getLocalizedMessage());
-            logger.error("response from harvester: {}", response.toString());
             harvestEntryCreated = false;
         }
 
