@@ -1,34 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import localization from '../../components/localization';
+import { Link } from 'react-router-dom';
 
+import { getLanguageFromUrl } from '../../utils/translateText';
+import localization from '../../components/localization';
 import './index.scss';
 
 const ResultsTabs  = (props) => {
-  const { onSelectView, isSelected } = props;
+  const { onSelectView, isSelected, location } = props;
+  const langCode = getLanguageFromUrl();
+  const langParam = langCode ? `?lang=${langCode}` : '';
   return (
     <div className="row">
       <div className="col-md-12 text-center">
         <ul className="search-results-tabs">
-          <li className={(!isSelected) ? 'li-active' : ''}>
-            <button
-              onClick={() => {
-                onSelectView('datasets')
-              }}
+          <li className={(location.pathname === '/') ? 'li-active' : ''}>
+            <Link
+              to={{ pathname: '/', search: langParam}}
               aria-label="Link til side for datasett:"
-            >
-              {localization.page.datasetTab}
-            </button>
+            >{localization.page.datasetTab}
+            </Link>
           </li>
-          <li className={(isSelected) ? 'li-active' : ''}>
-            <button
-              onClick={() => {
-                onSelectView('concepts')
-              }}
+          <li className={(location.pathname === '/concepts') ? 'li-active' : ''}>
+            <Link
+              to={{ pathname: '/concepts', search: location.search}}
               aria-label="Link til side for begrep:"
-            >
-              {localization.page.termTab}
-            </button>
+            >{localization.page.termTab}
+            </Link>
           </li>
         </ul>
       </div>

@@ -122,6 +122,23 @@ export default class ResultsConcepts extends React.Component {
     return null;
   }
 
+  _renderTerms() {
+    const { termItems } = this.props;
+    if (termItems && termItems.hits && termItems.hits.hits) {
+      return termItems.hits.hits.map(item => (
+        <ConceptsHitItem
+          key={item._id}
+          result={item}
+          terms={this.state.terms}
+          onAddTerm={this.handleAddTerm}
+          onDeleteTerm={this.handleDeleteTerm}
+          selectedLanguageCode={this.props.selectedLanguageCode}
+        />
+      ));
+    }
+    return null;
+  }
+
   render() {
     const conceptsHitItemWithProps = React.createElement(ConceptsHitItem, {
       terms: this.state.terms,
@@ -135,50 +152,69 @@ export default class ResultsConcepts extends React.Component {
     });
 
     return (
-      <SearchkitProvider searchkit={searchkitConcepts}>
-        <div>
+      <div>
+
+        <div id="content" role="main">
           <div className="container">
-            <div className="row mb-60">
-              <div className="col-md-12">
-                <TopBar>
-                  <SearchBox
-                    autofocus
-                    searchOnChange={false}
-                    placeholder={localization.query.intro}
-                  />
-                </TopBar>
-              </div>
-              <div className="col-md-12 text-center">
-                <HitsStats component={conceptsHitStatsWithProps} />
-              </div>
-            </div>
-            <div>
-              <ResultsTabs
-                onSelectView={this.props.onSelectView}
-                isSelected={this.props.isSelected}
-              />
-            </div>
+
             <div id="conceptsPanel">
               <div className="row">
+
                 <div className="col-sm-4">
                   { this._renderCompareTerms() }
                 </div>
+
                 <div id="concepts" className="col-sm-8">
-                  <Hits
-                    mod="sk-hits-grid"
-                    hitsPerPage={50}
-                    itemComponent={conceptsHitItemWithProps}
-                    sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
-                  />
-                  <Pagination
-                    showNumbers
-                  />
+                  {this._renderTerms()}
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <SearchkitProvider searchkit={searchkitConcepts}>
+          <div>
+            <div className="container">
+
+              <div className="row mb-60">
+                <div className="col-md-12">
+                  <TopBar>
+                    <SearchBox
+                      searchOnChange={false}
+                      placeholder={localization.query.intro}
+                    />
+                  </TopBar>
+                </div>
+                <div className="col-md-12 text-center">
+                  <HitsStats component={conceptsHitStatsWithProps} />
+                </div>
+              </div>
+
+              <div id="conceptsPanel">
+                <div className="row">
+                  <div className="col-sm-4">
+                    { this._renderCompareTerms() }
+                  </div>
+                  <div id="concepts" className="col-sm-8">
+                    <Hits
+                      mod="sk-hits-grid"
+                      hitsPerPage={50}
+                      itemComponent={conceptsHitItemWithProps}
+                      sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
+                    />
+                    <Pagination
+                      showNumbers
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </SearchkitProvider>
+        </SearchkitProvider>
+      </div>
     );
   }
 }
@@ -189,7 +225,6 @@ ResultsConcepts.defaultProps = {
 };
 
 ResultsConcepts.propTypes = {
-  onSelectView: PropTypes.func.isRequired,
   selectedLanguageCode: PropTypes.string,
   isSelected: PropTypes.bool
 };

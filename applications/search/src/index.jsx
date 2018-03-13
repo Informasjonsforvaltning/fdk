@@ -1,7 +1,14 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Provider } from 'react-redux';
+// import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { BrowserRouter, Route, Switch, Router } from 'react-router-dom';
+import { syncHistoryWithStore, push } from 'react-router-redux';
+// import { createHistory } from 'history';
+import createHistory from 'history/createBrowserHistory'
 
+import configureStore from './store/configureStore';
+import routing from './reducers/routing';
 import SearchPage from './containers/search-results';
 import DetailsPage from './containers/search-detailspage';
 import AboutPage from './containers/search-about';
@@ -38,6 +45,29 @@ function handleUpdate() {
   }
 }
 
+const store = configureStore();
+
+const history = createHistory();
+
+// This is all we need to do sync browser history with the location
+// state in the store.
+// syncHistoryWithStore(history, store, { adjustUrlOnReplay: false });
+
+
+// store.dispatch(push('/foo'));
+// const routerHistory = syncHistoryWithStore(history, store, { adjustUrlOnReplay: true });
+
+/*
+const recentLocation = (store.getState().routing || {}).locationBeforeTransitions;
+const routerHistory = syncHistoryWithStore(history, store, { adjustUrlOnReplay: false });
+const location = history.location;
+console.log("location2", JSON.stringify(location));
+//history.replace('?tester');
+if(recentLocation && recentLocation.pathname) {
+  history.replace(recentLocation.pathname);
+}
+
+/*
 const routes =
   (
     <Route path="/" component={App}>
@@ -50,8 +80,38 @@ const routes =
     </Route>
   );
 
+
 ReactDOM.render((
-  <Router history={browserHistory} onUpdate={handleUpdate}>
-    {routes}
-  </Router>
+  <Provider store={store}>
+    <Router history={browserHistory} onUpdate={handleUpdate}>
+      {routes}
+    </Router>
+  </Provider>
 ), document.getElementById('root'));
+*/
+
+/*
+const routes =
+  (
+    <Switch>
+      <Route exact path="/" render={(props) => <SearchPage {...props} />} />
+      <Route exact path="/datasets" component={SearchPage} />
+      <Route exact path="/datasets/:id" component={DetailsPage} />
+      <Route exact path="/reports" component={ReportsPage} />
+    </Switch>
+  );
+*/
+
+
+ReactDOM.render((
+  <Provider store={store}>
+    <BrowserRouter>
+      <div className="d-flex flex-column site">
+        <div className="site-content d-flex flex-column">
+          <Route path="/" component={App} />
+        </div>
+      </div>
+    </BrowserRouter>
+  </Provider>
+), document.getElementById('root'))
+

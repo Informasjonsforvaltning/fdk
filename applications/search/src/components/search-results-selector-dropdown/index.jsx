@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
+import localization from '../localization';
+
 export default class Select extends React.Component {
   constructor(props) {
     super(props);
+    // const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
+    const { activeSort } = this.props;
     this.state = {
-      selectedValue: 'sort.relevance'
+      selectedValue: activeSort ? activeSort.substring(0, activeSort.lastIndexOf('.')) : 'relevance'
     };
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(e) {
-    const key = e.key;
-    this.props.setItems([key]);
+    const { onChange } = this.props;
+    onChange(e);
     this.setState({
       selectedValue: e.label || e.title || e.key
     });
@@ -27,27 +31,25 @@ export default class Select extends React.Component {
   }
 
   render() {
-    const { items, showCount, translate, countFormatter } = this.props; // eslint-disable-line react/prop-types
+    const { items } = this.props; // eslint-disable-line react/prop-types
 
     return (
       <DropdownButton
         bsStyle="default"
         id="search-result-dropdown-1"
         className="fdk-button fdk-button-default"
-        title={`${this.props.translate('sort.by')} ${this.props.translate(this.state.selectedValue)}`}
+        title={`${localization.sort.by} ${localization.sort[this.state.selectedValue]}`}
         onSelect={this.onChange}
-        aria-label={`Sorter søkeresultat, ${this.props.translate('sort.by')} ${this.props.translate(this.state.selectedValue)}`}
+        aria-label={`Sorter søkeresultat, ${localization.sort.by} ${localization.sort[this.state.selectedValue]}`}
       >
         {map(items, (item, idx) => {
-          const { key, label, title, doc_count } = item; // eslint-disable-line camelcase
-          let text = `${translate('sort.by')} ${translate(label || title || key)}`;
-          if (showCount && doc_count !== undefined) text += ` (${countFormatter(doc_count)})`; // eslint-disable-line camelcase
+          const { key, label, title } = item; // eslint-disable-line camelcase
+          const text = `${localization.sort.by} ${localization.sort[label]}`;
           return (
             <MenuItem key={idx} eventKey={item}>{text}</MenuItem>
           );
         })}
       </DropdownButton>
-
     );
   }
 }

@@ -11,6 +11,9 @@ import {
   TopBar
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
+import queryString from 'query-string';
+
+import { addOrReplaceParam, getParamFromUrl, removeParam } from '../../utils/addOrReplaceUrlParam';
 import { Modal, Button } from 'react-bootstrap';
 import { DatasetsQueryTransport } from '../../utils/DatasetsQueryTransport';
 import localization from '../localization';
@@ -22,6 +25,7 @@ import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import ResultsTabs from '../search-results-tabs';
+import FilterBox from '../search-results-filterbox';
 
 const host = '/dcat';
 
@@ -34,16 +38,16 @@ export default class ResultsDataset extends React.Component {
       showModal: false
     }
 
-    const history = createHistory();
-    history.listen( location => {
-      this.props.onHistoryListen(history, location);
+    const history2 = createHistory();
+    history2.listen( location => {
+      this.props.onHistoryListen(history2, location);
     });
 
     searchkitDataset = new SearchkitManager(
       host,
       {
         transport: new DatasetsQueryTransport(),
-        createHistory: ()=> history
+        createHistory: ()=> history2
       }
     );
     searchkitDataset.translateFunction = (key) => {
@@ -68,6 +72,10 @@ export default class ResultsDataset extends React.Component {
 
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log("ResultsDataset componentWillReceiveProps");
   }
 
   _renderPublisherRefinementListFilter() {
@@ -107,36 +115,39 @@ export default class ResultsDataset extends React.Component {
   }
 
   _renderFilterModal() {
+    const { showFilterModal, closeFilterModal, datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, searchQuery, themesItems } = this.props;
     return (
-      <Modal show={this.state.showModal} onHide={this.close}>
+      <Modal show={showFilterModal} onHide={closeFilterModal}>
         <Modal.Header closeButton>
           <Modal.Title>Filter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="search-filters">
-            <RefinementListFilter
-              id="theme"
+            <FilterBox
               title={localization.facet.theme}
-              field="theme.code.raw"
-              operator="AND"
-              size={5}
-              itemComponent={RefinementOptionThemes}
+              filter={datasetItems.aggregations.theme_count}
+              onClick={onFilterTheme}
+              activeFilter={searchQuery.theme}
+              themesItems={themesItems}
             />
-            <RefinementListFilter
-              id="accessRight"
+            <FilterBox
               title={localization.facet.accessRight}
-              field="accessRights.authorityCode.raw"
-              operator="AND"
-              size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-              itemComponent={RefinementOptionPublishers}
+              filter={datasetItems.aggregations.accessRightsCount}
+              onClick={onFilterAccessRights}
+              activeFilter={searchQuery.accessrights}
             />
-            {this._renderPublisherRefinementListFilterMobile()}
+            <FilterBox
+              title={localization.facet.organisation}
+              filter={datasetItems.aggregations.publisherCount}
+              onClick={onFilterPublisher}
+              activeFilter={searchQuery.publisher}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button
             className="fdk-button-default fdk-button"
-            onClick={this.close}
+            onClick={closeFilterModal}
           >
             Close
           </Button>
@@ -145,7 +156,21 @@ export default class ResultsDataset extends React.Component {
     );
   }
 
+  _renderHits() {
+    const { datasetItems } = this.props;
+    if (datasetItems && datasetItems.hits && datasetItems.hits.hits) {
+      return datasetItems.hits.hits.map(item => (
+        <SearchHitItem
+          key={item._source.id}
+          result={item}
+        />
+      ));
+    }
+    return null;
+  }
+
   render() {
+    const { history, datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, onSort, searchQuery, themesItems } = this.props;
     const selectDropdownWithProps = React.createElement(SelectDropdown, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
@@ -158,113 +183,194 @@ export default class ResultsDataset extends React.Component {
       prefLabel: localization.page['nosearch.descriptions']
     });
     return (
-      <SearchkitProvider searchkit={searchkitDataset}>
+      <div>
+
         <div id="content" role="main">
           <div className="container">
-            <div className="row mb-60">
-              <div className="col-md-12 fdk-search-flex">
-                <div className="btn-group btn-group-default visible-xs visible-sm">
-                  <Button
-                    className="fdk-button-default fdk-button fdk-button-filter"
-                    bsStyle="primary"
-                    bsSize="large"
-                    onClick={this.open}
-                  >
-                    Filter
-                  </Button>
-                  {this._renderFilterModal()}
-                </div>
-                <TopBar>
-                  <SearchBox
-                    autofocus
-                    searchOnChange={false}
-                    placeholder={localization.query.intro}
-                  />
-                </TopBar>
-              </div>
-              <div className="col-md-12 text-center">
-                <HitsStats component={datasetsHitStatsWithProps} />
-              </div>
-            </div>
-            <div>
-              <ResultsTabs onSelectView={this.props.onSelectView} />
-            </div>
-            <div id="resultPanel">
+
+            <div id="resultPanel2">
               <div className="row">
                 <div className="col-md-4 col-md-offset-8">
                   <div className="pull-right">
-                    <SortingSelector
-                      tabIndex="0"
-                      options={[
+                    <SelectDropdown
+                      items={[
                         {
-                          label: 'sort.relevance',
+                          label: 'relevance',
                           field: '_score',
                           order: 'asc',
                           defaultOption: true
                         },
                         {
-                          label: `sort.title`,
+                          label: 'title',
                           field: 'title',
                           order: 'asc'
                         },
                         {
-                          label: `sort.modified`,
+                          label: 'modified',
                           field: 'modified',
                           order: 'desc'
                         },
                         {
-                          label: `sort.publisher`,
+                          label: 'publisher',
                           field: 'publisher.name',
                           order: 'asc'
                         }
                       ]}
-                      listComponent={selectDropdownWithProps}
+                      selectedLanguageCode={this.props.selectedLanguageCode}
+                      onChange={onSort}
+                      activeSort={searchQuery.sortfield}
                     />
                   </div>
                 </div>
               </div>
+
               <div className="row">
+
                 <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
-                  <span className="uu-invisible" aria-hidden="false">Filtrering tema</span>
-                  <RefinementListFilter
-                    id="theme"
-                    title={localization.facet.theme}
-                    field="theme.code.raw"
-                    operator="AND"
-                    size={5}
-                    itemComponent={RefinementOptionThemes}
-                  />
                   <span className="uu-invisible" aria-hidden="false">Filtrering tilgang</span>
-                  <RefinementListFilter
-                    id="accessRight"
-                    title={localization.facet.accessRight}
-                    field="accessRights.authorityCode.raw"
-                    operator="AND"
-                    size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-                    itemComponent={RefinementOptionPublishers}
-                  />
-                  <span className="uu-invisible" aria-hidden="false">Filtrering virksomheter</span>
-                  {this._renderPublisherRefinementListFilter()}
+
+                  {datasetItems && datasetItems.aggregations &&
+                    <div>
+                      {this._renderFilterModal()}
+                      <FilterBox
+                        title={localization.facet.theme}
+                        filter={datasetItems.aggregations.theme_count}
+                        onClick={onFilterTheme}
+                        activeFilter={searchQuery.theme}
+                        themesItems={themesItems}
+                      />
+                      <FilterBox
+                        title={localization.facet.accessRight}
+                        filter={datasetItems.aggregations.accessRightsCount}
+                        onClick={onFilterAccessRights}
+                        activeFilter={searchQuery.accessrights}
+                      />
+                      <FilterBox
+                        title={localization.facet.organisation}
+                        filter={datasetItems.aggregations.publisherCount}
+                        onClick={onFilterPublisher}
+                        activeFilter={searchQuery.publisher}
+                      />
+                    </div>
+                  }
                 </div>
-                <div id="datasets" className="col-xs-12 col-md-8">
-                  <Hits
-                    mod="sk-hits-grid"
-                    hitsPerPage={50}
-                    itemComponent={searchHitItemWithProps}
-                    sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
-                  />
-                  <div className="col-md-8 col-md-offset-2">
-                    <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
-                    <Pagination
-                      showNumbers
+
+                <div id="datasets2" className="col-xs-12 col-md-8">
+                  {this._renderHits()}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+
+        <SearchkitProvider searchkit={searchkitDataset}>
+          <div id="content" role="main">
+            <div className="container">
+              <div className="row mb-60">
+                <div className="col-md-12 fdk-search-flex">
+                  <div className="btn-group btn-group-default visible-xs visible-sm">
+                    <Button
+                      className="fdk-button-default fdk-button fdk-button-filter"
+                      bsStyle="primary"
+                      bsSize="large"
+                      onClick={this.open}
+                    >
+                    Filter
+                    </Button>
+                  </div>
+                  <TopBar>
+                    <SearchBox
+
+                      searchOnChange={false}
+                      placeholder={localization.query.intro}
                     />
+                  </TopBar>
+                </div>
+                <div className="col-md-12 text-center">
+                  <HitsStats component={datasetsHitStatsWithProps} />
+                </div>
+              </div>
+
+              <div id="resultPanel">
+                <div className="row">
+                  <div className="col-md-4 col-md-offset-8">
+                    <div className="pull-right">
+                      <SortingSelector
+                        tabIndex="0"
+                        options={[
+                          {
+                            label: 'sort.relevance',
+                            field: '_score',
+                            order: 'asc',
+                            defaultOption: true
+                          },
+                          {
+                            label: `sort.title`,
+                            field: 'title',
+                            order: 'asc'
+                          },
+                          {
+                            label: `sort.modified`,
+                            field: 'modified',
+                            order: 'desc'
+                          },
+                          {
+                            label: `sort.publisher`,
+                            field: 'publisher.name',
+                            order: 'asc'
+                          }
+                        ]}
+                        listComponent={selectDropdownWithProps}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
+                    <span className="uu-invisible" aria-hidden="false">Filtrering tema</span>
+                    <RefinementListFilter
+                      id="theme"
+                      title={localization.facet.theme}
+                      field="theme.code.raw"
+                      operator="AND"
+                      size={5}
+                      itemComponent={RefinementOptionThemes}
+                    />
+                    <span className="uu-invisible" aria-hidden="false">Filtrering tilgang</span>
+                    <RefinementListFilter
+                      id="accessRight"
+                      title={localization.facet.accessRight}
+                      field="accessRights.authorityCode.raw"
+                      operator="AND"
+                      size={5/* NOT IN USE!!! see QueryTransport.jsx */}
+                      itemComponent={RefinementOptionPublishers}
+                    />
+                    <span className="uu-invisible" aria-hidden="false">Filtrering virksomheter</span>
+                    {this._renderPublisherRefinementListFilter()}
+                  </div>
+                  <div id="datasets" className="col-xs-12 col-md-8">
+                    <Hits
+                      mod="sk-hits-grid"
+                      hitsPerPage={50}
+                      itemComponent={searchHitItemWithProps}
+                      sourceFilter={['title', 'description', 'keyword', 'catalog', 'theme', 'publisher', 'contactPoint', 'distribution']}
+                    />
+                    <div className="col-md-8 col-md-offset-2">
+                      <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
+                      <Pagination
+                        showNumbers
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </SearchkitProvider>
+        </SearchkitProvider>
+      </div>
     );
   }
 }
@@ -275,6 +381,5 @@ ResultsDataset.defaultProps = {
 
 ResultsDataset.propTypes = {
   selectedLanguageCode: PropTypes.string,
-  onSelectView: PropTypes.func.isRequired,
   onHistoryListen: PropTypes.func.isRequired
 };

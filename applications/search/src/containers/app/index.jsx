@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../../utils/translateText';
 import '../../assets/css/main.scss';
+import SearchPage from '../../containers/search-results';
+import DetailsPage from '../../containers/search-detailspage';
+import AboutPage from '../../containers/search-about';
+import GetStartedPage from '../../containers/search-getstarted-article';
+import ReportsPage from '../../containers/reports';
 
 const getLangUrl = (langCode) => {
   const href = window.location.search;
@@ -184,6 +190,15 @@ export default class App extends React.Component {
         </div>
         <div className="fdk-container-path" />
         {childWithProp}
+        <div className="app-routes">
+          <Switch>
+            <Route exact path="/" render={(props) => <SearchPage {...props} />} />
+            <Route exact path="/datasets" component={SearchPage} />
+            <Route exact path="/concepts" component={SearchPage} />
+            <Route exact path="/datasets/:id" component={DetailsPage} />
+            <Route exact path="/reports" component={ReportsPage} />
+          </Switch>
+        </div>
 
         <div className="fdk-footer visible-xs visible-sm">
           <div className="container">
@@ -258,6 +273,8 @@ export default class App extends React.Component {
   }
 }
 
+/*
 App.propTypes = {
   children: PropTypes.node.isRequired
 };
+*/
