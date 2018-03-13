@@ -125,4 +125,12 @@ public class ElasticSearchResultHandlerTest {
 
         assertThat("Should return 4 dataset uris", actual.size(), is(4));
     }
+
+
+    @Test
+    public void testDatasetHarvestRecord() throws Throwable {
+
+
+    }
+
 }

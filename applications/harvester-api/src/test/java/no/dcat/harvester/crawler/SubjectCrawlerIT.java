@@ -1,10 +1,16 @@
 package no.dcat.harvester.crawler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.dcat.harvester.crawler.handlers.ElasticsearchResultHandlerIT;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.util.FileManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -81,5 +87,27 @@ public class SubjectCrawlerIT {
 
         assertThat(datasets.size() , is(484));
     }
+
+    @Test
+    public void readDifiDataLivar() throws Throwable {
+
+        Resource r = new ClassPathResource("difi-complete-2018-03-08.jsonld");
+        Model model = new CrawlerJob(null,null,null, subjectCrawler).loadModelAndValidate(r.getURL());
+
+        model.write(System.out, "TURTLE");
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        Dataset found = datasets.stream().filter(dataset -> dataset.getUri().startsWith("https://data.norge.no/node/1939")).findFirst().get();
+
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(found));
+
+        assertThat(datasets.size() , is(550));
+
+
+    }
+
 
 }
