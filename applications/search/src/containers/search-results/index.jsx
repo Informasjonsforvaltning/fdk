@@ -103,7 +103,10 @@ class SearchPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const datasetQuery = `datasets/${nextProps.location.search}`;
-    if(nextProps.location !== this.props.location) {
+    console.log("old props", JSON.stringify(this.props.location.search));
+    console.log("next props", JSON.stringify(nextProps.location.search));
+    //if(nextProps.location !== this.props.location) {
+    if(nextProps.location.search !== this.props.location.search) {
       this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`));
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${nextProps.location.search}`));
     }
@@ -283,7 +286,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const { datasetItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems }  = this.props;
+    const { selectedLanguageCode, datasetItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems }  = this.props;
     const showDatasets = cx(
       {
         show: !this.state.showConcepts,
@@ -341,9 +344,13 @@ class SearchPage extends React.Component {
           isFetchingTerms={isFetchingTerms}
           open={this.open}
         />
-        <div>
-          <ResultsTabs onSelectView={this.handleSelectView} location={this.props.location} />
-        </div>
+        <ResultsTabs
+          onSelectView={this.handleSelectView}
+          location={this.props.location}
+          countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
+          countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+          selectedLanguageCode={selectedLanguageCode}
+        />
         <Switch>
           <Route
             exact

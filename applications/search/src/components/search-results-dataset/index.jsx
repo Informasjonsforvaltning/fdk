@@ -189,7 +189,7 @@ export default class ResultsDataset extends React.Component {
           <div className="container">
 
             <div id="resultPanel2">
-              <div className="row">
+              <div className="row mt-1 mb-1">
                 <div className="col-md-4 col-md-offset-8">
                   <div className="pull-right">
                     <SelectDropdown

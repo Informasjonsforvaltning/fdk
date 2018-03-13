@@ -16,7 +16,6 @@
     background-color: $color1;
     color: $color0;
     line-height: 3em;
-
     button, a {
       background: none;
       border: 0;
@@ -37,6 +36,7 @@
 @media only screen and (min-width : 992px) {
   .search-results-tabs {
     li {
+      width: 14em;
       button, a {
         padding: 1em 4em;
       }

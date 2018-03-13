@@ -192,9 +192,9 @@ export default class App extends React.Component {
         {childWithProp}
         <div className="app-routes">
           <Switch>
-            <Route exact path="/" render={(props) => <SearchPage {...props} />} />
+            <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
             <Route exact path="/datasets" component={SearchPage} />
-            <Route exact path="/concepts" component={SearchPage} />
+            <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
             <Route exact path="/datasets/:id" component={DetailsPage} />
             <Route exact path="/reports" component={ReportsPage} />
           </Switch>
