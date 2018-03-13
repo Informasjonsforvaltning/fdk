@@ -77,6 +77,7 @@ class SearchPage extends React.Component {
     this.handleDatasetFilterAccessRights = this.handleDatasetFilterAccessRights.bind(this);
     this.handleDatasetFilterPublisher = this.handleDatasetFilterPublisher.bind(this);
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
@@ -164,7 +165,8 @@ class SearchPage extends React.Component {
       {
         searchQuery: {
           ...this.state.searchQuery,
-          q: event.target.value !== '' ? event.target.value : null
+          q: event.target.value !== '' ? event.target.value : null,
+          from: undefined
         }
       }
     );
@@ -177,7 +179,8 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            theme:  addValue(theme, event.target.value)
+            theme:  addValue(theme, event.target.value),
+            from: undefined
           }
         }),
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
@@ -188,7 +191,8 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            theme: removeValue(theme, event.target.value)
+            theme: removeValue(theme, event.target.value),
+            from: undefined
           }
         }),
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
@@ -203,7 +207,8 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            accessrights: addValue(accessrights, event.target.value)
+            accessrights: addValue(accessrights, event.target.value),
+            from: undefined
           }
         }),
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
@@ -214,7 +219,8 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            accessrights: removeValue(accessrights, event.target.value)
+            accessrights: removeValue(accessrights, event.target.value),
+            from: undefined
           }
         }),
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
@@ -229,7 +235,8 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            publisher: addValue(publisher, event.target.value)
+            publisher: addValue(publisher, event.target.value),
+            from: undefined
           }
         }),
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
@@ -240,7 +247,8 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            publisher: removeValue(publisher, event.target.value)
+            publisher: removeValue(publisher, event.target.value),
+            from: undefined
           }
         }),
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
@@ -277,6 +285,63 @@ class SearchPage extends React.Component {
         () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
+  }
+
+  handlePageChange(data) {
+    console.log("handlePageChange", JSON.stringify(data));
+    let selected = data.selected;
+    let offset = Math.ceil(selected * 50);
+    if (offset === 0) {
+      this.setState(
+        ({
+          searchQuery: {
+            ...this.state.searchQuery,
+            from: undefined
+          }
+        }),
+        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    } else {
+      this.setState(
+        ({
+          searchQuery: {
+            ...this.state.searchQuery,
+            from: offset
+          }
+        }),
+        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+    /*
+    let sortField = event.field;
+
+    if (sortField === '_score') {
+      this.setState(
+        ({
+          searchQuery: {
+            ...this.state.searchQuery,
+            sortfield: undefined,
+            sortdirection: undefined
+          }
+        }),
+        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    } else {
+      if (sortField === 'title') {
+        sortField = sortField.concat('.').concat(localization.getLanguage())
+      }
+      this.setState(
+        ({
+          searchQuery: {
+            ...this.state.searchQuery,
+            sortfield: sortField,
+            sortdirection: event.order
+          }
+        }),
+        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+    */
   }
 
   close() {
@@ -366,10 +431,12 @@ class SearchPage extends React.Component {
                 onFilterAccessRights={this.handleDatasetFilterAccessRights}
                 onFilterPublisher={this.handleDatasetFilterPublisher}
                 onSort={this.handleDatasetSort}
+                onPageChange={this.handlePageChange}
                 searchQuery={this.state.searchQuery}
                 themesItems={themesItems}
                 showFilterModal={this.state.showFilterModal}
                 closeFilterModal={this.close}
+                hitsPerPage={50}
                 {...props}
               />)
             }
@@ -382,6 +449,7 @@ class SearchPage extends React.Component {
                 onHistoryListen={this.handleHistoryListen}
                 selectedLanguageCode={this.props.selectedLanguageCode}
                 termItems={termItems}
+                hitsPerPage={10}
                 {...props}
               />)
             }

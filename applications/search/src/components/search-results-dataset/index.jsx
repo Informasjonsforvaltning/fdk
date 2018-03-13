@@ -171,7 +171,7 @@ export default class ResultsDataset extends React.Component {
   }
 
   render() {
-    const { history, datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, onSort, searchQuery, themesItems } = this.props;
+    const { history, datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, onSort, onPageChange, searchQuery, themesItems, hitsPerPage } = this.props;
     const selectDropdownWithProps = React.createElement(SelectDropdown, {
       selectedLanguageCode: this.props.selectedLanguageCode
     });
@@ -183,6 +183,10 @@ export default class ResultsDataset extends React.Component {
     const datasetsHitStatsWithProps = React.createElement(CustomHitsStats, {
       prefLabel: localization.page['nosearch.descriptions']
     });
+
+    const page = (searchQuery && searchQuery.from) ? (searchQuery.from / hitsPerPage) : 0;
+    const pageCount = Math.ceil( ((datasetItems && datasetItems.hits) ? datasetItems.hits.total : 1) / hitsPerPage)
+
     return (
       <div>
 
@@ -261,16 +265,20 @@ export default class ResultsDataset extends React.Component {
                 </div>
 
                 <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+                  <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
                   <ReactPaginate previousLabel={"Forrige side"}
                                  nextLabel={"Neste side"}
-                                 breakLabel={<a href="">...</a>}
+                                 breakLabel={<span>...</span>}
                                  breakClassName={"break-me"}
-                                 pageCount={110}
-                                 marginPagesDisplayed={2}
+                                 pageCount={pageCount}
+                                 marginPagesDisplayed={1}
                                  pageRangeDisplayed={5}
                                  containerClassName={"pagination"}
+                                 onPageChange={onPageChange}
                                  subContainerClassName={"pages pagination"}
-                                 activeClassName={"active"} />
+                                 activeClassName={"active"}
+                                 initialPage={page}
+                  />
                 </div>
               </div>
 
