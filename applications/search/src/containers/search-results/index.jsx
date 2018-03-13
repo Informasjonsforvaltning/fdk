@@ -41,8 +41,10 @@ class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const searchQuery = queryString.parse(props.location.search) || {
-      searchQuery: null,
-      showFilterModal: false
+        searchQuery: {
+          size: 50
+        },
+        showFilterModal: false,
     }
 
     this.state = {

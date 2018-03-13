@@ -12,6 +12,7 @@ import {
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
 import queryString from 'query-string';
+import ReactPaginate from 'react-paginate';
 
 import { addOrReplaceParam, getParamFromUrl, removeParam } from '../../utils/addOrReplaceUrlParam';
 import { Modal, Button } from 'react-bootstrap';
@@ -257,6 +258,19 @@ export default class ResultsDataset extends React.Component {
 
                 <div id="datasets2" className="col-xs-12 col-md-8">
                   {this._renderHits()}
+                </div>
+
+                <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+                  <ReactPaginate previousLabel={"Forrige side"}
+                                 nextLabel={"Neste side"}
+                                 breakLabel={<a href="">...</a>}
+                                 breakClassName={"break-me"}
+                                 pageCount={110}
+                                 marginPagesDisplayed={2}
+                                 pageRangeDisplayed={5}
+                                 containerClassName={"pagination"}
+                                 subContainerClassName={"pages pagination"}
+                                 activeClassName={"active"} />
                 </div>
               </div>
 

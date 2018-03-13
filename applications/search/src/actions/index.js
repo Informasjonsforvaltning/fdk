@@ -1,5 +1,6 @@
 import { CALL_API } from '../middleware/api';
 import * as actions from '../constants/ActionTypes';
+import { addOrReplaceParamWithoutURL, addOrReplaceParam } from './../utils/addOrReplaceUrlParam';
 
 function fetchApi(url, types) {
   return {
@@ -15,6 +16,8 @@ function shouldFetchApi(state) {
 }
 
 export function fetchDatasetsIfNeeded(datasetsURL) {
+  // add static size parameter
+  datasetsURL = addOrReplaceParam(datasetsURL, 'size', '5');
   return (dispatch, getState) =>
     shouldFetchApi(
       getState().datasets) && dispatch(
@@ -23,6 +26,8 @@ export function fetchDatasetsIfNeeded(datasetsURL) {
 }
 
 export function fetchTermsIfNeeded(termsURL) {
+  // add static size parameter
+  termsURL = addOrReplaceParam(termsURL, 'size', '5');
   return (dispatch, getState) =>
     shouldFetchApi(
       getState().terms) && dispatch(
