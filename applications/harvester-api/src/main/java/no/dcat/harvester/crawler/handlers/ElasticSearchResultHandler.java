@@ -289,7 +289,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         dataset.setDescription(descriptionCleaned);
     }
 
-    private DatasetHarvestRecord findLastDatasetHarvestRecordWithContent(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
+    DatasetHarvestRecord findLastDatasetHarvestRecordWithContent(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
         MatchQueryBuilder hasDatasetId = QueryBuilders.matchQuery("datasetId", dataset.getId());
         ExistsQueryBuilder hasDatasetValue = QueryBuilders.existsQuery("dataset");
 
@@ -319,7 +319,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return null;
     }
 
-    private DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch elasticsearch, Gson gson){
+    DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch elasticsearch, Gson gson){
 
         MatchQueryBuilder hasDatasetId = QueryBuilders.matchQuery("datasetId", dataset.getId());
         logger.info("findFirstDataset: {}", hasDatasetId.toString());
@@ -330,7 +330,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 .addSort("date", SortOrder.ASC)
                 .setSize(5).get();
 
-        logger.info("query: {}", firstDatasetRecordResponse.getHits().toString());
+        logger.debug("find first dataset harvest record query: {}", firstDatasetRecordResponse.getHits().toString());
 
         if (firstDatasetRecordResponse.getHits().getTotalHits() > 0) {
             DatasetHarvestRecord firstHarvestRecord =
@@ -476,7 +476,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return lookupEntry;
     }
 
-    private Date getFirstHarvestedDate(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
+    Date getFirstHarvestedDate(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
         DatasetHarvestRecord firstHarvestRecord = findFirstDatasetHarvestRecord(dataset, elasticsearch, gson);
         if (firstHarvestRecord != null) {
             return firstHarvestRecord.getDate();
@@ -485,7 +485,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return null;
     }
 
-    private void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch,
+    void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch,
                                              List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest,
                                              Date harvestTime, Dataset dataset, ChangeInformation stats) {
 
@@ -533,7 +533,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     }
 
-    private DatasetHarvestRecord createDatasetHarvestRecord(Dataset dataset, DcatSource dcatSource, boolean isChanged, Date harvestTime, List<String> validationResults) {
+    DatasetHarvestRecord createDatasetHarvestRecord(Dataset dataset, DcatSource dcatSource, boolean isChanged, Date harvestTime, List<String> validationResults) {
         DatasetHarvestRecord record = new DatasetHarvestRecord();
 
         record.setDatasetId(dataset.getId());
@@ -550,7 +550,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return record;
     }
 
-    private IndexRequest createBulkRequest(String index, String type, String id, Object data, Gson gson) {
+    IndexRequest createBulkRequest(String index, String type, String id, Object data, Gson gson) {
         IndexRequest request =  id == null ?
                     new IndexRequest(index, type) : new IndexRequest(index, type, id);
         request.source(gson.toJson(data));
@@ -558,7 +558,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return request;
     }
 
-    private boolean isChanged(DatasetHarvestRecord lastDatasetHarvestRecord, Dataset currentDataset, Gson gson) {
+    boolean isChanged(DatasetHarvestRecord lastDatasetHarvestRecord, Dataset currentDataset, Gson gson) {
 
         if (lastDatasetHarvestRecord == null || currentDataset == null) {
             return false;
@@ -571,7 +571,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return !c1.equals(c2);
     }
 
-    private ValidationStatus extractValidationStatus(List<String> messages) {
+    ValidationStatus extractValidationStatus(List<String> messages) {
         if (messages != null && !messages.isEmpty()) {
             ValidationStatus vs = new ValidationStatus();
             vs.setWarnings((int) messages.stream().filter(m -> m.contains("validation_warning")).count());

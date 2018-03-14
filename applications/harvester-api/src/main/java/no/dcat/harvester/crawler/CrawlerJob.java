@@ -283,7 +283,7 @@ public class CrawlerJob implements Runnable {
      * @param model the model to be validated (must be according to DCAT-AP-EU and DCAT-AP-NO
      * @return returns true if model is valid (only contains warnings) and false if it has errors
      */
-    private boolean isValid(Model model) {
+    boolean isValid(Model model) {
 
         //most severe error status
         final ValidationError.RuleSeverity[] status = {ValidationError.RuleSeverity.ok};
@@ -355,7 +355,7 @@ public class CrawlerJob implements Runnable {
      * in global variable validationErrors
      * @param model the model containing the resources to be removed
      */
-    private void removeNonValidDatasets(Model model) {
+    void removeNonValidDatasets(Model model) {
 
         for(Map.Entry<RDFNode, ImportStatus> entry : nonValidDatasets.entrySet()) {
             ImportStatus is = entry.getValue();
