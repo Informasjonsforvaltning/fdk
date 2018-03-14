@@ -1,4 +1,3 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
 import { DATASETS_REQUEST, DATASETS_SUCCESS, DATASETS_FAILURE } from '../constants/ActionTypes';
 
 export default function datasets(state = { isFetchingDatasets: false, datasetItems: null }, action) {
@@ -22,12 +21,6 @@ export default function datasets(state = { isFetchingDatasets: false, datasetIte
         isFetchingDatasets: false,
         datasetItems: null
       };
-    case LOCATION_CHANGE:
-      const pathname = '/datasets'; // action.payload.pathname;
-      console.log("i datasets LOCATION_CHANGE", pathname);
-      // /redux-history-demo/:operation
-      const [_, operation = ""] = pathname.split('/');
-      return operation;
     default:
       return state;
   }

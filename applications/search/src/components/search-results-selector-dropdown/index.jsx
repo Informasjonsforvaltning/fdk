@@ -32,7 +32,6 @@ export default class Select extends React.Component {
 
   render() {
     const { items } = this.props; // eslint-disable-line react/prop-types
-
     return (
       <DropdownButton
         bsStyle="default"
@@ -43,7 +42,7 @@ export default class Select extends React.Component {
         aria-label={`Sorter søkeresultat, ${localization.sort.by} ${localization.sort[this.state.selectedValue]}`}
       >
         {map(items, (item, idx) => {
-          const { key, label, title } = item; // eslint-disable-line camelcase
+          const { label} = item; // eslint-disable-line camelcase
           const text = `${localization.sort.by} ${localization.sort[label]}`;
           return (
             <MenuItem key={idx} eventKey={item}>{text}</MenuItem>

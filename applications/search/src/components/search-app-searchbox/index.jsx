@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import CustomHitsStats from '../search-result-custom-hitstats';
-import localization from '../localization';
 import './index.scss';
 
 const SearchBox  = (props) => {

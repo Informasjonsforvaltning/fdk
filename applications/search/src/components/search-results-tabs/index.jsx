@@ -8,7 +8,7 @@ import localization from '../../components/localization';
 import './index.scss';
 
 const ResultsTabs  = (props) => {
-  const { onSelectView, isSelected, location, countDatasets, countTerms, selectedLanguageCode } = props;
+  const { location, countDatasets, countTerms, selectedLanguageCode } = props;
   let { search } = location;
   if (selectedLanguageCode) {
     if (selectedLanguageCode === 'nb') {
@@ -52,7 +52,6 @@ ResultsTabs.defaultProps = {
 };
 
 ResultsTabs.propTypes = {
-  onSelectView: PropTypes.func.isRequired,
   isSelected: PropTypes.bool
 };
 

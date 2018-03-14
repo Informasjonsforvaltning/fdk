@@ -1,19 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { browserHistory } from 'react-router';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../../utils/translateText';
-import '../../assets/css/main.scss';
 import SearchPage from '../../containers/search-results';
 import DetailsPage from '../../containers/search-detailspage';
 import AboutPage from '../../containers/search-about';
 import GetStartedPage from '../../containers/search-getstarted-article';
 import ReportsPage from '../../containers/reports';
+import '../../assets/css/main.scss';
 
 const getLangUrl = (langCode) => {
   const href = window.location.search;
@@ -55,7 +53,7 @@ export default class App extends React.Component {
     const langCode = e;
     const langUrl = getLangUrl(langCode);
     const nextUrl = `${location.pathname}${langUrl}`;
-    browserHistory.push(nextUrl);
+    this.props.history.push(nextUrl);
 
     let text;
     if (langCode === 'nb') {
@@ -274,9 +272,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-/*
-App.propTypes = {
-  children: PropTypes.node.isRequired
-};
-*/

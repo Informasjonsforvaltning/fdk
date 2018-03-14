@@ -21,16 +21,6 @@
       ]
     }
   },
-  "authors": [
-    {
-      "name": "Joseph McElroy",
-      "email": "phoey1@gmail.com"
-    },
-    {
-      "name": "Siavash Etemadieh",
-      "email": "ssetem@gmail.com"
-    }
-  ],
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.2",
@@ -62,17 +52,12 @@
     "react-moment": "^0.6.5",
     "react-paginate": "^5.1.0",
     "react-redux": "^5.0.7",
-    "react-router": "^3.2.0",
     "react-router-dom": "^4.2.2",
-    "react-router-redux": "^4.0.8",
     "react-select": "^1.0.1",
     "react-treeview": "^0.4.7",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "searchkit": "2.2.0",
-    "searchkit-express": "0.2.1",
-    "superagent": "3.6.0",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.5.0"
