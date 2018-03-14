@@ -197,6 +197,8 @@ export default class App extends React.Component {
             <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
             <Route exact path="/datasets/:id" component={DetailsPage} />
             <Route exact path="/reports" component={ReportsPage} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/about-registration" component={GetStartedPage} />
           </Switch>
         </div>
 

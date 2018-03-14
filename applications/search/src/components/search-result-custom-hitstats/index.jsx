@@ -53,8 +53,7 @@ const CustomHitsStats = (props) => {
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info nosearch" data-qa="info">
           <div>
-            <span>{localization.hitstats.nosearch.search}</span> <span>{countDatasets}</span>
-            <span>{localization.hitstats.nosearch.descriptions}</span>
+            <span>{localization.hitstats.nosearch.search} {countDatasets} {localization.hitstats.nosearch.descriptions}</span>
             <span>&nbsp;{localization.hitstats.and} {countTerms} {localization.hitstats.concepts}</span>
           </div>
         </div>

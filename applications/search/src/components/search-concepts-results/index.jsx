@@ -9,6 +9,7 @@ import {
   TopBar
 } from 'searchkit';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line import/no-unresolved, import/extensions
+import ReactPaginate from 'react-paginate';
 
 import { TermsQueryTransport } from '../../utils/TermsQueryTransport';
 import localization from '../localization';
@@ -140,6 +141,7 @@ export default class ResultsConcepts extends React.Component {
   }
 
   render() {
+    const { history, termItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, onSort, onPageChange, searchQuery, themesItems, hitsPerPage } = this.props;
     const conceptsHitItemWithProps = React.createElement(ConceptsHitItem, {
       terms: this.state.terms,
       onAddTerm: this.handleAddTerm,
@@ -150,6 +152,9 @@ export default class ResultsConcepts extends React.Component {
     const conceptsHitStatsWithProps = React.createElement(CustomHitsStats, {
       prefLabel: localization.page['nosearch.concepts']
     });
+
+    const page = (searchQuery && searchQuery.from) ? (searchQuery.from / hitsPerPage) : 0;
+    const pageCount = Math.ceil( ((termItems && termItems.hits) ? termItems.hits.total : 1) / hitsPerPage);
 
     return (
       <div>
@@ -166,7 +171,23 @@ export default class ResultsConcepts extends React.Component {
 
                 <div id="concepts" className="col-sm-8">
                   {this._renderTerms()}
-
+                </div>
+                <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+                  <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
+                  <ReactPaginate
+                    previousLabel={localization.page.prev}
+                    nextLabel={localization.page.next}
+                    breakLabel={<span>...</span>}
+                    breakClassName={"break-me"}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={2}
+                    containerClassName={"pagination"}
+                    onPageChange={onPageChange}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                    initialPage={page}
+                  />
                 </div>
               </div>
             </div>

@@ -105,7 +105,8 @@
       background-color: transparent !important;
       border: none !important;
       color: $color1 !important;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+      padding: 6px !important;
       &:hover {
         background-color: $color5 !important;
       }
@@ -148,7 +149,7 @@
 }
 
 
-
+/*
 .sk-pagination-navigation .sk-toggle-option:first-child,
 .sk-pagination-navigation .sk-toggle-option:last-child {
   flex: auto;
@@ -241,9 +242,12 @@
   color: $color0;
   text-decoration: none;
 }
+*/
 
 /* SEARCHPAGE REFINEMENT FILTER */
 
+
+/*
 .sk-panel {
   background-color: $color5;
   padding: 2rem;
@@ -258,12 +262,57 @@
   font-weight: 500;
   margin: 0px;
 }
+*/
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
-  .sk-hits-stats__info {
-    font-size: 2.25rem;
-    line-height: 2.7rem;
+  .pagination {
+    li {
+      a, span {
+        background-color: transparent !important;
+        border: none !important;
+        color: $color1 !important;
+        font-size: 1.5rem !important;
+        padding: 6px 12px !important;
+        &:hover {
+          background-color: $color5 !important;
+        }
+      }
+    }
+    li.active {
+      a {
+        background-color: $color1 !important;
+        color: $color0 !important;
+      }
+    }
+    li.previous {
+      a {
+        &:before {
+          content: "\F060";
+          display: inline-block;
+          font: normal normal normal 14px/1 FontAwesome;
+          font-size: inherit;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          margin-right: .5em;
+        }
+      }
+    }
+    li.next {
+      a {
+        &:after {
+          content: "\F061";
+          display: inline-block;
+          font: normal normal normal 14px/1 FontAwesome;
+          font-size: inherit;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          margin-left: .5em;
+        }
+      }
+    }
   }
 }
 

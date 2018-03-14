@@ -16,8 +16,8 @@ const ResultsTabs  = (props) => {
     } else {
       search = addOrReplaceParamWithoutURL(`${search}`, 'lang', selectedLanguageCode);
     }
-
   }
+  search = addOrReplaceParamWithoutURL(`${search}`, 'from', '')
   //search = addOrReplaceParamWithoutURL(`${search}`, 'lang', selectedLanguageCode);
   return (
     <div className="row">

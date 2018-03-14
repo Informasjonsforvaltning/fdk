@@ -185,7 +185,7 @@ export default class ResultsDataset extends React.Component {
     });
 
     const page = (searchQuery && searchQuery.from) ? (searchQuery.from / hitsPerPage) : 0;
-    const pageCount = Math.ceil( ((datasetItems && datasetItems.hits) ? datasetItems.hits.total : 1) / hitsPerPage)
+    const pageCount = Math.ceil( ((datasetItems && datasetItems.hits) ? datasetItems.hits.total : 1) / hitsPerPage);
 
     return (
       <div>
@@ -266,24 +266,23 @@ export default class ResultsDataset extends React.Component {
 
                 <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
                   <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
-                  <ReactPaginate previousLabel={"Forrige side"}
-                                 nextLabel={"Neste side"}
-                                 breakLabel={<span>...</span>}
-                                 breakClassName={"break-me"}
-                                 pageCount={pageCount}
-                                 marginPagesDisplayed={1}
-                                 pageRangeDisplayed={5}
-                                 containerClassName={"pagination"}
-                                 onPageChange={onPageChange}
-                                 subContainerClassName={"pages pagination"}
-                                 activeClassName={"active"}
-                                 initialPage={page}
+                  <ReactPaginate
+                    previousLabel={localization.page.prev}
+                    nextLabel={localization.page.next}
+                    breakLabel={<span>...</span>}
+                    breakClassName={"break-me"}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={2}
+                    containerClassName={"pagination"}
+                    onPageChange={onPageChange}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                    initialPage={page}
                   />
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
 

@@ -449,7 +449,8 @@ class SearchPage extends React.Component {
                 onHistoryListen={this.handleHistoryListen}
                 selectedLanguageCode={this.props.selectedLanguageCode}
                 termItems={termItems}
-                hitsPerPage={10}
+                onPageChange={this.handlePageChange}
+                hitsPerPage={50}
                 {...props}
               />)
             }
