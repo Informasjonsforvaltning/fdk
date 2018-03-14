@@ -200,12 +200,14 @@ export default class App extends React.Component {
         <div className="fdk-container-path" />
         <div className="app-routes">
           <Switch>
-            <Route path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-            <Route path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-            <Route path="/datasets/:id" component={DetailsPage} />
+            <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route exact path="/datasets/:id" component={DetailsPage} />
+            <Route exact path="/reports" component={ReportsPage} />
+            <Route exact path="/about" component={AboutPage} />
+            <Route exact path="/about-registration" component={GetStartedPage} />
           </Switch>
         </div>
-
         <div className="fdk-footer visible-xs visible-sm">
           <div className="container">
             <div className="row">
