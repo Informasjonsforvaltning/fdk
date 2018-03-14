@@ -18,7 +18,6 @@ const ResultsTabs  = (props) => {
     }
   }
   search = addOrReplaceParamWithoutURL(`${search}`, 'from', '')
-  //search = addOrReplaceParamWithoutURL(`${search}`, 'lang', selectedLanguageCode);
   return (
     <div className="row">
       <div className="col-md-12 text-center">

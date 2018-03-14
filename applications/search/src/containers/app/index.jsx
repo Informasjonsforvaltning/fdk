@@ -78,6 +78,17 @@ export default class App extends React.Component {
       React.Children.map(this.props.children, child => React.cloneElement(child, {
         selectedLanguageCode: this.state.selectedLanguageCode
       }));
+    /*
+     <Switch>
+     <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+     <Route exact path="/datasets" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+     <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+     <Route exact path="/datasets/:id" component={DetailsPage} />
+     <Route exact path="/reports" component={ReportsPage} />
+     <Route path="/about" component={AboutPage} />
+     <Route path="/about-registration" component={GetStartedPage} />
+     </Switch>
+     */
     return (
       <div>
         <div>
@@ -187,16 +198,11 @@ export default class App extends React.Component {
           </div>
         </div>
         <div className="fdk-container-path" />
-        {childWithProp}
         <div className="app-routes">
           <Switch>
-            <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-            <Route exact path="/datasets" component={SearchPage} />
-            <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-            <Route exact path="/datasets/:id" component={DetailsPage} />
-            <Route exact path="/reports" component={ReportsPage} />
-            <Route path="/about" component={AboutPage} />
-            <Route path="/about-registration" component={GetStartedPage} />
+            <Route path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route path="/datasets/:id" component={DetailsPage} />
           </Switch>
         </div>
 

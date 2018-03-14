@@ -51,7 +51,7 @@ export function addOrReplaceParamWithoutURL(uri, key, value) {
   else {
     uri = uri + separator + key + "=" + value;
   }
-  if(value==='') {
+  if(value === '') {
     return removeParam(key, uri);
   }
   return uri;
@@ -71,7 +71,6 @@ export function removeParam(key, sourceURL) {
         }
         rtn = rtn + "?" + params_arr.join("&");
     }
-    console.log("rtn", JSON.stringify(rtn));
     return rtn;
 }
 

@@ -51,10 +51,33 @@ class SearchPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { selectedLanguageCode } = nextProps;
     const datasetQuery = `datasets/${nextProps.location.search}`;
     if(nextProps.location.search !== this.props.location.search) {
       this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`));
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${nextProps.location.search}`));
+    }
+    if(selectedLanguageCode !== this.props.selectedLanguageCode) {
+      console.log("componentwillreceiveProps", JSON.stringify(selectedLanguageCode));
+      if (selectedLanguageCode === 'nb') {
+        this.setState(
+          {
+            searchQuery: {
+              ...this.state.searchQuery,
+              lang: undefined
+            }
+          }
+        );
+      } else {
+        this.setState(
+          {
+            searchQuery: {
+              ...this.state.searchQuery,
+              lang: selectedLanguageCode
+            }
+          }
+        );
+      }
     }
   }
 
@@ -275,6 +298,7 @@ class SearchPage extends React.Component {
                 selectedLanguageCode={this.props.selectedLanguageCode}
                 termItems={termItems}
                 onPageChange={this.handlePageChange}
+                searchQuery={this.state.searchQuery}
                 hitsPerPage={50}
                 {...props}
               />)

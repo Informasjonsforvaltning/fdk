@@ -108,18 +108,19 @@ export default class ResultsConcepts extends React.Component {
                 <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
                   <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
                   <ReactPaginate
+                    pageCount={pageCount}
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={1}
                     previousLabel={localization.page.prev}
                     nextLabel={localization.page.next}
                     breakLabel={<span>...</span>}
                     breakClassName={"break-me"}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
                     containerClassName={"pagination"}
                     onPageChange={onPageChange}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
                     initialPage={page}
+                    disableInitialCallback={true}
                   />
                 </div>
               </div>
