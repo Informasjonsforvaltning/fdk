@@ -1,9 +1,8 @@
 @import '../../assets/css/colors.scss';
 
 .search-results-tabs {
-  border-bottom: 2px solid ;
+  margin-bottom: 0;
   padding-left: 0;
-
   li {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -13,22 +12,23 @@
     display: inline-block;
     margin-right: 0.5em;    
     margin-left: 0.5em;
-    background-color: $color1;
-    color: $color0;
+    //background-color: $color1;
+    //color: $color1;
     line-height: 3em;
     button, a {
       background: none;
       border: 0;
       box-sizing: border-box;
-      color: $color0;
+      color: $color1;
       padding: .8em 1.5em;
       font-weight: 500;
       text-decoration: none;
     }
   }
 
-  .li-active {    
-    font-size: 2rem;
+  .li-active {
+    background-color: $color6;
+    font-size: 1.8rem;
   }
 }
 
@@ -43,7 +43,7 @@
     }
 
     .li-active {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
   }
 }

@@ -237,9 +237,17 @@ SEARCHPAGE SORTING DROPDOWN
  */
 
 .fdk-button-filter {
-    height: 55px;
+    height: 54px;
     margin: 0;
     border-radius: 5px 0 0 5px;
+    box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
+}
+
+.fdk-button-search {
+    height: 54px;
+    margin: 0;
+    border-radius:  0 5px 5px 0;
+    box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
 }
 
     /*
@@ -296,6 +304,9 @@ SEARCHPAGE SORTING DROPDOWN
 @media only screen and (min-width : 992px) {
     .fdk-footer {
         margin: 60px 0px 0px 0px;
+    }
+    .fdk-button-search {
+        height: 68px;
     }
 }
 

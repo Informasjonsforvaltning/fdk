@@ -281,23 +281,29 @@ class SearchPage extends React.Component {
     const { selectedLanguageCode, datasetItems, publisherCountItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems, publisherItems }  = this.props;
 
     return (
-      <div className="container">
-        <SearchBox
-          onSearchSubmit={this.handleSearchSubmit}
-          onSearchChange={this.handleSearchChange}
-          searchQuery={this.state.searchQuery.q}
-          countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
-          isFetchingDatasets={isFetchingDatasets}
-          countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
-          isFetchingTerms={isFetchingTerms}
-          open={this.open}
-        />
-        <ResultsTabs
-          location={this.props.location}
-          countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
-          countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
-          selectedLanguageCode={selectedLanguageCode}
-        />
+      <div>
+        <section className="top-section-search mb-1">
+          <div className="container">
+              <div className="fdk-container-path" />
+              <SearchBox
+                onSearchSubmit={this.handleSearchSubmit}
+                onSearchChange={this.handleSearchChange}
+                searchQuery={this.state.searchQuery.q}
+                countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
+                isFetchingDatasets={isFetchingDatasets}
+                countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+                isFetchingTerms={isFetchingTerms}
+                open={this.open}
+              />
+              <ResultsTabs
+                location={this.props.location}
+                countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
+                countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+                selectedLanguageCode={selectedLanguageCode}
+              />
+          </div>
+        </section>
+        <div className="container">
         <Switch>
           <Route
             exact
@@ -338,6 +344,7 @@ class SearchPage extends React.Component {
             }
           />
         </Switch>
+      </div>
       </div>
     );
   }

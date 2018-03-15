@@ -19,6 +19,10 @@
   font-weight: 500;
 }
 
+.top-section-search {
+  background-color: $color-cta4;
+}
+
 /* SEARCHPAGE FILTERS */
 
 /*
@@ -314,6 +318,32 @@
       }
     }
   }
+}
+
+/*==========  Media Queries  ==========*/
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}/* end min-width : 320px */
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}/* end min-width : 480px */
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .top-section-search {
+    background-image: url(../../assets/img/illustration-login.svg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 50%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
 }
 
 /* Large Devices, Wide Screens */

@@ -8,7 +8,7 @@ const SearchBox  = (props) => {
   const { onSearchSubmit, onSearchChange, searchQuery, countDatasets, isFetchingDatasets, countTerms, isFetchingTerms, open } = props;
   return (
     <div className="row mb-60">
-      <div className="col-md-12 fdk-search-flex">
+      <div className="col-12 col-md-8 col-md-offset-2 fdk-search-flex">
         <div className="visible-sm visible-xs">
           <button
             type="button"

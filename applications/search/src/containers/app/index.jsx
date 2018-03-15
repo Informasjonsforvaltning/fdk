@@ -197,7 +197,6 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
-        <div className="fdk-container-path" />
         <div className="app-routes">
           <Switch>
             <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
