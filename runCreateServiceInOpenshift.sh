@@ -180,29 +180,6 @@ then
     # todo
     echo Fuseki deploy not implemented yet
 
-elif [ $service = registration ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        createOpenshiftService registration
-        oc expose dc/registration --port=4200
-
-        if [ $environment = ppe ]
-        then
-            oc env dc/registration REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4200 NODE_ENV=$environment
-        elif [ $environment = tt1 ]
-        then
-            oc env dc/registration REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4200 NODE_ENV=$environment
-
-        else
-            oc env dc/registration REG_API_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=https://reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no/reference-data PORT=4200 NODE_ENV=$environment
-        fi
-    else
-        # deploymentmode = onlyDeployImages
-        deployNewDockerImage registration
-    fi
-
 elif [ $service = registration-react ]
 then
     if [ $deploymode = recreateServices ]
@@ -213,13 +190,23 @@ then
 
         if [ $environment = ppe ]
         then
-            oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4300 NODE_ENV=$environment
+            oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ \
+            QUERY_SERVICE_URL=/reference-data \
+            PORT=4300 \
+            NODE_ENV=production
+
         elif [ $environment = tt1 ]
         then
-            oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ QUERY_SERVICE_URL=https://$registrationGuiExternalAddress/reference-data PORT=4300 NODE_ENV=$environment
+            oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ \
+            QUERY_SERVICE_URL=/reference-data \
+            PORT=4300 \
+            NODE_ENV=production
 
         else
-            oc env dc/registration-react REG_API_URL=https://reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no/ QUERY_SERVICE_URL=/reference-data PORT=4300 NODE_ENV=$environment
+            oc env dc/registration-react REG_API_URL=https://reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no/ \
+            QUERY_SERVICE_URL=/reference-data \
+            PORT=4300 \
+            NODE_ENV=production
         fi
     else
         # deploymentmode = onlyDeployImages
@@ -279,7 +266,13 @@ then
     then
         profile=prod
         createOpenshiftService harvester-api
-        oc env dc/harvester-api themesHttpUsername=themeUser themesHttpPassword=themePassword
+        oc env dc/harvester-api \
+        themesHttpUsername=themeUser \
+        themesHttpPassword=themePassword \
+        emailUsername=changeme \
+        emailPassword=changeme \
+        emailSenderAddress=changeThe@email.address.here
+
         exposeService harvester-api
     else
         # deploymentmode = onlyDeployImages
@@ -385,26 +378,6 @@ then
         deployNewDockerImage search-api
     fi
 
-elif [ $service = nginx ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        createOpenshiftService nginx
-
-        #create secure route for registration gui
-        oc create route edge --service=nginx --hostname=$oldRegistrationGuiExternalAddress --port=8080
-        oc label route nginx --overwrite=true \
-            environmentTag=$environmentTag \
-            nginx environmentDate=$dateTag
-
-        #todo: should be automated
-        echo "Remember: Container port 80 must be deleted"
-    else
-        # deploymentmode = onlyDeployImages
-        deployNewDockerImage nginx
-    fi
-
 elif [ $service = nginx-registration ]
 then
     if [ $deploymode = recreateServices ]
@@ -419,7 +392,7 @@ then
             nginx environmentDate=$dateTag
 
         #todo: should be automated
-        echo "Remember: Container port 80 must be deleted"
+        echo "Remember: Container port 80 must be deleted in service"
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage nginx-registration
@@ -439,7 +412,7 @@ then
             environmentDate=$dateTag
 
         #todo: should be automated
-        echo "Remember: Container port 80 must be deleted"
+        echo "Remember: Container port 80 must be deleted in service"
 
     else
         # deploymentmode = onlyDeployImages

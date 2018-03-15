@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-services="registration registration-auth registration-api registration-auth registration-validator reference-data search-api search harvester harvester-api nginx"
+services="registration-react registration-auth registration-api registration-auth registration-validator reference-data search-api search harvester harvester-api nginx-registration nginx-search"
 
 for i in $services
 do
