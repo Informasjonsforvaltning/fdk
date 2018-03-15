@@ -48,7 +48,7 @@ public class FusekiUserDetailsService implements UserDetailsService {
 
         Map<String, String> userMap = new HashMap<>();
 
-        //createTestUser("test_user", "password", "USER"); //todo: trengs denne?
+        //create new admin user if it does not already exist in Fuseki
         createTestUser(applicationSettings.getAdminUsername(), applicationSettings.getAdminPassword(), "ADMIN");
 
         try {
