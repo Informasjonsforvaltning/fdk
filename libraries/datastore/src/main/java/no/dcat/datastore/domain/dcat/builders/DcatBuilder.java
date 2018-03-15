@@ -504,7 +504,7 @@ public class DcatBuilder {
 
                 // contact has same uri as one that has been exported before, force a new one
                 if (exportedContacsUriMap.containsKey(contact.getUri()) && contact != exportedContacsUriMap.get(contact.getUri())) {
-                    contact.setUri("http://datakatalog.no/contact/export/"+ UUID.randomUUID().toString());
+                    contact.setUri(AbstractBuilder.CONTACT_PREFIX + "/export/"+ UUID.randomUUID().toString());
                 }
 
                 contactRes = model.createResource(contact.getUri());

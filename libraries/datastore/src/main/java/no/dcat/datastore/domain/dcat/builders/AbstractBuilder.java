@@ -35,6 +35,8 @@ import java.util.UUID;
 
 public abstract class AbstractBuilder {
 
+    public static final String CONTACT_PREFIX = "http://dataktalog.no/contact";
+
     static Property owlTime_hasBeginning = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning");
     static Property owlTime_hasEnd = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd");
     static Property schema_startDate = ResourceFactory.createProperty("http://schema.org/startDate");
@@ -402,10 +404,11 @@ public abstract class AbstractBuilder {
                 if (object.getURI() != null && !object.getURI().isEmpty()) {
                     contact.setUri(object.getURI());
                 } else {
-                    contact.setUri("http://dataktalog.no/contact/import/" + UUID.randomUUID().toString());
+                    contact.setUri(CONTACT_PREFIX + "/import/" + UUID.randomUUID().toString());
                 }
 
                 // reuse existing contact
+
                 if (contactMap.containsKey(contact.getUri())) {
                     result.add(contactMap.get(contact.getUri()));
                     continue;

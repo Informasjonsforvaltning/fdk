@@ -3,8 +3,10 @@ package no.dcat.harvester.crawler.handlers;
 import ch.qos.logback.classic.LoggerContext;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
@@ -17,6 +19,7 @@ import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.harvester.crawler.notification.HarvestLogger;
 import no.dcat.shared.Catalog;
+import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.HarvestMetadata;
@@ -37,7 +40,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.ConstantScoreQueryBuilder;
 import org.elasticsearch.index.query.ExistsQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -90,12 +92,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * Creates a new elasticsearch code result handler connected to
      * a particular elasticsearch instance.
      *
-     * @param hostname host name where elasticsearch cluster is found
-     * @param port port for connection to elasticserach cluster. Usually 9300
-     * @param clustername Name of elasticsearch cluster
-     * @param themesHostname hostname for reference-data service whitch provides themes service
-     * @param httpUsername username used for posting data to reference-data service
-     * @param httpPassword password used for posting data to reference-data service
+     * @param hostname               host name where elasticsearch cluster is found
+     * @param port                   port for connection to elasticserach cluster. Usually 9300
+     * @param clustername            Name of elasticsearch cluster
+     * @param themesHostname         hostname for reference-data service whitch provides themes service
+     * @param httpUsername           username used for posting data to reference-data service
+     * @param httpPassword           password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
     public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender, EmailNotificationService emailNotificationService) {
@@ -121,11 +123,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * Process a data catalog, represented as an RDF model
      *
      * @param dcatSource information about the source/provider of the data catalog
-     * @param model RDF model containing the data catalog
+     * @param model      RDF model containing the data catalog
      */
     @Override
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
-        logger.debug("Processing results Elasticsearch: " + this.hostename +":" + this.port + " cluster: "+ this.clustername);
+        logger.debug("Processing results Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
 
         try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {
             logger.trace("Start indexing");
@@ -139,9 +141,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     /**
      * Index data catalog with Elasticsearch
-     * @param dcatSource information about the source/provider of the data catalog
-     * @param model RDF model containing the data catalog
-     * @param elasticsearch The Elasticsearch instance where the data catalog should be stored
+     *
+     * @param dcatSource        information about the source/provider of the data catalog
+     * @param model             RDF model containing the data catalog
+     * @param elasticsearch     The Elasticsearch instance where the data catalog should be stored
      * @param validationResults List of strings with result from validation rules execution
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
@@ -154,9 +157,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         harvestLog.info("Harvest log for datasource ID: " + dcatSource.getId());
 
 
+        // enable gson to read subtype of publisher
         RuntimeTypeAdapterFactory<Publisher> typeFactory = RuntimeTypeAdapterFactory
-                .of(Publisher.class)
-                .registerSubtype(no.dcat.datastore.domain.dcat.Publisher.class, "valid");
+                .of(Publisher.class, "type")
+                .registerSubtype(no.dcat.datastore.domain.dcat.Publisher.class, no.dcat.datastore.domain.dcat.Publisher.class.getName());
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -211,14 +215,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             ChangeInformation stats = new ChangeInformation();
             logger.debug("stats: " + stats.toString());
-            for (Dataset dataset : validDatasets) {
-                if (dataset.getCatalog().getUri().equals(catalog.getUri())) {
-                    catalogRecord.getValidDatasetUris().add(dataset.getUri());
+            for (Dataset dataset : validDatasets.stream().filter(d -> d.getCatalog().getUri().equals(catalog.getUri())).collect(Collectors.toList())) {
 
-                    addDisplayFields(dataset);
+                catalogRecord.getValidDatasetUris().add(dataset.getUri());
 
-                    saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
-                }
+                addDisplayFields(dataset);
+
+                saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
+
             }
 
             catalogRecord.setNonValidDatasetUris(new HashSet<>());
@@ -234,7 +238,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             //add validation results to log to send to datasource owner
             harvestLog.info("Validation results for catalog {}:", catalog.getId());
-            if(validationResults != null) {
+            if (validationResults != null) {
                 for (String validationResult : validationResults) {
                     harvestLog.info(validationResult);
                 }
@@ -243,7 +247,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             }
         }
 
-        if(notificationService != null) {
+        if (notificationService != null) {
             //get contents from harvest log file
             notificationService.sendValidationResultNotification(
                     notificationEmailSender,
@@ -266,14 +270,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     /**
      * Add extra fields to the dataset to help visualization.
-     *
+     * <p>
      * <p>Assume that description contains basic htmltags. Swap description and descriptionFormatted and clean description. </p>
      *
      * @param dataset the dataset to enhance.
      */
 
     private void addDisplayFields(Dataset dataset) {
-        if (dataset == null || dataset.getDescription() == null)  {
+        if (dataset == null || dataset.getDescription() == null) {
             return;
         }
 
@@ -282,7 +286,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         final Map<String, String> descriptionCleaned = new HashMap<>();
 
         // remove formatting on description
-        dataset.getDescription().forEach( (key, value) -> {
+        dataset.getDescription().forEach((key, value) -> {
             descriptionCleaned.put(key, HtmlCleaner.cleanAllHtmlTags(value));
         });
 
@@ -290,7 +294,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     DatasetHarvestRecord findLastDatasetHarvestRecordWithContent(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
-        MatchQueryBuilder hasDatasetId = QueryBuilders.matchQuery("datasetId", dataset.getId());
+        TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
         ExistsQueryBuilder hasDatasetValue = QueryBuilders.existsQuery("dataset");
 
         BoolQueryBuilder datasetWithValueQuery = QueryBuilders.boolQuery();
@@ -308,8 +312,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             DatasetHarvestRecord lastHarvestRecord =
                     gson.fromJson(lastDatasetRecordResponse.getHits().getAt(0).getSourceAsString(), DatasetHarvestRecord.class);
-            if (lastHarvestRecord != null) {
-                logger.info("Found {} harvested at {}", lastHarvestRecord.getDatasetId(), dateFormat.format(lastHarvestRecord.getDate()));
+            if (lastHarvestRecord != null && lastHarvestRecord.getDatasetId().equals(dataset.getId())) {
+                logger.debug("Found {} harvested at {}", lastHarvestRecord.getDatasetId(), dateFormat.format(lastHarvestRecord.getDate()));
 
                 return lastHarvestRecord;
             }
@@ -319,16 +323,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return null;
     }
 
-    DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch elasticsearch, Gson gson){
+    DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
 
-        MatchQueryBuilder hasDatasetId = QueryBuilders.matchQuery("datasetId", dataset.getId());
+        TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
         logger.info("findFirstDataset: {}", hasDatasetId.toString());
 
         SearchResponse firstDatasetRecordResponse = elasticsearch.getClient()
                 .prepareSearch(HARVEST_INDEX).setTypes("dataset")
                 .setQuery(hasDatasetId)
                 .addSort("date", SortOrder.ASC)
-                .setSize(5).get();
+                .setSize(1).get();
 
         logger.debug("find first dataset harvest record query: {}", firstDatasetRecordResponse.getHits().toString());
 
@@ -361,27 +365,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 .setSize(1).get();
 
         if (lastCatalogRecordResponse.getHits().getTotalHits() > 0) {
-            CatalogHarvestRecord lastCatalogRecord =
-                    gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
+            try {
+                CatalogHarvestRecord lastCatalogRecord =
+                        gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
 
-            if (lastCatalogRecord.getCatalogUri().equals(thisCatalogRecord.getCatalogUri())) {
-                logger.info("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
-                logger.trace("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
+                if (lastCatalogRecord.getCatalogUri().equals(thisCatalogRecord.getCatalogUri())) {
+                    logger.info("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
+                    logger.trace("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
 
-                Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
-                missingUris.removeAll(thisCatalogRecord.getValidDatasetUris());
-                if (missingUris.size() > 0) {
-                    logger.info("There are {} datasets that were not harvested this time", missingUris.size());
+                    Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
+                    missingUris.removeAll(thisCatalogRecord.getValidDatasetUris());
+                    if (missingUris.size() > 0) {
+                        logger.info("There are {} datasets that were not harvested this time", missingUris.size());
 
-                    for (String uri : missingUris) {
-                        DatasetLookup lookup = findLookupDataset(elasticsearch.getClient(), uri, gson);
-                        if (lookup != null && lookup.getDatasetId() != null) {
-                            elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
-                            logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
-                            stats.setDeletes(stats.getDeletes() + 1);
+                        for (String uri : missingUris) {
+                            DatasetLookup lookup = findLookupDataset(elasticsearch.getClient(), uri, gson);
+                            if (lookup != null && lookup.getDatasetId() != null) {
+                                elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
+                                logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
+                                stats.setDeletes(stats.getDeletes() + 1);
+                            }
                         }
                     }
                 }
+            } catch (JsonParseException e) {
+                logger.error("Unable to parse catalogHarvestRecord: {} ", lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString());
             }
         }
     }
@@ -432,7 +440,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return result;
     }
 
-    DatasetLookup findOrCreateDatasetLookup(Dataset dataset, Elasticsearch elasticsearch, Gson gson, ChangeInformation stats, Date harvestTime) {
+    DatasetLookup findOrCreateDatasetLookupAndUpdateDatasetId(Dataset dataset, Elasticsearch elasticsearch, Gson gson, ChangeInformation stats, Date harvestTime) {
         String datasetId = null;
 
         // get dataset lookup entry
@@ -455,7 +463,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             datasetId = lookupEntry.getDatasetId();
             logger.debug("existing dataset {} with harvestUri {} identified", datasetId, dataset.getUri());
 
-            if (lookupEntry.getHarvest() == null) { // compensating in case harvest does'not exist in existing lookup -- todo delete
+            if (lookupEntry.getHarvest() == null) {
                 lookupEntry.setHarvest(createHarvestMetadata());
             }
 
@@ -465,13 +473,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         dataset.setId(lookupEntry.getDatasetId());
 
         lookupEntry.getHarvest().setLastHarvested(harvestTime);
-
-        // compensate if we do not have first harvest date (handles old way harvest records. TODO delete when all production datasets are harvested
-        if (lookupEntry.getHarvest().getFirstHarvested() == null) {
-            lookupEntry.getHarvest().setFirstHarvested(getFirstHarvestedDate(dataset, elasticsearch, gson));
-
-            // todo update datasetharvestrecords to only contain changed dataset?
-        }
 
         return lookupEntry;
     }
@@ -485,40 +486,123 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return null;
     }
 
+    // TODO remove after run in production
+    DatasetHarvestRecord updateDatasetHarvestRecordsAndReturnLastChanged(Dataset dataset, Elasticsearch elasticsearch, Gson gson, BulkRequestBuilder bulkRequest, DatasetLookup lookupEntry) {
+
+        logger.info("update dataset harvest records for dataset {} - {}", dataset.getId(), dataset.getUri());
+        TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
+        logger.info("findAllDatasetHarvestRecords and nullify not changed datasets: {}", hasDatasetId.toString());
+        boolean runner = true;
+        List<DatasetHarvestRecord> allRecords = new ArrayList<>();
+        Map<DatasetHarvestRecord, String> recordIdMap = new HashMap<>();
+        int from = 0;
+        int size = 20;
+
+        while (runner) {
+            SearchResponse harvestRecordResponse = elasticsearch.getClient()
+                    .prepareSearch(HARVEST_INDEX).setTypes("dataset")
+                    .setQuery(hasDatasetId)
+                    .addSort("date", SortOrder.ASC)
+                    .setFrom(from)
+                    .setSize(size).get();
+
+            int numberOfHits = harvestRecordResponse.getHits().hits().length;
+            if (numberOfHits > 0) {
+                for (int i = 0; i < numberOfHits; i++) {
+                    DatasetHarvestRecord harvestRecord =
+                            gson.fromJson(harvestRecordResponse.getHits().getAt(i).getSourceAsString(), DatasetHarvestRecord.class);
+
+                    if (harvestRecord.getDatasetId().equals(dataset.getId())) {
+                        String recordId = harvestRecordResponse.getHits().getAt(i).getId();
+                        recordIdMap.put(harvestRecord, recordId);
+                        allRecords.add(harvestRecord);
+                    }
+                }
+
+                from += size;
+            } else {
+                runner = false;
+            }
+
+        }
+        DatasetHarvestRecord previousRecord = null;
+        DatasetHarvestRecord lastChangedRecord = null;
+        List<DatasetHarvestRecord> recordsWithNoChange = new ArrayList<>();
+        for (DatasetHarvestRecord record : allRecords) {
+
+            if (previousRecord != null) {
+                if (isChanged(previousRecord, record.getDataset(), gson)) {
+                    lookupEntry.getHarvest().getChanged().add(record.getDate());
+                    lastChangedRecord = record;
+                    lookupEntry.getHarvest().setLastChanged(record.getDate());
+                } else {
+                    recordsWithNoChange.add(record);
+                }
+            }
+
+            previousRecord = record;
+        }
+        logger.info("Found {} harvest records to nullify ", recordsWithNoChange.size());
+
+        recordsWithNoChange.forEach(record -> {
+            String recordId = recordIdMap.get(record);
+            logger.info("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
+            record.setDataset(null);
+            record.setValidationStatus(null);
+            bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", recordId, record, gson));
+        });
+
+        return lastChangedRecord;
+
+    }
+
+
     void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch,
-                                             List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest,
-                                             Date harvestTime, Dataset dataset, ChangeInformation stats) {
+                                     List<String> catalogValidationResults, Gson gson, BulkRequestBuilder bulkRequest,
+                                     Date harvestTime, Dataset dataset, ChangeInformation stats) {
 
         try {
-            DatasetLookup lookupEntry = findOrCreateDatasetLookup(dataset, elasticsearch, gson, stats, harvestTime);
+            DatasetLookup lookupEntry = findOrCreateDatasetLookupAndUpdateDatasetId(dataset, elasticsearch, gson, stats, harvestTime);
 
-            DatasetHarvestRecord lastHarvestWithContent = findLastDatasetHarvestRecordWithContent(dataset, elasticsearch, gson);
+            if (!lookupEntry.getDatasetId().equals(dataset.getId())) {
+                throw new Exception(String.format("LookupEntry {} does not match datasetid {}", lookupEntry.getDatasetId(), dataset.getId()));
+            }
+
+            DatasetHarvestRecord lastHarvestRecordWithContent;
+
+            // compensate if we do not have first harvest date (handles old way) harvest records.
+            if (lookupEntry.getHarvest().getFirstHarvested() == null) {
+                // this should be removed - TODO
+                logger.info("Compensating actions for dataset: {}", dataset.getUri());
+                lookupEntry.getHarvest().setFirstHarvested(getFirstHarvestedDate(dataset, elasticsearch, gson));
+                lastHarvestRecordWithContent = updateDatasetHarvestRecordsAndReturnLastChanged(dataset, elasticsearch, gson, bulkRequest, lookupEntry);
+            } else {
+                // this should remain
+                lastHarvestRecordWithContent = findLastDatasetHarvestRecordWithContent(dataset, elasticsearch, gson);
+            }
 
             boolean isChanged = true;
 
-            if (lastHarvestWithContent != null) {
-                // detect changes
-                isChanged = isChanged(lastHarvestWithContent, dataset, gson);
-
-                if (! isChanged ) { // compensating
-                    List<Date> changeDates = lookupEntry.getHarvest().getChanged();
-                    if (!changeDates.contains(lastHarvestWithContent.getDate())) {
-                        lookupEntry.getHarvest().getChanged().add(lastHarvestWithContent.getDate());
-                    }
+            if (lastHarvestRecordWithContent != null) {
+                if (!lastHarvestRecordWithContent.getDatasetId().equals(dataset.getId())) {
+                    throw new Exception(String.format("LastHarvestRecordWithChange {} does not match datasetid {}", lastHarvestRecordWithContent.getDatasetId(), dataset.getId()));
                 }
+                // detect changes
+                isChanged = isChanged(lastHarvestRecordWithContent, dataset, gson);
             }
 
             if (isChanged) {
                 lookupEntry.getHarvest().getChanged().add(harvestTime);
+                lookupEntry.getHarvest().setLastChanged(harvestTime);
             }
 
             // save lookup entry
-            bulkRequest.add(createBulkRequest(HARVEST_INDEX,"lookup", dataset.getUri(), lookupEntry, gson));
+            bulkRequest.add(createBulkRequest(HARVEST_INDEX, "lookup", dataset.getUri(), lookupEntry, gson));
 
             // create a new dataset harvest record
-            DatasetHarvestRecord record = createDatasetHarvestRecord(dataset, dcatSource, isChanged, harvestTime, validationResults);
+            DatasetHarvestRecord record = createDatasetHarvestRecord(dataset, dcatSource, isChanged, harvestTime, catalogValidationResults);
             // save dataset harvest record
-            bulkRequest.add(createBulkRequest(HARVEST_INDEX,"dataset", null, record, gson));
+            bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", null, record, gson));
 
             // add harvest metadata to dataset
             dataset.setHarvest(lookupEntry.getHarvest());
@@ -528,31 +612,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             bulkRequest.add(createBulkRequest(DCAT_INDEX, DATASET_TYPE, dataset.getId(), dataset, gson));
 
         } catch (Exception e) {
-            logger.error("Unable to index {}. Reason: {}", dataset.getUri(), e.getMessage() );
+            logger.error("Unable to index {}. Reason: {}", dataset.getUri(), e.getMessage(), e);
         }
 
     }
 
-    DatasetHarvestRecord createDatasetHarvestRecord(Dataset dataset, DcatSource dcatSource, boolean isChanged, Date harvestTime, List<String> validationResults) {
+    DatasetHarvestRecord createDatasetHarvestRecord(Dataset dataset, DcatSource dcatSource, boolean isChanged, Date harvestTime, List<String> catalogValidationResults) {
         DatasetHarvestRecord record = new DatasetHarvestRecord();
 
         record.setDatasetId(dataset.getId());
         record.setDatasetUri(dataset.getUri());
         record.setDcatSourceId(dcatSource.getId());
 
-        if (isChanged) {
-            record.setDataset(dataset);
-        }
         record.setDate(harvestTime);
 
-        record.setValidationStatus(extractValidationStatus(getValidationMessages(validationResults, dataset)));
+        if (isChanged) {
+            record.setDataset(dataset);
+            record.setValidationStatus(extractValidationStatus(filterValidationMessagesForDataset(catalogValidationResults, dataset)));
+        }
 
         return record;
     }
 
     IndexRequest createBulkRequest(String index, String type, String id, Object data, Gson gson) {
-        IndexRequest request =  id == null ?
-                    new IndexRequest(index, type) : new IndexRequest(index, type, id);
+        IndexRequest request = id == null ?
+                new IndexRequest(index, type) : new IndexRequest(index, type, id);
         request.source(gson.toJson(data));
 
         return request;
@@ -564,12 +648,93 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             return false;
         }
 
-        // compare json to check if the dataset objects are alike
-        String c1 = gson.toJson(currentDataset);
-        String c2  = gson.toJson(lastDatasetHarvestRecord.getDataset());
+        Dataset lastSavedDataset = lastDatasetHarvestRecord.getDataset();
 
-        return !c1.equals(c2);
+        if (lastSavedDataset == null) {
+            return false;
+        }
+
+        boolean isEqual = isJsonEqual(currentDataset, lastSavedDataset, gson);
+
+        if (!isEqual && (hasWrongOrgpath(currentDataset) || hasWrongOrgpath(lastSavedDataset))) {
+            // TODO HACK to fix earlier handling ov annet without orgnummer
+            correctOrgpath(currentDataset);
+            correctOrgpath(lastSavedDataset);
+
+            isEqual = isJsonEqual(currentDataset, lastSavedDataset, gson);
+        }
+
+        if (!isEqual && currentDataset.getContactPoint() != null && lastSavedDataset.getContactPoint() != null) { // TODO HACK to fix random generated contact point uris
+
+            List<Contact> contacts1 = currentDataset.getContactPoint();
+            List<Contact> contacts2 = lastSavedDataset.getContactPoint();
+
+            try {
+                currentDataset.setContactPoint(null);
+                lastSavedDataset.setContactPoint(null);
+
+                boolean isEqualExceptContacts = isJsonEqual(currentDataset, lastSavedDataset, gson);
+
+                if (isEqualExceptContacts) {
+                    Contact contact1 = contacts1.get(0);
+                    Contact contact2 = contacts2.get(0);
+
+                    if (contact1 != null && contact2 != null) {
+                        if (contact1.getUri().startsWith(AbstractBuilder.CONTACT_PREFIX) && contact2.getUri().startsWith(AbstractBuilder.CONTACT_PREFIX)) {
+
+                            isEqual = stringCompare(contact1.getEmail(), contact2.getEmail()) &&
+                                    stringCompare(contact1.getFullname(), contact2.getFullname()) &&
+                                    stringCompare(contact1.getHasTelephone(), contact2.getHasTelephone()) &&
+                                    stringCompare(contact1.getHasURL(), contact2.getHasURL()) &&
+                                    stringCompare(contact1.getOrganizationName(), contact2.getOrganizationName()) &&
+                                    stringCompare(contact1.getOrganizationUnit(), contact2.getOrganizationUnit());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                // If this occurs the contacts are not comparable.
+            } finally {
+                currentDataset.setContactPoint(contacts1);
+                lastSavedDataset.setContactPoint(contacts2);
+            }
+        }
+
+        return !isEqual;
     }
+
+    boolean hasWrongOrgpath(Dataset dataset) {
+        return dataset.getPublisher().getOrgPath().startsWith("/ANNET/http");
+    }
+
+    void correctOrgpath(Dataset dataset) {
+        if (hasWrongOrgpath(dataset)) {
+            dataset.getPublisher().setOrgPath("/ANNET/" + dataset.getPublisher().getName());
+            dataset.getCatalog().getPublisher().setOrgPath("/ANNET/" + dataset.getCatalog().getPublisher().getName());
+        }
+    }
+
+    boolean isJsonEqual(Dataset d1, Dataset d2, Gson gson) {
+        // compare json to check if the dataset objects are alike
+        String c1 = gson.toJson(d1);
+        String c2 = gson.toJson(d2);
+
+        return c1.equals(c2);
+    }
+
+    boolean stringCompare(String string1, String string2) {
+        if (string1 == null) {
+            if (string2 == null) {
+                return true;
+            }
+            return false;
+        } else {
+            if (string2 == null) {
+                return false;
+            }
+            return string1.equals(string2);
+        }
+    }
+
 
     ValidationStatus extractValidationStatus(List<String> messages) {
         if (messages != null && !messages.isEmpty()) {
@@ -585,16 +750,16 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
 
-    List<String> getValidationMessages(List<String> validationResults, Dataset dataset) {
+    List<String> filterValidationMessagesForDataset(List<String> catalogValidationResults, Dataset dataset) {
         List<String> messages = null;
-        if (validationResults != null) {
+        if (catalogValidationResults != null) {
             try {
-                messages = validationResults.stream().filter(m ->
+                messages = catalogValidationResults.stream().filter(m ->
                         m.contains(dataset.getUri()) && m.contains("className='Dataset'")).collect(Collectors.toList());
                 logger.debug("messages: {}", messages.toString());
                 if (dataset.getDistribution() != null) {
                     for (Distribution distribution : dataset.getDistribution()) {
-                        List<String> distMessages = validationResults.stream()
+                        List<String> distMessages = catalogValidationResults.stream()
                                 .filter(m -> m.contains(distribution.getUri()) && m.contains("className='Distribution'"))
                                 .collect(Collectors.toList());
                         messages.addAll(distMessages);
@@ -652,7 +817,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         if (!elasticsearch.indexExists(indexName)) {
             logger.info("Creating index: " + indexName);
             elasticsearch.createIndex(indexName);
-        }else{
+        } else {
             logger.debug("Index exists: " + indexName);
         }
     }

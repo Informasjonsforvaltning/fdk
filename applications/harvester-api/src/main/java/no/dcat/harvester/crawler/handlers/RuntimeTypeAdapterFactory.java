@@ -32,6 +32,7 @@ package no.dcat.harvester.crawler.handlers;
         import com.google.gson.reflect.TypeToken;
         import com.google.gson.stream.JsonReader;
         import com.google.gson.stream.JsonWriter;
+        import no.dcat.datastore.domain.dcat.Publisher;
 
 /**
  * Adapts values whose runtime type may differ from their declaration type. This
@@ -201,6 +202,12 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
             @Override public R read(JsonReader in) throws IOException {
                 JsonElement jsonElement = Streams.parse(in);
                 JsonElement labelJsonElement = jsonElement.getAsJsonObject().remove(typeFieldName);
+
+                // HACK TO force subptye
+                if (labelJsonElement == null) {
+                    labelJsonElement = new JsonPrimitive(Publisher.class.getName());
+                }
+
                 if (labelJsonElement == null) {
                     throw new JsonParseException("cannot deserialize " + baseType
                             + " because it does not define a field named " + typeFieldName);

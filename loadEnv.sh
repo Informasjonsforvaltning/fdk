@@ -37,6 +37,7 @@ clustername=$3
 
 targetElasticUrl=http://localhost:9200
 
+
 dcatfile=ppe_dcat_data.json
 harvestfile=ppe_harvest_data.json
 
@@ -45,7 +46,7 @@ DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 echo "Starting dump ${DATETIME}"
 
 # prepare target environment
-echo "Prepare target environment"
+echo "Prepare target environment (deletes all objects and recreates mapping and indexes"
 java -jar applications/migration/target/migration-0.2.4-SNAPSHOT-exec.jar ${host} ${port} ${clustername}
 
 # recreate data in target environment
@@ -53,6 +54,8 @@ echo "Copy file into target environment"
 elasticdump --input=${dcatfile} --output=${targetElasticUrl}/dcat --type=data
 elasticdump --input=ppe_harvest_lookup.json --output=${targetElasticUrl}/harvest --type=data
 elasticdump --input=ppe_harvest_catalog.json --output=${targetElasticUrl}/harvest --type=data
+elasticdump --input=ppe_harvest_dataset.json --output=${targetElasticUrl}/harvest --type=data
+
 
 
 ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`

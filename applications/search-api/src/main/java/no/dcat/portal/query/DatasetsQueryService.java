@@ -3,15 +3,15 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
-import no.dcat.shared.Dataset;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.dcat.shared.Publisher;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosConcept;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Date;
 
 
 /**
@@ -41,6 +42,8 @@ import java.net.URLDecoder;
 @RestController
 public class DatasetsQueryService extends ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     public static final String INDEX_DCAT = "dcat";
 
@@ -94,6 +97,9 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
                                          @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
                                          @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
+                                         @RequestParam(value = "orgPath", defaultValue ="", required = false) String orgPath,
+                                         @RequestParam(value = "firstHarvested", defaultValue="0", required = false) int firstHarvested,
+                                         @RequestParam(value = "lastChanged", defaultValue="0", required = false) int lastChanged,
                                          @RequestParam(value = "from", defaultValue = "0") int from,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                          @RequestParam(value = "lang", defaultValue = "nb") String lang,
@@ -152,7 +158,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -164,7 +170,10 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
-                .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"));
+                .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
+                .addAggregation(temporalAggregation("last7days", 7, "harvest.firstHarvested"))
+                .addAggregation(temporalAggregation("last30days", 30, "harvest.firstHarvested"))
+                .addAggregation(temporalAggregation("last365days", 365, "harvest.firstHarvested"));
 
         // Handle attempting to sort on score, because any sorting removes score i.e. relevance from the search.
         if (sortfield.compareTo("score") != 0) {
@@ -179,6 +188,22 @@ public class DatasetsQueryService extends ElasticsearchService {
         // return response
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
+
+    AggregationBuilder temporalAggregation(String name, int days, String dateField) {
+
+
+        AggregationBuilder filterAggregation = AggregationBuilders.filter(name).filter(temporalRange(days, dateField));
+
+        return filterAggregation;
+    }
+
+    RangeQueryBuilder temporalRange(int days, String dateField) {
+        long now = new Date().getTime();
+        long DAY_IN_MS = 1000 * 3600 *24;
+
+        return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+    }
+
 
     private void addSort(@RequestParam(value = "sortfield", defaultValue = "source") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
@@ -225,7 +250,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search, String orgPath, int firstHarvested, int lastChanged) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -265,6 +290,24 @@ public class DatasetsQueryService extends ElasticsearchService {
             }
 
             boolQuery.filter(boolFilter3);
+        }
+
+        if (!StringUtils.isEmpty(orgPath)) {
+            BoolQueryBuilder orgPathFilter = QueryBuilders.boolQuery();
+            orgPathFilter.must(QueryBuilders.termQuery("publisher.orgPath", orgPath));
+            boolQuery.filter(orgPathFilter);
+        }
+
+        if (firstHarvested > 0) {
+            BoolQueryBuilder firstHarvestedFilter = QueryBuilders.boolQuery();
+            firstHarvestedFilter.must(temporalRange(firstHarvested, "harvest.firstHarvested"));
+            boolQuery.filter(firstHarvestedFilter);
+        }
+
+        if (lastChanged > 0) {
+            BoolQueryBuilder lastChangedFilter = QueryBuilders.boolQuery();
+            lastChangedFilter.must(temporalRange(lastChanged, "harvest.lastChanged"));
+            boolQuery.filter(lastChangedFilter);
         }
 
         return boolQuery;

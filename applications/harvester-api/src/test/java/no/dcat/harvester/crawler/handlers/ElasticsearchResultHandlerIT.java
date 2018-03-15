@@ -203,5 +203,14 @@ public class ElasticsearchResultHandlerIT {
     }
 
 
+    @Test
+	public void harvestDifiData() {
+
+
+
+	}
+
+
+
 
 }
