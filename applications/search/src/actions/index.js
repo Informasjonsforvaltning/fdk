@@ -1,6 +1,6 @@
 import { CALL_API } from '../middleware/api';
 import * as actions from '../constants/ActionTypes';
-import { addOrReplaceParamWithoutURL, addOrReplaceParam } from './../utils/addOrReplaceUrlParam';
+import { addOrReplaceParam } from './../utils/addOrReplaceUrlParam';
 
 function fetchApi(url, types) {
   return {
@@ -17,21 +17,21 @@ function shouldFetchApi(state) {
 
 export function fetchDatasetsIfNeeded(datasetsURL) {
   // add static size parameter
-  datasetsURL = addOrReplaceParam(datasetsURL, 'size', '50');
+  const url = addOrReplaceParam(datasetsURL, 'size', '50');
   return (dispatch, getState) =>
     shouldFetchApi(
       getState().datasets) && dispatch(
-      fetchApi(datasetsURL, [actions.DATASETS_REQUEST, actions.DATASETS_SUCCESS, actions.DATASETS_FAILURE])
+      fetchApi(url, [actions.DATASETS_REQUEST, actions.DATASETS_SUCCESS, actions.DATASETS_FAILURE])
     );
 }
 
 export function fetchTermsIfNeeded(termsURL) {
   // add static size parameter
-  termsURL = addOrReplaceParam(termsURL, 'size', '50');
+  const url = addOrReplaceParam(termsURL, 'size', '50');
   return (dispatch, getState) =>
     shouldFetchApi(
       getState().terms) && dispatch(
-      fetchApi(termsURL, [actions.TERMS_REQUEST, actions.TERMS_SUCCESS, actions.TERMS_FAILURE])
+      fetchApi(url, [actions.TERMS_REQUEST, actions.TERMS_SUCCESS, actions.TERMS_FAILURE])
     );
 }
 
@@ -45,10 +45,10 @@ export function fetchThemesIfNeeded() {
 
 export function fetchPublishersIfNeeded() {
   return (dispatch, getState) =>
-  shouldFetchApi(
-    getState().publishers) && dispatch(
-    fetchApi('/publisher', [actions.PUBLISHERS_REQUEST, actions.PUBLISHERS_SUCCESS, actions.PUBLISHERS_FAILURE])
-  );
+    shouldFetchApi(
+      getState().publishers) && dispatch(
+      fetchApi('/publisher', [actions.PUBLISHERS_REQUEST, actions.PUBLISHERS_SUCCESS, actions.PUBLISHERS_FAILURE])
+    );
 }
 
 export function publishDataset(value) {

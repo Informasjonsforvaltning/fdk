@@ -74,21 +74,6 @@ export default class App extends React.Component {
     const langCode = getLanguageFromUrl();
     const langParam = langCode ? `?lang=${langCode}` : '';
 
-    const childWithProp =
-      React.Children.map(this.props.children, child => React.cloneElement(child, {
-        selectedLanguageCode: this.state.selectedLanguageCode
-      }));
-    /*
-     <Switch>
-     <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-     <Route exact path="/datasets" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-     <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-     <Route exact path="/datasets/:id" component={DetailsPage} />
-     <Route exact path="/reports" component={ReportsPage} />
-     <Route path="/about" component={AboutPage} />
-     <Route path="/about-registration" component={GetStartedPage} />
-     </Switch>
-     */
     return (
       <div>
         <div>
@@ -201,7 +186,7 @@ export default class App extends React.Component {
         <div className="app-routes">
           <Switch>
             <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
-            <Route exact path="/concepts" render={ (props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route exact path="/concepts" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
             <Route exact path="/datasets/:id" component={DetailsPage} />
             <Route exact path="/reports" component={ReportsPage} />
             <Route exact path="/about" component={AboutPage} />

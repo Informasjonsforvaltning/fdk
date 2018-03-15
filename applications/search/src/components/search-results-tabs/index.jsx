@@ -24,7 +24,7 @@ const ResultsTabs  = (props) => {
         <ul className="search-results-tabs">
           <li className={(location.pathname === '/') ? 'li-active' : ''}>
             <Link
-              to={{ pathname: '/', search: search}}
+              to={{ pathname: '/', search}}
               aria-label="Link til side for datasett:"
             >
               {localization.page.datasetTab}
@@ -33,11 +33,11 @@ const ResultsTabs  = (props) => {
           </li>
           <li className={(location.pathname === '/concepts') ? 'li-active' : ''}>
             <Link
-              to={{ pathname: '/concepts', search: search}}
+              to={{ pathname: '/concepts', search}}
               aria-label="Link til side for begrep:"
             >
               {localization.page.termTab}
-                <span>&nbsp;({countTerms})</span>
+              <span>&nbsp;({countTerms})</span>
             </Link>
           </li>
         </ul>
@@ -47,11 +47,9 @@ const ResultsTabs  = (props) => {
 }
 
 ResultsTabs.defaultProps = {
-  isSelected: false
 };
 
 ResultsTabs.propTypes = {
-  isSelected: PropTypes.bool
 };
 
 export default ResultsTabs;

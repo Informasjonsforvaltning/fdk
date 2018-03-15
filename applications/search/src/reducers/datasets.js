@@ -10,7 +10,7 @@ export default function datasets(state = { isFetchingDatasets: false, datasetIte
     case DATASETS_SUCCESS:
       const orgs = action.response.data.aggregations.orgPath.buckets;
       const flat = _(orgs).forEach(f => {
-        let filteredOrgs = _(orgs).filter(g=>g.key.substring(0,g.key.lastIndexOf('/'))===f.key).value();
+        const filteredOrgs = _(orgs).filter(g=>g.key.substring(0,g.key.lastIndexOf('/'))===f.key).value();
         filteredOrgs.forEach(item => {
           item.hasParent = true
         })

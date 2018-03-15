@@ -19,16 +19,14 @@ import ResultsTabs from '../../components/search-results-tabs';
 import { removeValue, addValue } from '../../utils/stringUtils';
 import './index.scss';
 
-const ReactGA = require('react-ga');
-
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const searchQuery = queryString.parse(props.location.search) || {
-        searchQuery: {
-          size: 50
-        },
-        showFilterModal: false,
+      searchQuery: {
+        size: 50
+      },
+      showFilterModal: false,
     }
 
     this.state = {
@@ -46,7 +44,6 @@ class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    const datasetsURL = '/datasets';
     this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${props.location.search}`));
     this.props.dispatch(fetchTermsIfNeeded(`/terms/${props.location.search}`));
     this.props.dispatch(fetchThemesIfNeeded());
@@ -55,13 +52,11 @@ class SearchPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { selectedLanguageCode } = nextProps;
-    const datasetQuery = `datasets/${nextProps.location.search}`;
     if(nextProps.location.search !== this.props.location.search) {
       this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`));
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${nextProps.location.search}`));
     }
     if(selectedLanguageCode !== this.props.selectedLanguageCode) {
-      console.log("componentwillreceiveProps", JSON.stringify(selectedLanguageCode));
       if (selectedLanguageCode === 'nb') {
         this.setState(
           {
@@ -84,7 +79,7 @@ class SearchPage extends React.Component {
     }
   }
 
-  handleSearchSubmit(event) {
+  handleSearchSubmit() {
     this.props.history.push(`?${qs.stringify(this.state.searchQuery, { skipNulls: true })}`);
   }
 
@@ -244,8 +239,8 @@ class SearchPage extends React.Component {
   }
 
   handlePageChange(data) {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * 50);
+    const selected = data.selected;
+    const offset = Math.ceil(selected * 50);
     if (offset === 0) {
       this.setState(
         ({

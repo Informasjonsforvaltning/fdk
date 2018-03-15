@@ -15,7 +15,7 @@ export default function publishers(state = { isFetchingPublishers: false, publis
       return {
         ...state,
         isFetchingPublishers: false,
-        publisherItems: objFromArray //action.response.data.hits.hits // action.response.data
+        publisherItems: objFromArray // action.response.data.hits.hits // action.response.data
       }
     case PUBLISHERS_FAILURE:
       return {

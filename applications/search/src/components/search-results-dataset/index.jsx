@@ -221,7 +221,7 @@ export default class ResultsDataset extends React.Component {
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
                     initialPage={page}
-                    disableInitialCallback={true}
+                    disableInitialCallback
                   />
                 </div>
               </div>

@@ -6,7 +6,7 @@ import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 
 import FilterOption from '../search-results-filterbox-option';
-//import './../search-publishers-tree/index.scss';
+// import './../search-publishers-tree/index.scss';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
@@ -59,9 +59,9 @@ export default class SearchPublishersTree extends React.Component {
   }
 
   handleClick(i) {
-    let [...collapsedBookkeeping] = this.state.collapsedBookkeeping;
+    const [...collapsedBookkeeping] = this.state.collapsedBookkeeping;
     collapsedBookkeeping[i] = !collapsedBookkeeping[i];
-    this.setState({collapsedBookkeeping: collapsedBookkeeping});
+    this.setState({collapsedBookkeeping});
   }
 
   // @params: the function has no param but the query need dataset id from prop
@@ -102,7 +102,7 @@ export default class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.orgPath === orgPath
         }
       );
-      //const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
+      // const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
       let name = node.key;
       const currentPublisher = publishers[name];
       if (currentPublisher) {
@@ -161,7 +161,7 @@ export default class SearchPublishersTree extends React.Component {
         }
       );
       const collapsed = SearchPublishersTree.isItemCollapsed(node.key, activeFilter);
-      //const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
+      // const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
       let name = node.key;
       const currentPublisher = publishers[node.key];
       if (currentPublisher) {
@@ -213,7 +213,7 @@ export default class SearchPublishersTree extends React.Component {
         <div className="fdk-panel__header">{title}</div>
         <div className="fdk-panel__content">
           <div className="fdk-items-list">
-        {this._renderTree()}
+            {this._renderTree()}
           </div>
         </div>
       </div>
