@@ -7,6 +7,7 @@ import localization from '../localization';
 import SearchHitItem from '../search-results-hit-item';
 import SelectDropdown from '../search-results-selector-dropdown';
 import FilterBox from '../search-results-filterbox';
+import FilterBoxPublishers from '../search-results-filterbox-publishers';
 
 export default class ResultsDataset extends React.Component {
   constructor(props) {
@@ -108,7 +109,20 @@ export default class ResultsDataset extends React.Component {
   }
 
   render() {
-    const { datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, onSort, onPageChange, searchQuery, themesItems, hitsPerPage } = this.props;
+    const {
+      datasetItems,
+      onFilterTheme,
+      onFilterAccessRights,
+      onFilterPublisher,
+      onFilterPublisherHierarchy,
+      onSort,
+      onPageChange,
+      searchQuery,
+      themesItems,
+      hitsPerPage,
+      publisherArray,
+      publishers
+    } = this.props;
     const page = (searchQuery && searchQuery.from) ? (searchQuery.from / hitsPerPage) : 0;
     const pageCount = Math.ceil( ((datasetItems && datasetItems.hits) ? datasetItems.hits.total : 1) / hitsPerPage);
 
@@ -176,6 +190,13 @@ export default class ResultsDataset extends React.Component {
                         filter={datasetItems.aggregations.publisherCount}
                         onClick={onFilterPublisher}
                         activeFilter={searchQuery.publisher}
+                      />
+                      <FilterBoxPublishers
+                        title={localization.facet.organisation}
+                        filter={publisherArray}
+                        onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                        activeFilter={searchQuery.publisherOrgPath}
+                        publishers={publishers}
                       />
                     </div>
                   }

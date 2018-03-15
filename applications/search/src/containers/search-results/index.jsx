@@ -9,7 +9,8 @@ import localization from '../../components/localization';
 import {
   fetchDatasetsIfNeeded,
   fetchTermsIfNeeded,
-  fetchThemesIfNeeded
+  fetchThemesIfNeeded,
+  fetchPublishersIfNeeded
 } from '../../actions/index';
 import ResultsDataset from '../../components/search-results-dataset';
 import ResultsConcepts from '../../components/search-concepts-results';
@@ -39,6 +40,7 @@ class SearchPage extends React.Component {
     this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
     this.handleDatasetFilterAccessRights = this.handleDatasetFilterAccessRights.bind(this);
     this.handleDatasetFilterPublisher = this.handleDatasetFilterPublisher.bind(this);
+    this.handleDatasetFilterPublisherHierarchy = this.handleDatasetFilterPublisherHierarchy.bind(this);
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
@@ -48,6 +50,7 @@ class SearchPage extends React.Component {
     this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${props.location.search}`));
     this.props.dispatch(fetchTermsIfNeeded(`/terms/${props.location.search}`));
     this.props.dispatch(fetchThemesIfNeeded());
+    this.props.dispatch(fetchPublishersIfNeeded());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -181,6 +184,34 @@ class SearchPage extends React.Component {
     }
   }
 
+  handleDatasetFilterPublisherHierarchy(event) {
+    const { publisherOrgPath } = this.state.searchQuery;
+    if (event.target.checked) {
+      this.setState(
+        ({
+          searchQuery: {
+            ...this.state.searchQuery,
+            publisherOrgPath: event.target.value,
+            from: undefined
+          }
+        }),
+        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+    else {
+      this.setState(
+        ({
+          searchQuery: {
+            ...this.state.searchQuery,
+            publisherOrgPath: removeValue(publisherOrgPath, event.target.value),
+            from: undefined
+          }
+        }),
+        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+  }
+
   handleDatasetSort(event) {
     let sortField = event.field;
 
@@ -213,7 +244,6 @@ class SearchPage extends React.Component {
   }
 
   handlePageChange(data) {
-    console.log("handlePageChange", JSON.stringify(data));
     let selected = data.selected;
     let offset = Math.ceil(selected * 50);
     if (offset === 0) {
@@ -248,7 +278,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const { selectedLanguageCode, datasetItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems }  = this.props;
+    const { selectedLanguageCode, datasetItems, publisherCountItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems, publisherItems }  = this.props;
 
     return (
       <div className="container">
@@ -279,6 +309,7 @@ class SearchPage extends React.Component {
                 onFilterTheme={this.handleDatasetFilterThemes}
                 onFilterAccessRights={this.handleDatasetFilterAccessRights}
                 onFilterPublisher={this.handleDatasetFilterPublisher}
+                onFilterPublisherHierarchy={this.handleDatasetFilterPublisherHierarchy}
                 onSort={this.handleDatasetSort}
                 onPageChange={this.handlePageChange}
                 searchQuery={this.state.searchQuery}
@@ -286,6 +317,8 @@ class SearchPage extends React.Component {
                 showFilterModal={this.state.showFilterModal}
                 closeFilterModal={this.close}
                 hitsPerPage={50}
+                publisherArray={publisherCountItems}
+                publishers={publisherItems}
                 {...props}
               />)
             }
@@ -318,10 +351,11 @@ SearchPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-function mapStateToProps({ datasets, terms, themes }) {
+function mapStateToProps({ datasets, terms, themes, publishers }) {
 
-  const { datasetItems, isFetchingDatasets } = datasets || {
-    datasetItems: null
+  const { datasetItems, publisherCountItems, isFetchingDatasets,  } = datasets || {
+    datasetItems: null,
+    publisherCountItems: null
   }
 
   const { termItems, isFetchingTerms } = terms || {
@@ -332,13 +366,20 @@ function mapStateToProps({ datasets, terms, themes }) {
     themesItems: null
   }
 
+  const { publisherItems, isFetchingPublishers } = publishers || {
+    publisherItems: null
+  }
+
   return {
     datasetItems,
+    publisherCountItems,
     isFetchingDatasets,
     termItems,
     isFetchingTerms,
     themesItems,
-    isFetchingThemes
+    isFetchingThemes,
+    publisherItems,
+    isFetchingPublishers
   }
 }
 

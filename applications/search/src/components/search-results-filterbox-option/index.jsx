@@ -4,7 +4,7 @@ import { getTranslateText } from '../../utils/translateText';
 
 const FilterOption = (props) => {
   const {
-    itemKey, label, count, onClick, active, themesItems
+    itemKey, value, label, count, onClick, active, themesItems, displayClass
   } = props;
 
   const optionLabel = `${label.charAt(0)}${label.substring(1).toLowerCase()}`;
@@ -23,19 +23,22 @@ const FilterOption = (props) => {
 
   const id = encodeURIComponent((itemKey + Math.random()));
 
+  let inputRef;
+
   return (
-    <div className="checkbox">
+    <div className={`checkbox ${displayClass}`}>
       {
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-      }<label tabIndex="0" role="button" htmlFor={id}>
+      }<label className="checkbox_label" onKeyPress={() => { inputRef.click() }} tabIndex="0" role="button" htmlFor={id}>
         <input
+          ref={(input) => { inputRef = input; }}
           type="checkbox"
           id={id}
           tabIndex="-1"
           checked={active}
           onChange={(e) => onClick(e)}
           className={`list-group-item fdk-label fdk-label-default`}
-          value={label}
+          value={value}
         />
         <label className="checkbox-replacement" htmlFor={id} />
         {textLabel} ({count})

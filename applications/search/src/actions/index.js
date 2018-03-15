@@ -43,6 +43,14 @@ export function fetchThemesIfNeeded() {
     );
 }
 
+export function fetchPublishersIfNeeded() {
+  return (dispatch, getState) =>
+  shouldFetchApi(
+    getState().publishers) && dispatch(
+    fetchApi('/publisher', [actions.PUBLISHERS_REQUEST, actions.PUBLISHERS_SUCCESS, actions.PUBLISHERS_FAILURE])
+  );
+}
+
 export function publishDataset(value) {
   return dispatch =>
     dispatch({

@@ -38,6 +38,7 @@ class FilterBox extends React.Component {
         <FilterOption
           key={index}
           itemKey={index}
+          value={item.key}
           label={item.key}
           count={item.doc_count}
           onClick={onClick}
