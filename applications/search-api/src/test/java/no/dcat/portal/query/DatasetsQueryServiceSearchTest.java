@@ -9,7 +9,9 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +55,8 @@ public class DatasetsQueryServiceSearchTest {
                 .setFrom(1).setSize(10))
                 .addSort("tema.nb.raw", SortOrder.ASC);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
+        sqs.search("query", "", "", "","",0, 0, 1, 10, "nb", "not_modified", "ascending");
     }
 
     /**
@@ -76,6 +80,8 @@ public class DatasetsQueryServiceSearchTest {
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
+        sqs.search("", "Ukjent","", "", "", 0,0, 1, 10, "nb", "", "");
     }
 
     /**
@@ -107,8 +113,57 @@ public class DatasetsQueryServiceSearchTest {
         ResponseEntity<String> actual = sqs.search("", "", "", "","",0,0, 10, 101, "nb", "", "");
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void checkSortfields() {
+        sqs.search("","","","","", 0, 0 , 0, 20,"en", "modified","");
+        sqs.search("","","","","", 0, 0 , 0, 20,"", "noe annet","asc");
+        sqs.search("","","","","", 0, 0 , 0, 20,"", "noe annet","desc");
 
     }
+
+    @Test
+    public void checkAndAdjustSizeLessThanZero() {
+        sqs.search("","","","","", 0, 0 , 0, -200,"", "","");
+    }
+
+    @Test
+    public void checkAccessRights() {
+        sqs.search("","","","Ukjent","", 0, 0 , 0, 20,"", "","");
+        sqs.search("","","","OPEN","", 0, 0 , 0, 20,"", "","");
+    }
+
+    @Test
+    public void checkHarvestMetadata() {
+        sqs.search("","","","","", 3, 0 , 0, 20,"", "","");
+        sqs.search("","","","","", 0, 3 , 0, 20,"", "","");
+    }
+
+    @Test
+    public void checkPublisherValue() {
+        sqs.search("", "", "Torsken", "", "", 0, 0, 0, 20, "", "", "");
+        sqs.search("", "", "Ukjent", "", "", 0, 0, 0, 20, "", "", "");
+    }
+
+        @Test
+    public void checkOrgpath() {
+        sqs.search("","","","","/ANNET", 0, 0 , 0, 20,"", "","");
+    }
+
+    @Test
+    public void aggregateDatasets() {
+        ResponseEntity<String> actual = sqs.aggregateDatasets("query");
+
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
+        actual = sqs.aggregateDatasets("");
+
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
+    }
+
+
 
     private void populateMock() {
         SearchHit[] hits = null;

@@ -239,8 +239,8 @@ public class DatasetsQueryService extends ElasticsearchService {
             return 100;
         }
 
-        if (size < 5) {
-            return 5;
+        if (size < 0) {
+            return 0;
         }
 
         return size;
@@ -363,17 +363,23 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         String acceptHeader = request.getHeader("Accept");
         if (acceptHeader != null && !acceptHeader.isEmpty() && !acceptHeader.contains("application/json")) {
-            try {
-                String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
-
-                ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
-                if (rdfResponse != null) return rdfResponse;
-            } catch (Exception e) {
-                logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
-            }
+            ResponseEntity<String> rdfResponse = produceRDFResponse(id, response, acceptHeader);
+            if (rdfResponse != null) return rdfResponse;
         }
 
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    private ResponseEntity<String> produceRDFResponse(String id, SearchResponse response, String acceptHeader) {
+        try {
+            String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
+
+            ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
+            if (rdfResponse != null) return rdfResponse;
+        } catch (Exception e) {
+            logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
+        }
+        return null;
     }
 
     ResponseEntity<String> getRdfResponse(String datasetAsJson, String acceptHeader) {
