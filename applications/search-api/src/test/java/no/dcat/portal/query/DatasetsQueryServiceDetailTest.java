@@ -13,21 +13,16 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Class for testing detail rest-API in DatasetsQueryService.
@@ -68,14 +63,40 @@ public class DatasetsQueryServiceDetailTest {
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
+    @Test
+    public void testGetNullRDFresponse() {
+        sqs.getRdfResponse("{}", "application/rdf+xml");
+        sqs.getRdfResponse("{}", "text/html");
+    }
+
+    @Test
+    public void correctAcceptheader() {
+        HttpServletRequestWrapper request = new HttpServletRequestWrapper(new ServletRequest("/details/path")) {
+            @Override
+            public String getHeader(String name) {
+                if ("Accept".equals(name)) {
+                    return "text/turtle";
+                }
+                return super.getHeader(name);
+            }
+        };
+
+            sqs.detail(request);
+    }
+
     private void populateMock() {
         String id = "29";
 
         SearchHit[] hits = null;
         SearchHit hit = mock(InternalSearchHit.class);
+        SearchHit hit2 = mock(InternalSearchHit.class);
+
 
         SearchHits searchHits = mock(SearchHits.class);
         when(searchHits.getHits()).thenReturn(hits);
+
+        when(searchHits.getAt(0)).thenReturn(hit2);
+        when(hit2.getSourceAsString()).thenReturn(dataset);
 
         response = mock(SearchResponse.class);
         when(response.getHits()).thenReturn(searchHits);
@@ -93,4 +114,203 @@ public class DatasetsQueryServiceDetailTest {
 
         when(client.prepareSearch("dcat")).thenReturn(builder);
     }
+
+    String dataset = "{\n" +
+            "                    \"id\": \"59d42d56-9769-4de8-8f19-df6e97c68476\",\n" +
+            "                    \"uri\": \"http://brreg.no/catalogs/974761076/datasets/12183f89-33e1-4036-ba61-f399eddfbe42\",\n" +
+            "                    \"source\": \"A\",\n" +
+            "                    \"title\": {\n" +
+            "                        \"nb\": \"Innrapportert inntekt\"\n" +
+            "                    },\n" +
+            "                    \"description\": {\n" +
+            "                        \"nb\": \"Informasjon om innrapportert inntekt\"\n" +
+            "                    },\n" +
+            "                    \"descriptionFormatted\": {\n" +
+            "                        \"nb\": \"Informasjon om innrapportert inntekt\"\n" +
+            "                    },\n" +
+            "                    \"contactPoint\": [],\n" +
+            "                    \"keyword\": [\n" +
+            "                        {\n" +
+            "                            \"nb\": \"inntekt\"\n" +
+            "                        },\n" +
+            "                        {\n" +
+            "                            \"nb\": \"gjeld og fradrag\"\n" +
+            "                        },\n" +
+            "                        {\n" +
+            "                            \"nb\": \"grunnlagsdata\"\n" +
+            "                        },\n" +
+            "                        {\n" +
+            "                            \"nb\": \"formue\"\n" +
+            "                        }\n" +
+            "                    ],\n" +
+            "                    \"publisher\": {\n" +
+            "                        \"overordnetEnhet\": \"972417807\",\n" +
+            "                        \"organisasjonsform\": \"ORGL\",\n" +
+            "                        \"naeringskode\": {\n" +
+            "                            \"uri\": \"http://www.ssb.no/nace/sn2007/84.110\",\n" +
+            "                            \"code\": \"84.110\",\n" +
+            "                            \"prefLabel\": {\n" +
+            "                                \"no\": \"Generell offentlig administrasjon\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"sektorkode\": {\n" +
+            "                            \"uri\": \"http://www.brreg.no/sektorkode/6100\",\n" +
+            "                            \"code\": \"6100\",\n" +
+            "                            \"prefLabel\": {\n" +
+            "                                \"no\": \"Statsforvaltningen\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"valid\": true,\n" +
+            "                        \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/974761076\",\n" +
+            "                        \"id\": \"974761076\",\n" +
+            "                        \"name\": \"SKATTEETATEN\",\n" +
+            "                        \"orgPath\": \"/STAT/972417807/974761076\"\n" +
+            "                    },\n" +
+            "                    \"language\": [\n" +
+            "                        {\n" +
+            "                            \"uri\": \"http://publications.europa.eu/resource/authority/language/NOR\",\n" +
+            "                            \"code\": \"NOR\",\n" +
+            "                            \"prefLabel\": {\n" +
+            "                                \"nb\": \"Norsk\",\n" +
+            "                                \"nn\": \"Norsk\",\n" +
+            "                                \"no\": \"Norsk\",\n" +
+            "                                \"en\": \"Norwegian\"\n" +
+            "                            }\n" +
+            "                        }\n" +
+            "                    ],\n" +
+            "                    \"landingPage\": [\n" +
+            "                        \"https://skatteetaten.github.io/datasamarbeid-api-dokumentasjon/index.html\"\n" +
+            "                    ],\n" +
+            "                    \"theme\": [\n" +
+            "                        {\n" +
+            "                            \"id\": \"http://publications.europa.eu/resource/authority/data-theme/GOVE\",\n" +
+            "                            \"code\": \"GOVE\",\n" +
+            "                            \"startUse\": \"2015-10-01\",\n" +
+            "                            \"title\": {\n" +
+            "                                \"it\": \"Governo e settore pubblico\",\n" +
+            "                                \"nb\": \"Forvaltning og offentlig sektor\",\n" +
+            "                                \"en\": \"Government and public sector\",\n" +
+            "                                \"hr\": \"Vlada i javni sektor\",\n" +
+            "                                \"es\": \"Gobierno y sector público\",\n" +
+            "                                \"de\": \"Regierung und öffentlicher Sektor\",\n" +
+            "                                \"sk\": \"Vláda a verejný sektor\",\n" +
+            "                                \"ro\": \"Guvern şi sector public\",\n" +
+            "                                \"bg\": \"Правителство и публичен сектор\",\n" +
+            "                                \"et\": \"Valitsus ja avalik sektor\",\n" +
+            "                                \"el\": \"Κυβέρνηση και δημόσιος τομέας\",\n" +
+            "                                \"pl\": \"Rząd i sektor publiczny\",\n" +
+            "                                \"cs\": \"Vláda a veřejný sektor\",\n" +
+            "                                \"ga\": \"Rialtas agus earnáil phoiblí\",\n" +
+            "                                \"pt\": \"Governo e setor público\",\n" +
+            "                                \"lt\": \"Vyriausybė ir viešasis sektorius\",\n" +
+            "                                \"lv\": \"Valdība un sabiedriskais sektors\",\n" +
+            "                                \"mt\": \"Gvern u settur pubbliku\",\n" +
+            "                                \"hu\": \"Kormányzat és közszféra\",\n" +
+            "                                \"da\": \"Regeringen og den offentlige sektor\",\n" +
+            "                                \"fi\": \"Valtioneuvosto ja julkinen sektori\",\n" +
+            "                                \"fr\": \"Gouvernement et secteur public\",\n" +
+            "                                \"sl\": \"Vlada in javni sektor\",\n" +
+            "                                \"sv\": \"Regeringen och den offentliga sektorn\",\n" +
+            "                                \"nl\": \"Overheid en publieke sector\"\n" +
+            "                            },\n" +
+            "                            \"conceptSchema\": {\n" +
+            "                                \"id\": \"http://publications.europa.eu/resource/authority/data-theme\",\n" +
+            "                                \"title\": {\n" +
+            "                                    \"en\": \"Dataset types Named Authority List\"\n" +
+            "                                },\n" +
+            "                                \"versioninfo\": \"20160921-0\",\n" +
+            "                                \"versionnumber\": \"20160921-0\"\n" +
+            "                            }\n" +
+            "                        }\n" +
+            "                    ],\n" +
+            "                    \"distribution\": [\n" +
+            "                        {\n" +
+            "                            \"uri\": \"http://data.brreg.no/datakatalog/distribusjon/26\",\n" +
+            "                            \"description\": {\n" +
+            "                                \"nb\": \"Innrapportert inntekt Skatteetaten\"\n" +
+            "                            },\n" +
+            "                            \"downloadURL\": [],\n" +
+            "                            \"accessURL\": [\n" +
+            "                                \"https://api.skatteetaten.no/api/innrapportert/inntektsmottaker/personidentifikator/oppgave/inntekt?fraOgMed=YYYY-MM&tilOgMed=YYYY-MM\"\n" +
+            "                            ],\n" +
+            "                            \"format\": [\n" +
+            "                                \"application/xml, application/json\"\n" +
+            "                            ],\n" +
+            "                            \"type\": \"API\"\n" +
+            "                        }\n" +
+            "                    ],\n" +
+            "                    \"accessRights\": {\n" +
+            "                        \"uri\": \"http://publications.europa.eu/resource/authority/access-right/RESTRICTED\",\n" +
+            "                        \"code\": \"RESTRICTED\",\n" +
+            "                        \"prefLabel\": {\n" +
+            "                            \"nb\": \"Begrenset\",\n" +
+            "                            \"nn\": \"Begrenset\",\n" +
+            "                            \"en\": \"Restricted\"\n" +
+            "                        }\n" +
+            "                    },\n" +
+            "                    \"identifier\": [\n" +
+            "                        \"63\"\n" +
+            "                    ],\n" +
+            "                    \"accrualPeriodicity\": {\n" +
+            "                        \"uri\": \"http://publications.europa.eu/resource/authority/frequency/CONT\",\n" +
+            "                        \"code\": \"CONT\",\n" +
+            "                        \"prefLabel\": {\n" +
+            "                            \"lt\": \"nenutrūkstamas\",\n" +
+            "                            \"ga\": \"leanúnach\",\n" +
+            "                            \"it\": \"continuo\",\n" +
+            "                            \"es\": \"continuo\",\n" +
+            "                            \"hu\": \"folyamatos\",\n" +
+            "                            \"sk\": \"priebežný\",\n" +
+            "                            \"bg\": \"постоянен\",\n" +
+            "                            \"fi\": \"jatkuva\",\n" +
+            "                            \"da\": \"kontinuerligt\",\n" +
+            "                            \"de\": \"kontinuierlich\",\n" +
+            "                            \"pl\": \"ciągły\",\n" +
+            "                            \"lv\": \"pastāvīgi\",\n" +
+            "                            \"cs\": \"průběžný\",\n" +
+            "                            \"mt\": \"kontinwu\",\n" +
+            "                            \"nl\": \"voortdurend\",\n" +
+            "                            \"fr\": \"continuel\",\n" +
+            "                            \"ro\": \"continuu\",\n" +
+            "                            \"en\": \"continuous\",\n" +
+            "                            \"hr\": \"stalan\",\n" +
+            "                            \"sl\": \"nenehen\",\n" +
+            "                            \"el\": \"συνεχής\",\n" +
+            "                            \"no\": \"kontinuerlig\",\n" +
+            "                            \"sv\": \"kontinuerlig\",\n" +
+            "                            \"et\": \"pidev\",\n" +
+            "                            \"pt\": \"contínuo\"\n" +
+            "                        }\n" +
+            "                    },\n" +
+            "                    \"catalog\": {\n" +
+            "                        \"id\": \"974761076\",\n" +
+            "                        \"uri\": \"http://brreg.no/catalogs/974761076\",\n" +
+            "                        \"title\": {\n" +
+            "                            \"nb\": \"Datakatalog for SKATTEETATEN\"\n" +
+            "                        },\n" +
+            "                        \"publisher\": {\n" +
+            "                            \"overordnetEnhet\": \"972417807\",\n" +
+            "                            \"organisasjonsform\": \"ORGL\",\n" +
+            "                            \"naeringskode\": {\n" +
+            "                                \"uri\": \"http://www.ssb.no/nace/sn2007/84.110\",\n" +
+            "                                \"code\": \"84.110\",\n" +
+            "                                \"prefLabel\": {\n" +
+            "                                    \"no\": \"Generell offentlig administrasjon\"\n" +
+            "                                }\n" +
+            "                            },\n" +
+            "                            \"sektorkode\": {\n" +
+            "                                \"uri\": \"http://www.brreg.no/sektorkode/6100\",\n" +
+            "                                \"code\": \"6100\",\n" +
+            "                                \"prefLabel\": {\n" +
+            "                                    \"no\": \"Statsforvaltningen\"\n" +
+            "                                }\n" +
+            "                            },\n" +
+            "                            \"valid\": true,\n" +
+            "                            \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/974761076\",\n" +
+            "                            \"id\": \"974761076\",\n" +
+            "                            \"name\": \"SKATTEETATEN\",\n" +
+            "                            \"orgPath\": \"/STAT/972417807/974761076\"\n" +
+            "                        }\n" +
+            "                    }\n" +
+            "                }";
 }

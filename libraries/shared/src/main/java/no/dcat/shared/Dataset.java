@@ -19,6 +19,7 @@ public class Dataset {
     private String uri;
 
     private String source;
+    private HarvestMetadata harvest;
 
     // dct:title
     // Norwegian: Tittel

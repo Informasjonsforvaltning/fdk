@@ -1,11 +1,15 @@
 package no.dcat.harvester.crawler.handlers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.shared.Dataset;
 import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -27,6 +31,7 @@ import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
@@ -175,7 +180,7 @@ public class ElasticsearchResultHandlerIT {
 
 	private void logDatasets(SearchResponse searchResponse) {
 		for (long i= 0; i < searchResponse.getHits().getTotalHits(); i++) {
-			Dataset d = new Gson().fromJson(searchResponse.getHits().getAt(0).getSourceAsString(), Dataset.class);
+			Dataset d = new Gson().fromJson(searchResponse.getHits().getAt((int)i).getSourceAsString(), Dataset.class);
 			logger.info("dataset uri={}, id={}", d.getUri(), d.getId());
 		}
 	}
@@ -196,4 +201,16 @@ public class ElasticsearchResultHandlerIT {
         //prevent race condition where elasticsearch is still indexing!!!
         sleep();
     }
+
+
+    @Test
+	public void harvestDifiData() {
+
+
+
+	}
+
+
+
+
 }

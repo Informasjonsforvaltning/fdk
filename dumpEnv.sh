@@ -11,7 +11,7 @@ set -e
 sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no
 
 dcatfile=ppe_dcat_data.json
-harvestfile=ppe_harvest_data.json
+harvestfile=ppe_harvest_*.json
 
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
@@ -24,6 +24,7 @@ echo "Dumping source to files"
 elasticdump --input=${sourceElasticUrl}/dcat --output=${dcatfile} --type=data
 elasticdump --input=${sourceElasticUrl}/harvest/lookup --output=ppe_harvest_lookup.json --type=data
 elasticdump --input=${sourceElasticUrl}/harvest/catalog --output=ppe_harvest_catalog.json --type=data
+elasticdump --input=${sourceElasticUrl}/harvest/dataset --output=ppe_harvest_dataset.json --type=data
 
 
 ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
