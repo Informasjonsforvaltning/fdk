@@ -14,12 +14,6 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     };
   }
 
-  componentDidUpdate() {
-    this.state = {
-      source: _.extend({}, this.props.result._source)
-    };
-  }
-
   _renderPublisher() {
     const { creator } = this.state.source;
     if (creator && creator.name) {

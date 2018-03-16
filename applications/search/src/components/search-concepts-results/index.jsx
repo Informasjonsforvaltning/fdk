@@ -120,7 +120,7 @@ export default class ResultsConcepts extends React.Component {
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
                     initialPage={page}
-                    disableInitialCallback={true}
+                    disableInitialCallback
                   />
                 </div>
               </div>
@@ -133,11 +133,9 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: '',
-  isSelected: false
+  selectedLanguageCode: ''
 };
 
 ResultsConcepts.propTypes = {
-  selectedLanguageCode: PropTypes.string,
-  isSelected: PropTypes.bool
+  selectedLanguageCode: PropTypes.string
 };

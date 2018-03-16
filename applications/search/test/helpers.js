@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { sinon, spy } from 'sinon';
 import { configure, mount, render, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 

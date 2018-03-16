@@ -32,7 +32,6 @@ export default class DetailsPage extends React.Component {
   // loads all the info for this dataset
   loadDatasetFromServer() {
     const { match: { params } } = this.props;
-    // const url = `/datasets/${this.props.params.id}`;
     const url = `/datasets/${params.id}`;
     const config = {
       headers: { Pragma: 'no-cache' }
@@ -254,11 +253,9 @@ export default class DetailsPage extends React.Component {
 }
 
 DetailsPage.defaultProps = {
-  params: null,
   selectedLanguageCode: null
 };
 
 DetailsPage.propTypes = {
-  params: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   selectedLanguageCode: PropTypes.string
 };

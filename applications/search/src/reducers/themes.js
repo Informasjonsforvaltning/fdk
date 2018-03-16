@@ -7,7 +7,7 @@ export default function themes(state = { isFetchingThemes: false, themesItems: n
         ...state,
         isFetchingThemes: true
       };
-    case THEMES_SUCCESS:
+    case THEMES_SUCCESS: {
       const objFromArray = action.response.data.reduce((accumulator, current) => {
         accumulator[current.code] = current
         return accumulator
@@ -15,14 +15,16 @@ export default function themes(state = { isFetchingThemes: false, themesItems: n
       return {
         ...state,
         isFetchingThemes: false,
-        themesItems: objFromArray // action.response.data
+        themesItems: objFromArray
       }
-    case THEMES_FAILURE:
+    }
+    case THEMES_FAILURE: {
       return {
         ...state,
         isFetchingThemes: false,
         themesItems: null
       };
+    }
     default:
       return state;
   }
