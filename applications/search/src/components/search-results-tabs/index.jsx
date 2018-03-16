@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { getLanguageFromUrl } from '../../utils/translateText';
 import { addOrReplaceParamWithoutURL } from '../../utils/addOrReplaceUrlParam';
 import localization from '../../components/localization';
 import './index.scss';
@@ -47,9 +46,17 @@ const ResultsTabs  = (props) => {
 }
 
 ResultsTabs.defaultProps = {
+  countDatasets: null,
+  countTerms: null,
+  selectedLanguageCode: null
 };
 
 ResultsTabs.propTypes = {
+  location: PropTypes.object.isRequired,
+  countDatasets: PropTypes.number,
+  countTerms: PropTypes.number,
+  selectedLanguageCode: PropTypes.string
+
 };
 
 export default ResultsTabs;

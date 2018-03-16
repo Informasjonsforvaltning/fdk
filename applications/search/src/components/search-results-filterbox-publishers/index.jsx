@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as axios from "axios";
 import defaults from 'lodash/defaults';
 import TreeView from 'react-treeview';
@@ -6,7 +7,6 @@ import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 
 import FilterOption from '../search-results-filterbox-option';
-// import './../search-publishers-tree/index.scss';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
@@ -25,8 +25,7 @@ export default class SearchPublishersTree extends React.Component {
     this.state = {
       source: {},
       backspaceRemoves: true,
-      multi: false,
-      collapsedBookkeeping: _(this.props.filter).filter(f=>!f.hasParent).value() // this.props.filter.map(() => true)
+      multi: false
     };
     this.options = defaults({
       headers:{},
@@ -37,8 +36,6 @@ export default class SearchPublishersTree extends React.Component {
       headers:this.options.headers
     });
     this.onChange = this.onChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
 
   }
@@ -56,12 +53,6 @@ export default class SearchPublishersTree extends React.Component {
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
-  }
-
-  handleClick(i) {
-    const [...collapsedBookkeeping] = this.state.collapsedBookkeeping;
-    collapsedBookkeeping[i] = !collapsedBookkeeping[i];
-    this.setState({collapsedBookkeeping});
   }
 
   // @params: the function has no param but the query need dataset id from prop
@@ -83,7 +74,6 @@ export default class SearchPublishersTree extends React.Component {
   }
 
   _renderTree() {
-    const { hits } = this.state.source;
     const { filter, onFilterPublisherHierarchy, activeFilter, publishers } = this.props;
 
     let filters;
@@ -102,15 +92,15 @@ export default class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.orgPath === orgPath
         }
       );
-      // const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
-      let name = node.key;
-      const currentPublisher = publishers[name];
-      if (currentPublisher) {
-        name = currentPublisher.name.substring(0,25);
-      }
 
-      const label = <span className="node" onClick={() => { this.onChange(node)}} role="button" tabIndex="0">{node.key}</span>;
-      const label2 = (
+      let name = node.key;
+      if (publishers) {
+        const currentPublisher = publishers[name];
+        if (currentPublisher) {
+          name = currentPublisher.name.substring(0, 25);
+        }
+      }
+      const label = (
         <FilterOption
           key={`${node.key}|${i}`}
           itemKey={0.5}
@@ -127,7 +117,7 @@ export default class SearchPublishersTree extends React.Component {
         return (
           <TreeView
             key={`${node.key  }|${  i}`}
-            nodeLabel={label2}
+            nodeLabel={label}
             defaultCollapsed={collapsed}
             itemClassName={chosenClass}
           >
@@ -161,15 +151,16 @@ export default class SearchPublishersTree extends React.Component {
         }
       );
       const collapsed = SearchPublishersTree.isItemCollapsed(node.key, activeFilter);
-      // const name = `${node.name.charAt(0)}${node.name.substring(1).toLowerCase()}`;
+
       let name = node.key;
-      const currentPublisher = publishers[node.key];
-      if (currentPublisher) {
-        name = currentPublisher.name.substring(0,25);
+      if (publishers) {
+        const currentPublisher = publishers[node.key];
+        if (currentPublisher) {
+          name = currentPublisher.name.substring(0, 25);
+        }
       }
-      // <div className="tester" tabIndex="0" onKeyPress={() => { this.handleClick(i) }} />
-      const label = <span className="node" onClick={() => { onClick(node)}} role="button" tabIndex="0"><strong>{node.key}</strong></span>;
-      const label2 = (
+
+      const label = (
         <FilterOption
           key={`${node.key}|${  i}`}
           itemKey={0.5}
@@ -185,7 +176,7 @@ export default class SearchPublishersTree extends React.Component {
         <div key={`panel${i}`} className="section tree-panelXX">
           <TreeView
             key={`${node.key  }|${  i}`}
-            nodeLabel={label2}
+            nodeLabel={label}
             defaultCollapsed={collapsed}
             itemClassName={chosenClass}
           >
@@ -222,9 +213,15 @@ export default class SearchPublishersTree extends React.Component {
 }
 
 SearchPublishersTree.defaultProps = {
-
+  title: null,
+  activeFilter: null,
+  publishers: null
 };
 
 SearchPublishersTree.propTypes = {
-
+  title: PropTypes.string,
+  filter: PropTypes.array.isRequired,
+  onFilterPublisherHierarchy: PropTypes.func.isRequired,
+  activeFilter: PropTypes.string,
+  publishers: PropTypes.object
 };

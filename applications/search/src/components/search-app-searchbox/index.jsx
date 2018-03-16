@@ -48,11 +48,22 @@ const SearchBox  = (props) => {
 }
 
 SearchBox.defaultProps = {
-
+  searchQuery: null,
+  countDatasets: null,
+  isFetchingDatasets: false,
+  countTerms: null,
+  isFetchingTerms: false
 };
 
 SearchBox.propTypes = {
-
+  onSearchSubmit: PropTypes.func.isRequired,
+  onSearchChange: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string,
+  countDatasets: PropTypes.number,
+  isFetchingDatasets: PropTypes.bool,
+  countTerms: PropTypes.number,
+  isFetchingTerms: PropTypes.bool,
+  open: PropTypes.func.isRequired
 };
 
 export default SearchBox;

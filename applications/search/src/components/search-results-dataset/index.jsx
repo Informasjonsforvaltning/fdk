@@ -19,32 +19,6 @@ export default class ResultsDataset extends React.Component {
     this.open = this.open.bind(this);
   }
 
-  _renderPublisherRefinementListFilter() {
-    this.publisherFilter =
-      (<RefinementListFilter
-        id="publisher"
-        title={localization.facet.organisation}
-        field="publisher.name.raw"
-        operator="AND"
-        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-        itemComponent={RefinementOptionPublishers}
-      />);
-    return this.publisherFilter;
-  }
-
-  _renderPublisherRefinementListFilterMobile() {
-    this.publisherFilter =
-      (<RefinementListFilter
-        id="publisher"
-        title={localization.facet.organisation}
-        field="publisher.name.raw"
-        operator="AND"
-        size={5/* NOT IN USE!!! see QueryTransport.jsx */}
-        itemComponent={RefinementOptionPublishersMobile}
-      />);
-    return this.publisherFilter;
-  }
-
   close() {
     this.setState({ showModal: false });
   }
@@ -54,7 +28,7 @@ export default class ResultsDataset extends React.Component {
   }
 
   _renderFilterModal() {
-    const { showFilterModal, closeFilterModal, datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, searchQuery, themesItems } = this.props;
+    const { showFilterModal, closeFilterModal, datasetItems, onFilterTheme, onFilterAccessRights, onFilterPublisher, onFilterPublisherHierarchy, searchQuery, themesItems, publisherArray, publishers } = this.props;
     return (
       <Modal show={showFilterModal} onHide={closeFilterModal}>
         <Modal.Header closeButton>
@@ -80,6 +54,13 @@ export default class ResultsDataset extends React.Component {
               filter={datasetItems.aggregations.publisherCount}
               onClick={onFilterPublisher}
               activeFilter={searchQuery.publisher}
+            />
+            <FilterBoxPublishers
+              title={localization.facet.organisation}
+              filter={publisherArray}
+              onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+              activeFilter={searchQuery.publisherOrgPath}
+              publishers={publishers}
             />
           </div>
         </Modal.Body>

@@ -133,11 +133,9 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: '',
-  isSelected: false
+  selectedLanguageCode: ''
 };
 
 ResultsConcepts.propTypes = {
-  selectedLanguageCode: PropTypes.string,
-  isSelected: PropTypes.bool
+  selectedLanguageCode: PropTypes.string
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
 import localization from '../localization'
@@ -83,13 +82,18 @@ class FilterBox extends React.Component {
   }
 }
 
-
 FilterBox.defaultProps = {
-
+  title: null,
+  activeFilter: null,
+  themesItems: null
 };
 
 FilterBox.propTypes = {
-
+  title: PropTypes.string,
+  filter: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  activeFilter: PropTypes.string,
+  themesItems: PropTypes.object
 };
 
 export default FilterBox;

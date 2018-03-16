@@ -41,11 +41,11 @@ export default class App extends React.Component {
     const langCode = getLanguageFromUrl();
     if (langCode !== null) {
       localization.setLanguage(langCode)
-      const selectedLanguage = localization.lang[langCode]
-      this.state = {
+      const selectedLanguage = localization.lang[langCode];
+      this.setState({
         selectedLanguage,
         selectedLanguageCode: langCode
-      }
+      });
     }
   }
 

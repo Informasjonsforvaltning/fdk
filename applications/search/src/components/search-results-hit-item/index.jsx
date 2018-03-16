@@ -17,12 +17,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     };
   }
 
-  componentDidUpdate() {
-    this.state = {
-      source: _.extend({}, this.props.result._source)
-    };
-  }
-
   _renderFormats(code) {
     let formatNodes;
     const { distribution } = this.state.source;

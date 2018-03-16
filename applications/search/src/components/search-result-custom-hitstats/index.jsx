@@ -4,27 +4,15 @@ import localization from '../localization';
 import { getParamFromUrl} from '../../utils/addOrReplaceUrlParam';
 
 const CustomHitsStats = (props) => {
-  const { countDatasets, isFetchingDatasets, countTerms, isFetchingTerms, timeTaken } = props;
-  // const countDatasetsInt = countDatasets ? parseInt(countDatasets, 10) : 0;
-  // const countTermsInt = countTerms ? parseInt(countTerms, 10) : 0;
+  const { countDatasets, countTerms } = props;
 
   let filteringOrTextSearchPerformed = false;
 
   if (getParamFromUrl('q') || getParamFromUrl('theme') || getParamFromUrl('accessRight') || getParamFromUrl('publisher')) {
     filteringOrTextSearchPerformed = true;
   }
-  // const initialCountSummaryShown = countDatasetsInt && !filteringOrTextSearchPerformed;
-  const initialCountSummaryShown = !filteringOrTextSearchPerformed;
 
-  let requestCompleted = false;
-  if(timeTaken > 0) {
-    requestCompleted =  true;
-  }
-
-  if (
-
-    filteringOrTextSearchPerformed
-  ) {
+  if (filteringOrTextSearchPerformed) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
