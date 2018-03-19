@@ -180,7 +180,6 @@ class SearchPage extends React.Component {
   }
 
   handleDatasetFilterPublisherHierarchy(event) {
-    const { publisherOrgPath } = this.state.searchQuery;
     if (event.target.checked) {
       this.setState(
         ({

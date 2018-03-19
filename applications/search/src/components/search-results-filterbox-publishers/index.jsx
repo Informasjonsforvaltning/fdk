@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as axios from "axios";
-import defaults from 'lodash/defaults';
 import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
@@ -22,28 +20,8 @@ export default class SearchPublishersTree extends React.Component {
 
   constructor(props) {
     super(props);
-    /*
-    this.state = {
-      source: {},
-      backspaceRemoves: true,
-      multi: false
-    };
-    this.options = defaults({
-      headers:{},
-      searchUrlPath: "/publisher"
-    });
-    this.axios = axios.create({
-      baseURL:this.host,
-      headers:this.options.headers
-    });
-    */
+
     this.onChange = this.onChange.bind(this);
-    //this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
-
-  }
-
-  componentDidMount() {
-    //this.loadDatasetFromServer();
   }
 
   onChange (value) {
@@ -57,35 +35,10 @@ export default class SearchPublishersTree extends React.Component {
     }
   }
 
-  // @params: the function has no param but the query need dataset id from prop
-  // loads all the info for this dataset
-  /*
-  loadDatasetFromServer() {
-    const url = `/publisher/hierarchy`;
-    axios.get(url)
-      .then((res) => {
-        const data = res.data;
-        const source = data;
-        this.setState({
-          source
-        });
-      })
-      .catch(error => {
-        console.error(error.response)
-      });
-    ;
-  }
-  */
 
   _renderTree() {
     const { filter, onFilterPublisherHierarchy, activeFilter, publishers } = this.props;
-
     const filters = activeFilter;
-    /*
-    if (activeFilter) {
-      filters = activeFilter.split(',');
-    }
-    */
 
     const subTree = hits => hits.map((node, i) => {
       let active = false;
@@ -147,8 +100,6 @@ export default class SearchPublishersTree extends React.Component {
     const mainTree = (hits, activeFilter) => hits.map((node, i) => {
       const { orgPath } = this.props;
       let active = false;
-      console.log("node", JSON.stringify(node));
-      console.log("filters", JSON.stringify(this.activeFilter));
       if (filters && filters.includes(node.key)) {
         active = true;
       }
@@ -181,7 +132,7 @@ export default class SearchPublishersTree extends React.Component {
         />
       )
       return (
-        <div key={`panel${i}`} className="section tree-panelXX">
+        <div key={`panel${i}`} className="section">
           <TreeView
             key={`${node.key  }|${  i}`}
             nodeLabel={label}
