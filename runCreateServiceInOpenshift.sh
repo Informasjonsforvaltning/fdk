@@ -355,6 +355,11 @@ then
     then
         profile=prod
         createOpenshiftService harvester
+
+        oc env dc/harvester \
+            harvester_adminUsername=changeme \
+            harvester_adminPassword=changeme
+
         exposeService harvester
     else
         # deploymentmode = onlyDeployImages
