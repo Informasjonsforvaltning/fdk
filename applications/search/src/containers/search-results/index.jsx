@@ -17,6 +17,7 @@ import ResultsConcepts from '../../components/search-concepts-results';
 import SearchBox from '../../components/search-app-searchbox';
 import ResultsTabs from '../../components/search-results-tabs';
 import { removeValue, addValue } from '../../utils/stringUtils';
+import { addOrReplaceParamWithoutURL, getParamFromString } from '../../utils/addOrReplaceUrlParam';
 import './index.scss';
 
 class SearchPage extends React.Component {
@@ -44,8 +45,20 @@ class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${props.location.search}`));
-    this.props.dispatch(fetchTermsIfNeeded(`/terms/${props.location.search}`));
+    const q = getParamFromString(props.location.search, 'q');
+    let hasSingleWord = false;
+    if(q) {
+      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+    }
+    if (hasSingleWord) {
+      const modifiedQ = addOrReplaceParamWithoutURL(props.location.search, 'q', q + ' ' + encodeURIComponent(q) + '*');
+      this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
+      this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
+    } else {
+      this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${props.location.search}`));
+      this.props.dispatch(fetchTermsIfNeeded(`/terms/${props.location.search}`));
+    }
+
     this.props.dispatch(fetchThemesIfNeeded());
     this.props.dispatch(fetchPublishersIfNeeded());
   }
@@ -53,8 +66,19 @@ class SearchPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { selectedLanguageCode } = nextProps;
     if(nextProps.location.search !== this.props.location.search) {
-      this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`));
-      this.props.dispatch(fetchTermsIfNeeded(`/terms/${nextProps.location.search}`));
+      const q = getParamFromString(nextProps.location.search, 'q');
+      let hasSingleWord = false;
+      if(q) {
+        hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+      }
+      if (hasSingleWord) {
+        const modifiedQ = addOrReplaceParamWithoutURL(nextProps.location.search, 'q', q + ' ' + encodeURIComponent(q) + '*');
+        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
+        this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
+      } else {
+        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`));
+        this.props.dispatch(fetchTermsIfNeeded(`/terms/${nextProps.location.search}`));
+      }
     }
     if(selectedLanguageCode !== this.props.selectedLanguageCode) {
       if (selectedLanguageCode === 'nb') {

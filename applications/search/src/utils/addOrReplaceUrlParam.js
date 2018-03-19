@@ -84,3 +84,14 @@ export function getParamFromUrl(param) {
     return queryObj[param];
   } return null;
 }
+
+/**
+ * Returns language code from url parameter "lang", if exists.
+ * @returns {null}
+ */
+export function getParamFromString(url, param) {
+  const queryObj = qs.parse(url.substr(1));
+  if (queryObj && queryObj[param]) {
+    return queryObj[param];
+  } return null;
+}
