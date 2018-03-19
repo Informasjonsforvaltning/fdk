@@ -22,6 +22,7 @@ export default class SearchPublishersTree extends React.Component {
 
   constructor(props) {
     super(props);
+    /*
     this.state = {
       source: {},
       backspaceRemoves: true,
@@ -35,13 +36,14 @@ export default class SearchPublishersTree extends React.Component {
       baseURL:this.host,
       headers:this.options.headers
     });
+    */
     this.onChange = this.onChange.bind(this);
-    this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
+    //this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
 
   }
 
   componentDidMount() {
-    this.loadDatasetFromServer();
+    //this.loadDatasetFromServer();
   }
 
   onChange (value) {
@@ -57,6 +59,7 @@ export default class SearchPublishersTree extends React.Component {
 
   // @params: the function has no param but the query need dataset id from prop
   // loads all the info for this dataset
+  /*
   loadDatasetFromServer() {
     const url = `/publisher/hierarchy`;
     axios.get(url)
@@ -72,14 +75,17 @@ export default class SearchPublishersTree extends React.Component {
       });
     ;
   }
+  */
 
   _renderTree() {
     const { filter, onFilterPublisherHierarchy, activeFilter, publishers } = this.props;
 
-    let filters;
+    const filters = activeFilter;
+    /*
     if (activeFilter) {
       filters = activeFilter.split(',');
     }
+    */
 
     const subTree = hits => hits.map((node, i) => {
       let active = false;
@@ -138,9 +144,11 @@ export default class SearchPublishersTree extends React.Component {
       );
     });
 
-    const mainTree = hits => hits.map((node, i) => {
+    const mainTree = (hits, activeFilter) => hits.map((node, i) => {
       const { orgPath } = this.props;
       let active = false;
+      console.log("node", JSON.stringify(node));
+      console.log("filters", JSON.stringify(this.activeFilter));
       if (filters && filters.includes(node.key)) {
         active = true;
       }

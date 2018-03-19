@@ -186,7 +186,7 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            publisherOrgPath: event.target.value,
+            orgPath: event.target.value,
             from: undefined
           }
         }),
@@ -198,7 +198,7 @@ class SearchPage extends React.Component {
         ({
           searchQuery: {
             ...this.state.searchQuery,
-            publisherOrgPath: removeValue(publisherOrgPath, event.target.value),
+            orgPath: undefined,
             from: undefined
           }
         }),

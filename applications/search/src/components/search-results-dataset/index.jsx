@@ -59,7 +59,7 @@ export default class ResultsDataset extends React.Component {
               title={localization.facet.organisation}
               filter={publisherArray}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-              activeFilter={searchQuery.publisherOrgPath}
+              activeFilter={searchQuery.orgPath}
               publishers={publishers}
             />
           </div>
@@ -176,7 +176,7 @@ export default class ResultsDataset extends React.Component {
                         title={localization.facet.organisation}
                         filter={publisherArray}
                         onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                        activeFilter={searchQuery.publisherOrgPath}
+                        activeFilter={searchQuery.orgPath}
                         publishers={publishers}
                       />
                     </div>
