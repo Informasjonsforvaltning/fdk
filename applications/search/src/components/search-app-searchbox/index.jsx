@@ -7,7 +7,7 @@ import './index.scss';
 
 const SearchBox  = (props) => {
   const { onSearchSubmit, onSearchChange, searchQuery, countDatasets, isFetchingDatasets, countTerms, isFetchingTerms, open } = props;
-  let refSearchBox;
+  let refSearchBox; // eslint-disable-line no-unused-vars
   return (
     <div className="row mb-60">
       <div className="col-12 col-md-8 col-md-offset-2 fdk-search-flex">
@@ -42,7 +42,7 @@ const SearchBox  = (props) => {
           onClick={(refSearchBox) => { onSearchSubmit(refSearchBox.target.value) }}
           className="fdk-button-search btn btn-lg"
         >
-          <i className="fa fa-search mr-2"></i>
+          <i className="fa fa-search mr-2" />
           Søk
         </button>
       </div>

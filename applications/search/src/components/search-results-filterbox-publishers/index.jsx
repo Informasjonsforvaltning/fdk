@@ -97,7 +97,7 @@ export default class SearchPublishersTree extends React.Component {
       if (publishers) {
         const currentPublisher = publishers[name];
         if (currentPublisher) {
-          name = currentPublisher.name.substring(0, 25);
+          name = currentPublisher.name; // .substring(0, 25);
         }
       }
       const label = (
@@ -156,7 +156,7 @@ export default class SearchPublishersTree extends React.Component {
       if (publishers) {
         const currentPublisher = publishers[node.key];
         if (currentPublisher) {
-          name = currentPublisher.name.substring(0, 25);
+          name = currentPublisher.name; // .substring(0, 25);
         }
       }
 
