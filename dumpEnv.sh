@@ -8,7 +8,9 @@ set -e
 # requires: npm install elasticdump@2.1.0 -g
 
 
-sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no
+#sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no
+sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no
+environment=ut1
 
 dcatfile=ppe_dcat_data.json
 harvestfile=ppe_harvest_*.json
@@ -22,9 +24,9 @@ rm -f ${dcatfile} ${harvestfile}
 # dump source
 echo "Dumping source to files"
 elasticdump --input=${sourceElasticUrl}/dcat --output=${dcatfile} --type=data
-elasticdump --input=${sourceElasticUrl}/harvest/lookup --output=ppe_harvest_lookup.json --type=data
-elasticdump --input=${sourceElasticUrl}/harvest/catalog --output=ppe_harvest_catalog.json --type=data
-elasticdump --input=${sourceElasticUrl}/harvest/dataset --output=ppe_harvest_dataset.json --type=data
+elasticdump --input=${sourceElasticUrl}/harvest/lookup --output=${environment}_harvest_lookup.json --type=data
+elasticdump --input=${sourceElasticUrl}/harvest/catalog --output=${environment}_harvest_catalog.json --type=data
+elasticdump --input=${sourceElasticUrl}/harvest/dataset --output=${environment}_harvest_dataset.json --type=data
 
 
 ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
