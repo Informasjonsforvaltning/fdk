@@ -8,9 +8,8 @@
   margin-bottom: 60px;
 }
 
-.fdk-search-flex {
-  display: flex;
-  align-items: flex-start;
+.top-section-search {
+  background-color: $color-cta4;
 }
 
 .sk-hits-stats__info {
@@ -19,90 +18,7 @@
   font-weight: 500;
 }
 
-.top-section-search {
-  background-color: $color-cta4;
-}
-
-/* SEARCHPAGE FILTERS */
-
-/*
-.filter--theme{
-  .sk-panel__header {
-    &:before {
-      content: "\F02E";
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: inherit;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-right: .5em;
-    }
-  }
-}
-
-.filter--publisher {
-  .sk-panel__header {
-    &:before {
-      content: "\F0F7";
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: inherit;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-right: .5em;
-    }
-  }
-}
-
-.filter--accessRight {
-  .sk-panel__header {
-    &:before {
-      content: "\F084";
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: inherit;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-right: .5em;
-    }
-  }
-}
-*/
-
-/*
-.search-filters .sk-item-list > input[type=checkbox] {
-  position: absolute;
-  left:-9999px;
-}
-.search-filters .sk-item-list > label {
-  cursor: pointer;
-}
-.search-filters .sk-item-list > label:last-child {
-  display: none;
-}
-.search-filters div.checkbox:nth-child(-n+5) {
-  display: block;
-}
-.search-filters input[type=checkbox]:checked ~ div {
-  display: block !important;
-}
-.search-filters input[type=checkbox]:checked ~ label {
-  display: none !important;
-}
-.search-filters input[type=checkbox]:checked ~ label:last-child {
-  display: inline-block !important;
-}
-.search-filters div.checkbox {
-  display: none;
-}
-*/
-
 /*  SEARCHPAGE PAGINATION  */
-
-
 .pagination {
   li {
     a, span {
@@ -151,122 +67,6 @@
     }
   }
 }
-
-
-/*
-.sk-pagination-navigation .sk-toggle-option:first-child,
-.sk-pagination-navigation .sk-toggle-option:last-child {
-  flex: auto;
-}
-
-.sk-pagination-navigation {
-  margin:10px auto;
-}
-
-.sk-pagination-select {
-  margin: 10px auto;
-  text-align:center;
-}
-
-.sk-toggle {
-  display: flex;
-  justify-content: center;
-}
-.sk-toggle-option {
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 1.5rem;
-  line-height: 1.5rem;
-  padding: 11px 12px 10px 12px;
-  margin: 0px 0px 6px 0px;
-  //display: inline-block;
-  //background-image: none;
-  //text-shadow: none;
-  text-align: center;
-  text-decoration: underline;
-  &:hover {
-    background-color: $color5;
-    text-decoration: none;
-  }
-}
-
-.sk-toggle-option.sk-toggle__item.is-disabled {
-  color: $color4;
-}
-
-
-.sk-toggle-option__text {
-  &:before {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-.sk-pagination-navigation .sk-toggle-option:first-child, .sk-pagination-navigation .sk-toggle-option:last-child {
-  flex: auto;
-}
-.sk-toggle-option.is-disabled {
-  cursor: initial;
-  color: #ddd;
-}
-.sk-toggle-option:first-child {
-  .sk-toggle-option__text {
-    &:before {
-      content: "\F060";
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: inherit;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-right: .5em;
-    }
-  }
-}
-.sk-toggle-option:last-child {
-  .sk-toggle-option__text {
-    &:after {
-      content: "\F061";
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: inherit;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin-left: .5em;
-    }
-  }
-}
-.sk-toggle-option.is-active {
-  background-color: $color1;
-  color: $color0;
-  text-decoration: none;
-}
-*/
-
-/* SEARCHPAGE REFINEMENT FILTER */
-
-
-/*
-.sk-panel {
-  background-color: $color5;
-  padding: 2rem;
-  margin: .5em auto;
-  border-radius: 5px;
-}
-
-.sk-panel__header {
-  color: $color1;
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  font-weight: 500;
-  margin: 0px;
-}
-*/
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {

@@ -68,14 +68,12 @@ export default class ResultsDatasetsReport extends React.Component {
       const paramEntity = (result) ? result.name : localization.report.allEntities;
       return paramEntity;
     }
-    // return localization.report.allEntities;
     return orgPath;
   }
 
   handleOnPublisherSearch(name, orgPath) {
     // Get orgPath from input or try to find from query params.
     const query = (orgPath !== null && orgPath !== undefined) ? orgPath : ResultsDatasetsReport.getOrgPath();
-    // let query = (orgPath) || ResultsDatasetsReport.getOrgPath();
 
     const paramWithRemovedOrgPath = removeParam('orgPath[0]', window.location.href);
     const replacedUrl = addOrReplaceParamWithoutEncoding(paramWithRemovedOrgPath, 'orgPath[0]', query);
@@ -154,23 +152,10 @@ export default class ResultsDatasetsReport extends React.Component {
   }
 
   render() {
-
-    /*
-    history.listen((location)=> {
-      if(location.search.indexOf('lang=') === -1 && this.props.selectedLanguageCode && this.props.selectedLanguageCode !== "nb") {
-        let nextUrl = "";
-        if (location.search.indexOf('?') === -1) {
-          nextUrl = `${location.search  }?lang=${   this.props.selectedLanguageCode}`
-        } else {
-          nextUrl = `${location.search  }&lang=${   this.props.selectedLanguageCode}`
-        }
-        history.push(nextUrl);
-      }
-    });
-    */
     return (
       <div>
         <div className="container">
+          <div className="fdk-container-path" />
           <section id="resultPanel">
             <div className="row">
               <div className="col-md-4 col-md-offset-8" id="content" role="main" tabIndex="-1">

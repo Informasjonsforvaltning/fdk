@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import localization from '../localization';
 import CustomHitsStats from '../search-result-custom-hitstats';
 import './index.scss';
 
 const SearchBox  = (props) => {
   const { onSearchSubmit, onSearchChange, searchQuery, countDatasets, isFetchingDatasets, countTerms, isFetchingTerms, open } = props;
+  let refSearchBox;
   return (
     <div className="row mb-60">
       <div className="col-12 col-md-8 col-md-offset-2 fdk-search-flex">
@@ -19,14 +21,15 @@ const SearchBox  = (props) => {
           </button>
         </div>
         <div className="fdk-search-box">
-          <form onSubmit={(e) => {e.preventDefault(); onSearchSubmit(e.target.value)}}>
-            <span className="glyphicon-search-frontpage glyphicon glyphicon-search" />
+          <form  onSubmit={(e) => {e.preventDefault(); onSearchSubmit(e.target.value)}}>
+
             <label htmlFor="searchBox">
               <input
                 name="searchBox"
+                ref={(input) => { refSearchBox = input; }}
                 type="search"
-                placeholder="Søk etter innhold"
-                aria-label="Skriv tekst for søk"
+                placeholder={localization.query.intro}
+                aria-label={localization.query.intro}
                 className="fdk-search"
                 value={searchQuery || ''}
                 onChange={(e) => {e.preventDefault(); onSearchChange(e)}}
@@ -34,6 +37,14 @@ const SearchBox  = (props) => {
             </label>
           </form>
         </div>
+        <button
+          type="button"
+          onClick={(refSearchBox) => { onSearchSubmit(refSearchBox.target.value) }}
+          className="fdk-button-search btn btn-lg"
+        >
+          <i className="fa fa-search mr-2"></i>
+          Søk
+        </button>
       </div>
       <div className="col-md-12 text-center">
         <CustomHitsStats

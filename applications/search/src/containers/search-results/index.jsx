@@ -279,67 +279,67 @@ class SearchPage extends React.Component {
       <div>
         <section className="top-section-search mb-1">
           <div className="container">
-              <div className="fdk-container-path" />
-              <SearchBox
-                onSearchSubmit={this.handleSearchSubmit}
-                onSearchChange={this.handleSearchChange}
-                searchQuery={this.state.searchQuery.q}
-                countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
-                isFetchingDatasets={isFetchingDatasets}
-                countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
-                isFetchingTerms={isFetchingTerms}
-                open={this.open}
-              />
-              <ResultsTabs
-                location={this.props.location}
-                countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
-                countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
-                selectedLanguageCode={selectedLanguageCode}
-              />
+            <div className="fdk-container-path" />
+            <SearchBox
+              onSearchSubmit={this.handleSearchSubmit}
+              onSearchChange={this.handleSearchChange}
+              searchQuery={this.state.searchQuery.q}
+              countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
+              isFetchingDatasets={isFetchingDatasets}
+              countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+              isFetchingTerms={isFetchingTerms}
+              open={this.open}
+            />
+            <ResultsTabs
+              location={this.props.location}
+              countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
+              countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+              selectedLanguageCode={selectedLanguageCode}
+            />
           </div>
         </section>
         <div className="container">
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={(props) =>
-              (<ResultsDataset
-                selectedLanguageCode={this.props.selectedLanguageCode}
-                datasetItems={datasetItems}
-                onFilterTheme={this.handleDatasetFilterThemes}
-                onFilterAccessRights={this.handleDatasetFilterAccessRights}
-                onFilterPublisher={this.handleDatasetFilterPublisher}
-                onFilterPublisherHierarchy={this.handleDatasetFilterPublisherHierarchy}
-                onSort={this.handleDatasetSort}
-                onPageChange={this.handlePageChange}
-                searchQuery={this.state.searchQuery}
-                themesItems={themesItems}
-                showFilterModal={this.state.showFilterModal}
-                closeFilterModal={this.close}
-                hitsPerPage={50}
-                publisherArray={publisherCountItems}
-                publishers={publisherItems}
-                {...props}
-              />)
-            }
-          />
-          <Route
-            exact
-            path="/concepts/:lang?"
-            render={(props) =>
-              (<ResultsConcepts
-                selectedLanguageCode={this.props.selectedLanguageCode}
-                termItems={termItems}
-                onPageChange={this.handlePageChange}
-                searchQuery={this.state.searchQuery}
-                hitsPerPage={50}
-                {...props}
-              />)
-            }
-          />
-        </Switch>
-      </div>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) =>
+                (<ResultsDataset
+                  selectedLanguageCode={this.props.selectedLanguageCode}
+                  datasetItems={datasetItems}
+                  onFilterTheme={this.handleDatasetFilterThemes}
+                  onFilterAccessRights={this.handleDatasetFilterAccessRights}
+                  onFilterPublisher={this.handleDatasetFilterPublisher}
+                  onFilterPublisherHierarchy={this.handleDatasetFilterPublisherHierarchy}
+                  onSort={this.handleDatasetSort}
+                  onPageChange={this.handlePageChange}
+                  searchQuery={this.state.searchQuery}
+                  themesItems={themesItems}
+                  showFilterModal={this.state.showFilterModal}
+                  closeFilterModal={this.close}
+                  hitsPerPage={50}
+                  publisherArray={publisherCountItems}
+                  publishers={publisherItems}
+                  {...props}
+                />)
+              }
+            />
+            <Route
+              exact
+              path="/concepts/:lang?"
+              render={(props) =>
+                (<ResultsConcepts
+                  selectedLanguageCode={this.props.selectedLanguageCode}
+                  termItems={termItems}
+                  onPageChange={this.handlePageChange}
+                  searchQuery={this.state.searchQuery}
+                  hitsPerPage={50}
+                  {...props}
+                />)
+              }
+            />
+          </Switch>
+        </div>
       </div>
     );
   }
