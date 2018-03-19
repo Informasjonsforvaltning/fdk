@@ -39,10 +39,10 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
             logger.warn("Error in getting entity from {} on {}", openDataEnhetsregisteret, entry.getOrganizationNumber());
             logger.warn("Actual error", rte);
 
-            //if enhetsregisteret webservice is unavailable, include organisation
+            //if enhetsregisteret webservice is unavailable, do not include organisation
             //todo: should be handled better
-            logger.info("including entity {} due to missing response from Enhetsregisteret web service", entry.getOrganizationNumber());
-            return true;
+            logger.info("excluding entity {} due to missing response from Enhetsregisteret web service", entry.getOrganizationNumber());
+            return false;
         }
     }
 

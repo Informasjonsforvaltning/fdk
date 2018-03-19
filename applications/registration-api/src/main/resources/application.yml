@@ -81,6 +81,31 @@ server:
 
 ---
 spring:
+  profiles: st1
+  data:
+    elasticsearch:
+      clusterNodes: elasticsearch:9300
+      clusterName: fellesdatakatalog
+logging:
+  level.: ERROR
+  level.no.brreg: INFO
+  level.no.dcat: INFO
+  level.org.springframework: INFO
+  level.org.springframework.web: ERROR
+  level.org.opensaml: INFO
+health:
+  config:
+    enabled: false
+management:
+  port: 8181
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+    basedir: /tmp/fdk
+
+---
+spring:
   profiles: prod-localauth
   data:
     elasticsearch:
