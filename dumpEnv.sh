@@ -9,23 +9,23 @@ set -e
 
 
 #sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no
-sourceElasticUrl=http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no
-environment=ut1
-
-dcatfile=ppe_dcat_data.json
-harvestfile=ppe_harvest_*.json
+sourceElasticUrl=http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no
+environment=st2
 
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
 echo "Starting dump ${DATETIME}"
 
-rm -f ${dcatfile} ${harvestfile}
 
 # dump source
-echo "Dumping source to files"
-elasticdump --input=${sourceElasticUrl}/dcat --output=${dcatfile} --type=data
+echo "Dumping dcat "
+elasticdump --input=${sourceElasticUrl}/dcat --output=${environment}_dcat.json --type=data
+
+echo "Dumping harvest/lookup"
 elasticdump --input=${sourceElasticUrl}/harvest/lookup --output=${environment}_harvest_lookup.json --type=data
+echo "Dumping harvest/catalog"
 elasticdump --input=${sourceElasticUrl}/harvest/catalog --output=${environment}_harvest_catalog.json --type=data
+echo "Dumping harvest/dataset"
 elasticdump --input=${sourceElasticUrl}/harvest/dataset --output=${environment}_harvest_dataset.json --type=data
 
 

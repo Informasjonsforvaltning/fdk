@@ -1,21 +1,4 @@
-#!/usr/bin/env bash
-set -e
-
-environment=st2
-targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-npc.brreg.no
-
-
-DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
-
-echo "Starting dump ${DATETIME}"
-
-# prepare target environment
-echo "Delete harvest index"
-curl -XDELETE ${targetElasticUrl}/harvest
-
-echo "Create index with mapping"
-
-curl -XPOST ${targetElasticUrl}/harvest -d '{
+{
 	"settings": {
 		"analysis": {
 			"analyzer": {
@@ -36,7 +19,8 @@ curl -XPOST ${targetElasticUrl}/harvest -d '{
 		"catalog": {
 			"properties": {
 				"date": {
-					"type": "date"
+					"type": "date",
+					"format": "yyyy-MM-dd'T'HH:mm:ssZ"
 				},
 				"catalogUri": {
 					"type": "string",
@@ -60,7 +44,8 @@ curl -XPOST ${targetElasticUrl}/harvest -d '{
 		"dataset": {
 			"properties": {
 				"date": {
-					"type": "date"
+					"type": "date",
+					"format": "yyyy-MM-dd'T'HH:mm:ssZ"
 				},
 				"datasetId": {
 					"type": "string",
@@ -85,18 +70,4 @@ curl -XPOST ${targetElasticUrl}/harvest -d '{
 			}
 		}
 	}
-}'
-
-
-
-# recreate data in target environment
-echo "Copy file into target environment"
-elasticdump --input=${environment}_harvest_lookup.json --output=${targetElasticUrl}/harvest --type=data
-elasticdump --input=${environment}_harvest_catalog.json --output=${targetElasticUrl}/harvest --type=data
-elasticdump --input=${environment}_harvest_dataset.json --output=${targetElasticUrl}/harvest --type=data
-
-ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
-
-echo "finished dump ${ENDTIME}"
-
-echo "Done";
+}
