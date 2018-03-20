@@ -680,7 +680,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                     Contact contact2 = contacts2.get(0);
 
                     if (contact1 != null && contact2 != null) {
-                        if (contact1.getUri().startsWith(AbstractBuilder.CONTACT_PREFIX) && contact2.getUri().startsWith(AbstractBuilder.CONTACT_PREFIX)) {
+                        if (AbstractBuilder.hasGeneratedContactPrefix(contact1) && AbstractBuilder.hasGeneratedContactPrefix(contact2)) {
 
                             isEqual = stringCompare(contact1.getEmail(), contact2.getEmail()) &&
                                     stringCompare(contact1.getFullname(), contact2.getFullname()) &&
@@ -703,13 +703,19 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     boolean hasWrongOrgpath(Dataset dataset) {
-        return dataset.getPublisher().getOrgPath().startsWith("/ANNET/http");
+        if (dataset != null && dataset.getPublisher() != null && dataset.getPublisher().getOrgPath() != null) {
+            return dataset.getPublisher().getOrgPath().startsWith("/ANNET/http");
+        }
+
+        return false;
     }
 
     void correctOrgpath(Dataset dataset) {
         if (hasWrongOrgpath(dataset)) {
             dataset.getPublisher().setOrgPath("/ANNET/" + dataset.getPublisher().getName());
-            dataset.getCatalog().getPublisher().setOrgPath("/ANNET/" + dataset.getCatalog().getPublisher().getName());
+            if (dataset.getCatalog() != null && dataset.getCatalog().getPublisher() != null) {
+                dataset.getCatalog().getPublisher().setOrgPath("/ANNET/" + dataset.getCatalog().getPublisher().getName());
+            }
         }
     }
 

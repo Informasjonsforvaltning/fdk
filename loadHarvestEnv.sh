@@ -78,7 +78,7 @@ curl -XPOST ${targetElasticUrl}/harvest -d '{
 					"type": "string",
 					"index": "not_analyzed"
 				},
-				"datasetUri": {
+				"harvestUri": {
 					"type": "string",
 					"index": "not_analyzed"
 				}

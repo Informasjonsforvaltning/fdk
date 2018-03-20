@@ -35,7 +35,8 @@ import java.util.UUID;
 
 public abstract class AbstractBuilder {
 
-    public static final String CONTACT_PREFIX = "http://dataktalog.no/contact";
+    public static final String CONTACT_PREFIX = "http://datakatalog.no/contact";
+    public static final String CONTACT_PREFIX_FEIL = "http://dataktalog.no/contact";
 
     static Property owlTime_hasBeginning = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning");
     static Property owlTime_hasEnd = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd");
@@ -45,6 +46,10 @@ public abstract class AbstractBuilder {
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
     static Map<String, Contact> contactMap = new HashMap<>();
 
+
+    public static boolean hasGeneratedContactPrefix(Contact contact) {
+        return (contact.getUri() != null && (contact.getUri().startsWith(CONTACT_PREFIX) || contact.getUri().startsWith(CONTACT_PREFIX_FEIL)) );
+    }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
         List<String> result = new ArrayList<>();
