@@ -300,15 +300,11 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    if (browser) {
-      console.log("Browser name", browser.name);
-      console.log("Browser version", browser.version);
-    }
     const { selectedLanguageCode, datasetItems, publisherCountItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems, publisherItems }  = this.props;
     const topSectionClass = cx(
       'top-section-search',
       {
-        'top-section-search--image': (browser && browser.name !== 'IE' ? true : false)
+        'top-section-search--image': (!!(browser && browser.name !== 'ie'))
       }
     );
     return (
