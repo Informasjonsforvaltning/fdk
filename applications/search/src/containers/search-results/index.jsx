@@ -51,7 +51,7 @@ class SearchPage extends React.Component {
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
     }
     if (hasSingleWord) {
-      const modifiedQ = addOrReplaceParamWithoutURL(props.location.search, 'q', q + ' ' + encodeURIComponent(q) + '*');
+      const modifiedQ = addOrReplaceParamWithoutURL(props.location.search, 'q', `${q  } ${  encodeURIComponent(q)  }*`);
       this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
     } else {
@@ -72,7 +72,7 @@ class SearchPage extends React.Component {
         hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
       }
       if (hasSingleWord) {
-        const modifiedQ = addOrReplaceParamWithoutURL(nextProps.location.search, 'q', q + ' ' + encodeURIComponent(q) + '*');
+        const modifiedQ = addOrReplaceParamWithoutURL(nextProps.location.search, 'q', `${q  } ${  encodeURIComponent(q)  }*`);
         this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
         this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
       } else {
