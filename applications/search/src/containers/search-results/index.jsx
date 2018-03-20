@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import queryString from 'query-string';
 import { Route, Switch } from 'react-router-dom';
+import cx from 'classnames';
+import { detect } from 'detect-browser';
 
 import localization from '../../components/localization';
 import {
@@ -19,6 +21,8 @@ import ResultsTabs from '../../components/search-results-tabs';
 import { removeValue, addValue } from '../../utils/stringUtils';
 import { addOrReplaceParamWithoutURL, getParamFromString } from '../../utils/addOrReplaceUrlParam';
 import './index.scss';
+
+const browser = detect();
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -296,11 +300,20 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    if (browser) {
+      console.log("Browser name", browser.name);
+      console.log("Browser version", browser.version);
+    }
     const { selectedLanguageCode, datasetItems, publisherCountItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems, publisherItems }  = this.props;
-
+    const topSectionClass = cx(
+      'top-section-search',
+      {
+        'top-section-search--image': (browser && browser.name !== 'IE' ? true : false)
+      }
+    );
     return (
       <div>
-        <section className="top-section-search mb-1">
+        <section className={topSectionClass}>
           <div className="container">
             <div className="fdk-container-path" />
             <SearchBox
