@@ -41,6 +41,16 @@ const About = () => {
                 {localization.about.helpToRegister}
               </Link>
             </p>
+            <p>
+              <a
+                title="Lenke til registreringsløsning"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://registrering-fdk.ppe.brreg.no/"
+              >
+                <span className="fdk-button fdk-button-default">Kom i gang med registreringen</span>
+              </a>
+            </p>
           </div>
         </div>
       </div>
