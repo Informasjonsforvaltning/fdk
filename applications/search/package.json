@@ -18,8 +18,7 @@
 
       "*.{js,jsx}": [
         "prettier --write",
-        "git add",
-        "lint"
+        "git add"
       ]
 
   },
