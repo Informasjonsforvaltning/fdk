@@ -5,21 +5,19 @@
     "node": true,
     "mocha": true
   },
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "prettier", "prettier/react"],
   "plugins": ["prettier"],
   "parser": "babel-eslint",
   "globals": {
     "$": false
   },
   "rules": {
-    /*
     "prettier/prettier": [ // customizing prettier rules (unfortunately not many of them are customizable)
       "error",
       {
         "singleQuote": true
       }
     ],
-    */
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "indent": [
       2,
