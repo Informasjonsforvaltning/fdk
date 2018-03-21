@@ -46,8 +46,6 @@ public class AbstractBuilderTest {
         model = ModelFactory.createDefaultModel();
         model.read(new ByteArrayInputStream(dcat.getBytes()), "", "TTL");
 
-        model.write(System.out, "TURTLE");
-
         ResIterator resourceIterator = model.listResourcesWithProperty(RDF.type, DCAT.Dataset);
 
         while (resourceIterator.hasNext()) {
@@ -63,7 +61,7 @@ public class AbstractBuilderTest {
     @Test
     public void extractContacts() throws Throwable {
         List<Contact> contacts = AbstractBuilder.extractContacts(datasetResource);
-        assertThat("Only one contact in dataset", contacts.size(), is(1));
+        assertThat("Only two contacts in dataset", contacts.size(), is(2));
 
     }
 

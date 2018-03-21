@@ -80,7 +80,8 @@ public class Elasticsearch implements AutoCloseable {
             InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
             logger.debug("ES address: " + address.toString());
             Settings settings = Settings.builder()
-                    .put(CLUSTER_NAME, clusterName).build();
+                    .put(CLUSTER_NAME, clusterName)
+                    .build();
 
             client = TransportClient.builder().settings(settings).build()
                     .addTransportAddress(address);
@@ -102,7 +103,7 @@ public class Elasticsearch implements AutoCloseable {
      * @return True if cluster is running
      */
     public boolean isElasticsearchRunning() {
-        return elasticsearchStatus() != null;
+        return client != null && elasticsearchStatus() != null ;
     }
 
 
@@ -168,12 +169,14 @@ public class Elasticsearch implements AutoCloseable {
             if (index.equals("harvest")) {
                 Resource harvestCatalogResource = new ClassPathResource("harvest_catalog_mapping.json");
                 Resource harvestDatasetResource = new ClassPathResource("harvest_dataset_mapping.json");
+                Resource harvestLookupResource = new ClassPathResource("harvest_lookup_mapping.json");
                 Resource settingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                 try {
                     client.admin().indices().prepareCreate("harvest")
                             .setSettings(IOUtils.toString(settingsResource.getInputStream(),"UTF-8"))
                             .addMapping("catalog", IOUtils.toString(harvestCatalogResource.getInputStream(), "UTF-8"))
                             .addMapping("dataset", IOUtils.toString(harvestDatasetResource.getInputStream(), "UTF-8"))
+                            .addMapping("lookup", IOUtils.toString(harvestLookupResource.getInputStream(), "UTF-8"))
                             .execute().actionGet();
 
                     logger.debug("[createIndex] {}", "harvest");

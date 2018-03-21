@@ -1,0 +1,14 @@
+{
+  "lookup": {
+    "properties": {
+      "datasetId": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "harvestUri": {
+        "type": "string",
+        "index": "not_analyzed"
+      }
+    }
+  }
+}
