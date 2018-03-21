@@ -303,6 +303,7 @@ class SearchPage extends React.Component {
     const { selectedLanguageCode, datasetItems, publisherCountItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems, publisherItems }  = this.props;
     const topSectionClass = cx(
       'top-section-search',
+      'mb-1',
       {
         'top-section-search--image': (!!(browser && browser.name !== 'ie'))
       }
