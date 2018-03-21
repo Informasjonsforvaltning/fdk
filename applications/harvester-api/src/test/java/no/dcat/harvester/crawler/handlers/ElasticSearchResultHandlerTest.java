@@ -88,13 +88,13 @@ public class ElasticSearchResultHandlerTest {
         distribution.setUri("http://data.norge.no/node/960");
         dataset.setDistribution(Arrays.asList(distribution));
 
-        List<String> actual = resultHandler.getValidationMessages(validationMessages, dataset);
+        List<String> actual = resultHandler.filterValidationMessagesForDataset(validationMessages, dataset);
         logger.info(actual.toString());
         assertThat("can extract validation message for distribution in dataset", actual.size(), is(1));
 
         dataset.setUri("http://data.norge.no/node/2121");
         dataset.setDistribution(null);
-        actual = resultHandler.getValidationMessages(validationMessages, dataset);
+        actual = resultHandler.filterValidationMessagesForDataset(validationMessages, dataset);
         logger.info(actual.toString());
 
         assertThat( "Can extract validation message for dataset", actual.size(), is(1));
@@ -109,7 +109,7 @@ public class ElasticSearchResultHandlerTest {
         dist.setUri("http://data.norge.no/node/960");
         dataset.setDistribution(Arrays.asList(dist));
 
-        List<String> actual = resultHandler.getValidationMessages(validationMessages, dataset);
+        List<String> actual = resultHandler.filterValidationMessagesForDataset(validationMessages, dataset);
 
         logger.info(actual.toString());
 
@@ -125,4 +125,12 @@ public class ElasticSearchResultHandlerTest {
 
         assertThat("Should return 4 dataset uris", actual.size(), is(4));
     }
+
+
+    @Test
+    public void testDatasetHarvestRecord() throws Throwable {
+
+
+    }
+
 }

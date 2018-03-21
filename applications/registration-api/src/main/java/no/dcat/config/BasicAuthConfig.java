@@ -35,7 +35,7 @@ import static no.dcat.config.Roles.ROLE_USER;
  * Configures basic auth for use in develop profile
  */
 @Configuration
-@Profile("!prod")
+@Profile({"prod-localauth", "develop", "unit-integration"})
 @EnableWebSecurity
 public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);

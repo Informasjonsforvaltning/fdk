@@ -1,10 +1,16 @@
 package no.dcat.harvester.crawler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.dcat.harvester.crawler.handlers.ElasticsearchResultHandlerIT;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.util.FileManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -81,5 +87,8 @@ public class SubjectCrawlerIT {
 
         assertThat(datasets.size() , is(484));
     }
+
+
+
 
 }

@@ -16,7 +16,7 @@ public class DeleteIndexesAndRecreateEmptyOnes {
     public static void main(String... args) {
 
         if (args.length != 3) {
-            logger.warn("Need three arguments to identify elasticsearch: host port clusterName\n\t example: http://localhost 9200 elasticsearch");
+            logger.warn("Need three arguments to identify elasticsearch: host port clusterName\n\t example: localhost 9300 elasticsearch");
         }
 
         String host = args[0];

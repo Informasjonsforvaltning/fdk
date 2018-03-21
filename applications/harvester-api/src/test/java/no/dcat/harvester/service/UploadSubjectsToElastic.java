@@ -64,7 +64,7 @@ public class UploadSubjectsToElastic {
         Model model = FileManager.get().loadModel(BEGREP_TTL_URL);
         // model.write(System.out, "TURTLE");
 
-        postSubjectsFromModel(tt1, model);
+        postSubjectsFromModel(ppe, model);
     }
 
     /**
@@ -96,7 +96,7 @@ public class UploadSubjectsToElastic {
         Model model = createRDFModel(extractSubjectsFromCSV(records, publisher));
 
         // update elasticsearch instance
-        postSubjectsFromModel(tt1, model);
+        postSubjectsFromModel(ppe, model);
     }
 
     @Test
@@ -156,6 +156,8 @@ public class UploadSubjectsToElastic {
         RestTemplate template = new RestTemplate();
 
         subjects.forEach(subject -> {
+            String url = host + "/dcat/subject/" + subject.getIdentifier();
+            logger.info(url);
             template.postForObject(host + "/dcat/subject/" + subject.getIdentifier(), subject, Subject.class);
         });
 

@@ -138,7 +138,7 @@ public class BrregAgentConverter {
         final Map<String, Publisher> publisherMap = new HashMap<>();
         publishers.forEach(publisher -> {
             if (publisher.getId() == null || publisher.getId().isEmpty()) {
-                publisher.setId(publisher.getUri());
+                publisher.setId(publisher.getName());
             } else {
                 if (publisherMap.containsKey(publisher.getId())) {
                     logger.error("Publisher {} is already registered and will be overwritten(duplicates in data?)", publisher.getId());
@@ -205,7 +205,8 @@ public class BrregAgentConverter {
                 }
             }
 
-            return prefix + "/" + publisher.getId();
+
+            return prefix + "/" + (publisher.getId().startsWith("http") ? publisher.getName() : publisher.getId());
         }
 
         return null;

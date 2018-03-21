@@ -77,13 +77,13 @@ public class OpenDataAuthorizedOrgformServiceTest {
     }
 
     @Test
-    public void isIncluded_serviceFailed_shouldBeIncluded() throws Exception {
+    public void isIncluded_serviceFailed_shouldNotBeIncluded() throws Exception {
         when(restTemplate.getForEntity("data.brreg.no/enheter/980123333", OpenDataEnhet.class)).thenThrow(new RuntimeErrorException(new Error()));
 
         Entity entity = new Entity();
         entity.setOrganizationNumber("980123333");
 
-        assertThat(orgformService.isIncluded(entity), is(true));
+        assertThat(orgformService.isIncluded(entity), is(false));
     }
 
 }

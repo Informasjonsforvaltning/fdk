@@ -30,16 +30,14 @@ public class DatasetSortRankingCreator {
     public Model rankDatasets(Model model, String sourceUri) {
         NodeIterator datasets = model.listObjectsOfProperty(DCAT.dataset);
         if(sourceUri.contains(REGISTRATION_INTERNAL_URI_DOMAIN) || sourceUri.contains(REGISTRATION_EXTERNAL_URI_DOMAIN)) {
-            logger.debug("datasets from registration detected:");
+            logger.debug("datasets from registration detected: Rank A: ", sourceUri);
             while (datasets.hasNext()) {
                 datasets.nextNode().asResource().addProperty(DCATNO.source, "A");
-                logger.debug("   Rank: A");
             }
         } else {
-            logger.debug("datasets from external source detected:");
+            logger.debug("datasets from external source detected: Rank B: ", sourceUri);
             while (datasets.hasNext()) {
                 datasets.nextNode().asResource().addProperty(DCATNO.source, "B");
-                logger.debug("   Rank: B");
             }
         }
         return model;

@@ -3,15 +3,15 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
-import no.dcat.shared.Dataset;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.dcat.shared.Publisher;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosConcept;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Date;
 
 
 /**
@@ -41,6 +42,8 @@ import java.net.URLDecoder;
 @RestController
 public class DatasetsQueryService extends ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     public static final String INDEX_DCAT = "dcat";
 
@@ -76,7 +79,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      *                      The search is performed on the fileds titel, keyword, description and publisher.name.
      * @param theme         Narrows the search to the specified theme. ex. GOVE
      * @param publisher     Narrows the search to the specified publisher. ex. UTDANNINGSDIREKTORATET
-     * @param accessRights   Narrows the search to the specified theme. ex. RESTRICTED
+     * @param accessRights  Narrows the search to the specified theme. ex. RESTRICTED
      * @param from          The starting index (starting from 0) of the sorted hits that is returned.
      * @param size          The number of hits that is returned. Max number is 100.
      * @param lang          The language of the query string. Used for analyzing the query-string.
@@ -89,29 +92,34 @@ public class DatasetsQueryService extends ElasticsearchService {
             notes = "Returns a list of matching datasets wrapped in a elasticsearch response. " +
                     "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
                     "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
-    @RequestMapping(value = QUERY_SEARCH, method= RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
                                          @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
                                          @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
                                          @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
-                                         @RequestParam(value = "from", defaultValue = "0") int from,
-                                         @RequestParam(value = "size", defaultValue = "10") int size,
-                                         @RequestParam(value = "lang", defaultValue = "nb") String lang,
+                                         @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+                                         @RequestParam(value = "firstHarvested", defaultValue = "0", required = false) int firstHarvested,
+                                         @RequestParam(value = "lastChanged", defaultValue = "0", required = false) int lastChanged,
+                                         @RequestParam(value = "from", defaultValue = "0", required = false) int from,
+                                         @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+                                         @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
                                          @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
                                          @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection) {
 
 
         StringBuilder loggMsg = new StringBuilder()
-                .append("query: \"").append(query)
-                .append("\" from:").append(from)
-                .append(" size:").append(size)
-                .append(" lang:").append(lang)
-                .append(" sortfield:").append(sortfield)
-                .append(" sortdirection:").append(sortdirection)
+                .append(" query:").append(query)
                 .append(" theme:").append(theme)
                 .append(" publisher:").append(publisher)
                 .append(" accessRights:").append(accessRights)
-                ;
+                .append(" orgPath:").append(orgPath)
+                .append(" firstHarvested:").append(firstHarvested)
+                .append(" lastChanged:").append(lastChanged)
+                .append(" from:").append(from)
+                .append(" size:").append(size)
+                .append(" lang:").append(lang)
+                .append(" sortfield:").append(sortfield)
+                .append(" sortdirection:").append(sortdirection);
 
         logger.debug(loggMsg.toString());
 
@@ -152,7 +160,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -164,7 +172,12 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
-                .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"));
+                .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
+                .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
+                .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
+                .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
+                .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
+                ;
 
         // Handle attempting to sort on score, because any sorting removes score i.e. relevance from the search.
         if (sortfield.compareTo("score") != 0) {
@@ -179,6 +192,23 @@ public class DatasetsQueryService extends ElasticsearchService {
         // return response
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
+
+    AggregationBuilder temporalAggregation(String name, String dateField) {
+
+        return AggregationBuilders.filters(name)
+                .filter("last7days", temporalRange(7, dateField))
+                .filter("last30days", temporalRange(30, dateField))
+                .filter("last365days", temporalRange(365, dateField));
+    }
+
+
+    RangeQueryBuilder temporalRange(int days, String dateField) {
+        long now = new Date().getTime();
+        long DAY_IN_MS = 1000 * 3600 * 24;
+
+        return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+    }
+
 
     private void addSort(@RequestParam(value = "sortfield", defaultValue = "source") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
@@ -209,8 +239,8 @@ public class DatasetsQueryService extends ElasticsearchService {
             return 100;
         }
 
-        if (size < 5) {
-            return 5;
+        if (size < 0) {
+            return 0;
         }
 
         return size;
@@ -225,7 +255,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search, String orgPath, int firstHarvested, int lastChanged) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -235,11 +265,11 @@ public class DatasetsQueryService extends ElasticsearchService {
         if (!StringUtils.isEmpty(theme)) {
 
             for (String t : theme.split(",")) {
-              if(t.equals("Ukjent")) {
-                boolFilter.must(QueryBuilders.missingQuery("theme.code"));
-              } else {
-                boolFilter.must(QueryBuilders.termQuery("theme.code", t));
-              }
+                if (t.equals("Ukjent")) {
+                    boolFilter.must(QueryBuilders.missingQuery("theme.code"));
+                } else {
+                    boolFilter.must(QueryBuilders.termQuery("theme.code", t));
+                }
             }
 
             boolQuery.filter(boolFilter);
@@ -247,10 +277,10 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         if (!StringUtils.isEmpty(publisher)) {
             BoolQueryBuilder boolFilter2 = QueryBuilders.boolQuery();
-            if(publisher.equals("Ukjent")) {
-              boolFilter2.must(QueryBuilders.missingQuery("publisher.name.raw"));
+            if (publisher.equals("Ukjent")) {
+                boolFilter2.must(QueryBuilders.missingQuery("publisher.name.raw"));
             } else {
-              boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
+                boolFilter2.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
             }
 
             boolQuery.filter(boolFilter2);
@@ -258,13 +288,31 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         if (!StringUtils.isEmpty(accessRights)) {
             BoolQueryBuilder boolFilter3 = QueryBuilders.boolQuery();
-            if(accessRights.equals("Ukjent")) {
-              boolFilter3.must(QueryBuilders.missingQuery("accessRights.code.raw"));
+            if (accessRights.equals("Ukjent")) {
+                boolFilter3.must(QueryBuilders.missingQuery("accessRights.code.raw"));
             } else {
-              boolFilter3.must(QueryBuilders.termQuery("accessRights.code.raw", accessRights));
+                boolFilter3.must(QueryBuilders.termQuery("accessRights.code.raw", accessRights));
             }
 
             boolQuery.filter(boolFilter3);
+        }
+
+        if (!StringUtils.isEmpty(orgPath)) {
+            BoolQueryBuilder orgPathFilter = QueryBuilders.boolQuery();
+            orgPathFilter.must(QueryBuilders.termQuery("publisher.orgPath", orgPath));
+            boolQuery.filter(orgPathFilter);
+        }
+
+        if (firstHarvested > 0) {
+            BoolQueryBuilder firstHarvestedFilter = QueryBuilders.boolQuery();
+            firstHarvestedFilter.must(temporalRange(firstHarvested, "harvest.firstHarvested"));
+            boolQuery.filter(firstHarvestedFilter);
+        }
+
+        if (lastChanged > 0) {
+            BoolQueryBuilder lastChangedFilter = QueryBuilders.boolQuery();
+            lastChangedFilter.must(temporalRange(lastChanged, "harvest.lastChanged"));
+            boolQuery.filter(lastChangedFilter);
         }
 
         return boolQuery;
@@ -292,7 +340,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         try {
             id = URLDecoder.decode(id, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            logger.warn("id could not be decoded {}. Reason {}",id, e.getLocalizedMessage());
+            logger.warn("id could not be decoded {}. Reason {}", id, e.getLocalizedMessage());
         }
 
         QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
@@ -315,17 +363,23 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         String acceptHeader = request.getHeader("Accept");
         if (acceptHeader != null && !acceptHeader.isEmpty() && !acceptHeader.contains("application/json")) {
-            try {
-                String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
-
-                ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
-                if (rdfResponse != null) return rdfResponse;
-            } catch (Exception e) {
-                logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
-            }
+            ResponseEntity<String> rdfResponse = produceRDFResponse(id, response, acceptHeader);
+            if (rdfResponse != null) return rdfResponse;
         }
 
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    private ResponseEntity<String> produceRDFResponse(String id, SearchResponse response, String acceptHeader) {
+        try {
+            String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
+
+            ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
+            if (rdfResponse != null) return rdfResponse;
+        } catch (Exception e) {
+            logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
+        }
+        return null;
     }
 
     ResponseEntity<String> getRdfResponse(String datasetAsJson, String acceptHeader) {
@@ -344,7 +398,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     String extractIdentifier(HttpServletRequest request) {
-        String id = request.getServletPath().replaceFirst("/datasets/","");
+        String id = request.getServletPath().replaceFirst("/datasets/", "");
         id = id.replaceFirst(":/", "://");
 
         return id;
@@ -502,10 +556,9 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
                 .addAggregation(datasetsWithDistribution)
                 .addAggregation(openDatasetsWithDistribution)
-                .addAggregation(datasetsWithSubject)
-                ;
+                .addAggregation(datasetsWithSubject);
 
-                // Execute search
+        // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
 
         logger.trace("Search response: " + response.toString());

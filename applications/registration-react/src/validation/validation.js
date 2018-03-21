@@ -2,6 +2,7 @@ import isURL from 'is-url';
 
 import localization from '../utils/localization';
 
+/* eslint-disable no-param-reassign */
 export const validateRequired = (nameOfObject, value, errors, useLangField = true) => {
   if (!value) {
     errors[`${nameOfObject}`] = useLangField ? {nb: localization.validation.required} : localization.validation.required
@@ -49,8 +50,9 @@ export const validateEmail = (nameOfObject, value, errors) => {
 }
 
 export const validatePhone = (nameOfObject, value, errors) => {
-  if (value && (!/^[\+]?[(]?[0-9]{4,12}$/i.test(value))) {
+  if (value && (!/^[+]?[(]?[0-9]{4,12}$/i.test(value))) {
     errors[`${nameOfObject}`] = localization.validation.validatePhone
   }
   return errors;
 }
+/* eslint-enable no-param-reassign */

@@ -1,5 +1,6 @@
 package no.dcat.admin.security;
 
+import no.dcat.admin.settings.ApplicationSettings;
 import no.dcat.admin.settings.FusekiSettings;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.Fuseki;
@@ -26,6 +27,10 @@ public class FusekiUserDetailsService implements UserDetailsService {
 
     @Autowired
     private FusekiSettings fusekiSettings;
+
+    @Autowired
+    private ApplicationSettings applicationSettings;
+
     private AdminDataStore adminDataStore;
 
     @Autowired
@@ -43,8 +48,8 @@ public class FusekiUserDetailsService implements UserDetailsService {
 
         Map<String, String> userMap = new HashMap<>();
 
-        createTestUser("test_user", "password", "USER");
-        createTestUser("test_admin", "password", "ADMIN");
+        //create new admin user if it does not already exist in Fuseki
+        createTestUser(applicationSettings.getAdminUsername(), applicationSettings.getAdminPassword(), "ADMIN");
 
         try {
             userMap = adminDataStore.getUser(username);
