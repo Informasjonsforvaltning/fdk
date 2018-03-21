@@ -31,6 +31,7 @@
     "classnames": "^2.2.5",
     "compression": "1.7.0",
     "copy-webpack-plugin": "^4.0.1",
+    "detect-browser": "^2.1.0",
     "ejs": "^2.3.4",
     "express": "4.15.4",
     "extract-text-webpack-plugin": "^3.0.0",
