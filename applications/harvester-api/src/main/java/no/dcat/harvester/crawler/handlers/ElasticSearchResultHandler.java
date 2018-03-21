@@ -693,7 +693,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                     Contact contact2 = contacts2.get(0);
 
                     if (contact1 != null && contact2 != null) {
-                        if (AbstractBuilder.hasGeneratedContactPrefix(contact1) && AbstractBuilder.hasGeneratedContactPrefix(contact2)) {
+                        // ignore null uri and previously generated uris
+                        if ((AbstractBuilder.hasGeneratedContactPrefix(contact1) || contact1.getUri() == null) && (AbstractBuilder.hasGeneratedContactPrefix(contact2) || contact2.getUri() == null)) {
 
                             isEqual = stringCompare(contact1.getEmail(), contact2.getEmail()) &&
                                     stringCompare(contact1.getFullname(), contact2.getFullname()) &&
