@@ -46,8 +46,6 @@ public class AbstractBuilderTest {
         model = ModelFactory.createDefaultModel();
         model.read(new ByteArrayInputStream(dcat.getBytes()), "", "TTL");
 
-        model.write(System.out, "TURTLE");
-
         ResIterator resourceIterator = model.listResourcesWithProperty(RDF.type, DCAT.Dataset);
 
         while (resourceIterator.hasNext()) {
