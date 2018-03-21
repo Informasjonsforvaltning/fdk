@@ -126,7 +126,7 @@ public class ElasticSearchResultHandlerTest {
 
     }
 
-    String datasetLookupJson = "{\"harvestUri\":\"https://kartkatalog.geonorge.no/Metadata/uuid/c23c14c6-63c4-40f4-bae4-2d40198a2f40\",\"datasetId\":\"06ae95f8-d712-4f52-9e2f-d8a6f3250bfa\"}";
+    private String datasetLookupJson = "{\"harvestUri\":\"https://kartkatalog.geonorge.no/Metadata/uuid/c23c14c6-63c4-40f4-bae4-2d40198a2f40\",\"datasetId\":\"06ae95f8-d712-4f52-9e2f-d8a6f3250bfa\"}";
 
     @Test
     public void findLookupDAtaset() {
@@ -177,8 +177,11 @@ public class ElasticSearchResultHandlerTest {
         assertThat(resultHandler.hasWrongOrgpath(dataset), is(true));
 
         resultHandler.correctOrgpath(dataset);
-
         assertThat(dataset.getPublisher().getOrgPath(), is("/ANNET/COSMO"));
+
+        dataset.getPublisher().setOrgPath("/STAT/123456789/123456799");
+        assertThat(resultHandler.hasWrongOrgpath(dataset), is (false));
+        resultHandler.correctOrgpath(dataset);
 
     }
 
@@ -206,6 +209,18 @@ public class ElasticSearchResultHandlerTest {
         record.setDataset(dataset1);
 
         assertThat(resultHandler.isChanged(record, dataset2, gson), is(false));
+
+        resultHandler.isChanged(null, dataset2, gson);
+        resultHandler.isChanged(record, null, gson);
+
+        dataset1.getPublisher().setOrgPath("/ANNET/http://fileisAll");
+
+        resultHandler.isChanged(record, dataset2, gson);
+
+        dataset1.setContactPoint(null);
+
+        resultHandler.isChanged(record, dataset2, gson);
+
     }
 
     String dataset1json = "{\n" +

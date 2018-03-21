@@ -419,8 +419,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         GetResponse response = client.prepareGet(HARVEST_INDEX, "lookup", uri).get();
 
         if (response.isExists()) {
-            DatasetLookup lookup = gson.fromJson(response.getSourceAsString(), DatasetLookup.class);
-            return lookup;
+            return gson.fromJson(response.getSourceAsString(), DatasetLookup.class);
         }
 
         return null;

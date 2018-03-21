@@ -63,7 +63,7 @@ public class AbstractBuilderTest {
     @Test
     public void extractContacts() throws Throwable {
         List<Contact> contacts = AbstractBuilder.extractContacts(datasetResource);
-        assertThat("Only one contact in dataset", contacts.size(), is(1));
+        assertThat("Only two contacts in dataset", contacts.size(), is(2));
 
     }
 

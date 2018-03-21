@@ -1,5 +1,6 @@
 package no.dcat.datastore.domain.dcat;
 
+import com.google.gson.Gson;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
@@ -268,14 +269,6 @@ public class DatasetConverterTest {
         }
 
         assertThat(count, is(expectedDataset.getTheme().size()));
-    }
-
-    @Test
-    @Ignore
-    public void java2dcatAndBack() throws Throwable {
-        actualDataset.setId(null);
-        expectedDataset.setId(null);
-        assertThat(actualDataset, is(expectedDataset));
     }
 
 

@@ -408,18 +408,15 @@ public abstract class AbstractBuilder {
 
                 if (object.getURI() != null && !object.getURI().isEmpty()) {
                     contact.setUri(object.getURI());
-                } else {
-                    contact.setUri(CONTACT_PREFIX + "/import/" + UUID.randomUUID().toString());
+
+                    // reuse existing contact
+                    if (contactMap.containsKey(contact.getUri())) {
+                        result.add(contactMap.get(contact.getUri()));
+                        continue;
+                    }
+
+                    contactMap.put(contact.getUri(), contact);
                 }
-
-                // reuse existing contact
-
-                if (contactMap.containsKey(contact.getUri())) {
-                    result.add(contactMap.get(contact.getUri()));
-                    continue;
-                }
-
-                contactMap.put(contact.getUri(), contact);
 
                 final String fn = extractAsString(object, Vcard.fn);
                 if (fn != null) {
