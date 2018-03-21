@@ -6,7 +6,7 @@ describe('Begrep', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Begrep/>);
+    wrapper = shallow(<Begrep />);
   });
 
   it('should render', () => {
