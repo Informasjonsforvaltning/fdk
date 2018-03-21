@@ -165,7 +165,13 @@ application:
   apiKey: 1234-abcde-56789-fghij
   harvesterUrl: http://localhost:8082
 
-
+---
+spring:
+  profiles: docker
+  data:
+    elasticsearch:
+      clusterNodes: elasticsearch:9300
+      clusterName: elasticsearch
 
 
 
