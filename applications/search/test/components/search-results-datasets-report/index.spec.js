@@ -9,7 +9,7 @@ describe('ResultsDatasetsReport', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<ResultsDatasetsReport/>);
+    wrapper = shallow(<ResultsDatasetsReport />);
   });
 
   it ('should render', () => {

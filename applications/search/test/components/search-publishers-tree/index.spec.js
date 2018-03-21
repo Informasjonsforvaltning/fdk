@@ -6,7 +6,7 @@ describe('PublisherTree', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<PublisherTree/>);
+    wrapper = shallow(<PublisherTree />);
   });
 
   it ('should render', () => {

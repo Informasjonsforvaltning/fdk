@@ -5,7 +5,7 @@ describe('Format', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Format/>);
+    wrapper = mount(<Format />);
   });
 
   it('should render', () => {

@@ -1,9 +1,9 @@
 export function removeValue(list, value) {
-  list = list.split(',');
-  list.splice(list.indexOf(value), 1);
-  if (JSON.stringify(list) === '[]') {
+  const modifiedList = list.split(',');
+  modifiedList.splice(modifiedList.indexOf(value), 1);
+  if (JSON.stringify(modifiedList) === '[]') {
     return undefined;
-  } return list.join(',');
+  } return modifiedList.join(',');
 }
 
 export function addValue(list, value) {
