@@ -15,12 +15,9 @@
   },
   "lint-staged": {
     "gitDir": "../../",
-
-      "*.{js,jsx}": [
-        "prettier --write",
-        "git add"
-      ]
-
+    "linters": {
+      "*.{js,jsx}": ["prettier --write","git add"]
+    }
   },
   "license": "ISC",
   "dependencies": {
