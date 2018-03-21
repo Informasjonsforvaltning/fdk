@@ -7,7 +7,7 @@ describe('DatasetInfo', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<DatasetInfo/>);
+    wrapper = shallow(<DatasetInfo />);
   });
 
   it ('should render', () => {

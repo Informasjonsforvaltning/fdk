@@ -1,5 +1,23 @@
 import qs from 'qs';
 
+export function removeParam(key, sourceURL) {
+  let rtn = sourceURL.split("?")[0];
+  let param;
+  let paramsArray = [];
+  const queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+  if (queryString !== "") {
+    paramsArray = queryString.split("&");
+    for (let i = paramsArray.length - 1; i >= 0; i -= 1) {
+      param = paramsArray[i].split("=")[0];
+      if (param === key) {
+        paramsArray.splice(i, 1);
+      }
+    }
+    rtn = `${rtn  }?${  paramsArray.join("&")}`;
+  }
+  return rtn;
+}
+
 /**
 * Add a URL parameter (or modify if already exists)
 * @param {url}   string  url
@@ -7,34 +25,34 @@ import qs from 'qs';
 * @param {value} string  value
 */
 export function addOrReplaceParam(url, param, value) {
-   param = encodeURIComponent(param);
-   var r = "([&?]|&amp;)" + param + "\\b(?:=(?:[^&#]*))*";
-   var a = document.createElement('a');
-   var regex = new RegExp(r);
-   var str = param + (value ? "=" + encodeURIComponent(value) : "");
-   a.href = url;
-   var q = a.search.replace(regex, "$1"+str);
-   if (q === a.search) {
-      a.search += (a.search ? "&" : "") + str;
-   } else {
-      a.search = q;
-   }
-   if(value==='') {
-     return removeParam(param, url);
-   }
-   return a.href;
+  const encodedParam = encodeURIComponent(param);
+  const r = `([&?]|&amp;)${  encodedParam  }\\b(?:=(?:[^&#]*))*`;
+  const a = document.createElement('a');
+  const regex = new RegExp(r);
+  const str = encodedParam + (value ? `=${  encodeURIComponent(value)}` : "");
+  a.href = url;
+  const q = a.search.replace(regex, `$1${str}`);
+  if (q === a.search) {
+    a.search += (a.search ? "&" : "") + str;
+  } else {
+    a.search = q;
+  }
+  if(value==='') {
+    return removeParam(encodedParam, url);
+  }
+  return a.href;
 }
 export function addOrReplaceParamWithoutEncoding(url, param, value) {
-  var r = "([&?]|&amp;)" + param + "\\b(?:=(?:[^&#]*))*";
-  var a = document.createElement('a');
-  var regex = new RegExp(r);
-  var str = param + (value ? "=" + encodeURIComponent(value) : "");
+  const r = `([&?]|&amp;)${  param  }\\b(?:=(?:[^&#]*))*`;
+  const a = document.createElement('a');
+  const regex = new RegExp(r);
+  const str = param + (value ? `=${  encodeURIComponent(value)}` : "");
   a.href = url;
-  var q = a.search.replace(regex, "$1"+str);
+  const q = a.search.replace(regex, `$1${str}`);
   if (q === a.search) {
-     a.search += (a.search ? "&" : "") + str;
+    a.search += (a.search ? "&" : "") + str;
   } else {
-     a.search = q;
+    a.search = q;
   }
   if(value==='') {
     return removeParam(param, url);
@@ -43,35 +61,19 @@ export function addOrReplaceParamWithoutEncoding(url, param, value) {
 }
 
 export function addOrReplaceParamWithoutURL(uri, key, value) {
-  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-  if (uri.match(re)) {
-    uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+  let modifiedUri = uri;
+  const re = new RegExp(`([?&])${  key  }=.*?(&|$)`, "i");
+  const separator = modifiedUri.indexOf('?') !== -1 ? "&" : "?";
+  if (modifiedUri.match(re)) {
+    modifiedUri = modifiedUri.replace(re, `$1${  key  }=${  value  }$2`);
   }
   else {
-    uri = uri + separator + key + "=" + value;
+    modifiedUri = `${modifiedUri + separator + key  }=${  value}`;
   }
   if(value === '') {
-    return removeParam(key, uri);
+    return removeParam(key, modifiedUri);
   }
-  return uri;
-}
-export function removeParam(key, sourceURL) {
-    var rtn = sourceURL.split("?")[0],
-        param,
-        params_arr = [],
-        queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
-    if (queryString !== "") {
-        params_arr = queryString.split("&");
-        for (var i = params_arr.length - 1; i >= 0; i -= 1) {
-            param = params_arr[i].split("=")[0];
-            if (param === key) {
-                params_arr.splice(i, 1);
-            }
-        }
-        rtn = rtn + "?" + params_arr.join("&");
-    }
-    return rtn;
+  return modifiedUri;
 }
 
 /**
