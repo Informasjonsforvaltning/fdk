@@ -1,34 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import localization from '../../components/localization';
+import { Link } from 'react-router-dom';
 
+import { addOrReplaceParamWithoutURL } from '../../utils/addOrReplaceUrlParam';
+import localization from '../../components/localization';
 import './index.scss';
 
 const ResultsTabs  = (props) => {
-  const { onSelectView, isSelected } = props;
+  const { location, countDatasets, countTerms, selectedLanguageCode } = props;
+  let { search } = location;
+  if (selectedLanguageCode) {
+    if (selectedLanguageCode === 'nb') {
+      search = addOrReplaceParamWithoutURL(`${search}`, 'lang', '');
+    } else {
+      search = addOrReplaceParamWithoutURL(`${search}`, 'lang', selectedLanguageCode);
+    }
+  }
+  search = addOrReplaceParamWithoutURL(`${search}`, 'from', '')
   return (
     <div className="row">
       <div className="col-md-12 text-center">
         <ul className="search-results-tabs">
-          <li className={(!isSelected) ? 'li-active' : ''}>
-            <button
-              onClick={() => {
-                onSelectView('datasets')
-              }}
+          <li className={(location.pathname === '/') ? 'li-active' : ''}>
+            <Link
+              to={{ pathname: '/', search}}
               aria-label="Link til side for datasett:"
             >
               {localization.page.datasetTab}
-            </button>
+              <span>&nbsp;({countDatasets})</span>
+            </Link>
           </li>
-          <li className={(isSelected) ? 'li-active' : ''}>
-            <button
-              onClick={() => {
-                onSelectView('concepts')
-              }}
+          <li className={(location.pathname === '/concepts') ? 'li-active' : ''}>
+            <Link
+              to={{ pathname: '/concepts', search}}
               aria-label="Link til side for begrep:"
             >
               {localization.page.termTab}
-            </button>
+              <span>&nbsp;({countTerms})</span>
+            </Link>
           </li>
         </ul>
       </div>
@@ -37,12 +46,17 @@ const ResultsTabs  = (props) => {
 }
 
 ResultsTabs.defaultProps = {
-  isSelected: false
+  countDatasets: null,
+  countTerms: null,
+  selectedLanguageCode: null
 };
 
 ResultsTabs.propTypes = {
-  onSelectView: PropTypes.func.isRequired,
-  isSelected: PropTypes.bool
+  location: PropTypes.object.isRequired,
+  countDatasets: PropTypes.number,
+  countTerms: PropTypes.number,
+  selectedLanguageCode: PropTypes.string
+
 };
 
 export default ResultsTabs;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import ResultsDatasetsReport from '../../components/search-results-datasets-report';
 import './index.scss';
-import '../../components/search-results-searchbox/index.scss';
 
 export default class ReportsPage extends React.Component {
   constructor(props) {

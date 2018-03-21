@@ -232,19 +232,6 @@ SEARCHPAGE SORTING DROPDOWN
     }
 }
 
-/*
- FILTER BUTTON
- */
-
-.fdk-button-filter {
-    height: 55px;
-    margin: 0;
-    border-radius: 5px 0 0 5px;
-}
-
-    /*
-     FILTER CHECKBOX
-     */
     .checkbox-replacement {
         height: 16px;
         width: 16px;
@@ -253,6 +240,7 @@ SEARCHPAGE SORTING DROPDOWN
     }
     .checkbox label {
         padding-left:0;
+        white-space: normal;
     }
     .checkbox label label {
         margin-right: 4px;

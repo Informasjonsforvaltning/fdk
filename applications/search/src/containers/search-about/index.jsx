@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import localization from '../../components/localization';
 
@@ -11,6 +11,7 @@ const About = () => {
   };
   return (
     <div className="container">
+      <div className="fdk-container-path" />
       <DocumentMeta {...meta} />
       <div className="row">
         <div className="col-md-8 col-md-offset-2">

@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { browserHistory } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../../utils/translateText';
+import SearchPage from '../../containers/search-results';
+import DetailsPage from '../../containers/search-detailspage';
+import AboutPage from '../../containers/search-about';
+import GetStartedPage from '../../containers/search-getstarted-article';
+import ReportsPage from '../../containers/reports';
 import '../../assets/css/main.scss';
 
 const getLangUrl = (langCode) => {
@@ -37,11 +41,11 @@ export default class App extends React.Component {
     const langCode = getLanguageFromUrl();
     if (langCode !== null) {
       localization.setLanguage(langCode)
-      const selectedLanguage = localization.lang[langCode]
-      this.state = {
+      const selectedLanguage = localization.lang[langCode];
+      this.setState({
         selectedLanguage,
         selectedLanguageCode: langCode
-      }
+      });
     }
   }
 
@@ -49,7 +53,7 @@ export default class App extends React.Component {
     const langCode = e;
     const langUrl = getLangUrl(langCode);
     const nextUrl = `${location.pathname}${langUrl}`;
-    browserHistory.push(nextUrl);
+    this.props.history.push(nextUrl);
 
     let text;
     if (langCode === 'nb') {
@@ -70,10 +74,6 @@ export default class App extends React.Component {
     const langCode = getLanguageFromUrl();
     const langParam = langCode ? `?lang=${langCode}` : '';
 
-    const childWithProp =
-      React.Children.map(this.props.children, child => React.cloneElement(child, {
-        selectedLanguageCode: this.state.selectedLanguageCode
-      }));
     return (
       <div>
         <div>
@@ -182,9 +182,16 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
-        <div className="fdk-container-path" />
-        {childWithProp}
-
+        <div className="app-routes">
+          <Switch>
+            <Route exact path="/" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route exact path="/concepts" render={(props) => <SearchPage selectedLanguageCode={this.state.selectedLanguageCode} {...props} />} />
+            <Route exact path="/datasets/:id" component={DetailsPage} />
+            <Route exact path="/reports" component={ReportsPage} />
+            <Route exact path="/about" component={AboutPage} />
+            <Route exact path="/about-registration" component={GetStartedPage} />
+          </Switch>
+        </div>
         <div className="fdk-footer visible-xs visible-sm">
           <div className="container">
             <div className="row">
@@ -257,7 +264,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  children: PropTypes.node.isRequired
-};

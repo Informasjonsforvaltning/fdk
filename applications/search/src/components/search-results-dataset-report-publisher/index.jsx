@@ -50,8 +50,8 @@ export default class SearchPublishers extends React.Component {
 
   render() {
     return (
-      <div className="section sk-panel">
-        <div className="sk-panel__header mb-2">{localization.report.searchPublisher}</div>
+      <div className="section fdk-report-search-publishers">
+        <div className="fdk-report-search-publishers__header mb-2">{localization.report.searchPublisher}</div>
         <Select.Async
           ignoreAccents={false}
           placeholder={localization.report.searchPublisherPlaceholder}

@@ -30,9 +30,9 @@ export default class DatasetKeyInfo extends React.Component { // eslint-disable-
     if (countClasses > 0) {
       const colWidht = 12 / countClasses;
       const colClass = `col-xs-12 col-sm-${colWidht}`;
-      this.state = {
+      this.setState = ({
         colClass
-      };
+      })
     }
   }
 

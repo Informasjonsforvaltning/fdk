@@ -65,6 +65,21 @@
     "nosearch.concepts":"begreper",
     "nosearch.descriptions":"datasett beskrivelser"
   },
+  "hitstats": {
+    "nosearch": {
+      "search": "Søk blant",
+      "descriptions": "datasettbeskrivelser"
+    },
+    "search": "Søket ga",
+    "datasetHits": "treff i datasett",
+    "datasetNoHits": "ingen treff i datasett",
+    "conceptHits": "treff i begrep",
+    "conceptNoHits": "ingen treff i begrep",
+    "noHits": "dessverre ingen treff",
+    "concepts": "begrep",
+    "and": "og",
+    "but": "men"
+  },
   "facet": {
     "organisation":"Virksomhet",
     "theme":"Tema",

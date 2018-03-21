@@ -41,6 +41,21 @@ export function addOrReplaceParamWithoutEncoding(url, param, value) {
   }
   return a.href;
 }
+
+export function addOrReplaceParamWithoutURL(uri, key, value) {
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    uri = uri + separator + key + "=" + value;
+  }
+  if(value === '') {
+    return removeParam(key, uri);
+  }
+  return uri;
+}
 export function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,
@@ -65,6 +80,17 @@ export function removeParam(key, sourceURL) {
  */
 export function getParamFromUrl(param) {
   const queryObj = qs.parse(window.location.search.substr(1));
+  if (queryObj && queryObj[param]) {
+    return queryObj[param];
+  } return null;
+}
+
+/**
+ * Returns language code from url parameter "lang", if exists.
+ * @returns {null}
+ */
+export function getParamFromString(url, param) {
+  const queryObj = qs.parse(url.substr(1));
   if (queryObj && queryObj[param]) {
     return queryObj[param];
   } return null;

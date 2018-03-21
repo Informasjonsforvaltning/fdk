@@ -31,7 +31,8 @@ export default class DetailsPage extends React.Component {
   // @params: the function has no param but the query need dataset id from prop
   // loads all the info for this dataset
   loadDatasetFromServer() {
-    const url = `/datasets/${this.props.params.id}`;
+    const { match: { params } } = this.props;
+    const url = `/datasets/${params.id}`;
     const config = {
       headers: { Pragma: 'no-cache' }
     }
@@ -232,6 +233,7 @@ export default class DetailsPage extends React.Component {
   render() {
     return (
       <div className="container">
+        <div className="fdk-container-path" />
         <div className="row">
           <div className="col-md-8 col-md-offset-2" id="content" role="main" tabIndex="-1">
             <article>
@@ -252,11 +254,9 @@ export default class DetailsPage extends React.Component {
 }
 
 DetailsPage.defaultProps = {
-  params: null,
   selectedLanguageCode: null
 };
 
 DetailsPage.propTypes = {
-  params: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   selectedLanguageCode: PropTypes.string
 };

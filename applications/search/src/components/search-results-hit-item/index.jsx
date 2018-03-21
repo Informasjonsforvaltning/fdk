@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
 
 import DistributionFormat from '../search-dataset-format';
 import localization from '../../components/localization';
@@ -13,12 +14,6 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     super(props);
     this.state = {
       source: _.extend({}, props.result._source)
-    };
-  }
-
-  componentDidUpdate() {
-    this.state = {
-      source: _.extend({}, this.props.result._source)
     };
   }
 
@@ -174,11 +169,11 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     );
 
     return (
-      <a
+      <Link
         id={hitElementId}
         className="fdk-a-search-hit"
         title={`${localization.result.dataset}: ${title}`}
-        href={`${link}${langParam}`}
+        to={`${link}${langParam}`}
       >
         <span className="uu-invisible" aria-hidden="false">Søketreff.</span>
         <div className="fdk-container fdk-container-search-hit">
@@ -200,7 +195,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
             {this._renderSample()}
           </div>
         </div>
-      </a>
+      </Link>
     );
   }
 }

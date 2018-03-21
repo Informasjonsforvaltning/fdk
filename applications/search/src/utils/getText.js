@@ -1,3 +1,4 @@
+/*
 const qs = require('qs');
 export function getText(langTextCode) {
   let queryObj = qs.parse(window.location.search.substr(1));
@@ -16,3 +17,4 @@ export function getText(langTextCode) {
       return langCode + ': ' + langTextCode;
   }
 }
+*/

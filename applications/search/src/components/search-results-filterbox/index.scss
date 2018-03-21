@@ -1,0 +1,32 @@
+@import '../../assets/css/colors';
+
+.fdk-panel--filter, .search-filter-publisher {
+  background-color: $color5;
+  margin-bottom: .5em;
+  border-radius: 5px;
+  .fdk-panel__header {
+    border-bottom: 1px solid $color6;
+    color: $color1;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 500;
+    margin-bottom: .5em;
+    padding: 1em 2em;
+  }
+  .fdk-panel__content {
+    font-size: 1.5rem;
+    padding: .5em 2em;
+    .fdk-items-list {
+      button {
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-weight: 700;
+      }
+      .checkbox {
+        margin-top: 0;
+        margin-bottom: .3em;
+      }
+    }
+  }
+}

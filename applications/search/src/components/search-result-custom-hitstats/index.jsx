@@ -4,38 +4,48 @@ import localization from '../localization';
 import { getParamFromUrl} from '../../utils/addOrReplaceUrlParam';
 
 const CustomHitsStats = (props) => {
-  const { hitsCount, timeTaken, prefLabel } = props;
-  const hitsCountInt = hitsCount ? parseInt(hitsCount, 10) : 0;
+  const { countDatasets, countTerms } = props;
 
   let filteringOrTextSearchPerformed = false;
 
   if (getParamFromUrl('q') || getParamFromUrl('theme') || getParamFromUrl('accessRight') || getParamFromUrl('publisher')) {
     filteringOrTextSearchPerformed = true;
   }
-  const initialCountSummaryShown = hitsCountInt && !filteringOrTextSearchPerformed;
 
-  let requestCompleted = false;
-  if(timeTaken > 0) {
-    requestCompleted =  true;
-  }
-
-  if (
-    requestCompleted &&
-    filteringOrTextSearchPerformed
-  ) {
+  if (filteringOrTextSearchPerformed) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
-          <span>{localization.page['result.summary']}</span> <span>{hitsCount}</span> {localization.page.dataset}
+          <span>{localization.hitstats.search}&nbsp;</span>
+          {countDatasets > 0 &&
+          <span>{countDatasets} {localization.hitstats.datasetHits}</span>
+          }
+          {countDatasets === 0 && countTerms > 0 &&
+          <span>,&nbsp;{localization.hitstats.but}</span>
+          }
+          {countDatasets > 0 && countTerms > 0 &&
+          <span>&nbsp;{localization.hitstats.and}</span>
+          }
+          {countTerms > 0 &&
+            <span>&nbsp;{localization.hitstats.and} {countTerms} {localization.hitstats.conceptHits}</span>
+          }
+          {countDatasets === 0 && countTerms === 0 &&
+          <span>{localization.hitstats.noHits}</span>
+          }
         </div>
       </div>
+
     );
-  } else if (initialCountSummaryShown) {
+  } else if (!filteringOrTextSearchPerformed) {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info nosearch" data-qa="info">
-          <span>{localization.page['nosearch.summary']}</span> <span>{hitsCount}</span> {prefLabel}
+          <div>
+            <span>{localization.hitstats.nosearch.search} {countDatasets} {localization.hitstats.nosearch.descriptions}</span>
+            <span>&nbsp;{localization.hitstats.and} {countTerms} {localization.hitstats.concepts}</span>
+          </div>
         </div>
+
       </div>
     );
   }
