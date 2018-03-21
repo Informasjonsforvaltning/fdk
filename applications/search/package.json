@@ -15,12 +15,13 @@
   },
   "lint-staged": {
     "gitDir": "../../",
-    "linters": {
+
       "*.{js,jsx}": [
         "prettier --write",
-        "git add"
+        "git add",
+        "lint"
       ]
-    }
+
   },
   "license": "ISC",
   "dependencies": {
