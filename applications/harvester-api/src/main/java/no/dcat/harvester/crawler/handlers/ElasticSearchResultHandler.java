@@ -688,6 +688,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 boolean isEqualExceptContacts = isJsonEqual(currentDataset, lastSavedDataset, gson);
 
                 if (isEqualExceptContacts) {
+                    // only compare the first? TODO fix this?
                     Contact contact1 = contacts1.get(0);
                     Contact contact2 = contacts2.get(0);
 
