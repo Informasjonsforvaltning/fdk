@@ -2,33 +2,135 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
+import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.Publisher;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
+import org.elasticsearch.action.ActionRequestBuilder;
+import org.elasticsearch.action.ListenableActionFuture;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.Client;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.mockito.Matchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 public class ElasticSearchResultHandlerTest {
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandlerTest.class);
+
+    @Test
+    public void indexWithElasticsearch() {
+        DcatSource dataSource = mock(DcatSource.class);
+        Client client = mock(Client.class);
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
+        BulkResponse bulkResponse = mock(BulkResponse.class);
+        ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
+        ActionRequestBuilder actionRequestBuilder = mock(ActionRequestBuilder.class);
+        when(elasticsearch.getClient()).thenReturn(client);
+        when(client.prepareBulk()).thenReturn(bulkRequestBuilder);
+        when(bulkRequestBuilder.execute()).thenReturn(listenableActionFuture);
+        when(listenableActionFuture.actionGet()).thenReturn(bulkResponse);
+        when(bulkResponse.hasFailures()).thenReturn(false);
+
+
+        Model model = FileManager.get().loadModel("ramsund.ttl");
+        DcatReader reader = new DcatReader(model);
+
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+        doReturn(reader).when(spyHandler).getReader(model);
+        doReturn(null).when(spyHandler).findLookupDataset(Matchers.any(), anyString(), Matchers.any());
+        doReturn(null).when(spyHandler).findLastDatasetHarvestRecordWithContent(Matchers.any(), Matchers.any(), Matchers.any());
+        doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        doNothing().when(spyHandler).saveCatalogHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+
+        spyHandler.indexWithElasticsearch(dataSource, model, elasticsearch, Collections.EMPTY_LIST );
+    }
+
+    @Test
+    public void saveDatasetAndHarvestRecord() {
+        DcatSource dcatSource = mock(DcatSource.class);
+        Gson gson = new Gson();
+
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+
+        Dataset dataset = gson.fromJson(dataset1json, Dataset.class);
+        DatasetLookup datasetLookup = new DatasetLookup();
+        datasetLookup.setDatasetId(dataset.getId());
+        datasetLookup.setHarvestUri(dataset.getUri());
+        datasetLookup.setHarvest(new HarvestMetadata());
+        datasetLookup.getHarvest().setChanged(new ArrayList<>());
+
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
+
+        doReturn(datasetLookup).when(spyHandler).findOrCreateDatasetLookupAndUpdateDatasetId(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        doReturn(new Date()).when(spyHandler).getFirstHarvestedDate(Matchers.any(), Matchers.any(), Matchers.any());
+        doReturn(null).when(spyHandler).updateDatasetHarvestRecordsAndReturnLastChanged(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        spyHandler.saveDatasetAndHarvestRecord(dcatSource, elasticsearch,
+                Collections.emptyList(), gson, bulkRequestBuilder, new Date(), dataset, null);
+
+    }
+
+    @Test
+    public void getFirstHarvestedDate() {
+        Dataset dataset = mock(Dataset.class);
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Gson gson = new Gson();
+        DatasetHarvestRecord harvestRecord = new DatasetHarvestRecord();
+        harvestRecord.setDate(new Date());
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+        doReturn(harvestRecord).when(spyHandler).findFirstDatasetHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any());
+
+        spyHandler.getFirstHarvestedDate(dataset, elasticsearch, gson);
+
+        harvestRecord.setDate(null);
+
+        spyHandler.getFirstHarvestedDate(dataset, elasticsearch, gson);
+
+    }
+
+    @Test
+    public void process() {
+        DcatSource dcatSource = mock(DcatSource.class);
+        Model model = mock(Model.class);
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+        doReturn(elasticsearch).when(spyHandler).createElasticsearch();
+        doNothing().when(spyHandler).indexWithElasticsearch(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+
+        spyHandler.process(dcatSource, model, Collections.emptyList());
+    }
 
     @Test
     public void delete() throws Throwable {
@@ -198,6 +300,17 @@ public class ElasticSearchResultHandlerTest {
         dataset2.setContactPoint(null);
 
         assertThat(resultHandler.isJsonEqual(dataset1, dataset2, gson), is(true));
+    }
+
+    @Test
+    public void createDatasetHarvestRecord() {
+        Gson gson = new Gson();
+        Dataset dataset1 = gson.fromJson(dataset1json, Dataset.class);
+        DcatSource dcatSource = new DcatSource();
+        dcatSource.setId("sourceid");
+
+        resultHandler.createDatasetHarvestRecord(dataset1, dcatSource, false, new Date(), Collections.EMPTY_LIST);
+        resultHandler.createDatasetHarvestRecord(dataset1, dcatSource, true, new Date(), Collections.EMPTY_LIST);
     }
 
     @Test

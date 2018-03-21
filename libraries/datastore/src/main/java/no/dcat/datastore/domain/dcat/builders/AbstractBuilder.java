@@ -47,6 +47,7 @@ public abstract class AbstractBuilder {
     static Map<String, Contact> contactMap = new HashMap<>();
 
 
+    // TODO - remove in next iteration
     public static boolean hasGeneratedContactPrefix(Contact contact) {
         return (contact.getUri() != null && (contact.getUri().startsWith(CONTACT_PREFIX) || contact.getUri().startsWith(CONTACT_PREFIX_FEIL)) );
     }

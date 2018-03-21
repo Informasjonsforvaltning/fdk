@@ -118,6 +118,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         this(hostname, port, clustername, themesHostname, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
+    Elasticsearch createElasticsearch() {
+        logger.debug("Connect to Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
+
+        return new Elasticsearch(hostename, port, clustername);
+    }
 
     /**
      * Process a data catalog, represented as an RDF model
@@ -127,16 +132,24 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      */
     @Override
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
-        logger.debug("Processing results Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
+        try (Elasticsearch elasticsearch = createElasticsearch()) {
 
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {
-            logger.trace("Start indexing");
+            logger.info("Start indexing ...");
+
             indexWithElasticsearch(dcatSource, model, elasticsearch, validationResults);
+
+            logger.info("Finished indexing");
+
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);
             throw e;
         }
-        logger.trace("finished");
+
+
+    }
+
+    DcatReader getReader(Model model) {
+        return new DcatReader(model, themesHostname, httpUsername, httpPassword);
     }
 
     /**
@@ -175,7 +188,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         Set<String> datasetsInSource = getSourceDatasetUris(model);
 
         // todo extract logs form reader and insert into elastic
-        DcatReader reader = new DcatReader(model, themesHostname, httpUsername, httpPassword);
+        DcatReader reader = getReader(model);
         List<Dataset> validDatasets = reader.getDatasets();
         List<Catalog> catalogs = reader.getCatalogs();
 
@@ -261,9 +274,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         //delete file appender and log file
         harvestlogger.closeLog();
 
-        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-        if (bulkResponse.hasFailures()) {
+        BulkResponse response = bulkRequest.execute().actionGet();
+        if (response.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
+            logger.error("Cannot store bulk requests: {}", response.buildFailureMessage());
         }
 
     }
@@ -275,7 +289,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      *
      * @param dataset the dataset to enhance.
      */
-
     private void addDisplayFields(Dataset dataset) {
         if (dataset == null || dataset.getDescription() == null) {
             return;
@@ -350,7 +363,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
 
-    private void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson,
+    void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson,
                                                                CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
 
         TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("catalogUri", thisCatalogRecord.getCatalogUri());
@@ -777,7 +790,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return messages;
     }
 
-    private void saveCatalogHarvestRecord(DcatSource dcatSource, List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest, Date harvestTime, CatalogHarvestRecord catalogRecord) {
+    void saveCatalogHarvestRecord(DcatSource dcatSource, List<String> validationResults, Gson gson, BulkRequestBuilder bulkRequest, Date harvestTime, CatalogHarvestRecord catalogRecord) {
         // get summary from fuseki
         dcatSource.getLastHarvest().ifPresent(harvest -> {
             catalogRecord.setMessage(harvest.getMessage());
