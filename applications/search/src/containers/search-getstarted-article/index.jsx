@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
 
@@ -25,10 +26,9 @@ const Article = () => {
           </div>
 
           <div className="fdk-box fdk-box--white">
-            <p>
-                Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" og tildele deg rollen "Tilgangsstyring".<br />
-                Kontakt datasettansvarlig i din virksomhet.
-            </p>
+            <p
+              dangerouslySetInnerHTML={{__html:'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" og tildele deg rollen "Tilgangsstyring".<br />Kontakt datasettansvarlig i din virksomhet.'}}
+            />
             <p>
                 Når du har fått tilgang, vil din virksomhets datakatalog være tilgjengelig etter innlogging.<br />
               <a
@@ -78,8 +78,9 @@ const Article = () => {
                 >
                   Altinn.no
                 </a>
-                <br />
-                  Velg <strong>"Profil, roller og rettigheter"</strong>.
+                <div
+                  dangerouslySetInnerHTML={{__html:'Velg <strong>"Profil, roller og rettigheter"</strong>.<br />'}}
+                />
               </div>
               <div className="fdk-box__rowItem--big">
                 <img alt="" src="/static/img/image11.png" title="" />
@@ -88,9 +89,10 @@ const Article = () => {
 
             <div className="fdk-box__rowItem fdk-box--flex">
               <div className="fdk-box__rowItem__number">2</div>
-              <div className="fdk-box__rowItem__text">
-                  I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for.
-              </div>
+              <div
+                className="fdk-box__rowItem__text"
+                dangerouslySetInnerHTML={{__html:'I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for.'}}
+              />
               <div className="fdk-box__rowItem--big">
                 <img alt="" src="/static/img/image5.png" title="" />
               </div>
@@ -99,9 +101,9 @@ const Article = () => {
             <div className="fdk-box__rowItem fdk-box--flex">
               <div className="fdk-box__rowItem__number">3</div>
               <div className="fdk-box__rowItem__text">
-                <p>
-                  Under "Andre med rettigheter til virksomheten" kan du legge til en <strong>ny person.</strong>
-                </p>
+                <p
+                  dangerouslySetInnerHTML={{__html:'Under "Andre med rettigheter til virksomheten" kan du legge til en <strong>ny person.</strong>'}}
+                />
                 <div className="fdk-box fdk-box--yellow fdk-box--italic">
                     Husk at du trenger fødselsnummer og etternavnet til den du ønsker å legge til.
                 </div>
@@ -114,10 +116,9 @@ const Article = () => {
             <div className="fdk-box__rowItem fdk-box--flex">
               <div className="fdk-box__rowItem__number">4</div>
               <div className="fdk-box__rowItem__text">
-                <p>
-                    Her tildeler du <strong>rolle</strong> til den ansatte. <br />
-                    Søk etter roller <strong>Tilgangsstyring</strong>.
-                </p>
+                <p
+                  dangerouslySetInnerHTML={{__html:'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>.'}}
+                />
                 <p>
                     Tilgangsstyring gir datasettansvarlig muligheten til å gi andre ansatte tilgang til registreringsløsningen i fremtiden.
                 </p>
@@ -133,15 +134,9 @@ const Article = () => {
                 <p>
                     Tildel <strong>rettighetene</strong> den ansatte skal ha.
                 </p>
-                <p>
-                    Søk etter <strong>"Registrering i datakatalog"</strong> og gi følgende rettigheter: <br />
-                    - Lese <br />
-                    - Fylle ut <br />
-                    - Signere <br />
-                    - Les arkiv <br />
-                  <br />
-                    Deretter trykker du "Ferdig".
-                </p>
+                <p
+                  dangerouslySetInnerHTML={{__html: 'Søk etter <strong>"Registrering i datakatalog"</strong> og gi følgende rettigheter: <br />- Lese <br />- Fylle ut <br />- Signere <br />- Les arkiv <br /><br />Deretter trykker du "Ferdig".'}}
+                />
               </div>
               <div className="fdk-box__rowItem--big">
                 <img alt="" src="/static/img/image13.png" title="" />
@@ -164,9 +159,9 @@ const Article = () => {
             <p>
                 Vi anbefaler at dere bruker en datasettansvarlig som administrerer registreringsrettigheter for virksomheten. Dette er forklart over.
             </p>
-            <p>
-                Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler roller "Tilgangsstyring".
-            </p>
+            <p
+              dangerouslySetInnerHTML={{__html: 'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler roller "Tilgangsstyring".'}}
+            />
           </div>
 
           <div className="fdk-subtitle">
@@ -189,8 +184,10 @@ const Article = () => {
               <div>Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.</div>
               <div>
                 <a
+                  title="Informasjonskapsler og personvern"
                   href="https://www.brreg.no/personvernerklaering/"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                     Informasjonskapsler og personvern
                 </a>
@@ -224,3 +221,4 @@ const Article = () => {
 }
 
 export default Article;
+/* eslint-enable react/no-danger */

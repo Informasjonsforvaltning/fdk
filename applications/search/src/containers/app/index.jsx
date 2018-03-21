@@ -1,7 +1,7 @@
 import React from 'react';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
@@ -131,27 +131,31 @@ export default class App extends React.Component {
                     className="fdk-button fdk-button-default fdk-button-menu"
                     title={localization.app.menu}
                   >
-                    <MenuItem
-                      key="menu-1"
-                      eventKey="menu-1"
-                      href={`/about${langParam}`}
-                    >
-                      {localization.about.about}
-                    </MenuItem>
-                    <MenuItem
-                      key="menu-2"
-                      eventKey="menu-2"
-                      href={`/about-registration${langParam}`}
-                    >
-                      {localization.menu.aboutRegistration}
-                    </MenuItem>
-                    <MenuItem
-                      key="menu-3"
-                      eventKey="menu-3"
-                      href={`/reports${langParam}`}
-                    >
-                      {localization.menu.reports}
-                    </MenuItem>
+
+                    <li role="presentation">
+                      <Link
+                        tabIndex="-1"
+                        to={`/about${langParam}`}
+                      >
+                        {localization.about.about}
+                      </Link>
+                    </li>
+                    <li role="presentation">
+                      <Link
+                        tabIndex="-1"
+                        to={`/about-registration${langParam}`}
+                      >
+                        {localization.menu.aboutRegistration}
+                      </Link>
+                    </li>
+                    <li role="presentation">
+                      <Link
+                        tabIndex="-1"
+                        to={`/reports${langParam}`}
+                      >
+                        {localization.menu.reports}
+                      </Link>
+                    </li>
                     <MenuItem
                       className="visible-xs visible-sm"
                       key="1"
