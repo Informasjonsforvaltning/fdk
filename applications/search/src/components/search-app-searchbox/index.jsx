@@ -1,12 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import localization from '../localization';
-import CustomHitsStats from '../search-result-custom-hitstats';
-import './index.scss';
+import localization from "../localization";
+import CustomHitsStats from "../search-result-custom-hitstats";
+import "./index.scss";
 
-const SearchBox  = (props) => {
-  const { onSearchSubmit, onSearchChange, searchQuery, countDatasets, isFetchingDatasets, countTerms, isFetchingTerms, open } = props;
+const SearchBox = props => {
+  const {
+    onSearchSubmit,
+    onSearchChange,
+    searchQuery,
+    countDatasets,
+    isFetchingDatasets,
+    countTerms,
+    isFetchingTerms,
+    open
+  } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
   return (
     <div className="row mb-60">
@@ -14,32 +23,43 @@ const SearchBox  = (props) => {
         <div className="visible-sm visible-xs">
           <button
             type="button"
-            className="fdk-button-default fdk-button fdk-button-filter btn btn-lg btn-primary"
+            className="fdk-button-default fdk-button fdk-button-filter btn btn-lg btn-primary xxx"
             onClick={open}
           >
-          Filter
+            Filter
           </button>
         </div>
         <div className="fdk-search-box">
-          <form  onSubmit={(e) => {e.preventDefault(); onSearchSubmit(e.target.value)}}>
-
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              onSearchSubmit(e.target.value);
+            }}
+          >
             <label htmlFor="searchBox">
               <input
                 name="searchBox"
-                ref={(input) => { refSearchBox = input; }}
+                ref={input => {
+                  refSearchBox = input;
+                }}
                 type="search"
                 placeholder={localization.query.intro}
                 aria-label={localization.query.intro}
                 className="fdk-search"
-                value={searchQuery || ''}
-                onChange={(e) => {e.preventDefault(); onSearchChange(e)}}
+                value={searchQuery || ""}
+                onChange={e => {
+                  e.preventDefault();
+                  onSearchChange(e);
+                }}
               />
             </label>
           </form>
         </div>
         <button
           type="button"
-          onClick={(refSearchBox) => { onSearchSubmit(refSearchBox.target.value) }}
+          onClick={refSearchBox => {
+            onSearchSubmit(refSearchBox.target.value);
+          }}
           className="fdk-button-search btn btn-lg"
         >
           <i className="fa fa-search mr-2" />
@@ -56,7 +76,7 @@ const SearchBox  = (props) => {
       </div>
     </div>
   );
-}
+};
 
 SearchBox.defaultProps = {
   searchQuery: null,
