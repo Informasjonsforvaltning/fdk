@@ -1,26 +1,29 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import qs from 'qs';
-import queryString from 'query-string';
-import { Route, Switch } from 'react-router-dom';
-import cx from 'classnames';
-import { detect } from 'detect-browser';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import qs from "qs";
+import queryString from "query-string";
+import { Route, Switch } from "react-router-dom";
+import cx from "classnames";
+import { detect } from "detect-browser";
 
-import localization from '../../components/localization';
+import localization from "../../components/localization";
 import {
   fetchDatasetsIfNeeded,
   fetchTermsIfNeeded,
   fetchThemesIfNeeded,
   fetchPublishersIfNeeded
-} from '../../actions/index';
-import ResultsDataset from '../../components/search-results-dataset';
-import ResultsConcepts from '../../components/search-concepts-results';
-import SearchBox from '../../components/search-app-searchbox';
-import ResultsTabs from '../../components/search-results-tabs';
-import { removeValue, addValue } from '../../utils/stringUtils';
-import { addOrReplaceParamWithoutURL, getParamFromString } from '../../utils/addOrReplaceUrlParam';
-import './index.scss';
+} from "../../actions/index";
+import ResultsDataset from "../../components/search-results-dataset";
+import ResultsConcepts from "../../components/search-concepts-results";
+import SearchBox from "../../components/search-app-searchbox";
+import ResultsTabs from "../../components/search-results-tabs";
+import { removeValue, addValue } from "../../utils/stringUtils";
+import {
+  addOrReplaceParamWithoutURL,
+  getParamFromString
+} from "../../utils/addOrReplaceUrlParam";
+import "./index.scss";
 
 const browser = detect();
 
@@ -31,36 +34,50 @@ class SearchPage extends React.Component {
       searchQuery: {
         size: 50
       },
-      showFilterModal: false,
-    }
+      showFilterModal: false
+    };
 
     this.state = {
       showConcepts: false,
       searchQuery
-    }
+    };
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
-    this.handleDatasetFilterAccessRights = this.handleDatasetFilterAccessRights.bind(this);
-    this.handleDatasetFilterPublisher = this.handleDatasetFilterPublisher.bind(this);
-    this.handleDatasetFilterPublisherHierarchy = this.handleDatasetFilterPublisherHierarchy.bind(this);
+    this.handleDatasetFilterAccessRights = this.handleDatasetFilterAccessRights.bind(
+      this
+    );
+    this.handleDatasetFilterPublisher = this.handleDatasetFilterPublisher.bind(
+      this
+    );
+    this.handleDatasetFilterPublisherHierarchy = this.handleDatasetFilterPublisherHierarchy.bind(
+      this
+    );
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    const q = getParamFromString(props.location.search, 'q');
+    const q = getParamFromString(props.location.search, "q");
     let hasSingleWord = false;
-    if(q) {
-      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+    if (q) {
+      hasSingleWord = !q.includes(" ") && !q.includes("*"); // no spaces and no asterix search
     }
     if (hasSingleWord) {
-      const modifiedQ = addOrReplaceParamWithoutURL(props.location.search, 'q', `${q  } ${  encodeURIComponent(q)  }*`);
+      const modifiedQ = addOrReplaceParamWithoutURL(
+        props.location.search,
+        "q",
+        `${q} ${encodeURIComponent(q)}*`
+      );
       this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
     } else {
-      this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${props.location.search}`));
-      this.props.dispatch(fetchTermsIfNeeded(`/terms/${props.location.search}`));
+      this.props.dispatch(
+        fetchDatasetsIfNeeded(`/datasets/${props.location.search}`)
+      );
+      this.props.dispatch(
+        fetchTermsIfNeeded(`/terms/${props.location.search}`)
+      );
     }
 
     this.props.dispatch(fetchThemesIfNeeded());
@@ -69,84 +86,89 @@ class SearchPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { selectedLanguageCode } = nextProps;
-    if(nextProps.location.search !== this.props.location.search) {
-      const q = getParamFromString(nextProps.location.search, 'q');
+    if (nextProps.location.search !== this.props.location.search) {
+      const q = getParamFromString(nextProps.location.search, "q");
       let hasSingleWord = false;
-      if(q) {
-        hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
+      if (q) {
+        hasSingleWord = !q.includes(" ") && !q.includes("*"); // no spaces and no asterix search
       }
       if (hasSingleWord) {
-        const modifiedQ = addOrReplaceParamWithoutURL(nextProps.location.search, 'q', `${q  } ${  encodeURIComponent(q)  }*`);
+        const modifiedQ = addOrReplaceParamWithoutURL(
+          nextProps.location.search,
+          "q",
+          `${q} ${encodeURIComponent(q)}*`
+        );
         this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
         this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
       } else {
-        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`));
-        this.props.dispatch(fetchTermsIfNeeded(`/terms/${nextProps.location.search}`));
+        this.props.dispatch(
+          fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`)
+        );
+        this.props.dispatch(
+          fetchTermsIfNeeded(`/terms/${nextProps.location.search}`)
+        );
       }
     }
-    if(selectedLanguageCode !== this.props.selectedLanguageCode) {
-      if (selectedLanguageCode === 'nb') {
-        this.setState(
-          {
-            searchQuery: {
-              ...this.state.searchQuery,
-              lang: undefined
-            }
+    if (selectedLanguageCode !== this.props.selectedLanguageCode) {
+      if (selectedLanguageCode === "nb") {
+        this.setState({
+          searchQuery: {
+            ...this.state.searchQuery,
+            lang: undefined
           }
-        );
+        });
       } else {
-        this.setState(
-          {
-            searchQuery: {
-              ...this.state.searchQuery,
-              lang: selectedLanguageCode
-            }
+        this.setState({
+          searchQuery: {
+            ...this.state.searchQuery,
+            lang: selectedLanguageCode
           }
-        );
+        });
       }
     }
   }
 
   handleSearchSubmit() {
-    this.props.history.push(`?${qs.stringify(this.state.searchQuery, { skipNulls: true })}`);
+    this.props.history.push(
+      `?${qs.stringify(this.state.searchQuery, { skipNulls: true })}`
+    );
   }
 
   handleSearchChange(event) {
-    this.setState(
-      {
-        searchQuery: {
-          ...this.state.searchQuery,
-          q: event.target.value !== '' ? event.target.value : null,
-          from: undefined
-        }
+    this.setState({
+      searchQuery: {
+        ...this.state.searchQuery,
+        q: event.target.value !== "" ? event.target.value : null,
+        from: undefined
       }
-    );
+    });
   }
 
   handleDatasetFilterThemes(event) {
     const { theme } = this.state.searchQuery;
     if (event.target.checked) {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
-            theme:  addValue(theme, event.target.value),
+            theme: addValue(theme, event.target.value),
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
-    }
-    else {
+    } else {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             theme: removeValue(theme, event.target.value),
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
   }
@@ -155,26 +177,27 @@ class SearchPage extends React.Component {
     const { accessrights } = this.state.searchQuery;
     if (event.target.checked) {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             accessrights: addValue(accessrights, event.target.value),
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
-    }
-    else {
+    } else {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             accessrights: removeValue(accessrights, event.target.value),
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
   }
@@ -183,26 +206,27 @@ class SearchPage extends React.Component {
     const { publisher } = this.state.searchQuery;
     if (event.target.checked) {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             publisher: addValue(publisher, event.target.value),
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
-    }
-    else {
+    } else {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             publisher: removeValue(publisher, event.target.value),
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
   }
@@ -210,26 +234,27 @@ class SearchPage extends React.Component {
   handleDatasetFilterPublisherHierarchy(event) {
     if (event.target.checked) {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             orgPath: event.target.value,
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
-    }
-    else {
+    } else {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             orgPath: undefined,
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
   }
@@ -237,30 +262,32 @@ class SearchPage extends React.Component {
   handleDatasetSort(event) {
     let sortField = event.field;
 
-    if (sortField === '_score') {
+    if (sortField === "_score") {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             sortfield: undefined,
             sortdirection: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     } else {
-      if (sortField === 'title') {
-        sortField = sortField.concat('.').concat(localization.getLanguage())
+      if (sortField === "title") {
+        sortField = sortField.concat(".").concat(localization.getLanguage());
       }
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             sortfield: sortField,
             sortdirection: event.order
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
   }
@@ -270,23 +297,25 @@ class SearchPage extends React.Component {
     const offset = Math.ceil(selected * 50);
     if (offset === 0) {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             from: undefined
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     } else {
       this.setState(
-        ({
+        {
           searchQuery: {
             ...this.state.searchQuery,
             from: offset
           }
-        }),
-        () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     }
   }
@@ -300,14 +329,19 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const { selectedLanguageCode, datasetItems, publisherCountItems, isFetchingDatasets, termItems, isFetchingTerms, themesItems, publisherItems }  = this.props;
-    const topSectionClass = cx(
-      'top-section-search',
-      'mb-1',
-      {
-        'top-section-search--image': (!!(browser && browser.name !== 'ie'))
-      }
-    );
+    const {
+      selectedLanguageCode,
+      datasetItems,
+      publisherCountItems,
+      isFetchingDatasets,
+      termItems,
+      isFetchingTerms,
+      themesItems,
+      publisherItems
+    } = this.props;
+    const topSectionClass = cx("top-section-search", "mb-1", {
+      "top-section-search--image": !!(browser && browser.name !== "ie")
+    });
     return (
       <div>
         <section className={topSectionClass}>
@@ -317,16 +351,28 @@ class SearchPage extends React.Component {
               onSearchSubmit={this.handleSearchSubmit}
               onSearchChange={this.handleSearchChange}
               searchQuery={this.state.searchQuery.q}
-              countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
+              countDatasets={
+                datasetItems && datasetItems.hits
+                  ? datasetItems.hits.total
+                  : null
+              }
               isFetchingDatasets={isFetchingDatasets}
-              countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+              countTerms={
+                termItems && termItems.hits ? termItems.hits.total : null
+              }
               isFetchingTerms={isFetchingTerms}
               open={this.open}
             />
             <ResultsTabs
               location={this.props.location}
-              countDatasets={(datasetItems && datasetItems.hits) ? datasetItems.hits.total : null}
-              countTerms={(termItems && termItems.hits) ? termItems.hits.total : null}
+              countDatasets={
+                datasetItems && datasetItems.hits
+                  ? datasetItems.hits.total
+                  : null
+              }
+              countTerms={
+                termItems && termItems.hits ? termItems.hits.total : null
+              }
               selectedLanguageCode={selectedLanguageCode}
             />
           </div>
@@ -336,14 +382,16 @@ class SearchPage extends React.Component {
             <Route
               exact
               path="/"
-              render={(props) =>
-                (<ResultsDataset
+              render={props => (
+                <ResultsDataset
                   selectedLanguageCode={this.props.selectedLanguageCode}
                   datasetItems={datasetItems}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
                   onFilterPublisher={this.handleDatasetFilterPublisher}
-                  onFilterPublisherHierarchy={this.handleDatasetFilterPublisherHierarchy}
+                  onFilterPublisherHierarchy={
+                    this.handleDatasetFilterPublisherHierarchy
+                  }
                   onSort={this.handleDatasetSort}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
@@ -354,22 +402,22 @@ class SearchPage extends React.Component {
                   publisherArray={publisherCountItems}
                   publishers={publisherItems}
                   {...props}
-                />)
-              }
+                />
+              )}
             />
             <Route
               exact
               path="/concepts/:lang?"
-              render={(props) =>
-                (<ResultsConcepts
+              render={props => (
+                <ResultsConcepts
                   selectedLanguageCode={this.props.selectedLanguageCode}
                   termItems={termItems}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
                   hitsPerPage={50}
                   {...props}
-                />)
-              }
+                />
+              )}
             />
           </Switch>
         </div>
@@ -387,23 +435,26 @@ SearchPage.propTypes = {
 };
 
 function mapStateToProps({ datasets, terms, themes, publishers }) {
-
-  const { datasetItems, publisherCountItems, isFetchingDatasets,  } = datasets || {
+  const {
+    datasetItems,
+    publisherCountItems,
+    isFetchingDatasets
+  } = datasets || {
     datasetItems: null,
     publisherCountItems: null
-  }
+  };
 
   const { termItems, isFetchingTerms } = terms || {
     termItems: null
-  }
+  };
 
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
-  }
+  };
 
   const { publisherItems, isFetchingPublishers } = publishers || {
     publisherItems: null
-  }
+  };
 
   return {
     datasetItems,
@@ -415,7 +466,7 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
     isFetchingThemes,
     publisherItems,
     isFetchingPublishers
-  }
+  };
 }
 
 export default connect(mapStateToProps)(SearchPage);

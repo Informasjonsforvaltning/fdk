@@ -1,6 +1,13 @@
-import { PUBLISHERS_REQUEST, PUBLISHERS_SUCCESS, PUBLISHERS_FAILURE } from '../constants/ActionTypes';
+import {
+  PUBLISHERS_REQUEST,
+  PUBLISHERS_SUCCESS,
+  PUBLISHERS_FAILURE
+} from "../constants/ActionTypes";
 
-export default function publishers(state = { isFetchingPublishers: false, publisherItems: null }, action) {
+export default function publishers(
+  state = { isFetchingPublishers: false, publisherItems: null },
+  action
+) {
   switch (action.type) {
     case PUBLISHERS_REQUEST: {
       return {
@@ -9,15 +16,18 @@ export default function publishers(state = { isFetchingPublishers: false, publis
       };
     }
     case PUBLISHERS_SUCCESS: {
-      const objFromArray = action.response.data.hits.hits.reduce((accumulator, current) => {
-        accumulator[current._source.orgPath] = current._source
-        return accumulator
-      }, {});
+      const objFromArray = action.response.data.hits.hits.reduce(
+        (accumulator, current) => {
+          accumulator[current._source.orgPath] = current._source;
+          return accumulator;
+        },
+        {}
+      );
       return {
         ...state,
         isFetchingPublishers: false,
         publisherItems: objFromArray // action.response.data.hits.hits // action.response.data
-      }
+      };
     }
     case PUBLISHERS_FAILURE: {
       return {

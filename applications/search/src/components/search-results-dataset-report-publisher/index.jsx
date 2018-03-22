@@ -1,23 +1,22 @@
-import React from 'react';
-import Select from 'react-select';
+import React from "react";
+import Select from "react-select";
 import * as axios from "axios";
-import defaults from 'lodash/defaults';
+import defaults from "lodash/defaults";
 
-import localization from '../localization';
-import './index.scss';
+import localization from "../localization";
+import "./index.scss";
 
 export default class SearchPublishers extends React.Component {
-  static getPublishers (input) {
+  static getPublishers(input) {
     if (!input) {
       return Promise.resolve({ options: [] });
     }
 
-    return axios.get(`/publisher?q=${input}`)
-      .then((response) => {
-        const hits = response.data.hits.hits;
-        const nodes = hits.map(item => item._source);
-        return { options: nodes }
-      });
+    return axios.get(`/publisher?q=${input}`).then(response => {
+      const hits = response.data.hits.hits;
+      const nodes = hits.map(item => item._source);
+      return { options: nodes };
+    });
   }
 
   constructor(props) {
@@ -27,22 +26,22 @@ export default class SearchPublishers extends React.Component {
       multi: false
     };
     this.options = defaults({
-      headers:{},
+      headers: {},
       searchUrlPath: "/publisher"
     });
     this.axios = axios.create({
-      baseURL:this.host,
-      headers:this.options.headers
+      baseURL: this.host,
+      headers: this.options.headers
     });
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange (value) {
+  onChange(value) {
     this.setState({
-      value,
+      value
     });
     if (!value) {
-      this.props.onSearch(null, '');
+      this.props.onSearch(null, "");
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
@@ -51,7 +50,9 @@ export default class SearchPublishers extends React.Component {
   render() {
     return (
       <div className="section fdk-report-search-publishers">
-        <div className="fdk-report-search-publishers__header mb-2">{localization.report.searchPublisher}</div>
+        <div className="fdk-report-search-publishers__header mb-2">
+          {localization.report.searchPublisher}
+        </div>
         <Select.Async
           ignoreAccents={false}
           placeholder={localization.report.searchPublisherPlaceholder}
@@ -69,10 +70,6 @@ export default class SearchPublishers extends React.Component {
   }
 }
 
-SearchPublishers.defaultProps = {
+SearchPublishers.defaultProps = {};
 
-};
-
-SearchPublishers.propTypes = {
-
-};
+SearchPublishers.propTypes = {};

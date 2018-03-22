@@ -1,4 +1,4 @@
-import qs from 'qs';
+import qs from "qs";
 
 /**
  * Add a URL parameter (or modify if already exists)
@@ -7,12 +7,12 @@ import qs from 'qs';
  */
 export function getTranslateText(textObj, selectedLanguage) {
   return (
-    textObj[selectedLanguage]
-    || textObj.nb
-    || textObj.no
-    || textObj.nn
-    || textObj.en
-    || null
+    textObj[selectedLanguage] ||
+    textObj.nb ||
+    textObj.no ||
+    textObj.nn ||
+    textObj.en ||
+    null
   );
 }
 
@@ -24,5 +24,6 @@ export function getLanguageFromUrl() {
   const queryObj = qs.parse(window.location.search.substr(1));
   if (queryObj && queryObj.lang) {
     return queryObj.lang;
-  } return null;
+  }
+  return null;
 }

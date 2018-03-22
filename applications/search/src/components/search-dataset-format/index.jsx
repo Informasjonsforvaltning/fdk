@@ -1,35 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
 
-const DistributionFormat  = (props) => {
+const DistributionFormat = props => {
   const { code, type, text } = props;
-  const formatClass = cx(
-    'fdk-label-distribution',
-    {
-      'fdk-label-distribution-offentlig': code === 'PUBLIC',
-      'fdk-label-distribution-begrenset': code === 'RESTRICTED',
-      'fdk-label-distribution-skjermet': code === 'NON-PUBLIC'
-    });
+  const formatClass = cx("fdk-label-distribution", {
+    "fdk-label-distribution-offentlig": code === "PUBLIC",
+    "fdk-label-distribution-begrenset": code === "RESTRICTED",
+    "fdk-label-distribution-skjermet": code === "NON-PUBLIC"
+  });
 
   return (
     <div className={formatClass}>
-      {type &&
-      <span>
-        <i className="fa fa-cogs fdk-fa-left" />
-        <strong className="fdk-distribution-format">
-          {type}
-        </strong>
-      </span>
-      }
+      {type && (
+        <span>
+          <i className="fa fa-cogs fdk-fa-left" />
+          <strong className="fdk-distribution-format">{type}</strong>
+        </span>
+      )}
       {text}
     </div>
   );
-
-}
+};
 
 DistributionFormat.defaultProps = {
-  code: 'PUBLIC',
+  code: "PUBLIC",
   type: null,
   text: null
 };

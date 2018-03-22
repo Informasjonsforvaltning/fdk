@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ReactPaginate from 'react-paginate';
+import React from "react";
+import PropTypes from "prop-types";
+import ReactPaginate from "react-paginate";
 
-import localization from '../localization';
-import ConceptsHitItem from '../search-concepts-hit-item';
-import CompareTerms from '../search-concepts-compare';
-import CompareTermModal from '../search-concepts-compare-modal';
+import localization from "../localization";
+import ConceptsHitItem from "../search-concepts-hit-item";
+import CompareTerms from "../search-concepts-compare";
+import CompareTermModal from "../search-concepts-compare-modal";
 
 export default class ResultsConcepts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       terms: []
-    }
+    };
     this.handleAddTerm = this.handleAddTerm.bind(this);
     this.handleDeleteTerm = this.handleDeleteTerm.bind(this);
   }
@@ -33,22 +33,23 @@ export default class ResultsConcepts extends React.Component {
 
   _renderCompareTerms() {
     const { terms } = this.state;
-    const children = items => items.map((item, index) => {
-      let creator;
-      if (item.creator && item.creator.name) {
-        creator = item.creator.name;
-      }
-      return (
-        <CompareTerms
-          key={item.uri}
-          prefLabel={item.prefLabel}
-          creator={creator}
-          onDeleteTerm={this.handleDeleteTerm}
-          termIndex={index}
-          selectedLanguageCode={this.props.selectedLanguageCode}
-        />
-      );
-    });
+    const children = items =>
+      items.map((item, index) => {
+        let creator;
+        if (item.creator && item.creator.name) {
+          creator = item.creator.name;
+        }
+        return (
+          <CompareTerms
+            key={item.uri}
+            prefLabel={item.prefLabel}
+            creator={creator}
+            onDeleteTerm={this.handleDeleteTerm}
+            termIndex={index}
+            selectedLanguageCode={this.props.selectedLanguageCode}
+          />
+        );
+      });
     const compareButton = (
       <CompareTermModal
         terms={terms}
@@ -60,13 +61,11 @@ export default class ResultsConcepts extends React.Component {
     if (terms && terms.length > 0) {
       return (
         <div>
-          <h3 className="mb-2">
-            {localization.terms.compareTerms}
-          </h3>
+          <h3 className="mb-2">{localization.terms.compareTerms}</h3>
           {children(terms)}
           {compareButton}
         </div>
-      )
+      );
     }
     return null;
   }
@@ -90,8 +89,11 @@ export default class ResultsConcepts extends React.Component {
 
   render() {
     const { termItems, onPageChange, searchQuery, hitsPerPage } = this.props;
-    const page = (searchQuery && searchQuery.from) ? (searchQuery.from / hitsPerPage) : 0;
-    const pageCount = Math.ceil( ((termItems && termItems.hits) ? termItems.hits.total : 1) / hitsPerPage);
+    const page =
+      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const pageCount = Math.ceil(
+      (termItems && termItems.hits ? termItems.hits.total : 1) / hitsPerPage
+    );
 
     return (
       <div>
@@ -99,14 +101,14 @@ export default class ResultsConcepts extends React.Component {
           <div className="container">
             <div id="conceptsPanel">
               <div className="row">
-                <div className="col-sm-4">
-                  { this._renderCompareTerms() }
-                </div>
+                <div className="col-sm-4">{this._renderCompareTerms()}</div>
                 <div id="concepts" className="col-sm-8">
                   {this._renderTerms()}
                 </div>
                 <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
-                  <span className="uu-invisible" aria-hidden="false">Sidepaginering.</span>
+                  <span className="uu-invisible" aria-hidden="false">
+                    Sidepaginering.
+                  </span>
                   <ReactPaginate
                     pageCount={pageCount}
                     pageRangeDisplayed={2}
@@ -133,7 +135,7 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: ''
+  selectedLanguageCode: ""
 };
 
 ResultsConcepts.propTypes = {
