@@ -1,10 +1,10 @@
-import React from 'react';
-import {Modal, ModalHeader, ModalTitle, ModalBody} from 'react-bootstrap';
-import localization from '../../components/localization';
-import CompareTermModalContent from '../search-concepts-compare-modal-content';
-import './index.scss';
+import React from "react";
+import { Modal, ModalHeader, ModalTitle, ModalBody } from "react-bootstrap";
+import localization from "../../components/localization";
+import CompareTermModalContent from "../search-concepts-compare-modal-content";
+import "./index.scss";
 
-const ReactGA = require('react-ga');
+const ReactGA = require("react-ga");
 
 export default class CompareTermModal extends React.Component {
   constructor(props) {
@@ -12,80 +12,92 @@ export default class CompareTermModal extends React.Component {
     this.state = {
       showModal: false,
       showBar: true
-    }
+    };
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
   }
 
   close() {
-    this.setState(
-      {
-        showModal: false,
-        showBar: true
-      }
-    );
+    this.setState({
+      showModal: false,
+      showBar: true
+    });
   }
 
   open(type) {
-    if (type === 'BOTTOM') {
+    if (type === "BOTTOM") {
       ReactGA.event({
-        category: 'Begrep',
-        action: 'Sammenligningsvindu',
-        label: 'Sticky button'
+        category: "Begrep",
+        action: "Sammenligningsvindu",
+        label: "Sticky button"
       });
     } else {
       ReactGA.event({
-        category: 'Begrep',
-        action: 'Sammenligningsvindu',
-        label: 'Left menu button'
+        category: "Begrep",
+        action: "Sammenligningsvindu",
+        label: "Left menu button"
       });
     }
-    ReactGA.modalview('/concepts/compare');
-    this.setState(
-      {
-        showModal: true,
-        showBar: false
-      }
-    );
+    ReactGA.modalview("/concepts/compare");
+    this.setState({
+      showModal: true,
+      showBar: false
+    });
   }
 
   render() {
-    let cols = 'col-md-';
-    switch ((12 / this.props.terms.length)) {
+    let cols = "col-md-";
+    switch (12 / this.props.terms.length) {
       case 6:
-        cols += '6';
+        cols += "6";
         break;
       case 4:
-        cols += '4';
+        cols += "4";
         break;
       default:
-        cols += '6';
+        cols += "6";
         break;
     }
 
-    const removeTerms = items => items.map((item, index) => (
-      <div className={cols} key={`remove-${  index  }${item.uri}`}>
-        <button className="fdk-buttonx fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button" onClick={() => {this.props.handleDeleteTerm(index)}}>
-          <i className="fa fa-times fdk-color0" />
-          &nbsp;
-          {localization.compare.remove}
-        </button>
-      </div>
-    ));
+    const removeTerms = items =>
+      items.map((item, index) => (
+        <div className={cols} key={`remove-${index}${item.uri}`}>
+          <button
+            className="fdk-buttonx fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button"
+            onClick={() => {
+              this.props.handleDeleteTerm(index);
+            }}
+          >
+            <i className="fa fa-times fdk-color0" />
+            &nbsp;
+            {localization.compare.remove}
+          </button>
+        </div>
+      ));
 
     const bottomModalLabel = (
       <div>
-        <button className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button" onClick={() => {this.open('BOTTOM')}}>
+        <button
+          className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button"
+          onClick={() => {
+            this.open("BOTTOM");
+          }}
+        >
           <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
-          {localization.compare.added + this.props.terms.length + localization.compare.toCompare}
+          {localization.compare.added +
+            this.props.terms.length +
+            localization.compare.toCompare}
         </button>
       </div>
     );
 
     return (
       <div>
-        <button className="fdk-button fdk-button-cta fdk-fullwidth" onClick={this.open}>
+        <button
+          className="fdk-button fdk-button-cta fdk-fullwidth"
+          onClick={this.open}
+        >
           <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
           {localization.compare.openCompare}
@@ -109,12 +121,12 @@ export default class CompareTermModal extends React.Component {
               selectedLanguageCode={this.props.selectedLanguageCode}
               cols={cols}
             />
-            <div className="row">
-              {removeTerms(this.props.terms)}
-            </div>
+            <div className="row">{removeTerms(this.props.terms)}</div>
           </ModalBody>
         </Modal>
-        {(this.state.showBar && this.props.terms.length > 0) ? bottomModalLabel : null}
+        {this.state.showBar && this.props.terms.length > 0
+          ? bottomModalLabel
+          : null}
       </div>
     );
   }

@@ -1,11 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import DocumentMeta from 'react-document-meta';
+import React from "react";
+import PropTypes from "prop-types";
+import DocumentMeta from "react-document-meta";
 
-import localization from '../../components/localization';
-import { getTranslateText } from '../../utils/translateText';
+import localization from "../../components/localization";
+import { getTranslateText } from "../../utils/translateText";
 
-export default class DatasetDescription extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class DatasetDescription extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   _renderPublisher() {
     const { publisher } = this.props;
     const ownedBy = localization.search_hit.owned;
@@ -13,8 +14,14 @@ export default class DatasetDescription extends React.Component { // eslint-disa
       return (
         <span>
           {ownedBy}&nbsp;
-          <strong id="dataset-descritption-publisher-text" className="fdk-strong-virksomhet">
-            {publisher ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase() : ''}
+          <strong
+            id="dataset-descritption-publisher-text"
+            className="fdk-strong-virksomhet"
+          >
+            {publisher
+              ? publisher.name.charAt(0) +
+                publisher.name.substring(1).toLowerCase()
+              : ""}
           </strong>
         </span>
       );
@@ -47,39 +54,40 @@ export default class DatasetDescription extends React.Component { // eslint-disa
     return (
       <header id="dataset-description">
         <DocumentMeta {...meta} />
-        {this.props.title &&
-        <h1 className="fdk-margin-bottom">
-          {this.props.title}
-        </h1>
-        }
+        {this.props.title && (
+          <h1 className="fdk-margin-bottom">{this.props.title}</h1>
+        )}
 
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}
           {this._renderThemes()}
         </div>
 
-        {this.props.description &&
-        <p className="fdk-ingress" dangerouslySetInnerHTML={{__html: this.props.descriptionFormatted}} />
-        }
+        {this.props.description && (
+          <p
+            className="fdk-ingress"
+            dangerouslySetInnerHTML={{
+              __html: this.props.descriptionFormatted
+            }}
+          />
+        )}
 
-        {this.props.objective &&
-        <p className="fdk-ingress">
-          {this.props.objective}
-        </p>
-        }
+        {this.props.objective && (
+          <p className="fdk-ingress">{this.props.objective}</p>
+        )}
       </header>
     );
   }
 }
 
 DatasetDescription.defaultProps = {
-  title: '',
-  description: '',
-  descriptionFormatted: '',
-  objective: '',
+  title: "",
+  description: "",
+  descriptionFormatted: "",
+  objective: "",
   publisher: null,
   themes: null,
-  selectedLanguageCode: ''
+  selectedLanguageCode: ""
 };
 
 DatasetDescription.propTypes = {

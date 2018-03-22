@@ -1,15 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as _ from 'lodash';
-import cx from 'classnames';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import * as _ from "lodash";
+import cx from "classnames";
+import { Link } from "react-router-dom";
 
-import DistributionFormat from '../search-dataset-format';
-import localization from '../../components/localization';
-import { getTranslateText, getLanguageFromUrl } from '../../utils/translateText';
-import './index.scss';
+import DistributionFormat from "../search-dataset-format";
+import localization from "../../components/localization";
+import {
+  getTranslateText,
+  getLanguageFromUrl
+} from "../../utils/translateText";
+import "./index.scss";
 
-export default class SearchHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class SearchHitItem extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
@@ -21,38 +25,35 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     let formatNodes;
     const { distribution } = this.state.source;
 
-    const children = (items, code) => items.map((item) => {
-      if (item !== null) {
-        const formatArray = item.trim().split(',');
-        return formatArray.map((item, index) => {
-          if (item === null) {
-            return null;
-          }
-          return (
-            <DistributionFormat
-              key={`dataset-distribution-format${index}`}
-              code={code}
-              text={item}
-            />
-          );
-        });
-      }
-      return null;
-    });
+    const children = (items, code) =>
+      items.map(item => {
+        if (item !== null) {
+          const formatArray = item.trim().split(",");
+          return formatArray.map((item, index) => {
+            if (item === null) {
+              return null;
+            }
+            return (
+              <DistributionFormat
+                key={`dataset-distribution-format${index}`}
+                code={code}
+                text={item}
+              />
+            );
+          });
+        }
+        return null;
+      });
 
     if (distribution && _.isArray(Object.keys(distribution))) {
-      formatNodes = Object.keys(distribution).map((key) => {
+      formatNodes = Object.keys(distribution).map(key => {
         if (distribution[key].format) {
           return distribution[key].format[0];
         }
         return null;
       });
       if (formatNodes && formatNodes[0] !== null) {
-        return (
-          <div>
-            { children(formatNodes, code) }
-          </div>
-        );
+        return <div>{children(formatNodes, code)}</div>;
       }
     }
     return null;
@@ -63,14 +64,15 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (publisher && publisher.name) {
       return (
         <span>
-          <span className="uu-invisible" aria-hidden="false">Datasettet</span>
+          <span className="uu-invisible" aria-hidden="false">
+            Datasettet
+          </span>
           {localization.search_hit.owned}&nbsp;
           <span className="fdk-strong-virksomhet">
-            {
-              (publisher && publisher.name)
-                ? publisher.name.charAt(0) + publisher.name.substring(1).toLowerCase()
-                : ''
-            }
+            {publisher && publisher.name
+              ? publisher.name.charAt(0) +
+                publisher.name.substring(1).toLowerCase()
+              : ""}
           </span>
         </span>
       );
@@ -83,11 +85,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const { theme } = this.state.source;
     if (theme) {
       themeNodes = theme.map((singleTheme, index) => (
-        <div
-          key={`dataset-description-theme-${index}`}
-          className="fdk-label"
-        >
-          <span className="uu-invisible" aria-hidden="false">Datasettets tema.</span>
+        <div key={`dataset-description-theme-${index}`} className="fdk-label">
+          <span className="uu-invisible" aria-hidden="false">
+            Datasettets tema.
+          </span>
           {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
         </div>
       ));
@@ -100,9 +101,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     if (sample) {
       if (sample.length > 0) {
         return (
-          <div id="search-hit-sample">
-            {localization.search_hit.sample}
-          </div>
+          <div id="search-hit-sample">{localization.search_hit.sample}</div>
         );
       }
     }
@@ -112,7 +111,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
   render() {
     const language = this.props.selectedLanguageCode;
     const langCode = getLanguageFromUrl();
-    const langParam = langCode ? `?lang=${langCode}` : '';
+    const langParam = langCode ? `?lang=${langCode}` : "";
     const { source } = this.state;
 
     // Read fields from search-hit, use correct language field if specified.
@@ -120,13 +119,22 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     const hitElementId = `search-hit-${hitId}`;
     let { title, description, objective } = source;
     if (title) {
-      title = source.title[language] || source.title.nb || source.title.nn || source.title.en;
+      title =
+        source.title[language] ||
+        source.title.nb ||
+        source.title.nn ||
+        source.title.en;
     }
     if (description) {
-      description = source.description[language] || source.description.nb || source.description.nn || source.description.en;
+      description =
+        source.description[language] ||
+        source.description.nb ||
+        source.description.nn ||
+        source.description.en;
     }
     if (objective) {
-      objective = objective[language] || objective.nb || objective.nn || objective.en;
+      objective =
+        objective[language] || objective.nb || objective.nn || objective.en;
     }
 
     if (description.length > 220) {
@@ -134,7 +142,10 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     } else if (description.length < 150 && objective) {
       const freeLength = 200 - description.length;
       const objectiveLength = objective.length;
-      description = `${description} ${objective.substr(0, (200 - freeLength))} ${(objectiveLength > freeLength ? '...' : '')}`;
+      description = `${description} ${objective.substr(
+        0,
+        200 - freeLength
+      )} ${objectiveLength > freeLength ? "..." : ""}`;
     }
     const link = `/datasets/${hitId}`;
 
@@ -143,30 +154,32 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
     let distributionRestricted = false;
     let distributionPublic = false;
 
-    let authorityCode = '';
+    let authorityCode = "";
     if (source.accessRights && source.accessRights.code) {
       authorityCode = source.accessRights.code;
     }
 
-    if (source.accessRights && authorityCode === 'NON_PUBLIC') {
+    if (source.accessRights && authorityCode === "NON_PUBLIC") {
       distributionNonPublic = true;
-      accessRightsLabel = localization.dataset.accessRights.authorityCode.nonPublic;
-    } else if (source.accessRights && authorityCode === 'RESTRICTED') {
+      accessRightsLabel =
+        localization.dataset.accessRights.authorityCode.nonPublic;
+    } else if (source.accessRights && authorityCode === "RESTRICTED") {
       distributionRestricted = true;
-      accessRightsLabel = localization.dataset.accessRights.authorityCode.restricted;
-    } else if (source.accessRights && authorityCode === 'PUBLIC') {
+      accessRightsLabel =
+        localization.dataset.accessRights.authorityCode.restricted;
+    } else if (source.accessRights && authorityCode === "PUBLIC") {
       distributionPublic = true;
-      accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
+      accessRightsLabel =
+        localization.dataset.accessRights.authorityCode.public;
     }
 
-    const distributionClass = cx(
-      {
-        'fdk-container-distributions': (distributionNonPublic || distributionRestricted || distributionPublic),
-        'fdk-distributions-red': distributionNonPublic,
-        'fdk-distributions-yellow': distributionRestricted,
-        'fdk-distributions-green': distributionPublic
-      }
-    );
+    const distributionClass = cx({
+      "fdk-container-distributions":
+        distributionNonPublic || distributionRestricted || distributionPublic,
+      "fdk-distributions-red": distributionNonPublic,
+      "fdk-distributions-yellow": distributionRestricted,
+      "fdk-distributions-green": distributionPublic
+    });
 
     return (
       <Link
@@ -175,17 +188,19 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
         title={`${localization.result.dataset}: ${title}`}
         to={`${link}${langParam}`}
       >
-        <span className="uu-invisible" aria-hidden="false">Søketreff.</span>
+        <span className="uu-invisible" aria-hidden="false">
+          Søketreff.
+        </span>
         <div className="fdk-container fdk-container-search-hit">
           <h2>{title}</h2>
           <div className="fdk-dataset-themes">
             {this._renderPublisher()}
             {this._renderThemes()}
           </div>
-          <p
-            className="fdk-p-search-hit"
-          >
-            <span className="uu-invisible" aria-hidden="false">Beskrivelse av datasettet,</span>
+          <p className="fdk-p-search-hit">
+            <span className="uu-invisible" aria-hidden="false">
+              Beskrivelse av datasettet,
+            </span>
             {description}
           </p>
 
@@ -202,7 +217,7 @@ export default class SearchHitItem extends React.Component { // eslint-disable-l
 
 SearchHitItem.defaultProps = {
   result: null,
-  selectedLanguageCode: 'nb'
+  selectedLanguageCode: "nb"
 };
 
 SearchHitItem.propTypes = {

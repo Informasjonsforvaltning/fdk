@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import React from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
-import DatasetDescription from '../../components/search-dataset-description';
-import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
-import DatasetDistribution from '../../components/search-dataset-distribution';
-import DatasetInfo from '../../components/search-dataset-info';
-import DatasetQuality from '../../components/search-dataset-quality-content';
-import DatasetBegrep from '../../components/search-dataset-begrep';
-import DatasetLandingPage from '../../components/search-dataset-landingpage';
-import DatasetContactInfo from '../../components/search-dataset-contactinfo';
-import localization from '../../components/localization';
-import { getTranslateText } from '../../utils/translateText';
+import DatasetDescription from "../../components/search-dataset-description";
+import DatasetKeyInfo from "../../components/search-dataset-keyinfo";
+import DatasetDistribution from "../../components/search-dataset-distribution";
+import DatasetInfo from "../../components/search-dataset-info";
+import DatasetQuality from "../../components/search-dataset-quality-content";
+import DatasetBegrep from "../../components/search-dataset-begrep";
+import DatasetLandingPage from "../../components/search-dataset-landingpage";
+import DatasetContactInfo from "../../components/search-dataset-contactinfo";
+import localization from "../../components/localization";
+import { getTranslateText } from "../../utils/translateText";
 // import api from '../../utils/api.json';
 
 export default class DetailsPage extends React.Component {
@@ -34,10 +34,11 @@ export default class DetailsPage extends React.Component {
     const { match: { params } } = this.props;
     const url = `/datasets/${params.id}`;
     const config = {
-      headers: { Pragma: 'no-cache' }
-    }
-    axios.get(url, config)
-      .then((res) => {
+      headers: { Pragma: "no-cache" }
+    };
+    axios
+      .get(url, config)
+      .then(res => {
         const data = res.data;
         const dataset = data.hits.hits[0]._source;
         this.setState({
@@ -46,7 +47,7 @@ export default class DetailsPage extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error.response)
+        console.error(error.response);
       });
   }
 
@@ -55,10 +56,35 @@ export default class DetailsPage extends React.Component {
     if (dataset) {
       return (
         <DatasetDescription
-          title={dataset.title ? getTranslateText(dataset.title, this.props.selectedLanguageCode) : null}
-          description={dataset.description ? getTranslateText(dataset.description, this.props.selectedLanguageCode) : null}
-          descriptionFormatted={dataset.descriptionFormatted ? getTranslateText(dataset.descriptionFormatted, this.props.selectedLanguageCode) : null}
-          objective={dataset.objective ? getTranslateText(dataset.objective, this.props.selectedLanguageCode) : null}
+          title={
+            dataset.title
+              ? getTranslateText(dataset.title, this.props.selectedLanguageCode)
+              : null
+          }
+          description={
+            dataset.description
+              ? getTranslateText(
+                  dataset.description,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
+          descriptionFormatted={
+            dataset.descriptionFormatted
+              ? getTranslateText(
+                  dataset.descriptionFormatted,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
+          objective={
+            dataset.objective
+              ? getTranslateText(
+                  dataset.objective,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
           publisher={dataset.publisher}
           themes={dataset.theme}
           selectedLanguageCode={this.props.selectedLanguageCode}
@@ -79,7 +105,14 @@ export default class DetailsPage extends React.Component {
         id={encodeURIComponent(distribution.uri)}
         key={encodeURIComponent(distribution.uri)}
         title={localization.dataset.distribution.title}
-        description={distribution.description ? getTranslateText(distribution.description, this.props.selectedLanguageCode) : null}
+        description={
+          distribution.description
+            ? getTranslateText(
+                distribution.description,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
         accessUrl={distribution.accessURL}
         format={distribution.format}
         code={accessRights ? accessRights.code : null}
@@ -101,7 +134,14 @@ export default class DetailsPage extends React.Component {
         id={encodeURIComponent(sample.uri)}
         key={encodeURIComponent(sample.uri)}
         title={localization.dataset.sample}
-        description={sample.description ? getTranslateText(sample.description, this.props.selectedLanguageCode) : null}
+        description={
+          sample.description
+            ? getTranslateText(
+                sample.description,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
         accessUrl={sample.accessURL}
         format={sample.format}
         code="SAMPLE"
@@ -112,7 +152,6 @@ export default class DetailsPage extends React.Component {
       />
     ));
   }
-
 
   _renderKeyInfo() {
     const { dataset } = this.state;
@@ -148,11 +187,31 @@ export default class DetailsPage extends React.Component {
 
     return (
       <DatasetInfo
-        issued={issued || null
+        issued={issued || null}
+        accrualPeriodicity={
+          accrualPeriodicity
+            ? getTranslateText(
+                accrualPeriodicity.prefLabel,
+                this.props.selectedLanguageCode
+              )
+            : null
         }
-        accrualPeriodicity={accrualPeriodicity ? getTranslateText(accrualPeriodicity.prefLabel, this.props.selectedLanguageCode) : null}
-        provenance={provenance ? getTranslateText(provenance.prefLabel, this.props.selectedLanguageCode) : null}
-        hasCurrentnessAnnotation={hasCurrentnessAnnotation ? getTranslateText(hasCurrentnessAnnotation.hasBody, this.props.selectedLanguageCode) : null}
+        provenance={
+          provenance
+            ? getTranslateText(
+                provenance.prefLabel,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
+        hasCurrentnessAnnotation={
+          hasCurrentnessAnnotation
+            ? getTranslateText(
+                hasCurrentnessAnnotation.hasBody,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
         spatial={spatial}
         temporal={temporal}
         language={language}
@@ -170,13 +229,46 @@ export default class DetailsPage extends React.Component {
       hasAccuracyAnnotation,
       hasAvailabilityAnnotation
     } = this.state.dataset;
-    if (hasRelevanceAnnotation || hasCompletenessAnnotation || hasAccuracyAnnotation || hasAvailabilityAnnotation) {
+    if (
+      hasRelevanceAnnotation ||
+      hasCompletenessAnnotation ||
+      hasAccuracyAnnotation ||
+      hasAvailabilityAnnotation
+    ) {
       return (
         <DatasetQuality
-          relevanceAnnotation={hasRelevanceAnnotation ? getTranslateText(hasRelevanceAnnotation.hasBody, this.props.selectedLanguageCode) : null}
-          completenessAnnotation={hasCompletenessAnnotation ? getTranslateText(hasCompletenessAnnotation.hasBody, this.props.selectedLanguageCode) : null}
-          accuracyAnnotation={hasAccuracyAnnotation ? getTranslateText(hasAccuracyAnnotation.hasBody, this.props.selectedLanguageCode) : null}
-          availabilityAnnotations={hasAvailabilityAnnotation ? getTranslateText(hasAvailabilityAnnotation.hasBody, this.props.selectedLanguageCode) : null}
+          relevanceAnnotation={
+            hasRelevanceAnnotation
+              ? getTranslateText(
+                  hasRelevanceAnnotation.hasBody,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
+          completenessAnnotation={
+            hasCompletenessAnnotation
+              ? getTranslateText(
+                  hasCompletenessAnnotation.hasBody,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
+          accuracyAnnotation={
+            hasAccuracyAnnotation
+              ? getTranslateText(
+                  hasAccuracyAnnotation.hasBody,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
+          availabilityAnnotations={
+            hasAvailabilityAnnotation
+              ? getTranslateText(
+                  hasAvailabilityAnnotation.hasBody,
+                  this.props.selectedLanguageCode
+                )
+              : null
+          }
         />
       );
     }
@@ -188,30 +280,28 @@ export default class DetailsPage extends React.Component {
     if (!(contactPoint || landingPage)) {
       return null;
     }
-    const contactPoints = (items) => items.map(item => (
-      <DatasetContactInfo
-        key={item.uri}
-        landingPage={landingPage}
-        contactPoint={item}
-      />
-    ));
+    const contactPoints = items =>
+      items.map(item => (
+        <DatasetContactInfo
+          key={item.uri}
+          landingPage={landingPage}
+          contactPoint={item}
+        />
+      ));
 
-    const landingPages = (items) => items.map((item, index) => (
-      <DatasetLandingPage
-        key={`dataset-contactpoint-${item.id}`}
-        id={`dataset-contactpoint-${index}`}
-        landingPage={item}
-      />
-    ));
+    const landingPages = items =>
+      items.map((item, index) => (
+        <DatasetLandingPage
+          key={`dataset-contactpoint-${item.id}`}
+          id={`dataset-contactpoint-${index}`}
+          landingPage={item}
+        />
+      ));
 
     return (
       <section className="fdk-margin-top-triple">
-        {landingPage &&
-        landingPages(landingPage)
-        }
-        {contactPoint &&
-        contactPoints(contactPoint)
-        }
+        {landingPage && landingPages(landingPage)}
+        {contactPoint && contactPoints(contactPoint)}
       </section>
     );
   }
@@ -235,7 +325,7 @@ export default class DetailsPage extends React.Component {
       <div className="container">
         <div className="fdk-container-path" />
         <div className="row">
-          <div className="col-md-8 col-md-offset-2" id="content" role="main" tabIndex="-1">
+          <div className="col-md-8 col-md-offset-2" id="content" role="main">
             <article>
               {this._renderDatasetDescription()}
               {this._renderKeyInfo()}

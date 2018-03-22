@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as _ from 'lodash';
+import React from "react";
+import PropTypes from "prop-types";
+import * as _ from "lodash";
 
-import localization from '../../components/localization';
-import { getTranslateText } from '../../utils/translateText';
-import './index.scss';
+import localization from "../../components/localization";
+import { getTranslateText } from "../../utils/translateText";
+import "./index.scss";
 
-export default class ConceptsHitItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class ConceptsHitItem extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
@@ -19,8 +20,10 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     if (creator && creator.name) {
       return (
         <span className="inline-block fdk-strong-virksomhet">
-          <span className="uu-invisible" aria-hidden="false">Utgiver.</span>
-          { creator.name }
+          <span className="uu-invisible" aria-hidden="false">
+            Utgiver.
+          </span>
+          {creator.name}
         </span>
       );
     }
@@ -29,25 +32,24 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
 
   _renderThemes() {
     const { inScheme } = this.state.source;
-    const children = items => items.map((item, index) => {
-      const subItem = item.substring(item.lastIndexOf('/') + 1)
-      return (
-        <span
-          key={`dataset-description-inScheme-${index}`}
-          id={`dataset-description-inScheme-${index}`}
-          className="fdk-label"
-        >
-          <span className="uu-invisible" aria-hidden="false">Tema.</span>
-          {subItem}
-        </span>
-      );
-    });
+    const children = items =>
+      items.map((item, index) => {
+        const subItem = item.substring(item.lastIndexOf("/") + 1);
+        return (
+          <span
+            key={`dataset-description-inScheme-${index}`}
+            id={`dataset-description-inScheme-${index}`}
+            className="fdk-label"
+          >
+            <span className="uu-invisible" aria-hidden="false">
+              Tema.
+            </span>
+            {subItem}
+          </span>
+        );
+      });
     if (inScheme) {
-      return (
-        <div className="mt-3">
-          { children(inScheme) }
-        </div>
-      );
+      return <div className="mt-3">{children(inScheme)}</div>;
     }
     return null;
   }
@@ -60,11 +62,10 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
           <span className="fa-stack fdk-fa-left fdk-fa-circle">
             <i className="fa fa-file-text fa-stack-1x fdk-color0" />
           </span>
-          <a
-            title="Link til lovhjemmel for begrep"
-            href={source}
-          >
-            <span className="uu-invisible" aria-hidden="false">Link til lovhjemmel for begrep.</span>
+          <a title="Link til lovhjemmel for begrep" href={source}>
+            <span className="uu-invisible" aria-hidden="false">
+              Link til lovhjemmel for begrep.
+            </span>
             {source}
             <i className="fa fa-external-link fdk-fa-right" />
           </a>
@@ -79,9 +80,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
     const { selectedLanguageCode } = this.props;
     if (note) {
       return (
-        <p
-          className="fdk-p-search-hit"
-        >
+        <p className="fdk-p-search-hit">
           {getTranslateText(note, selectedLanguageCode)}
         </p>
       );
@@ -92,30 +91,29 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
   _renderAltLabel() {
     const { altLabel } = this.state.source;
     const { selectedLanguageCode } = this.props;
-    const children = items => items.map((item, index) => {
-      if (index > 0) {
+    const children = items =>
+      items.map((item, index) => {
+        if (index > 0) {
+          return (
+            <span key={`concepts-altlabel-${index}`}>
+              {`, ${getTranslateText(item, selectedLanguageCode)}`}
+            </span>
+          );
+        }
         return (
-          <span
-            key={`concepts-altlabel-${index}`}
-          >
-            {`, ${getTranslateText(item, selectedLanguageCode)}`}
+          <span key={`concepts-altlabel-${index}`}>
+            {`${getTranslateText(item, selectedLanguageCode)}`}
           </span>
         );
-      }
-      return (
-        <span
-          key={`concepts-altlabel-${index}`}
-        >
-          {`${getTranslateText(item, selectedLanguageCode)}`}
-        </span>
-      );
-    });
+      });
     if (altLabel) {
       return (
         <div>
-          <span className="uu-invisible" aria-hidden="false">Begrep er</span>
+          <span className="uu-invisible" aria-hidden="false">
+            Begrep er
+          </span>
           <strong>{localization.terms.altLabel} </strong>
-          { children(altLabel) }
+          {children(altLabel)}
         </div>
       );
     }
@@ -125,7 +123,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
   render() {
     const { onAddTerm, selectedLanguageCode } = this.props;
     const { source } = this.state;
-    const { prefLabel, definition, uri  } = source;
+    const { prefLabel, definition, uri } = source;
     const hitElementId = `concepts-hit-${encodeURIComponent(uri)}`;
 
     let termTitle;
@@ -133,7 +131,9 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
 
     if (prefLabel) {
       termTitle = getTranslateText(prefLabel, selectedLanguageCode);
-      termTitle = termTitle.charAt(0).toUpperCase() + termTitle.substring(1).toLowerCase();
+      termTitle =
+        termTitle.charAt(0).toUpperCase() +
+        termTitle.substring(1).toLowerCase();
     }
     if (definition) {
       termDescription = getTranslateText(definition, selectedLanguageCode);
@@ -141,7 +141,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
 
     let toBeCompared = false;
     if (this.props.terms) {
-      toBeCompared = _.some(this.props.terms, (term) => term.uri === uri);
+      toBeCompared = _.some(this.props.terms, term => term.uri === uri);
     }
 
     return (
@@ -151,39 +151,63 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
         title={`Begrep: ${termTitle}`}
         tabIndex="0" // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
       >
-        <span className="uu-invisible" aria-hidden="false">Søketreff begrep.</span>
-        <div className={`fdk-container fdk-container-search-hit ${toBeCompared ? 'toBeCompared' : ''}`}>
+        <span className="uu-invisible" aria-hidden="false">
+          Søketreff begrep.
+        </span>
+        <div
+          className={`fdk-container fdk-container-search-hit ${toBeCompared
+            ? "toBeCompared"
+            : ""}`}
+        >
+          {!toBeCompared && (
+            <button
+              className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+              onClick={() => {
+                onAddTerm(source);
+              }}
+              type="button"
+            >
+              <span aria-hidden="true">+</span>{" "}
+              {localization.compare.addCompare}
+            </button>
+          )}
 
-          {!toBeCompared &&
-          <button className='fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg' onClick={() => {onAddTerm(source)}} type="button"><span aria-hidden="true">+</span> {localization.compare.addCompare}</button>
-          }
+          {!toBeCompared && (
+            <button
+              className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+              onClick={() => {
+                onAddTerm(source);
+              }}
+              type="button"
+            >
+              <span aria-hidden="true">+</span>{" "}
+              {localization.compare.addCompare}
+            </button>
+          )}
 
-          {!toBeCompared &&
-          <button className='fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm' onClick={() => {onAddTerm(source)}} type="button"><span aria-hidden="true">+</span> {localization.compare.addCompare}</button>
-          }
-
-          <span className="uu-invisible" aria-hidden="false">Tittel.</span>
+          <span className="uu-invisible" aria-hidden="false">
+            Tittel.
+          </span>
           <h2 className="inline-block mr-2">{termTitle}</h2>
 
           {this._renderPublisher()}
 
           {this._renderThemes()}
 
-          <p
-            className="fdk-p-search-hit"
-          >
-            <span className="uu-invisible" aria-hidden="false">Beskrivelse av begrep.</span>
+          <p className="fdk-p-search-hit">
+            <span className="uu-invisible" aria-hidden="false">
+              Beskrivelse av begrep.
+            </span>
             {termDescription}
           </p>
 
-          { this._renderLaw() }
+          {this._renderLaw()}
 
           <hr />
 
-          { this._renderNote() }
+          {this._renderNote()}
 
-          { this._renderAltLabel() }
-
+          {this._renderAltLabel()}
         </div>
       </div>
     );
@@ -193,7 +217,7 @@ export default class ConceptsHitItem extends React.Component { // eslint-disable
 ConceptsHitItem.defaultProps = {
   result: null,
   terms: null,
-  selectedLanguageCode: 'nb'
+  selectedLanguageCode: "nb"
 };
 
 ConceptsHitItem.propTypes = {

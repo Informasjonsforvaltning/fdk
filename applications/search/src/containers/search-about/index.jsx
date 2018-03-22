@@ -1,8 +1,8 @@
-import React from 'react';
-import DocumentMeta from 'react-document-meta';
-import { Link } from 'react-router-dom';
+import React from "react";
+import DocumentMeta from "react-document-meta";
+import { Link } from "react-router-dom";
 
-import localization from '../../components/localization';
+import localization from "../../components/localization";
 
 const About = () => {
   const meta = {
@@ -15,29 +15,30 @@ const About = () => {
       <DocumentMeta {...meta} />
       <div className="row">
         <div className="col-md-8 col-md-offset-2">
-          <h1 className="fdk-margin-bottom">
-            {localization.about.title}
-          </h1>
+          <h1 className="fdk-margin-bottom">{localization.about.title}</h1>
           <div className="fdk-margin-bottom">
-            <p className="fdk-ingress">
-              {localization.about.titleSub}
-            </p>
-            <p className="fdk-ingress">
-              {localization.about.ingress}
-            </p>
+            <p className="fdk-ingress">{localization.about.titleSub}</p>
+            <p className="fdk-ingress">{localization.about.ingress}</p>
           </div>
           <div className="fdk-textregular">
             {
               // eslint-disable-next-line react/no-danger
-            }<p dangerouslySetInnerHTML={{__html: localization.about.maintext}} />
+            }
+            <p
+              dangerouslySetInnerHTML={{ __html: localization.about.maintext }}
+            />
             {
               // eslint-disable-next-line react/no-danger
-            }<p dangerouslySetInnerHTML={{__html: localization.about.dataNorgeText}} />
+            }
+            <p
+              dangerouslySetInnerHTML={{
+                __html: localization.about.dataNorgeText
+              }}
+            />
             <p>
-              <b>{localization.about.register}</b><br />
-              <Link
-                to="/about-registration"
-              >
+              <b>{localization.about.register}</b>
+              <br />
+              <Link to="/about-registration">
                 {localization.about.helpToRegister}
               </Link>
             </p>
@@ -48,7 +49,9 @@ const About = () => {
                 rel="noopener noreferrer"
                 href="https://registrering-fdk.ppe.brreg.no/"
               >
-                <span className="fdk-button fdk-button-default">Kom i gang med registreringen</span>
+                <span className="fdk-button fdk-button-default">
+                  Kom i gang med registreringen
+                </span>
               </a>
             </p>
           </div>
@@ -56,6 +59,6 @@ const About = () => {
       </div>
     </div>
   );
-}
+};
 
 export default About;

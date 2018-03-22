@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Collapse } from 'react-bootstrap';
+import React from "react";
+import PropTypes from "prop-types";
+import { Collapse } from "react-bootstrap";
 
-import './index.scss';
+import "./index.scss";
 
 export default class BegrepCollapse extends React.Component {
   constructor(props) {
@@ -20,18 +20,19 @@ export default class BegrepCollapse extends React.Component {
   render() {
     return (
       <div className="fdk-container-detail fdk-container-detail-begrep">
-        <div className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep" role="button" tabIndex={0} onClick={this.toggle}>
+        <div
+          className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
+          role="button"
+          tabIndex={0}
+          onClick={this.toggle}
+        >
           <strong className="pull-left">{this.props.prefLabel}:&nbsp;</strong>
-          {this.props.note &&
-          <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
-          }
-          <div>
-            {this.props.definition}
-          </div>
+          {this.props.note && (
+            <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
+          )}
+          <div>{this.props.definition}</div>
           <Collapse in={this.state.detailed}>
-            <div>
-              {this.props.note}
-            </div>
+            <div>{this.props.note}</div>
           </Collapse>
         </div>
       </div>
@@ -40,9 +41,9 @@ export default class BegrepCollapse extends React.Component {
 }
 
 BegrepCollapse.defaultProps = {
-  prefLabel: '',
-  definition: '',
-  note: ''
+  prefLabel: "",
+  definition: "",
+  note: ""
 };
 
 BegrepCollapse.propTypes = {

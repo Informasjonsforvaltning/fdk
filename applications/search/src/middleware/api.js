@@ -1,33 +1,33 @@
-import axios from 'axios';
+import axios from "axios";
 
 function callApi(url) {
-
   const header = {
-    pragma: 'no-cache',
-    'cache-control': 'no-cache',
-    Accept: 'application/json'
-  }
-
-  const getInit = {
-    method: 'GET',
-    headers: header,
-    credentials: 'same-origin'
+    pragma: "no-cache",
+    "cache-control": "no-cache",
+    Accept: "application/json"
   };
 
-  return axios.get(url, getInit)
-    .then((response) => response)
-    .catch((response) => {
+  const getInit = {
+    method: "GET",
+    headers: header,
+    credentials: "same-origin"
+  };
+
+  return axios
+    .get(url, getInit)
+    .then(response => response)
+    .catch(response => {
       const { error } = response;
       return Promise.reject(error);
-    })
+    });
 }
 
-export const CALL_API = 'CALL_API';
+export const CALL_API = "CALL_API";
 
-export default () => next => (action) => {
+export default () => next => action => {
   const callApiOptions = action[CALL_API];
 
-  if (typeof callApiOptions === 'undefined') {
+  if (typeof callApiOptions === "undefined") {
     return next(action);
   }
 
@@ -44,12 +44,20 @@ export default () => next => (action) => {
   next(actionWith({ type: requestType }));
 
   return callApi(url)
-    .then(response => next(actionWith({
-      type: successType,
-      response
-    })))
-    .catch(error => next(actionWith({
-      type: failureType,
-      error
-    })));
+    .then(response =>
+      next(
+        actionWith({
+          type: successType,
+          response
+        })
+      )
+    )
+    .catch(error =>
+      next(
+        actionWith({
+          type: failureType,
+          error
+        })
+      )
+    );
 };

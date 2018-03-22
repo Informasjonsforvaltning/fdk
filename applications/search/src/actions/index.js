@@ -1,6 +1,6 @@
-import { CALL_API } from '../middleware/api';
-import * as actions from '../constants/ActionTypes';
-import { addOrReplaceParam } from './../utils/addOrReplaceUrlParam';
+import { CALL_API } from "../middleware/api";
+import * as actions from "../constants/ActionTypes";
+import { addOrReplaceParam } from "./../utils/addOrReplaceUrlParam";
 
 function fetchApi(url, types) {
   return {
@@ -17,37 +17,53 @@ function shouldFetchApi(state) {
 
 export function fetchDatasetsIfNeeded(datasetsURL) {
   // add static size parameter
-  const url = addOrReplaceParam(datasetsURL, 'size', '50');
+  const url = addOrReplaceParam(datasetsURL, "size", "50");
   return (dispatch, getState) =>
-    shouldFetchApi(
-      getState().datasets) && dispatch(
-      fetchApi(url, [actions.DATASETS_REQUEST, actions.DATASETS_SUCCESS, actions.DATASETS_FAILURE])
+    shouldFetchApi(getState().datasets) &&
+    dispatch(
+      fetchApi(url, [
+        actions.DATASETS_REQUEST,
+        actions.DATASETS_SUCCESS,
+        actions.DATASETS_FAILURE
+      ])
     );
 }
 
 export function fetchTermsIfNeeded(termsURL) {
   // add static size parameter
-  const url = addOrReplaceParam(termsURL, 'size', '50');
+  const url = addOrReplaceParam(termsURL, "size", "50");
   return (dispatch, getState) =>
-    shouldFetchApi(
-      getState().terms) && dispatch(
-      fetchApi(url, [actions.TERMS_REQUEST, actions.TERMS_SUCCESS, actions.TERMS_FAILURE])
+    shouldFetchApi(getState().terms) &&
+    dispatch(
+      fetchApi(url, [
+        actions.TERMS_REQUEST,
+        actions.TERMS_SUCCESS,
+        actions.TERMS_FAILURE
+      ])
     );
 }
 
 export function fetchThemesIfNeeded() {
   return (dispatch, getState) =>
-    shouldFetchApi(
-      getState().themes) && dispatch(
-      fetchApi('/reference-data/themes', [actions.THEMES_REQUEST, actions.THEMES_SUCCESS, actions.THEMES_FAILURE])
+    shouldFetchApi(getState().themes) &&
+    dispatch(
+      fetchApi("/reference-data/themes", [
+        actions.THEMES_REQUEST,
+        actions.THEMES_SUCCESS,
+        actions.THEMES_FAILURE
+      ])
     );
 }
 
 export function fetchPublishersIfNeeded() {
   return (dispatch, getState) =>
-    shouldFetchApi(
-      getState().publishers) && dispatch(
-      fetchApi('/publisher', [actions.PUBLISHERS_REQUEST, actions.PUBLISHERS_SUCCESS, actions.PUBLISHERS_FAILURE])
+    shouldFetchApi(getState().publishers) &&
+    dispatch(
+      fetchApi("/publisher", [
+        actions.PUBLISHERS_REQUEST,
+        actions.PUBLISHERS_SUCCESS,
+        actions.PUBLISHERS_FAILURE
+      ])
     );
 }
 

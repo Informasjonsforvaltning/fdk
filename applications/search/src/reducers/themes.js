@@ -1,6 +1,13 @@
-import { THEMES_REQUEST, THEMES_SUCCESS, THEMES_FAILURE } from '../constants/ActionTypes';
+import {
+  THEMES_REQUEST,
+  THEMES_SUCCESS,
+  THEMES_FAILURE
+} from "../constants/ActionTypes";
 
-export default function themes(state = { isFetchingThemes: false, themesItems: null }, action) {
+export default function themes(
+  state = { isFetchingThemes: false, themesItems: null },
+  action
+) {
   switch (action.type) {
     case THEMES_REQUEST:
       return {
@@ -8,15 +15,18 @@ export default function themes(state = { isFetchingThemes: false, themesItems: n
         isFetchingThemes: true
       };
     case THEMES_SUCCESS: {
-      const objFromArray = action.response.data.reduce((accumulator, current) => {
-        accumulator[current.code] = current
-        return accumulator
-      }, {});
+      const objFromArray = action.response.data.reduce(
+        (accumulator, current) => {
+          accumulator[current.code] = current;
+          return accumulator;
+        },
+        {}
+      );
       return {
         ...state,
         isFetchingThemes: false,
         themesItems: objFromArray
-      }
+      };
     }
     case THEMES_FAILURE: {
       return {

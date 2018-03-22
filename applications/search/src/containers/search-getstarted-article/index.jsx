@@ -1,13 +1,13 @@
 /* eslint-disable react/no-danger */
-import React from 'react';
-import DocumentMeta from 'react-document-meta';
+import React from "react";
+import DocumentMeta from "react-document-meta";
 
-import localization from '../../components/localization';
-import './index.scss';
+import localization from "../../components/localization";
+import "./index.scss";
 
 const Article = () => {
   const meta = {
-    title: 'Hvordan komme i gang med registrering av datasett'
+    title: "Hvordan komme i gang med registrering av datasett"
   };
   return (
     <div className="container">
@@ -20,47 +20,57 @@ const Article = () => {
           </h1>
           <div className="fdk-margin-bottom" />
 
-
           <div className="fdk-subtitle">
-            <span>Jeg &oslash;nsker tilgang til registreringsl&oslash;sningen for min virksomhet</span>
+            <span>
+              Jeg &oslash;nsker tilgang til registreringsl&oslash;sningen for
+              min virksomhet
+            </span>
           </div>
 
           <div className="fdk-box fdk-box--white">
             <p
-              dangerouslySetInnerHTML={{__html:'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" og tildele deg rollen "Tilgangsstyring".<br />Kontakt datasettansvarlig i din virksomhet.'}}
+              dangerouslySetInnerHTML={{
+                __html:
+                  'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" og tildele deg rollen "Tilgangsstyring".<br />Kontakt datasettansvarlig i din virksomhet.'
+              }}
             />
             <p>
-                Når du har fått tilgang, vil din virksomhets datakatalog være tilgjengelig etter innlogging.<br />
+              Når du har fått tilgang, vil din virksomhets datakatalog være
+              tilgjengelig etter innlogging.<br />
               <a
                 title="Lenke til registreringsløsning"
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://registrering-fdk.ppe.brreg.no/"
               >
-                  Logg inn i registreringsløsningen
+                Logg inn i registreringsløsningen
               </a>
             </p>
           </div>
 
           <div className="fdk-subtitle">
-              Hvordan gjøre en ansatt til datasettansvarlig
+            Hvordan gjøre en ansatt til datasettansvarlig
             <span className="label label-default ml-1">Anbefalt</span>
           </div>
 
           <div className="fdk-box fdk-box--yellow fdk-box--flex fdk-box--noMargin">
-
             <i className="fdk-box__icon fa fa-exclamation-circle fa-3x" />
 
             <div>
-                Du må ha rollen <strong>Tilgangsstyring</strong> for din virksomhet for å tildele roller og rettigheter til andre.<br />
-                Du trenger <strong>fødselsnummer</strong> (11 siffer) og <strong>etternavnet</strong> til den du ønsker å tildele rettigheter til.
+              Du må ha rollen <strong>Tilgangsstyring</strong> for din
+              virksomhet for å tildele roller og rettigheter til andre.<br />
+              Du trenger <strong>fødselsnummer</strong> (11 siffer) og{" "}
+              <strong>etternavnet</strong> til den du ønsker å tildele
+              rettigheter til.
             </div>
           </div>
 
           <div className="fdk-box fdk-box--white fdk-box--border">
-
             <p>
-                En <strong>datasettansvarlig</strong> vil ha ansvaret for å gi ansatte tilgang til å registrere datasett på vegne av virksomheten. Det er anbefalt at dere har en person med dette ansvaret, da det forenkler fremtidige tilganger.
+              En <strong>datasettansvarlig</strong> vil ha ansvaret for å gi
+              ansatte tilgang til å registrere datasett på vegne av
+              virksomheten. Det er anbefalt at dere har en person med dette
+              ansvaret, da det forenkler fremtidige tilganger.
             </p>
             <p>
               <strong>Slik går du frem:</strong>
@@ -79,7 +89,10 @@ const Article = () => {
                   Altinn.no
                 </a>
                 <div
-                  dangerouslySetInnerHTML={{__html:'Velg <strong>"Profil, roller og rettigheter"</strong>.<br />'}}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      'Velg <strong>"Profil, roller og rettigheter"</strong>.<br />'
+                  }}
                 />
               </div>
               <div className="fdk-box__rowItem--big">
@@ -91,7 +104,10 @@ const Article = () => {
               <div className="fdk-box__rowItem__number">2</div>
               <div
                 className="fdk-box__rowItem__text"
-                dangerouslySetInnerHTML={{__html:'I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for.'}}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    "I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for."
+                }}
               />
               <div className="fdk-box__rowItem--big">
                 <img alt="" src="/static/img/image5.png" title="" />
@@ -102,10 +118,14 @@ const Article = () => {
               <div className="fdk-box__rowItem__number">3</div>
               <div className="fdk-box__rowItem__text">
                 <p
-                  dangerouslySetInnerHTML={{__html:'Under "Andre med rettigheter til virksomheten" kan du legge til en <strong>ny person.</strong>'}}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      'Under "Andre med rettigheter til virksomheten" kan du legge til en <strong>ny person.</strong>'
+                  }}
                 />
                 <div className="fdk-box fdk-box--yellow fdk-box--italic">
-                    Husk at du trenger fødselsnummer og etternavnet til den du ønsker å legge til.
+                  Husk at du trenger fødselsnummer og etternavnet til den du
+                  ønsker å legge til.
                 </div>
               </div>
               <div className="fdk-box__rowItem--big">
@@ -117,10 +137,14 @@ const Article = () => {
               <div className="fdk-box__rowItem__number">4</div>
               <div className="fdk-box__rowItem__text">
                 <p
-                  dangerouslySetInnerHTML={{__html:'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>.'}}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>."
+                  }}
                 />
                 <p>
-                    Tilgangsstyring gir datasettansvarlig muligheten til å gi andre ansatte tilgang til registreringsløsningen i fremtiden.
+                  Tilgangsstyring gir datasettansvarlig muligheten til å gi
+                  andre ansatte tilgang til registreringsløsningen i fremtiden.
                 </p>
               </div>
               <div className="fdk-box__rowItem--big">
@@ -132,10 +156,13 @@ const Article = () => {
               <div className="fdk-box__rowItem__number">5</div>
               <div className="fdk-box__rowItem__text">
                 <p>
-                    Tildel <strong>rettighetene</strong> den ansatte skal ha.
+                  Tildel <strong>rettighetene</strong> den ansatte skal ha.
                 </p>
                 <p
-                  dangerouslySetInnerHTML={{__html: 'Søk etter <strong>"Registrering i datakatalog"</strong> og gi følgende rettigheter: <br />- Lese <br />- Fylle ut <br />- Signere <br />- Les arkiv <br /><br />Deretter trykker du "Ferdig".'}}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      'Søk etter <strong>"Registrering i datakatalog"</strong> og gi følgende rettigheter: <br />- Lese <br />- Fylle ut <br />- Signere <br />- Les arkiv <br /><br />Deretter trykker du "Ferdig".'
+                  }}
                 />
               </div>
               <div className="fdk-box__rowItem--big">
@@ -145,43 +172,56 @@ const Article = () => {
 
             <div className="text-center">
               <span>
-                  Gratulerer! Nå har du opprettet en <strong>datasettansvarlig</strong> for din virksomhet.
+                Gratulerer! Nå har du opprettet en{" "}
+                <strong>datasettansvarlig</strong> for din virksomhet.
               </span>
             </div>
-
           </div>
 
           <div className="fdk-subtitle">
-            <span>Jeg &oslash;nsker å tildele rettigheter til enkeltpersoner manuelt</span>
+            <span>
+              Jeg &oslash;nsker å tildele rettigheter til enkeltpersoner manuelt
+            </span>
           </div>
 
           <div className="fdk-box fdk-box--white">
             <p>
-                Vi anbefaler at dere bruker en datasettansvarlig som administrerer registreringsrettigheter for virksomheten. Dette er forklart over.
+              Vi anbefaler at dere bruker en datasettansvarlig som administrerer
+              registreringsrettigheter for virksomheten. Dette er forklart over.
             </p>
             <p
-              dangerouslySetInnerHTML={{__html: 'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler roller "Tilgangsstyring".'}}
+              dangerouslySetInnerHTML={{
+                __html:
+                  'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler roller "Tilgangsstyring".'
+              }}
             />
           </div>
 
           <div className="fdk-subtitle">
-            <span>Jeg vil importere datasett til registreringsløsningen fra egne kilder</span>
+            <span>
+              Jeg vil importere datasett til registreringsløsningen fra egne
+              kilder
+            </span>
           </div>
 
           <div className="fdk-box fdk-box--white">
             <p>
-                Registreringsløsningen har en importfunksjon, slik at datasettbeskrivelser registrert i andre løsningner kan hentes inn. Vi anbefaler deg å gå over datasettene og sørge for at all relevant informasjon er oppdatert.
+              Registreringsløsningen har en importfunksjon, slik at
+              datasettbeskrivelser registrert i andre løsningner kan hentes inn.
+              Vi anbefaler deg å gå over datasettene og sørge for at all
+              relevant informasjon er oppdatert.
             </p>
           </div>
-
         </div>
       </div>
       <div className="row">
         <div className="col-sm-12">
-
           <div className="fdk-box fdk-box--flex fdk-box__feedback">
             <div className="fdk-box fdk-box__feedback__left">
-              <div>Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.</div>
+              <div>
+                Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene,
+                Difi og øvrige SKATE-etater.
+              </div>
               <div>
                 <a
                   title="Informasjonskapsler og personvern"
@@ -189,7 +229,7 @@ const Article = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                    Informasjonskapsler og personvern
+                  Informasjonskapsler og personvern
                 </a>
               </div>
             </div>
@@ -204,21 +244,28 @@ const Article = () => {
                 </div>
                 <div className="fdk-box__rowItem--big">
                   <p>
-                      Vi jobber hele tiden med løsningen og setter derfor stor pris på gode innspill fra publikum!
+                    Vi jobber hele tiden med løsningen og setter derfor stor
+                    pris på gode innspill fra publikum!
                   </p>
                   <p>
-                    <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">Send oss gjerne en e-post</a> med ris, ros eller om morsomme bugs som har klart å gjemme seg fra testerne våre.
+                    <a
+                      className="white-link"
+                      href="mailto:fellesdatakatalog@brreg.no"
+                    >
+                      Send oss gjerne en e-post
+                    </a>{" "}
+                    med ris, ros eller om morsomme bugs som har klart å gjemme
+                    seg fra testerne våre.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Article;
 /* eslint-enable react/no-danger */

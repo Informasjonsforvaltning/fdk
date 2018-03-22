@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
 import * as axios from "axios";
 
-import localization from '../localization';
-import ReportStats from '../search-results-dataset-report-stats';
-import SearchPublishers from '../search-results-dataset-report-publisher';
-import SearchPublishersTree from '../search-publishers-tree';
-import { addOrReplaceParamWithoutEncoding, removeParam } from '../../utils/addOrReplaceUrlParam';
+import localization from "../localization";
+import ReportStats from "../search-results-dataset-report-stats";
+import SearchPublishers from "../search-results-dataset-report-publisher";
+import SearchPublishersTree from "../search-publishers-tree";
+import {
+  addOrReplaceParamWithoutEncoding,
+  removeParam
+} from "../../utils/addOrReplaceUrlParam";
 
 export default class ResultsDatasetsReport extends React.Component {
   static getOrgPath() {
@@ -13,22 +16,24 @@ export default class ResultsDatasetsReport extends React.Component {
       .substring(1)
       .split("&")
       .map(v => v.split("="))
-      .reduce((map, [key, value]) =>
-        map.set(key, decodeURIComponent(value)), new Map())
-      .get('orgPath[0]');
-    return (orgPath) || '';
+      .reduce(
+        (map, [key, value]) => map.set(key, decodeURIComponent(value)),
+        new Map()
+      )
+      .get("orgPath[0]");
+    return orgPath || "";
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      entity: '',
+      entity: "",
       aggregateDataset: {},
       catalog: {},
       publishers: [],
-      searchValue: '',
+      searchValue: "",
       selectedOrgPath: null
-    }
+    };
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
     this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
     this.handleOnTreeChange = this.handleOnTreeChange.bind(this);
@@ -38,34 +43,42 @@ export default class ResultsDatasetsReport extends React.Component {
   }
 
   getPublishers() {
-    axios.get('/publisher?q=')
+    axios
+      .get("/publisher?q=")
       .then(response => {
         const publishers = response.data.hits.hits
           .map(item => item._source)
-          .map(hit => (
-            {
-              name: hit.name,
-              orgPath: hit.orgPath
-            }
-          ));
-        const entity = this.getName(ResultsDatasetsReport.getOrgPath(), publishers);
+          .map(hit => ({
+            name: hit.name,
+            orgPath: hit.orgPath
+          }));
+        const entity = this.getName(
+          ResultsDatasetsReport.getOrgPath(),
+          publishers
+        );
         this.setState({
           publishers,
           entity
         });
       })
       .catch(error => {
-        console.error(error.response)
+        console.error(error.response);
       });
-    ;
   }
 
   getName(orgPath, publishersIn) {
     // Set publishers from state if exists, or input if exists.
-    const publishers = (this.state.publishers.length > 0) ? this.state.publishers : (publishersIn) || null;
+    const publishers =
+      this.state.publishers.length > 0
+        ? this.state.publishers
+        : publishersIn || null;
     if (publishers) {
-      const result = publishers.find(publisher => publisher.orgPath === orgPath);
-      const paramEntity = (result) ? result.name : localization.report.allEntities;
+      const result = publishers.find(
+        publisher => publisher.orgPath === orgPath
+      );
+      const paramEntity = result
+        ? result.name
+        : localization.report.allEntities;
       return paramEntity;
     }
     return orgPath;
@@ -73,10 +86,20 @@ export default class ResultsDatasetsReport extends React.Component {
 
   handleOnPublisherSearch(name, orgPath) {
     // Get orgPath from input or try to find from query params.
-    const query = (orgPath !== null && orgPath !== undefined) ? orgPath : ResultsDatasetsReport.getOrgPath();
+    const query =
+      orgPath !== null && orgPath !== undefined
+        ? orgPath
+        : ResultsDatasetsReport.getOrgPath();
 
-    const paramWithRemovedOrgPath = removeParam('orgPath[0]', window.location.href);
-    const replacedUrl = addOrReplaceParamWithoutEncoding(paramWithRemovedOrgPath, 'orgPath[0]', query);
+    const paramWithRemovedOrgPath = removeParam(
+      "orgPath[0]",
+      window.location.href
+    );
+    const replacedUrl = addOrReplaceParamWithoutEncoding(
+      paramWithRemovedOrgPath,
+      "orgPath[0]",
+      query
+    );
 
     // Empty query params.
     const emptyParam = {
@@ -86,7 +109,7 @@ export default class ResultsDatasetsReport extends React.Component {
     window.history.pushState(emptyParam, emptyParam.title, emptyParam.url);
 
     // Set new query param if necessary.
-    if (query && orgPath !== '') {
+    if (query && orgPath !== "") {
       const queryParam = {
         title: document.title,
         url: replacedUrl
@@ -95,10 +118,11 @@ export default class ResultsDatasetsReport extends React.Component {
     }
 
     // Get entity from input or try to find from publishers using orgPath.
-    const entity = (name) || this.getName(query);
+    const entity = name || this.getName(query);
 
-    axios.get(`/aggregateDataset?q=${query}`)
-      .then((response) => {
+    axios
+      .get(`/aggregateDataset?q=${query}`)
+      .then(response => {
         const data = response.data;
         this.setState({
           entity,
@@ -106,31 +130,28 @@ export default class ResultsDatasetsReport extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error.response)
+        console.error(error.response);
       });
-    ;
-
-    axios.get(`/harvest/catalog?q=${query}`)
-      .then((response) => {
+    axios
+      .get(`/harvest/catalog?q=${query}`)
+      .then(response => {
         const data = response.data;
         this.setState({
           catalog: data
         });
       })
       .catch(error => {
-        console.error(error.response)
+        console.error(error.response);
       });
-    ;
   }
 
-  handleOnChangeSearchField (value) {
+  handleOnChangeSearchField(value) {
     this.setState({
       value: value || null,
       selectedOrgPath: value ? value.orgPath : null
-
     });
     if (!value) {
-      this.handleOnPublisherSearch(null, '');
+      this.handleOnPublisherSearch(null, "");
     } else {
       this.handleOnPublisherSearch(value.name, value.orgPath);
     }
@@ -138,17 +159,17 @@ export default class ResultsDatasetsReport extends React.Component {
 
   handleOnTreeChange(name, orgPath) {
     this.setState({
-      value: ''
+      value: ""
     });
     this.handleOnPublisherSearch(name, orgPath);
   }
 
   handleOnClearSearch() {
     this.setState({
-      value: '',
+      value: "",
       selectedOrgPath: Math.random()
     });
-    this.handleOnPublisherSearch(null, '')
+    this.handleOnPublisherSearch(null, "");
   }
 
   render() {
@@ -158,14 +179,18 @@ export default class ResultsDatasetsReport extends React.Component {
           <div className="fdk-container-path" />
           <section id="resultPanel">
             <div className="row">
-              <div className="col-md-4 col-md-offset-8" id="content" role="main" tabIndex="-1">
+              <div
+                className="col-md-4 col-md-offset-8"
+                id="content"
+                role="main"
+              >
                 <div className="pull-right" />
               </div>
             </div>
             <div className="row">
               <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
                 <button
-                  className='fdk-button fdk-button-default-no-hover'
+                  className="fdk-button fdk-button-default-no-hover"
                   onClick={this.handleOnClearSearch}
                   type="button"
                 >
