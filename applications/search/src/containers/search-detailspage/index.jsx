@@ -325,12 +325,7 @@ export default class DetailsPage extends React.Component {
       <div className="container">
         <div className="fdk-container-path" />
         <div className="row">
-          <div
-            className="col-md-8 col-md-offset-2"
-            id="content"
-            role="main"
-            tabIndex="-1"
-          >
+          <div className="col-md-8 col-md-offset-2" id="content" role="main">
             <article>
               {this._renderDatasetDescription()}
               {this._renderKeyInfo()}

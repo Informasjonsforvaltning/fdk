@@ -183,7 +183,6 @@ export default class ResultsDatasetsReport extends React.Component {
                 className="col-md-4 col-md-offset-8"
                 id="content"
                 role="main"
-                tabIndex="-1"
               >
                 <div className="pull-right" />
               </div>
