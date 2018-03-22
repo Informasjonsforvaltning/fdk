@@ -497,17 +497,26 @@ public class DcatBuilder {
                     (contact.getOrganizationUnit() != null && !contact.getOrganizationUnit().isEmpty())) {
 
                 // contact already exported?
-                if (exportedContacts.contains(contact)) {
-                    return;
-                }
-                exportedContacts.add(contact);
+                if (contact.getUri() != null) {
+                    if (exportedContacts.contains(contact)) {
+                        return;
+                    }
+                    exportedContacts.add(contact);
 
-                // contact has same uri as one that has been exported before, force a new one
-                if (exportedContacsUriMap.containsKey(contact.getUri()) && contact != exportedContacsUriMap.get(contact.getUri())) {
-                    contact.setUri(AbstractBuilder.CONTACT_PREFIX + "/export/"+ UUID.randomUUID().toString());
-                }
+                    // contact has same uri as one that has been exported before, force a new one
+                    if (exportedContacsUriMap.containsKey(contact.getUri()) && contact != exportedContacsUriMap.get(contact.getUri())) {
+                        contact.setUri(AbstractBuilder.CONTACT_PREFIX + "/export/" + UUID.randomUUID().toString());
+                    }
 
-                contactRes = model.createResource(contact.getUri());
+                    contactRes = model.createResource(contact.getUri());
+
+                    // remember uri for contact
+                    exportedContacsUriMap.put(contact.getUri(), contact);
+
+                } else {
+                    // create anonymous contact
+                    contactRes = model.createResource();
+                }
 
                 contactRes.addProperty(RDF.type, VCARD4.Organization);
                 datRes.addProperty(DCAT.contactPoint, contactRes);
@@ -535,8 +544,7 @@ public class DcatBuilder {
                     }
                 }
 
-                // remember uri for contact
-                exportedContacsUriMap.put(contact.getUri(), contact);
+
             }
         }
     }

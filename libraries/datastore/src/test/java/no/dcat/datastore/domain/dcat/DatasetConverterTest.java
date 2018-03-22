@@ -1,9 +1,11 @@
 package no.dcat.datastore.domain.dcat;
 
+import com.google.gson.Gson;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import no.dcat.shared.Catalog;
+import no.dcat.shared.Contact;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -61,7 +63,7 @@ public class DatasetConverterTest {
         // TRANSFOMR TO DCAT
         String dcat = dcatBuilder.transform(catalog, "TURTLE");
 
-        logger.info("dcat: {} ", dcat);
+        logger.debug("dcat: {} ", dcat);
 
         Model model = ModelFactory.createDefaultModel();
         model.read(new ByteArrayInputStream(dcat.getBytes()), "", "TTL");
@@ -189,7 +191,9 @@ public class DatasetConverterTest {
 
     @Test
     public void checkContactPoints() throws Throwable {
-        expectedDataset.getContactPoint().get(0).setId(null);
+        
+        expectedDataset.getContactPoint().sort((c1, c2) -> c1.getEmail().compareTo(c2.getEmail()) );
+        actualDataset.getContactPoint().sort((c1, c2) -> c1.getEmail().compareTo(c2.getEmail()));
         assertThat(actualDataset.getContactPoint(), is(expectedDataset.getContactPoint()));
     }
 
@@ -268,14 +272,6 @@ public class DatasetConverterTest {
         }
 
         assertThat(count, is(expectedDataset.getTheme().size()));
-    }
-
-    @Test
-    @Ignore
-    public void java2dcatAndBack() throws Throwable {
-        actualDataset.setId(null);
-        expectedDataset.setId(null);
-        assertThat(actualDataset, is(expectedDataset));
     }
 
 

@@ -2,24 +2,135 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import no.dcat.datastore.Elasticsearch;
+import no.dcat.datastore.domain.DcatSource;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
+import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
+import no.dcat.shared.HarvestMetadata;
+import no.dcat.shared.Publisher;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
+import org.elasticsearch.action.ActionRequestBuilder;
+import org.elasticsearch.action.ListenableActionFuture;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetRequestBuilder;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.client.Client;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 public class ElasticSearchResultHandlerTest {
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandlerTest.class);
+
+    @Test
+    public void indexWithElasticsearch() {
+        DcatSource dataSource = mock(DcatSource.class);
+        Client client = mock(Client.class);
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
+        BulkResponse bulkResponse = mock(BulkResponse.class);
+        ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
+        ActionRequestBuilder actionRequestBuilder = mock(ActionRequestBuilder.class);
+        when(elasticsearch.getClient()).thenReturn(client);
+        when(client.prepareBulk()).thenReturn(bulkRequestBuilder);
+        when(bulkRequestBuilder.execute()).thenReturn(listenableActionFuture);
+        when(listenableActionFuture.actionGet()).thenReturn(bulkResponse);
+        when(bulkResponse.hasFailures()).thenReturn(false);
+
+
+        Model model = FileManager.get().loadModel("ramsund.ttl");
+        DcatReader reader = new DcatReader(model);
+
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+        doReturn(reader).when(spyHandler).getReader(model);
+        doReturn(null).when(spyHandler).findLookupDataset(Matchers.any(), anyString(), Matchers.any());
+        doReturn(null).when(spyHandler).findLastDatasetHarvestRecordWithContent(Matchers.any(), Matchers.any(), Matchers.any());
+        doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        doNothing().when(spyHandler).saveCatalogHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+
+        spyHandler.indexWithElasticsearch(dataSource, model, elasticsearch, Collections.EMPTY_LIST );
+    }
+
+    @Test
+    public void saveDatasetAndHarvestRecord() {
+        DcatSource dcatSource = mock(DcatSource.class);
+        Gson gson = new Gson();
+
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+
+        Dataset dataset = gson.fromJson(dataset1json, Dataset.class);
+        DatasetLookup datasetLookup = new DatasetLookup();
+        datasetLookup.setDatasetId(dataset.getId());
+        datasetLookup.setHarvestUri(dataset.getUri());
+        datasetLookup.setHarvest(new HarvestMetadata());
+        datasetLookup.getHarvest().setChanged(new ArrayList<>());
+
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
+
+        doReturn(datasetLookup).when(spyHandler).findOrCreateDatasetLookupAndUpdateDatasetId(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        doReturn(new Date()).when(spyHandler).getFirstHarvestedDate(Matchers.any(), Matchers.any(), Matchers.any());
+        doReturn(null).when(spyHandler).updateDatasetHarvestRecordsAndReturnLastChanged(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        spyHandler.saveDatasetAndHarvestRecord(dcatSource, elasticsearch,
+                Collections.emptyList(), gson, bulkRequestBuilder, new Date(), dataset, null);
+
+    }
+
+    @Test
+    public void getFirstHarvestedDate() {
+        Dataset dataset = mock(Dataset.class);
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Gson gson = new Gson();
+        DatasetHarvestRecord harvestRecord = new DatasetHarvestRecord();
+        harvestRecord.setDate(new Date());
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+        doReturn(harvestRecord).when(spyHandler).findFirstDatasetHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any());
+
+        spyHandler.getFirstHarvestedDate(dataset, elasticsearch, gson);
+
+        harvestRecord.setDate(null);
+
+        spyHandler.getFirstHarvestedDate(dataset, elasticsearch, gson);
+
+    }
+
+    @Test
+    public void process() {
+        DcatSource dcatSource = mock(DcatSource.class);
+        Model model = mock(Model.class);
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+        doReturn(elasticsearch).when(spyHandler).createElasticsearch();
+        doNothing().when(spyHandler).indexWithElasticsearch(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+
+        spyHandler.process(dcatSource, model, Collections.emptyList());
+    }
 
     @Test
     public void delete() throws Throwable {
@@ -117,6 +228,28 @@ public class ElasticSearchResultHandlerTest {
 
     }
 
+    private String datasetLookupJson = "{\"harvestUri\":\"https://kartkatalog.geonorge.no/Metadata/uuid/c23c14c6-63c4-40f4-bae4-2d40198a2f40\",\"datasetId\":\"06ae95f8-d712-4f52-9e2f-d8a6f3250bfa\"}";
+
+    @Test
+    public void findLookupDAtaset() {
+        Gson gson = new Gson();
+        Client client = mock(Client.class);
+        GetRequestBuilder builder = mock(GetRequestBuilder.class);
+        GetResponse response = mock(GetResponse.class);
+
+        when(client.prepareGet(anyString(), anyString(), anyString())).thenReturn(builder);
+        when(builder.get()).thenReturn(response);
+
+        when(response.isExists()).thenReturn(true);
+        when(response.getSourceAsString()).thenReturn(datasetLookupJson);
+
+
+        DatasetLookup actual = resultHandler.findLookupDataset(client, "http://someuri", gson);
+
+        assertThat(actual.getDatasetId(), is("06ae95f8-d712-4f52-9e2f-d8a6f3250bfa"));
+
+    }
+
     @Test
     public void getDatasetUris() throws Throwable {
         Model model = FileManager.get().loadModel("ramsund.ttl");
@@ -128,9 +261,512 @@ public class ElasticSearchResultHandlerTest {
 
 
     @Test
-    public void testDatasetHarvestRecord() throws Throwable {
+    public void checkStringCompare() throws Throwable {
+        assertThat(resultHandler.stringCompare(null, null), is(true));
+        assertThat(resultHandler.stringCompare("hallo", null), is(false));
+        assertThat(resultHandler.stringCompare(null, "hallo"), is (false));
+        assertThat(resultHandler.stringCompare("hallo", "hallo"), is(true));
+        assertThat(resultHandler.stringCompare("hallo", "hello"), is(false));
+    }
+    @Test
+    public void checkCorrectOrgpath() {
 
+        Dataset dataset = new Dataset();
+        dataset.setPublisher(new Publisher());
+        dataset.getPublisher().setOrgPath("/ANNET/http:...");
+        dataset.getPublisher().setName("COSMO");
+
+        assertThat(resultHandler.hasWrongOrgpath(dataset), is(true));
+
+        resultHandler.correctOrgpath(dataset);
+        assertThat(dataset.getPublisher().getOrgPath(), is("/ANNET/COSMO"));
+
+        dataset.getPublisher().setOrgPath("/STAT/123456789/123456799");
+        assertThat(resultHandler.hasWrongOrgpath(dataset), is (false));
+        resultHandler.correctOrgpath(dataset);
 
     }
 
+    @Test
+    public void checkisJsonEqual() {
+
+        Gson gson = new Gson();
+        Dataset dataset1 = gson.fromJson(dataset1json, Dataset.class);
+        Dataset dataset2 = gson.fromJson(dataset2json, Dataset.class);
+
+        assertThat(resultHandler.isJsonEqual(dataset1, dataset2, gson), is(false));
+
+        dataset1.setContactPoint(null);
+        dataset2.setContactPoint(null);
+
+        assertThat(resultHandler.isJsonEqual(dataset1, dataset2, gson), is(true));
+    }
+
+    @Test
+    public void createDatasetHarvestRecord() {
+        Gson gson = new Gson();
+        Dataset dataset1 = gson.fromJson(dataset1json, Dataset.class);
+        DcatSource dcatSource = new DcatSource();
+        dcatSource.setId("sourceid");
+
+        resultHandler.createDatasetHarvestRecord(dataset1, dcatSource, false, new Date(), Collections.EMPTY_LIST);
+        resultHandler.createDatasetHarvestRecord(dataset1, dcatSource, true, new Date(), Collections.EMPTY_LIST);
+    }
+
+    @Test
+    public void checkIsChanged() {
+        Gson gson = new Gson();
+        Dataset dataset1 = gson.fromJson(dataset1json, Dataset.class);
+        Dataset dataset2 = gson.fromJson(dataset2json, Dataset.class);
+        DatasetHarvestRecord record = new DatasetHarvestRecord();
+        record.setDataset(dataset1);
+
+        assertThat(resultHandler.isChanged(record, dataset2, gson), is(false));
+
+        resultHandler.isChanged(null, dataset2, gson);
+        resultHandler.isChanged(record, null, gson);
+
+        dataset1.getPublisher().setOrgPath("/ANNET/http://fileisAll");
+
+        resultHandler.isChanged(record, dataset2, gson);
+
+        dataset1.setContactPoint(null);
+
+        resultHandler.isChanged(record, dataset2, gson);
+
+    }
+
+    String dataset1json = "{\n" +
+            "                        \"id\": \"2da6a86c-c69b-46d4-a838-12ed6922d74a\",\n" +
+            "                        \"uri\": \"http://brreg.no/catalogs/910888447/datasets/b997c2b4-e6a1-4405-a2ec-62c6f98e3beb\",\n" +
+            "                        \"source\": \"A\",\n" +
+            "                        \"title\": {\n" +
+            "                            \"nb\": \"Juledata\"\n" +
+            "                        },\n" +
+            "                        \"description\": {\n" +
+            "                            \"nb\": \"Viktige opplysninger om julehøytiden\"\n" +
+            "                        },\n" +
+            "                        \"objective\": {\n" +
+            "                            \"nb\": \"Test\"\n" +
+            "                        },\n" +
+            "                        \"contactPoint\": [\n" +
+            "                            {\n" +
+            "                                \"uri\": \"http://datakatalog.no/contact/export/fea7b1d1-4550-4362-a028-cfcdbc527e30\",\n" +
+            "                                \"email\": \"nissen@nord.pol\",\n" +
+            "                                \"organizationUnit\": \"Julenissen\",\n" +
+            "                                \"hasURL\": \"http://registration-api:8080/catalogs/www.nisse.no\",\n" +
+            "                                \"hasTelephone\": \"12345678\"\n" +
+            "                            }\n" +
+            "                        ],\n" +
+            "                        \"publisher\": {\n" +
+            "                            \"valid\": false,\n" +
+            "                            \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/910888447\",\n" +
+            "                            \"id\": \"910888447\",\n" +
+            "                            \"name\": \"REINLI OG BERLEVÅG REGNSKAP\",\n" +
+            "                            \"orgPath\": \"/ANNET/910888447\"\n" +
+            "                        },\n" +
+            "                        \"modified\": \"2017-12-01T00:00:00+0100\",\n" +
+            "                        \"landingPage\": [],\n" +
+            "                        \"theme\": [\n" +
+            "                            {\n" +
+            "                                \"id\": \"http://publications.europa.eu/resource/authority/data-theme/SOCI\",\n" +
+            "                                \"code\": \"SOCI\",\n" +
+            "                                \"startUse\": \"2015-10-01\",\n" +
+            "                                \"title\": {\n" +
+            "                                    \"bg\": \"Население и общество\",\n" +
+            "                                    \"sk\": \"Obyvateľstvo a spoločnosť\",\n" +
+            "                                    \"de\": \"Bevölkerung und Gesellschaft\",\n" +
+            "                                    \"fr\": \"Population et société\",\n" +
+            "                                    \"ro\": \"Populaţie şi societate\",\n" +
+            "                                    \"lt\": \"Gyventojų skaičius ir visuomenė\",\n" +
+            "                                    \"sv\": \"Befolkning och samhälle\",\n" +
+            "                                    \"hr\": \"Stanovništvo i društvo\",\n" +
+            "                                    \"lv\": \"Iedzīvotāji un sabiedrība\",\n" +
+            "                                    \"sl\": \"Prebivalstvo in družba\",\n" +
+            "                                    \"pt\": \"População e sociedade\",\n" +
+            "                                    \"pl\": \"Ludność i społeczeństwo\",\n" +
+            "                                    \"da\": \"Befolkning og samfund\",\n" +
+            "                                    \"hu\": \"Népesség és társadalom\",\n" +
+            "                                    \"es\": \"Población y sociedad\",\n" +
+            "                                    \"fi\": \"Väestö ja yhteiskunta\",\n" +
+            "                                    \"en\": \"Population and society\",\n" +
+            "                                    \"nb\": \"Befolkning og samfunn\",\n" +
+            "                                    \"it\": \"Popolazione e società\",\n" +
+            "                                    \"el\": \"Πληθυσμός και κοινωνία\",\n" +
+            "                                    \"et\": \"Elanikkond ja ühiskond\",\n" +
+            "                                    \"nl\": \"Bevolking en samenleving\",\n" +
+            "                                    \"mt\": \"Popolazzjoni u soċjetà\",\n" +
+            "                                    \"cs\": \"Populace a společnost\",\n" +
+            "                                    \"ga\": \"Daonra agus sochaí\"\n" +
+            "                                },\n" +
+            "                                \"conceptSchema\": {\n" +
+            "                                    \"id\": \"http://publications.europa.eu/resource/authority/data-theme\",\n" +
+            "                                    \"title\": {\n" +
+            "                                        \"en\": \"Dataset types Named Authority List\"\n" +
+            "                                    },\n" +
+            "                                    \"versioninfo\": \"20160921-0\",\n" +
+            "                                    \"versionnumber\": \"20160921-0\"\n" +
+            "                                }\n" +
+            "                            }\n" +
+            "                        ],\n" +
+            "                        \"accessRights\": {\n" +
+            "                            \"uri\": \"http://publications.europa.eu/resource/authority/access-right/PUBLIC\",\n" +
+            "                            \"code\": \"PUBLIC\",\n" +
+            "                            \"prefLabel\": {\n" +
+            "                                \"en\": \"Public\",\n" +
+            "                                \"nb\": \"Offentlig\",\n" +
+            "                                \"nn\": \"Offentlig\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"hasAccuracyAnnotation\": {\n" +
+            "                            \"inDimension\": \"http://iso.org/25012/2008/dataquality/Accuracy\",\n" +
+            "                            \"hasBody\": {\n" +
+            "                                \"no\": \"Kun om julen. Varer ikke helt til påske.\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"hasCompletenessAnnotation\": {\n" +
+            "                            \"inDimension\": \"http://iso.org/25012/2008/dataquality/Completeness\",\n" +
+            "                            \"hasBody\": {\n" +
+            "                                \"no\": \"Alt om julen\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"hasAvailabilityAnnotation\": {\n" +
+            "                            \"inDimension\": \"http://iso.org/25012/2008/dataquality/Availability\",\n" +
+            "                            \"hasBody\": {\n" +
+            "                                \"no\": \"Tilgjengelig kun i desember.\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"hasRelevanceAnnotation\": {\n" +
+            "                            \"inDimension\": \"http://iso.org/25012/2008/dataquality/Relevance\",\n" +
+            "                            \"hasBody\": {\n" +
+            "                                \"no\": \"Relevant i adventstiden\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"provenance\": {\n" +
+            "                            \"uri\": \"http://data.brreg.no/datakatalog/provinens/vedtak\",\n" +
+            "                            \"code\": \"VEDTAK\",\n" +
+            "                            \"prefLabel\": {\n" +
+            "                                \"en\": \"Governmental decisions\",\n" +
+            "                                \"nb\": \"Vedtak\",\n" +
+            "                                \"nn\": \"Vedtak\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"accrualPeriodicity\": {\n" +
+            "                            \"uri\": \"http://publications.europa.eu/resource/authority/frequency/ANNUAL\",\n" +
+            "                            \"code\": \"ANNUAL\",\n" +
+            "                            \"prefLabel\": {\n" +
+            "                                \"de\": \"jährlich\",\n" +
+            "                                \"lv\": \"reizi gadā\",\n" +
+            "                                \"bg\": \"годишен\",\n" +
+            "                                \"nl\": \"jaarlijks\",\n" +
+            "                                \"sk\": \"ročný\",\n" +
+            "                                \"no\": \"årlig\",\n" +
+            "                                \"sv\": \"årlig\",\n" +
+            "                                \"pl\": \"roczny\",\n" +
+            "                                \"hr\": \"godišnje\",\n" +
+            "                                \"sl\": \"letni\",\n" +
+            "                                \"fi\": \"vuotuinen\",\n" +
+            "                                \"mt\": \"annwali\",\n" +
+            "                                \"lt\": \"kasmetinis\",\n" +
+            "                                \"fr\": \"annuel\",\n" +
+            "                                \"ga\": \"bliantúil\",\n" +
+            "                                \"da\": \"årligt\",\n" +
+            "                                \"et\": \"aastane\",\n" +
+            "                                \"pt\": \"anual\",\n" +
+            "                                \"ro\": \"anual\",\n" +
+            "                                \"es\": \"anual\",\n" +
+            "                                \"el\": \"ετήσιος\",\n" +
+            "                                \"en\": \"annual\",\n" +
+            "                                \"cs\": \"roční\",\n" +
+            "                                \"it\": \"annuale\",\n" +
+            "                                \"hu\": \"évenkénti\"\n" +
+            "                            }\n" +
+            "                        },\n" +
+            "                        \"subject\": [\n" +
+            "                            {\n" +
+            "                                \"uri\": \"https://data-david.github.io/Begrep/begrep/Enhet\",\n" +
+            "                                \"identifier\": \"https://data-david.github.io/Begrep/begrep/Enhet\",\n" +
+            "                                \"prefLabel\": {\n" +
+            "                                    \"no\": \"enhet\"\n" +
+            "                                },\n" +
+            "                                \"definition\": {\n" +
+            "                                    \"no\": \"alt som er registrert med et organisasjonsnummer \"\n" +
+            "                                },\n" +
+            "                                \"note\": {\n" +
+            "                                    \"no\": \"Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.\"\n" +
+            "                                },\n" +
+            "                                \"source\": \"https://jira.brreg.no/browse/BEGREP-208\",\n" +
+            "                                \"creator\": {\n" +
+            "                                    \"overordnetEnhet\": \"912660680\",\n" +
+            "                                    \"organisasjonsform\": \"ORGL\",\n" +
+            "                                    \"naeringskode\": {\n" +
+            "                                        \"uri\": \"http://www.ssb.no/nace/sn2007/84.110\",\n" +
+            "                                        \"code\": \"84.110\",\n" +
+            "                                        \"prefLabel\": {\n" +
+            "                                            \"no\": \"Generell offentlig administrasjon\"\n" +
+            "                                        }\n" +
+            "                                    },\n" +
+            "                                    \"sektorkode\": {\n" +
+            "                                        \"uri\": \"http://www.brreg.no/sektorkode/6100\",\n" +
+            "                                        \"code\": \"6100\",\n" +
+            "                                        \"prefLabel\": {\n" +
+            "                                            \"no\": \"Statsforvaltningen\"\n" +
+            "                                        }\n" +
+            "                                    },\n" +
+            "                                    \"valid\": true,\n" +
+            "                                    \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/974760673\",\n" +
+            "                                    \"id\": \"974760673\",\n" +
+            "                                    \"name\": \"Brønnøysundregistrene\",\n" +
+            "                                    \"orgPath\": \"/STAT/912660680/974760673\"\n" +
+            "                                },\n" +
+            "                                \"inScheme\": [\n" +
+            "                                    \"http://data-david.github.io/vokabular/Befolkning\"\n" +
+            "                                ]\n" +
+            "                            }\n" +
+            "                        ],\n" +
+            "                        \"conformsTo\": [\n" +
+            "                            {\n" +
+            "                                \"uri\": \"http://www.nisse.no\",\n" +
+            "                                \"prefLabel\": {\n" +
+            "                                    \"nb\": \"Julestandarden\"\n" +
+            "                                },\n" +
+            "                                \"extraType\": \"http://purl.org/dc/terms/Standard\"\n" +
+            "                            }\n" +
+            "                        ],\n" +
+            "                        \"type\": \"Data\",\n" +
+            "                        \"catalog\": {\n" +
+            "                            \"id\": \"910888447\",\n" +
+            "                            \"uri\": \"http://brreg.no/catalogs/910888447\",\n" +
+            "                            \"title\": {\n" +
+            "                                \"nb\": \"Datakatalog for REINLI OG BERLEVÅG REGNSKAP\"\n" +
+            "                            },\n" +
+            "                            \"description\": {\n" +
+            "                                \"nb\": \"Datasettbeskrivelser\\n\"\n" +
+            "                            },\n" +
+            "                            \"publisher\": {\n" +
+            "                                \"valid\": false,\n" +
+            "                                \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/910888447\",\n" +
+            "                                \"id\": \"910888447\",\n" +
+            "                                \"name\": \"REINLI OG BERLEVÅG REGNSKAP\",\n" +
+            "                                \"orgPath\": \"/ANNET/910888447\"\n" +
+            "                            }\n" +
+            "                        }\n" +
+            "                    }";
+
+    String dataset2json = "{\n" +
+            "\"id\": \"2da6a86c-c69b-46d4-a838-12ed6922d74a\",\n" +
+            "\"uri\": \"http://brreg.no/catalogs/910888447/datasets/b997c2b4-e6a1-4405-a2ec-62c6f98e3beb\",\n" +
+            "\"source\": \"A\",\n" +
+            "\"title\": {\n" +
+            "\"nb\": \"Juledata\"\n" +
+            "},\n" +
+            "\"description\": {\n" +
+            "\"nb\": \"Viktige opplysninger om julehøytiden\"\n" +
+            "},\n" +
+            "\"objective\": {\n" +
+            "\"nb\": \"Test\"\n" +
+            "},\n" +
+            "\"contactPoint\": [\n" +
+            "{\n" +
+            "\"uri\": \"http://datakatalog.no/contact/export/9ff0f0b7-7dfe-4105-a02c-599ffe2ef31c\",\n" +
+            "\"email\": \"nissen@nord.pol\",\n" +
+            "\"organizationUnit\": \"Julenissen\",\n" +
+            "\"hasURL\": \"http://registration-api:8080/catalogs/www.nisse.no\",\n" +
+            "\"hasTelephone\": \"12345678\"\n" +
+            "}\n" +
+            "],\n" +
+            "\"publisher\": {\n" +
+            "\"valid\": false,\n" +
+            "\"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/910888447\",\n" +
+            "\"id\": \"910888447\",\n" +
+            "\"name\": \"REINLI OG BERLEVÅG REGNSKAP\",\n" +
+            "\"orgPath\": \"/ANNET/910888447\"\n" +
+            "},\n" +
+            "\"modified\": \"2017-12-01T00:00:00+0100\",\n" +
+            "\"landingPage\": [],\n" +
+            "\"theme\": [\n" +
+            "{\n" +
+            "\"id\": \"http://publications.europa.eu/resource/authority/data-theme/SOCI\",\n" +
+            "\"code\": \"SOCI\",\n" +
+            "\"startUse\": \"2015-10-01\",\n" +
+            "\"title\": {\n" +
+            "\"bg\": \"Население и общество\",\n" +
+            "\"sk\": \"Obyvateľstvo a spoločnosť\",\n" +
+            "\"de\": \"Bevölkerung und Gesellschaft\",\n" +
+            "\"fr\": \"Population et société\",\n" +
+            "\"ro\": \"Populaţie şi societate\",\n" +
+            "\"lt\": \"Gyventojų skaičius ir visuomenė\",\n" +
+            "\"sv\": \"Befolkning och samhälle\",\n" +
+            "\"hr\": \"Stanovništvo i društvo\",\n" +
+            "\"lv\": \"Iedzīvotāji un sabiedrība\",\n" +
+            "\"sl\": \"Prebivalstvo in družba\",\n" +
+            "\"pt\": \"População e sociedade\",\n" +
+            "\"pl\": \"Ludność i społeczeństwo\",\n" +
+            "\"da\": \"Befolkning og samfund\",\n" +
+            "\"hu\": \"Népesség és társadalom\",\n" +
+            "\"es\": \"Población y sociedad\",\n" +
+            "\"fi\": \"Väestö ja yhteiskunta\",\n" +
+            "\"en\": \"Population and society\",\n" +
+            "\"nb\": \"Befolkning og samfunn\",\n" +
+            "\"it\": \"Popolazione e società\",\n" +
+            "\"el\": \"Πληθυσμός και κοινωνία\",\n" +
+            "\"et\": \"Elanikkond ja ühiskond\",\n" +
+            "\"nl\": \"Bevolking en samenleving\",\n" +
+            "\"mt\": \"Popolazzjoni u soċjetà\",\n" +
+            "\"cs\": \"Populace a společnost\",\n" +
+            "\"ga\": \"Daonra agus sochaí\"\n" +
+            "},\n" +
+            "\"conceptSchema\": {\n" +
+            "\"id\": \"http://publications.europa.eu/resource/authority/data-theme\",\n" +
+            "\"title\": {\n" +
+            "\"en\": \"Dataset types Named Authority List\"\n" +
+            "},\n" +
+            "\"versioninfo\": \"20160921-0\",\n" +
+            "\"versionnumber\": \"20160921-0\"\n" +
+            "}\n" +
+            "}\n" +
+            "],\n" +
+            "\"accessRights\": {\n" +
+            "\"uri\": \"http://publications.europa.eu/resource/authority/access-right/PUBLIC\",\n" +
+            "\"code\": \"PUBLIC\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"en\": \"Public\",\n" +
+            "\"nb\": \"Offentlig\",\n" +
+            "\"nn\": \"Offentlig\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"hasAccuracyAnnotation\": {\n" +
+            "\"inDimension\": \"http://iso.org/25012/2008/dataquality/Accuracy\",\n" +
+            "\"hasBody\": {\n" +
+            "\"no\": \"Kun om julen. Varer ikke helt til påske.\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"hasCompletenessAnnotation\": {\n" +
+            "\"inDimension\": \"http://iso.org/25012/2008/dataquality/Completeness\",\n" +
+            "\"hasBody\": {\n" +
+            "\"no\": \"Alt om julen\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"hasAvailabilityAnnotation\": {\n" +
+            "\"inDimension\": \"http://iso.org/25012/2008/dataquality/Availability\",\n" +
+            "\"hasBody\": {\n" +
+            "\"no\": \"Tilgjengelig kun i desember.\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"hasRelevanceAnnotation\": {\n" +
+            "\"inDimension\": \"http://iso.org/25012/2008/dataquality/Relevance\",\n" +
+            "\"hasBody\": {\n" +
+            "\"no\": \"Relevant i adventstiden\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"provenance\": {\n" +
+            "\"uri\": \"http://data.brreg.no/datakatalog/provinens/vedtak\",\n" +
+            "\"code\": \"VEDTAK\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"en\": \"Governmental decisions\",\n" +
+            "\"nb\": \"Vedtak\",\n" +
+            "\"nn\": \"Vedtak\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"accrualPeriodicity\": {\n" +
+            "\"uri\": \"http://publications.europa.eu/resource/authority/frequency/ANNUAL\",\n" +
+            "\"code\": \"ANNUAL\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"de\": \"jährlich\",\n" +
+            "\"lv\": \"reizi gadā\",\n" +
+            "\"bg\": \"годишен\",\n" +
+            "\"nl\": \"jaarlijks\",\n" +
+            "\"sk\": \"ročný\",\n" +
+            "\"no\": \"årlig\",\n" +
+            "\"sv\": \"årlig\",\n" +
+            "\"pl\": \"roczny\",\n" +
+            "\"hr\": \"godišnje\",\n" +
+            "\"sl\": \"letni\",\n" +
+            "\"fi\": \"vuotuinen\",\n" +
+            "\"mt\": \"annwali\",\n" +
+            "\"lt\": \"kasmetinis\",\n" +
+            "\"fr\": \"annuel\",\n" +
+            "\"ga\": \"bliantúil\",\n" +
+            "\"da\": \"årligt\",\n" +
+            "\"et\": \"aastane\",\n" +
+            "\"pt\": \"anual\",\n" +
+            "\"ro\": \"anual\",\n" +
+            "\"es\": \"anual\",\n" +
+            "\"el\": \"ετήσιος\",\n" +
+            "\"en\": \"annual\",\n" +
+            "\"cs\": \"roční\",\n" +
+            "\"it\": \"annuale\",\n" +
+            "\"hu\": \"évenkénti\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"subject\": [\n" +
+            "{\n" +
+            "\"uri\": \"https://data-david.github.io/Begrep/begrep/Enhet\",\n" +
+            "\"identifier\": \"https://data-david.github.io/Begrep/begrep/Enhet\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"no\": \"enhet\"\n" +
+            "},\n" +
+            "\"definition\": {\n" +
+            "\"no\": \"alt som er registrert med et organisasjonsnummer \"\n" +
+            "},\n" +
+            "\"note\": {\n" +
+            "\"no\": \"Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.\"\n" +
+            "},\n" +
+            "\"source\": \"https://jira.brreg.no/browse/BEGREP-208\",\n" +
+            "\"creator\": {\n" +
+            "\"overordnetEnhet\": \"912660680\",\n" +
+            "\"organisasjonsform\": \"ORGL\",\n" +
+            "\"naeringskode\": {\n" +
+            "\"uri\": \"http://www.ssb.no/nace/sn2007/84.110\",\n" +
+            "\"code\": \"84.110\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"no\": \"Generell offentlig administrasjon\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"sektorkode\": {\n" +
+            "\"uri\": \"http://www.brreg.no/sektorkode/6100\",\n" +
+            "\"code\": \"6100\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"no\": \"Statsforvaltningen\"\n" +
+            "}\n" +
+            "},\n" +
+            "\"valid\": true,\n" +
+            "\"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/974760673\",\n" +
+            "\"id\": \"974760673\",\n" +
+            "\"name\": \"Brønnøysundregistrene\",\n" +
+            "\"orgPath\": \"/STAT/912660680/974760673\"\n" +
+            "},\n" +
+            "\"inScheme\": [\n" +
+            "\"http://data-david.github.io/vokabular/Befolkning\"\n" +
+            "]\n" +
+            "}\n" +
+            "],\n" +
+            "\"conformsTo\": [\n" +
+            "{\n" +
+            "\"uri\": \"http://www.nisse.no\",\n" +
+            "\"prefLabel\": {\n" +
+            "\"nb\": \"Julestandarden\"\n" +
+            "},\n" +
+            "\"extraType\": \"http://purl.org/dc/terms/Standard\"\n" +
+            "}\n" +
+            "],\n" +
+            "\"type\": \"Data\",\n" +
+            "\"catalog\": {\n" +
+            "\"id\": \"910888447\",\n" +
+            "\"uri\": \"http://brreg.no/catalogs/910888447\",\n" +
+            "\"title\": {\n" +
+            "\"nb\": \"Datakatalog for REINLI OG BERLEVÅG REGNSKAP\"\n" +
+            "},\n" +
+            "\"description\": {\n" +
+            "\"nb\": \"Datasettbeskrivelser\\n\"\n" +
+            "},\n" +
+            "\"publisher\": {\n" +
+            "\"valid\": false,\n" +
+            "\"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/910888447\",\n" +
+            "\"id\": \"910888447\",\n" +
+            "\"name\": \"REINLI OG BERLEVÅG REGNSKAP\",\n" +
+            "\"orgPath\": \"/ANNET/910888447\"\n" +
+            "}\n" +
+            "}\n" +
+            "}";
 }

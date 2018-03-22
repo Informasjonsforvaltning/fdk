@@ -77,15 +77,18 @@ public class TestCompleteCatalog {
                         "RESTRICTED", map("nb", "Begrenset")));
 
         Contact contact = new Contact();
-        contact.setId(UUID.randomUUID().toString());
-        contact.setUri("http://contact/"+ contact.getId());
+
+        contact.setUri("http://contact/someContactURI/123" );
 
         contact.setEmail("digitalisering@kartverket.no");
         contact.setHasURL("http://testetaten.no/url");
         contact.setHasTelephone("22306022");
         contact.setOrganizationUnit("Avdeling for digitalisering");
 
-        dataset.setContactPoint(Collections.singletonList(contact));
+        Contact anonymContact = new Contact();
+        anonymContact.setEmail("anonymous@anonym.org.no");
+
+        dataset.setContactPoint(Arrays.asList(contact, anonymContact));
         SkosConcept sosi =SkosConcept.getInstance("https://www.kartverket.no/geodataarbeid/standarder/sosi/", "SOSI", DCTerms.Standard.getURI());
         dataset.setConformsTo(Collections.singletonList(sosi));
 

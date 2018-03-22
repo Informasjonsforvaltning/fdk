@@ -35,7 +35,8 @@ import java.util.UUID;
 
 public abstract class AbstractBuilder {
 
-    public static final String CONTACT_PREFIX = "http://dataktalog.no/contact";
+    public static final String CONTACT_PREFIX = "http://datakatalog.no/contact";
+    public static final String CONTACT_PREFIX_FEIL = "http://dataktalog.no/contact";
 
     static Property owlTime_hasBeginning = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasBeginning");
     static Property owlTime_hasEnd = ResourceFactory.createProperty("http://www.w3.org/TR/owl-time/hasEnd");
@@ -45,6 +46,11 @@ public abstract class AbstractBuilder {
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
     static Map<String, Contact> contactMap = new HashMap<>();
 
+
+    // TODO - remove in next iteration
+    public static boolean hasGeneratedContactPrefix(Contact contact) {
+        return (contact.getUri() != null && (contact.getUri().startsWith(CONTACT_PREFIX) || contact.getUri().startsWith(CONTACT_PREFIX_FEIL)) );
+    }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
         List<String> result = new ArrayList<>();
@@ -403,18 +409,15 @@ public abstract class AbstractBuilder {
 
                 if (object.getURI() != null && !object.getURI().isEmpty()) {
                     contact.setUri(object.getURI());
-                } else {
-                    contact.setUri(CONTACT_PREFIX + "/import/" + UUID.randomUUID().toString());
+
+                    // reuse existing contact
+                    if (contactMap.containsKey(contact.getUri())) {
+                        result.add(contactMap.get(contact.getUri()));
+                        continue;
+                    }
+
+                    contactMap.put(contact.getUri(), contact);
                 }
-
-                // reuse existing contact
-
-                if (contactMap.containsKey(contact.getUri())) {
-                    result.add(contactMap.get(contact.getUri()));
-                    continue;
-                }
-
-                contactMap.put(contact.getUri(), contact);
 
                 final String fn = extractAsString(object, Vcard.fn);
                 if (fn != null) {
