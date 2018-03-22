@@ -16,7 +16,10 @@
   "lint-staged": {
     "gitDir": "../../",
     "linters": {
-      "*.{js,jsx}": ["prettier --write","git add"]
+      "*.{js,jsx}": [
+        "prettier --write",
+        "git add"
+      ]
     }
   },
   "license": "ISC",
@@ -68,7 +71,6 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
@@ -96,8 +98,6 @@
     "postcss-loader": "^2.0.6",
     "postcss-variables-loader": "^4.0.0",
     "prettier": "^1.7.4",
-    "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",
     "sinon": "^4.0.0",
     "sinon-chai": "^2.14.0",
