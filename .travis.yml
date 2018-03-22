@@ -50,6 +50,12 @@ jobs:
       env:
         - comment=Run regular unit tests
 
+    - stage: Tests # Run regular React unit tests
+      script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
+      after_success: npm run coverage
+      env:
+      - comment=Run regular React unit tests + generate test coverage report
+
     - stage: Tests # Run unit and integration tests + generate test coverage report
       if: type = cron #run only during nightly cron job - time-consuming operation
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
@@ -57,13 +63,6 @@ jobs:
       - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
       - comment=Run unit and integration tests + generate test coverage report
-
-    - stage: Tests # Run regular React unit tests
-      script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
-      if: type = cron #run only during nightly cron job
-      after_success: npm run coverage
-      env:
-      - comment=Run regular React unit tests + generate test coverage report
 
     #- stage: Tests # Run Angular e2e tests
     #  if: type = cron #run only during nightly cron job - time-consuming operation
@@ -80,7 +79,7 @@ jobs:
     #    - comment=Run end-to-end (Cucumber) tests
 
     - stage: deploy
-      if: branch = develop
+      if: branch = develop # only deploy when building develop
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
       deploy:
         provider: script
