@@ -80,6 +80,7 @@ jobs:
     #    - comment=Run end-to-end (Cucumber) tests
 
     - stage: deploy
+      if: branch = develop
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
       deploy:
         provider: script
