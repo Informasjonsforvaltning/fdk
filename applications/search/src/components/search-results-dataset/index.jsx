@@ -121,111 +121,105 @@ export default class ResultsDataset extends React.Component {
     );
 
     return (
-      <div>
-        <div id="content" role="main">
-          <div className="container">
-            <div id="resultPanel">
-              <div className="row mt-1 mb-1">
-                <div className="col-md-4 col-md-offset-8">
-                  <div className="pull-right">
-                    <SelectDropdown
-                      items={[
-                        {
-                          label: "relevance",
-                          field: "_score",
-                          order: "asc",
-                          defaultOption: true
-                        },
-                        {
-                          label: "title",
-                          field: "title",
-                          order: "asc"
-                        },
-                        {
-                          label: "modified",
-                          field: "modified",
-                          order: "desc"
-                        },
-                        {
-                          label: "publisher",
-                          field: "publisher.name",
-                          order: "asc"
-                        }
-                      ]}
-                      selectedLanguageCode={this.props.selectedLanguageCode}
-                      onChange={onSort}
-                      activeSort={searchQuery.sortfield}
+      <div id="content" role="main">
+        <div id="resultPanel">
+          <div className="row mt-1 mb-1">
+            <div className="col-md-4 col-md-offset-8">
+              <div className="pull-right">
+                <SelectDropdown
+                  items={[
+                    {
+                      label: "relevance",
+                      field: "_score",
+                      order: "asc",
+                      defaultOption: true
+                    },
+                    {
+                      label: "title",
+                      field: "title",
+                      order: "asc"
+                    },
+                    {
+                      label: "modified",
+                      field: "modified",
+                      order: "desc"
+                    },
+                    {
+                      label: "publisher",
+                      field: "publisher.name",
+                      order: "asc"
+                    }
+                  ]}
+                  selectedLanguageCode={this.props.selectedLanguageCode}
+                  onChange={onSort}
+                  activeSort={searchQuery.sortfield}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
+              <span className="uu-invisible" aria-hidden="false">
+                Filtrering tilgang
+              </span>
+              {datasetItems &&
+                datasetItems.aggregations && (
+                  <div>
+                    {this._renderFilterModal()}
+                    <FilterBox
+                      title={localization.facet.theme}
+                      filter={datasetItems.aggregations.theme_count}
+                      onClick={onFilterTheme}
+                      activeFilter={searchQuery.theme}
+                      themesItems={themesItems}
+                    />
+                    <FilterBox
+                      title={localization.facet.accessRight}
+                      filter={datasetItems.aggregations.accessRightsCount}
+                      onClick={onFilterAccessRights}
+                      activeFilter={searchQuery.accessrights}
+                    />
+                    <FilterBox
+                      title={localization.facet.organisation}
+                      filter={datasetItems.aggregations.publisherCount}
+                      onClick={onFilterPublisher}
+                      activeFilter={searchQuery.publisher}
+                    />
+                    <FilterBoxPublishers
+                      title={localization.facet.organisation}
+                      filter={publisherArray}
+                      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                      activeFilter={searchQuery.orgPath}
+                      publishers={publishers}
                     />
                   </div>
-                </div>
-              </div>
+                )}
+            </div>
 
-              <div className="row">
-                <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
-                  <span className="uu-invisible" aria-hidden="false">
-                    Filtrering tilgang
-                  </span>
-                  {datasetItems &&
-                    datasetItems.aggregations && (
-                      <div>
-                        {this._renderFilterModal()}
-                        <FilterBox
-                          title={localization.facet.theme}
-                          filter={datasetItems.aggregations.theme_count}
-                          onClick={onFilterTheme}
-                          activeFilter={searchQuery.theme}
-                          themesItems={themesItems}
-                        />
-                        <FilterBox
-                          title={localization.facet.accessRight}
-                          filter={datasetItems.aggregations.accessRightsCount}
-                          onClick={onFilterAccessRights}
-                          activeFilter={searchQuery.accessrights}
-                        />
-                        <FilterBox
-                          title={localization.facet.organisation}
-                          filter={datasetItems.aggregations.publisherCount}
-                          onClick={onFilterPublisher}
-                          activeFilter={searchQuery.publisher}
-                        />
-                        <FilterBoxPublishers
-                          title={localization.facet.organisation}
-                          filter={publisherArray}
-                          onFilterPublisherHierarchy={
-                            onFilterPublisherHierarchy
-                          }
-                          activeFilter={searchQuery.orgPath}
-                          publishers={publishers}
-                        />
-                      </div>
-                    )}
-                </div>
+            <div id="datasets" className="col-xs-12 col-md-8">
+              {this._renderHits()}
+            </div>
 
-                <div id="datasets" className="col-xs-12 col-md-8">
-                  {this._renderHits()}
-                </div>
-
-                <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
-                  <span className="uu-invisible" aria-hidden="false">
-                    Sidepaginering.
-                  </span>
-                  <ReactPaginate
-                    pageCount={pageCount}
-                    pageRangeDisplayed={2}
-                    marginPagesDisplayed={1}
-                    previousLabel={localization.page.prev}
-                    nextLabel={localization.page.next}
-                    breakLabel={<span>...</span>}
-                    breakClassName={"break-me"}
-                    containerClassName={"pagination"}
-                    onPageChange={onPageChange}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                    initialPage={page}
-                    disableInitialCallback
-                  />
-                </div>
-              </div>
+            <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+              <span className="uu-invisible" aria-hidden="false">
+                Sidepaginering.
+              </span>
+              <ReactPaginate
+                pageCount={pageCount}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={1}
+                previousLabel={localization.page.prev}
+                nextLabel={localization.page.next}
+                breakLabel={<span>...</span>}
+                breakClassName={"break-me"}
+                containerClassName={"pagination"}
+                onPageChange={onPageChange}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                initialPage={page}
+                disableInitialCallback
+              />
             </div>
           </div>
         </div>
