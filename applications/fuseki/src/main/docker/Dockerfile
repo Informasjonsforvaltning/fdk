@@ -1,4 +1,4 @@
-FROM tomcat:8-jre8
+FROM tomcat:8-jre8-alpine
 
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
