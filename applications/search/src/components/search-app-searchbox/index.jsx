@@ -23,7 +23,7 @@ const SearchBox = props => {
         <div className="visible-sm visible-xs">
           <button
             type="button"
-            className="fdk-button-default fdk-button fdk-button-filter btn btn-lg btn-primary"
+            className="fdk-button fdk-button-filter"
             onClick={open}
           >
             Filter

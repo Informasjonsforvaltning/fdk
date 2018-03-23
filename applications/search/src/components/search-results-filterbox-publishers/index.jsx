@@ -55,8 +55,9 @@ export default class SearchPublishersTree extends React.Component {
     } = this.props;
     const filters = activeFilter;
 
-    const subTree = (hits, activeFilter) =>
-      hits.map((node, i) => {
+    const subTree = (hits, activeFilter) => {
+      let nodeOnSameLevelHasChildren = false;
+      return hits.map((node, i) => {
         let active = false;
         if (filters && filters === node.key) {
           active = true;
@@ -90,6 +91,7 @@ export default class SearchPublishersTree extends React.Component {
           activeFilter
         );
         if (node.children && node.children.length > 0) {
+          nodeOnSameLevelHasChildren = true;
           return (
             <TreeView
               key={`${node.key}|${i}`}
@@ -110,10 +112,11 @@ export default class SearchPublishersTree extends React.Component {
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}
-            displayClass=""
+            displayClass={nodeOnSameLevelHasChildren ? "indent" : ""}
           />
         );
       });
+    };
 
     const mainTree = (hits, activeFilter) =>
       hits.map((node, i) => {

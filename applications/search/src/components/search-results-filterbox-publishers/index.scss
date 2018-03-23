@@ -5,6 +5,7 @@
   .tree-view {
     overflow-x: hidden;
     .tree-view_item {
+      border-top: none;
       color: $color1;
       white-space: nowrap;
       margin-top: 0;
@@ -12,6 +13,9 @@
     }
     .tree-view_children {
       margin-left: 32px;
+      .checkbox.indent {
+        margin-left: 19px;
+      }
     }
   }
 }
