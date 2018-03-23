@@ -96,36 +96,32 @@ export default class ResultsConcepts extends React.Component {
     );
 
     return (
-      <div>
-        <div id="content" role="main">
-          <div className="container">
-            <div id="conceptsPanel">
-              <div className="row">
-                <div className="col-sm-4">{this._renderCompareTerms()}</div>
-                <div id="concepts" className="col-sm-8">
-                  {this._renderTerms()}
-                </div>
-                <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
-                  <span className="uu-invisible" aria-hidden="false">
-                    Sidepaginering.
-                  </span>
-                  <ReactPaginate
-                    pageCount={pageCount}
-                    pageRangeDisplayed={2}
-                    marginPagesDisplayed={1}
-                    previousLabel={localization.page.prev}
-                    nextLabel={localization.page.next}
-                    breakLabel={<span>...</span>}
-                    breakClassName={"break-me"}
-                    containerClassName={"pagination"}
-                    onPageChange={onPageChange}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                    initialPage={page}
-                    disableInitialCallback
-                  />
-                </div>
-              </div>
+      <div id="content" role="main">
+        <div id="conceptsPanel">
+          <div className="row">
+            <div className="col-sm-4">{this._renderCompareTerms()}</div>
+            <div id="concepts" className="col-sm-8">
+              {this._renderTerms()}
+            </div>
+            <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+              <span className="uu-invisible" aria-hidden="false">
+                Sidepaginering.
+              </span>
+              <ReactPaginate
+                pageCount={pageCount}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={1}
+                previousLabel={localization.page.prev}
+                nextLabel={localization.page.next}
+                breakLabel={<span>...</span>}
+                breakClassName={"break-me"}
+                containerClassName={"pagination"}
+                onPageChange={onPageChange}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                initialPage={page}
+                disableInitialCallback
+              />
             </div>
           </div>
         </div>

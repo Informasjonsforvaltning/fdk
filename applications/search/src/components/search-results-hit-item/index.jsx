@@ -191,7 +191,7 @@ export default class SearchHitItem extends React.Component {
         <span className="uu-invisible" aria-hidden="false">
           Søketreff.
         </span>
-        <div className="fdk-container fdk-container-search-hit">
+        <div className="fdk-container-search-hit">
           <h2>{title}</h2>
           <div className="fdk-dataset-themes">
             {this._renderPublisher()}
