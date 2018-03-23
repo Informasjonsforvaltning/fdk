@@ -88,7 +88,13 @@ export default class ResultsConcepts extends React.Component {
   }
 
   render() {
-    const { termItems, onPageChange, searchQuery, hitsPerPage } = this.props;
+    const {
+      termItems,
+      onClearSearch,
+      onPageChange,
+      searchQuery,
+      hitsPerPage
+    } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
     const pageCount = Math.ceil(
@@ -98,8 +104,28 @@ export default class ResultsConcepts extends React.Component {
     return (
       <div id="content" role="main">
         <div id="conceptsPanel">
+          <div className="row mt-1 mb-1">
+            <div className="col-md-4">
+              <button
+                className="fdk-button fdk-button-default-no-hover"
+                onClick={onClearSearch}
+                type="button"
+              >
+                {localization.query.clear}
+              </button>
+            </div>
+          </div>
+
           <div className="row">
-            <div className="col-sm-4">{this._renderCompareTerms()}</div>
+            <div className="search-filters col-sm-4 col-md-4 flex-move-first-item-to-bottom">
+              <div className="visible-md visible-lg">
+                <span className="uu-invisible" aria-hidden="false">
+                  Filtrering tilgang
+                </span>
+              </div>
+              {this._renderCompareTerms()}
+            </div>
+
             <div id="concepts" className="col-sm-8">
               {this._renderTerms()}
             </div>

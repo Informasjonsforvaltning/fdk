@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Collapse } from "react-bootstrap";
+import cx from "classnames";
 
 import localization from "../localization";
 import FilterOption from "../search-results-filterbox-option";
@@ -10,12 +11,18 @@ class FilterBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      openFilter: true, // (props.activeFilter && props.activeFilter !== '') ? true : false,
       open: false
     };
-    this.toggle = this.toggle.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
+    this.toggleList = this.toggleList.bind(this);
   }
 
-  toggle() {
+  toggleFilter() {
+    this.setState({ openFilter: !this.state.openFilter });
+  }
+
+  toggleList() {
     this.setState({ open: !this.state.open });
   }
 
@@ -56,7 +63,7 @@ class FilterBox extends React.Component {
               <Collapse in={open}>
                 <div>{options(buckets.slice(5))}</div>
               </Collapse>
-              <button onClick={this.toggle}>
+              <button onClick={this.toggleList}>
                 {open
                   ? localization.facet.showfewer
                   : localization.facet.showmore}
@@ -70,15 +77,27 @@ class FilterBox extends React.Component {
   }
 
   render() {
+    const { openFilter } = this.state;
     const { title, filter, onClick, activeFilter } = this.props;
+    const collapseIconClass = cx("fa", "mr-2", {
+      "fa-angle-down": !openFilter,
+      "fa-angle-up": openFilter
+    });
     return (
       <div className="fdk-panel--filter">
-        <div className="fdk-panel__header">{title}</div>
-        <div className="fdk-panel__content">
-          <div className="fdk-items-list">
-            {this._renderOptions(filter, onClick, activeFilter)}
-          </div>
+        <div className="fdk-panel__header">
+          <button className="p-0" onClick={this.toggleFilter}>
+            <i className={collapseIconClass} />
+            <span>{title}</span>
+          </button>
         </div>
+        <Collapse in={openFilter}>
+          <div className="fdk-panel__content">
+            <div className="fdk-items-list">
+              {this._renderOptions(filter, onClick, activeFilter)}
+            </div>
+          </div>
+        </Collapse>
       </div>
     );
   }

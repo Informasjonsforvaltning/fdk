@@ -7,15 +7,20 @@
   .fdk-panel__header {
     border-bottom: 1px solid $color6;
     color: $color1;
-    font-size: 1.875rem;
     line-height: 2.25rem;
-    font-weight: 500;
     margin-bottom: .5em;
     padding: 1em 2em;
+    button {
+      border: none;
+      background-color: transparent;
+      font-size: 1.875rem;
+      font-weight: 500;
+    }
   }
   .fdk-panel__content {
     font-size: 1.5rem;
     padding: .5em 2em;
+
     .fdk-items-list {
       button {
         background: transparent;

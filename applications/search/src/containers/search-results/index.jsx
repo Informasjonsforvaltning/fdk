@@ -41,6 +41,8 @@ class SearchPage extends React.Component {
       showConcepts: false,
       searchQuery
     };
+
+    this.handleClearSearch = this.handleClearSearch.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
@@ -126,6 +128,17 @@ class SearchPage extends React.Component {
         });
       }
     }
+  }
+
+  handleClearSearch() {
+    this.setState(
+      {
+        searchQuery: {
+          size: 50
+        }
+      },
+      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+    );
   }
 
   handleSearchSubmit() {
@@ -386,6 +399,7 @@ class SearchPage extends React.Component {
                 <ResultsDataset
                   selectedLanguageCode={this.props.selectedLanguageCode}
                   datasetItems={datasetItems}
+                  onClearSearch={this.handleClearSearch}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
                   onFilterPublisher={this.handleDatasetFilterPublisher}
@@ -412,9 +426,16 @@ class SearchPage extends React.Component {
                 <ResultsConcepts
                   selectedLanguageCode={this.props.selectedLanguageCode}
                   termItems={termItems}
+                  onClearSearch={this.handleClearSearch}
                   onPageChange={this.handlePageChange}
+                  onFilterPublisherHierarchy={
+                    this.handleDatasetFilterPublisherHierarchy
+                  }
                   searchQuery={this.state.searchQuery}
                   hitsPerPage={50}
+                  showFilterModal={this.state.showFilterModal}
+                  publisherArray={publisherCountItems}
+                  publishers={publisherItems}
                   {...props}
                 />
               )}

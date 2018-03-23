@@ -34,7 +34,6 @@ export default class ResultsDataset extends React.Component {
       datasetItems,
       onFilterTheme,
       onFilterAccessRights,
-      onFilterPublisher,
       onFilterPublisherHierarchy,
       searchQuery,
       themesItems,
@@ -60,12 +59,6 @@ export default class ResultsDataset extends React.Component {
               filter={datasetItems.aggregations.accessRightsCount}
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
-            />
-            <FilterBox
-              title={localization.facet.organisation}
-              filter={datasetItems.aggregations.publisherCount}
-              onClick={onFilterPublisher}
-              activeFilter={searchQuery.publisher}
             />
             <FilterBoxPublishers
               title={localization.facet.organisation}
@@ -101,9 +94,9 @@ export default class ResultsDataset extends React.Component {
   render() {
     const {
       datasetItems,
+      onClearSearch,
       onFilterTheme,
       onFilterAccessRights,
-      onFilterPublisher,
       onFilterPublisherHierarchy,
       onSort,
       onPageChange,
@@ -124,7 +117,16 @@ export default class ResultsDataset extends React.Component {
       <div id="content" role="main">
         <div id="resultPanel">
           <div className="row mt-1 mb-1">
-            <div className="col-md-4 col-md-offset-8">
+            <div className="col-md-4">
+              <button
+                className="fdk-button fdk-button-default-no-hover"
+                onClick={onClearSearch}
+                type="button"
+              >
+                {localization.query.clear}
+              </button>
+            </div>
+            <div className="col-md-4 col-md-offset-4">
               <div className="pull-right">
                 <SelectDropdown
                   items={[
@@ -179,12 +181,6 @@ export default class ResultsDataset extends React.Component {
                       filter={datasetItems.aggregations.accessRightsCount}
                       onClick={onFilterAccessRights}
                       activeFilter={searchQuery.accessrights}
-                    />
-                    <FilterBox
-                      title={localization.facet.organisation}
-                      filter={datasetItems.aggregations.publisherCount}
-                      onClick={onFilterPublisher}
-                      activeFilter={searchQuery.publisher}
                     />
                     <FilterBoxPublishers
                       title={localization.facet.organisation}
