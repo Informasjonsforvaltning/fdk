@@ -61,7 +61,7 @@ const FilterOption = props => {
           className={`list-group-item fdk-label fdk-label-default`}
           value={value}
         />
-        <label className="checkbox-replacement" htmlFor={id} />
+        <span className="checkbox-replacement" />
         {textLabel} ({count})
       </label>
       {/* eslint-enable jsx-a11y/no-noninteractive-element-to-interactive-role */}

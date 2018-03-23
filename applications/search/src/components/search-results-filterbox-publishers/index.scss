@@ -3,11 +3,15 @@
 .search-filter-publisher {
 
   .tree-view {
+    overflow-x: hidden;
     .tree-view_item {
       color: $color1;
       white-space: nowrap;
       margin-top: 0;
       margin-bottom: 0;
+    }
+    .tree-view_children {
+      margin-left: 32px;
     }
   }
 }
