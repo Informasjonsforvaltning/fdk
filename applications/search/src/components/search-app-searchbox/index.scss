@@ -13,13 +13,13 @@
     label {
       width: 100%
     }
-    .fdk-search {
+    input.fdk-search {
       color: $color1;
       border: none;
       border-radius: 0;
       box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
       font-weight: 400;
-      line-height: 3rem;
+      height: 54px;
       width: 100%;
       padding: 12px 16px;
       margin: 0 0 10px 0px;
@@ -27,10 +27,16 @@
   }
 
   .fdk-button-filter {
+    background-color: $color1;
+    color: $color0;
     height: 54px;
     margin: 0;
     border-radius: 5px 0 0 5px;
     box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
+    &:hover, &:focus {
+      color: $color0;
+      border-color: $color1;
+    }
   }
 
   .fdk-button-search {
@@ -53,9 +59,10 @@
 
   .fdk-search-flex {
     .fdk-search-box {
-      .fdk-search {
+      input.fdk-search {
         border-radius: 5px 0 0 5px;
         font-size: 3rem;
+        height: 68px;
       }
     }
 

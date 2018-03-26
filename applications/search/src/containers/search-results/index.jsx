@@ -31,9 +31,7 @@ class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const searchQuery = queryString.parse(props.location.search) || {
-      searchQuery: {
-        size: 50
-      },
+      searchQuery: {},
       showFilterModal: false
     };
 
@@ -41,6 +39,8 @@ class SearchPage extends React.Component {
       showConcepts: false,
       searchQuery
     };
+
+    this.handleClearSearch = this.handleClearSearch.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
@@ -126,6 +126,15 @@ class SearchPage extends React.Component {
         });
       }
     }
+  }
+
+  handleClearSearch() {
+    this.setState(
+      {
+        searchQuery: {}
+      },
+      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+    );
   }
 
   handleSearchSubmit() {
@@ -335,6 +344,7 @@ class SearchPage extends React.Component {
       publisherCountItems,
       isFetchingDatasets,
       termItems,
+      publisherCountTermItems,
       isFetchingTerms,
       themesItems,
       publisherItems
@@ -358,7 +368,7 @@ class SearchPage extends React.Component {
               }
               isFetchingDatasets={isFetchingDatasets}
               countTerms={
-                termItems && termItems.hits ? termItems.hits.total : null
+                termItems && termItems.hits ? termItems.hits.total : 0
               }
               isFetchingTerms={isFetchingTerms}
               open={this.open}
@@ -371,7 +381,7 @@ class SearchPage extends React.Component {
                   : null
               }
               countTerms={
-                termItems && termItems.hits ? termItems.hits.total : null
+                termItems && termItems.hits ? termItems.hits.total : 0
               }
               selectedLanguageCode={selectedLanguageCode}
             />
@@ -386,6 +396,7 @@ class SearchPage extends React.Component {
                 <ResultsDataset
                   selectedLanguageCode={this.props.selectedLanguageCode}
                   datasetItems={datasetItems}
+                  onClearSearch={this.handleClearSearch}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
                   onFilterPublisher={this.handleDatasetFilterPublisher}
@@ -412,9 +423,17 @@ class SearchPage extends React.Component {
                 <ResultsConcepts
                   selectedLanguageCode={this.props.selectedLanguageCode}
                   termItems={termItems}
+                  onClearSearch={this.handleClearSearch}
                   onPageChange={this.handlePageChange}
+                  onFilterPublisherHierarchy={
+                    this.handleDatasetFilterPublisherHierarchy
+                  }
                   searchQuery={this.state.searchQuery}
                   hitsPerPage={50}
+                  showFilterModal={this.state.showFilterModal}
+                  closeFilterModal={this.close}
+                  publisherArray={publisherCountTermItems}
+                  publishers={publisherItems}
                   {...props}
                 />
               )}
@@ -444,8 +463,9 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
     publisherCountItems: null
   };
 
-  const { termItems, isFetchingTerms } = terms || {
-    termItems: null
+  const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
+    termItems: null,
+    publisherCountTermItems: null
   };
 
   const { themesItems, isFetchingThemes } = themes || {
@@ -461,6 +481,7 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
     publisherCountItems,
     isFetchingDatasets,
     termItems,
+    publisherCountTermItems,
     isFetchingTerms,
     themesItems,
     isFetchingThemes,

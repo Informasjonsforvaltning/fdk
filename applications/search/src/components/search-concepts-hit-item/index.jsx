@@ -155,7 +155,7 @@ export default class ConceptsHitItem extends React.Component {
           Søketreff begrep.
         </span>
         <div
-          className={`fdk-container fdk-container-search-hit ${toBeCompared
+          className={`fdk-container-search-hit ${toBeCompared
             ? "toBeCompared"
             : ""}`}
         >

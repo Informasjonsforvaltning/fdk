@@ -20,10 +20,10 @@ const SearchBox = props => {
   return (
     <div className="row mb-60">
       <div className="col-12 col-md-8 col-md-offset-2 fdk-search-flex">
-        <div className="visible-sm visible-xs">
+        <div className="visible-xs">
           <button
             type="button"
-            className="fdk-button-default fdk-button fdk-button-filter btn btn-lg btn-primary"
+            className="fdk-button fdk-button-filter"
             onClick={open}
           >
             Filter

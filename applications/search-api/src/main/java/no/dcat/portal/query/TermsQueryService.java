@@ -2,12 +2,10 @@ package no.dcat.portal.query;
 
 
 import io.swagger.annotations.ApiOperation;
-import no.dcat.shared.Publisher;
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -17,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,13 +56,17 @@ import org.springframework.web.bind.annotation.RestController;
             notes = "Returns the elasticsearch response with matching terms (dct:subject)", response = Subject.class)
     @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
+                                         @RequestParam(value = "creator", defaultValue = "", required = false) String creator,
+                                         @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
                                          @RequestParam(value = "from", defaultValue = "0", required = false) int from,
                                          @RequestParam(value = "size", defaultValue = "10", required = false) int size,
                                          @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang) {
 
         StringBuilder loggMsg = new StringBuilder()
-                .append("query: \"").append(query)
-                .append("\" from:").append(from)
+                .append("query: ").append(query)
+                .append(" creator: ").append(creator)
+                .append(" orgPath: ").append(orgPath)
+                .append(" from:").append(from)
                 .append(" size:").append(size)
                 .append(" lang:").append(lang);
 
@@ -75,9 +78,6 @@ import org.springframework.web.bind.annotation.RestController;
             analyzerLang = "english";
         }
         lang = "no"; // hardcode to search in all language fields
-
-        from = checkAndAdjustFrom(from);
-        size = checkAndAdjustSize(size);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
@@ -99,17 +99,10 @@ import org.springframework.web.bind.annotation.RestController;
 
         logger.trace(search.toString());
 
-        // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
-                .setTypes("subject")
-                .setQuery(search)
-                .setFrom(from)
-                .setSize(size);
-
-        //addSort(sortfield, sortdirection, searchBuilder);
+        BoolQueryBuilder boolQuery = addFilter(search, creator, orgPath);
 
         // Execute search
-        SearchResponse response = searchBuilder.execute().actionGet();
+        SearchResponse response = doSearch(boolQuery, from, size);
 
         logger.trace("Search response: {}", response.toString());
 
@@ -117,45 +110,60 @@ import org.springframework.web.bind.annotation.RestController;
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
-    private int checkAndAdjustFrom(int from) {
-        if (from < 0) {
-            return 0;
-        } else {
-            return from;
+    private BoolQueryBuilder addFilter(QueryBuilder search, String creator, String orgPath) {
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+                .must(search);
+
+        BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
+
+        if (!StringUtils.isEmpty(creator)) {
+            BoolQueryBuilder boolFilterPublisher = QueryBuilders.boolQuery();
+            if (creator.toLowerCase().equals("ukjent")) {
+                boolFilterPublisher.must(QueryBuilders.missingQuery("creator.name.raw"));
+            } else {
+                boolFilterPublisher.must(QueryBuilders.termQuery("creator.name.raw", creator));
+            }
+
+            boolQuery.filter(boolFilterPublisher);
         }
+
+        if (!StringUtils.isEmpty(orgPath)) {
+            BoolQueryBuilder orgPathFilter = QueryBuilders.boolQuery();
+            orgPathFilter.must(QueryBuilders.termQuery("creator.orgPath", orgPath));
+            boolQuery.filter(orgPathFilter);
+        }
+
+        return boolQuery;
+
     }
 
-    private int checkAndAdjustSize(int size) {
-        if (size > 100) {
-            return 100;
-        }
 
-        if (size < 5) {
-            return 5;
-        }
-
-        return size;
-    }
-
-
-
-    /**
-     * Create aggregation object that counts the number of
-     * datasets for each value of the defined field.
-     * <p/>
-     *
-     * @param field The field to be aggregated.
-     * @return Aggregation builder object to be used in query
-     */
-    private AggregationBuilder createAggregation(String terms, String field, String missing) {
-        return AggregationBuilders
-                .terms(terms)
-                .missing(missing)
-                .field(field)
+    SearchResponse doSearch(QueryBuilder search, int from, int size) {
+        AggregationBuilder aggregateCreatorNames = AggregationBuilders
+                .terms("creator")
+                .missing("ukjent")
+                .field("creator.name.raw")
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
                 .order(Order.count(false));
+
+        AggregationBuilder aggregateOrgPath = AggregationBuilders
+                .terms("orgPath")
+                .missing("ukjent")
+                .field("creator.orgPath")
+                .size(AGGREGATION_NUMBER_OF_COUNTS)
+                .order(Order.count(false));
+
+        // set up search query with aggregations
+        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
+                .setTypes("subject")
+                .setQuery(search)
+                .setFrom(from)
+                .setSize(size)
+                .addAggregation(aggregateCreatorNames)
+                .addAggregation(aggregateOrgPath)
+                ;
+
+        return searchBuilder.execute().actionGet();
     }
-
-
 
 }

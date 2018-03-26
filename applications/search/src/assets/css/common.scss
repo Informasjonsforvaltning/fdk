@@ -82,6 +82,9 @@ body {
     display: inline-block;
     background: none;
     text-align: center;
+    &:active, &:focus {
+        outline: none;
+    }
 }
 
 .fdk-button-small {

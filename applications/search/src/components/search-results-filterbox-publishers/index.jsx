@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TreeView from "react-treeview";
 import "react-treeview/react-treeview.css";
 import cx from "classnames";
+import { Collapse } from "react-bootstrap";
 
 import FilterOption from "../search-results-filterbox-option";
 import "./index.scss";
@@ -23,7 +24,10 @@ export default class SearchPublishersTree extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.state = {
+      openFilter: true // (props.activeFilter && props.activeFilter !== '') ? true : false,
+    };
+    this.toggleFilter = this.toggleFilter.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -38,6 +42,10 @@ export default class SearchPublishersTree extends React.Component {
     }
   }
 
+  toggleFilter() {
+    this.setState({ openFilter: !this.state.openFilter });
+  }
+
   _renderTree() {
     const {
       filter,
@@ -47,15 +55,16 @@ export default class SearchPublishersTree extends React.Component {
     } = this.props;
     const filters = activeFilter;
 
-    const subTree = hits =>
-      hits.map((node, i) => {
+    const subTree = (hits, activeFilter) => {
+      let nodeOnSameLevelHasChildren = false;
+      return hits.map((node, i) => {
         let active = false;
-        if (filters && filters.includes(node.key)) {
+        if (filters && filters === node.key) {
           active = true;
         }
         const { orgPath } = this.props;
         const chosenClass = cx({
-          "tree-item_chosen": node.orgPath === orgPath
+          "tree-item_chosen": node.key === orgPath
         });
 
         let name = node.key;
@@ -82,6 +91,7 @@ export default class SearchPublishersTree extends React.Component {
           activeFilter
         );
         if (node.children && node.children.length > 0) {
+          nodeOnSameLevelHasChildren = true;
           return (
             <TreeView
               key={`${node.key}|${i}`}
@@ -89,7 +99,7 @@ export default class SearchPublishersTree extends React.Component {
               defaultCollapsed={collapsed}
               itemClassName={chosenClass}
             >
-              {subTree(node.children)}
+              {subTree(node.children, activeFilter)}
             </TreeView>
           );
         }
@@ -102,20 +112,21 @@ export default class SearchPublishersTree extends React.Component {
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}
-            displayClass=""
+            displayClass={nodeOnSameLevelHasChildren ? "indent" : ""}
           />
         );
       });
+    };
 
     const mainTree = (hits, activeFilter) =>
       hits.map((node, i) => {
         const { orgPath } = this.props;
         let active = false;
-        if (filters && filters.includes(node.key)) {
+        if (filters && filters === node.key) {
           active = true;
         }
         const chosenClass = cx("tree-view_main", {
-          "tree-item_chosen": node.orgPath === orgPath
+          "tree-item_chosen": node.key === orgPath
         });
         const collapsed = SearchPublishersTree.isItemCollapsed(
           node.key,
@@ -142,36 +153,62 @@ export default class SearchPublishersTree extends React.Component {
             displayClass="inline-block"
           />
         );
+        if (node.key !== "ukjent") {
+          return (
+            <div key={`panel${i}`} className="section">
+              <TreeView
+                key={`${node.key}|${i}`}
+                nodeLabel={label}
+                defaultCollapsed={collapsed}
+                itemClassName={chosenClass}
+              >
+                {node.children &&
+                  node.children.length > 0 &&
+                  subTree(node.children, activeFilter)}
+              </TreeView>
+            </div>
+          );
+        }
         return (
-          <div key={`panel${i}`} className="section">
-            <TreeView
-              key={`${node.key}|${i}`}
-              nodeLabel={label}
-              defaultCollapsed={collapsed}
-              itemClassName={chosenClass}
-            >
-              {node.children &&
-                node.children.length > 0 &&
-                subTree(node.children)}
-            </TreeView>
-          </div>
+          <FilterOption
+            key={`${node.key}|${i}`}
+            itemKey={0.5}
+            value={node.key}
+            label={name}
+            count={node.doc_count}
+            onClick={onFilterPublisherHierarchy}
+            active={active}
+            displayClass="indent"
+          />
         );
       });
 
     if (filter && typeof filter !== "undefined" && filter.length > 0) {
-      return <div>{mainTree(filter)}</div>;
+      return <div>{mainTree(filter, activeFilter)}</div>;
     }
     return null;
   }
 
   render() {
+    const { openFilter } = this.state;
     const { title } = this.props;
+    const collapseIconClass = cx("fa", "mr-2", {
+      "fa-angle-down": !this.state.openFilter,
+      "fa-angle-up": this.state.openFilter
+    });
     return (
-      <div className="search-filter-publisher pre-scrollableXX">
-        <div className="fdk-panel__header">{title}</div>
-        <div className="fdk-panel__content">
-          <div className="fdk-items-list">{this._renderTree()}</div>
+      <div className="search-filter-publisher">
+        <div className="fdk-panel__header">
+          <button className="p-0" onClick={this.toggleFilter}>
+            <i className={collapseIconClass} />
+            <span>{title}</span>
+          </button>
         </div>
+        <Collapse in={openFilter}>
+          <div className="fdk-panel__content">
+            <div className="fdk-items-list">{this._renderTree()}</div>
+          </div>
+        </Collapse>
       </div>
     );
   }
