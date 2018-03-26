@@ -344,6 +344,7 @@ class SearchPage extends React.Component {
       publisherCountItems,
       isFetchingDatasets,
       termItems,
+      publisherCountTermItems,
       isFetchingTerms,
       themesItems,
       publisherItems
@@ -430,7 +431,8 @@ class SearchPage extends React.Component {
                   searchQuery={this.state.searchQuery}
                   hitsPerPage={50}
                   showFilterModal={this.state.showFilterModal}
-                  publisherArray={publisherCountItems}
+                  closeFilterModal={this.close}
+                  publisherArray={publisherCountTermItems}
                   publishers={publisherItems}
                   {...props}
                 />
@@ -461,8 +463,9 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
     publisherCountItems: null
   };
 
-  const { termItems, isFetchingTerms } = terms || {
-    termItems: null
+  const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
+    termItems: null,
+    publisherCountTermItems: null
   };
 
   const { themesItems, isFetchingThemes } = themes || {
@@ -478,6 +481,7 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
     publisherCountItems,
     isFetchingDatasets,
     termItems,
+    publisherCountTermItems,
     isFetchingTerms,
     themesItems,
     isFetchingThemes,

@@ -161,7 +161,7 @@ export default class ResultsDataset extends React.Component {
           </div>
 
           <div className="row">
-            <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-md visible-lg">
+            <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-sm visible-md visible-lg">
               <span className="uu-invisible" aria-hidden="false">
                 Filtrering tilgang
               </span>

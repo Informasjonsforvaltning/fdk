@@ -153,20 +153,35 @@ export default class SearchPublishersTree extends React.Component {
             displayClass="inline-block"
           />
         );
-        return (
-          <div key={`panel${i}`} className="section">
-            <TreeView
+        if (node.key !== "ukjent") {
+          return (
+            <div key={`panel${i}`} className="section">
+              <TreeView
+                key={`${node.key}|${i}`}
+                nodeLabel={label}
+                defaultCollapsed={collapsed}
+                itemClassName={chosenClass}
+              >
+                {node.children &&
+                  node.children.length > 0 &&
+                  subTree(node.children, activeFilter)}
+              </TreeView>
+            </div>
+          );
+        } else {
+          return (
+            <FilterOption
               key={`${node.key}|${i}`}
-              nodeLabel={label}
-              defaultCollapsed={collapsed}
-              itemClassName={chosenClass}
-            >
-              {node.children &&
-                node.children.length > 0 &&
-                subTree(node.children, activeFilter)}
-            </TreeView>
-          </div>
-        );
+              itemKey={0.5}
+              value={node.key}
+              label={name}
+              count={node.doc_count}
+              onClick={onFilterPublisherHierarchy}
+              active={active}
+              displayClass="indent"
+            />
+          );
+        }
       });
 
     if (filter && typeof filter !== "undefined" && filter.length > 0) {

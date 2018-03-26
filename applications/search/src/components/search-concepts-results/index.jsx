@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactPaginate from "react-paginate";
+import { Modal, Button } from "react-bootstrap";
 
 import localization from "../localization";
 import ConceptsHitItem from "../search-concepts-hit-item";
 import CompareTerms from "../search-concepts-compare";
 import CompareTermModal from "../search-concepts-compare-modal";
+import FilterBoxPublishers from "../search-results-filterbox-publishers";
 
 export default class ResultsConcepts extends React.Component {
   constructor(props) {
@@ -87,13 +89,57 @@ export default class ResultsConcepts extends React.Component {
     return null;
   }
 
+  _renderFilterModal() {
+    const {
+      showFilterModal,
+      closeFilterModal,
+      datasetItems,
+      onFilterTheme,
+      onFilterAccessRights,
+      onFilterPublisherHierarchy,
+      searchQuery,
+      themesItems,
+      publisherArray,
+      publishers
+    } = this.props;
+    return (
+      <Modal show={showFilterModal} onHide={closeFilterModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="search-filters">
+            <FilterBoxPublishers
+              title={localization.facet.organisation}
+              filter={publisherArray}
+              onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+              activeFilter={searchQuery.orgPath}
+              publishers={publishers}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="fdk-button-default fdk-button"
+            onClick={closeFilterModal}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   render() {
     const {
       termItems,
       onClearSearch,
       onPageChange,
+      onFilterPublisherHierarchy,
       searchQuery,
-      hitsPerPage
+      hitsPerPage,
+      publisherArray,
+      publishers
     } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
@@ -118,10 +164,23 @@ export default class ResultsConcepts extends React.Component {
 
           <div className="row">
             <div className="search-filters col-sm-4 col-md-4 flex-move-first-item-to-bottom">
-              <div className="visible-md visible-lg">
+              <div className="visible-sm visible-md visible-lg">
                 <span className="uu-invisible" aria-hidden="false">
                   Filtrering tilgang
                 </span>
+                {termItems &&
+                  termItems.aggregations && (
+                    <div>
+                      {this._renderFilterModal()}
+                      <FilterBoxPublishers
+                        title={localization.facet.organisation}
+                        filter={publisherArray}
+                        onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                        activeFilter={searchQuery.orgPath}
+                        publishers={publishers}
+                      />
+                    </div>
+                  )}
               </div>
               {this._renderCompareTerms()}
             </div>
