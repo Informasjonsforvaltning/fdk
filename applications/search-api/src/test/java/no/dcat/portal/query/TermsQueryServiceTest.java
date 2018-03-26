@@ -39,20 +39,20 @@ public class TermsQueryServiceTest {
         service.setElasticsearchHost("http://dummy.no");
 
         searchResponse = mock(SearchResponse.class);
-        when(searchResponse.toString()).thenReturn(dataset);
-
-
-
+        when(searchResponse.toString()).thenReturn(dataset)
     }
 
     @Test
     public void callSearch() {
         doReturn(searchResponse).when(service).doSearch(any(), anyInt(), anyInt());
 
-        service.search("", 0, 20, "nb");
-        service.search("", 0, 20, "en");
-        service.search("enhet", 0, 20, "nb");
+        service.search("", "","", 0, 20, "nb");
+        service.search("", "", "", 0, 20, "en");
+        service.search("enhet", "", "",0, 20, "nb");
+        service.search("","brreg", "/STAT", 0, 20, "nb");
+        service.search("","Ukjent", "/STAT", 0, 20, "nb");
     }
+
 
     @Test
     public void doSearch() {
