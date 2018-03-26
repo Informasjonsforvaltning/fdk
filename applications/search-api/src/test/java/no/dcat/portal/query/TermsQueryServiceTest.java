@@ -4,6 +4,8 @@ import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.internal.InternalSearchHit;
@@ -13,6 +15,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
@@ -23,6 +26,7 @@ import static org.mockito.Mockito.when;
 public class TermsQueryServiceTest {
 
     TermsQueryService service;
+    SearchResponse searchResponse;
     Client client;
 
     @Before
@@ -34,28 +38,16 @@ public class TermsQueryServiceTest {
         service.client = client;
         service.setElasticsearchHost("http://dummy.no");
 
-        SearchResponse searchResponse = mock(SearchResponse.class);
+        searchResponse = mock(SearchResponse.class);
         when(searchResponse.toString()).thenReturn(dataset);
 
-        doReturn(searchResponse).when(service).doSearch("", 0, 20);
-        doReturn(searchResponse).when(service).doSearch("enhet", 0, 20);
 
-        SearchRequestBuilder searchRequestBuilder = mock (SearchRequestBuilder.class);
 
-        when(client.prepareSearch(anyString())).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.setTypes(anyString())).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.setQuery("no")).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.setFrom(0)).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.setSize(20)).thenReturn(searchRequestBuilder);
-        when(searchRequestBuilder.addAggregation(anyObject())).thenReturn(searchRequestBuilder);
-
-        ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
-        when(searchRequestBuilder.execute()).thenReturn(listenableActionFuture);
-        when(listenableActionFuture.actionGet()).thenReturn(searchResponse);
     }
 
     @Test
     public void callSearch() {
+        doReturn(searchResponse).when(service).doSearch(any(), anyInt(), anyInt());
 
         service.search("", 0, 20, "nb");
         service.search("", 0, 20, "en");
@@ -64,7 +56,22 @@ public class TermsQueryServiceTest {
 
     @Test
     public void doSearch() {
-        service.doSearch("no", 0, 20);
+        QueryBuilder queryBuilder = mock (QueryBuilder.class);
+        SearchRequestBuilder searchRequestBuilder = mock (SearchRequestBuilder.class);
+
+        when(client.prepareSearch("dcat")).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setTypes(anyString())).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setQuery(queryBuilder)).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setFrom(0)).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setSize(20)).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.addAggregation(anyObject())).thenReturn(searchRequestBuilder);
+
+        ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
+        when(searchRequestBuilder.execute()).thenReturn(listenableActionFuture);
+        when(listenableActionFuture.actionGet()).thenReturn(searchResponse);
+
+
+        service.doSearch(queryBuilder, 0, 20);
     }
 
 

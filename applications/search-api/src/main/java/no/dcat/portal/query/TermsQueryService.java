@@ -96,7 +96,7 @@ import org.springframework.web.bind.annotation.RestController;
         //addSort(sortfield, sortdirection, searchBuilder);
 
         // Execute search
-        SearchResponse response = doSearch(query, from, size);
+        SearchResponse response = doSearch(search, from, size);
 
         logger.trace("Search response: {}", response.toString());
 
@@ -104,7 +104,7 @@ import org.springframework.web.bind.annotation.RestController;
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
-    SearchResponse doSearch(String search, int from, int size) {
+    SearchResponse doSearch(QueryBuilder search, int from, int size) {
         AggregationBuilder aggregateCreatorNames = AggregationBuilders
                 .terms("creator")
                 .missing("ukjent")
@@ -126,7 +126,8 @@ import org.springframework.web.bind.annotation.RestController;
                 .setFrom(from)
                 .setSize(size)
                 .addAggregation(aggregateCreatorNames)
-                .addAggregation(aggregateOrgPath);
+                .addAggregation(aggregateOrgPath)
+                ;
 
         return searchBuilder.execute().actionGet();
     }
