@@ -367,7 +367,7 @@ class SearchPage extends React.Component {
               }
               isFetchingDatasets={isFetchingDatasets}
               countTerms={
-                termItems && termItems.hits ? termItems.hits.total : null
+                termItems && termItems.hits ? termItems.hits.total : 0
               }
               isFetchingTerms={isFetchingTerms}
               open={this.open}
@@ -380,7 +380,7 @@ class SearchPage extends React.Component {
                   : null
               }
               countTerms={
-                termItems && termItems.hits ? termItems.hits.total : null
+                termItems && termItems.hits ? termItems.hits.total : 0
               }
               selectedLanguageCode={selectedLanguageCode}
             />
