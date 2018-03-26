@@ -2,12 +2,9 @@ package no.dcat.portal.query;
 
 
 import io.swagger.annotations.ApiOperation;
-import no.dcat.shared.Publisher;
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -76,9 +73,6 @@ import org.springframework.web.bind.annotation.RestController;
         }
         lang = "no"; // hardcode to search in all language fields
 
-        from = checkAndAdjustFrom(from);
-        size = checkAndAdjustSize(size);
-
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
 
@@ -99,17 +93,10 @@ import org.springframework.web.bind.annotation.RestController;
 
         logger.trace(search.toString());
 
-        // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
-                .setTypes("subject")
-                .setQuery(search)
-                .setFrom(from)
-                .setSize(size);
-
         //addSort(sortfield, sortdirection, searchBuilder);
 
         // Execute search
-        SearchResponse response = searchBuilder.execute().actionGet();
+        SearchResponse response = doSearch(query, from, size);
 
         logger.trace("Search response: {}", response.toString());
 
@@ -117,45 +104,31 @@ import org.springframework.web.bind.annotation.RestController;
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
-    private int checkAndAdjustFrom(int from) {
-        if (from < 0) {
-            return 0;
-        } else {
-            return from;
-        }
-    }
-
-    private int checkAndAdjustSize(int size) {
-        if (size > 100) {
-            return 100;
-        }
-
-        if (size < 5) {
-            return 5;
-        }
-
-        return size;
-    }
-
-
-
-    /**
-     * Create aggregation object that counts the number of
-     * datasets for each value of the defined field.
-     * <p/>
-     *
-     * @param field The field to be aggregated.
-     * @return Aggregation builder object to be used in query
-     */
-    private AggregationBuilder createAggregation(String terms, String field, String missing) {
-        return AggregationBuilders
-                .terms(terms)
-                .missing(missing)
-                .field(field)
+    SearchResponse doSearch(String search, int from, int size) {
+        AggregationBuilder aggregateCreatorNames = AggregationBuilders
+                .terms("creator")
+                .missing("ukjent")
+                .field("creator.name.raw")
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
                 .order(Order.count(false));
+
+        AggregationBuilder aggregateOrgPath = AggregationBuilders
+                .terms("orgPath")
+                .missing("ukjent")
+                .field("creator.orgPath")
+                .size(AGGREGATION_NUMBER_OF_COUNTS)
+                .order(Order.count(false));
+
+        // set up search query with aggregations
+        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
+                .setTypes("subject")
+                .setQuery(search)
+                .setFrom(from)
+                .setSize(size)
+                .addAggregation(aggregateCreatorNames)
+                .addAggregation(aggregateOrgPath);
+
+        return searchBuilder.execute().actionGet();
     }
-
-
 
 }
