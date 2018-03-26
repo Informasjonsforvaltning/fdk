@@ -93,12 +93,8 @@ export default class ResultsConcepts extends React.Component {
     const {
       showFilterModal,
       closeFilterModal,
-      datasetItems,
-      onFilterTheme,
-      onFilterAccessRights,
       onFilterPublisherHierarchy,
       searchQuery,
-      themesItems,
       publisherArray,
       publishers
     } = this.props;

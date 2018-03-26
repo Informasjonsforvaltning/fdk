@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
   TERMS_REQUEST,
   TERMS_SUCCESS,
@@ -13,12 +14,13 @@ export default function terms(
   action
 ) {
   switch (action.type) {
-    case TERMS_REQUEST:
+    case TERMS_REQUEST: {
       return {
         ...state,
         isFetchingTerms: true
       };
-    case TERMS_SUCCESS:
+    }
+    case TERMS_SUCCESS: {
       const orgs = action.response.data.aggregations.orgPath.buckets;
       const flat = _(orgs).forEach(f => {
         const filteredOrgs = _(orgs)
@@ -42,13 +44,15 @@ export default function terms(
         termItems: action.response.data,
         publisherCountTermItems: resultArray
       };
-    case TERMS_FAILURE:
+    }
+    case TERMS_FAILURE: {
       return {
         ...state,
         isFetchingTerms: false,
         termItems: null,
         publisherCountTermItems: null
       };
+    }
     default:
       return state;
   }
