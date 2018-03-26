@@ -168,20 +168,19 @@ export default class SearchPublishersTree extends React.Component {
               </TreeView>
             </div>
           );
-        } else {
-          return (
-            <FilterOption
-              key={`${node.key}|${i}`}
-              itemKey={0.5}
-              value={node.key}
-              label={name}
-              count={node.doc_count}
-              onClick={onFilterPublisherHierarchy}
-              active={active}
-              displayClass="indent"
-            />
-          );
         }
+        return (
+          <FilterOption
+            key={`${node.key}|${i}`}
+            itemKey={0.5}
+            value={node.key}
+            label={name}
+            count={node.doc_count}
+            onClick={onFilterPublisherHierarchy}
+            active={active}
+            displayClass="indent"
+          />
+        );
       });
 
     if (filter && typeof filter !== "undefined" && filter.length > 0) {
