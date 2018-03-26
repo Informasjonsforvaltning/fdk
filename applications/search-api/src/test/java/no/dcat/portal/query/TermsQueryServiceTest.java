@@ -39,7 +39,7 @@ public class TermsQueryServiceTest {
         service.setElasticsearchHost("http://dummy.no");
 
         searchResponse = mock(SearchResponse.class);
-        when(searchResponse.toString()).thenReturn(dataset)
+        when(searchResponse.toString()).thenReturn(dataset);
     }
 
     @Test
