@@ -117,7 +117,7 @@ export default class ResultsDataset extends React.Component {
       <div id="content" role="main">
         <div id="resultPanel">
           <div className="row mt-1 mb-1">
-            <div className="col-md-4">
+            <div className="col-xs-6 col-md-4">
               <button
                 className="fdk-button fdk-button-default-no-hover"
                 onClick={onClearSearch}
@@ -126,7 +126,7 @@ export default class ResultsDataset extends React.Component {
                 {localization.query.clear}
               </button>
             </div>
-            <div className="col-md-4 col-md-offset-4">
+            <div className="col-xs-6 col-md-4 col-md-offset-4">
               <div className="pull-right">
                 <SelectDropdown
                   items={[

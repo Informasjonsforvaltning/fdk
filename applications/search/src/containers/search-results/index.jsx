@@ -31,9 +31,7 @@ class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const searchQuery = queryString.parse(props.location.search) || {
-      searchQuery: {
-        size: 50
-      },
+      searchQuery: {},
       showFilterModal: false
     };
 
@@ -133,9 +131,7 @@ class SearchPage extends React.Component {
   handleClearSearch() {
     this.setState(
       {
-        searchQuery: {
-          size: 50
-        }
+        searchQuery: {}
       },
       () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
