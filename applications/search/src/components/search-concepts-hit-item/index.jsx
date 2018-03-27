@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import * as _ from "lodash";
 
 import localization from "../../components/localization";
-import { getTranslateText, getLanguageFromUrl } from "../../utils/translateText";
+import {
+  getTranslateText,
+  getLanguageFromUrl
+} from "../../utils/translateText";
 import "./index.scss";
 
 export default class ConceptsHitItem extends React.Component {
@@ -123,7 +126,7 @@ export default class ConceptsHitItem extends React.Component {
   _renderDocCount() {
     const { subjectCountItem } = this.props;
     const lang = getLanguageFromUrl();
-    let langParam = '';
+    let langParam = "";
     if (lang) {
       langParam = `&lang=${lang}`;
     }
@@ -134,8 +137,8 @@ export default class ConceptsHitItem extends React.Component {
             title="Link til datasett med begrep"
             href={`/?subjects=${subjectCountItem.key}${langParam}`}
           >
-          {localization.terms.docCount} {subjectCountItem.doc_count}{" "}
-          {localization.terms.docCountPart2}
+            {localization.terms.docCount} {subjectCountItem.doc_count}{" "}
+            {localization.terms.docCountPart2}
           </a>
         </p>
       );
