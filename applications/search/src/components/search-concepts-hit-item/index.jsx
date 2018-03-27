@@ -120,6 +120,18 @@ export default class ConceptsHitItem extends React.Component {
     return null;
   }
 
+  _renderDocCount() {
+    const { subjectCountItem } = this.props;
+    if (subjectCountItem && subjectCountItem.doc_count > 0) {
+      return (
+        <p>
+          {localization.terms.docCount} {subjectCountItem.doc_count}{" "}
+          {localization.terms.docCountPart2}
+        </p>
+      );
+    }
+  }
+
   render() {
     const { onAddTerm, selectedLanguageCode, subjectCountItem } = this.props;
     const { source } = this.state;
@@ -209,10 +221,7 @@ export default class ConceptsHitItem extends React.Component {
 
           {this._renderAltLabel()}
 
-          {subjectCountItem &&
-            subjectCountItem.doc_count > 0 && (
-              <p>Brukt i {subjectCountItem.doc_count} datasett</p>
-            )}
+          {this._renderDocCount()}
         </div>
       </div>
     );
