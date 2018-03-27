@@ -108,20 +108,20 @@ export default class ConceptsHitItem extends React.Component {
       });
     if (altLabel) {
       return (
-        <div>
+        <p>
           <span className="uu-invisible" aria-hidden="false">
             Begrep er
           </span>
           <strong>{localization.terms.altLabel} </strong>
           {children(altLabel)}
-        </div>
+        </p>
       );
     }
     return null;
   }
 
   render() {
-    const { onAddTerm, selectedLanguageCode } = this.props;
+    const { onAddTerm, selectedLanguageCode, subjectCountItem } = this.props;
     const { source } = this.state;
     const { prefLabel, definition, uri } = source;
     const hitElementId = `concepts-hit-${encodeURIComponent(uri)}`;
@@ -208,6 +208,11 @@ export default class ConceptsHitItem extends React.Component {
           {this._renderNote()}
 
           {this._renderAltLabel()}
+
+          {subjectCountItem &&
+            subjectCountItem.doc_count > 0 && (
+              <p>Brukt i {subjectCountItem.doc_count} datasett</p>
+            )}
         </div>
       </div>
     );

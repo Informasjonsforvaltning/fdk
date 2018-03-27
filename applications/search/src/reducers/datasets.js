@@ -38,11 +38,20 @@ export default function datasets(
       const resultArray = _(flat)
         .filter(f => !f.hasParent)
         .value();
+
+      const objFromArray = action.response.data.aggregations.subjectsCount.buckets.reduce(
+        (accumulator, current) => {
+          accumulator[current.key] = current; // eslint-disable-line no-param-reassign
+          return accumulator;
+        },
+        {}
+      );
       return {
         ...state,
         isFetchingDatasets: false,
         datasetItems: action.response.data,
-        publisherCountItems: resultArray
+        publisherCountItems: resultArray,
+        subjectsCountItems: objFromArray
       };
     }
     case DATASETS_FAILURE: {

@@ -73,8 +73,13 @@ export default class ResultsConcepts extends React.Component {
   }
 
   _renderTerms() {
-    const { termItems } = this.props;
-    if (termItems && termItems.hits && termItems.hits.hits) {
+    const { termItems, subjectsCountItems } = this.props;
+    if (
+      termItems &&
+      termItems.hits &&
+      termItems.hits.hits &&
+      subjectsCountItems
+    ) {
       return termItems.hits.hits.map(item => (
         <ConceptsHitItem
           key={item._id}
@@ -82,6 +87,7 @@ export default class ResultsConcepts extends React.Component {
           terms={this.state.terms}
           onAddTerm={this.handleAddTerm}
           onDeleteTerm={this.handleDeleteTerm}
+          subjectCountItem={subjectsCountItems[item._source.prefLabel.no]}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       ));
