@@ -1,9 +1,9 @@
-import _ from "lodash";
+import _ from 'lodash';
 import {
   DATASETS_REQUEST,
   DATASETS_SUCCESS,
   DATASETS_FAILURE
-} from "../constants/ActionTypes";
+} from '../constants/ActionTypes';
 
 export default function datasets(
   state = {
@@ -24,7 +24,7 @@ export default function datasets(
       const orgs = action.response.data.aggregations.orgPath.buckets;
       const flat = _(orgs).forEach(f => {
         const filteredOrgs = _(orgs)
-          .filter(g => g.key.substring(0, g.key.lastIndexOf("/")) === f.key)
+          .filter(g => g.key.substring(0, g.key.lastIndexOf('/')) === f.key)
           .value();
         filteredOrgs.forEach(item => {
           const retVal = item;

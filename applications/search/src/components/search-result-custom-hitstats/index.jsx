@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import localization from "../localization";
-import { getParamFromUrl } from "../../utils/addOrReplaceUrlParam";
+import localization from '../localization';
+import { getParamFromUrl } from '../../utils/addOrReplaceUrlParam';
 
 const CustomHitsStats = props => {
   const { countDatasets, countTerms } = props;
@@ -9,10 +9,10 @@ const CustomHitsStats = props => {
   let filteringOrTextSearchPerformed = false;
 
   if (
-    getParamFromUrl("q") ||
-    getParamFromUrl("theme") ||
-    getParamFromUrl("accessRight") ||
-    getParamFromUrl("publisher")
+    getParamFromUrl('q') ||
+    getParamFromUrl('theme') ||
+    getParamFromUrl('accessRight') ||
+    getParamFromUrl('publisher')
   ) {
     filteringOrTextSearchPerformed = true;
   }
@@ -33,7 +33,7 @@ const CustomHitsStats = props => {
             countTerms > 0 && <span>&nbsp;{localization.hitstats.and}</span>}
           {countTerms > 0 && (
             <span>
-              &nbsp;{localization.hitstats.and} {countTerms}{" "}
+              &nbsp;{localization.hitstats.and} {countTerms}{' '}
               {localization.hitstats.conceptHits}
             </span>
           )}
@@ -48,11 +48,11 @@ const CustomHitsStats = props => {
         <div className="sk-hits-stats__info nosearch" data-qa="info">
           <div>
             <span>
-              {localization.hitstats.nosearch.search} {countDatasets}{" "}
+              {localization.hitstats.nosearch.search} {countDatasets}{' '}
               {localization.hitstats.nosearch.descriptions}
             </span>
             <span>
-              &nbsp;{localization.hitstats.and} {countTerms}{" "}
+              &nbsp;{localization.hitstats.and} {countTerms}{' '}
               {localization.hitstats.concepts}
             </span>
           </div>

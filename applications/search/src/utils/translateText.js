@@ -1,4 +1,4 @@
-import qs from "qs";
+import qs from 'qs';
 
 /**
  * Add a URL parameter (or modify if already exists)

@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const LinkExternal = props => (
   <a href={props.uri}>
@@ -9,8 +9,8 @@ const LinkExternal = props => (
 );
 
 LinkExternal.defaultProps = {
-  uri: "",
-  prefLabel: ""
+  uri: '',
+  prefLabel: ''
 };
 
 LinkExternal.propTypes = {

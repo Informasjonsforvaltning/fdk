@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { map } from "lodash";
-import { DropdownButton, MenuItem } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { map } from 'lodash';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import localization from "../localization";
+import localization from '../localization';
 
 export default class Select extends React.Component {
   constructor(props) {
@@ -12,8 +12,8 @@ export default class Select extends React.Component {
     const { activeSort } = this.props;
     this.state = {
       selectedValue: activeSort
-        ? activeSort.substring(0, activeSort.lastIndexOf("."))
-        : "relevance"
+        ? activeSort.substring(0, activeSort.lastIndexOf('.'))
+        : 'relevance'
     };
     this.onChange = this.onChange.bind(this);
   }

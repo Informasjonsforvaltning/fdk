@@ -1,8 +1,8 @@
-import React from "react";
-import DocumentMeta from "react-document-meta";
-import { Link } from "react-router-dom";
+import React from 'react';
+import DocumentMeta from 'react-document-meta';
+import { Link } from 'react-router-dom';
 
-import localization from "../../components/localization";
+import localization from '../../components/localization';
 
 const About = () => {
   const meta = {

@@ -1,22 +1,22 @@
-import React from "react";
-import * as ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { BrowserRouter, Route } from "react-router-dom";
-import ReactGA from "react-ga";
+import React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
-import configureStore from "./store/configureStore";
-import App from "./containers/app";
+import configureStore from './store/configureStore';
+import App from './containers/app';
 
-if (window.location.hostname.indexOf("fellesdatakatalog.brreg.no") !== -1) {
-  ReactGA.initialize("UA-110098477-1"); // prod
+if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
+  ReactGA.initialize('UA-110098477-1'); // prod
   ReactGA.set({ anonymizeIp: true });
 } else if (
-  window.location.hostname.indexOf("fellesdatakatalog.tt1.brreg.no") !== -1
+  window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1
 ) {
-  ReactGA.initialize("UA-110098477-2"); // tt1
+  ReactGA.initialize('UA-110098477-2'); // tt1
   ReactGA.set({ anonymizeIp: true });
-} else if (window.location.hostname.indexOf("localhost") !== -1) {
-  ReactGA.initialize("UA-41886511-1"); // localhost
+} else if (window.location.hostname.indexOf('localhost') !== -1) {
+  ReactGA.initialize('UA-41886511-1'); // localhost
   ReactGA.set({ anonymizeIp: true });
 }
 
@@ -25,9 +25,9 @@ if (window.location.hostname.indexOf("fellesdatakatalog.brreg.no") !== -1) {
  */
 function Analytics(props) {
   if (
-    window.location.hostname.indexOf("fellesdatakatalog.brreg.no") !== -1 ||
-    window.location.hostname.indexOf("fellesdatakatalog.tt1.brreg.no") !== -1 ||
-    window.location.hostname.indexOf("localhost") !== -1
+    window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1 ||
+    window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1 ||
+    window.location.hostname.indexOf('localhost') !== -1
   ) {
     ReactGA.set({ page: props.location.pathname + props.location.search });
     ReactGA.pageview(props.location.pathname + props.location.search);
@@ -48,5 +48,5 @@ ReactDOM.render(
       </div>
     </BrowserRouter>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );

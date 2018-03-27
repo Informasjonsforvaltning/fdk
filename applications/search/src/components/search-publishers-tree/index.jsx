@@ -1,11 +1,11 @@
-import React from "react";
-import * as axios from "axios";
-import defaults from "lodash/defaults";
-import TreeView from "react-treeview";
-import "react-treeview/react-treeview.css";
-import cx from "classnames";
+import React from 'react';
+import * as axios from 'axios';
+import defaults from 'lodash/defaults';
+import TreeView from 'react-treeview';
+import 'react-treeview/react-treeview.css';
+import cx from 'classnames';
 
-import "./index.scss";
+import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
   /*
@@ -27,7 +27,7 @@ export default class SearchPublishersTree extends React.Component {
     if (chosenOrgPath && chosenOrgPath !== undefined) {
       const parentOrgPath = chosenOrgPath.substr(
         0,
-        chosenOrgPath.lastIndexOf("/")
+        chosenOrgPath.lastIndexOf('/')
       );
       if (parentOrgPath.indexOf(itemOrgPath) !== -1) {
         return false;
@@ -45,7 +45,7 @@ export default class SearchPublishersTree extends React.Component {
     };
     this.options = defaults({
       headers: {},
-      searchUrlPath: "/publisher"
+      searchUrlPath: '/publisher'
     });
     this.axios = axios.create({
       baseURL: this.host,
@@ -64,7 +64,7 @@ export default class SearchPublishersTree extends React.Component {
       value
     });
     if (!value) {
-      this.props.onSearch(null, "");
+      this.props.onSearch(null, '');
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
@@ -95,7 +95,7 @@ export default class SearchPublishersTree extends React.Component {
       hits.map((node, i) => {
         const { orgPath } = this.props;
         const chosenClass = cx({
-          "tree-item_chosen": node.orgPath === orgPath
+          'tree-item_chosen': node.orgPath === orgPath
         });
         const name = `${node.name.charAt(0)}${node.name
           .substring(1)
@@ -132,8 +132,8 @@ export default class SearchPublishersTree extends React.Component {
           <div
             key={`${name}|${i}`}
             className={`node tree-view_item ${node.orgPath === orgPath
-              ? "tree-item_chosen"
-              : ""}`}
+              ? 'tree-item_chosen'
+              : ''}`}
             onClick={() => {
               this.onChange(node);
             }}
@@ -148,8 +148,8 @@ export default class SearchPublishersTree extends React.Component {
     const mainTree = hits =>
       hits.map((node, i) => {
         const { orgPath } = this.props;
-        const chosenClass = cx("tree-view_main", {
-          "tree-item_chosen": node.orgPath === orgPath
+        const chosenClass = cx('tree-view_main', {
+          'tree-item_chosen': node.orgPath === orgPath
         });
         const collapsed = SearchPublishersTree.isItemCollapsed(
           node.orgPath,
@@ -186,7 +186,7 @@ export default class SearchPublishersTree extends React.Component {
         );
       });
 
-    if (hits && typeof hits !== "undefined" && hits.length > 0) {
+    if (hits && typeof hits !== 'undefined' && hits.length > 0) {
       return <div>{mainTree(hits)}</div>;
     }
     return null;

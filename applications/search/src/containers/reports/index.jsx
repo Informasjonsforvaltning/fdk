@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import ResultsDatasetsReport from "../../components/search-results-datasets-report";
-import "./index.scss";
+import ResultsDatasetsReport from '../../components/search-results-datasets-report';
+import './index.scss';
 
 export default class ReportsPage extends React.Component {
   constructor(props) {

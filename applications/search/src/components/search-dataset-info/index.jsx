@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Moment from "react-moment";
-import _sortBy from "lodash/sortBy";
-import cx from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Moment from 'react-moment';
+import _sortBy from 'lodash/sortBy';
+import cx from 'classnames';
 
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
-import "./index.scss";
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
+import './index.scss';
 
 export default class DatasetInfo extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -42,7 +42,7 @@ export default class DatasetInfo extends React.Component {
         );
       });
 
-    if (spatial && typeof spatial !== "undefined" && spatial.length > 0) {
+    if (spatial && typeof spatial !== 'undefined' && spatial.length > 0) {
       return (
         <div className="col-md-12 fdk-padding-no">
           <div className="fdk-container-detail">
@@ -69,12 +69,12 @@ export default class DatasetInfo extends React.Component {
     const { temporal, language } = this.props;
     const headerFrom = localization.dataset.periodFrom;
     const headerTo = localization.dataset.periodTo;
-    const temporalClass = cx("fdk-container-detail", {
-      "col-md-8":
-        language && typeof language !== "undefined" && language.length > 0,
-      "col-md-12": !(
+    const temporalClass = cx('fdk-container-detail', {
+      'col-md-8':
+        language && typeof language !== 'undefined' && language.length > 0,
+      'col-md-12': !(
         language &&
-        typeof language !== "undefined" &&
+        typeof language !== 'undefined' &&
         language.length > 0
       )
     });
@@ -154,9 +154,9 @@ export default class DatasetInfo extends React.Component {
 
   _renderLanguage() {
     const { language, temporal, selectedLanguageCode } = this.props;
-    const languageClass = cx("fdk-container-detail", {
-      "col-md-4": temporal && temporal.length > 0,
-      "col-md-12": !(temporal && temporal.length > 0)
+    const languageClass = cx('fdk-container-detail', {
+      'col-md-4': temporal && temporal.length > 0,
+      'col-md-12': !(temporal && temporal.length > 0)
     });
     const children = items =>
       items.map((item, index) => {
@@ -174,7 +174,7 @@ export default class DatasetInfo extends React.Component {
         return null;
       });
 
-    if (language && typeof language !== "undefined" && language.length > 0) {
+    if (language && typeof language !== 'undefined' && language.length > 0) {
       return (
         <div className={languageClass}>
           <div className="fdk-detail-icon">
@@ -247,7 +247,7 @@ export default class DatasetInfo extends React.Component {
 
     if (
       references &&
-      typeof references !== "undefined" &&
+      typeof references !== 'undefined' &&
       references.length > 0
     ) {
       let groupReferences = references;
@@ -277,14 +277,14 @@ export default class DatasetInfo extends React.Component {
     const isIssued = !!issued;
     const isAccrualPeriodicity = !!accrualPeriodicity;
 
-    const issuedClass = cx("fdk-padding-no", {
-      "col-md-4": isAccrualPeriodicity,
-      "col-md-12": !isAccrualPeriodicity
+    const issuedClass = cx('fdk-padding-no', {
+      'col-md-4': isAccrualPeriodicity,
+      'col-md-12': !isAccrualPeriodicity
     });
 
-    const accrualPeriodicityClass = cx("fdk-padding-no", {
-      "col-md-8": isIssued,
-      "col-md-12": !isIssued
+    const accrualPeriodicityClass = cx('fdk-padding-no', {
+      'col-md-8': isIssued,
+      'col-md-12': !isIssued
     });
 
     return (
@@ -380,14 +380,14 @@ export default class DatasetInfo extends React.Component {
 
 DatasetInfo.defaultProps = {
   issued: null,
-  accrualPeriodicity: "",
-  provenance: "",
-  hasCurrentnessAnnotation: "",
+  accrualPeriodicity: '',
+  provenance: '',
+  hasCurrentnessAnnotation: '',
   spatial: null,
   temporal: null,
   language: null,
   references: null,
-  selectedLanguageCode: ""
+  selectedLanguageCode: ''
 };
 
 DatasetInfo.propTypes = {

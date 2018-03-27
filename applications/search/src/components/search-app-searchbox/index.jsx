@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import localization from "../localization";
-import CustomHitsStats from "../search-result-custom-hitstats";
-import "./index.scss";
+import localization from '../localization';
+import CustomHitsStats from '../search-result-custom-hitstats';
+import './index.scss';
 
 const SearchBox = props => {
   const {
@@ -46,7 +46,7 @@ const SearchBox = props => {
                 placeholder={localization.query.intro}
                 aria-label={localization.query.intro}
                 className="fdk-search"
-                value={searchQuery || ""}
+                value={searchQuery || ''}
                 onChange={e => {
                   e.preventDefault();
                   onSearchChange(e);

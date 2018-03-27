@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
+import React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
-import DatasetDescription from "../../components/search-dataset-description";
-import DatasetKeyInfo from "../../components/search-dataset-keyinfo";
-import DatasetDistribution from "../../components/search-dataset-distribution";
-import DatasetInfo from "../../components/search-dataset-info";
-import DatasetQuality from "../../components/search-dataset-quality-content";
-import DatasetBegrep from "../../components/search-dataset-begrep";
-import DatasetLandingPage from "../../components/search-dataset-landingpage";
-import DatasetContactInfo from "../../components/search-dataset-contactinfo";
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
+import DatasetDescription from '../../components/search-dataset-description';
+import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
+import DatasetDistribution from '../../components/search-dataset-distribution';
+import DatasetInfo from '../../components/search-dataset-info';
+import DatasetQuality from '../../components/search-dataset-quality-content';
+import DatasetBegrep from '../../components/search-dataset-begrep';
+import DatasetLandingPage from '../../components/search-dataset-landingpage';
+import DatasetContactInfo from '../../components/search-dataset-contactinfo';
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 // import api from '../../utils/api.json';
 
 export default class DetailsPage extends React.Component {
@@ -34,7 +34,7 @@ export default class DetailsPage extends React.Component {
     const { match: { params } } = this.props;
     const url = `/datasets/${params.id}`;
     const config = {
-      headers: { Pragma: "no-cache" }
+      headers: { Pragma: 'no-cache' }
     };
     axios
       .get(url, config)

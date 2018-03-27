@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 const CompareTerms = props => {
   const {

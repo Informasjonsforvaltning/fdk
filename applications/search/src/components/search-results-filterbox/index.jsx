@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Collapse } from "react-bootstrap";
-import cx from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Collapse } from 'react-bootstrap';
+import cx from 'classnames';
 
-import localization from "../localization";
-import FilterOption from "../search-results-filterbox-option";
-import "./index.scss";
+import localization from '../localization';
+import FilterOption from '../search-results-filterbox-option';
+import './index.scss';
 
 class FilterBox extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class FilterBox extends React.Component {
     const { themesItems } = this.props;
     let filters;
     if (activeFilter) {
-      filters = activeFilter.split(",");
+      filters = activeFilter.split(',');
     }
     const options = items =>
       items.map((item, index) => {
@@ -79,9 +79,9 @@ class FilterBox extends React.Component {
   render() {
     const { openFilter } = this.state;
     const { title, filter, onClick, activeFilter } = this.props;
-    const collapseIconClass = cx("fa", "mr-2", {
-      "fa-angle-down": !openFilter,
-      "fa-angle-up": openFilter
+    const collapseIconClass = cx('fa', 'mr-2', {
+      'fa-angle-down': !openFilter,
+      'fa-angle-up': openFilter
     });
     return (
       <div className="fdk-panel--filter">

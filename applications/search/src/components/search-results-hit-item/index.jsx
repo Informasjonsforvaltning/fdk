@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as _ from "lodash";
-import cx from "classnames";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as _ from 'lodash';
+import cx from 'classnames';
+import { Link } from 'react-router-dom';
 
-import DistributionFormat from "../search-dataset-format";
-import localization from "../../components/localization";
+import DistributionFormat from '../search-dataset-format';
+import localization from '../../components/localization';
 import {
   getTranslateText,
   getLanguageFromUrl
-} from "../../utils/translateText";
-import "./index.scss";
+} from '../../utils/translateText';
+import './index.scss';
 
 export default class SearchHitItem extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -28,7 +28,7 @@ export default class SearchHitItem extends React.Component {
     const children = (items, code) =>
       items.map(item => {
         if (item !== null) {
-          const formatArray = item.trim().split(",");
+          const formatArray = item.trim().split(',');
           return formatArray.map((item, index) => {
             if (item === null) {
               return null;
@@ -72,7 +72,7 @@ export default class SearchHitItem extends React.Component {
             {publisher && publisher.name
               ? publisher.name.charAt(0) +
                 publisher.name.substring(1).toLowerCase()
-              : ""}
+              : ''}
           </span>
         </span>
       );
@@ -111,7 +111,7 @@ export default class SearchHitItem extends React.Component {
   render() {
     const language = this.props.selectedLanguageCode;
     const langCode = getLanguageFromUrl();
-    const langParam = langCode ? `?lang=${langCode}` : "";
+    const langParam = langCode ? `?lang=${langCode}` : '';
     const { source } = this.state;
 
     // Read fields from search-hit, use correct language field if specified.
@@ -145,7 +145,7 @@ export default class SearchHitItem extends React.Component {
       description = `${description} ${objective.substr(
         0,
         200 - freeLength
-      )} ${objectiveLength > freeLength ? "..." : ""}`;
+      )} ${objectiveLength > freeLength ? '...' : ''}`;
     }
     const link = `/datasets/${hitId}`;
 
@@ -154,31 +154,31 @@ export default class SearchHitItem extends React.Component {
     let distributionRestricted = false;
     let distributionPublic = false;
 
-    let authorityCode = "";
+    let authorityCode = '';
     if (source.accessRights && source.accessRights.code) {
       authorityCode = source.accessRights.code;
     }
 
-    if (source.accessRights && authorityCode === "NON_PUBLIC") {
+    if (source.accessRights && authorityCode === 'NON_PUBLIC') {
       distributionNonPublic = true;
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.nonPublic;
-    } else if (source.accessRights && authorityCode === "RESTRICTED") {
+    } else if (source.accessRights && authorityCode === 'RESTRICTED') {
       distributionRestricted = true;
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.restricted;
-    } else if (source.accessRights && authorityCode === "PUBLIC") {
+    } else if (source.accessRights && authorityCode === 'PUBLIC') {
       distributionPublic = true;
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.public;
     }
 
     const distributionClass = cx({
-      "fdk-container-distributions":
+      'fdk-container-distributions':
         distributionNonPublic || distributionRestricted || distributionPublic,
-      "fdk-distributions-red": distributionNonPublic,
-      "fdk-distributions-yellow": distributionRestricted,
-      "fdk-distributions-green": distributionPublic
+      'fdk-distributions-red': distributionNonPublic,
+      'fdk-distributions-yellow': distributionRestricted,
+      'fdk-distributions-green': distributionPublic
     });
 
     return (
@@ -217,7 +217,7 @@ export default class SearchHitItem extends React.Component {
 
 SearchHitItem.defaultProps = {
   result: null,
-  selectedLanguageCode: "nb"
+  selectedLanguageCode: 'nb'
 };
 
 SearchHitItem.propTypes = {

@@ -1,42 +1,42 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import { addOrReplaceParamWithoutURL } from "../../utils/addOrReplaceUrlParam";
-import localization from "../../components/localization";
-import "./index.scss";
+import { addOrReplaceParamWithoutURL } from '../../utils/addOrReplaceUrlParam';
+import localization from '../../components/localization';
+import './index.scss';
 
 const ResultsTabs = props => {
   const { location, countDatasets, countTerms, selectedLanguageCode } = props;
   let { search } = location;
   if (selectedLanguageCode) {
-    if (selectedLanguageCode === "nb") {
-      search = addOrReplaceParamWithoutURL(`${search}`, "lang", "");
+    if (selectedLanguageCode === 'nb') {
+      search = addOrReplaceParamWithoutURL(`${search}`, 'lang', '');
     } else {
       search = addOrReplaceParamWithoutURL(
         `${search}`,
-        "lang",
+        'lang',
         selectedLanguageCode
       );
     }
   }
-  search = addOrReplaceParamWithoutURL(`${search}`, "from", "");
+  search = addOrReplaceParamWithoutURL(`${search}`, 'from', '');
   return (
     <div className="row">
       <div className="col-sm-12 col-md-8 col-md-offset-4">
         <ul className="search-results-tabs">
-          <li className={location.pathname === "/" ? "li-active" : ""}>
+          <li className={location.pathname === '/' ? 'li-active' : ''}>
             <Link
-              to={{ pathname: "/", search }}
+              to={{ pathname: '/', search }}
               aria-label="Link til side for datasett:"
             >
               {localization.page.datasetTab}
               <span>&nbsp;({countDatasets})</span>
             </Link>
           </li>
-          <li className={location.pathname === "/concepts" ? "li-active" : ""}>
+          <li className={location.pathname === '/concepts' ? 'li-active' : ''}>
             <Link
-              to={{ pathname: "/concepts", search }}
+              to={{ pathname: '/concepts', search }}
               aria-label="Link til side for begrep:"
             >
               {localization.page.termTab}

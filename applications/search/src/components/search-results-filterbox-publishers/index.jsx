@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import TreeView from "react-treeview";
-import "react-treeview/react-treeview.css";
-import cx from "classnames";
-import { Collapse } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import TreeView from 'react-treeview';
+import 'react-treeview/react-treeview.css';
+import cx from 'classnames';
+import { Collapse } from 'react-bootstrap';
 
-import FilterOption from "../search-results-filterbox-option";
-import "./index.scss";
+import FilterOption from '../search-results-filterbox-option';
+import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
   static isItemCollapsed(itemOrgPath, chosenOrgPath) {
     if (chosenOrgPath && chosenOrgPath !== undefined) {
       const parentOrgPath = chosenOrgPath.substr(
         0,
-        chosenOrgPath.lastIndexOf("/")
+        chosenOrgPath.lastIndexOf('/')
       );
       if (parentOrgPath.indexOf(itemOrgPath) !== -1) {
         return false;
@@ -36,7 +36,7 @@ export default class SearchPublishersTree extends React.Component {
       value
     });
     if (!value) {
-      this.props.onSearch(null, "");
+      this.props.onSearch(null, '');
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
@@ -64,7 +64,7 @@ export default class SearchPublishersTree extends React.Component {
         }
         const { orgPath } = this.props;
         const chosenClass = cx({
-          "tree-item_chosen": node.key === orgPath
+          'tree-item_chosen': node.key === orgPath
         });
 
         let name = node.key;
@@ -112,7 +112,7 @@ export default class SearchPublishersTree extends React.Component {
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}
-            displayClass={nodeOnSameLevelHasChildren ? "indent" : ""}
+            displayClass={nodeOnSameLevelHasChildren ? 'indent' : ''}
           />
         );
       });
@@ -125,8 +125,8 @@ export default class SearchPublishersTree extends React.Component {
         if (filters && filters === node.key) {
           active = true;
         }
-        const chosenClass = cx("tree-view_main", {
-          "tree-item_chosen": node.key === orgPath
+        const chosenClass = cx('tree-view_main', {
+          'tree-item_chosen': node.key === orgPath
         });
         const collapsed = SearchPublishersTree.isItemCollapsed(
           node.key,
@@ -153,7 +153,7 @@ export default class SearchPublishersTree extends React.Component {
             displayClass="inline-block"
           />
         );
-        if (node.key !== "ukjent") {
+        if (node.key !== 'ukjent') {
           return (
             <div key={`panel${i}`} className="section">
               <TreeView
@@ -183,7 +183,7 @@ export default class SearchPublishersTree extends React.Component {
         );
       });
 
-    if (filter && typeof filter !== "undefined" && filter.length > 0) {
+    if (filter && typeof filter !== 'undefined' && filter.length > 0) {
       return <div>{mainTree(filter, activeFilter)}</div>;
     }
     return null;
@@ -192,9 +192,9 @@ export default class SearchPublishersTree extends React.Component {
   render() {
     const { openFilter } = this.state;
     const { title } = this.props;
-    const collapseIconClass = cx("fa", "mr-2", {
-      "fa-angle-down": !this.state.openFilter,
-      "fa-angle-up": this.state.openFilter
+    const collapseIconClass = cx('fa', 'mr-2', {
+      'fa-angle-down': !this.state.openFilter,
+      'fa-angle-up': this.state.openFilter
     });
     return (
       <div className="search-filter-publisher">

@@ -1,5 +1,5 @@
-import React from "react";
-import "./index.scss";
+import React from 'react';
+import './index.scss';
 
 const Error404 = () => (
   <div className="container error-container">

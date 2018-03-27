@@ -1,30 +1,30 @@
-import React from "react";
-import qs from "qs";
-import { DropdownButton, MenuItem } from "react-bootstrap";
-import { Route, Switch, Link } from "react-router-dom";
+import React from 'react';
+import qs from 'qs';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { Route, Switch, Link } from 'react-router-dom';
 
-import localization from "../../components/localization";
-import { addOrReplaceParam } from "../../utils/addOrReplaceUrlParam";
-import { getLanguageFromUrl } from "../../utils/translateText";
-import SearchPage from "../../containers/search-results";
-import DetailsPage from "../../containers/search-detailspage";
-import AboutPage from "../../containers/search-about";
-import GetStartedPage from "../../containers/search-getstarted-article";
-import ReportsPage from "../../containers/reports";
-import "../../assets/css/main.scss";
+import localization from '../../components/localization';
+import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
+import { getLanguageFromUrl } from '../../utils/translateText';
+import SearchPage from '../../containers/search-results';
+import DetailsPage from '../../containers/search-detailspage';
+import AboutPage from '../../containers/search-about';
+import GetStartedPage from '../../containers/search-getstarted-article';
+import ReportsPage from '../../containers/reports';
+import '../../assets/css/main.scss';
 
 const getLangUrl = langCode => {
   const href = window.location.search;
   const queryObj = qs.parse(window.location.search.substr(1));
-  if (langCode === "nb") {
-    return addOrReplaceParam(href, "lang", "");
-  } else if (href.indexOf("lang=") === -1) {
-    return href.indexOf("?") === -1
+  if (langCode === 'nb') {
+    return addOrReplaceParam(href, 'lang', '');
+  } else if (href.indexOf('lang=') === -1) {
+    return href.indexOf('?') === -1
       ? `${href}?lang=${langCode}`
       : `${href}&lang=${langCode}`;
   } else if (langCode !== queryObj.lang) {
-    const replacedUrl = addOrReplaceParam(href, "lang", langCode);
-    return replacedUrl.substring(replacedUrl.indexOf("?"));
+    const replacedUrl = addOrReplaceParam(href, 'lang', langCode);
+    return replacedUrl.substring(replacedUrl.indexOf('?'));
   }
   return href;
 };
@@ -33,8 +33,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLanguage: `${localization.lang["norwegian-nb"]}`,
-      selectedLanguageCode: "nb"
+      selectedLanguage: `${localization.lang['norwegian-nb']}`,
+      selectedLanguageCode: 'nb'
     };
     this.onChangeLanguage = this.onChangeLanguage.bind(this);
   }
@@ -58,12 +58,12 @@ export default class App extends React.Component {
     this.props.history.push(nextUrl);
 
     let text;
-    if (langCode === "nb") {
-      text = `${localization.lang["norwegian-nb"]}`;
-    } else if (langCode === "nn") {
-      text = `${localization.lang["norwegian-nn"]}`;
-    } else if (langCode === "en") {
-      text = `${localization.lang["english-en"]}`;
+    if (langCode === 'nb') {
+      text = `${localization.lang['norwegian-nb']}`;
+    } else if (langCode === 'nn') {
+      text = `${localization.lang['norwegian-nn']}`;
+    } else if (langCode === 'en') {
+      text = `${localization.lang['english-en']}`;
     }
     this.setState({
       selectedLanguage: `${text}`,
@@ -74,7 +74,7 @@ export default class App extends React.Component {
 
   render() {
     const langCode = getLanguageFromUrl();
-    const langParam = langCode ? `?lang=${langCode}` : "";
+    const langParam = langCode ? `?lang=${langCode}` : '';
 
     return (
       <div>
@@ -99,7 +99,7 @@ export default class App extends React.Component {
           {localization.beta.first}
           <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">
             {localization.beta.second}
-          </a>{" "}
+          </a>{' '}
           {localization.beta.last}
         </div>
 
@@ -129,13 +129,13 @@ export default class App extends React.Component {
                   onSelect={this.onChangeLanguage}
                 >
                   <MenuItem key="1" eventKey="nb">
-                    {localization.lang["norwegian-nb"]}
+                    {localization.lang['norwegian-nb']}
                   </MenuItem>
                   <MenuItem key="2" eventKey="nn">
-                    {localization.lang["norwegian-nn"]}
+                    {localization.lang['norwegian-nn']}
                   </MenuItem>
                   <MenuItem key="3" eventKey="en">
-                    {localization.lang["english-en"]}
+                    {localization.lang['english-en']}
                   </MenuItem>
                 </DropdownButton>
 
@@ -171,7 +171,7 @@ export default class App extends React.Component {
                       eventKey="nb"
                       onSelect={this.onChangeLanguage}
                     >
-                      {localization.lang["norwegian-nb"]}
+                      {localization.lang['norwegian-nb']}
                     </MenuItem>
                     <MenuItem
                       className="visible-xs visible-sm"
@@ -179,7 +179,7 @@ export default class App extends React.Component {
                       eventKey="nn"
                       onSelect={this.onChangeLanguage}
                     >
-                      {localization.lang["norwegian-nn"]}
+                      {localization.lang['norwegian-nn']}
                     </MenuItem>
                     <MenuItem
                       className="visible-xs visible-sm"
@@ -187,7 +187,7 @@ export default class App extends React.Component {
                       eventKey="en"
                       onSelect={this.onChangeLanguage}
                     >
-                      {localization.lang["english-en"]}
+                      {localization.lang['english-en']}
                     </MenuItem>
                   </DropdownButton>
                 </div>

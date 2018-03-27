@@ -1,18 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
-import "./index.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
+import './index.scss';
 
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
-import LinkExternal from "../search-link-external";
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
+import LinkExternal from '../search-link-external';
 
 export default class DatasetKeyInfo extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
-      colClass: "col-xs-12"
+      colClass: 'col-xs-12'
     };
   }
 
@@ -27,7 +27,7 @@ export default class DatasetKeyInfo extends React.Component {
     }
     if (
       conformsTo &&
-      typeof conformsTo !== "undefined" &&
+      typeof conformsTo !== 'undefined' &&
       conformsTo.length > 0
     ) {
       countClasses += 1;
@@ -44,15 +44,15 @@ export default class DatasetKeyInfo extends React.Component {
   _renderHeader() {
     const { accessRights } = this.props;
     if (accessRights) {
-      const accessRightClass = cx("fa fdk-fa-left", {
-        "fdk-color-unntatt fa-lock": accessRights.code === "NON_PUBLIC",
-        "fa-unlock-alt fdk-color-begrenset": accessRights.code === "RESTRICTED",
-        "fa-unlock fdk-color-offentlig": accessRights.code === "PUBLIC"
+      const accessRightClass = cx('fa fdk-fa-left', {
+        'fdk-color-unntatt fa-lock': accessRights.code === 'NON_PUBLIC',
+        'fa-unlock-alt fdk-color-begrenset': accessRights.code === 'RESTRICTED',
+        'fa-unlock fdk-color-offentlig': accessRights.code === 'PUBLIC'
       });
       return (
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
           <i className={accessRightClass} />
-          {localization.dataset.accessRight}{" "}
+          {localization.dataset.accessRight}{' '}
           {getTranslateText(
             accessRights.prefLabel,
             this.props.selectedLanguageCode
@@ -186,7 +186,7 @@ export default class DatasetKeyInfo extends React.Component {
       ));
     if (
       conformsTo &&
-      typeof conformsTo !== "undefined" &&
+      typeof conformsTo !== 'undefined' &&
       conformsTo.length > 0
     ) {
       return (
@@ -251,7 +251,7 @@ DatasetKeyInfo.defaultProps = {
   type: null,
   conformsTo: null,
   informationModel: null,
-  selectedLanguageCode: ""
+  selectedLanguageCode: ''
 };
 
 DatasetKeyInfo.propTypes = {

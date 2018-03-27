@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { createLogger } from "redux-logger";
-import api from "../middleware/api";
-import rootReducer from "../reducers/index";
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import api from '../middleware/api';
+import rootReducer from '../reducers/index';
 
 export default function configureStore() {
   const composeEnhancers =
@@ -15,9 +15,9 @@ export default function configureStore() {
   );
 
   if (module.hot) {
-    module.hot.accept("../reducers", () => {
+    module.hot.accept('../reducers', () => {
       /* eslint-disable global-require */
-      store.replaceReducer(require("../reducers").default);
+      store.replaceReducer(require('../reducers').default);
     });
   }
   return store;

@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ReactPaginate from "react-paginate";
-import { Modal, Button } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
+import { Modal, Button } from 'react-bootstrap';
 
-import localization from "../localization";
-import ConceptsHitItem from "../search-concepts-hit-item";
-import CompareTerms from "../search-concepts-compare";
-import CompareTermModal from "../search-concepts-compare-modal";
-import FilterBoxPublishers from "../search-results-filterbox-publishers";
+import localization from '../localization';
+import ConceptsHitItem from '../search-concepts-hit-item';
+import CompareTerms from '../search-concepts-compare';
+import CompareTermModal from '../search-concepts-compare-modal';
+import FilterBoxPublishers from '../search-results-filterbox-publishers';
 
 export default class ResultsConcepts extends React.Component {
   constructor(props) {
@@ -201,11 +201,11 @@ export default class ResultsConcepts extends React.Component {
                 previousLabel={localization.page.prev}
                 nextLabel={localization.page.next}
                 breakLabel={<span>...</span>}
-                breakClassName={"break-me"}
-                containerClassName={"pagination"}
+                breakClassName={'break-me'}
+                containerClassName={'pagination'}
                 onPageChange={onPageChange}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
+                subContainerClassName={'pages pagination'}
+                activeClassName={'active'}
                 initialPage={page}
                 disableInitialCallback
               />
@@ -218,7 +218,7 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: ""
+  selectedLanguageCode: ''
 };
 
 ResultsConcepts.propTypes = {

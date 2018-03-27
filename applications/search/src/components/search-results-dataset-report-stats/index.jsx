@@ -1,6 +1,6 @@
-import React from "react";
-import "./index.scss";
-import localization from "../localization";
+import React from 'react';
+import './index.scss';
+import localization from '../localization';
 
 const ReportStats = props => {
   const { aggregateDataset, entity, catalog } = props;
@@ -10,37 +10,37 @@ const ReportStats = props => {
     public:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "PUBLIC"
+        bucket => bucket.key.toUpperCase() === 'PUBLIC'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "PUBLIC"
+            bucket => bucket.key.toUpperCase() === 'PUBLIC'
           ).doc_count
         : 0,
     restricted:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "RESTRICTED"
+        bucket => bucket.key.toUpperCase() === 'RESTRICTED'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "RESTRICTED"
+            bucket => bucket.key.toUpperCase() === 'RESTRICTED'
           ).doc_count
         : 0,
     nonPublic:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "NON_PUBLIC"
+        bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "NON_PUBLIC"
+            bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
           ).doc_count
         : 0,
     unknown:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "UKJENT"
+        bucket => bucket.key.toUpperCase() === 'UKJENT'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "UKJENT"
+            bucket => bucket.key.toUpperCase() === 'UKJENT'
           ).doc_count
         : 0,
     newLastWeek:
@@ -136,7 +136,7 @@ const ReportStats = props => {
           <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
             <p>
               <strong>
-                {" "}
+                {' '}
                 <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />
                 {stats.restricted}
               </strong>

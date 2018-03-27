@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as _ from "lodash";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as _ from 'lodash';
 
-import localization from "../../components/localization";
+import localization from '../../components/localization';
 import {
   getTranslateText,
   getLanguageFromUrl
-} from "../../utils/translateText";
-import "./index.scss";
+} from '../../utils/translateText';
+import './index.scss';
 
 export default class ConceptsHitItem extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -37,7 +37,7 @@ export default class ConceptsHitItem extends React.Component {
     const { inScheme } = this.state.source;
     const children = items =>
       items.map((item, index) => {
-        const subItem = item.substring(item.lastIndexOf("/") + 1);
+        const subItem = item.substring(item.lastIndexOf('/') + 1);
         return (
           <span
             key={`dataset-description-inScheme-${index}`}
@@ -126,7 +126,7 @@ export default class ConceptsHitItem extends React.Component {
   _renderDocCount() {
     const { subjectCountItem } = this.props;
     const lang = getLanguageFromUrl();
-    let langParam = "";
+    let langParam = '';
     if (lang) {
       langParam = `&lang=${lang}`;
     }
@@ -137,16 +137,17 @@ export default class ConceptsHitItem extends React.Component {
             title="Link til datasett med begrep"
             href={`/?subjects=${subjectCountItem.key}${langParam}`}
           >
-            {localization.terms.docCount} {subjectCountItem.doc_count}{" "}
+            {localization.terms.docCount} {subjectCountItem.doc_count}{' '}
             {localization.terms.docCountPart2}
           </a>
         </p>
       );
     }
+    return null;
   }
 
   render() {
-    const { onAddTerm, selectedLanguageCode, subjectCountItem } = this.props;
+    const { onAddTerm, selectedLanguageCode } = this.props;
     const { source } = this.state;
     const { prefLabel, definition, uri } = source;
     const hitElementId = `concepts-hit-${encodeURIComponent(uri)}`;
@@ -181,8 +182,8 @@ export default class ConceptsHitItem extends React.Component {
         </span>
         <div
           className={`fdk-container-search-hit ${toBeCompared
-            ? "toBeCompared"
-            : ""}`}
+            ? 'toBeCompared'
+            : ''}`}
         >
           {!toBeCompared && (
             <button
@@ -192,7 +193,7 @@ export default class ConceptsHitItem extends React.Component {
               }}
               type="button"
             >
-              <span aria-hidden="true">+</span>{" "}
+              <span aria-hidden="true">+</span>{' '}
               {localization.compare.addCompare}
             </button>
           )}
@@ -205,7 +206,7 @@ export default class ConceptsHitItem extends React.Component {
               }}
               type="button"
             >
-              <span aria-hidden="true">+</span>{" "}
+              <span aria-hidden="true">+</span>{' '}
               {localization.compare.addCompare}
             </button>
           )}
@@ -244,7 +245,7 @@ export default class ConceptsHitItem extends React.Component {
 ConceptsHitItem.defaultProps = {
   result: null,
   terms: null,
-  selectedLanguageCode: "nb"
+  selectedLanguageCode: 'nb'
 };
 
 ConceptsHitItem.propTypes = {
