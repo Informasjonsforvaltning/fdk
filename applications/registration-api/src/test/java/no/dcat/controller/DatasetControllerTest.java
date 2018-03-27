@@ -89,8 +89,6 @@ public class DatasetControllerTest {
         assertThat(actual, is(expected));
         assertThat(actual.getReferences(), is (expected.getReferences()));
 
-        System.out.println("references" + expected.getReferences().toString());
-
     }
 }
 

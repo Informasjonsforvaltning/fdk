@@ -104,14 +104,14 @@ public class AdminDataStore {
 				"	?user difiMeta:dcatSource ?a.", "}");
 		Model dcatModel = fuseki.describe(query, map);
 
-		System.out.println(DifiMeta.DcatSource);
+		logger.debug("{}", DifiMeta.DcatSource);
 
 		if (!dcatModel.listResourcesWithProperty(RDF.type, DifiMeta.DcatSource).hasNext()) {
-			System.out.println("EMPTY");
+			logger.debug("EMPTY");
 			return Optional.empty();
 		}
 
-		System.out.println(new DcatSource(dcatModel, dcatSourceId));
+		logger.debug("{}",new DcatSource(dcatModel, dcatSourceId));
 
 		return Optional.of(new DcatSource(dcatModel, dcatSourceId));
 	}
