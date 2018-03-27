@@ -131,7 +131,9 @@ class SearchPage extends React.Component {
   handleClearSearch() {
     this.setState(
       {
-        searchQuery: {}
+        searchQuery: {
+          lang: this.state.searchQuery.lang
+        }
       },
       () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
