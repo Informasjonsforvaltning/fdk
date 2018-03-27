@@ -394,7 +394,7 @@ class SearchPage extends React.Component {
           <Switch>
             <Route
               exact
-              path="/"
+              path="/datasets"
               render={props => (
                 <ResultsDataset
                   selectedLanguageCode={this.props.selectedLanguageCode}
@@ -421,7 +421,7 @@ class SearchPage extends React.Component {
             />
             <Route
               exact
-              path="/concepts/:lang?"
+              path="/terms/:lang?"
               render={props => (
                 <ResultsConcepts
                   selectedLanguageCode={this.props.selectedLanguageCode}

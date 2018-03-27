@@ -25,18 +25,18 @@ const ResultsTabs = props => {
     <div className="row">
       <div className="col-sm-12 col-md-8 col-md-offset-4">
         <ul className="search-results-tabs">
-          <li className={location.pathname === '/' ? 'li-active' : ''}>
+          <li className={location.pathname === '/datasets' ? 'li-active' : ''}>
             <Link
-              to={{ pathname: '/', search }}
+              to={{ pathname: '/datasets', search }}
               aria-label="Link til side for datasett:"
             >
               {localization.page.datasetTab}
               <span>&nbsp;({countDatasets})</span>
             </Link>
           </li>
-          <li className={location.pathname === '/concepts' ? 'li-active' : ''}>
+          <li className={location.pathname === '/terms' ? 'li-active' : ''}>
             <Link
-              to={{ pathname: '/concepts', search }}
+              to={{ pathname: '/terms', search }}
               aria-label="Link til side for begrep:"
             >
               {localization.page.termTab}
