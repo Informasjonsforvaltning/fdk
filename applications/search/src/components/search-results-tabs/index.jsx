@@ -11,16 +11,16 @@ const ResultsTabs = props => {
   let { search } = location;
   if (selectedLanguageCode) {
     if (selectedLanguageCode === 'nb') {
-      search = addOrReplaceParamWithoutURL(`${search}`, 'lang', '');
+      search = addOrReplaceParamWithoutURL(search, 'lang', '');
     } else {
       search = addOrReplaceParamWithoutURL(
-        `${search}`,
+        search,
         'lang',
         selectedLanguageCode
       );
     }
   }
-  search = addOrReplaceParamWithoutURL(`${search}`, 'from', '');
+  search = addOrReplaceParamWithoutURL(search, 'from', '');
   return (
     <div className="row">
       <div className="col-sm-12 col-md-8 col-md-offset-4">
