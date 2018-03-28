@@ -50,7 +50,7 @@ public class SubjectCrawlerIT {
         Resource r = new ClassPathResource("begrepHarvest.ttl");
         Model model = new CrawlerJob(null,null,null,subjectCrawler).loadModelAndValidate(r.getURL());
 
-        model.write(System.out, "TURTLE");
+        //model.write(System.out, "TURTLE");
 
         DcatReader reader = setupReader(model);
         List<Subject> actualSubjects = reader.getSubjects();

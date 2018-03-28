@@ -81,7 +81,7 @@ public class BrregAgentConverterTest {
 		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
 		converter.collectFromUri(uri.toString(), model,resource);
 
-		model.write(System.out, "TTL");
+		//model.write(System.out, "TTL");
 
 		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
 

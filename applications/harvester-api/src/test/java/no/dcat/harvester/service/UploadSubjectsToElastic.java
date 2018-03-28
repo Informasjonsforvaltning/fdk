@@ -178,7 +178,7 @@ public class UploadSubjectsToElastic {
             i++;
         }
 
-        if (logger.isInfoEnabled()) {
+        if (logger.isDebugEnabled()) {
             model.write(System.out, "TURTLE");
         }
         return model;

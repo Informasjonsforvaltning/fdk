@@ -31,7 +31,7 @@ application:
   fusekiService: http://localhost:3030/fuseki
 logging:
   level.: ERROR
-  level.no.brreg: DEBUG
+  level.no.brreg: INFO
   level.org.springframework: ERROR
 server:
   port: 8083

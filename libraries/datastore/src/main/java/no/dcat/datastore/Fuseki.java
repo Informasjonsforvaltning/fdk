@@ -47,7 +47,7 @@ public class Fuseki {
 			UpdateExecutionFactory.createRemoteForm(UpdateFactory.create(p.toString()), updateServiceUri).execute();
 
 		}catch (QueryParseException e){
-			System.out.println(p.toString());
+			logger.warn("Error parsing query: p={}", p.toString());
 			throw  e;
 		}
 	}

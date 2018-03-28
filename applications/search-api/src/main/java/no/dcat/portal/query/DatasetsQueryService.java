@@ -52,7 +52,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
     public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
-    public static final String FIELD_SUBJECTS_PREFLABEL = "subject.code.raw";
+    public static final String FIELD_SUBJECTS_PREFLABEL = "subject.prefLabel.no";
 
     public static final String TERMS_THEME_COUNT = "theme_count";
     public static final String TERMS_PUBLISHER_COUNT = "publisherCount";

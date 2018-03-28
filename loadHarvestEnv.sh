@@ -6,6 +6,11 @@ function startLoad {
     echo "Start loading ..."
     environment=$1
     targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-npc.brreg.no
+    if [ "$environment" == "ppe" ]
+    then
+        targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-pc.brreg.no
+    fi
+    echo $targetElasticUrl
 
     DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
@@ -92,9 +97,11 @@ function startLoad {
 
 
     # recreate data in target environment
-    echo "Copy file into target environment"
+    echo "loading harvest_lookup"
     elasticdump --input=${environment}_harvest_lookup.json --output=${targetElasticUrl}/harvest --type=data
+    echo "loading harvest_catalog ..."
     elasticdump --input=${environment}_harvest_catalog.json --output=${targetElasticUrl}/harvest --type=data
+    echo "loading harvest_dataset ..."
     elasticdump --input=${environment}_harvest_dataset.json --output=${targetElasticUrl}/harvest --type=data
 
     ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
@@ -119,5 +126,6 @@ then
 else
     exit 1
 fi
+
 
 echo "Done";

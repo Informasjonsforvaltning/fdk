@@ -24,7 +24,7 @@ public class ReferenceTest {
     @Test
     public void referenceCodelistExists() throws Throwable {
         List<String> codeTypes = controller.codeTypes();
-        System.out.println(codeTypes);
+
         assertThat(codeTypes.stream().anyMatch(t -> t.equals("referencetypes")), is(true));
     }
 

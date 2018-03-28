@@ -36,8 +36,6 @@ public class LocationTest {
         CodesService codesService = new CodesService(tdbConnection);
         SkosCode code = codesService.addLocation("http://sws.geonames.org/3144096/");
 
-        System.out.println(code.toString());
-
         assertEquals("Norge", code.getPrefLabel().get("no"));
 
         List<SkosCode> locations = codesService.getCodes(Types.location);

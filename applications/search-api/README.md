@@ -1,7 +1,7 @@
 # Search api for data catalog repository 
 
 Docker image: [dcatno/search-api](https://hub.docker.com/r/dcatno/search-api/)
-Base image: [ubuntu](https://hub.docker.com/_/ubuntu/)
+Base image: [openjdk:8-jre-alpine]()
 Source: [Dockerfile](https://github.com/...)
 
 Provides a query api for the data catalog repository.
@@ -28,11 +28,23 @@ Query parameters
 - `theme=GOVE,SOCI` (datasets that have theme GOVE and SOCI)
 - `publisher=DIFI` (datasets from a publisher)
 - `accessRight=PUBLIC` (datasets that have accessRights: PUBLIC, )
+- `lastChanged=3` (the datasets that were changed during the last three days)
+- `firstHarvestesd=20` (the datasets that were harvested for the first time during the last twenty days)
+- `orgPath=/STAT` (all datasets that have publishers that are governmental, other options are /PRIVAT, /FYLKE, /KOMMUNE and /ANNET)
 - `from=0` (show page 0)
 - `size=50` (number of hits per page, page size)
 - `lang=nb` (filter language)
 - `sortfield=title` (sort datasets by title, publisher or modified)
 - `sortdirection=asc` (sort direction: asc or desc)
+
+# Search for Terms (concepts)
+
+Example `/terms?q=enhet`
+
+Query paramters
+- `q=enhet` (query for a specific term, searches in prefLabel, altLabel, definition or description)
+- `creator=DIFI` (terms of which has DIFI as creator)
+- `orgPath=/STAT/962738899` (all terms defined by government (STAT) and organization number 96273889 and any subunits)
 
 # Search for HarvestCatalogRecords
 
