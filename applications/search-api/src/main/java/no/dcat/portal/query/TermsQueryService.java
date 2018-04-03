@@ -165,7 +165,7 @@ import org.springframework.web.bind.annotation.RestController;
                 .setSize(size)
                 .addAggregation(aggregateCreatorNames)
                 .addAggregation(aggregateOrgPath)
-                .addAggregation(aggregateDataset)
+                //.addAggregation(aggregateDataset)
                 ;
 
         return searchBuilder.execute().actionGet();
