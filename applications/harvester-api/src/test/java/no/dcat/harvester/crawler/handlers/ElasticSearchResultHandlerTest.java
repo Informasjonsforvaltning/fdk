@@ -11,14 +11,17 @@ import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.Publisher;
+import no.dcat.shared.Subject;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
+import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.ActionRequestBuilder;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +78,7 @@ public class ElasticSearchResultHandlerTest {
         doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
         doNothing().when(spyHandler).saveCatalogHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
 
-        spyHandler.indexWithElasticsearch(dataSource, model, elasticsearch, Collections.EMPTY_LIST );
+        spyHandler.indexWithElasticsearch(dataSource, model, elasticsearch, Collections.EMPTY_LIST);
     }
 
     @Test
@@ -146,6 +150,70 @@ public class ElasticSearchResultHandlerTest {
         assertThat(valid.size(), is(1));
     }
 
+    @Test
+    public void updateSubjects() {
+        ElasticSearchResultHandler spyHandler = spy(resultHandler);
+
+        List<Dataset> datasets = new ArrayList<>();
+        Dataset dataset1 = new Dataset();
+        dataset1.setUri("ds1");
+        dataset1.setId("1234");
+        dataset1.setTitle(new HashMap<>());
+        dataset1.getTitle().put("nb", "TEST");
+
+        Subject s1 = new Subject();
+        s1.setUri("http://subject1.no");
+        s1.setPrefLabel(new HashMap<>());
+        s1.getPrefLabel().put("nb", "Subject1");
+
+        Subject s2 = new Subject();
+        s2.setUri("http://subject2.no");
+        s2.setPrefLabel(new HashMap<>());
+        s2.getPrefLabel().put("nb", "Subject2");
+
+
+        Subject s3 = new Subject();
+        s3.setUri("http://subject2.no");
+        Dataset ds3 = new Dataset();
+        ds3.setId("3333");
+        ds3.setUri("ds3");
+        s3.setDatasets(Arrays.asList(ds3));
+
+        dataset1.setSubject(Arrays.asList(s1,s2));
+
+        Dataset dataset2 = new Dataset();
+        dataset2.setUri("ds2");
+        dataset2.setId("4321");
+
+        dataset2.setSubject(Arrays.asList(s2));
+
+        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Gson gson = new Gson();
+
+        spyHandler.updateSubjects(Arrays.asList(dataset1, dataset2), elasticsearch, gson );
+
+        Client client = mock(Client.class);
+
+        when(elasticsearch.getClient()).thenReturn(client);
+        BulkRequestBuilder bulkBuilder = mock(BulkRequestBuilder.class);
+        when(client.prepareBulk()).thenReturn(bulkBuilder);
+        when(bulkBuilder.add((IndexRequest)anyObject())).thenReturn(null);
+        GetResponse getResponse = mock(GetResponse.class);
+        ActionFuture actionFuture = mock(ActionFuture.class);
+        when(client.get(anyObject())).thenReturn(actionFuture);
+        BulkResponse bulkResponse = mock(BulkResponse.class);
+        when(actionFuture.actionGet()).thenReturn(getResponse);
+        when(getResponse.getSourceAsString()).thenReturn(gson.toJson(s3));
+
+        ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
+        when(bulkBuilder.execute()).thenReturn(listenableActionFuture);
+        when(listenableActionFuture.actionGet()).thenReturn(bulkResponse);
+        when(bulkResponse.hasFailures()).thenReturn(false);
+
+        spyHandler.updateSubjects(Arrays.asList(dataset1, dataset2), elasticsearch, gson);
+    }
+
+
     String msgs = "[\n" +
             "\"[validation_summary] 0 errors, 32 warnings and 0 other messages \",\n" +
             "\"[validation_warning] ValidationError{className\\u003d\\u0027License Document\\u0027, ruleId\\u003d166, ruleSeverity\\u003dwarning, ruleDescription\\u003d\\u0027dct:LicenseDocument does not exist.\\u0027, message\\u003d\\u0027The recommended class dct:LicenseDocument does not exist.\\u0027, subject\\u003dnull, predicate\\u003dnull, object\\u003dnull}, crawler_id\\u003dhttp://dcat.difi.no/dcatSource_1815c610-e5b1-4fd5-8fb6-eb3dcd7c1e9a, crawler_name\\u003ddatanorge, crawler_url\\u003dhttp://data.norge.no/api/dcat2/991825827/data.jsonld, crawler_user\\u003dtest_admin\",\n" +
@@ -188,7 +256,8 @@ public class ElasticSearchResultHandlerTest {
     @Before
     public void setup() {
         resultHandler = new ElasticSearchResultHandler(null, 0, null, null, null, null);
-        validationMessages = new Gson().fromJson(msgs, new TypeToken<List<String>>(){}.getType());
+        validationMessages = new Gson().fromJson(msgs, new TypeToken<List<String>>() {
+        }.getType());
     }
 
     @Test
@@ -208,7 +277,7 @@ public class ElasticSearchResultHandlerTest {
         actual = resultHandler.filterValidationMessagesForDataset(validationMessages, dataset);
         logger.info(actual.toString());
 
-        assertThat( "Can extract validation message for dataset", actual.size(), is(1));
+        assertThat("Can extract validation message for dataset", actual.size(), is(1));
     }
 
     @Test
@@ -264,10 +333,11 @@ public class ElasticSearchResultHandlerTest {
     public void checkStringCompare() throws Throwable {
         assertThat(resultHandler.stringCompare(null, null), is(true));
         assertThat(resultHandler.stringCompare("hallo", null), is(false));
-        assertThat(resultHandler.stringCompare(null, "hallo"), is (false));
+        assertThat(resultHandler.stringCompare(null, "hallo"), is(false));
         assertThat(resultHandler.stringCompare("hallo", "hallo"), is(true));
         assertThat(resultHandler.stringCompare("hallo", "hello"), is(false));
     }
+
     @Test
     public void checkCorrectOrgpath() {
 
@@ -282,7 +352,7 @@ public class ElasticSearchResultHandlerTest {
         assertThat(dataset.getPublisher().getOrgPath(), is("/ANNET/COSMO"));
 
         dataset.getPublisher().setOrgPath("/STAT/123456789/123456799");
-        assertThat(resultHandler.hasWrongOrgpath(dataset), is (false));
+        assertThat(resultHandler.hasWrongOrgpath(dataset), is(false));
         resultHandler.correctOrgpath(dataset);
 
     }
