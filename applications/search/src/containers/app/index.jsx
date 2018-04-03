@@ -1,7 +1,7 @@
 import React from 'react';
 import qs from 'qs';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { Route, Redirect, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import localization from '../../components/localization';
 import { addOrReplaceParam } from '../../utils/addOrReplaceUrlParam';
@@ -198,10 +198,9 @@ export default class App extends React.Component {
 
         <div className="app-routes">
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/datasets" />} />
             <Route
               exact
-              path="/datasets"
+              path="/"
               render={props => (
                 <SearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
@@ -211,7 +210,7 @@ export default class App extends React.Component {
             />
             <Route
               exact
-              path="/terms"
+              path="/concepts"
               render={props => (
                 <SearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
