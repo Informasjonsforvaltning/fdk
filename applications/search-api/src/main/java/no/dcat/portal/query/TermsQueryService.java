@@ -11,6 +11,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -153,14 +154,18 @@ import org.springframework.web.bind.annotation.RestController;
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
                 .order(Order.count(false));
 
+        ValueCountBuilder aggregateDataset = AggregationBuilders
+                .count("datasets");
+
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = client.prepareSearch("scat")
                 .setTypes("subject")
                 .setQuery(search)
                 .setFrom(from)
                 .setSize(size)
                 .addAggregation(aggregateCreatorNames)
                 .addAggregation(aggregateOrgPath)
+                .addAggregation(aggregateDataset)
                 ;
 
         return searchBuilder.execute().actionGet();
