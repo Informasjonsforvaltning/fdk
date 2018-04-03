@@ -82,7 +82,7 @@ public class SubjectCrawlerIT {
 
         Model actual = subjectCrawler.annotateSubjects(model);
 
-        actual.write(System.out, "TURTLE");
+        //actual.write(System.out, "TURTLE");
 
         DcatReader reader = new DcatReader(model);
         List<Subject> actualSubjects = reader.getSubjects();

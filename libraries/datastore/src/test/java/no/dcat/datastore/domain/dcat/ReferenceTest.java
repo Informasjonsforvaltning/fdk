@@ -103,7 +103,6 @@ public class ReferenceTest {
 
         String dcat = builder.getDcatOutput("TURTLE");
 
-        System.out.println(dcat);
 
         Model m = ModelFactory.createDefaultModel();
         m.read(new ByteArrayInputStream(dcat.getBytes()), null, "TTL");

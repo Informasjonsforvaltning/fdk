@@ -72,7 +72,7 @@ public class HarvestLogger {
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
             contents = reader.lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
-            System.out.println(e);
+            logger.warn("ioexception: ", e.getMessage());
         }
         return contents;
     }

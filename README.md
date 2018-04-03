@@ -49,15 +49,15 @@ You need to download the following two files [docker-compose.yml](/docker-compos
 ![Architecture](/images/fdk-architecture-logic.png)
 
 The Registration Application consists of the following main modules:
-  * registration, an Angular 2 application which allow users to log in and edit or register metadata about datasets.
-  * registration-api, a Java Spring Boot service which supports an REST API
+  * registration, a React application which allow users to log in and edit or register metadata about datasets.
+  * registration-api, a Java Spring Boot service which supports a REST API
   * registration-db, a Elasticsearch document database
   * registration-validator, a Java Spring Boot service that can validate inputdata against the DCAT standard. Currently not in use.
   * registration-auth, A Java Spring Boot service that act as a authentication and authorization service. Used
   in develop and test to skip IDPorten and Altinn integrations.
   
 The Search Application consists of the following modules
-  * search, an React application which allow users to search and view dataset descriptions.
+  * search, a React application which allow users to search and view dataset descriptions.
   * search-api, an Java Spring Boot service whit a REST API 
   * search-db, an Elasticsearch search and document database
 
@@ -115,6 +115,7 @@ repository and [data/fuseki](data/fuseki) for the fuseki repository.
   * Elasticsearch stores the data in JSON denormalized for search
   * Fuseki stores the data in RDF/DCAT format
 
+![Indexes in elasticsearch](/images/elastic-index.png)
 
 ## Travis and Coveralls
 
