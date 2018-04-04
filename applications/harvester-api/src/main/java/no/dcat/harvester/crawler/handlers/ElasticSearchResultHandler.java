@@ -1,6 +1,9 @@
 package no.dcat.harvester.crawler.handlers;
 
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.FileAppender;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
@@ -48,6 +51,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -166,11 +172,33 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
         //add special logger for the message that will be sent to dcatsource owner;
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String logFileName = HARVESTLOG_DIRECTORY + "harvest-" + dcatSource.getOrgnumber() + "-" + timestamp + ".log";
-        HarvestLogger harvestlogger = new HarvestLogger(logFileName);
-        Logger harvestLog = harvestlogger.getLogger();
 
-        harvestLog.info("Harvest log for datasource ID: " + dcatSource.getId());
+        ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        FileAppender<ILoggingEvent> fileAppender = new FileAppender<>();
+        String logFileName ="";
+
+        try {
+            logFileName = File.createTempFile("harvest", ".log").getAbsolutePath();
+            logger.info("logfile={}", logFileName);
+
+            LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+
+            PatternLayoutEncoder ple = new PatternLayoutEncoder();
+            ple.setPattern("%r %thread %level - %msg%n");
+            ple.setContext(lc);
+            ple.start();
+
+            fileAppender.setFile(logFileName);
+            fileAppender.setEncoder(ple);
+            fileAppender.setContext(lc);
+            fileAppender.start();
+
+            rootLogger.addAppender(fileAppender);
+            rootLogger.setAdditive(false);
+
+        } catch (Exception e) {
+            logger.error("Unable to create logging facade {}",e.getMessage());
+        }
 
         // enable gson to read subtype of publisher
         RuntimeTypeAdapterFactory<Publisher> typeFactory = RuntimeTypeAdapterFactory
@@ -189,7 +217,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         Set<String> datasetsInSource = getSourceDatasetUris(model);
 
-        // todo extract logs form reader and insert into elastic
         DcatReader reader = getReader(model);
         List<Dataset> validDatasets = reader.getDatasets();
         List<Catalog> catalogs = reader.getCatalogs();
@@ -202,32 +229,35 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
         logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
                 validDatasets.size(), datasetsInSource.size() - validDatasets.size());
-        //also route to harvest log - to be mailed to user
-        harvestLog.info("Processing {} valid datasets. {} non valid datasets were ignored",
-                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
 
-        updateDatasets(dcatSource, model, elasticsearch, validationResults, harvestLog, gson, validDatasets, catalogs);
 
-        if (notificationService != null) {
-            //get contents from harvest log file
-            notificationService.sendValidationResultNotification(
-                    notificationEmailSender,
-                    VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
-                    VALIDATION_EMAIL_SUBJECT,
-                    harvestlogger.getLogContents());
-        } else {
-            logger.warn("email notifcation service not set. Could not send email with validation results");
-        }
-
-        //delete file appender and log file
-        harvestlogger.closeLog();
-
+        updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, validDatasets, catalogs);
         updateSubjects(validDatasets, elasticsearch, gson);
+
+        rootLogger.detachAppender(fileAppender);
+
+        try  {
+            //get contents from harvest log file
+            String logContent = new String(Files.readAllBytes(Paths.get(logFileName)));
+
+            if(notificationService != null && !logContent.isEmpty()) {
+                notificationService.sendValidationResultNotification(
+                        notificationEmailSender,
+                        VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
+                        VALIDATION_EMAIL_SUBJECT,
+                        logContent);
+            } else {
+                logger.warn("email notifcation service not set. Could not send email with validation results");
+            }
+
+        } catch (Exception e) {
+            logger.warn("unable to read logContent {}", e.getMessage(), e);
+        }
 
     }
 
     private void updateDatasets(DcatSource dcatSource, Model model, Elasticsearch elasticsearch,
-                                List<String> validationResults, Logger harvestLog, Gson gson,
+                                List<String> validationResults, Gson gson,
                                 List<Dataset> validDatasets, List<Catalog> catalogs) {
 
         logger.debug("Preparing bulkRequest");
@@ -235,13 +265,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         Date harvestTime = new Date();
         logger.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
-        //also route to harvest log - to be mailed to user
-        harvestLog.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
 
         for (Catalog catalog : catalogs) {
             logger.info("Processing catalog {}", catalog.getUri());
-            //also route to harvest log - to be mailed to user
-            harvestLog.info("Processing catalog {}", catalog.getUri());
 
             CatalogHarvestRecord catalogRecord = new CatalogHarvestRecord();
             catalogRecord.setCatalogUri(catalog.getUri());
@@ -274,15 +300,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
 
-            //add validation results to log to send to datasource owner
-            harvestLog.info("Validation results for catalog {}:", catalog.getId());
-            if (validationResults != null) {
-                for (String validationResult : validationResults) {
-                    harvestLog.info(validationResult);
-                }
-            } else {
-                harvestLog.info("No validation results found for catalog {}", catalog.getId());
-            }
         }
 
         BulkResponse response = bulkRequest.execute().actionGet();
@@ -853,6 +870,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                    });
                }
             });
+
+            if (uniqueSubjectsToIndex.size() == 0) {
+                return;
+            }
 
             // find subjects already stored
             Map<String, Subject> subjectsStored = new HashMap<>();
