@@ -1,6 +1,9 @@
 import React from "react";
-import "./index.scss";
+import { Link } from 'react-router-dom';
+
 import localization from "../localization";
+import { getParamFromString } from '../../utils/addOrReplaceUrlParam';
+import "./index.scss";
 
 const ReportStats = props => {
   const { aggregateDataset, entity, catalog } = props;
@@ -93,6 +96,10 @@ const ReportStats = props => {
         : 0
   };
 
+  const orgPath = getParamFromString(window.location.search, 'orgPath');
+  const encodedOrgPath = orgPath ? encodeURIComponent(orgPath) : null;
+  const orgPathParam = ((encodedOrgPath !== null) ? `&orgPath=${encodedOrgPath}` : '')
+
   const title = (
     <div className="row">
       <div className="fdk-container-stats">
@@ -110,9 +117,17 @@ const ReportStats = props => {
 
   const total = (
     <div className="row">
-      <div className="fdk-container-stats fdk-container-stats-total">
+      <div
+        className="fdk-container-stats fdk-container-stats-total"
+      >
         <h1>
-          <strong>{stats.total}</strong>
+          <strong>
+            <Link
+              to={orgPath ? `/?orgPath=${encodedOrgPath}` : '/'}
+            >
+            {stats.total}
+            </Link>
+          </strong>
         </h1>
         <h1>{localization.report.total}</h1>
       </div>
@@ -124,7 +139,11 @@ const ReportStats = props => {
       <div className="fdk-container-stats fdk-container-stats-accesslevel-title">
         <h2>{localization.report.accessLevel}</h2>
         <div className="row">
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
+          <Link
+            title={localization.report.public}
+            className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            to={`/?accessrights=PUBLIC${orgPathParam}`}
+          >
             <p>
               <strong>
                 <i className="fa fdk-fa-left fa-unlock fdk-color-offentlig" />
@@ -132,8 +151,12 @@ const ReportStats = props => {
               </strong>
             </p>
             <p>{localization.report.public}</p>
-          </div>
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
+          </Link>
+          <Link
+            title={localization.report.restricted}
+            className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            to={`/?accessrights=RESTRICTED${orgPathParam}`}
+          >
             <p>
               <strong>
                 {" "}
@@ -142,8 +165,11 @@ const ReportStats = props => {
               </strong>
             </p>
             <p>{localization.report.restricted}</p>
-          </div>
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no">
+          </Link>
+          <Link
+            className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            to={`/?accessrights=NON-PUBLIC${orgPathParam}`}
+          >
             <p>
               <strong>
                 <i className="fa fdk-fa-left fa-lock fdk-color-unntatt" />
@@ -151,8 +177,11 @@ const ReportStats = props => {
               </strong>
             </p>
             <p>{localization.report.nonPublic}</p>
-          </div>
-          <div className="col-md-3 fdk-container-stats-accesslevel fdk-padding-no">
+          </Link>
+          <Link
+            className="col-md-3 fdk-container-stats-accesslevel fdk-padding-no"
+            to={`/?accessrights=Ukjent${orgPathParam}`}
+          >
             <p>
               <strong>
                 <i className="fa fdk-fa-left fa-question fdk-color4" />
@@ -160,11 +189,26 @@ const ReportStats = props => {
               </strong>
             </p>
             <p>{localization.report.unknown}</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
   );
+
+  /*
+   @RequestParam(value = "q", defaultValue = "", required = false) String query,
+   @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
+   @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
+   @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
+   @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+   @RequestParam(value = "firstHarvested", defaultValue = "0", required = false) int firstHarvested,
+   @RequestParam(value = "lastChanged", defaultValue = "0", required = false) int lastChanged,
+   @RequestParam(value = "from", defaultValue = "0", required = false) int from,
+   @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+   @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
+   @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
+   @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection)
+   */
 
   const changes = (
     <div className="row">
@@ -174,13 +218,24 @@ const ReportStats = props => {
           <div className="row">
             <div className="col-sm-6">
               <p>
-                <strong>{stats.newLastWeek}</strong>
+
+                  <strong>
+                    <Link
+                      title={localization.report.newDatasets}
+                      className="fdk-plain-label"
+                      to={`/?lastChanged=7${orgPathParam}`}
+                    >
+                      {stats.newLastWeek}
+                    </Link>
+                  </strong>
               </p>
               <p>{localization.report.newDatasets}</p>
             </div>
             <div className="col-sm-6">
               <p className="fdk-deleted-strong">
-                <strong>{stats.deletedLastWeek}</strong>
+                <strong>
+                  {stats.deletedLastWeek}
+                </strong>
               </p>
               <p>{localization.report.deletedDatasets}</p>
             </div>
@@ -193,7 +248,15 @@ const ReportStats = props => {
           <div className="row">
             <div className="col-sm-6">
               <p>
-                <strong>{stats.newLastMonth}</strong>
+                <strong>
+                  <Link
+                    title={localization.report.deletedLastMonth}
+                    className="fdk-plain-label"
+                    to={`/?lastChanged=30${orgPathParam}`}
+                  >
+                    {stats.newLastMonth}
+                  </Link>
+                </strong>
               </p>
               <p>{localization.report.newDatasets}</p>
             </div>
@@ -212,7 +275,15 @@ const ReportStats = props => {
           <div className="row">
             <div className="col-sm-6">
               <p>
-                <strong>{stats.newLastYear}</strong>
+                <strong>
+                  <Link
+                    title={localization.report.newDatasets}
+                    className="fdk-plain-label"
+                    to={`/?lastChanged=365${orgPathParam}`}
+                  >
+                    {stats.newLastYear}
+                  </Link>
+                </strong>
               </p>
               <p>{localization.report.newDatasets}</p>
             </div>
