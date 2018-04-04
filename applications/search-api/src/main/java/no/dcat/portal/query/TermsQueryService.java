@@ -78,7 +78,7 @@ import org.springframework.web.bind.annotation.RestController;
         if ("en".equals(lang)) {
             analyzerLang = "english";
         }
-        lang = "no"; // hardcode to search in all language fields
+        lang = "*"; // hardcode to search in all language fields
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
@@ -95,7 +95,10 @@ import org.springframework.web.bind.annotation.RestController;
                     .field("definition" + "." + lang).boost(3)
                     .field("creator.name").boost(2)
                     .field("inScheme")
-                    .field("note" + "." + lang);
+                    .field("note" + "." + lang)
+                    .field("datasets.title.*")
+                    .field("datasets.description.*")
+            ;
         }
 
         logger.trace(search.toString());
@@ -154,9 +157,6 @@ import org.springframework.web.bind.annotation.RestController;
                 .size(AGGREGATION_NUMBER_OF_COUNTS)
                 .order(Order.count(false));
 
-        ValueCountBuilder aggregateDataset = AggregationBuilders
-                .count("datasets");
-
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = client.prepareSearch("scat")
                 .setTypes("subject")
@@ -165,7 +165,6 @@ import org.springframework.web.bind.annotation.RestController;
                 .setSize(size)
                 .addAggregation(aggregateCreatorNames)
                 .addAggregation(aggregateOrgPath)
-                //.addAggregation(aggregateDataset)
                 ;
 
         return searchBuilder.execute().actionGet();
