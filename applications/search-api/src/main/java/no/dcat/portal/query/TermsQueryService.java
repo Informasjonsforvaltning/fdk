@@ -11,7 +11,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
-import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
   public class TermsQueryService extends ElasticsearchService {
-    public static final String INDEX_DCAT = "dcat";
+    public static final String SUBJECT_INDEX = "scat";
 
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
@@ -118,8 +117,6 @@ import org.springframework.web.bind.annotation.RestController;
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
-        BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
-
         if (!StringUtils.isEmpty(creator)) {
             BoolQueryBuilder boolFilterPublisher = QueryBuilders.boolQuery();
             if (creator.toLowerCase().equals("ukjent")) {
@@ -158,7 +155,7 @@ import org.springframework.web.bind.annotation.RestController;
                 .order(Order.count(false));
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch("scat")
+        SearchRequestBuilder searchBuilder = client.prepareSearch(SUBJECT_INDEX)
                 .setTypes("subject")
                 .setQuery(search)
                 .setFrom(from)
