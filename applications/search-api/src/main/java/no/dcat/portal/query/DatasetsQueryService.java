@@ -157,6 +157,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .field("accessRights.prefLabel" + "." + lang)
                     .field("accessRights.code")
                     .field("subject.prefLabel." + lang)
+                    .field("subject.altLabel." + lang)
+                    .field("subject.definition." + lang)
                     .defaultOperator(SimpleQueryStringBuilder.Operator.OR);
         }
 
