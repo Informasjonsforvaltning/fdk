@@ -179,30 +179,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
         createIndexIfNotExists(elasticsearch, SUBJECT_INDEX);
 
-        openHarvestLog();
+        startHarvestLog();
+
+        DcatReader dcatReader = getReader(model);
+
+        List<Dataset> validDatasets = dcatReader.getDatasets();
+        List<Catalog> catalogs = dcatReader.getCatalogs();
 
         Set<String> datasetsInSource = getSourceDatasetUris(model);
 
-        DcatReader reader = getReader(model);
-        List<Dataset> validDatasets = reader.getDatasets();
-        List<Catalog> catalogs = reader.getCatalogs();
-
         if (validDatasets == null || validDatasets.isEmpty()) {
-            throw new RuntimeException(
-                    String.format("No valid datasets to index. %d datasets were found at source url %s",
+
+            logger.error("No valid datasets to index. Found {} non valid datasets at url {}",
                             datasetsInSource.size(),
-                            dcatSource.getUrl()));
+                            dcatSource.getUrl());
+        } else {
+            logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
+                    validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+
+            Gson gson = getGson();
+
+            updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, validDatasets, catalogs);
+            updateSubjects(validDatasets, elasticsearch, gson);
         }
-        logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
-                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
 
-
-        Gson gson = getGson();
-
-        updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, validDatasets, catalogs);
-        updateSubjects(validDatasets, elasticsearch, gson);
-
-        closeAndReportHarvestLog(dcatSource, validationResults);
+        stopHarvestLogAndReport(dcatSource, validationResults);
     }
 
     private Gson getGson() {
@@ -218,7 +219,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 .create();
     }
 
-    void openHarvestLog() {
+    void startHarvestLog() {
 
         rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("no.dcat");
         fileAppender = new FileAppender<>();
@@ -248,7 +249,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
     }
 
-    void closeAndReportHarvestLog(DcatSource dcatSource, List<String> validationResults) {
+    void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
 
         rootLogger.detachAppender(fileAppender);
 
@@ -262,20 +263,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 //add special logger for the message that will be sent to dcatsource owner;
                 String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-                StringBuffer messageBuilder = new StringBuffer();
-                messageBuilder.append("HARVEST REPORT: " + dcatSource.getUrl() +"\n");
-                messageBuilder.append("DATE: " + timestamp + "\n\n");
-
-                messageBuilder.append("SYNTAX CHECKS\n");
-                messageBuilder.append("--------------------\n\n");
-                messageBuilder.append(dcatSyntaxValidation + "\n\n");
-
-                messageBuilder.append("SEMANTIC CHECKS\n");
-                messageBuilder.append("--------------------\n\n");
-                messageBuilder.append(validationReport + "\n\n");
-                messageBuilder.append("----- the end ------\n");
-
-                String message = messageBuilder.toString();
+                String message = "HARVEST REPORT: " + dcatSource.getUrl() + "\n" +
+                        "DATE: " + timestamp + "\n\n" +
+                        "SYNTAX CHECKS\n" +
+                        "--------------------\n\n" +
+                        dcatSyntaxValidation + "\n\n" +
+                        "SEMANTIC CHECKS\n" +
+                        "--------------------\n\n" +
+                        validationReport + "\n\n" +
+                        "----- the end ------\n";
                 logger.debug(message);
 
                 notificationService.sendValidationResultNotification(
