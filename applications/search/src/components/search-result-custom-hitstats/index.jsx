@@ -27,14 +27,13 @@ const CustomHitsStats = props => {
               {countDatasets} {localization.hitstats.datasetHits}
             </span>
           )}
-          {countDatasets === 0 &&
-            countTerms > 0 && <span>,&nbsp;{localization.hitstats.but}</span>}
           {countDatasets > 0 &&
-            countTerms > 0 && <span>&nbsp;{localization.hitstats.and}</span>}
+            countTerms > 0 && (
+              <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
+            )}
           {countTerms > 0 && (
             <span>
-              &nbsp;{localization.hitstats.and} {countTerms}{" "}
-              {localization.hitstats.conceptHits}
+              {countTerms} {localization.hitstats.conceptHits}
             </span>
           )}
           {countDatasets === 0 &&
