@@ -574,6 +574,10 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, "Ukjent"))
                 .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, "Ukjent"))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", "Ukjent"))
+                .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
+                .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
+                .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
+                .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
                 .addAggregation(datasetsWithDistribution)
                 .addAggregation(openDatasetsWithDistribution)
                 .addAggregation(datasetsWithSubject);
