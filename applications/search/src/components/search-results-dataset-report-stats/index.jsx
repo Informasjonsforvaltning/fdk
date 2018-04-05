@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import localization from "../localization";
-import { getParamFromString } from '../../utils/addOrReplaceUrlParam';
+import { getParamFromString } from "../../utils/addOrReplaceUrlParam";
 import "./index.scss";
 
 const ReportStats = props => {
@@ -46,30 +46,29 @@ const ReportStats = props => {
             bucket => bucket.key.toUpperCase() === "UKJENT"
           ).doc_count
         : 0,
+
     newLastWeek:
-      catalog.aggregations && catalog.aggregations.last7days.inserts
-        ? catalog.aggregations && catalog.aggregations.last7days.inserts.value
+      aggregateDataset.aggregations &&
+      aggregateDataset.aggregations.lastChanged.buckets &&
+      aggregateDataset.aggregations.lastChanged.buckets.last7days
+        ? aggregateDataset.aggregations.lastChanged.buckets.last7days.doc_count
         : 0,
-    deletedLastWeek:
-      catalog.aggregations && catalog.aggregations.last7days.deletes
-        ? catalog.aggregations && catalog.aggregations.last7days.deletes.value
-        : 0,
+
     newLastMonth:
-      catalog.aggregations && catalog.aggregations.last30days.inserts
-        ? catalog.aggregations && catalog.aggregations.last30days.inserts.value
+      aggregateDataset.aggregations &&
+      aggregateDataset.aggregations.lastChanged.buckets &&
+      aggregateDataset.aggregations.lastChanged.buckets.last30days
+        ? aggregateDataset.aggregations.lastChanged.buckets.last30days.doc_count
         : 0,
-    deletedLastMonth:
-      catalog.aggregations && catalog.aggregations.last30days.deletes
-        ? catalog.aggregations && catalog.aggregations.last30days.deletes.value
-        : 0,
+
     newLastYear:
-      catalog.aggregations && catalog.aggregations.last365days.inserts
-        ? catalog.aggregations && catalog.aggregations.last365days.inserts.value
+      aggregateDataset.aggregations &&
+      aggregateDataset.aggregations.lastChanged.buckets &&
+      aggregateDataset.aggregations.lastChanged.buckets.last365days
+        ? aggregateDataset.aggregations.lastChanged.buckets.last365days
+            .doc_count
         : 0,
-    deletedLastYear:
-      catalog.aggregations && catalog.aggregations.last365days.deletes
-        ? catalog.aggregations && catalog.aggregations.last365days.deletes.value
-        : 0,
+
     withoutConcepts:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.subjectsCount &&
@@ -96,9 +95,10 @@ const ReportStats = props => {
         : 0
   };
 
-  const orgPath = getParamFromString(window.location.search, 'orgPath');
+  const orgPath = getParamFromString(window.location.search, "orgPath");
   const encodedOrgPath = orgPath ? encodeURIComponent(orgPath) : null;
-  const orgPathParam = ((encodedOrgPath !== null) ? `&orgPath=${encodedOrgPath}` : '')
+  const orgPathParam =
+    encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : "";
 
   const title = (
     <div className="row">
@@ -117,15 +117,11 @@ const ReportStats = props => {
 
   const total = (
     <div className="row">
-      <div
-        className="fdk-container-stats fdk-container-stats-total"
-      >
+      <div className="fdk-container-stats fdk-container-stats-total">
         <h1>
           <strong>
-            <Link
-              to={orgPath ? `/?orgPath=${encodedOrgPath}` : '/'}
-            >
-            {stats.total}
+            <Link to={orgPath ? `/?orgPath=${encodedOrgPath}` : "/"}>
+              {stats.total}
             </Link>
           </strong>
         </h1>
@@ -195,49 +191,25 @@ const ReportStats = props => {
     </div>
   );
 
-  /*
-   @RequestParam(value = "q", defaultValue = "", required = false) String query,
-   @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
-   @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
-   @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
-   @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
-   @RequestParam(value = "firstHarvested", defaultValue = "0", required = false) int firstHarvested,
-   @RequestParam(value = "lastChanged", defaultValue = "0", required = false) int lastChanged,
-   @RequestParam(value = "from", defaultValue = "0", required = false) int from,
-   @RequestParam(value = "size", defaultValue = "10", required = false) int size,
-   @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
-   @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
-   @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection)
-   */
-
   const changes = (
     <div className="row">
       <div className="col-md-4 fdk-container-stats-changes-left">
         <div className="fdk-container-stats fdk-container-stats-changes">
           <h2>{localization.report.changesLastWeek}</h2>
           <div className="row">
-            <div className="col-sm-6">
+            <div>
               <p>
-
-                  <strong>
-                    <Link
-                      title={localization.report.newDatasets}
-                      className="fdk-plain-label"
-                      to={`/?lastChanged=7${orgPathParam}`}
-                    >
-                      {stats.newLastWeek}
-                    </Link>
-                  </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-            <div className="col-sm-6">
-              <p className="fdk-deleted-strong">
                 <strong>
-                  {stats.deletedLastWeek}
+                  <Link
+                    title={localization.report.newDatasets}
+                    className="fdk-plain-label"
+                    to={`/?lastChanged=7${orgPathParam}`}
+                  >
+                    {stats.newLastWeek}
+                  </Link>
                 </strong>
               </p>
-              <p>{localization.report.deletedDatasets}</p>
+              <p>{localization.report.newDatasets}</p>
             </div>
           </div>
         </div>
@@ -246,7 +218,7 @@ const ReportStats = props => {
         <div className="fdk-container-stats fdk-container-stats-changes">
           <h2>{localization.report.changesLastMonth}</h2>
           <div className="row">
-            <div className="col-sm-6">
+            <div>
               <p>
                 <strong>
                   <Link
@@ -260,12 +232,6 @@ const ReportStats = props => {
               </p>
               <p>{localization.report.newDatasets}</p>
             </div>
-            <div className="col-sm-6">
-              <p className="fdk-deleted-strong">
-                <strong>{stats.deletedLastMonth}</strong>
-              </p>
-              <p>{localization.report.deletedDatasets}</p>
-            </div>
           </div>
         </div>
       </div>
@@ -273,7 +239,7 @@ const ReportStats = props => {
         <div className="fdk-container-stats fdk-container-stats-changes">
           <h2>{localization.report.changesLastYear}</h2>
           <div className="row">
-            <div className="col-sm-6">
+            <div>
               <p>
                 <strong>
                   <Link
@@ -286,12 +252,6 @@ const ReportStats = props => {
                 </strong>
               </p>
               <p>{localization.report.newDatasets}</p>
-            </div>
-            <div className="col-sm-6">
-              <p className="fdk-deleted-strong">
-                <strong>{stats.deletedLastYear}</strong>
-              </p>
-              <p>{localization.report.deletedDatasets}</p>
             </div>
           </div>
         </div>
