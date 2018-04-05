@@ -73,11 +73,9 @@ class SearchPage extends React.Component {
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
     } else {
       this.props.dispatch(
-        fetchDatasetsIfNeeded(`/datasets/${props.location.search}`)
+        fetchDatasetsIfNeeded(`/datasets${props.location.search}`)
       );
-      this.props.dispatch(
-        fetchTermsIfNeeded(`/terms/${props.location.search}`)
-      );
+      this.props.dispatch(fetchTermsIfNeeded(`/terms${props.location.search}`));
     }
 
     this.props.dispatch(fetchThemesIfNeeded());
@@ -98,14 +96,14 @@ class SearchPage extends React.Component {
           'q',
           `${q} ${encodeURIComponent(q)}*`
         );
-        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
-        this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
+        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets${modifiedQ}`));
+        this.props.dispatch(fetchTermsIfNeeded(`/terms${modifiedQ}`));
       } else {
         this.props.dispatch(
-          fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`)
+          fetchDatasetsIfNeeded(`/datasets${nextProps.location.search}`)
         );
         this.props.dispatch(
-          fetchTermsIfNeeded(`/terms/${nextProps.location.search}`)
+          fetchTermsIfNeeded(`/terms${nextProps.location.search}`)
         );
       }
     }

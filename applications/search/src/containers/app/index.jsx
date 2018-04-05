@@ -195,6 +195,7 @@ export default class App extends React.Component {
             </div>
           </div>
         </div>
+
         <div className="app-routes">
           <Switch>
             <Route
@@ -227,6 +228,7 @@ export default class App extends React.Component {
             />
           </Switch>
         </div>
+
         <div className="fdk-footer visible-xs visible-sm">
           <div className="container">
             <div className="row">
