@@ -190,11 +190,13 @@ public class ElasticSearchResultHandlerTest {
         Elasticsearch elasticsearch = mock(Elasticsearch.class);
         Gson gson = new Gson();
 
+        // first time should fail
         spyHandler.updateSubjects(Arrays.asList(dataset1, dataset2), elasticsearch, gson );
 
         Client client = mock(Client.class);
 
         when(elasticsearch.getClient()).thenReturn(client);
+
         BulkRequestBuilder bulkBuilder = mock(BulkRequestBuilder.class);
         when(client.prepareBulk()).thenReturn(bulkBuilder);
         when(bulkBuilder.add((IndexRequest)anyObject())).thenReturn(null);
@@ -210,6 +212,7 @@ public class ElasticSearchResultHandlerTest {
         when(listenableActionFuture.actionGet()).thenReturn(bulkResponse);
         when(bulkResponse.hasFailures()).thenReturn(false);
 
+        // second time should work
         spyHandler.updateSubjects(Arrays.asList(dataset1, dataset2), elasticsearch, gson);
     }
 

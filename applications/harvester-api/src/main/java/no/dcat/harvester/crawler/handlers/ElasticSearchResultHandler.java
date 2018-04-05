@@ -20,7 +20,6 @@ import no.dcat.datastore.domain.harvest.ValidationStatus;
 import no.dcat.harvester.clean.HtmlCleaner;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
-import no.dcat.harvester.crawler.notification.HarvestLogger;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
@@ -170,8 +169,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param validationResults List of strings with result from validation rules execution
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
-        //add special logger for the message that will be sent to dcatsource owner;
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
         ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         FileAppender<ILoggingEvent> fileAppender = new FileAppender<>();
@@ -184,7 +181,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
             PatternLayoutEncoder ple = new PatternLayoutEncoder();
-            ple.setPattern("%r %thread %level - %msg%n");
+            ple.setPattern("%level - %msg%n");
             ple.setContext(lc);
             ple.start();
 
@@ -238,14 +235,35 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         try  {
             //get contents from harvest log file
-            String logContent = new String(Files.readAllBytes(Paths.get(logFileName)));
 
-            if(notificationService != null && !logContent.isEmpty()) {
+            String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
+            String validationReport = new String(Files.readAllBytes(Paths.get(logFileName)));
+
+            if(notificationService != null &&  !validationReport.isEmpty()) {
+                //add special logger for the message that will be sent to dcatsource owner;
+                String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+                StringBuffer messageBuilder = new StringBuffer();
+                messageBuilder.append("HARVEST REPORT: " + dcatSource.getUrl() +"\n");
+                messageBuilder.append("DATE: " + timestamp + "\n\n");
+
+                messageBuilder.append("SYNTAX CHECKS\n");
+                messageBuilder.append("--------------------\n\n");
+                messageBuilder.append(dcatSyntaxValidation + "\n\n");
+
+                messageBuilder.append("SEMANTIC CHECKS\n");
+                messageBuilder.append("--------------------\n\n");
+                messageBuilder.append(validationReport + "\n\n");
+                messageBuilder.append("----- the end ------\n");
+
+                String message = messageBuilder.toString();
+                logger.debug(message);
+
                 notificationService.sendValidationResultNotification(
                         notificationEmailSender,
                         VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
                         VALIDATION_EMAIL_SUBJECT,
-                        logContent);
+                        message);
             } else {
                 logger.warn("email notifcation service not set. Could not send email with validation results");
             }
@@ -928,7 +946,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             }
 
         } catch (Exception e) {
-            logger.error("unable to index subjects");
+            logger.error("Unable to index subjects: {}", e.getMessage());
         }
 
     }
