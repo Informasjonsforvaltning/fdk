@@ -33,13 +33,6 @@
   margin: 10px 0 20px 0; 
   text-align: center;
   text-decoration: none !important;
-  &:hover, &:focus, &:active {
-    -moz-transition: all .2s ease-in;
-    -o-transition: all .2s ease-in;
-    -webkit-transition: all .2s ease-in;
-    transition: all .2s ease-in;
-    background-color: $color5;
-  }
   p {
     font-weight: 400;
     margin: 10px 0 0 0;
