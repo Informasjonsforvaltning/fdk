@@ -2,7 +2,7 @@
 
 .fdk-container-stats {
   background-color: $color0;
-	border: 1px solid $color6;
+  border: 1px solid $color6;
   margin: 0 10px 10px 0;
   padding: 10px 30px 10px 30px;
   border-radius: 5px;
@@ -20,12 +20,19 @@
   }
   strong {
     font-size: 15rem;
-  }  
+  }
+  a {
+    color: $color1 !important;
+    text-decoration: none !important;
+  }
 }
-.fdk-container-stats-accesslevel {  
+.fdk-container-stats-accesslevel {
+  cursor: pointer;
+  color: $color1 !important;
   padding: 0 10px 0 10px;
   margin: 10px 0 20px 0; 
   text-align: center;
+  text-decoration: none !important;
   p {
     font-weight: 400;
     margin: 10px 0 0 0;
@@ -61,6 +68,10 @@
     margin: 0;
     font-size: 1.45rem;
     padding: 0 0 15px 0;
+  }
+  a {
+    color: $color1 !important;
+    text-decoration: none !important;
   }
 }
 .fdk-container-stats-changes-left {
