@@ -27,8 +27,6 @@ spring:
   profiles: prod
   mail:
     host: smtprelay.brreg.no
-    username: ${emailUsername}
-    password: ${emailPassword}
 application:
   elasticSearchCluster: fellesdatakatalog
   notificationMailSenderAddress: ${emailSenderAddress}
