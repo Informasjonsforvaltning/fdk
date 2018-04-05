@@ -191,17 +191,30 @@ public class Elasticsearch implements AutoCloseable {
                 try {
                     Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                     Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
-                    Resource subjectMappingResource = new ClassPathResource("dcat_subject_mapping.json");
 
                     client.admin().indices().prepareCreate(index)
                             .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
                             .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
-                            .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
                             .execute().actionGet();
 
                     logger.debug("[createIndex] {}", index);
                     client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
 
+                } catch (IOException e) {
+                    logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
+                }
+            } else if (index.equals("scat")) {
+                try {
+                    Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
+                    Resource subjectMappingResource = new ClassPathResource("scat_subject_mapping.json");
+
+                    client.admin().indices().prepareCreate(index)
+                            .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
+                            .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
+                            .execute().actionGet();
+
+                    logger.debug("[createIndex] {}", index);
+                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
                 } catch (IOException e) {
                     logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
                 }

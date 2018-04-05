@@ -33,6 +33,7 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.RDF;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -45,6 +46,7 @@ import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,6 +69,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String SUBJECT_TYPE = "subject";
     public static final String DATASET_TYPE = "dataset";
     public static final String HARVEST_INDEX = "harvest";
+    public static final String SUBJECT_INDEX = "scat";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
     public static final String VALIDATION_EMAIL_RECEIVER = "fellesdatakatalog@brreg.no"; //temporary
@@ -169,7 +172,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         harvestLog.info("Harvest log for datasource ID: " + dcatSource.getId());
 
-
         // enable gson to read subtype of publisher
         RuntimeTypeAdapterFactory<Publisher> typeFactory = RuntimeTypeAdapterFactory
                 .of(Publisher.class, "type")
@@ -181,9 +183,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 .registerTypeAdapterFactory(typeFactory)
                 .create();
 
-
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
         createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
+        createIndexIfNotExists(elasticsearch, SUBJECT_INDEX);
 
         Set<String> datasetsInSource = getSourceDatasetUris(model);
 
@@ -204,9 +206,32 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         harvestLog.info("Processing {} valid datasets. {} non valid datasets were ignored",
                 validDatasets.size(), datasetsInSource.size() - validDatasets.size());
 
+        updateDatasets(dcatSource, model, elasticsearch, validationResults, harvestLog, gson, validDatasets, catalogs);
+
+        if (notificationService != null) {
+            //get contents from harvest log file
+            notificationService.sendValidationResultNotification(
+                    notificationEmailSender,
+                    VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
+                    VALIDATION_EMAIL_SUBJECT,
+                    harvestlogger.getLogContents());
+        } else {
+            logger.warn("email notifcation service not set. Could not send email with validation results");
+        }
+
+        //delete file appender and log file
+        harvestlogger.closeLog();
+
+        updateSubjects(validDatasets, elasticsearch, gson);
+
+    }
+
+    private void updateDatasets(DcatSource dcatSource, Model model, Elasticsearch elasticsearch,
+                                List<String> validationResults, Logger harvestLog, Gson gson,
+                                List<Dataset> validDatasets, List<Catalog> catalogs) {
+
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
-        saveSubjects(dcatSource, gson, bulkRequest, reader);
 
         Date harvestTime = new Date();
         logger.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
@@ -260,27 +285,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             }
         }
 
-        if (notificationService != null) {
-            //get contents from harvest log file
-            notificationService.sendValidationResultNotification(
-                    notificationEmailSender,
-                    VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
-                    VALIDATION_EMAIL_SUBJECT,
-                    harvestlogger.getLogContents());
-        } else {
-            logger.warn("email notifcation service not set. Could not send email with validation results");
-        }
-
-        //delete file appender and log file
-        harvestlogger.closeLog();
-
         BulkResponse response = bulkRequest.execute().actionGet();
         if (response.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
             logger.error("Cannot store bulk requests: {}", response.buildFailureMessage());
         }
-
     }
+
 
     /**
      * Add extra fields to the dataset to help visualization.
@@ -577,7 +588,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             DatasetLookup lookupEntry = findOrCreateDatasetLookupAndUpdateDatasetId(dataset, elasticsearch, gson, stats, harvestTime);
 
             if (!lookupEntry.getDatasetId().equals(dataset.getId())) {
-                throw new Exception(String.format("LookupEntry {} does not match datasetid {}", lookupEntry.getDatasetId(), dataset.getId()));
+                throw new Exception(String.format("LookupEntry %s does not match datasetid %s", lookupEntry.getDatasetId(), dataset.getId()));
             }
 
             DatasetHarvestRecord lastHarvestRecordWithContent;
@@ -597,7 +608,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             if (lastHarvestRecordWithContent != null) {
                 if (!lastHarvestRecordWithContent.getDatasetId().equals(dataset.getId())) {
-                    throw new Exception(String.format("LastHarvestRecordWithChange {} does not match datasetid {}", lastHarvestRecordWithContent.getDatasetId(), dataset.getId()));
+                    throw new Exception(String.format("LastHarvestRecordWithChange %s does not match datasetid %s", lastHarvestRecordWithContent.getDatasetId(), dataset.getId()));
                 }
                 // detect changes
                 isChanged = isChanged(lastHarvestRecordWithContent, dataset, gson);
@@ -813,24 +824,102 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         bulkRequest.add(catalogCrawlRequest);
     }
 
+    void updateSubjects(List<Dataset> datasets, Elasticsearch elasticsearch, Gson gson) {
 
-    private void saveSubjects(DcatSource dcatSource, Gson gson, BulkRequestBuilder bulkRequest, DcatReader reader) {
-        List<Subject> subjects = reader.getSubjects();
-        List<Subject> filteredSubjects = subjects.stream().filter(s ->
-                s.getPrefLabel() != null && s.getDefinition() != null && !s.getPrefLabel().isEmpty() && !s.getDefinition().isEmpty())
-                .collect(Collectors.toList());
+        try {
 
-        logger.info("Total number of unique subject uris {} in dcat source {}.", subjects.size(), dcatSource.getId());
-        logger.info("Adding {} subjects with prefLabel and definition to elastic", filteredSubjects.size());
+            Map<String, Subject> uniqueSubjectsToIndex = new HashMap<>();
 
-        for (Subject subject : filteredSubjects) {
+            // find the datasets unique subjects
+            datasets.forEach(dataset -> {
+               if (dataset.getSubject() != null) {
+                   dataset.getSubject().forEach(subject -> {
 
-            IndexRequest indexRequest = new IndexRequest(DCAT_INDEX, SUBJECT_TYPE, subject.getUri());
-            indexRequest.source(gson.toJson(subject));
+                       assert subject != null;
+                       assert subject.getUri() != null;
 
-            logger.debug("Add subject document {} to bulk request", subject.getUri());
-            bulkRequest.add(indexRequest);
+                       Subject uniqueSubject = uniqueSubjectsToIndex.get(subject.getUri());
+                       if (uniqueSubject == null) {
+                           uniqueSubjectsToIndex.put(subject.getUri(), subject);
+                           uniqueSubject = subject;
+                       }
+
+                       if (uniqueSubject.getDatasets() == null) {
+                           uniqueSubject.setDatasets(new ArrayList<>());
+                       }
+
+                       uniqueSubject.getDatasets().add(snuff(dataset));
+
+                   });
+               }
+            });
+
+            // find subjects already stored
+            Map<String, Subject> subjectsStored = new HashMap<>();
+            uniqueSubjectsToIndex.forEach((key, value) -> {
+
+                GetResponse response = elasticsearch.getClient().get(new GetRequest(SUBJECT_INDEX, SUBJECT_TYPE, key)).actionGet();
+                Subject subject = gson.fromJson(response.getSourceAsString(), Subject.class);
+
+                if (subject != null) {
+                    subjectsStored.put(key, subject);
+                }
+            });
+
+            // update subjects saved
+            BulkRequestBuilder bulkSubjectBuilder = elasticsearch.getClient().prepareBulk();
+            uniqueSubjectsToIndex.forEach((key, uniqueSubject) -> {
+
+                Subject storedSubject = subjectsStored.get(key);
+
+                if (storedSubject != null) {
+                    List<Dataset> storedDatasets = storedSubject.getDatasets();
+                    Map<String, Dataset> datasetMap = new HashMap<>();
+
+                    BeanUtils.copyProperties(uniqueSubject, storedSubject);
+
+                    uniqueSubject.getDatasets().forEach(dataset -> {
+                        datasetMap.put(dataset.getUri(), dataset);
+                    });
+
+                    // merge any extra dataset harvested earlier
+                    storedDatasets.forEach(dataset -> {
+                        if (!datasetMap.containsKey(dataset.getUri())) {
+                            datasetMap.put(dataset.getUri(), snuff(dataset));
+                        }
+                    });
+
+                    uniqueSubject.setDatasets(new ArrayList<>(datasetMap.values()));
+                }
+
+                IndexRequest indexRequest = new IndexRequest(SUBJECT_INDEX, SUBJECT_TYPE, uniqueSubject.getUri());
+                indexRequest.source(gson.toJson(uniqueSubject));
+
+                logger.debug("Add subject document {} to bulk request", uniqueSubject.getUri());
+                bulkSubjectBuilder.add(indexRequest);
+
+            });
+
+            BulkResponse response = bulkSubjectBuilder.execute().actionGet();
+            if (response.hasFailures()) {
+                //TODO: process failures by iterating through each bulk response item?
+                logger.error("Cannot store bulk requests: {}", response.buildFailureMessage());
+            }
+
+        } catch (Exception e) {
+            logger.error("unable to index subjects");
         }
+
+    }
+
+    private Dataset snuff(Dataset d) {
+        Dataset s = new Dataset();
+        s.setId(d.getId());
+        s.setUri(d.getUri());
+        s.setTitle(d.getTitle());
+        s.setDescription(d.getDescription());
+
+        return s;
     }
 
     private void createIndexIfNotExists(Elasticsearch elasticsearch, String indexName) {
