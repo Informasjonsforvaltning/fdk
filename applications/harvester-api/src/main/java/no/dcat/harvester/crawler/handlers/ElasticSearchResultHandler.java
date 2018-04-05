@@ -373,7 +373,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         ExistsQueryBuilder hasDatasetValue = QueryBuilders.existsQuery("dataset");
 
         BoolQueryBuilder datasetWithValueQuery = QueryBuilders.boolQuery();
-        datasetWithValueQuery.should(hasDatasetId).should(hasDatasetValue);
+        datasetWithValueQuery.must(hasDatasetId).must(hasDatasetValue);
 
         logger.debug("query: {}", datasetWithValueQuery.toString());
 
@@ -391,6 +391,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 logger.debug("Found {} harvested at {}", lastHarvestRecord.getDatasetId(), dateFormat.format(lastHarvestRecord.getDate()));
 
                 return lastHarvestRecord;
+            } else {
+                logger.info("Dataset {} has no harvest metadata and are never harvested before", dataset.getUri());
             }
 
         }
