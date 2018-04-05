@@ -647,7 +647,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             DatasetHarvestRecord lastHarvestRecordWithContent;
 
             // compensate if we do not have first harvest date (handles old way) harvest records.
-            if (lookupEntry.getHarvest().getFirstHarvested() == null) {
+            if (true) { // TODO replace lookupEntry.getHarvest().getFirstHarvested() == null) {
                 // this should be removed - TODO
                 logger.info("Compensating actions for dataset: {}", dataset.getUri());
                 lookupEntry.getHarvest().setFirstHarvested(getFirstHarvestedDate(dataset, elasticsearch, gson));
