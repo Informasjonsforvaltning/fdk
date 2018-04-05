@@ -23,6 +23,8 @@ public class Subject implements Serializable{
     private Publisher creator;
     private List<String> inScheme;
 
+    private List<Dataset> datasets;
+
     public Subject() {
     }
 

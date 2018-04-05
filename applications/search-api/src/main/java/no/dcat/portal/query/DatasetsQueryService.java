@@ -104,7 +104,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "size", defaultValue = "10", required = false) int size,
                                          @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
                                          @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
-                                         @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection) {
+                                         @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection,
+                                         @RequestParam(value = "subject", defaultValue = "", required = false) String subject) {
 
 
         StringBuilder loggMsg = new StringBuilder()
@@ -119,7 +120,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" size:").append(size)
                 .append(" lang:").append(lang)
                 .append(" sortfield:").append(sortfield)
-                .append(" sortdirection:").append(sortdirection);
+                .append(" sortdirection:").append(sortdirection)
+                .append(" subject:").append(subject);
 
         logger.debug(loggMsg.toString());
 
@@ -154,13 +156,16 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .field("publisher.name").boost(3f)
                     .field("accessRights.prefLabel" + "." + lang)
                     .field("accessRights.code")
+                    .field("subject.prefLabel." + lang)
+                    .field("subject.altLabel." + lang)
+                    .field("subject.definition." + lang)
                     .defaultOperator(SimpleQueryStringBuilder.Operator.OR);
         }
 
         logger.trace(search.toString());
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged, subject);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -255,7 +260,10 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights, QueryBuilder search, String orgPath, int firstHarvested, int lastChanged) {
+    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
+                                       QueryBuilder search, String orgPath,
+                                       int firstHarvested, int lastChanged,
+                                       String subject) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
@@ -313,6 +321,18 @@ public class DatasetsQueryService extends ElasticsearchService {
             BoolQueryBuilder lastChangedFilter = QueryBuilders.boolQuery();
             lastChangedFilter.must(temporalRange(lastChanged, "harvest.lastChanged"));
             boolQuery.filter(lastChangedFilter);
+        }
+
+        if (!StringUtils.isEmpty(subject)) {
+            BoolQueryBuilder subjectFilter = QueryBuilders.boolQuery();
+            for (String subj : subject.split(",")) {
+                if (subj.startsWith("http")) {
+                    subjectFilter.must(QueryBuilders.matchQuery("subject.uri", subj));
+                } else {
+                    subjectFilter.must(QueryBuilders.termQuery("subject.prefLabel.no", subj));
+                }
+            }
+            boolQuery.filter(subjectFilter);
         }
 
         return boolQuery;
