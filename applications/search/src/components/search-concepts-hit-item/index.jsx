@@ -139,7 +139,7 @@ export default class ConceptsHitItem extends React.Component {
         <p>
           <a
             title="Link til datasett med begrep"
-            href={`/?subjects=${getTranslateText(
+            href={`/?subject=${getTranslateText(
               _source.prefLabel,
               selectedLanguageCode
             )}${langParam}`}
