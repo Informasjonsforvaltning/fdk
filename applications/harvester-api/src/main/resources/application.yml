@@ -26,19 +26,9 @@ fuseki:
 spring:
   profiles: prod
   mail:
-    host: smtprelay@brreg.no
-    port: 587
+    host: smtprelay.brreg.no
     username: ${emailUsername}
     password: ${emailPassword}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          connectionTimeout: 5000
-          timeout: 3000
-          writetimeout: 5000
-          starttls:
-            enable: true
 application:
   elasticSearchCluster: fellesdatakatalog
   notificationMailSenderAddress: ${emailSenderAddress}
