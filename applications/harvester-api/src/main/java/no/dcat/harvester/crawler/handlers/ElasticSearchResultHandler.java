@@ -96,6 +96,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     String notificationEmailSender;
 
 
+    ch.qos.logback.classic.Logger rootLogger;
+    FileAppender<ILoggingEvent> fileAppender;
+    String logFileName = "";
+
     /**
      * Creates a new elasticsearch code result handler connected to
      * a particular elasticsearch instance.
@@ -160,6 +164,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return new DcatReader(model, themesHostname, httpUsername, httpPassword);
     }
 
+
     /**
      * Index data catalog with Elasticsearch
      *
@@ -170,9 +175,54 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
 
-        ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        FileAppender<ILoggingEvent> fileAppender = new FileAppender<>();
-        String logFileName ="";
+        createIndexIfNotExists(elasticsearch, DCAT_INDEX);
+        createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
+        createIndexIfNotExists(elasticsearch, SUBJECT_INDEX);
+
+        openHarvestLog();
+
+        Set<String> datasetsInSource = getSourceDatasetUris(model);
+
+        DcatReader reader = getReader(model);
+        List<Dataset> validDatasets = reader.getDatasets();
+        List<Catalog> catalogs = reader.getCatalogs();
+
+        if (validDatasets == null || validDatasets.isEmpty()) {
+            throw new RuntimeException(
+                    String.format("No valid datasets to index. %d datasets were found at source url %s",
+                            datasetsInSource.size(),
+                            dcatSource.getUrl()));
+        }
+        logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
+                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+
+
+        Gson gson = getGson();
+
+        updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, validDatasets, catalogs);
+        updateSubjects(validDatasets, elasticsearch, gson);
+
+        closeAndReportHarvestLog(dcatSource, validationResults);
+    }
+
+    private Gson getGson() {
+        // enable gson to read subtype of publisher
+        RuntimeTypeAdapterFactory<Publisher> typeFactory = RuntimeTypeAdapterFactory
+                .of(Publisher.class, "type")
+                .registerSubtype(no.dcat.datastore.domain.dcat.Publisher.class, no.dcat.datastore.domain.dcat.Publisher.class.getName());
+
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .setDateFormat(DATE_FORMAT)
+                .registerTypeAdapterFactory(typeFactory)
+                .create();
+    }
+
+    void openHarvestLog() {
+
+        rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("no.dcat");
+        fileAppender = new FileAppender<>();
+        logFileName ="";
 
         try {
             logFileName = File.createTempFile("harvest", ".log").getAbsolutePath();
@@ -196,40 +246,9 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         } catch (Exception e) {
             logger.error("Unable to create logging facade {}",e.getMessage());
         }
+    }
 
-        // enable gson to read subtype of publisher
-        RuntimeTypeAdapterFactory<Publisher> typeFactory = RuntimeTypeAdapterFactory
-                .of(Publisher.class, "type")
-                .registerSubtype(no.dcat.datastore.domain.dcat.Publisher.class, no.dcat.datastore.domain.dcat.Publisher.class.getName());
-
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .setDateFormat(DATE_FORMAT)
-                .registerTypeAdapterFactory(typeFactory)
-                .create();
-
-        createIndexIfNotExists(elasticsearch, DCAT_INDEX);
-        createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
-        createIndexIfNotExists(elasticsearch, SUBJECT_INDEX);
-
-        Set<String> datasetsInSource = getSourceDatasetUris(model);
-
-        DcatReader reader = getReader(model);
-        List<Dataset> validDatasets = reader.getDatasets();
-        List<Catalog> catalogs = reader.getCatalogs();
-
-        if (validDatasets == null || validDatasets.isEmpty()) {
-            throw new RuntimeException(
-                    String.format("No valid datasets to index. %d datasets were found at source url %s",
-                            datasetsInSource.size(),
-                            dcatSource.getUrl()));
-        }
-        logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
-                validDatasets.size(), datasetsInSource.size() - validDatasets.size());
-
-
-        updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, validDatasets, catalogs);
-        updateSubjects(validDatasets, elasticsearch, gson);
+    void closeAndReportHarvestLog(DcatSource dcatSource, List<String> validationResults) {
 
         rootLogger.detachAppender(fileAppender);
 
@@ -271,7 +290,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         } catch (Exception e) {
             logger.warn("unable to read logContent {}", e.getMessage(), e);
         }
-
     }
 
     private void updateDatasets(DcatSource dcatSource, Model model, Elasticsearch elasticsearch,
