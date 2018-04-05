@@ -52,6 +52,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     ch.qos.logback.classic.Logger rootLogger;
     FileAppender<ILoggingEvent> fileAppender;
-    String logFileName = "";
+    Path temporarylogFile;
 
     /**
      * Creates a new elasticsearch code result handler connected to
@@ -223,11 +224,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("no.dcat");
         fileAppender = new FileAppender<>();
-        logFileName ="";
 
         try {
-            logFileName = File.createTempFile("harvest", ".log").getAbsolutePath();
-            logger.info("logfile={}", logFileName);
+            temporarylogFile = Files.createTempFile("harvest", ".log");
+            logger.info("logfile={}", temporarylogFile);
 
             LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
@@ -236,7 +236,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             ple.setContext(lc);
             ple.start();
 
-            fileAppender.setFile(logFileName);
+            fileAppender.setFile(temporarylogFile.toString());
             fileAppender.setEncoder(ple);
             fileAppender.setContext(lc);
             fileAppender.start();
@@ -251,15 +251,17 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
 
-        rootLogger.detachAppender(fileAppender);
-
         try  {
             //get contents from harvest log file
+            rootLogger.detachAppender(fileAppender);
+            fileAppender.stop();
 
             String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
-            String validationReport = new String(Files.readAllBytes(Paths.get(logFileName)));
+            String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
 
-            if(notificationService != null &&  !validationReport.isEmpty()) {
+            Files.delete(temporarylogFile);
+
+            if(notificationService != null &&  (!dcatSyntaxValidation.isEmpty() || !semanticValidation.isEmpty())) {
                 //add special logger for the message that will be sent to dcatsource owner;
                 String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
@@ -270,7 +272,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                         dcatSyntaxValidation + "\n\n" +
                         "SEMANTIC CHECKS\n" +
                         "--------------------\n\n" +
-                        validationReport + "\n\n" +
+                        semanticValidation + "\n\n" +
                         "----- the end ------\n";
                 logger.debug(message);
 
