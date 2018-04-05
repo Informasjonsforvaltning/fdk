@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
   public class TermsQueryService extends ElasticsearchService {
-    public static final String INDEX_DCAT = "dcat";
+    public static final String SUBJECT_INDEX = "scat";
 
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
@@ -77,7 +77,7 @@ import org.springframework.web.bind.annotation.RestController;
         if ("en".equals(lang)) {
             analyzerLang = "english";
         }
-        lang = "no"; // hardcode to search in all language fields
+        lang = "*"; // hardcode to search in all language fields
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
@@ -94,7 +94,10 @@ import org.springframework.web.bind.annotation.RestController;
                     .field("definition" + "." + lang).boost(3)
                     .field("creator.name").boost(2)
                     .field("inScheme")
-                    .field("note" + "." + lang);
+                    .field("note" + "." + lang)
+                    .field("datasets.title.*")
+                    .field("datasets.description.*")
+            ;
         }
 
         logger.trace(search.toString());
@@ -113,8 +116,6 @@ import org.springframework.web.bind.annotation.RestController;
     private BoolQueryBuilder addFilter(QueryBuilder search, String creator, String orgPath) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
-
-        BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
 
         if (!StringUtils.isEmpty(creator)) {
             BoolQueryBuilder boolFilterPublisher = QueryBuilders.boolQuery();
@@ -154,7 +155,7 @@ import org.springframework.web.bind.annotation.RestController;
                 .order(Order.count(false));
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = client.prepareSearch(SUBJECT_INDEX)
                 .setTypes("subject")
                 .setQuery(search)
                 .setFrom(from)

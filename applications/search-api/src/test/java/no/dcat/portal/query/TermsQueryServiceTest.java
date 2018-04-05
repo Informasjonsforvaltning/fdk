@@ -59,7 +59,7 @@ public class TermsQueryServiceTest {
         QueryBuilder queryBuilder = mock (QueryBuilder.class);
         SearchRequestBuilder searchRequestBuilder = mock (SearchRequestBuilder.class);
 
-        when(client.prepareSearch("dcat")).thenReturn(searchRequestBuilder);
+        when(client.prepareSearch("scat")).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setTypes(anyString())).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setQuery(queryBuilder)).thenReturn(searchRequestBuilder);
         when(searchRequestBuilder.setFrom(0)).thenReturn(searchRequestBuilder);

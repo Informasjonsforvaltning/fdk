@@ -29,7 +29,6 @@ export default class ResultsDatasetsReport extends React.Component {
     this.state = {
       entity: '',
       aggregateDataset: {},
-      catalog: {},
       publishers: [],
       searchValue: '',
       selectedOrgPath: null
@@ -132,17 +131,6 @@ export default class ResultsDatasetsReport extends React.Component {
       .catch(error => {
         console.error(error.response);
       });
-    axios
-      .get(`/harvest/catalog?q=${query}`)
-      .then(response => {
-        const data = response.data;
-        this.setState({
-          catalog: data
-        });
-      })
-      .catch(error => {
-        console.error(error.response);
-      });
   }
 
   handleOnChangeSearchField(value) {
@@ -211,7 +199,6 @@ export default class ResultsDatasetsReport extends React.Component {
                 <ReportStats
                   aggregateDataset={this.state.aggregateDataset}
                   entity={this.state.entity}
-                  catalog={this.state.catalog}
                 />
               </div>
             </div>
