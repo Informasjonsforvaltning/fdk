@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { Modal, Button } from 'react-bootstrap';
+import cx from 'classnames';
 
 import localization from '../localization';
 import SearchHitItem from '../search-results-hit-item';
@@ -100,6 +101,7 @@ export default class ResultsDataset extends React.Component {
       onFilterPublisherHierarchy,
       onSort,
       onPageChange,
+      showClearFilterButton,
       searchQuery,
       themesItems,
       hitsPerPage,
@@ -113,13 +115,22 @@ export default class ResultsDataset extends React.Component {
         hitsPerPage
     );
 
+    const clearButtonClass = cx(
+      'fdk-button',
+      'fdk-button-default-no-hover',
+      'fade-in-500',
+      {
+        hidden: !showClearFilterButton
+      }
+    );
+
     return (
       <div id="content" role="main">
         <div id="resultPanel">
           <div className="row mt-1 mb-1">
             <div className="col-xs-6 col-md-4">
               <button
-                className="fdk-button fdk-button-default-no-hover"
+                className={clearButtonClass}
                 onClick={onClearSearch}
                 type="button"
               >

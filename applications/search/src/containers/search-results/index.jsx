@@ -409,6 +409,13 @@ class SearchPage extends React.Component {
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
+                  showClearFilterButton={
+                    !!(
+                      this.state.searchQuery.theme ||
+                      this.state.searchQuery.accessrights ||
+                      this.state.searchQuery.orgPath
+                    )
+                  }
                   closeFilterModal={this.close}
                   hitsPerPage={50}
                   publisherArray={publisherCountItems}
@@ -433,6 +440,7 @@ class SearchPage extends React.Component {
                   hitsPerPage={50}
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
+                  showClearFilterButton={!!this.state.searchQuery.orgPath}
                   publisherArray={publisherCountTermItems}
                   publishers={publisherItems}
                   subjectsCountItems={subjectsCountItems}

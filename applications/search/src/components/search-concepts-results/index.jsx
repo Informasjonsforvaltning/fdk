@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { Modal, Button } from 'react-bootstrap';
+import cx from 'classnames';
 
 import localization from '../localization';
 import ConceptsHitItem from '../search-concepts-hit-item';
@@ -146,6 +147,7 @@ export default class ResultsConcepts extends React.Component {
       onPageChange,
       onFilterPublisherHierarchy,
       searchQuery,
+      showClearFilterButton,
       hitsPerPage,
       publisherArray,
       publishers
@@ -156,13 +158,22 @@ export default class ResultsConcepts extends React.Component {
       (termItems && termItems.hits ? termItems.hits.total : 1) / hitsPerPage
     );
 
+    const clearButtonClass = cx(
+      'fdk-button',
+      'fdk-button-default-no-hover',
+      'fade-in-500',
+      {
+        hidden: !showClearFilterButton
+      }
+    );
+
     return (
       <div id="content" role="main">
         <div id="conceptsPanel">
-          <div className="row mt-1 mb-1">
+          <div className="row mt-1 mb-1 fdk-button-row">
             <div className="col-md-4">
               <button
-                className="fdk-button fdk-button-default-no-hover"
+                className={clearButtonClass}
                 onClick={onClearSearch}
                 type="button"
               >
