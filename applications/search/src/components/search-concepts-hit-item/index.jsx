@@ -134,7 +134,7 @@ export default class ConceptsHitItem extends React.Component {
     if (lang) {
       langParam = `&lang=${lang}`;
     }
-    if (subjectCountItem > 0) {
+    if (subjectCountItem > 0 && _source.prefLabel) {
       return (
         <p>
           <a

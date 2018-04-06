@@ -81,24 +81,19 @@ export default class ResultsConcepts extends React.Component {
       termItems.hits.hits &&
       subjectsCountItems
     ) {
-      return termItems.hits.hits.map(item => {
-        if (item._source.identifier) {
-          return (
-            <ConceptsHitItem
-              key={item._id}
-              result={item}
-              terms={this.state.terms}
-              onAddTerm={this.handleAddTerm}
-              onDeleteTerm={this.handleDeleteTerm}
-              subjectCountItem={
-                item._source.datasets ? item._source.datasets.length : 0
-              }
-              selectedLanguageCode={this.props.selectedLanguageCode}
-            />
-          );
-        }
-        return null;
-      });
+      return termItems.hits.hits.map(item => (
+        <ConceptsHitItem
+          key={item._id}
+          result={item}
+          terms={this.state.terms}
+          onAddTerm={this.handleAddTerm}
+          onDeleteTerm={this.handleDeleteTerm}
+          subjectCountItem={
+            item._source.datasets ? item._source.datasets.length : 0
+          }
+          selectedLanguageCode={this.props.selectedLanguageCode}
+        />
+      ));
     }
     return null;
   }

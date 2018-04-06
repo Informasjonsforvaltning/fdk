@@ -1,3 +1,5 @@
+@import './colors.scss';
+
 @mixin animate($params){
   -webkit-animation: $params;
   -moz-animation: $params;
@@ -37,4 +39,50 @@
 @-o-keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+@keyframes autofill {
+  to {
+    color: $color1;
+    background: $color0;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes autofill {
+  to {
+    color: $color1;
+    background: $color0;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes autofill {
+  to {
+    color: $color1;
+    background: $color0;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes autofill {
+  to {
+    color: $color1;
+    background: $color0;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes autofill {
+  to {
+    color: $color1;
+    background: $color0;
+  }
 }
