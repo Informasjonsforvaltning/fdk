@@ -88,9 +88,6 @@ export default class ResultsConcepts extends React.Component {
           terms={this.state.terms}
           onAddTerm={this.handleAddTerm}
           onDeleteTerm={this.handleDeleteTerm}
-          subjectCountItem={
-            item._source.datasets ? item._source.datasets.length : 0
-          }
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       ));

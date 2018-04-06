@@ -124,20 +124,18 @@ export default class ConceptsHitItem extends React.Component {
   }
 
   _renderDocCount() {
-    const {
-      result: { _source },
-      subjectCountItem,
-      selectedLanguageCode
-    } = this.props;
+    const { result: { _source }, selectedLanguageCode } = this.props;
     const lang = getLanguageFromUrl();
     let langParam = '';
     if (lang) {
       langParam = `&lang=${lang}`;
     }
+    const subjectCountItem = _source.datasets ? _source.datasets.length : 0;
     if (subjectCountItem > 0 && _source.prefLabel) {
       return (
         <p>
           <a
+            className="fdk-hit-dataset-count"
             title="Link til datasett med begrep"
             href={`/?subject=${getTranslateText(
               _source.prefLabel,
