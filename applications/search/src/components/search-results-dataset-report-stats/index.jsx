@@ -49,23 +49,25 @@ const ReportStats = props => {
 
     newLastWeek:
       aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.lastChanged.buckets &&
-      aggregateDataset.aggregations.lastChanged.buckets.last7days
-        ? aggregateDataset.aggregations.lastChanged.buckets.last7days.doc_count
+      aggregateDataset.aggregations.firstHarvested.buckets &&
+      aggregateDataset.aggregations.firstHarvested.buckets.last7days
+        ? aggregateDataset.aggregations.firstHarvested.buckets.last7days
+            .doc_count
         : 0,
 
     newLastMonth:
       aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.lastChanged.buckets &&
-      aggregateDataset.aggregations.lastChanged.buckets.last30days
-        ? aggregateDataset.aggregations.lastChanged.buckets.last30days.doc_count
+      aggregateDataset.aggregations.firstHarvested.buckets &&
+      aggregateDataset.aggregations.firstHarvested.buckets.last30days
+        ? aggregateDataset.aggregations.firstHarvested.buckets.last30days
+            .doc_count
         : 0,
 
     newLastYear:
       aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.lastChanged.buckets &&
-      aggregateDataset.aggregations.lastChanged.buckets.last365days
-        ? aggregateDataset.aggregations.lastChanged.buckets.last365days
+      aggregateDataset.aggregations.firstHarvested.buckets &&
+      aggregateDataset.aggregations.firstHarvested.buckets.last365days
+        ? aggregateDataset.aggregations.firstHarvested.buckets.last365days
             .doc_count
         : 0,
 
@@ -203,7 +205,7 @@ const ReportStats = props => {
                   <Link
                     title={localization.report.newDatasets}
                     className="fdk-plain-label"
-                    to={`/?lastChanged=7${orgPathParam}`}
+                    to={`/?firstHarvested=7${orgPathParam}`}
                   >
                     {stats.newLastWeek}
                   </Link>
@@ -224,7 +226,7 @@ const ReportStats = props => {
                   <Link
                     title={localization.report.deletedLastMonth}
                     className="fdk-plain-label"
-                    to={`/?lastChanged=30${orgPathParam}`}
+                    to={`/?firstHarvested=30${orgPathParam}`}
                   >
                     {stats.newLastMonth}
                   </Link>
@@ -245,7 +247,7 @@ const ReportStats = props => {
                   <Link
                     title={localization.report.newDatasets}
                     className="fdk-plain-label"
-                    to={`/?lastChanged=365${orgPathParam}`}
+                    to={`/?firstHarvested=365${orgPathParam}`}
                   >
                     {stats.newLastYear}
                   </Link>
