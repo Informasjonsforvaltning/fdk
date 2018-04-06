@@ -1,8 +1,8 @@
-import LocalizedStrings from "react-localization";
+import LocalizedStrings from 'react-localization';
 
-import en from "../../l10n/en.json";
-import nb from "../../l10n/nb.json";
-import nn from "../../l10n/nn.json";
+import en from '../../l10n/en.json';
+import nb from '../../l10n/nb.json';
+import nn from '../../l10n/nn.json';
 
 const localization = new LocalizedStrings({
   en,
@@ -10,6 +10,6 @@ const localization = new LocalizedStrings({
   nn
 });
 
-localization.setLanguage("nb");
+localization.setLanguage('nb');
 
 export default localization;

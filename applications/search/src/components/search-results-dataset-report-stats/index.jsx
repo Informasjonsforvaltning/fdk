@@ -1,71 +1,73 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import localization from "../localization";
-import { getParamFromString } from "../../utils/addOrReplaceUrlParam";
-import "./index.scss";
+import localization from '../localization';
+import { getParamFromString } from '../../utils/addOrReplaceUrlParam';
+import './index.scss';
 
 const ReportStats = props => {
-  const { aggregateDataset, entity, catalog } = props;
+  const { aggregateDataset, entity } = props;
 
   const stats = {
     total: aggregateDataset.hits ? aggregateDataset.hits.total : 0,
     public:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "PUBLIC"
+        bucket => bucket.key.toUpperCase() === 'PUBLIC'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "PUBLIC"
+            bucket => bucket.key.toUpperCase() === 'PUBLIC'
           ).doc_count
         : 0,
     restricted:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "RESTRICTED"
+        bucket => bucket.key.toUpperCase() === 'RESTRICTED'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "RESTRICTED"
+            bucket => bucket.key.toUpperCase() === 'RESTRICTED'
           ).doc_count
         : 0,
     nonPublic:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "NON_PUBLIC"
+        bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "NON_PUBLIC"
+            bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
           ).doc_count
         : 0,
     unknown:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === "UKJENT"
+        bucket => bucket.key.toUpperCase() === 'UKJENT'
       )
         ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === "UKJENT"
+            bucket => bucket.key.toUpperCase() === 'UKJENT'
           ).doc_count
         : 0,
 
     newLastWeek:
       aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.lastChanged.buckets &&
-      aggregateDataset.aggregations.lastChanged.buckets.last7days
-        ? aggregateDataset.aggregations.lastChanged.buckets.last7days.doc_count
+      aggregateDataset.aggregations.firstHarvested.buckets &&
+      aggregateDataset.aggregations.firstHarvested.buckets.last7days
+        ? aggregateDataset.aggregations.firstHarvested.buckets.last7days
+            .doc_count
         : 0,
 
     newLastMonth:
       aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.lastChanged.buckets &&
-      aggregateDataset.aggregations.lastChanged.buckets.last30days
-        ? aggregateDataset.aggregations.lastChanged.buckets.last30days.doc_count
+      aggregateDataset.aggregations.firstHarvested.buckets &&
+      aggregateDataset.aggregations.firstHarvested.buckets.last30days
+        ? aggregateDataset.aggregations.firstHarvested.buckets.last30days
+            .doc_count
         : 0,
 
     newLastYear:
       aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.lastChanged.buckets &&
-      aggregateDataset.aggregations.lastChanged.buckets.last365days
-        ? aggregateDataset.aggregations.lastChanged.buckets.last365days
+      aggregateDataset.aggregations.firstHarvested.buckets &&
+      aggregateDataset.aggregations.firstHarvested.buckets.last365days
+        ? aggregateDataset.aggregations.firstHarvested.buckets.last365days
             .doc_count
         : 0,
 
@@ -95,10 +97,10 @@ const ReportStats = props => {
         : 0
   };
 
-  const orgPath = getParamFromString(window.location.search, "orgPath");
+  const orgPath = getParamFromString(window.location.search, 'orgPath');
   const encodedOrgPath = orgPath ? encodeURIComponent(orgPath) : null;
   const orgPathParam =
-    encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : "";
+    encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';
 
   const title = (
     <div className="row">
@@ -120,7 +122,7 @@ const ReportStats = props => {
       <div className="fdk-container-stats fdk-container-stats-total">
         <h1>
           <strong>
-            <Link to={orgPath ? `/?orgPath=${encodedOrgPath}` : "/"}>
+            <Link to={orgPath ? `/?orgPath=${encodedOrgPath}` : '/'}>
               {stats.total}
             </Link>
           </strong>
@@ -155,7 +157,7 @@ const ReportStats = props => {
           >
             <p>
               <strong>
-                {" "}
+                {' '}
                 <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />
                 {stats.restricted}
               </strong>
@@ -203,7 +205,7 @@ const ReportStats = props => {
                   <Link
                     title={localization.report.newDatasets}
                     className="fdk-plain-label"
-                    to={`/?lastChanged=7${orgPathParam}`}
+                    to={`/?firstHarvested=7${orgPathParam}`}
                   >
                     {stats.newLastWeek}
                   </Link>
@@ -224,7 +226,7 @@ const ReportStats = props => {
                   <Link
                     title={localization.report.deletedLastMonth}
                     className="fdk-plain-label"
-                    to={`/?lastChanged=30${orgPathParam}`}
+                    to={`/?firstHarvested=30${orgPathParam}`}
                   >
                     {stats.newLastMonth}
                   </Link>
@@ -245,7 +247,7 @@ const ReportStats = props => {
                   <Link
                     title={localization.report.newDatasets}
                     className="fdk-plain-label"
-                    to={`/?lastChanged=365${orgPathParam}`}
+                    to={`/?firstHarvested=365${orgPathParam}`}
                   >
                     {stats.newLastYear}
                   </Link>

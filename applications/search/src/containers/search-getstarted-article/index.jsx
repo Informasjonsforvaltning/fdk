@@ -1,13 +1,13 @@
 /* eslint-disable react/no-danger */
-import React from "react";
-import DocumentMeta from "react-document-meta";
+import React from 'react';
+import DocumentMeta from 'react-document-meta';
 
-import localization from "../../components/localization";
-import "./index.scss";
+import localization from '../../components/localization';
+import './index.scss';
 
 const Article = () => {
   const meta = {
-    title: "Hvordan komme i gang med registrering av datasett"
+    title: 'Hvordan komme i gang med registrering av datasett'
   };
   return (
     <div className="container">
@@ -59,7 +59,7 @@ const Article = () => {
             <div>
               Du må ha rollen <strong>Tilgangsstyring</strong> for din
               virksomhet for å tildele roller og rettigheter til andre.<br />
-              Du trenger <strong>fødselsnummer</strong> (11 siffer) og{" "}
+              Du trenger <strong>fødselsnummer</strong> (11 siffer) og{' '}
               <strong>etternavnet</strong> til den du ønsker å tildele
               rettigheter til.
             </div>
@@ -106,7 +106,7 @@ const Article = () => {
                 className="fdk-box__rowItem__text"
                 dangerouslySetInnerHTML={{
                   __html:
-                    "I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for."
+                    'I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for.'
                 }}
               />
               <div className="fdk-box__rowItem--big">
@@ -139,7 +139,7 @@ const Article = () => {
                 <p
                   dangerouslySetInnerHTML={{
                     __html:
-                      "Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>."
+                      'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>.'
                   }}
                 />
                 <p>
@@ -172,7 +172,7 @@ const Article = () => {
 
             <div className="text-center">
               <span>
-                Gratulerer! Nå har du opprettet en{" "}
+                Gratulerer! Nå har du opprettet en{' '}
                 <strong>datasettansvarlig</strong> for din virksomhet.
               </span>
             </div>
@@ -253,7 +253,7 @@ const Article = () => {
                       href="mailto:fellesdatakatalog@brreg.no"
                     >
                       Send oss gjerne en e-post
-                    </a>{" "}
+                    </a>{' '}
                     med ris, ros eller om morsomme bugs som har klart å gjemme
                     seg fra testerne våre.
                   </p>

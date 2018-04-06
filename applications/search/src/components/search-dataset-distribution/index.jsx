@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
-import DistributionFormat from "../search-dataset-format";
-import "./index.scss";
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
+import DistributionFormat from '../search-dataset-format';
+import './index.scss';
 
 export default class DatasetDistribution extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -14,7 +14,7 @@ export default class DatasetDistribution extends React.Component {
     const children = (items, code) =>
       items.map(item => {
         if (item !== null) {
-          const formatArray = item.trim().split(",");
+          const formatArray = item.trim().split(',');
           return formatArray.map((item, index) => {
             if (item === null) {
               return null;
@@ -160,11 +160,11 @@ export default class DatasetDistribution extends React.Component {
 
   render() {
     const { title, code } = this.props;
-    const distributionClass = cx("fdk-container-detail", {
-      "fdk-container-detail-unntatt-offentlig": code === "NON_PUBLIC",
-      "fdk-container-detail-begrenset": code === "RESTRICTED",
-      "fdk-container-detail-offentlig": code === "PUBLIC",
-      "fdk-container-detail-sample": code === "SAMPLE"
+    const distributionClass = cx('fdk-container-detail', {
+      'fdk-container-detail-unntatt-offentlig': code === 'NON_PUBLIC',
+      'fdk-container-detail-begrenset': code === 'RESTRICTED',
+      'fdk-container-detail-offentlig': code === 'PUBLIC',
+      'fdk-container-detail-sample': code === 'SAMPLE'
     });
     return (
       <section className={distributionClass}>
@@ -183,11 +183,11 @@ export default class DatasetDistribution extends React.Component {
 }
 
 DatasetDistribution.defaultProps = {
-  title: "",
+  title: '',
   description: null,
   accessUrl: null,
   format: null,
-  code: "",
+  code: '',
   license: null,
   conformsTo: null,
   page: null,

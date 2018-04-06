@@ -1,13 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ReactPaginate from "react-paginate";
-import { Modal, Button } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
+import { Modal, Button } from 'react-bootstrap';
+import cx from 'classnames';
 
-import localization from "../localization";
-import ConceptsHitItem from "../search-concepts-hit-item";
-import CompareTerms from "../search-concepts-compare";
-import CompareTermModal from "../search-concepts-compare-modal";
-import FilterBoxPublishers from "../search-results-filterbox-publishers";
+import localization from '../localization';
+import ConceptsHitItem from '../search-concepts-hit-item';
+import CompareTerms from '../search-concepts-compare';
+import CompareTermModal from '../search-concepts-compare-modal';
+import FilterBoxPublishers from '../search-results-filterbox-publishers';
 
 export default class ResultsConcepts extends React.Component {
   constructor(props) {
@@ -73,8 +74,13 @@ export default class ResultsConcepts extends React.Component {
   }
 
   _renderTerms() {
-    const { termItems } = this.props;
-    if (termItems && termItems.hits && termItems.hits.hits) {
+    const { termItems, subjectsCountItems } = this.props;
+    if (
+      termItems &&
+      termItems.hits &&
+      termItems.hits.hits &&
+      subjectsCountItems
+    ) {
       return termItems.hits.hits.map(item => (
         <ConceptsHitItem
           key={item._id}
@@ -133,6 +139,7 @@ export default class ResultsConcepts extends React.Component {
       onPageChange,
       onFilterPublisherHierarchy,
       searchQuery,
+      showClearFilterButton,
       hitsPerPage,
       publisherArray,
       publishers
@@ -143,13 +150,22 @@ export default class ResultsConcepts extends React.Component {
       (termItems && termItems.hits ? termItems.hits.total : 1) / hitsPerPage
     );
 
+    const clearButtonClass = cx(
+      'fdk-button',
+      'fdk-button-default-no-hover',
+      'fade-in-500',
+      {
+        hidden: !showClearFilterButton
+      }
+    );
+
     return (
       <div id="content" role="main">
         <div id="conceptsPanel">
-          <div className="row mt-1 mb-1">
+          <div className="row mt-1 mb-1 fdk-button-row">
             <div className="col-md-4">
               <button
-                className="fdk-button fdk-button-default-no-hover"
+                className={clearButtonClass}
                 onClick={onClearSearch}
                 type="button"
               >
@@ -195,11 +211,11 @@ export default class ResultsConcepts extends React.Component {
                 previousLabel={localization.page.prev}
                 nextLabel={localization.page.next}
                 breakLabel={<span>...</span>}
-                breakClassName={"break-me"}
-                containerClassName={"pagination"}
+                breakClassName={'break-me'}
+                containerClassName={'pagination'}
                 onPageChange={onPageChange}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
+                subContainerClassName={'pages pagination'}
+                activeClassName={'active'}
                 initialPage={page}
                 disableInitialCallback
               />
@@ -212,7 +228,7 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: ""
+  selectedLanguageCode: ''
 };
 
 ResultsConcepts.propTypes = {

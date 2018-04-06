@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import localization from "../../components/localization";
+import localization from '../../components/localization';
 
 const DatasetLandingPage = props => (
   <div className="dataset-landingpage">

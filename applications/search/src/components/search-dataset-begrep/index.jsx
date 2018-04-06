@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import BegrepCollapse from "../search-dataset-begrep-collapse";
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
+import BegrepCollapse from '../search-dataset-begrep-collapse';
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetBegrep extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -110,7 +110,7 @@ export default class DatasetBegrep extends React.Component {
 DatasetBegrep.defaultProps = {
   subject: null,
   keyword: null,
-  selectedLanguageCode: ""
+  selectedLanguageCode: ''
 };
 
 DatasetBegrep.propTypes = {

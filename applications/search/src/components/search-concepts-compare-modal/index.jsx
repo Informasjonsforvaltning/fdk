@@ -1,10 +1,10 @@
-import React from "react";
-import { Modal, ModalHeader, ModalTitle, ModalBody } from "react-bootstrap";
-import localization from "../../components/localization";
-import CompareTermModalContent from "../search-concepts-compare-modal-content";
-import "./index.scss";
+import React from 'react';
+import { Modal, ModalHeader, ModalTitle, ModalBody } from 'react-bootstrap';
+import localization from '../../components/localization';
+import CompareTermModalContent from '../search-concepts-compare-modal-content';
+import './index.scss';
 
-const ReactGA = require("react-ga");
+const ReactGA = require('react-ga');
 
 export default class CompareTermModal extends React.Component {
   constructor(props) {
@@ -25,20 +25,20 @@ export default class CompareTermModal extends React.Component {
   }
 
   open(type) {
-    if (type === "BOTTOM") {
+    if (type === 'BOTTOM') {
       ReactGA.event({
-        category: "Begrep",
-        action: "Sammenligningsvindu",
-        label: "Sticky button"
+        category: 'Begrep',
+        action: 'Sammenligningsvindu',
+        label: 'Sticky button'
       });
     } else {
       ReactGA.event({
-        category: "Begrep",
-        action: "Sammenligningsvindu",
-        label: "Left menu button"
+        category: 'Begrep',
+        action: 'Sammenligningsvindu',
+        label: 'Left menu button'
       });
     }
-    ReactGA.modalview("/concepts/compare");
+    ReactGA.modalview('/concepts/compare');
     this.setState({
       showModal: true,
       showBar: false
@@ -46,16 +46,16 @@ export default class CompareTermModal extends React.Component {
   }
 
   render() {
-    let cols = "col-md-";
+    let cols = 'col-md-';
     switch (12 / this.props.terms.length) {
       case 6:
-        cols += "6";
+        cols += '6';
         break;
       case 4:
-        cols += "4";
+        cols += '4';
         break;
       default:
-        cols += "6";
+        cols += '6';
         break;
     }
 
@@ -80,7 +80,7 @@ export default class CompareTermModal extends React.Component {
         <button
           className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button"
           onClick={() => {
-            this.open("BOTTOM");
+            this.open('BOTTOM');
           }}
         >
           <i className="fa fa-chevron-up fdk-color0" />

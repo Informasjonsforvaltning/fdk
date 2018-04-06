@@ -1,9 +1,9 @@
-import _ from "lodash";
+import _ from 'lodash';
 import {
   DATASETS_REQUEST,
   DATASETS_SUCCESS,
   DATASETS_FAILURE
-} from "../constants/ActionTypes";
+} from '../constants/ActionTypes';
 
 export default function datasets(
   state = {
@@ -24,7 +24,7 @@ export default function datasets(
       const orgs = action.response.data.aggregations.orgPath.buckets;
       const flat = _(orgs).forEach(f => {
         const filteredOrgs = _(orgs)
-          .filter(g => g.key.substring(0, g.key.lastIndexOf("/")) === f.key)
+          .filter(g => g.key.substring(0, g.key.lastIndexOf('/')) === f.key)
           .value();
         filteredOrgs.forEach(item => {
           const retVal = item;
@@ -38,11 +38,20 @@ export default function datasets(
       const resultArray = _(flat)
         .filter(f => !f.hasParent)
         .value();
+
+      const objFromArray = action.response.data.aggregations.subjectsCount.buckets.reduce(
+        (accumulator, current) => {
+          accumulator[current.key] = current; // eslint-disable-line no-param-reassign
+          return accumulator;
+        },
+        {}
+      );
       return {
         ...state,
         isFetchingDatasets: false,
         datasetItems: action.response.data,
-        publisherCountItems: resultArray
+        publisherCountItems: resultArray,
+        subjectsCountItems: objFromArray
       };
     }
     case DATASETS_FAILURE: {

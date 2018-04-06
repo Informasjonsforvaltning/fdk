@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { getTranslateText } from "../../utils/translateText";
-import localization from "../../components/localization";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { getTranslateText } from '../../utils/translateText';
+import localization from '../../components/localization';
 
 const CompareTermModalContent = props => {
   let { terms, selectedLanguageCode, cols } = props;
@@ -26,13 +26,13 @@ const CompareTermModalContent = props => {
               getTranslateText(item.prefLabel, selectedLanguageCode)
                 .substring(1)
                 .toLowerCase()
-            : ""}
+            : ''}
         </h3>
         <h5>
           {item.creator && item.creator.name
             ? item.creator.name.charAt(0).toUpperCase() +
               item.creator.name.substring(1)
-            : ""}
+            : ''}
         </h5>
       </div>
     ));
@@ -50,24 +50,24 @@ const CompareTermModalContent = props => {
               getTranslateText(item.definition, selectedLanguageCode).substring(
                 1
               )
-            : ""}
+            : ''}
         </p>
       </div>
     ));
 
   const inSchemeList = [];
   for (let i = 0; i < terms.length; i += 1) {
-    let inScheme = "";
+    let inScheme = '';
     if (terms[i].inScheme) {
       for (let j = 0; j < terms[i].inScheme.length; j += 1) {
         inScheme += terms[i].inScheme[j].substring(
-          terms[i].inScheme[j].lastIndexOf("/") + 1
+          terms[i].inScheme[j].lastIndexOf('/') + 1
         );
         if (j < terms[i].inScheme.length - 1) {
-          inScheme += ", ";
+          inScheme += ', ';
         }
       }
-      inScheme += ".";
+      inScheme += '.';
     }
     inSchemeList.push(inScheme);
   }
@@ -92,7 +92,7 @@ const CompareTermModalContent = props => {
               <i className="fa fa-external-link" />
             </a>
           ) : (
-            ""
+            ''
           )}
         </p>
       </div>
@@ -105,14 +105,14 @@ const CompareTermModalContent = props => {
         <p>
           {item.note && getTranslateText(item.note, selectedLanguageCode)
             ? getTranslateText(item.note, selectedLanguageCode)
-            : ""}
+            : ''}
         </p>
       </div>
     ));
 
   const altLabelList = [];
   for (let i = 0; i < terms.length; i += 1) {
-    let altLabel = "";
+    let altLabel = '';
     if (terms[i].altLabel) {
       for (let j = 0; j < terms[i].altLabel.length; j += 1) {
         if (getTranslateText(terms[i].altLabel[j], selectedLanguageCode)) {
@@ -121,11 +121,11 @@ const CompareTermModalContent = props => {
             selectedLanguageCode
           );
           if (j < terms[i].altLabel.length - 1) {
-            altLabel += ", ";
+            altLabel += ', ';
           }
         }
       }
-      altLabel += ".";
+      altLabel += '.';
     }
     altLabelList.push(altLabel);
   }
@@ -158,26 +158,26 @@ const CompareTermModalContent = props => {
 CompareTermModalContent.defaultProps = {
   terms: [
     {
-      uri: "",
-      identifier: "",
+      uri: '',
+      identifier: '',
       prefLabel: {
-        nb: ""
+        nb: ''
       },
       definition: {
-        nb: ""
+        nb: ''
       },
       note: {
-        nb: ""
+        nb: ''
       },
-      source: "",
+      source: '',
       creator: {
-        name: ""
+        name: ''
       },
-      inScheme: [""]
+      inScheme: ['']
     }
   ],
-  selectedLanguageCode: "nb",
-  cols: "col-md-6"
+  selectedLanguageCode: 'nb',
+  cols: 'col-md-6'
 };
 
 CompareTermModalContent.propTypes = {

@@ -17,7 +17,7 @@
     "gitDir": "../../",
     "linters": {
       "*.{js,jsx}": [
-        "prettier --write",
+        "lint",
         "git add"
       ]
     }

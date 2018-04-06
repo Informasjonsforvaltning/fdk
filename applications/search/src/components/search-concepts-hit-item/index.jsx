@@ -1,10 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as _ from "lodash";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as _ from 'lodash';
 
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
-import "./index.scss";
+import localization from '../../components/localization';
+import {
+  getTranslateText,
+  getLanguageFromUrl
+} from '../../utils/translateText';
+import './index.scss';
 
 export default class ConceptsHitItem extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -34,7 +37,7 @@ export default class ConceptsHitItem extends React.Component {
     const { inScheme } = this.state.source;
     const children = items =>
       items.map((item, index) => {
-        const subItem = item.substring(item.lastIndexOf("/") + 1);
+        const subItem = item.substring(item.lastIndexOf('/') + 1);
         return (
           <span
             key={`dataset-description-inScheme-${index}`}
@@ -108,13 +111,41 @@ export default class ConceptsHitItem extends React.Component {
       });
     if (altLabel) {
       return (
-        <div>
+        <p>
           <span className="uu-invisible" aria-hidden="false">
             Begrep er
           </span>
           <strong>{localization.terms.altLabel} </strong>
           {children(altLabel)}
-        </div>
+        </p>
+      );
+    }
+    return null;
+  }
+
+  _renderDocCount() {
+    const { result: { _source }, selectedLanguageCode } = this.props;
+    const lang = getLanguageFromUrl();
+    let langParam = '';
+    if (lang) {
+      langParam = `&lang=${lang}`;
+    }
+    const subjectCountItem = _source.datasets ? _source.datasets.length : 0;
+    if (subjectCountItem > 0 && _source.prefLabel) {
+      return (
+        <p>
+          <a
+            className="fdk-hit-dataset-count"
+            title="Link til datasett med begrep"
+            href={`/?subject=${getTranslateText(
+              _source.prefLabel,
+              selectedLanguageCode
+            )}${langParam}`}
+          >
+            {localization.terms.docCount} {subjectCountItem}{' '}
+            {localization.terms.docCountPart2}
+          </a>
+        </p>
       );
     }
     return null;
@@ -156,8 +187,8 @@ export default class ConceptsHitItem extends React.Component {
         </span>
         <div
           className={`fdk-container-search-hit ${toBeCompared
-            ? "toBeCompared"
-            : ""}`}
+            ? 'toBeCompared'
+            : ''}`}
         >
           {!toBeCompared && (
             <button
@@ -167,7 +198,7 @@ export default class ConceptsHitItem extends React.Component {
               }}
               type="button"
             >
-              <span aria-hidden="true">+</span>{" "}
+              <span aria-hidden="true">+</span>{' '}
               {localization.compare.addCompare}
             </button>
           )}
@@ -180,7 +211,7 @@ export default class ConceptsHitItem extends React.Component {
               }}
               type="button"
             >
-              <span aria-hidden="true">+</span>{" "}
+              <span aria-hidden="true">+</span>{' '}
               {localization.compare.addCompare}
             </button>
           )}
@@ -208,6 +239,8 @@ export default class ConceptsHitItem extends React.Component {
           {this._renderNote()}
 
           {this._renderAltLabel()}
+
+          {this._renderDocCount()}
         </div>
       </div>
     );
@@ -217,7 +250,7 @@ export default class ConceptsHitItem extends React.Component {
 ConceptsHitItem.defaultProps = {
   result: null,
   terms: null,
-  selectedLanguageCode: "nb"
+  selectedLanguageCode: 'nb'
 };
 
 ConceptsHitItem.propTypes = {

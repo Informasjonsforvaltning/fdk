@@ -194,7 +194,9 @@
   "terms": {
     "compareTerms": "Compare concepts",
     "removeTerms": "Remove",
-    "altLabel": "Også kjent som:"
+    "altLabel": "Også kjent som:",
+    "docCount": "Used in",
+    "docCountPart2": "dataset"
   },
   "compare": {
     "definition": "Definition",

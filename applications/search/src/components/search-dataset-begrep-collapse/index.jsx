@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Collapse } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Collapse } from 'react-bootstrap';
 
-import "./index.scss";
+import './index.scss';
 
 export default class BegrepCollapse extends React.Component {
   constructor(props) {
@@ -41,9 +41,9 @@ export default class BegrepCollapse extends React.Component {
 }
 
 BegrepCollapse.defaultProps = {
-  prefLabel: "",
-  definition: "",
-  note: ""
+  prefLabel: '',
+  definition: '',
+  note: ''
 };
 
 BegrepCollapse.propTypes = {

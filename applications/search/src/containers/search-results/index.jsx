@@ -1,29 +1,29 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import qs from "qs";
-import queryString from "query-string";
-import { Route, Switch } from "react-router-dom";
-import cx from "classnames";
-import { detect } from "detect-browser";
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import qs from 'qs';
+import queryString from 'query-string';
+import { Route, Switch } from 'react-router-dom';
+import cx from 'classnames';
+import { detect } from 'detect-browser';
 
-import localization from "../../components/localization";
+import localization from '../../components/localization';
 import {
   fetchDatasetsIfNeeded,
   fetchTermsIfNeeded,
   fetchThemesIfNeeded,
   fetchPublishersIfNeeded
-} from "../../actions/index";
-import ResultsDataset from "../../components/search-results-dataset";
-import ResultsConcepts from "../../components/search-concepts-results";
-import SearchBox from "../../components/search-app-searchbox";
-import ResultsTabs from "../../components/search-results-tabs";
-import { removeValue, addValue } from "../../utils/stringUtils";
+} from '../../actions/index';
+import ResultsDataset from '../../components/search-results-dataset';
+import ResultsConcepts from '../../components/search-concepts-results';
+import SearchBox from '../../components/search-app-searchbox';
+import ResultsTabs from '../../components/search-results-tabs';
+import { removeValue, addValue } from '../../utils/stringUtils';
 import {
   addOrReplaceParamWithoutURL,
   getParamFromString
-} from "../../utils/addOrReplaceUrlParam";
-import "./index.scss";
+} from '../../utils/addOrReplaceUrlParam';
+import './index.scss';
 
 const browser = detect();
 
@@ -58,26 +58,24 @@ class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    const q = getParamFromString(props.location.search, "q");
+    const q = getParamFromString(props.location.search, 'q');
     let hasSingleWord = false;
     if (q) {
-      hasSingleWord = !q.includes(" ") && !q.includes("*"); // no spaces and no asterix search
+      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
     }
     if (hasSingleWord) {
       const modifiedQ = addOrReplaceParamWithoutURL(
         props.location.search,
-        "q",
+        'q',
         `${q} ${encodeURIComponent(q)}*`
       );
       this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
       this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
     } else {
       this.props.dispatch(
-        fetchDatasetsIfNeeded(`/datasets/${props.location.search}`)
+        fetchDatasetsIfNeeded(`/datasets${props.location.search}`)
       );
-      this.props.dispatch(
-        fetchTermsIfNeeded(`/terms/${props.location.search}`)
-      );
+      this.props.dispatch(fetchTermsIfNeeded(`/terms${props.location.search}`));
     }
 
     this.props.dispatch(fetchThemesIfNeeded());
@@ -87,30 +85,30 @@ class SearchPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { selectedLanguageCode } = nextProps;
     if (nextProps.location.search !== this.props.location.search) {
-      const q = getParamFromString(nextProps.location.search, "q");
+      const q = getParamFromString(nextProps.location.search, 'q');
       let hasSingleWord = false;
       if (q) {
-        hasSingleWord = !q.includes(" ") && !q.includes("*"); // no spaces and no asterix search
+        hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
       }
       if (hasSingleWord) {
         const modifiedQ = addOrReplaceParamWithoutURL(
           nextProps.location.search,
-          "q",
+          'q',
           `${q} ${encodeURIComponent(q)}*`
         );
-        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
-        this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
+        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets${modifiedQ}`));
+        this.props.dispatch(fetchTermsIfNeeded(`/terms${modifiedQ}`));
       } else {
         this.props.dispatch(
-          fetchDatasetsIfNeeded(`/datasets/${nextProps.location.search}`)
+          fetchDatasetsIfNeeded(`/datasets${nextProps.location.search}`)
         );
         this.props.dispatch(
-          fetchTermsIfNeeded(`/terms/${nextProps.location.search}`)
+          fetchTermsIfNeeded(`/terms${nextProps.location.search}`)
         );
       }
     }
     if (selectedLanguageCode !== this.props.selectedLanguageCode) {
-      if (selectedLanguageCode === "nb") {
+      if (selectedLanguageCode === 'nb') {
         this.setState({
           searchQuery: {
             ...this.state.searchQuery,
@@ -131,7 +129,9 @@ class SearchPage extends React.Component {
   handleClearSearch() {
     this.setState(
       {
-        searchQuery: {}
+        searchQuery: {
+          lang: this.state.searchQuery.lang
+        }
       },
       () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
@@ -147,7 +147,7 @@ class SearchPage extends React.Component {
     this.setState({
       searchQuery: {
         ...this.state.searchQuery,
-        q: event.target.value !== "" ? event.target.value : null,
+        q: event.target.value !== '' ? event.target.value : null,
         from: undefined
       }
     });
@@ -271,7 +271,7 @@ class SearchPage extends React.Component {
   handleDatasetSort(event) {
     let sortField = event.field;
 
-    if (sortField === "_score") {
+    if (sortField === '_score') {
       this.setState(
         {
           searchQuery: {
@@ -284,8 +284,8 @@ class SearchPage extends React.Component {
           this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     } else {
-      if (sortField === "title") {
-        sortField = sortField.concat(".").concat(localization.getLanguage());
+      if (sortField === 'title') {
+        sortField = sortField.concat('.').concat(localization.getLanguage());
       }
       this.setState(
         {
@@ -342,6 +342,7 @@ class SearchPage extends React.Component {
       selectedLanguageCode,
       datasetItems,
       publisherCountItems,
+      subjectsCountItems,
       isFetchingDatasets,
       termItems,
       publisherCountTermItems,
@@ -349,8 +350,8 @@ class SearchPage extends React.Component {
       themesItems,
       publisherItems
     } = this.props;
-    const topSectionClass = cx("top-section-search", "mb-1", {
-      "top-section-search--image": !!(browser && browser.name !== "ie")
+    const topSectionClass = cx('top-section-search', 'mb-1', {
+      'top-section-search--image': !!(browser && browser.name !== 'ie')
     });
     return (
       <div>
@@ -408,6 +409,13 @@ class SearchPage extends React.Component {
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
+                  showClearFilterButton={
+                    !!(
+                      this.state.searchQuery.theme ||
+                      this.state.searchQuery.accessrights ||
+                      this.state.searchQuery.orgPath
+                    )
+                  }
                   closeFilterModal={this.close}
                   hitsPerPage={50}
                   publisherArray={publisherCountItems}
@@ -432,8 +440,10 @@ class SearchPage extends React.Component {
                   hitsPerPage={50}
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
+                  showClearFilterButton={!!this.state.searchQuery.orgPath}
                   publisherArray={publisherCountTermItems}
                   publishers={publisherItems}
+                  subjectsCountItems={subjectsCountItems}
                   {...props}
                 />
               )}
@@ -457,10 +467,12 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
   const {
     datasetItems,
     publisherCountItems,
+    subjectsCountItems,
     isFetchingDatasets
   } = datasets || {
     datasetItems: null,
-    publisherCountItems: null
+    publisherCountItems: null,
+    subjectsCountItems: null
   };
 
   const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
@@ -479,6 +491,7 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
   return {
     datasetItems,
     publisherCountItems,
+    subjectsCountItems,
     isFetchingDatasets,
     termItems,
     publisherCountTermItems,

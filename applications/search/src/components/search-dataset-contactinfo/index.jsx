@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
-import localization from "../../components/localization";
+import localization from '../../components/localization';
 
 const DatasetContactInfo = props => {
   const { contactPoint = null } = props;
@@ -18,14 +18,14 @@ const DatasetContactInfo = props => {
     hasTelephone = contactPoint.hasTelephone;
   }
 
-  const emailClass = cx("fdk-container-detail", {
-    "col-md-8": hasTelephone,
-    "col-md-12": !hasTelephone
+  const emailClass = cx('fdk-container-detail', {
+    'col-md-8': hasTelephone,
+    'col-md-12': !hasTelephone
   });
 
-  const telephoneClass = cx("fdk-container-detail", {
-    "col-md-4": email,
-    "col-md-12": !email
+  const telephoneClass = cx('fdk-container-detail', {
+    'col-md-4': email,
+    'col-md-12': !email
   });
 
   return (
@@ -48,7 +48,7 @@ const DatasetContactInfo = props => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {localization.dataset.contactPoint.organizationUnit}{" "}
+                      {localization.dataset.contactPoint.organizationUnit}{' '}
                       {organizationUnit}
                       <i className="fa fa-external-link fdk-fa-right" />
                     </a>

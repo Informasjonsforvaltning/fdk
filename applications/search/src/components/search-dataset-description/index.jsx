@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import DocumentMeta from "react-document-meta";
+import React from 'react';
+import PropTypes from 'prop-types';
+import DocumentMeta from 'react-document-meta';
 
-import localization from "../../components/localization";
-import { getTranslateText } from "../../utils/translateText";
+import localization from '../../components/localization';
+import { getTranslateText } from '../../utils/translateText';
 
 export default class DatasetDescription extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -21,7 +21,7 @@ export default class DatasetDescription extends React.Component {
             {publisher
               ? publisher.name.charAt(0) +
                 publisher.name.substring(1).toLowerCase()
-              : ""}
+              : ''}
           </strong>
         </span>
       );
@@ -81,13 +81,13 @@ export default class DatasetDescription extends React.Component {
 }
 
 DatasetDescription.defaultProps = {
-  title: "",
-  description: "",
-  descriptionFormatted: "",
-  objective: "",
+  title: '',
+  description: '',
+  descriptionFormatted: '',
+  objective: '',
   publisher: null,
   themes: null,
-  selectedLanguageCode: ""
+  selectedLanguageCode: ''
 };
 
 DatasetDescription.propTypes = {

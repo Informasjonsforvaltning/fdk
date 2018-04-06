@@ -29,7 +29,7 @@
   "query": {
     "intro": "Søk etter innhold",
     "do": "Utfør søk",
-    "clear": "Nullstill søk"
+    "clear": "Fjern alle filtre"
   },
   "login": {
     "title": "Logg inn"
@@ -194,7 +194,9 @@
   "terms": {
     "compareTerms": "Sammenlign begrep",
     "removeTerms": "Fjern",
-    "altLabel": "Også kjent som:"
+    "altLabel": "Også kjent som:",
+    "docCount": "Brukt i",
+    "docCountPart2": "datasett"
   },
   "compare": {
     "definition": "Definisjon",

@@ -1,36 +1,36 @@
-import React from "react";
-import * as axios from "axios";
+import React from 'react';
+import * as axios from 'axios';
 
-import localization from "../localization";
-import ReportStats from "../search-results-dataset-report-stats";
-import SearchPublishers from "../search-results-dataset-report-publisher";
-import SearchPublishersTree from "../search-publishers-tree";
+import localization from '../localization';
+import ReportStats from '../search-results-dataset-report-stats';
+import SearchPublishers from '../search-results-dataset-report-publisher';
+import SearchPublishersTree from '../search-publishers-tree';
 import {
   addOrReplaceParamWithoutEncoding,
   removeParam
-} from "../../utils/addOrReplaceUrlParam";
+} from '../../utils/addOrReplaceUrlParam';
 
 export default class ResultsDatasetsReport extends React.Component {
   static getOrgPath() {
     const orgPath = window.location.search
       .substring(1)
-      .split("&")
-      .map(v => v.split("="))
+      .split('&')
+      .map(v => v.split('='))
       .reduce(
         (map, [key, value]) => map.set(key, decodeURIComponent(value)),
         new Map()
       )
-      .get("orgPath[0]");
-    return orgPath || "";
+      .get('orgPath[0]');
+    return orgPath || '';
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      entity: "",
+      entity: '',
       aggregateDataset: {},
       publishers: [],
-      searchValue: "",
+      searchValue: '',
       selectedOrgPath: null
     };
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
@@ -43,7 +43,7 @@ export default class ResultsDatasetsReport extends React.Component {
 
   getPublishers() {
     axios
-      .get("/publisher?q=")
+      .get('/publisher?q=')
       .then(response => {
         const publishers = response.data.hits.hits
           .map(item => item._source)
@@ -91,12 +91,12 @@ export default class ResultsDatasetsReport extends React.Component {
         : ResultsDatasetsReport.getOrgPath();
 
     const paramWithRemovedOrgPath = removeParam(
-      "orgPath[0]",
+      'orgPath[0]',
       window.location.href
     );
     const replacedUrl = addOrReplaceParamWithoutEncoding(
       paramWithRemovedOrgPath,
-      "orgPath[0]",
+      'orgPath[0]',
       query
     );
 
@@ -108,7 +108,7 @@ export default class ResultsDatasetsReport extends React.Component {
     window.history.pushState(emptyParam, emptyParam.title, emptyParam.url);
 
     // Set new query param if necessary.
-    if (query && orgPath !== "") {
+    if (query && orgPath !== '') {
       const queryParam = {
         title: document.title,
         url: replacedUrl
@@ -139,7 +139,7 @@ export default class ResultsDatasetsReport extends React.Component {
       selectedOrgPath: value ? value.orgPath : null
     });
     if (!value) {
-      this.handleOnPublisherSearch(null, "");
+      this.handleOnPublisherSearch(null, '');
     } else {
       this.handleOnPublisherSearch(value.name, value.orgPath);
     }
@@ -147,17 +147,17 @@ export default class ResultsDatasetsReport extends React.Component {
 
   handleOnTreeChange(name, orgPath) {
     this.setState({
-      value: ""
+      value: ''
     });
     this.handleOnPublisherSearch(name, orgPath);
   }
 
   handleOnClearSearch() {
     this.setState({
-      value: "",
+      value: '',
       selectedOrgPath: Math.random()
     });
-    this.handleOnPublisherSearch(null, "");
+    this.handleOnPublisherSearch(null, '');
   }
 
   render() {

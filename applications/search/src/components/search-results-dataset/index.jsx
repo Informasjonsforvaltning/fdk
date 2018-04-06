@@ -1,13 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ReactPaginate from "react-paginate";
-import { Modal, Button } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
+import { Modal, Button } from 'react-bootstrap';
+import cx from 'classnames';
 
-import localization from "../localization";
-import SearchHitItem from "../search-results-hit-item";
-import SelectDropdown from "../search-results-selector-dropdown";
-import FilterBox from "../search-results-filterbox";
-import FilterBoxPublishers from "../search-results-filterbox-publishers";
+import localization from '../localization';
+import SearchHitItem from '../search-results-hit-item';
+import SelectDropdown from '../search-results-selector-dropdown';
+import FilterBox from '../search-results-filterbox';
+import FilterBoxPublishers from '../search-results-filterbox-publishers';
 
 export default class ResultsDataset extends React.Component {
   constructor(props) {
@@ -100,6 +101,7 @@ export default class ResultsDataset extends React.Component {
       onFilterPublisherHierarchy,
       onSort,
       onPageChange,
+      showClearFilterButton,
       searchQuery,
       themesItems,
       hitsPerPage,
@@ -113,13 +115,22 @@ export default class ResultsDataset extends React.Component {
         hitsPerPage
     );
 
+    const clearButtonClass = cx(
+      'fdk-button',
+      'fdk-button-default-no-hover',
+      'fade-in-500',
+      {
+        hidden: !showClearFilterButton
+      }
+    );
+
     return (
       <div id="content" role="main">
         <div id="resultPanel">
           <div className="row mt-1 mb-1">
             <div className="col-xs-6 col-md-4">
               <button
-                className="fdk-button fdk-button-default-no-hover"
+                className={clearButtonClass}
                 onClick={onClearSearch}
                 type="button"
               >
@@ -131,25 +142,25 @@ export default class ResultsDataset extends React.Component {
                 <SelectDropdown
                   items={[
                     {
-                      label: "relevance",
-                      field: "_score",
-                      order: "asc",
+                      label: 'relevance',
+                      field: '_score',
+                      order: 'asc',
                       defaultOption: true
                     },
                     {
-                      label: "title",
-                      field: "title",
-                      order: "asc"
+                      label: 'title',
+                      field: 'title',
+                      order: 'asc'
                     },
                     {
-                      label: "modified",
-                      field: "modified",
-                      order: "desc"
+                      label: 'modified',
+                      field: 'modified',
+                      order: 'desc'
                     },
                     {
-                      label: "publisher",
-                      field: "publisher.name",
-                      order: "asc"
+                      label: 'publisher',
+                      field: 'publisher.name',
+                      order: 'asc'
                     }
                   ]}
                   selectedLanguageCode={this.props.selectedLanguageCode}
@@ -208,11 +219,11 @@ export default class ResultsDataset extends React.Component {
                 previousLabel={localization.page.prev}
                 nextLabel={localization.page.next}
                 breakLabel={<span>...</span>}
-                breakClassName={"break-me"}
-                containerClassName={"pagination"}
+                breakClassName={'break-me'}
+                containerClassName={'pagination'}
                 onPageChange={onPageChange}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
+                subContainerClassName={'pages pagination'}
+                activeClassName={'active'}
                 initialPage={page}
                 disableInitialCallback
               />

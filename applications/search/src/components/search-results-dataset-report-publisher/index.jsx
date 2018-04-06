@@ -1,10 +1,10 @@
-import React from "react";
-import Select from "react-select";
-import * as axios from "axios";
-import defaults from "lodash/defaults";
+import React from 'react';
+import Select from 'react-select';
+import * as axios from 'axios';
+import defaults from 'lodash/defaults';
 
-import localization from "../localization";
-import "./index.scss";
+import localization from '../localization';
+import './index.scss';
 
 export default class SearchPublishers extends React.Component {
   static getPublishers(input) {
@@ -27,7 +27,7 @@ export default class SearchPublishers extends React.Component {
     };
     this.options = defaults({
       headers: {},
-      searchUrlPath: "/publisher"
+      searchUrlPath: '/publisher'
     });
     this.axios = axios.create({
       baseURL: this.host,
@@ -41,7 +41,7 @@ export default class SearchPublishers extends React.Component {
       value
     });
     if (!value) {
-      this.props.onSearch(null, "");
+      this.props.onSearch(null, '');
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
