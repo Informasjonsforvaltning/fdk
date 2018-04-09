@@ -166,7 +166,7 @@ const ReportStats = props => {
           </Link>
           <Link
             className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
-            to={`/?accessrights=NON-PUBLIC${orgPathParam}`}
+            to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
           >
             <p>
               <strong>
