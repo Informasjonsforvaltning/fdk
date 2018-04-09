@@ -11,6 +11,7 @@ import DetailsPage from '../../containers/search-detailspage';
 import AboutPage from '../../containers/search-about';
 import GetStartedPage from '../../containers/search-getstarted-article';
 import ReportsPage from '../../containers/reports';
+import Breadcrumbs from '../../components/search-app-breadcrumbs';
 import '../../assets/css/main.scss';
 
 const getLangUrl = langCode => {
@@ -191,6 +192,16 @@ export default class App extends React.Component {
                     </MenuItem>
                   </DropdownButton>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="fdk-header-x mt-1">
+          <div className="container">
+            <div className="row">
+              <div className="col-xs-12">
+                <Breadcrumbs/>
               </div>
             </div>
           </div>
