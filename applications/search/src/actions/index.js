@@ -32,14 +32,14 @@ export function fetchDatasetsIfNeeded(datasetsURL) {
 export function fetchDatasetDetailsIfNeeded(datasetURL) {
   // add static size parameter
   return (dispatch, getState) =>
-  shouldFetchApi(getState().datasetDetails) &&
-  dispatch(
-    fetchApi(datasetURL, [
-      actions.DATASETDETAILS_REQUEST,
-      actions.DATASETDETAILS_SUCCESS,
-      actions.DATASETDETAILS_FAILURE
-    ])
-  );
+    shouldFetchApi(getState().datasetDetails) &&
+    dispatch(
+      fetchApi(datasetURL, [
+        actions.DATASETDETAILS_REQUEST,
+        actions.DATASETDETAILS_SUCCESS,
+        actions.DATASETDETAILS_FAILURE
+      ])
+    );
 }
 
 export function fetchTermsIfNeeded(termsURL) {

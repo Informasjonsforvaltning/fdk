@@ -197,16 +197,13 @@ export default class App extends React.Component {
           </div>
         </div>
 
-
-          <div className="container">
-            <div className="row">
-                <Breadcrumbs
-                  selectedLanguageCode={this.state.selectedLanguageCode}
-                />
-
-            </div>
+        <div className="container">
+          <div className="row">
+            <Breadcrumbs
+              selectedLanguageCode={this.state.selectedLanguageCode}
+            />
           </div>
-
+        </div>
 
         <div className="app-routes">
           <Switch>

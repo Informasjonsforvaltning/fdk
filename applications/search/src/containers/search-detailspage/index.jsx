@@ -1,11 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
-import {
-  fetchDatasetDetailsIfNeeded
-} from '../../actions/index';
+import { fetchDatasetDetailsIfNeeded } from '../../actions/index';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
 import DatasetDistribution from '../../components/search-dataset-distribution';
@@ -62,42 +59,45 @@ class DetailsPage extends React.Component {
 
   _renderDatasetDescription() {
     const { datasetItem } = this.props;
-      return (
-        <DatasetDescription
-          title={
-            datasetItem.title
-              ? getTranslateText(datasetItem.title, this.props.selectedLanguageCode)
-              : null
-          }
-          description={
-            datasetItem.description
-              ? getTranslateText(
-                  datasetItem.description,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
-          descriptionFormatted={
-            datasetItem.descriptionFormatted
-              ? getTranslateText(
-                  datasetItem.descriptionFormatted,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
-          objective={
-            datasetItem.objective
-              ? getTranslateText(
-                  datasetItem.objective,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
-          publisher={datasetItem.publisher}
-          themes={datasetItem.theme}
-          selectedLanguageCode={this.props.selectedLanguageCode}
-        />
-      );
+    return (
+      <DatasetDescription
+        title={
+          datasetItem.title
+            ? getTranslateText(
+                datasetItem.title,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
+        description={
+          datasetItem.description
+            ? getTranslateText(
+                datasetItem.description,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
+        descriptionFormatted={
+          datasetItem.descriptionFormatted
+            ? getTranslateText(
+                datasetItem.descriptionFormatted,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
+        objective={
+          datasetItem.objective
+            ? getTranslateText(
+                datasetItem.objective,
+                this.props.selectedLanguageCode
+              )
+            : null
+        }
+        publisher={datasetItem.publisher}
+        themes={datasetItem.theme}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    );
   }
 
   _renderDistribution() {
@@ -160,18 +160,18 @@ class DetailsPage extends React.Component {
 
   _renderKeyInfo() {
     const { datasetItem } = this.props;
-      return (
-        <DatasetKeyInfo
-          accessRights={datasetItem.accessRights}
-          legalBasisForRestriction={datasetItem.legalBasisForRestriction}
-          legalBasisForProcessing={datasetItem.legalBasisForProcessing}
-          legalBasisForAccess={datasetItem.legalBasisForAccess}
-          type={datasetItem.type}
-          conformsTo={datasetItem.conformsTo}
-          informationModel={datasetItem.informationModel}
-          selectedLanguageCode={this.props.selectedLanguageCode}
-        />
-      );
+    return (
+      <DatasetKeyInfo
+        accessRights={datasetItem.accessRights}
+        legalBasisForRestriction={datasetItem.legalBasisForRestriction}
+        legalBasisForProcessing={datasetItem.legalBasisForProcessing}
+        legalBasisForAccess={datasetItem.legalBasisForAccess}
+        type={datasetItem.type}
+        conformsTo={datasetItem.conformsTo}
+        informationModel={datasetItem.informationModel}
+        selectedLanguageCode={this.props.selectedLanguageCode}
+      />
+    );
   }
 
   _renderDatasetInfo() {
@@ -343,7 +343,8 @@ class DetailsPage extends React.Component {
           </div>
         </div>
       );
-    } return null;
+    }
+    return null;
   }
 }
 
@@ -356,10 +357,7 @@ DetailsPage.propTypes = {
 };
 
 const mapStateToProps = ({ datasetDetails }) => {
-  const {
-    datasetItem,
-    isFetchingDataset
-  } = datasetDetails || {
+  const { datasetItem, isFetchingDataset } = datasetDetails || {
     datasetItem: null,
     isFetchingDataset: null
   };
