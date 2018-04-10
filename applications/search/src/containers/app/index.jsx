@@ -197,15 +197,16 @@ export default class App extends React.Component {
           </div>
         </div>
 
-        <div className="fdk-header-x mt-1">
+
           <div className="container">
             <div className="row">
-              <div className="col-xs-12">
-                <Breadcrumbs/>
-              </div>
+                <Breadcrumbs
+                  selectedLanguageCode={this.state.selectedLanguageCode}
+                />
+
             </div>
           </div>
-        </div>
+
 
         <div className="app-routes">
           <Switch>

@@ -20,6 +20,8 @@
     "english-en": "Engelsk"
   },
   "menu": {
+    "home": "Hjem",
+    "about": "Om Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
   },

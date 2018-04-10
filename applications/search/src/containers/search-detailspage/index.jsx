@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import {
+  fetchDatasetDetailsIfNeeded
+} from '../../actions/index';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
 import DatasetDistribution from '../../components/search-dataset-distribution';
@@ -14,7 +18,7 @@ import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 // import api from '../../utils/api.json';
 
-export default class DetailsPage extends React.Component {
+class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +29,7 @@ export default class DetailsPage extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.loadDatasetFromServer();
   }
 
@@ -33,6 +38,9 @@ export default class DetailsPage extends React.Component {
   loadDatasetFromServer() {
     const { match: { params } } = this.props;
     const url = `/datasets/${params.id}`;
+    this.props.dispatch(fetchDatasetDetailsIfNeeded(url));
+
+    /*
     const config = {
       headers: { Pragma: 'no-cache' }
     };
@@ -49,54 +57,51 @@ export default class DetailsPage extends React.Component {
       .catch(error => {
         console.error(error.response);
       });
+      */
   }
 
   _renderDatasetDescription() {
-    const { dataset } = this.state;
-    if (dataset) {
+    const { datasetItem } = this.props;
       return (
         <DatasetDescription
           title={
-            dataset.title
-              ? getTranslateText(dataset.title, this.props.selectedLanguageCode)
+            datasetItem.title
+              ? getTranslateText(datasetItem.title, this.props.selectedLanguageCode)
               : null
           }
           description={
-            dataset.description
+            datasetItem.description
               ? getTranslateText(
-                  dataset.description,
+                  datasetItem.description,
                   this.props.selectedLanguageCode
                 )
               : null
           }
           descriptionFormatted={
-            dataset.descriptionFormatted
+            datasetItem.descriptionFormatted
               ? getTranslateText(
-                  dataset.descriptionFormatted,
+                  datasetItem.descriptionFormatted,
                   this.props.selectedLanguageCode
                 )
               : null
           }
           objective={
-            dataset.objective
+            datasetItem.objective
               ? getTranslateText(
-                  dataset.objective,
+                  datasetItem.objective,
                   this.props.selectedLanguageCode
                 )
               : null
           }
-          publisher={dataset.publisher}
-          themes={dataset.theme}
+          publisher={datasetItem.publisher}
+          themes={datasetItem.theme}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       );
-    }
-    return null;
   }
 
   _renderDistribution() {
-    const { distribution } = this.state.dataset;
-    const { accessRights } = this.state.dataset;
+    const { distribution, accessRights } = this.props.datasetItem;
     if (!distribution) {
       return null;
     }
@@ -125,7 +130,7 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderSample() {
-    const { sample } = this.state.dataset;
+    const { sample } = this.props.datasetItem;
     if (!sample) {
       return null;
     }
@@ -154,22 +159,19 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderKeyInfo() {
-    const { dataset } = this.state;
-    if (dataset) {
+    const { datasetItem } = this.props;
       return (
         <DatasetKeyInfo
-          accessRights={dataset.accessRights}
-          legalBasisForRestriction={dataset.legalBasisForRestriction}
-          legalBasisForProcessing={dataset.legalBasisForProcessing}
-          legalBasisForAccess={dataset.legalBasisForAccess}
-          type={dataset.type}
-          conformsTo={dataset.conformsTo}
-          informationModel={dataset.informationModel}
+          accessRights={datasetItem.accessRights}
+          legalBasisForRestriction={datasetItem.legalBasisForRestriction}
+          legalBasisForProcessing={datasetItem.legalBasisForProcessing}
+          legalBasisForAccess={datasetItem.legalBasisForAccess}
+          type={datasetItem.type}
+          conformsTo={datasetItem.conformsTo}
+          informationModel={datasetItem.informationModel}
           selectedLanguageCode={this.props.selectedLanguageCode}
         />
       );
-    }
-    return null;
   }
 
   _renderDatasetInfo() {
@@ -183,7 +185,7 @@ export default class DetailsPage extends React.Component {
       language,
       isPartOf,
       references
-    } = this.state.dataset;
+    } = this.props.datasetItem;
 
     return (
       <DatasetInfo
@@ -228,7 +230,7 @@ export default class DetailsPage extends React.Component {
       hasCompletenessAnnotation,
       hasAccuracyAnnotation,
       hasAvailabilityAnnotation
-    } = this.state.dataset;
+    } = this.props.datasetItem;
     if (
       hasRelevanceAnnotation ||
       hasCompletenessAnnotation ||
@@ -276,7 +278,7 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderLandingPageAndContactInfo() {
-    const { contactPoint, landingPage } = this.state.dataset;
+    const { contactPoint, landingPage } = this.props.datasetItem;
     if (!(contactPoint || landingPage)) {
       return null;
     }
@@ -307,7 +309,7 @@ export default class DetailsPage extends React.Component {
   }
 
   _renderBegrep() {
-    const { keyword, subject } = this.state.dataset;
+    const { keyword, subject } = this.props.datasetItem;
     if (keyword || subject) {
       return (
         <DatasetBegrep
@@ -321,25 +323,27 @@ export default class DetailsPage extends React.Component {
   }
 
   render() {
-    return (
-      <div className="container">
-        <div className="fdk-container-path" />
-        <div className="row">
-          <div className="col-md-8 col-md-offset-2" id="content" role="main">
-            <article>
-              {this._renderDatasetDescription()}
-              {this._renderKeyInfo()}
-              {this._renderDistribution()}
-              {this._renderSample()}
-              {this._renderDatasetInfo()}
-              {this._renderQuality()}
-              {this._renderBegrep()}
-              {this._renderLandingPageAndContactInfo()}
-            </article>
+    const { datasetItem } = this.props;
+    if (datasetItem) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2" id="content" role="main">
+              <article>
+                {this._renderDatasetDescription()}
+                {this._renderKeyInfo()}
+                {this._renderDistribution()}
+                {this._renderSample()}
+                {this._renderDatasetInfo()}
+                {this._renderQuality()}
+                {this._renderBegrep()}
+                {this._renderLandingPageAndContactInfo()}
+              </article>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } return null;
   }
 }
 
@@ -350,3 +354,20 @@ DetailsPage.defaultProps = {
 DetailsPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
+
+const mapStateToProps = ({ datasetDetails }) => {
+  const {
+    datasetItem,
+    isFetchingDataset
+  } = datasetDetails || {
+    datasetItem: null,
+    isFetchingDataset: null
+  };
+
+  return {
+    datasetItem,
+    isFetchingDataset
+  };
+};
+
+export default connect(mapStateToProps)(DetailsPage);

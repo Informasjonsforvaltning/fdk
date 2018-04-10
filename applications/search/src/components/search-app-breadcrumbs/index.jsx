@@ -3,32 +3,44 @@ import { NavLink } from 'react-router-dom';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
 import localization from '../localization';
-
-// breadcrumbs can be any type of component or string
-const UserBreadcrumb = ({ match }) =>
-  <span>{match.params.userId}</span>; // use match param userId to fetch/display user name
+import PureDatasetBreadcrumb from '../search-app-breadcrumbs-dataset';
+import PurePathNameBreadcrumb from '../search-app-breadcrumbs-pathname';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  { path: '/', breadcrumb: 'hjem' },
-  { path: '/datasets/:id', breadcrumb: 'datasett' },
-  { path: '/about', breadcrumb: localization.about.about },
-  { path: '/reports', breadcrumb: localization.menu.aboutRegistration }
+  { path: '/', breadcrumb: <PurePathNameBreadcrumb pathName='home' /> },
+  { path: '/datasets/:id', breadcrumb: PureDatasetBreadcrumb },
+  { path: '/about', breadcrumb: <PurePathNameBreadcrumb pathName='about' /> },
+  { path: '/about-registration', breadcrumb: <PurePathNameBreadcrumb pathName='aboutRegistration' /> },
+  { path: '/reports', breadcrumb: <PurePathNameBreadcrumb pathName='reports' /> }
 ];
+
+const options = {
+  disableDefaults: true,
+  excludePaths: [
+
+  ]
+}
 
 // map & render your breadcrumb components however you want.
 // each `breadcrumb` has the props `key`, `location`, and `match` included!
-const Breadcrumbs = ({ breadcrumbs }) => (
-  <div>
-    {breadcrumbs.map((breadcrumb, index) => (
-      <span key={breadcrumb.props.key}>
-        <NavLink to={breadcrumb.props.match.url}>
-          {breadcrumb}
-        </NavLink>
-        {(index < breadcrumbs.length - 1) && <i> > </i>}
-      </span>
-    ))}
-  </div>
-);
+const Breadcrumbs = ({ breadcrumbs }) => {
+  if (breadcrumbs && breadcrumbs.length > 1) {
+    return (
+      <div className="col-xs-12">
+        <p className="fdk-p-path">
+        {breadcrumbs.map((breadcrumb, index) => (
+          <span key={breadcrumb.key}>
+          <NavLink to={breadcrumb.props.match.url}>
+            {breadcrumb}
+          </NavLink>
+            {(index < breadcrumbs.length - 1) && <i className="fa fa-angle-right fdk-fa-path" />}
+        </span>
+        ))}
+        </p>
+      </div>
+    )
+  } return null;
+};
 
-export default withBreadcrumbs(routes, { disableDefaults: true })(Breadcrumbs);
+export default withBreadcrumbs(routes, options)(Breadcrumbs);
