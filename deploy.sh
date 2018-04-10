@@ -2,8 +2,8 @@
 set -e
 
 # Deployment pipeline (environment order)
-# UT1 -> ST2 -> TT1 -> ST1 -> PPE
-#
+# UT1 -> ST2 -> TT1 -> ST1 ->PPE
+#     -> PP2 -> PPE
 # UT1: Development environment. Build server continually deploys to this environment
 # ST2: Internal test server with local (mocked) authorisation
 # TT1: Externally accessible test server with local (mocked) authorisation
@@ -23,7 +23,7 @@ fi
 
 if [ -z "$2" ]
 then
-    echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
+    echo "environment must be specified: ut1, st1, st2, tt1. pp2, ppe or prd"
     echo "correct usage: ./deploy.sh <component> <environment>"
     echo "example: ./deploy.sh harvester-api tt1"
     exit 1
@@ -154,6 +154,18 @@ elif [ "$environment" == "tt1" ] ; then
 
   gitTag ${component} st2 tt1
 
+
+elif [ "$environment" == "pp2" ] ; then
+  if [ "$component" == "all" ] ; then
+    for i in $components
+    do
+      dockerTag ${i} ut1 pp2
+    done
+  else
+    dockerTag ${component} ut1 pp2
+  fi
+
+  gitTag ${component} ut1 pp2
 
 elif [ "$environment" == "ppe" ] ; then
   if [ "$component" == "all" ] ; then
