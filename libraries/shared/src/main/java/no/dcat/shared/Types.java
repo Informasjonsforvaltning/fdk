@@ -9,6 +9,7 @@ public enum Types {
    //LINGUISTICSYSTEM("http://publications.europa.eu/mdr/resource/authority/language/skos/languages-skos.rdf", "linguisticsystem");
     linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem"),
     referencetypes("rdf/reference-code-skos.ttl", "referencetypes"),
+    openlicenses("rdf/open-licenses-skos.rdf", "openlicenses"),
 
     location(null, "location"),
     subject(null, "subject");

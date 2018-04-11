@@ -64,7 +64,7 @@ fi
 
 if [ -z "$2" ]
 then
-    echo "environment must be specified: ut1, st1, st2, tt1 ppe or prd"
+    echo "environment must be specified: ut1, st1, st2, tt1 ppe, pp2 or prd"
     echo "correct usage: runCreateServiceInOpenshift.sh <service> <environment> <dockertag> <date-tag> <deploymode>"
     exit 1
 fi
@@ -103,11 +103,19 @@ openshiftProject=fellesdatakatalog-$environment
 
 
 #configuration that differs between nonprod and prod clusters
-if [ $environment = ppe ] || [ $environment = prd ]
+if [ $environment = ppe ] || [ $environment = pp2 ]|| [ $environment = prd ]
 then
     #run on prod cluster
     cluster=ose-pc
+else
+    #run on non-prod cluster if environment is ut1, st1, st2, tt1, pp2
+    cluster=ose-npc
+fi
 
+#configuration - ppe and prd environmens should use Altinn and Idporten prod environment
+# others, including pp2 use test environments
+if [ $environment = ppe ] || [ $environment = prd ]
+then
     #point to Altinn prod environment
     altinnServiceCode=4814
     altinnServiceEdition=1
@@ -120,13 +128,7 @@ then
     registrationApiHarvesterUserName=changeme
     registrationApiHarvesterPassword=changeme
 else
-    #run on non-prod cluster if environment is ut1, st1, st2, tt1
-    cluster=ose-npc
 
-    #old registration-gui build with angular (to be removed later)
-    oldRegistrationGuiExternalAddress=reg-gui-fellesdatakatalog-$environment.$cluster.brreg.no
-
-    #new registration-gui build with react
     registrationGuiExternalAddress=reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no
     searchGuiExternalAddress=fellesdatakatalog-$environment.$cluster.brreg.no
 
@@ -286,7 +288,7 @@ then
         # spring boot profiles:
         # prod if authenticating with idporten
         # prod-localauth if using local authentication and authorization
-        if [ $environment = ut1 ] || [ $environment = st2 ] || [ $environment = tt1 ]
+        if [ $environment = ut1 ] || [ $environment = st2 ] || [ $environment = tt1 ] || [ $environment = pp2 ]
         then
             profile=prod-localauth
             altinnServiceUrl=http://registration-auth:8080/
