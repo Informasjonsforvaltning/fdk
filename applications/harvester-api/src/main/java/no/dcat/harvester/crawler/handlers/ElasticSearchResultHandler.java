@@ -71,6 +71,8 @@ import java.util.stream.Collectors;
  */
 public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
+
     public static final String DCAT_INDEX = "dcat";
     public static final String SUBJECT_TYPE = "subject";
     public static final String DATASET_TYPE = "dataset";
@@ -80,13 +82,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
     public static final String VALIDATION_EMAIL_RECEIVER = "fellesdatakatalog@brreg.no"; //temporary
     public static final String VALIDATION_EMAIL_SUBJECT = "Felles datakatalog harvestlogg";
-    public static final String HARVESTLOG_DIRECTORY = "harvestlog/";
+
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-    private LoggerContext logCtx = (LoggerContext) LoggerFactory.getILoggerFactory();
-    private final Logger logger = logCtx.getLogger("main");
-
     private EmailNotificationService notificationService;
+
+    private boolean enableHarvestLog = false;
+    private boolean enableChangeHandling = false;
 
     String hostename;
     int port;
@@ -95,7 +97,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     String httpUsername;
     String httpPassword;
     String notificationEmailSender;
-
 
     ch.qos.logback.classic.Logger rootLogger;
     FileAppender<ILoggingEvent> fileAppender;
@@ -192,8 +193,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         if (validDatasets == null || validDatasets.isEmpty()) {
 
             logger.error("No valid datasets to index. Found {} non valid datasets at url {}",
-                            datasetsInSource.size(),
-                            dcatSource.getUrl());
+                    datasetsInSource.size(),
+                    dcatSource.getUrl());
         } else {
             logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
                     validDatasets.size(), datasetsInSource.size() - validDatasets.size());
@@ -222,71 +223,74 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     void startHarvestLog() {
 
-        rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("no.dcat");
-        fileAppender = new FileAppender<>();
+        if (enableHarvestLog) {
+            rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("no.dcat");
+            fileAppender = new FileAppender<>();
 
-        try {
-            temporarylogFile = Files.createTempFile("harvest", ".log");
-            logger.info("logfile={}", temporarylogFile);
+            try {
+                temporarylogFile = Files.createTempFile("harvest", ".log");
+                logger.info("logfile={}", temporarylogFile);
 
-            LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+                LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-            PatternLayoutEncoder ple = new PatternLayoutEncoder();
-            ple.setPattern("%level - %msg%n");
-            ple.setContext(lc);
-            ple.start();
+                PatternLayoutEncoder ple = new PatternLayoutEncoder();
+                ple.setPattern("%level - %msg%n");
+                ple.setContext(lc);
+                ple.start();
 
-            fileAppender.setFile(temporarylogFile.toString());
-            fileAppender.setEncoder(ple);
-            fileAppender.setContext(lc);
-            fileAppender.start();
+                fileAppender.setFile(temporarylogFile.toString());
+                fileAppender.setEncoder(ple);
+                fileAppender.setContext(lc);
+                fileAppender.start();
 
-            rootLogger.addAppender(fileAppender);
-            rootLogger.setAdditive(false);
+                rootLogger.addAppender(fileAppender);
+                rootLogger.setAdditive(false);
 
-        } catch (Exception e) {
-            logger.error("Unable to create logging facade {}",e.getMessage());
+            } catch (Exception e) {
+                logger.error("Unable to create logging facade {}", e.getMessage());
+            }
         }
     }
 
     void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
+        if (enableHarvestLog) {
+            try {
+                //get contents from harvest log file
+                rootLogger.detachAppender(fileAppender);
+                fileAppender.stop();
 
-        try  {
-            //get contents from harvest log file
-            rootLogger.detachAppender(fileAppender);
-            fileAppender.stop();
+                String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
+                String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
 
-            String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
-            String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
+                Files.delete(temporarylogFile);
 
-            Files.delete(temporarylogFile);
+                if (notificationService != null && (!dcatSyntaxValidation.isEmpty() || !semanticValidation.isEmpty())) {
+                    //add special logger for the message that will be sent to dcatsource owner;
+                    String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-            if(notificationService != null &&  (!dcatSyntaxValidation.isEmpty() || !semanticValidation.isEmpty())) {
-                //add special logger for the message that will be sent to dcatsource owner;
-                String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                    String message = "HARVEST REPORT: " + dcatSource.getUrl() + "\n" +
+                            "DATE: " + timestamp + "\n\n" +
+                            "SYNTAX CHECKS\n" +
+                            "--------------------\n\n" +
+                            dcatSyntaxValidation + "\n\n" +
+                            "SEMANTIC CHECKS\n" +
+                            "--------------------\n\n" +
+                            semanticValidation + "\n\n" +
+                            "----- the end ------\n";
+                    logger.debug(message);
 
-                String message = "HARVEST REPORT: " + dcatSource.getUrl() + "\n" +
-                        "DATE: " + timestamp + "\n\n" +
-                        "SYNTAX CHECKS\n" +
-                        "--------------------\n\n" +
-                        dcatSyntaxValidation + "\n\n" +
-                        "SEMANTIC CHECKS\n" +
-                        "--------------------\n\n" +
-                        semanticValidation + "\n\n" +
-                        "----- the end ------\n";
-                logger.debug(message);
+                    notificationService.sendValidationResultNotification(
+                            notificationEmailSender,
+                            VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
+                            VALIDATION_EMAIL_SUBJECT,
+                            message);
+                } else {
+                    logger.warn("email notifcation service not set. Could not send email with validation results");
+                }
 
-                notificationService.sendValidationResultNotification(
-                        notificationEmailSender,
-                        VALIDATION_EMAIL_RECEIVER, //TODO: replace with email lookop for catalog owners
-                        VALIDATION_EMAIL_SUBJECT,
-                        message);
-            } else {
-                logger.warn("email notifcation service not set. Could not send email with validation results");
+            } catch (Exception e) {
+                logger.warn("unable to read logContent {}", e.getMessage(), e);
             }
-
-        } catch (Exception e) {
-            logger.warn("unable to read logContent {}", e.getMessage(), e);
         }
     }
 
@@ -332,7 +336,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             saveCatalogHarvestRecord(dcatSource, validationResults, gson, bulkRequest, harvestTime, catalogRecord);
 
-            logger.debug("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
+            logger.trace("/harvest/catalog/_indexRequest:\n{}", gson.toJson(catalogRecord));
 
         }
 
@@ -411,7 +415,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 .addSort("date", SortOrder.ASC)
                 .setSize(1).get();
 
-        logger.debug("find first dataset harvest record query: {}", firstDatasetRecordResponse.getHits().toString());
+        logger.trace("find first dataset harvest record query: {}", firstDatasetRecordResponse.getHits().toString());
 
         if (firstDatasetRecordResponse.getHits().getTotalHits() > 0) {
             DatasetHarvestRecord firstHarvestRecord =
@@ -428,12 +432,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
 
     void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson,
-                                                               CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
+                                                       CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
 
         TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("catalogUri", thisCatalogRecord.getCatalogUri());
         ConstantScoreQueryBuilder csQueryBuilder = QueryBuilders.constantScoreQuery(termQueryBuilder);
 
-        logger.debug("query: {}", csQueryBuilder.toString());
+        logger.trace("query: {}", csQueryBuilder.toString());
 
         SearchResponse lastCatalogRecordResponse = elasticsearch.getClient()
                 .prepareSearch(HARVEST_INDEX).setTypes("catalog")
@@ -622,7 +626,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         recordsWithNoChange.forEach(record -> {
             String recordId = recordIdMap.get(record);
-            logger.info("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
+            logger.debug("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
             record.setDataset(null);
             record.setValidationStatus(null);
             bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", recordId, record, gson));
@@ -644,52 +648,54 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 throw new Exception(String.format("LookupEntry %s does not match datasetid %s", lookupEntry.getDatasetId(), dataset.getId()));
             }
 
-            DatasetHarvestRecord lastHarvestRecordWithContent;
+            if (enableChangeHandling) {
+                DatasetHarvestRecord lastHarvestRecordWithContent;
 
-            {
-                // TODO Compensate reset of harvest history
-                lookupEntry.getHarvest().setFirstHarvested(null);
-                lookupEntry.getHarvest().setLastChanged(null);
-                lookupEntry.getHarvest().getChanged().clear();
+                {
+                    // TODO Compensate reset of harvest history
+                    lookupEntry.getHarvest().setFirstHarvested(null);
+                    lookupEntry.getHarvest().setLastChanged(null);
+                    lookupEntry.getHarvest().getChanged().clear();
 
-            }
-
-            // compensate if we do not have first harvest date (handles old way) harvest records.
-            if (lookupEntry.getHarvest().getFirstHarvested() == null) {
-                // this should be removed - TODO
-                logger.info("Compensating actions for dataset: {}", dataset.getUri());
-                lookupEntry.getHarvest().setFirstHarvested(getFirstHarvestedDate(dataset, elasticsearch, gson));
-                lastHarvestRecordWithContent = updateDatasetHarvestRecordsAndReturnLastChanged(dataset, elasticsearch, gson, bulkRequest, lookupEntry);
-            } else {
-                // this should remain
-                lastHarvestRecordWithContent = findLastDatasetHarvestRecordWithContent(dataset, elasticsearch, gson);
-            }
-
-            boolean isChanged = true;
-
-            if (lastHarvestRecordWithContent != null) {
-                if (!lastHarvestRecordWithContent.getDatasetId().equals(dataset.getId())) {
-                    throw new Exception(String.format("LastHarvestRecordWithChange %s does not match datasetid %s", lastHarvestRecordWithContent.getDatasetId(), dataset.getId()));
                 }
-                // detect changes
-                isChanged = isChanged(lastHarvestRecordWithContent, dataset, gson);
-            }
 
-            if (isChanged) {
-                lookupEntry.getHarvest().getChanged().add(harvestTime);
-                lookupEntry.getHarvest().setLastChanged(harvestTime);
-            }
+                // compensate if we do not have first harvest date (handles old way) harvest records.
+                if (lookupEntry.getHarvest().getFirstHarvested() == null) {
+                    // this should be removed - TODO
+                    logger.info("Compensating actions for dataset: {}", dataset.getUri());
+                    lookupEntry.getHarvest().setFirstHarvested(getFirstHarvestedDate(dataset, elasticsearch, gson));
+                    lastHarvestRecordWithContent = updateDatasetHarvestRecordsAndReturnLastChanged(dataset, elasticsearch, gson, bulkRequest, lookupEntry);
+                } else {
+                    // this should remain
+                    lastHarvestRecordWithContent = findLastDatasetHarvestRecordWithContent(dataset, elasticsearch, gson);
+                }
 
+                boolean isChanged = true;
+
+                if (lastHarvestRecordWithContent != null) {
+                    if (!lastHarvestRecordWithContent.getDatasetId().equals(dataset.getId())) {
+                        throw new Exception(String.format("LastHarvestRecordWithChange %s does not match datasetid %s", lastHarvestRecordWithContent.getDatasetId(), dataset.getId()));
+                    }
+                    // detect changes
+                    isChanged = isChanged(lastHarvestRecordWithContent, dataset, gson);
+                }
+
+                if (isChanged) {
+                    lookupEntry.getHarvest().getChanged().add(harvestTime);
+                    lookupEntry.getHarvest().setLastChanged(harvestTime);
+                }
+
+                // create a new dataset harvest record
+                DatasetHarvestRecord record = createDatasetHarvestRecord(dataset, dcatSource, isChanged, harvestTime, catalogValidationResults);
+                // save dataset harvest record
+                bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", null, record, gson));
+
+                // add harvest metadata to dataset
+                dataset.setHarvest(lookupEntry.getHarvest());
+
+            }
             // save lookup entry
             bulkRequest.add(createBulkRequest(HARVEST_INDEX, "lookup", dataset.getUri(), lookupEntry, gson));
-
-            // create a new dataset harvest record
-            DatasetHarvestRecord record = createDatasetHarvestRecord(dataset, dcatSource, isChanged, harvestTime, catalogValidationResults);
-            // save dataset harvest record
-            bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", null, record, gson));
-
-            // add harvest metadata to dataset
-            dataset.setHarvest(lookupEntry.getHarvest());
 
             logger.debug("Add dataset document {} to bulk request", dataset.getId());
             // save dataset
@@ -848,7 +854,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             try {
                 messages = catalogValidationResults.stream().filter(m ->
                         m.contains(dataset.getUri()) && m.contains("className='Dataset'")).collect(Collectors.toList());
-                logger.debug("messages: {}", messages.toString());
+                logger.trace("messages: {}", messages.toString());
                 if (dataset.getDistribution() != null) {
                     for (Distribution distribution : dataset.getDistribution()) {
                         List<String> distMessages = catalogValidationResults.stream()
@@ -893,26 +899,26 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             // find the datasets unique subjects
             datasets.forEach(dataset -> {
-               if (dataset.getSubject() != null) {
-                   dataset.getSubject().forEach(subject -> {
+                if (dataset.getSubject() != null) {
+                    dataset.getSubject().forEach(subject -> {
 
-                       assert subject != null;
-                       assert subject.getUri() != null;
+                        if (subject != null && subject.getUri() != null) {
 
-                       Subject uniqueSubject = uniqueSubjectsToIndex.get(subject.getUri());
-                       if (uniqueSubject == null) {
-                           uniqueSubjectsToIndex.put(subject.getUri(), subject);
-                           uniqueSubject = subject;
-                       }
+                            Subject uniqueSubject = uniqueSubjectsToIndex.get(subject.getUri());
+                            if (uniqueSubject == null) {
+                                uniqueSubjectsToIndex.put(subject.getUri(), subject);
+                                uniqueSubject = subject;
+                            }
 
-                       if (uniqueSubject.getDatasets() == null) {
-                           uniqueSubject.setDatasets(new ArrayList<>());
-                       }
+                            if (uniqueSubject.getDatasets() == null) {
+                                uniqueSubject.setDatasets(new ArrayList<>());
+                            }
 
-                       uniqueSubject.getDatasets().add(snuff(dataset));
+                            uniqueSubject.getDatasets().add(snuff(dataset));
+                        }
 
-                   });
-               }
+                    });
+                }
             });
 
             if (uniqueSubjectsToIndex.size() == 0) {
