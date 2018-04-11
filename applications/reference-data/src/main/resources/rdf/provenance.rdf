@@ -27,7 +27,7 @@
     		<at:op-code>NASJONAL</at:op-code>
     		<atold:op-code>NASJONAL</atold:op-code>
     		<dc:identifier>NASJONAL</dc:identifier>
-            <skos:prefLabel xml:lang="en">National Shared Component</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">National Building Block</skos:prefLabel>
             <skos:prefLabel xml:lang="nb">Nasjonal felleskomponent</skos:prefLabel>
             <skos:prefLabel xml:lang="nn">Nasjonal felleskomponent</skos:prefLabel>
     </skos:Concept>
