@@ -1,0 +1,11 @@
+{
+  "testMatch": ["<rootDir>/test/**/(test).js?(x)", "**/?(*.)(test).js?(x)"],
+  "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "/target/"],
+  "setupFiles": [
+    "raf/polyfill",
+    "<rootDir>/test/jestsetup.js"
+  ],
+  "moduleNameMapper": {
+    "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+  }
+}
