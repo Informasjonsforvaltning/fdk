@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchDatasetDetailsIfNeeded } from '../../actions/index';
+import {
+  fetchDatasetDetailsIfNeeded,
+  resetDatasetDetails
+} from '../../actions/index';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
 import DatasetDistribution from '../../components/search-dataset-distribution';
@@ -28,6 +31,10 @@ class DetailsPage extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.loadDatasetFromServer();
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(resetDatasetDetails());
   }
 
   // @params: the function has no param but the query need dataset id from prop

@@ -1,7 +1,8 @@
 import {
   DATASETDETAILS_REQUEST,
   DATASETDETAILS_SUCCESS,
-  DATASETDETAILS_FAILURE
+  DATASETDETAILS_FAILURE,
+  DATASETDETAILS_RESET
 } from '../constants/ActionTypes';
 
 export default function datasetDetails(
@@ -26,6 +27,13 @@ export default function datasetDetails(
       };
     }
     case DATASETDETAILS_FAILURE: {
+      return {
+        ...state,
+        isFetchingDataset: false,
+        datasetItem: null
+      };
+    }
+    case DATASETDETAILS_RESET: {
       return {
         ...state,
         isFetchingDataset: false,

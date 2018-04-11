@@ -102,3 +102,10 @@ export function resetUser() {
       type: actions.USER_FAILURE
     });
 }
+
+export function resetDatasetDetails() {
+  return dispatch =>
+    dispatch({
+      type: actions.DATASETDETAILS_RESET
+    });
+}
