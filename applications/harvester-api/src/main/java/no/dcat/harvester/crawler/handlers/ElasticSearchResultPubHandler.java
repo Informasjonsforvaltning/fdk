@@ -67,24 +67,26 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     }
 
     protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        if (model != null && elasticsearch != null) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
-        logger.debug("Preparing bulkRequest for Publishers.");
-        BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
+            logger.debug("Preparing bulkRequest for Publishers.");
+            BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
-        List<Publisher> publishers = new PublisherBuilder(model).build();
-        publishers.addAll(getTopAgentsNotIndexed(elasticsearch, publishers, gson));
+            List<Publisher> publishers = new PublisherBuilder(model).build();
+            publishers.addAll(getTopAgentsNotIndexed(elasticsearch, publishers, gson));
 
-        for (Publisher publisher: publishers) {
+            for (Publisher publisher : publishers) {
 
-            IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
-            bulkRequest.add(indexRequest);
-        }
+                IndexRequest indexRequest = addPublisherToIndex(gson, publisher);
+                bulkRequest.add(indexRequest);
+            }
 
-        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
-        if (bulkResponse.hasFailures()) {
-            logger.error("Load of publisher has error: {}", bulkResponse.buildFailureMessage());
-            //TODO: process failures by iterating through each bulk response item?
+            BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+            if (bulkResponse.hasFailures()) {
+                logger.error("Load of publisher has error: {}", bulkResponse.buildFailureMessage());
+                //TODO: process failures by iterating through each bulk response item?
+            }
         }
     }
 

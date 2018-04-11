@@ -193,7 +193,7 @@ public class CrawlerRestController {
 
         logger.debug("Start Crawler Job for each dcat source");
 
-        for (DcatSource dcatSource : adminDataStore.getDcatSourceUrls()) {
+        for (DcatSource dcatSource : adminDataStore.getDcatSources()) {
             logger.info("STARTING CRAWLERJOB {}", dcatSource.getUrl());
 
             CrawlerJob job = crawlerJobFactory.createCrawlerJob(dcatSource);
