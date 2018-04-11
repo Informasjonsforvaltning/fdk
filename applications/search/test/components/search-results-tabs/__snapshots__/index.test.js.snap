@@ -1,649 +1,111 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render ResultTabs correctly 1`] = `
-ShallowWrapper {
-  "length": 1,
-  Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <ResultsTabs
-    countDatasets={null}
-    countTerms={null}
-    location={
-      Object {
-        "hash": "",
-        "key": "ublg0e",
-        "pathname": "/",
-        "search": "",
-      }
-    }
-    selectedLanguageCode={null}
-  />,
-  Symbol(enzyme.__renderer__): Object {
-    "batchedUpdates": [Function],
-    "getNode": [Function],
-    "render": [Function],
-    "simulateEvent": [Function],
-    "unmount": [Function],
-  },
-  Symbol(enzyme.__node__): Object {
-    "instance": null,
-    "key": undefined,
-    "nodeType": "host",
-    "props": Object {
-      "children": <div
-        className="col-sm-12 col-md-8 col-md-offset-4"
+exports[`should render ResultTabs with "Concepts" active correctly 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-sm-12 col-md-8 col-md-offset-4"
+  >
+    <ul
+      className="search-results-tabs"
+    >
+      <li
+        className=""
       >
-        <ul
-          className="search-results-tabs"
-        >
-          <li
-            className="li-active"
-          >
-            <Link
-              aria-label="Link til side for datasett:"
-              replace={false}
-              to={
-                Object {
-                  "pathname": "/",
-                  "search": "?",
-                }
-              }
-            >
-              Datasett
-              <span>
-                 (
-                )
-              </span>
-            </Link>
-          </li>
-          <li
-            className=""
-          >
-            <Link
-              aria-label="Link til side for begrep:"
-              replace={false}
-              to={
-                Object {
-                  "pathname": "/concepts",
-                  "search": "?",
-                }
-              }
-            >
-              Begrep
-              <span>
-                 (
-                )
-              </span>
-            </Link>
-          </li>
-        </ul>
-      </div>,
-      "className": "row",
-    },
-    "ref": null,
-    "rendered": Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "children": <ul
-          className="search-results-tabs"
-        >
-          <li
-            className="li-active"
-          >
-            <Link
-              aria-label="Link til side for datasett:"
-              replace={false}
-              to={
-                Object {
-                  "pathname": "/",
-                  "search": "?",
-                }
-              }
-            >
-              Datasett
-              <span>
-                 (
-                )
-              </span>
-            </Link>
-          </li>
-          <li
-            className=""
-          >
-            <Link
-              aria-label="Link til side for begrep:"
-              replace={false}
-              to={
-                Object {
-                  "pathname": "/concepts",
-                  "search": "?",
-                }
-              }
-            >
-              Begrep
-              <span>
-                 (
-                )
-              </span>
-            </Link>
-          </li>
-        </ul>,
-        "className": "col-sm-12 col-md-8 col-md-offset-4",
-      },
-      "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": Array [
-            <li
-              className="li-active"
-            >
-              <Link
-                aria-label="Link til side for datasett:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/",
-                    "search": "?",
-                  }
-                }
-              >
-                Datasett
-                <span>
-                   (
-                  )
-                </span>
-              </Link>
-            </li>,
-            <li
-              className=""
-            >
-              <Link
-                aria-label="Link til side for begrep:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/concepts",
-                    "search": "?",
-                  }
-                }
-              >
-                Begrep
-                <span>
-                   (
-                  )
-                </span>
-              </Link>
-            </li>,
-          ],
-          "className": "search-results-tabs",
-        },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": <Link
-                aria-label="Link til side for datasett:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/",
-                    "search": "?",
-                  }
-                }
-              >
-                Datasett
-                <span>
-                   (
-                  )
-                </span>
-              </Link>,
-              "className": "li-active",
-            },
-            "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "aria-label": "Link til side for datasett:",
-                "children": Array [
-                  "Datasett",
-                  <span>
-                     (
-                    )
-                  </span>,
-                ],
-                "replace": false,
-                "to": Object {
-                  "pathname": "/",
-                  "search": "?",
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "Datasett",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": Array [
-                      " (",
-                      null,
-                      ")",
-                    ],
-                  },
-                  "ref": null,
-                  "rendered": Array [
-                    " (",
-                    null,
-                    ")",
-                  ],
-                  "type": "span",
-                },
-              ],
-              "type": [Function],
-            },
-            "type": "li",
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": <Link
-                aria-label="Link til side for begrep:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/concepts",
-                    "search": "?",
-                  }
-                }
-              >
-                Begrep
-                <span>
-                   (
-                  )
-                </span>
-              </Link>,
-              "className": "",
-            },
-            "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "aria-label": "Link til side for begrep:",
-                "children": Array [
-                  "Begrep",
-                  <span>
-                     (
-                    )
-                  </span>,
-                ],
-                "replace": false,
-                "to": Object {
-                  "pathname": "/concepts",
-                  "search": "?",
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                "Begrep",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": Array [
-                      " (",
-                      null,
-                      ")",
-                    ],
-                  },
-                  "ref": null,
-                  "rendered": Array [
-                    " (",
-                    null,
-                    ")",
-                  ],
-                  "type": "span",
-                },
-              ],
-              "type": [Function],
-            },
-            "type": "li",
-          },
-        ],
-        "type": "ul",
-      },
-      "type": "div",
-    },
-    "type": "div",
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "children": <div
-          className="col-sm-12 col-md-8 col-md-offset-4"
-        >
-          <ul
-            className="search-results-tabs"
-          >
-            <li
-              className="li-active"
-            >
-              <Link
-                aria-label="Link til side for datasett:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/",
-                    "search": "?",
-                  }
-                }
-              >
-                Datasett
-                <span>
-                   (
-                  )
-                </span>
-              </Link>
-            </li>
-            <li
-              className=""
-            >
-              <Link
-                aria-label="Link til side for begrep:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/concepts",
-                    "search": "?",
-                  }
-                }
-              >
-                Begrep
-                <span>
-                   (
-                  )
-                </span>
-              </Link>
-            </li>
-          </ul>
-        </div>,
-        "className": "row",
-      },
-      "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": <ul
-            className="search-results-tabs"
-          >
-            <li
-              className="li-active"
-            >
-              <Link
-                aria-label="Link til side for datasett:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/",
-                    "search": "?",
-                  }
-                }
-              >
-                Datasett
-                <span>
-                   (
-                  )
-                </span>
-              </Link>
-            </li>
-            <li
-              className=""
-            >
-              <Link
-                aria-label="Link til side for begrep:"
-                replace={false}
-                to={
-                  Object {
-                    "pathname": "/concepts",
-                    "search": "?",
-                  }
-                }
-              >
-                Begrep
-                <span>
-                   (
-                  )
-                </span>
-              </Link>
-            </li>
-          </ul>,
-          "className": "col-sm-12 col-md-8 col-md-offset-4",
-        },
-        "ref": null,
-        "rendered": Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": Array [
-              <li
-                className="li-active"
-              >
-                <Link
-                  aria-label="Link til side for datasett:"
-                  replace={false}
-                  to={
-                    Object {
-                      "pathname": "/",
-                      "search": "?",
-                    }
-                  }
-                >
-                  Datasett
-                  <span>
-                     (
-                    )
-                  </span>
-                </Link>
-              </li>,
-              <li
-                className=""
-              >
-                <Link
-                  aria-label="Link til side for begrep:"
-                  replace={false}
-                  to={
-                    Object {
-                      "pathname": "/concepts",
-                      "search": "?",
-                    }
-                  }
-                >
-                  Begrep
-                  <span>
-                     (
-                    )
-                  </span>
-                </Link>
-              </li>,
-            ],
-            "className": "search-results-tabs",
-          },
-          "ref": null,
-          "rendered": Array [
+        <Link
+          aria-label="Link til side for datasett:"
+          replace={false}
+          to={
             Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": <Link
-                  aria-label="Link til side for datasett:"
-                  replace={false}
-                  to={
-                    Object {
-                      "pathname": "/",
-                      "search": "?",
-                    }
-                  }
-                >
-                  Datasett
-                  <span>
-                     (
-                    )
-                  </span>
-                </Link>,
-                "className": "li-active",
-              },
-              "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "aria-label": "Link til side for datasett:",
-                  "children": Array [
-                    "Datasett",
-                    <span>
-                       (
-                      )
-                    </span>,
-                  ],
-                  "replace": false,
-                  "to": Object {
-                    "pathname": "/",
-                    "search": "?",
-                  },
-                },
-                "ref": null,
-                "rendered": Array [
-                  "Datasett",
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": Array [
-                        " (",
-                        null,
-                        ")",
-                      ],
-                    },
-                    "ref": null,
-                    "rendered": Array [
-                      " (",
-                      null,
-                      ")",
-                    ],
-                    "type": "span",
-                  },
-                ],
-                "type": [Function],
-              },
-              "type": "li",
-            },
+              "pathname": "/",
+              "search": "?",
+            }
+          }
+        >
+          Datasett
+          <span>
+             (
+            )
+          </span>
+        </Link>
+      </li>
+      <li
+        className="li-active"
+      >
+        <Link
+          aria-label="Link til side for begrep:"
+          replace={false}
+          to={
             Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": <Link
-                  aria-label="Link til side for begrep:"
-                  replace={false}
-                  to={
-                    Object {
-                      "pathname": "/concepts",
-                      "search": "?",
-                    }
-                  }
-                >
-                  Begrep
-                  <span>
-                     (
-                    )
-                  </span>
-                </Link>,
-                "className": "",
-              },
-              "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "aria-label": "Link til side for begrep:",
-                  "children": Array [
-                    "Begrep",
-                    <span>
-                       (
-                      )
-                    </span>,
-                  ],
-                  "replace": false,
-                  "to": Object {
-                    "pathname": "/concepts",
-                    "search": "?",
-                  },
-                },
-                "ref": null,
-                "rendered": Array [
-                  "Begrep",
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": Array [
-                        " (",
-                        null,
-                        ")",
-                      ],
-                    },
-                    "ref": null,
-                    "rendered": Array [
-                      " (",
-                      null,
-                      ")",
-                    ],
-                    "type": "span",
-                  },
-                ],
-                "type": [Function],
-              },
-              "type": "li",
-            },
-          ],
-          "type": "ul",
-        },
-        "type": "div",
-      },
-      "type": "div",
-    },
-  ],
-  Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
-      "options": Object {
-        "enableComponentDidUpdateOnSetState": true,
-      },
-    },
-  },
-}
+              "pathname": "/concepts",
+              "search": "?",
+            }
+          }
+        >
+          Begrep
+          <span>
+             (
+            )
+          </span>
+        </Link>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render ResultTabs with "Dataset" active correctly 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-sm-12 col-md-8 col-md-offset-4"
+  >
+    <ul
+      className="search-results-tabs"
+    >
+      <li
+        className="li-active"
+      >
+        <Link
+          aria-label="Link til side for datasett:"
+          replace={false}
+          to={
+            Object {
+              "pathname": "/",
+              "search": "?",
+            }
+          }
+        >
+          Datasett
+          <span>
+             (
+            )
+          </span>
+        </Link>
+      </li>
+      <li
+        className=""
+      >
+        <Link
+          aria-label="Link til side for begrep:"
+          replace={false}
+          to={
+            Object {
+              "pathname": "/concepts",
+              "search": "?",
+            }
+          }
+        >
+          Begrep
+          <span>
+             (
+            )
+          </span>
+        </Link>
+      </li>
+    </ul>
+  </div>
+</div>
 `;

@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.prod.config.js -p",
     "server": "export NODE_ENV=production && node start.js",
     "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive ./test/**/*.spec.js --require ignore-styles",
-    "testing": "jest --config=jest.config.json ",
+    "testing": "jest --config=jest.config.json",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "tdd": "npm test -- --watch",
     "lint": "eslint ./ --ext=.js,.jsx --fix"

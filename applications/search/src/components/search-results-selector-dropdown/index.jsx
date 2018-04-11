@@ -8,7 +8,6 @@ import localization from '../localization';
 export default class Select extends React.Component {
   constructor(props) {
     super(props);
-    // const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
     const { activeSort } = this.props;
     this.state = {
       selectedValue: activeSort
@@ -22,18 +21,12 @@ export default class Select extends React.Component {
     const { onChange } = this.props;
     onChange(e);
     this.setState({
-      selectedValue: e.label || e.title || e.key
+      selectedValue: e.label
     });
   }
 
-  getSelectedValue() {
-    const { selectedItems = [] } = this.props;
-    if (selectedItems.length === 0) return null;
-    return selectedItems[0];
-  }
-
   render() {
-    const { items } = this.props; // eslint-disable-line react/prop-types
+    const { items } = this.props;
     return (
       <DropdownButton
         bsStyle="default"
@@ -47,7 +40,7 @@ export default class Select extends React.Component {
           .sort[this.state.selectedValue]}`}
       >
         {map(items, (item, idx) => {
-          const { label } = item; // eslint-disable-line camelcase
+          const { label } = item;
           const text = `${localization.sort.by} ${localization.sort[label]}`;
           return (
             <MenuItem key={idx} eventKey={item}>
@@ -61,9 +54,12 @@ export default class Select extends React.Component {
 }
 
 Select.defaultProps = {
-  selectedItems: null
+  items: null,
+  activeSort: null
 };
 
 Select.propTypes = {
-  selectedItems: PropTypes.array
+  items: PropTypes.array,
+  activeSort: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };

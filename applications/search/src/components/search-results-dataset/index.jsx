@@ -163,7 +163,6 @@ export default class ResultsDataset extends React.Component {
                       order: 'asc'
                     }
                   ]}
-                  selectedLanguageCode={this.props.selectedLanguageCode}
                   onChange={onSort}
                   activeSort={searchQuery.sortfield}
                 />
@@ -236,9 +235,9 @@ export default class ResultsDataset extends React.Component {
 }
 
 ResultsDataset.defaultProps = {
-  selectedLanguageCode: null
+  showFilterModal: false
 };
 
 ResultsDataset.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  showFilterModal: PropTypes.bool
 };

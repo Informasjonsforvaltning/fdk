@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
- import ResultTabs from '../../../src/components/search-results-tabs';
+import ResultTabs from '../../../src/components/search-results-tabs';
 
-test('should render ResultTabs correctly', () => {
+test('should render ResultTabs with "Dataset" active correctly', () => {
   const defaultProps = {
     location: {
       pathname: "/",
@@ -13,32 +13,17 @@ test('should render ResultTabs correctly', () => {
   };
   const wrapper = shallow(<ResultTabs {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
-
 });
 
-
-
-
-
-/*
-describe('ResultTabs', () => {
-  let wrapper;
+test('should render ResultTabs with "Concepts" active correctly', () => {
   const defaultProps = {
     location: {
-      pathname: "/",
+      pathname: "/concepts",
       search: "",
       hash: "",
       key: "ublg0e"
     }
   };
-
-  it ('should render', () => {
-    wrapper = shallow(<ResultTabs {...defaultProps} />);
-    expect(wrapper).to.have.length(1);
-    expect(wrapper.find('.search-results-tabs')).to.have.length(1);
-    expect(wrapper.find(Link)).to.have.length(2);
-  });
-
+  const wrapper = shallow(<ResultTabs {...defaultProps} />);
+  expect(wrapper).toMatchSnapshot();
 });
-*/
-

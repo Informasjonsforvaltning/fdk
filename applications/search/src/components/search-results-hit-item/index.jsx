@@ -13,7 +13,6 @@ import {
 import './index.scss';
 
 export default class SearchHitItem extends React.Component {
-  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {

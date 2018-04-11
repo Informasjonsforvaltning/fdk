@@ -5,6 +5,9 @@
     "raf/polyfill",
     "<rootDir>/test/jestsetup.js"
   ],
+  "snapshotSerializers": [
+    "enzyme-to-json/serializer"
+  ],
   "moduleNameMapper": {
     "^.+\\.(css|less|scss)$": "identity-obj-proxy"
   },
