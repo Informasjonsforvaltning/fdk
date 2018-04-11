@@ -20,6 +20,18 @@
         <skos:prefLabel xml:lang="nb">Vedtak</skos:prefLabel>
         <skos:prefLabel xml:lang="nn">Vedtak</skos:prefLabel>
     </skos:Concept>
+
+    <skos:Concept rdf:about="http://data.brreg.no/datakatalog/provinens/nasjonal" at:deprecated="false">
+            <skos:inScheme rdf:resource="http://data.brreg.no/datakatalog/provinens"/>
+    		<at:authority-code>NASJONAL</at:authority-code>
+    		<at:op-code>NASJONAL</at:op-code>
+    		<atold:op-code>NASJONAL</atold:op-code>
+    		<dc:identifier>NASJONAL</dc:identifier>
+            <skos:prefLabel xml:lang="en">National Shared Component</skos:prefLabel>
+            <skos:prefLabel xml:lang="nb">Nasjonal felleskomponent</skos:prefLabel>
+            <skos:prefLabel xml:lang="nn">Nasjonal felleskomponent</skos:prefLabel>
+    </skos:Concept>
+
      <skos:Concept rdf:about="http://data.brreg.no/datakatalog/provinens/bruker" at:deprecated="false">
         <skos:inScheme rdf:resource="http://data.brreg.no/datakatalog/provinens"/>
 		<at:authority-code>BRUKER</at:authority-code>
