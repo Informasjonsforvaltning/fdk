@@ -152,7 +152,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             logger.info("Submitted bulk requests");
 
-            Thread.sleep(2000);
+            Thread.sleep(10000);
             if (elasticsearch.elasticsearchStatus() != null)
                 logger.info("Elastisearch status {}", elasticsearch.elasticsearchStatus().toString());
 
