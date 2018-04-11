@@ -249,11 +249,27 @@ a > .fdk-button-cta {
     margin: 2px 0px 2px 0px;
 }
 
+.fdk-label-small {
+    background-color: $color5;
+    color: $color1;
+    font-size: 1.4rem;
+    border-radius: 2px;
+    padding-left: .5em;
+    padding-right: .5em;
+    display: inline-block;
+}
+
 .fdk-label-on-grey {
     background-color: $color4;
 }
 
+.fdk-label-on-blue {
+    background-color: $color-cta4;
+}
 
+.fdk-label-right {
+    margin-bottom: 1em;
+}
 
 /* fonts */
 
@@ -384,6 +400,11 @@ a > .fdk-label {
         padding: 5px 7px 4px 7px;
         display: inline-block;
         margin: -1px 0px -1px 2px;
+    }
+
+    .fdk-label-right {
+        float: right;
+        margin-bottom: 1em;
     }
 }
 

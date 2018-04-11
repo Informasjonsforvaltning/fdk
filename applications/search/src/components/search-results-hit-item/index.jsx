@@ -192,7 +192,12 @@ export default class SearchHitItem extends React.Component {
           Søketreff.
         </span>
         <div className="fdk-container-search-hit">
-          <h2>{title}</h2>
+          <h2 className="inline-block">{title}</h2>
+          {false && (
+            <span className="fdk-label fdk-label-right">
+              {localization.search_hit.NationalBuildingBlock}
+            </span>
+          )}
           <div className="fdk-dataset-themes">
             {this._renderPublisher()}
             {this._renderThemes()}

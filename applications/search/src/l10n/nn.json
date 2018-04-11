@@ -122,7 +122,8 @@
     "restricted": "Begrenset offentlighet",
     "ukjent": "Ukjent",
     "non_public": "Unntatt offentlighet",
-    "sample": "Eksempeldata tilgjengelig"
+    "sample": "Eksempeldata tilgjengelig",
+    "NationalBuildingBlock": "Nasjonal felleskomponent"
   },
   "dataset": {
     "accessRight": "Datasettet er",

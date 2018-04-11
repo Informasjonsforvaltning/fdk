@@ -122,7 +122,8 @@
     "restricted": "Restricted",
     "ukjent": "Unknown",
     "non_public": "Non public",
-    "sample": "Sample data are available"
+    "sample": "Sample data are available",
+    "NationalBuildingBlock": "National Building Block"
   },
   "dataset": {
     "accessRight": "Dataset is",
