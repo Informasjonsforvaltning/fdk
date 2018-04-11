@@ -88,7 +88,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private EmailNotificationService notificationService;
 
     private boolean enableHarvestLog = false;
-    private boolean enableChangeHandling = false;
+    private boolean enableChangeHandling = true;
 
     String hostename;
     int port;

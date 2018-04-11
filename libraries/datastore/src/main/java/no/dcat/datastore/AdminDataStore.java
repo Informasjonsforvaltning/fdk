@@ -31,17 +31,59 @@ public class AdminDataStore {
 		this.fuseki = fuseki;
 	}
 
+	public List<DcatSource> getDcatSourceUrls() {
+
+		ResultSet resultSet = fuseki.select("PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+				"PREFIX  difiMeta: <http://dcat.difi.no/metadata/>\n" +
+				"PREFIX  dct:  <http://purl.org/dc/terms/>\n" +
+				"PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n" +
+				"SELECT ?url ?org ?user ?a\n" +
+				"WHERE\n" +
+				" { ?user  difiMeta:dcatSource  ?a.\n" +
+				"\t?a difiMeta:orgnumber ?org.\n" +
+				"\t?a difiMeta:url ?url.\n" +
+				"}");
+
+		List<DcatSource> result = new ArrayList<>();
+
+		while (resultSet.hasNext()) {
+			QuerySolution qs = resultSet.next();
+			DcatSource dcatSource = new DcatSource();
+			dcatSource.setId(qs.get("a").asResource().getURI());
+			dcatSource.setUrl(qs.get("url").asLiteral().getString());
+			dcatSource.setUser(qs.get("user").asResource().getURI());
+			dcatSource.setOrgnumber(qs.get("org").asLiteral().getString());
+
+			logger.debug("datasourceurl: {}", dcatSource.toString());
+			result.add(dcatSource);
+		}
+
+		return result;
+	}
+
 	/**
 	 * @return
 	 */
 	public List<DcatSource> getDcatSources() {
-		logger.trace("Listing all dcat sources");
+		logger.debug("Listing all dcat sources");
 		List<DcatSource> dcatSources = new ArrayList<>();
 
 		Map<String, String> map = new HashMap<>();
 
 		String query = String.join("\n", "describe ?a ?user where {", "	?user difiMeta:dcatSource ?a.", "}");
 		Model dcatModel = fuseki.describe(query, map);
+		ResultSet result = fuseki.select("PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+				"PREFIX  difiMeta: <http://dcat.difi.no/metadata/>\n" +
+				"PREFIX  dct:  <http://purl.org/dc/terms/>\n" +
+				"PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n" +
+				"SELECT ?url ?org ?user ?a\n" +
+				"WHERE\n" +
+				" { ?user  difiMeta:dcatSource  ?a.\n" +
+				"\t?a difiMeta:orgnumber ?org.\n" +
+				"\t?a difiMeta:url ?url.\n" +
+				"}");
+
+		QuerySolution qs = result.next();
 
 		List<DcatSource> ret = new ArrayList<>();
 
