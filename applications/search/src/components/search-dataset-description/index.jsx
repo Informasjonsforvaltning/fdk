@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
+import Moment from 'react-moment';
 
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
@@ -23,6 +24,19 @@ export default class DatasetDescription extends React.Component {
                 publisher.name.substring(1).toLowerCase()
               : ''}
           </strong>
+        </span>
+      );
+    }
+    return null;
+  }
+
+  _renderHarvested() {
+    const { harvest } = this.props;
+    if (harvest && harvest.firstHarvested) {
+      return (
+        <span>
+          {localization.dataset.firstHarvested}&nbsp;
+          <Moment format="DD.MM.YYYY">{harvest.firstHarvested}</Moment>
         </span>
       );
     }
@@ -58,6 +72,8 @@ export default class DatasetDescription extends React.Component {
           <h1 className="fdk-margin-bottom">{this.props.title}</h1>
         )}
 
+        <div className="fdk-detail-date">{this._renderHarvested()}</div>
+
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}
           {this._renderThemes()}
@@ -87,7 +103,8 @@ DatasetDescription.defaultProps = {
   objective: '',
   publisher: null,
   themes: null,
-  selectedLanguageCode: ''
+  selectedLanguageCode: '',
+  harvest: null
 };
 
 DatasetDescription.propTypes = {
@@ -97,5 +114,6 @@ DatasetDescription.propTypes = {
   objective: PropTypes.string,
   publisher: PropTypes.object,
   themes: PropTypes.array,
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  harvest: null
 };

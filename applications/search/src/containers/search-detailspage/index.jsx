@@ -103,6 +103,7 @@ class DetailsPage extends React.Component {
         publisher={datasetItem.publisher}
         themes={datasetItem.theme}
         selectedLanguageCode={this.props.selectedLanguageCode}
+        harvest={datasetItem.harvest}
       />
     );
   }
