@@ -50,10 +50,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +86,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private EmailNotificationService notificationService;
 
     private boolean enableHarvestLog = false;
-    private boolean enableChangeHandling = true;
+    private boolean enableChangeHandling = false;
 
     String hostename;
     int port;
@@ -152,8 +150,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             indexWithElasticsearch(dcatSource, model, elasticsearch, validationResults);
 
-            logger.info("Finished indexing");
+            logger.info("Submitted bulk requests");
 
+            Thread.sleep(2000);
+            if (elasticsearch.elasticsearchStatus() != null)
+                logger.info("Elastisearch status {}", elasticsearch.elasticsearchStatus().toString());
+
+        } catch (InterruptedException e) {
+            logger.error("INTERRUPTED");
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);
             throw e;

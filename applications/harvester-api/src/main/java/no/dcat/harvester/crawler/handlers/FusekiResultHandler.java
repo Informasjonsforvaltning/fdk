@@ -31,9 +31,9 @@ public class FusekiResultHandler implements CrawlerResultHandler {
 	}
 
 	public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
-		logger.trace("Starting processing of rdf results");
+		logger.info("Starting processing of rdf results");
 		dcatDataStore.saveDataCatalogue(dcatSource, model);
-		logger.trace("Finished processing of rdf results");
+		logger.info("Finished processing of rdf results");
 	}
 }
 

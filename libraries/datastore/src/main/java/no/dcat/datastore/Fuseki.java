@@ -43,6 +43,9 @@ public class Fuseki {
 				.stream()
 				.forEach((key) -> p.setLiteral(key, map.get(key)));
 
+		logger.debug("sparqlUpdate: " + p.toString());
+		logger.info("Updating fuseki: {}", updateServiceUri);
+
 		try{
 			UpdateExecutionFactory.createRemoteForm(UpdateFactory.create(p.toString()), updateServiceUri).execute();
 
