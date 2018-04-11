@@ -571,7 +571,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         logger.info("update dataset harvest records for dataset {} - {}", dataset.getId(), dataset.getUri());
         TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
-        logger.info("findAllDatasetHarvestRecords and nullify not changed datasets: {}", hasDatasetId.toString());
+        logger.debug("findAllDatasetHarvestRecords and nullify not changed datasets QUERY: {}", hasDatasetId.toString());
         boolean runner = true;
         List<DatasetHarvestRecord> allRecords = new ArrayList<>();
         Map<DatasetHarvestRecord, String> recordIdMap = new HashMap<>();

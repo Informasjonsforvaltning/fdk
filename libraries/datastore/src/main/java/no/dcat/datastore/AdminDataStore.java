@@ -33,15 +33,15 @@ public class AdminDataStore {
 
 	public List<DcatSource> getDcatSourceUrls() {
 
-		ResultSet resultSet = fuseki.select("PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-				"PREFIX  difiMeta: <http://dcat.difi.no/metadata/>\n" +
+		ResultSet resultSet = fuseki.select("PREFIX  difiMeta: <http://dcat.difi.no/metadata/>\n" +
 				"PREFIX  dct:  <http://purl.org/dc/terms/>\n" +
 				"PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n" +
-				"SELECT ?url ?org ?user ?a\n" +
+				"SELECT ?dcatsrc ?url ?org ?user ?graph\n" +
 				"WHERE\n" +
-				" { ?user  difiMeta:dcatSource  ?a.\n" +
-				"\t?a difiMeta:orgnumber ?org.\n" +
-				"\t?a difiMeta:url ?url.\n" +
+				" { \t?user  difiMeta:dcatSource ?dcatsrc.\n" +
+				"\t?dcatsrc difiMeta:orgnumber ?org;\n" +
+				"\t\tdifiMeta:url ?url;\n" +
+				"    \tdifiMeta:graph ?graph.\n" +
 				"}");
 
 		List<DcatSource> result = new ArrayList<>();
@@ -49,12 +49,13 @@ public class AdminDataStore {
 		while (resultSet.hasNext()) {
 			QuerySolution qs = resultSet.next();
 			DcatSource dcatSource = new DcatSource();
-			dcatSource.setId(qs.get("a").asResource().getURI());
+			dcatSource.setId(qs.get("dcatsrc").asResource().getURI());
 			dcatSource.setUrl(qs.get("url").asLiteral().getString());
 			dcatSource.setUser(qs.get("user").asResource().getURI());
 			dcatSource.setOrgnumber(qs.get("org").asLiteral().getString());
+			dcatSource.setGraph(qs.get("graph").asLiteral().getString());
 
-			logger.debug("datasourceurl: {}", dcatSource.toString());
+			logger.debug("dcatSource: {}", dcatSource.toString());
 			result.add(dcatSource);
 		}
 
@@ -72,18 +73,6 @@ public class AdminDataStore {
 
 		String query = String.join("\n", "describe ?a ?user where {", "	?user difiMeta:dcatSource ?a.", "}");
 		Model dcatModel = fuseki.describe(query, map);
-		ResultSet result = fuseki.select("PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-				"PREFIX  difiMeta: <http://dcat.difi.no/metadata/>\n" +
-				"PREFIX  dct:  <http://purl.org/dc/terms/>\n" +
-				"PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n" +
-				"SELECT ?url ?org ?user ?a\n" +
-				"WHERE\n" +
-				" { ?user  difiMeta:dcatSource  ?a.\n" +
-				"\t?a difiMeta:orgnumber ?org.\n" +
-				"\t?a difiMeta:url ?url.\n" +
-				"}");
-
-		QuerySolution qs = result.next();
 
 		List<DcatSource> ret = new ArrayList<>();
 
