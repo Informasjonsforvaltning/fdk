@@ -1,4 +1,4 @@
-FROM tomcat:8-jre8-alpine
+FROM tomcat:8-jre8
 
 ENV TZ=Europe/Oslo
 #ENV JAVA_OPTS="-Xmx2g"
