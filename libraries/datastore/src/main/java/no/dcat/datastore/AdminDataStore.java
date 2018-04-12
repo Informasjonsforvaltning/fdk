@@ -426,8 +426,8 @@ public class AdminDataStore {
 		if (message != null) {
 			sparqlMessage = "rdfs:comment ?message;";
 
-			// max 250 characters TODO XXX
-			String croppedMessage = 250 < message.length() ? message : message.substring(0,250);
+			// max 250 characters TODO XXX - parameterize
+			String croppedMessage =  message.length() < 250 ? message : message.substring(0, 250);
 			map.put("message", croppedMessage);
 		}
 
