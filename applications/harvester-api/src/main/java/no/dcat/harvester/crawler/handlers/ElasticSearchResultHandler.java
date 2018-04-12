@@ -88,7 +88,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private EmailNotificationService notificationService;
 
     private boolean enableHarvestLog = false;
-    private boolean enableChangeHandling = false;
+    private boolean enableChangeHandling = true;
 
     String hostename;
     int port;
@@ -114,7 +114,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param httpPassword           password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword, String notifactionEmailSender, EmailNotificationService emailNotificationService) {
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword,
+                                      String notifactionEmailSender, EmailNotificationService emailNotificationService) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
@@ -149,30 +150,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         try (Elasticsearch elasticsearch = createElasticsearch()) {
 
             logger.info("Start indexing ...");
+            long startTime = System.currentTimeMillis();
 
             indexWithElasticsearch(dcatSource, model, elasticsearch, validationResults);
 
-            logger.info("Submitted bulk requests");
-            long startTime = System.currentTimeMillis();
-
-            waitForElasticToGoGreen(elasticsearch);
-
-            long waitTime = (System.currentTimeMillis() - startTime) / 1000;
-            logger.info("Elastic is ready after {}s busy indexing", waitTime);
-
+            long took = (System.currentTimeMillis() - startTime) / 1000;
+            logger.info("Finished indexing in {} seconds", took);
 
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);
             throw e;
         }
 
-
     }
 
-    void waitForElasticToGoGreen(Elasticsearch elasticsearch) {
+    void waitForIndexing(Elasticsearch elasticsearch) {
+        logger.info("Checking elasticsearch status...");
+        long startTime = System.currentTimeMillis();
+
         elasticsearch.getClient().admin().cluster().prepareHealth()
-                .setWaitForGreenStatus()
+                .setWaitForYellowStatus()
                 .execute().actionGet();
+
+        long waitTime = (System.currentTimeMillis() - startTime) / 1000;
+
+        logger.info("Elastic is ready after {}s busy indexing", waitTime);
     }
 
     DcatReader getReader(Model model) {
@@ -353,11 +355,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         }
 
+        logger.info("Processing {} bulkRequests ...", bulkRequest.numberOfActions());
         BulkResponse response = bulkRequest.execute().actionGet();
         if (response.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
             logger.error("Cannot store bulk requests: {}", response.buildFailureMessage());
         }
+
+        waitForIndexing(elasticsearch);
+
     }
 
 
@@ -419,7 +425,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
 
         TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
-        logger.info("findFirstDataset: {}", hasDatasetId.toString());
+        logger.trace("findFirstDataset: {}", hasDatasetId.toString());
 
         SearchResponse firstDatasetRecordResponse = elasticsearch.getClient()
                 .prepareSearch(HARVEST_INDEX).setTypes("dataset")
@@ -634,17 +640,20 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             previousRecord = record;
         }
-        logger.info("Found {} harvest records to nullify ", recordsWithNoChange.size());
 
-        recordsWithNoChange.forEach(record -> {
-            if (record.getDataset() != null) {
-                String recordId = recordIdMap.get(record);
-                logger.debug("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
-                record.setDataset(null);
-                record.setValidationStatus(null);
-                bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", recordId, record, gson));
-            }
-        });
+        if (recordsWithNoChange.size() > 0) {
+            logger.info("Found {} harvest records to nullify ", recordsWithNoChange.size());
+
+            recordsWithNoChange.forEach(record -> {
+                if (record.getDataset() != null) {
+                    String recordId = recordIdMap.get(record);
+                    logger.debug("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
+                    record.setDataset(null);
+                    record.setValidationStatus(null);
+                    bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", recordId, record, gson));
+                }
+            });
+        }
 
         return lastChangedRecord;
 
@@ -704,10 +713,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 // save dataset harvest record
                 bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", null, record, gson));
 
-                // add harvest metadata to dataset
-                dataset.setHarvest(lookupEntry.getHarvest());
-
             }
+
+            // add harvest metadata to dataset
+            dataset.setHarvest(lookupEntry.getHarvest());
+
             // save lookup entry
             bulkRequest.add(createBulkRequest(HARVEST_INDEX, "lookup", dataset.getUri(), lookupEntry, gson));
 
@@ -991,6 +1001,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 //TODO: process failures by iterating through each bulk response item?
                 logger.error("Cannot store bulk requests: {}", response.buildFailureMessage());
             }
+
+            waitForIndexing(elasticsearch);
 
         } catch (Exception e) {
             logger.error("Unable to index subjects: {}", e.getMessage());
