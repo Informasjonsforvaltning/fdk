@@ -1,7 +1,6 @@
 FROM tomcat:8-jre8
 
 ENV TZ=Europe/Oslo
-#ENV JAVA_OPTS="-Xmx2g"
 ENV CATALINA_OPTS="-Xmx2048m"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
