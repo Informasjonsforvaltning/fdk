@@ -7,19 +7,8 @@ import localization from '../../components/localization';
 import './index.scss';
 
 const ResultsTabs = props => {
-  const { location, countDatasets, countTerms, selectedLanguageCode } = props;
+  const { location, countDatasets, countTerms } = props;
   let { search } = location;
-  if (selectedLanguageCode) {
-    if (selectedLanguageCode === 'nb') {
-      search = addOrReplaceParamWithoutURL(search, 'lang', '');
-    } else {
-      search = addOrReplaceParamWithoutURL(
-        search,
-        'lang',
-        selectedLanguageCode
-      );
-    }
-  }
   search = addOrReplaceParamWithoutURL(search, 'from', '');
   return (
     <div className="row">
@@ -51,15 +40,13 @@ const ResultsTabs = props => {
 
 ResultsTabs.defaultProps = {
   countDatasets: null,
-  countTerms: null,
-  selectedLanguageCode: null
+  countTerms: null
 };
 
 ResultsTabs.propTypes = {
   location: PropTypes.object.isRequired,
   countDatasets: PropTypes.number,
-  countTerms: PropTypes.number,
-  selectedLanguageCode: PropTypes.string
+  countTerms: PropTypes.number
 };
 
 export default ResultsTabs;

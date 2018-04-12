@@ -24,7 +24,6 @@
     "no-shadow": 0,
     "no-underscore-dangle": 0,
     "wrap-iife": 2,
-    "react/prop-types": 0,
     "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
     "react/no-array-index-key": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accumulator"] }]

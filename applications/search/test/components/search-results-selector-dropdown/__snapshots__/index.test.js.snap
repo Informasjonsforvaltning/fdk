@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Select correctly with active sort 1`] = `
+<DropdownButton
+  aria-label="Sorter søkeresultat, Sorter på tittel"
+  bsStyle="default"
+  className="fdk-button fdk-button-default"
+  id="search-result-dropdown-1"
+  onSelect={[Function]}
+  title="Sorter på tittel"
+>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "defaultOption": true,
+        "field": "_score",
+        "label": "relevance",
+        "order": "asc",
+      }
+    }
+    header={false}
+    key="0"
+  >
+    Sorter på relevans
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "field": "title",
+        "label": "title",
+        "order": "asc",
+      }
+    }
+    header={false}
+    key="1"
+  >
+    Sorter på tittel
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "field": "modified",
+        "label": "modified",
+        "order": "desc",
+      }
+    }
+    header={false}
+    key="2"
+  >
+    Sorter på sist endret
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "field": "publisher.name",
+        "label": "publisher",
+        "order": "asc",
+      }
+    }
+    header={false}
+    key="3"
+  >
+    Sorter på utgiver
+  </MenuItem>
+</DropdownButton>
+`;
+
+exports[`should render Select correctly with no active sort 1`] = `
+<DropdownButton
+  aria-label="Sorter søkeresultat, Sorter på relevans"
+  bsStyle="default"
+  className="fdk-button fdk-button-default"
+  id="search-result-dropdown-1"
+  onSelect={[Function]}
+  title="Sorter på relevans"
+>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "defaultOption": true,
+        "field": "_score",
+        "label": "relevance",
+        "order": "asc",
+      }
+    }
+    header={false}
+    key="0"
+  >
+    Sorter på relevans
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "field": "title",
+        "label": "title",
+        "order": "asc",
+      }
+    }
+    header={false}
+    key="1"
+  >
+    Sorter på tittel
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "field": "modified",
+        "label": "modified",
+        "order": "desc",
+      }
+    }
+    header={false}
+    key="2"
+  >
+    Sorter på sist endret
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey={
+      Object {
+        "field": "publisher.name",
+        "label": "publisher",
+        "order": "asc",
+      }
+    }
+    header={false}
+    key="3"
+  >
+    Sorter på utgiver
+  </MenuItem>
+</DropdownButton>
+`;

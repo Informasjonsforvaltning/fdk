@@ -1,5 +1,7 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalTitle, ModalBody } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+
 import localization from '../../components/localization';
 import CompareTermModalContent from '../search-concepts-compare-modal-content';
 import './index.scss';
@@ -131,3 +133,14 @@ export default class CompareTermModal extends React.Component {
     );
   }
 }
+
+CompareTermModal.defaultProps = {
+  terms: null,
+  selectedLanguageCode: null
+};
+
+CompareTermModal.propTypes = {
+  terms: PropTypes.array,
+  handleDeleteTerm: PropTypes.func.isRequired,
+  selectedLanguageCode: PropTypes.string
+};
