@@ -20,20 +20,18 @@ const renderFormats = (source, code) => {
     items.map(item => {
       if (typeof item !== 'undefined') {
         const formatArray = item.trim().split(',');
-        return formatArray.map((item, index) => {
+        return formatArray.map((item, index) => (
           /*
           if (typeof item == 'undefined') {
             return null;
           }
           */
-          return (
-            <DistributionFormat
-              key={`dataset-distribution-format${index}`}
-              code={code}
-              text={item}
-            />
-          );
-        });
+          <DistributionFormat
+            key={`dataset-distribution-format${index}`}
+            code={code}
+            text={item}
+          />
+        ));
       }
       return null;
     });

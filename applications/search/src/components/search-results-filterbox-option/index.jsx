@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 
@@ -33,7 +34,7 @@ const FilterOption = props => {
       : optionLabel;
   }
 
-  const id = encodeURIComponent(itemKey + Math.random());
+  const id = encodeURIComponent(itemKey + value);
 
   let inputRef;
 
@@ -68,4 +69,26 @@ const FilterOption = props => {
     </div>
   );
 };
+
+FilterOption.defaultProps = {
+  value: null,
+  label: null,
+  count: null,
+  onClick: null,
+  active: null,
+  themesItems: null,
+  displayClass: null
+};
+
+FilterOption.propTypes = {
+  itemKey: PropTypes.number.isRequired,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  count: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+  active: PropTypes.bool,
+  themesItems: PropTypes.object,
+  displayClass: PropTypes.string
+};
+
 export default FilterOption;

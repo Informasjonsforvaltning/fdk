@@ -1,6 +1,6 @@
 {
   "testMatch": ["<rootDir>/test/**/(test).js?(x)", "**/?(*.)(test).js?(x)"],
-  "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "/target/"],
+  "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "<rootDir>/test/fixtures/", "/target/"],
   "setupFiles": [
     "raf/polyfill",
     "<rootDir>/test/jestsetup.js"
